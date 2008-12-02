@@ -1,100 +1,96 @@
-From: "Scott Chacon" <schacon@gmail.com>
-Subject: Re: [PATCH] Modified the default git help message to be grouped by topic
-Date: Tue, 2 Dec 2008 15:39:43 -0800
-Message-ID: <d411cc4a0812021539g34d3a94bn7e873f8cf04adc56@mail.gmail.com>
-References: <20081201173037.GA41967@agadorsparticus>
-	 <20081201183258.GB24443@coredump.intra.peff.net>
-	 <7v7i6jqriv.fsf@gitster.siamese.dyndns.org>
-	 <d411cc4a0812012210h4cb59974sbda71abd2c64f93b@mail.gmail.com>
-	 <885649360812021211u3d547982i8e1c3070972363e8@mail.gmail.com>
-	 <alpine.DEB.1.00.0812022353410.27091@racer>
-	 <20081202233004.GA22379@coredump.intra.peff.net>
+From: "Reece Dunn" <msclrhd@googlemail.com>
+Subject: Re: git-p4 submit, Can't clobber writable file
+Date: Tue, 2 Dec 2008 23:51:48 +0000
+Message-ID: <3f4fd2640812021551t5451e6e3i91e6d2694c89e085@mail.gmail.com>
+References: <40586.80065.qm@web37902.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"James Pickens" <jepicken@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 03 00:41:02 2008
+Cc: git@vger.kernel.org
+To: garyyang6@yahoo.com
+X-From: git-owner@vger.kernel.org Wed Dec 03 00:53:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7erV-0007rC-Md
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 00:41:02 +0100
+	id 1L7f3K-00037m-3U
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 00:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752953AbYLBXjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 18:39:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752798AbYLBXjp
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 18:39:45 -0500
-Received: from wa-out-1112.google.com ([209.85.146.179]:62221 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751848AbYLBXjo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 18:39:44 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1532971wah.21
-        for <git@vger.kernel.org>; Tue, 02 Dec 2008 15:39:43 -0800 (PST)
+	id S1753527AbYLBXvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 18:51:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753494AbYLBXvv
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 18:51:51 -0500
+Received: from wf-out-1314.google.com ([209.85.200.169]:32610 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753405AbYLBXvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 18:51:50 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so3410561wfd.4
+        for <git@vger.kernel.org>; Tue, 02 Dec 2008 15:51:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
+        d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=h26/bPVDZZiyih9psajoAR54tRFTtEpnnvKBFVIM2C0=;
-        b=Y3zoT9i8dx8K+g/PiCyvNbFZ5tDSg6bMrQdlUJi/5bvq9Tb4L6NurWPNKF15tMSuzL
-         dMusyiK2PqrU2MfIFFWltWtuP+n4W77e7bMZR9/M6MwP3cCcbaycpoHRIQiPtU+twVOQ
-         +fIsuT/iZh1RmaMHe8XNvMWhpn+k8yAcEnGpU=
+        bh=zGLEq8RxNZYoXHCCuYxlUX/c6v2tTHGsbJQqhkbzAUs=;
+        b=VkDBSTFR4R0jxvfGRgQYTv6ho2EBQ/JZ6oIF1wkiJY/C3LewpCK1JSaTblsQv6YyG7
+         wGecB4nBOrJv9wolXD7OQRVj5ashOf6ZJ/U0hB9WGWXFs9wdgHkQOmhY7WyAXZ2zXNx9
+         lUPBwwyKCdS3+R/QzjdsCWfPlfnVGi+xXMepI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
+        d=googlemail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=uaLqxEqESo9u4Awi7GWB4ICc87yaYuURo5GQENx0KBKdOYYJGW25XBII05K+c4dQHM
-         4K1ql2I9ZKKmBiCXb26jCR080Bq+hm4q+ByCVfXRSUgUEZp9DAEAdPbn6gBz/K098NuR
-         E6UuL71Q+pOoCjaX2/dHhAgP4GxVVSQsWsF+w=
-Received: by 10.114.160.17 with SMTP id i17mr7688894wae.125.1228261183155;
-        Tue, 02 Dec 2008 15:39:43 -0800 (PST)
-Received: by 10.115.22.20 with HTTP; Tue, 2 Dec 2008 15:39:43 -0800 (PST)
-In-Reply-To: <20081202233004.GA22379@coredump.intra.peff.net>
+        b=QB5MuKhIiwxrVMtqAqs6+YD2NIx0zxlBIGiloJfSqlJLLmjE+z01ti8y5VS5pcdfHR
+         1JtqwQpUeyQ9vTSdWBVgFvNpcm7Tx6Uu1X6piXFNukNnXKsfsjTubjq3R0X84BXDHe8P
+         XSKJeFdjSnSOLlAtHJB3Z1XWx1ejNKO/i0NFw=
+Received: by 10.142.163.13 with SMTP id l13mr5072480wfe.244.1228261909166;
+        Tue, 02 Dec 2008 15:51:49 -0800 (PST)
+Received: by 10.142.161.21 with HTTP; Tue, 2 Dec 2008 15:51:48 -0800 (PST)
+In-Reply-To: <40586.80065.qm@web37902.mail.mud.yahoo.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102190>
 
-Hi,
-
-On Tue, Dec 2, 2008 at 3:30 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Dec 02, 2008 at 11:55:03PM +0100, Johannes Schindelin wrote:
+2008/12/2 Gary Yang <garyyang6@yahoo.com>:
 >
->> If the whole thing gets longer than 24 lines, we have to leave some things
->> out.  Personally, I consider rm and mv unimportant enough that they could
->> be shown in an extended list, but be left out of the summary page.
+> I followed the instructions at http://modular.math.washington.edu/home/mhansen/git-1.5.5.1/contrib/fast-import/git-p4.txt
 >
-> For the record, the current output is 26 lines, plus you probably want
-> to account for 1 line of the user's next shell prompt. So we are 3 lines
-> over already.
+> But, I am not able to git-p4 submit. Any idea?
 >
-> Scott's proposal is about grouping the commands more sensibly. Many of
-> the complaints are about the length of the output. Maybe we should scrap
-> having a list of commands altogether and just point at section-specific
-> documentation, each of which could discuss basic commands related to it.
-
-I've always felt it was helpful to newcomers to have that page there
-with the couple dozen commands you might use - mostly in case you've
-forgotten what the exact command name was.  Hg does something like 'hg
-help' which gives you more commands, but I feel like just having the
-quick cheat-sheet is generally really helpful.  If someone just wants
-to remember what the command 'checkout' was, I wouldn't want them to
-have to go to two places - one to look up what the task document was
-and then another to view that.
-
-My $0.02
-
-> I think there has been mention of task-oriented documentation pointers
-> before, and I think this is a place where we would want it.
+> git-p4 clone //build/scripts build_scripts
+> cd build_scripts
+> vi foo.h
+> git commit foo.h
+> git-p4 rebase
+> git-p4 submit
 >
-> -Peff
->
+>  from sets import Set;
+> Perforce checkout for depot path //build/scripts/ located at /home/gyang/workspace/build_scripts/
+> Syncronizing p4 checkout...
 
-Scott
+This will be running a `p4 sync ...` command to ensure that the files
+are up-to-date.
+
+> //build/scripts/foo.h#1 - added as /home/gyang/workspace/build_scripts/foo.h
+> Can't clobber writable file /home/gyang/workspace/build_scripts/foo.h
+> //build/scripts/foo.c#1 - added as /home/gyang/workspace/build_scripts/foo.c
+> Can't clobber writable file /user/home/gyang/workspace/build_scripts/foo.c
+> ......
+> command failed: p4 sync ...
+
+Perforce will mark files as readonly when it does a checkout. When you
+use `p4 edit` to say you have made changes to the file, Perforce
+removes the readonly bit.
+
+What is happening here is that the sync (checkout) command is trying
+to write foo.h/c to your build_scripts directory, but because they
+already exist there *and* are not readonly, Perforce is producing that
+error as it does not want to overwrite any files that have changed
+locally.
+
+Not sure what is happening on the git-p4 side, though.
+
+- Reece
