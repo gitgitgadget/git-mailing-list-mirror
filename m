@@ -1,66 +1,115 @@
-From: "Constantine Plotnikov" <constantine.plotnikov@gmail.com>
-Subject: [man bug?] git rebase --preserve-merges
-Date: Tue, 2 Dec 2008 19:45:17 +0300
-Message-ID: <85647ef50812020845g7de701bbye4a43a4e992a264b@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Managing websites with git
+Date: Tue, 2 Dec 2008 11:55:07 -0500
+Message-ID: <20081202165507.GA15826@coredump.intra.peff.net>
+References: <fe5a74300811300830x850d81csc5cf1f9b367bac11@mail.gmail.com> <20081130170722.GJ6572@eratosthenes.sbcglobal.net> <20081130172717.GA7047@coredump.intra.peff.net> <87k5ajflp0.fsf@sparse.dyndns.org> <20081202011154.GA6390@coredump.intra.peff.net> <87vdu2po5l.fsf@sparse.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 02 17:46:44 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jason Riedy <jason@acm.org>
+X-From: git-owner@vger.kernel.org Tue Dec 02 17:56:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7YOU-0000ok-F0
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 17:46:38 +0100
+	id 1L7YY2-0004yj-8r
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 17:56:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753290AbYLBQpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 11:45:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751934AbYLBQpV
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 11:45:21 -0500
-Received: from fk-out-0910.google.com ([209.85.128.189]:25456 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751444AbYLBQpU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 11:45:20 -0500
-Received: by fk-out-0910.google.com with SMTP id 18so2502471fkq.5
-        for <git@vger.kernel.org>; Tue, 02 Dec 2008 08:45:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=La26qy9yeJC0ddRuWkT08lsvybl54RHTko6zw5mR4e0=;
-        b=qYFloKyrzmnogjLbDgGNHzF+JEk5MU9yqT/SInqk4iBrDbCGA2e/p16ETb5qqXfBRA
-         TR8GousLV+trWtMYkvAD91tvx+zl/CjxAL3cKyitETA0dSldV8Ml17N5F2FIpSyjfZjE
-         X568dNFTN8W8toyqKIDJuMYgPQq6ydErn8+hA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=RqcYFrj3Udmlkf6ps/gdRbj0osNXAooIO5goMeGXAPhXzpy6NOPxlf843dfYkF6K9k
-         T8SZ056yvf3sggcUAMK9B9jRKqLkD/KarcHm/1FO4mXzQ7Q99lN7MzCsxOvVm3o7YM+k
-         jtXox4SzORZNGWOxDaf9Jk+Cp9HnPFoGKuybM=
-Received: by 10.181.61.2 with SMTP id o2mr4311473bkk.101.1228236318024;
-        Tue, 02 Dec 2008 08:45:18 -0800 (PST)
-Received: by 10.181.143.16 with HTTP; Tue, 2 Dec 2008 08:45:17 -0800 (PST)
+	id S1754714AbYLBQzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 11:55:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754699AbYLBQzL
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 11:55:11 -0500
+Received: from peff.net ([208.65.91.99]:4361 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754659AbYLBQzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 11:55:10 -0500
+Received: (qmail 13033 invoked by uid 111); 2 Dec 2008 16:55:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 02 Dec 2008 11:55:09 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Dec 2008 11:55:07 -0500
 Content-Disposition: inline
+In-Reply-To: <87vdu2po5l.fsf@sparse.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102159>
 
-The man page for git rebase mentions "--preserve-merges" command line
-option but this option does not seems to be available.
+On Tue, Dec 02, 2008 at 10:55:34AM -0500, Jason Riedy wrote:
 
-Also if this option is specified, the following usage statement is printed:
+> Ah, ok, thanks!  Issuing a warning makes sense.  I'm not sure if
+> denying such a push by default does...
 
-Usage: git rebase [--interactive | -i] [-v] [--onto <newbase>]
-<upstream> [<branch>]
+I don't know if Junio has made a decision on whether or when the default
+should be flipped to 'deny'.
 
-And this usage statement does not mention -m and -s options that seems
-to be available. I assume that the problem is the obsolete
-documentation.
+> > Doing git push $remote HEAD:branch-that-is-checked-out
+> > has _never_ worked without further action on $remote. Now we're warning
+> > about it.
+> 
+> It works just fine.  I suspect we have different definitions of
+> "works".
 
-Regards,
-Constantine
+Fair enough. To be more precise: such a push has always resulted in a
+state on the remote end that the user must be aware of when making
+further commits, and the result of _not_ being aware and blindly running
+"git commit" is to accidentally revert all of the pushed changes. And
+even if one _is_ aware, sorting out any existing changes in the index
+from pushed changes can be difficult.
+
+So yes, there are workflows that can legitimately make use of a push to
+the current branch. But it is still a dangerous operation for a large
+number of users (I would argue the majority, but I don't have actual
+numbers) that we have seen numerous complaints about.
+
+> To me, that push updates the branch's reference.  The working
+> copy and index now may be out of sync, but neither the working
+> copy nor the index is the branch's reference.  Trying to commit
+> from the index correctly refuses.  The warning is a nice
+
+How is committing from the index refused? Try this:
+
+  mkdir parent &&
+  (cd parent &&
+    git init &&
+    echo content >file &&
+    git add file &&
+    git commit -m one) &&
+  git clone parent child &&
+  (cd child &&
+    echo changes >>file &&
+    git commit -a -m two &&
+    git push) &&
+  (cd parent &&
+    git commit -m oops &&
+    git show
+  )
+
+You will find that you have just reverted the changes from 'two' with
+'oops'.
+
+Committing straight from the working tree (via "git commit <path>" or
+"git commit -a") has the same problem.
+
+> (And in context: I used to update the IEEE754 group's web site by
+> a git push to the checked-out master, with a hook to reset
+> everything.  Worked just fine (and very quickly) until they shut
+> off shell access.  There was no need for an extra branch on the
+> server side.)
+
+Follow the earlier parts of the thread and you will see that is one of
+the sane workflows that has been mentioned. You are aware of the lack of
+sync (and you have a hook to address it) and you don't plan on having
+any local changes (so sorting them out is easy -- you just "git reset
+--hard" to take the pushed content).
+
+> I'll try to find time when I encounter another.  I'm pretty sure
+> that switching to denying pushes to checked-out branches is the
+> first one that *really* will make me change how I work.
+
+It shouldn't make you change how you work. At most, it will break an
+existing setup until you set receive.denycurrentbranch to false (again,
+if and when the default value changes). You can prepare for any such
+change now by pre-emptively setting the config value.
+
+-Peff
