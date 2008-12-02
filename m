@@ -1,62 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH v2 0/8] Unit test cleanups
-Date: Tue, 2 Dec 2008 08:38:56 -0800
-Message-ID: <20081202163856.GR23984@spearce.org>
-References: <20081127214916.GD23984@spearce.org> <1228088435-23722-1-git-send-email-robin.rosenberg@dewire.com>
+From: "Constantine Plotnikov" <constantine.plotnikov@gmail.com>
+Subject: [man bug?] git rebase --preserve-merges
+Date: Tue, 2 Dec 2008 19:45:17 +0300
+Message-ID: <85647ef50812020845g7de701bbye4a43a4e992a264b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, fonseca@diku.dk
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 17:41:30 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 02 17:46:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7YII-0006Bf-UC
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 17:40:15 +0100
+	id 1L7YOU-0000ok-F0
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 17:46:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753028AbYLBQi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 11:38:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752730AbYLBQi6
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 11:38:58 -0500
-Received: from george.spearce.org ([209.20.77.23]:37870 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752728AbYLBQi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 11:38:57 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id E85EC38200; Tue,  2 Dec 2008 16:38:56 +0000 (UTC)
+	id S1753290AbYLBQpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 11:45:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751934AbYLBQpV
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 11:45:21 -0500
+Received: from fk-out-0910.google.com ([209.85.128.189]:25456 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751444AbYLBQpU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 11:45:20 -0500
+Received: by fk-out-0910.google.com with SMTP id 18so2502471fkq.5
+        for <git@vger.kernel.org>; Tue, 02 Dec 2008 08:45:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=La26qy9yeJC0ddRuWkT08lsvybl54RHTko6zw5mR4e0=;
+        b=qYFloKyrzmnogjLbDgGNHzF+JEk5MU9yqT/SInqk4iBrDbCGA2e/p16ETb5qqXfBRA
+         TR8GousLV+trWtMYkvAD91tvx+zl/CjxAL3cKyitETA0dSldV8Ml17N5F2FIpSyjfZjE
+         X568dNFTN8W8toyqKIDJuMYgPQq6ydErn8+hA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=RqcYFrj3Udmlkf6ps/gdRbj0osNXAooIO5goMeGXAPhXzpy6NOPxlf843dfYkF6K9k
+         T8SZ056yvf3sggcUAMK9B9jRKqLkD/KarcHm/1FO4mXzQ7Q99lN7MzCsxOvVm3o7YM+k
+         jtXox4SzORZNGWOxDaf9Jk+Cp9HnPFoGKuybM=
+Received: by 10.181.61.2 with SMTP id o2mr4311473bkk.101.1228236318024;
+        Tue, 02 Dec 2008 08:45:18 -0800 (PST)
+Received: by 10.181.143.16 with HTTP; Tue, 2 Dec 2008 08:45:17 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1228088435-23722-1-git-send-email-robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102158>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> A completele reworked set of patches, including fixing a couple
-> more forgot-to-close bugs and Shawns suggestion that we disable
-> memory mapping in junit tests by default.
-...
-> Robin Rosenberg (8):
->   Drop unneeded code in unit tests
->   Cleanup malformed test cases
->   Turn off memory mapping in JGit unit tests by default
->   Add a counter to make sure the test repo name is unique
->   Make the cleanup less verbose when it fails to delete temporary
->     stuff.
->   Cleanup after each test.
->   Close files opened by unit testing framework
->   Hard failure on unit test cleanups if they fail.
-> 
->  .../tst/org/spearce/jgit/lib/PackWriterTest.java   |    3 +
->  .../org/spearce/jgit/lib/RepositoryTestCase.java   |  152 +++++++++++++++++---
->  .../tst/org/spearce/jgit/lib/T0007_Index.java      |   10 +-
->  3 files changed, 139 insertions(+), 26 deletions(-)
+The man page for git rebase mentions "--preserve-merges" command line
+option but this option does not seems to be available.
 
-Merged.  The series looked really good to me.  Second time is the
-charm, eh?  :-)
+Also if this option is specified, the following usage statement is printed:
 
--- 
-Shawn.
+Usage: git rebase [--interactive | -i] [-v] [--onto <newbase>]
+<upstream> [<branch>]
+
+And this usage statement does not mention -m and -s options that seems
+to be available. I assume that the problem is the obsolete
+documentation.
+
+Regards,
+Constantine
