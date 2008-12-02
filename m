@@ -1,94 +1,65 @@
-From: "Peter Harris" <git@peter.is-a-geek.org>
-Subject: Re: git-svn rebase "problems"
-Date: Tue, 2 Dec 2008 10:21:36 -0500
-Message-ID: <eaa105840812020721t299009bcv15e2805cc040854@mail.gmail.com>
-References: <73fd69b50811301917j6535f289uf177976707914e46@mail.gmail.com>
-	 <73fd69b50812020656u3fd17015n267f694236982e5@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-gui: Teach start_push_anywhere_action{} to notice
+	when remote is a mirror.
+Date: Tue, 2 Dec 2008 07:30:07 -0800
+Message-ID: <20081202153007.GJ23984@spearce.org>
+References: <20081202151502.3f30ced4@crow>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Joe Fiorini" <joe@faithfulgeek.org>
-X-From: git-owner@vger.kernel.org Tue Dec 02 16:23:06 2008
+To: Mark Burton <markb@ordern.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 16:31:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7X5U-0008RG-NX
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 16:22:57 +0100
+	id 1L7XDi-0003Mu-C3
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 16:31:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754474AbYLBPVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 10:21:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbYLBPVi
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 10:21:38 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:24721 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754242AbYLBPVi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 10:21:38 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so668132qwe.37
-        for <git@vger.kernel.org>; Tue, 02 Dec 2008 07:21:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=c9QN+4Gi/VFrcgkoPwkod65vux8znK6sYe+FRz/SqDQ=;
-        b=Dexvtuex05R1xGeG8IL/Lx6dcLS5w/FANxHy4ZZfvRou7lx5xfVLWHT0QMFv5wjJB/
-         aaBdN51HAurcOjA/9NeABdmqLs0OFvcePaYvHFBy3Y1vm8fbCk4+EIrvyCfIiU7LXXVP
-         NASgn8Lf3qrfiTl21w6v7HuGgEuWVhZcSLs3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=hqtkDckb56P4Hlm26U2zeDVB7z5IDzvKfQZaTRjOYJ6rE/H6qg9+3oWLEMNNIcvEM8
-         CYqJNHzwlNFxZMqNbR28G7RhSm0iEHPI8AYFhVsArctSqMOIOijs8vRQ4xuiJLdJcSgx
-         MLKqAxPsrrCln7hHldiN73vnft1cO66ks4NqI=
-Received: by 10.65.215.14 with SMTP id s14mr12961620qbq.5.1228231296327;
-        Tue, 02 Dec 2008 07:21:36 -0800 (PST)
-Received: by 10.65.230.19 with HTTP; Tue, 2 Dec 2008 07:21:36 -0800 (PST)
-In-Reply-To: <73fd69b50812020656u3fd17015n267f694236982e5@mail.gmail.com>
+	id S1754554AbYLBPaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 10:30:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754550AbYLBPaJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 10:30:09 -0500
+Received: from george.spearce.org ([209.20.77.23]:55686 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754547AbYLBPaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 10:30:08 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 7508938200; Tue,  2 Dec 2008 15:30:07 +0000 (UTC)
 Content-Disposition: inline
-X-Google-Sender-Auth: 993a5e1a841ae3ac
+In-Reply-To: <20081202151502.3f30ced4@crow>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102143>
 
-On Tue, Dec 2, 2008 at 9:56 AM, Joe Fiorini wrote:
-> Are there any other details I can provide to get an answer on this?
+Mark Burton <markb@ordern.com> wrote:
+> When the destination repository is a mirror, this function goofed by still
+> passing a refspec to git-push. Now it notices that the remote is a mirror
+> and holds the refspec.
+> 
+> Signed-off-by: Mark Burton <markb@ordern.com>
 
-Maybe an actual script that reproduces the problem you're seeing?
+Thanks.
 
-> On Sun, Nov 30, 2008 at 10:17 PM, Joe Fiorini wrote:
->>
->> So I'm using git-svn. My team tends to commit to the svn server fairly
->> often. It has happened more than once that, because git svn rebase
->> applies each svn commit sequentially, some of the commits will
->> conflict with each other - whether or not I have ever touched the
->> file.
+>  This patch stops git-gui from annoying git-push when the remote is a
+>  mirror. A further enhancement would be to disable the branch names list
+>  in the dialog when the selected destination is a mirror. As it stands, you can
+>  select a branch name from the list but it will be ignored (this could possibly
+>  confuse/annoy people). But that's a bunch more work so I'm stopping here for
+>  now.
 
-That sounds like you're "git pull"ing from each other, yes? I can't
-imagine any other way you'd get conflicts on files you have never
-touched.
+Yea, it is a chunk of work.  I thought about trying to do it myself
+right now, but realized I won't be able to do it in 15 minutes and
+gave up.  :-)
 
->> Is there anything I could do to get around this without having to
->> merge code I'm unfamiliar with?
+Unfortunately this patch adds a new string to be translated and I've
+already made a request for the translators to update their languages,
+and several have.  I'll send out another request to let them know
+there's this new string; we should have enough time before 1.6.1
+goes final.
 
-If the problem is that git-svn doesn't recognize git-svn commits that
-have come from others via git-pull, you might be able to get away with
-"rm -rf .git/svn" to force git-svn to rebuild its index. Git 1.6.1rc
-or newer doesn't need this workaround, since it has incremental index
-updating.
-
-If the problem is that others' branches are conflicting with svn
-checkins, switch back to your own branch so you're only rebasing your
-own code, ask the person who wrote the other code to fix the
-conflicts, and re-pull. This assumes a work-flow where you only ever
-make commits on top of an un-merged state (which you pretty much have
-to adopt anyway in a rebase-heavy environment such as one based on
-git-svn).
-
-Peter Harris
+-- 
+Shawn.
