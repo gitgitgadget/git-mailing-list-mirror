@@ -1,125 +1,66 @@
-From: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
-Subject: Re: Grafting mis-aligned trees.
-Date: Tue, 2 Dec 2008 12:28:06 -0600
-Message-ID: <200812021228.07070.bss03@volumehost.net>
-References: <200811171645.12869.bss03@volumehost.net> <200812021119.51857.bss03@volumehost.net> <493572A3.4070205@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Managing websites with git
+Date: Tue, 02 Dec 2008 11:07:54 -0800
+Message-ID: <7vd4gapf91.fsf@gitster.siamese.dyndns.org>
+References: <fe5a74300811300830x850d81csc5cf1f9b367bac11@mail.gmail.com>
+ <20081130170722.GJ6572@eratosthenes.sbcglobal.net>
+ <20081130172717.GA7047@coredump.intra.peff.net>
+ <87k5ajflp0.fsf@sparse.dyndns.org>
+ <20081202011154.GA6390@coredump.intra.peff.net>
+ <87vdu2po5l.fsf@sparse.dyndns.org>
+ <20081202165507.GA15826@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart51188186.7imdF1euae";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Dec 02 19:30:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jason Riedy <jason@acm.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 02 20:09:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7a0Z-0001E6-Qk
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 19:30:04 +0100
+	id 1L7ack-0007x5-05
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 20:09:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753126AbYLBS2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 13:28:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753205AbYLBS2k
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 13:28:40 -0500
-Received: from eastrmmtao105.cox.net ([68.230.240.47]:38613 "EHLO
-	eastrmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752988AbYLBS2j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 13:28:39 -0500
-Received: from eastrmimpo01.cox.net ([68.1.16.119])
-          by eastrmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20081202182837.PAMW6960.eastrmmtao105.cox.net@eastrmimpo01.cox.net>;
-          Tue, 2 Dec 2008 13:28:37 -0500
-Received: from localhost ([72.204.50.125])
-	by eastrmimpo01.cox.net with bizsmtp
-	id mJUd1a00D2i4SyG02JUdsH; Tue, 02 Dec 2008 13:28:38 -0500
-X-Authority-Analysis: v=1.0 c=1 a=rsX2rq0AEOEA:10 a=nEQGfrJnAAAA:8
- a=HQQM7ZltTVzmoOmx57wA:9 a=5X7MSA344eoq4-wYzLbT6vKF1xkA:4 a=B7iFY6Z7H_gA:10
- a=LY0hPdMaydYA:10 a=oVB4sroyol82axCGB1EA:9 a=reoCcWk6hPUaFcwzpwzxuc4opdMA:4
- a=rPt6xJ-oxjAA:10
-X-CM-Score: 0.00
-Received: from bss by localhost with local (Exim 4.69)
-	(envelope-from <bss03@volumehost.net>)
-	id 1L7Zym-0005lT-5G; Tue, 02 Dec 2008 12:28:12 -0600
-User-Agent: KMail/1.9.9
-In-Reply-To: <493572A3.4070205@drmicha.warpmail.net>
-X-Eric-Conspiracy: There is no conspiracy
+	id S1754004AbYLBTII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 14:08:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752507AbYLBTIH
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 14:08:07 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62406 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752435AbYLBTIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 14:08:06 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0614717F18;
+	Tue,  2 Dec 2008 14:08:02 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A361A17F11; Tue, 
+ 2 Dec 2008 14:07:56 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8A666B00-C0A4-11DD-B9B8-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102168>
 
---nextPart51188186.7imdF1euae
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Jeff King <peff@peff.net> writes:
 
-On Tuesday 02 December 2008, Michael J Gruber <git@drmicha.warpmail.net>=20
-wrote about 'Re: Grafting mis-aligned trees.':
->Boyd Stephen Smith Jr. venit, vidit, dixit 02.12.2008 18:19:
->> I can't help thinking that rebase -ip might have helped.  I wasn't
->> aware of -p when I was initially working on this problem.  (It doesn't
->> help that I generally use Debian stable, and git 1.4 did not have -p.)
+> On Tue, Dec 02, 2008 at 10:55:34AM -0500, Jason Riedy wrote:
 >
->rebase rebases one branch at a time, but you need to rebase/rewrite
->several, and the merge info between depends on rewritten sha1s.
+>> Ah, ok, thanks!  Issuing a warning makes sense.  I'm not sure if
+>> denying such a push by default does...
+> ...
+> It shouldn't make you change how you work. At most, it will break an
+> existing setup until you set receive.denycurrentbranch to false (again,
+> if and when the default value changes). You can prepare for any such
+> change now by pre-emptively setting the config value.
 
-Yes.  I guess that's why I employed filter-branch to begin with.
+True.
 
->> I probably don't need the -f.  If there are files that should be
->> ignored (and thus shouldn't be in the repo), I'll filter-branch to cut
->> them out of the history at some point.
->
->'-f' is about not having to clean out refs/original from a previous
->filter-branch run.
-
-Okay, I misread your command line.  For some reason I thought "-f" was an=20
-option to add.
-
->> What *exactly* is the subtree merge.  The documentation I've read
->> sounds like this case, sort of, but it's rather unclear to me.
->
->I think 'subtree' does what you want, but 'merge' doesn't!
-
-*giggle*  I'm not quite sure what makes this funny to me, but it made me=20
-laugh.
-
->'subtree'=20
->saves you the rewriting (putting TI into project/web), but you want a
->one-time conversion anyway. 'subtree' allows you to repeatedly merge
->branches with a different root. What it does is it looks for subdir,
->'rewrites' the incoming tree automatically and merges the result.
->=20
->But you don't want a merge, do you? Or else your whole TI history would
->be tacked onto FT's head "to the left": a new (subtree) merge commit
->would have FT's and TI's head as parents. This is one way of storing TI
->history in the full repo, but not the one you said you wanted.
-
-You are right; that's not what I want.  But, it is a good second-place=20
-result that I'll keep in mind.  Sometimes keeping the history at all is=20
-more important that keeping the history orderly.
-
-Again, thanks for the help.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss03@volumehost.net                      ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.org/                      \_/    =20
-
---nextPart51188186.7imdF1euae
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkk1fjcACgkQ55pqL7G1QFnLUQCffwa7zJChUtvEyCFwxeR84YUH
-1XgAnRTrk8881RV8WS0NLJl6ow9skFDN
-=8NAO
------END PGP SIGNATURE-----
-
---nextPart51188186.7imdF1euae--
+But "pre-emptively" is a bit misleading.  Please realize that the warning
+is not about "this is a risky thing to do, you've been warned", but is
+about "the behaviour to allow this may change in the future; if you rely
+on it please set this config before that happens".  We may end up not
+flipping the default for a long time, but setting the config also has the
+side effect of squelching the warning, so it never hurts to set it now.
