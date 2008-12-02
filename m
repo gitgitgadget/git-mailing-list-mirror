@@ -1,105 +1,78 @@
-From: "Leo Razoumov" <slonik.az@gmail.com>
-Subject: Re: Managing websites with git
-Date: Mon, 1 Dec 2008 20:36:43 -0500
-Message-ID: <ee2a733e0812011736o122b43bbxb30a92261f584370@mail.gmail.com>
-References: <fe5a74300811300830x850d81csc5cf1f9b367bac11@mail.gmail.com>
-	 <20081130170722.GJ6572@eratosthenes.sbcglobal.net>
-	 <20081130172717.GA7047@coredump.intra.peff.net>
-	 <87k5ajflp0.fsf@sparse.dyndns.org>
-Reply-To: SLONIK.AZ@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] added a built-in alias for 'stage' to the 'add' command
+Date: Mon, 01 Dec 2008 17:38:20 -0800
+Message-ID: <7vbpvvqrub.fsf@gitster.siamese.dyndns.org>
+References: <20081201172902.GA41963@agadorsparticus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>,
-	"David Bryson" <david@statichacks.org>,
-	"Felix Andersen" <felix@nibbo.se>
-To: "Jason Riedy" <jason@acm.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 02 02:38:05 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 02:40:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7KDE-0001Gl-Ek
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:38:04 +0100
+	id 1L7KFF-0001iY-6n
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:40:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069AbYLBBgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 20:36:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752309AbYLBBgr
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:36:47 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:27649 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750895AbYLBBgq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 20:36:46 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so1975260fgg.17
-        for <git@vger.kernel.org>; Mon, 01 Dec 2008 17:36:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=qHBCcIvarEE1o/GQpvpPbbEiFadJsPRBYM6ZhEm2u40=;
-        b=eyppun+pMCQyZelyGTLssqOSyWNmj97yzgJ39XEY2XcRC1yfSa4vboOFfcadKouO5D
-         kKxUu0JaMcO3IY71kJCRdm9GMuEvZsbFUImlp2BzFsGu0rpCquI1P4S/fTP5Mr09TeO2
-         cPMAl73DJ2MHukdm9ZIBYHlokjPbKq4cHfToU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=X3b+Au7cbSO1X28p5v43o8rDs7SpI90Losl6Vv3QHXxXRwuq6+Kk7QmQBa771l9yk9
-         EFro/g6k3EkZI3hirdzb0lppl+l8SVHhQWpzfpt/80tjUWwgakt4wTUQYWZ11TLjWLXm
-         cOFO4iOVgEWVUfzhwW3C4g3g0bubroImydg5A=
-Received: by 10.181.18.2 with SMTP id v2mr4094048bki.194.1228181803158;
-        Mon, 01 Dec 2008 17:36:43 -0800 (PST)
-Received: by 10.181.7.8 with HTTP; Mon, 1 Dec 2008 17:36:43 -0800 (PST)
-In-Reply-To: <87k5ajflp0.fsf@sparse.dyndns.org>
-Content-Disposition: inline
+	id S1752613AbYLBBix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 20:38:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752614AbYLBBix
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:38:53 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41056 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752309AbYLBBiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 20:38:52 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 091BF83988;
+	Mon,  1 Dec 2008 20:38:52 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 139FC83984; Mon,
+  1 Dec 2008 20:38:21 -0500 (EST)
+In-Reply-To: <20081201172902.GA41963@agadorsparticus> (Scott Chacon's message
+ of "Mon, 1 Dec 2008 09:29:02 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F948ABF2-C011-11DD-9247-465CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102092>
 
-On 12/1/08, Jason Riedy <jason@acm.org> wrote:
-> And David Bryson writes:
->  > One really should not push to a non-bare repo.
->
->
-> WHAT?!?!?!
->
->  And Jeff King responds:
->
-> > It's in master and should be in 1.6.1, but it is a config option that
->  > defaults to "warn" for now, so as not to break existing setups.
->
->
-> WHAT?!?!?!
->
->  I do this all the time.  I clone from my main working directory
->  onto some cluster / MPP where the build system is all wonky.
->  Once I get everything building, I push back to a branch (often
->  new) in my main working directory.  Then I can merge the build
->  changes whenever I get a chance.
->
->  Pushing from these systems often is much, much easier than
->  pulling from the origin.  Sometimes you're working in temporary
->  space on a back-end node; you can connect out but you cannot
->  connect in.
->
->  I've gotten a few people interested in git for managing these
->  nearly one-off build problems.  git is the first system that has
->  "just worked" for them.  Their having to configure each repo
->  eliminates the "just works" factor.
->
->  It feels like newer gits make more and more decisions about what
->  I shouldn't do.
->
->
->  Jason
->
+Scott Chacon <schacon@gmail.com> writes:
 
-I second Jason's opinion. I also frequently push to non-bare
-intermediary repos. This functionality is essential for several of my
-work flows. Please, please, do not handicap git-push operation!!
+> Subject: Re: [PATCH] added a built-in alias for 'stage' to the 'add' command
 
---Leo--
+s/added/Add/;
+
+Write your commit log message in present tense (recall David Brown's talk
+at GitTogether '08? ;-)
+
+> this comes from conversation at the GitTogether where we thought it would
+
+s/this/This/;
+
+> be helpful to be able to teach people to 'stage' files because it tends
+> to cause confusion when told that they have to keep 'add'ing them.
+>
+> This continues the movement to start referring to the index as a
+> staging area (eg: the --staged alias to 'git diff'). Also added a
+> doc file for 'git stage' that basically points to the docs for
+> 'git add'.
+>
+> Signed-off-by: Scott Chacon <schacon@gmail.com>
+
+I think this is fine but I'd rather not risk the documentation getting
+stale over time, so...
+
+> +SYNOPSIS
+> +--------
+> +[verse]
+> +'git stage' [-n] [-v] [--force | -f] [--interactive | -i] [--patch | -p]
+> +	  [--all | [--update | -u]] [--intent-to-add | -N]
+> +	  [--refresh] [--ignore-errors] [--] <filepattern>...
+
+...I think this should read something like
+
+	'git stage' args...
