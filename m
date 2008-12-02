@@ -1,67 +1,114 @@
-From: "Caleb Cushing" <xenoterracide@gmail.com>
-Subject: Re: more merge strategies : feature request
-Date: Tue, 2 Dec 2008 08:46:00 -0500
-Message-ID: <81bfc67a0812020546o79906a20jcd04bd42d18dd803@mail.gmail.com>
-References: <81bfc67a0811290848m6cb219c0y71a7266001096f2d@mail.gmail.com>
-	 <4933AC03.6050300@op5.se>
-	 <ee2a733e0812011849l1b319c96u9abbb4e8dd4f53ce@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/2 v2] bisect: fix "git bisect skip <commit>" and add tests
+ cases
+Date: Tue, 2 Dec 2008 14:53:47 +0100
+Message-ID: <20081202145347.90403957.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: "Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org
-To: SLONIK.AZ@gmail.com
-X-From: git-owner@vger.kernel.org Tue Dec 02 14:47:34 2008
+Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Dec 02 14:53:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7Vb2-0004My-Jd
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 14:47:25 +0100
+	id 1L7Vh9-0006hr-38
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 14:53:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754198AbYLBNqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 08:46:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753881AbYLBNqD
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 08:46:03 -0500
-Received: from rv-out-0506.google.com ([209.85.198.236]:62144 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754193AbYLBNqB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 08:46:01 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so2977109rvb.1
-        for <git@vger.kernel.org>; Tue, 02 Dec 2008 05:46:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=RgW9FjHrUJdZEoZ1YcY8gMw04FRwdv1KOYIN2263q3E=;
-        b=C/gTk55uTw4soWYbOrl8Wb7tdiCbYTpquopiuh+UyG2NWWow1NvQDFR4YejvqOvzhe
-         Ru5sDwNp731Mri5qiMa7RUIK9DdMZN8j2U2GMiKjSeeqSM4Uz6p8AYIyTaPv7raemrYH
-         CRVbn34zHMyApJWCQDKbxwYXqgh7G2SeWwxXU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=QkcgDDugIrvZfsAMxCRBP7nPzGtqfwrA3D6STdOnkG9ITMzUNYNatPYHk9mTbWMg8A
-         WBCydcOPWWRyFvLCjhykii+6KymffjbWLU1VUMr7n86oM6IaCbNLEXCr/Rzmw+XLvx24
-         O8MVcdKD4HN+b6ejCYfOuQkbi+jwIGgObYLYA=
-Received: by 10.141.197.21 with SMTP id z21mr5771970rvp.107.1228225560727;
-        Tue, 02 Dec 2008 05:46:00 -0800 (PST)
-Received: by 10.141.145.7 with HTTP; Tue, 2 Dec 2008 05:46:00 -0800 (PST)
-In-Reply-To: <ee2a733e0812011849l1b319c96u9abbb4e8dd4f53ce@mail.gmail.com>
-Content-Disposition: inline
+	id S1754514AbYLBNwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 08:52:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754442AbYLBNwW
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 08:52:22 -0500
+Received: from smtp4-g19.free.fr ([212.27.42.30]:46942 "EHLO smtp4-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754075AbYLBNwU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 08:52:20 -0500
+Received: from smtp4-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp4-g19.free.fr (Postfix) with ESMTP id 6F4C23EA145;
+	Tue,  2 Dec 2008 14:52:16 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g19.free.fr (Postfix) with SMTP id 72A7B3EA0D3;
+	Tue,  2 Dec 2008 14:52:15 +0100 (CET)
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102134>
 
-> I guess that "no-overwrite" can be achieved by
->
->  git merge -s ours --no-commit
+The patch that allows "git bisect skip" to be passed a range of
+commits using the "<commit1>..<commit2>" notation is flawed because
+it introduces a regression when it was passed a simple rev or commit.
 
-no it doesn't. which is why I called it a bad name. no-overwrite would
-still add new lines to the file not in ours (and no-commit isn't
-needed in that case) it just wouldn't overwrite conflicting lines, my
-understanding of ours is that it will keep the files as is.
-Caleb Cushing
+"git bisect skip <commit>" doesn't work any more, because <commit>
+is quoted but not properly unquoted.
+
+This patch fixes that and add tests cases to better check when it is
+passed commits and range of commits.
+
+While at it, this patch also properly quotes the non range arguments
+using the "sq" function.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-bisect.sh               |    4 ++--
+ t/t6030-bisect-porcelain.sh |   19 ++++++++++++++++++-
+ 2 files changed, 20 insertions(+), 3 deletions(-)
+
+	Change since previous version: now properly quote any non
+	range argument using "sq" (in patch 1/2).
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 6706bc1..ddbdba8 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -199,11 +199,11 @@ bisect_skip() {
+             *..*)
+                 revs=$(git rev-list "$arg") || die "Bad rev input: $arg" ;;
+             *)
+-                revs="'$arg'" ;;
++                revs=$(sq "$arg") ;;
+ 	    esac
+             all="$all $revs"
+         done
+-        bisect_state 'skip' $all
++        eval bisect_state 'skip' $all
+ }
+ 
+ bisect_state() {
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 85fa39c..dd7eac8 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -313,8 +313,25 @@ test_expect_success 'bisect run & skip: find first bad' '
+ 	grep "$HASH6 is first bad commit" my_bisect_log.txt
+ '
+ 
+-test_expect_success 'bisect starting with a detached HEAD' '
++test_expect_success 'bisect skip only one range' '
++	git bisect reset &&
++	git bisect start $HASH7 $HASH1 &&
++	git bisect skip $HASH1..$HASH5 &&
++	test "$HASH6" = "$(git rev-parse --verify HEAD)" &&
++	test_must_fail git bisect bad > my_bisect_log.txt &&
++	grep "first bad commit could be any of" my_bisect_log.txt
++'
+ 
++test_expect_success 'bisect skip many ranges' '
++	git bisect start $HASH7 $HASH1 &&
++	test "$HASH4" = "$(git rev-parse --verify HEAD)" &&
++	git bisect skip $HASH2 $HASH2.. ..$HASH5 &&
++	test "$HASH6" = "$(git rev-parse --verify HEAD)" &&
++	test_must_fail git bisect bad > my_bisect_log.txt &&
++	grep "first bad commit could be any of" my_bisect_log.txt
++'
++
++test_expect_success 'bisect starting with a detached HEAD' '
+ 	git bisect reset &&
+ 	git checkout master^ &&
+ 	HEAD=$(git rev-parse --verify HEAD) &&
+-- 
+1.6.0.4.838.g4ea49
