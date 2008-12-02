@@ -1,102 +1,125 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: fixes to gitweb feature check code
-Date: Tue, 2 Dec 2008 02:53:06 +0100
-Message-ID: <200812020253.09430.jnareb@gmail.com>
-References: <Message-ID: <cb7bb73a0811291731g7f8770f7p89e924c00d2ab004@mail.gmail.com> <cb7bb73a0811291731g7f8770f7p89e924c00d2ab004@mail.gmail.com> <1228008844-12506-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: [PATCH 2/5] don't die immediately when convert an invalid type name
+Date: Tue, 02 Dec 2008 09:53:03 +0800
+Message-ID: <493494FF.5030001@gmail.com>
+References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 02 02:54:34 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 02:55:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7KTB-0004s2-2M
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:54:33 +0100
+	id 1L7KU2-00053V-J6
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:55:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbYLBBxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 20:53:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752364AbYLBBxP
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:53:15 -0500
-Received: from ik-out-1112.google.com ([66.249.90.181]:53572 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752075AbYLBBxO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Dec 2008 20:53:14 -0500
-Received: by ik-out-1112.google.com with SMTP id c29so2277080ika.5
-        for <git@vger.kernel.org>; Mon, 01 Dec 2008 17:53:12 -0800 (PST)
+	id S1752872AbYLBByJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 20:54:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752862AbYLBByI
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:54:08 -0500
+Received: from ti-out-0910.google.com ([209.85.142.185]:45974 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752801AbYLBByF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 20:54:05 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so1744819tic.23
+        for <git@vger.kernel.org>; Mon, 01 Dec 2008 17:54:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=pEcROZr233TlizMG5ku0G8/gBpW9OilYH2kWbg1NpC4=;
-        b=jWXXY8+YAr9vMStZgia1Ge6hE55o8HK1KdBezc8vRHGreRJ1SmIRi2PkNlu/djxmYp
-         JoY1dak5SeZNSPAHGXG1jLENvkEbpEYyQ/PozmNrZ4SleBTqEsVE+55d44SLHdSv2nmz
-         U9Gqp/EvFcS8hN2gaNujZ9oCyl5WkGFqt+nfY=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=PKVEvtehnhBIIVYvOgzfEGk4Y+aBScvJR3dkL8jG8d0=;
+        b=Q/Zi2PigY2tnaMOQEbiMUgTeWT14iuo/8tw828UMWyvSEbDCCSt+HOTCoG/DBMbLtd
+         jbQZV1eiyVtev03oRU25kZ9i0RQ4KGVz8K1BnOPI4eiwh8iDQUkKMck6TpL3oQyvVFH1
+         Pp1dm9havW6IurZKEF8g79qrwigLpoFlJVvOY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=AVasDF2yQJG//cZCCOic/hjfbDxS904ThvU5KlXUtPV0xD637qf/vY2bUn8Ucol8Aq
-         5ndcuIZjkAeQnC37ET7xEWrJpwuqv78faaIwbjB7/J+jsrwEwZAiU8eDD6FTgxBBt9R6
-         QvBMqFYZ7HJIdC0dJ2NHw10sx7gtAO2eHQRnA=
-Received: by 10.210.49.19 with SMTP id w19mr13372395ebw.149.1228182791970;
-        Mon, 01 Dec 2008 17:53:11 -0800 (PST)
-Received: from ?192.168.1.11? (abvo94.neoplus.adsl.tpnet.pl [83.8.212.94])
-        by mx.google.com with ESMTPS id z33sm4378645ikz.4.2008.12.01.17.53.09
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=Udb+CyJkr4zT86NFXewQ0h2cQXwkHYL7kw0tsUeDyymA+LuUOQBNC8WL1QMQtpi1yq
+         LoVN4WiMP+od5MConzn69HhlEtAWCyGykjpIwo+SJsSiKvq1TUzfMl3MQmkAcct16LSf
+         d+xDC8sAfuNgkzgtEpcwvgOB5iOLv+OERb6Lo=
+Received: by 10.110.53.19 with SMTP id b19mr3552393tia.37.1228182844070;
+        Mon, 01 Dec 2008 17:54:04 -0800 (PST)
+Received: from ?10.64.1.142? ([211.157.41.194])
+        by mx.google.com with ESMTPS id i9sm2994856tid.9.2008.12.01.17.53.06
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Dec 2008 17:53:10 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1228008844-12506-1-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+        Mon, 01 Dec 2008 17:53:16 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7voczws3np.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102096>
-
-On Sun, 30 Nov 2008, Giuseppe Bilotta wrote:
-
-> The gitweb_check_feature routine was being used for two different
-> purposes: retrieving the actual feature value (such as the list of
-> snapshot formats or the list of additional actions), and checking if a
-> feature was enabled.
-> 
-> This led to subtle bugs in feature checking code: gitweb_check_feature
-> would return (0) for disabled features, so its use in scalar context
-> would return true instead of false.
-> 
-> To fix this issue and future-proof the code, we split feature value
-> retrieval into its own gitweb_get_feature()function , and ensure that
-
-  retrieval into its own gitweb_get_feature() function, and ensure that
-
-> the boolean feature check function gitweb_check_feature() always returns
-> a scalar (precisely, the first/only item in the feature value list).
-> 
-> Usage of gitweb_check_feature() across gitweb is replaced with
-> gitweb_get_feature() where appropriate, and list evaluation of
-> gitweb_check_feature() is demoted to scalar evaluation to prevent
-> ambiguity. The few previously incorrect uses of gitweb_check_feature()
-> in scalar context are left untouched because they are now correct.
-> 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-
-Acked-by: Jakub Narebski <jnareb@gmail.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102097>
 
 
-What I like about having all this, i.e. fix, futureproof and style
-correction in one single patch is the fact that fix doesn't introduce
-strange looking (gitweb_check_feature('bool_feat'))[0]... well, except
-encapsulated in a subroutine.
 
->From all possible splits of this feature into series of up to three
-patches I think I like the one with pure subroutine rename from *check*
-to *get* least...
+Signed-off-by: Liu Yubao <yubao.liu@gmail.com>
+---
+ object.c    |   14 +++++++++++++-
+ object.h    |    1 +
+ sha1_file.c |    2 +-
+ 3 files changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/object.c b/object.c
+index 50b6528..0a18db6 100644
+--- a/object.c
++++ b/object.c
+@@ -33,13 +33,25 @@ const char *typename(unsigned int type)
+ 	return object_type_strings[type];
+ }
+ 
+-int type_from_string(const char *str)
++int type_from_string_gently(const char *str)
+ {
+ 	int i;
+ 
+ 	for (i = 1; i < ARRAY_SIZE(object_type_strings); i++)
+ 		if (!strcmp(str, object_type_strings[i]))
+ 			return i;
++
++	return -1;
++}
++
++int type_from_string(const char *str)
++{
++	int i;
++
++	i = type_from_string_gently(str);
++	if (i > 0)
++		return i;
++
+ 	die("invalid object type \"%s\"", str);
+ }
+ 
+diff --git a/object.h b/object.h
+index d962ff1..88baf2b 100644
+--- a/object.h
++++ b/object.h
+@@ -36,6 +36,7 @@ struct object {
+ };
+ 
+ extern const char *typename(unsigned int type);
++extern int type_from_string_gently(const char *str);
+ extern int type_from_string(const char *str);
+ 
+ extern unsigned int get_max_object_index(void);
+diff --git a/sha1_file.c b/sha1_file.c
+index efe6967..dccc455 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1291,7 +1291,7 @@ static int parse_sha1_header(const char *hdr, unsigned long length, unsigned lon
+ 	/*
+ 	 * The length must be followed by a zero byte
+ 	 */
+-	return *hdr ? -1 : type_from_string(type);
++	return *hdr ? -1 : type_from_string_gently(type);
+ }
+ 
+ static void *unpack_sha1_file(void *map, unsigned long mapsize, enum object_type *type, unsigned long *size, const unsigned char *sha1)
 -- 
-Jakub Narebski
-Poland
+1.6.1.rc1.5.gde86c
