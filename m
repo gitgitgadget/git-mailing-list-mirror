@@ -1,76 +1,54 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git-svn rebase "problems"
-Date: Tue, 02 Dec 2008 16:32:56 +0100
-Message-ID: <49355528.80503@drmicha.warpmail.net>
-References: <73fd69b50811301917j6535f289uf177976707914e46@mail.gmail.com> <73fd69b50812020656u3fd17015n267f694236982e5@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH] Do not append a new line to the backwards compat files (bug #12656)
+Date: Tue, 2 Dec 2008 16:39:16 +0100
+Message-ID: <20081202153916.GA19967@diana.vm.bytemark.co.uk>
+References: <20081202143839.24221.90893.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Joe Fiorini <joe@faithfulgeek.org>
-X-From: git-owner@vger.kernel.org Tue Dec 02 16:34:21 2008
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 02 16:41:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7XGV-0004Vm-8B
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 16:34:19 +0100
+	id 1L7XMf-0007CL-IV
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 16:40:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750777AbYLBPdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 10:33:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750763AbYLBPdA
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 10:33:00 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52417 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750748AbYLBPdA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2008 10:33:00 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 83BC11C9BA7;
-	Tue,  2 Dec 2008 10:32:59 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 02 Dec 2008 10:32:59 -0500
-X-Sasl-enc: xFm/CarLNTxVBRvMJKhrnglgr5M0Qmld/tOC0DU9A9R4 1228231979
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id F272D2CDF2;
-	Tue,  2 Dec 2008 10:32:58 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.18 (X11/20081105)
-In-Reply-To: <73fd69b50812020656u3fd17015n267f694236982e5@mail.gmail.com>
+	id S1755124AbYLBPjW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Dec 2008 10:39:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754964AbYLBPjV
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 10:39:21 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2938 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754846AbYLBPjU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 10:39:20 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1L7XLI-0006DX-00; Tue, 02 Dec 2008 15:39:16 +0000
+Content-Disposition: inline
+In-Reply-To: <20081202143839.24221.90893.stgit@localhost.localdomain>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102146>
 
-Joe Fiorini venit, vidit, dixit 02.12.2008 15:56:
-> Are there any other details I can provide to get an answer on this?
-> 
-> Thanks!
-> Joe
-> 
-> On Sun, Nov 30, 2008 at 10:17 PM, Joe Fiorini <joe@faithfulgeek.org> wrote:
->> I'm having some problems with git svn rebase. I'm pretty sure this is
->> just the way git works, not a problem per se. But it's causing trouble
->> for me and my team.
->> My team is currently on Subversion. I'm trying to convince some people
->> that git is a good way to go.
->>
->> So I'm using git-svn. My team tends to commit to the svn server fairly
->> often. It has happened more than once that, because git svn rebase
->> applies each svn commit sequentially, some of the commits will
->> conflict with each other - whether or not I have ever touched the
+On 2008-12-02 14:38:39 +0000, Catalin Marinas wrote:
 
-git svn rebase fetches all svn commits and then rebases your current
-branch onto FETCH_HEAD (the last svn commit). In doing so, it applies
-the commits you have on your branch (since merge base) one by one.
-What do you mean by "applies each svn commit sequentially"?
+> Since the multiline argument wasn't passed to the
+> utils.write_string() function when writing the compatibility
+> description file from the new infrastructure, any older command like
+> push would have committed these new lines.
+>
+> Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
 
->> file. Obviously, this is a big problem because if I've never touched
->> the file, then I probably won't know exactly how to resolve the merge
->> (the merge markers haven't been solely reliable).
+Acked-by: Karl Hasselstr=F6m <kha@treskal.com>
 
-If you develop on a local branch and get conflicts with others' commits
-someone has to resolve them, whether you use git or svn. But I'm
-surprised there are conflicts in files you didn't touch. Can you share
-more details on the files or the workflow/repo?
+Thanks.
 
-Michael
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
