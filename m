@@ -1,73 +1,64 @@
-From: Jason Riedy <jason@acm.org>
-Subject: Re: Managing websites with git
-Date: Mon, 01 Dec 2008 19:46:35 -0500
-Message-ID: <87k5ajflp0.fsf@sparse.dyndns.org>
-References: <fe5a74300811300830x850d81csc5cf1f9b367bac11@mail.gmail.com>
-	<20081130170722.GJ6572@eratosthenes.sbcglobal.net>
-	<20081130172717.GA7047@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6 (v2)] upload-pack: send the HEAD information
+Date: Mon, 01 Dec 2008 17:31:16 -0800
+Message-ID: <7vk5ajqs63.fsf@gitster.siamese.dyndns.org>
+References: <1228140775-29212-1-git-send-email-gitster@pobox.com>
+ <1228140775-29212-2-git-send-email-gitster@pobox.com>
+ <1228140775-29212-3-git-send-email-gitster@pobox.com>
+ <1228140775-29212-4-git-send-email-gitster@pobox.com>
+ <1228140775-29212-5-git-send-email-gitster@pobox.com>
+ <1228140775-29212-6-git-send-email-gitster@pobox.com>
+ <20081201174414.GA22185@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Bryson <david@statichacks.org>,
-	Felix Andersen <felix@nibbo.se>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 02 02:28:06 2008
+X-From: git-owner@vger.kernel.org Tue Dec 02 02:33:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7K3R-0007DI-6I
-	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:27:57 +0100
+	id 1L7K8a-0008Up-AZ
+	for gcvg-git-2@gmane.org; Tue, 02 Dec 2008 02:33:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263AbYLBB0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Dec 2008 20:26:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751954AbYLBB0l
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:26:41 -0500
-Received: from b.mail.sonic.net ([64.142.19.5]:52190 "EHLO b.mail.sonic.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750895AbYLBB0k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Dec 2008 20:26:40 -0500
-X-Greylist: delayed 1747 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Dec 2008 20:26:40 EST
-Received: from nan.sparse.yi.org (misc-148-78-88-138.pool.starband.net [148.78.88.138])
-	(authenticated bits=0)
-	by b.mail.sonic.net (8.13.8.Beta0-Sonic/8.13.7) with ESMTP id mB20v6bD025462;
-	Mon, 1 Dec 2008 16:57:12 -0800
-In-Reply-To: <20081130172717.GA7047@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 30 Nov 2008 12:27:17 -0500")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0.60 (gnu/linux)
+	id S1752788AbYLBBbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Dec 2008 20:31:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752766AbYLBBbr
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Dec 2008 20:31:47 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55422 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752146AbYLBBbr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Dec 2008 20:31:47 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 99EC317E71;
+	Mon,  1 Dec 2008 20:31:45 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E5FD617E6D; Mon, 
+ 1 Dec 2008 20:31:18 -0500 (EST)
+In-Reply-To: <20081201174414.GA22185@coredump.intra.peff.net> (Jeff King's
+ message of "Mon, 1 Dec 2008 12:44:15 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FB201740-C010-11DD-96EC-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102089>
 
-And David Bryson writes:
-> One really should not push to a non-bare repo.
+Jeff King <peff@peff.net> writes:
 
-WHAT?!?!?!
+> On Mon, Dec 01, 2008 at 06:12:54AM -0800, Junio C Hamano wrote:
+>
+>> +			packet_write(1, "%s %s%c%s%c%s\n", sha1_to_hex(sha1), refname,
+>> +				     0, capabilities, 0, target);
+>
+> Yuck. My two complaints are:
+>
+>   (1) this implicitly handles only the HEAD symref.
 
-And Jeff King responds:
-> It's in master and should be in 1.6.1, but it is a config option that
-> defaults to "warn" for now, so as not to break existing setups.
+But this information *is* on the "40-hex name" line that describes the
+HEAD ;-)
 
-WHAT?!?!?!
-
-I do this all the time.  I clone from my main working directory
-onto some cluster / MPP where the build system is all wonky.
-Once I get everything building, I push back to a branch (often
-new) in my main working directory.  Then I can merge the build
-changes whenever I get a chance.
-
-Pushing from these systems often is much, much easier than
-pulling from the origin.  Sometimes you're working in temporary
-space on a back-end node; you can connect out but you cannot
-connect in.
-
-I've gotten a few people interested in git for managing these
-nearly one-off build problems.  git is the first system that has
-"just worked" for them.  Their having to configure each repo
-eliminates the "just works" factor.
-
-It feels like newer gits make more and more decisions about what
-I shouldn't do.
-
-Jason
+You can trivially extend it to add this to other symbolic refs if you are
+interested.  I wasn't.
