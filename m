@@ -1,118 +1,122 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: summaries in git add --patch[PATCH 1/2]
-Date: Wed, 03 Dec 2008 15:22:12 -0800
-Message-ID: <7vd4g8alp7.fsf@gitster.siamese.dyndns.org>
+Subject: Re: summaries in git add --patch[PATCH 2/2]
+Date: Wed, 03 Dec 2008 15:23:07 -0800
+Message-ID: <7v4p1kalno.fsf@gitster.siamese.dyndns.org>
 References: <492F0CAD.3010101@gmail.com>
  <7viqq8adsf.fsf@gitster.siamese.dyndns.org> <492F92C9.7030301@gmail.com>
  <7v8wr48g98.fsf@gitster.siamese.dyndns.org> <49308B4B.3070703@gmail.com>
- <7vskp6j95x.fsf@gitster.siamese.dyndns.org> <4936EE63.209@gmail.com>
+ <7vskp6j95x.fsf@gitster.siamese.dyndns.org> <4936EE68.6030009@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: William Pursell <bill.pursell@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 00:23:36 2008
+X-From: git-owner@vger.kernel.org Thu Dec 04 00:24:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L814C-0006Fm-G5
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 00:23:36 +0100
+	id 1L815G-0006bZ-El
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 00:24:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753473AbYLCXWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 18:22:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753409AbYLCXWT
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 18:22:19 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40504 "EHLO
+	id S1756673AbYLCXXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 18:23:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754487AbYLCXXP
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 18:23:15 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38520 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751822AbYLCXWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 18:22:18 -0500
+	with ESMTP id S1756655AbYLCXXN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 18:23:13 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 982DA83BB0;
-	Wed,  3 Dec 2008 18:22:17 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D73F1180B8;
+	Wed,  3 Dec 2008 18:23:12 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9C8A083BAF; Wed,
-  3 Dec 2008 18:22:14 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6E29F1808C; Wed, 
+ 3 Dec 2008 18:23:09 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 39DBDE98-C191-11DD-AEEE-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 5ACB9F30-C191-11DD-8846-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102306>
 
 William Pursell <bill.pursell@gmail.com> writes:
 
-> Junio C Hamano wrote:
->
->> One thing I will not do after such a discussion, unless I am really really
->> interested in having the new feature personally myself, is to go back to
->> the discussion thread and assemble the pieces together to make the final
->> series of patches for inclusion.  The responsibility for doing that lies
->> on the original contributor.
->>
->
-> That is a perfectly reasonable policy, and I did not intend
-> to suggest that you should do that work.
+> From 57b5eab3f64a40ebe9aca122b5c6db1ab5c26116 Mon Sep 17 00:00:00 2001
+> From: William Pursell <bill.pursell@gmail.com>
+> Date: Wed, 3 Dec 2008 20:26:36 +0000
+> Subject: [PATCH 2/2] Implemented 'g' command to goto a hunk.
 
-Heh, that is not a policy but just the way I work (rather, "the way I
-don't work and push the work to others instead") with a limited amount of
-time.
+s/ted/t/; or s/Implemented/Add/;
+s/goto/go to/;
 
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index b0223c3..daf8d5d 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -836,6 +836,45 @@ sub patch_update_cmd {
->  	}
->  }
->
-> +# Generate a one line summary of a hunk.
-> +sub summarize_hunk {
-> +	my $rhunk = shift;
-> +	my $summary = $rhunk->{TEXT}[0];
-> +
-> +	# Keep the line numbers, discard extra context.
-> +	$summary =~ s/(@@.*@@).*/$1 /s;
+> When a minor change is made while the working directory is in a bit of a
+> mess (and the user should have done a stash before making the minor
+> edit, but didn't) it is somewhat difficult to wade through all of the
+> hunks using git add --patch.  This allows one to jump to the hunk that
+> needs to be staged without having to respond 'n' to each preceding hunk.
 
-You would need to make the first glob less eager, i.e. /(@@.*?@@).*/,
-otherwise you will be folled by a literal @@ in the contents that is
-tacked after "@@ -j,k +l,m @@".
+Yeah, even without forgotten stashing, you can be in a situation where you
+simply have many many changes all over in a file, and know exactly how the
+one you need to add to the index urgently looks like.
 
-Do you really want the surrounding @@ in the result, by the way?
+> @@ -976,6 +980,27 @@ sub patch_update_file {
+>  				}
+>  				next;
+>  			}
+> +			elsif ($other =~ 'g' && $line =~ /^g(.*)/) {
+> +				my $response = $1;
+> +				my $i = 0;
+> +				chomp $response;
+> +				while (not $response) {
 
-> +	# Add some user context. (Just take first changed line.)
-> +	for my $line (@{$rhunk->{TEXT}}) {
-> +		if ($line =~ m/^[+-]/) {
+Did you mean "while ($response eq '')"?  I do not think you want "g0<ret>"
+to fall into the loop.
 
-Even if it is a blank line?
+> +					my $extra = "";
+> +					$i = display_hunks (\@hunk, $i);
 
-> +			$summary .= $line;
-> +			last;
-> +		}
-> +	}
-> +
-> +	return substr ($summary, 0, 80);
+s/_hunks /_hunks/;
 
-s/str /str/;
+> +					$extra = "(<ret> to see more): " if ($i != $num);
 
-How well does substr() work with utf-8 and other multi-byte encodings
-these days, I have to wonder...
+This is probably just a matter of taste, but (1) Statement Modifiers are
+much harder to read than straightforward conditional blocks, and (2) loop
+termination condition is better written with magnitude comparison not with
+unequality test, when the variable approaches to the limit always from a
+known direction, so:
 
-> +}
-> +
-> +
-> +# Print a one-line summary of each hunk in the array ref in
-> +# the first argument, starting wih the index in the 2nd.
-> +sub display_hunks {
-> +	my ($hunks, $i) = @_;
-> +	my $ctr = 0;
-> +	$i = 0 if not $i;
+	if ($i < $num) {
+        	$extra = "(<ret> to see more): ";
+	}
 
-I think "$i ||= 0" is more common.
+> +					print "goto which hunk? $extra";
 
-> +			$status,
-> +			$i + 1,
-> +			summarize_hunk ($hunks->[$i]);
+This placement of $extra looks a bit odd.
 
-s/_hunk /_hunk/;
+	goto which hunk? (<ret> to see more): *cursor blinking here*
+        goto which hunk? *cursor blinking here*
+
+Shouldn't it be like this?
+
+	goto which hunk (<ret> to see more)? *cursor blinking here*
+
+> +					$response = <STDIN>;
+> +					chomp $response;
+> +				}
+> +				if ($response !~ /^\s*\d+$/) {
+
+Why is " 1<ret>" allowed but not "1 <ret>"?
+
+> +					print STDERR "Invalid number: '$response'\n";
+> +				} elsif (0 < $response && $response <= $num) {
+> +					$ix = $response - 1;
+> +				} else {
+> +					print STDERR "Sorry, only $num hunks available.\n";
+> +				}
+> +				next;
+> +			}
+>  			elsif ($line =~ /^d/i) {
+>  				while ($ix < $num) {
+>  					if (!defined $hunk[$ix]{USE}) {
