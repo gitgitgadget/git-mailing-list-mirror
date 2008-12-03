@@ -1,55 +1,71 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: "git help stage" doesn't display git-stage man page
-Date: Wed, 03 Dec 2008 09:27:17 +0200
-Message-ID: <87myfdn2ga.fsf@iki.fi>
-References: <7vvdu1hj41.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [man bug?] git rebase --preserve-merges
+Date: Wed, 03 Dec 2008 08:43:24 +0100
+Message-ID: <4936389C.9090904@op5.se>
+References: <85647ef50812020845g7de701bbye4a43a4e992a264b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 08:28:42 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 03 08:44:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7mA3-0006t4-Hr
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 08:28:39 +0100
+	id 1L7mPn-0002PP-1Q
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 08:44:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753204AbYLCH1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 02:27:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753400AbYLCH1X
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 02:27:23 -0500
-Received: from mta-out.inet.fi ([195.156.147.13]:34076 "EHLO kirsi2.inet.fi"
+	id S1752101AbYLCHni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 02:43:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751753AbYLCHni
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 02:43:38 -0500
+Received: from mail.op5.se ([193.201.96.20]:39675 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752963AbYLCH1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 02:27:22 -0500
-Received: from mithlond.arda.local (80.220.180.181) by kirsi2.inet.fi (8.5.014)
-        id 48FC5B8901FE6147; Wed, 3 Dec 2008 09:27:19 +0200
-Received: from dtw by mithlond.arda.local with local (Exim 4.69)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1L7m8j-0001Lg-M4; Wed, 03 Dec 2008 09:27:17 +0200
-In-Reply-To: <7vvdu1hj41.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Tue\, 02 Dec 2008 22\:23\:58 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751251AbYLCHni (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 02:43:38 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id A906F1B8010D;
+	Wed,  3 Dec 2008 08:40:07 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id W4XpPb5leaDX; Wed,  3 Dec 2008 08:40:00 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.6])
+	by mail.op5.se (Postfix) with ESMTP id 66EA61B80092;
+	Wed,  3 Dec 2008 08:39:57 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081119)
+In-Reply-To: <85647ef50812020845g7de701bbye4a43a4e992a264b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102221>
 
-Junio C Hamano (2008-12-02 22:23 -0800) wrote:
+Constantine Plotnikov wrote:
+> The man page for git rebase mentions "--preserve-merges" command line
+> option but this option does not seems to be available.
+> 
+> Also if this option is specified, the following usage statement is printed:
+> 
+> Usage: git rebase [--interactive | -i] [-v] [--onto <newbase>]
+> <upstream> [<branch>]
+> 
+> And this usage statement does not mention -m and -s options that seems
+> to be available. I assume that the problem is the obsolete
+> documentation.
+> 
 
-> * The 'master' branch has these since the last announcement
->   in addition to the above.
+You're probably using an old git where merge-preserving rebase is only
+available for interactive mode. Check the man-page again, and thoroughly
+this time ;-)
 
-> Scott Chacon (1):
->   Add a built-in alias for 'stage' to the 'add' command
-
-I think there's a minor user-interface defect:
-
-    $ git help stage
-    No manual entry for gitstage
-
-"git stage" is only a built-in alias but at some point it may become the
-primary staging command for new Git users and hence a kind of real Git
-command. I think "git help stage" should show the git-stage manual page
-(even though it only points to git-add(1)).
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
