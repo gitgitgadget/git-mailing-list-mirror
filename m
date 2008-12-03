@@ -1,58 +1,98 @@
-From: Teemu Likonen <tlikonen@iki.fi>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: "git help stage" doesn't display git-stage man page
-Date: Wed, 03 Dec 2008 10:29:22 +0200
-Message-ID: <87bpvtmzkt.fsf@iki.fi>
+Date: Wed, 03 Dec 2008 00:34:22 -0800
+Message-ID: <7vmyfdfyi9.fsf@gitster.siamese.dyndns.org>
 References: <7vvdu1hj41.fsf@gitster.siamese.dyndns.org>
-	<87myfdn2ga.fsf@iki.fi> <7vwsehfzf7.fsf@gitster.siamese.dyndns.org>
+ <87myfdn2ga.fsf@iki.fi> <7vwsehfzf7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 09:31:00 2008
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Wed Dec 03 09:35:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7n8H-0005dW-Ac
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 09:30:53 +0100
+	id 1L7nD3-000756-II
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 09:35:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbYLCI3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 03:29:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbYLCI3h
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 03:29:37 -0500
-Received: from mta-out.inet.fi ([195.156.147.13]:42103 "EHLO kirsi2.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751208AbYLCI3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 03:29:36 -0500
-Received: from mithlond.arda.local (80.220.180.181) by kirsi2.inet.fi (8.5.014)
-        id 48FC5B8901FF2490; Wed, 3 Dec 2008 10:29:33 +0200
-Received: from dtw by mithlond.arda.local with local (Exim 4.69)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1L7n6o-00037H-Nf; Wed, 03 Dec 2008 10:29:22 +0200
-In-Reply-To: <7vwsehfzf7.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 03 Dec 2008 00\:14\:36 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751243AbYLCIea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 03:34:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbYLCIea
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 03:34:30 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41658 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751243AbYLCIe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 03:34:28 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9019D834A3;
+	Wed,  3 Dec 2008 03:34:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7768B8349E; Wed,
+  3 Dec 2008 03:34:23 -0500 (EST)
+In-Reply-To: <7vwsehfzf7.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 03 Dec 2008 00:14:36 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 326BCBE0-C115-11DD-B1A0-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102228>
 
-Junio C Hamano (2008-12-03 00:14 -0800) wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Teemu Likonen <tlikonen@iki.fi> writes:
+>
+>>> Scott Chacon (1):
+>>>   Add a built-in alias for 'stage' to the 'add' command
+>>
+>> I think there's a minor user-interface defect:
+>>
+>>     $ git help stage
+>>     No manual entry for gitstage
+>
+> ...
+> In that sense, I think the intention of the patch to add "stage" as an
+> additional verb, while clearly marking it as a synonym to the primary
+> command "add", is aimed at the right place and strikes the right balance.
+>
 > By the way, I think this should fix it, although it is very late and I
 > have no time to test it tonight myself.
 
-It does fix it for me. Thanks.
+Ok, I lied.  I'll go to bed after committing this.
 
+-- >8 --
+From: Junio C Hamano <gitster@pobox.com>
+Date: Wed, 3 Dec 2008 00:30:34 -0800
+Subject: [PATCH] Install git-stage in exec-path
 
-> diff --git i/Makefile w/Makefile
-> index 9577d6f..5158197 100644
-> --- i/Makefile
-> +++ w/Makefile
-> @@ -320,6 +320,7 @@ BUILT_INS += git-merge-subtree$X
->  BUILT_INS += git-peek-remote$X
->  BUILT_INS += git-repo-config$X
->  BUILT_INS += git-show$X
-> +BUILT_INS += git-stage$X
->  BUILT_INS += git-status$X
->  BUILT_INS += git-whatchanged$X
+Earlier the plan was to eventually eradicate git-foo executables from the
+filesystem for all the built-in commands, but when we released 1.6.0 we
+decided not to do so.  Instead, it has been promised that by prepending
+the output from $(git --exec-path) to your $PATH, you can keep using the
+dashed form of commands.
+
+This also allows "git stage" to appear in the autogenerated command list,
+which is used to offer man pages by "git help" command.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 9577d6f..5158197 100644
+--- a/Makefile
++++ b/Makefile
+@@ -320,6 +320,7 @@ BUILT_INS += git-merge-subtree$X
+ BUILT_INS += git-peek-remote$X
+ BUILT_INS += git-repo-config$X
+ BUILT_INS += git-show$X
++BUILT_INS += git-stage$X
+ BUILT_INS += git-status$X
+ BUILT_INS += git-whatchanged$X
+ 
+-- 
+1.6.1.rc1.44.g06a3
