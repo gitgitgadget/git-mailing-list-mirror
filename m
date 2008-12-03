@@ -1,124 +1,113 @@
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: Re: [PATCH 1/5] avoid parse_sha1_header() accessing memory out of
- bound
-Date: Wed, 03 Dec 2008 11:49:50 +0800
-Message-ID: <493601DE.3050107@gmail.com>
-References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org> <4934949B.70307@gmail.com> <20081202154257.GK23984@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-svn: Make branch use correct svn-remote
+Date: Tue, 02 Dec 2008 19:55:06 -0800
+Message-ID: <7vbpvtj4kl.fsf@gitster.siamese.dyndns.org>
+References: <1228185780-22938-1-git-send-email-deskinm@umich.edu>
+ <20081202215157.GB9650@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Dec 03 04:51:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Deskin Miller <deskinm@umich.edu>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Dec 03 04:56:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7ilm-000389-Po
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 04:51:23 +0100
+	id 1L7iqn-0004Eo-VJ
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 04:56:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591AbYLCDuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 22:50:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752225AbYLCDuE
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 22:50:04 -0500
-Received: from ti-out-0910.google.com ([209.85.142.189]:16430 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750895AbYLCDuC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 22:50:02 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so2111285tic.23
-        for <git@vger.kernel.org>; Tue, 02 Dec 2008 19:50:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=8Af8wl/n1+ahKjZ/DrfQCIh2uAbaR85KR/yO/c2fd9w=;
-        b=IYZZLmw+Kwc1JQVuDrjvsxCDo7kyJZ3YVGsLmTSzJbe7kiYau+SaGMWlOByXGLZjvF
-         1ajETflY9MCPP/jtviCE8TKvz3eIDiKIURh17S/74cBz+UHv2ZfabZZmweyI7FTT5vwD
-         ELw00n2H+vCzLdSnXmrraHcQ1ne2sxHEG3pyc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=gYeEpmwN0iDHJ16vkqDsCUTCqpJhWszuY3okUvuhlSObf1uIhIHjLYQy9rwt2PNHWv
-         KNdSGlwwQhOXBYl3G9AJAu4Ly9Y6rRwHhYcKG7dtkj/iMl8R4BHYISDgR9tph2uGnTzn
-         LeKUY+v78VH2vyxcmRAY92yDlDdaBI6JXCb20=
-Received: by 10.110.62.4 with SMTP id k4mr1122476tia.17.1228276199900;
-        Tue, 02 Dec 2008 19:49:59 -0800 (PST)
-Received: from ?10.64.1.78? ([211.157.41.194])
-        by mx.google.com with ESMTPS id b4sm3544352tic.2.2008.12.02.19.49.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 02 Dec 2008 19:49:58 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
-In-Reply-To: <20081202154257.GK23984@spearce.org>
+	id S1751251AbYLCDzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 22:55:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750895AbYLCDzR
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 22:55:17 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56871 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750931AbYLCDzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 22:55:16 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C230683258;
+	Tue,  2 Dec 2008 22:55:13 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 884FB83257; Tue,
+  2 Dec 2008 22:55:08 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3067A5B6-C0EE-11DD-A3E6-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102208>
 
-Shawn O. Pearce wrote:
-> Liu Yubao <yubao.liu@gmail.com> wrote:
->> diff --git a/sha1_file.c b/sha1_file.c
->> index 6c0e251..efe6967 100644
->> --- a/sha1_file.c
->> +++ b/sha1_file.c
->> @@ -1254,10 +1255,10 @@ static int parse_sha1_header(const char *hdr, unsigned long *sizep)
->>  	/*
->>  	 * The type can be at most ten bytes (including the
->>  	 * terminating '\0' that we add), and is followed by
->> -	 * a space.
->> +	 * a space, at least one byte for size, and a '\0'.
->>  	 */
->>  	i = 0;
->> -	for (;;) {
->> +	while (hdr < hdr_end - 2) {
->>  		char c = *hdr++;
->>  		if (c == ' ')
->>  			break;
->> @@ -1265,6 +1266,8 @@ static int parse_sha1_header(const char *hdr, unsigned long *sizep)
->>  		if (i >= sizeof(type))
->>  			return -1;
-> 
-> That first hunk I am citing is unnecessary, because of the lines
-> right above.  All of the callers of this function pass in a buffer
-> that is at least 32 bytes in size; this loop aborts if it does not
-> find a ' ' within the first 10 bytes of the buffer.  We'll never
-> access memory outside of the buffer during this loop.
-> 
-> So IMHO your first three hunks here aren't necessary.
-> 
+Eric Wong <normalperson@yhbt.net> writes:
 
-Seems you missed the cover letter sent as patch 0/5, all patches are explained
-in the cover letter, sorry I sent them as separate topics by mistake.
+> Deskin Miller <deskinm@umich.edu> wrote:
+>> The 'branch' subcommand incorrectly had the svn-remote to use hardcoded
+>> as 'svn', the default remote name.  This meant that branches derived
+>> from other svn-remotes would try to use the branch and tag configuration
+>> for the 'svn' remote, potentially copying would-be branches to the wrong
+>> place in SVN, into the branch namespace for another project.
+>> 
+>> Fix this by using the remote name extracted from the svn info for the
+>> specified git ref.  Add a testcase for this behaviour.
+>> 
+>> Signed-off-by: Deskin Miller <deskinm@umich.edu>
+>
+> Looks alright to me, thanks Deskin.
+>
+> Acked-by: Eric Wong <normalperson@yhbt.net>
 
-This bound check is mainly for uncompressed loose object, a loose object
-that just are uncompressed:
+Does not work for me X-<.
 
-uncompressed loose object = inflate(loose object)
-loose object = deflate(typename + <space> + size + '\0' + data)
+* expecting success:
+        (svn co "$svnrepo" svn &&
+        cd svn &&
+        mkdir mirror &&
+        svn add mirror &&
+        svn copy trunk tags branches mirror/ &&
+        svn ci -m "made mirror" ) &&
+        rm -rf svn &&
+        git svn init -s -R mirror --prefix=mirror/ "$svnrepo"/mirror &&
+        git svn fetch -R mirror &&
+        git checkout mirror/trunk &&
+        base=$(git rev-parse HEAD:) &&
+        git svn branch -m "branch in mirror" d &&
+        test $base = $(git rev-parse remotes/mirror/d:) &&
+        test_must_fail git rev-parse remotes/d
 
-I'm doing a defensive programming, for uncompressed loose object the mmapped
-memory is passed to parse_sha1_header without being checked by inflateInit() first,
-so there may be a SIGSEGV crash for a corrupted uncompressed loose object.
+A    svn/trunk
+A    svn/trunk/foo
+A    svn/branches
+A    svn/branches/a
+A    svn/branches/a/foo
+A    svn/branches/b
+A    svn/branches/b/foo
+A    svn/tags
+A    svn/tags/tag4
+A    svn/tags/tag4/foo
+A    svn/tags/tag1
+A    svn/tags/tag1/foo
+A    svn/tags/tag2
+A    svn/tags/tag2/foo
+A    svn/tags/tag3
+A    svn/tags/tag3/foo
+Checked out revision 8.
+A         mirror
+svn: Client error in parsing arguments
+* FAIL 4: branch uses correct svn-remote
 
-
->> @@ -1275,7 +1278,7 @@ static int parse_sha1_header(const char *hdr, unsigned long *sizep)
->>  	if (size > 9)
->>  		return -1;
->>  	if (size) {
->> -		for (;;) {
->> +		while (hdr < hdr_end - 1) {
->>  			unsigned long c = *hdr - '0';
->>  			if (c > 9)
->>  				break;
-> 
-> OK, there's no promise here that we don't roll off the buffer.
-> 
-> This can be fixed in the caller, ensuring we always have the '\0'
-> at some point in the initial header buffer we were asked to parse:
-> 
-Isn't it easier to solve this problem in one place and maintain it? Maybe someday
-someone forgets parse_sha1_header requires a null terminated buffer, and a corrupted
-uncompressed loose object even doesn't have to be null terminated (if there will be
-this kind of loose object).
+                (svn co "$svnrepo" svn &&
+                cd svn &&
+                mkdir mirror &&
+                svn add mirror &&
+                svn copy trunk tags branches mirror/ &&
+                svn ci -m "made mirror" ) &&
+                rm -rf svn &&
+                git svn init -s -R mirror --prefix=mirror/ "$svnrepo"/mirror &&
+                git svn fetch -R mirror &&
+                git checkout mirror/trunk &&
+                base=$(git rev-parse HEAD:) &&
+                git svn branch -m "branch in mirror" d &&
+                test $base = $(git rev-parse remotes/mirror/d:) &&
+                test_must_fail git rev-parse remotes/d
