@@ -1,83 +1,59 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Ad: fast-import problem importing dos format files under cygwin
-Date: Wed, 3 Dec 2008 19:05:50 +0100
-Message-ID: <20081203180550.GA5149@efreet.light.src>
-References: <43827.194.138.12.144.1228290700.squirrel@artax.karlin.mff.cuni.cz> <43270.194.138.12.144.1228295417.squirrel@artax.karlin.mff.cuni.cz> <49367909.8070605@viscovery.net> <51143.194.138.12.144.1228311791.squirrel@artax.karlin.mff.cuni.cz> <20081203160446.GY23984@spearce.org> <alpine.DEB.1.00.0812031718350.28112@intel-tinevez-2-302>
+From: "Tzury Bar Yochay" <tzury.by@gmail.com>
+Subject: Re: Is there a way to control the number of revisions will be saved by git
+Date: Wed, 3 Dec 2008 20:20:14 +0200
+Message-ID: <2f5ea7490812031020l57ec1a04x257c66549f3dac8a@mail.gmail.com>
+References: <2f5ea7490812030301p29e944fw5f59943dc352cd09@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 03 19:07:58 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 03 19:21:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7w7z-0000PU-EH
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 19:07:11 +0100
+	id 1L7wLv-0006c8-Iz
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 19:21:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751295AbYLCSFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 13:05:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbYLCSFy
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 13:05:54 -0500
-Received: from cuda1.bluetone.cz ([212.158.128.5]:53176 "EHLO
-	cuda1.bluetone.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751188AbYLCSFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 13:05:54 -0500
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by cuda1.bluetone.cz (Spam Firewall) with ESMTP
-	id 36B5F37DB91; Wed,  3 Dec 2008 19:05:51 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145]) by cuda1.bluetone.cz with ESMTP id iwWsTvOppB7Msf9R; Wed, 03 Dec 2008 19:05:51 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.69)
-	(envelope-from <bulb@ucw.cz>)
-	id 1L7w6g-0001MM-Vb; Wed, 03 Dec 2008 19:05:51 +0100
+	id S1751748AbYLCSUS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 13:20:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751568AbYLCSUS
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 13:20:18 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:41191 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751268AbYLCSUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 13:20:16 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so2560633fgg.17
+        for <git@vger.kernel.org>; Wed, 03 Dec 2008 10:20:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=zLVdQlbnIGUhmbT/CmjbvrjUPKjSBfrlEJ8yugS/4ws=;
+        b=cZ7vu+LguNdlccc0MfV43BISw2xDMPu9/sZlDKZkoY45X4fgKDUma13acqGzgvcBIy
+         LtJ0diAU1PYvj2QdGKXoLS0PQ5bsyxvaVQsPGP1B79U/EpfaFnij7dJ0RjboMJVoWqbJ
+         TGBcFQBrXAd98CW5B9vka5b1TzZmJmLTsDgVg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=NkwOUVREWzjF5uWVWLj8F8lF78h2ndIYsexJWX/QK6gqCiTU6dsBu+DJmvHLUJaZRA
+         S/U9G1NFgoDTVgB5ss4Bkep1iKvVDAC9bMsdFaUFlfMHoWh34qYj4kcRUtI08bDKf3Au
+         vKzzpTw6Qt9SJ8/8H7Vldd3tDLzrb5fVkji/M=
+Received: by 10.181.31.16 with SMTP id i16mr4733958bkj.129.1228328414695;
+        Wed, 03 Dec 2008 10:20:14 -0800 (PST)
+Received: by 10.180.249.13 with HTTP; Wed, 3 Dec 2008 10:20:14 -0800 (PST)
+In-Reply-To: <2f5ea7490812030301p29e944fw5f59943dc352cd09@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0812031718350.28112@intel-tinevez-2-302>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Google-Sender-Auth: 29c0b16aad8638ff
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102275>
 
-Hi,
-
-On Wed, Dec 03, 2008 at 17:20:54 +0100, Johannes Schindelin wrote:
-> Hi,
-> On Wed, 3 Dec 2008, Shawn O. Pearce wrote:
-> > Jan Hudec <bulb@ucw.cz> wrote:
-> > > Dne 3 Prosinec 2008, 13:18, Johannes Sixt napsal(a):
-> > > > Jan Hudec schrieb:
-> > > >> On 3 December 2008, 08:51, Jan Hudec wrote:
-> > > >>>
-> > > >>> I have been playing with fast-import in cygwin and I have problems 
-> > > >>> importing files with CR/LF line-endings. The size in data command 
-> > > >>> is calculated including the CRs and than the file is copied binary 
-> > > >>> to the fast-import input stream. However fast-import skips the CRs 
-> > > >>> when reading, overreads by that number of bytes and fails when it 
-> > > >>> tries to read the next command from the middle.
-> >
-> > [...] 
-> > fast-import under-reading near CRs and getting misaligned on its input 
-> > indicates that the stdio library has given us a FILE* for stdin which is 
-> > converting CRLF pairs into LFs, even within an fread() call.
-> > 
-> > My guess here is fast-import's stdin is set in text mode, but it really 
-> > needs to be in binary mode.  fast-import.c never attempts to correct 
-> > that when it starts, so on DOS based systems we are probably totally 
-> > screwed from the beginning...
-
-Yes, it does indeed sound so. Strange thing is why it would be that way, when
-it does not seem to be the case for any other process (eg. the shell will
-complain loudly if I feed it a DOS formatted script). The standard input is
-simple shell redirect from a file on a binary-mounted filesystem. I'll do
-some more cross-checks tomorrow.
-
-> I think you need to set the environment variable
-> 
-> 	CYGWIN=binmode
-
-Will try. Thanks.
-
--- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+> Why would you want that, by the way?
+I was thinking of building some experimental application on top of git
