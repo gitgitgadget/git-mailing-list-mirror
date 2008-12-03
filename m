@@ -1,98 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git help stage" doesn't display git-stage man page
-Date: Wed, 03 Dec 2008 00:34:22 -0800
-Message-ID: <7vmyfdfyi9.fsf@gitster.siamese.dyndns.org>
-References: <7vvdu1hj41.fsf@gitster.siamese.dyndns.org>
- <87myfdn2ga.fsf@iki.fi> <7vwsehfzf7.fsf@gitster.siamese.dyndns.org>
+From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
+Subject: Re: [PATCH] Implement rebase -q to fix pull --rebase -q
+Date: Wed, 3 Dec 2008 09:35:48 +0100
+Message-ID: <4ac8254d0812030035n52fde4b3s29c0f525e175f123@mail.gmail.com>
+References: <1228277212-5917-1-git-send-email-tuncer.ayaz@gmail.com>
+	 <7vej0pheww.fsf@gitster.siamese.dyndns.org>
+	 <4ac8254d0812030007w3217f6eei3d364ce2272930c3@mail.gmail.com>
+	 <7vr64pfyvg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Wed Dec 03 09:35:52 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 03 09:37:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7nD3-000756-II
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 09:35:50 +0100
+	id 1L7nEH-0007Uk-Oh
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 09:37:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbYLCIea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 03:34:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbYLCIea
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 03:34:30 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41658 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243AbYLCIe2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 03:34:28 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9019D834A3;
-	Wed,  3 Dec 2008 03:34:27 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7768B8349E; Wed,
-  3 Dec 2008 03:34:23 -0500 (EST)
-In-Reply-To: <7vwsehfzf7.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 03 Dec 2008 00:14:36 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 326BCBE0-C115-11DD-B1A0-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753119AbYLCIfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 03:35:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106AbYLCIfv
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 03:35:51 -0500
+Received: from yw-out-2324.google.com ([74.125.46.28]:49039 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751376AbYLCIfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 03:35:50 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so1395624ywe.1
+        for <git@vger.kernel.org>; Wed, 03 Dec 2008 00:35:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=b62VPLoiF+oxhuXHn1ofX3q+RHzSyxNhwxXIMQh/iQs=;
+        b=vV6eSJFP67OeYQGeO+kA/Q8Dn7gYl8GqPY6AibVZQo+u6qc142JDDBG4ezQnfIB9j1
+         3S3ewoImmefVYEu8k4Sl0MQloxVDg4TcX5YXa5WSOGA3uKzc19ASrZj+vqT7J/b+0FHZ
+         IdekuurLD85f11aSEYzVgJqHiAbsae5OFqmlI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=IM/ukbZtPjNtj0cP4Km+cb60s9MqGT0zWlm7fwOOHliuwgUNppHYrL+ttR50BXBUCT
+         4qqrPv3NViUgrwiicQCjDk8Tv56KInKt0JZWUkCQXcoh5Ga8giKlEjqmtcLOkwYdAxae
+         5lr5F/qTUd9obpO0KqEouR18/LtmHHjUoCx2I=
+Received: by 10.65.150.2 with SMTP id c2mr13146606qbo.32.1228293348601;
+        Wed, 03 Dec 2008 00:35:48 -0800 (PST)
+Received: by 10.65.242.16 with HTTP; Wed, 3 Dec 2008 00:35:48 -0800 (PST)
+In-Reply-To: <7vr64pfyvg.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102229>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Teemu Likonen <tlikonen@iki.fi> writes:
+On Wed, Dec 3, 2008 at 9:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Tuncer Ayaz" <tuncer.ayaz@gmail.com> writes:
 >
->>> Scott Chacon (1):
->>>   Add a built-in alias for 'stage' to the 'add' command
+>> I mainly use -q in automation where I only want output if something
+>> goes wrong. Just like good old cp or mv do.
+>> Do you think this is the wrong way to go?
 >>
->> I think there's a minor user-interface defect:
+>>> How are you dealing with messages from the actual replaying of each local
+>>> commit on top of what is fetched?  In order to be able to tell where you
+>>> are when one of them fail in conflicts, you cannot stay silent while doing
+>>> so.
 >>
->>     $ git help stage
->>     No manual entry for gitstage
+>> Fair point.
 >
-> ...
-> In that sense, I think the intention of the patch to add "stage" as an
-> additional verb, while clearly marking it as a synonym to the primary
-> command "add", is aimed at the right place and strikes the right balance.
+> Ahh, ok, if this is for cron jobs, then it is understandable that:
 >
-> By the way, I think this should fix it, although it is very late and I
-> have no time to test it tonight myself.
+>  (1) You may want a successful "git pull" or "git pull --rebase" to be
+>     absolutely silent about what it did; and
+>
+>  (2) A failed "git pull" and "git pull --rebase" that produces information
+>     other than the fact it failed would not help you, the receiver of a
+>     cron job report, very much.  You would go to the repository when it
+>     fails, reset the mess away, and then do the pull or pull-rebase
+>     yourself manually anyway.
+>
+> If that is the motivation behind the series, I think you would really want
+> to squelch output from "format-patch | am -3" pipeline.
 
-Ok, I lied.  I'll go to bed after committing this.
+You mean I should follow this path and produce a patch series instead?
 
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Date: Wed, 3 Dec 2008 00:30:34 -0800
-Subject: [PATCH] Install git-stage in exec-path
+> Another thing to consider is that, unlike simple single-operation commands
+> such as "mv" or "cp" you mentioned, what "git pull" does is much more
+> involved and has many different failure modes, so you cannot compare them
+> fairly.  Simple commands can have a single "quiet" level, but I have a
+> feeling that there is a difference between "quiet mode" I expect when I am
+> running "git pull" interactively and "quiet mode" I would want when I
 
-Earlier the plan was to eventually eradicate git-foo executables from the
-filesystem for all the built-in commands, but when we released 1.6.0 we
-decided not to do so.  Instead, it has been promised that by prepending
-the output from $(git --exec-path) to your $PATH, you can keep using the
-dashed form of commands.
+We have the same expectation here and IDE writers also seem to expect that.
 
-This also allows "git stage" to appear in the autogenerated command list,
-which is used to offer man pages by "git help" command.
+> would be driving "git pull" from a cron job.  IOW, you probably would want
+> something like "--really-quiet" mode.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Yeah, it gets messy and in the current codebase. I am also not sure whether
+the effort/benefit ratio is good enough.
 
-diff --git a/Makefile b/Makefile
-index 9577d6f..5158197 100644
---- a/Makefile
-+++ b/Makefile
-@@ -320,6 +320,7 @@ BUILT_INS += git-merge-subtree$X
- BUILT_INS += git-peek-remote$X
- BUILT_INS += git-repo-config$X
- BUILT_INS += git-show$X
-+BUILT_INS += git-stage$X
- BUILT_INS += git-status$X
- BUILT_INS += git-whatchanged$X
- 
--- 
-1.6.1.rc1.44.g06a3
+> I would write such a cron-job script to capture the log and send it only
+> upon failure from the underlying command if I were doing this myself,
+> though.
+
+This is the way I do it now and I'm surprised I found no other simple way
+than writing a wrapper script for it. At least not with vixie-cron.
