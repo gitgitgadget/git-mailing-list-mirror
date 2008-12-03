@@ -1,48 +1,73 @@
-From: Christian Jaeger <christian@jaeger.mine.nu>
-Subject: git tag -s: TAG_EDITMSG should not be deleted upon failures
-Date: Wed, 03 Dec 2008 16:53:24 +0100
-Message-ID: <4936AB74.3090901@jaeger.mine.nu>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Ad: fast-import problem importing dos format files under cygwin
+Date: Wed, 3 Dec 2008 08:04:46 -0800
+Message-ID: <20081203160446.GY23984@spearce.org>
+References: <43827.194.138.12.144.1228290700.squirrel@artax.karlin.mff.cuni.cz> <43270.194.138.12.144.1228295417.squirrel@artax.karlin.mff.cuni.cz> <49367909.8070605@viscovery.net> <51143.194.138.12.144.1228311791.squirrel@artax.karlin.mff.cuni.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 03 16:55:15 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed Dec 03 17:06:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7u4B-0002kn-Lx
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 16:55:08 +0100
+	id 1L7uF0-000755-LB
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 17:06:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751348AbYLCPx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 10:53:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbYLCPx2
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 10:53:28 -0500
-Received: from ethlife-a.ethz.ch ([129.132.49.178]:36415 "HELO ethlife.ethz.ch"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751190AbYLCPx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 10:53:27 -0500
-Received: (qmail 19445 invoked from network); 3 Dec 2008 15:53:24 -0000
-Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
-  by localhost with SMTP; 3 Dec 2008 15:53:24 -0000
-Received: (qmail 1845 invoked from network); 3 Dec 2008 15:53:24 -0000
-Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
-  by elvis-jaeger.mine.nu with SMTP; 3 Dec 2008 15:53:24 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
+	id S1751286AbYLCQEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 11:04:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751213AbYLCQEs
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 11:04:48 -0500
+Received: from george.spearce.org ([209.20.77.23]:53159 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751190AbYLCQEr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 11:04:47 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B9CE338200; Wed,  3 Dec 2008 16:04:46 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <51143.194.138.12.144.1228311791.squirrel@artax.karlin.mff.cuni.cz>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102268>
 
-Before I've now set my default signing key id in my ~/.gitconfig, I've 
-run at least half a dozen times into the case where I'm running "git tag 
--s $tagname", carefully preparing a tag message, saving the file & 
-exiting from the editor, only to be greeted with an error message that 
-no key could be found for my (deliberately host-specific) email address, 
-and my message gone. If it would keep the TAG_EDITMSG file (like git 
-commit seems to be doing with COMMIT_EDITMSG anyway), I could rescue the 
-message from there. I relentlessly assume that this small change would 
-also make a handful of other people happier.
+Jan Hudec <bulb@ucw.cz> wrote:
+> Dne 3 Prosinec 2008, 13:18, Johannes Sixt napsal(a):
+> > Jan Hudec schrieb:
+> >> On 3 December 2008, 08:51, Jan Hudec wrote:
+> >>> Hello folks,
+> >>>
+> >>> I have been playing with fast-import in cygwin and I have problems
+> >>> importing files with CR/LF line-endings. The size in data command is
+> >>> calculated including the CRs and than the file is copied binary to the
+> >>> fast-import input stream. However fast-import skips the CRs when
+> >>> reading,
+> >>> overreads by that number of bytes and fails when it tries to read the
+> >>> next command from the middle.
+> >
+> > Do you happen to have core.autocrlf set in some way and could it make a
+> > difference for fast-import? I have it unset.
+> 
+> I have it set to false explicitly in global config. Tried with not having
+> it set at all and gives the same problem. Since the previous version of
+> MSys Git worked for me, I suspect it's somehow cygwin-related.
 
-Christian.
+Huh.  So fast-import *never* does auto-CRLF conversion, even if the
+property is set.  It just doesn't make those calls internally.
+It blindly copies data from the input stream into the pack.
+No exceptions.
+
+fast-import under-reading near CRs and getting misaligned on its
+input indicates that the stdio library has given us a FILE* for stdin
+which is converting CRLF pairs into LFs, even within an fread() call.
+
+My guess here is fast-import's stdin is set in text mode, but it
+really needs to be in binary mode.  fast-import.c never attempts
+to correct that when it starts, so on DOS based systems we are
+probably totally screwed from the beginning...
+
+-- 
+Shawn.
