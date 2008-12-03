@@ -1,94 +1,48 @@
-From: Aaron Harnly <git@lists.harnly.net>
-Subject: Buggy (or undocumented) handling of terminal \r in .gitignore patterns
-Date: Wed, 3 Dec 2008 15:46:31 +0000 (UTC)
-Message-ID: <loom.20081203T152511-351@post.gmane.org>
+From: Christian Jaeger <christian@jaeger.mine.nu>
+Subject: git tag -s: TAG_EDITMSG should not be deleted upon failures
+Date: Wed, 03 Dec 2008 16:53:24 +0100
+Message-ID: <4936AB74.3090901@jaeger.mine.nu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 03 16:51:43 2008
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 03 16:55:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7u0i-0001HP-57
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 16:51:32 +0100
+	id 1L7u4B-0002kn-Lx
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 16:55:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751334AbYLCPuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 10:50:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbYLCPuG
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 10:50:06 -0500
-Received: from main.gmane.org ([80.91.229.2]:51829 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751121AbYLCPuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 10:50:04 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1L7tzG-00028Q-Gl
-	for git@vger.kernel.org; Wed, 03 Dec 2008 15:50:02 +0000
-Received: from exchange.wgen.net ([38.117.159.162])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Dec 2008 15:50:02 +0000
-Received: from git by exchange.wgen.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Dec 2008 15:50:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 38.117.159.162 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/2008111318 Ubuntu/8.10 (intrepid) Firefox/3.0.4)
+	id S1751348AbYLCPx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 10:53:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbYLCPx2
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 10:53:28 -0500
+Received: from ethlife-a.ethz.ch ([129.132.49.178]:36415 "HELO ethlife.ethz.ch"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751190AbYLCPx1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 10:53:27 -0500
+Received: (qmail 19445 invoked from network); 3 Dec 2008 15:53:24 -0000
+Received: from unknown (HELO elvis-jaeger.mine.nu) (127.0.0.1)
+  by localhost with SMTP; 3 Dec 2008 15:53:24 -0000
+Received: (qmail 1845 invoked from network); 3 Dec 2008 15:53:24 -0000
+Received: from unknown (HELO ?127.0.0.1?) (10.0.5.1)
+  by elvis-jaeger.mine.nu with SMTP; 3 Dec 2008 15:53:24 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102267>
 
-This is with git 1.5.6.3 on Ubuntu and Mac OS X.
+Before I've now set my default signing key id in my ~/.gitconfig, I've 
+run at least half a dozen times into the case where I'm running "git tag 
+-s $tagname", carefully preparing a tag message, saving the file & 
+exiting from the editor, only to be greeted with an error message that 
+no key could be found for my (deliberately host-specific) email address, 
+and my message gone. If it would keep the TAG_EDITMSG file (like git 
+commit seems to be doing with COMMIT_EDITMSG anyway), I could rescue the 
+message from there. I relentlessly assume that this small change would 
+also make a handful of other people happier.
 
-Overview: .gitignore patterns ending in \r do not work as expected, apparently
-because the terminal \r is assumed to be part of the newline.
-
-Steps to Reproduce:
-(NB ^M is the control-M sequence, not a literal caret-M)
-
-1. Create an empty repository.
-2. Create a file named Icon\r (aka Icon^M).
-3. Add the following pattern to the .gitignore:
-
-Icon^M
-
-Expected behavior:
-
-The file is ignored.
-
-Actual behavior:
-
-The file is not ignored.
-
-Discussion:
-
-It appears that the parsing of .gitignore files tries to be graceful in allowing
-the file to have CRLF endings, or indeed mixed LF / CRLF endings.
-
-This is well and good, but poses a bit of a problem for ignoring files whose
-name ends in \r. In particular, Mac OS X's icon files are named Icon\r. Yes,
-this is sick and annoying on the part of Apple.
-
-I understand the rationale for this behavior, but it probably should be
-documented somewhere. In the meantime, a workaround that does allow the ignoring
-of these files is the pattern:
-
-Icon^M^M
-
-where again, the terminal \r seems to be ignored as part of the newline, but the
-penultimate \r gets picked up as part of the pattern.
-
-Any thoughts on whether:
-1. this behavior should be left as it is
-2. there is actually documentation somewhere that I didn't see
-3. terminal \r in an otherwise all-LF file should be assumed to be part of the
-pattern
-4. some other alternative?
-
-cheers,
-~aaron
+Christian.
