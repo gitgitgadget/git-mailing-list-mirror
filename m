@@ -1,73 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Ad: fast-import problem importing dos format files under cygwin
-Date: Wed, 3 Dec 2008 08:04:46 -0800
-Message-ID: <20081203160446.GY23984@spearce.org>
-References: <43827.194.138.12.144.1228290700.squirrel@artax.karlin.mff.cuni.cz> <43270.194.138.12.144.1228295417.squirrel@artax.karlin.mff.cuni.cz> <49367909.8070605@viscovery.net> <51143.194.138.12.144.1228311791.squirrel@artax.karlin.mff.cuni.cz>
+From: Pete Wyckoff <pw@padd.com>
+Subject: git alias always chdir to top
+Date: Wed, 3 Dec 2008 11:08:52 -0500
+Message-ID: <20081203160852.GA3773@osc.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed Dec 03 17:06:30 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 03 17:10:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7uF0-000755-LB
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 17:06:19 +0100
+	id 1L7uIm-0000it-J9
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 17:10:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751286AbYLCQEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 11:04:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751213AbYLCQEs
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 11:04:48 -0500
-Received: from george.spearce.org ([209.20.77.23]:53159 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751190AbYLCQEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 11:04:47 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id B9CE338200; Wed,  3 Dec 2008 16:04:46 +0000 (UTC)
+	id S1751214AbYLCQIz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 11:08:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751195AbYLCQIz
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 11:08:55 -0500
+Received: from marge.padd.com ([99.188.165.110]:42877 "EHLO marge.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751098AbYLCQIy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 11:08:54 -0500
+Received: from oink.padd.com (oink.padd.com [69.36.12.13])
+	by marge.padd.com (Postfix) with ESMTPSA id D884510F81C5
+	for <git@vger.kernel.org>; Wed,  3 Dec 2008 08:07:31 -0800 (PST)
+Received: by oink.padd.com (Postfix, from userid 7770)
+	id E85E5FD4167; Wed,  3 Dec 2008 11:08:52 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <51143.194.138.12.144.1228311791.squirrel@artax.karlin.mff.cuni.cz>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102269>
 
-Jan Hudec <bulb@ucw.cz> wrote:
-> Dne 3 Prosinec 2008, 13:18, Johannes Sixt napsal(a):
-> > Jan Hudec schrieb:
-> >> On 3 December 2008, 08:51, Jan Hudec wrote:
-> >>> Hello folks,
-> >>>
-> >>> I have been playing with fast-import in cygwin and I have problems
-> >>> importing files with CR/LF line-endings. The size in data command is
-> >>> calculated including the CRs and than the file is copied binary to the
-> >>> fast-import input stream. However fast-import skips the CRs when
-> >>> reading,
-> >>> overreads by that number of bytes and fails when it tries to read the
-> >>> next command from the middle.
-> >
-> > Do you happen to have core.autocrlf set in some way and could it make a
-> > difference for fast-import? I have it unset.
-> 
-> I have it set to false explicitly in global config. Tried with not having
-> it set at all and gives the same problem. Since the previous version of
-> MSys Git worked for me, I suspect it's somehow cygwin-related.
+I have a git alias that takes a relative file name argument,
+and would like to know from where in the tree it was invoked,
+especially if inside a subdirectory of the git tree.
 
-Huh.  So fast-import *never* does auto-CRLF conversion, even if the
-property is set.  It just doesn't make those calls internally.
-It blindly copies data from the input stream into the pack.
-No exceptions.
+Consider .git/config:
 
-fast-import under-reading near CRs and getting misaligned on its
-input indicates that the stdio library has given us a FILE* for stdin
-which is converting CRLF pairs into LFs, even within an fread() call.
+    [alias]
+	pwd = !/bin/pwd
 
-My guess here is fast-import's stdin is set in text mode, but it
-really needs to be in binary mode.  fast-import.c never attempts
-to correct that when it starts, so on DOS based systems we are
-probably totally screwed from the beginning...
+Then a git tree:
 
--- 
-Shawn.
+    /home/me
+	topdir/
+	    .git/
+	    subdir/
+		subdir-y.c
+	    topdir-x.c
+
+Then inside /home/me/topdir, all is well:
+
+    $ pwd
+    /home/me/topdir
+    $ git pwd
+    /home/me/topdir
+
+But inside /home/me/topdir/subdir, the pwd alias is invoked in the wrong
+dir:
+
+    $ pwd
+    /home/me/topdir/subdir
+    $ git pwd
+    /home/me/topdir
+
+The implication of this is that I call an alias command like:
+
+    $ pwd
+    /home/me/topdir/subdir
+    $ git myalias subdir-y.c
+    myalias: No such file subdir-y.c
+
+It looks like handle_alias() uses setup_git_directory_gently() to
+find the .git, which chdir()s up until it gets there.  Is there a
+way to do this without changing the process current working
+directory instead?  I could even handle an environment variable
+saving the original cwd, but that's ickier.
+
+		-- Pete
