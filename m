@@ -1,98 +1,118 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFCv2 1/2] gitweb: add patch view
-Date: Wed, 3 Dec 2008 18:08:01 +0100
-Message-ID: <200812031808.01916.jnareb@gmail.com>
-References: <1228298862-28191-1-git-send-email-giuseppe.bilotta@gmail.com> <200812031400.50980.jnareb@gmail.com> <cb7bb73a0812030514u11e10bebue5a1451d54fc3f96@mail.gmail.com>
+From: Alejandro Riveira =?ISO-8859-1?Q?Fern=E1ndez?= 
+	<alejandro.riveira@gmail.com>
+Subject: [BUG Gitk] Resend: git bisect visualize crash
+Date: Wed, 03 Dec 2008 18:32:13 +0100
+Message-ID: <1228325533.8747.4.camel@varda>
+Reply-To: alejandro.riveira@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Petr Baudis" <pasky@suse.cz>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 18:09:56 2008
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-umq0Q4SP4QW8YpxO0Dg+"
+Cc: paulus@samba.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 03 18:33:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7vEL-0000nr-MS
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 18:09:42 +0100
+	id 1L7vbX-0003BY-MK
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 18:33:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382AbYLCRIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 12:08:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751349AbYLCRIN
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 12:08:13 -0500
-Received: from an-out-0708.google.com ([209.85.132.241]:17540 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751322AbYLCRIM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 12:08:12 -0500
-Received: by an-out-0708.google.com with SMTP id d40so1506840and.1
-        for <git@vger.kernel.org>; Wed, 03 Dec 2008 09:08:10 -0800 (PST)
+	id S1751632AbYLCRcW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 12:32:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751530AbYLCRcW
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 12:32:22 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:42938 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751295AbYLCRcV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 12:32:21 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so1901307nfc.21
+        for <git@vger.kernel.org>; Wed, 03 Dec 2008 09:32:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=NNb64/h8RfJSmKO2hdxmAMQpFaI2QGicJRwOGaeQv+k=;
-        b=Xs2OdwwgGw5d3bstwi7LfHj148CBt2WtiypYIIXkpFjxhQ4NKZTvsZN6LVBS/FAWRw
-         oJVOZKaXeJvdVqyrh3qfx0Eab5XzI0Br+1yru99BUybD0RJe3y+t4XgTPC+xW11s0aab
-         JYIbYs0XjgVnzZbKLmIh4duYfpP0r8fh+N4as=
+        h=domainkey-signature:received:received:subject:from:reply-to:to:cc
+         :content-type:date:message-id:mime-version:x-mailer;
+        bh=Pg/Hr2oCLoX27wmZ3BIVV91D+8F2M8xJffpUH4E1vSQ=;
+        b=Kn1zmn6g3CrJsupUChqMUf+VCV8BgTF34mz9WjRXYJDHIDll6DNxnlKrDKMURM8ZIH
+         Zm5rWyQdSzJNduv4GpJCQA6mjw+uo5tkVmIZ6HWyOfcOPHm7vp9MR/CTXFY1uJPkZ0E8
+         3b4aFvtw+AzjV4S1Nfnb8xeCN0LsEqZ+g/cow=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=SWGgjH5TYYS6rAsfmleFNhFudEZyIF6T1vnEkGkQOV+7SXZKkcoSQuFLvdXRFLaBe+
-         oVsk/yzKoIL+bweL445NREfle5FrRM9zKVU8l/HanXhDj05I9kKsYALvLmdrdJFLeWIh
-         1WJ059pwFkrlwVKra4BiyhWLOzUOtx4VbXcxI=
-Received: by 10.103.222.1 with SMTP id z1mr6213682muq.121.1228324089832;
-        Wed, 03 Dec 2008 09:08:09 -0800 (PST)
-Received: from ?192.168.1.11? (abvo179.neoplus.adsl.tpnet.pl [83.8.212.179])
-        by mx.google.com with ESMTPS id n7sm9947375mue.13.2008.12.03.09.08.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Dec 2008 09:08:08 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0812030514u11e10bebue5a1451d54fc3f96@mail.gmail.com>
-Content-Disposition: inline
+        h=subject:from:reply-to:to:cc:content-type:date:message-id
+         :mime-version:x-mailer;
+        b=Xzg6PHRaPovf+hVNXhmONtOyhVMrKgv96bK8mr4C9Qvu8uDjXUNJ09O7GOxJWOR+Ch
+         k87MVmp6epGuIWMaIEbAbqveiSykrxdnXCqaUM61Dqh6CVG20o28R8adZ9c1MJ5akZM6
+         4VN0INo9LSQu8J8pc+aJ+DPe5yRnj63WARzic=
+Received: by 10.210.136.10 with SMTP id j10mr15617193ebd.188.1228325537749;
+        Wed, 03 Dec 2008 09:32:17 -0800 (PST)
+Received: from ?10.0.0.2? (197.Red-83-53-124.dynamicIP.rima-tde.net [83.53.124.197])
+        by mx.google.com with ESMTPS id t12sm818270gvd.25.2008.12.03.09.32.15
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 03 Dec 2008 09:32:16 -0800 (PST)
+X-Mailer: Evolution 2.24.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102272>
 
-On Wed, Dec 3, 2008 at 14:14, Giuseppe Bilotta wrote:
-> On Wed, Dec 3, 2008 at 2:00 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->> On Wed, 3 Dec 2008, Giuseppe Bilotta wrote:
->>> On Wed, Dec 3, 2008 at 12:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>>
->>>> Perhaps this configuration should also be a feature defined in %feature,
->>>> overridable by each repository?  If you default it to "disabled" (as any
->>>> new feature typically does), you do not have to yank a random number such
->>>> as 100 out of thin air.
->>>
->>> I thought about it, but then I thought it was way too useful for
->>> single patches to disable the feature a priori. I'd rather make the
->>> default limit much smaller (like the original 16 commits I had in
->>> mind, or even less).
->>
->> Perhaps %feature can be used to configure _maximum_ number of patches
->> in 'patch' / 'format_patch' view (gitweb_get_feature... well, sort of
->> as gitweb_check_feature would work too), rather than checking if it
->> is enabled or disabled?
-> 
-> The way it's implemented in v2, you just need to set $patch_max in
-> your local or system config file (e.g. /etc/gitweb.conf). I'm not sure
-> about the benefit we would gain in going through %feature.
 
-Ah, I haven't read patch in detail yet.
+--=-umq0Q4SP4QW8YpxO0Dg+
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-The (doubtful or not) benefit of going through %feature would be ability
-to set limits (with perhaps -1 / <0 / undef / '' meaning: unlimited) on
-per repository basis, with no limit for small repository, some limit for
-the rest, and no 'patch' view or heavily limited for repository with
-large size commits.
+i sent this already through gmane but i do not get responses
+sorry if you see this twice
+Please cc i'm not suscribed
+---
+i'm using ubuntu 8.10 and git bisect visualize is crashing.
+Noticed when bisecting the kernel but it is easily reproducible
 
-Just my 2 cents.
--- 
-Jakub Narebski
-Poland
+in git repository as of today
+
+$ git bisect bad
+$ git bisect good HEAD~20
+
+$ git bisect visualize                                                     =
+             (03-12 12:16)
+Error in startup script: can't read "notflag": no such variable
+    while executing
+"expr {!$notflag}"
+    ("--not" arm line 2)
+    invoked from within
+"switch -glob -- $arg {
+            "-d" -
+            "--date-order" {
+                set vdatemode($n) 1
+                # remove from origargs in case we hit an unknown option
+                set origarg..."
+    (procedure "parseviewargs" line 21)
+    invoked from within
+"parseviewargs $view $args"
+    (procedure "start_rev_list" line 27)
+    invoked from within
+"start_rev_list $curview"
+    (procedure "getcommits" line 5)
+    invoked from within
+"getcommits {}"
+    (file "/usr/local/bin/gitk" line 10897)
+
+$ git --version
+git version 1.6.1.rc1
+$
+
+
+
+
+--=-umq0Q4SP4QW8YpxO0Dg+
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Esta parte del mensaje =?ISO-8859-1?Q?est=E1?= firmada
+ digitalmente
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkk2wpgACgkQ3GEkiSnUSOGsQQCcDl+e9Amdz4HXVcDP4tHLkzmP
+a9oAnjeZjGzsO80Y41kcAITiN3wCY85/
+=f09U
+-----END PGP SIGNATURE-----
+
+--=-umq0Q4SP4QW8YpxO0Dg+--
