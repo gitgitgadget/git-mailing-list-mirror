@@ -1,124 +1,230 @@
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: Re: [PATCH 5/5] support writing uncompressed loose object
-Date: Wed, 03 Dec 2008 12:22:46 +0800
-Message-ID: <49360996.40106@gmail.com>
-References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org> <4934975E.2010601@gmail.com> <20081202160706.GN23984@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Dec 03 05:24:28 2008
+From: "Marcel M. Cary" <marcel@oak.homeunix.org>
+Subject: [PATCH] git-sh-setup: Fix scripts whose PWD is a symlink into a git work-dir
+Date: Tue,  2 Dec 2008 21:27:00 -0800
+Message-ID: <1228282020-2294-1-git-send-email-marcel@oak.homeunix.org>
+References: <7vtz9vk6uj.fsf@gitster.siamese.dyndns.org>
+Cc: jnareb@gmail.com, ae@op5.se, j.sixt@viscovery.net,
+	"Marcel M. Cary" <marcel@oak.homeunix.org>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 03 06:28:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7jHk-00024j-7z
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 05:24:24 +0100
+	id 1L7kI2-0006ah-BV
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 06:28:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752709AbYLCEWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 23:22:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752716AbYLCEWx
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 23:22:53 -0500
-Received: from ti-out-0910.google.com ([209.85.142.191]:11035 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750900AbYLCEWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 23:22:53 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so2119178tic.23
-        for <git@vger.kernel.org>; Tue, 02 Dec 2008 20:22:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=8ULRvEFcvcu16eSYQ1VOkzRq9RJ94UotKrO+NF0Y/GM=;
-        b=YngrxA0x1ExElE6qg+miDfEDzGG19ALi13ZUC1n/5E4H9yx/9zMfxlW172xGVs+RAT
-         iOG4sSdIW+d6gZ8GOEr+aAYp+8Fi+P2QvtmzGzP5Z1AyOULjR2YkSQO84qFZLr83nxR+
-         t2VPeP1noN3bFQe47ODD8aKW2fV7im/Yw1hFA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=d4WpQLdPhh42sGEMh/dZEQ4VADTocFS13K0sfzTOp7UPhcMhjZktv2y8b952Sa4zAO
-         fShF7m/DB5gFYvbAOvpl98BIZL+faCUzUUVXCLcgSQmTeXXTIYoCXwr8gSdiBTd53bAM
-         Tfaz1UIs6QfXhxddRabPqfCo9kTA40h9QVN8o=
-Received: by 10.110.42.17 with SMTP id p17mr10876311tip.42.1228278170804;
-        Tue, 02 Dec 2008 20:22:50 -0800 (PST)
-Received: from ?10.64.1.78? ([211.157.41.194])
-        by mx.google.com with ESMTPS id 14sm2332308tim.11.2008.12.02.20.22.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 02 Dec 2008 20:22:49 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
-In-Reply-To: <20081202160706.GN23984@spearce.org>
+	id S1754125AbYLCF1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 00:27:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752091AbYLCF1G
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 00:27:06 -0500
+Received: from smtp120.sbc.mail.sp1.yahoo.com ([69.147.64.93]:30292 "HELO
+	smtp120.sbc.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1755775AbYLCF1E (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Dec 2008 00:27:04 -0500
+Received: (qmail 49831 invoked from network); 3 Dec 2008 05:27:04 -0000
+Received: from unknown (HELO ordinateur.home.org) (marcel@76.231.190.99 with plain)
+  by smtp120.sbc.mail.sp1.yahoo.com with SMTP; 3 Dec 2008 05:27:03 -0000
+X-YMail-OSG: 4scDZ5gVM1nEOT1D_3z4jtkfXwCjj0E_oZCi9Sg2BuogzdRVJd.C18HE0HT8wSFryR.K9Fa0QZSdZkBcNoRx9mCaFeYQV5qDyM_IcgiJXRfszSoeDu99aUBLYmkgWnM1p21TOPsq.MHWZDohvj8mqIzqv5CJ418l4IhSIOyWkFiigyls
+X-Yahoo-Newman-Property: ymail-5
+Received: from polliwog.home.org ([192.168.0.18] helo=localhost.localdomain)
+	by ordinateur.home.org with esmtp (Exim 4.63)
+	(envelope-from <marcel@oak.homeunix.org>)
+	id 1L7kGL-0003ir-55; Tue, 02 Dec 2008 21:27:01 -0800
+X-Mailer: git-send-email 1.6.0.3
+In-Reply-To: <7vtz9vk6uj.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102215>
 
-Shawn O. Pearce wrote:
-> Liu Yubao <yubao.liu@gmail.com> wrote:
->> Signed-off-by: Liu Yubao <yubao.liu@gmail.com>
-> 
-> IMHO, this needs more description in the commit message.
-> 
->> diff --git a/sha1_file.c b/sha1_file.c
->> index 05a9fa3..053b564 100644
->> --- a/sha1_file.c
->> +++ b/sha1_file.c
->> @@ -2328,7 +2328,7 @@ static int create_tmpfile(char *buffer, size_t bufsiz, const char *filename)
->>  }
->>  
->>  static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
->> -			      void *buf, unsigned long len, time_t mtime)
->> +			      void *buf, unsigned long len, time_t mtime, int dont_deflate)
-> 
-> Passing this as an argument is pointless.  It should be a repository
-> wide configuration option in core, so you can declare it a static and
-> allow git_config to populate it.  Defaulting to 1 (no compression)
-> like you do elsewhere in the patch isn't good.
-> 
-Aha, sorry again, I sent the patch series as separate topics by mistake.
+* Before interpretting an upward path (../) in cd_to_toplevel,
+  cd to a path without symlinks given by /bin/pwd
+* Add tests for cd_to_toplevel and "git pull" in a symlinked
+  directory that failed before this fix, plus constrasting
+  scenarios that already worked
 
-I considered adding a configuration variable, the patch series are sent
-just to see whether the idea is worth.
+Signed-off-by: Marcel M. Cary <marcel@oak.homeunix.org>
+---
 
-> I'm still against this file format change.  The series itself isn't
-> that bad, and the buffer overflow catch in parse_sha1_header()
-> may be something worthwhile fixing.  But I'm still not sold that
-> introducing a new loose object format is worth it.
-> 
-> I'd rather use a binary header encoding like the new-style/in-pack
-> format rather than the older style text headers.  Its faster to
-> parse for one thing.
-> 
-The key point I suggest is to use *uncompressed* loose object, I didn't
-change the format of uncompressed loose object because I don't want
-to distract your attention and keep the patches small.
+I hope this patch will address concerns both about changes
+to existing APIs and speed of the new behavior.
 
-> Your changes in the reading code cause a copy of the buffer we
-> mmap()'d.  That sort of ruins your argument that this change is
-> worthwhile because concurrent processes on the same host can mmap the
-> same buffer and save memory.  We're still copying the buffer anyway.
-> I probably should have commented on that in patch 4/5, but I just
-> realized it, so I'm saying it here.
-> 
-Yes, I mentioned it in the cover letter(sigh, sorry!)
+A few notes on implementation choices:
 
-I didn't use the mapped buffer directly because other functions required
-a null terminated buffer to parse data part of loose object. It can be
-fixed but I don't want to make the patches too big.
+I used /bin/pwd because of this precedent for choosing it over
+"cd -P" for compatibility.
+http://article.gmane.org/gmane.comp.version-control.git/46918
 
-The two big pros of uncompressed loose object are:
+If cd_to_toplevel had concatenated $(/bin/pwd) with $cdup to
+avoid the separate "cd", it would require checking for $cdup
+being an absolute path.  I wasn't sure how to check that in
+a way that is both portable and clearly faster than "cd",
+so cd_to_toplevel runs "cd" twice.  I'm assuming that
+running an external command like expr or grep is slower than
+just doing the "cd".
 
-*) avoid compressing and uncompressing loose objects    (I have implemented it)
-*) use memory mapped loose object directly              (I havn't implemented it)
+cd_to_toplevel doesn't check $PWD to see whether to do the
+first cd, because some shells allegedly don't update it
+reliably.
+
+Since cd_to_toplevel doesn't know whether it's at a
+symlinked PWD or not, I wrote it to treat the 
+"cd $(/bin/pwd)" as mandatory, even when it might not
+actually be.  So on systems without /bin/pwd, it will fail
+even when there are no symlinks.  I thought that was better
+than inconsistent behavior depending on whether /bin/pwd is
+available.
+
+The extra "cd" will be skipped when the script is already at
+the top of the working tree.
 
 
-Thank you for reviewing my patches, seems the idea to use uncompressed loose
-object isn't attractive enough, I will keep the patches locally.
+ git-sh-setup.sh           |   11 +++++++
+ t/t2300-cd-to-toplevel.sh |   37 +++++++++++++++++++++++++
+ t/t5521-pull-symlink.sh   |   67 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 115 insertions(+), 0 deletions(-)
+ create mode 100755 t/t2300-cd-to-toplevel.sh
+ create mode 100755 t/t5521-pull-symlink.sh
 
-
-Best regards,
-
-Liu Yubao
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index dbdf209..377700b 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -85,6 +85,17 @@ cd_to_toplevel () {
+ 	cdup=$(git rev-parse --show-cdup)
+ 	if test ! -z "$cdup"
+ 	then
++		# Interpret $cdup relative to the physical, not logical, cwd.
++		# Probably /bin/pwd is more portable than passing -P to cd or pwd.
++		phys="$(/bin/pwd)" || {
++			echo >&2 "Cannot determine the physical path to the current dir"
++			exit 1
++		}
++		cd "$phys" || {
++			echo >&2 "Cannot chdir to the physical path to current dir: $phys"
++			exit 1
++		}
++
+ 		cd "$cdup" || {
+ 			echo >&2 "Cannot chdir to $cdup, the toplevel of the working tree"
+ 			exit 1
+diff --git a/t/t2300-cd-to-toplevel.sh b/t/t2300-cd-to-toplevel.sh
+new file mode 100755
+index 0000000..293dc35
+--- /dev/null
++++ b/t/t2300-cd-to-toplevel.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
++
++test_description='cd_to_toplevel'
++
++. ./test-lib.sh
++
++test_cd_to_toplevel () {
++	test_expect_success "$2" '
++		(
++			cd '"'$1'"' &&
++			. git-sh-setup &&
++			cd_to_toplevel &&
++			[ "$(pwd -P)" = "$TOPLEVEL" ]
++		)
++	'
++}
++
++TOPLEVEL="$(pwd -P)/repo"
++mkdir -p repo/sub/dir
++mv .git repo/
++SUBDIRECTORY_OK=1
++
++test_cd_to_toplevel repo 'at physical root'
++
++test_cd_to_toplevel repo/sub/dir 'at physical subdir'
++
++ln -s repo symrepo
++test_cd_to_toplevel symrepo 'at symbolic root'
++
++ln -s repo/sub/dir subdir-link
++test_cd_to_toplevel subdir-link 'at symbolic subdir'
++
++cd repo
++ln -s sub/dir internal-link
++test_cd_to_toplevel internal-link 'at internal symbolic subdir'
++
++test_done
+diff --git a/t/t5521-pull-symlink.sh b/t/t5521-pull-symlink.sh
+new file mode 100755
+index 0000000..f18fec7
+--- /dev/null
++++ b/t/t5521-pull-symlink.sh
+@@ -0,0 +1,67 @@
++#!/bin/sh
++
++test_description='pulling from symlinked subdir'
++
++. ./test-lib.sh
++
++D=`pwd`
++
++# The scenario we are building:
++#
++#   trash\ directory/
++#     clone-repo/
++#       subdir/
++#         bar
++#     subdir-link -> clone-repo/subdir/
++#
++# The working directory is subdir-link.
++#
++test_expect_success setup '
++
++    mkdir subdir &&
++    touch subdir/bar &&
++    git add subdir/bar &&
++    git commit -m empty &&
++    git clone . clone-repo &&
++    # demonstrate that things work without the symlink
++    test_debug "cd clone-repo/subdir/ && git pull; cd ../.." &&
++    ln -s clone-repo/subdir/ subdir-link &&
++    cd subdir-link/ &&
++    test_debug "set +x"
++'
++
++# From subdir-link, pulling should work as it does from
++# clone-repo/subdir/.
++#
++# Instead, the error pull gave was:
++#
++#   fatal: 'origin': unable to chdir or not a git archive
++#   fatal: The remote end hung up unexpectedly
++#
++# because git would find the .git/config for the "trash directory"
++# repo, not for the clone-repo repo.  The "trash directory" repo
++# had no entry for origin.  Git found the wrong .git because
++# git rev-parse --show-cdup printed a path relative to
++# clone-repo/subdir/, not subdir-link/.  Git rev-parse --show-cdup
++# used the correct .git, but when the git pull shell script did
++# "cd `git rev-parse --show-cdup`", it ended up in the wrong
++# directory.  Shell "cd" works a little different from chdir() in C.
++# Bash's "cd -P" works like chdir() in C.
++#
++test_expect_success 'pulling from symlinked subdir' '
++
++    git pull
++'
++
++# Prove that the remote end really is a repo, and other commands
++# work fine in this context.
++#
++test_debug "
++    test_expect_success 'pushing from symlinked subdir' '
++
++        git push
++    '
++"
++cd "$D"
++
++test_done
+-- 
+1.6.0.3
