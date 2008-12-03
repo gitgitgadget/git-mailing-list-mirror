@@ -1,63 +1,53 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Problems with EGit
-Date: Wed, 3 Dec 2008 20:45:46 +0100
-Message-ID: <200812032045.47208.robin.rosenberg.lists@dewire.com>
-References: <4936689B.1030903@gerina.com> <200812032021.57901.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-svn: Make branch use correct svn-remote
+Date: Wed, 03 Dec 2008 12:06:05 -0800
+Message-ID: <7v1vwpdnwy.fsf@gitster.siamese.dyndns.org>
+References: <1228185780-22938-1-git-send-email-deskinm@umich.edu>
+ <20081202215157.GB9650@hand.yhbt.net>
+ <7vbpvtj4kl.fsf@gitster.siamese.dyndns.org>
+ <49365259.5090803@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Bastian Flinspach <bastian.flinspach@gerina.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 20:48:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Wong <normalperson@yhbt.net>,
+	Deskin Miller <deskinm@umich.edu>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Dec 03 21:08:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7xhf-0007Nv-Gv
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 20:48:07 +0100
+	id 1L7y0t-0006uG-Iz
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 21:08:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751622AbYLCTpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 14:45:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbYLCTpz
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 14:45:55 -0500
-Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:61859 "EHLO
-	pne-smtpout2-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751509AbYLCTpz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Dec 2008 14:45:55 -0500
-Received: from sleipner.localnet (213.67.100.250) by pne-smtpout2-sn1.fre.skanova.net (7.3.129)
-        id 4843FAEB02BE6DA9; Wed, 3 Dec 2008 20:45:49 +0100
-User-Agent: KMail/1.10.3 (Linux/2.6.27-10-generic; KDE/4.1.3; i686; ; )
-In-Reply-To: <200812032021.57901.robin.rosenberg.lists@dewire.com>
-Content-Disposition: inline
+	id S1757565AbYLCUGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 15:06:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757378AbYLCUGQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 15:06:16 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35305 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757556AbYLCUGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 15:06:15 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3790883615;
+	Wed,  3 Dec 2008 15:06:13 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EFEDD83612; Wed,
+  3 Dec 2008 15:06:07 -0500 (EST)
+In-Reply-To: <49365259.5090803@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Wed, 03 Dec 2008 10:33:13 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D5BB72A4-C175-11DD-BE22-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102282>
 
-onsdag 03 december 2008 20:21:57 skrev Robin Rosenberg:
-> onsdag 03 december 2008 12:08:11 skrev Bastian Flinspach:
-> 
-> Hi Bastian,
-> 
-> > When i try to commit changes via the command line, everything works fine 
-> > (well, except for me not being able to use my keyboard right for 
-> > entering the commit message, but thats probably not important because i 
-> > want to use EGit anyways).
-> > Eclipse recognizes the repository and also displays changes i make. When 
-> > trying to commit, however, i get a permission denied error.
-> > 
-> > So, this is basically where i am stuck. What can be the problem and what 
-> > would be a solution? I assume, that i might have something to do with 
-> > Linux users and privileges, but i am not yet versed enough to identify 
-> > the problem on my own.
-> 
-> If Git does not have permission problems, neither should EGit, I think, In the
-> workspace there is a file called .metadata/.log that you can inspect. See
-> if you can find anything interesting, i.e. a seemingly relevant stack trace or
-> other error message. The file can be quite large so try to cut it down.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Starting eclipse from a shell, may yield even more information.
+> Patch coming. (Sorry I always forget the ccs with send-email.)
 
--- robin
+Thanks, indeed my environment has svn 1.4.2 installed and Deskin's patch
+with your patch squashed in makes everything happy again.
