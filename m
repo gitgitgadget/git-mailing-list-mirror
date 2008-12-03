@@ -1,113 +1,88 @@
-From: Gary Yang <garyyang6@yahoo.com>
-Subject: Re: git-p4 submit, Can't clobber writable file
-Date: Tue, 2 Dec 2008 16:14:05 -0800 (PST)
-Message-ID: <94261.93438.qm@web37908.mail.mud.yahoo.com>
-References: <3f4fd2640812021551t5451e6e3i91e6d2694c89e085@mail.gmail.com>
-Reply-To: garyyang6@yahoo.com
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Modified the default git help message to be grouped by
+	topic
+Date: Tue, 2 Dec 2008 19:37:31 -0500
+Message-ID: <20081203003731.GA23780@coredump.intra.peff.net>
+References: <20081201173037.GA41967@agadorsparticus> <20081201183258.GB24443@coredump.intra.peff.net> <7v7i6jqriv.fsf@gitster.siamese.dyndns.org> <d411cc4a0812012210h4cb59974sbda71abd2c64f93b@mail.gmail.com> <885649360812021211u3d547982i8e1c3070972363e8@mail.gmail.com> <alpine.DEB.1.00.0812022353410.27091@racer> <20081202233004.GA22379@coredump.intra.peff.net> <7vfxl6m84g.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 01:15:37 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	James Pickens <jepicken@gmail.com>,
+	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 03 01:39:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7fOv-0001Us-ST
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 01:15:34 +0100
+	id 1L7flf-0007pd-7O
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 01:39:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754733AbYLCAOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 19:14:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754676AbYLCAOK
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 19:14:10 -0500
-Received: from web37908.mail.mud.yahoo.com ([209.191.91.170]:20756 "HELO
-	web37908.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1754230AbYLCAOH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Dec 2008 19:14:07 -0500
-Received: (qmail 93999 invoked by uid 60001); 3 Dec 2008 00:14:05 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Message-ID;
-  b=0gVdM11px6D3ex7Kz4Sb3fM30keRQxo42B3wB+lAWiX/gU1UfIILX05yDW+proMqccFOgq8PgvjoB9udo3x1nVIRhYfpSGUS5K5ZJtSJRChsEyzbPQNLKl0pR4rZ+qoyzuowanBT/gLq9l9msFAAOMkOnmp5vFsSNQYLnWZfUoY=;
-X-YMail-OSG: wMb7EzwVM1lQQYyLSbuKjOQU3a8qx9X58jSCLNVZOf3wQkW1L8RcRCr5k9lQgBPS22lprDfdX9ugL3jwinURPuvtzIWgKwZvRio_Xzz7xH3NQ1FuFBagCN_6k.NkhLffZnFirTn4iAv1gfsiMxFa2RgGMnjVOp.eqEx4WGM6MW4qeMHw0CpCIx4ZzClJ
-Received: from [76.195.33.70] by web37908.mail.mud.yahoo.com via HTTP; Tue, 02 Dec 2008 16:14:05 PST
-X-Mailer: YahooMailWebService/0.7.260.1
-In-Reply-To: <3f4fd2640812021551t5451e6e3i91e6d2694c89e085@mail.gmail.com>
+	id S1754977AbYLCAhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 19:37:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754875AbYLCAhf
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 19:37:35 -0500
+Received: from peff.net ([208.65.91.99]:4904 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754766AbYLCAhd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 19:37:33 -0500
+Received: (qmail 15452 invoked by uid 111); 3 Dec 2008 00:37:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 02 Dec 2008 19:37:32 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Dec 2008 19:37:31 -0500
+Content-Disposition: inline
+In-Reply-To: <7vfxl6m84g.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102193>
 
-Reece,
+On Tue, Dec 02, 2008 at 04:10:07PM -0800, Junio C Hamano wrote:
 
-I understand your explanation. But, git-p4 submit does not work for me. Are you able to re-produce the problem?
-
-Thanks,
-
-Gary
-
-
---- On Tue, 12/2/08, Reece Dunn <msclrhd@googlemail.com> wrote:
-
-> From: Reece Dunn <msclrhd@googlemail.com>
-> Subject: Re: git-p4 submit, Can't clobber writable file
-> To: garyyang6@yahoo.com
-> Cc: git@vger.kernel.org
-> Date: Tuesday, December 2, 2008, 3:51 PM
-> 2008/12/2 Gary Yang <garyyang6@yahoo.com>:
-> >
-> > I followed the instructions at
-> http://modular.math.washington.edu/home/mhansen/git-1.5.5.1/contrib/fast-import/git-p4.txt
-> >
-> > But, I am not able to git-p4 submit. Any idea?
-> >
-> > git-p4 clone //build/scripts build_scripts
-> > cd build_scripts
-> > vi foo.h
-> > git commit foo.h
-> > git-p4 rebase
-> > git-p4 submit
-> >
-> >  from sets import Set;
-> > Perforce checkout for depot path //build/scripts/
-> located at /home/gyang/workspace/build_scripts/
-> > Syncronizing p4 checkout...
+> It might not be a bad idea to make this "top page help" into an
+> interactive hierarchical help topic browser.  You would start a page that
+> might look like this:
 > 
-> This will be running a `p4 sync ...` command to ensure that
-> the files
-> are up-to-date.
-> 
-> > //build/scripts/foo.h#1 - added as
-> /home/gyang/workspace/build_scripts/foo.h
-> > Can't clobber writable file
-> /home/gyang/workspace/build_scripts/foo.h
-> > //build/scripts/foo.c#1 - added as
-> /home/gyang/workspace/build_scripts/foo.c
-> > Can't clobber writable file
-> /user/home/gyang/workspace/build_scripts/foo.c
-> > ......
-> > command failed: p4 sync ...
-> 
-> Perforce will mark files as readonly when it does a
-> checkout. When you
-> use `p4 edit` to say you have made changes to the file,
-> Perforce
-> removes the readonly bit.
-> 
-> What is happening here is that the sync (checkout) command
-> is trying
-> to write foo.h/c to your build_scripts directory, but
-> because they
-> already exist there *and* are not readonly, Perforce is
-> producing that
-> error as it does not want to overwrite any files that have
-> changed
-> locally.
-> 
-> Not sure what is happening on the git-p4 side, though.
-> 
-> - Reece
+>     Bootstrapping -- preparing an area to work in
+>         init, clone
+>     Basic -- review, undo and record your changes
+>         diff, status, checkout <path>, add, reset, commit
+>     History -- inspect what you have now, and what happened before
+>         log, blame, grep, show
+>     Branching and Merging -- build and use alternate histories
+> 	branch, checkout -b, merge, rebase
+>     Working with Others
+> 	remote, fetch, pull, push
 
+Yes, that is the sort of thing I was thinking of. And I think your
+layout addresses Scott's concern, which is to keep names of commands
+available for quick reference. So really we are ditching the
+descriptions.
 
-      
+> with each of the command and the heading being a "link" (use ncurses for
+> that).  If you choose the leaf-level command (say, 'diff'), you will get
+
+I'm not sure we need anything so fancy. I was thinking of something
+like:
+
+  Bootstrapping -- preparing an area to work in (bootstrapping)
+    init, clone
+  ...
+  Working with Others (others)
+    remote, fetch, pull, push
+
+  Use "git help <subject>" for more help on one of these subjects, or
+  "git help <command>" for help with a specific command.
+
+And maybe the "(bootstrapping)" could be typographically more obvious as
+the subject keyword, but I think you get the point (and for
+"Bootstrapping", it's obvious what the keyword would be, but for
+"Working with Others" it's not).
+
+And obviously something with ncurses would save you typing, but I have
+no desire to recreate "info" or "lynx" here (and I also think that "git"
+or "git foo" displaying help should remain non-interactive to cause the
+least surprise).
+
+-Peff
