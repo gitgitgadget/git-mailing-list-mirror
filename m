@@ -1,109 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git help stage" doesn't display git-stage man page
-Date: Wed, 03 Dec 2008 00:14:36 -0800
-Message-ID: <7vwsehfzf7.fsf@gitster.siamese.dyndns.org>
-References: <7vvdu1hj41.fsf@gitster.siamese.dyndns.org>
- <87myfdn2ga.fsf@iki.fi>
+From: "Jan Hudec" <bulb@ucw.cz>
+Subject: fast-import problem importing dos format files under cygwin
+Date: Wed, 3 Dec 2008 08:51:40 +0100 (CET)
+Message-ID: <43827.194.138.12.144.1228290700.squirrel@artax.karlin.mff.cuni.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Wed Dec 03 09:16:14 2008
+Content-Type: multipart/mixed;boundary="----=_20081203085140_20147"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 03 09:21:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7mu4-0001mJ-ND
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 09:16:13 +0100
+	id 1L7mz5-00036T-QL
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 09:21:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750912AbYLCIOz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 03:14:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750845AbYLCIOz
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 03:14:55 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37040 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750811AbYLCIOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 03:14:54 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 13924833B1;
-	Wed,  3 Dec 2008 03:14:52 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9952F833AD; Wed,
-  3 Dec 2008 03:14:38 -0500 (EST)
-In-Reply-To: <87myfdn2ga.fsf@iki.fi> (Teemu Likonen's message of "Wed, 03 Dec
- 2008 09:27:17 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 75C8C620-C112-11DD-8DB2-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751176AbYLCIUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 03:20:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbYLCIUD
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 03:20:03 -0500
+Received: from artax.karlin.mff.cuni.cz ([195.113.26.195]:60137 "EHLO
+	artax.karlin.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751066AbYLCIUB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 03:20:01 -0500
+X-Greylist: delayed 1699 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Dec 2008 03:20:00 EST
+Received: from artax.karlin.mff.cuni.cz (localhost [127.0.0.1])
+	by artax.karlin.mff.cuni.cz (Postfix) with ESMTP id 8C3679803C
+	for <git@vger.kernel.org>; Wed,  3 Dec 2008 08:51:40 +0100 (CET)
+Received: from 194.138.12.144
+        (SquirrelMail authenticated user jhud7196)
+        by artax.karlin.mff.cuni.cz with HTTP;
+        Wed, 3 Dec 2008 08:51:40 +0100 (CET)
+User-Agent: SquirrelMail/1.4.9a
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102225>
 
-Teemu Likonen <tlikonen@iki.fi> writes:
+------=_20081203085140_20147
+Content-Type: text/plain; charset="iso-8859-2"
+Content-Transfer-Encoding: 8bit
 
-> Junio C Hamano (2008-12-02 22:23 -0800) wrote:
->
->> * The 'master' branch has these since the last announcement
->>   in addition to the above.
->
->> Scott Chacon (1):
->>   Add a built-in alias for 'stage' to the 'add' command
->
-> I think there's a minor user-interface defect:
->
->     $ git help stage
->     No manual entry for gitstage
+Hello folks,
 
-The patch also breaks the promise made at 1.6.0 that prepending exec path
-to $PATH allows you to use the dashed form.
+I have been playing with fast-import in cygwin and I have problems
+importing files with CR/LF line-endings. The size in data command is
+calculated including the CRs and than the file is copied binary to the
+fast-import input stream. However fast-import skips the CRs when reading,
+overreads by that number of bytes and fails when it tries to read the next
+command from the middle.
 
-	$ PATH=$(git --exec-path):$PATH
-        $ git-stage -p
-	xash: git-stage: cmd not found
+Attached is a test input stream and crash report generated by fast-import
+when reading it. In case mail system damages it along the way despite
+being attached to prevent that, the file should be in unix format -- that
+is what my cygwin perl outputs by default -- and has CRs only on lines 15
+and 16. The unix.txt and dos.txt should only differ that the '.'s in
+former are replaced by '^M's in the later (so the data commands are
+otherwise same).
 
-> "git stage" is only a built-in alias but at some point it may become the
-> primary staging command for new Git users and hence a kind of real Git
-> command. I think "git help stage" should show the git-stage manual page
-> (even though it only points to git-add(1)).
+Note, that when I convert the file to dos format, it is read as intended.
+However, that is inconsistent with rest of the cygwin environment which
+generated and expects files in unix format. I use binary mounts (not
+converting) and CYGWIN environment variable is empty. My git version is
+1.6.0.4 from official Cygwin package.
 
-I do not think it would ever be _the_ primary command to add the contents
-to the index; we are adding it as a training wheel.
+Is this behaviour intentional workaround for something or a bug?
 
-When we had the "staging area" discussion, somehow people ended up with
-this notion that you somehow *need to* use the same verb and noun.
-I.e. "the index is now explained as the _staging area_.  Why isn't the
-command to add contents to the staging area called git-stage?" was the
-primary argument that lead to this thinking.
+-- 
+                                        - Jan Hudec <bulb@ucw.cz>
+------=_20081203085140_20147
+Content-Type: /; name="test1.gfi"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="test1.gfi"
 
-I do not think it adds much value to the system to be dogmatic and insist
-that you _have to_ use the same verb and noun.  "You add your changes to
-the staging area" is a perfectly natural way to explain what you are doing
-and where the "add" in git-add command comes from.  It however is Ok to
-allow people to use different spelling (i.e. the verb "stage").
+Y29tbWl0IHJlZnMvaGVhZHMvbWFzdGVyDQpjb21taXR0ZXIgSmFuIEh1ZGVjIDxidWxiQHVjdy5j
+ej4gMTIyODI4Nzg5MCArMDEwMA0KZGF0YSAxOQ0KdW5peC1mb3JtYXR0ZWQtZmlsZQ0KTSAxMDA2
+NDQgaW5saW5lIHVuaXgudHh0DQpkYXRhIDEzDQpzb21lLg0KbGluZXMuDQpjb21taXQgcmVmcy9o
+ZWFkcy9tYXN0ZXINCmNvbW1pdHRlciBKYW4gSHVkZWMgPGJ1bGJAdWN3LmN6PiAxMjI4Mjg3ODky
+ICswMTAwDQpkYXRhIDE4DQpkb3MtZm9ybWF0dGVkLWZpbGUNCk0gMTAwNjQ0IGlubGluZSBkb3Mu
+dHh0DQpkYXRhIDEzDQpzb21lDQpsaW5lcw0KY29tbWl0IHJlZnMvaGVhZHMvbWFzdGVyDQpjb21t
+aXR0ZXIgSmFuIEh1ZGVjIDxidWxiQHVjdy5jej4gMTIyODI4Nzg5NCArMDEwMA0KZGF0YSAyMw0K
+b25lIG1vcmUgY29tbWl0IGZvciBmdW4NCk0gMTAwNjQ0IGlubGluZSBvdGhlci50eHQNCmRhdGEg
+MjINCndlIG5lZWQgbW9yZSBjb21tYW5kcw0KY2hlY2twb2ludA0K
+------=_20081203085140_20147
+Content-Type: /; name="fast_import_crash_5212"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="fast_import_crash_5212"
 
-In that sense, I think the intention of the patch to add "stage" as an
-additional verb, while clearly marking it as a synonym to the primary
-command "add", is aimed at the right place and strikes the right balance.
-
-By the way, I think this should fix it, although it is very late and I
-have no time to test it tonight myself.
-
----
-
- Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git i/Makefile w/Makefile
-index 9577d6f..5158197 100644
---- i/Makefile
-+++ w/Makefile
-@@ -320,6 +320,7 @@ BUILT_INS += git-merge-subtree$X
- BUILT_INS += git-peek-remote$X
- BUILT_INS += git-repo-config$X
- BUILT_INS += git-show$X
-+BUILT_INS += git-stage$X
- BUILT_INS += git-status$X
- BUILT_INS += git-whatchanged$X
- 
+ZmFzdC1pbXBvcnQgY3Jhc2ggcmVwb3J0OgogICAgZmFzdC1pbXBvcnQgcHJvY2VzczogNTIxMgog
+ICAgcGFyZW50IHByb2Nlc3MgICAgIDogMTY5NgogICAgYXQgV2VkIERlYyAzIDA4OjI5OjQyIDIw
+MDgKCmZhdGFsOiBVbnN1cHBvcnRlZCBjb21tYW5kOiBtbWl0IHJlZnMvaGVhZHMvbWFzdGVyCgpN
+b3N0IFJlY2VudCBDb21tYW5kcyBCZWZvcmUgQ3Jhc2gKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tCiAgY29tbWl0IHJlZnMvaGVhZHMvbWFzdGVyCiAgY29tbWl0dGVyIEphbiBIdWRl
+YyA8YnVsYkB1Y3cuY3o+IDEyMjgyODc4OTAgKzAxMDAKICBkYXRhIDE5CiAgTSAxMDA2NDQgaW5s
+aW5lIHVuaXgudHh0CiAgZGF0YSAxMwogIGNvbW1pdCByZWZzL2hlYWRzL21hc3RlcgogIGNvbW1p
+dHRlciBKYW4gSHVkZWMgPGJ1bGJAdWN3LmN6PiAxMjI4Mjg3ODkyICswMTAwCiAgZGF0YSAxOAog
+IE0gMTAwNjQ0IGlubGluZSBkb3MudHh0CiAgZGF0YSAxMwoqIG1taXQgcmVmcy9oZWFkcy9tYXN0
+ZXIKCkFjdGl2ZSBCcmFuY2ggTFJVCi0tLS0tLS0tLS0tLS0tLS0tCiAgICBhY3RpdmVfYnJhbmNo
+ZXMgPSAxIGN1ciwgNSBtYXgKCiAgcG9zICBjbG9jayBuYW1lCiAgfn5+fn5+fn5+fn5+fn5+fn5+
+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+CiAgIDEpICAgICAgMiByZWZzL2hlYWRzL21hc3Rl
+cgoKSW5hY3RpdmUgQnJhbmNoZXMKLS0tLS0tLS0tLS0tLS0tLS0KcmVmcy9oZWFkcy9tYXN0ZXI6
+CiAgc3RhdHVzICAgICAgOiBhY3RpdmUgbG9hZGVkCiAgdGlwIGNvbW1pdCAgOiAyYTExYjc1M2Qx
+NTU0NDM0NjI1MjNlMGYzY2VmNzJlNGYwMjgxN2IyCiAgb2xkIHRyZWUgICAgOiA1YmNkY2RjYWZi
+YTUzMDM3OTc4NjUzMTFhN2ZhMDZlMmNlM2RkYzY1CiAgY3VyIHRyZWUgICAgOiA1YmNkY2RjYWZi
+YTUzMDM3OTc4NjUzMTFhN2ZhMDZlMmNlM2RkYzY1CiAgY29tbWl0IGNsb2NrOiAyCiAgbGFzdCBw
+YWNrICAgOiAwCgoKTWFya3MKLS0tLS0KCi0tLS0tLS0tLS0tLS0tLS0tLS0KRU5EIE9GIENSQVNI
+IFJFUE9SVAo=
+------=_20081203085140_20147--
