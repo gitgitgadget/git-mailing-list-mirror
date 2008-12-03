@@ -1,103 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: Fix handling of non-ASCII characters in inserted
- HTML files
-Date: Tue, 02 Dec 2008 19:55:13 -0800
-Message-ID: <7v63m1j4ke.fsf@gitster.siamese.dyndns.org>
-References: <200811171140.45884.jnareb@gmail.com>
- <20081201175741.11133.82393.stgit@localhost.localdomain>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: Re: [PATCH 3/5] optimize parse_sha1_header() a little by detecting
+ object type
+Date: Wed, 03 Dec 2008 12:06:19 +0800
+Message-ID: <493605BB.8020705@gmail.com>
+References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org> <49349579.2030506@gmail.com> <20081202155300.GL23984@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Tatsuki Sugiura <sugi@nemui.org>,
-	Gerrit Pape <pape@smarden.org>, Recai Oktas <roktas@debian.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 04:56:53 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Dec 03 05:07:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7ir0-0004IM-Qy
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 04:56:47 +0100
+	id 1L7j1b-0006TK-RD
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 05:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751753AbYLCDzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 22:55:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752507AbYLCDzX
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 22:55:23 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56906 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750895AbYLCDzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 22:55:22 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 088598325A;
-	Tue,  2 Dec 2008 22:55:22 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ADF1483259; Tue,
-  2 Dec 2008 22:55:15 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3550E8BC-C0EE-11DD-9B5B-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752655AbYLCEG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 23:06:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752507AbYLCEG1
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 23:06:27 -0500
+Received: from ti-out-0910.google.com ([209.85.142.188]:9348 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752487AbYLCEG0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 23:06:26 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so2115010tic.23
+        for <git@vger.kernel.org>; Tue, 02 Dec 2008 20:06:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=Vn7j+T3rpXZq00rIMidU2Kv4pVwwpw+wWnsO1YN3nTM=;
+        b=QRy/aGqbvKSXcbU8QwJkK7+7furjpdNtVOaCK6t3SAXgUlulMGAhNG0aTjI8wxdHLI
+         Z5xAGda9kGJzn52nv7/QtqDD0yz8bdJbxrLYa0VJZ97RLeYl7U6DZWWnGBmFX1iRkXlu
+         y9P2EkULw1JhX8+RfkG8xw18A0HN4zFs314DI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=lT8SqSVAj36kxkJUq+CuapHKeQAPZ+h7AvBeikYDipOK09iEUbgUhuQ4uPH4W+Xcjn
+         Zv7EW5nA1eTr1Kv/6I9u6Q9tB695f1HZIjkiC7Acxv8d4qUxsLvDn2AREwCSc1T16bKL
+         kH7ihEY0VJlpXnUoR/gHUjTN6yn5mccaqdy3Q=
+Received: by 10.110.103.5 with SMTP id a5mr19118634tic.26.1228277184094;
+        Tue, 02 Dec 2008 20:06:24 -0800 (PST)
+Received: from ?10.64.1.78? ([211.157.41.194])
+        by mx.google.com with ESMTPS id w5sm5833435tib.14.2008.12.02.20.06.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 02 Dec 2008 20:06:22 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+In-Reply-To: <20081202155300.GL23984@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102210>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Shawn O. Pearce wrote:
+> Liu Yubao <yubao.liu@gmail.com> wrote:
+>> diff --git a/sha1_file.c b/sha1_file.c
+>> index dccc455..79062f0 100644
+>> --- a/sha1_file.c
+>> +++ b/sha1_file.c
+>> @@ -1099,7 +1099,8 @@ static void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
+>>  
+>>  		if (!fstat(fd, &st)) {
+>>  			*size = xsize_t(st.st_size);
+>> -			map = xmmap(NULL, *size, PROT_READ, MAP_PRIVATE, fd, 0);
+>> +			if (*size > 0)
+>> +				map = xmmap(NULL, *size, PROT_READ, MAP_PRIVATE, fd, 0);
+>>  		}
+>>  		close(fd);
+>>  	}
+> 
+> This has nothing to do with this change description.  Why are we
+> returning NULL from map_sha1_file when the file length is 0 bytes?
+> No loose object should ever be an empty file, there must always be
+> some sort of type header present.  So it probably is an error to
+> have a 0 length file here.  But that bug is a different change.
+> 
 
-> Use new insert_file() subroutine to insert HTML chunks from external
-> files: $site_header, $home_text (by default indextext.html),
-> $site_footer, and $projectroot/$project/REAME.html.
->
-> All non-ASCII chars of those files will be broken by Perl IO layer
-> without decoding to utf8, so insert_file() does to_utf8() on each
-> printed line; alternate solution would be to open those files with
-> "binmode $fh, ':utf8'", or even all files with "use open qw(:std :utf8)".
->
-> Note that inserting README.html lost one of checks for simplicity.
->
-> Noticed-by: Tatsuki Sugiura <sugi@nemui.org>
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> ---
-> This is more complete solution that the one provided by Tatsuki Sugiura
-> in original patch
->
->   [PATCH] gitweb: fix encode handling for site_{header,footer}
->   Msg-Id: <87vdumbxgc.wl@vaj-k-334-sugi.local.valinux.co.jp>
->   http://thread.gmane.org/gmane.comp.version-control.git/101199
+Also a defensive programming for uncompressed loose object because the mapped memory
+will be passed to parse_sha1_header() directly without being checked by inflateInit().
 
-It may be more complete but it is obviously untested.  Please help me
-trust you better with your future patches.  Because I personally do not
-run gitweb myself, I really need a trustworthy lieutenant(s) in the area.
+In fact unpack_sha1_header() in current code calls legacy_loose_object() without checking
+mapsize first. If it encounters (very very unlikely) a corrupted empty loose object, it
+will crash.
 
-[Wed Dec  3 01:52:07 2008] gitweb.perl: Global symbol "$fd" requires explicit package name at /git.git/t/../gitweb/gitweb.perl line 4500.
-[Wed Dec  3 01:52:07 2008] gitweb.perl: Execution of /git.git/t/../gitweb/gitweb.perl aborted due to compilation errors.
+>> @@ -1257,6 +1258,8 @@ static int parse_sha1_header(const char *hdr, unsigned long length, unsigned lon
+>>  	 * terminating '\0' that we add), and is followed by
+>>  	 * a space, at least one byte for size, and a '\0'.
+>>  	 */
+>> +	if ('b' != *hdr && 'c' != *hdr && 't' != *hdr)	/* blob/commit/tag/tree */
+>> +		return -1;
+>>  	i = 0;
+>>  	while (hdr < hdr_end - 2) {
+>>  		char c = *hdr++;
+> 
+> Oh.  I wouldn't do that.  Its a cute trick and it works to quickly
+> determine if the header is an uncompressed header vs. a zlib header
+> vs. a new-style loose object header (which git cannot write anymore,
+> but it still can read).  But its just asking for trouble when/if a
+> new object type was ever added to the type table.
+> 
+I can't agree any more, it's just a trick. I considered adding
+a function seems_likely_uncompressed_loose_object(), but I didn't
+because this patch series are just my first try, I don't know whether
+the idea to support uncompressed loose object is attractive enough.
 
-> but it is in principle the same solution.
->
-> I think this one as it is a bugfix should go in git 1.6.1
-
-Trading a gitweb with a small bug with a gitweb that does not even pass
-its test script does not feel like a good change to me.
-
-I think the breakage is the "close $fd" at the end of this hunk:
-
-> @@ -4472,13 +4475,11 @@ sub git_summary {
->  	print "</table>\n";
->  
->  	if (-s "$projectroot/$project/README.html") {
-> -		if (open my $fd, "$projectroot/$project/README.html") {
-> -			print "<div class=\"title\">readme</div>\n" .
-> -			      "<div class=\"readme\">\n";
-> -			print $_ while (<$fd>);
-> -			print "\n</div>\n"; # class="readme"
-> -			close $fd;
-> -		}
-> +		print "<div class=\"title\">readme</div>\n" .
-> +		      "<div class=\"readme\">\n";
-> +		insert_file("$projectroot/$project/README.html");
-> +		print "\n</div>\n"; # class="readme"
-> +		close $fd;
->  	}
->  
->  	# we need to request one more than 16 (0..15) to check if
-
-I'll queue it to 'pu', with the "close $fd" removed, for now.
+> Given that we know that no type name can be more than 10 bytes and
+> if you use my patch from earlier today you can be certain hdr has a
+> '\0' terminator, so you could write a function to test for the type
+> against the hdr, stopping on either ' ' or '\0'.  Or find the first
+> ' ' in the first 10 bytes (which is what this loop does anyway) and
+> then test that against the type name table.
+> 
