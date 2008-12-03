@@ -1,76 +1,77 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 5/5] submodule: use git rev-parse -q
-Date: Wed,  3 Dec 2008 14:26:52 +0100
-Message-ID: <c3a20382adecc78a12c9cf1bff9beb102d323b5e.1228310570.git.vmiklos@frugalware.org>
-References: <cover.1228310570.git.vmiklos@frugalware.org>
- <4858dc4d5d92276fa96a8fb45b02adaae57dcf26.1228310570.git.vmiklos@frugalware.org>
- <73193271279140eda04ec46097936e64f3c526d6.1228310570.git.vmiklos@frugalware.org>
- <8c4e8eda234e8e37d4a7a3ac43ffc7738e6fac4b.1228310570.git.vmiklos@frugalware.org>
- <b67238b67501272485cc659c11a836f4f96e0d81.1228310570.git.vmiklos@frugalware.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 14:28:44 2008
+Subject: Re: Is there a way to control the number of revisions will be
+	saved by git
+Date: Wed, 3 Dec 2008 14:40:37 +0100
+Message-ID: <20081203134036.GR19355@genesis.frugalware.org>
+References: <2f5ea7490812030301p29e944fw5f59943dc352cd09@mail.gmail.com> <49366C03.5080506@viscovery.net> <m3ljuxifer.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="THYEXwetZJOK3OLY"
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Tzury Bar Yochay <tzury.by@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 03 14:42:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7rmT-0000Wy-6u
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 14:28:41 +0100
+	id 1L7rzP-0005SM-Dm
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 14:42:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751183AbYLCN1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 08:27:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751155AbYLCN1F
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 08:27:05 -0500
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:46171 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750984AbYLCN04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 08:26:56 -0500
-Received: from vmobile.example.net (dsl5401C5DE.pool.t-online.hu [84.1.197.222])
-	by yugo.frugalware.org (Postfix) with ESMTPA id E9FB7446CDF;
-	Wed,  3 Dec 2008 14:26:52 +0100 (CET)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id DCDDA19DC74; Wed,  3 Dec 2008 14:26:53 +0100 (CET)
-X-Mailer: git-send-email 1.6.0.4
-In-Reply-To: <b67238b67501272485cc659c11a836f4f96e0d81.1228310570.git.vmiklos@frugalware.org>
-In-Reply-To: <cover.1228310570.git.vmiklos@frugalware.org>
-References: <cover.1228310570.git.vmiklos@frugalware.org>
+	id S1750811AbYLCNkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 08:40:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750799AbYLCNkn
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 08:40:43 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:52439 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750758AbYLCNkm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 08:40:42 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 0EB0A580D2;
+	Wed,  3 Dec 2008 14:40:38 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 09BC84465E;
+	Wed,  3 Dec 2008 14:40:38 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 64AFA11901A1; Wed,  3 Dec 2008 14:40:37 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <m3ljuxifer.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102259>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- git-submodule.sh |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 220d94e..2f47e06 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -413,7 +413,7 @@ cmd_summary() {
- 
- 	test $summary_limit = 0 && return
- 
--	if rev=$(git rev-parse --verify "$1^0" 2>/dev/null)
-+	if rev=$(git rev-parse -q --verify "$1^0")
- 	then
- 		head=$rev
- 		shift
-@@ -464,11 +464,11 @@ cmd_summary() {
- 		missing_dst=
- 
- 		test $mod_src = 160000 &&
--		! GIT_DIR="$name/.git" git-rev-parse --verify $sha1_src^0 >/dev/null 2>&1 &&
-+		! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_src^0 >/dev/null &&
- 		missing_src=t
- 
- 		test $mod_dst = 160000 &&
--		! GIT_DIR="$name/.git" git-rev-parse --verify $sha1_dst^0 >/dev/null 2>&1 &&
-+		! GIT_DIR="$name/.git" git-rev-parse -q --verify $sha1_dst^0 >/dev/null &&
- 		missing_dst=t
- 
- 		total_commits=
--- 
-1.6.0.4
+--THYEXwetZJOK3OLY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Dec 03, 2008 at 04:58:40AM -0800, Jakub Narebski <jnareb@gmail.com>=
+ wrote:
+> Or just use shallow clone
+>=20
+>   git clone --depth <depth> <repository>
+>=20
+> to have new copy (clone) of <repository> to have only <depth> commits
+> back.  See man git-commit; but it might be not what you want.
+
+You mean man git-clone?
+
+This trick can be used only once, since you can't clone a shallow clone.
+
+--THYEXwetZJOK3OLY
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkk2jFQACgkQe81tAgORUJbgIgCgqCwKtKDlQujK7gXznltnX9xk
+ggwAn25MnNeOFivTRV2lLrpLkAZrieie
+=BPtg
+-----END PGP SIGNATURE-----
+
+--THYEXwetZJOK3OLY--
