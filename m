@@ -1,60 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFCv2 1/2] gitweb: add patch view
-Date: Wed, 03 Dec 2008 03:19:09 -0800
-Message-ID: <7vbpvtecb6.fsf@gitster.siamese.dyndns.org>
-References: <1228298862-28191-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1228298862-28191-2-git-send-email-giuseppe.bilotta@gmail.com>
+From: Alejandro Riveira <ariveira@gmail.com>
+Subject: [BUG] git bisect visualize crash
+Date: Wed, 3 Dec 2008 11:20:29 +0000 (UTC)
+Message-ID: <gh5q1t$qjn$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Petr Baudis <pasky@suse.cz>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 12:21:12 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 03 12:22:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7pmy-0000aZ-3H
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 12:21:04 +0100
+	id 1L7pnp-0000pv-2t
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 12:21:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751613AbYLCLTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 06:19:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751575AbYLCLTm
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 06:19:42 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34744 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751288AbYLCLTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 06:19:41 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C86FB83DB2;
-	Wed,  3 Dec 2008 06:19:39 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1AC5583D70; Wed,
-  3 Dec 2008 06:19:10 -0500 (EST)
-In-Reply-To: <1228298862-28191-2-git-send-email-giuseppe.bilotta@gmail.com>
- (Giuseppe Bilotta's message of "Wed, 3 Dec 2008 11:07:41 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4698025C-C12C-11DD-A0F8-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751639AbYLCLUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 06:20:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751638AbYLCLUl
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 06:20:41 -0500
+Received: from main.gmane.org ([80.91.229.2]:44621 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751631AbYLCLUj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 06:20:39 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1L7pmX-0000X2-Go
+	for git@vger.kernel.org; Wed, 03 Dec 2008 11:20:37 +0000
+Received: from 197.red-83-53-124.dynamicip.rima-tde.net ([83.53.124.197])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 Dec 2008 11:20:37 +0000
+Received: from ariveira by 197.red-83-53-124.dynamicip.rima-tde.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 Dec 2008 11:20:37 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 197.red-83-53-124.dynamicip.rima-tde.net
+User-Agent: Pan/0.132 (Waxed in Black)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102242>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+i'm using ubuntu 8.10 and git bisect visualize is crashing.
+Noticed when bisecting the kernel but it is easily reproducible
 
-> We thus create a new view that can be fed to git-am directly by exposing
-> the output of git format-patch directly. This allows patch exchange and
-> submission via gitweb. A hard limit (configurable, defaults to 100) is
-> imposed on the number of commits which will be included in a patchset,
-> to prevent DoS attacks on the server.
+in git repository as of today
 
-Hmm, I would imagine that "snapshot" would be a much more effective way to
-do such an attack, and notice the way we prevent it is to selectively
-enable the feature per repository.
+$ git bisect bad
+$ git bisect good HEAD~20
 
-Perhaps this configuration should also be a feature defined in %feature,
-overridable by each repository?  If you default it to "disabled" (as any
-new feature typically does), you do not have to yank a random number such
-as 100 out of thin air.
+$ git bisect visualize                                                                  (03-12 12:16)
+Error in startup script: can't read "notflag": no such variable
+    while executing
+"expr {!$notflag}"
+    ("--not" arm line 2)
+    invoked from within
+"switch -glob -- $arg {
+            "-d" -
+            "--date-order" {
+                set vdatemode($n) 1
+                # remove from origargs in case we hit an unknown option
+                set origarg..."
+    (procedure "parseviewargs" line 21)
+    invoked from within
+"parseviewargs $view $args"
+    (procedure "start_rev_list" line 27)
+    invoked from within
+"start_rev_list $curview"
+    (procedure "getcommits" line 5)
+    invoked from within
+"getcommits {}"
+    (file "/usr/local/bin/gitk" line 10897)
+
+$ git --version
+git version 1.6.1.rc1
+$
