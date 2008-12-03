@@ -1,99 +1,109 @@
-From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
-Subject: Re: [PATCH] Implement rebase -q to fix pull --rebase -q
-Date: Wed, 3 Dec 2008 09:07:52 +0100
-Message-ID: <4ac8254d0812030007w3217f6eei3d364ce2272930c3@mail.gmail.com>
-References: <1228277212-5917-1-git-send-email-tuncer.ayaz@gmail.com>
-	 <7vej0pheww.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git help stage" doesn't display git-stage man page
+Date: Wed, 03 Dec 2008 00:14:36 -0800
+Message-ID: <7vwsehfzf7.fsf@gitster.siamese.dyndns.org>
+References: <7vvdu1hj41.fsf@gitster.siamese.dyndns.org>
+ <87myfdn2ga.fsf@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 03 09:09:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Wed Dec 03 09:16:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7mnH-0008Th-T4
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 09:09:12 +0100
+	id 1L7mu4-0001mJ-ND
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 09:16:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752975AbYLCIHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 03:07:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752315AbYLCIHz
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 03:07:55 -0500
-Received: from rn-out-0910.google.com ([64.233.170.186]:48367 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752101AbYLCIHy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 03:07:54 -0500
-Received: by rn-out-0910.google.com with SMTP id k40so2825871rnd.17
-        for <git@vger.kernel.org>; Wed, 03 Dec 2008 00:07:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=12XDyeC1QIMpZLNyWOtWdkvjSssViKN+BkFezn+HBm8=;
-        b=lhWUsCddhCbAw48cvd1NOVW3pWIt61Gql2BGe1JGpY3B6rQZIhFpiSzDgQaPNF3l74
-         GTaKXCsRXiK+ZGuuAyjarqinpEsL87bktoqkpAZlMTXZu1w3Li6ojGbOEab1Op9f56Im
-         VDB2+gCOLZzfSHy5vzhZ8LedIMDOPpsq5LLIA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Zs2WQ4AFwlvKZpsZJsb+ySxHdiItffNaoA+hziZrBn9QQGs6g9aw3Ng6VUDk9k8CwN
-         ZpK4fsEQrBVmLKkz900AYiJjFUGly9Es8B31/99vtw657lFq80oZ+xbU/prVlKJ5fGEV
-         CRZysXsQ3Rw1TaF7ti/KoD1PSsrzuNJHPTE34=
-Received: by 10.64.143.4 with SMTP id q4mr13144530qbd.67.1228291672992;
-        Wed, 03 Dec 2008 00:07:52 -0800 (PST)
-Received: by 10.65.242.16 with HTTP; Wed, 3 Dec 2008 00:07:52 -0800 (PST)
-In-Reply-To: <7vej0pheww.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1750912AbYLCIOz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 03:14:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750845AbYLCIOz
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 03:14:55 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37040 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750811AbYLCIOy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 03:14:54 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 13924833B1;
+	Wed,  3 Dec 2008 03:14:52 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9952F833AD; Wed,
+  3 Dec 2008 03:14:38 -0500 (EST)
+In-Reply-To: <87myfdn2ga.fsf@iki.fi> (Teemu Likonen's message of "Wed, 03 Dec
+ 2008 09:27:17 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 75C8C620-C112-11DD-8DB2-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102224>
 
-On Wed, Dec 3, 2008 at 8:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Tuncer Ayaz <tuncer.ayaz@gmail.com> writes:
+Teemu Likonen <tlikonen@iki.fi> writes:
+
+> Junio C Hamano (2008-12-02 22:23 -0800) wrote:
 >
->> This is needed on top of the fetch/pull -q/-v changes
->> to make
->> $ git pull --rebase -q
->> as quiet as expected.
+>> * The 'master' branch has these since the last announcement
+>>   in addition to the above.
 >
-> I am not sure if this is worth it, in the sense that it is not really
-> quiet enough (iow, it is not what I expect even though you claim "as
+>> Scott Chacon (1):
+>>   Add a built-in alias for 'stage' to the 'add' command
+>
+> I think there's a minor user-interface defect:
+>
+>     $ git help stage
+>     No manual entry for gitstage
 
-Junio, sorry for using 'expected'.
-I thought about the wording while writing and had a feeling that 'expected'
-may be too strong as it's my opinion only. I should have listened to myself :).
+The patch also breaks the promise made at 1.6.0 that prepending exec path
+to $PATH allows you to use the dashed form.
 
-> expected" here), and in another sense that making it really quiet may not
-> be what we want anyway.
+	$ PATH=$(git --exec-path):$PATH
+        $ git-stage -p
+	xash: git-stage: cmd not found
 
-I mainly use -q in automation where I only want output if something
-goes wrong. Just like good old cp or mv do.
-Do you think this is the wrong way to go?
+> "git stage" is only a built-in alias but at some point it may become the
+> primary staging command for new Git users and hence a kind of real Git
+> command. I think "git help stage" should show the git-stage manual page
+> (even though it only points to git-add(1)).
 
-> How are you dealing with messages from the actual replaying of each local
-> commit on top of what is fetched?  In order to be able to tell where you
-> are when one of them fail in conflicts, you cannot stay silent while doing
-> so.
+I do not think it would ever be _the_ primary command to add the contents
+to the index; we are adding it as a training wheel.
 
-Fair point.
+When we had the "staging area" discussion, somehow people ended up with
+this notion that you somehow *need to* use the same verb and noun.
+I.e. "the index is now explained as the _staging area_.  Why isn't the
+command to add contents to the staging area called git-stage?" was the
+primary argument that lead to this thinking.
 
-Log messages that are of importance to a failure should ideally be sent to
-stderr but I think caching log messages for the failure case would
-over-complicate
-much of the code and is not worth it. Also you may not always know which part
-of stdout messages are useful for the failure case and not getting the
-same messages
-on a rerun for many commands makes this hard to trace back, yeah.
+I do not think it adds much value to the system to be dogmatic and insist
+that you _have to_ use the same verb and noun.  "You add your changes to
+the staging area" is a perfectly natural way to explain what you are doing
+and where the "add" in git-add command comes from.  It however is Ok to
+allow people to use different spelling (i.e. the verb "stage").
 
-As we've quietened pull/fetch/clone in a major already I am OK with leaving this
-change out.
-I'm definitely not advocating adding/changing anything when it's not clear we
-want the changed behavior. It's easier to keep out than to remove it
-later on :).
+In that sense, I think the intention of the patch to add "stage" as an
+additional verb, while clearly marking it as a synonym to the primary
+command "add", is aimed at the right place and strikes the right balance.
+
+By the way, I think this should fix it, although it is very late and I
+have no time to test it tonight myself.
+
+---
+
+ Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git i/Makefile w/Makefile
+index 9577d6f..5158197 100644
+--- i/Makefile
++++ w/Makefile
+@@ -320,6 +320,7 @@ BUILT_INS += git-merge-subtree$X
+ BUILT_INS += git-peek-remote$X
+ BUILT_INS += git-repo-config$X
+ BUILT_INS += git-show$X
++BUILT_INS += git-stage$X
+ BUILT_INS += git-status$X
+ BUILT_INS += git-whatchanged$X
+ 
