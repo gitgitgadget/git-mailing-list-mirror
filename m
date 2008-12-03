@@ -1,63 +1,74 @@
-From: "Tzury Bar Yochay" <tzury.by@gmail.com>
-Subject: Is there a way to control the number of revisions will be saved by git
-Date: Wed, 3 Dec 2008 13:01:10 +0200
-Message-ID: <2f5ea7490812030301p29e944fw5f59943dc352cd09@mail.gmail.com>
+From: Bastian Flinspach <bastian.flinspach@gerina.com>
+Subject: Problems with EGit
+Date: Wed, 03 Dec 2008 12:08:11 +0100
+Message-ID: <4936689B.1030903@gerina.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 03 12:02:38 2008
+X-From: git-owner@vger.kernel.org Wed Dec 03 12:14:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7pV7-0003Dm-H8
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 12:02:38 +0100
+	id 1L7pgs-00076N-PH
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 12:14:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463AbYLCLBN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 06:01:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbYLCLBN
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 06:01:13 -0500
-Received: from fk-out-0910.google.com ([209.85.128.186]:5528 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751428AbYLCLBM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 06:01:12 -0500
-Received: by fk-out-0910.google.com with SMTP id 18so2880433fkq.5
-        for <git@vger.kernel.org>; Wed, 03 Dec 2008 03:01:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition:x-google-sender-auth;
-        bh=YDSDYmYBXY/RWoRluR3IYElQiLaWbSR5HF3+P8HnM8A=;
-        b=TJgJWwQqbgISE/r2v3vX7pIpDZjorUiDfko4ODTOOLwS5F9NhGnFUOWgYbngX6VH96
-         SVZtgkkkgY5JhmTnr5CUuOKDwpGSDa3n0wUA//u+wLtmoKNtAftLwcpYrj2mt+fGTu+b
-         9t2Hk4UrcYFvzmB60i/7OkPGl2iMnpv6WDQmg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=iCIvxDAktlVXff30sKYXTAwnePZU5wDXcwySG7cFZMS76EFkqHm8s4kXK5dz9+DMmC
-         R081r3OGOua2ygD+UjiySgx7zlgPvakUj1IYYlcg01AINwAm45aXV7/7Tw6qZQqNYN7/
-         XIK8N/NSowKToFGyLRjLy0sBPXSEBSWPayPBc=
-Received: by 10.181.205.15 with SMTP id h15mr4355633bkq.19.1228302070195;
-        Wed, 03 Dec 2008 03:01:10 -0800 (PST)
-Received: by 10.180.249.13 with HTTP; Wed, 3 Dec 2008 03:01:10 -0800 (PST)
-Content-Disposition: inline
-X-Google-Sender-Auth: 2102514725ccafdc
+	id S1751428AbYLCLNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 06:13:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751268AbYLCLNZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 06:13:25 -0500
+Received: from moutng.kundenserver.de ([212.227.126.187]:64027 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751160AbYLCLNY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 06:13:24 -0500
+Received: from [192.168.0.18] (p54AE41B0.dip.t-dialin.net [84.174.65.176])
+	by mrelayeu.kundenserver.de (node=mrelayeu2) with ESMTP (Nemesis)
+	id 0MKwtQ-1L7pab1pq8-0004Dq; Wed, 03 Dec 2008 12:08:18 +0100
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+X-Provags-ID: V01U2FsdGVkX18AtFqmKwQ5suz4cL6gqvnttvu2AWksZ22WfAT
+ TDIW5YQXH6BwEbdOvqpm3YsV4cmtbM0MBU8rXYGypvNBCR0epJ
+ O9dVMK8Ni8VQluQUX9YwA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102240>
 
-Hello Happy Gitters,
+Hi everyone.
 
-Say I wish to save only 100 generations back (per branch).
-Is it possible to configure git so it will save only N records back.
+I am a newbie in regards to Linux and especially git. I worked with SVN 
+for some time, but mainly as a client.
+Never the less, i wanted to set up some form of code repository for my 
+workplace and git seems to be a good fit.
 
-If git cannot be configured for that, Is there a way to shrink the repository
-manually so it will contain the last N generations?
+So i installed git on our local development server here in our office. I 
+am the only developer at the time, so i can do as i please. :-)
+The Server is a debian machine, essentially only running a web server (I 
+develop web apps), which webroot directory is also shared via samba with 
+the otherwise all windows network. The first Version of git i got from 
+the apt was an old one and after some struggling, i managed to update it 
+to  1.6.0.3.g9f8f13. I also created my repository and installed EGit in 
+my eclipse 3.4.
+In Eclipse, i linked to the samba Folder containing the code.
 
+When i try to commit changes via the command line, everything works fine 
+(well, except for me not being able to use my keyboard right for 
+entering the commit message, but thats probably not important because i 
+want to use EGit anyways).
+Eclipse recognizes the repository and also displays changes i make. When 
+trying to commit, however, i get a permission denied error.
 
-- Tzury
+So, this is basically where i am stuck. What can be the problem and what 
+would be a solution? I assume, that i might have something to do with 
+Linux users and privileges, but i am not yet versed enough to identify 
+the problem on my own.
+
+Please keep in mind, that i am a complete beginner with these topics 
+when answering.
+
+I would appreciate your help.
+
+best regards
+
+Bastian Flinspach
