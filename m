@@ -1,177 +1,75 @@
-From: "Tuncer Ayaz" <tuncer.ayaz@gmail.com>
-Subject: Re: [PATCH] Implement rebase -q to fix pull --rebase -q
-Date: Wed, 3 Dec 2008 05:09:50 +0100
-Message-ID: <4ac8254d0812022009t6eed5406ve2acb0b020240448@mail.gmail.com>
-References: <1228277212-5917-1-git-send-email-tuncer.ayaz@gmail.com>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: Re: [PATCH 4/5] support reading uncompressed loose object
+Date: Wed, 03 Dec 2008 12:09:43 +0800
+Message-ID: <49360687.4060701@gmail.com>
+References: <493399B7.5000505@gmail.com> <7voczws3np.fsf@gitster.siamese.dyndns.org> <493495B4.5070304@gmail.com> <20081202155806.GM23984@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
 X-From: git-owner@vger.kernel.org Wed Dec 03 05:11:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L7j4t-00076c-68
-	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 05:11:07 +0100
+	id 1L7j4s-00076c-GV
+	for gcvg-git-2@gmane.org; Wed, 03 Dec 2008 05:11:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026AbYLCEJx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Dec 2008 23:09:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753126AbYLCEJx
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 23:09:53 -0500
-Received: from yw-out-2324.google.com ([74.125.46.28]:40698 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752873AbYLCEJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Dec 2008 23:09:52 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so1371595ywe.1
-        for <git@vger.kernel.org>; Tue, 02 Dec 2008 20:09:50 -0800 (PST)
+	id S1752507AbYLCEJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Dec 2008 23:09:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752716AbYLCEJu
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Dec 2008 23:09:50 -0500
+Received: from ti-out-0910.google.com ([209.85.142.187]:12337 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750900AbYLCEJt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Dec 2008 23:09:49 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so2115846tic.23
+        for <git@vger.kernel.org>; Tue, 02 Dec 2008 20:09:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=8FZu8oCqPf/oWF+7hXk5PTPoZSmxctVd2NAtZawG6dE=;
-        b=fg9ZT8dHP5eohUVwEqTT7M371uAAtp+OYzJI8BSG2ITRNjZYbE4TSqm9wQPPPOe5sd
-         PscSn6Q8of1nCt2fOnvy7mnCLMEUUi91FfGyMPq9JJTiKKEJYkRa/1By6T9fjD4hdprK
-         BdwSZYafCFufRBl6MG+JeIXuUh9R3G0WXdFic=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=ZBpdfCm/hVm3kJGo+dnPJNrfBbbGKQEiWSJqzIn4iCU=;
+        b=b0HLv0Aj76u/nQ8bXBbMxeCkbfr0XIYY0NHgcWgg4m5ujFXkD8DwStGVBEFtHRQdVH
+         diseO5ux9CaNrk6wmTJBnBYMV3cO+cKHTby3MlnQ2oLMnEl+BXLIRH3mwZcDcPdgtQcY
+         Em+ueSr5YiiFGgZGcv4MAOQdmV0v5p79gBKEE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=b9+r4O7r72+n3Przb2wHc7OfzQffhVtAo8S7WHJcZ5jCO+pKVNkOPv/cVsDO+pI2gV
-         7YvkTp8OXexPzxTohZ+tWrqDDO7aoThHkA04kO9Ou/qLmlIbBKVeHJlJJuLQb4TIbBLA
-         CPEumBDBT+uYlWHyPTCCdndidcyTNzbLi8BW4=
-Received: by 10.65.123.10 with SMTP id a10mr13099146qbn.79.1228277390464;
-        Tue, 02 Dec 2008 20:09:50 -0800 (PST)
-Received: by 10.65.242.16 with HTTP; Tue, 2 Dec 2008 20:09:50 -0800 (PST)
-In-Reply-To: <1228277212-5917-1-git-send-email-tuncer.ayaz@gmail.com>
-Content-Disposition: inline
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=WQPIjHacv4nDH4qd8KHboqeYUAK9CMMRPhq69c9x6AIuFDlZ8VtaABQTS8vcx63847
+         Aue3fFw800kuOPv03A4OXYk+iZ3tFLQlct4mnC1VpRACJBPsGQBowAcQP9/M4BTID/zv
+         mq/4R9Csrm3NiyBVZF9E0i56EMdxgKtz7NeYg=
+Received: by 10.110.63.17 with SMTP id l17mr4117084tia.40.1228277387684;
+        Tue, 02 Dec 2008 20:09:47 -0800 (PST)
+Received: from ?10.64.1.78? ([211.157.41.194])
+        by mx.google.com with ESMTPS id a14sm738223tia.12.2008.12.02.20.09.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 02 Dec 2008 20:09:46 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.17 (X11/20080925)
+In-Reply-To: <20081202155806.GM23984@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102213>
 
-On Wed, Dec 3, 2008 at 5:06 AM, Tuncer Ayaz <tuncer.ayaz@gmail.com> wrote:
-> This is needed on top of the fetch/pull -q/-v changes
-> to make
-> $ git pull --rebase -q
-> as quiet as expected.
->
-> Signed-off-by: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-> ---
->  git-pull.sh   |    2 +-
->  git-rebase.sh |   31 +++++++++++++++++++++++--------
->  2 files changed, 24 insertions(+), 9 deletions(-)
->
-> diff --git a/git-pull.sh b/git-pull.sh
-> index 1cac898..57fcee9 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -184,6 +184,6 @@ fi
->  merge_name=$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || exit
->  test true = "$rebase" &&
->        exec git-rebase $strategy_args --onto $merge_head \
-> -       ${oldremoteref:-$merge_head}
-> +       $verbosity ${oldremoteref:-$merge_head}
->  exec git-merge $no_stat $no_commit $squash $no_ff $log_arg $strategy_args \
->        "$merge_name" HEAD $merge_head $verbosity
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index 023a6dc..bbfdc2e 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -3,7 +3,7 @@
->  # Copyright (c) 2005 Junio C Hamano.
->  #
->
-> -USAGE='[--interactive | -i] [-v] [--onto <newbase>] <upstream> [<branch>]'
-> +USAGE='[--interactive | -i] [-q] [-v] [--onto <newbase>] <upstream> [<branch>]'
->  LONG_USAGE='git-rebase replaces <branch> with a new branch of the
->  same name.  When the --onto option is provided the new branch starts
->  out with a HEAD equal to <newbase>, otherwise it is equal to <upstream>
-> @@ -45,7 +45,7 @@ strategy=recursive
->  do_merge=
->  dotest="$GIT_DIR"/rebase-merge
->  prec=4
-> -verbose=
-> +verbosity=1
->  git_am_opt=
->
->  continue_merge () {
-> @@ -135,7 +135,10 @@ move_to_original_branch () {
->  finish_rb_merge () {
->        move_to_original_branch
->        rm -r "$dotest"
-> -       echo "All done."
-> +       if test $verbosity -gt 0
-> +       then
-> +               echo "All done."
-> +       fi
->  }
->
->  is_interactive () {
-> @@ -288,8 +291,11 @@ do
->                esac
->                do_merge=t
->                ;;
-> +       -q|--quiet)
-> +               verbosity=0
-> +               ;;
->        -v|--verbose)
-> -               verbose=t
-> +               verbosity=2
->                ;;
->        --whitespace=*)
->                git_am_opt="$git_am_opt $1"
-> @@ -401,11 +407,14 @@ if test "$upstream" = "$onto" && test "$mb" = "$onto" &&
->  then
->        # Lazily switch to the target branch if needed...
->        test -z "$switch_to" || git checkout "$switch_to"
-> -       echo >&2 "Current branch $branch_name is up to date."
-> +       if test $verbosity -gt 0
-> +       then
-> +               echo >&2 "Current branch $branch_name is up to date."
-> +       fi
+Shawn O. Pearce wrote:
+> Liu Yubao <yubao.liu@gmail.com> wrote:
+>> Signed-off-by: Liu Yubao <yubao.liu@gmail.com>
+> 
+> I'd like to see a bit more of an explanation of the new loose
+> object format you are reading in the commit message.  We have a
+> long history of explaining *why* the code behaves the way it does
+> in our commits, so we can look at it in blame/log and understand
+> what the heck went on.
+>  
+I mentioned in the cover letter sent as patch 0/5, indeed I should
+have mentioned it in the commit message again.
 
-If anyone dislikes the additional three lines I could combine
-the test with the action on one line. I'm just not sure that would
-make it better, especially depending on log message length.
+An uncompressed loose object is just an uncompressed loose object:
 
->        exit 0
->  fi
->
-> -if test -n "$verbose"
-> +if test $verbosity -gt 1
->  then
->        echo "Changes from $mb to $onto:"
->        # We want color (if set), but no pager
-> @@ -413,7 +422,10 @@ then
->  fi
->
->  # Detach HEAD and reset the tree
-> -echo "First, rewinding head to replay your work on top of it..."
-> +if test $verbosity -gt 0
-> +then
-> +       echo "First, rewinding head to replay your work on top of it..."
-> +fi
->  git checkout -q "$onto^0" || die "could not detach HEAD"
->  git update-ref ORIG_HEAD $branch
->
-> @@ -421,7 +433,10 @@ git update-ref ORIG_HEAD $branch
->  # we just fast forwarded.
->  if test "$mb" = "$branch"
->  then
-> -       echo >&2 "Fast-forwarded $branch_name to $onto_name."
-> +       if test $verbosity -gt 0
-> +       then
-> +               echo >&2 "Fast-forwarded $branch_name to $onto_name."
-> +       fi
->        move_to_original_branch
->        exit 0
->  fi
-> --
-> 1.6.0.2.GIT
->
->
+loose object = deflate(typename + <space> + size + '\0' + data)
+uncompressed object = inflate(loose object)
