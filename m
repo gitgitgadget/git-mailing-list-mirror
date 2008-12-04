@@ -1,62 +1,55 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: more merge strategies : feature request
-Date: Thu, 04 Dec 2008 19:11:07 +0900
-Message-ID: <20081204191107.6117@nanako3.lavabit.com>
-References: <7vabbc7kk5.fsf@gitster.siamese.dyndns.org>
- <ee2a733e0812021707i82049eai866035aef3386264@mail.gmail.com>
- <81bfc67a0811290848m6cb219c0y71a7266001096f2d@mail.gmail.com>
- <4933AC03.6050300@op5.se>
- <ee2a733e0812011849l1b319c96u9abbb4e8dd4f53ce@mail.gmail.com>
- <81bfc67a0812020546o79906a20jcd04bd42d18dd803@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: git-gui: Warn when username and e-mail address is unconfigured?
+Date: Thu, 4 Dec 2008 11:43:15 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0812041141160.9969@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: "Leo Razoumov" <slonik.az@gmail.com>,
-	"Caleb Cushing" <xenoterracide@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 11:13:17 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 04 11:44:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8BCl-0007lp-39
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 11:13:07 +0100
+	id 1L8BhK-0000bM-97
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 11:44:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753795AbYLDKLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 05:11:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754338AbYLDKLt
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 05:11:49 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:42114 "EHLO karen.lavabit.com"
+	id S1756117AbYLDKnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 05:43:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755998AbYLDKnT
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 05:43:19 -0500
+Received: from ds9.cixit.se ([193.15.169.228]:43092 "EHLO ds9.cixit.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751708AbYLDKLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 05:11:48 -0500
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 1FCCBC86A7;
-	Thu,  4 Dec 2008 04:11:47 -0600 (CST)
-Received: from 4746.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id 97T8K4QR6W3M; Thu, 04 Dec 2008 04:11:47 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=LBcJi/dACSdVF6/aF9XxWv212EKj2th2OGc9r3Mkxg65z45tM5cSxVW9ePPcwNAW4UAlZfi2prxd6Ao2ufIOzdmVPPwxo+T0Pyqqjdq0mQVSvEM1HefObtMfX9ZazKAJlmkbSop4RTrwnMPMhB8/5sMkT3tmhbfH3+8jIBow88E=;
-  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7vabbc7kk5.fsf@gitster.siamese.dyndns.org>
+	id S1755435AbYLDKnS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 05:43:18 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mB4AhFac029730
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 4 Dec 2008 11:43:15 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mB4AhFR1029722;
+	Thu, 4 Dec 2008 11:43:15 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Thu, 04 Dec 2008 11:43:16 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102334>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+Hi!
 
-> I thought http://article.gmane.org/gmane.comp.version-control.git/89033 in
-> the thread (and your response to it which is 89175) pretty much concluded
-> the discussion.  Is Caleb adding anything new to the discussion (iow, is
-> there a convincing new argument why having such a merge is a good idea and
-> what the workflow looks like that benefits from it)?
+When using Git on Windows, it doesn't pick up a user name from the
+environment, which leads to commits made by git gui (and probably by
+git itself) to show up as being made by "unknown <username@.(none)>"
+(where "username" is the Windows account name).
 
-I first thought so, but after reading this feature request thread again I do not think so anymore.
-
-Sorry for the noise.
+Is it possible to add a warning to git-gui the first time a commit is
+attempted if the e-mail address is not configured, and have the user
+open the configuration dialogue to set up the name properly?
 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+\\// Peter - http://www.softwolves.pp.se/
