@@ -1,127 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH - DONTUSE] git-am: propagate -C/-p as well
-Date: Thu, 04 Dec 2008 15:36:12 -0800
-Message-ID: <7vmyfbbjir.fsf_-_@gitster.siamese.dyndns.org>
-References: <49382612.3010207@fs.ei.tum.de>
- <7vhc5jeo60.fsf@gitster.siamese.dyndns.org> <49385908.5020202@fs.ei.tum.de>
- <7v7i6fd0zt.fsf@gitster.siamese.dyndns.org>
- <7vy6yvbki6.fsf@gitster.siamese.dyndns.org>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH] Allow passing of --directory to git-am.
+Date: Fri, 05 Dec 2008 00:41:50 +0100
+Message-ID: <49386ABE.2050404@fs.ei.tum.de>
+References: <49382612.3010207@fs.ei.tum.de> <7vhc5jeo60.fsf@gitster.siamese.dyndns.org> <49385908.5020202@fs.ei.tum.de> <7v7i6fd0zt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git <git@vger.kernel.org>
-To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-X-From: git-owner@vger.kernel.org Fri Dec 05 00:37:43 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 05 00:43:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8NlJ-0007IT-Gf
-	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 00:37:37 +0100
+	id 1L8Nqi-0000n2-RZ
+	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 00:43:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382AbYLDXgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 18:36:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751354AbYLDXgT
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 18:36:19 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51875 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751182AbYLDXgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 18:36:19 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E7D2984A51;
-	Thu,  4 Dec 2008 18:36:17 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E0AFA84A50; Thu,
-  4 Dec 2008 18:36:14 -0500 (EST)
-In-Reply-To: <7vy6yvbki6.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 04 Dec 2008 15:14:57 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 59251FC8-C25C-11DD-B75B-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751753AbYLDXl4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Dec 2008 18:41:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbYLDXl4
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 18:41:56 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:52264 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751748AbYLDXlz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2008 18:41:55 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id A5FF01C25E;
+	Fri,  5 Dec 2008 00:41:51 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 0Wn1bvybytRq; Fri,  5 Dec 2008 00:41:51 +0100 (CET)
+Received: from [192.168.10.11] (dyn.144-85-212-018.dsl.vtx.ch [144.85.212.18])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 642811C0F0;
+	Fri,  5 Dec 2008 00:41:51 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.17 (X11/20081021)
+In-Reply-To: <7v7i6fd0zt.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102377>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano wrote:
+> Simon 'corecode' Schubert <corecode@fs.ei.tum.de> writes:
+>=20
+>> You mean not storing/restoring the flags across an invocation?  No,
+>> that's a different thing.  My patch only adds the --directory option=
+,
+>> it does not fix the previously existing bug.
+>=20
+> The question is if it _introduces_ a bug that the directory given in =
+the
+> initial invocation of "git am --directory=3Dfoo" is lost if an patch =
+does
+> not apply and you need to manually resolve and continue.
+>=20
+> If it does not introduce such a bug, you do not have the same issue a=
+s the
+> old patch.  Otherwise you have the same issue as the old patch.  The
+> question was if you have the same issue or you don't.  Yes?  No?
 
-> I think this fixes the --whitespace=* one, although I obviously haven't
-> tried to use it myself extensively.
+Yes, that's the issue.  In this regard it behaves bug-compatible with t=
+he=20
+-p and -C options.
 
-This one comes on top of it *if* you want to propagate -C/-p as well, but
-I think it might be a wrong idea to propagate these to begin with.
-
-Just like --3way is a one-shot option to deal with a single unapplicable
-patch (because it was based on an old version) in the whole series, and is
-designed not to get propagated, I suspect that people use -C<n> to fix a
-single broken patch and they may expect it not to apply to the whole
-series.
-
-The breakage --whitespace deals with is an attribute of the submitter (use
-of a broken editor and lack of diligence).  You most often feed a single
-series from the same submitter in the same mbox to "git am", preserving
-the --whitespace=fix option during the same "am" run makes sense, and
-somewhat more importantly, even though the option indeed modifies what you
-received, the change the option causes and the risk of breaking the
-semantics of the patch is minimum.  I am not sure the breakage --3way
-deals with falls into the exactly the same category, but it is similar (if
-the first patch in the series was based on an old version, it is very
-likely that the subsequent ones are also based on the same old version).
-So after all it might be better to propagate --3way as well (which this
-patch does not do).
-
-If we decide that propagating --3way is a good thing, then it would be
-equally good to propagate -C, -p and --directory options.
-
-I dunno.
-
- git-am.sh |   14 ++++++--------
- 1 files changed, 6 insertions(+), 8 deletions(-)
-
-diff --git c/git-am.sh w/git-am.sh
-index 1bf70d4..a35e07a 100755
---- c/git-am.sh
-+++ w/git-am.sh
-@@ -121,7 +121,7 @@ It does not apply to blobs recorded in its index."
- 
- prec=4
- dotest="$GIT_DIR/rebase-apply"
--sign= utf8=t keep= skip= interactive= resolved= rebasing= abort= ws=
-+sign= utf8=t keep= skip= interactive= resolved= rebasing= abort=
- resolvemsg= resume=
- git_apply_opt=
- 
-@@ -155,9 +155,7 @@ do
- 		;;
- 	--resolvemsg)
- 		shift; resolvemsg=$1 ;;
--	--whitespace)
--		ws="--whitespace=$2"; shift ;;
--	-C|-p)
-+	-C|-p|--whitespace)
- 		git_apply_opt="$git_apply_opt $1$2"; shift ;;
- 	--)
- 		shift; break ;;
-@@ -247,10 +245,10 @@ else
- 		exit 1
- 	}
- 
--	# -s, -u, -k and --whitespace flags are kept for the
--	# resuming session after a patch failure.
-+	# -s, -u, -k, --whitespace, -C and -p flags are kept
-+	# for the resuming session after a patch failure.
- 	# -3 and -i can and must be given when resuming.
--	echo " $ws" >"$dotest/whitespace"
-+	echo " $git_apply_opt" >"$dotest/apply_opt_extra"
- 	echo "$sign" >"$dotest/sign"
- 	echo "$utf8" >"$dotest/utf8"
- 	echo "$keep" >"$dotest/keep"
-@@ -283,7 +281,7 @@ if test "$(cat "$dotest/keep")" = t
- then
- 	keep=-k
- fi
--ws=$(cat "$dotest/whitespace")
-+apply_opt_extra=$(cat "$dotest/apply_opt_extra")
- if test "$(cat "$dotest/sign")" = t
- then
- 	SIGNOFF=`git var GIT_COMMITTER_IDENT | sed -e '
+--=20
+   <3 the future  +++  RENT this banner advert  +++   ASCII Ribbon   /"=
+\
+   rock the past  +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1 =
+ +++     Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
