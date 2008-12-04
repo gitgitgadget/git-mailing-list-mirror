@@ -1,51 +1,56 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: Make branch use correct svn-remote
-Date: Thu, 4 Dec 2008 11:26:45 -0800
-Message-ID: <20081204192645.GD9650@hand.yhbt.net>
-References: <1228185780-22938-1-git-send-email-deskinm@umich.edu> <20081202215157.GB9650@hand.yhbt.net> <7vbpvtj4kl.fsf@gitster.siamese.dyndns.org> <49365259.5090803@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Allow passing of --directory to git-am.
+Date: Thu, 04 Dec 2008 11:27:35 -0800
+Message-ID: <7vhc5jeo60.fsf@gitster.siamese.dyndns.org>
+References: <49382612.3010207@fs.ei.tum.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Deskin Miller <deskinm@umich.edu>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Dec 04 20:28:08 2008
+Cc: git <git@vger.kernel.org>
+To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+X-From: git-owner@vger.kernel.org Thu Dec 04 20:29:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8Jro-00051z-VR
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 20:28:05 +0100
+	id 1L8Jsj-0005Q3-Ir
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 20:29:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787AbYLDT0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 14:26:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752709AbYLDT0s
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 14:26:48 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:58594 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751663AbYLDT0r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 14:26:47 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id BF8D52DC01A;
-	Thu,  4 Dec 2008 19:26:46 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <49365259.5090803@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753788AbYLDT1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 14:27:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753906AbYLDT1p
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 14:27:45 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54516 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753765AbYLDT1o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 14:27:44 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5CA7284481;
+	Thu,  4 Dec 2008 14:27:42 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0BAD58447F; Thu,
+  4 Dec 2008 14:27:38 -0500 (EST)
+In-Reply-To: <49382612.3010207@fs.ei.tum.de> (Simon Schubert's message of
+ "Thu, 04 Dec 2008 19:48:50 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9EC59B2A-C239-11DD-91D9-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102359>
 
-Michael J Gruber <git@drmicha.warpmail.net> wrote:
-> Junio C Hamano venit, vidit, dixit 03.12.2008 04:55:
-> > Eric Wong <normalperson@yhbt.net> writes:
-> >> Deskin Miller <deskinm@umich.edu> wrote:
-> 
-> If I split the above copy into three lines then the test passes (svn
-> 1.4.6, Deskin's patch applied onto 1.6.1-rc1 with the fix.
+Simon 'corecode' Schubert <corecode@fs.ei.tum.de> writes:
 
-Thank you all for the testing and fixes.
+> We need to play some shell tricks to be able to pass directory names
+> which contain spaces and/or quotes.
 
--- 
-Eric Wong
+There already was an earlier attempt for this feature by Kevin Ballard,
+which had issues I pointed out:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/94335/focus=94456
+
+The patch was carried for a few weeks in 'pu' but was dropped due to lack
+of follow-up updates.
+
+Does your version address the issues Kevin's one had?
