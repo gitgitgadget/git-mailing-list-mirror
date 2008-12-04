@@ -1,67 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: more merge strategies : feature request
-Date: Wed, 03 Dec 2008 18:15:06 -0800
-Message-ID: <7vabbc7kk5.fsf@gitster.siamese.dyndns.org>
-References: <ee2a733e0812021707i82049eai866035aef3386264@mail.gmail.com>
- <81bfc67a0811290848m6cb219c0y71a7266001096f2d@mail.gmail.com>
- <4933AC03.6050300@op5.se>
- <ee2a733e0812011849l1b319c96u9abbb4e8dd4f53ce@mail.gmail.com>
- <81bfc67a0812020546o79906a20jcd04bd42d18dd803@mail.gmail.com>
- <20081204062717.6117@nanako3.lavabit.com>
+From: Gary Yang <garyyang6@yahoo.com>
+Subject: How to update the tag to Git server?
+Date: Wed, 3 Dec 2008 18:16:32 -0800 (PST)
+Message-ID: <84437.20577.qm@web37903.mail.mud.yahoo.com>
+Reply-To: garyyang6@yahoo.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Leo Razoumov" <slonik.az@gmail.com>,
-	"Caleb Cushing" <xenoterracide@gmail.com>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 03:16:39 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 04 03:17:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L83ld-0005eh-LC
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 03:16:38 +0100
+	id 1L83mq-000607-QP
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 03:17:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754658AbYLDCPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 21:15:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756535AbYLDCPT
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 21:15:19 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51853 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756131AbYLDCPN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 21:15:13 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F1D1384807;
-	Wed,  3 Dec 2008 21:15:12 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E2E5784806; Wed,
-  3 Dec 2008 21:15:07 -0500 (EST)
-In-Reply-To: <20081204062717.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Thu, 04 Dec 2008 06:27:17 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 620F3BF4-C1A9-11DD-86B9-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752519AbYLDCQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 21:16:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751530AbYLDCQe
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 21:16:34 -0500
+Received: from web37903.mail.mud.yahoo.com ([209.191.91.165]:41961 "HELO
+	web37903.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1750942AbYLDCQe (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Dec 2008 21:16:34 -0500
+Received: (qmail 20758 invoked by uid 60001); 4 Dec 2008 02:16:33 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Message-ID;
+  b=E/10U3kpxWlsrH+VJ1jfoMCivhwmd4X5u5njo2rQ1LeNUCn7Cvu9wrNcAP6iYxmfHdsZvvFcOggTv+Rj0oRtLnImT5b+eoZUSaxg5YjvWwwl2mCs2qgpPkr+UaOlS8XdY4N7LqD/DYWkoGZyuMnTtYhQoGh83HM+HsEClfl3y/c=;
+X-YMail-OSG: uNX94E8VM1nBX95mL2aFw5A8KBXMfwIDE87yxe63lvBjOVmU5sjS8hhcMbTWYotMAfQsVay_bgU_d_08MnSOSYgzxrLM9DrDFkSe5AHJ30H3323YDJwFlmSM5VdWOeCFW8We38MFxAgpJjsKiUtPGMlBsqtU1ledoHijnK5KccxzVI6ij1BJOF0Ob7Zp
+Received: from [76.195.33.70] by web37903.mail.mud.yahoo.com via HTTP; Wed, 03 Dec 2008 18:16:32 PST
+X-Mailer: YahooMailWebService/0.7.260.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102322>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-> Isn't what Caleb wants "-X ours/theirs" per-hunk option for merge strategy backends?
->
-> It was discussed several months ago on the list and was rejected.  For details you can start here:
->
->     http://thread.gmane.org/gmane.comp.version-control.git/89010/focus=89021
->
-> I still think the patch in the above link was reasonable, but the thread
-> was distracted into discussing minor syntactical details of how the
-> option gets passed to the backend, and the rest of the discussion to
-> decide if it makes sense to add such a feature was unfortunately lost in
-> the noise and never concluded.
+I pushed code from my local repository to Git Server.
+git push git.company.com:/pub/git/training.git
 
-I thought http://article.gmane.org/gmane.comp.version-control.git/89033 in
-the thread (and your response to it which is 89175) pretty much concluded
-the discussion.  Is Caleb adding anything new to the discussion (iow, is
-there a convincing new argument why having such a merge is a good idea and
-what the workflow looks like that benefits from it)?
+I, then tagged my local repository.
+git tag -u gyang@company.com RELEASE_2
+
+I want to update the Git server so that I can have the tag at my Git server, I did:
+git push git.company.com:/pub/git/training.git
+Everything up-to-date
+
+I got "Everything up-to-date". Same story for the command with -f.
+git push -f svdcgit01.amcc.com:/pub/git/training.git
+
+git tag -l
+RELEASE_2
+
+>From my git server, git.company.com, I cannot see the tag at summary. I need to have the tag, RELEASE_2 at git.company.com. Can someone tell me how to do it?
+
+Thanks.
+
+
+
+
+
+
+
+      
