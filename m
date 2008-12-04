@@ -1,89 +1,61 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: [PATCH] Allow passing of --directory to git-am.
-Date: Thu, 04 Dec 2008 18:04:04 +0100
-Message-ID: <49380D84.5050403@fs.ei.tum.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git rebase --continue with goofy error
+Date: Thu, 4 Dec 2008 18:43:51 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812041842150.7045@racer>
+References: <5AC243B6-F048-4286-80E1-1D0E695792B9@illumaware.com> <49380639.3010508@drmicha.warpmail.net> <70AE8AF8-9353-442A-A315-047DA176B351@illumaware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 04 18:39:50 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Adrian Klingel <Adrian.Klingel@illumaware.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 18:46:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8IAZ-0004gE-Ls
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 18:39:20 +0100
+	id 1L8IGs-0007R0-ND
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 18:45:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759206AbYLDRh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 12:37:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759183AbYLDRhz
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 12:37:55 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:53995 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759067AbYLDRhy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 12:37:54 -0500
-X-Greylist: delayed 2026 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Dec 2008 12:37:54 EST
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id B33591C25E
-	for <git@vger.kernel.org>; Thu,  4 Dec 2008 18:04:05 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id AMtkAeK46KZo for <git@vger.kernel.org>;
-	Thu,  4 Dec 2008 18:04:05 +0100 (CET)
-Received: from [192.168.10.11] (dyn.144-85-212-018.dsl.vtx.ch [144.85.212.18])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 82D331C0A9
-	for <git@vger.kernel.org>; Thu,  4 Dec 2008 18:04:05 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.17 (X11/20081021)
+	id S1755329AbYLDRoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 12:44:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754846AbYLDRod
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 12:44:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35342 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753374AbYLDRod (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 12:44:33 -0500
+Received: (qmail invoked by alias); 04 Dec 2008 17:44:30 -0000
+Received: from pD9EB33F3.dip0.t-ipconnect.de (EHLO noname) [217.235.51.243]
+  by mail.gmx.net (mp016) with SMTP; 04 Dec 2008 18:44:30 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+UunkldfGU1s7SpSiEuzVfmZnyTqQeWPENbXPDfN
+	yuXTijRhe6mQaz
+X-X-Sender: gene099@racer
+In-Reply-To: <70AE8AF8-9353-442A-A315-047DA176B351@illumaware.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.75
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102352>
 
-We need to play some shell tricks to be able to pass directory names
-which contain spaces and/or quotes.
+Hi,
 
-Signed-off-by: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
----
-  git-am.sh |    8 +++++---
-  1 files changed, 5 insertions(+), 3 deletions(-)
+On Thu, 4 Dec 2008, Adrian Klingel wrote:
 
-diff --git a/git-am.sh b/git-am.sh
-index aa60261..4052d7d 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -16,6 +16,7 @@ s,signoff       add a Signed-off-by line to the commit 
-message
-  u,utf8          recode into utf8 (default)
-  k,keep          pass -k flag to git-mailinfo
-  whitespace=     pass it through git-apply
-+directory=      pass it through git-apply
-  C=              pass it through git-apply
-  p=              pass it through git-apply
-  resolvemsg=     override error message when patch failure occurs
-@@ -155,8 +156,9 @@ do
-  		;;
-  	--resolvemsg)
-  		shift; resolvemsg=$1 ;;
--	--whitespace)
--		git_apply_opt="$git_apply_opt $1=$2"; shift ;;
-+	--whitespace|--directory)
-+		quot=$(echo "$2" | sed -e "s/'/\\'/g")
-+		git_apply_opt="$git_apply_opt $1='$quot'"; shift ;;
-  	-C|-p)
-  		git_apply_opt="$git_apply_opt $1$2"; shift ;;
-  	--)
-@@ -454,7 +456,7 @@ do
+> I found out why my "git rebase --continue" was failing.  Do I need to 
+> explicitly add the .dotest directory and contents after each rebase 
+> failure?
 
-  	case "$resolved" in
-  	'')
--		git apply $git_apply_opt --index "$dotest/patch"
-+		eval git apply $git_apply_opt --index '"$dotest/patch"'
-  		apply_status=$?
-  		;;
-  	t)
--- 
-1.6.1.rc1.45.g123ed.dirty
+You did _what_?
+
+The directory .dotest/ contains metadata of the rebase.  That you have to 
+add it probably means that your commits contain files in that directory.  
+Which is bogus.
+
+Just another proof that we were right to move .dotest/ into .git/ (which 
+you will benefit from after an upgrade).
+
+Ciao,
+Dscho
