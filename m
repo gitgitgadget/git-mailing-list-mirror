@@ -1,93 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to update the tag to Git server?
-Date: Wed, 03 Dec 2008 18:48:43 -0800
-Message-ID: <7v1vwo7j04.fsf@gitster.siamese.dyndns.org>
-References: <84437.20577.qm@web37903.mail.mud.yahoo.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: "git help stage" doesn't display git-stage man page
+Date: Wed, 3 Dec 2008 22:42:03 -0500
+Message-ID: <20081204034203.GA12835@coredump.intra.peff.net>
+References: <7vvdu1hj41.fsf@gitster.siamese.dyndns.org> <87myfdn2ga.fsf@iki.fi> <7vwsehfzf7.fsf@gitster.siamese.dyndns.org> <7vmyfdfyi9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: garyyang6@yahoo.com
-X-From: git-owner@vger.kernel.org Thu Dec 04 03:50:10 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 04:43:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L84I3-0004Xf-Ri
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 03:50:08 +0100
+	id 1L857p-0007ZX-AY
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 04:43:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754524AbYLDCsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 21:48:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754232AbYLDCsu
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 21:48:50 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60877 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754143AbYLDCst (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 21:48:49 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 76EE184A5D;
-	Wed,  3 Dec 2008 21:48:48 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8C97384A5A; Wed,
-  3 Dec 2008 21:48:45 -0500 (EST)
-In-Reply-To: <84437.20577.qm@web37903.mail.mud.yahoo.com> (Gary Yang's
- message of "Wed, 3 Dec 2008 18:16:32 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 13639A68-C1AE-11DD-912D-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753438AbYLDDmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 22:42:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106AbYLDDmI
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 22:42:08 -0500
+Received: from peff.net ([208.65.91.99]:1494 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750966AbYLDDmH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 22:42:07 -0500
+Received: (qmail 27414 invoked by uid 111); 4 Dec 2008 03:42:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Dec 2008 22:42:04 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Dec 2008 22:42:03 -0500
+Content-Disposition: inline
+In-Reply-To: <7vmyfdfyi9.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102325>
 
-Gary Yang <garyyang6@yahoo.com> writes:
+On Wed, Dec 03, 2008 at 12:34:22AM -0800, Junio C Hamano wrote:
 
-> I pushed code from my local repository to Git Server.
-> git push git.company.com:/pub/git/training.git
->
-> I, then tagged my local repository.
-> git tag -u gyang@company.com RELEASE_2
+> diff --git a/Makefile b/Makefile
+> index 9577d6f..5158197 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -320,6 +320,7 @@ BUILT_INS += git-merge-subtree$X
+>  BUILT_INS += git-peek-remote$X
+>  BUILT_INS += git-repo-config$X
+>  BUILT_INS += git-show$X
+> +BUILT_INS += git-stage$X
+>  BUILT_INS += git-status$X
+>  BUILT_INS += git-whatchanged$X
 
-git-push(1) manual page says that the syntax of the command is:
+We need this, too, then.
 
-   'git push' [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
-              [--repo=<repository>] [-f | --force] [-v | --verbose]
-              [<repository> <refspec>...]
+-- >8 --
+add stage to gitignore
 
-and its OPTIONS section explains what <refspec> means.
+This is a generated builtin since 24b1f65f (Install git-stage in
+exec-path).
 
-<refspec>...::
-	The canonical format of a <refspec> parameter is
-	`+?<src>:<dst>`; that is, an optional plus `{plus}`, followed
-	by the source ref, followed by a colon `:`, followed by
-	the destination ref.
-	...
-        The <src> side represents the source branch (or arbitrary
-        "SHA1 expression", such as `master~4` (four parents before the
-        tip of `master` branch); see linkgit:git-rev-parse[1]) that you
-        want to push.  The <dst> side represents the destination location.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ .gitignore |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-You want to update refs/tags/RELEASE_2 on the destination side (i.e. the
-public server) with the same refs/tags/RELEASE_2 on the source side
-(i.e. your side), so you would want to say
-
-	refs/tags/RELEASE_2:refs/tags/RELEASE_2
-
-for <refspec>.  The documentation further mentions that there is a
-short-hand for that:
-
-	`tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
-
-Hence the command line becomes:
-
-    $ git push svdcgit01.amcc.com:/pub/git/training.git tag RELEASE_2
-
-Note that saying "tag" is redundant these days as long as you do not have
-a branch named "RELEASE_2" at the same time.  But saying "tag" never
-hurts, as it is still (and will be) supported.
-
-Note to people who teach git to new people.  The moral of the story is not
-that people should learn to read the manual pages.  It is that people
-should not learn "push" without remote nor refspec first.  In other words,
-the first push command you teach them should be the "git push $over_there
-$this_refspec" form, fully spelled.
+diff --git a/.gitignore b/.gitignore
+index 0c35577..327e660 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -118,6 +118,7 @@ git-show
+ git-show-branch
+ git-show-index
+ git-show-ref
++git-stage
+ git-stash
+ git-status
+ git-stripspace
+-- 
+1.6.1.rc1.309.g51074
