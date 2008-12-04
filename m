@@ -1,63 +1,61 @@
-From: david@lang.hm
-Subject: gittorrent on /.
-Date: Thu, 4 Dec 2008 13:15:00 -0800 (PST)
-Message-ID: <alpine.DEB.1.10.0812041313270.7145@asgard.lang.hm>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [PATCH 1/4] add strbuf_expand_dict_cb(), a helper for simple
+	cases
+Date: Thu, 04 Dec 2008 14:30:29 -0600
+Message-ID: <1228422630.32534.4.camel@ld0161-tx32>
+References: <4928912A.5050307@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 04 21:16:02 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?ISO-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Dec 04 21:32:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8Kbu-0007xq-Dd
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 21:15:42 +0100
+	id 1L8Kre-0005Yz-1O
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 21:31:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752681AbYLDUOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 15:14:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753232AbYLDUOY
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 15:14:24 -0500
-Received: from mail.lang.hm ([64.81.33.126]:41208 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752327AbYLDUOY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 15:14:24 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id mB4KEN7v009509
-	for <git@vger.kernel.org>; Thu, 4 Dec 2008 12:14:23 -0800
-X-X-Sender: dlang@asgard.lang.hm
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1754577AbYLDUak convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Dec 2008 15:30:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754573AbYLDUak
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 15:30:40 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:39535 "EHLO
+	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753851AbYLDUaj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 15:30:39 -0500
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw02.freescale.net (8.14.3/az33egw02) with ESMTP id mB4KUVPp004724;
+	Thu, 4 Dec 2008 13:30:31 -0700 (MST)
+Received: from ld0161-tx32 (ld0161-tx32.am.freescale.net [10.82.19.111])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id mB4KUU0Z002563;
+	Thu, 4 Dec 2008 14:30:30 -0600 (CST)
+In-Reply-To: <4928912A.5050307@lsrfire.ath.cx>
+X-Mailer: Evolution 2.0.2 (2.0.2-35.el4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102365>
 
-lots of misinformation in here (including the implication that gittorrent 
-is ready, or nearly ready to use).
+On Sun, 2008-11-23 at 00:09 +0100, Ren=C3=A9 Scharfe wrote:
+> The new callback function strbuf_expand_dict_cb() can be used togethe=
+r
+> with strbuf_expand() if there is only a small number of placeholders
+> for static replacement texts.  It expects its dictionary as an array =
+of
+> placeholder+value pairs as context parameter, terminated by an entry
+> with the placeholder member set to NULL.
+>=20
+> The new helper is intended to aid converting the remaining calls of
+> interpolate().  strbuf_expand() is smaller, more flexible and can be
+> used to go faster than interpolate(), so it should replace the latter=
+=2E
+>=20
+> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+> ---
 
-David Lang
+Acked-by: Jon Loeliger <jdl@freescale.com>
 
-http://tech.slashdot.org/tech/08/12/04/1625226.shtml
-
-Political and Technical Implications of GitTorrent
-Posted by CmdrTaco on Thursday December 04, @01:03PM
-from the distribute-this-sucka dept.
-Programming Media
-lkcl writes "The GitTorrent Protocol (GTP) is a protocol for collaborative 
-git repository distribution across the Internet. Git promises to be a 
-distributed software management tool, where a repository can be 
-distributed. Yet, the mechanisms used to date to actually 'distribute,' 
-such as ssh, are very much still centralized. GitTorrent makes Git truly 
-distributed. The initial plans are for reducing mirror loading, however 
-the full plans include totally distributed development: no central mirrors 
-whatsoever. PGP signing (an existing feature of git) and other 
-web-of-trust-based mechanisms will take over from protocols on ports (e.g. 
-ssh) as the access control 'clearing house.' The implications of a truly 
-distributed revision control system are truly staggering: unrestricted 
-software freedom. The playing field is leveled in so many ways, as 'The 
-Web Site' no longer becomes the central choke-point of control. Coming 
-just in time for that all-encompassing Free Software revolution hinted at 
-by The Rebellion Against Vista, this article will explain more fully some 
-of the implications that make this quiet and technically brilliant 
-project, GitTorrent, so important to Software Freedom, from both technical 
-and political perspectives."
+jdl
