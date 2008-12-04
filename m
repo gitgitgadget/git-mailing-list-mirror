@@ -1,82 +1,125 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: [PATCH] Allow passing of --directory to git-am.
-Date: Thu, 04 Dec 2008 23:26:16 +0100
-Message-ID: <49385908.5020202@fs.ei.tum.de>
-References: <49382612.3010207@fs.ei.tum.de> <7vhc5jeo60.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: pre-rebase safety hook
+Date: Thu, 04 Dec 2008 14:29:52 -0800
+Message-ID: <7vd4g7d15r.fsf@gitster.siamese.dyndns.org>
+References: <e1a5e9a00812040958u3af4c69ofba66567baacb79c@mail.gmail.com>
+ <7vbpvrens3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 23:27:46 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Tim Harper" <timcharper@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 23:31:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8MfX-0007sk-AA
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 23:27:35 +0100
+	id 1L8MjA-0000vz-Cy
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 23:31:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756356AbYLDW0S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Dec 2008 17:26:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756369AbYLDW0S
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 17:26:18 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:34760 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756353AbYLDW0S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2008 17:26:18 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id E48071C25E;
-	Thu,  4 Dec 2008 23:26:16 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id weYD7m8W2-vT; Thu,  4 Dec 2008 23:26:16 +0100 (CET)
-Received: from [192.168.10.11] (dyn.144-85-212-018.dsl.vtx.ch [144.85.212.18])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 75B5C1C0F1;
-	Thu,  4 Dec 2008 23:26:16 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.17 (X11/20081021)
-In-Reply-To: <7vhc5jeo60.fsf@gitster.siamese.dyndns.org>
+	id S1756369AbYLDWaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 17:30:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756307AbYLDWaA
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 17:30:00 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33816 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756102AbYLDWaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 17:30:00 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 75F5E181E3;
+	Thu,  4 Dec 2008 17:29:58 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 10D91181E2; Thu, 
+ 4 Dec 2008 17:29:54 -0500 (EST)
+In-Reply-To: <7vbpvrens3.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 04 Dec 2008 11:35:56 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1532D19C-C253-11DD-B4BF-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102372>
 
-Junio C Hamano wrote:
-> Simon 'corecode' Schubert <corecode@fs.ei.tum.de> writes:
->=20
->> We need to play some shell tricks to be able to pass directory names
->> which contain spaces and/or quotes.
->=20
-> There already was an earlier attempt for this feature by Kevin Ballar=
-d,
-> which had issues I pointed out:
->=20
->   http://thread.gmane.org/gmane.comp.version-control.git/94335/focus=3D=
-94456
->=20
-> The patch was carried for a few weeks in 'pu' but was dropped due to =
-lack
-> of follow-up updates.
->=20
-> Does your version address the issues Kevin's one had?
+Junio C Hamano <gitster@pobox.com> writes:
 
-You mean not storing/restoring the flags across an invocation?  No, tha=
-t's=20
-a different thing.  My patch only adds the --directory option, it does =
-not=20
-fix the previously existing bug.
+> If you want to prevent a branch whose tip commit is on more than one
+> branches from being rebased, I think something like this would suffice.
+>
+>     #!/bin/sh
+>     LF='
+>     '
+>     in_branches=$(git branch -a --with "${2-HEAD}")
+>     case "$in_branches" in
+>     *"$LF"*)
+> 	: this commit is on more than two branches
+>         exit 1
+>         ;;
+>     esac
+>     exit 0
+>
+> But I didn't test it.
 
-cheers
-   simon
+Actually, the above cannot possibly be right.  To decide whether to allow
+rebasing of a branch or not, you need to also give it from which commit
+the rebase will rewrite.
 
---=20
-   <3 the future  +++  RENT this banner advert  +++   ASCII Ribbon   /"=
-\
-   rock the past  +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1 =
- +++     Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+For example, suppose you have a branch "topic", that was forked from
+"master" and built two commits, then another branch "side" was forked from
+that, and you have three more commits on "topic" since then:
+
+               o "side"
+              /  
+         A---B---C---D---E "topic"
+        /
+    ---o---o---o---o "master"
+
+Now, can I allow you to rebase "topic"?  It depends.  These should be
+allowed:
+
+	git rebase B "topic"
+	git rebase C "topic"
+	git rebase D "topic"
+
+but rebasing "topic" on top of "master", or anything that changes the fact
+that "topic" contains commits A and B, should be prohibited, because it
+will interfere with "side".  For example,
+
+	git rebase A "topic"
+
+would make this history:
+
+           B---o "side"
+          /
+         A---B'--C'--D'--E' "topic"
+        /
+    ---o---o---o---o "master"
+
+where B' and B are different commits.
+
+So you need to check all the commits that will be affected by the rebase
+to see if any of them is on a branch other than the one that is being
+rebased.  The set of commits that needs to be checked are:
+
+        git rev-list "$1..${2-HEAD}"
+
+so a naive implementation that is based on brnach --with would probably
+look like:
+
+	#!/bin/sh
+
+	: allow rebasing a detached HEAD
+	git symbolic-ref -q HEAD || exit 0
+
+        LF='
+        '
+        git rev-list "$1..${2-HEAD}" |
+        while read commit
+        do
+        	case "$(git branch -a --with $commit)" in
+                *"$LF"*)
+                	: this is on two or more branches
+                        exit 1
+                        ;;
+		esac
+	done
