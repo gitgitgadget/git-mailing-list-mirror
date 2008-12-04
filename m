@@ -1,85 +1,163 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: git rebase --continue with goofy error
-Date: Thu, 4 Dec 2008 17:27:57 +0100
-Message-ID: <20081204162757.GA23360@atjola.homenet>
+Date: Thu, 04 Dec 2008 17:32:57 +0100
+Message-ID: <49380639.3010508@drmicha.warpmail.net>
 References: <5AC243B6-F048-4286-80E1-1D0E695792B9@illumaware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Adrian Klingel <Adrian.Klingel@illumaware.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 17:29:50 2008
+X-From: git-owner@vger.kernel.org Thu Dec 04 17:34:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8H4w-0000Om-59
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 17:29:26 +0100
+	id 1L8H9m-0002Zf-Pg
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 17:34:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787AbYLDQ2E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Dec 2008 11:28:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbYLDQ2D
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 11:28:03 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50089 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751214AbYLDQ2B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 11:28:01 -0500
-Received: (qmail invoked by alias); 04 Dec 2008 16:27:59 -0000
-Received: from i577B9D5C.versanet.de (EHLO atjola.local) [87.123.157.92]
-  by mail.gmx.net (mp067) with SMTP; 04 Dec 2008 17:27:59 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+pf+Fver+ph6FX0Fa5mC93cSUjONJ0Jw1Tx3HY48
-	cozuilp5XFtQLf
-Content-Disposition: inline
+	id S1752022AbYLDQdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 11:33:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751993AbYLDQdF
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 11:33:05 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:59323 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751969AbYLDQdE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Dec 2008 11:33:04 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 836E41CCC5A;
+	Thu,  4 Dec 2008 11:33:01 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 04 Dec 2008 11:33:01 -0500
+X-Sasl-enc: fALSBFh7f3nQJWBp98bOfm0+T4O5YfcxxvImbofZuoZ4 1228408381
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id CD61513E0F;
+	Thu,  4 Dec 2008 11:33:00 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081105)
 In-Reply-To: <5AC243B6-F048-4286-80E1-1D0E695792B9@illumaware.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102348>
 
-On 2008.12.04 09:55:55 -0500, Adrian Klingel wrote:
+Adrian Klingel venit, vidit, dixit 04.12.2008 15:55:
+> I am trying so, so hard to rebase a branch with updates made in master:
+> 
+> *********
+> git rebase master
+> *********
+> 
+> I get about 20 conflicts back, which I fix and do:
+> 
+> *********
+> git add *
+> *********
+> 
+> There were also many, many error messages after the rebase command, eg:
+> 
+> *********
+> error: test/unit/missing_year_test.rb: already exists in index
+> error: test/unit/axle_test.rb: already exists in index
+> error: test/unit/body_style_test.rb: already exists in index
+> error: test/unit/brake_test.rb: already exists in index
+> error: test/unit/category_test.rb: already exists in index
+> error: test/unit/comment_test.rb: already exists in index
+> error: test/unit/company_comment_test.rb: does not exist in index
+> error: test/unit/country_test.rb: already exists in index
+> *********
+> 
+> 
+> but I ignore that error, because I have no idea what it means.  If I  
+
+Not a good general approach. If there are errors to begin with there is
+no reason to expect success later on.
+
+Here, I assume you are starting from a dirty working tree. What did git
+status say before the rebase?
+
+> were to guess, I'd say it's trying to copy files from master to my  
+> current branch.  Of course.
+> 
+> So now I have added my conflict fixes, per the message:
+> 
+> *********
+> Failed to merge in the changes.
+> Patch failed at 0002.
+> 
+> When you have resolved this problem run "git rebase --continue".
+> If you would prefer to skip this patch, instead run "git rebase --skip".
+> To restore the original branch and stop rebasing run "git rebase -- 
+> abort".
+> *********
+
+What command triggered that message? It's certainly not saying that you
+have added your conflict fixes, as you seem to think.
+
+> 
+> So I decide to continue:
+> 
+> *********
+> git rebase --continue
+> *********
+> 
+> 
 > And I get the following:
->
+> 
 > *********
 > mymac:/Library/mydir/code/myapp me$ git rebase --continue
 > Unknown option: 1
 > Usage: head [-options] <url>...
->     -m <method>   use method for the request (default is 'HEAD')
->     -f            make request even if head believes method is illega=
-l
->     -b <base>     Use the specified URL as base
->     -t <timeout>  Set timeout value
->     -i <time>     Set the If-Modified-Since header on the request
->     -c <conttype> use this content-type for POST, PUT, CHECKIN
->     -a            Use text mode for content I/O
->     -p <proxyurl> use this as a proxy
->     -P            don't load proxy settings from environment
->     -H <header>   send this HTTP header (you can specify several)
->
->     -u            Display method and URL before any response
->     -U            Display request headers (implies -u)
->     -s            Display response status code
->     -S            Display response status chain
->     -e            Display response headers
->     -d            Do not display content
->     -o <format>   Process HTML content in various ways
->
->     -v            Show program version
->     -h            Print this message
->
->     -x            Extra debugging output
+>      -m <method>   use method for the request (default is 'HEAD')
+>      -f            make request even if head believes method is illegal
+>      -b <base>     Use the specified URL as base
+>      -t <timeout>  Set timeout value
+>      -i <time>     Set the If-Modified-Since header on the request
+>      -c <conttype> use this content-type for POST, PUT, CHECKIN
+>      -a            Use text mode for content I/O
+>      -p <proxyurl> use this as a proxy
+>      -P            don't load proxy settings from environment
+>      -H <header>   send this HTTP header (you can specify several)
+> 
+>      -u            Display method and URL before any response
+>      -U            Display request headers (implies -u)
+>      -s            Display response status code
+>      -S            Display response status chain
+>      -e            Display response headers
+>      -d            Do not display content
+>      -o <format>   Process HTML content in various ways
+> 
+>      -v            Show program version
+>      -h            Print this message
+> 
+>      -x            Extra debugging output
+> Applying
+> You still have unmerged paths in your index
+> did you forget to use 'git add'?
+> 
+> When you have resolved this problem run "git rebase --continue".
+> If you would prefer to skip this patch, instead run "git rebase --skip".
+> To restore the original branch and stop rebasing run "git rebase -- 
+> abort".
+> 
+> *********
+> 
+> 
+> A google search of "git" and "Unknown option: 1" yields zero  
+> results. 
 
-That comes via git-am which used to call "head -1", but using -<n> is
-deprecated and apparently not supported anymore by modern versions of
-coreutils. Was fixed in:
+As the "Usage: head..." tells us, the message comes from the command
+"head", not from git. (head is used by git-rebase -i)
 
-1d9b2656: git-am: head -1 is obsolete and doesn't work on some new syst=
-ems
+> Notice I did not commit the adds.  I didn't think it made  
+> sense to do that, since I imagine that is what the rebase is doing  
+> anyway?
+> 
+> This is on git version 1.5.5.3.
+> 
+> Should I upgrade git?  Will that break any repos that I have?
 
-Which is in git 1.5.6.
+Yes! No!
 
-Bj=F6rn
+Cheers,
+Michael
