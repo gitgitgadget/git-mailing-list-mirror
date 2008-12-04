@@ -1,81 +1,117 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git-gui: Warn when username and e-mail address is unconfigured?
-Date: Fri, 5 Dec 2008 00:30:15 +0300
-Organization: HOME
-Message-ID: <200812050030.16467.angavrilov@gmail.com>
-References: <Pine.LNX.4.64.0812041141160.9969@ds9.cixit.se> <bd6139dc0812041104s26ae149foeafa489e65aeb584@mail.gmail.com> <b9fd99020812041254l5d1fa383m4fcc3b40f6fabacb@mail.gmail.com>
+Date: Thu, 04 Dec 2008 13:34:22 -0800
+Message-ID: <7vskp3d3q9.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0812041141160.9969@ds9.cixit.se>
+ <b9fd99020812040805j1143c029yf0cc4c1c4a835759@mail.gmail.com>
+ <bd6139dc0812041104s26ae149foeafa489e65aeb584@mail.gmail.com>
+ <b9fd99020812041254l5d1fa383m4fcc3b40f6fabacb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: sverre@rabbelier.nl, "Peter Krefting" <peter@softwolves.pp.se>,
+Content-Type: text/plain; charset=us-ascii
+Cc: spearce@spearce.org, sverre@rabbelier.nl,
+	"Peter Krefting" <peter@softwolves.pp.se>,
 	"Git Mailing List" <git@vger.kernel.org>
 To: "Jeremy Ramer" <jdramer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 22:33:10 2008
+X-From: git-owner@vger.kernel.org Thu Dec 04 22:36:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8Loh-0003x1-L3
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 22:33:00 +0100
+	id 1L8LrS-00054q-IN
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 22:35:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755193AbYLDVbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 16:31:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755081AbYLDVbh
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 16:31:37 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:24344 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754085AbYLDVbg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 16:31:36 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so2948199fgg.17
-        for <git@vger.kernel.org>; Thu, 04 Dec 2008 13:31:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=SQIl7BjffKRdOAxtgDEx2FD1McypIpUqjhNuCblZd94=;
-        b=D6fEzmOa9/RwV85oLtCVNeps0UuiGA7nGZi6Ebp1L9KntYAEtNTt6jl7tRgak3Wfuy
-         beHrQNQtlZrAVu+so5MYilV+gAUkGU1PhOdEONFHppYZcpcTs/fI4CyBJLkWRdenP+gz
-         danZxJ6epSYc88ePZOMJQi2rtw95yL75cqEGA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=o0YfvxAOVf2oQc3psP7gdyU0dCY1JYz6avqjovL8IBOTNGrfN78nECDFxdmSjk+nzZ
-         Pnev6ma7m7/tAHb/9D6agAezaFgMqcm1VLYp2Bh+ARCu031UagRHLQbhURZrQ/U+vJga
-         nySI62nX+fK/a8Vk13rJCtfFzDOQOgWBofPxk=
-Received: by 10.181.223.2 with SMTP id a2mr5172139bkr.184.1228426294211;
-        Thu, 04 Dec 2008 13:31:34 -0800 (PST)
-Received: from keydesk.localnet ([92.255.85.78])
-        by mx.google.com with ESMTPS id h2sm3603685fkh.29.2008.12.04.13.31.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 04 Dec 2008 13:31:33 -0800 (PST)
-User-Agent: KMail/1.10.3 (Linux/2.6.27.5-123.fc10.i686; KDE/4.1.3; i686; ; )
+	id S1755166AbYLDVee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 16:34:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755184AbYLDVee
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 16:34:34 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55269 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755081AbYLDVed (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 16:34:33 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2835E84FFF;
+	Thu,  4 Dec 2008 16:34:32 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5DF5684FFB; Thu,
+  4 Dec 2008 16:34:25 -0500 (EST)
 In-Reply-To: <b9fd99020812041254l5d1fa383m4fcc3b40f6fabacb@mail.gmail.com>
-Content-Disposition: inline
+ (Jeremy Ramer's message of "Thu, 4 Dec 2008 13:54:00 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 568ED724-C24B-11DD-AAA0-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102369>
 
-On Thursday 04 December 2008 23:54:00 Jeremy Ramer wrote:
+"Jeremy Ramer" <jdramer@gmail.com> writes:
+
 > On Thu, Dec 4, 2008 at 12:04 PM, Sverre Rabbelier <alturin@gmail.com> wrote:
-> > On Thu, Dec 4, 2008 at 17:05, Jeremy Ramer <jdramer@gmail.com> wrote:
-> >> That's strange. I am using git 1.6.0.4 on cygwin and I get a warning
-> >> message every time I start git gui.  I actually find this really
-> >> annoying and would like a way to turn this warning message off.
-> >
-> > git config --global user.name "Your Name"
-> > git config --global user.email "you@example.com"
-> >
-> 
+>> On Thu, Dec 4, 2008 at 17:05, Jeremy Ramer <jdramer@gmail.com> wrote:
+>>> That's strange. I am using git 1.6.0.4 on cygwin and I get a warning
+>>> message every time I start git gui.  I actually find this really
+>>> annoying and would like a way to turn this warning message off.
+>>
+>> git config --global user.name "Your Name"
+>> git config --global user.email "you@example.com"
+>>
+>
 > I have done that.  I still get the warning message every time I start git gui.
-> --
 
-What does it say precisely? I.e. is it perhaps the warning about subprocesses
-possibly ignoring the value of environment variables?
+I do not use Windows, and I do not run git-gui, so I am guessing only from
+the source.  Are you talking about the message composed by this part?
 
-Alexander
+    # -- Warn the user about environmental problems.  Cygwin's Tcl
+    #    does *not* pass its env array onto any processes it spawns.
+    #    This means that git processes get none of our environment.
+    #
+    if {[is_Cygwin]} {
+            set ignored_env 0
+            set suggest_user {}
+            set msg [mc "Possible environment issues exist.
+
+    The following environment variables are probably
+    going to be ignored by any Git subprocess run
+    by %s:
+
+    " [appname]]
+
+The logic to produce the error message does look somewhat screwy.
+
+It checks a selected set of variables whose name begin with GIT_ in the
+environment, and if it finds any, it gives the above message.  In
+addition, if GIT_{AUTHOR,COMMITTER}_{EMAIL,NAME} are among them, it also
+adds this to the message:
+
+                    if {$suggest_user ne {}} {
+                            append msg [mc "
+    A good replacement for %s
+    is placing values for the user.name and
+    user.email settings into your personal
+    ~/.gitconfig file.
+    " $suggest_user]
+
+There are two and half issues about this code.
+
+ (1) When it prepares additional message about user.{email,name},
+     it does not check if the user already has them defined.  IOW, there
+     is no way other than unsetenv before running git-gui to squelch this
+     part of the message.
+
+ (2) For other environment variables, such as GIT_PAGER, it does not offer
+     alternatives, such as core.pager.  Again, there is no way other than
+     unsetenv to squelch the warning.
+
+An excuse to both of the above could be that the warning is not about the
+user having environment variables that can be discarded, but about
+brokenness of Cygwin Tcl envirnonment that discards them.  But if that is
+the case, there is this other half issue:
+
+ (3) The warning does not trigger if the environment is not set when this
+     check is made.  Now I do not know if git-gui tries to spawn
+     subprocesses with its own (customized) environment settings (e.g. you
+     would need to be able to run git-commit-tree with modified
+     GIT_AUTHOR_NAME if you want to use the lowlevel plumbing to create a
+     new commit and lie about the author identity), but if it does, the
+     warning does not trigger.
