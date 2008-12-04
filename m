@@ -1,129 +1,126 @@
-From: William Pursell <bill.pursell@gmail.com>
-Subject: Re: summaries in git add --patch[PATCH 2/2]
-Date: Thu, 04 Dec 2008 06:56:37 +0000
-Message-ID: <49377F25.9020005@gmail.com>
-References: <492F0CAD.3010101@gmail.com> <7viqq8adsf.fsf@gitster.siamese.dyndns.org> <492F92C9.7030301@gmail.com> <7v8wr48g98.fsf@gitster.siamese.dyndns.org> <49308B4B.3070703@gmail.com> <7vskp6j95x.fsf@gitster.siamese.dyndns.org> <4936EE68.6030009@gmail.com> <7v4p1kalno.fsf@gitster.siamese.dyndns.org>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [RFCv3 1/2] gitweb: add patch view
+Date: Thu, 4 Dec 2008 08:24:52 +0100
+Message-ID: <cb7bb73a0812032324m24991c5cydec41203e738fa89@mail.gmail.com>
+References: <1228345188-15125-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <7vy6yw95ln.fsf@gitster.siamese.dyndns.org>
+	 <cb7bb73a0812031620s2459f773q3db33971e3507b2f@mail.gmail.com>
+	 <200812040249.01374.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 07:58:01 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Petr Baudis" <pasky@suse.cz>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 08:26:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L889w-0005Yn-Kb
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 07:58:01 +0100
+	id 1L88bF-0003rD-0Q
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 08:26:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795AbYLDG4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 01:56:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbYLDG4o
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 01:56:44 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:31317 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751202AbYLDG4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 01:56:43 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so1663617eyi.37
-        for <git@vger.kernel.org>; Wed, 03 Dec 2008 22:56:41 -0800 (PST)
+	id S1752953AbYLDHYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 02:24:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753109AbYLDHYy
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 02:24:54 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:47883 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750925AbYLDHYy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 02:24:54 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so2041479nfc.21
+        for <git@vger.kernel.org>; Wed, 03 Dec 2008 23:24:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=tPWOqXScsA5r9EEedGa+JpTzNYyRVow0pK1Zf9qd9NE=;
-        b=W+MCsYKqhcvod/VK+Vv4Absu+PNgaG9myF1bDlX+PZvDJg+K4Kmi3xmu6L5G6ezovA
-         yTEj1RC0nmFH1UIBT1zzDJrMpbtQKjrVitxiph5ueXsQNTwe4DpYEKskeN6S5mnMOrl1
-         AByOKj86s1XNNPb+Q0NC8YIadUyMe09Pe4Alo=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=j1v7Fhwtydqni5FjtC67uMQ7thhK26+iVM1DBDWRTlM=;
+        b=k68hJEmB6aCx/ZLMlDhsm6JwkPUKuH26sCDpttqontgJMukucMs6Hi7sQMlCKVA/Pu
+         t6iDgp/5lbJWurcqLnk+fGiM7aKYacqjGDdaIA/95BKeU7EUuP3UuH5isppPi1xmZDcP
+         yTQ6wpXmasrmMYP0riCQSsgudQ/K7TUzCx6CQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=iJHMfRExl+pwZoXDJqr6uU2OGitmSiKwsy2Kl8g47N676IrYFGcO/1L4As4egYw49w
-         lDUDAOc3Vif42ngHprrqUWK0m5FW6ek2e41EC+MdEnulJF0p/0NgPBsQ5ZibHnqI5XDJ
-         ckAfwxg2rH1LuSVdA5Mts86XRBwdNcfBXoLO4=
-Received: by 10.210.51.18 with SMTP id y18mr16242173eby.103.1228373801522;
-        Wed, 03 Dec 2008 22:56:41 -0800 (PST)
-Received: from clam.local (5ace1311.bb.sky.com [90.206.19.17])
-        by mx.google.com with ESMTPS id p10sm1754833gvf.12.2008.12.03.22.56.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Dec 2008 22:56:40 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.18 (Macintosh/20081105)
-In-Reply-To: <7v4p1kalno.fsf@gitster.siamese.dyndns.org>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Y1qpIdwX9mpNP34Zxro2QI96gBFRiAMXaYwnvXXXMwDMREO6LmsNWllz8gnRficRtj
+         D2syRwyc6JfDLLOVik8Qhp18dQCFdchzXh0OGbbfAxgB+DKLXc2yy7/tkXjxH7PbqTgT
+         9Aw/hp+9SY9k9fDVnHQ6U8SpuuNRoQO8dtXaQ=
+Received: by 10.210.52.15 with SMTP id z15mr3200202ebz.28.1228375492237;
+        Wed, 03 Dec 2008 23:24:52 -0800 (PST)
+Received: by 10.210.79.12 with HTTP; Wed, 3 Dec 2008 23:24:52 -0800 (PST)
+In-Reply-To: <200812040249.01374.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102328>
 
- From b039fb8aa03efab3faf46c0a0a8d84cea974f26f Mon Sep 17 00:00:00 2001
-From: William Pursell <bill.pursell@gmail.com>
-Date: Thu, 4 Dec 2008 06:48:57 +0000
-Subject: [PATCH 2/2] Add 'g' command to go to a hunk.
+On Thu, Dec 4, 2008 at 2:48 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Thu, Dec 4, 2008 at 01:20, Giuseppe Bilotta wrote:
+>> On Thu, Dec 4, 2008 at 12:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+>>>> +
+>>>> +     # The maximum number of patches in a patchset generated in patch
+>>>> +     # view. Set this to 0 or undef to disable patch view, or to a
+>>>> +     # negative number to remove any limit.
+>>>> +     'patches' => {
+>>>> +             'override' => 1,
+>>>> +             'default' => [16]},
+>
+> Errr... you need something like 'sub' => \&feature_patches for override
+> to actually work, I think.
 
-When a minor change is made while the working directory
-is in a bit of a mess (and the user should have done a
-stash before making the minor edit, but didn't) it is
-somewhat difficult to wade through all of the hunks using
-git add --patch.  This allows one to jump to the hunk
-that needs to be staged without having to respond 'n' to
-each preceding hunk.
+Oops, right.
 
-Signed-off-by: William Pursell <bill.pursell@gmail.com>
----
-  git-add--interactive.perl |   26 ++++++++++++++++++++++++++
-  1 files changed, 26 insertions(+), 0 deletions(-)
+>> I always assumed that the disabled default was related to how invasive
+>> the changes would be (to the UI or computationally-wise). As for the
+>> overridability, that's actually the only reason why it would make
+>> sense to put in the %feature hash ... otherwise a conf-settable
+>> $patch_max (as in v2) would have been enough.
+>
+> Add to that the fact that this patch just adds the new view, like for
+> example in the case of 'snapshot' link, which was turned on... but fact,
+> it was by default not overridable. I would agree that it can be turned
+> on with low limit but not overridable in introductory patch.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index b25a841..555c981 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -800,6 +800,7 @@ y - stage this hunk
-  n - do not stage this hunk
-  a - stage this and all the remaining hunks in the file
-  d - do not stage this hunk nor any of the remaining hunks in the file
-+g - select a hunk to goto
-  j - leave this hunk undecided, see next undecided hunk
-  J - leave this hunk undecided, see next hunk
-  k - leave this hunk undecided, see previous undecided hunk
-@@ -946,6 +947,9 @@ sub patch_update_file {
-  		if ($ix < $num - 1) {
-  			$other .= '/J';
-  		}
-+		if ($num > 1) {
-+			$other .= '/g';
-+		}
-  		for ($i = 0; $i < $num; $i++) {
-  			if (!defined $hunk[$i]{USE}) {
-  				$undecided = 1;
-@@ -979,6 +983,28 @@ sub patch_update_file {
-  				}
-  				next;
-  			}
-+			elsif ($other =~ 'g' && $line =~ /^g(.*)/) {
-+				my $response = $1;
-+				my $i = $ix > 10 ? $ix - 10 : 0;
-+				while ($response eq '') {
-+					my $extra = "";
-+					$i = display_hunks(\@hunk, $i);
-+					if ($i < $num) {
-+						$extra = " (<ret> to see more)";
-+					}
-+					print "goto which hunk$extra? ";
-+					$response = <STDIN>;
-+					chomp $response;
-+				}
-+				if ($response !~ /^\s*\d+\s*$/) {
-+					print STDERR "Invalid number: '$response'\n";
-+				} elsif (0 < $response && $response <= $num) {
-+					$ix = $response - 1;
-+				} else {
-+					print STDERR "Sorry, only $num hunks available.\n";
-+				}
-+				next;
-+			}
-  			elsif ($line =~ /^d/i) {
-  				while ($ix < $num) {
-  					if (!defined $hunk[$ix]{USE}) {
+Ok, I'll make it non-overridable, and keep this 16 limit for starters.
+Or would you suggest even lower?
+
+>>>>  sub git_commitdiff {
+>>>>       my $format = shift || 'html';
+>>>> +
+>>>> +     my $patch_max = gitweb_check_feature('patches');
+>>>> +     if ($format eq 'patch') {
+>>>> +             die_error(403, "Patch view not allowed") unless $patch_max;
+>>>> +     }
+>>>> +
+>>>
+>>> Should you have to pay overhead for the check-feature call even when
+>>> the $format is not "patch"?
+>>
+>> Actually I wasn't sure if I could use my within the if block, and have
+>> the value visible outside (it's used further down when picking the
+>> options to pass to format-patch). And since it was used in the second
+>> patch anyway to choose whether to add the 'patch' link in html view or
+>> not, I just put it outside the block.
+>
+> You have to use _declaration_ ourside block, but assignment can happen
+> inside:
+>
+> +     my $patch_max;
+> +     if ($format eq 'patch') {
+> +             $patch_max = gitweb_check_feature('patches');
+> +             die_error(403, "Patch view not allowed") unless $patch_max;
+> +     }
+
+Right, stupid me.
+
+> (Side note: doesn't it uses spaces instead of tabs for align?)
+
+I'll check.
+
 -- 
-1.6.1.rc1.37.g83daf.dirty
+Giuseppe "Oblomov" Bilotta
