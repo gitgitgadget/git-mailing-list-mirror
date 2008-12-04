@@ -1,86 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] gitk: fix 'can't read "notflag"'
-Date: Thu, 4 Dec 2008 15:34:15 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812041532160.7045@racer>
-References: <gh5q1t$qjn$1@ger.gmane.org>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: [PATCH] git-p4: Fix bug in p4Where method.
+Date: Thu, 04 Dec 2008 14:37:33 +0100
+Message-ID: <1228397853-15921-1-git-send-email-torarvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-814361349-1228401256=:7045"
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>,
-	Alejandro Riveira <ariveira@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 15:36:17 2008
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Tor Arvid Lund <torarvid@gmail.com>
+To: "Junio C. Hamano" <gitster@pobox.com>,
+	Simon Hausmann <simon@lst.de>
+X-From: git-owner@vger.kernel.org Thu Dec 04 15:39:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8FJQ-0003tH-Pd
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 15:36:17 +0100
+	id 1L8FM2-00051G-Jl
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 15:38:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755232AbYLDOe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 09:34:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754931AbYLDOe4
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 09:34:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33860 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751244AbYLDOez (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 09:34:55 -0500
-Received: (qmail invoked by alias); 04 Dec 2008 14:34:53 -0000
-Received: from pD9EB33F3.dip0.t-ipconnect.de (EHLO noname) [217.235.51.243]
-  by mail.gmx.net (mp013) with SMTP; 04 Dec 2008 15:34:53 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+lekhFkImlgjiGRiJKviPW2YOhuz3K8/PovKX9SM
-	V7L095XFnJo6Me
-X-X-Sender: gene099@racer
-In-Reply-To: <gh5q1t$qjn$1@ger.gmane.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1755262AbYLDOhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 09:37:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754782AbYLDOhl
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 09:37:41 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:58346 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753347AbYLDOhk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 09:37:40 -0500
+X-Greylist: delayed 3604 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Dec 2008 09:37:40 EST
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KBC00FB0TUL71E0@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Thu, 04 Dec 2008 14:37:33 +0100 (CET)
+Received: from exchange.qsystems.no ([213.187.171.142])
+ by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KBC00F0ITULBAB0@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Thu, 04 Dec 2008 14:37:33 +0100 (CET)
+Received: from pingvin.heads.no ([192.168.223.6]) by exchange.qsystems.no with
+ Microsoft SMTPSVC(6.0.3790.3959); Thu, 04 Dec 2008 14:41:09 +0100
+Received: by pingvin.heads.no (Postfix, from userid 1001)	id 8F9393182C8; Thu,
+ 04 Dec 2008 14:37:33 +0100 (CET)
+X-Mailer: git-send-email 1.6.0.90.g436ed
+X-OriginalArrivalTime: 04 Dec 2008 13:41:09.0375 (UTC)
+ FILETIME=[F6EC40F0:01C95615]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102340>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+When running:
 
---8323329-814361349-1228401256=:7045
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+p4 where //depot/SomePath/...
 
+The result can in some situations look like:
 
-Sometimes, when calling git bisect visualize, parameters including
-a "--not" are passed to gitk, triggering an uninitialized-variable bug
-introduced in ee66e089(gitk: Make updates go faster).
+//depot/SomePath/... //client/SomePath/... /home/user/p4root/SomePath/...
+-//depot/SomePath/UndesiredSubdir/... //client/SomePath/UndesiredSubdir/... /home/user/p4root/SomePath/UndesiredSubdir/...
 
-Noticed by Alejandro Riveira Fernández.
+This depends on the users Client view. The current p4Where method will now
+return /home/user/p4root/SomePath/UndesiredSubdir/... which is not what we
+want. This patch loops through the results from "p4 where", and picks the one
+where the depotFile exactly matches the given depotPath (//depot/SomePath/...
+in this example).
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Tor Arvid Lund <torarvid@gmail.com>
 ---
+ contrib/fast-import/git-p4 |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
 
-	On Wed, 3 Dec 2008, Alejandro Riveira wrote:
-
-	> $ git bisect visualize                                                                  (03-12 12:16)
-	> Error in startup script: can't read "notflag": no such variable
-
-	Alejandro was good enough to test this fix.
-
- gitk-git/gitk |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 3353f4a..b18bdf0 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -139,6 +139,7 @@ proc parseviewargs {n arglist} {
-     set origargs $arglist
-     set allknown 1
-     set filtered 0
-+    set notflag 0
-     set i -1
-     foreach arg $arglist {
- 	incr i
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 46136d4..7ade777 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -245,7 +245,15 @@ def p4Cmd(cmd):
+ def p4Where(depotPath):
+     if not depotPath.endswith("/"):
+         depotPath += "/"
+-    output = p4Cmd("where %s..." % depotPath)
++    depotPath = depotPath + "..."
++    outputList = p4CmdList("where %s" % depotPath)
++    output = None
++    for entry in outputList:
++        if entry["depotFile"] == depotPath:
++            output = entry
++            break
++    if output == None:
++        return ""
+     if output["code"] == "error":
+         return ""
+     clientPath = ""
 -- 
-1.6.0.4.1189.g8876f
-
---8323329-814361349-1228401256=:7045--
+1.6.0.2.1172.ga5ed0
