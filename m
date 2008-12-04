@@ -1,81 +1,81 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: gittorrent on /.
-Date: Thu, 04 Dec 2008 13:19:18 -0800
-Message-ID: <1228425558.2666.90.camel@localhost.localdomain>
-References: <alpine.DEB.1.10.0812041313270.7145@asgard.lang.hm>
+From: Alexander Gavrilov <angavrilov@gmail.com>
+Subject: Re: git-gui: Warn when username and e-mail address is unconfigured?
+Date: Fri, 5 Dec 2008 00:30:15 +0300
+Organization: HOME
+Message-ID: <200812050030.16467.angavrilov@gmail.com>
+References: <Pine.LNX.4.64.0812041141160.9969@ds9.cixit.se> <bd6139dc0812041104s26ae149foeafa489e65aeb584@mail.gmail.com> <b9fd99020812041254l5d1fa383m4fcc3b40f6fabacb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Thu Dec 04 22:21:19 2008
+Cc: sverre@rabbelier.nl, "Peter Krefting" <peter@softwolves.pp.se>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Jeremy Ramer" <jdramer@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 22:33:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8Ld2-0007VT-4e
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 22:20:56 +0100
+	id 1L8Loh-0003x1-L3
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 22:33:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755456AbYLDVT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 16:19:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753532AbYLDVT2
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 16:19:28 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:42889 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755456AbYLDVT1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 16:19:27 -0500
-Received: from [172.19.0.202] (c-67-164-30-157.hsd1.ca.comcast.net [67.164.30.157])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id mB4LJHXT019804
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 4 Dec 2008 13:19:17 -0800
-In-Reply-To: <alpine.DEB.1.10.0812041313270.7145@asgard.lang.hm>
-X-Mailer: Evolution 2.12.3 (2.12.3-5.fc8) 
-X-Virus-Scanned: ClamAV 0.88.7/8721/Thu Dec  4 05:26:10 2008 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Thu, 04 Dec 2008 13:19:17 -0800 (PST)
+	id S1755193AbYLDVbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 16:31:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755081AbYLDVbh
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 16:31:37 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:24344 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754085AbYLDVbg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 16:31:36 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so2948199fgg.17
+        for <git@vger.kernel.org>; Thu, 04 Dec 2008 13:31:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:organization:to:subject
+         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=SQIl7BjffKRdOAxtgDEx2FD1McypIpUqjhNuCblZd94=;
+        b=D6fEzmOa9/RwV85oLtCVNeps0UuiGA7nGZi6Ebp1L9KntYAEtNTt6jl7tRgak3Wfuy
+         beHrQNQtlZrAVu+so5MYilV+gAUkGU1PhOdEONFHppYZcpcTs/fI4CyBJLkWRdenP+gz
+         danZxJ6epSYc88ePZOMJQi2rtw95yL75cqEGA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:organization:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=o0YfvxAOVf2oQc3psP7gdyU0dCY1JYz6avqjovL8IBOTNGrfN78nECDFxdmSjk+nzZ
+         Pnev6ma7m7/tAHb/9D6agAezaFgMqcm1VLYp2Bh+ARCu031UagRHLQbhURZrQ/U+vJga
+         nySI62nX+fK/a8Vk13rJCtfFzDOQOgWBofPxk=
+Received: by 10.181.223.2 with SMTP id a2mr5172139bkr.184.1228426294211;
+        Thu, 04 Dec 2008 13:31:34 -0800 (PST)
+Received: from keydesk.localnet ([92.255.85.78])
+        by mx.google.com with ESMTPS id h2sm3603685fkh.29.2008.12.04.13.31.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 04 Dec 2008 13:31:33 -0800 (PST)
+User-Agent: KMail/1.10.3 (Linux/2.6.27.5-123.fc10.i686; KDE/4.1.3; i686; ; )
+In-Reply-To: <b9fd99020812041254l5d1fa383m4fcc3b40f6fabacb@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102368>
 
-*sighs* the slashdot commentators make me sad!  Bonus points to whoever
-got the comments up about "MirrorSync" up on the GitTorrent page.
-
-- John 'Warthog9' Hawley
-
-On Thu, 2008-12-04 at 13:15 -0800, david@lang.hm wrote:
-> lots of misinformation in here (including the implication that gittorrent 
-> is ready, or nearly ready to use).
+On Thursday 04 December 2008 23:54:00 Jeremy Ramer wrote:
+> On Thu, Dec 4, 2008 at 12:04 PM, Sverre Rabbelier <alturin@gmail.com> wrote:
+> > On Thu, Dec 4, 2008 at 17:05, Jeremy Ramer <jdramer@gmail.com> wrote:
+> >> That's strange. I am using git 1.6.0.4 on cygwin and I get a warning
+> >> message every time I start git gui.  I actually find this really
+> >> annoying and would like a way to turn this warning message off.
+> >
+> > git config --global user.name "Your Name"
+> > git config --global user.email "you@example.com"
+> >
 > 
-> David Lang
-> 
-> http://tech.slashdot.org/tech/08/12/04/1625226.shtml
-> 
-> Political and Technical Implications of GitTorrent
-> Posted by CmdrTaco on Thursday December 04, @01:03PM
-> from the distribute-this-sucka dept.
-> Programming Media
-> lkcl writes "The GitTorrent Protocol (GTP) is a protocol for collaborative 
-> git repository distribution across the Internet. Git promises to be a 
-> distributed software management tool, where a repository can be 
-> distributed. Yet, the mechanisms used to date to actually 'distribute,' 
-> such as ssh, are very much still centralized. GitTorrent makes Git truly 
-> distributed. The initial plans are for reducing mirror loading, however 
-> the full plans include totally distributed development: no central mirrors 
-> whatsoever. PGP signing (an existing feature of git) and other 
-> web-of-trust-based mechanisms will take over from protocols on ports (e.g. 
-> ssh) as the access control 'clearing house.' The implications of a truly 
-> distributed revision control system are truly staggering: unrestricted 
-> software freedom. The playing field is leveled in so many ways, as 'The 
-> Web Site' no longer becomes the central choke-point of control. Coming 
-> just in time for that all-encompassing Free Software revolution hinted at 
-> by The Rebellion Against Vista, this article will explain more fully some 
-> of the implications that make this quiet and technically brilliant 
-> project, GitTorrent, so important to Software Freedom, from both technical 
-> and political perspectives."
+> I have done that.  I still get the warning message every time I start git gui.
 > --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+What does it say precisely? I.e. is it perhaps the warning about subprocesses
+possibly ignoring the value of environment variables?
+
+Alexander
