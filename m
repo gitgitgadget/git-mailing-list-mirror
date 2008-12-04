@@ -1,130 +1,111 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFCv3 1/2] gitweb: add patch view
-Date: Thu, 4 Dec 2008 02:48:59 +0100
-Message-ID: <200812040249.01374.jnareb@gmail.com>
-References: <1228345188-15125-1-git-send-email-giuseppe.bilotta@gmail.com> <7vy6yw95ln.fsf@gitster.siamese.dyndns.org> <cb7bb73a0812031620s2459f773q3db33971e3507b2f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFC/PATCH] Document "git-reset --merge"
+Date: Wed, 03 Dec 2008 18:00:12 -0800
+Message-ID: <7vprk87l8z.fsf_-_@gitster.siamese.dyndns.org>
+References: <alpine.LFD.2.00.0812010908120.3256@nehalem.linux-foundation.org>
+ <7vr64oc30p.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.2.00.0812031634520.3256@nehalem.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Petr Baudis" <pasky@suse.cz>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 02:50:32 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 04 03:01:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L83MN-0007Vw-HA
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 02:50:31 +0100
+	id 1L83XE-00020Q-Lt
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 03:01:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751543AbYLDBtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 20:49:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbYLDBtH
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 20:49:07 -0500
-Received: from ey-out-2122.google.com ([74.125.78.27]:27804 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751295AbYLDBtE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 20:49:04 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so1635519eyi.37
-        for <git@vger.kernel.org>; Wed, 03 Dec 2008 17:49:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=lHahx4jx8g4spjP1+Y9BWoSA9VB0JrwzaFYOvhsa23c=;
-        b=dvpQG350HuCV2lrHYJwIypaF60snuSJqCA4n2uczE6Fly4lXn8apProUC5CmJS8MPk
-         nTFQSqPqRHec7xaTUtWSGeTl4BdDdOYEPS6Kay9RjE5xEml1PsqeEjiDKkNHtwCPVNoT
-         dEGWukX/nNA/o+J1OeOJ12TbSnEZCT4jtQTHk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=HKdCtCrmgCtREHQsC+8pT10lLxTbID7Ol7JvDhWUTqOC5E0yhWb9XLCNSQUJpPjO7m
-         aAEZHiyK73/2jPyTZphUYSbF4/2SvNkPa8DSIgjEl4AZMppqqmL52CHVGLY0cglLxAcL
-         CxenFdCAe4OisxHo8UcfEJdWO1yrf2WaNaC5o=
-Received: by 10.210.52.15 with SMTP id z15mr2977427ebz.101.1228355342167;
-        Wed, 03 Dec 2008 17:49:02 -0800 (PST)
-Received: from ?192.168.1.11? (abvo179.neoplus.adsl.tpnet.pl [83.8.212.179])
-        by mx.google.com with ESMTPS id 7sm90030eyg.52.2008.12.03.17.49.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Dec 2008 17:49:01 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0812031620s2459f773q3db33971e3507b2f@mail.gmail.com>
-Content-Disposition: inline
+	id S1753340AbYLDCAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 21:00:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752328AbYLDCAV
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 21:00:21 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43704 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750773AbYLDCAU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 21:00:20 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3238D84728;
+	Wed,  3 Dec 2008 21:00:19 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3103E84726; Wed,
+  3 Dec 2008 21:00:16 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.0812031634520.3256@nehalem.linux-foundation.org> (Linus
+ Torvalds's message of "Wed, 3 Dec 2008 16:39:49 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4D5287CC-C1A7-11DD-9FC9-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102319>
 
-On Thu, Dec 4, 2008 at 01:20, Giuseppe Bilotta wrote:
-> On Thu, Dec 4, 2008 at 12:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->>> +
->>> +     # The maximum number of patches in a patchset generated in patch
->>> +     # view. Set this to 0 or undef to disable patch view, or to a
->>> +     # negative number to remove any limit.
->>> +     'patches' => {
->>> +             'override' => 1,
->>> +             'default' => [16]},
+The commit log message for the feature made it sound as if this is a saner
+version of --mixed, but the use case presented makes it clear that it is a
+better variant of --hard when your changes and somebody else's changes are
+mixed together.
 
-Errr... you need something like 'sub' => \&feature_patches for override
-to actually work, I think.
+Perhaps we would want to rewrite the example that shows the use of --hard
+not to talk about recovering from a failed merge?  
 
->>>  );
->>
->> Looking at the existing entries in the %feature hash, it seems that it is
->> our tradition that a new feature starts as disabled and not overridable
->> (see 'ctags' in the context above).
-> 
-> I always assumed that the disabled default was related to how invasive
-> the changes would be (to the UI or computationally-wise). As for the
-> overridability, that's actually the only reason why it would make
-> sense to put in the %feature hash ... otherwise a conf-settable
-> $patch_max (as in v2) would have been enough.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-reset.txt |   29 ++++++++++++++++++++++++++++-
+ 1 files changed, 28 insertions(+), 1 deletions(-)
 
-Add to that the fact that this patch just adds the new view, like for
-example in the case of 'snapshot' link, which was turned on... but fact,
-it was by default not overridable. I would agree that it can be turned
-on with low limit but not overridable in introductory patch.
-
->>>  sub git_commitdiff {
->>>       my $format = shift || 'html';
->>> +
->>> +     my $patch_max = gitweb_check_feature('patches');
->>> +     if ($format eq 'patch') {
->>> +             die_error(403, "Patch view not allowed") unless $patch_max;
->>> +     }
->>> +
->>
->> Should you have to pay overhead for the check-feature call even when
->> the $format is not "patch"?
-> 
-> Actually I wasn't sure if I could use my within the if block, and have
-> the value visible outside (it's used further down when picking the
-> options to pass to format-patch). And since it was used in the second
-> patch anyway to choose whether to add the 'patch' link in html view or
-> not, I just put it outside the block.
-
-You have to use _declaration_ ourside block, but assignment can happen
-inside:
-
-+     my $patch_max;
-+     if ($format eq 'patch') {
-+             $patch_max = gitweb_check_feature('patches');
-+             die_error(403, "Patch view not allowed") unless $patch_max;
-+     }
-
-(Side note: doesn't it uses spaces instead of tabs for align?)
+diff --git c/Documentation/git-reset.txt i/Documentation/git-reset.txt
+index 52aab5e..c542b0c 100644
+--- c/Documentation/git-reset.txt
++++ i/Documentation/git-reset.txt
+@@ -8,7 +8,7 @@ git-reset - Reset current HEAD to the specified state
+ SYNOPSIS
+ --------
+ [verse]
+-'git reset' [--mixed | --soft | --hard] [-q] [<commit>]
++'git reset' [--mixed | --soft | --hard | --merge] [-q] [<commit>]
+ 'git reset' [-q] [<commit>] [--] <paths>...
  
-[...]
->> Other than that the patch seems quite straightforward and was a pleasant
->> read.  Thanks.
-
-BTW. I'll try to review patch (and probably Ack) soon.
--- 
-Jakub Narebski
-Poland
+ DESCRIPTION
+@@ -45,6 +45,11 @@ OPTIONS
+ 	switched to. Any changes to tracked files in the working tree
+ 	since <commit> are lost.
+ 
++--merge::
++	Resets the index to match the tree recorded by the named commit,
++	and updates the files that are different between the named commit
++	and the current commit in the working tree.
++
+ -q::
+ 	Be quiet, only report errors.
+ 
+@@ -152,6 +157,28 @@ tip of the current branch in ORIG_HEAD, so resetting hard to it
+ brings your index file and the working tree back to that state,
+ and resets the tip of the branch to that commit.
+ 
++Undo a merge or pull inside a dirty work tree::
+++
++------------
++$ git pull                         <1>
++Auto-merging nitfol
++Merge made by recursive.
++ nitfol                |   20 +++++----
++ ...
++$ git reset --merge ORIG_HEAD      <2>
++------------
+++
++<1> Even if you may have local modifications in your
++working tree, you can safely say "git pull" when you know
++that the change in the other branch does not overlap with
++them.
++<2> After inspecting the result of the merge, you may find
++that the change in the other branch is unsatisfactory.  Running
++"git reset --hard ORIG_HEAD" will let you go back to where you
++were, but it will discard your local changes, which you do not
++want.  "git reset --merge" keeps your local changes.
++
++
+ Interrupted workflow::
+ +
+ Suppose you are interrupted by an urgent fix request while you
