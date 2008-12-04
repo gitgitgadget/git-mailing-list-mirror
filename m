@@ -1,66 +1,98 @@
-From: "Tim Harper" <timcharper@gmail.com>
-Subject: pre-rebase safety hook
-Date: Thu, 4 Dec 2008 10:58:41 -0700
-Message-ID: <e1a5e9a00812040958u3af4c69ofba66567baacb79c@mail.gmail.com>
+From: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
+Subject: Re: [PATCH] Allow passing of --directory to git-am.
+Date: Thu, 4 Dec 2008 12:28:58 -0600
+Message-ID: <200812041228.58885.bss03@volumehost.net>
+References: <49380D84.5050403@fs.ei.tum.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart4905501.fdEM0jHD12";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 04 19:00:02 2008
+Cc: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 04 19:31:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8IUa-0004fA-0C
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 19:00:00 +0100
+	id 1L8IyQ-0008OI-6F
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 19:30:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753677AbYLDR6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 12:58:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751605AbYLDR6n
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 12:58:43 -0500
-Received: from wf-out-1314.google.com ([209.85.200.170]:14664 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753195AbYLDR6m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 12:58:42 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so4348652wfd.4
-        for <git@vger.kernel.org>; Thu, 04 Dec 2008 09:58:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=GLGceFd1f90zx/HBHOTTP1PheHlUWOF4vaxZ3SyNi4E=;
-        b=I3mrcOKpxlW4T3eo5TxiifLI5yyo5A6mu2afpIHy4C/65FQ0RZ1joZ5a6VpbO57mcI
-         NT9Jl2AMVQpHEIswHLcC5qaz7ua4U1VtbYIS7hd6oM94tHhxYUXIX1eqUnegmBngWhZE
-         1Qy8w7dENmCV3ke4F4olbS8Pz7iupU8Xvwga8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=oBsn8RXdnsJBvYFvm4j2y71vUliXkJBMGDPZ6DjjQpOX3ngUzCEIgTA+o7Rp35Kc+2
-         +uZi0zszbg9HUvcqXi4nFpngV5ZzHal7H9bNoVcIZPUNhjF8aCLv0b7Jrzco/YeOJ06X
-         o7qRm+QyUAOymQSOmNwLrMoESz+5cyXZNKz54=
-Received: by 10.115.47.13 with SMTP id z13mr9181330waj.108.1228413521051;
-        Thu, 04 Dec 2008 09:58:41 -0800 (PST)
-Received: by 10.114.146.19 with HTTP; Thu, 4 Dec 2008 09:58:41 -0800 (PST)
-Content-Disposition: inline
+	id S1753232AbYLDS3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 13:29:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753228AbYLDS3c
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 13:29:32 -0500
+Received: from eastrmmtao101.cox.net ([68.230.240.7]:40938 "EHLO
+	eastrmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753222AbYLDS3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 13:29:31 -0500
+Received: from eastrmimpo02.cox.net ([68.1.16.120])
+          by eastrmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20081204182929.PXBX3950.eastrmmtao101.cox.net@eastrmimpo02.cox.net>;
+          Thu, 4 Dec 2008 13:29:29 -0500
+Received: from localhost ([72.204.50.125])
+	by eastrmimpo02.cox.net with bizsmtp
+	id n6VV1a0052i4SyG026VV09; Thu, 04 Dec 2008 13:29:30 -0500
+X-Authority-Analysis: v=1.0 c=1 a=hxm1ygmibCAA:10 a=QBLpfaYHh3oA:10
+ a=nEQGfrJnAAAA:8 a=QzKfQiP7Be0FQ6YUsMQA:9 a=3X_Cj2eEDOoHAuWJ9kNwC7ZAP2QA:4
+ a=B7iFY6Z7H_gA:10 a=LY0hPdMaydYA:10 a=xBBZ_92U-EZ4izQP7JMA:9
+ a=tcN5K1my7q_68s52xg-usdl1EJ0A:4 a=rPt6xJ-oxjAA:10
+X-CM-Score: 0.00
+Received: from bss by localhost with local (Exim 4.69)
+	(envelope-from <bss03@volumehost.net>)
+	id 1L8Iwi-000GAW-0s; Thu, 04 Dec 2008 12:29:04 -0600
+User-Agent: KMail/1.9.9
+In-Reply-To: <49380D84.5050403@fs.ei.tum.de>
+X-Eric-Conspiracy: There is no conspiracy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102354>
 
-Is anyone aware of a pre-rebase hook script that will prevent (or at
-least warn) you from letting a rebase rewrite a commit that has been
-pushed or merged into any branch except it's own?
+--nextPart4905501.fdEM0jHD12
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I've activated the pre-rebase.sample, and it does seem to give me any
-warnings at all:
+On Thursday 04 December 2008, Simon 'corecode' Schubert=20
+<corecode@fs.ei.tum.de> wrote about '[PATCH] Allow passing of --directory=20
+to git-am.':
+>-	--whitespace)
+>-		git_apply_opt=3D"$git_apply_opt $1=3D$2"; shift ;;
+>+	--whitespace|--directory)
+>+		quot=3D$(echo "$2" | sed -e "s/'/\\'/g")
+>+		git_apply_opt=3D"$git_apply_opt $1=3D'$quot'"; shift ;;
 
-Here's the terminal output demonstrating what I mean:
+Test:
+bss@monster:~$ echo "don't" | sed -e "s/'/\\'/g"
+don't
+bss@monster:~$
 
-http://pastie.org/331082
+I'm thinking your sed line doesn't do what you think it does.  You probably=
+=20
+want something like:
+bss@monster:~$ echo "don't" | sed -e "s/'/'\\\\''/g"
+don'\''t
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss03@volumehost.net                      ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.org/                      \_/    =20
 
-Thanks!
+--nextPart4905501.fdEM0jHD12
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-Tim
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkk4IWoACgkQ55pqL7G1QFkxIQCfbhaUQnEnKa6fM94BmFf7p7ZF
+trEAn2Vw0evTYNv8W7a0UAWPvkHkGNkz
+=vtNA
+-----END PGP SIGNATURE-----
+
+--nextPart4905501.fdEM0jHD12--
