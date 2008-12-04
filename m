@@ -1,66 +1,130 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: two questions about the format of loose object
-Date: Wed, 03 Dec 2008 19:54:26 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0812031949060.14328@xanadu.home>
-References: <493399B7.5000505@gmail.com> <20081201153211.GH23984@spearce.org>
- <4934A5EC.2090708@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFCv3 1/2] gitweb: add patch view
+Date: Thu, 4 Dec 2008 02:48:59 +0100
+Message-ID: <200812040249.01374.jnareb@gmail.com>
+References: <1228345188-15125-1-git-send-email-giuseppe.bilotta@gmail.com> <7vy6yw95ln.fsf@gitster.siamese.dyndns.org> <cb7bb73a0812031620s2459f773q3db33971e3507b2f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	git list <git@vger.kernel.org>
-To: Liu Yubao <yubao.liu@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 04 01:56:27 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Petr Baudis" <pasky@suse.cz>
+To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 04 02:50:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L82Vq-0001Xl-Cr
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 01:56:14 +0100
+	id 1L83MN-0007Vw-HA
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 02:50:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759089AbYLDAyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Dec 2008 19:54:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759638AbYLDAye
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 19:54:34 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:64634 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759524AbYLDAyd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Dec 2008 19:54:33 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KBB00MUOUIQPNP0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 03 Dec 2008 19:54:27 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <4934A5EC.2090708@gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751543AbYLDBtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Dec 2008 20:49:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbYLDBtH
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Dec 2008 20:49:07 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:27804 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751295AbYLDBtE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Dec 2008 20:49:04 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so1635519eyi.37
+        for <git@vger.kernel.org>; Wed, 03 Dec 2008 17:49:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=lHahx4jx8g4spjP1+Y9BWoSA9VB0JrwzaFYOvhsa23c=;
+        b=dvpQG350HuCV2lrHYJwIypaF60snuSJqCA4n2uczE6Fly4lXn8apProUC5CmJS8MPk
+         nTFQSqPqRHec7xaTUtWSGeTl4BdDdOYEPS6Kay9RjE5xEml1PsqeEjiDKkNHtwCPVNoT
+         dEGWukX/nNA/o+J1OeOJ12TbSnEZCT4jtQTHk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=HKdCtCrmgCtREHQsC+8pT10lLxTbID7Ol7JvDhWUTqOC5E0yhWb9XLCNSQUJpPjO7m
+         aAEZHiyK73/2jPyTZphUYSbF4/2SvNkPa8DSIgjEl4AZMppqqmL52CHVGLY0cglLxAcL
+         CxenFdCAe4OisxHo8UcfEJdWO1yrf2WaNaC5o=
+Received: by 10.210.52.15 with SMTP id z15mr2977427ebz.101.1228355342167;
+        Wed, 03 Dec 2008 17:49:02 -0800 (PST)
+Received: from ?192.168.1.11? (abvo179.neoplus.adsl.tpnet.pl [83.8.212.179])
+        by mx.google.com with ESMTPS id 7sm90030eyg.52.2008.12.03.17.49.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 03 Dec 2008 17:49:01 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <cb7bb73a0812031620s2459f773q3db33971e3507b2f@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102318>
 
-On Tue, 2 Dec 2008, Liu Yubao wrote:
+On Thu, Dec 4, 2008 at 01:20, Giuseppe Bilotta wrote:
+> On Thu, Dec 4, 2008 at 12:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+>>> +
+>>> +     # The maximum number of patches in a patchset generated in patch
+>>> +     # view. Set this to 0 or undef to disable patch view, or to a
+>>> +     # negative number to remove any limit.
+>>> +     'patches' => {
+>>> +             'override' => 1,
+>>> +             'default' => [16]},
 
-> In fact the format I proposed in my patches is uncompressed loose
-> object, not uncompressed loose object header, that's to say I
-> proposed format 2 in my question 2, I am just curious why the
-> loose object header is compressed in question 1.
+Errr... you need something like 'sub' => \&feature_patches for override
+to actually work, I think.
+
+>>>  );
+>>
+>> Looking at the existing entries in the %feature hash, it seems that it is
+>> our tradition that a new feature starts as disabled and not overridable
+>> (see 'ctags' in the context above).
 > 
-> I did a test to add all files of git-1.6.1-rc1 with git-add, the
-> time spent decreased by half. Other commands like git diff,
-> git diff --cached, git diff HEAD~ HEAD should be faster now
-> although the change may be not noticable for small and medium project.
+> I always assumed that the disabled default was related to how invasive
+> the changes would be (to the UI or computationally-wise). As for the
+> overridability, that's actually the only reason why it would make
+> sense to put in the %feature hash ... otherwise a conf-settable
+> $patch_max (as in v2) would have been enough.
 
-Please try this with an unmodified git version:
+Add to that the fact that this patch just adds the new view, like for
+example in the case of 'snapshot' link, which was turned on... but fact,
+it was by default not overridable. I would agree that it can be turned
+on with low limit but not overridable in introductory patch.
 
-	git config --global core.loosecompression 0
+>>>  sub git_commitdiff {
+>>>       my $format = shift || 'html';
+>>> +
+>>> +     my $patch_max = gitweb_check_feature('patches');
+>>> +     if ($format eq 'patch') {
+>>> +             die_error(403, "Patch view not allowed") unless $patch_max;
+>>> +     }
+>>> +
+>>
+>> Should you have to pay overhead for the check-feature call even when
+>> the $format is not "patch"?
+> 
+> Actually I wasn't sure if I could use my within the if block, and have
+> the value visible outside (it's used further down when picking the
+> options to pass to format-patch). And since it was used in the second
+> patch anyway to choose whether to add the 'patch' link in html view or
+> not, I just put it outside the block.
 
-and redo your tests please.
+You have to use _declaration_ ourside block, but assignment can happen
+inside:
 
-One thing that a purely uncompressed loose object format is missing is 
-quick data integrity protection. With the above, you'll have all your 
-loose objects uncompressed but they'll still have a CRC32 done over 
-them.
++     my $patch_max;
++     if ($format eq 'patch') {
++             $patch_max = gitweb_check_feature('patches');
++             die_error(403, "Patch view not allowed") unless $patch_max;
++     }
 
+(Side note: doesn't it uses spaces instead of tabs for align?)
+ 
+[...]
+>> Other than that the patch seems quite straightforward and was a pleasant
+>> read.  Thanks.
 
-Nicolas
+BTW. I'll try to review patch (and probably Ack) soon.
+-- 
+Jakub Narebski
+Poland
