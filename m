@@ -1,63 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git help stage" doesn't display git-stage man page
-Date: Thu, 04 Dec 2008 11:37:36 -0800
-Message-ID: <7vzljbd94v.fsf@gitster.siamese.dyndns.org>
-References: <7vvdu1hj41.fsf@gitster.siamese.dyndns.org>
- <87myfdn2ga.fsf@iki.fi> <7vwsehfzf7.fsf@gitster.siamese.dyndns.org>
- <7vmyfdfyi9.fsf@gitster.siamese.dyndns.org>
- <20081204034203.GA12835@coredump.intra.peff.net>
+From: david@lang.hm
+Subject: gittorrent on /.
+Date: Thu, 4 Dec 2008 13:15:00 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0812041313270.7145@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 04 20:39:50 2008
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 04 21:16:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8K2W-0001ih-NY
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 20:39:09 +0100
+	id 1L8Kbu-0007xq-Dd
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 21:15:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751957AbYLDThv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 14:37:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751730AbYLDThv
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 14:37:51 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47325 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751039AbYLDThu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 14:37:50 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 045C617BD3;
-	Thu,  4 Dec 2008 14:37:50 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AD20C181B5; Thu, 
- 4 Dec 2008 14:37:37 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 08F3F4B4-C23B-11DD-8379-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752681AbYLDUOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 15:14:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753232AbYLDUOY
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 15:14:24 -0500
+Received: from mail.lang.hm ([64.81.33.126]:41208 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752327AbYLDUOY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 15:14:24 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id mB4KEN7v009509
+	for <git@vger.kernel.org>; Thu, 4 Dec 2008 12:14:23 -0800
+X-X-Sender: dlang@asgard.lang.hm
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102364>
 
-Jeff King <peff@peff.net> writes:
+lots of misinformation in here (including the implication that gittorrent 
+is ready, or nearly ready to use).
 
-> On Wed, Dec 03, 2008 at 12:34:22AM -0800, Junio C Hamano wrote:
->
->> diff --git a/Makefile b/Makefile
->> index 9577d6f..5158197 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -320,6 +320,7 @@ BUILT_INS += git-merge-subtree$X
->>  BUILT_INS += git-peek-remote$X
->>  BUILT_INS += git-repo-config$X
->>  BUILT_INS += git-show$X
->> +BUILT_INS += git-stage$X
->>  BUILT_INS += git-status$X
->>  BUILT_INS += git-whatchanged$X
->
-> We need this, too, then.
+David Lang
 
-Good catch, thanks.
+http://tech.slashdot.org/tech/08/12/04/1625226.shtml
+
+Political and Technical Implications of GitTorrent
+Posted by CmdrTaco on Thursday December 04, @01:03PM
+from the distribute-this-sucka dept.
+Programming Media
+lkcl writes "The GitTorrent Protocol (GTP) is a protocol for collaborative 
+git repository distribution across the Internet. Git promises to be a 
+distributed software management tool, where a repository can be 
+distributed. Yet, the mechanisms used to date to actually 'distribute,' 
+such as ssh, are very much still centralized. GitTorrent makes Git truly 
+distributed. The initial plans are for reducing mirror loading, however 
+the full plans include totally distributed development: no central mirrors 
+whatsoever. PGP signing (an existing feature of git) and other 
+web-of-trust-based mechanisms will take over from protocols on ports (e.g. 
+ssh) as the access control 'clearing house.' The implications of a truly 
+distributed revision control system are truly staggering: unrestricted 
+software freedom. The playing field is leveled in so many ways, as 'The 
+Web Site' no longer becomes the central choke-point of control. Coming 
+just in time for that all-encompassing Free Software revolution hinted at 
+by The Rebellion Against Vista, this article will explain more fully some 
+of the implications that make this quiet and technically brilliant 
+project, GitTorrent, so important to Software Freedom, from both technical 
+and political perspectives."
