@@ -1,98 +1,98 @@
-From: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
-Subject: Re: [PATCH] Allow passing of --directory to git-am.
-Date: Thu, 4 Dec 2008 12:28:58 -0600
-Message-ID: <200812041228.58885.bss03@volumehost.net>
-References: <49380D84.5050403@fs.ei.tum.de>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: [PATCH] Allow passing of --directory to git-am.
+Date: Thu, 04 Dec 2008 19:48:50 +0100
+Message-ID: <49382612.3010207@fs.ei.tum.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart4905501.fdEM0jHD12";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 04 19:31:04 2008
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 04 19:50:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8IyQ-0008OI-6F
-	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 19:30:50 +0100
+	id 1L8JH8-0007Wi-DQ
+	for gcvg-git-2@gmane.org; Thu, 04 Dec 2008 19:50:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753232AbYLDS3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 13:29:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753228AbYLDS3c
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 13:29:32 -0500
-Received: from eastrmmtao101.cox.net ([68.230.240.7]:40938 "EHLO
-	eastrmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753222AbYLDS3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 13:29:31 -0500
-Received: from eastrmimpo02.cox.net ([68.1.16.120])
-          by eastrmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20081204182929.PXBX3950.eastrmmtao101.cox.net@eastrmimpo02.cox.net>;
-          Thu, 4 Dec 2008 13:29:29 -0500
-Received: from localhost ([72.204.50.125])
-	by eastrmimpo02.cox.net with bizsmtp
-	id n6VV1a0052i4SyG026VV09; Thu, 04 Dec 2008 13:29:30 -0500
-X-Authority-Analysis: v=1.0 c=1 a=hxm1ygmibCAA:10 a=QBLpfaYHh3oA:10
- a=nEQGfrJnAAAA:8 a=QzKfQiP7Be0FQ6YUsMQA:9 a=3X_Cj2eEDOoHAuWJ9kNwC7ZAP2QA:4
- a=B7iFY6Z7H_gA:10 a=LY0hPdMaydYA:10 a=xBBZ_92U-EZ4izQP7JMA:9
- a=tcN5K1my7q_68s52xg-usdl1EJ0A:4 a=rPt6xJ-oxjAA:10
-X-CM-Score: 0.00
-Received: from bss by localhost with local (Exim 4.69)
-	(envelope-from <bss03@volumehost.net>)
-	id 1L8Iwi-000GAW-0s; Thu, 04 Dec 2008 12:29:04 -0600
-User-Agent: KMail/1.9.9
-In-Reply-To: <49380D84.5050403@fs.ei.tum.de>
-X-Eric-Conspiracy: There is no conspiracy
+	id S1753851AbYLDSsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 13:48:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754705AbYLDSsy
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 13:48:54 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:47229 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753776AbYLDSsx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 13:48:53 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 3836A1C25E
+	for <git@vger.kernel.org>; Thu,  4 Dec 2008 19:48:51 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id zG7QayGGuVrr for <git@vger.kernel.org>;
+	Thu,  4 Dec 2008 19:48:51 +0100 (CET)
+Received: from [192.168.10.11] (dyn.144-85-212-018.dsl.vtx.ch [144.85.212.18])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 0C2951C0F1
+	for <git@vger.kernel.org>; Thu,  4 Dec 2008 19:48:51 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.17 (X11/20081021)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102355>
 
---nextPart4905501.fdEM0jHD12
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+We need to play some shell tricks to be able to pass directory names
+which contain spaces and/or quotes.
 
-On Thursday 04 December 2008, Simon 'corecode' Schubert=20
-<corecode@fs.ei.tum.de> wrote about '[PATCH] Allow passing of --directory=20
-to git-am.':
->-	--whitespace)
->-		git_apply_opt=3D"$git_apply_opt $1=3D$2"; shift ;;
->+	--whitespace|--directory)
->+		quot=3D$(echo "$2" | sed -e "s/'/\\'/g")
->+		git_apply_opt=3D"$git_apply_opt $1=3D'$quot'"; shift ;;
+Signed-off-by: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+---
 
-Test:
-bss@monster:~$ echo "don't" | sed -e "s/'/\\'/g"
-don't
-bss@monster:~$
+Boyd Stephen Smith Jr. wrote:
+ > I'm thinking your sed line doesn't do what you think it does.  You 
+probably
+ > want something like:
+ > bss@monster:~$ echo "don't" | sed -e "s/'/'\\\\''/g"
+ > don'\''t
 
-I'm thinking your sed line doesn't do what you think it does.  You probably=
-=20
-want something like:
-bss@monster:~$ echo "don't" | sed -e "s/'/'\\\\''/g"
-don'\''t
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss03@volumehost.net                      ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.org/                      \_/    =20
+Thanks, I clearly did not test this well enough.
 
---nextPart4905501.fdEM0jHD12
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+  git-am.sh |    8 +++++---
+  1 files changed, 5 insertions(+), 3 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+diff --git a/git-am.sh b/git-am.sh
+index aa60261..3baff4e 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -16,6 +16,7 @@ s,signoff       add a Signed-off-by line to the commit 
+message
+  u,utf8          recode into utf8 (default)
+  k,keep          pass -k flag to git-mailinfo
+  whitespace=     pass it through git-apply
++directory=      pass it through git-apply
+  C=              pass it through git-apply
+  p=              pass it through git-apply
+  resolvemsg=     override error message when patch failure occurs
+@@ -155,8 +156,9 @@ do
+  		;;
+  	--resolvemsg)
+  		shift; resolvemsg=$1 ;;
+-	--whitespace)
+-		git_apply_opt="$git_apply_opt $1=$2"; shift ;;
++	--whitespace|--directory)
++		quot=$(echo "$2" | sed -e "s/'/'\\\''/g")
++		git_apply_opt="$git_apply_opt $1='$quot'"; shift ;;
+  	-C|-p)
+  		git_apply_opt="$git_apply_opt $1$2"; shift ;;
+  	--)
+@@ -454,7 +456,7 @@ do
 
-iEYEABECAAYFAkk4IWoACgkQ55pqL7G1QFkxIQCfbhaUQnEnKa6fM94BmFf7p7ZF
-trEAn2Vw0evTYNv8W7a0UAWPvkHkGNkz
-=vtNA
------END PGP SIGNATURE-----
-
---nextPart4905501.fdEM0jHD12--
+  	case "$resolved" in
+  	'')
+-		git apply $git_apply_opt --index "$dotest/patch"
++		eval git apply $git_apply_opt --index '"$dotest/patch"'
+  		apply_status=$?
+  		;;
+  	t)
+-- 
+1.6.1.rc1.45.g123ed.dirty
