@@ -1,57 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] git-am: propagate -C<n>, -p<n> options as well
-Date: Fri, 5 Dec 2008 13:21:43 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812051320170.7062@intel-tinevez-2-302>
-References: <1228443780-3386-1-git-send-email-gitster@pobox.com> <1228443780-3386-2-git-send-email-gitster@pobox.com> <1228443780-3386-3-git-send-email-gitster@pobox.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: git alias always chdir to top
+Date: Fri, 5 Dec 2008 09:09:48 -0500
+Message-ID: <20081205140948.GB23087@osc.edu>
+References: <20081203160852.GA3773@osc.edu> <20081204123402.GA23740@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 13:23:26 2008
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 05 15:11:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8ZiO-0001SE-DY
-	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 13:23:24 +0100
+	id 1L8bOj-0000Bf-DD
+	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 15:11:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751870AbYLEMWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2008 07:22:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751674AbYLEMWG
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 07:22:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42417 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751138AbYLEMWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2008 07:22:05 -0500
-Received: (qmail invoked by alias); 05 Dec 2008 12:22:01 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp036) with SMTP; 05 Dec 2008 13:22:01 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19lf2QVnLRl+81JRAHetLQwGRLsAHrL4r6Kct8+ln
-	qzCSFjRkpUf4fK
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <1228443780-3386-3-git-send-email-gitster@pobox.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1751980AbYLEOJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2008 09:09:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbYLEOJu
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 09:09:50 -0500
+Received: from marge.padd.com ([99.188.165.110]:33447 "EHLO marge.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751943AbYLEOJt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2008 09:09:49 -0500
+Received: from oink.padd.com (oink.padd.com [69.36.12.13])
+	by marge.padd.com (Postfix) with ESMTPSA id 1A5FF10F8032;
+	Fri,  5 Dec 2008 06:08:20 -0800 (PST)
+Received: by oink.padd.com (Postfix, from userid 7770)
+	id 26B4AFD4167; Fri,  5 Dec 2008 09:09:48 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20081204123402.GA23740@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102401>
 
-Hi,
+peff@peff.net wrote on Thu, 04 Dec 2008 07:34 -0500:
+> On Wed, Dec 03, 2008 at 11:08:52AM -0500, Pete Wyckoff wrote:
+> 
+> > It looks like handle_alias() uses setup_git_directory_gently() to
+> > find the .git, which chdir()s up until it gets there.  Is there a
+> > way to do this without changing the process current working
+> > directory instead?  I could even handle an environment variable
+> > saving the original cwd, but that's ickier.
+> 
+> There has been some discussion of refactoring the setup to _not_ do that
+> chdir until later, which should fix your problem. And other problems,
+> too, since aliases can get confused about whether or not we're in a
+> worktree (try "git config alias.st status && cd .git && git st") as a
+> result of the startup sequence.  Ideally the _only_ thing to happen
+> before running an alias would be to look at the config to see how to run
+> the alias, and everything else would be "as if" you had just run the
+> alias manually.
+> 
+> So no, there's no way to do it correctly right now. The git commands
+> internally do know the original prefix, but I don't think it is exposed
+> via the environment.
+> 
+> I hope this will get fixed eventually, but refactoring this code is
+> unpleasant enough and I have been busy enough that it hasn't happened
+> yet. You are of course welcome to volunteer. ;)
 
-On Thu, 4 Dec 2008, Junio C Hamano wrote:
+Thanks for these comments.  I missed the discussion about
+refactoring to move the chdir around.
 
-> -	echo " $ws" >"$dotest/whitespace"
-> +	echo " $git_apply_opt" >"$dotest/apply_opt_extra"
+In my particular case, since the only usage of this particular git
+alias is by another script, I can get away with passing the full
+path name and making some assumptions about the caller.
 
->From the other scripts, it appears we have sort of a convention to use 
-dashes instead of underscores for file names (see e.g. 
-$dotest/patch-merge-tmp-dir).
+Point taken that it would be good to clean up the alias code path
+so that this issue doesn't even arise in the first place.
 
-Other than that, the whole series looks good to me.
-
-Thanks for the work, especially the tests,
-Dscho
+		-- Pete
