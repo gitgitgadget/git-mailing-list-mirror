@@ -1,138 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v3 3/3] gitweb: Optional grouping of projects by category
-Date: Fri, 5 Dec 2008 11:45:08 +0100
-Message-ID: <200812051145.09732.jnareb@gmail.com>
-References: <87wsei1uvp.wl%seb@cine7.net> <200812050308.52891.jnareb@gmail.com> <87bpvr1hee.wl%seb@cine7.net>
+From: "Alexander Gavrilov" <angavrilov@gmail.com>
+Subject: Re: git-gui: Warn when username and e-mail address is unconfigured?
+Date: Fri, 5 Dec 2008 14:01:48 +0300
+Message-ID: <bb6f213e0812050301t2f18061epfeff7bc74ee6f28a@mail.gmail.com>
+References: <Pine.LNX.4.64.0812041141160.9969@ds9.cixit.se>
+	 <b9fd99020812040805j1143c029yf0cc4c1c4a835759@mail.gmail.com>
+	 <bd6139dc0812041104s26ae149foeafa489e65aeb584@mail.gmail.com>
+	 <b9fd99020812041254l5d1fa383m4fcc3b40f6fabacb@mail.gmail.com>
+	 <7vskp3d3q9.fsf@gitster.siamese.dyndns.org>
+	 <b9fd99020812041558w204e5f48gbed73fdbd289ad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Petr Baudis <pasky@suse.cz>,
-	Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
-To: =?iso-8859-1?q?S=E9bastien_Cevey?= <seb@cine7.net>
-X-From: git-owner@vger.kernel.org Fri Dec 05 11:46:53 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, spearce@spearce.org,
+	sverre@rabbelier.nl, "Peter Krefting" <peter@softwolves.pp.se>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Jeremy Ramer" <jdramer@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 05 12:03:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8YCo-0003zM-Jv
-	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 11:46:43 +0100
+	id 1L8YSi-0000w0-OQ
+	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 12:03:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751808AbYLEKpT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Dec 2008 05:45:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbYLEKpS
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 05:45:18 -0500
-Received: from ey-out-2122.google.com ([74.125.78.26]:28548 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751121AbYLEKpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2008 05:45:16 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so1937070eyi.37
-        for <git@vger.kernel.org>; Fri, 05 Dec 2008 02:45:14 -0800 (PST)
+	id S1750980AbYLELBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2008 06:01:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbYLELBv
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 06:01:51 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:41112 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750852AbYLELBu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2008 06:01:50 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so4060682ugf.37
+        for <git@vger.kernel.org>; Fri, 05 Dec 2008 03:01:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=4GQ7+rMsDfJnlS9UxHkNw7V0PwrCVHcCJLWkbRnSw7c=;
-        b=jnAk0bLr4D4Ay25AMS5DSmVrkkqGsSAXEXpqmm6YfX/Nl4G2Xf2+mj1oZzv7PPMNlt
-         wWdKCqlgA8SUrScEEbAlu1DXLmUAGE02cRHtUQLZ0mP4Og3lqHP7KL1HQtYbdKBeH9Ej
-         OWsn9+NmtILHvDHbV5vLZ0Pk3sA+YT9daTQIE=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=WqcylqwNuGpntPihDn2oIzB/SEfwdneIy+mHtnpBM+I=;
+        b=JFMyxVV2Ikpk8jDizxajpvbYltPNTxNPH0kJJSkNvg0nXUPxuOHhAONu0LdQBk2Bc4
+         3bF4KEv8c5mQZD9xC6GPhUe2ENTGezUDs/eWDMRSozNm/YTqxiqeJloAdlVMb6N7Egte
+         LSlkc3eaZYYAah1ffJ935yxN7Rk8a+ghxucHU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=BcLqtzOeYvvUhHO3JyzP2FCftTHgsW91VP6CaJV3VLhErSn7u2I/MwTrY2A3/8wwSR
-         /dji8u/fCtfaHrgsYIEkP2FNtk/uDD1bfkgDZ3QLKV5TV5hp3sN/b8/bnxp+OnEda8gg
-         0puVY8r49E+7UPSOfz1cxKlrzdQg7C76TASW4=
-Received: by 10.210.23.3 with SMTP id 3mr7558584ebw.124.1228473914933;
-        Fri, 05 Dec 2008 02:45:14 -0800 (PST)
-Received: from ?192.168.1.11? (abwe217.neoplus.adsl.tpnet.pl [83.8.228.217])
-        by mx.google.com with ESMTPS id 3sm272486eyj.51.2008.12.05.02.45.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 05 Dec 2008 02:45:13 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <87bpvr1hee.wl%seb@cine7.net>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=rHQL0kRhNvAaW68TjbVOwlLuxczGQi7ESY88ElgGFYRUMgIMOjN7sBDK7FdfiCxACL
+         mxeG48EGkuvbS+FpzJj7A705CJwoPjgRCsrkCqzpkVf00ne4SwuX4358llh1hQL1fklo
+         BiOI/Ex8aSLe9ljjPrAqE3RJfsl4KVEL2fJWw=
+Received: by 10.67.106.13 with SMTP id i13mr513852ugm.7.1228474908923;
+        Fri, 05 Dec 2008 03:01:48 -0800 (PST)
+Received: by 10.67.103.2 with HTTP; Fri, 5 Dec 2008 03:01:48 -0800 (PST)
+In-Reply-To: <b9fd99020812041558w204e5f48gbed73fdbd289ad@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102398>
 
-On Fri, 5 Dec 2008 at 03:32, S=E9bastien Cevey wrote:
-> At Fri, 5 Dec 2008 03:08:52 +0100, Jakub Narebski wrote:
->=20
-> > Nice... but perhaps it would be better to simply pass $from / $to t=
-o
-> > build_projlist_by_category function, and have in %categories only
-> > projects which are shown...
->=20
-> Ah you're right, we could do that, I hadn't thought of it.  Sounds
-> cleaner than the $from/$to dance I did in this patch.
+On Fri, Dec 5, 2008 at 2:58 AM, Jeremy Ramer <jdramer@gmail.com> wrote:
+> Yes, that does appear to be the message I get, with the following
+> environment variables:
+> - GIT_AUTHOR_EMAIL
+> - GIT_COMMITTER_NAME
+> - GIT_COMMITER_EMAIL
+> - GIT_AUTHOR_NAME
+>
+> Now that I look closer I see that I am setting these in my .bashrc
+> file.  When I first started using git a year ago I was given the
+> impression that these were needed. But I see that that is no longer
+> the case since I use the config:
+>
+> git config --global user.name "Your Name"
+> git config --global user.email "you@example.com"
+>
+> Removing them from my .bashrc removes the warning.  In hindsight the
+> warning should have clued me in, but I've been seeing that message
+> since I first started using git on Cygwin so I figured it was a cygwin
+> issue that I couldn't do anything about.
+>
 
-Usually simpler is better. The more complicated code, the more chances
-for bugs, and less maintability. I haven't even tried to follow=20
-$from/$to updating logic, but noticed that we can simply pass $from
-and $to to build_projlist_by_category(), and use loop $from..$to there.
+I wonder if what the warning says is still true. It's 2 years since
+it was added, so the issue might have been fixed.
 
-> > well, unless filtered out in print_project_rows() by $show_ctags; s=
-o
-> > I think that there is nonzero probability of empty (no project
-> > shown) categories.
->=20
-> Mh indeed, in fact this could happen any time we reach one of the
-> 'next' statements in the loop in print_project_rows(), when performin=
-g
-> search, tag filtering, etc...
->=20
-> Actually, assuming the project list is split into page, this can also
-> lead to empty pages (if no project on the page matches the filter).
-> To avoid empty categories, it's a bit tricky since the header is
-> printed before we determine whether there are matching projects..
->=20
-> I need to read the code more carefully, but it seems that one solutio=
-n
-> would be to add a function that determines whether a project should b=
-e
-> displayed or not (according to tags and search and forks); then we ca=
-n
-> map this function on the list of projects.
->=20
-> I could do it if it sounds sane to you.
+If you run "GIT_AUTHOR_NAME=foobar git gui", and make a commit,
+does it set the author name to 'foobar'?
 
-Nah, I think it would be best to postpone dealing with this issue, and
-keep the code simple at the cost of possibly empty categories. It is
-not as empty categories are an actual error...
-
-I guess that correct way to deal with this would be to filter projects
-earlier, before grouping by category, and not "at the last minute",=20
-when displaying them. It might be even better solution wrt. dividing
-projects list into pages. But that in my opinion is certainly matter
-for a separate patch.
-
-> > I'll try to examine the code in more detail later... currently I do=
-n't
-> > know why but I can't git-am the second patch (this patch) correctly=
-=2E..
->=20
-> This is the third patch, are you sure you applied 1 and 2 before?
-=20
-Somehow I couldn't apply second patch in series:
-
- $ git am -3 -u "[PATCH v3 2_3] gitweb: Split git_project_list_body in =
-two functions.txt"
- Applying: gitweb: Split git_project_list_body in two functions
- error: patch failed: gitweb/gitweb.perl:3972
- error: gitweb/gitweb.perl: patch does not apply
- fatal: sha1 information is lacking or useless (gitweb/gitweb.perl).
- Repository lacks necessary blobs to fall back on 3-way merge.
- Cannot fall back to three-way merge.
- Patch failed at 0001.
-=20
-> Thanks for your careful and supportive comments!
-
-You are welcome. Nice to have another gitweb developer :-)
---=20
-Jakub Narebski
-Poland
+Alexander
