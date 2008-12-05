@@ -1,70 +1,143 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH 3/3] Report symlink failures in merge-recursive
-Date: Fri, 5 Dec 2008 01:39:14 +0100
-Message-ID: <20081205003914.GC7294@blimp.localdomain>
-References: <20081205003546.GA7294@blimp.localdomain>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Git weekly news: 2008-49
+Date: Fri, 5 Dec 2008 02:43:40 +0200
+Message-ID: <94a0d4530812041643r784ae8b1x242e3b2f9c9f41@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 05 01:40:35 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "git list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 05 01:45:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8OkE-0001OD-HC
-	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 01:40:34 +0100
+	id 1L8Ooh-0002Ug-Vq
+	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 01:45:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752187AbYLEAjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Dec 2008 19:39:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752127AbYLEAjR
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 19:39:17 -0500
-Received: from mo-p05-ob.rzone.de ([81.169.146.181]:20807 "EHLO
-	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751953AbYLEAjR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Dec 2008 19:39:17 -0500
-X-RZG-CLASS-ID: mo05
-X-RZG-AUTH: :Pm0FVUW6aauhRGJJc5OfA4AU8DM8ZlijdmJYxKn/UQvEQQx8Ak82pR9a
-Received: from tigra.home (Fadd1.f.strato-dslnet.de [195.4.173.209])
-	by post.strato.de (klopstock mo55) (RZmta 17.20)
-	with ESMTP id y05231kB4Nj3qD ; Fri, 5 Dec 2008 01:39:15 +0100 (MET)
-Received: from blimp.localdomain (unknown [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id AFA50277C8;
-	Fri,  5 Dec 2008 01:39:14 +0100 (CET)
-Received: by blimp.localdomain (Postfix, from userid 1000)
-	id 8B23E36D27; Fri,  5 Dec 2008 01:39:14 +0100 (CET)
+	id S1755402AbYLEAnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Dec 2008 19:43:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755638AbYLEAnn
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Dec 2008 19:43:43 -0500
+Received: from rv-out-0506.google.com ([209.85.198.227]:46866 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751953AbYLEAnm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Dec 2008 19:43:42 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so4233106rvb.1
+        for <git@vger.kernel.org>; Thu, 04 Dec 2008 16:43:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=y+1rUX2f99zcVSKx0dftnoaDpplWxtrqZkZjDAqxmM8=;
+        b=h5x2z6TqKzuMKNkXnhF0FTJ9QKEUqp+fXaaTAzlcdjUFQ18oVqVKfpVzcwKFHI2Vwe
+         MgVNm/QW0uvJwHfwOfK4l4CbadPBWlOR063hQWac1L79TNcNQUpQUpWuT0dp7iuq998Y
+         y92J3v5b6dKVQPAkd1A0E7/epjEWu/00PrGHY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=Fi3B79LQRINLRWyZvCzhn0e9fDySfslzYEmbPphuDSIlr4KOuFKI+zwFnzQq0J/yFa
+         0SCaM0rm87ywkVBNUViAGI2zHkEOucGeCayD0oRSzTk6eel0yDVBraUBAyP8dx/cB5pG
+         p46+5n6CTfqdCw/qWrf4o9ZGRzvhugEFgRS1k=
+Received: by 10.141.34.12 with SMTP id m12mr7241564rvj.118.1228437820612;
+        Thu, 04 Dec 2008 16:43:40 -0800 (PST)
+Received: by 10.140.203.13 with HTTP; Thu, 4 Dec 2008 16:43:40 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20081205003546.GA7294@blimp.localdomain>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102384>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+Hi there,
 
-I don't check for unlink success in the line above, because symlink
-will fail if unlink failed to cleanup the new path.
+I've been following the git tag at delicious.com[1] and there's quite
+many interesting links, so I thought  on gathering them so the git
+community can enjoy them in one pack :)
 
- merge-recursive.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+The blog post is here:
+http://gitlog.wordpress.com/2008/12/05/git-weekely-news-2008-49/
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 0e988f2..a0c804c 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -525,7 +525,8 @@ static void update_file_flags(struct merge_options *o,
- 			char *lnk = xmemdupz(buf, size);
- 			safe_create_leading_directories_const(path);
- 			unlink(path);
--			symlink(lnk, path);
-+			if (symlink(lnk, path))
-+				die("failed to symlink %s: %s", path, strerror(errno));
- 			free(lnk);
- 		} else
- 			die("do not know what to do with %06o %s '%s'",
+But here are the links anyway. The order is rather random.
+
+Why Git is Better than X
+http://whygitisbetterthanx.com/
+
+GitTorrent, The Movie
+http://www.advogato.org/article/994.html
+
+Peer-to-peer Protocol for Synchronizing of Git Repositories
+http://code.google.com/p/gittorrent/
+
+Codebase - Git repository hosting with source browser, changesets,
+ticketing & deployment tracking.
+http://atechmedia.com/codebase
+
+Codebase Launches Git-based Project Management Service
+http://www.sitepoint.com/blogs/2008/12/04/codebase-launches-git-based-project-management-service/
+
+The Git Community Book
+http://book.git-scm.com/index.html
+
+GitX: A git GUI specifically for Mac OS X
+http://gitx.frim.nl/index.html
+
+Pushing and pulling with Git, part 1
+http://www.gnome.org/~federico/news-2008-11.html#pushing-and-pulling-with-git-1
+
+$ cheat git
+http://cheat.errtheblog.com/s/git/
+
+gh > hg
+http://github.com/blog/218-gh-hg
+
+Easy Git External Dependency Management with Giternal
+http://www.rubyinside.com/giternal-easy-git-external-dependency-management-1322.html
+
+Work with Git from Emacs
+http://xtalk.msk.su/~ott/en/writings/emacs-vcs/EmacsGit.html
+
+It's Magit! A Emacs mode for Git.
+http://zagadka.vm.bytemark.co.uk/magit/
+
+Improving my git workflow
+http://hoth.entp.com/2008/11/10/improving-my-git-workflow
+
+git-bz: Bugzilla subcommand for Git
+http://blog.fishsoup.net/2008/11/16/git-bz-bugzilla-subcommand-for-git/
+
+android.git.kernel.org Git
+http://android.git.kernel.org/
+
+GitSvnComparsion
+http://git.or.cz/gitwiki/GitSvnComparsion
+
+Guides: Developing with Submodules
+http://github.com/guides/developing-with-submodules
+
+A web-focused Git workflow
+http://joemaller.com/2008/11/25/a-web-focused-git-workflow/
+
+Why we chose Git, a rebuttal
+http://www.unethicalblogger.com/posts/2008/11/why_we_chose_git_a_rebuttal
+
+Git'n Your Shared Host On
+http://railstips.org/2008/11/24/gitn-your-shared-host-on
+
+Git integration with Hudson and Trac
+http://www.unethicalblogger.com/posts/2008/11/git_integration_with_hudson_and_trac
+
+Everyday GIT With 20 Commands Or So
+http://www.kernel.org/pub/software/scm/git/docs/everyday.html
+
+Hosting Git repositories, The Easy (and Secure) Way
+http://scie.nti.st/2007/11/14/hosting-git-repositories-the-easy-and-secure-way
+
+10 Reasons to Use Git for Research
+http://mendicantbug.com/2008/11/30/10-reasons-to-use-git-for-research/
+
+[1] http://delicious.com/tag/git
+
 -- 
-1.6.1.rc1.29.gb140
+Felipe Contreras
