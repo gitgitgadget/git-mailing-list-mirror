@@ -1,92 +1,138 @@
-From: "Alexander Gavrilov" <angavrilov@gmail.com>
-Subject: Re: git-gui: Warn when username and e-mail address is unconfigured?
-Date: Fri, 5 Dec 2008 14:01:48 +0300
-Message-ID: <bb6f213e0812050301t2f18061epfeff7bc74ee6f28a@mail.gmail.com>
-References: <Pine.LNX.4.64.0812041141160.9969@ds9.cixit.se>
-	 <b9fd99020812040805j1143c029yf0cc4c1c4a835759@mail.gmail.com>
-	 <bd6139dc0812041104s26ae149foeafa489e65aeb584@mail.gmail.com>
-	 <b9fd99020812041254l5d1fa383m4fcc3b40f6fabacb@mail.gmail.com>
-	 <7vskp3d3q9.fsf@gitster.siamese.dyndns.org>
-	 <b9fd99020812041558w204e5f48gbed73fdbd289ad@mail.gmail.com>
+From: "kanagesh radhakrishnan" <rkanagesh@gmail.com>
+Subject: Using repo to work with multiple GIT repositories
+Date: Fri, 5 Dec 2008 16:50:24 +0530
+Message-ID: <ece1079f0812050320n7191097sbc1c10c353b23708@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, spearce@spearce.org,
-	sverre@rabbelier.nl, "Peter Krefting" <peter@softwolves.pp.se>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Jeremy Ramer" <jdramer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 12:03:29 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 05 12:21:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8YSi-0000w0-OQ
-	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 12:03:09 +0100
+	id 1L8Ykk-0006nO-Ak
+	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 12:21:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750980AbYLELBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2008 06:01:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbYLELBv
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 06:01:51 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:41112 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750852AbYLELBu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2008 06:01:50 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so4060682ugf.37
-        for <git@vger.kernel.org>; Fri, 05 Dec 2008 03:01:49 -0800 (PST)
+	id S1751844AbYLELU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2008 06:20:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751795AbYLELU3
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 06:20:29 -0500
+Received: from rn-out-0910.google.com ([64.233.170.190]:64601 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751815AbYLELU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2008 06:20:27 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so3913024rnd.17
+        for <git@vger.kernel.org>; Fri, 05 Dec 2008 03:20:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=WqcylqwNuGpntPihDn2oIzB/SEfwdneIy+mHtnpBM+I=;
-        b=JFMyxVV2Ikpk8jDizxajpvbYltPNTxNPH0kJJSkNvg0nXUPxuOHhAONu0LdQBk2Bc4
-         3bF4KEv8c5mQZD9xC6GPhUe2ENTGezUDs/eWDMRSozNm/YTqxiqeJloAdlVMb6N7Egte
-         LSlkc3eaZYYAah1ffJ935yxN7Rk8a+ghxucHU=
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=miF3gOGqrhO1PZ7OtrXQqYL+ZTMWBh19O/2pYuGhRko=;
+        b=unBe2dVKz+CQfbdhJcbFp/mGKhvpzDppnMWDapcFeCC+lvDm91lAJ1RwqH1yyzjEmp
+         4LKd3c313jxVDWGdkmpfPc3CKaSUtymMLb1J8GHneIlD38lOjIiaMLYJl13xyYO7UOXW
+         xyksB30bl0V7V7hMDtyasT492U/1W8W51/9lw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=rHQL0kRhNvAaW68TjbVOwlLuxczGQi7ESY88ElgGFYRUMgIMOjN7sBDK7FdfiCxACL
-         mxeG48EGkuvbS+FpzJj7A705CJwoPjgRCsrkCqzpkVf00ne4SwuX4358llh1hQL1fklo
-         BiOI/Ex8aSLe9ljjPrAqE3RJfsl4KVEL2fJWw=
-Received: by 10.67.106.13 with SMTP id i13mr513852ugm.7.1228474908923;
-        Fri, 05 Dec 2008 03:01:48 -0800 (PST)
-Received: by 10.67.103.2 with HTTP; Fri, 5 Dec 2008 03:01:48 -0800 (PST)
-In-Reply-To: <b9fd99020812041558w204e5f48gbed73fdbd289ad@mail.gmail.com>
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=o7HkmnxlZxdvvVmo//PIfMzQZ1E0uI6gR8oB8m6A2JFNUzlkQQYqw/sAPitlETfiRP
+         y9UHA+3KW0AL7DeCcYWLVd3zUJzh37n6ESllQlDX21+33bYcnG8ENd+7PMXgrOaHMIdA
+         Sg8L1gvzVDZSrvM0+v0fQy9HSEGSrEjDz8e6k=
+Received: by 10.142.14.20 with SMTP id 20mr6367672wfn.79.1228476024869;
+        Fri, 05 Dec 2008 03:20:24 -0800 (PST)
+Received: by 10.143.98.7 with HTTP; Fri, 5 Dec 2008 03:20:24 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102399>
 
-On Fri, Dec 5, 2008 at 2:58 AM, Jeremy Ramer <jdramer@gmail.com> wrote:
-> Yes, that does appear to be the message I get, with the following
-> environment variables:
-> - GIT_AUTHOR_EMAIL
-> - GIT_COMMITTER_NAME
-> - GIT_COMMITER_EMAIL
-> - GIT_AUTHOR_NAME
->
-> Now that I look closer I see that I am setting these in my .bashrc
-> file.  When I first started using git a year ago I was given the
-> impression that these were needed. But I see that that is no longer
-> the case since I use the config:
->
-> git config --global user.name "Your Name"
-> git config --global user.email "you@example.com"
->
-> Removing them from my .bashrc removes the warning.  In hindsight the
-> warning should have clued me in, but I've been seeing that message
-> since I first started using git on Cygwin so I figured it was a cygwin
-> issue that I couldn't do anything about.
->
+Hello All,
 
-I wonder if what the warning says is still true. It's 2 years since
-it was added, so the issue might have been fixed.
+My work currently resides in four different source trees, namely:
 
-If you run "GIT_AUTHOR_NAME=foobar git gui", and make a commit,
-does it set the author name to 'foobar'?
+   * bootloaders   (git://192.168.10.1/bootloaders)
+   * kernel           (git://192.168.10.1/kernel)
+   * applications  (git://192.168.10.1/apps)
+   * build             (git://192.168.10.1/build)
 
-Alexander
+I maintain them as four different git repositories.  They are hosted
+on a local server enabling any other developer to be able to clone
+from one of the trees, make changes, commit locally and then push to
+the git server.
+
+I was browsing through the Android source code and found that they
+have a similar situation where code is maintained in a large number of
+independent GIT repositories.  The tool 'repo' is being used to
+initialize and sync each tree.
+
+I have been trying to bring in this approach to maintain my work too.
+I have had success to some extent :-) I have created a manifest.git
+and repo.git in my local server.  The default.xml file being
+maintained in manifest.git has a list of the GIT repositories being
+hosted by my local GIT server.
+
+In order to clone the four GIT trees from the server, I do the following:
+
+   $ repo init -u git://192.168.10.1/manifest.git
+   $ repo sync
+
+This clones from the four source trees maintained in the GIT server.
+
+I am able to make changes locally in each tree and commit them.
+However, when I attempt to push the commits to the main repository on
+the GIT server, it always says that 'everything is up to date'
+
+   $ git push user@192.168.10.1:/home/git/applications
+   user@192.168.10.1's password:
+   Everything up-to-date
+
+Further, when I try to pull in any recent updates with the git-pull
+command, I get the following error:
+
+   $ git-pull
+   fatal: 'origin': unable to chdir or not a git archive
+   fatal: The remote end hung up unexpectedly
+
+I know pushing to the repository on the GIT server works since I am
+able to push local commits when I have cloned the working copy
+manually (instead of using repo init and repo sync).
+-----------------------------------------------------------------
+   $ git-clone git://192.168.10.1/applications
+   Initialized empty Git repository in /home/user/work/applications/.git/
+   remote: Counting objects: 6857, done.
+   remote: Compressing objects: 100% (3805/3805), done.
+   remote: Total 6857 (delta 2943), reused 6853 (delta 2941)
+   Receiving objects: 100% (6857/6857), 9.51 MiB | 10547 KiB/s, done.
+   Resolving deltas: 100% (2943/2943), done.
+   $
+
+   <edit, make changes, save, commit changes locally>
+
+   $ git-commit -a -m "Changed rule to build with custom tools"
+   Created commit bd55a06: Changed rule to build with custom tools
+   1 files changed, 1 insertions(+), 1 deletions(-)
+   $
+
+   <push changes to repository on GIT server>
+   $ git-push user@192.168.10.1:/home/git/applications
+   user@192.168.10.1's password:
+   Counting objects: 8, done.
+   Compressing objects: 100% (6/6), done.
+   Writing objects: 100% (6/6), 611 bytes, done.
+   Total 6 (delta 4), reused 0 (delta 0)
+   To user@192.168.10.1:/home/git/applications
+   dce4bea..bd55a06  master -> master
+   $
+-----------------------------------------------------------------
+
+May I know what I have to look at to solve this problem?  Has anyone
+faced a similar problem?  Any pointers would be of help.
+
+Thanks in advance.
+
+Regards,
+Kanagesh
