@@ -1,89 +1,62 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+From: Nanako Shiraishi <nanako3@lavabit.com>
 Subject: Re: Git weekly news: 2008-49
-Date: Fri, 5 Dec 2008 23:11:17 +0100
-Message-ID: <adf1fd3d0812051411k4bdbbfc0yca9ce6a97fff31d4@mail.gmail.com>
-References: <94a0d4530812041643r784ae8b1x242e3b2f9c9f41@mail.gmail.com>
-	 <m3d4g6ipah.fsf@localhost.localdomain>
-	 <94a0d4530812050946r5ea7ddb2v1d93d28ba679813b@mail.gmail.com>
-	 <adf1fd3d0812051344x79fe2c10i77b2abb8e7e19fe@mail.gmail.com>
-	 <94a0d4530812051357m4f0bc591n802c41a78e698b3b@mail.gmail.com>
+Date: Sat, 06 Dec 2008 07:18:22 +0900
+Message-ID: <20081206071822.6117@nanako3.lavabit.com>
+References: <7v3ah2z6jh.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530812041643r784ae8b1x242e3b2f9c9f41@mail.gmail.com>
+ <m3d4g6ipah.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: "Felipe Contreras" <felipe.contreras@gmail.com>,
+	"Jakub Narebski" <jnareb@gmail.com>,
 	"git list" <git@vger.kernel.org>
-To: "Felipe Contreras" <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 23:12:37 2008
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 05 23:20:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8iua-0000kh-7v
-	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 23:12:36 +0100
+	id 1L8j2E-0003Rh-RF
+	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 23:20:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754083AbYLEWLT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Dec 2008 17:11:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751980AbYLEWLT
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 17:11:19 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:50310 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751348AbYLEWLS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Dec 2008 17:11:18 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so127128yxm.1
-        for <git@vger.kernel.org>; Fri, 05 Dec 2008 14:11:17 -0800 (PST)
-Received: by 10.100.128.2 with SMTP id a2mr322781and.93.1228515077382;
-        Fri, 05 Dec 2008 14:11:17 -0800 (PST)
-Received: by 10.100.135.12 with HTTP; Fri, 5 Dec 2008 14:11:17 -0800 (PST)
-In-Reply-To: <94a0d4530812051357m4f0bc591n802c41a78e698b3b@mail.gmail.com>
-Content-Disposition: inline
+	id S1752809AbYLEWTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2008 17:19:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752478AbYLEWTO
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 17:19:14 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:43368 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751980AbYLEWTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2008 17:19:13 -0500
+Received: from a.earth.lavabit.com (a.earth.lavabit.com [192.168.111.10])
+	by karen.lavabit.com (Postfix) with ESMTP id BE765C7A71;
+	Fri,  5 Dec 2008 16:19:12 -0600 (CST)
+Received: from 1549.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id XNMRDNTXF6ER; Fri, 05 Dec 2008 16:19:12 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=Yi6CMG9XhllHyj/v89j0jyANBu3oxlU2/K6i38BSHZURROFSk6HSk7PQroRMW260dDptuAu0Up6gbfWG635h1G3hvyQsUJtip/dsw97S1pVMz0NLoCpEaOHETYYIKJ17UI7xl6GY33FD2GBqrPSe5MxaJ+WgHCu6HDYWeCBmSlY=;
+  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7v3ah2z6jh.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102417>
 
-2008/12/5 Felipe Contreras <felipe.contreras@gmail.com>:
-> On Fri, Dec 5, 2008 at 11:44 PM, Santi B=E9jar <santi@agolina.net> wr=
-ote:
->> 2008/12/5 Felipe Contreras <felipe.contreras@gmail.com>:
->>> On Fri, Dec 5, 2008 at 6:02 PM, Jakub Narebski <jnareb@gmail.com> w=
-rote:
->>
->> [...]
->>
->>>>> But here are the links anyway. The order is rather random.
->>>>
->>>> Moreover the _quality_ of those links is very random.
->>>
->>> Exactly, I didn't choose them, that's what people have been tagging=
- as
->>> "git" in delicious.com. I'm subscribed to the RSS feed and saving t=
-he
->>> ones that appear a lot.
->>>
->>> In fact I don't like some of them, but that's what the "public" fin=
-ds
->>> interesting.
->>
->> So I don't see the value of such a list. You can go to delicious and
->> get it.
+Quoting "Junio C Hamano" <gitster@pobox.com>:
+
+> Expecting people to apply for an account and write for that page would not
+> fly.  As Felipe said himself, many people already have their own blog.
 >
-> Try it. You can't see which ones are new, which are completely
-> irrelevant. There are duplicates and you can't see the popularity /
-> freshness ratio, or "hotness", never mind the most popular this week.
->
-> Apparently some people already found interesting links they haven't
-> seen before, so at lest there's value for them.
+> Having said all that, I am not sure "Planet" would work for the git
+> community as well as it would for others.  I do not know of many core-ish
+> people write on git on their blogs (and I know at least two core-ish
+> people who flatly say "blogging is a waste of time").
 
-Maybe they should. Sorry for my ignorance.
+But are you not "core-ish", with your own pages?
 
->
->> Another thing that could be great is filtering this list to
->> those that pass a certain criteria (mainly quality, up to date, ...)
->> and present it in an attractive way, with summaries, categorized by
->> type (trick, tutorial, comparison,...), ...
->
+  http://gitster.livejournal.com/tag/git
 
-If this view is more or less what you have in mind I'll try to help.
-
-Santi
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
