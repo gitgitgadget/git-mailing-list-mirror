@@ -1,101 +1,102 @@
-From: "Jeremy Ramer" <jdramer@gmail.com>
-Subject: Re: git-gui: Warn when username and e-mail address is unconfigured?
-Date: Fri, 5 Dec 2008 13:18:54 -0700
-Message-ID: <b9fd99020812051218o1c337148u12b8e190c60f32eb@mail.gmail.com>
-References: <Pine.LNX.4.64.0812041141160.9969@ds9.cixit.se>
-	 <b9fd99020812040805j1143c029yf0cc4c1c4a835759@mail.gmail.com>
-	 <bd6139dc0812041104s26ae149foeafa489e65aeb584@mail.gmail.com>
-	 <b9fd99020812041254l5d1fa383m4fcc3b40f6fabacb@mail.gmail.com>
-	 <7vskp3d3q9.fsf@gitster.siamese.dyndns.org>
-	 <b9fd99020812041558w204e5f48gbed73fdbd289ad@mail.gmail.com>
-	 <bb6f213e0812050301t2f18061epfeff7bc74ee6f28a@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git weekly news: 2008-49
+Date: Fri, 05 Dec 2008 12:54:58 -0800
+Message-ID: <7v3ah2z6jh.fsf@gitster.siamese.dyndns.org>
+References: <94a0d4530812041643r784ae8b1x242e3b2f9c9f41@mail.gmail.com>
+ <m3d4g6ipah.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, spearce@spearce.org,
-	sverre@rabbelier.nl, "Peter Krefting" <peter@softwolves.pp.se>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Alexander Gavrilov" <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 05 21:20:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Felipe Contreras" <felipe.contreras@gmail.com>,
+	"git list" <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 05 21:56:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8h9p-0002Gg-FL
-	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 21:20:13 +0100
+	id 1L8hj8-00070q-3l
+	for gcvg-git-2@gmane.org; Fri, 05 Dec 2008 21:56:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753148AbYLEUS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2008 15:18:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752660AbYLEUS4
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 15:18:56 -0500
-Received: from wf-out-1314.google.com ([209.85.200.173]:24032 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752478AbYLEUSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2008 15:18:55 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so149355wfd.4
-        for <git@vger.kernel.org>; Fri, 05 Dec 2008 12:18:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Qe2vrQxhJ9owcUxCit7zuN/ktc7qTIx5NUz6AiDhxwk=;
-        b=V3BVdd895Fj+Rkd5brVe27v6WzEf6WuDTNCXZPxGwAeaYfhDyc5og2rplF8MfE7ajU
-         we9EnH7YD59/NOfWg3ccSmtyfr7a6cCUeWTXYjt28I4sfDARc2703tx3fn94aujq57Qg
-         OpsnyJrHWw+V9zTkLJ4ym66iYDWD0ZVfpt7XA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=gK0B36HtHyd+GQKgkfwBKbRomWPszp7onx0OALJ0QPpq0qAwU83lwEQJd8EXakJzp8
-         LS1lSkZn/7JJpVFCtpQscmHmdskQFOu+lF8uzPt91wkJPpjL3zmCYVKE5XrEhd5TvQuy
-         wK24bElH7aG3IQ5UJzrC4k+F9s2nNSdKhZWV8=
-Received: by 10.114.106.13 with SMTP id e13mr350790wac.52.1228508334366;
-        Fri, 05 Dec 2008 12:18:54 -0800 (PST)
-Received: by 10.114.57.17 with HTTP; Fri, 5 Dec 2008 12:18:54 -0800 (PST)
-In-Reply-To: <bb6f213e0812050301t2f18061epfeff7bc74ee6f28a@mail.gmail.com>
-Content-Disposition: inline
+	id S1753629AbYLEUzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2008 15:55:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753351AbYLEUzJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 15:55:09 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36506 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751945AbYLEUzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2008 15:55:08 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CFADD182F8;
+	Fri,  5 Dec 2008 15:55:05 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 83960182F6; Fri, 
+ 5 Dec 2008 15:54:59 -0500 (EST)
+In-Reply-To: <m3d4g6ipah.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Fri, 05 Dec 2008 08:02:33 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FE89BEA8-C30E-11DD-880B-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102411>
 
-On Fri, Dec 5, 2008 at 4:01 AM, Alexander Gavrilov <angavrilov@gmail.com> wrote:
-> On Fri, Dec 5, 2008 at 2:58 AM, Jeremy Ramer <jdramer@gmail.com> wrote:
->> Yes, that does appear to be the message I get, with the following
->> environment variables:
->> - GIT_AUTHOR_EMAIL
->> - GIT_COMMITTER_NAME
->> - GIT_COMMITER_EMAIL
->> - GIT_AUTHOR_NAME
->>
->> Now that I look closer I see that I am setting these in my .bashrc
->> file.  When I first started using git a year ago I was given the
->> impression that these were needed. But I see that that is no longer
->> the case since I use the config:
->>
->> git config --global user.name "Your Name"
->> git config --global user.email "you@example.com"
->>
->> Removing them from my .bashrc removes the warning.  In hindsight the
->> warning should have clued me in, but I've been seeing that message
->> since I first started using git on Cygwin so I figured it was a cygwin
->> issue that I couldn't do anything about.
->>
->
-> I wonder if what the warning says is still true. It's 2 years since
-> it was added, so the issue might have been fixed.
->
-> If you run "GIT_AUTHOR_NAME=foobar git gui", and make a commit,
-> does it set the author name to 'foobar'?
+Jakub Narebski <jnareb@gmail.com> writes:
 
-I ran
-export GIT_AUTHOR_NAME="foobar git gui"
-and then made a commit with git gui and it did not set the author name
-to foobar.  It used my global config name.
+> [1] It would be nice if somebody resurrected GitTraffic, offshot of
+> now defunct KernelTraffic, or at least helped to write Git articles
+> for KernelTrap (which currently is in a bit of hiatus).
 
->
-> Alexander
->
+While I 100% agree with you that "Git Traffic" was a terrific attempt, I
+do not think expecting or asking Felipe to duplicate it is realistic.
+
+I searched for Felipe's proposal on the list archive, and its title was
+"Planet Git".  That shows why the focus could be different.
+
+"Git Traffic" was great because it attempted to directly address the issue
+that the traffic on the mailing list was simply too high (and still is) to
+follow for casual observers.  It did so by giving a comprehensive summary
+of what important topics were discussed recently on the list from the
+viewpoint of one dedicated person who followed many, perhaps not all,
+important threads carefully, who very well knew what was going on, and who
+had a good taste on what is important and what is not.
+
+But "Planet Git" is quite different from "Git Traffic".  For the latter,
+somebody needs to do a real work, continuously.  But more importantly, I
+think they would serve different purposes.  A "Planet" could be valuable
+to have with or without "Traffic".
+
+I think what was presented as "Official Git blog", however, is also
+different from what people expect a "Planet" to be.  I do not think it is
+unreasonable to expect or ask Felipe to improve on making his service more
+"Planet" like.
+
+A "Planet", as I understand it, is an aggregator of (selected) people's
+blogs, and even though I am not currently involved in any Planet nor
+follow any Planet myself, I can imagine that it could be a valuable
+resource to have a "Planet Git" that subscribes to and aggregates what
+influential figures write on git in their blogs.
+
+Felipe's page currently is a random collection of links, and other than
+their titles, there is no indication for readers to judge which link is
+worth clicking and reading.  It does not even mention who wrote each
+piece, let alone editorial comments (e.g. "This is worth reading") like
+you added.  When you click one of them in order to read it, you leave the
+"list of links".  That is not how navigation (the click and thought flow
+for the readers) usually works in a "Planet".
+
+If this wants to be a "Planet Git", I do not think there is any need for
+Felipe to ask "who wants accounts?"  It would go the other way.  Instead,
+Felipe, as the coordinator of the "Planet", would find people who writes
+noteworthy things on git on their own blogs, would ask for permission to
+slurp and aggregate what they wrote, and produce the page by aggregating
+their writings.  That would make a good "Planet Git".
+
+Expecting people to apply for an account and write for that page would not
+fly.  As Felipe said himself, many people already have their own blog.
+
+Having said all that, I am not sure "Planet" would work for the git
+community as well as it would for others.  I do not know of many core-ish
+people write on git on their blogs (and I know at least two core-ish
+people who flatly say "blogging is a waste of time").
