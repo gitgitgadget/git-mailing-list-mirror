@@ -1,89 +1,180 @@
-From: "Christian MICHON" <christian.michon@gmail.com>
-Subject: Re: Git Books
-Date: Sat, 6 Dec 2008 13:27:52 +0100
-Message-ID: <46d6db660812060427h3c97efd9ie4aa604133aa3583@mail.gmail.com>
-References: <d411cc4a0812060358ub640ea3kd04072c5640eef68@mail.gmail.com>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [RFCv3 1/2] gitweb: add patch view
+Date: Sat, 6 Dec 2008 13:34:57 +0100
+Message-ID: <cb7bb73a0812060434r2b48fd1ev359020fb1e0d1603@mail.gmail.com>
+References: <1228345188-15125-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1228345188-15125-2-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200812060134.22959.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "git list" <git@vger.kernel.org>
-To: "Scott Chacon" <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 06 13:29:19 2008
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 06 13:36:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8wHe-0005ad-K7
-	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 13:29:19 +0100
+	id 1L8wOa-0007fQ-8y
+	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 13:36:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755590AbYLFM1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Dec 2008 07:27:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755575AbYLFM1z
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 07:27:55 -0500
-Received: from mu-out-0910.google.com ([209.85.134.185]:49539 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755558AbYLFM1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Dec 2008 07:27:54 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so370298muf.1
-        for <git@vger.kernel.org>; Sat, 06 Dec 2008 04:27:52 -0800 (PST)
+	id S1755638AbYLFMfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2008 07:35:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755180AbYLFMfE
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 07:35:04 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:63504 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752331AbYLFMfA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2008 07:35:00 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so166734eyi.37
+        for <git@vger.kernel.org>; Sat, 06 Dec 2008 04:34:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=K6cZWYekPKNwiMVyZ+OL3NRnavB2S6hjm55JA5nOnqg=;
-        b=r6cIfW+1UGTbBvoc1u45LNttW8H3ayazDlMWIEBQQEPCcYKMTrdVdKw7dBE3l5Nmrf
-         45Zl1p15bdHMAp0IS/hu1+3Nmi3kLF952NbogsDkQLo9VGqVr140fN+Oz7iPdd2zx/uQ
-         /DFbbnmhUyjDhA6CI1pzRAjzBV3iNy3/X+bhE=
+        bh=KJgWNlCmKR1V+JCZ8gwtiSLen3UkyoaMPuS4RIOXHwo=;
+        b=TSf+U/RNgmo8UMagK7plgN4y1yeVhRpJvSXLX9mLC/J1bD942pM6dzk3TFvv7et0rV
+         J07AqYGkHhLnhE/Z82k8JFOJcDmcIQZG6EpEFZL3khou1Z/DR3FAR5dIhP9wKglbnWTv
+         rntZEuLE+wSBYDHam9Fqpt+SnwhWQgaurtzYY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=XmX7CSKTVy8OXGyGgeNtaib9Masle2vklSr7rmh0Yy3tgUk+6XbHwBerh1EPLyjR1q
-         5AAzH2zMmj+FkipSubzCTWvBa6klTRnA3/tuMAURp3qQUr7dLW9uzq6S6c5Ki9VS0RVw
-         5a9qFMzm5ns8bUrJcaUyJnlBztjiWwy+K1YcY=
-Received: by 10.103.189.15 with SMTP id r15mr445558mup.126.1228566472266;
-        Sat, 06 Dec 2008 04:27:52 -0800 (PST)
-Received: by 10.103.189.18 with HTTP; Sat, 6 Dec 2008 04:27:52 -0800 (PST)
-In-Reply-To: <d411cc4a0812060358ub640ea3kd04072c5640eef68@mail.gmail.com>
+        b=MHHakEIs4PaxBW4wvhYqjHlC1rUzyuELlJrxEzvIhV2dfLrJpCYoPT6X6jjjg2l1zU
+         D+wl7G9PIVypfFlrNB6zFHY5ryuN2GBdowYUMsZHbXb4z88sHh5yvsKQA5raIylO4734
+         QB0V9GVoDZ00plYtp77VViMz994L74WCivT2c=
+Received: by 10.210.125.13 with SMTP id x13mr1157461ebc.198.1228566897491;
+        Sat, 06 Dec 2008 04:34:57 -0800 (PST)
+Received: by 10.210.79.12 with HTTP; Sat, 6 Dec 2008 04:34:57 -0800 (PST)
+In-Reply-To: <200812060134.22959.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102449>
 
-On Sat, Dec 6, 2008 at 12:58 PM, Scott Chacon <schacon@gmail.com> wrote:
-> Hey all,
+On Sat, Dec 6, 2008 at 1:34 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Wed, 3 Dec 2008, Giuseppe Bilotta wrote:
 >
-> I have been talked into helping write a real, paper-based book on Git
-> for a publisher big enough that you may even see it in your local
-> Borders or whatnot.  (And, it appears that Junio has been as well:
-> http://gitster.livejournal.com/21616.html)
+>> The manually-built email format in commitdiff_plain output is not
+>> appropriate for feeding git-am, because of two limitations:
+>>  * when a range of commits is specified, commitdiff_plain publishes a
+>>    single patch with the message from the first commit, instead of a
+>>    patchset,
 >
-> So, since I'm near the beginning of this process, I was wondering if
-> the group had any feedback as to what might be super helpful to
-> include.  I mean, I have a pretty good layout and all, but if you
-> wanted to point me to some threads that tend to crop up in the mailing
-> list and IRC channel from relative newcomers that I might be able to
-> nip in the bud, I would like to.  I'm addressing the stuff that _I_
-> hear a lot, and I'm scanning the IRC logs and list for topics, but I
-> figured many of you must answer the same questions all the time, too.
+> This is because 'commitdiff_plain' wasn't _meant_ as patch series view,
+> to be fed to git-am. Actually it is a bit cross between "git show"
+> result with '--pretty=email' format, and "git diff" between two commits,
+> to be fed to git-apply or GNU patch.
 >
-> Thanks,
-> Scott
-> --
+> Nevertheless the above reasoning doesn't need to be put in a commit
+> message. But it explains why new 'patch' / 'patchset' view is needed:
+> because there was no equivalent.
 
-workflows, workflows, workflows...
+I'll remove it.
 
-gitconfig/aliases best practices
+>>  * in either case, the patch summary is replicated both as email subject
+>>    and as first line of the email itself, resulting in a doubled summary
+>>    if the output is fed to git-am.
+>
+> This is independent issue which is I think worth correcting anyway,
+> unless we decide to scrap 'commitdiff_plain' view altogether.
+> But I think we would want some text/plain patch view to be applied
+> by GNU patch (for example in RPM .spec file).
 
-tips and tricks in branches (ex: parentless...) and in setting up git servers
+I don't think we should scrap commitdiff either, but the subject
+replication is not really an issue if the view is not fed to git am.
 
-my 3 cents :)
+>> +     # The maximum number of patches in a patchset generated in patch
+>> +     # view. Set this to 0 or undef to disable patch view, or to a
+>> +     # negative number to remove any limit.
+>> +     'patches' => {
+>> +             'override' => 1,
+>> +             'default' => [16]},
+>>  );
+>
+> You need to set "'sub' => \&feature_patches" for feature to be
+> override-able at all.  Also features are usually not overridable
+> by default, which reduces load a tiny bit (by _possibly_ not reading
+> config, although that shouldn't matter much now with reading whole
+> commit using single call to git-config, and not one call per variable).
+
+I think I'll make the feature non-overridable. I'll also make it
+default to disabled, although I'm not particularly happy with the
+choice.
+
+> And I think the default might be set larger: 'log' view generates
+> as big if not bigger load, and it is split into 100 commits long
+> pages.
+
+Hm, I would say the load of patch view is much higher than the load of
+log view, both in terms of bandwidth and in terms of load on the
+server, because of the diffs.
+
+>>  sub git_commitdiff {
+>>       my $format = shift || 'html';
+>> +
+>> +     my $patch_max = gitweb_check_feature('patches');
+>
+> Wouldn't it be better to name this variable $max_patchset_size, or
+> something like that? I'm not saying that this name is bad, but I'm
+> wondering if it could be better...
+
+max_patchset_size sounds much worse than patch_max to me, which is why
+I went for the latter 8-)
+
+>>       if ($format eq 'html') {
+>>               $formats_nav =
+>>                       $cgi->a({-href => href(action=>"commitdiff_plain", -replay=>1)},
+>> @@ -5483,7 +5498,12 @@ sub git_commitdiff {
+>>               open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+>>                       '-p', $hash_parent_param, $hash, "--"
+>>                       or die_error(500, "Open git-diff-tree failed");
+>> -
+>> +     } elsif ($format eq 'patch') {
+>> +             open $fd, "-|", git_cmd(), "format-patch", '--encoding=utf8',
+>> +                     '--stdout', $patch_max > 0 ? "-$patch_max" : (),
+>
+>> +                     $hash_parent ? ('-n', "$hash_parent..$hash") :
+>> +                     ('--root', '-1', $hash)
+>
+> This bit makes 'patch' view behave bit differently than git-format-patch,
+> which I think is a good idea: namely it shows single patch if there is
+> no cutoff.  This should be mentioned in commit message, and perhaps
+> even in a comment in code.
+>
+> Beside, if you show only single patch because $hash_parent is not set,
+> you don't need to examine $patch_max nor set limit, because you use '-1'.
+> Currently if $patch_max > 0 and !$hash_parent, you pass limit for the
+> number of patches twice.  This I think is harmless but...
+
+I've reworked the code a bit, making the commit spec an array computed
+before passing it to the command line. The code is cleaner but
+obviously longer 8-)
+
+The double limit worked properly, btw.
+
+>> +             # TODO add X-Git-Tag/X-Git-Url headers in a sensible way
+>
+> Sensible way would mean modifying git-format-patch to be able to add
+> extra headers via command option, just like it is now possible via
+> config variable format.headers, I think.  Because there are no surefire
+> markers of where one patch ends and another begins: commit message is
+> free text, and can contain diff... although if it contains diff
+> separator '---' then git-am would have problem with patch; or at least
+> even assuming sane commit messages it is not easy.
+>
+> Also I think that only X-Git-Url makes sense, and it is per whole
+> patchset (whole 'patch' view output) and not for each individual
+> patch.
+
+I've stripped this commet for the time being. I'm not sure even
+X-Git-Url makes sense, and the fact that it should only attached to
+the first email makes it an oddball.
 
 -- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+Giuseppe "Oblomov" Bilotta
