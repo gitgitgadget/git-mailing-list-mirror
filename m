@@ -1,102 +1,112 @@
-From: applehq <theappleman@gmail.com>
-Subject: [PATCH] t9129: Prevent test failure if no UTF-8 locale
-Date: Sat, 6 Dec 2008 01:31:52 +0000
-Message-ID: <20081206013152.GA6129@cumin>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 3/6] Make reset_tree() in builtin-checkout.c a bit more
+ library-ish
+Date: Fri,  5 Dec 2008 17:54:12 -0800
+Message-ID: <1228528455-3089-4-git-send-email-gitster@pobox.com>
+References: <1228528455-3089-1-git-send-email-gitster@pobox.com>
+ <1228528455-3089-2-git-send-email-gitster@pobox.com>
+ <1228528455-3089-3-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 06 02:31:27 2008
+X-From: git-owner@vger.kernel.org Sat Dec 06 02:55:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8m0x-0000MB-P7
-	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 02:31:24 +0100
+	id 1L8mOa-0005h5-O1
+	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 02:55:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753987AbYLFBaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2008 20:30:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754459AbYLFBaH
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 20:30:07 -0500
-Received: from wf-out-1314.google.com ([209.85.200.171]:62712 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753722AbYLFBaF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2008 20:30:05 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so254231wfd.4
-        for <git@vger.kernel.org>; Fri, 05 Dec 2008 17:30:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mail-followup-to:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=gi4v2ihY07NprZXdD1laRtUF7jX5AiMYlNzjqVYakKY=;
-        b=oyQQOpFl1rzrL0SMuDNxRMe1QM9CqGwf/LnIJIs4h9p4rKwYYhz5cxXU8ecDLrZwSo
-         1QBR+PQQNbksEVbGX0TV0s84Cs1Aa8nuheEVgisiUrPLHge/NRizidjf46ewtfaeb6bp
-         eRQbYiGeH1dpsr8BN2IXfA5ubIuWUxsJ1nOM0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mail-followup-to:mime-version
-         :content-type:content-disposition:user-agent;
-        b=JwHIGl/SLrYUf427fLBqluQvTLibdrhqfb7yjDzDSCoDSi+ZUaOuAKsJVTYc4/1olT
-         NacJWsKFjTqw8MRgPMfHEHAzZ+O2n/Sy6z5nZ8i0TO6BbCcwoaSmLpzFUQd+TTbxjRko
-         lJiILucPpqNpFt4yI4EmW6nkgmJoZ73b5mYe8=
-Received: by 10.142.221.11 with SMTP id t11mr265933wfg.238.1228527005050;
-        Fri, 05 Dec 2008 17:30:05 -0800 (PST)
-Received: from @ (82-35-17-232.cable.ubr03.hari.blueyonder.co.uk [82.35.17.232])
-        by mx.google.com with ESMTPS id 20sm11111672wfi.27.2008.12.05.17.30.02
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 05 Dec 2008 17:30:04 -0800 (PST)
-Mail-Followup-To: applehq <theappleman@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-11-16)
+	id S1755378AbYLFBy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2008 20:54:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752501AbYLFBy2
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 20:54:28 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63586 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755216AbYLFBy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2008 20:54:27 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1A1F084EF1
+	for <git@vger.kernel.org>; Fri,  5 Dec 2008 20:54:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 626C484EF0 for
+ <git@vger.kernel.org>; Fri,  5 Dec 2008 20:54:26 -0500 (EST)
+X-Mailer: git-send-email 1.6.1.rc1.72.ga5ce6
+In-Reply-To: <1228528455-3089-3-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: D048073C-C338-11DD-8390-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102432>
 
-Commit 16fc08e2d86dad152194829d21bc55b2ef0c8fb1 introduced a
-test that failed if the en_US.UTF-8 locale was not installed.
+The function demanded an internal structure "struct checkout_opts" as its
+argument, but we'd want to split this (and one of its callers) out into a
+separate library.  This makes what the function wants a bit more explicit
+and much less dependent on the rest of builtin-checkout.c
 
-Make the test find a UTF-8 locale, and expect failure.
-
-Signed-off-by: applehq <theappleman@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t9129-git-svn-i18n-commitencoding.sh |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
+ builtin-checkout.c |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/t/t9129-git-svn-i18n-commitencoding.sh b/t/t9129-git-svn-i18n-commitencoding.sh
-index 938b7fe..87ecdd0 100755
---- a/t/t9129-git-svn-i18n-commitencoding.sh
-+++ b/t/t9129-git-svn-i18n-commitencoding.sh
-@@ -15,8 +15,9 @@ compare_git_head_with () {
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index c2c0561..d88fce2 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -319,7 +319,7 @@ static void describe_detached_head(char *msg, struct commit *commit)
+ 	strbuf_release(&sb);
  }
  
- compare_svn_head_with () {
--	LC_ALL=en_US.UTF-8 svn log --limit 1 `git svn info --url` | \
--		sed -e 1,3d -e "/^-\{1,\}\$/d" >current &&
-+	LC_ALL=`locale -a | grep -i utf | head -1` \
-+		svn log --limit 1 `git svn info --url` | \
-+			sed -e 1,3d -e "/^-\{1,\}\$/d" >current &&
- 	test_cmp current "$1"
- }
+-static int reset_tree(struct tree *tree, struct checkout_opts *o, int worktree)
++static int reset_tree(struct tree *tree, int quiet, int worktree, int *wt_error)
+ {
+ 	struct unpack_trees_options opts;
+ 	struct tree_desc tree_desc;
+@@ -331,14 +331,14 @@ static int reset_tree(struct tree *tree, struct checkout_opts *o, int worktree)
+ 	opts.reset = 1;
+ 	opts.merge = 1;
+ 	opts.fn = oneway_merge;
+-	opts.verbose_update = !o->quiet;
++	opts.verbose_update = !quiet;
+ 	opts.src_index = &the_index;
+ 	opts.dst_index = &the_index;
+ 	parse_tree(tree);
+ 	init_tree_desc(&tree_desc, tree->buffer, tree->size);
+ 	switch (unpack_trees(1, &tree_desc, &opts)) {
+ 	case -2:
+-		o->writeout_error = 1;
++		*wt_error = 1;
+ 		/*
+ 		 * We return 0 nevertheless, as the index is all right
+ 		 * and more importantly we have made best efforts to
+@@ -377,7 +377,8 @@ static int merge_working_tree(struct checkout_opts *opts,
+ 		return error("corrupt index file");
  
-@@ -60,7 +61,7 @@ do
- 	'
- done
+ 	if (opts->force) {
+-		ret = reset_tree(new->commit->tree, opts, 1);
++		ret = reset_tree(new->commit->tree, opts->quiet, 1,
++				 &opts->writeout_error);
+ 		if (ret)
+ 			return ret;
+ 	} else {
+@@ -446,14 +447,16 @@ static int merge_working_tree(struct checkout_opts *opts,
+ 			o.verbosity = 0;
+ 			work = write_tree_from_memory(&o);
  
--test_expect_success 'ISO-8859-1 should match UTF-8 in svn' '
-+test_expect_failure 'ISO-8859-1 should match UTF-8 in svn' '
- (
- 	cd ISO-8859-1 &&
- 	compare_svn_head_with "$TEST_DIRECTORY"/t3900/1-UTF-8.txt
-@@ -69,7 +70,7 @@ test_expect_success 'ISO-8859-1 should match UTF-8 in svn' '
- 
- for H in EUCJP ISO-2022-JP
- do
--	test_expect_success '$H should match UTF-8 in svn' '
-+	test_expect_failure '$H should match UTF-8 in svn' '
- 	(
- 		cd $H &&
- 		compare_svn_head_with "$TEST_DIRECTORY"/t3900/2-UTF-8.txt
+-			ret = reset_tree(new->commit->tree, opts, 1);
++			ret = reset_tree(new->commit->tree, opts->quiet, 1,
++					 &opts->writeout_error);
+ 			if (ret)
+ 				return ret;
+ 			o.branch1 = new->name;
+ 			o.branch2 = "local";
+ 			merge_trees(&o, new->commit->tree, work,
+ 				old->commit->tree, &result);
+-			ret = reset_tree(new->commit->tree, opts, 0);
++			ret = reset_tree(new->commit->tree, opts->quiet, 0,
++					 &opts->writeout_error);
+ 			if (ret)
+ 				return ret;
+ 		}
 -- 
-1.6.1.rc1.53.g455b
+1.6.1.rc1.72.ga5ce6
