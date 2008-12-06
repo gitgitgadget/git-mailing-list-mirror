@@ -1,102 +1,67 @@
-From: nadim khemir <nadim@khemir.net>
-Subject: Re: Git Books
-Date: Sat, 6 Dec 2008 15:38:17 +0100
-Message-ID: <200812061538.17700.nadim@khemir.net>
-References: <d411cc4a0812060358ub640ea3kd04072c5640eef68@mail.gmail.com> <m34p1hihx4.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-To: "git list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Dec 06 15:38:25 2008
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [RFCv4 0/3] gitweb: patch view
+Date: Sat,  6 Dec 2008 16:02:32 +0100
+Message-ID: <1228575755-13432-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 06 16:03:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8yIa-0001oI-0N
-	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 15:38:24 +0100
+	id 1L8ygq-0001n4-Uc
+	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 16:03:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756487AbYLFOhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Dec 2008 09:37:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758266AbYLFOhH
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 09:37:07 -0500
-Received: from mail1.perspektivbredband.net ([81.186.254.13]:35405 "EHLO
-	mail1.perspektivbredband.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756487AbYLFOhG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Dec 2008 09:37:06 -0500
-Received: from khemir.net (h51bafc0a.c46-01-06.sta.perspektivbredband.net [81.186.252.10])
-	by mail1.perspektivbredband.net (Postfix) with ESMTP id E0B92940137
-	for <git@vger.kernel.org>; Sat,  6 Dec 2008 15:37:03 +0100 (CET)
-Received: from naquadim.khemir.lan (naquadim.khemir.lan [192.168.1.234])
-	by khemir.net (Postfix) with ESMTP id 8181E12640A7
-	for <git@vger.kernel.org>; Sat,  6 Dec 2008 15:37:03 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <m34p1hihx4.fsf@localhost.localdomain>
-Content-Disposition: inline
-X-Spam-Status: No, score=0.1 required=5.0 tests=AWL,UNPARSEABLE_RELAY
-	autolearn=ham version=3.2.5-gr0
-X-Spam-Checker-Version: SpamAssassin 3.2.5-gr0 (2008-06-10) on firewall
+	id S1753801AbYLFPCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2008 10:02:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753035AbYLFPCM
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 10:02:12 -0500
+Received: from ey-out-2122.google.com ([74.125.78.25]:47170 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752246AbYLFPCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2008 10:02:11 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so180690eyi.37
+        for <git@vger.kernel.org>; Sat, 06 Dec 2008 07:02:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=3KDKkgxTQ+wENyaLklqBcXrCRdFRO01qCHWCvIFK+W0=;
+        b=IYyxDRlSdQuNOJGNlfZnbISC99nTY15CidX1TcKbo3TN0lhrSowMhjZfmtAI4Pl902
+         Gxq1wWbZ8bQ772xv0AyLbXwgflcqW4AKHHRf5+hQ+ScHLcOzcWKYl2ayWmRdVo817QrI
+         Dckv0k2SKLj1VYoVCo56xncTmutMPURrZiWh4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=MDwsb/Cc1780y2Qcn65XdfNzVeNEwy5AiA71K9tAacvkvMWY2wVUhsCQTM2Lw4SwZQ
+         K3o9zwZ9itnqEtoQs6hs10cDFOwlfGv+fvm5mUyL6Oiv8aIMlW+7vQQnC6MEph8ui42i
+         8ewi0i3JIbqwyhSMcE4Eru7MpkHUUTlVfxmdU=
+Received: by 10.210.120.7 with SMTP id s7mr1328436ebc.78.1228575729148;
+        Sat, 06 Dec 2008 07:02:09 -0800 (PST)
+Received: from localhost ([78.13.53.163])
+        by mx.google.com with ESMTPS id i8sm1698758nfh.27.2008.12.06.07.02.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 06 Dec 2008 07:02:08 -0800 (PST)
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102459>
 
-On Saturday 06 December 2008 13.54.06 Jakub Narebski wrote:
-> "Scott Chacon" <schacon@gmail.com> writes:
-> > I have been talked into helping write a real, paper-based book on Git
-> > ...
->
-> What I really would like to see in a paper book is _diagrams_, in the
-> form of simple graphs (and not UML-like diagrams, of flow-control like
-> diagrams).
+Fourth iteration of the patch view feature, that exposes git
+format-patch output in gitweb. The most significant different from the
+previous revision is the introduction of the 'patches' view, that only
+differs from 'patch' view in the treatment of single commits: 'patch'
+view only displays the patch for that specific commit, whereas 'patches'
+follows the git format-patch M.O.
 
-I was thinking about buying the pdf below. The little I can see looks like 
-there are a bunch of diagrams in it.
+Giuseppe Bilotta (3):
+  gitweb: add patch view
+  gitweb: add patches view
+  gitweb: link to patch(es) view from commit and log views
 
-http://peepcode.com/products/git-internals-pdf
-
-> You can find them in various slides for presentations 
-> (among others Junio's talks), and sometimes in blog posts[1], but
-> usually only as ASCII-diagrams[2] in git documentation.  (And the
-> examples in"The Git Comminity Book" I've seen so far are a bit too
-> complicated).
-
-I like doing my ASCII-diagrams with Asciio, unsurprizingly.
-
-
-                                         ********
-                                         * HEAD *
-                                         ********
-                                             |
-                                             v
-                           .-----.      .--------.
-                           | tag |      | branch |
-                           '-----'      '--------'
-                              |              |
-                              v              v
-..........               ..........     ..........
-. commit .<--------------. commit .<----. commit .
-..........               ..........     ..........
-     |                        |              |
-     v                        v              v
- .------.                 .------.       .------.
- | tree |--------.--------| tree |       | tree |
- '------'        |        '------'       '------'
-     |           v            |              |
-     v       .------.         v              v
- .------.    | blob |     .------.       .------.
- | tree |--. '------'  .--| tree |       | blob |
- '------'  |           |  '------'       '------'
-           '-----.-----'      |
-                 |            v
-                 v        .------.
-             .------.     | tree |
-             | blob |     '------'
-             '------'         |
-                              v
-                          .------.
-                          | blob |
-                          '------'
-
-cheers, Nadim.
+ gitweb/gitweb.perl |  107 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 106 insertions(+), 1 deletions(-)
