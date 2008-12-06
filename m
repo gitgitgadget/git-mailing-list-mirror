@@ -1,98 +1,162 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] Documentation: Remove duplicated info from RelNotes-1.6.1
-Date: Sat,  6 Dec 2008 23:36:41 +0100
-Message-ID: <1228603001-23095-1-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 06 23:38:06 2008
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH] Drop StGit support
+Date: Sun,  7 Dec 2008 00:01:23 +0100
+Message-ID: <1228604483-30761-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sun Dec 07 00:03:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L95mm-0003oz-No
-	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 23:38:05 +0100
+	id 1L96B5-0002Yg-DW
+	for gcvg-git-2@gmane.org; Sun, 07 Dec 2008 00:03:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753005AbYLFWgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Dec 2008 17:36:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752964AbYLFWgr
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 17:36:47 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:30801 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752800AbYLFWgr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Dec 2008 17:36:47 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so280660nfc.21
-        for <git@vger.kernel.org>; Sat, 06 Dec 2008 14:36:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:from:to:cc
-         :subject:date:message-id:x-mailer;
-        bh=ycXlC6okhQa8Mrma6oR6RmLr0D73blQwvAKuH6+Lg78=;
-        b=ueG2GAsjiwC7evkhFkXfrreo1/U52FZQA9v2z8cGvnloAMpNxuZ3QSFxs9IRh9HICe
-         vJ67PiIht1zuIURxp8g9RypOMkFoepZ7vtbyaRI89QZqNU+I/RFl2eppyu6rRDN5NTgs
-         nidIXFPZ8Z85ah7i33wHt64ECVu64mtRNIUdU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=JSTfec8PXJNw7MwwS1yGnzTcfYFpBYYbTYLpTQbczrzsWfBNyEjXCIQrvD+t9aupHp
-         GyXoarVUe46Tc9uWuNpO5hSwboIydfIkCHpUyf358g3XAFT8hv5YhtT1f/6LvdkMbtdF
-         8Le+q81xhW2eCabcuewJYiJvOyd6DE9/ewIhY=
-Received: by 10.210.34.19 with SMTP id h19mr1726179ebh.160.1228603005173;
-        Sat, 06 Dec 2008 14:36:45 -0800 (PST)
-Received: from localhost.localdomain (abvc175.neoplus.adsl.tpnet.pl [83.8.200.175])
-        by mx.google.com with ESMTPS id 5sm1260966eyh.56.2008.12.06.14.36.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Dec 2008 14:36:44 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mB6MahqW023121;
-	Sat, 6 Dec 2008 23:36:44 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mB6MagwZ023119;
-	Sat, 6 Dec 2008 23:36:42 +0100
-X-Mailer: git-send-email 1.6.0.4
+	id S1753142AbYLFXB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2008 18:01:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753164AbYLFXB2
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 18:01:28 -0500
+Received: from mail.dewire.com ([83.140.172.130]:28156 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753053AbYLFXB1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2008 18:01:27 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 678C61475A96;
+	Sun,  7 Dec 2008 00:01:25 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id EeYXj7yoV+eO; Sun,  7 Dec 2008 00:01:24 +0100 (CET)
+Received: from localhost.localdomain (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 82AF4147EAE9;
+	Sun,  7 Dec 2008 00:01:24 +0100 (CET)
+X-Mailer: git-send-email 1.6.0.3.640.g6331a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102481>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+It is slow and none of the jgit/egit developers use it.
+
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 ---
-I feel a bit silly signing off such simple patch.
+ .../internal/decorators/GitResourceDecorator.java  |   20 ++----
+ .../src/org/spearce/jgit/lib/Repository.java       |   62 --------------------
+ 2 files changed, 7 insertions(+), 75 deletions(-)
 
-The duplicated contents is:
-* "git diff" learned to put more sensible hunk headers for Python,
-  HTML and ObjC contents.
+This applies on top of the close outputstream bugfix patch posted recently.
 
-
-There are two entries which talk about nearly the same things, but
-I am not sure there if it is duplication or not:
-
-* "git diff" learned "textconv" filters --- a binary or hard-to-read
-  contents can be munged into human readable form and the difference
-  between the results of the conversion can be viewed (obviously this
-  cannot produce a patch that can be applied, so this is disabled in
-  format-patch among other things).
-
-* a "textconv" filter that makes binary files textual form for human
-   consumption can be specified as an attribute for paths; "git diff"
-   learnt to make use of it.
-
-
- Documentation/RelNotes-1.6.1.txt |    2 --
- 1 files changed, 0 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/RelNotes-1.6.1.txt b/Documentation/RelNotes-1.6.1.txt
-index 9f5c0b5..a82e2ae 100644
---- a/Documentation/RelNotes-1.6.1.txt
-+++ b/Documentation/RelNotes-1.6.1.txt
-@@ -135,8 +135,6 @@ on.
-   cannot produce a patch that can be applied, so this is disabled in
-   format-patch among other things).
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
+index 1055fcc..97a0311 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
+@@ -322,19 +322,13 @@ public void decorate(final Object element, final IDecoration decoration) {
+ 								Repository repo = mapped.getRepository();
+ 								try {
+ 									String branch = repo.getBranch();
+-									if (repo.isStGitMode()) {
+-										String patch = repo.getPatch();
+-										decoration.addSuffix(" [StGit " + patch + "@" + branch
+-												+ "]");
+-									} else {
+-										RepositoryState repositoryState = repo.getRepositoryState();
+-										String statename;
+-										if (repositoryState.equals(RepositoryState.SAFE))
+-											statename = "";
+-										else
+-											statename = repositoryState.getDescription() + " ";
+-										decoration.addSuffix(" [Git " + statename + "@ " + branch + "]");
+-									}
++									RepositoryState repositoryState = repo.getRepositoryState();
++									String statename;
++									if (repositoryState.equals(RepositoryState.SAFE))
++										statename = "";
++									else
++										statename = repositoryState.getDescription() + " ";
++									decoration.addSuffix(" [Git " + statename + "@ " + branch + "]");
+ 								} catch (IOException e) {
+ 									e.printStackTrace();
+ 									decoration.addSuffix(" [Git ?]");
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+index da1494f..b63ef18 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+@@ -58,7 +58,6 @@
  
--* "git diff" hunk header pattern for ObjC has been added.
+ import org.spearce.jgit.errors.IncorrectObjectTypeException;
+ import org.spearce.jgit.errors.RevisionSyntaxException;
+-import org.spearce.jgit.stgit.StGitPatch;
+ import org.spearce.jgit.util.FS;
+ 
+ /**
+@@ -988,67 +987,6 @@ public Ref peel(final Ref ref) {
+ 		return ret;
+ 	}
+ 
+-	/**
+-	 * @return true if HEAD points to a StGit patch.
+-	 */
+-	public boolean isStGitMode() {
+-		File file = new File(getDirectory(), "HEAD");
+-		BufferedReader reader = null;
+-		try {
+-			reader = new BufferedReader(new FileReader(file));
+-			String string = reader.readLine();
+-			if (!string.startsWith("ref: refs/heads/"))
+-				return false;
+-			String branch = string.substring("ref: refs/heads/".length());
+-			File currentPatches = new File(new File(new File(getDirectory(),
+-					"patches"), branch), "applied");
+-			if (!currentPatches.exists())
+-				return false;
+-			if (currentPatches.length() == 0)
+-				return false;
+-			return true;
 -
- * "--cached" option to "git diff has an easier to remember synonym "--staged",
-   to ask "what is the difference between the given commit and the
-   contents staged in the index?"
+-		} catch (IOException e) {
+-			e.printStackTrace();
+-			return false;
+-		} finally {
+-			try {
+-				if (reader != null)
+-					reader.close();
+-			} catch (IOException e1) {
+-				// nothing to do here
+-			}
+-		}
+-	}
+-
+-	/**
+-	 * @return applied patches in a map indexed on current commit id
+-	 * @throws IOException
+-	 */
+-	public Map<ObjectId,StGitPatch> getAppliedPatches() throws IOException {
+-		Map<ObjectId,StGitPatch> ret = new HashMap<ObjectId,StGitPatch>();
+-		if (isStGitMode()) {
+-			File patchDir = new File(new File(getDirectory(),"patches"),getBranch());
+-			BufferedReader apr = new BufferedReader(new FileReader(new File(patchDir,"applied")));
+-			try {
+-				for (String patchName=apr.readLine(); patchName!=null; patchName=apr.readLine()) {
+-					File topFile = new File(new File(new File(patchDir,"patches"), patchName), "top");
+-					BufferedReader tfr = new BufferedReader(new FileReader(topFile));
+-					try {
+-						String objectId = tfr.readLine();
+-						ObjectId id = ObjectId.fromString(objectId);
+-						ret.put(id, new StGitPatch(patchName, id));
+-					} finally {
+-						tfr.close();
+-					}
+-				}
+-			} finally {
+-				apr.close();
+-			}
+-		}
+-		return ret;
+-	}
+-	
+ 	/** Clean up stale caches */
+ 	public void refreshFromDisk() {
+ 		refs.clearCache();
 -- 
-1.6.0.4
+1.6.0.3.640.g6331a
