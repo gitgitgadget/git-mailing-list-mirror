@@ -1,88 +1,115 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: Git Books
-Date: Sat, 6 Dec 2008 13:56:08 +0100
-Message-ID: <4d8e3fd30812060456i43d2301clcf4e4724e1962939@mail.gmail.com>
-References: <d411cc4a0812060358ub640ea3kd04072c5640eef68@mail.gmail.com>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [RFCv3 1/2] gitweb: add patch view
+Date: Sat, 6 Dec 2008 14:01:09 +0100
+Message-ID: <cb7bb73a0812060501s6a3faea7l74e81c2a591ba2a7@mail.gmail.com>
+References: <1228345188-15125-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1228345188-15125-2-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200812060134.22959.jnareb@gmail.com>
+	 <7vabbaxh8y.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git list" <git@vger.kernel.org>
-To: "Scott Chacon" <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 06 13:57:34 2008
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
+	"Petr Baudis" <pasky@suse.cz>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 06 14:02:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8wiw-0004wz-LP
-	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 13:57:31 +0100
+	id 1L8wnm-0006Dy-H1
+	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 14:02:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755655AbYLFM4L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Dec 2008 07:56:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755574AbYLFM4L
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 07:56:11 -0500
-Received: from rv-out-0506.google.com ([209.85.198.225]:29684 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755522AbYLFM4K convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Dec 2008 07:56:10 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so415551rvb.1
-        for <git@vger.kernel.org>; Sat, 06 Dec 2008 04:56:09 -0800 (PST)
+	id S1751382AbYLFNBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2008 08:01:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbYLFNBM
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 08:01:12 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:7620 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750952AbYLFNBL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2008 08:01:11 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so168972eyi.37
+        for <git@vger.kernel.org>; Sat, 06 Dec 2008 05:01:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=VQP/gN7DBwlCXExLIGmzACbN9T4GLCh29WThvZRSQHY=;
-        b=AGbtVmq4J8yscOzBrhJFVkhwnoCm7/vTmuhAR4NIJht7D4dBMp93rMDrWHlzIgZ5DK
-         r4Rkc51mOWO5qvAGhdaXpfb6NZ5NnGhLgpmMw2sqAiqLt6YeQNVMMLv5z04CQXJI7Uuh
-         qk1J6+icQMrTeOc1Wkw2+2stnDeNQiKKL5GN4=
+        bh=1GOg3mwZ/pCdklZFd32c3yJJeQ1+ewX3S+FSvqp7SHE=;
+        b=KxKkZYFa2/zYbCw+FSYO/ogqcdkdD90zI5pEXM62iPH8THPx6iuWAgOPFIifpK4UBI
+         uhwsfU9v+aOIMmqY7bw+813zdNAEFF0jAppw7eLGN2j5EiKC35iFW6l+5AsetQS6FIgW
+         cKrplQlLkzbTEyqKIb+zs8+vNYIg9zeAoSliM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=iu7o8Vq8eMKsvonfXEnMM7cQZQhXncsJWyOi9rAL9AdEdquJ3s91iNvN6oI0kGND+j
-         Hxs2UUQ7FFpNGS+JYiJA/UFigeNgwDN+7Cv7EYxToUjigF2BN8SC4qPYh9LBbYpjtfbg
-         HaxFMJzL/keheTRNFGXXeYyRrtYcsumy2qVQM=
-Received: by 10.143.2.19 with SMTP id e19mr506526wfi.96.1228568168956;
-        Sat, 06 Dec 2008 04:56:08 -0800 (PST)
-Received: by 10.142.153.14 with HTTP; Sat, 6 Dec 2008 04:56:08 -0800 (PST)
-In-Reply-To: <d411cc4a0812060358ub640ea3kd04072c5640eef68@mail.gmail.com>
+        b=Q4b13j+V3x5DpPYEvLhMiHq1tRYMro5lEpHjWz6Ku3gygUB1tUHqCbiWsgP8lDvKFx
+         D82SAGwFI7rN1QsKG3bYvQMrEFEmgAmFOQFN3z/3X5e2BI5Bu1VJH2Nd6JEZks06QjnI
+         5Ix0UuRt8q624l/lpVxGcvvs20l7c6gv8Gsz0=
+Received: by 10.210.27.20 with SMTP id a20mr1200499eba.137.1228568469139;
+        Sat, 06 Dec 2008 05:01:09 -0800 (PST)
+Received: by 10.210.79.12 with HTTP; Sat, 6 Dec 2008 05:01:09 -0800 (PST)
+In-Reply-To: <7vabbaxh8y.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102452>
 
-On 12/6/08, Scott Chacon <schacon@gmail.com> wrote:
-> Hey all,
+On Sat, Dec 6, 2008 at 1:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 >
-> I have been talked into helping write a real, paper-based book on Git
-> for a publisher big enough that you may even see it in your local
-
-> Borders or whatnot.  (And, it appears that Junio has been as well:
-> http://gitster.livejournal.com/21616.html)
+>>> +    # The maximum number of patches in a patchset generated in patch
+>>> +    # view. Set this to 0 or undef to disable patch view, or to a
+>>> +    # negative number to remove any limit.
+>>> +    'patches' => {
+>>> +            'override' => 1,
+>>> +            'default' => [16]},
+>>>  );
+>>
+>> You need to set "'sub' => \&feature_patches" for feature to be
+>> override-able at all.  Also features are usually not overridable
+>> by default, which reduces load a tiny bit (by _possibly_ not reading
+>> config, although that shouldn't matter much now with reading whole
+>> commit using single call to git-config, and not one call per variable).
+>> And I think the default might be set larger: 'log' view generates
+>> as big if not bigger load, and it is split into 100 commits long
+>> pages.
 >
-> So, since I'm near the beginning of this process, I was wondering if
-> the group had any feedback as to what might be super helpful to
-> include.  I mean, I have a pretty good layout and all, but if you
-> wanted to point me to some threads that tend to crop up in the mailin=
-g
-> list and IRC channel from relative newcomers that I might be able to
-> nip in the bud, I would like to.  I'm addressing the stuff that _I_
-> hear a lot, and I'm scanning the IRC logs and list for topics, but I
-> figured many of you must answer the same questions all the time, too.
+> I do not think defaulting to 'no' for overridability nor defaulting a new
+> feature to 'disabled' have much to do with the load, but they are more
+> about the principle of least surprise.  Somebody who runs gitweb in the
+> playpen he was given on the server shouldn't be getting a phone call from
+> his users late at night complaining that the page his gitweb serves look
+> different and has one extra link per each line, only because the sysadmin
+> of the server decided to update git to 1.6.1 without telling him.
+>
+> Once a new version capable of serving a new feature is introduced, he can
+> plan, announce and deploy by switching the feature on in his gitweb
+> configuration file.
+>
+> Some things, like sitewide default css changes, cannot be made disabled
+> by default.  But a new feature can easily be kept disabled by default not
+> to cause needless surprises.
 
-Please spend lot of words about fetch and pull. These are the most
-hard to =F9nderstand commands for people that are used to cvs and svn.
+In the eternal war between making feature easily available and not
+disturbing the user too much between upgrades, I'm more on the 'making
+available' field, especially when the features are not particularly
+invasive (e.g., the patch view only adds one single link, on the
+navigation bar, and only in some views).
 
-Btw, i would love to see a git in a nutshell book in my native
-language (italian).
-I'm willing to help writing and translating.
+It should also be noted that if the sysadmin deploys a new software
+version without telling its users, there's an obvious communication
+problem between the sysadmin and its users, but that's not something
+the tool developers should try to work around. Otherwise we'd still be
+offering the dash version of the commands by default.
+
+(Plus, weren't you the one suggesting that the remote heads feature
+should be enabled by default? And that's an even more invasive change,
+if you ask me.)
 
 
-Ciao,
---=20
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
-http://mypage.vodafone.it/
+-- 
+Giuseppe "Oblomov" Bilotta
