@@ -1,204 +1,183 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [RFCv4 1/3] gitweb: add patch view
-Date: Sat,  6 Dec 2008 16:02:33 +0100
-Message-ID: <1228575755-13432-2-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1228575755-13432-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 06 16:04:04 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFCv3 2/2] gitweb: links to patch action in commitdiff and shortlog view
+Date: Sat, 6 Dec 2008 16:25:53 +0100
+Message-ID: <200812061625.53527.jnareb@gmail.com>
+References: <1228345188-15125-1-git-send-email-giuseppe.bilotta@gmail.com> <200812060153.52947.jnareb@gmail.com> <cb7bb73a0812060525k65a7f549l2cce5f0dae9fc76c@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 06 16:27:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8yhC-0001tF-Ea
-	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 16:03:51 +0100
+	id 1L8z41-0001Bo-NU
+	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 16:27:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754650AbYLFPCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Dec 2008 10:02:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755964AbYLFPCP
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 10:02:15 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:17295 "EHLO
+	id S1756815AbYLFP0A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Dec 2008 10:26:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756723AbYLFP0A
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 10:26:00 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:22327 "EHLO
 	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753035AbYLFPCO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Dec 2008 10:02:14 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so217525nfc.21
-        for <git@vger.kernel.org>; Sat, 06 Dec 2008 07:02:12 -0800 (PST)
+	with ESMTP id S1756802AbYLFPZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2008 10:25:59 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so220833nfc.21
+        for <git@vger.kernel.org>; Sat, 06 Dec 2008 07:25:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=GuWbC2O47R478Aty0iGnlDH4JUvMTeBCT5igqBMRPjQ=;
-        b=Z9mh0Z2ArFBH7ONlDZgdo55OkVn1fE6HRHxZGyVnYB3AhW8fEE2VBvKxulGc56npPA
-         g/wdYvakDbxtB6LOuIZ1saPORNkOodMDl3X+UcIqUY311FcVP5twzZ4kd93JueHnkE8B
-         zd8oE1rIYjUZoYD1hOltsSoZXO39ARmtNdRE0=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=+emDN9a5vE22c/CgQt4zyXuOtgWW2B5gvReFumn6wMo=;
+        b=oE02KKDl2d+8osxcZprRhoDHi8KMREmu8cVbDwTvNyHi4oCizLHf5fxzlx1D63Q0fR
+         dYsbHlS/a74DdcVLyix7q9jOZZnNzMiyzbZrZTExryxMxTvQ5b7xgLw5O1VTAvgaQBtV
+         pWK9nCErmMCqjKR8LCe4qk1wR9+69cTNU9MnE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Xm0w+maADyn4ACOXfWKRwShDOUYVuq5Q4hkmMrWuSla++BsROxCt5wKHzijPwhpz6t
-         3a+peCjNtJ5lwe1Ii+hziPoGmHPgtK2YHz8cNKNna/xNDXdYuXpWqIGyKu6KAteDKKn9
-         V3zn7i0QZTon1VM7bijuNhyMb8ulKYsShzJ58=
-Received: by 10.210.125.13 with SMTP id x13mr1300309ebc.198.1228575732149;
-        Sat, 06 Dec 2008 07:02:12 -0800 (PST)
-Received: from localhost ([78.13.53.163])
-        by mx.google.com with ESMTPS id h1sm1697132nfh.3.2008.12.06.07.02.10
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=PuNUJJh1RtkBCXDRn6pKT4U8QVWMBKjBB/j6pGIhaLiVbzL/BpMsduz6UntjjyeIE4
+         idgi8sK2EfiJdMNx0F1NZldm30WMoP9TwW7jgV4qZmq/s6p7cNGEQWtj7iII1RTeOlmr
+         WK84yhyv02Xnl0dZKXj8UgzqGViRRaB05YRy8=
+Received: by 10.210.119.16 with SMTP id r16mr1325819ebc.191.1228577156143;
+        Sat, 06 Dec 2008 07:25:56 -0800 (PST)
+Received: from ?192.168.1.11? (abvc175.neoplus.adsl.tpnet.pl [83.8.200.175])
+        by mx.google.com with ESMTPS id 3sm6822229eyi.45.2008.12.06.07.25.54
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Dec 2008 07:02:11 -0800 (PST)
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1228575755-13432-1-git-send-email-giuseppe.bilotta@gmail.com>
+        Sat, 06 Dec 2008 07:25:55 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <cb7bb73a0812060525k65a7f549l2cce5f0dae9fc76c@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102463>
 
-The output of commitdiff_plain is not intended for git-am:
- * when given a range of commits, commitdiff_plain publishes a single
-   patch with the message from the first commit, instead of a patchset
- * the hand-built email format replicates the commit summary both as
-   email subject and as first line of the email itself, resulting in
-   a duplication if the output is used with git-am.
+Dnia sobota 6. grudnia 2008 14:25, Giuseppe Bilotta napisa=B3:
+> On Sat, Dec 6, 2008 at 1:53 AM, Jakub Narebski <jnareb@gmail.com> wro=
+te:
+>> On Wed, 3 Dec 2008, Giuseppe Bilotta wrote:
+>>
+>>> In shortlog view, a link to the patchset is only offered when the n=
+umber
+>>> of commits shown is less than the allowed maximum number of patches=
+=2E
+>>>
+>>> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+=20
+>>> +     if (gitweb_check_feature('patches')) {
+>>> +             $formats_nav .=3D " | " .
+>>> +                     $cgi->a({-href =3D> href(action=3D>"patch", -=
+replay=3D>1)},
+>>> +                             "patch");
+>>> +     }
+>>>
+>>>       if (!defined $parent) {
+>>>               $parent =3D "--root";
+>>> @@ -5415,6 +5420,11 @@ sub git_commitdiff {
+>>>               $formats_nav =3D
+>>>                       $cgi->a({-href =3D> href(action=3D>"commitdif=
+f_plain", -replay=3D>1)},
+>>>                               "raw");
+>>> +             if ($patch_max) {
+>>> +                     $formats_nav .=3D " | " .
+>>> +                             $cgi->a({-href =3D> href(action=3D>"p=
+atch", -replay=3D>1)},
+>>> +                                     "patch");
+>>> +             }
+>>>
+>>>               if (defined $hash_parent &&
+>>>                   $hash_parent ne '-c' && $hash_parent ne '--cc') {
+>>
+>> In the above two hunks 'patch' view functions as "git show --pretty=3D=
+email"
+>> text/plain equivalent, but this duplicates a bit 'commitdiff_plain'
+>> functionality.  Well, 'commitdiff_plain' has currently some errors,
+>> but...
+>=20
+> All things considered, for single commit view there is (modulo bugs)
+> no factual difference between plain diff and patch view.
+>=20
+> Although we could merge them, I'm thinking that the plain diff view
+> has somewhat too much information in it. For backwards compatibility
+> it's probably not wise to change it, but we should consider it for th=
+e
+> next major version, honestly.
 
-We thus create a new view that can be fed to git-am directly, allowing
-patch exchange via gitweb. The new view exposes the output of git
-format-patch directly, limiting it to a single patch in the case of a
-single commit.
+I'm just wondering if we should add 'patch' link to 'commit' and
+'commitdiff' views (as alternate view) at all...
+=20
+>>> @@ -5949,6 +5959,14 @@ sub git_shortlog {
+>>>                       $cgi->a({-href =3D> href(-replay=3D>1, page=3D=
+>$page+1),
+>>>                                -accesskey =3D> "n", -title =3D> "Al=
+t-n"}, "next");
+>>>       }
+>>> +     my $patch_max =3D gitweb_check_feature('patches');
+>>> +     if ($patch_max) {
+>>> +             if ($patch_max < 0 || @commitlist <=3D $patch_max) {
+>>> +                     $paging_nav .=3D " &sdot; " .
+>>> +                             $cgi->a({-href =3D> href(action=3D>"p=
+atch", -replay=3D>1)},
+>>> +                                     @commitlist> 1 ? "patchset" :=
+ "patch");
+>>> +             }
+>>> +     }
+>>
+>> Here 'patch' view functions as "git format-patch", able to be downlo=
+aded
+>> and fed to git-am.  Perhaps the action should also be named 'patches=
+'
+>> here?; it could lead to the same function.
+>=20
+> I had half an idea to do so. 'patches' or 'patchset'?
 
-A configurable upper limit is imposed on the number of commits which
-will be included in a patchset, to prevent DoS attacks on the server.
-Setting the limit to 0 will disable the patch view, setting it to a
-negative number will remove the limit.
+Hmmm... I think 'patches'.
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- gitweb/gitweb.perl |   65 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 64 insertions(+), 1 deletions(-)
+>> By the way, there is subtle bug in above link. If shortlog view is l=
+ess
+>> than $patch_max commits long, but it is because the history for a gi=
+ven
+>> branch (or starting from given commit) is so short, and not because
+>> there is cutoff $hash_parent set, the 'patchset' view wouldn't displ=
+ay
+>> plain text equivalent view, but only patch for top commit.
+>=20
+> Ah, good point.
+>=20
+> Hm, not easy to solve. One way could be to add the hash_parent
+> manually. Or we could make the 'patches' view different from the
+> 'patch' view in the way it handles refspecs without ranges. I'm
+> leaning towards the latter. What's your opinion?
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 95988fb..71d5af4 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -329,6 +329,14 @@ our %feature = (
- 	'ctags' => {
- 		'override' => 0,
- 		'default' => [0]},
-+
-+	# The maximum number of patches in a patchset generated in patch
-+	# view. Set this to 0 or undef to disable patch view, or to a
-+	# negative number to remove any limit.
-+	'patches' => {
-+		'sub' => \&feature_patches,
-+		'override' => 0,
-+		'default' => [16]},
- );
- 
- sub gitweb_get_feature {
-@@ -410,6 +418,19 @@ sub feature_pickaxe {
- 	return ($_[0]);
- }
- 
-+sub feature_patches {
-+	my @val = (git_get_project_config('patches', '--int'));
-+
-+	# if @val is empty, the config is not (properly)
-+	# overriding the feature, so we return the default,
-+	# otherwise we pick the override
-+	if (@val) {
-+		return @val;
-+	}
-+
-+	return ($_[0]);
-+}
-+
- # checking HEAD file with -e is fragile if the repository was
- # initialized long time ago (i.e. symlink HEAD) and was pack-ref'ed
- # and then pruned.
-@@ -503,6 +524,7 @@ our %actions = (
- 	"heads" => \&git_heads,
- 	"history" => \&git_history,
- 	"log" => \&git_log,
-+	"patch" => \&git_patch,
- 	"rss" => \&git_rss,
- 	"atom" => \&git_atom,
- 	"search" => \&git_search,
-@@ -5386,6 +5408,13 @@ sub git_blobdiff_plain {
- 
- sub git_commitdiff {
- 	my $format = shift || 'html';
-+
-+	my $patch_max;
-+	if ($format eq 'patch') {
-+		$patch_max = gitweb_check_feature('patches');
-+		die_error(403, "Patch view not allowed") unless $patch_max;
-+	}
-+
- 	$hash ||= $hash_base || "HEAD";
- 	my %co = parse_commit($hash)
- 	    or die_error(404, "Unknown commit object");
-@@ -5483,7 +5512,23 @@ sub git_commitdiff {
- 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
- 			'-p', $hash_parent_param, $hash, "--"
- 			or die_error(500, "Open git-diff-tree failed");
--
-+	} elsif ($format eq 'patch') {
-+		# For commit ranges, we limit the output to the number of
-+		# patches specified in the 'patches' feature.
-+		# For single commits, we limit the output to a single patch,
-+		# diverging from the git format-patch default.
-+		my @commit_spec = ();
-+		if ($hash_parent) {
-+			if ($patch_max > 0) {
-+				push @commit_spec, "-$patch_max";
-+			}
-+			push @commit_spec, '-n', "$hash_parent..$hash";
-+		} else {
-+			push @commit_spec, '-1', '--root', $hash;
-+		}
-+		open $fd, "-|", git_cmd(), "format-patch", '--encoding=utf8',
-+			'--stdout', @commit_spec
-+			or die_error(500, "Open git-format-patch failed");
- 	} else {
- 		die_error(400, "Unknown commitdiff format");
- 	}
-@@ -5532,6 +5577,14 @@ sub git_commitdiff {
- 			print to_utf8($line) . "\n";
- 		}
- 		print "---\n\n";
-+	} elsif ($format eq 'patch') {
-+		my $filename = basename($project) . "-$hash.patch";
-+
-+		print $cgi->header(
-+			-type => 'text/plain',
-+			-charset => 'utf-8',
-+			-expires => $expires,
-+			-content_disposition => 'inline; filename="' . "$filename" . '"');
- 	}
- 
- 	# write patch
-@@ -5553,6 +5606,11 @@ sub git_commitdiff {
- 		print <$fd>;
- 		close $fd
- 			or print "Reading git-diff-tree failed\n";
-+	} elsif ($format eq 'patch') {
-+		local $/ = undef;
-+		print <$fd>;
-+		close $fd
-+			or print "Reading git-format-patch failed\n";
- 	}
- }
- 
-@@ -5560,6 +5618,11 @@ sub git_commitdiff_plain {
- 	git_commitdiff('plain');
- }
- 
-+# format-patch-style patches
-+sub git_patch {
-+	git_commitdiff('patch');
-+}
-+
- sub git_history {
- 	if (!defined $hash_base) {
- 		$hash_base = git_get_head_hash($project);
--- 
-1.5.6.5
+I think simplest solution would be to add $hash_parent if it is not
+set from the last commit, i.e. $commitlist[-1]{'id'}
+
+>> I assume that the link is only for 'shortlog' view, and not also for
+>> 'log' and 'history' views because 'shortlog' is the only log-like vi=
+ew
+>> which support $hash_parent?
+>=20
+> The actual reason is that I never use log nor history view, but since
+> they don't support hash_parent because of this (I was the one who sen=
+t
+> the patch to support hash_parent in shortlog view) you could
+> paralogistically say that's the reason ;-)
+>=20
+> I'm not sure about history view, but for log view I'm considering
+> addiong also a 'patch' link next to each commit. I'll think about it.
+
+Well, you can add it only for 'shortlog' view, and when the code for
+all log-like views would get consolidated, you will get link to 'patche=
+s'
+view automatically :-)
+
+--=20
+Jakub Narebski
+Poland
