@@ -1,104 +1,129 @@
-From: Farrukh Najmi <farrukh@wellfleetsoftware.com>
-Subject: Re: ETA for release of gjit 0.4?
-Date: Sat, 06 Dec 2008 13:57:00 -0500
-Message-ID: <493ACAFC.5040605@wellfleetsoftware.com>
-References: <49393BFC.6010606@wellfleetsoftware.com>
- <200812061947.27905.robin.rosenberg.lists@dewire.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git tag -s: TAG_EDITMSG should not be deleted upon failures
+Date: Sat, 6 Dec 2008 14:40:34 -0500
+Message-ID: <20081206194034.GA18418@coredump.intra.peff.net>
+References: <4936AB74.3090901@jaeger.mine.nu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Dec 06 19:58:30 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Christian Jaeger <christian@jaeger.mine.nu>
+X-From: git-owner@vger.kernel.org Sat Dec 06 20:42:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L92MD-000549-DZ
-	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 19:58:25 +0100
+	id 1L932K-0001zW-2e
+	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 20:41:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752079AbYLFS5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Dec 2008 13:57:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751963AbYLFS5H
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 13:57:07 -0500
-Received: from vms046pub.verizon.net ([206.46.252.46]:53630 "EHLO
-	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751042AbYLFS5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Dec 2008 13:57:07 -0500
-Received: from [192.168.1.101] ([98.110.173.56])
- by vms046.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0KBG00GDQXYZJHV2@vms046.mailsrvcs.net> for
- git@vger.kernel.org; Sat, 06 Dec 2008 12:57:00 -0600 (CST)
-In-reply-to: <200812061947.27905.robin.rosenberg.lists@dewire.com>
-User-Agent: Thunderbird 2.0.0.18 (X11/20081125)
+	id S1752283AbYLFTkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2008 14:40:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752325AbYLFTkj
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 14:40:39 -0500
+Received: from peff.net ([208.65.91.99]:4076 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752220AbYLFTki (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2008 14:40:38 -0500
+Received: (qmail 6906 invoked by uid 111); 6 Dec 2008 19:40:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 06 Dec 2008 14:40:36 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Dec 2008 14:40:34 -0500
+Content-Disposition: inline
+In-Reply-To: <4936AB74.3090901@jaeger.mine.nu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102470>
 
+tag: delete TAG_EDITMSG only on successful tag
 
+The user may put some effort into writing an annotated tag
+message. When the tagging process later fails (which can
+happen fairly easily, since it may be dependent on gpg being
+correctly configured and used), there is no record left on
+disk of the tag message.
 
-Robin Rosenberg wrote:
-> fredag 05 december 2008 15:34:36 skrev Farrukh Najmi:
->   
->> Dear colleagues,
->>
->> I am using jgit in my maven project. Since current version is a SNAPSHOT 
->> (0.4-SNAPSHOT) I cannot release my project with a SNAPSHOT dependency 
->> (maven does not allow it). WHat is the time line for releasing version 
->> 0.4 of jgit so I can plan accordingly.
->> Thanks for any info.
->>     
->
-> What? Plan? :)
->   
+Instead, let's keep the TAG_EDITMSG file around until we are
+sure the tag has been created successfully. If we die
+because of an error, the user can recover their text from
+that file. Leaving the file in place causes no conflicts;
+it will be silently overwritten by the next annotated tag
+creation.
 
-:-)
+This matches the behavior of COMMIT_EDITMSG, which stays
+around in case of error.
 
-> You could name the version something else like 0.3.1.42b27c 
->
->   
+Signed-off-by: Jeff King <peff@peff.net>
+---
+On Wed, Dec 03, 2008 at 04:53:24PM +0100, Christian Jaeger wrote:
 
-I could but maven (and good project release) practices are that a 
-project's release version should be managed by the project and not 
-consumers of the project.
+> Before I've now set my default signing key id in my ~/.gitconfig, I've  
+> run at least half a dozen times into the case where I'm running "git tag  
+> -s $tagname", carefully preparing a tag message, saving the file &  
+> exiting from the editor, only to be greeted with an error message that no 
+> key could be found for my (deliberately host-specific) email address, and 
+> my message gone. If it would keep the TAG_EDITMSG file (like git commit 
+> seems to be doing with COMMIT_EDITMSG anyway), I could rescue the message 
+> from there. I relentlessly assume that this small change would also make a 
+> handful of other people happier.
 
-BTW, If there is interest in maveninzing the project I can offer to 
-contribute that change to the project. Just let me know if that is 
-something the project wishes to do.
+I think that is sensible. Here is the patch.
 
-Maven offers many benefits to projects as described in links below. It 
-takes a little getting used to for project dev team but its not bad. It 
-does not impact consumers of projects negatively in any way.
+There are two possible improvements I can think of:
 
-Background blog:
-<http://farrukhnajmi.blogspot.com/2008/02/why-maven-rocks-in-beginning-there-was.html>
+  - we can be more friendly about helping the user recover. Right now,
+    we don't tell them that their message was saved anywhere, and it
+    will be silently overwritten if they try another tag. I'm not sure
+    what would be the best way to go about that, though.
 
-More useful link:
-<http://ebxmlrr.wiki.sourceforge.net/whymaven>
+  - the "path" variable became a little less local. It might be worth
+    giving it a better name ("editmsg_path" or similar), but keeping it
+    made the diff a lot less noisy (and it's still local to a fairly
+    simple function).
 
-Thanks for a great project.
+ builtin-tag.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-> It was a long time since we labeled anything. Shawn, how about merging
-> my recent close-file-patches, reverting 3ffa47d9294086fbd1cdeb9b1564f922a23e3c6f
-> and e7307f14c531d52cf231c39d844841c4adaf5e5a and then just call i 0.4 ?
->
-> -- robin
->
-> # from my pu branch, the latest Tentative build in the update site. Works quite well for
-> me. Refactoring and 
-> $ git log --pretty=oneline origin/master..pu
-> 2aafc054446f9b3aecdc01687a6949e4c54be6eb Revert "Rewrite GitMoveDeleteHook to use DirCacheBuilder"
-> 439277860e1e315b7f0cd339b2435cc8311956c1 Revert "Teach GitMoveDeleteHook how to move a folder recursively"
-> abc44bc6efa47c4c6e3c23f85fe9de9cd8460224 Improve closing of files in error situations.
-> 22e2808ac2915446ed81115b663c684341ce6bdd Close a forgotten reference to the HEAD ref.
->
->   
-
-
+diff --git a/builtin-tag.c b/builtin-tag.c
+index d339971..ea596d2 100644
+--- a/builtin-tag.c
++++ b/builtin-tag.c
+@@ -260,6 +260,7 @@ static void create_tag(const unsigned char *object, const char *tag,
+ 	enum object_type type;
+ 	char header_buf[1024];
+ 	int header_len;
++	char *path;
+ 
+ 	type = sha1_object_info(object, NULL);
+ 	if (type <= OBJ_NONE)
+@@ -279,7 +280,6 @@ static void create_tag(const unsigned char *object, const char *tag,
+ 		die("tag header too big.");
+ 
+ 	if (!message) {
+-		char *path;
+ 		int fd;
+ 
+ 		/* write the template message before editing: */
+@@ -300,9 +300,6 @@ static void create_tag(const unsigned char *object, const char *tag,
+ 			"Please supply the message using either -m or -F option.\n");
+ 			exit(1);
+ 		}
+-
+-		unlink(path);
+-		free(path);
+ 	}
+ 
+ 	stripspace(buf, 1);
+@@ -316,6 +313,9 @@ static void create_tag(const unsigned char *object, const char *tag,
+ 		die("unable to sign the tag");
+ 	if (write_sha1_file(buf->buf, buf->len, tag_type, result) < 0)
+ 		die("unable to write tag file");
++
++	unlink(path);
++	free(path);
+ }
+ 
+ struct msg_arg {
 -- 
-Regards,
-Farrukh Najmi
-
-Web: http://www.wellfleetsoftware.com
+1.6.1.rc1.335.gf97227.dirty
