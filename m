@@ -1,183 +1,137 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFCv3 2/2] gitweb: links to patch action in commitdiff and shortlog view
-Date: Sat, 6 Dec 2008 16:25:53 +0100
-Message-ID: <200812061625.53527.jnareb@gmail.com>
-References: <1228345188-15125-1-git-send-email-giuseppe.bilotta@gmail.com> <200812060153.52947.jnareb@gmail.com> <cb7bb73a0812060525k65a7f549l2cce5f0dae9fc76c@mail.gmail.com>
+From: Alexander Gavrilov <angavrilov@gmail.com>
+Subject: [PATCH (GIT-GUI FIX)] git-gui: Fix handling of relative paths in blame.
+Date: Sat, 6 Dec 2008 20:21:54 +0300
+Organization: HOME
+Message-ID: <200812062021.55061.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 06 16:27:27 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Paul Mackerras <paulus@samba.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 06 18:24:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8z41-0001Bo-NU
-	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 16:27:26 +0100
+	id 1L90tK-0006iM-BO
+	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 18:24:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756815AbYLFP0A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Dec 2008 10:26:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756723AbYLFP0A
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 10:26:00 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:22327 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756802AbYLFPZ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Dec 2008 10:25:59 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so220833nfc.21
-        for <git@vger.kernel.org>; Sat, 06 Dec 2008 07:25:57 -0800 (PST)
+	id S1752268AbYLFRXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2008 12:23:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbYLFRXM
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 12:23:12 -0500
+Received: from mu-out-0910.google.com ([209.85.134.184]:54438 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751376AbYLFRXK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2008 12:23:10 -0500
+Received: by mu-out-0910.google.com with SMTP id g7so436248muf.1
+        for <git@vger.kernel.org>; Sat, 06 Dec 2008 09:23:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
+        h=domainkey-signature:received:received:from:organization:to:subject
+         :date:user-agent:cc:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=+emDN9a5vE22c/CgQt4zyXuOtgWW2B5gvReFumn6wMo=;
-        b=oE02KKDl2d+8osxcZprRhoDHi8KMREmu8cVbDwTvNyHi4oCizLHf5fxzlx1D63Q0fR
-         dYsbHlS/a74DdcVLyix7q9jOZZnNzMiyzbZrZTExryxMxTvQ5b7xgLw5O1VTAvgaQBtV
-         pWK9nCErmMCqjKR8LCe4qk1wR9+69cTNU9MnE=
+        bh=4kvzR3PwtcYbM+4Ecp24vG/DKhCv6T458LSqQWkpNZ8=;
+        b=PzL1dpzy9WyAVLM2EGQAuBw1Eg8MdPQUKmv05H7Hl9jZ0AL+eo0r3jux//aHFH8fOG
+         ROW05OI9rZPz/Z5TPjCkGAELg3/M9DxK+tZh+HnJcHuL7tcPxFmObF+2+xgqB9SEI9in
+         zZHdu+V7lO3Ugo5JwrtCqNTFHq+394bmqoMuE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=PuNUJJh1RtkBCXDRn6pKT4U8QVWMBKjBB/j6pGIhaLiVbzL/BpMsduz6UntjjyeIE4
-         idgi8sK2EfiJdMNx0F1NZldm30WMoP9TwW7jgV4qZmq/s6p7cNGEQWtj7iII1RTeOlmr
-         WK84yhyv02Xnl0dZKXj8UgzqGViRRaB05YRy8=
-Received: by 10.210.119.16 with SMTP id r16mr1325819ebc.191.1228577156143;
-        Sat, 06 Dec 2008 07:25:56 -0800 (PST)
-Received: from ?192.168.1.11? (abvc175.neoplus.adsl.tpnet.pl [83.8.200.175])
-        by mx.google.com with ESMTPS id 3sm6822229eyi.45.2008.12.06.07.25.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Dec 2008 07:25:55 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0812060525k65a7f549l2cce5f0dae9fc76c@mail.gmail.com>
+        h=from:organization:to:subject:date:user-agent:cc:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        b=d1JSSO7e+LR0z07lWvGRVlOr4/YJWmjknftsIxqJq5iDzjgCD6lxFd7fjCvSLOlwKs
+         gBPFh447exvlttzeta4XJxXJgrfPSsD948YtZqlUNQ+ycaHusdMlSC/mGB4f8omTAjhe
+         k1J/IhvTVj7dTSEX3V7LMnOUJ0uauhajRg0Ag=
+Received: by 10.181.145.7 with SMTP id x7mr483294bkn.177.1228584187674;
+        Sat, 06 Dec 2008 09:23:07 -0800 (PST)
+Received: from keydesk.localnet ([92.255.85.78])
+        by mx.google.com with ESMTPS id p17sm2126179fka.16.2008.12.06.09.23.06
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 06 Dec 2008 09:23:07 -0800 (PST)
+User-Agent: KMail/1.10.3 (Linux/2.6.27.5-123.fc10.i686; KDE/4.1.3; i686; ; )
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102464>
 
-Dnia sobota 6. grudnia 2008 14:25, Giuseppe Bilotta napisa=B3:
-> On Sat, Dec 6, 2008 at 1:53 AM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
->> On Wed, 3 Dec 2008, Giuseppe Bilotta wrote:
->>
->>> In shortlog view, a link to the patchset is only offered when the n=
-umber
->>> of commits shown is less than the allowed maximum number of patches=
-=2E
->>>
->>> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-=20
->>> +     if (gitweb_check_feature('patches')) {
->>> +             $formats_nav .=3D " | " .
->>> +                     $cgi->a({-href =3D> href(action=3D>"patch", -=
-replay=3D>1)},
->>> +                             "patch");
->>> +     }
->>>
->>>       if (!defined $parent) {
->>>               $parent =3D "--root";
->>> @@ -5415,6 +5420,11 @@ sub git_commitdiff {
->>>               $formats_nav =3D
->>>                       $cgi->a({-href =3D> href(action=3D>"commitdif=
-f_plain", -replay=3D>1)},
->>>                               "raw");
->>> +             if ($patch_max) {
->>> +                     $formats_nav .=3D " | " .
->>> +                             $cgi->a({-href =3D> href(action=3D>"p=
-atch", -replay=3D>1)},
->>> +                                     "patch");
->>> +             }
->>>
->>>               if (defined $hash_parent &&
->>>                   $hash_parent ne '-c' && $hash_parent ne '--cc') {
->>
->> In the above two hunks 'patch' view functions as "git show --pretty=3D=
-email"
->> text/plain equivalent, but this duplicates a bit 'commitdiff_plain'
->> functionality.  Well, 'commitdiff_plain' has currently some errors,
->> but...
->=20
-> All things considered, for single commit view there is (modulo bugs)
-> no factual difference between plain diff and patch view.
->=20
-> Although we could merge them, I'm thinking that the plain diff view
-> has somewhat too much information in it. For backwards compatibility
-> it's probably not wise to change it, but we should consider it for th=
-e
-> next major version, honestly.
+Currently using '..' or '.' in the file path for gui blame
+causes it to break, because the path is passed inside the 
+SHA:PATH spec to cat-file, which apparently does not understand
+such items. As a result, cat-file returns nothing, and the
+viewer crashes because of an "index out of range" error.
 
-I'm just wondering if we should add 'patch' link to 'commit' and
-'commitdiff' views (as alternate view) at all...
-=20
->>> @@ -5949,6 +5959,14 @@ sub git_shortlog {
->>>                       $cgi->a({-href =3D> href(-replay=3D>1, page=3D=
->$page+1),
->>>                                -accesskey =3D> "n", -title =3D> "Al=
-t-n"}, "next");
->>>       }
->>> +     my $patch_max =3D gitweb_check_feature('patches');
->>> +     if ($patch_max) {
->>> +             if ($patch_max < 0 || @commitlist <=3D $patch_max) {
->>> +                     $paging_nav .=3D " &sdot; " .
->>> +                             $cgi->a({-href =3D> href(action=3D>"p=
-atch", -replay=3D>1)},
->>> +                                     @commitlist> 1 ? "patchset" :=
- "patch");
->>> +             }
->>> +     }
->>
->> Here 'patch' view functions as "git format-patch", able to be downlo=
-aded
->> and fed to git-am.  Perhaps the action should also be named 'patches=
-'
->> here?; it could lead to the same function.
->=20
-> I had half an idea to do so. 'patches' or 'patchset'?
+This commit adds a simple function that normalizes such paths.
+I choose not to use [file normalize], because it uses some data
+from the file system, e.g. dereferences symlinks, and creates
+an absolute path, while blame may be used to inspect historical
+information that bears no relation to the current filesystem state.
 
-Hmmm... I think 'patches'.
+Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+---
 
->> By the way, there is subtle bug in above link. If shortlog view is l=
-ess
->> than $patch_max commits long, but it is because the history for a gi=
-ven
->> branch (or starting from given commit) is so short, and not because
->> there is cutoff $hash_parent set, the 'patchset' view wouldn't displ=
-ay
->> plain text equivalent view, but only patch for top commit.
->=20
-> Ah, good point.
->=20
-> Hm, not easy to solve. One way could be to add the hash_parent
-> manually. Or we could make the 'patches' view different from the
-> 'patch' view in the way it handles refspecs without ranges. I'm
-> leaning towards the latter. What's your opinion?
+	On Saturday 06 December 2008 13:56:45 Paul Mackerras wrote:
+	> I have checked in a fix into my gitk.git repository at
+	> git://git.kernel.org/pub/scm/gitk/gitk.git.  However, there seems to
+	> be a bug in git gui blame; it gives a "list index out of range" error
+	> sometimes.
+	> 
+	> Shawn, to see an example of the error, get a current kernel tree and
+	> do:
+	> 
+	> $ cd arch/powerpc
+	> $ git gui blame --line=1183 2c5e76158fcea6e3b9536a74efa7b5e2e846d374 \
+	>   ../../net/sunrpc/svcsock.c
 
-I think simplest solution would be to add $hash_parent if it is not
-set from the last commit, i.e. $commitlist[-1]{'id'}
+ git-gui.sh |   18 ++++++++++++++++--
+ 1 files changed, 16 insertions(+), 2 deletions(-)
 
->> I assume that the link is only for 'shortlog' view, and not also for
->> 'log' and 'history' views because 'shortlog' is the only log-like vi=
-ew
->> which support $hash_parent?
->=20
-> The actual reason is that I never use log nor history view, but since
-> they don't support hash_parent because of this (I was the one who sen=
-t
-> the patch to support hash_parent in shortlog view) you could
-> paralogistically say that's the reason ;-)
->=20
-> I'm not sure about history view, but for log view I'm considering
-> addiong also a 'patch' link next to each commit. I'll think about it.
-
-Well, you can add it only for 'shortlog' view, and when the code for
-all log-like views would get consolidated, you will get link to 'patche=
-s'
-view automatically :-)
-
---=20
-Jakub Narebski
-Poland
+diff --git a/git-gui.sh b/git-gui.sh
+index 8a4b42d..65dacf9 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -2630,6 +2630,20 @@ proc usage {} {
+ 	exit 1
+ }
+ 
++proc normalize_relpath {path} {
++	set elements {}
++	foreach item [file split $path] {
++		if {$item eq {.}} continue
++		if {$item eq {..} && [llength $elements] > 0
++		    && [lindex $elements end] ne {..}} {
++			set elements [lrange $elements 0 end-1]
++			continue
++		}
++		lappend elements $item
++	}
++	return [eval file join $elements]
++}
++
+ # -- Not a normal commit type invocation?  Do that instead!
+ #
+ switch -- $subcommand {
+@@ -2648,7 +2662,7 @@ blame {
+ 	foreach a $argv {
+ 		if {$is_path || [file exists $_prefix$a]} {
+ 			if {$path ne {}} usage
+-			set path $_prefix$a
++			set path [normalize_relpath $_prefix$a]
+ 			break
+ 		} elseif {$a eq {--}} {
+ 			if {$path ne {}} {
+@@ -2671,7 +2685,7 @@ blame {
+ 	unset is_path
+ 
+ 	if {$head ne {} && $path eq {}} {
+-		set path $_prefix$head
++		set path [normalize_relpath $_prefix$head]
+ 		set head {}
+ 	}
+ 
+-- 
+1.6.0.4.30.gf4240
