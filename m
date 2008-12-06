@@ -1,244 +1,186 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 4/6] builtin-checkout.c: refactor merge_working_tree()
-Date: Fri,  5 Dec 2008 17:54:13 -0800
-Message-ID: <1228528455-3089-5-git-send-email-gitster@pobox.com>
+Subject: [PATCH 6/6] builtin-reset.c: use reset_index_and_worktree()
+Date: Fri,  5 Dec 2008 17:54:15 -0800
+Message-ID: <1228528455-3089-7-git-send-email-gitster@pobox.com>
 References: <1228528455-3089-1-git-send-email-gitster@pobox.com>
  <1228528455-3089-2-git-send-email-gitster@pobox.com>
  <1228528455-3089-3-git-send-email-gitster@pobox.com>
  <1228528455-3089-4-git-send-email-gitster@pobox.com>
+ <1228528455-3089-5-git-send-email-gitster@pobox.com>
+ <1228528455-3089-6-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 06 02:56:19 2008
+X-From: git-owner@vger.kernel.org Sat Dec 06 02:56:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8mP4-0005m7-EM
-	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 02:56:19 +0100
+	id 1L8mP6-0005m7-03
+	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 02:56:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755567AbYLFByi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2008 20:54:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756036AbYLFByg
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 20:54:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61875 "EHLO
+	id S1756036AbYLFByn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2008 20:54:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755935AbYLFBym
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 20:54:42 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61905 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755567AbYLFBya (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2008 20:54:30 -0500
+	with ESMTP id S1756015AbYLFByf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2008 20:54:35 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1A8471830E
-	for <git@vger.kernel.org>; Fri,  5 Dec 2008 20:54:30 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 05B4218321
+	for <git@vger.kernel.org>; Fri,  5 Dec 2008 20:54:35 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E2FA4182CB for
- <git@vger.kernel.org>; Fri,  5 Dec 2008 20:54:28 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2B0BB1830E for
+ <git@vger.kernel.org>; Fri,  5 Dec 2008 20:54:33 -0500 (EST)
 X-Mailer: git-send-email 1.6.1.rc1.72.ga5ce6
-In-Reply-To: <1228528455-3089-4-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: D212014E-C338-11DD-9401-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+In-Reply-To: <1228528455-3089-6-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: D4FFEF42-C338-11DD-981D-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102438>
 
-The logic to bring the index and the working tree from one commit to
-another is a nontrivial amount of code in this function.  Separate it out
-into its own function, so that other callers can call it.
+This makes "git reset --merge" to use the same underlying mechanism "git
+checkout" uses to update the index and the work tree.
+
+It is possible to make it use the 3-way merge fallback "git checkout -m"
+allows, but this commit does not go there yet.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin-checkout.c |  172 +++++++++++++++++++++++++++-------------------------
- 1 files changed, 89 insertions(+), 83 deletions(-)
+ builtin-checkout.c |    1 +
+ builtin-reset.c    |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ reset.h            |   11 ++++++++
+ 3 files changed, 76 insertions(+), 2 deletions(-)
+ create mode 100644 reset.h
 
 diff --git a/builtin-checkout.c b/builtin-checkout.c
-index d88fce2..9c45c49 100644
+index a08941a..d196521 100644
 --- a/builtin-checkout.c
 +++ b/builtin-checkout.c
-@@ -352,6 +352,87 @@ static int reset_tree(struct tree *tree, int quiet, int worktree, int *wt_error)
- 	}
+@@ -16,6 +16,7 @@
+ #include "blob.h"
+ #include "xdiff-interface.h"
+ #include "ll-merge.h"
++#include "reset.h"
+ 
+ static const char * const checkout_usage[] = {
+ 	"git checkout [options] <branch>",
+diff --git a/builtin-reset.c b/builtin-reset.c
+index c0cb915..481a1cc 100644
+--- a/builtin-reset.c
++++ b/builtin-reset.c
+@@ -18,6 +18,7 @@
+ #include "tree.h"
+ #include "branch.h"
+ #include "parse-options.h"
++#include "reset.h"
+ 
+ static const char * const git_reset_usage[] = {
+ 	"git reset [--mixed | --soft | --hard | --merge] [-q] [<commit>]",
+@@ -52,7 +53,7 @@ static inline int is_merge(void)
+ 	return !access(git_path("MERGE_HEAD"), F_OK);
  }
  
-+static int switch_trees(int merge, int quiet, int *wt_error,
-+			struct commit *old_commit, const char *old_label,
-+			struct commit *new_commit, const char *new_label)
+-static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet)
++static int reset_index_file_via_read_tree(const unsigned char *sha1, int reset_type, int quiet)
+ {
+ 	int i = 0;
+ 	const char *args[6];
+@@ -77,6 +78,67 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
+ 	return run_command_v_opt(args, RUN_GIT_CMD);
+ }
+ 
++static int reset_index_file(struct commit *new, int reset_type, int quiet)
 +{
-+	int ret;
-+	struct tree_desc trees[2];
-+	struct tree *tree;
-+	struct unpack_trees_options topts;
++	/*
++	 * SOFT reset won't even touch index nor work tree so
++	 * this function is not called.
++	 * MIXED updates the index only (should have been called
++	 * --cached), and we let "git read-tree" to do so.
++	 * HARD and MERGE corresponds to "checkout -f" and "checkout [-m]"
++	 */
++	int merge, wt_error, ret;
++	struct commit *old;
++	unsigned char head_sha1[20];
++	unsigned char *new_sha1 = new->object.sha1;
++	struct lock_file *lock_file;
++	int newfd;
 +
-+	memset(&topts, 0, sizeof(topts));
-+	topts.head_idx = -1;
-+	topts.src_index = &the_index;
-+	topts.dst_index = &the_index;
++	/*
++	 * We play lazy and let read-tree complain if HEAD is not
++	 * readable.  Also on hard reset, HEAD does not have to be
++	 * readable.
++	 */
++	if (reset_type == MIXED ||
++	    reset_type == HARD ||
++	    get_sha1("HEAD", head_sha1) ||
++	    !(old = lookup_commit_reference_gently(head_sha1, 1)))
++		return reset_index_file_via_read_tree(new_sha1, reset_type,
++						      quiet);
 +
-+	topts.msgs.not_uptodate_file = "You have local changes to '%s'; cannot switch branches.";
-+
-+	refresh_cache(REFRESH_QUIET);
-+
-+	if (unmerged_cache()) {
-+		error("you need to resolve your current index first");
-+		return 1;
++	lock_file = xcalloc(1, sizeof(struct lock_file));
++	newfd = hold_locked_index(lock_file, 1);
++	if (read_cache() < 0) {
++		rollback_lock_file(lock_file);
++		return reset_index_file_via_read_tree(new_sha1, reset_type,
++						      quiet);
 +	}
 +
-+	/* 2-way merge to the new branch */
-+	topts.initial_checkout = is_cache_unborn();
-+	topts.update = 1;
-+	topts.merge = 1;
-+	topts.gently = merge;
-+	topts.verbose_update = !quiet;
-+	topts.fn = twoway_merge;
-+	topts.dir = xcalloc(1, sizeof(*topts.dir));
-+	topts.dir->show_ignored = 1;
-+	topts.dir->exclude_per_dir = ".gitignore";
-+	tree = parse_tree_indirect(old_commit->object.sha1);
-+	init_tree_desc(&trees[0], tree->buffer, tree->size);
-+	tree = parse_tree_indirect(new_commit->object.sha1);
-+	init_tree_desc(&trees[1], tree->buffer, tree->size);
++	/*
++	 * If we want "checkout -m" behaviour of falling back to
++	 * the 3-way content level merges, we could use
++	 *
++	 *	 merge = (reset_type == MERGE);
++	 *
++	 * here.
++	 */
++	merge = 0;
 +
-+	ret = unpack_trees(2, trees, &topts);
-+	if (ret == -1) {
-+		/*
-+		 * Unpack couldn't do a trivial merge; either give up
-+		 * or do a real merge, depending on whether the merge
-+		 * flag was used.
-+		 */
-+		struct tree *result;
-+		struct tree *work;
-+		struct merge_options o;
-+		if (!merge)
-+			return 1;
-+		parse_commit(old_commit);
-+
-+		/* Do more real merge */
-+
-+		/*
-+		 * We update the index fully, then write the tree from
-+		 * the index, then merge the new branch with the
-+		 * current tree, with the old branch as the base. Then
-+		 * we reset the index (but not the working tree) to
-+		 * the new branch, leaving the working tree as the
-+		 * merged version, but skipping unmerged entries in
-+		 * the index.
-+		 */
-+
-+		add_files_to_cache(NULL, NULL, 0);
-+		init_merge_options(&o);
-+		o.verbosity = 0;
-+		work = write_tree_from_memory(&o);
-+
-+		ret = reset_tree(new_commit->tree, quiet, 1, wt_error);
-+		if (ret)
-+			return ret;
-+		o.branch1 = new_label;
-+		o.branch2 = old_label;
-+		merge_trees(&o, new_commit->tree, work,
-+			    old_commit->tree, &result);
-+		ret = reset_tree(new_commit->tree, quiet, 0, wt_error);
++	wt_error = 0;
++	ret = reset_index_and_worktree(0, merge, quiet, &wt_error,
++				       old, "local",
++				       new, "reset");
++	if (ret || wt_error) {
++		rollback_lock_file(lock_file);
++		return -1;
 +	}
-+	return ret;
++
++	if (write_cache(newfd, active_cache, active_nr) ||
++	    commit_locked_index(lock_file))
++		return error("unable to write new index file");
++	return 0;
 +}
 +
- struct branch_info {
- 	const char *name; /* The short name used */
- 	const char *path; /* The full name of a real branch */
-@@ -376,91 +457,16 @@ static int merge_working_tree(struct checkout_opts *opts,
- 	if (read_cache() < 0)
- 		return error("corrupt index file");
+ static void print_new_head_line(struct commit *commit)
+ {
+ 	const char *hex, *body;
+@@ -276,7 +338,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		if (is_merge() || read_cache() < 0 || unmerged_cache())
+ 			die("Cannot do a soft reset in the middle of a merge.");
+ 	}
+-	else if (reset_index_file(sha1, reset_type, quiet))
++	else if (reset_index_file(commit, reset_type, quiet))
+ 		die("Could not reset index file to revision '%s'.", rev);
  
--	if (opts->force) {
-+	if (opts->force)
- 		ret = reset_tree(new->commit->tree, opts->quiet, 1,
- 				 &opts->writeout_error);
--		if (ret)
--			return ret;
--	} else {
--		struct tree_desc trees[2];
--		struct tree *tree;
--		struct unpack_trees_options topts;
--
--		memset(&topts, 0, sizeof(topts));
--		topts.head_idx = -1;
--		topts.src_index = &the_index;
--		topts.dst_index = &the_index;
--
--		topts.msgs.not_uptodate_file = "You have local changes to '%s'; cannot switch branches.";
--
--		refresh_cache(REFRESH_QUIET);
--
--		if (unmerged_cache()) {
--			error("you need to resolve your current index first");
--			return 1;
--		}
--
--		/* 2-way merge to the new branch */
--		topts.initial_checkout = is_cache_unborn();
--		topts.update = 1;
--		topts.merge = 1;
--		topts.gently = opts->merge;
--		topts.verbose_update = !opts->quiet;
--		topts.fn = twoway_merge;
--		topts.dir = xcalloc(1, sizeof(*topts.dir));
--		topts.dir->show_ignored = 1;
--		topts.dir->exclude_per_dir = ".gitignore";
--		tree = parse_tree_indirect(old->commit->object.sha1);
--		init_tree_desc(&trees[0], tree->buffer, tree->size);
--		tree = parse_tree_indirect(new->commit->object.sha1);
--		init_tree_desc(&trees[1], tree->buffer, tree->size);
--
--		ret = unpack_trees(2, trees, &topts);
--		if (ret == -1) {
--			/*
--			 * Unpack couldn't do a trivial merge; either
--			 * give up or do a real merge, depending on
--			 * whether the merge flag was used.
--			 */
--			struct tree *result;
--			struct tree *work;
--			struct merge_options o;
--			if (!opts->merge)
--				return 1;
--			parse_commit(old->commit);
--
--			/* Do more real merge */
--
--			/*
--			 * We update the index fully, then write the
--			 * tree from the index, then merge the new
--			 * branch with the current tree, with the old
--			 * branch as the base. Then we reset the index
--			 * (but not the working tree) to the new
--			 * branch, leaving the working tree as the
--			 * merged version, but skipping unmerged
--			 * entries in the index.
--			 */
--
--			add_files_to_cache(NULL, NULL, 0);
--			init_merge_options(&o);
--			o.verbosity = 0;
--			work = write_tree_from_memory(&o);
--
--			ret = reset_tree(new->commit->tree, opts->quiet, 1,
--					 &opts->writeout_error);
--			if (ret)
--				return ret;
--			o.branch1 = new->name;
--			o.branch2 = "local";
--			merge_trees(&o, new->commit->tree, work,
--				old->commit->tree, &result);
--			ret = reset_tree(new->commit->tree, opts->quiet, 0,
--					 &opts->writeout_error);
--			if (ret)
--				return ret;
--		}
--	}
-+	else
-+		ret = switch_trees(opts->merge, opts->quiet,
-+				   &opts->writeout_error,
-+				   old->commit, "local",
-+				   new->commit, new->name);
-+	if (ret)
-+		return ret;
- 
- 	if (write_cache(newfd, active_cache, active_nr) ||
- 	    commit_locked_index(lock_file))
+ 	/* Any resets update HEAD to the head being switched to,
+diff --git a/reset.h b/reset.h
+new file mode 100644
+index 0000000..9c42838
+--- /dev/null
++++ b/reset.h
+@@ -0,0 +1,11 @@
++#ifndef RESET_H
++#define RESET_H
++
++extern int reset_index_and_worktree(int force, int merge, int quiet,
++				    int *wt_error,
++				    struct commit *old_commit,
++				    const char *old_label,
++				    struct commit *new_commit,
++				    const char *new_label);
++
++#endif
 -- 
 1.6.1.rc1.72.ga5ce6
