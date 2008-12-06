@@ -1,124 +1,378 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Git Books
-Date: Sat, 6 Dec 2008 20:45:15 +0100
-Message-ID: <20081206194515.GA4721@atjola.homenet>
-References: <d411cc4a0812060358ub640ea3kd04072c5640eef68@mail.gmail.com>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: [PATCH 2/2] gitk: Update German translation.
+Date: Sat, 6 Dec 2008 20:49:24 +0100
+Organization: Alumni Technische =?iso-8859-1?q?Universit=E4t?= Hamburg-Harburg
+Message-ID: <200812062049.24884.stimming@tuhh.de>
+References: <200812062048.30412.stimming@tuhh.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 06 20:46:39 2008
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_EdtOJyEZLgJ0Ie1"
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Dec 06 20:55:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L936s-0003YI-Rx
-	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 20:46:39 +0100
+	id 1L93Fo-0006V2-51
+	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 20:55:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752363AbYLFTpW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Dec 2008 14:45:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbYLFTpV
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 14:45:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38631 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752220AbYLFTpU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Dec 2008 14:45:20 -0500
-Received: (qmail invoked by alias); 06 Dec 2008 19:45:16 -0000
-Received: from i577B8F30.versanet.de (EHLO atjola.local) [87.123.143.48]
-  by mail.gmx.net (mp057) with SMTP; 06 Dec 2008 20:45:16 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18Z/gdim3sZRlX6JOdE9islkhduoTgOPi7VeqyM7T
-	8FusA9JMEyb8R2
-Content-Disposition: inline
-In-Reply-To: <d411cc4a0812060358ub640ea3kd04072c5640eef68@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1752613AbYLFTyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Dec 2008 14:54:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752573AbYLFTyJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Dec 2008 14:54:09 -0500
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:37058 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752220AbYLFTyH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Dec 2008 14:54:07 -0500
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id mB6Js34g032732
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sat, 6 Dec 2008 20:54:03 +0100
+Received: from [192.168.0.101] (e176221017.adsl.alicedsl.de [85.176.221.17])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id mB6Js2N1029099
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 6 Dec 2008 20:54:03 +0100
+User-Agent: KMail/1.9.5
+In-Reply-To: <200812062048.30412.stimming@tuhh.de>
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102473>
 
-On 2008.12.06 03:58:28 -0800, Scott Chacon wrote:
-> So, since I'm near the beginning of this process, I was wondering if
-> the group had any feedback as to what might be super helpful to
-> include.  I mean, I have a pretty good layout and all, but if you
-> wanted to point me to some threads that tend to crop up in the mailin=
-g
-> list and IRC channel from relative newcomers that I might be able to
-> nip in the bud, I would like to.  I'm addressing the stuff that _I_
-> hear a lot, and I'm scanning the IRC logs and list for topics, but I
-> figured many of you must answer the same questions all the time, too.
+--Boundary-00=_EdtOJyEZLgJ0Ie1
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Just some random thoughts:
+Attached to avoid whitespace problems.
 
-Please explain HEAD early on, and what it actually means. I've seen
-quite a number of people understanding HEAD as, for example, a magic
-keyword, a branch property, or a _direct_ reference to the latest commi=
-t
-on the branch they have checked out. Especially the last one has really
-confused the hell out of some people when they came across the concept
-of a detached HEAD.
+Regards,
 
-Explaining remote tracking branches early on, say after the first
-"clone" is also important I guess. A number of readers will probably
-just "dive in" when they learned a few commands and clone some random
-repo to start playing. Unless Murphy lets us down, they'll clone a repo
-that has multiple branches and will sit there, wondering how to get one
-of the branches that only exist as remote tracking branches in their
-repo.
+Christian
 
-And for commands, it's IMHO best to always start with the "full blown"
-form, and only then, after introducing the command and what it does,
-start to talk about short forms and how you can leave out some argument=
-s
-and fall back to defaults.
+--Boundary-00=_EdtOJyEZLgJ0Ie1
+Content-Type: text/x-diff;
+  charset="iso-8859-1";
+  name="0002-gitk-Update-German-translation.patch"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+	filename="0002-gitk-Update-German-translation.patch"
 
-=46or example:
+=46rom 282060ac531fee722142f9d39c4ff29570723cbb Mon Sep 17 00:00:00 2001
+=46rom: Christian Stimming <stimming@tuhh.de>
+Date: Sat, 6 Dec 2008 20:47:15 +0100
+Subject: [PATCH 2/2] gitk: Update German translation.
 
-rebase:
-Start with "rebase --onto <onto> <upstream> <branch>" and how that take=
-s
-the commits from <upstream>..<branch> and "replays" them on top of
-<onto>. In my experience, starting with that version and showing how it
-affects the commit DAG helps people to actually understand what happens=
-,
-while a plain "git rebase master" seems like pure magic to some, becaus=
-e
-you can't even use the arguments to explain why and where things are
-placed, or you start telling how those are all defaults, and then have
-to explain everything all over again, when you use the explicit form fo=
-r
-more complicated things and people seem to get confused by that.
+Merged with most recent "make update-po" result.
 
-fetch:
-Include refspecs in the first examples and show how a missing rhs cause=
-s
-the fetched stuff to be stored in FETCH_HEAD. And only then go on to
-tell that remotes usually have a default refspec in their config, and
-that you can thus omit the refspecs when you fetch from a remote.
+Signed-off-by: Christian Stimming <stimming@tuhh.de>
+=2D--
+ po/de.po |  186 ++++++++++++++++++++++++++++++++++++++++++++++++++++------=
+=2D---
+ 1 files changed, 157 insertions(+), 29 deletions(-)
 
-push:
-refspecs again. Maybe start with pushing a single branch/tag/whatever,
-explicitly, eg. "git push origin refs/heads/master:refs/heads/master",
-and only then introduce the DWIM stuff like "git push origin master".
-Same thing for the default ":" refspec, please mention what that refspe=
-c
-means and that it is the default when no refspec is given (either on th=
-e
-command line or in the config). A lot of people don't seem to know abou=
-t
-refspecs at all, and the "matching branch names" refspec is IMHO worth
-being mentioned, as I've seen a bunch of questions lately that could be
-answered by explaining that. For example, updating matching branches an=
-d
-pushing a new tag at once, or having a push config that pushes one or
-more branches to differently named branches on the remote, but using th=
-e
-name matching for all other. And personally, I also like "git push
-origin : v1.2.3" better than pushing twice or naming my branches
-explicitly :-)
+diff --git a/po/de.po b/po/de.po
+index e0a6dee..825dc98 100644
+=2D-- a/po/de.po
++++ b/po/de.po
+@@ -7,8 +7,8 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: git-gui\n"
+ "Report-Msgid-Bugs-To: \n"
+=2D"POT-Creation-Date: 2008-10-25 13:18+0200\n"
+=2D"PO-Revision-Date: 2008-10-25 13:23+0200\n"
++"POT-Creation-Date: 2008-12-06 20:40+0100\n"
++"PO-Revision-Date: 2008-12-06 20:45+0100\n"
+ "Last-Translator: Christian Stimming <stimming@tuhh.de>\n"
+ "Language-Team: German\n"
+ "MIME-Version: 1.0\n"
+@@ -90,7 +90,11 @@ msgstr "Zweige neu laden"
+ msgid "List references"
+ msgstr "Zweige/Markierungen auflisten"
+=20
+=2D#: gitk:1815
++#: gitk:1915
++msgid "Start git gui"
++msgstr "=C2=BBgit gui=C2=AB starten"
++
++#: gitk:1917
+ msgid "Quit"
+ msgstr "Beenden"
+=20
+@@ -295,7 +299,15 @@ msgstr "Externer Vergleich"
+ msgid "Blame parent commit"
+ msgstr "Annotieren der Elternversion"
+=20
+=2D#: gitk:2488
++#: gitk:2360
++msgid "Show origin of this line"
++msgstr "Herkunft dieser Zeile anzeigen"
++
++#: gitk:2361
++msgid "Run git gui blame on this line"
++msgstr "Annotieren (=C2=BBgit gui blame=C2=AB) von dieser Zeile"
++
++#: gitk:2606
+ msgid ""
+ "\n"
+ "Gitk - a commit viewer for git\n"
+@@ -501,7 +513,38 @@ msgstr "Version nicht gefunden"
+ msgid "git gui blame: command failed:"
+ msgstr "git gui blame: Kommando fehlgeschlagen:"
+=20
+=2D#: gitk:3092
++#: gitk:3398
++#, tcl-format
++msgid "Couldn't read merge head: %s"
++msgstr "Zusammenf=C3=BChrungs-Spitze konnte nicht gelesen werden: %s"
++
++#: gitk:3406
++#, tcl-format
++msgid "Error reading index: %s"
++msgstr "Fehler beim Lesen der Bereitstellung (=C2=BBindex=C2=AB): %s"
++
++#: gitk:3431
++#, tcl-format
++msgid "Couldn't start git blame: %s"
++msgstr "=C2=BBgit blame=C2=AB konnte nicht gestartet werden: %s"
++
++#: gitk:3434 gitk:6160
++msgid "Searching"
++msgstr "Suchen"
++
++#: gitk:3466
++#, tcl-format
++msgid "Error running git blame: %s"
++msgstr "Fehler beim Ausf=C3=BChren von =C2=BBgit blame=C2=AB: %s"
++
++#: gitk:3494
++#, tcl-format
++msgid "That line comes from commit %s,  which is not in this view"
++msgstr ""
++"Diese Zeile stammt aus Version %s, welche nicht in dieser Ansicht gezeigt=
+ "
++"wird."
++
++#: gitk:3508
+ msgid "External diff viewer failed:"
+ msgstr "Externes Vergleich-(Diff-)Programm fehlgeschlagen:"
+=20
+@@ -509,11 +552,7 @@ msgstr "Externes Vergleich-(Diff-)Programm fehlgeschla=
+gen:"
+ msgid "Gitk view definition"
+ msgstr "Gitk Ansichten"
+=20
+=2D#: gitk:3225
+=2Dmsgid "Name"
+=2Dmsgstr "Name"
+=2D
+=2D#: gitk:3228
++#: gitk:3630
+ msgid "Remember this view"
+ msgstr "Diese Ansicht speichern"
+=20
+@@ -521,15 +560,55 @@ msgstr "Diese Ansicht speichern"
+ msgid "Commits to include (arguments to git log):"
+ msgstr "Versionen anzeigen (Argumente von git-log):"
+=20
+=2D#: gitk:3239
++#: gitk:3632
++msgid "Use all refs"
++msgstr "Alle Zweige verwenden"
++
++#: gitk:3633
++msgid "Strictly sort by date"
++msgstr "Streng nach Datum sortieren"
++
++#: gitk:3634
++msgid "Mark branch sides"
++msgstr "Zweig-Seiten markieren"
++
++#: gitk:3635
++msgid "Since date:"
++msgstr "Von Datum:"
++
++#: gitk:3636
++msgid "Until date:"
++msgstr "Bis Datum:"
++
++#: gitk:3637
++msgid "Max count:"
++msgstr "Max. Anzahl:"
++
++#: gitk:3638
++msgid "Skip:"
++msgstr "=C3=9Cberspringen:"
++
++#: gitk:3639
++msgid "Limit to first parent"
++msgstr "Auf erste Elternversion beschr=C3=A4nken"
++
++#: gitk:3640
+ msgid "Command to generate more commits to include:"
+ msgstr "Versionsliste durch folgendes Kommando erzeugen lassen:"
+=20
+=2D#: gitk:3246
++#: gitk:3749
++msgid "Name"
++msgstr "Name"
++
++#: gitk:3797
+ msgid "Enter files and directories to include, one per line:"
+ msgstr "Folgende Dateien und Verzeichnisse anzeigen (eine pro Zeile):"
+=20
+=2D#: gitk:3293
++#: gitk:3811
++msgid "Apply (F5)"
++msgstr "Anwenden (F5)"
++
++#: gitk:3849
+ msgid "Error in commit selection arguments:"
+ msgstr "Fehler in den ausgew=C3=A4hlten Versionen:"
+=20
+@@ -569,11 +648,7 @@ msgstr "Lokale =C3=84nderungen bereitgestellt, aber ni=
+cht eingetragen"
+ msgid "Local uncommitted changes, not checked in to index"
+ msgstr "Lokale =C3=84nderungen, nicht bereitgestellt"
+=20
+=2D#: gitk:5549
+=2Dmsgid "Searching"
+=2Dmsgstr "Suchen"
+=2D
+=2D#: gitk:6049
++#: gitk:6673
+ msgid "Tags:"
+ msgstr "Markierungen:"
+=20
+@@ -597,11 +672,12 @@ msgstr "Folgt auf"
+ msgid "Precedes"
+ msgstr "Vorg=C3=A4nger von"
+=20
+=2D#: gitk:6378
+=2Dmsgid "Error getting merge diffs:"
+=2Dmsgstr "Fehler beim Laden des Vergleichs:"
++#: gitk:7209
++#, tcl-format
++msgid "Error getting diffs: %s"
++msgstr "Fehler beim Laden des Vergleichs: %s"
+=20
+=2D#: gitk:7113
++#: gitk:7748
+ msgid "Goto:"
+ msgstr "Gehe zu:"
+=20
+@@ -722,7 +798,12 @@ msgstr "Name:"
+ msgid "Please specify a name for the new branch"
+ msgstr "Bitte geben Sie einen Namen f=C3=BCr den neuen Zweig an."
+=20
+=2D#: gitk:7703
++#: gitk:8328
++#, tcl-format
++msgid "Branch '%s' already exists. Overwrite?"
++msgstr "Zweig =C2=BB%s=C2=AB existiert bereits. Soll er =C3=BCberschrieben=
+ werden?"
++
++#: gitk:8394
+ #, tcl-format
+ msgid "Commit %s is already included in branch %s -- really re-apply it?"
+ msgstr ""
+@@ -733,7 +814,26 @@ msgstr ""
+ msgid "Cherry-picking"
+ msgstr "Version pfl=C3=BCcken"
+=20
+=2D#: gitk:7720
++#: gitk:8408
++#, tcl-format
++msgid ""
++"Cherry-pick failed because of local changes to file '%s'.\n"
++"Please commit, reset or stash your changes and try again."
++msgstr ""
++"Pfl=C3=BCcken fehlgeschlagen, da noch lokale =C3=84nderungen in Datei =C2=
+=BB%s=C2=AB\n"
++"vorliegen. Bitte diese =C3=84nderungen eintragen, zur=C3=BCcksetzen oder\=
+n"
++"zwischenspeichern (=C2=BBgit stash=C2=BB) und dann erneut versuchen."
++
++#: gitk:8414
++msgid ""
++"Cherry-pick failed because of merge conflict.\n"
++"Do you wish to run git citool to resolve it?"
++msgstr ""
++"Pfl=C3=BCcken fehlgeschlagen, da ein Zusammenf=C3=BChrungs-Konflikt aufge=
+treten\n"
++"ist. Soll das =C2=BBgit citool=C2=AB (Zusammenf=C3=BChrungs-Werkzeug) auf=
+gerufen\n"
++"werden, um diesen Konflikt aufzul=C3=B6sen?"
++
++#: gitk:8430
+ msgid "No changes committed"
+ msgstr "Keine =C3=84nderungen eingetragen"
+=20
+@@ -889,23 +989,51 @@ msgstr "Farben: Klicken zum W=C3=A4hlen"
+ msgid "Background"
+ msgstr "Hintergrund"
+=20
+=2D#: gitk:9435
++#: gitk:10153 gitk:10183
++msgid "background"
++msgstr "Hintergrund"
++
++#: gitk:10156
+ msgid "Foreground"
+ msgstr "Vordergrund"
+=20
+=2D#: gitk:9439
++#: gitk:10157
++msgid "foreground"
++msgstr "Vordergrund"
++
++#: gitk:10160
+ msgid "Diff: old lines"
+ msgstr "Vergleich: Alte Zeilen"
+=20
+=2D#: gitk:9444
++#: gitk:10161
++msgid "diff old lines"
++msgstr "Vergleich - Alte Zeilen"
++
++#: gitk:10165
+ msgid "Diff: new lines"
+ msgstr "Vergleich: Neue Zeilen"
+=20
+=2D#: gitk:9449
++#: gitk:10166
++msgid "diff new lines"
++msgstr "Vergleich - Neue Zeilen"
++
++#: gitk:10170
+ msgid "Diff: hunk header"
+ msgstr "Vergleich: =C3=84nderungstitel"
+=20
+=2D#: gitk:9455
++#: gitk:10172
++msgid "diff hunk header"
++msgstr "Vergleich - =C3=84nderungstitel"
++
++#: gitk:10176
++msgid "Marked line bg"
++msgstr "Markierte Zeile Hintergrund"
++
++#: gitk:10178
++msgid "marked line background"
++msgstr "markierte Zeile Hintergrund"
++
++#: gitk:10182
+ msgid "Select bg"
+ msgstr "Hintergrundfarbe Ausw=C3=A4hlen"
+=20
+=2D-=20
+1.6.0.3.517.g759a
 
-Bj=F6rn
+
+--Boundary-00=_EdtOJyEZLgJ0Ie1--
