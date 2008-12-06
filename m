@@ -1,186 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 6/6] builtin-reset.c: use reset_index_and_worktree()
-Date: Fri,  5 Dec 2008 17:54:15 -0800
-Message-ID: <1228528455-3089-7-git-send-email-gitster@pobox.com>
-References: <1228528455-3089-1-git-send-email-gitster@pobox.com>
- <1228528455-3089-2-git-send-email-gitster@pobox.com>
- <1228528455-3089-3-git-send-email-gitster@pobox.com>
- <1228528455-3089-4-git-send-email-gitster@pobox.com>
- <1228528455-3089-5-git-send-email-gitster@pobox.com>
- <1228528455-3089-6-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 06 02:56:23 2008
+Subject: Re: [PATCH] t9129: Prevent test failure if no UTF-8 locale
+Date: Fri, 05 Dec 2008 18:05:50 -0800
+Message-ID: <7vk5aevz0h.fsf@gitster.siamese.dyndns.org>
+References: <20081206013152.GA6129@cumin>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: applehq <theappleman@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 06 03:08:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L8mP6-0005m7-03
-	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 02:56:20 +0100
+	id 1L8map-0000Xr-8W
+	for gcvg-git-2@gmane.org; Sat, 06 Dec 2008 03:08:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756036AbYLFByn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Dec 2008 20:54:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755935AbYLFBym
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 20:54:42 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61905 "EHLO
+	id S1752949AbYLFCF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Dec 2008 21:05:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbYLFCF6
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Dec 2008 21:05:58 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63954 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756015AbYLFByf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Dec 2008 20:54:35 -0500
+	with ESMTP id S1752731AbYLFCF6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Dec 2008 21:05:58 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 05B4218321
-	for <git@vger.kernel.org>; Fri,  5 Dec 2008 20:54:35 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 454BE18334;
+	Fri,  5 Dec 2008 21:05:57 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2B0BB1830E for
- <git@vger.kernel.org>; Fri,  5 Dec 2008 20:54:33 -0500 (EST)
-X-Mailer: git-send-email 1.6.1.rc1.72.ga5ce6
-In-Reply-To: <1228528455-3089-6-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: D4FFEF42-C338-11DD-981D-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B9BDB1832E; Fri, 
+ 5 Dec 2008 21:05:52 -0500 (EST)
+In-Reply-To: <20081206013152.GA6129@cumin> (theappleman@gmail.com's message
+ of "Sat, 6 Dec 2008 01:31:52 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6BA88A16-C33A-11DD-A585-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102439>
 
-This makes "git reset --merge" to use the same underlying mechanism "git
-checkout" uses to update the index and the work tree.
+applehq <theappleman@gmail.com> writes:
 
-It is possible to make it use the 3-way merge fallback "git checkout -m"
-allows, but this commit does not go there yet.
+> Commit 16fc08e2d86dad152194829d21bc55b2ef0c8fb1 introduced a
+> test that failed if the en_US.UTF-8 locale was not installed.
+>
+> Make the test find a UTF-8 locale, and expect failure.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-checkout.c |    1 +
- builtin-reset.c    |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- reset.h            |   11 ++++++++
- 3 files changed, 76 insertions(+), 2 deletions(-)
- create mode 100644 reset.h
+NAK on the latter one.
 
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index a08941a..d196521 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -16,6 +16,7 @@
- #include "blob.h"
- #include "xdiff-interface.h"
- #include "ll-merge.h"
-+#include "reset.h"
- 
- static const char * const checkout_usage[] = {
- 	"git checkout [options] <branch>",
-diff --git a/builtin-reset.c b/builtin-reset.c
-index c0cb915..481a1cc 100644
---- a/builtin-reset.c
-+++ b/builtin-reset.c
-@@ -18,6 +18,7 @@
- #include "tree.h"
- #include "branch.h"
- #include "parse-options.h"
-+#include "reset.h"
- 
- static const char * const git_reset_usage[] = {
- 	"git reset [--mixed | --soft | --hard | --merge] [-q] [<commit>]",
-@@ -52,7 +53,7 @@ static inline int is_merge(void)
- 	return !access(git_path("MERGE_HEAD"), F_OK);
- }
- 
--static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet)
-+static int reset_index_file_via_read_tree(const unsigned char *sha1, int reset_type, int quiet)
- {
- 	int i = 0;
- 	const char *args[6];
-@@ -77,6 +78,67 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
- 	return run_command_v_opt(args, RUN_GIT_CMD);
- }
- 
-+static int reset_index_file(struct commit *new, int reset_type, int quiet)
-+{
-+	/*
-+	 * SOFT reset won't even touch index nor work tree so
-+	 * this function is not called.
-+	 * MIXED updates the index only (should have been called
-+	 * --cached), and we let "git read-tree" to do so.
-+	 * HARD and MERGE corresponds to "checkout -f" and "checkout [-m]"
-+	 */
-+	int merge, wt_error, ret;
-+	struct commit *old;
-+	unsigned char head_sha1[20];
-+	unsigned char *new_sha1 = new->object.sha1;
-+	struct lock_file *lock_file;
-+	int newfd;
-+
-+	/*
-+	 * We play lazy and let read-tree complain if HEAD is not
-+	 * readable.  Also on hard reset, HEAD does not have to be
-+	 * readable.
-+	 */
-+	if (reset_type == MIXED ||
-+	    reset_type == HARD ||
-+	    get_sha1("HEAD", head_sha1) ||
-+	    !(old = lookup_commit_reference_gently(head_sha1, 1)))
-+		return reset_index_file_via_read_tree(new_sha1, reset_type,
-+						      quiet);
-+
-+	lock_file = xcalloc(1, sizeof(struct lock_file));
-+	newfd = hold_locked_index(lock_file, 1);
-+	if (read_cache() < 0) {
-+		rollback_lock_file(lock_file);
-+		return reset_index_file_via_read_tree(new_sha1, reset_type,
-+						      quiet);
-+	}
-+
-+	/*
-+	 * If we want "checkout -m" behaviour of falling back to
-+	 * the 3-way content level merges, we could use
-+	 *
-+	 *	 merge = (reset_type == MERGE);
-+	 *
-+	 * here.
-+	 */
-+	merge = 0;
-+
-+	wt_error = 0;
-+	ret = reset_index_and_worktree(0, merge, quiet, &wt_error,
-+				       old, "local",
-+				       new, "reset");
-+	if (ret || wt_error) {
-+		rollback_lock_file(lock_file);
-+		return -1;
-+	}
-+
-+	if (write_cache(newfd, active_cache, active_nr) ||
-+	    commit_locked_index(lock_file))
-+		return error("unable to write new index file");
-+	return 0;
-+}
-+
- static void print_new_head_line(struct commit *commit)
- {
- 	const char *hex, *body;
-@@ -276,7 +338,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		if (is_merge() || read_cache() < 0 || unmerged_cache())
- 			die("Cannot do a soft reset in the middle of a merge.");
- 	}
--	else if (reset_index_file(sha1, reset_type, quiet))
-+	else if (reset_index_file(commit, reset_type, quiet))
- 		die("Could not reset index file to revision '%s'.", rev);
- 
- 	/* Any resets update HEAD to the head being switched to,
-diff --git a/reset.h b/reset.h
-new file mode 100644
-index 0000000..9c42838
---- /dev/null
-+++ b/reset.h
-@@ -0,0 +1,11 @@
-+#ifndef RESET_H
-+#define RESET_H
-+
-+extern int reset_index_and_worktree(int force, int merge, int quiet,
-+				    int *wt_error,
-+				    struct commit *old_commit,
-+				    const char *old_label,
-+				    struct commit *new_commit,
-+				    const char *new_label);
-+
-+#endif
--- 
-1.6.1.rc1.72.ga5ce6
+test_expect_failure does not mean "This might, and it is Ok to, fail", as
+you seem to think.  It means "This should succeed if our software is not
+buggy, but there is a known breakage to cause it to fail, so this test is
+marked as such until the bug is fixed."
+
+Skipping the test on a platform that lacks necessary locale is fine, but
+if you run the test, they should expect success.  Otherwise you cannot
+tell if it is a platform issue (i.e. not having any UTF-8 locale) or
+a bug in the software (i.e. git-svn not working as expected).
+
+> Signed-off-by: applehq <theappleman@gmail.com>
+
+Sign off with an unreal name, hmm..., what good would that give us...?
+
+> @@ -15,8 +15,9 @@ compare_git_head_with () {
+>  }
+>  
+>  compare_svn_head_with () {
+> -	LC_ALL=en_US.UTF-8 svn log --limit 1 `git svn info --url` | \
+> -		sed -e 1,3d -e "/^-\{1,\}\$/d" >current &&
+> +	LC_ALL=`locale -a | grep -i utf | head -1` \
+> +		svn log --limit 1 `git svn info --url` | \
+> +			sed -e 1,3d -e "/^-\{1,\}\$/d" >current &&
+
+I think what this part tries to do is good, in that we do not care if it
+is en_US UTF-8 or any other UTF-8.  But cramming that logic all in one
+pipeline (and an inefficient one at that) makes it harder to read.
+
+Do something like this upfront:
+
+	a_utf8_locale=$(locale -a | sed -ne '/[Uu][Tt][Ff]-*8/{
+        	p
+                q
+	'})
+
+and if that variable is empty then skip the test that relies on having a
+UTF-8 locale on the platform.  Then the function can say:
+
+	LC_ALL="$a_utf8_locale" svn log --limit 1 ...
