@@ -1,86 +1,83 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] git-stash: use git rev-parse -q
-Date: Mon, 8 Dec 2008 00:17:23 +0100
-Message-ID: <20081207231723.GA5068@atjola.homenet>
-References: <1228179369-3766-1-git-send-email-vmiklos@frugalware.org>
+From: "Peter Harris" <git@peter.is-a-geek.org>
+Subject: Re: How to clone git repository with git-svn meta-data included?
+Date: Sun, 7 Dec 2008 18:51:24 -0500
+Message-ID: <eaa105840812071551w2106eb72k54ec68938628d51@mail.gmail.com>
+References: <493A6CEC.4060601@tuffmail.com>
+	 <eaa105840812070857i27f8e920keaba3f92f5260b38@mail.gmail.com>
+	 <493C1F36.7050504@tuffmail.com>
+	 <eaa105840812071230l5e8d54bcg21b36019711bc3cd@mail.gmail.com>
+	 <493C47FD.4080302@tuffmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Mon Dec 08 00:18:47 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Grzegorz Kossakowski" <grek@tuffmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 08 00:52:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9Sti-0004qb-O6
-	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 00:18:47 +0100
+	id 1L9TQg-00056m-01
+	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 00:52:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753549AbYLGXR2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Dec 2008 18:17:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753187AbYLGXR2
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 18:17:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59842 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752819AbYLGXR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2008 18:17:27 -0500
-Received: (qmail invoked by alias); 07 Dec 2008 23:17:25 -0000
-Received: from i577BAE33.versanet.de (EHLO atjola.local) [87.123.174.51]
-  by mail.gmx.net (mp066) with SMTP; 08 Dec 2008 00:17:25 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19egm496B5e9tn8qFmB1DtQCRwKRnjer4b6mom2EE
-	xXE55OBw1BARj2
+	id S1751368AbYLGXv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2008 18:51:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752230AbYLGXv1
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 18:51:27 -0500
+Received: from rn-out-0910.google.com ([64.233.170.188]:48078 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750931AbYLGXv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Dec 2008 18:51:26 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so733384rnd.17
+        for <git@vger.kernel.org>; Sun, 07 Dec 2008 15:51:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=18ugMBJtZTnr9TyA8WzBowoH8LJbGmg/5EvbGRn+OvQ=;
+        b=kOxHy4GMjeh8W3W6MMwLMT71FJkWUO+/uy1XNoVNmTquXheuCfWIzPBbZKo03fezl6
+         cnW7X4QtRoIzerkesDIT65kuoqGbavbNLEBLtf+/pzKUm446NzCy+GmXDjNjeWRC6n+V
+         0h/vAwGj3NuEF6IerCRPleCUMod0b04F3ZSmw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=qkTEe6pMDD+qkhavqPlNYcR5SjJtO6GukBaXz19jPU0Ei0fIUAwGhIpoLlTYNKQRgY
+         YDDk9oq/cbFyf/XsD0SolBxd3uSsRHobYjJCJV4w58qFHypzWJEDVxbkO/hwwHNybFCs
+         YtoUAaqhoAOktSOdCetN48owwXxPywHXEU0kI=
+Received: by 10.64.10.2 with SMTP id 2mr2249312qbj.76.1228693884097;
+        Sun, 07 Dec 2008 15:51:24 -0800 (PST)
+Received: by 10.65.230.19 with HTTP; Sun, 7 Dec 2008 15:51:24 -0800 (PST)
+In-Reply-To: <493C47FD.4080302@tuffmail.com>
 Content-Disposition: inline
-In-Reply-To: <1228179369-3766-1-git-send-email-vmiklos@frugalware.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+X-Google-Sender-Auth: e060d82182d5fea8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102512>
 
-On 2008.12.02 01:56:09 +0100, Miklos Vajna wrote:
-> Don't redirect stderr to /dev/null, use -q to suppress the output on
-> stderr.
->=20
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
-> =20
->  	# clear_stash if we just dropped the last stash entry
-> -	git rev-parse --verify "$ref_stash@{0}" > /dev/null 2>&1 || clear_s=
-tash
-> +	git rev-parse -q --verify "$ref_stash@{0}" > /dev/null || clear_sta=
-sh
+On Sun, Dec 7, 2008 at 5:02 PM, Grzegorz Kossakowski wrote:
+> Peter Harris pisze:
+>> After the git clone, I do the following:
+>> git svn init -s svn://repo/sitory
+>> git svn rebase
+>>
+>> No data is transferred[1], although 'git svn rebase' does spend a
+>> minute or so reading the commit messages to rebuild its index.
+>
+> I've tried this method with Cocoon repository
+> (http://jukka.zitting.name/git/?p=cocoon.git;a=summary) and got this error:
+>
+> git clone git://jukka.zitting.name/cocoon.git
+> git svn init -s https://svn.eu.apache.org/repos/asf/cocoon/
+> git svn rebase
+> Unable to determine upstream SVN information from working tree history
 
-This one causes an error message to pop up when the last stash entry is
-dropped:
+Odd. Usually that indicates a lack of metadata, but that repo appears
+to contain the right stuff. Beats me.
 
-doener@atjola:git (master) $ echo 123 >> Makefile
-
-doener@atjola:git (master) $ git stash
-Saved working directory and index state "WIP on master: 2dd6202...
-Update draft release notes to 1.6.1"
-HEAD is now at 2dd6202 Update draft release notes to 1.6.1
-(To restore them type "git stash apply")
-
-doener@atjola:git (master) $ git stash drop
-Dropped refs/stash@{0} (e692e43ce03fe0b5f0eb94123123ea61a0f2097a)
-fatal: Log .git/logs/refs/stash is empty.
-
-git version 1.6.1.rc1.56.g2dd62
-
-After "git stash drop" finished the rev-parse won't complain anymore,
-even if you recreate an empty .git/logs/refs/stash file, because
-=2Egit/refs/stash is also gone, and then it doesn't seem to care anymor=
-e.
-
-But having a valid ref and an empty log makes it unhappy:
-
-doener@atjola:git (master) $ git rev-parse HEAD > .git/refs/stash
-doener@atjola:git (master) $ : > .git/logs/refs/stash
-doener@atjola:git (master) $ git rev-parse -q --verify 'refs/stash@{1}'
-fatal: Log .git/logs/refs/stash is empty.
-
-Bj=F6rn
+Peter Harris
