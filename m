@@ -1,125 +1,82 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: What's cooking in git.git (Nov 2008, #06; Wed, 26)
-Date: Sun, 7 Dec 2008 16:26:21 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0812071455020.19665@iabervon.org>
-References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org>  <alpine.DEB.1.00.0811281225040.30769@pacific.mpi-cbg.de>  <20081128192033.GF23984@spearce.org>  <7voczz4cfb.fsf@gitster.siamese.dyndns.org>  <alpine.LNX.1.00.0811281938250.19665@iabervon.org> 
- <fcaeb9bf0811290502j5db4056fo9b125aaa8b564314@mail.gmail.com>  <fcaeb9bf0811300229v4e7bfbb7g9a0ac72dcddb4326@mail.gmail.com>  <alpine.LNX.1.00.0811301509070.19665@iabervon.org>  <fcaeb9bf0812060926r2ee443bfl3adb3f2d1129e5b8@mail.gmail.com> 
- <alpine.LNX.1.00.0812061238260.19665@iabervon.org> <fcaeb9bf0812070427s64438216s41bf1294aa6398a3@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: missing "commit | commitdiff | tree | snapshot" within we web git page
+Date: Sun, 07 Dec 2008 13:30:45 -0800 (PST)
+Message-ID: <m3zlj7hdvh.fsf@localhost.localdomain>
+References: <200812072155.52456.toralf.foerster@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 07 22:28:08 2008
+Content-Type: text/plain; charset=iso-8859-14
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-14?q?Toralf_F=F6rster?= <toralf.foerster@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Dec 07 22:32:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9RAS-0005GE-1x
-	for gcvg-git-2@gmane.org; Sun, 07 Dec 2008 22:27:56 +0100
+	id 1L9RET-0006rr-2m
+	for gcvg-git-2@gmane.org; Sun, 07 Dec 2008 22:32:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751471AbYLGV0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2008 16:26:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751374AbYLGV0b
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 16:26:31 -0500
-Received: from iabervon.org ([66.92.72.58]:40115 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751202AbYLGV0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2008 16:26:31 -0500
-Received: (qmail 26980 invoked by uid 1000); 7 Dec 2008 21:26:21 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 7 Dec 2008 21:26:21 -0000
-In-Reply-To: <fcaeb9bf0812070427s64438216s41bf1294aa6398a3@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752179AbYLGVas convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Dec 2008 16:30:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751737AbYLGVas
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 16:30:48 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:6322 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751374AbYLGVar convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Dec 2008 16:30:47 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so346843eyi.37
+        for <git@vger.kernel.org>; Sun, 07 Dec 2008 13:30:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding:date;
+        bh=yWfrnSW5Utsj7AgJz/teOf5FnVf9MwLZZOy9nowEryQ=;
+        b=MdzRSQ/hq69eNbnFRvTz6KGVozwB7JXi5tmZ5R5vN+kVPudLExHTxVrlnce0pWuD4Q
+         /Qeq7HKqGpckI9H4xMmyVAPqHfhHEbvyf9tlCzWh7oLDcBmkYIYCTEZGYfZVZpp7wPag
+         +W8RSew79Euz2yJV5QFe9C/5uHMIyI0TrGMfI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding:date;
+        b=vmAZH+JkJAYobBy9Pw7PqN2/4F3WhDUc+YPSC/a4hfObs80AYic+9l7DRQKjI8BW/+
+         +gD0a8XqnGmrSI5rKRzB1ocgJflKq+HldBvTTlDF1jQtB5JxmdFP4ApOse4jun4eAiDb
+         W+t6ZbYTRGDyeICb1dboHfFdkEGEVVYHTQXf8=
+Received: by 10.210.123.2 with SMTP id v2mr2809156ebc.0.1228685445950;
+        Sun, 07 Dec 2008 13:30:45 -0800 (PST)
+Received: from localhost.localdomain (abvk203.neoplus.adsl.tpnet.pl [83.8.208.203])
+        by mx.google.com with ESMTPS id b33sm18757403ika.23.2008.12.07.13.30.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 07 Dec 2008 13:30:45 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mB7LUiYL030841;
+	Sun, 7 Dec 2008 22:30:44 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mB7LUgMq030838;
+	Sun, 7 Dec 2008 22:30:42 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <200812072155.52456.toralf.foerster@gmx.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102508>
 
-On Sun, 7 Dec 2008, Nguyen Thai Ngoc Duy wrote:
+Toralf F=F6rster <toralf.foerster@gmx.de> writes:
 
-> On 12/7/08, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> >  > There is not much work for CE_NO_CHECKOUT on plumbling level except
-> >  > some fixes. The last half of the series, for porcelain level, you will
-> >  > see more.
-> >
-> >
-> > For the porcelain level, do we need the difference to be in the index? If
-> >  the porcelain knows the sparse checkout area and can instruct the plumbing
-> >  appropriately, the information shouldn't need to be stored in the index
-> 
-> This was discussed since the beginning of this feature. I recall that
-> the index reflects worktree, and because we mark CE_NO_CHECKOUT on
-> file basis, it's best to save the information there, not separately.
-> We do save high level information to form the checkout area (sparse
-> patterns) in the last half, but basically you should be able to live
-> without that.
+> While watching this=20
+> http://git.kernel.org/?p=3Dlinux/kernel/git/stable/linux-2.6.27.y.git=
+;a=3Dshortlog=20
+> I'm wondering why the last line doesn't contain sth. like
+> "commit | commitdiff | tree | snapshot"
 
-We need to mark in the index the information that reflects the worktree.
+It contains it?
 
-If, however, we take CE_VALID to be the flag for "ignore the worktree 
-entirely at this path; act as it if contains what the index contains" (and 
-use this to cause that aspect of no-checkout), and we then entirely ignore 
-the worktree, including not caring whether there are files there or not 
-(except, of course, that in the transition from caring to not caring for 
-no-checkout, we make the worktree empty, while in the case for 
-"stat-is-expensive", we bring it into agreement with the index), then 
-there is no additional information that needs to be conveyed in the index.
-
-> >  unless it's ever important to remember whether an entry is CE_VALID due to
-> >  having been outside the checkout when the index was written, even though
-> >  the checkout area now includes it. I don't have a good intuition as to
-> >  what ought to happen if the user manually changes what's specified for
-> >  checkout without actually updating the index and working tree.
-> 
-> So if a user changes worktree without updating index, they will have
-> the same results as they do now: files are shown as modified if they
-> don't have CE_NO_CHECKOUT set. If those files do, they are considered
-> 'orphaned' or staled and are recommended to be removed/updated to
-> avoid unexpected consequences (not availble this this first half
-> series because that belongs to "git status").
-
-I was actually thinking that there would be a file for "this is what the 
-user wants to have checked out" (as opposed to the index, which must 
-contain "this is what is checked out"), and the porcelain would instruct 
-the plumbing as to what to do with the worktree (that the plumbing with 
-then ignore, due to the index bit) based on this information.
-
-The index obviously can't contain the user's full instructions for what 
-should be checked out, because the user will want to say "I don't care 
-about anything in Documentation/" and have this apply to 
-Documentation/some-file-not-in-the-index, so that if this file is in the 
-worktree, the user gets a warning.
-
-I think you're doing this with core.defaultsparse, although you seem to 
-allow the index to diverge from this easily.
-
-The question, then, is what happens when the index and core.defaultsparse 
-disagree, either because the porcelain supports causing it or because the 
-user has simply editting the config file or used plumbing to modify the 
-index. That is, (1) we have index entries that say that the worktree is 
-ignored, and the rules don't say they're outside the sparse checkout; do 
-we care whether we expect the worktree to be empty or match the index? 
-And, (2) we have index entries that say we do care about them, but the 
-rules say they're outside the sparse checkout; what happens with these?
-
-Case (1) is where we would need to know, in the index, whether we expect 
-the worktree to actually match the index (traditional CE_VALID) or whether 
-we expect the worktree to be empty (CE_NO_CHECKOUT), if our behavior 
-should actually differ. My vague feeling is that we don't want it to 
-differ, and these paths are unexpectional "interesting to the user, but 
-the worktree is ignored" until reading a tree into the index again. (But 
-note that we will have to check on the worktree when reading into the 
-index if this changes the index from "blobA, CE_VALID" to 
-"blobA, !CE_VALID", since the worktree could differ in a way that we don't 
-want to retain. And I think we want it to be an error to have the worktree 
-be something other than blobA or nothing before, but "nothing" is fine and 
-we just write it out. (This means that users of CE_VALID who remove files 
-behind git's back may lose their removal work; but this is a pretty 
-trivial danger).
-
-	-Daniel
-*This .sig left intentionally blank*
+Unless you are talking about line with the 'next' link...
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
