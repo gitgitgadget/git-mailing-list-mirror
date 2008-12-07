@@ -1,123 +1,117 @@
-From: Thomas Jarosch <thomas.jarosch@intra2net.com>
-Subject: help needed: Splitting a git repository after subversion migration
-Date: Sun, 07 Dec 2008 18:41:01 +0100
-Message-ID: <493C0AAD.1040208@intra2net.com>
+From: Grzegorz Kossakowski <grek@tuffmail.com>
+Subject: Re: How to clone git repository with git-svn meta-data included?
+Date: Sun, 07 Dec 2008 20:08:38 +0100
+Message-ID: <493C1F36.7050504@tuffmail.com>
+References: <493A6CEC.4060601@tuffmail.com> <eaa105840812070857i27f8e920keaba3f92f5260b38@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 07 18:52:45 2008
+Cc: git@vger.kernel.org
+To: Peter Harris <git@peter.is-a-geek.org>
+X-From: git-owner@vger.kernel.org Sun Dec 07 20:12:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9Nnn-00033J-Ix
-	for gcvg-git-2@gmane.org; Sun, 07 Dec 2008 18:52:20 +0100
+	id 1L9P2y-00034f-Rn
+	for gcvg-git-2@gmane.org; Sun, 07 Dec 2008 20:12:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751919AbYLGRti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2008 12:49:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751692AbYLGRti
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 12:49:38 -0500
-Received: from re01.intra2net.com ([82.165.28.202]:45443 "EHLO
-	re01.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751464AbYLGRth (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2008 12:49:37 -0500
-X-Greylist: delayed 660 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Dec 2008 12:49:37 EST
-Received: from intranator.m.i2n (unknown [172.16.1.99])
+	id S1753994AbYLGTIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2008 14:08:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753461AbYLGTIn
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 14:08:43 -0500
+Received: from mxout-03.mxes.net ([216.86.168.178]:1824 "EHLO
+	mxout-03.mxes.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753209AbYLGTIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Dec 2008 14:08:42 -0500
+Received: from [192.168.0.125] (unknown [82.210.157.165])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by re01.intra2net.com (Postfix) with ESMTP id 2E8C26428
-	for <git@vger.kernel.org>; Sun,  7 Dec 2008 18:38:36 +0100 (CET)
-Received: from localhost (intranator.m.i2n [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 97FB32AC4B
-	for <git@vger.kernel.org>; Sun,  7 Dec 2008 18:38:35 +0100 (CET)
-Received: from pikkukde.a.i2n (pikkukde.m.i2n [192.168.12.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by intranator.m.i2n (Postfix) with ESMTP id 74CF42AC4A
-	for <git@vger.kernel.org>; Sun,  7 Dec 2008 18:38:34 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (X11/20081119)
-X-Virus-Scanned: by Intranator (www.intranator.com) with AMaViS and F-Secure AntiVirus (fsavdb 2008-12-07_01)
-X-Spam-Status: hits=-1.8 tests=[ALL_TRUSTED=-1.8,BAYES_50=0.001]
-X-Spam-Level: 982
+	by smtp.mxes.net (Postfix) with ESMTP id 41F1A23E3E9;
+	Sun,  7 Dec 2008 14:08:40 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081112)
+In-Reply-To: <eaa105840812070857i27f8e920keaba3f92f5260b38@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102504>
 
-Hello together,
+Peter Harris pisze:
+> Make sure you don't use the --no-metadata flag when setting up
+> git-svn. This will embed the metadata into commit messages, so git-svn
+> can rebuild it from scratch whenever it needs to. (You probably also
+> want git 1.6.1rc for incremental rebuild support). This also has the
+> advantage that you can see the svn revision number when looking at a
+> commit message.
 
-I've successfully imported a large subversion repository into git.
-The tree contains source code and binary data ("releases"),
-the resulting .git directory is about 11GB.
+Not sure what you exactly mean here. Do you mean that if metadata is included in commit messages
+then there is an easy way to initialize git-svn after cloning the repo?
 
-After the import I recreated the tags/branches by converting the refs
-to the subversion tags using a small shell script from the web:
+By easy I mean:
+a) it does not require to much of interactive actions to be performed
+b) it does not pull too much from svn server
 
-for branch in `git branch -r`; do
-     ...
-     version=`basename $branch`
-     git tag -s -f -m "$subject" "$version" "$branch^"
-     git branch -d -r $branch
-done
+Point b) is important because we usually have quite large repositories.
 
-Ok, so far everything went really smooth. I wanted to split this repository
-into two repositories, one for the source code and one for the binary data.
-The current tree layout is like this:
+Also, could you point me to a place where this rebuild support is described? I would like to know
+what our committer has to do after cloning from Jukka's server.
 
-sources/c++_xyz
-releases/large_binary_data
-...
+> svn doesn't really know what a merge is (not even 1.5). You MUST
+> rebase in order to commit to svn. This is a limitation of svn, not
+> git.
 
-The original tree was imported from CVS to subversion and the layout
-of the trunk was once reorganized/moved later. Here's the command
-I used to split out the "source" tree:
+Yep, I'm aware of the fact that history has to be flattened but I was more worried about the point
+you address below.
 
-git filter-branch --index-filter 'git rm --cached --ignore-unmatch -r -f
-CVSROOT Attic source/Attic develpkg/Attic
-source/packages/Attic releases update_pkg' -- --all
+> In terms of re-pulling from the git-svn mirror, git-svn will create
+> the same commits (with the same sha1s) from svn every time, so there
+> will be no conflicts there.
 
-After that I ran these commands to reclaim the space:
-- git clone --no-hardlinks filtered_tree final_output
-- cd final_output
-- git gc
-- git prune
-- git repack -a -d --depth=250 --window=250
+Just to make sure: so if one person pulls from git-svn mirror and another one pulls using git svn
+rebase they result in the same tree right?
 
-Unfortunately the .git directory of the "source" tree is still 7.5GB big.
+>> Is it possible with Git right now?
+> 
+> Yes, but it might not be possible with svn, depending on which part of
+> the above "it" is.
 
-When I just imported the "trunk" from subversion without any tags
-and then ran "git filter-branch --subdirectory-filter source" + git gc,
-the .git directory was about 1.5GB afterwards.
+It referred mostly to cloning from git svn mirror and then being able to use git svn dcommit to push
+changes back to svn. Since git svn data is not being cloned the question is how to recreate it.
 
-How can I find out where those other 6GB go to?
-I already looked at the tags with gitk,
-there's no sign of the releases/* stuff left.
+>> What if A was not fair and has rewritten a few commits coming from B so they contain malicious code?
+>> How we can detect something like that and how C be sure that what he merges is really work
+>> attributed by correct names?
+> 
+> If C doesn't trust A, C should not pull from A. C should pull only
+> from (trusted) B. Presumably B knows who (of A and B) did which work,
+> and B's repository can be trusted?
+> 
+> If neither of A or B can be trusted, then you have problems that a
+> computer cannot solve for you.
 
-The "--all" switch for "git filter-branch"
-doesn't seem documented in git 1.6.0.4?
-I just learned about it from the example usage.
+Yep, I was having in mind the case when both A and B are untrusted. I don't want my computer to
+check if something coming from A or B is safe or not I just want to know which bits are coming from
+A and which from B.
 
-"git filter-branch" also had trouble converting the tags
-and suggested I should add "--tag-name-filter cat", which I did.
-Maybe that's something for the examples, too?
+This is really important for us because of legal reasons.
 
-I also tried running "git filter-branch --tag-name-filter cat 
---subdirectory-filter source -- --all", but that commands aborts
-with these messages:
+> You could maybe use signed tags ("git help tag") - each contributor
+> could sign a certain tree state, and if you see commits attributed to
+> the other contributor after their last tag, you know something is
+> fishy. But that might be more effort than either you or your
+> contributors want to go through. And while it might help with
+> attribution problems, it still doesn't help with all the other
+> problems you might have with untrusted contributors.
 
-WARNING: 'refs/tags/v5-0-8' was rewritten into multiple commits:
-ee180f6117597b60ee237e9da92047946dfdeec5
-fd7824d1926ce9e4c89b685583eb9a9c2f2537af
-WARNING: Ref 'refs/tags/v5-0-8' points to the first one now.
-error: Ref refs/tags/v5-0-8 is at 4ea78238cfd6ee259c4e8bde7be4a90bc86295b0 
-but expected 06c60261502acfb7b2bbe44c2e2ec371bea65827
-fatal: Cannot lock the ref 'refs/tags/v5-0-8'.
-Could not rewrite refs/tags/v5-0-8
+The question is why Git doesn't sign all commits by default but only tags? Creating tags all the
+time is rather tedious process and seems to have no sense, right?
 
+Does it mean that with current Git design it's the best to not use advanced features of Git like
+tree merging but simply go with posting e-mails with patches instead if contributors cannot be trusted?
 
-Besides that git really rocks :-)
+Thanks for your reply.
 
-Thanks in advance,
-Thomas
+-- 
+Best regards,
+Grzegorz Kossakowski
