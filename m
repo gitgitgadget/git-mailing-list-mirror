@@ -1,112 +1,76 @@
-From: Grzegorz Kossakowski <grek@tuffmail.com>
-Subject: Re: How to clone git repository with git-svn meta-data included?
-Date: Sun, 07 Dec 2008 23:02:37 +0100
-Message-ID: <493C47FD.4080302@tuffmail.com>
-References: <493A6CEC.4060601@tuffmail.com>	 <eaa105840812070857i27f8e920keaba3f92f5260b38@mail.gmail.com>	 <493C1F36.7050504@tuffmail.com> <eaa105840812071230l5e8d54bcg21b36019711bc3cd@mail.gmail.com>
+From: Deskin Miller <deskinm@umich.edu>
+Subject: Re: [PATCH] git-svn: Make following parents atomic
+Date: Sun, 7 Dec 2008 17:24:44 -0500
+Message-ID: <20081207222444.GA10881@euler>
+References: <1228665970-21204-1-git-send-email-deskinm@umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 07 23:04:06 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: normalperson@yhbt.net, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 07 23:26:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9RjP-0007kc-Iv
-	for gcvg-git-2@gmane.org; Sun, 07 Dec 2008 23:04:04 +0100
+	id 1L9S4u-0006kN-FB
+	for gcvg-git-2@gmane.org; Sun, 07 Dec 2008 23:26:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752497AbYLGWCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2008 17:02:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751991AbYLGWCl
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 17:02:41 -0500
-Received: from mxout-03.mxes.net ([216.86.168.178]:2613 "EHLO
-	mxout-03.mxes.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751823AbYLGWCl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2008 17:02:41 -0500
-Received: from [192.168.0.125] (unknown [82.210.157.165])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.mxes.net (Postfix) with ESMTP id 86A8A23E3FD;
-	Sun,  7 Dec 2008 17:02:39 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.18 (X11/20081112)
-In-Reply-To: <eaa105840812071230l5e8d54bcg21b36019711bc3cd@mail.gmail.com>
+	id S1752969AbYLGWY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2008 17:24:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878AbYLGWY5
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 17:24:57 -0500
+Received: from an-out-0708.google.com ([209.85.132.249]:52789 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752497AbYLGWY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Dec 2008 17:24:56 -0500
+Received: by an-out-0708.google.com with SMTP id d40so365932and.1
+        for <git@vger.kernel.org>; Sun, 07 Dec 2008 14:24:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent:sender;
+        bh=a6nGsIHmpMbPCYHM8X6CYfu52Ot+ErrKIWKKiZE1rC0=;
+        b=pAjE5gUQL3lobuXS5qJpIQfmKUayvIiH2qbPkMB88c07/L/UbS94ZZIVDo3uFzC/UE
+         ZjXkkULFjiXhhmNjP7Rj/yV9q77m4s9Odr5Fo7xSLTRbrJvzn2po1d6hICEVdO/WTdsB
+         M+Ewvf+udCrAWaIepDvurV6do/5gvBoTtCn+s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent:sender;
+        b=XMj/cTsk7uNSWNjRVTIsD78DspT+4z/BL3KNyciZPXarPgabqBr9RIFd9UaoClCyjF
+         Xc6g1gKwE3FGT1P0JaKTSDOqgnaQg0Eb/rPe8qRfgpn70wIVpauN38V2S2V1NlwMGdwf
+         yLZO9zoKt689PlxAoCpeFS74UjHAmZcJzm7wU=
+Received: by 10.65.242.7 with SMTP id u7mr2214049qbr.23.1228688694700;
+        Sun, 07 Dec 2008 14:24:54 -0800 (PST)
+Received: from euler ([68.40.49.130])
+        by mx.google.com with ESMTPS id s27sm6609938qbs.11.2008.12.07.14.24.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 07 Dec 2008 14:24:53 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1228665970-21204-1-git-send-email-deskinm@umich.edu>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102510>
 
-Peter Harris pisze:
-> After the git clone, I do the following:
-> git svn init -s svn://repo/sitory
-> git svn rebase
-> 
-> No data is transferred[1], although 'git svn rebase' does spend a
-> minute or so reading the commit messages to rebuild its index.
+On Sun, Dec 07, 2008 at 11:06:10AM -0500, Deskin Miller wrote:
+> [...]
+>
+> To fix this, when we initialise the Git::SVN object $gs to search for
+> and perhaps fetch history, we check if there are any commits in SVN in
+> the range between the current revision $gs is at, and the top revision
+> for which we were asked to fill history.  If there are commits we're
+> missing in that range, we continue the fetch from the current revision
+> to the top, properly getting all history before using it as the parent
+> for the branch we're trying to create.
 
-I've tried this method with Cocoon repository
-(http://jukka.zitting.name/git/?p=cocoon.git;a=summary) and got this error:
+On looking at the patch again, I think I might have introduced a bug:
+it'll take the most commit on the parent branch, even if it was branched
+from an earlier point.  I'll spend more time looking at it and should
+have a v2 in a day at most if I'm rigth, hopefully more like a few
+hours.
 
-git clone git://jukka.zitting.name/cocoon.git
-git svn init -s https://svn.eu.apache.org/repos/asf/cocoon/
-git svn rebase
-Unable to determine upstream SVN information from working tree history
-
-git --version
-git version 1.6.0.2
-
-Any idea what's wrong here?
-
-> This could all be in a common script you distribute to your users.
-
-Good suggestion.
-
-> "git help svn" mentions the rebuild only in passing. I'm not sure if
-> it is described in better detail elsewhere.
-
-Ah, I didn't spot this earlier. Thanks.
-
-> If something is in A's tree, it is coming from A. Either A has
-> authority, or A has received authority from someone else, or A is
-> bringing the legal problem down on himself. When A says "Please Pull"
-> (or when A pushes) A is effectively saying "These changes are legally
-> mine to give you".
-> 
-> The Developer's Certificate of Origin 1.0 was designed to address this
-> issue; see also "Signed-off-by"
-> 
-> Of course, if it's a legal issue, make sure you consult your own lawyer.
-
-I see. Thanks for insightful comments.
-
->>> You could maybe use signed tags ("git help tag")...
->> The question is why Git doesn't sign all commits by default but only tags? Creating tags all the
->> time is rather tedious process and seems to have no sense, right?
-> 
-> Typing in your GPG passphrase for every single little commit would be
-> even more tedious, IMHO.
-
-Yep, that's true.
-
->> Does it mean that with current Git design it's the best to not use advanced features of Git like
->> tree merging but simply go with posting e-mails with patches instead if contributors cannot be trusted?
-> 
-> That would be my policy. At the very least, I would have a human
-> review the tree before merging it.
-
-Agreed.
-
-> Note that git was designed around a "git am" workflow, so it is very
-> efficient at dealing with large numbers of patches at a time.
-> 
-> Note also that you can do tree merging with an email-patch based
-> workflow, since git format-patch preserves parent information,
-> although it does take a little bit more work. See also: "git help am"
-> under --3way.
-
-Thanks for all your valuable information. As soon as I resolve problem with git svn rebase I'll
-start reading on how git am --3way works.
-
--- 
-Best regards,
-Grzegorz Kossakowski
+Deskin Miller
