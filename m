@@ -1,82 +1,112 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: missing "commit | commitdiff | tree | snapshot" within we web git page
-Date: Sun, 07 Dec 2008 13:30:45 -0800 (PST)
-Message-ID: <m3zlj7hdvh.fsf@localhost.localdomain>
-References: <200812072155.52456.toralf.foerster@gmx.de>
+From: Grzegorz Kossakowski <grek@tuffmail.com>
+Subject: Re: How to clone git repository with git-svn meta-data included?
+Date: Sun, 07 Dec 2008 23:02:37 +0100
+Message-ID: <493C47FD.4080302@tuffmail.com>
+References: <493A6CEC.4060601@tuffmail.com>	 <eaa105840812070857i27f8e920keaba3f92f5260b38@mail.gmail.com>	 <493C1F36.7050504@tuffmail.com> <eaa105840812071230l5e8d54bcg21b36019711bc3cd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-14
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-14?q?Toralf_F=F6rster?= <toralf.foerster@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Dec 07 22:32:12 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 07 23:04:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9RET-0006rr-2m
-	for gcvg-git-2@gmane.org; Sun, 07 Dec 2008 22:32:05 +0100
+	id 1L9RjP-0007kc-Iv
+	for gcvg-git-2@gmane.org; Sun, 07 Dec 2008 23:04:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752179AbYLGVas convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Dec 2008 16:30:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751737AbYLGVas
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 16:30:48 -0500
-Received: from ey-out-2122.google.com ([74.125.78.26]:6322 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751374AbYLGVar convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Dec 2008 16:30:47 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so346843eyi.37
-        for <git@vger.kernel.org>; Sun, 07 Dec 2008 13:30:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        bh=yWfrnSW5Utsj7AgJz/teOf5FnVf9MwLZZOy9nowEryQ=;
-        b=MdzRSQ/hq69eNbnFRvTz6KGVozwB7JXi5tmZ5R5vN+kVPudLExHTxVrlnce0pWuD4Q
-         /Qeq7HKqGpckI9H4xMmyVAPqHfhHEbvyf9tlCzWh7oLDcBmkYIYCTEZGYfZVZpp7wPag
-         +W8RSew79Euz2yJV5QFe9C/5uHMIyI0TrGMfI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding:date;
-        b=vmAZH+JkJAYobBy9Pw7PqN2/4F3WhDUc+YPSC/a4hfObs80AYic+9l7DRQKjI8BW/+
-         +gD0a8XqnGmrSI5rKRzB1ocgJflKq+HldBvTTlDF1jQtB5JxmdFP4ApOse4jun4eAiDb
-         W+t6ZbYTRGDyeICb1dboHfFdkEGEVVYHTQXf8=
-Received: by 10.210.123.2 with SMTP id v2mr2809156ebc.0.1228685445950;
-        Sun, 07 Dec 2008 13:30:45 -0800 (PST)
-Received: from localhost.localdomain (abvk203.neoplus.adsl.tpnet.pl [83.8.208.203])
-        by mx.google.com with ESMTPS id b33sm18757403ika.23.2008.12.07.13.30.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 07 Dec 2008 13:30:45 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mB7LUiYL030841;
-	Sun, 7 Dec 2008 22:30:44 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mB7LUgMq030838;
-	Sun, 7 Dec 2008 22:30:42 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <200812072155.52456.toralf.foerster@gmx.de>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752497AbYLGWCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2008 17:02:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751991AbYLGWCl
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 17:02:41 -0500
+Received: from mxout-03.mxes.net ([216.86.168.178]:2613 "EHLO
+	mxout-03.mxes.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751823AbYLGWCl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Dec 2008 17:02:41 -0500
+Received: from [192.168.0.125] (unknown [82.210.157.165])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.mxes.net (Postfix) with ESMTP id 86A8A23E3FD;
+	Sun,  7 Dec 2008 17:02:39 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081112)
+In-Reply-To: <eaa105840812071230l5e8d54bcg21b36019711bc3cd@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102509>
 
-Toralf F=F6rster <toralf.foerster@gmx.de> writes:
+Peter Harris pisze:
+> After the git clone, I do the following:
+> git svn init -s svn://repo/sitory
+> git svn rebase
+> 
+> No data is transferred[1], although 'git svn rebase' does spend a
+> minute or so reading the commit messages to rebuild its index.
 
-> While watching this=20
-> http://git.kernel.org/?p=3Dlinux/kernel/git/stable/linux-2.6.27.y.git=
-;a=3Dshortlog=20
-> I'm wondering why the last line doesn't contain sth. like
-> "commit | commitdiff | tree | snapshot"
+I've tried this method with Cocoon repository
+(http://jukka.zitting.name/git/?p=cocoon.git;a=summary) and got this error:
 
-It contains it?
+git clone git://jukka.zitting.name/cocoon.git
+git svn init -s https://svn.eu.apache.org/repos/asf/cocoon/
+git svn rebase
+Unable to determine upstream SVN information from working tree history
 
-Unless you are talking about line with the 'next' link...
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+git --version
+git version 1.6.0.2
+
+Any idea what's wrong here?
+
+> This could all be in a common script you distribute to your users.
+
+Good suggestion.
+
+> "git help svn" mentions the rebuild only in passing. I'm not sure if
+> it is described in better detail elsewhere.
+
+Ah, I didn't spot this earlier. Thanks.
+
+> If something is in A's tree, it is coming from A. Either A has
+> authority, or A has received authority from someone else, or A is
+> bringing the legal problem down on himself. When A says "Please Pull"
+> (or when A pushes) A is effectively saying "These changes are legally
+> mine to give you".
+> 
+> The Developer's Certificate of Origin 1.0 was designed to address this
+> issue; see also "Signed-off-by"
+> 
+> Of course, if it's a legal issue, make sure you consult your own lawyer.
+
+I see. Thanks for insightful comments.
+
+>>> You could maybe use signed tags ("git help tag")...
+>> The question is why Git doesn't sign all commits by default but only tags? Creating tags all the
+>> time is rather tedious process and seems to have no sense, right?
+> 
+> Typing in your GPG passphrase for every single little commit would be
+> even more tedious, IMHO.
+
+Yep, that's true.
+
+>> Does it mean that with current Git design it's the best to not use advanced features of Git like
+>> tree merging but simply go with posting e-mails with patches instead if contributors cannot be trusted?
+> 
+> That would be my policy. At the very least, I would have a human
+> review the tree before merging it.
+
+Agreed.
+
+> Note that git was designed around a "git am" workflow, so it is very
+> efficient at dealing with large numbers of patches at a time.
+> 
+> Note also that you can do tree merging with an email-patch based
+> workflow, since git format-patch preserves parent information,
+> although it does take a little bit more work. See also: "git help am"
+> under --3way.
+
+Thanks for all your valuable information. As soon as I resolve problem with git svn rebase I'll
+start reading on how git am --3way works.
+
+-- 
+Best regards,
+Grzegorz Kossakowski
