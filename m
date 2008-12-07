@@ -1,99 +1,162 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2008, #06; Wed, 26)
-Date: Sun, 7 Dec 2008 19:27:00 +0700
-Message-ID: <fcaeb9bf0812070427s64438216s41bf1294aa6398a3@mail.gmail.com>
-References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0811281225040.30769@pacific.mpi-cbg.de>
-	 <20081128192033.GF23984@spearce.org>
-	 <7voczz4cfb.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LNX.1.00.0811281938250.19665@iabervon.org>
-	 <fcaeb9bf0811290502j5db4056fo9b125aaa8b564314@mail.gmail.com>
-	 <fcaeb9bf0811300229v4e7bfbb7g9a0ac72dcddb4326@mail.gmail.com>
-	 <alpine.LNX.1.00.0811301509070.19665@iabervon.org>
-	 <fcaeb9bf0812060926r2ee443bfl3adb3f2d1129e5b8@mail.gmail.com>
-	 <alpine.LNX.1.00.0812061238260.19665@iabervon.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun Dec 07 13:28:32 2008
+From: Deskin Miller <deskinm@umich.edu>
+Subject: [PATCH] git-svn: Make following parents atomic
+Date: Sun,  7 Dec 2008 11:06:10 -0500
+Message-ID: <1228665970-21204-1-git-send-email-deskinm@umich.edu>
+Cc: normalperson@yhbt.net, gitster@pobox.com,
+	Deskin Miller <deskinm@umich.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 07 17:07:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9IkO-0001pz-Lh
-	for gcvg-git-2@gmane.org; Sun, 07 Dec 2008 13:28:29 +0100
+	id 1L9MAV-0003JU-Nz
+	for gcvg-git-2@gmane.org; Sun, 07 Dec 2008 17:07:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753736AbYLGM1G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2008 07:27:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753723AbYLGM1E
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 07:27:04 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:26493 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753679AbYLGM1C (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2008 07:27:02 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so620077fgg.17
-        for <git@vger.kernel.org>; Sun, 07 Dec 2008 04:27:00 -0800 (PST)
+	id S1754005AbYLGQGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2008 11:06:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754099AbYLGQGV
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 11:06:21 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:41729 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753725AbYLGQGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Dec 2008 11:06:20 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so322765yxm.1
+        for <git@vger.kernel.org>; Sun, 07 Dec 2008 08:06:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=ybmNWiVYkDl56YBReeFq4iOwE/TtE7A506ZKCW1+z34=;
-        b=ee7c13RrCK3IXF0KbFLtZDn6xRUox+6OjQm3T2QXs7B/mwu4oXkoQpsUGkeidZycml
-         s9OMgejoU2om8lrdYjYj9c0p2an+5aEuyme7smZU/tWuMtu+mwyz1Izb5Ov9vgfStDD9
-         IXxg0X110GCTkrYAtl7Az7WjULVa4K5SjnQsk=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:sender;
+        bh=A3IAEB92jAtCGl5nqthhZFKJqFcxTHuZTZmnYnshUF0=;
+        b=PapwxrI6Nm2PVgSqjh50cmhCtTkf0aNmTvhrQ3kZXEiQohEhWCwWPQ9mEC0ncAyPKS
+         B+l6Yc2rXmlqoSZQp93C0RLHY6VBDuYea/KSmTJutIh1QuctKP+VeRi0PyfLbXuSwAxQ
+         pWsgqPXTqTZKGR5DmgdP5S/u/BB5H3j3Oq4iw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=TdPdHggXLMErJiIijNjHe8TA1QyyNZPAaOWhf4Vs2jSdgkiHHg23+idJ4dVYF8ifQA
-         tcgv8x+yYWgeJbUxGZpM0Bhap0Ye6QUQmaWTwwvrVHXyvnlX5N0z1fxqengBWai962hQ
-         j7yq/cRPankRR+s31OBY2QYT/iRsQca2RnDY4=
-Received: by 10.86.80.17 with SMTP id d17mr1911714fgb.55.1228652820378;
-        Sun, 07 Dec 2008 04:27:00 -0800 (PST)
-Received: by 10.86.62.13 with HTTP; Sun, 7 Dec 2008 04:27:00 -0800 (PST)
-In-Reply-To: <alpine.LNX.1.00.0812061238260.19665@iabervon.org>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer:sender;
+        b=x58565ss0eO7ATfbM8rtVeraPoP2l7zo8RKT+hN0PvhDqHVXku5Xx3sdBvYRAhjz9O
+         WW+pW8mOLGgKvUKZbyEHhPju//bqWDcyeMVbRDNbcenwXc2JFgv/KdvK+Dz+k9FSwzHh
+         UUmkI/cpHQuh9bBWMQIUmWf6CGietOy8A5Ogc=
+Received: by 10.65.59.11 with SMTP id m11mr1943705qbk.90.1228665979004;
+        Sun, 07 Dec 2008 08:06:19 -0800 (PST)
+Received: from localhost.localdomain ([68.40.49.130])
+        by mx.google.com with ESMTPS id k7sm6416438qba.6.2008.12.07.08.06.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 07 Dec 2008 08:06:18 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.rc1.45.g123ed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102499>
 
-On 12/7/08, Daniel Barkalow <barkalow@iabervon.org> wrote:
->  > There is not much work for CE_NO_CHECKOUT on plumbling level except
->  > some fixes. The last half of the series, for porcelain level, you will
->  > see more.
->
->
-> For the porcelain level, do we need the difference to be in the index? If
->  the porcelain knows the sparse checkout area and can instruct the plumbing
->  appropriately, the information shouldn't need to be stored in the index
+find_parent_branch generates branch@rev type branches when one has to
+look back through SVN history to properly get the history for a branch
+copied from somewhere not already being tracked by git-svn.  If in the
+process of fetching this history, git-svn is interrupted, then when one
+fetches again, it will use whatever was last fetched as the parent
+commit and fail to fetch any more history which it didn't get to before
+being terminated.  This is especially troubling in that different
+git-svn copies of the same SVN repository can end up with different
+commit sha1s, incorrectly showing the history as divergent and
+precluding easy collaboration using git push and fetch.
 
-This was discussed since the beginning of this feature. I recall that
-the index reflects worktree, and because we mark CE_NO_CHECKOUT on
-file basis, it's best to save the information there, not separately.
-We do save high level information to form the checkout area (sparse
-patterns) in the last half, but basically you should be able to live
-without that.
+To fix this, when we initialise the Git::SVN object $gs to search for
+and perhaps fetch history, we check if there are any commits in SVN in
+the range between the current revision $gs is at, and the top revision
+for which we were asked to fill history.  If there are commits we're
+missing in that range, we continue the fetch from the current revision
+to the top, properly getting all history before using it as the parent
+for the branch we're trying to create.
 
->  unless it's ever important to remember whether an entry is CE_VALID due to
->  having been outside the checkout when the index was written, even though
->  the checkout area now includes it. I don't have a good intuition as to
->  what ought to happen if the user manually changes what's specified for
->  checkout without actually updating the index and working tree.
+Signed-off-by: Deskin Miller <deskinm@umich.edu>
+---
+Patch is based on maint.
 
-So if a user changes worktree without updating index, they will have
-the same results as they do now: files are shown as modified if they
-don't have CE_NO_CHECKOUT set. If those files do, they are considered
-'orphaned' or staled and are recommended to be removed/updated to
-avoid unexpected consequences (not availble this this first half
-series because that belongs to "git status").
+This was a nasty bug that took some work to figure out; I knew two
+git-svn copies had diverged, but though I could look at the commits
+where they diverged there was no good way to figure out what git-svn had
+been doing at that point.  I ended up writing a script to automate the
+process and save information for me to analyse later; I'll be posting an
+announcement with further explanation, but the repository is available
+at
+
+git://git.deskinm.fdns.net/git-svn-bugfix.git
+
+Deskin Miller
+
+ git-svn.perl                     |   14 +++++++++++---
+ t/t9104-git-svn-follow-parent.sh |   33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 44 insertions(+), 3 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 56238da..c53d864 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2318,9 +2318,17 @@ sub find_parent_branch {
+ 		$gs = Git::SVN->init($u, $p, $repo_id, $ref_id, 1);
+ 	}
+ 	my ($r0, $parent) = $gs->find_rev_before($r, 1);
+-	if (!defined $r0 || !defined $parent) {
+-		my ($base, $head) = parse_revision_argument(0, $r);
+-		if ($base <= $r) {
++	{
++		my ($base, $head);
++		if (!defined $r0 || !defined $parent) {
++			($base, $head) = parse_revision_argument(0, $r);
++		} else {
++			if ($r0 < $r) {
++				$gs->ra->get_log([$gs->{path}], $r0 + 1, $r, 1,
++					0, 1, sub { $base = $_[1] - 1 });
++			}
++		}
++		if (defined $base && $base <= $r) {
+ 			$gs->fetch($base, $r);
+ 		}
+ 		($r0, $parent) = $gs->last_rev_commit;
+diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
+index 4d964e2..8e7b95b 100755
+--- a/t/t9104-git-svn-follow-parent.sh
++++ b/t/t9104-git-svn-follow-parent.sh
+@@ -149,6 +149,39 @@ test_expect_success "track initial change if it was only made to parent" '
+ 	     "`git rev-parse r9270-d~1`"
+ 	'
+ 
++test_expect_success "follow-parent is atomic" '
++	cd wc &&
++	svn up &&
++	svn mkdir stunk &&
++	cd stunk &&
++	echo "trunk stunk" > readme &&
++	svn add readme &&
++	cd .. &&
++	svn ci -m "trunk stunk" &&
++	echo "stunk like junk" >> stunk/readme &&
++	svn ci -m "really stunk" &&
++	cd .. &&
++	svn copy -m "stunk flunked" "$svnrepo"/stunk "$svnrepo"/flunk &&
++	git svn init --minimize-url -i stunk "$svnrepo"/stunk &&
++	git svn fetch -i stunk &&
++	git update-ref refs/remotes/flunk@17 refs/remotes/stunk~1 &&
++	git update-ref -d refs/remotes/stunk &&
++	git config --unset svn-remote.svn.fetch stunk &&
++	mkdir -p "$GIT_DIR"/svn/flunk@17 &&
++	rev_map=$(cd "$GIT_DIR"/svn/stunk && ls .rev_map*) &&
++	dd if="$GIT_DIR"/svn/stunk/$rev_map \
++           of="$GIT_DIR"/svn/flunk@17/$rev_map bs=24 count=1 &&
++	rm -rf "$GIT_DIR"/svn/stunk &&
++	git svn init --minimize-url -i flunk "$svnrepo"/flunk &&
++	git svn fetch -i flunk &&
++	git svn init --minimize-url -i stunk "$svnrepo"/stunk &&
++	git svn fetch -i stunk &&
++	test "`git rev-parse --verify refs/remotes/flunk@17`" \
++           = "`git rev-parse --verify refs/remotes/stunk`" &&
++	test "`git rev-parse --verify refs/remotes/flunk~1`" \
++           = "`git rev-parse --verify refs/remotes/stunk`"
++	'
++
+ test_expect_success "track multi-parent paths" '
+ 	svn cp -m "resurrect /glob" "$svnrepo"/r9270 "$svnrepo"/glob &&
+ 	git-svn multi-fetch &&
 -- 
-Duy
+1.6.1.rc1.45.g123ed
