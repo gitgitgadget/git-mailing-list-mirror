@@ -1,78 +1,81 @@
-From: "Li Frank" <Frank.Li@freescale.com>
-Subject: RE: Can Git push only first parent history commits?
-Date: Mon, 8 Dec 2008 11:11:30 +0800
-Message-ID: <402F4B33D9C9DE4083DB96B416549FAF9E2D@zch01exm23.fsl.freescale.net>
-References: <402F4B33D9C9DE4083DB96B416549FAF9E12@zch01exm23.fsl.freescale.net> <7v7i6bbcc6.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] diff: allow turning on textconv explicitly for
+ plumbing
+Date: Sun, 07 Dec 2008 19:55:12 -0800
+Message-ID: <7vfxkz9v8f.fsf@gitster.siamese.dyndns.org>
+References: <20081208025700.GB22072@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 08 04:13:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 08 04:57:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9WYY-0006HK-KH
-	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 04:13:11 +0100
+	id 1L9XFR-0006Cl-OA
+	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 04:57:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754474AbYLHDLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2008 22:11:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754589AbYLHDLr
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 22:11:47 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:60389 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754314AbYLHDLr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Dec 2008 22:11:47 -0500
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.14.3/az33egw02) with ESMTP id mB83BcGD024872
-	for <git@vger.kernel.org>; Sun, 7 Dec 2008 20:11:38 -0700 (MST)
-Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id mB83BbeW012504
-	for <git@vger.kernel.org>; Sun, 7 Dec 2008 21:11:37 -0600 (CST)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <7v7i6bbcc6.fsf@gitster.siamese.dyndns.org>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Can Git push only first parent history commits?
-Thread-Index: AclY4Tl/49DFvoEzQoWWXlbbsavX1AAAId2Q
+	id S1754716AbYLHDzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2008 22:55:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754542AbYLHDzT
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 22:55:19 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51035 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754506AbYLHDzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Dec 2008 22:55:18 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2CB3C85233;
+	Sun,  7 Dec 2008 22:55:17 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5539D85231; Sun,
+  7 Dec 2008 22:55:14 -0500 (EST)
+In-Reply-To: <20081208025700.GB22072@coredump.intra.peff.net> (Jeff King's
+ message of "Sun, 7 Dec 2008 21:57:01 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 067D56B4-C4DC-11DD-A334-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102525>
 
-I don't know the detail of git internal.  Or my email subject
-description have some problem. 
- 
-I just want to combine some commits to one commit and push combined
-commit to remote.  And at same time, keep commits history at my local
-repository.  Rebase will make original history lost. 
- 
+Jeff King <peff@peff.net> writes:
 
------Original Message-----
-From: Junio C Hamano [mailto:gitster@pobox.com] 
-Sent: Monday, December 08, 2008 11:00 AM
-To: Li Frank-B20596
-Cc: git@vger.kernel.org
-Subject: Re: Can Git push only first parent history commits?
+> I know this is not strictly a bugfix and we are in -rc, but:
+>
+>   1. It is an enhancement to a previously unreleased feature, and
+>      shouldn't affect anything outside of that.
+>
+>   2. It affects the scripting interface to textconv, so I would like to
+>      get it in before textconv is ever released so that it is always the
+>      "right way" to turn text conversion off or on.
 
-Your drawing nor explanation unfortunately does not make much sense to
-me, so I'll respond only to the subject.
+I'd agree with #1, especially if you said "doesn't" instead of
+"shouldn't".
 
-Pushing only first parent history would mean that the commits you will
-be transferring will still record their true parents, but you are not
-sending any parents but the first ones.  The repository that receives
-such a push would not pass fsck, in other words, you are deliberately
-corrupting the repository.
+But I am not 100% sure if the scripting part is "the right way".
 
-Naturally we won't support such an operation by default.
+If a script wants to take whatever Porcelain users are happy as the
+"presentation for human consumption" and pass that through as its own
+output to the end user, maybe it is better off reading from Porcelain,
+instead of reading from the plumbing (the latter of which requires making
+the plumbing output less reliable)?
 
-It is plausible that you can implement an option to do so, but it would
-make it hard at the receiving end to tell between a true repository
-corruption and a corruption you are deliberately introducing by such a
-push, so it won't be useful unless accompanied by a corresponding option
-to fsck to make it not complain when parent commits and associated
-objects that are not necessary for first parent history.
+When we later enhance textconv output from the "diff" Porcelain to benefit
+interactive users, it will automatically help the script that passes
+through the "diff" output to the end users.
+
+You can certainly argue that this "textconv" feature that is grafted from
+Porcelain into plumbing is a special case in that its output is subject to
+change any time to help human consumption and we never strive for its
+stability as we do for other features in the plumbing to support machine
+readability by scripts.  You can propagate the later enhancement of
+textconv diff output we'd make for Porcelain to the scripted users that
+reads from the plumbing that way.
+
+But then wouldn't it be the same for these scripts that do value the
+"presentation meant for human consumption" over "machine readability" to
+read from Porcelain?  That would not have to blur the distinction between
+the Porcelain and plumbing like the approach you are suggesting here.
