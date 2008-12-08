@@ -1,62 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fetch-pack: Avoid memcpy() with src==dst
-Date: Sun, 07 Dec 2008 18:47:21 -0800
-Message-ID: <7viqpvbcxy.fsf@gitster.siamese.dyndns.org>
-References: <1228596609-12720-1-git-send-email-trast@student.ethz.ch>
+From: "Li Frank" <Frank.Li@freescale.com>
+Subject: Can Git push only first parent history commits?
+Date: Mon, 8 Dec 2008 10:52:38 +0800
+Message-ID: <402F4B33D9C9DE4083DB96B416549FAF9E12@zch01exm23.fsl.freescale.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Dec 08 03:50:37 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 08 03:54:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9WCf-0001yZ-JM
-	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 03:50:34 +0100
+	id 1L9WG9-0002gO-C6
+	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 03:54:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754191AbYLHCr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2008 21:47:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754092AbYLHCr2
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 21:47:28 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46787 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754088AbYLHCr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2008 21:47:27 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 30C36185A8;
-	Sun,  7 Dec 2008 21:47:27 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DDEDB1856A; Sun, 
- 7 Dec 2008 21:47:23 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8C971262-C4D2-11DD-901C-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1754357AbYLHCwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2008 21:52:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754364AbYLHCwv
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 21:52:51 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:58617 "EHLO
+	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754311AbYLHCwv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Dec 2008 21:52:51 -0500
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw02.freescale.net (8.14.3/az33egw02) with ESMTP id mB82qkdV022311
+	for <git@vger.kernel.org>; Sun, 7 Dec 2008 19:52:50 -0700 (MST)
+Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id mB82qiQa007302
+	for <git@vger.kernel.org>; Sun, 7 Dec 2008 20:52:45 -0600 (CST)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Can Git push only first parent history commits?
+Thread-Index: AclY4AeZ2kBH0IAmTqi5xCM8474tRA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102518>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+        The commit history is: 
+        origin/master
+              Commit1..Commit2..Commit3(T1 branch). 
+         
+        I want to combined Commit1, Commit2 and Commit3 to one commit_X
+and push to origin master and keep old T1 branch history.  So I can't
+use rebase.  T1 branch history will be lost after rebase. 
+        So I create T2 branch at origin/master:
+	
+        origin/master
+              Commit1..Commit2..Commit3(T1 branch). 
+	  T2 (branch).
 
-> memcpy() may only be used for disjoint memory areas, but when invoked
-> from cmd_fetch_pack(), we have my_args == &args.  (The argument cannot
-> be removed entirely because transport.c invokes with its own
-> variable.)
+        Then I use "git merge --no-ff --log T1" merge T1 to T2.  
+        So 
+	  origin/master
+              	+--Commit1..Commit2..Commit3(T1 branch). +
 
-It makes me wonder if it might be a better fix to abolish the use of file
-scoped global "args" and pass a pointer to "struct fetch_pack_args"
-throughout the callchain instead.
+	
++----------------------------------------------------------------+--Comm
+itX(T2 branch).
 
-In the current code, cmd_fetch_pack() is the only caller that passes &args
-to this function, but it is not so implausible to have a future callchain
-that makes two calls to cmd_fetch_pack(), perhaps implementing some sort
-of alias to fetch from multiple places, would horribly break without such
-a fix, because cmd_fetch_pack() assumes that args is in its pristine
-state.
-
-I'll apply this to 'maint' and merge it up, because the patch is
-independent of the above issue.
-
-Thanks.
+       But when I push T2 to origin master, Commit1 ,2, 3 also pushed.
+I expect there are only CommitX at origin master branch. 
+       How can I do?
+ 
+best regards
+Frank Li
