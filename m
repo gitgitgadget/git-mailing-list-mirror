@@ -1,71 +1,154 @@
-From: "Li Frank" <Frank.Li@freescale.com>
-Subject: Can Git push only first parent history commits?
-Date: Mon, 8 Dec 2008 10:52:38 +0800
-Message-ID: <402F4B33D9C9DE4083DB96B416549FAF9E12@zch01exm23.fsl.freescale.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] GIT 1.6.1-rc2
+Date: Sun, 07 Dec 2008 18:53:09 -0800
+Message-ID: <7vbpvnbcoa.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 08 03:54:10 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 08 03:54:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9WG9-0002gO-C6
-	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 03:54:09 +0100
+	id 1L9WGZ-0002nG-Bc
+	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 03:54:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754357AbYLHCwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2008 21:52:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754364AbYLHCwv
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 21:52:51 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:58617 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754311AbYLHCwv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Dec 2008 21:52:51 -0500
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.14.3/az33egw02) with ESMTP id mB82qkdV022311
-	for <git@vger.kernel.org>; Sun, 7 Dec 2008 19:52:50 -0700 (MST)
-Received: from zch01exm23.fsl.freescale.net (zch01exm23.ap.freescale.net [10.192.129.207])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id mB82qiQa007302
-	for <git@vger.kernel.org>; Sun, 7 Dec 2008 20:52:45 -0600 (CST)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Can Git push only first parent history commits?
-Thread-Index: AclY4AeZ2kBH0IAmTqi5xCM8474tRA==
+	id S1754572AbYLHCxS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Dec 2008 21:53:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754506AbYLHCxS
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 21:53:18 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47168 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754379AbYLHCxR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Dec 2008 21:53:17 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 67FCE185B8;
+	Sun,  7 Dec 2008 21:53:16 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8A753185B6; Sun, 
+ 7 Dec 2008 21:53:11 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5CBEE622-C4D3-11DD-A478-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102519>
 
-        The commit history is: 
-        origin/master
-              Commit1..Commit2..Commit3(T1 branch). 
-         
-        I want to combined Commit1, Commit2 and Commit3 to one commit_X
-and push to origin master and keep old T1 branch history.  So I can't
-use rebase.  T1 branch history will be lost after rebase. 
-        So I create T2 branch at origin/master:
-	
-        origin/master
-              Commit1..Commit2..Commit3(T1 branch). 
-	  T2 (branch).
+Another week, another rc.  There are no outstanding features that shoul=
+d
+graduate from 'next' anymore until final.
 
-        Then I use "git merge --no-ff --log T1" merge T1 to T2.  
-        So 
-	  origin/master
-              	+--Commit1..Commit2..Commit3(T1 branch). +
+  http://www.kernel.org/pub/software/scm/git/
 
-	
-+----------------------------------------------------------------+--Comm
-itX(T2 branch).
+  git-1.6.1-rc2.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.6.1-rc2.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.6.1-rc2.tar.{gz,bz2}		(preformatted docs)
 
-       But when I push T2 to origin master, Commit1 ,2, 3 also pushed.
-I expect there are only CommitX at origin master branch. 
-       How can I do?
- 
-best regards
-Frank Li
+The RPM binary packages for a few architectures are also there.
+
+  testing/git-*-1.6.1-rc2-1.fc9.$arch.rpm	(RPM)
+
+----------------------------------------------------------------
+
+Changes since v1.6.1-rc1 are as follows:
+
+Alex Riesen (3):
+      Make some of fwrite/fclose/write/close failures visible
+      Make chdir failures visible
+      Report symlink failures in merge-recursive
+
+Alexander Gavrilov (2):
+      gitk: Make line origin search update the busy status
+      gitk: Add a menu option to start git gui
+
+Christian Couder (2):
+      bisect: fix "git bisect skip <commit>" and add tests cases
+      Documentation: describe how to "bisect skip" a range of commits
+
+Christian Stimming (1):
+      gitk: Update German translation
+
+Davide Libenzi (1):
+      xdiff: give up scanning similar lines early
+
+Deskin Miller (1):
+      git-svn: Make branch use correct svn-remote
+
+Giuseppe Bilotta (2):
+      gitweb: make gitweb_check_feature a boolean wrapper
+      Update comment on gitweb_check/get_feature
+
+Jakub Narebski (2):
+      gitweb: Fix handling of non-ASCII characters in inserted HTML fil=
+es
+      gitweb: Make project specific override for 'grep' feature work
+
+Jeff King (2):
+      add stage to gitignore
+      tag: delete TAG_EDITMSG only on successful tag
+
+Johannes Sixt (1):
+      t4030-diff-textconv: Make octal escape sequence more portable
+
+Junio C Hamano (17):
+      builtin-rm.c: explain and clarify the "local change" logic
+      git add --intent-to-add: fix removal of cached emptiness
+      git add --intent-to-add: do not let an empty blob be committed by=
+ accident
+      gitweb: fix 'ctags' feature check and others
+      gitweb: rename gitweb_check_feature to gitweb_get_feature
+      Makefile: introduce NO_PTHREADS
+      Install git-stage in exec-path
+      git-am --whitespace: do not lose the command line option
+      git-am: propagate -C<n>, -p<n> options as well
+      git-am: propagate --3way options as well
+      Test that git-am does not lose -C/-p/--whitespace options
+      git-am: rename apply_opt_extra file to apply-opt
+      Update draft release notes to 1.6.1
+      GIT 1.6.0.5
+      Update draft release notes for 1.6.1
+      Revert "git-stash: use git rev-parse -q"
+      Point "stale" 1.6.0.5 documentation from the main git documentati=
+on page
+
+Linus Torvalds (1):
+      Add backslash to list of 'crud' characters in real name
+
+Mark Burton (1):
+      git-gui: Teach start_push_anywhere_action{} to notice when remote=
+ is a mirror.
+
+Matt McCutchen (1):
+      "git diff <tree>{3,}": do not reverse order of arguments
+
+Miklos Vajna (8):
+      User's Manual: remove duplicated url at the end of Appendix B
+      git-stash: use git rev-parse -q
+      filter-branch: use git rev-parse -q
+      lost-found: use git rev-parse -q
+      pull: use git rev-parse -q
+      rebase: use git rev-parse -q
+      submodule: use git rev-parse -q
+      http.c: use 'git_config_string' to get 'curl_http_proxy'
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
+      Extend index to save more flags
+
+Paul Mackerras (3):
+      gitk: Fix context menu items for generating diffs when in tree mo=
+de
+      gitk: Highlight only when search type is "containing:".
+      gitk: Fix bug in accessing undefined "notflag" variable
+
+Scott Chacon (1):
+      Add a built-in alias for 'stage' to the 'add' command
+
+Thomas Rast (1):
+      fetch-pack: Avoid memcpy() with src=3D=3Ddst
+
+Tor Arvid Lund (1):
+      git-p4: Fix bug in p4Where method.
