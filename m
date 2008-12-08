@@ -1,131 +1,91 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] reorder ALLOW_TEXTCONV option setting
-Date: Sun, 7 Dec 2008 21:54:17 -0500
-Message-ID: <20081208025417.GA22072@coredump.intra.peff.net>
+Subject: [PATCH 2/3] diff: allow turning on textconv explicitly for plumbing
+Date: Sun, 7 Dec 2008 21:57:01 -0500
+Message-ID: <20081208025700.GB22072@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 08 03:55:39 2008
+X-From: git-owner@vger.kernel.org Mon Dec 08 03:58:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9WHb-00031i-26
-	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 03:55:39 +0100
+	id 1L9WKI-0003XE-Tr
+	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 03:58:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754856AbYLHCyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Dec 2008 21:54:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754542AbYLHCyU
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 21:54:20 -0500
-Received: from peff.net ([208.65.91.99]:4037 "EHLO peff.net"
+	id S1754253AbYLHC5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Dec 2008 21:57:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754217AbYLHC5F
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Dec 2008 21:57:05 -0500
+Received: from peff.net ([208.65.91.99]:3974 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754470AbYLHCyU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Dec 2008 21:54:20 -0500
-Received: (qmail 21396 invoked by uid 111); 8 Dec 2008 02:54:19 -0000
+	id S1754111AbYLHC5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Dec 2008 21:57:04 -0500
+Received: (qmail 21421 invoked by uid 111); 8 Dec 2008 02:57:02 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 07 Dec 2008 21:54:19 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Dec 2008 21:54:17 -0500
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 07 Dec 2008 21:57:02 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Dec 2008 21:57:01 -0500
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102521>
 
-Right now for the diff porcelain and the log family, we
-call:
+Some history viewers use the diff plumbing to generate diffs
+rather than going through the "git diff" porcelain.
+Currently, there is no way for them to specify that they
+would like to see the text-converted version of the diff.
 
-  init_revisions();
-  setup_revisions();
-  DIFF_OPT_SET(ALLOW_TEXTCONV);
+This patch adds a "--textconv" option to allow such a
+plumbing user to allow text conversion.  The user can then
+tell the viewer whether or not they would like text
+conversion enabled.
 
-However, that means textconv will _always_ be on, instead of
-being a default that can be manipulated with
-setup_revisions. Instead, we want:
-
-  init_revisions();
-  DIFF_OPT_SET(ALLOW_TEXTCONV);
-  setup_revisions();
-
-which is what this patch does.
-
-We'll go ahead and move the callsite in wt-status, also;
-even though the user can't pass any options here, it is a
-cleanup that will help avoid any surprise later if the
-setup_revisions line is changed.
+While it may be tempting add a configuration option rather
+than requiring each plumbing user to be configured to pass
+--textconv, that is somewhat dangerous. Text-converted diffs
+generally cannot be applied directly, so each plumbing user
+should "opt in" to generating such a diff, either by
+explicit request of the user or by confirming that their
+output will not be fed to patch.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This is a "bug fix" in the sense that the code does not match the
-original intent (which was to set a default for these porcelains). But
-you can't _trigger_ the bug since setup_revisions never munges the value
-(but it will in 2/3).
+My ultimate goal is to see these diffs in gitk, which is implemented in
+3/3. As a bonus side effect, the --no-textconv option can be used with
+"git diff" or "git log" if you really don't want to see them there
+(e.g., because you are abusing "git log" to produce a binary patch you
+mean to apply).
 
- builtin-diff.c |    4 ++--
- builtin-log.c  |    2 +-
- wt-status.c    |    2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+I know this is not strictly a bugfix and we are in -rc, but:
 
-diff --git a/builtin-diff.c b/builtin-diff.c
-index dddcf69..d75d69b 100644
---- a/builtin-diff.c
-+++ b/builtin-diff.c
-@@ -290,8 +290,9 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	/* Otherwise, we are doing the usual "git" diff */
- 	rev.diffopt.skip_stat_unmatch = !!diff_auto_refresh_index;
+  1. It is an enhancement to a previously unreleased feature, and
+     shouldn't affect anything outside of that.
+
+  2. It affects the scripting interface to textconv, so I would like to
+     get it in before textconv is ever released so that it is always the
+     "right way" to turn text conversion off or on.
+
+ diff.c |    4 ++++
+ diff.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index f644947..e21af3b 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2477,6 +2477,10 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		DIFF_OPT_SET(options, ALLOW_EXTERNAL);
+ 	else if (!strcmp(arg, "--no-ext-diff"))
+ 		DIFF_OPT_CLR(options, ALLOW_EXTERNAL);
++	else if (!strcmp(arg, "--textconv"))
++		DIFF_OPT_SET(options, ALLOW_TEXTCONV);
++	else if (!strcmp(arg, "--no-textconv"))
++		DIFF_OPT_CLR(options, ALLOW_TEXTCONV);
+ 	else if (!strcmp(arg, "--ignore-submodules"))
+ 		DIFF_OPT_SET(options, IGNORE_SUBMODULES);
  
--	/* Default to let external be used */
-+	/* Default to let external and textconv be used */
- 	DIFF_OPT_SET(&rev.diffopt, ALLOW_EXTERNAL);
-+	DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
- 
- 	if (nongit)
- 		die("Not a git repository");
-@@ -303,7 +304,6 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	DIFF_OPT_SET(&rev.diffopt, RECURSIVE);
--	DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
- 
- 	/*
- 	 * If the user asked for our exit code then don't start a
-diff --git a/builtin-log.c b/builtin-log.c
-index b164717..840daf9 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -37,6 +37,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 	DIFF_OPT_SET(&rev->diffopt, RECURSIVE);
- 	rev->show_root_diff = default_show_root;
- 	rev->subject_prefix = fmt_patch_subject_prefix;
-+	DIFF_OPT_SET(&rev->diffopt, ALLOW_TEXTCONV);
- 
- 	if (default_date_mode)
- 		rev->date_mode = parse_date_format(default_date_mode);
-@@ -60,7 +61,6 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 		} else
- 			die("unrecognized argument: %s", arg);
- 	}
--	DIFF_OPT_SET(&rev->diffopt, ALLOW_TEXTCONV);
- }
- 
- /*
-diff --git a/wt-status.c b/wt-status.c
-index 3edae43..96ff2f8 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -279,11 +279,11 @@ static void wt_status_print_verbose(struct wt_status *s)
- 	struct rev_info rev;
- 
- 	init_revisions(&rev, NULL);
-+	DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
- 	setup_revisions(0, NULL, &rev,
- 		s->is_initial ? EMPTY_TREE_SHA1_HEX : s->reference);
- 	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
- 	rev.diffopt.detect_rename = 1;
--	DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
- 	rev.diffopt.file = s->fp;
- 	rev.diffopt.close_file = 0;
- 	/*
 -- 
 1.6.1.rc2.285.gc1cf2
