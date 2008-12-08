@@ -1,73 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-svn: Make following parents atomic
-Date: Mon, 08 Dec 2008 00:33:22 -0800
-Message-ID: <7v1vwj83sd.fsf@gitster.siamese.dyndns.org>
-References: <20081207222444.GA10881@euler>
- <1228717252-1016-1-git-send-email-deskinm@umich.edu>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] git-stash: use git rev-parse -q
+Date: Mon, 8 Dec 2008 09:46:53 +0100
+Message-ID: <20081208084653.GR5691@genesis.frugalware.org>
+References: <1228179369-3766-1-git-send-email-vmiklos@frugalware.org> <20081207231723.GA5068@atjola.homenet> <7vhc5fcui1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, normalperson@yhbt.net
-To: Deskin Miller <deskinm@umich.edu>
-X-From: git-owner@vger.kernel.org Mon Dec 08 09:34:52 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="YH9Qf6Fh2G5kB/85"
+Cc: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 08 09:48:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9bZq-0004L8-0G
-	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 09:34:50 +0100
+	id 1L9bmm-00081H-Qy
+	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 09:48:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750877AbYLHIdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Dec 2008 03:33:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750848AbYLHIdc
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Dec 2008 03:33:32 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35418 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750809AbYLHIdb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Dec 2008 03:33:31 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B8947185F9;
-	Mon,  8 Dec 2008 03:33:28 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 29021185F8; Mon, 
- 8 Dec 2008 03:33:23 -0500 (EST)
-In-Reply-To: <1228717252-1016-1-git-send-email-deskinm@umich.edu> (Deskin
- Miller's message of "Mon, 8 Dec 2008 01:20:52 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E3712FB6-C502-11DD-A396-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751009AbYLHIqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Dec 2008 03:46:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750927AbYLHIqz
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Dec 2008 03:46:55 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:37943 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750752AbYLHIqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Dec 2008 03:46:55 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 089BA580A8;
+	Mon,  8 Dec 2008 09:46:53 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 9F5164465E;
+	Mon,  8 Dec 2008 09:46:52 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 27B7311B8831; Mon,  8 Dec 2008 09:46:53 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vhc5fcui1.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102537>
 
-Deskin Miller <deskinm@umich.edu> writes:
 
-> +test_expect_success "follow-parent is atomic" '
-> +	cd wc &&
-> +	svn up &&
-> +	svn mkdir stunk &&
-> +	cd stunk &&
-> +	echo "trunk stunk" > readme &&
-> +	svn add readme &&
-> +	cd .. &&
+--YH9Qf6Fh2G5kB/85
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If you need to chdir around inside a test, please do that in a subshell,
-so that after failing any command in between, the next test will not start
-in an unexpected directory.
+On Sun, Dec 07, 2008 at 05:42:46PM -0800, Junio C Hamano <gitster@pobox.com=
+> wrote:
+> Thanks; I'll revert this one.  Use of -q is simply not worth this
+> aggravation.
 
-> +	svn ci -m "trunk stunk" &&
-> +	echo "stunk like junk" >> stunk/readme &&
-> +	svn ci -m "really stunk" &&
-> +	echo "stink stank stunk" >> stunk/readme &&
-> +	svn ci -m "even the grinch agrees" &&
-> +	cd .. &&
-> +	svn copy -m "stunk flunked" "$svnrepo"/stunk "$svnrepo"/flunk &&
+Sorry, I missed that 2>/dev/null is used for this purpose there as well.=20
 
-> +	(svn cp -m "early stunk flunked too" \
-> +		"$svnrepo"/stunk@17 "$svnrepo"/flunked ||
-> +	svn cp -m "early stunk flunked too" \
-> +		-r17 "$svnrepo"/stunk "$svnrepo"/flunked) &&
+--YH9Qf6Fh2G5kB/85
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-On the other hand, I do not see a need for this portion to be in a
-subshell.  Wouldn't a normal statement grouping with {} work just as well?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkk83v0ACgkQe81tAgORUJaWtACeLj+T2RHxOAyj8GNbaOPBSf1M
+rbEAoIadWXhhM7i1L6Tm9MyV/GJb/KDv
+=BTXv
+-----END PGP SIGNATURE-----
+
+--YH9Qf6Fh2G5kB/85--
