@@ -1,88 +1,62 @@
-From: "D. Stuart Freeman" <stuart.freeman@et.gatech.edu>
-Subject: git-svn not working when parent of cloned dir requires auth
-Date: Mon, 8 Dec 2008 15:54:18 -0500
-Message-ID: <20081208205418.GA16418@cetel-004-xx6.admin.gatech.edu>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Can someone confirm what the contents of refs/heads/master
+	means?
+Date: Mon, 8 Dec 2008 22:26:36 +0100
+Message-ID: <20081208212636.GA6061@atjola.homenet>
+References: <f78b0fcc-6165-440a-b76b-b1b0a281b15c@k8g2000yqn.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="C7zPtVaVf+AK4Oqc"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 08 22:19:10 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: davetron5000 <davetron5000@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 08 22:28:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9nVT-0008Ke-J9
-	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 22:19:08 +0100
+	id 1L9ne2-00037z-0C
+	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 22:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752126AbYLHVRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Dec 2008 16:17:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752113AbYLHVRo
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Dec 2008 16:17:44 -0500
-Received: from deliverator1.ecc.gatech.edu ([130.207.185.171]:49326 "EHLO
-	deliverator1.ecc.gatech.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752089AbYLHVRn (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Dec 2008 16:17:43 -0500
-X-Greylist: delayed 1402 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Dec 2008 16:17:43 EST
-Received: from deliverator3.ecc.gatech.edu (deliverator3.ecc.gatech.edu [130.207.185.173])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by deliverator1.ecc.gatech.edu (Postfix) with ESMTP id B445B2DCE60
-	for <git@vger.kernel.org>; Mon,  8 Dec 2008 15:55:21 -0500 (EST)
-Received: from deliverator3.ecc.gatech.edu (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 4BF1739C19D
-	for <git@vger.kernel.org>; Mon,  8 Dec 2008 15:54:18 -0500 (EST)
-Received: from mailprx5.gatech.edu (mailprx5.prism.gatech.edu [130.207.171.19])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(Client CN "smtp.mail.gatech.edu", Issuer "Equifax" (verified OK))
-	by deliverator3.ecc.gatech.edu (Postfix) with ESMTP id 1409F39C187
-	for <git@vger.kernel.org>; Mon,  8 Dec 2008 15:54:18 -0500 (EST)
-Received: from mothra.cetl.gatech.edu (cetel-004-xx6.admin.gatech.edu [130.207.46.56])
-	(using TLSv1 with cipher DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	(sasl: method=PLAIN, username=dfreeman31@mailprx5.gatech.edu, sender=stuart@cetel-004-xx6.admin.gatech.edu)
-	by mailprx5.gatech.edu (Postfix) with ESMTP id C4E8F1F7F
-	for <git@vger.kernel.org>; Mon,  8 Dec 2008 15:54:17 -0500 (EST)
-	(envelope-from stuart@cetel-004-xx6.admin.gatech.edu)
-Received: from stuart by mothra.cetl.gatech.edu with local (Exim 4.69)
-	(envelope-from <stuart@cetel-004-xx6.admin.gatech.edu>)
-	id 1L9n7S-0004M9-Qp
-	for git@vger.kernel.org; Mon, 08 Dec 2008 15:54:18 -0500
+	id S1752169AbYLHV0l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Dec 2008 16:26:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751763AbYLHV0l
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Dec 2008 16:26:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40027 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752128AbYLHV0k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Dec 2008 16:26:40 -0500
+Received: (qmail invoked by alias); 08 Dec 2008 21:26:37 -0000
+Received: from i577B9E20.versanet.de (EHLO atjola.local) [87.123.158.32]
+  by mail.gmx.net (mp057) with SMTP; 08 Dec 2008 22:26:37 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19qYW5nEEJq+XIWvuuojcHLzwwkAuctNCoXymtme7
+	nQ6Wkb82QHua6u
 Content-Disposition: inline
+In-Reply-To: <f78b0fcc-6165-440a-b76b-b1b0a281b15c@k8g2000yqn.googlegroups.com>
 User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102583>
 
+On 2008.12.08 11:23:46 -0800, davetron5000 wrote:
+> I'm using git-svn to interact with an SVN repo that has branches.
+>=20
+> After my clone via:
+>=20
+> git svn clone $REPO/main -T trunk -b branches -t tags
+>=20
+> my 'master' branch pointed to one of the branches in svn and not to
+> the main trunk. (my .git/config looked correct for svn interaction,
+> i.e. trunk pointed to the right place).
 
---C7zPtVaVf+AK4Oqc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Just to clear up that bit as well. when the "fetch" finishes (which is
+part of the clone process), git-svn checks if there is a master branch,
+and if not, it creates one from the last commit it created. So if your
+last svn commit was to branch XYZ and not to trunk, master will
+reference that commit on branch XYZ.
 
-I'm trying to
-'git svn clone https://mware.ucdavis.edu/svn/ucd-sakai/gradebook-gwt -s'
-that repo is setup to allow anonymous reading of that directory tree, but
-git-svn prompts me for a password.  I think git-svn is traversing up the
-directory tree and encountering a directory that needs authn, can I prevent
-it from doing that?
-
---=20
-D. Stuart Freeman
-Georgia Institute of Technology
-
---C7zPtVaVf+AK4Oqc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkk9iXoACgkQ74jXllI0CXTk8ACgvWi9Hg2GYzkmW9egdU+o7O+0
-HYoAn2110zVALYK+UefnYv5+E14AQHeZ
-=85hw
------END PGP SIGNATURE-----
-
---C7zPtVaVf+AK4Oqc--
+Bj=F6rn
