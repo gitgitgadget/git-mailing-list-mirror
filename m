@@ -1,100 +1,64 @@
-From: "LIU JIN-YU-KFQP84" <simon.liu@motorola.com>
-Subject: RE: How to config git-daemon?
-Date: Mon, 8 Dec 2008 15:36:40 +0800
-Message-ID: <DFC883208F3ED446B46EEE1DBD54BA950633D137@zmy16exm62.ds.mot.com>
-References: <D13CA5792E8D5140A50EEDB89972CDCB053E21AA@zmy16exm63.ds.mot.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Can Git push only first parent history commits?
+Date: Mon, 08 Dec 2008 08:44:02 +0100
+Message-ID: <vpqabb7az7h.fsf@bauges.imag.fr>
+References: <402F4B33D9C9DE4083DB96B416549FAF9E12@zch01exm23.fsl.freescale.net>
+	<7v7i6bbcc6.fsf@gitster.siamese.dyndns.org>
+	<402F4B33D9C9DE4083DB96B416549FAF9E2D@zch01exm23.fsl.freescale.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 8BIT
-To: "Ren LingYan-E5949C" <E5949C@motorola.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 08 08:38:02 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
+To: "Li Frank" <Frank.Li@freescale.com>
+X-From: git-owner@vger.kernel.org Mon Dec 08 08:56:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9agp-0005Ip-0o
-	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 08:37:59 +0100
+	id 1L9ayl-0002TW-5F
+	for gcvg-git-2@gmane.org; Mon, 08 Dec 2008 08:56:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190AbYLHHgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Dec 2008 02:36:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbYLHHgm
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Dec 2008 02:36:42 -0500
-Received: from mail153.messagelabs.com ([216.82.253.51]:44216 "HELO
-	mail153.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751098AbYLHHgl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Dec 2008 02:36:41 -0500
-X-VirusChecked: Checked
-X-Env-Sender: simon.liu@motorola.com
-X-Msg-Ref: server-2.tower-153.messagelabs.com!1228721800!16774162!1
-X-StarScan-Version: 5.5.12.14.2; banners=-,-,-
-X-Originating-IP: [136.182.1.14]
-Received: (qmail 25240 invoked from network); 8 Dec 2008 07:36:40 -0000
-Received: from unknown (HELO motgate4.mot.com) (136.182.1.14)
-  by server-2.tower-153.messagelabs.com with SMTP; 8 Dec 2008 07:36:40 -0000
-Received: from il27exr03.cig.mot.com (il27exr03.mot.com [10.17.196.72])
-	by motgate4.mot.com (8.12.11/Motorola) with ESMTP id mB87aeN9016639
-	for <git@vger.kernel.org>; Mon, 8 Dec 2008 00:36:40 -0700 (MST)
-Received: from il27vts02.mot.com (il27vts02.cig.mot.com [10.17.196.86])
-	by il27exr03.cig.mot.com (8.13.1/Vontu) with SMTP id mB87ae4h028849
-	for <git@vger.kernel.org>; Mon, 8 Dec 2008 01:36:40 -0600 (CST)
-Received: from zmy16exm62.ds.mot.com (zmy16exm62.ap.mot.com [10.179.4.33])
-	by il27exr03.cig.mot.com (8.13.1/8.13.0) with ESMTP id mB87acLG028840
-	for <git@vger.kernel.org>; Mon, 8 Dec 2008 01:36:39 -0600 (CST)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <D13CA5792E8D5140A50EEDB89972CDCB053E21AA@zmy16exm63.ds.mot.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: How to config git-daemon?
-thread-index: AclY+oYsciOdQQ3YQ2KaJCjLwo2w2AAADwQgAADQqWAAAlz3kA==
-X-CFilter-Loop: Reflected
+	id S1751267AbYLHHzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Dec 2008 02:55:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751246AbYLHHzO
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Dec 2008 02:55:14 -0500
+Received: from imag.imag.fr ([129.88.30.1]:47183 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751211AbYLHHzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Dec 2008 02:55:12 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id mB87i2JP014469
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 8 Dec 2008 08:44:03 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1L9amg-00017i-DV; Mon, 08 Dec 2008 08:44:02 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1L9amg-0004m4-AO; Mon, 08 Dec 2008 08:44:02 +0100
+In-Reply-To: <402F4B33D9C9DE4083DB96B416549FAF9E2D@zch01exm23.fsl.freescale.net> (Li Frank's message of "Mon\, 8 Dec 2008 11\:11\:30 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 08 Dec 2008 08:44:04 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102534>
 
- 
-Hi,
+"Li Frank" <Frank.Li@freescale.com> writes:
 
-Try to check if GIT_PROXY_COMMAND is set and your proxy can accept
-internal address.
+> I don't know the detail of git internal.  Or my email subject
+> description have some problem. 
+>  
+> I just want to combine some commits to one commit and push combined
+> commit to remote.  And at same time, keep commits history at my local
+> repository.  Rebase will make original history lost. 
 
-Regards
-Simon Liu
+git merge --squash may help.
 
------Original Message-----
-From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-Behalf Of Ren LingYan-E5949C
-Sent: Monday, December 08, 2008 2:28 PM
-To: git@vger.kernel.org
-Subject: How to config git-daemon?
-
-Hello,
- 
-I want to public my repository testproject, which can be accessed by git
-protocol. 
- 
-My steps are as below:
- 
-On Server machine (for example 10.194.66.71) 1. Created testproject
-under /home/e5949c/repositories 2. Created a file "git-daemon-export-ok"
-under testproject/ .git directory.
-3. Run command "git daemon --verbose --export-all"
- 
-On test machine
-1. Run command "git clone
-git://10.194.66.71/home/e5949c/repositories/testproject.git". Error as
-below :
- 
-Initialized empty Git repository in
-/export/home/e5949c/repositories/test/testproject/.git/
-fatal: The remote end hung up unexpectedly
- 
-Can anyone help me on this error? What did I miss ? 
-
-Your help will be highly appreciated !
- 
-Thanks,
-Emily 
+-- 
+Matthieu
