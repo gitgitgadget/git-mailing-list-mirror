@@ -1,75 +1,109 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
-Subject: Re: get upstream branch
-Date: Tue, 9 Dec 2008 16:51:02 +0100
-Message-ID: <adf1fd3d0812090751r5d5a1c49k199e5e92316e0f9d@mail.gmail.com>
-References: <3ab397d0812082052j6a45d05dr1c863aa260826f4@mail.gmail.com>
-	 <7vljup6hdf.fsf@gitster.siamese.dyndns.org>
-	 <20081209055629.GB2972@coredump.intra.peff.net>
-	 <7v8wqp6e89.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH/RFC] Allow writing loose objects that are corrupted in
+	a pack file
+Date: Tue, 9 Dec 2008 08:24:02 -0800
+Message-ID: <20081209162402.GP31551@spearce.org>
+References: <20081209093627.77039a1f@perceptron>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>,
-	"Jeff Whiteside" <jeff.m.whiteside@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 09 16:52:41 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git ML <git@vger.kernel.org>, tyler@slide.com
+To: Jan =?iso-8859-1?Q?Kr=FCger?= <jk@jk.gs>
+X-From: git-owner@vger.kernel.org Tue Dec 09 17:25:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LA4sv-0000iH-Qy
-	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 16:52:30 +0100
+	id 1LA5Or-0006I9-Qs
+	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 17:25:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750788AbYLIPvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2008 10:51:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751631AbYLIPvG
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 10:51:06 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:49727 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752440AbYLIPvF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2008 10:51:05 -0500
-Received: by qyk4 with SMTP id 4so67819qyk.13
-        for <git@vger.kernel.org>; Tue, 09 Dec 2008 07:51:03 -0800 (PST)
-Received: by 10.103.173.15 with SMTP id a15mr119388mup.59.1228837862739;
-        Tue, 09 Dec 2008 07:51:02 -0800 (PST)
-Received: by 10.103.167.6 with HTTP; Tue, 9 Dec 2008 07:51:02 -0800 (PST)
-In-Reply-To: <7v8wqp6e89.fsf@gitster.siamese.dyndns.org>
+	id S1753112AbYLIQYH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2008 11:24:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753041AbYLIQYG
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 11:24:06 -0500
+Received: from george.spearce.org ([209.20.77.23]:52645 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752837AbYLIQYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2008 11:24:05 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 2F29D38200; Tue,  9 Dec 2008 16:24:02 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <20081209093627.77039a1f@perceptron>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102638>
 
-2008/12/9 Junio C Hamano <gitster@pobox.com>:
-> Jeff King <peff@peff.net> writes:
->
->> In one of my scripts I do something like this (actually this is not
->> straight from my script, as the operation there is "find all pairs of
->> local/remote branches" and this is "find the current upstream"):
->>
->>   ref=`git symbolic-ref HEAD`
->>   head=${ref#refs/heads/}
->>   remote=`git config branch.$head.remote`
->>   branch=`git config branch.$head.merge`
->>   echo refs/remote/$remote/${branch#refs/heads/}
->>
->> And obviously this is missing error checking for the detached HEAD
->> (symbolic-ref should fail) and no tracking branch ($remote and/or $branch
->> will be empty) cases.
->
-> Yeah, add any nonstandard layout to that set of things that are missing,
-> but in practice it should not matter.
+Jan Kr=FCger <jk@jk.gs> wrote:
+> For fixing a corrupted repository by using backup copies of individua=
+l
+> files, allow write_sha1_file() to write loose files even if the objec=
+t
+> already exists in a pack file, but only if the existing entry is mark=
+ed
+> as corrupted.
 
-In "git pull --rebase" this is used to know the hash of the tracking branch:
+Huh.  So I'm digging around sha1_file.c and I'm not yet sure why
+your patch makes a difference.
 
-        . git-parse-remote &&
-        origin="$1"
-        test -z "$origin" && origin=$(get_default_remote)
-        reflist="$(get_remote_refs_for_fetch "$@" 2>/dev/null |
-                sed "s|refs/heads/\(.*\):|\1|")" &&
-        oldremoteref="$(git rev-parse -q --verify \
-                "refs/remotes/$origin/$reflist")"
+has_sha1_file() calls find_pack_entry() to determine which pack has
+the object, and at what offset (if found).  It doesn't care about
+the offset, but it does care about the successful match.
 
-Santi
+find_pack_entry() already considers the bad_object_sha1 for each
+pack, before it even tries the binary search within the index.
+So if the entry was known to be bad has_sha1_file() will return 0,
+unless the object is loose.
+
+Where this breaks down is if the object is being created,
+its very likely we didn't attempt to read it in this process.
+The bad_object_sha1 table is transient and populated only when
+unpacking an object entry fails.  So for example during a merge
+if a tree was stored in a pack and is corrupt and the merge
+result produces that same tree object we won't write it out with
+write_sha1_file() because it exists in a pack, but since we never
+read it we also don't know the pack entry is corrupt.
+
+Its horribly inefficient to read every object before we write it
+back out.  The best thing to do when faced with corruption is to
+stop and repack, overlaying the object database from a known good
+copy of the repository so pack-objects can use the good copy when
+a corrupt object is identified.
+
+So I agree with you that changing this in write_sha1_file() is a
+bad idea for the normal good cases, but I also don't see how this
+patch changes anything at all... the code path you introduced is
+already implemented.
+
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 6c0e251..17085cc 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2373,14 +2373,17 @@ int write_sha1_file(void *buf, unsigned long =
+len, const char *type, unsigned cha
+>  	char hdr[32];
+>  	int hdrlen;
+> =20
+> -	/* Normally if we have it in the pack then we do not bother writing
+> -	 * it out into .git/objects/??/?{38} file.
+> -	 */
+>  	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
+>  	if (returnsha1)
+>  		hashcpy(returnsha1, sha1);
+> -	if (has_sha1_file(sha1))
+> -		return 0;
+> +	/* Normally if we have it in the pack then we do not bother writing
+> +	 * it out into .git/objects/??/?{38} file. We do, though, if there
+> +	 * is no chance that we have an uncorrupted version of the object.
+> +	 */
+> +	if (has_sha1_file(sha1)) {
+> +		if (has_loose_object(sha1) || !has_packed_and_bad(sha1))
+> +			return 0;
+> +	}
+>  	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
+>  }
+
+--=20
+Shawn.
