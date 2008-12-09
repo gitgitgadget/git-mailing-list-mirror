@@ -1,98 +1,86 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
-Subject: Re: git-bpush: Pushing to a bundle
-Date: Tue, 9 Dec 2008 11:21:36 +0100
-Message-ID: <adf1fd3d0812090221t2264a4f9i87b5e23be897ee84@mail.gmail.com>
-References: <adf1fd3d0812090149m158fcb9as15bacce58c61a1a3@mail.gmail.com>
-	 <alpine.DEB.1.00.0812091100470.2916@eeepc-johanness>
+From: "Lars Hjemli" <lh@elementstorage.no>
+Subject: Re: Forcing --no-ff on pull
+Date: Tue, 9 Dec 2008 11:31:50 +0100
+Message-ID: <8c5c35580812090231u28076844nf5a9225349c20801@mail.gmail.com>
+References: <1228815240.18611.48.camel@starfruit.local>
+	 <8c5c35580812090149lc6dd79cj60a9d23c18089557@mail.gmail.com>
+	 <1228817565.18611.54.camel@starfruit.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git list" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 09 11:23:09 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "R. Tyler Ballance" <tyler@slide.com>
+X-From: git-owner@vger.kernel.org Tue Dec 09 11:33:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9zk2-0003tn-Bm
-	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 11:22:58 +0100
+	id 1L9ztu-00078p-Me
+	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 11:33:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697AbYLIKVj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2008 05:21:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752695AbYLIKVj
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 05:21:39 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:26802 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752684AbYLIKVi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Dec 2008 05:21:38 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so775180nfc.21
-        for <git@vger.kernel.org>; Tue, 09 Dec 2008 02:21:37 -0800 (PST)
-Received: by 10.103.191.12 with SMTP id t12mr1636039mup.49.1228818096767;
-        Tue, 09 Dec 2008 02:21:36 -0800 (PST)
-Received: by 10.103.167.6 with HTTP; Tue, 9 Dec 2008 02:21:36 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0812091100470.2916@eeepc-johanness>
+	id S1752641AbYLIKbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2008 05:31:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752680AbYLIKbw
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 05:31:52 -0500
+Received: from rv-out-0506.google.com ([209.85.198.230]:17840 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750922AbYLIKbv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2008 05:31:51 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so1576070rvb.1
+        for <git@vger.kernel.org>; Tue, 09 Dec 2008 02:31:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=MeZYlovi+cmUw1t4Xc+CtbvghZIhWVEJM0XnKZwtCyA=;
+        b=m36PwZwknDBcZ/0fyquyyDf+h/p8D7Aoswwah+zGE3yUj/0KkfTpsQZ3UNpD8WdTDG
+         HPHJxP02X9RNDw+ugmpne/Lvb4p9KDLinRcJyQkhGtS5CXmBalG3RW8ype2u2W/sF5bR
+         UJBDHW3bFtcdCegJkffFw7ADmjDUO1cvpnls4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=QMWmjRwDGBVmH3pW4j3ReBBbmtDJh1PhecHj2wszYnUZXANFxjK6hh5vGChf3RyHkd
+         u+pwjZhd3ORffIiD6bciQRj5qzd1Sy2GTLJxLToqSz/KDEeNqAOT/W510a5t2p0LA++H
+         93lVch5YIcwFt5yRbVCJjygytKi099Xj0N4RM=
+Received: by 10.114.199.3 with SMTP id w3mr3098218waf.181.1228818710350;
+        Tue, 09 Dec 2008 02:31:50 -0800 (PST)
+Received: by 10.115.106.12 with HTTP; Tue, 9 Dec 2008 02:31:50 -0800 (PST)
+In-Reply-To: <1228817565.18611.54.camel@starfruit.local>
 Content-Disposition: inline
+X-Google-Sender-Auth: a6357674cbd29077
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102623>
 
-=46irst, thanks for the comments.
-
-2008/12/9 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
->
-> On Tue, 9 Dec 2008, Santi B=E9jar wrote:
->
->> The basic idea is:
+On Tue, Dec 9, 2008 at 11:12, R. Tyler Ballance <tyler@slide.com> wrote:
+> On Tue, 2008-12-09 at 10:49 +0100, Lars Hjemli wrote:
+>> On Tue, Dec 9, 2008 at 10:34, R. Tyler Ballance <tyler@slide.com> wrote:
+>> > Is there a header macro I can define or a config option I could define
+>> > to make --no-ff on `git pull` implicit instead of explicit?
 >>
->> - Easily create bundles with the current branch.
->> - Be able to push to defined bundles in remote.<remote>.url
->> - Only add new objects by default (do not lose objects)
+>> Try this:
+>> $ git config branch.stable.mergeoptions "--no-ff"
 >
-> That is probably not what people need.  Usually, when bundles are sen=
-t
-> around, you need _incremental_ bundles.
-
-I do not find convenient strictly incremental bundles, because then
-you (or the other people) needs to fetch every single bundle. What I
-do is add new objects until the bundle is too big and then create a
-bundle with a new base. This way you don't have to worry if the other
-person has applied the last bundle or not.
-
->  IOW if you already have a bundle,
-> you want to create a new bundle that contains everything that is new,=
- _in
-> addition_ to the existing bundle.
-
->> while [ $# !=3D 0 ] ; do
+> I recall stumbling across this a while ago looking at the git-config(1)
+> man page, but this isn't /quite/ what we need.
 >
-> Heh, I did not realize just how _used_ I got to the conventions in Gi=
-t's
-> shell programming, until I thought "Should this not use 'test' instea=
-d
-> of brackets?"
+> I'm talking about forcing for *every* pull, it's a safe assumption to
+> make that we want a merge commit every time somebody fast-forwards a
+> branch.
 
-I don't have problems either way, I'll change to follow Git's conventio=
-ns.
+$ git config alias.xpull "pull --no-ff" ?
 
->
->> while [ $# !=3D 0 ] ; do
->>     refs=3D"$refs$LF$1" && shift
->> done
->
-> That is equivalent to refs=3D"$*", no?
+But are you sure you never want a fast-forward on _any_ branch? I use
+--no-ff unconditionally on the master and stable branches as $dayjob,
+to make sure that the merging of feature/bugfix-branches are
+explicitly noted in history, but I almost never use it on other
+branches.
 
-Almost, IFS is set to line-feed so I needed to put $LF instead of space=
-s.
-
->
-> Anyway, I found reading your shell script quite hard, because of exce=
-ssive
-> use of brackets and single line && chains (which lack proper error
-> handling, BTW).
-
-I've tried to catch errors, but maybe not enough.
-
-Santi
+--
+larsh
