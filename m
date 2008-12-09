@@ -1,123 +1,125 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: git fsck segmentation fault
-Date: Tue, 9 Dec 2008 22:57:22 +0100
-Message-ID: <20081209215722.GA8877@auto.tuwien.ac.at>
-References: <200811271814.06941.simon@lst.de> <200811272021.56108.simon@lst.de> <alpine.LFD.2.00.0811271449500.14328@xanadu.home> <200811280919.10685.simon@lst.de> <alpine.LFD.2.00.0812091408560.14328@xanadu.home>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Forcing --no-ff on pull
+Date: Tue, 9 Dec 2008 17:32:36 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0812091651360.19665@iabervon.org>
+References: <1228815240.18611.48.camel@starfruit.local>  <20081209191704.6117@nanako3.lavabit.com> <1228819087.18611.73.camel@starfruit.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Simon Hausmann <simon@lst.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Dec 09 22:58:47 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1969388103-1228861956=:19665"
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: "R. Tyler Ballance" <tyler@slide.com>
+X-From: git-owner@vger.kernel.org Tue Dec 09 23:34:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAAbM-0000dm-1s
-	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 22:58:44 +0100
+	id 1LAB9Q-0005Td-FF
+	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 23:33:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754257AbYLIV5Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2008 16:57:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754587AbYLIV5Z
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 16:57:25 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:55855 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753609AbYLIV5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2008 16:57:24 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 7C282680507D;
-	Tue,  9 Dec 2008 22:57:22 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WnopXZWSF6mT; Tue,  9 Dec 2008 22:57:22 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 590E06805045; Tue,  9 Dec 2008 22:57:22 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0812091408560.14328@xanadu.home>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754061AbYLIWcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2008 17:32:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753609AbYLIWcj
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 17:32:39 -0500
+Received: from iabervon.org ([66.92.72.58]:53397 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753362AbYLIWci (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2008 17:32:38 -0500
+Received: (qmail 1683 invoked by uid 1000); 9 Dec 2008 22:32:36 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 9 Dec 2008 22:32:36 -0000
+In-Reply-To: <1228819087.18611.73.camel@starfruit.local>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102656>
 
-On Tue, Dec 09, 2008 at 02:09:58PM -0500, Nicolas Pitre wrote:
-> Has this been looked at?  Martin?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I have not noticed this message.
+--1547844168-1969388103-1228861956=:19665
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> #54 0x0000000000493c6d in parse_tree (item=3D0x20d0178) at tree.c:224
-> #55 0x0000000000424ca2 in mark_object (obj=3D0x20d0178, type=3D2, dat=
-a=3D<value=20
-> optimized out>) at builtin-fsck.c:102
-> #56 0x0000000000468d1c in fsck_walk (obj=3D<value optimized out>, wal=
-k=3D0x424af0=20
-> <mark_object>, data=3D0x20d0128) at fsck.c:26
-> #57 0x0000000000424cba in mark_object (obj=3D0x20d0128, type=3D2, dat=
-a=3D<value=20
-> optimized out>) at builtin-fsck.c:105
-> #58 0x0000000000468d1c in fsck_walk (obj=3D<value optimized out>, wal=
-k=3D0x424af0=20
-> <mark_object>, data=3D0x1edb448) at fsck.c:26
-> #59 0x0000000000424cba in mark_object (obj=3D0x1edb448, type=3D2, dat=
-a=3D<value=20
-> optimized out>) at builtin-fsck.c:105
-> #60 0x0000000000468d1c in fsck_walk (obj=3D<value optimized out>, wal=
-k=3D0x424af0=20
-> <mark_object>, data=3D0x1edb420) at fsck.c:26
-> #61 0x0000000000424cba in mark_object (obj=3D0x1edb420, type=3D2, dat=
-a=3D<value=20
-> optimized out>) at builtin-fsck.c:105
-> #62 0x0000000000468bf9 in fsck_walk (obj=3D0x241a750, walk=3D0x424af0=
-=20
-> <mark_object>, data=3D0x241a750) at fsck.c:50
-> #63 0x0000000000424b7d in mark_object (obj=3D0x241a750, type=3D1, dat=
-a=3D<value=20
-> optimized out>) at builtin-fsck.c:105
-> #64 0x0000000000468c31 in fsck_walk (obj=3D<value optimized out>, wal=
-k=3D0x424af0=20
-> <mark_object>, data=3D0x241a708) at fsck.c:57
-> #65 0x0000000000424b7d in mark_object (obj=3D0x241a708, type=3D1, dat=
-a=3D<value=20
-> optimized out>) at builtin-fsck.c:105
-> #66 0x0000000000468c31 in fsck_walk (obj=3D<value optimized out>, wal=
-k=3D0x424af0=20
-> <mark_object>, data=3D0x4dea0b0) at fsck.c:57
-> #67 0x0000000000424b7d in mark_object (obj=3D0x4dea0b0, type=3D1, dat=
-a=3D<value=20
-> optimized out>) at builtin-fsck.c:105
-> #68 0x0000000000468c31 in fsck_walk (obj=3D<value optimized out>, wal=
-k=3D0x424af0=20
-> <mark_object>, data=3D0x488ff78) at fsck.c:57
-> #69 0x0000000000424b7d in mark_object (obj=3D0x488ff78, type=3D1, dat=
-a=3D<value=20
-> optimized out>) at builtin-fsck.c:105
-> #70 0x0000000000468c31 in fsck_walk (obj=3D<value optimized out>, wal=
-k=3D0x424af0=20
-> <mark_object>, data=3D0x488bd18) at fsck.c:57
-> #71 0x0000000000424b7d in mark_object (obj=3D0x488bd18, type=3D1, dat=
-a=3D<value=20
-> optimized out>) at builtin-fsck.c:105
-> #72 0x0000000000468c31 in fsck_walk (obj=3D<value optimized out>, wal=
-k=3D0x424af0=20
-> <mark_object>, data=3D0x313c0b0) at fsck.c:57
-> #73 0x0000000000424b7d in mark_object (obj=3D0x313c0b0, type=3D1, dat=
-a=3D<value=20
-> optimized out>) at builtin-fsck.c:105
-> [recursion between line 105 and 57]
+On Tue, 9 Dec 2008, R. Tyler Ballance wrote:
 
-If I look at the backtrace, nothing seems wrong. The obj pointers for
-mark_object are all different, so its not stuck in a loop. If you look
-at type, you will see that it traverses commits (type=3D1) untils
-#63. Then it traverses trees (type=3D2).
+> On Tue, 2008-12-09 at 19:17 +0900, Nanako Shiraishi wrote:
+> > Quoting "R. Tyler Ballance" <tyler@slide.com>:
+> > 
+> > > The most common use-case involves a user merging a project branch into a
+> > > stabilization branch (`git checkout stable && git pull . project`) in
+> > > such a way that no merge commit is generated. Of course, without
+> > > thinking they'll push these changes up to the centralized repository.
+> > > Not 15 minutes later they realize "ruh roh! I didn't want to do that"
+> > 
+> > Why does the user not want to fast-forward, if the merge she wants to do is actually a fast-forward?
+> 
+> I agree with you, this is more about preventing coworkers who are too
+> lazy to understand the entirety of what they're doing from hurting the
+> workflow of "the rest of us". It's a technically solution to a people
+> problem (I understand technology far more than people ;))
+> 
+> Consider the following scenarion:
+>   % git checkout -b project﻿
+> ﻿  % <work>
+> ﻿  % git commit -am "A"﻿
+> ﻿  % <work>
+> ﻿  % git commit -am "B"﻿
+> ﻿  % <work>
+> ﻿  % git commit -am "C"﻿
+> ﻿  % <work>
+> ﻿  % git commit -am "D"
+> ﻿﻿  % git checkout stable
+> ﻿﻿  % git pull . project
+> ﻿﻿  % <fast-forward>
+> ﻿﻿  % git push origin stable
+> ﻿﻿
+> At this point, QA is involved and what can happen is that QA realizes
+> that this code is *not* stable and *never* should have been brought into
+> the stable branch.
 
-At my option, there is a commit with a very long ancestory (~40.000
-[stack frame count/2]). As we do depth first search for the reachabilit=
-y
-check, we need about 80.000 frames.
+How do you prevent the (IMHO more likely) case of:
 
-I suggest, that you retry with a very much bigger stack (ulimit -s).
+% git checkout -b project
+% git checkout stable
+<fix some bug in stable>
+% git commit -a
+<forget to switch branches back>
+<work>
+% git commit -am "A"
+<work>
+% git commit -am "B"
+...
+% git push origin stable
 
-mfg Martin K=F6gler
+That is, the developer makes a whole bunch of inappropriate commits on 
+their stable branch instead of their project branch and then pushes it out 
+(perhaps as part of a push rule, or thinking only the bug fix went there). 
+I suspect that "pull" step there isn't the point where things are going 
+wrong.
+
+If you've actually got QA in the process, have developers push to a 
+per-developer location and send a pull request to QA. QA can reject bad 
+changes instead of putting them into the stable branch at all, and then 
+they can reply to the pull requests with snide comments instead of having 
+to beat up the developers, because the developer doesn't inconvenience 
+anybody (except QA, whose job is to be inconvenienced by developers).
+
+> I'm less concerned at this point, the company switched entirely to Git
+> two weeks ago, with the history containing possible unwanted merges. I'm
+> more concerned however with LazyDeveloper inadvertently polluting stable
+> branches as LazyDeveloper does not yet fully grasp the concepts that Git
+> offers
+
+I think such developers are more likely to push some bad commits to 
+"stable" directly than they are to make their bad commits on a branch, 
+merge it (fast-forward or otherwise) and push the result. It's also easy 
+to discover:
+
+% git push origin project:stable
+
+And not generate a merge commit simply by virtue of not merging branches.
+
+	-Daniel
+*This .sig left intentionally blank*
+--1547844168-1969388103-1228861956=:19665--
