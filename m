@@ -1,171 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: get upstream branch
-Date: Mon, 08 Dec 2008 21:35:08 -0800
-Message-ID: <7vljup6hdf.fsf@gitster.siamese.dyndns.org>
-References: <3ab397d0812082052j6a45d05dr1c863aa260826f4@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] diff: allow turning on textconv explicitly for
+	plumbing
+Date: Tue, 9 Dec 2008 00:48:24 -0500
+Message-ID: <20081209054824.GA2972@coredump.intra.peff.net>
+References: <20081208025700.GB22072@coredump.intra.peff.net> <7vfxkz9v8f.fsf@gitster.siamese.dyndns.org> <20081208045924.GA22780@coredump.intra.peff.net> <7vskoz88g8.fsf@gitster.siamese.dyndns.org> <7v63lv842a.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Jeff Whiteside" <jeff.m.whiteside@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 09 06:36:53 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 09 06:50:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9vH0-0006mo-1D
-	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 06:36:42 +0100
+	id 1L9vTz-0001sM-0v
+	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 06:50:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750888AbYLIFfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2008 00:35:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750931AbYLIFfQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 00:35:16 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44946 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750880AbYLIFfP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2008 00:35:15 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5614E85E21;
-	Tue,  9 Dec 2008 00:35:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2E93785E20; Tue,
-  9 Dec 2008 00:35:10 -0500 (EST)
-In-Reply-To: <3ab397d0812082052j6a45d05dr1c863aa260826f4@mail.gmail.com>
- (Jeff Whiteside's message of "Mon, 8 Dec 2008 20:52:03 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 26E5F3FC-C5B3-11DD-86D9-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752663AbYLIFs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2008 00:48:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbYLIFs3
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 00:48:29 -0500
+Received: from peff.net ([208.65.91.99]:4241 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752658AbYLIFs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2008 00:48:28 -0500
+Received: (qmail 441 invoked by uid 111); 9 Dec 2008 05:48:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 09 Dec 2008 00:48:25 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Dec 2008 00:48:24 -0500
+Content-Disposition: inline
+In-Reply-To: <7v63lv842a.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102598>
 
-"Jeff Whiteside" <jeff.m.whiteside@gmail.com> writes:
+On Mon, Dec 08, 2008 at 12:27:25AM -0800, Junio C Hamano wrote:
 
-> Does anyone know how to programmatically get the upstream/parent
-> branch of a branch?
+> I imagine that web developers may want to use a textconv filter that
+> replaces ">" with "\n>" on the HTML files their designer-colleagues throw
+> in the source tree to make "git log -p" of the whole project easier to
 
-I do not think there is any plumbing facility to get that information, as
-such "upstream/parent" concept did not exist back then when building the
-whole Porcelain by scripting was the norm.
+Hrm, didn't you argue against textconv'ing non-binary contents earlier
+in the cycle? At any rate, I agree that is a reasonable use. Maybe a
+better name would have been "normalize" or "canonicalize".
 
-This should give "git branch -v -v it" to show the remote tracking
-branch that is merged when "git pull" without any other parameters is
-issued while on branch "it".
+> follow.  When the developers would want to suggest improvements to what
+> their designer-colleagues did, however, by running "git diff --stat -p" in
+> their dirty work tree to produce a patch (like I just did just now,
+> visible from the mnemonic prefixes below), they would want to disable
+> textconv temporarily to get an appliable patch with --no-textconv option.
 
-Obviously untested.
+Yep, exactly. I use "git diff >patch" all the time instead of
+format-patch.
 
- builtin-branch.c |   26 +++++++++++++++-----------
- 1 files changed, 15 insertions(+), 11 deletions(-)
+> You raised an intriguing possibility to use textconv in blame.  It would
+> also be useful if we allowed "git show --textconv $blob" to pass the blob
+> via textconv filter and any other transformation controlled by the
+> attributes mechanism..  When "git show" sees the above command line, it
+> only knows the blob object name and not the path, so we may need to allow
+> a new option to tell the command to pretend as if the content came from a
+> path, perhaps with a syntax like:
+> 
+> 	$ git show --attribute-path=a/b/c $blob
+> 	$ git show --attribute-path=a/b/c --textconv $blob
 
-diff --git c/builtin-branch.c w/builtin-branch.c
-index 494cbac..565d99c 100644
---- c/builtin-branch.c
-+++ w/builtin-branch.c
-@@ -279,11 +279,15 @@ static int ref_cmp(const void *r1, const void *r2)
- 	return strcmp(c1->name, c2->name);
- }
- 
--static void fill_tracking_info(struct strbuf *stat, const char *branch_name)
-+static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
-+			       int verbosity)
- {
- 	int ours, theirs;
- 	struct branch *branch = branch_get(branch_name);
- 
-+	if (verbosity > 1 && branch->merge[0]->dst)
-+		strbuf_addf(stat, "(follows %s) ", branch->merge[0]->dst);
-+
- 	if (!stat_tracking_info(branch, &ours, &theirs) || (!ours && !theirs))
- 		return;
- 	if (!ours)
-@@ -305,7 +309,7 @@ static int matches_merge_filter(struct commit *commit)
- 	return (is_merged == (merge_filter == SHOW_MERGED));
- }
- 
--static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
-+static void print_ref_item(struct ref_item *item, int maxwidth, int verbosity,
- 			   int abbrev, int current)
- {
- 	char c;
-@@ -333,7 +337,7 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 		color = COLOR_BRANCH_CURRENT;
- 	}
- 
--	if (verbose) {
-+	if (verbosity > 0) {
- 		struct strbuf subject = STRBUF_INIT, stat = STRBUF_INIT;
- 		const char *sub = " **** invalid ref ****";
- 
-@@ -345,7 +349,7 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 		}
- 
- 		if (item->kind == REF_LOCAL_BRANCH)
--			fill_tracking_info(&stat, item->name);
-+			fill_tracking_info(&stat, item->name, verbosity);
- 
- 		printf("%c %s%-*s%s %s %s%s\n", c, branch_get_color(color),
- 		       maxwidth, item->name,
-@@ -373,7 +377,7 @@ static int calc_maxwidth(struct ref_list *refs)
- 	return w;
- }
- 
--static void print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit)
-+static void print_ref_list(int kinds, int detached, int verbosity, int abbrev, struct commit_list *with_commit)
- {
- 	int i;
- 	struct ref_list ref_list;
-@@ -393,7 +397,7 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
- 				   (struct object *) filter, "");
- 		ref_list.revs.limited = 1;
- 		prepare_revision_walk(&ref_list.revs);
--		if (verbose)
-+		if (verbosity > 0)
- 			ref_list.maxwidth = calc_maxwidth(&ref_list);
- 	}
- 
-@@ -407,7 +411,7 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
- 		item.commit = head_commit;
- 		if (strlen(item.name) > ref_list.maxwidth)
- 			ref_list.maxwidth = strlen(item.name);
--		print_ref_item(&item, ref_list.maxwidth, verbose, abbrev, 1);
-+		print_ref_item(&item, ref_list.maxwidth, verbosity, abbrev, 1);
- 		free(item.name);
- 	}
- 
-@@ -415,7 +419,7 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
- 		int current = !detached &&
- 			(ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
- 			!strcmp(ref_list.list[i].name, head);
--		print_ref_item(&ref_list.list[i], ref_list.maxwidth, verbose,
-+		print_ref_item(&ref_list.list[i], ref_list.maxwidth, verbosity,
- 			       abbrev, current);
- 	}
- 
-@@ -498,7 +502,7 @@ static int opt_parse_merge_filter(const struct option *opt, const char *arg, int
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
- 	int delete = 0, rename = 0, force_create = 0;
--	int verbose = 0, abbrev = DEFAULT_ABBREV, detached = 0;
-+	int verbosity = 0, abbrev = DEFAULT_ABBREV, detached = 0;
- 	int reflog = 0;
- 	enum branch_track track;
- 	int kinds = REF_LOCAL_BRANCH;
-@@ -506,7 +510,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 
- 	struct option options[] = {
- 		OPT_GROUP("Generic options"),
--		OPT__VERBOSE(&verbose),
-+		OPT__VERBOSITY(&verbosity),
- 		OPT_SET_INT( 0 , "track",  &track, "set up tracking mode (see git-pull(1))",
- 			BRANCH_TRACK_EXPLICIT),
- 		OPT_BOOLEAN( 0 , "color",  &branch_use_color, "use colored output"),
-@@ -577,7 +581,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (delete)
- 		return delete_branches(argc, argv, delete > 1, kinds);
- 	else if (argc == 0)
--		print_ref_list(kinds, detached, verbose, abbrev, with_commit);
-+		print_ref_list(kinds, detached, verbosity, abbrev, with_commit);
- 	else if (rename && (argc == 1))
- 		rename_branch(head, argv[0], rename > 1);
- 	else if (rename && (argc == 2))
+I think that makes sense. If you are going to implement a "use this as
+the attribute path" feature, though, you might also want just "use these
+attributes" which I can imagine being simpler in some cases. Like:
+
+  $ git show --attribute diff=whatever $blob
+
+But on the subject of "other places to see textconv", another one I
+considered was git log -S. I haven't looked to see if it even checks
+binary files at all, but certainly if I was searching for some text
+content I would want to find it in the text version (and depending on
+the file format, there may be other binary cruft preventing you from
+finding it in the binary version at all).
+
+The series I posted was to show the text in gitk diffs. However, it does
+nothing for finding text in gitk's "find commits introducing this
+string", which I assume just uses git's pickaxe.
+
+Unfortunately, it would probably be painfully slow. But still better
+than nothing. One enhancement for textconv that I am considering is to
+name the tempfiles based on the blob sha1. Then a smart helper could
+cache expensive conversions if it wanted (and dumb helpers would
+obviously just ignore the filename).
+
+Side note: For one use case, storing word processor documents, this
+approach seems sensible. But for my jpg example, it almost seems that
+I could use git more efficiently by having two files: one with the exif
+text, and one with the image content. And then I could "build" the
+resulting tagged jpgs by combining the two, but operations on the text
+would be very efficient. The downside, of course, being that the "build"
+step is annoying, and consumes a ton of disk space. But it just occurred
+to me as an alternate way to think about the use case.
+
+> @@ -133,7 +133,8 @@ on.
+>    contents can be munged into human readable form and the difference
+>    between the results of the conversion can be viewed (obviously this
+>    cannot produce a patch that can be applied, so this is disabled in
+> -  format-patch among other things).
+> +  format-patch and plumbing, but if you really wanted to, you can enable
+> +  it by giving them --textconv command line option explicitly).
+
+I wonder if we want to word this even more strongly: --textconv is there
+and you can play with it if you want, but we are not promising that it
+is part of the stable API yet.
+
+-Peff
