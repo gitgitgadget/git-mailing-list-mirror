@@ -1,139 +1,76 @@
-From: "R. Tyler Ballance" <tyler@slide.com>
-Subject: Re: [PATCH/RFC] Allow writing loose objects that are corrupted in
-	a pack file
-Date: Tue, 09 Dec 2008 01:02:19 -0800
-Organization: Slide, Inc.
-Message-ID: <1228813339.18611.35.camel@starfruit.local>
-References: <20081209093627.77039a1f@perceptron>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Forcing --no-ff on pull
+Date: Tue, 09 Dec 2008 01:46:05 -0800 (PST)
+Message-ID: <m3vdtthebu.fsf@localhost.localdomain>
+References: <1228815240.18611.48.camel@starfruit.local>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-L77nzp0zWQHRTddpjw3n"
-Cc: Git ML <git@vger.kernel.org>
-To: Jan =?ISO-8859-1?Q?Kr=FCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Tue Dec 09 10:42:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "R. Tyler Ballance" <tyler@slide.com>
+X-From: git-owner@vger.kernel.org Tue Dec 09 10:47:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9z6X-0000GZ-NS
-	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 10:42:10 +0100
+	id 1L9zBi-0001uk-Dj
+	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 10:47:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752517AbYLIJkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2008 04:40:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752515AbYLIJkq
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 04:40:46 -0500
-Received: from mx0.slide.com ([208.76.68.7]:48501 "EHLO mx0.slide.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752472AbYLIJkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2008 04:40:45 -0500
+	id S1752462AbYLIJqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2008 04:46:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752443AbYLIJqK
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 04:46:10 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:37185 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751486AbYLIJqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2008 04:46:08 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so1023030ugf.37
+        for <git@vger.kernel.org>; Tue, 09 Dec 2008 01:46:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=slide.com; s=slideinc; h=Subject:From:To:Date:Message-Id; bh=W
-	qryX7r/eyHEf/whJjQs3lQ5XmlSqi05YCPMX+6g9oU=; b=iQzTzdpHTSbQU41nx
-	nd97kG5u63JzhKnsV4rZ/DeGHQS9c2svLgLYyvjiKUOyc8EACA2nosGOjYW0uU/0
-	L6gS0TKjQWs/V721HPLKEjye5jfaZHtTIho8/QTpKSuLLTqZR7UfJLpp2eYFNwEp
-	pELWx4u4kZJ6JhhIBIU/3NVFXs=
-Received: from nat3.slide.com ([208.76.69.126]:49876 helo=calculon.corp.slide.com)
-	by mx0.slide.com with esmtp (Exim 4.69 #1)
-	id 1L9yU1-00037P-Kv; Tue, 09 Dec 2008 01:02:21 -0800
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by calculon.corp.slide.com (Postfix) with ESMTP id 9707EA6F0002;
-	Tue,  9 Dec 2008 01:02:21 -0800 (PST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -3.159
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.159 tagged_above=-10 required=6.6
-	tests=[AWL=-0.660, BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from calculon.corp.slide.com ([127.0.0.1])
-	by localhost (calculon.corp.slide.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6YHF6P8ModiO; Tue,  9 Dec 2008 01:02:21 -0800 (PST)
-Received: from [10.12.0.194] (unknown [10.12.0.194])
-	by calculon.corp.slide.com (Postfix) with ESMTP id 1CC48A6F0001;
-	Tue,  9 Dec 2008 01:02:21 -0800 (PST)
-In-Reply-To: <20081209093627.77039a1f@perceptron>
-X-Mailer: Evolution 2.22.1.1 
-X-Content-Bypass: Bypassed by sending host IP
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=dvqOiTsScVS1bAiRWbZMsQYDvbkIvZDmGqEiWxe+A0A=;
+        b=LYrs4u70uep+buSMPjQrBtgJ6omuHzhELbGBJLJ2pnqVpByUNJohIv4fpwJ4V50Kt8
+         wpQPQqKGlM0xIo72uLMsB5spdWEVwlLlJsVq1v9F94xqzokvrinYvysix8wtsZ9TiLbd
+         oO9C5FDZt+fwvsFhqcyiEtyW/L8beA0N9sxHk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=H2LpIMabT2utrbUUbPww3EjP+iHwpVj1B9c5kdNfGZ21sMMMaJ5BdNFiYfMyC671KH
+         WSUa9sJJKZ8Ltj8qaqca738mX5qji14WnDJClxMYh74OVjYVZrKX+5DqQVGwXcvaq0gR
+         7do+55wGOhtDTy2fsWAxXLxAVekBxOrUf61nk=
+Received: by 10.67.96.9 with SMTP id y9mr3093640ugl.64.1228815966805;
+        Tue, 09 Dec 2008 01:46:06 -0800 (PST)
+Received: from localhost.localdomain (abwb7.neoplus.adsl.tpnet.pl [83.8.225.7])
+        by mx.google.com with ESMTPS id k2sm6652305ugf.21.2008.12.09.01.46.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Dec 2008 01:46:05 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mB99ja0p002001;
+	Tue, 9 Dec 2008 10:45:41 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mB99jP9v001996;
+	Tue, 9 Dec 2008 10:45:25 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1228815240.18611.48.camel@starfruit.local>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102615>
 
+"R. Tyler Ballance" <tyler@slide.com> writes:
 
---=-L77nzp0zWQHRTddpjw3n
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+> Is there a header macro I can define or a config option I could define
+> to make --no-ff on `git pull` implicit instead of explicit? Making sure
+> we are always generating merge commits as a "just-in-case" safe guard
+> about merge-happy developers who think after hitting enter? :)
 
-On Tue, 2008-12-09 at 09:36 +0100, Jan Kr=C3=BCger wrote:
-> For fixing a corrupted repository by using backup copies of individual
-> files, allow write_sha1_file() to write loose files even if the object
-> already exists in a pack file, but only if the existing entry is marked
-> as corrupted.
->=20
-> Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
-> ---
->=20
-> On IRC I talked to rtyler who had a corrupted pack file and plenty of
-> object backups by way of cloned repositories. We decided to try
-> extracting the corrupted objects from the other object database and
-> injecting them into the broken repo as loose objects, but this failed
-> because sha1_write_file() refuses to write loose objects that are
-> already present in a pack file.
-
-Figured I'd chime in here with some anecdotal evidence with the error
-condition that I hit shortly after Jan sent the email.
-
-        xdev3 (master-release)% git pull --no-ff . master
-        From .
-         * branch            master     -> FETCH_HEAD
-        error: failed to read object
-        befd9bc4d184b4383569909e4d245f3337c1f8ed at offset 1415784644
-        from .git/objects/pack/pack-f7eb06e39f01b528c1d1a2c413ac51b31b8515a=
-a.pack
-        fatal: object befd9bc4d184b4383569909e4d245f3337c1f8ed is
-        corrupted
-        Merge with strategy recursive failed.
-        xdev3 (master-release)%
-
-I ran that command a couple of times to make sure it wasn't a fluke, I
-repeated the error numerous times (without switching branches or pulling
-from a remote). This pull was done with a slightly modified internal
-version of v1.6.0.4
-        xdev3 (master-release)% git --version
-        git version 1.6.0.4-kb1
-        xdev3 (master-release)
-       =20
-
-After consulting with Jan, I tried running the same command with a
-modified version of v1.6.0.5 with Jan's patch
-        xdev3 (master-release)% ~/basket/bin/git pull --no-ff . master
-        From .
-         * branch            master     -> FETCH_HEAD
-        Merge made by recursive.
-         ** TOP SECRET MERGES! ;) **
-       =20
-         13 files changed, 51 insertions(+), 21 deletions(-)
-        xdev3 (master-release)%
-       =20
-       =20
-Purely anecdotal as I'm not entirely clear what the hell is actually going =
-on here :)
-
-
-Cheers
---=20
--R. Tyler Ballance
-Slide, Inc.
-
---=-L77nzp0zWQHRTddpjw3n
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkk+NBsACgkQFCbH3D9R4W/1CwCeLFbJBW/7PH7RpnjllkQzQjV0
-n+QAnR+hIFbwD1ryHxMct3qxwSooHZEe
-=ZC2Q
------END PGP SIGNATURE-----
-
---=-L77nzp0zWQHRTddpjw3n--
+branch.<name>.mergeoptions ?
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
