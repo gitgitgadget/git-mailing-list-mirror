@@ -1,78 +1,84 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Forcing --no-ff on pull
-Date: Tue, 09 Dec 2008 11:00:30 +0100
-Message-ID: <493E41BE.4050809@viscovery.net>
-References: <1228815240.18611.48.camel@starfruit.local>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-bpush: Pushing to a bundle
+Date: Tue, 9 Dec 2008 11:07:37 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812091100470.2916@eeepc-johanness>
+References: <adf1fd3d0812090149m158fcb9as15bacce58c61a1a3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Tue Dec 09 11:02:27 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="658432-1391502559-1228817258=:2916"
+Cc: git list <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Tue Dec 09 11:07:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9zQ3-0006J9-S2
-	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 11:02:20 +0100
+	id 1L9zVE-0007lz-US
+	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 11:07:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751216AbYLIKA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2008 05:00:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbYLIKA1
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 05:00:27 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:22644 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750922AbYLIKA0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2008 05:00:26 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1L9zO7-00050K-Dr; Tue, 09 Dec 2008 11:00:19 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 35AFBA865; Tue,  9 Dec 2008 11:00:19 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <1228815240.18611.48.camel@starfruit.local>
-X-Spam-Score: -1.4 (-)
-X-Spam-Report: Spam detection software, running on the system "lilzmailsa01.liwest.at", has
-	identified this incoming email as possible spam.  The original message
-	has been attached to this so you can view it (if it isn't spam) or label
-	similar future email.  If you have any questions, see
-	the administrator of that system for details.
-	Content preview:  R. Tyler Ballance schrieb: > The most common use-case involves
-	a user merging a project branch into a > stabilization branch (`git checkout
-	stable && git pull . project`) in > such a way that no merge commit is generated.
-	Of course, without > thinking they'll push these changes up to the centralized
-	repository. > Not 15 minutes later they realize "ruh roh! I didn't want to
-	do that" > and become very frustrated that they have to resort to asking
-	for help > or hand-reverting N number of commits. [...] 
-	Content analysis details:   (-1.4 points, 7.0 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+	id S1752581AbYLIKGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2008 05:06:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbYLIKGX
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 05:06:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41323 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751733AbYLIKGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2008 05:06:22 -0500
+Received: (qmail invoked by alias); 09 Dec 2008 10:06:19 -0000
+Received: from ini-firewall.unizh.ch (EHLO eeepc-johanness.st-andrews.ac.uk) [130.60.5.218]
+  by mail.gmx.net (mp016) with SMTP; 09 Dec 2008 11:06:19 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+AZW8d9m2AbesUUPz1gVTwY1yQdg43cmS4dArJOG
+	s5QOqqmYHqinbO
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <adf1fd3d0812090149m158fcb9as15bacce58c61a1a3@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102619>
 
-R. Tyler Ballance schrieb:
-> The most common use-case involves a user merging a project branch into a
-> stabilization branch (`git checkout stable && git pull . project`) in
-> such a way that no merge commit is generated. Of course, without
-> thinking they'll push these changes up to the centralized repository.
-> Not 15 minutes later they realize "ruh roh! I didn't want to do that"
-> and become very frustrated that they have to resort to asking for help
-> or hand-reverting N number of commits. 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Is the problem
+--658432-1391502559-1228817258=:2916
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
- * that there is no merge commit, or
+Hi,
 
- * that you have to undo N commits instead of just one?
+On Tue, 9 Dec 2008, Santi Béjar wrote:
 
-The latter is probably helped by
+> The basic idea is:
+> 
+> - Easily create bundles with the current branch.
+> - Be able to push to defined bundles in remote.<remote>.url
+> - Only add new objects by default (do not lose objects)
 
-   $ git reset --hard ORIG_HEAD && git push -f origin
+That is probably not what people need.  Usually, when bundles are sent 
+around, you need _incremental_ bundles.  IOW if you already have a bundle, 
+you want to create a new bundle that contains everything that is new, _in 
+addition_ to the existing bundle.
 
--- Hannes
+> while [ $# != 0 ] ; do
+
+Heh, I did not realize just how _used_ I got to the conventions in Git's 
+shell programming, until I thought "Should this not use 'test' instead 
+of brackets?"
+
+> while [ $# != 0 ] ; do
+>     refs="$refs$LF$1" && shift
+> done
+
+That is equivalent to refs="$*", no?
+
+Anyway, I found reading your shell script quite hard, because of excessive 
+use of brackets and single line && chains (which lack proper error 
+handling, BTW).
+
+Ciao,
+Dscho
+
+--658432-1391502559-1228817258=:2916--
