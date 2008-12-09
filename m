@@ -1,69 +1,81 @@
-From: "Tim Visher" <tim.visher@gmail.com>
-Subject: Re: Problems Cloning an SVN repo.
-Date: Tue, 9 Dec 2008 14:41:26 -0500
-Message-ID: <c115fd3c0812091141m21738cew428872e3f9d6df97@mail.gmail.com>
-References: <c115fd3c0812090954n6e5e527anadf04936e1ca01f@mail.gmail.com>
-	 <eaa105840812091009k292ced25vcd638808c913b76@mail.gmail.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: How to clone git repository with git-svn meta-data included?
+Date: Tue, 09 Dec 2008 22:08:54 +1300
+Message-ID: <1228813734.28186.77.camel@maia.lan>
+References: <493A6CEC.4060601@tuffmail.com>
+	 <eaa105840812070857i27f8e920keaba3f92f5260b38@mail.gmail.com>
+	 <493C1F36.7050504@tuffmail.com>
+	 <eaa105840812071230l5e8d54bcg21b36019711bc3cd@mail.gmail.com>
+	 <493C47FD.4080302@tuffmail.com>	 <493D1CC2.8050407@drmicha.warpmail.net>
+	 <493D66BB.3060907@tuffmail.com>
+	 <eaa105840812081040s1036b79an9914c1f74d6d7f6a@mail.gmail.com>
+	 <493D6AE9.6020504@tuffmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Peter Harris" <git@peter.is-a-geek.org>
-X-From: git-owner@vger.kernel.org Tue Dec 09 20:43:16 2008
+Cc: Peter Harris <peter@peter.is-a-geek.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Grzegorz Kossakowski <grek@tuffmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 09 20:48:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LA8Tn-0004mY-Ri
-	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 20:42:48 +0100
+	id 1LA8Yw-000736-Ai
+	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 20:48:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754578AbYLITl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2008 14:41:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754519AbYLITl3
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 14:41:29 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:39058 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754363AbYLITl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2008 14:41:28 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so65452yxm.1
-        for <git@vger.kernel.org>; Tue, 09 Dec 2008 11:41:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=OG0BjxHx/g90lr4+Hbx+hvW2Hn8b6L/QHWlZnKyiGmk=;
-        b=v7VsAKBBXEtYQCjzbhEu62+SXADVycOIsoZfb5zNNWoe+y1tExUEtFJEJLOrh32Bvq
-         dQ8f68z1AYOE2JK7FVA6FEXNSAL4Kl0Thr1NAei9MhaszE4RqqIpMWOAelm12w/PUTn6
-         9oHLMzcRBoAglpjE9ItgxkLiKK32Ht3ob9adg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=QZ6OSPNzEEx5eORdxqEy9ksm4/q/p2O+S+MobyNJvpytyZUcBw1tKEz8C4Fj6VXdqu
-         AZkNLLpey3WZf4fyJ0hPydYtvvpOlomaP8wKSC+f+TpDUpoL7Zrn+otG38aAJ8GSn4qb
-         LQQHZhQ5s7paVvPygannH0qtyS9dbJl8Md2pg=
-Received: by 10.100.196.17 with SMTP id t17mr463598anf.84.1228851686994;
-        Tue, 09 Dec 2008 11:41:26 -0800 (PST)
-Received: by 10.100.198.2 with HTTP; Tue, 9 Dec 2008 11:41:26 -0800 (PST)
-In-Reply-To: <eaa105840812091009k292ced25vcd638808c913b76@mail.gmail.com>
-Content-Disposition: inline
+	id S1754603AbYLITqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2008 14:46:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754599AbYLITqk
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 14:46:40 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:43943 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754603AbYLITqi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2008 14:46:38 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id F3EC121C3D4; Wed, 10 Dec 2008 08:46:36 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.6 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
+	DATE_IN_PAST_06_12 autolearn=no version=3.2.5
+Received: from [127.0.0.1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 3DEDA21C3B9;
+	Wed, 10 Dec 2008 08:46:32 +1300 (NZDT)
+In-Reply-To: <493D6AE9.6020504@tuffmail.com>
+X-Mailer: Evolution 2.22.3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102652>
 
-> Did you install the subversion-perl cygwin package?
+On Mon, 2008-12-08 at 19:43 +0100, Grzegorz Kossakowski wrote:
+> > Yes. The rfoo = sha1hash part is git-svn rebuilding its index.
+> > "Current branch master is up to date" is git-svn calling "git rebase
+> > <svn-branch>", and git saying that there is nothing to do, since there
+> > have been no svn commits to that branch since the last time you ran
+> > git svn rebase (or since you cloned the git mirror, or since the last
+> > time the git mirror pulled from svn).
+> 
+> Thanks for confirmation and explanation.
+> 
+> The remaining question is who should address this issue with non-existing trunk ref? Should I ask
+> Jukka, who maintains svn mirrors, to put instruction into his scripts that will add trunk reference?
 
-That was it.  Thanks everyone!
+It's up to the git-svn user to make sure that they prepare the refs to
+be what git-svn expects.  This is something probably requiring more
+documentation and/or git-svn features to be easier.
 
--- 
+> Would it be the best practice?
 
-In Christ,
+Well, obscure stuff should never really be best practice.  The best practice
+is to have a single git repository that is where the svn -> git migration
+happens.  And git-svn could perhaps auto-init based on information in the
+commit log or something.  Best practice is to enhance the tool to work the
+way it Should(tm) :)
 
-Timmy V.
-
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+Sam
