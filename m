@@ -1,91 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-bpush: Pushing to a bundle
-Date: Tue, 09 Dec 2008 09:32:18 -0800
-Message-ID: <7voczl45lp.fsf@gitster.siamese.dyndns.org>
-References: <adf1fd3d0812090149m158fcb9as15bacce58c61a1a3@mail.gmail.com>
- <alpine.DEB.1.00.0812091100470.2916@eeepc-johanness>
- <adf1fd3d0812090221t2264a4f9i87b5e23be897ee84@mail.gmail.com>
+From: "Tim Visher" <tim.visher@gmail.com>
+Subject: Problems Cloning an SVN repo.
+Date: Tue, 9 Dec 2008 12:54:20 -0500
+Message-ID: <c115fd3c0812090954n6e5e527anadf04936e1ca01f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"git list" <git@vger.kernel.org>
-To: =?utf-8?Q?Santi_B=C3=A9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Tue Dec 09 18:34:14 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 09 18:56:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LA6Sw-0002ww-1e
-	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 18:33:46 +0100
+	id 1LA6oO-0003jM-UV
+	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 18:55:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753045AbYLIRc2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2008 12:32:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106AbYLIRc2
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 12:32:28 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60574 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753045AbYLIRc1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Dec 2008 12:32:27 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 11F28187CA;
-	Tue,  9 Dec 2008 12:32:26 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 00BCC187BE; Tue, 
- 9 Dec 2008 12:32:20 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 58656598-C617-11DD-ACCD-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1754965AbYLIRyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2008 12:54:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754372AbYLIRyY
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 12:54:24 -0500
+Received: from yw-out-2324.google.com ([74.125.46.30]:59768 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754081AbYLIRyW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2008 12:54:22 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so40349ywe.1
+        for <git@vger.kernel.org>; Tue, 09 Dec 2008 09:54:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=I70gMFNWuUEbOSwWyisUEeqR5pnxnRNceoZ+RKPYeUM=;
+        b=ZruPRBWEOnOnT26ISraTzkMwpWJ8DjM7P77GLQVl7SCdpAx46RRQjfvAHlkCmydxRC
+         B7dpnPnZCSekO2qZC8TJpL6AinQFPBzjrTqww8zhyY61/l6PWhGrOL8b6lVNudgGU2yW
+         ughccBq8xELZ0ejNk+THzKiiWoS4+J71Bq8p4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=PMJ+nnCRqRgPS+rU2rzz9gbrRwCesNO0O/RTa0KVmdcyiwJ5jA16MXZNGOnkzq6CSB
+         hCziD/8bQyv/Z+jJzMcE0g7RXVRFC3v7+ouY2Q06EQiV38GaC7cKrpSAXeZxiT4DCsBE
+         j5twJ/igQ+QkZPZLIz7uRikeHln6H3S8cZT+c=
+Received: by 10.100.96.9 with SMTP id t9mr344778anb.109.1228845260834;
+        Tue, 09 Dec 2008 09:54:20 -0800 (PST)
+Received: by 10.100.198.2 with HTTP; Tue, 9 Dec 2008 09:54:20 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102643>
 
-"Santi B=C3=A9jar" <santi@agolina.net> writes:
+Hello everyone,
 
-> I do not find convenient strictly incremental bundles, because then
-> you (or the other people) needs to fetch every single bundle. What I
-> do is add new objects until the bundle is too big and then create a
-> bundle with a new base. This way you don't have to worry if the other
-> person has applied the last bundle or not.
+I'm trying to use `git svn clone` to begin to work with a project
+stored in subversion through git for the work I do on the project
+locally.  I installed git through cygwin and I'm getting the following
+error when executing the command.
 
-You both have good points.  I sort of tend to side with your argument f=
-rom
-convenience point of view, if only because that resembles the way how
-people traditionally arrange incremental backups "a full dump on Sunday
-night, and every day incremental relative to the last full dump".  Dsch=
-o's
-suggestion is akin to "a full dump on Sunday night, and every day
-incremental relative to the previous day".  Both form obviously can
-recreate the same contents, but often "incremental since the last full
-synchronization point", even though it may make bigger dumps, is easier=
- to
-handle for humans.
+    Can't locate SVN/Core.pm in @INC (@INC contains:
+/usr/lib/perl5/site_perl/5.10 /usr/lib/perl5/5.10/i686-cygwin
+/usr/lib/perl5/5.10 /usr/lib/perl5/site_perl/5.10/i686-cygwin
+/usr/lib/perl5/vendor_perl/5.10/i686-cygwin
+/usr/lib/perl5/vendor_perl/5.10 /usr/lib/perl5/site_perl/5.8
+/usr/lib/perl5/vendor_perl/5.8 .) at /usr/sbin/git-core//git-svn line
+29.
 
->>  IOW if you already have a bundle,
->> you want to create a new bundle that contains everything that is new=
-, _in
->> addition_ to the existing bundle.
->
->>> while [ $# !=3D 0 ] ; do
->>
->> Heh, I did not realize just how _used_ I got to the conventions in G=
-it's
->> shell programming, until I thought "Should this not use 'test' inste=
-ad
->> of brackets?"
+Any help?
 
-Now I see you are improving ;-)
+-- 
 
->>> while [ $# !=3D 0 ] ; do
->>>     refs=3D"$refs$LF$1" && shift
->>> done
->>
->> That is equivalent to refs=3D"$*", no?
->
-> Almost, IFS is set to line-feed so I needed to put $LF instead of spa=
-ces.
+In Christ,
 
-If $IFS is set to LF, "$*" will be $1, $2, $3 concatenated with LF in
-between.  The first character in $IFS is used for that purpose..
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
