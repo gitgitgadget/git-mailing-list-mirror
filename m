@@ -1,125 +1,92 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Forcing --no-ff on pull
-Date: Tue, 9 Dec 2008 17:32:36 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0812091651360.19665@iabervon.org>
-References: <1228815240.18611.48.camel@starfruit.local>  <20081209191704.6117@nanako3.lavabit.com> <1228819087.18611.73.camel@starfruit.local>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 0/3] gitweb: Improve git_blame in preparation for incremental
+	blame
+Date: Tue, 09 Dec 2008 23:43:23 +0100
+Message-ID: <20081209223703.28106.29198.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1969388103-1228861956=:19665"
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Tue Dec 09 23:34:03 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Luben Tuikov <ltuikov@yahoo.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 09 23:45:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAB9Q-0005Td-FF
-	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 23:33:56 +0100
+	id 1LABJt-0001JM-5j
+	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 23:44:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754061AbYLIWcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2008 17:32:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753609AbYLIWcj
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 17:32:39 -0500
-Received: from iabervon.org ([66.92.72.58]:53397 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753362AbYLIWci (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2008 17:32:38 -0500
-Received: (qmail 1683 invoked by uid 1000); 9 Dec 2008 22:32:36 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 9 Dec 2008 22:32:36 -0000
-In-Reply-To: <1228819087.18611.73.camel@starfruit.local>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754222AbYLIWn2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2008 17:43:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753988AbYLIWn2
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 17:43:28 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:21772 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754044AbYLIWn1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2008 17:43:27 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so78681ugf.37
+        for <git@vger.kernel.org>; Tue, 09 Dec 2008 14:43:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:cc
+         :date:message-id:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=b1ptPkv2l7RHl+C9EuG0L02qRmK1YkYt+imzGbcQepg=;
+        b=GSIR+iU3B0fL9QqWUU/edXrW37CCIdPSScheOFBaIFg/MzMENhd9hu6WYILCX8b58s
+         ydMJNvMJxR12sMza332ILgWzcNHkaSb2/JDKr076TIS1yHjtBSQQtG3qHTubt0us6ZX2
+         Hf0gvd9n8JRidzce5qy7IQBye4WO+tlxtTwrc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:cc:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        b=LXBFGE+vS5XRxYS+avDubND48nCdbor+4UbIt0IZT3vMXPnWDFqWOaRAcc5R0erfm8
+         h8lQflKsaED4x/x0fvzhs2S80rcoj4WdY0YkEpfc0kBcSyeLPZaNE9nGEebNyCElzXNc
+         TzjxKUv4vfjgNWY/ejkuqqN0oJKKADacDJYi8=
+Received: by 10.86.96.18 with SMTP id t18mr294752fgb.56.1228862605168;
+        Tue, 09 Dec 2008 14:43:25 -0800 (PST)
+Received: from localhost.localdomain (absh60.neoplus.adsl.tpnet.pl [83.8.127.60])
+        by mx.google.com with ESMTPS id d4sm1017545fga.58.2008.12.09.14.43.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Dec 2008 14:43:23 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mB9MhNmB028179;
+	Tue, 9 Dec 2008 23:43:25 +0100
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102657>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The following series implements a few improvements to git_blame code
+and 'blame' view output to prepare for WIP/RFC patch adding incremental
+blame output to gitweb using AJAX (JavaScript and XMLHttpRequest); the
+code in question is based on code by Petr Baudis from 26 Aug 2007
+  http://permalink.gmane.org/gmane.comp.version-control.git/56657
+which in turn was based on Fredrik Kuivinen proof of concept patch.
 
---1547844168-1969388103-1228861956=:19665
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
 
-On Tue, 9 Dec 2008, R. Tyler Ballance wrote:
+The first patch in series (moving id to tr element) is needed in
+blame_incremental, and it makes it easier to use DOM to manipulate
+gitweb blame output.
 
-> On Tue, 2008-12-09 at 19:17 +0900, Nanako Shiraishi wrote:
-> > Quoting "R. Tyler Ballance" <tyler@slide.com>:
-> > 
-> > > The most common use-case involves a user merging a project branch into a
-> > > stabilization branch (`git checkout stable && git pull . project`) in
-> > > such a way that no merge commit is generated. Of course, without
-> > > thinking they'll push these changes up to the centralized repository.
-> > > Not 15 minutes later they realize "ruh roh! I didn't want to do that"
-> > 
-> > Why does the user not want to fast-forward, if the merge she wants to do is actually a fast-forward?
-> 
-> I agree with you, this is more about preventing coworkers who are too
-> lazy to understand the entirety of what they're doing from hurting the
-> workflow of "the rest of us". It's a technically solution to a people
-> problem (I understand technology far more than people ;))
-> 
-> Consider the following scenarion:
->   % git checkout -b project﻿
-> ﻿  % <work>
-> ﻿  % git commit -am "A"﻿
-> ﻿  % <work>
-> ﻿  % git commit -am "B"﻿
-> ﻿  % <work>
-> ﻿  % git commit -am "C"﻿
-> ﻿  % <work>
-> ﻿  % git commit -am "D"
-> ﻿﻿  % git checkout stable
-> ﻿﻿  % git pull . project
-> ﻿﻿  % <fast-forward>
-> ﻿﻿  % git push origin stable
-> ﻿﻿
-> At this point, QA is involved and what can happen is that QA realizes
-> that this code is *not* stable and *never* should have been brought into
-> the stable branch.
+Second patch is about what I have noticed when examining git_blame
+code.
 
-How do you prevent the (IMHO more likely) case of:
+The last patch is not necessarily required; but please tell me if it
+is to be accepted or to be dropped, to know whether to base
+incremental blame on it.
 
-% git checkout -b project
-% git checkout stable
-<fix some bug in stable>
-% git commit -a
-<forget to switch branches back>
-<work>
-% git commit -am "A"
-<work>
-% git commit -am "B"
-...
-% git push origin stable
+---
+Jakub Narebski (3):
+      gitweb: A bit of code cleanup in git_blame()
+      gitweb: Cache $parent_commit info in git_blame()
+      gitweb: Move 'lineno' id from link to row element in git_blame
 
-That is, the developer makes a whole bunch of inappropriate commits on 
-their stable branch instead of their project branch and then pushes it out 
-(perhaps as part of a push rule, or thinking only the bug fix went there). 
-I suspect that "pull" step there isn't the point where things are going 
-wrong.
+ gitweb/gitweb.perl |   84 ++++++++++++++++++++++++++++++----------------------
+ 1 files changed, 49 insertions(+), 35 deletions(-)
 
-If you've actually got QA in the process, have developers push to a 
-per-developer location and send a pull request to QA. QA can reject bad 
-changes instead of putting them into the stable branch at all, and then 
-they can reply to the pull requests with snide comments instead of having 
-to beat up the developers, because the developer doesn't inconvenience 
-anybody (except QA, whose job is to be inconvenienced by developers).
-
-> I'm less concerned at this point, the company switched entirely to Git
-> two weeks ago, with the history containing possible unwanted merges. I'm
-> more concerned however with LazyDeveloper inadvertently polluting stable
-> branches as LazyDeveloper does not yet fully grasp the concepts that Git
-> offers
-
-I think such developers are more likely to push some bad commits to 
-"stable" directly than they are to make their bad commits on a branch, 
-merge it (fast-forward or otherwise) and push the result. It's also easy 
-to discover:
-
-% git push origin project:stable
-
-And not generate a merge commit simply by virtue of not merging branches.
-
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-1969388103-1228861956=:19665--
+-- 
+Jakub Narebski
+ShadeHawk on #git
+Poland
