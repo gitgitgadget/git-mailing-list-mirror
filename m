@@ -1,68 +1,98 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: Forcing --no-ff on pull
-Date: Tue, 09 Dec 2008 19:17:04 +0900
-Message-ID: <20081209191704.6117@nanako3.lavabit.com>
-References: <1228815240.18611.48.camel@starfruit.local>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: git-bpush: Pushing to a bundle
+Date: Tue, 9 Dec 2008 11:21:36 +0100
+Message-ID: <adf1fd3d0812090221t2264a4f9i87b5e23be897ee84@mail.gmail.com>
+References: <adf1fd3d0812090149m158fcb9as15bacce58c61a1a3@mail.gmail.com>
+	 <alpine.DEB.1.00.0812091100470.2916@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Tue Dec 09 11:19:12 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git list" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 09 11:23:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1L9zgN-0002hc-Ls
-	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 11:19:12 +0100
+	id 1L9zk2-0003tn-Bm
+	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 11:22:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752356AbYLIKRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2008 05:17:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbYLIKRy
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 05:17:54 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:36767 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752273AbYLIKRx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2008 05:17:53 -0500
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 1E6C2C869F;
-	Tue,  9 Dec 2008 04:17:53 -0600 (CST)
-Received: from 9253.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id RC7XF7PGTXOH; Tue, 09 Dec 2008 04:17:53 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=QqsfRxqKXhG+VBYTAVIweUzE1CPEYQ3jBu3hBpR8fFfxsT5cGJVWUu430Z91R1rsUgVjfcEIdnFhy6G3U65o1iMUjFR4Q5bxbLvF3F6oz1Cz7s9R9CezN0tyNVxd7LESxLx+zHRvkLptbSMbw3uxXyVK1M/1K7AcWCdhOVg5uhI=;
-  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <1228815240.18611.48.camel@starfruit.local>
+	id S1752697AbYLIKVj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2008 05:21:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752695AbYLIKVj
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 05:21:39 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:26802 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752684AbYLIKVi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Dec 2008 05:21:38 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so775180nfc.21
+        for <git@vger.kernel.org>; Tue, 09 Dec 2008 02:21:37 -0800 (PST)
+Received: by 10.103.191.12 with SMTP id t12mr1636039mup.49.1228818096767;
+        Tue, 09 Dec 2008 02:21:36 -0800 (PST)
+Received: by 10.103.167.6 with HTTP; Tue, 9 Dec 2008 02:21:36 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0812091100470.2916@eeepc-johanness>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102622>
 
-Quoting "R. Tyler Ballance" <tyler@slide.com>:
+=46irst, thanks for the comments.
 
-> The most common use-case involves a user merging a project branch into a
-> stabilization branch (`git checkout stable && git pull . project`) in
-> such a way that no merge commit is generated. Of course, without
-> thinking they'll push these changes up to the centralized repository.
-> Not 15 minutes later they realize "ruh roh! I didn't want to do that"
+2008/12/9 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi,
+>
+> On Tue, 9 Dec 2008, Santi B=E9jar wrote:
+>
+>> The basic idea is:
+>>
+>> - Easily create bundles with the current branch.
+>> - Be able to push to defined bundles in remote.<remote>.url
+>> - Only add new objects by default (do not lose objects)
+>
+> That is probably not what people need.  Usually, when bundles are sen=
+t
+> around, you need _incremental_ bundles.
 
-Why does the user not want to fast-forward, if the merge she wants to do is actually a fast-forward?
+I do not find convenient strictly incremental bundles, because then
+you (or the other people) needs to fetch every single bundle. What I
+do is add new objects until the bundle is too big and then create a
+bundle with a new base. This way you don't have to worry if the other
+person has applied the last bundle or not.
 
-If you mean that the user merged branches in a wrong direction, how does it help her avoid such a mistake to unconditionally forbid fast-forward merges?  Doesn't people often do:
+>  IOW if you already have a bundle,
+> you want to create a new bundle that contains everything that is new,=
+ _in
+> addition_ to the existing bundle.
 
- Start on a topic branch, have a potentially bright idea...
- % git checkout -b experiment
- Hack on experiment branch.
- Happy because it indeed was an excellent idea.
- % git checkout topic
- % git pull . experiment
- % git branch -d experiement
+>> while [ $# !=3D 0 ] ; do
+>
+> Heh, I did not realize just how _used_ I got to the conventions in Gi=
+t's
+> shell programming, until I thought "Should this not use 'test' instea=
+d
+> of brackets?"
 
-If you forbid fast-forward merges, when they merge their successful experiment back to the original topic, it will leave an unwanted merge in the history.
+I don't have problems either way, I'll change to follow Git's conventio=
+ns.
 
-In other words, I do not think --no-ff is a right solution for the problem you are trying to solve.  Perhaps you would need a hook that prevents a merge from certain direction from taking place instead?
+>
+>> while [ $# !=3D 0 ] ; do
+>>     refs=3D"$refs$LF$1" && shift
+>> done
+>
+> That is equivalent to refs=3D"$*", no?
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Almost, IFS is set to line-feed so I needed to put $LF instead of space=
+s.
+
+>
+> Anyway, I found reading your shell script quite hard, because of exce=
+ssive
+> use of brackets and single line && chains (which lack proper error
+> handling, BTW).
+
+I've tried to catch errors, but maybe not enough.
+
+Santi
