@@ -1,104 +1,75 @@
-From: Jeff King <peff@peff.net>
+From: "Lars Hjemli" <lh@elementstorage.no>
 Subject: Re: Forcing --no-ff on pull
-Date: Tue, 9 Dec 2008 05:57:03 -0500
-Message-ID: <20081209105703.GA21536@coredump.intra.peff.net>
-References: <1228815240.18611.48.camel@starfruit.local> <20081209191704.6117@nanako3.lavabit.com> <1228819087.18611.73.camel@starfruit.local>
+Date: Tue, 9 Dec 2008 11:57:33 +0100
+Message-ID: <8c5c35580812090257w46dc3b75mc8f300ab396c82bd@mail.gmail.com>
+References: <1228815240.18611.48.camel@starfruit.local>
+	 <8c5c35580812090149lc6dd79cj60a9d23c18089557@mail.gmail.com>
+	 <1228817565.18611.54.camel@starfruit.local>
+	 <8c5c35580812090231u28076844nf5a9225349c20801@mail.gmail.com>
+	 <1228819557.18611.80.camel@starfruit.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Tue Dec 09 11:58:42 2008
+X-From: git-owner@vger.kernel.org Tue Dec 09 11:59:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LA0IU-0006MC-6a
-	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 11:58:34 +0100
+	id 1LA0Im-0006Sf-B6
+	for gcvg-git-2@gmane.org; Tue, 09 Dec 2008 11:58:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752219AbYLIK5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2008 05:57:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbYLIK5H
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 05:57:07 -0500
-Received: from peff.net ([208.65.91.99]:2848 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752089AbYLIK5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2008 05:57:06 -0500
-Received: (qmail 2069 invoked by uid 111); 9 Dec 2008 10:57:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 09 Dec 2008 05:57:04 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Dec 2008 05:57:03 -0500
+	id S1752361AbYLIK5f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2008 05:57:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752454AbYLIK5e
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 05:57:34 -0500
+Received: from wf-out-1314.google.com ([209.85.200.175]:40061 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752361AbYLIK5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2008 05:57:34 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so1756315wfd.4
+        for <git@vger.kernel.org>; Tue, 09 Dec 2008 02:57:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=LCkwJfYNURd8erxML8g9ugAWn0ESr1VmxpjEQNI/snQ=;
+        b=PZBhK75PCd4GM/rQj+kRq2MhxGRHLXGMc8M+9FTa6yIGPEYo6bepCk4H5uvKiFt7pT
+         nDXVB9QgpHwbC0pc3MaOgxBH+4PN2hRMW3eE0gkk96TmD2lbfDoRa6seQdEE/7nFc9D2
+         7cqNmd0COjYH46S1BGBVkDt0aOYbUIncDArzg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=FcXzQQ50SKxDqdYY5N7E8DlY/Zq0HdanWqxSESal3CtI7gfaJ70mS2Sjunb1Hao0W4
+         77ldNXaowjSFZTc1N3OUZQ/ISgiLW7dSEyflARvBGNFtvrqg5wc3MibjygGg/OoBlixn
+         kfG42Pc0Z8taCIw+tZF9bJrsT1u7L8i15LgV8=
+Received: by 10.114.25.3 with SMTP id 3mr3120805way.103.1228820253495;
+        Tue, 09 Dec 2008 02:57:33 -0800 (PST)
+Received: by 10.115.106.12 with HTTP; Tue, 9 Dec 2008 02:57:33 -0800 (PST)
+In-Reply-To: <1228819557.18611.80.camel@starfruit.local>
 Content-Disposition: inline
-In-Reply-To: <1228819087.18611.73.camel@starfruit.local>
+X-Google-Sender-Auth: f61bd3f14f75b52f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102627>
 
-On Tue, Dec 09, 2008 at 02:38:07AM -0800, R. Tyler Ballance wrote:
+On Tue, Dec 9, 2008 at 11:45, R. Tyler Ballance <tyler@slide.com> wrote:
+> Really hate to take this much bandwidth up on the mailing list over such
+> a silly problem, but after spending a week trying to /talk/ and educate
+> some folks, I feel drastic measures need to be taken ;)
 
-> At this point, QA is involved and what can happen is that QA realizes
-> that this code is *not* stable and *never* should have been brought into
-> the stable branch.
-> 
-> Now we have two options "block" the stable branch until LazyDeveloper
-> makes the appropriate changes to stabilize the branch again *OR* back
-> out LazyDeveloper's changes (A, B, C, D) and beat them up in the
-> alleyway :)
+A possible solution could be the "Integration manager workflow" described here:
 
-It sounds like the problem is that LazyDeveloper has the authority to
-push to the stable branch that everyone else pulls from, but can't be
-trusted with that authority (because he is pushing bad work).
+  http://whygitisbetterthanx.com/#any-workflow
 
-Maybe you would do better to invert your workflow:
+But it has the potential of confusing your co-devs ;-)
 
-  1. LazyDeveloper does some work on the 'foo' branch locally. Either
-     his work repo is accessible to everyone, or he pushes it to a
-     personal public repo (or a personal namespace within a shared
-     repo).
-
-  2. LazyDeveloper tells QA "check out foo, which should be ready for
-     integration."
-
-  3. QA pulls LazyDeveloper's foo. If it is OK, they merge and push to
-     the official "stable" branch. If it isn't, they reject and
-     LazyDeveloper fixes and goes back to step 2. LazyDeveloper is free
-     to reset, rewind, or rebase as appropriate, since nobody but QA has
-     ever even looked at this branch (and once they reached the "reject"
-     conclusion, they don't care anymore).
-
-So everyone builds off of the official "stable" branch, which by
-definition is stuff that has passed through QA.
-
-> Given the nature of our work, we have a stable branch per-team, and one
-> funneling stable branch for the entire company (master), that branch
-> being used to push the live web site with. 
-
-And you could of course have per-team QA if you wanted to organize it
-that way.
-
-> The second option is why I want to force --no-ff on *all* pulls if
-> possible. With --no-ff we can simply `git revert -sn <hash> -m 1 && git
-> commit -a` in order to back out A, B, C, D. With a true fast-forward,
-> we've had to use git-rev-list(1) trickery and some bash scriptery to
-> properly revert a series of commits from a given time frame from a given
-> developer.
-
-There isn't good support for multiple reverts, but you can do the moral
-equivalent with a big patch (note that revert can actually be more
-clever about resolving the three way merge, but if you are close to the
-tip, you shouldn't find any conflicts):
-
-  git diff HEAD last-good-commit | git apply
-
-If they are the tip commits, then you can always just make a new commit
-with the pre-breakage state. This is sort of a mix of "git reset" and
-"git revert" in that it throws away changes, but not history.
-
-I don't think there is good porcelain support for this, but you can do:
-
-  GIT_INDEX_FILE=index.tmp; export GIT_INDEX_FILE
-  git read-tree last-good-commit
-  git commit -m 'revert crappy commits'
-
--Peff
+--
+larsh
