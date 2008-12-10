@@ -1,65 +1,59 @@
-From: Anders Melchiorsen <mail@cup.kalibalik.dk>
-Subject: [PATCH 3/4] Documentation: mention branches rather than heads
-Date: Sun, 18 Jan 2009 15:36:57 +0100
-Message-ID: <1232289418-25627-4-git-send-email-mail@cup.kalibalik.dk>
-References: <1232289418-25627-1-git-send-email-mail@cup.kalibalik.dk>
- <1232289418-25627-2-git-send-email-mail@cup.kalibalik.dk>
- <1232289418-25627-3-git-send-email-mail@cup.kalibalik.dk>
-Cc: git@vger.kernel.org, Anders Melchiorsen <mail@cup.kalibalik.dk>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Jan 18 15:38:52 2009
+From: rdkrsr <rdkrsr@googlemail.com>
+Subject: after first git clone of linux kernel repository there are changed files in working dir
+Date: Wed, 10 Dec 2008 19:22:46 +0100
+Message-ID: <d304880b0812101022u2abe5d68ub3bda68ed39f830b@mail.gmail.com>
+References: <d304880b0812101019ufe85095h46ff0fe00d32bbd0@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 10 19:24:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOYnU-0002Y3-Fw
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 15:38:44 +0100
+	id 1LATjD-0004h1-Nj
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 19:24:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762222AbZAROhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 09:37:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762055AbZAROhL
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 09:37:11 -0500
-Received: from mail.hotelhot.dk ([77.75.163.100]:46802 "EHLO mail.hotelhot.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760494AbZAROhC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 09:37:02 -0500
-Received: from mail.hotelhot.dk (localhost [127.0.0.1])
-	by mail.hotelhot.dk (Postfix) with ESMTP id E186030881;
-	Sun, 18 Jan 2009 15:36:24 +0100 (CET)
-Received: from localhost.localdomain (router.kalibalik.dk [192.168.0.1])
-	by mail.hotelhot.dk (Postfix) with ESMTP id 680B130013;
-	Sun, 18 Jan 2009 15:36:23 +0100 (CET)
-X-Mailer: git-send-email 1.6.0.2.514.g23abd3
-In-Reply-To: <1232289418-25627-3-git-send-email-mail@cup.kalibalik.dk>
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1752371AbYLJSWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 13:22:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752378AbYLJSWt
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 13:22:49 -0500
+Received: from po-out-1718.google.com ([72.14.252.154]:50321 "EHLO
+	po-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752371AbYLJSWs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 13:22:48 -0500
+Received: by po-out-1718.google.com with SMTP id y22so815672pof.1
+        for <git@vger.kernel.org>; Wed, 10 Dec 2008 10:22:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=PFTD6MdSNCyJOqwZPZhnoElSXu9c3qUiIFM4XBKMN0I=;
+        b=V8vosEyWglOhD+qi5rstltW0bWJKfwQblfCNLQw7NG+Npb0yvpY2BIo1jaO9/bx6Lj
+         vkBpTuxD6U81SV/Z7jdUTjkp6cb4snDc+x2S7b9x5dL8dArJ7G0Y9BR0PHc5tEw5bBYr
+         tfS1R4+xHqUviB8jDWrkH7rOVn8AGoEaxlZYI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=es2al5qJo6Z8E3x8o94DaohnrKT+yhEE3Bs056W+7w/hMoBY18Nx+Sap4wECQGfA+x
+         uu83Wl3AYVAGxYfsiH4ngmX7lsahD9lidVHuynTyz0uRP1Zl+3Un1W1lsXArXJjFdV0E
+         SGUQFMXrAvgTlLPAbfcZe7smL4uaE2j/1lhmY=
+Received: by 10.141.195.5 with SMTP id x5mr787473rvp.168.1228933366647;
+        Wed, 10 Dec 2008 10:22:46 -0800 (PST)
+Received: by 10.140.172.16 with HTTP; Wed, 10 Dec 2008 10:22:46 -0800 (PST)
+In-Reply-To: <d304880b0812101019ufe85095h46ff0fe00d32bbd0@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106196>
 
-Most of the git push page talks about branches, so make it consistent
-also in this paragraph.
+I just fetched the sources without changing anything, but git diff
+shows, that there are changes that are not yet updated (changed but not
+updated: use git add to ...). Why is it like that?
 
-Signed-off-by: Anders Melchiorsen <mail@cup.kalibalik.dk>
----
- Documentation/git-push.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 6d3c711..a7a6f4c 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -57,8 +57,8 @@ Pushing an empty <src> allows you to delete the <dst> ref from
- the remote repository.
- +
- The special refspec `:` (or `+:` to allow non-fast forward updates)
--directs git to push "matching" heads: for every head that exists on
--the local side, the remote side is updated if a head of the same name
-+directs git to push "matching" branches: for every branch that exists on
-+the local side, the remote side is updated if a branch of the same name
- already exists on the remote side.  This is the default operation mode
- if no explicit refspec is found (that is neither on the command line
- nor in any Push line of the corresponding remotes file---see below).
--- 
-1.6.0.2.514.g23abd3
+I use msysgit on windows, maybe that is one reason?
