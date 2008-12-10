@@ -1,84 +1,295 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 2/6] Simplify RawParseUtils next and nextLF loops
-Date: Wed, 10 Dec 2008 14:05:47 -0800
-Message-ID: <1228946751-12708-3-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 5/6] Add Bourne style quoting for TransportGitSsh
+Date: Wed, 10 Dec 2008 14:05:50 -0800
+Message-ID: <1228946751-12708-6-git-send-email-spearce@spearce.org>
 References: <1228946751-12708-1-git-send-email-spearce@spearce.org>
  <1228946751-12708-2-git-send-email-spearce@spearce.org>
+ <1228946751-12708-3-git-send-email-spearce@spearce.org>
+ <1228946751-12708-4-git-send-email-spearce@spearce.org>
+ <1228946751-12708-5-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 23:08:00 2008
+X-From: git-owner@vger.kernel.org Wed Dec 10 23:08:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAXDL-00031R-La
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 23:07:28 +0100
+	id 1LAXDO-00031R-67
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 23:07:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755039AbYLJWF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 17:05:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755517AbYLJWF5
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 17:05:57 -0500
-Received: from george.spearce.org ([209.20.77.23]:39011 "EHLO
+	id S1755486AbYLJWGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 17:06:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755639AbYLJWGG
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 17:06:06 -0500
+Received: from george.spearce.org ([209.20.77.23]:39021 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755039AbYLJWFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 17:05:54 -0500
+	with ESMTP id S1755486AbYLJWF4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 17:05:56 -0500
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 6190138239; Wed, 10 Dec 2008 22:05:53 +0000 (UTC)
+	id B303E38215; Wed, 10 Dec 2008 22:05:55 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 3FBFE38210;
-	Wed, 10 Dec 2008 22:05:52 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 3862B38192;
+	Wed, 10 Dec 2008 22:05:53 +0000 (UTC)
 X-Mailer: git-send-email 1.6.1.rc2.299.gead4c
-In-Reply-To: <1228946751-12708-2-git-send-email-spearce@spearce.org>
+In-Reply-To: <1228946751-12708-5-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102730>
 
-We always need ptr + 1 after we read the current position,
-so we might as well do the much more common foo[ptr++]. A
-good JIT would be more likely to optimize this case over
-the weird else branch we had.
+Now that we have a nice QuotedString abstraction we can port our
+string quoting logic from being private within the SSH transport
+code to being available in the rest of the library.
+
+Currently we only support the super-restrictive quoting style used
+for the repository path name argument over SSH.  We don't support the
+"minimal" style used to invoke the command name, nor do we support
+the ~user/ style format, which cannot be quoted.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../src/org/spearce/jgit/util/RawParseUtils.java   |   12 ++++--------
- 1 files changed, 4 insertions(+), 8 deletions(-)
+ .../jgit/util/QuotedStringBourneStyleTest.java     |  111 ++++++++++++++++++++
+ .../spearce/jgit/transport/TransportGitSsh.java    |   13 +--
+ .../src/org/spearce/jgit/util/QuotedString.java    |   66 ++++++++++++
+ 3 files changed, 179 insertions(+), 11 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringBourneStyleTest.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
-index 10c2239..5a40911 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
-@@ -221,10 +221,8 @@ public static final int parseTimeZoneOffset(final byte[] b, int ptr) {
- 	public static final int next(final byte[] b, int ptr, final char chrA) {
- 		final int sz = b.length;
- 		while (ptr < sz) {
--			if (b[ptr] == chrA)
--				return ptr + 1;
--			else
--				ptr++;
-+			if (b[ptr++] == chrA)
-+				return ptr;
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringBourneStyleTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringBourneStyleTest.java
+new file mode 100644
+index 0000000..86d46fe
+--- /dev/null
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringBourneStyleTest.java
+@@ -0,0 +1,111 @@
++/*
++ * Copyright (C) 2008, Google Inc.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.util;
++
++import static org.spearce.jgit.util.QuotedString.BOURNE;
++import junit.framework.TestCase;
++
++import org.spearce.jgit.lib.Constants;
++
++public class QuotedStringBourneStyleTest extends TestCase {
++	private static void assertQuote(final String in, final String exp) {
++		final String r = BOURNE.quote(in);
++		assertNotSame(in, r);
++		assertFalse(in.equals(r));
++		assertEquals('\'' + exp + '\'', r);
++	}
++
++	private static void assertDequote(final String exp, final String in) {
++		final byte[] b = Constants.encode('\'' + in + '\'');
++		final String r = BOURNE.dequote(b, 0, b.length);
++		assertEquals(exp, r);
++	}
++
++	public void testQuote_Empty() {
++		assertEquals("''", BOURNE.quote(""));
++	}
++
++	public void testDequote_Empty1() {
++		assertEquals("", BOURNE.dequote(new byte[0], 0, 0));
++	}
++
++	public void testDequote_Empty2() {
++		assertEquals("", BOURNE.dequote(new byte[] { '\'', '\'' }, 0, 2));
++	}
++
++	public void testDequote_SoleSq() {
++		assertEquals("", BOURNE.dequote(new byte[] { '\'' }, 0, 1));
++	}
++
++	public void testQuote_BareA() {
++		assertQuote("a", "a");
++	}
++
++	public void testDequote_BareA() {
++		final String in = "a";
++		final byte[] b = Constants.encode(in);
++		assertEquals(in, BOURNE.dequote(b, 0, b.length));
++	}
++
++	public void testDequote_BareABCZ_OnlyBC() {
++		final String in = "abcz";
++		final byte[] b = Constants.encode(in);
++		final int p = in.indexOf('b');
++		assertEquals("bc", BOURNE.dequote(b, p, p + 2));
++	}
++
++	public void testDequote_LoneBackslash() {
++		assertDequote("\\", "\\");
++	}
++
++	public void testQuote_NamedEscapes() {
++		assertQuote("'", "'\\''");
++		assertQuote("!", "'\\!'");
++
++		assertQuote("a'b", "a'\\''b");
++		assertQuote("a!b", "a'\\!'b");
++	}
++
++	public void testDequote_NamedEscapes() {
++		assertDequote("'", "'\\''");
++		assertDequote("!", "'\\!'");
++
++		assertDequote("a'b", "a'\\''b");
++		assertDequote("a!b", "a'\\!'b");
++	}
++}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
+index 3f2cd37..e3f5ae8 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
+@@ -47,6 +47,7 @@
+ import org.spearce.jgit.errors.NoRemoteRepositoryException;
+ import org.spearce.jgit.errors.TransportException;
+ import org.spearce.jgit.lib.Repository;
++import org.spearce.jgit.util.QuotedString;
+ 
+ import com.jcraft.jsch.ChannelExec;
+ import com.jcraft.jsch.JSchException;
+@@ -154,17 +155,7 @@ private static void sq(final StringBuilder cmd, final String val) {
+ 				return;
  		}
- 		return ptr;
- 	}
-@@ -260,11 +258,9 @@ public static final int nextLF(final byte[] b, int ptr) {
- 	public static final int nextLF(final byte[] b, int ptr, final char chrA) {
- 		final int sz = b.length;
- 		while (ptr < sz) {
--			final byte c = b[ptr];
-+			final byte c = b[ptr++];
- 			if (c == chrA || c == '\n')
--				return ptr + 1;
+ 
+-		cmd.append('\'');
+-		for (; i < val.length(); i++) {
+-			final char c = val.charAt(i);
+-			if (c == '\'')
+-				cmd.append("'\\''");
+-			else if (c == '!')
+-				cmd.append("'\\!'");
 -			else
--				ptr++;
-+				return ptr;
- 		}
- 		return ptr;
+-				cmd.append(c);
+-		}
+-		cmd.append('\'');
++		cmd.append(QuotedString.BOURNE.quote(val.substring(i)));
  	}
+ 
+ 	private void initSession() throws TransportException {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/QuotedString.java b/org.spearce.jgit/src/org/spearce/jgit/util/QuotedString.java
+index 4aaa8ff..1089e9e 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/util/QuotedString.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/util/QuotedString.java
+@@ -49,6 +49,15 @@
+ 	public static final C_Style C = new C_Style();
+ 
+ 	/**
++	 * Quoting style used by the Bourne shell.
++	 * <p>
++	 * Quotes are unconditionally inserted during {@link #quote(String)}. This
++	 * protects shell meta-characters like <code>$</code> or <code>~</code> from
++	 * being recognized as special.
++	 */
++	public static final BourneStyle BOURNE = new BourneStyle();
++
++	/**
+ 	 * Quote an input string by the quoting rules.
+ 	 * <p>
+ 	 * If the input string does not require any quoting, the same String
+@@ -110,6 +119,63 @@ public String dequote(final String in) {
+ 	 */
+ 	public abstract String dequote(byte[] in, int offset, int end);
+ 
++	/**
++	 * Quoting style used by the Bourne shell.
++	 * <p>
++	 * Quotes are unconditionally inserted during {@link #quote(String)}. This
++	 * protects shell meta-characters like <code>$</code> or <code>~</code> from
++	 * being recognized as special.
++	 */
++	public static class BourneStyle extends QuotedString {
++		@Override
++		public String quote(final String in) {
++			final StringBuilder r = new StringBuilder();
++			r.append('\'');
++			int start = 0, i = 0;
++			for (; i < in.length(); i++) {
++				switch (in.charAt(i)) {
++				case '\'':
++				case '!':
++					r.append(in, start, i);
++					r.append('\'');
++					r.append('\\');
++					r.append(in.charAt(i));
++					r.append('\'');
++					start = i + 1;
++					break;
++				}
++			}
++			r.append(in, start, i);
++			r.append('\'');
++			return r.toString();
++		}
++
++		@Override
++		public String dequote(final byte[] in, int ip, final int ie) {
++			boolean inquote = false;
++			final byte[] r = new byte[ie - ip];
++			int rPtr = 0;
++			while (ip < ie) {
++				final byte b = in[ip++];
++				switch (b) {
++				case '\'':
++					inquote = !inquote;
++					continue;
++				case '\\':
++					if (inquote || ip == ie)
++						r[rPtr++] = b; // literal within a quote
++					else
++						r[rPtr++] = in[ip++];
++					continue;
++				default:
++					r[rPtr++] = b;
++					continue;
++				}
++			}
++			return decode(Constants.CHARSET, r, 0, rPtr);
++		}
++	}
++
+ 	/** Quoting style that obeys the rules of the C programming language. */
+ 	public static final class C_Style extends QuotedString {
+ 		private static final byte[] quote;
 -- 
 1.6.1.rc2.299.gead4c
