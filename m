@@ -1,79 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Annotating patches inside diff
-Date: Wed, 10 Dec 2008 17:58:14 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812101755480.25069@eeepc-johanness>
-References: <200812101445.48034.jnareb@gmail.com>
+From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+Subject: Re: help needed: Splitting a git repository after subversion migration
+Date: Wed, 10 Dec 2008 17:33:28 +0100
+Organization: Intra2net AG
+Message-ID: <200812101733.36221.thomas.jarosch@intra2net.com>
+References: <493C0AAD.1040208@intra2net.com> <20081208142447.GA20186@atjola.homenet> <200812081834.26688.thomas.jarosch@intra2net.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 17:58:29 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: =?iso-8859-1?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Dec 10 17:59:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LASO6-0001a4-Px
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 17:58:15 +0100
+	id 1LASP9-00025x-0F
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 17:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753718AbYLJQ45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 11:56:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755166AbYLJQ45
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 11:56:57 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60777 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753567AbYLJQ44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 11:56:56 -0500
-Received: (qmail invoked by alias); 10 Dec 2008 16:56:54 -0000
-Received: from ini-firewall.unizh.ch (EHLO eeepc-johanness.st-andrews.ac.uk) [130.60.5.218]
-  by mail.gmx.net (mp007) with SMTP; 10 Dec 2008 17:56:54 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+HMY8FLWuH9SInrCaJO0MJzJTDE0aR/6D0cNsa18
-	rLBMZRDW4WJOsb
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <200812101445.48034.jnareb@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1755580AbYLJQ6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 11:58:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755576AbYLJQ6A
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 11:58:00 -0500
+Received: from rs02.intra2net.com ([81.169.173.116]:60125 "EHLO
+	rs02.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755575AbYLJQ6A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 11:58:00 -0500
+X-Greylist: delayed 1457 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Dec 2008 11:57:59 EST
+Received: from intranator.m.i2n (unknown [172.16.1.99])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by rs02.intra2net.com (Postfix) with ESMTP id E16D84C6F;
+	Wed, 10 Dec 2008 17:33:40 +0100 (CET)
+Received: from localhost (intranator.m.i2n [127.0.0.1])
+	by localhost (Postfix) with ESMTP id 6820D2AC52;
+	Wed, 10 Dec 2008 17:33:40 +0100 (CET)
+Received: from storm.localnet (storm.m.i2n [172.16.1.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by intranator.m.i2n (Postfix) with ESMTP id 67CCA2AC51;
+	Wed, 10 Dec 2008 17:33:39 +0100 (CET)
+User-Agent: KMail/1.10.3 (Linux/2.6.27.5-41.fc9.i686; KDE/4.1.3; i686; ; )
+In-Reply-To: <200812081834.26688.thomas.jarosch@intra2net.com>
+Content-Disposition: inline
+X-Virus-Scanned: by Intranator (www.intranator.com) with AMaViS and F-Secure AntiVirus (fsavdb 2008-12-10_06)
+X-Spam-Status: hits=-4.1 tests=[ALL_TRUSTED=-1.8,BAYES_00=-2.312]
+X-Spam-Level: 959
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102698>
 
-Hi,
+On Monday, 8. December 2008 18:34:20 Thomas Jarosch wrote:
+> 1. When I run "git rev-list --all --objects", I can see file names that
+> look like "SVN-branchname/directory/filename". Is it normal that "git svn"
+> creates a directory with the name of the branch and puts files below it?
 
-On Wed, 10 Dec 2008, Jakub Narebski wrote:
+Ok, this seems to be a PEBKAC: In the history of the subversion repository, 
+f.e. I once copied the "branches" root folder to tags/xyz. One revision later 
+I noticed this and retagged the correct branch. git-svn imports all branches
+from the first tag, which is the correct thing to do :o)
 
-> I remember that long time ago on git mailing list there was discussed 
-> extending git-apply and friends (including git-am), to be able to 
-> ignore lines in patches with selected special prefix, different from 
-> '@' for chunks headers, ' ' for context, '+'/'-' for added/deleted 
-> lines.  IIRC it was chose '|' for this purpose.
-> 
-> This way you could annotate patch
-> 
-> @@ -4667,7 +4667,6 @@ HTML
->                                   hash_base => $parent_commit);
->                 print "<td class=\"linenr\">";
->                 print $cgi->a({ -href => "$blamed#l$orig_lineno",
-> | moved to <tr>
-> -                               -id => "l$lineno",
->                                 -class => "linenr" },
->                               esc_html($lineno));
->                 print "</td>";
-> 
-> 
-> Was it accepted or dropped, or is this feature present but not 
-> documented?
+Now I'll manually check the history of the tags/ and branches/ folder
+for more funny tags and write down the revision. If I understood
+the git-svn man page correctly, I should be able to specifiy
+revision ranges it's going to import. I'll try to skip the broken tags.
 
-As I said on IRC, I think that if you are too good in the hiding-comments 
-business, you can just spare the time to write them, 'cause nobody will 
-find them.
-
-IOW such a comment needs to go either into the commit message (if it is an 
-important API change), so that people who do not remember discussions on 
-the mailing list still have a chance to find the comment, or between the 
-message and the diffstat (if it is less important).
-
-Ciao,
-Dscho
+Cheers,
+Thomas
