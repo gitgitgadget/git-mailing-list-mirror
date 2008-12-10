@@ -1,69 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 3/3] gitweb: A bit of code cleanup in git_blame()
-Date: Wed, 10 Dec 2008 03:13:24 +0100
-Organization: At home
-Message-ID: <ghn8jv$hg9$1@ger.gmane.org>
-References: <20081209223703.28106.29198.stgit@localhost.localdomain> <20081209224814.28106.83387.stgit@localhost.localdomain>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH 2/3] gitweb: Cache $parent_commit info in git_blame()
+Date: Wed, 10 Dec 2008 12:49:01 +0900
+Message-ID: <20081210124901.6117@nanako3.lavabit.com>
+References: <20081209224622.28106.89325.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 10 03:14:55 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 10 04:51:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAEbC-0003lV-RE
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 03:14:51 +0100
+	id 1LAG6G-0008Bo-Bg
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 04:51:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752835AbYLJCNd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Dec 2008 21:13:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752335AbYLJCNd
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 21:13:33 -0500
-Received: from main.gmane.org ([80.91.229.2]:56742 "EHLO ciao.gmane.org"
+	id S1754675AbYLJDtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Dec 2008 22:49:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754634AbYLJDtj
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 22:49:39 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:42599 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751839AbYLJCNc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2008 21:13:32 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LAEZp-0000vS-W7
-	for git@vger.kernel.org; Wed, 10 Dec 2008 02:13:26 +0000
-Received: from absh60.neoplus.adsl.tpnet.pl ([83.8.127.60])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 10 Dec 2008 02:13:25 +0000
-Received: from jnareb by absh60.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 10 Dec 2008 02:13:25 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: absh60.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1754601AbYLJDti (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Dec 2008 22:49:38 -0500
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id D7F76C888A;
+	Tue,  9 Dec 2008 21:49:37 -0600 (CST)
+Received: from 2870.lavabit.com (212.62.97.23)
+	by lavabit.com with ESMTP id 2LHVOHH2TU4U; Tue, 09 Dec 2008 21:49:37 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=1Qv8ePCffwgGrS79Hrk9m+/5jDgcDagvV9D5bxK+dBIFPrp30vdSKrFjFr9r1LTMPpwrZb0x8klA3W3/VnfnWbfdEi9M/1IWea01qRXjJ4F+DPPy6LRtanGGgA/9wXlw/m5inJVfeRKvGXSv1E0bvIF6x5UJye6dDqke6xUpUs8=;
+  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <20081209224622.28106.89325.stgit@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102665>
 
-Jakub Narebski wrote:
+Quoting Jakub Narebski <jnareb@gmail.com>:
 
-I'm sorry, there should be
+> Unfortunately the implementation in 244a70e used one call for
+> git-rev-parse to find parent revision per line in file, instead of
+> using long lived "git cat-file --batch-check" (which might not existed
+> then), or changing validate_refname to validate_revision and made it
+> accept <rev>^, <rev>^^, <rev>^^^ etc. syntax.
 
-  +       my $ftype =3D "blob";
-> =A0=A0=A0=A0=A0=A0=A0=A0if (!defined $hash) {
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0$hash =3D git_get_has=
-h_by_path($hash_base, $file_name, "blob")
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0or die_error(404, "Error looking up file");
-> +=A0=A0=A0=A0=A0=A0=A0} else {
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0$ftype =3D git_get_type=
-($hash);
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0if ($ftype !~ "blob") {
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-die_error(400, "Object is not a blob");
-> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0}
+Could you substantiate why this is "Unfortunate"?  Is the new implementation faster?  By how much?
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+When "previous" commit information is available in the output from "git blame", can you make use of it?
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
