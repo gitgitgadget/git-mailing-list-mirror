@@ -1,88 +1,79 @@
-From: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
-Subject: Re: fatal output from git-show really wants a terminal
-Date: Wed, 10 Dec 2008 10:10:14 -0600
-Message-ID: <200812101010.14868.bss03@volumehost.net>
-References: <ghop5d$qud$1@ger.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Annotating patches inside diff
+Date: Wed, 10 Dec 2008 17:58:14 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812101755480.25069@eeepc-johanness>
+References: <200812101445.48034.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart614474878.afLusXfKXG";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Tim Olsen <tim@brooklynpenguin.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 10 17:12:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 10 17:58:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LARf3-0005wm-LL
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 17:11:42 +0100
+	id 1LASO6-0001a4-Px
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 17:58:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753543AbYLJQKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 11:10:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751697AbYLJQKX
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 11:10:23 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:54303 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753232AbYLJQKW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 11:10:22 -0500
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20081210161022.JXEI2948.fed1rmmtao101.cox.net@fed1rmimpo03.cox.net>;
-          Wed, 10 Dec 2008 11:10:22 -0500
-Received: from [10.0.0.123] ([72.204.50.125])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id pUA91a00D2i4SyG04UAMlc; Wed, 10 Dec 2008 11:10:22 -0500
-X-Authority-Analysis: v=1.0 c=1 a=4x8eZqvhE5cA:10 a=cCwArZ2WySYA:10
- a=nEQGfrJnAAAA:8 a=iN18yP-ElZEsN2CUkc4A:9 a=4OVYHAgB7ssekxPcUEnGVaWI4MYA:4
- a=B7iFY6Z7H_gA:10 a=LY0hPdMaydYA:10 a=7vY25r5LKNZFbyYTDf8A:9
- a=rVdmItnawO-iSBJMOSoTI38fvawA:4 a=rPt6xJ-oxjAA:10
-X-CM-Score: 0.00
-User-Agent: KMail/1.9.9
-In-Reply-To: <ghop5d$qud$1@ger.gmane.org>
+	id S1753718AbYLJQ45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 11:56:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755166AbYLJQ45
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 11:56:57 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60777 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753567AbYLJQ44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 11:56:56 -0500
+Received: (qmail invoked by alias); 10 Dec 2008 16:56:54 -0000
+Received: from ini-firewall.unizh.ch (EHLO eeepc-johanness.st-andrews.ac.uk) [130.60.5.218]
+  by mail.gmx.net (mp007) with SMTP; 10 Dec 2008 17:56:54 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+HMY8FLWuH9SInrCaJO0MJzJTDE0aR/6D0cNsa18
+	rLBMZRDW4WJOsb
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <200812101445.48034.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102697>
 
---nextPart614474878.afLusXfKXG
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-On Wednesday 2008 December 10 10:01:49 you wrote:
->It appears that when outputting a fatal error, git-show will choose
->stdout over stderr if stdout is a terminal and stderr is not.  How do I
->redirect the error but still allow stdout to be displayed?
+On Wed, 10 Dec 2008, Jakub Narebski wrote:
 
-Gah, I think that's really bad behavior. Anyway, something like:
-git show 12345 2>/dev/null | cat
-should work.  Neither stdout nor stderr will be a terminal, but stdout will=
- be=20
-displayed to your terminal.
-=2D-=20
-Boyd Stephen Smith Jr. =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ,=3D ,-_-. =
-=3D.=20
-bss03@volumehost.net =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0((_/)o o(\_=
-))
-ICQ: 514984 YM/AIM: DaTwinkDaddy =A0 =A0 =A0 =A0 =A0 `-'(. .)`-'=20
-http://iguanasuicide.org/ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\_/ =
-=A0 =A0=20
+> I remember that long time ago on git mailing list there was discussed 
+> extending git-apply and friends (including git-am), to be able to 
+> ignore lines in patches with selected special prefix, different from 
+> '@' for chunks headers, ' ' for context, '+'/'-' for added/deleted 
+> lines.  IIRC it was chose '|' for this purpose.
+> 
+> This way you could annotate patch
+> 
+> @@ -4667,7 +4667,6 @@ HTML
+>                                   hash_base => $parent_commit);
+>                 print "<td class=\"linenr\">";
+>                 print $cgi->a({ -href => "$blamed#l$orig_lineno",
+> | moved to <tr>
+> -                               -id => "l$lineno",
+>                                 -class => "linenr" },
+>                               esc_html($lineno));
+>                 print "</td>";
+> 
+> 
+> Was it accepted or dropped, or is this feature present but not 
+> documented?
 
---nextPart614474878.afLusXfKXG
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+As I said on IRC, I think that if you are too good in the hiding-comments 
+business, you can just spare the time to write them, 'cause nobody will 
+find them.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+IOW such a comment needs to go either into the commit message (if it is an 
+important API change), so that people who do not remember discussions on 
+the mailing list still have a chance to find the comment, or between the 
+message and the diffstat (if it is less important).
 
-iEYEABECAAYFAkk/6eYACgkQdNbfk+86fC1v0gCcDxWXFtigmHt1edVDqgxduHg2
-e0oAn0NTqABxiCrPzXno/1hXLTGj2wej
-=xDAJ
------END PGP SIGNATURE-----
-
---nextPart614474878.afLusXfKXG--
+Ciao,
+Dscho
