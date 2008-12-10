@@ -1,56 +1,100 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH 2/3] gitweb: Cache $parent_commit info in git_blame()
-Date: Wed, 10 Dec 2008 12:49:01 +0900
-Message-ID: <20081210124901.6117@nanako3.lavabit.com>
-References: <20081209224622.28106.89325.stgit@localhost.localdomain>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH 1/3] gitweb: Move 'lineno' id from link to row element in git_blame
+Date: Tue, 9 Dec 2008 21:55:18 -0800 (PST)
+Message-ID: <661413.30278.qm@web31807.mail.mud.yahoo.com>
+References: <20081209224330.28106.18301.stgit@localhost.localdomain>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 04:51:03 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 10 07:03:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAG6G-0008Bo-Bg
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 04:51:00 +0100
+	id 1LAIAS-0000wX-9K
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 07:03:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754675AbYLJDtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Dec 2008 22:49:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754634AbYLJDtj
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Dec 2008 22:49:39 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:42599 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754601AbYLJDti (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Dec 2008 22:49:38 -0500
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id D7F76C888A;
-	Tue,  9 Dec 2008 21:49:37 -0600 (CST)
-Received: from 2870.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id 2LHVOHH2TU4U; Tue, 09 Dec 2008 21:49:37 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=1Qv8ePCffwgGrS79Hrk9m+/5jDgcDagvV9D5bxK+dBIFPrp30vdSKrFjFr9r1LTMPpwrZb0x8klA3W3/VnfnWbfdEi9M/1IWea01qRXjJ4F+DPPy6LRtanGGgA/9wXlw/m5inJVfeRKvGXSv1E0bvIF6x5UJye6dDqke6xUpUs8=;
-  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <20081209224622.28106.89325.stgit@localhost.localdomain>
+	id S1751801AbYLJGCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 01:02:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752970AbYLJGCA
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 01:02:00 -0500
+Received: from web31807.mail.mud.yahoo.com ([68.142.207.70]:20942 "HELO
+	web31807.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751730AbYLJGCA (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2008 01:02:00 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Dec 2008 01:01:59 EST
+Received: (qmail 30322 invoked by uid 60001); 10 Dec 2008 05:55:18 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:X-Mailer:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type;
+  b=b0xPPoDfidgaCy4rPDtMtTy0QiUQMHkjSbR43h/FV+NjSgou/Wgq9r5lxB3m9ndJr+YgxUjk1OT2AAtzFohdIfx672A3AwFbC+W6kk13zknRWgUw7c5k/8aAC6qL+xVKa2omjNYJmQ/8D4yrGogR3ewmGQplRI9N1n9tfuFNnw0=  ;
+Received: from [71.132.209.19] by web31807.mail.mud.yahoo.com via HTTP; Tue, 09 Dec 2008 21:55:18 PST
+X-Mailer: YahooMailWebService/0.7.260.1
+In-Reply-To: <20081209224330.28106.18301.stgit@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102666>
 
-Quoting Jakub Narebski <jnareb@gmail.com>:
 
-> Unfortunately the implementation in 244a70e used one call for
-> git-rev-parse to find parent revision per line in file, instead of
-> using long lived "git cat-file --batch-check" (which might not existed
-> then), or changing validate_refname to validate_revision and made it
-> accept <rev>^, <rev>^^, <rev>^^^ etc. syntax.
+--- On Tue, 12/9/08, Jakub Narebski <jnareb@gmail.com> wrote:
+> From: Jakub Narebski <jnareb@gmail.com>
+> Subject: [PATCH 1/3] gitweb: Move 'lineno' id from link to row element in git_blame
+> To: git@vger.kernel.org
+> Cc: "Luben Tuikov" <ltuikov@yahoo.com>, "Jakub Narebski" <jnareb@gmail.com>
+> Date: Tuesday, December 9, 2008, 2:46 PM
+> Move l<line number> ID from <a> link element
+> inside table row (inside
+> cell element for column with line numbers), to encompassing
+> <tr> table
+> row element.  It was done to make it easier to manipulate
+> result HTML
+> with DOM, and to be able write 'blame_incremental'
+> view with the same,
+> or nearly the same result.
+> 
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Acked-by: Luben Tuikov <ltuikov@yahoo.com>
 
-Could you substantiate why this is "Unfortunate"?  Is the new implementation faster?  By how much?
+   Luben
 
-When "previous" commit information is available in the output from "git blame", can you make use of it?
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+> ---
+> For blame_incremental I need easy way to manipulate rows of
+> blame
+> table, to add information about blamed commits as it
+> arrives.
+> 
+> So there it is.
+> 
+>  gitweb/gitweb.perl |    3 +--
+>  1 files changed, 1 insertions(+), 2 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 6eb370d..1b800f4 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -4645,7 +4645,7 @@ HTML
+>  		if ($group_size) {
+>  			$current_color = ++$current_color % $num_colors;
+>  		}
+> -		print "<tr
+> class=\"$rev_color[$current_color]\">\n";
+> +		print "<tr id=\"l$lineno\"
+> class=\"$rev_color[$current_color]\">\n";
+>  		if ($group_size) {
+>  			print "<td
+> class=\"sha1\"";
+>  			print " title=\"". esc_html($author)
+> . ", $date\"";
+> @@ -4667,7 +4667,6 @@ HTML
+>  		                  hash_base => $parent_commit);
+>  		print "<td
+> class=\"linenr\">";
+>  		print $cgi->a({ -href =>
+> "$blamed#l$orig_lineno",
+> -		                -id => "l$lineno",
+>  		                -class => "linenr" },
+>  		              esc_html($lineno));
+>  		print "</td>";
