@@ -1,79 +1,162 @@
-From: Alexander Potashev <aspotashev@gmail.com>
-Subject: [PATCH (resend)] Fix typo in comment in builtin-add.c
-Date: Thu, 11 Dec 2008 01:27:44 +0300
-Message-ID: <1228948064-4006-1-git-send-email-aspotashev@gmail.com>
-References: <200812101910.mBAJAsF04710@localhost.localdomain>
-Cc: Alexander Potashev <aspotashev@gmail.com>,
-	"Boyd Stephen Smith Jr." <bss03@volumehost.net>,
-	Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-To: A S Potashev <aspotashev@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 23:28:38 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [RFC/PATCH] Add support for a pdf version of the user manual
+Date: Wed, 10 Dec 2008 23:44:50 +0100
+Message-ID: <1228949090-22475-1-git-send-email-vmiklos@frugalware.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 10 23:44:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAXXm-0002yr-J1
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 23:28:35 +0100
+	id 1LAXnJ-0000uJ-65
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 23:44:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753409AbYLJW1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 17:27:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753617AbYLJW1R
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 17:27:17 -0500
-Received: from fg-out-1718.google.com ([72.14.220.153]:30817 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751054AbYLJW1Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 17:27:16 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so343109fgg.17
-        for <git@vger.kernel.org>; Wed, 10 Dec 2008 14:27:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=kFALlKTnyheefuOnraApxxZVhNh8pXtJDkGEhrWbCSE=;
-        b=OWz7KWgR1RTrzCdif8CT580KLPP2m6GCEQ+dJosEqELeAV3ljhJw8QuLxHaQxk2O5i
-         K9qfM22Ka+DP+j4kwEIZvECgDz2+NkjxmWjftdFlL2kXW3D7oM4PgJYCwBhQFAwzXT5y
-         41loJDPPVfuPkDid/wQeG414ByCzYlNtDInmE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=mlJ0rHOsc+/IbdjZTEqIOA1DlZ0WK1ahWVR+BMME5kvlKGB+tFnwL1zio/uU7Qh14/
-         Vg6UeCVv0CGRzNM2C4MZe+jLaLckt4FJU+KdYmq9lgSbdstr4HWlwEyav3JA+c+1fFwr
-         bg2/6f5K+/yTInrE2UP2SGLqP/5EgXlpMLwrM=
-Received: by 10.86.50.6 with SMTP id x6mr910526fgx.71.1228948034808;
-        Wed, 10 Dec 2008 14:27:14 -0800 (PST)
-Received: from localhost.localdomain ([91.78.206.93])
-        by mx.google.com with ESMTPS id 4sm104416fge.45.2008.12.10.14.27.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 10 Dec 2008 14:27:13 -0800 (PST)
-X-Mailer: git-send-email 1.6.0.4
-In-Reply-To: <200812101910.mBAJAsF04710@localhost.localdomain>
+	id S1753185AbYLJWnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 17:43:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752934AbYLJWnT
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 17:43:19 -0500
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:52589 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751448AbYLJWnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 17:43:19 -0500
+Received: from vmobile.example.net (dsl5401CC70.pool.t-online.hu [84.1.204.112])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 356D9446CDE
+	for <git@vger.kernel.org>; Wed, 10 Dec 2008 23:43:16 +0100 (CET)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id C96CF19DC9B; Wed, 10 Dec 2008 23:44:50 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.rc1.35.gae26e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102733>
 
-Reported-by: Tim Daly <daly@axiom-developer.org>
-Cc: Boyd Stephen Smith Jr. <bss03@volumehost.net>
-Cc: Junio C Hamano <gitster@pobox.com>
-Cc: <git@vger.kernel.org>
-Signed-off-by: Alexander Potashev <aspotashev@gmail.com>
+Use dblatex in order to create a pdf version of the git user manual.  No
+existing Makefile targets (including "all") are touched, so you need to
+explicitly say
+
+make pdf
+sudo make install-pdf
+
+to get user-manual.pdf created and installed.
+
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
- builtin-add.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/builtin-add.c b/builtin-add.c
-index ea4e771..719de8b 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -23,7 +23,7 @@ static void fill_pathspec_matches(const char **pathspec, char *seen, int specs)
- 	int num_unmatched = 0, i;
+Hi,
+
+It turns out that people prefer reading long documents (such as the User
+Manual) in a pdf reader, rather then in a web browser. This patch makes
+them happy.
+
+I marked it RFC as I'm not sure if using the asciidoc dblatex sty and
+xsl file is a good idea or not.
+
+(Oh and because we are in the rc period and this is not a bugfix.)
+
+The other (info/man/html) formats do not make use of the config files in
+/etc/asciidoc, so maybe it would be better to just copy them in the
+Documentation dir. OTOH I did not want to cause a duplication without a
+good reason.
+
+Opinions?
+
+Thanks.
+
+ Documentation/Makefile |   13 +++++++++++++
+ INSTALL                |    3 +++
+ Makefile               |    6 ++++++
+ 3 files changed, 22 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index c34c1ca..69f4ade 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -32,6 +32,7 @@ DOC_MAN7=$(patsubst %.txt,%.7,$(MAN7_TXT))
+ prefix?=$(HOME)
+ bindir?=$(prefix)/bin
+ htmldir?=$(prefix)/share/doc/git-doc
++pdfdir?=$(prefix)/share/doc/git-doc
+ mandir?=$(prefix)/share/man
+ man1dir=$(mandir)/man1
+ man5dir=$(mandir)/man5
+@@ -50,6 +51,7 @@ infodir?=$(prefix)/share/info
+ MAKEINFO=makeinfo
+ INSTALL_INFO=install-info
+ DOCBOOK2X_TEXI=docbook2x-texi
++DBLATEX=dblatex
+ ifndef PERL_PATH
+ 	PERL_PATH = /usr/bin/perl
+ endif
+@@ -87,6 +89,8 @@ man7: $(DOC_MAN7)
  
- 	/*
--	 * Since we are walking the index as if we are warlking the directory,
-+	 * Since we are walking the index as if we were walking the directory,
- 	 * we have to mark the matched pathspec as seen; otherwise we will
- 	 * mistakenly think that the user gave a pathspec that did not match
- 	 * anything.
+ info: git.info gitman.info
+ 
++pdf: user-manual.pdf
++
+ install: install-man
+ 
+ install-man: man
+@@ -107,6 +111,10 @@ install-info: info
+ 	  echo "No directory found in $(DESTDIR)$(infodir)" >&2 ; \
+ 	fi
+ 
++install-pdf: pdf
++	$(INSTALL) -d -m 755 $(DESTDIR)$(pdfdir)
++	$(INSTALL) -m 644 user-manual.pdf $(DESTDIR)$(pdfdir)
++
+ install-html: html
+ 	sh ./install-webdoc.sh $(DESTDIR)$(htmldir)
+ 
+@@ -190,6 +198,11 @@ user-manual.texi: user-manual.xml
+ 	$(DOCBOOK2X_TEXI) user-manual.xml --to-stdout | $(PERL_PATH) fix-texi.perl >$@+
+ 	mv $@+ $@
+ 
++user-manual.pdf: user-manual.xml
++	$(RM) $@+ $@
++	$(DBLATEX) -o $@+ -p /etc/asciidoc/dblatex/asciidoc-dblatex.xsl -s /etc/asciidoc/dblatex/asciidoc-dblatex.sty $<
++	mv $@+ $@
++
+ gitman.texi: $(MAN_XML) cat-texi.perl
+ 	$(RM) $@+ $@
+ 	($(foreach xml,$(MAN_XML),$(DOCBOOK2X_TEXI) --to-stdout $(xml);)) | \
+diff --git a/INSTALL b/INSTALL
+index d1deb0b..ae7f750 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -101,6 +101,9 @@ Issues of note:
+    Building and installing the info file additionally requires
+    makeinfo and docbook2X.  Version 0.8.3 is known to work.
+ 
++   Building and installing the pdf file additionally requires
++   dblatex.  Version 0.2.7 with asciidoc >= 8.2.7 is known to work.
++
+    The documentation is written for AsciiDoc 7, but "make
+    ASCIIDOC8=YesPlease doc" will let you format with AsciiDoc 8.
+ 
+diff --git a/Makefile b/Makefile
+index 5158197..b1456a2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1306,6 +1306,9 @@ html:
+ info:
+ 	$(MAKE) -C Documentation info
+ 
++pdf:
++	$(MAKE) -C Documentation pdf
++
+ TAGS:
+ 	$(RM) TAGS
+ 	$(FIND) . -name '*.[hcS]' -print | xargs etags -a
+@@ -1448,6 +1451,9 @@ install-html:
+ install-info:
+ 	$(MAKE) -C Documentation install-info
+ 
++install-pdf:
++	$(MAKE) -C Documentation install-pdf
++
+ quick-install-doc:
+ 	$(MAKE) -C Documentation quick-install
+ 
 -- 
-1.6.0.4
+1.6.1.rc1.35.gae26e.dirty
