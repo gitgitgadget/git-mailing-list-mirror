@@ -1,68 +1,83 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH 2/3] gitweb: Cache $parent_commit info in git_blame()
-Date: Wed, 10 Dec 2008 12:05:30 -0800 (PST)
-Message-ID: <710873.22344.qm@web31806.mail.mud.yahoo.com>
-References: <200812101615.55340.jnareb@gmail.com>
-Reply-To: ltuikov@yahoo.com
+From: Alexander Potashev <aspotashev@gmail.com>
+Subject: Re: builtin-add.c patch
+Date: Wed, 10 Dec 2008 23:10:11 +0300
+Message-ID: <20081210201011.GA11244@myhost>
+References: <200812101238.mBACcWQk023480@axiom-developer.org> <20081210142632.GA4137@myhost> <200812101914.mBAJEAS04718@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 21:07:00 2008
+To: root <daly@axiom-developer.org>
+X-From: git-owner@vger.kernel.org Wed Dec 10 21:11:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAVKc-0005mP-LU
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 21:06:51 +0100
+	id 1LAVOh-0007fC-85
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 21:11:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753967AbYLJUFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 15:05:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753607AbYLJUFc
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 15:05:32 -0500
-Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:43186 "HELO
-	web31806.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753232AbYLJUFc (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2008 15:05:32 -0500
-Received: (qmail 25497 invoked by uid 60001); 10 Dec 2008 20:05:30 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:X-Mailer:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type;
-  b=Qej88PZl/+zh7ln/q3xDZJymj/82d1wXav2znLHDJi03/xSrL0HiAxU1Dh31fZrLcwRKLvs9ZJ2OyAHtyaPgiSvPOKbz26GnXgNFojnGmIRu2/v0QpWIR44XtcYYfSzZClP59XHudv+2O2IunTP0mr5jaTwQxpWEEvh1scSA7kc=  ;
-Received: from [71.132.209.19] by web31806.mail.mud.yahoo.com via HTTP; Wed, 10 Dec 2008 12:05:30 PST
-X-Mailer: YahooMailWebService/0.7.260.1
-In-Reply-To: <200812101615.55340.jnareb@gmail.com>
+	id S1752895AbYLJUJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 15:09:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752817AbYLJUJp
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 15:09:45 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:53464 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752814AbYLJUJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 15:09:44 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so309765fgg.17
+        for <git@vger.kernel.org>; Wed, 10 Dec 2008 12:09:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=Il86nuH2p7VmzNaaZdUhD66PEn4EsgJYBAArz+m+c74=;
+        b=cBI4i+wS8kDvG3elp0yugP5J41gqhqE6RyRpo88Dy285qxdMrfqWLnijFeMHpum8Ru
+         eLgykm3iX0ejP1cOFuDi5WmJ3lOwmeSjqAk/ZxBWh+oxPb1Hp98f9fRQH8rWZC1c2xf7
+         j3eo2tMm5HWjJDWLJPG/N4XD7LZXeJpKE5wcA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=MPR50WKawUQGIH1rKR3NygHc140Vh0cRAhj+LUZdtBfLfJuDbkOI4y9tDiSB42EJ5l
+         GUUtu4ipN78m78ApK06O9dUfQQqnqbW4v7mQyXcWxoDRZDIU/uAerwDtMrlNQqbn/ejx
+         GmZDufqUSv+lpQfOPKjydE/abjSgRKDEhUcn4=
+Received: by 10.86.95.8 with SMTP id s8mr827882fgb.79.1228939782756;
+        Wed, 10 Dec 2008 12:09:42 -0800 (PST)
+Received: from smtp.gmail.com ([91.78.206.93])
+        by mx.google.com with ESMTPS id e11sm110455fga.32.2008.12.10.12.09.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 10 Dec 2008 12:09:42 -0800 (PST)
+Received: by smtp.gmail.com (sSMTP sendmail emulation); Wed, 10 Dec 2008 23:10:11 +0300
+Content-Disposition: inline
+In-Reply-To: <200812101914.mBAJEAS04718@localhost.localdomain>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102710>
 
+Hello, Tim!
 
---- On Wed, 12/10/08, Jakub Narebski <jnareb@gmail.com> wrote:
-> > Have you tested this patch that it gives the same
-> commit chain
-> > as before it?
+On 14:14 Wed 10 Dec     , root wrote:
+> Alexander,
 > 
-> The only difference between precious version and this patch
-> is that
-> now, if you calculate sha-1 of $long_rev^, it is stored in 
-> $metainfo{$long_rev}{'parent'} and not calculated
-> second time.
+> I saw a suggestion that git could be used as a filesystem rather
+> than as a code repository. I'm looking to convert it for this
+> purpose to sit underneath Axiom, a computer algebra system written
+> in common lisp. Basically the idea is that a "close" operation does
+> a 'git add foo ; git commit'. 
+> 
+> Are you aware of anyone who has used git as a filesystem?
+> 
+> Tim Daly
+> 
 
-Yes, I agree a patch to this effect would improve performance
-proportionally to the history of the lines of a file.  So it's a
-good thing, as most commits change a contiguous block of size more
-than one line of a file.
+It's a quite off-topic question. But Git is not optimized to track
+individual files with separate history
+( see http://www.youtube.com/watch?v=8dhZ9BXQgc4 ).
+Also, Git uses only 644 and 755 permissions (755 stands for
+executables, often scripts - shell scripts, perl, ...), but
+usual filesystems provide full range of premissions/ownership.
 
-"$parent_commit" depends on "$full_rev^" which depends on "$full_rev".
-So as soon as "$full_rev" != "$old_full_rev", you'd know that you need
-to update "$parent_commit".  "$old_full_rev" needs to exist outside the
-scope of "while (1)".  I didn't see this in the code or in the patch.
-
-> But I have checked that (at least for single example file)
-> the blame output is identical for before and after this patch.
-
-I've always tested it on something like "gitweb.perl", etc.
-
-    Luben
+                                 Alexander
