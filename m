@@ -1,84 +1,63 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: [PATCH] git-gui: Fixed typos in Swedish translation.
-Date: Wed, 10 Dec 2008 09:50:01 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0812100948460.26470@ds9.cixit.se>
-References: <20081208163628.GG31551@spearce.org> <Pine.LNX.4.64.0812091623590.31023@ds9.cixit.se>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] diff: respect textconv in rewrite diffs
+Date: Wed, 10 Dec 2008 04:02:22 -0500
+Message-ID: <20081210090221.GA11367@coredump.intra.peff.net>
+References: <20081209081227.GA19626@coredump.intra.peff.net> <20081209081321.GA19707@coredump.intra.peff.net> <7v3agw2zu5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="264365225-444710384-1228899001=:26470"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Dec 10 09:51:35 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 10 10:03:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAKn8-0007Iz-0u
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 09:51:34 +0100
+	id 1LAKz1-0002US-CO
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 10:03:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755518AbYLJIuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 03:50:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755436AbYLJIuK
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 03:50:10 -0500
-Received: from ds9.cixit.se ([193.15.169.228]:53274 "EHLO ds9.cixit.se"
+	id S1754051AbYLJJC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 04:02:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754142AbYLJJC0
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 04:02:26 -0500
+Received: from peff.net ([208.65.91.99]:4005 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755312AbYLJIuI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 03:50:08 -0500
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mBA8o2ac008184
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 10 Dec 2008 09:50:02 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mBA8o1Il008156;
-	Wed, 10 Dec 2008 09:50:01 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <Pine.LNX.4.64.0812091623590.31023@ds9.cixit.se>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Wed, 10 Dec 2008 09:50:02 +0100 (CET)
+	id S1753731AbYLJJCZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 04:02:25 -0500
+Received: (qmail 7495 invoked by uid 111); 10 Dec 2008 09:02:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 10 Dec 2008 04:02:23 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2008 04:02:22 -0500
+Content-Disposition: inline
+In-Reply-To: <7v3agw2zu5.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102676>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Dec 10, 2008 at 12:34:26AM -0800, Junio C Hamano wrote:
 
---264365225-444710384-1228899001=:26470
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+> > +cat >dump <<'EOF'
+> > +#!/bin/sh
+> > +perl -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' < "$1"
+> > +EOF
+> 
+> I'll squash in a change to make this part use $SHELL_PATH for
+> consistency.  Thanks.
 
-> Patch to the Swedish translation is attached gzipped.
+It was cut-and-paste from t4030, so if we care, it might be worth
+changing there, too (and naming it "dump" instead of "hexdump", because
+it actually dumps in decimal :) ).
 
-Thanks for applying it. I found two typos, which are corrected by the
-attached patch.
+But more importantly, the fixup you just pushed seems to have an extra
+">dump":
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
---264365225-444710384-1228899001=:26470
-Content-Type: APPLICATION/octet-stream; name=0001-git-gui-Fixed-typos-in-Swedish-translation.patch.gz
-Content-Transfer-Encoding: BASE64
-Content-ID: <Pine.LNX.4.64.0812100950010.26470@ds9.cixit.se>
-Content-Description: [PATCH] git-gui: Fixed typos in Swedish translation.
-Content-Disposition: attachment; filename=0001-git-gui-Fixed-typos-in-Swedish-translation.patch.gz
+> +{
+> +       echo "#!$SHELL_PATH"
+> +       cat >dump <<'EOF'
+> +perl -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' < "$1"
+> +EOF
+> +} >dump
+> +chmod +x dump
 
-H4sICBaDP0kAAzAwMDEtZ2l0LWd1aS1GaXhlZC10eXBvcy1pbi1Td2VkaXNo
-LXRyYW5zbGF0aW9uLnBhdGNoAJ1U0W6bMBR95yuuspdWqV0MhBBUTe3aVau2
-aFETbQ/bHgBfCAvByCZpK+1z9g39gf7YrsnaVF3XtUPIcPG918fnHHOq1RJk
-NvCTFNNRmGciSNPEz4bDkRtFXh566IkoHwz8UGYwVjVMsQExBNeNuxs81xXO
-KbWJYYItanivMW/LuoCDxsaHRuXtharWaHjTcIOvnZOkxRg+o9wD4cIJZrZJ
-BO4oHojYG0LfFa7rTFfpd8zaGL5MjmbH775BUbasWJUxnJaXKKG9apSBkhBd
-oCzNHFqd1KZK2lLV3HGmZVGjZCrPWXr1fGyMMQcatW/WvFHwA+gKod/vd98F
-5GWFBrJ5UhcWvk/rG9R2SbPT37UfJFa4idmu48gyz4Exgg7J/l3b9O7VKWuJ
-l5CG/sjzAs5FOAwHQUa8uGEQWDT36hzCcb/28BDYaI/4sgMFS1OYVkOv50Bv
-opVlj51J9gm1IUAxmPXX2s6dY6N0y8amKCV7syoMm6kYNnOTjzN2rLFjkW2E
-suIw4TErURT7gl5c12YzymbnuC7NI8kjEGHs+Z2WNrn/RDK5gMQPRnfJ0PuQ
-mJbNfiuq9LMFvK2ui1VSIJthQsa8dchB2zCzPqxKQy15F2xrxmfjt1uuBO+A
-WIqjaE/40N887tE8vbleECQCROPNz1rqRGLnEM05p5av4lvPcjOPhR8OHVtc
-SugdJ1Vlt9FobBKNLFPLJaXSLMyVWmzqt3qy3lGtFWXCQqsF1pDfXOtuSFGj
-rG2rZE1mzOaYLWxolijJignZC3YerGLFeLIfVgZf1A96hHV3g/rPfUfBdt9d
-BR2SjLZPhzi9+isFDwg422IhvMmajER0GwvzfzixHLy05T9osTQ8pKaj5TFS
-BoEHVZnup1pd0B+Et1kVe0FIJx4cwQc85APH+QWf4Ej3ngUAAA==
-
---264365225-444710384-1228899001=:26470--
+-Peff
