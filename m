@@ -1,54 +1,50 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit] kha/{safe,experimental} updated
-Date: Wed, 10 Dec 2008 21:40:33 +0100
-Message-ID: <20081210204033.GA13461@diana.vm.bytemark.co.uk>
-References: <20081208203923.GA9986@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] modify/delete conflict resolution overwrites untracked
+ file
+Date: Wed, 10 Dec 2008 12:51:59 -0800
+Message-ID: <7vzlj3ycr4.fsf@gitster.siamese.dyndns.org>
+References: <20081210201259.GA12928@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Gustav =?iso-8859-1?Q?H=E5llberg?= <gustav@virtutech.com>,
-	David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 21:42:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Wed Dec 10 21:53:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAVsv-0003LN-Pz
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 21:42:18 +0100
+	id 1LAW3q-00085T-0t
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 21:53:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754007AbYLJUk7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Dec 2008 15:40:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754648AbYLJUk7
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 15:40:59 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2650 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752947AbYLJUk7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 15:40:59 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1LAVrF-0003Xw-00; Wed, 10 Dec 2008 20:40:33 +0000
-Content-Disposition: inline
-In-Reply-To: <20081208203923.GA9986@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753737AbYLJUwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 15:52:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752700AbYLJUwJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 15:52:09 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45638 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753641AbYLJUwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 15:52:08 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5F0281892C;
+	Wed, 10 Dec 2008 15:52:07 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 66F0818929; Wed,
+ 10 Dec 2008 15:52:01 -0500 (EST)
+In-Reply-To: <20081210201259.GA12928@localhost> (Clemens Buchacher's message
+ of "Wed, 10 Dec 2008 21:12:59 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 683B4EA2-C6FC-11DD-BC54-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102719>
 
-On 2008-12-08 21:39:23 +0100, Karl Hasselstr=F6m wrote:
+Clemens Buchacher <drizzd@aon.at> writes:
 
-> The "safe" branch has a whole bunch of stgit.el improvements by
-> David and Gustav. "experimental" has the same two patches that just
-> sit there waiting for the git features they depend on to be
-> sufficiently widely deployed.
+> If it's a regression, it dates far back, since 1.5.0 fails as well.
 
-Updated with three more stgit.el patches from Gustav. (One of them
-only in experimental, since Gustav seemed to think it was a bit
-hackish, and David hasn't commented on it yet, and I'm an elisp noob.)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+A good lit(h)mus test to see if it is a regression or just a plain bug in
+the recursive strategy would be to see what 'resolve' strategy does
+(replace "merge" with "merge -s resolve" in your test).
