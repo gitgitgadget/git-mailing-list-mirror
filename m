@@ -1,295 +1,97 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 5/6] Add Bourne style quoting for TransportGitSsh
-Date: Wed, 10 Dec 2008 14:05:50 -0800
-Message-ID: <1228946751-12708-6-git-send-email-spearce@spearce.org>
-References: <1228946751-12708-1-git-send-email-spearce@spearce.org>
- <1228946751-12708-2-git-send-email-spearce@spearce.org>
- <1228946751-12708-3-git-send-email-spearce@spearce.org>
- <1228946751-12708-4-git-send-email-spearce@spearce.org>
- <1228946751-12708-5-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 23:08:04 2008
+From: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
+Subject: Re: fatal output from git-show really wants a terminal
+Date: Wed, 10 Dec 2008 16:24:06 -0600
+Message-ID: <200812101624.11255.bss03@volumehost.net>
+References: <ghop5d$qud$1@ger.gmane.org> <200812102046.50186.j6t@kdbg.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart7598268.3DVMe100J9";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j6t@kdbg.org>, Tim Olsen <tim@brooklynpenguin.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 10 23:25:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAXDO-00031R-67
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 23:07:30 +0100
+	id 1LAXUr-0001pi-G4
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 23:25:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755486AbYLJWGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 17:06:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755639AbYLJWGG
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 17:06:06 -0500
-Received: from george.spearce.org ([209.20.77.23]:39021 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755486AbYLJWF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 17:05:56 -0500
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id B303E38215; Wed, 10 Dec 2008 22:05:55 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 3862B38192;
-	Wed, 10 Dec 2008 22:05:53 +0000 (UTC)
-X-Mailer: git-send-email 1.6.1.rc2.299.gead4c
-In-Reply-To: <1228946751-12708-5-git-send-email-spearce@spearce.org>
+	id S1753485AbYLJWYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 17:24:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753409AbYLJWYJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 17:24:09 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:64748 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753356AbYLJWYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 17:24:08 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20081210222407.CKGH2948.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 10 Dec 2008 17:24:07 -0500
+Received: from [10.0.0.123] ([72.204.50.125])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id paQ61a00A2i4SyG04aQ6vX; Wed, 10 Dec 2008 17:24:07 -0500
+X-Authority-Analysis: v=1.0 c=1 a=4x8eZqvhE5cA:10 a=cCwArZ2WySYA:10
+ a=nEQGfrJnAAAA:8 a=pPtlm3eTAPfBldqyw0wA:9 a=TIvKYbPKmq7eX8v19k8EvC8_vn8A:4
+ a=B7iFY6Z7H_gA:10 a=LY0hPdMaydYA:10 a=wVZX06xqH1-Fx18mdYcA:9
+ a=dFsmT-2iDlEIXykH1prNJcv2-okA:4 a=rPt6xJ-oxjAA:10
+X-CM-Score: 0.00
+User-Agent: KMail/1.9.9
+In-Reply-To: <200812102046.50186.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102731>
 
-Now that we have a nice QuotedString abstraction we can port our
-string quoting logic from being private within the SSH transport
-code to being available in the rest of the library.
+--nextPart7598268.3DVMe100J9
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Currently we only support the super-restrictive quoting style used
-for the repository path name argument over SSH.  We don't support the
-"minimal" style used to invoke the command name, nor do we support
-the ~user/ style format, which cannot be quoted.
+On Wednesday 2008 December 10 13:46:50 you wrote:
+>On Mittwoch, 10. Dezember 2008, Tim Olsen wrote:
+>> It appears that when outputting a fatal error, git-show will choose
+>> stdout over stderr if stdout is a terminal and stderr is not.
+>
+>This is by design.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../jgit/util/QuotedStringBourneStyleTest.java     |  111 ++++++++++++++++++++
- .../spearce/jgit/transport/TransportGitSsh.java    |   13 +--
- .../src/org/spearce/jgit/util/QuotedString.java    |   66 ++++++++++++
- 3 files changed, 179 insertions(+), 11 deletions(-)
- create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringBourneStyleTest.java
+Then it is poor design. :P j/k
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringBourneStyleTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringBourneStyleTest.java
-new file mode 100644
-index 0000000..86d46fe
---- /dev/null
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringBourneStyleTest.java
-@@ -0,0 +1,111 @@
-+/*
-+ * Copyright (C) 2008, Google Inc.
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
-+
-+package org.spearce.jgit.util;
-+
-+import static org.spearce.jgit.util.QuotedString.BOURNE;
-+import junit.framework.TestCase;
-+
-+import org.spearce.jgit.lib.Constants;
-+
-+public class QuotedStringBourneStyleTest extends TestCase {
-+	private static void assertQuote(final String in, final String exp) {
-+		final String r = BOURNE.quote(in);
-+		assertNotSame(in, r);
-+		assertFalse(in.equals(r));
-+		assertEquals('\'' + exp + '\'', r);
-+	}
-+
-+	private static void assertDequote(final String exp, final String in) {
-+		final byte[] b = Constants.encode('\'' + in + '\'');
-+		final String r = BOURNE.dequote(b, 0, b.length);
-+		assertEquals(exp, r);
-+	}
-+
-+	public void testQuote_Empty() {
-+		assertEquals("''", BOURNE.quote(""));
-+	}
-+
-+	public void testDequote_Empty1() {
-+		assertEquals("", BOURNE.dequote(new byte[0], 0, 0));
-+	}
-+
-+	public void testDequote_Empty2() {
-+		assertEquals("", BOURNE.dequote(new byte[] { '\'', '\'' }, 0, 2));
-+	}
-+
-+	public void testDequote_SoleSq() {
-+		assertEquals("", BOURNE.dequote(new byte[] { '\'' }, 0, 1));
-+	}
-+
-+	public void testQuote_BareA() {
-+		assertQuote("a", "a");
-+	}
-+
-+	public void testDequote_BareA() {
-+		final String in = "a";
-+		final byte[] b = Constants.encode(in);
-+		assertEquals(in, BOURNE.dequote(b, 0, b.length));
-+	}
-+
-+	public void testDequote_BareABCZ_OnlyBC() {
-+		final String in = "abcz";
-+		final byte[] b = Constants.encode(in);
-+		final int p = in.indexOf('b');
-+		assertEquals("bc", BOURNE.dequote(b, p, p + 2));
-+	}
-+
-+	public void testDequote_LoneBackslash() {
-+		assertDequote("\\", "\\");
-+	}
-+
-+	public void testQuote_NamedEscapes() {
-+		assertQuote("'", "'\\''");
-+		assertQuote("!", "'\\!'");
-+
-+		assertQuote("a'b", "a'\\''b");
-+		assertQuote("a!b", "a'\\!'b");
-+	}
-+
-+	public void testDequote_NamedEscapes() {
-+		assertDequote("'", "'\\''");
-+		assertDequote("!", "'\\!'");
-+
-+		assertDequote("a'b", "a'\\''b");
-+		assertDequote("a!b", "a'\\!'b");
-+	}
-+}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-index 3f2cd37..e3f5ae8 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-@@ -47,6 +47,7 @@
- import org.spearce.jgit.errors.NoRemoteRepositoryException;
- import org.spearce.jgit.errors.TransportException;
- import org.spearce.jgit.lib.Repository;
-+import org.spearce.jgit.util.QuotedString;
- 
- import com.jcraft.jsch.ChannelExec;
- import com.jcraft.jsch.JSchException;
-@@ -154,17 +155,7 @@ private static void sq(final StringBuilder cmd, final String val) {
- 				return;
- 		}
- 
--		cmd.append('\'');
--		for (; i < val.length(); i++) {
--			final char c = val.charAt(i);
--			if (c == '\'')
--				cmd.append("'\\''");
--			else if (c == '!')
--				cmd.append("'\\!'");
--			else
--				cmd.append(c);
--		}
--		cmd.append('\'');
-+		cmd.append(QuotedString.BOURNE.quote(val.substring(i)));
- 	}
- 
- 	private void initSession() throws TransportException {
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/QuotedString.java b/org.spearce.jgit/src/org/spearce/jgit/util/QuotedString.java
-index 4aaa8ff..1089e9e 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/util/QuotedString.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/util/QuotedString.java
-@@ -49,6 +49,15 @@
- 	public static final C_Style C = new C_Style();
- 
- 	/**
-+	 * Quoting style used by the Bourne shell.
-+	 * <p>
-+	 * Quotes are unconditionally inserted during {@link #quote(String)}. This
-+	 * protects shell meta-characters like <code>$</code> or <code>~</code> from
-+	 * being recognized as special.
-+	 */
-+	public static final BourneStyle BOURNE = new BourneStyle();
-+
-+	/**
- 	 * Quote an input string by the quoting rules.
- 	 * <p>
- 	 * If the input string does not require any quoting, the same String
-@@ -110,6 +119,63 @@ public String dequote(final String in) {
- 	 */
- 	public abstract String dequote(byte[] in, int offset, int end);
- 
-+	/**
-+	 * Quoting style used by the Bourne shell.
-+	 * <p>
-+	 * Quotes are unconditionally inserted during {@link #quote(String)}. This
-+	 * protects shell meta-characters like <code>$</code> or <code>~</code> from
-+	 * being recognized as special.
-+	 */
-+	public static class BourneStyle extends QuotedString {
-+		@Override
-+		public String quote(final String in) {
-+			final StringBuilder r = new StringBuilder();
-+			r.append('\'');
-+			int start = 0, i = 0;
-+			for (; i < in.length(); i++) {
-+				switch (in.charAt(i)) {
-+				case '\'':
-+				case '!':
-+					r.append(in, start, i);
-+					r.append('\'');
-+					r.append('\\');
-+					r.append(in.charAt(i));
-+					r.append('\'');
-+					start = i + 1;
-+					break;
-+				}
-+			}
-+			r.append(in, start, i);
-+			r.append('\'');
-+			return r.toString();
-+		}
-+
-+		@Override
-+		public String dequote(final byte[] in, int ip, final int ie) {
-+			boolean inquote = false;
-+			final byte[] r = new byte[ie - ip];
-+			int rPtr = 0;
-+			while (ip < ie) {
-+				final byte b = in[ip++];
-+				switch (b) {
-+				case '\'':
-+					inquote = !inquote;
-+					continue;
-+				case '\\':
-+					if (inquote || ip == ie)
-+						r[rPtr++] = b; // literal within a quote
-+					else
-+						r[rPtr++] = in[ip++];
-+					continue;
-+				default:
-+					r[rPtr++] = b;
-+					continue;
-+				}
-+			}
-+			return decode(Constants.CHARSET, r, 0, rPtr);
-+		}
-+	}
-+
- 	/** Quoting style that obeys the rules of the C programming language. */
- 	public static final class C_Style extends QuotedString {
- 		private static final byte[] quote;
--- 
-1.6.1.rc2.299.gead4c
+Why not use the pager only if git-show is "interactive", using the same tes=
+t=20
+for interactivity as SUSv3/POSIX shells use?  IIRC, a shell is interactive =
+if=20
+both stdin and stderr are terminals.  That test for interactivity -- a=20
+associated difference in behavior -- predates git by a number of years.  Is=
+=20
+there a reason for being different?  Is the porcelain consistent about that=
+=20
+behavior?
+=2D-=20
+Boyd Stephen Smith Jr. =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ,=3D ,-_-. =
+=3D.=20
+bss03@volumehost.net =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0((_/)o o(\_=
+))
+ICQ: 514984 YM/AIM: DaTwinkDaddy =A0 =A0 =A0 =A0 =A0 `-'(. .)`-'=20
+http://iguanasuicide.org/ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\_/ =
+=A0 =A0=20
+
+--nextPart7598268.3DVMe100J9
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAklAQYsACgkQdNbfk+86fC14igCdFYhXYRfBS2sZPavGLtLmX5e6
+/jUAn27B0JrCEWK4OVhjqCRaTCha7Z6z
+=10XR
+-----END PGP SIGNATURE-----
+
+--nextPart7598268.3DVMe100J9--
