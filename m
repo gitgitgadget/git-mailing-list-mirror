@@ -1,107 +1,104 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] diff: fix handling of binary rewrite diffs
-Date: Wed, 10 Dec 2008 00:34:49 -0800
-Message-ID: <7vvdts1l92.fsf@gitster.siamese.dyndns.org>
-References: <20081209081227.GA19626@coredump.intra.peff.net>
+Subject: Re: [PATCH 3/3] gitweb: A bit of code cleanup in git_blame()
+Date: Wed, 10 Dec 2008 00:35:37 -0800
+Message-ID: <7voczk1l7q.fsf@gitster.siamese.dyndns.org>
+References: <20081209223703.28106.29198.stgit@localhost.localdomain>
+ <20081209224814.28106.83387.stgit@localhost.localdomain>
+ <ghn8jv$hg9$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 10 09:36:19 2008
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 10 09:37:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAKYK-0002kH-4k
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 09:36:16 +0100
+	id 1LAKZ5-0002ug-80
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 09:37:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754649AbYLJIe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 03:34:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754701AbYLJIe4
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 03:34:56 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59976 "EHLO
+	id S1754771AbYLJIfq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Dec 2008 03:35:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754752AbYLJIfq
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 03:35:46 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39098 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754272AbYLJIey (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 03:34:54 -0500
+	with ESMTP id S1754731AbYLJIfp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2008 03:35:45 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5435885A6A;
-	Wed, 10 Dec 2008 03:34:54 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 42CF41888A;
+	Wed, 10 Dec 2008 03:35:44 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5F31F85A64; Wed,
- 10 Dec 2008 03:34:51 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 746DB18889; Wed,
+ 10 Dec 2008 03:35:39 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6B48A5FC-C695-11DD-9CC5-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 890B0F76-C695-11DD-A0AD-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102674>
 
-Jeff King <peff@peff.net> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Instead, if we have binary files, then let's just skip emit_rewrite_diff
-> altogether. We will already have shown the "dissimilarity index" line,
-> so it is really about the diff contents. If binary diffs are turned off,
-> the "Binary files a/file and b/file differ" message should be the same
-> in either case. If we do have binary patches turned on, there isn't much
-> point in making a less-efficient binary patch that does a total rewrite;
-> no human is going to read it, and since binary patches don't apply with
-> any fuzz anyway, the result of application should be the same.
-
-Makes sense.
-
->  diff.c                         |    4 ++-
->  t/t4031-diff-rewrite-binary.sh |   42 ++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 45 insertions(+), 1 deletions(-)
->  create mode 100755 t/t4031-diff-rewrite-binary.sh
+> Jakub Narebski wrote:
 >
-> diff --git a/diff.c b/diff.c
-> index f644947..ea958a2 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1376,7 +1376,9 @@ static void builtin_diff(const char *name_a,
->  		 */
->  		if ((one->mode ^ two->mode) & S_IFMT)
->  			goto free_ab_and_return;
-> -		if (complete_rewrite) {
-> +		if (complete_rewrite &&
-> +		    !diff_filespec_is_binary(one) &&
-> +		    !diff_filespec_is_binary(two)) {
->  			emit_rewrite_diff(name_a, name_b, one, two, o);
->  			o->found_changes = 1;
->  			goto free_ab_and_return;
+> I'm sorry, there should be
+>
+>   +       my $ftype =3D "blob";
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (!defined $hash) =
+{
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0$hash =3D git_get_hash_by_path($hash_base, $=
+file_name, "blob")
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0or die_error(404, "Error looking up file");
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0} else {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0$ftype =3D git_get_type($hash);
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0if ($ftype !~ "blob") {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0di=
+e_error(400, "Object is not a blob");
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0}
 
-And looks correct.
+I will squash in the following and queue [1/3] and [3/3] to 'pu', as th=
+ere
+seem to be a few comments on [2/3] that look worth addressing.
 
-> diff --git a/t/t4031-diff-rewrite-binary.sh b/t/t4031-diff-rewrite-binary.sh
-> new file mode 100755
-> index 0000000..4b522f7
-> --- /dev/null
-> +++ b/t/t4031-diff-rewrite-binary.sh
-> @@ -0,0 +1,42 @@
-> +#!/bin/sh
-> +
-> +test_description='rewrite diff on binary file'
-> +
-> +. ./test-lib.sh
-> +
-> +# We must be large enough to meet the MINIMUM_BREAK_SIZE
-> +# requirement.
-> +make_file() {
-> +	for i in 1 2 3 4 5 6 7 8 9 10; do
-> +		for j in 1 2 3 4 5 6 7 9 10; do
-> +			for k in 1 2 3 4 5; do
-> +				printf "$1\n"
-> +			done
-> +		done
-> +	done >file
-> +}
-> +
-> +test_expect_success 'create binary file with changes' '
-> +	make_file "\\0" &&
-> +	git add file &&
-> +	make_file "\\01"
-> +'
+ gitweb/gitweb.perl |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-Hmm... "1 2 3 4 5 6 7 9 10"?
+diff --git c/gitweb/gitweb.perl w/gitweb/gitweb.perl
+index d491a1d..ccbf5d4 100755
+--- c/gitweb/gitweb.perl
++++ w/gitweb/gitweb.perl
+@@ -4585,11 +4585,12 @@ sub git_blame {
+ 	die_error(404, "Couldn't find base commit") unless $hash_base;
+ 	my %co =3D parse_commit($hash_base)
+ 		or die_error(404, "Commit not found");
++	my $ftype =3D "blob";
+ 	if (!defined $hash) {
+ 		$hash =3D git_get_hash_by_path($hash_base, $file_name, "blob")
+ 			or die_error(404, "Error looking up file");
+ 	} else {
+-		my $ftype =3D git_get_type($hash);
++		$ftype =3D git_get_type($hash);
+ 		if ($ftype !~ "blob") {
+ 			die_error(400, "Object is not a blob");
+ 		}
+@@ -4637,7 +4638,8 @@ HTML
+ 			$metainfo{$full_rev} =3D {};
+ 		}
+ 		my $meta =3D $metainfo{$full_rev};
+-		while (my $data =3D <$fd>) {
++		my $data;
++		while ($data =3D <$fd>) {
+ 			chomp $data;
+ 			last if ($data =3D~ s/^\t//); # contents of line
+ 			if ($data =3D~ /^(\S+) (.*)$/) {
