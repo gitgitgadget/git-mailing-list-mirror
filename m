@@ -1,77 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: malloc fails when dealing with huge files
-Date: Wed, 10 Dec 2008 11:32:32 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0812101121401.3340@localhost.localdomain>
-References: <43c10b980812100742t3a65466yb9b7310bfedb2b18@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jonathan Blanton <jonathan.blanton@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 20:34:52 2008
+From: Lee Marlow <lee.marlow@gmail.com>
+Subject: [PATCH 1/2] bash completion: Add '--intent-to-add' long option for 'git add'
+Date: Wed, 10 Dec 2008 12:39:17 -0700
+Message-ID: <1228937958-5091-1-git-send-email-lee.marlow@gmail.com>
+Cc: git@vger.kernel.org, Lee Marlow <lee.marlow@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Dec 10 20:41:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAUpT-00013W-EF
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 20:34:39 +0100
+	id 1LAUvZ-0003kf-Ll
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 20:40:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755593AbYLJTdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 14:33:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755603AbYLJTdH
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 14:33:07 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:36261 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755581AbYLJTdG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2008 14:33:06 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBAJWXGs009859
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 10 Dec 2008 11:32:34 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBAJWWw8023882;
-	Wed, 10 Dec 2008 11:32:33 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <43c10b980812100742t3a65466yb9b7310bfedb2b18@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.427 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755209AbYLJTjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 14:39:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754513AbYLJTji
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 14:39:38 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:5760 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753840AbYLJTjh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 14:39:37 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so123597eyi.37
+        for <git@vger.kernel.org>; Wed, 10 Dec 2008 11:39:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=svf1OucflabAw/s4mEu0KcBJ8XuBrGnd+0Fcc0wdgr8=;
+        b=Iin33ll/KObnZJvW8ICgU8IA51ulvOSRtuRpqFvpSdWO8klVEzN1oFPgTn+6hT4Jze
+         HecRh9IEcGsFGxdmTuXZfvZovkKDerW3YipxfecF8u6aU9hG25niIneVfPv5LkC0ifWp
+         2P/pPYTp3R8NqzoHIZug1tGWBMQ0V82LQXO8M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=FGmE7XSd8mYZMHbLLIbD5/4E08gUG8GjZMfYbR0GoC0jz13dpQBb/BeXOL+4sKi3nj
+         7zQ3sZ3ZDFIYuzfG6DccwBFjgYOiLjKVHbbZ2VDoUSmHwkdLP3boCFkFW1GoC2B87Vlu
+         inmneBuKYi5L5w3UT8uHUl2/IDJydr4IKaDRY=
+Received: by 10.103.131.18 with SMTP id i18mr657328mun.74.1228937975790;
+        Wed, 10 Dec 2008 11:39:35 -0800 (PST)
+Received: from localhost.localdomain ([12.25.108.178])
+        by mx.google.com with ESMTPS id g1sm2581164muf.47.2008.12.10.11.39.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 10 Dec 2008 11:39:34 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.rc2.14.g5363d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102704>
 
+Signed-off-by: Lee Marlow <lee.marlow@gmail.com>
+---
+ contrib/completion/git-completion.bash |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-
-On Wed, 10 Dec 2008, Jonathan Blanton wrote:
->
-> I'm using Git for a project that contains huge (multi-gigabyte) files.
->  I need to track these files, but with some of the really big ones,
-> git-add aborts with the message "fatal: Out of memory, malloc failed".
-
-git is _really_ not designed for huge files.
-
-By design - good or bad - git does pretty much all single file operations 
-with the whole file in memory as one single allocation. 
-
-Now, some of that is hard to fix - or at least would generate much more 
-complex code. The _particular_ case of "git add" could be fixed without 
-undue pain, but it's not entirely trivial either.
-
-The main offender is probably "index_fd()" that just mmap's the whole file 
-in one go and then calls write_sha1_file() which really expects it to be 
-one single memory area both for the initial SHA1 create and for the 
-compression and writing out of the result.
-
-Changing that to do big files in pieces would not be _too_ painful, but 
-it's not just a couple of lines either.
-
-However, git performance with big files would never be wonderful, and 
-things like "git diff" would still end up reading not just the whole file, 
-but _both_versions_ at the same time. Marking the big files as being 
-no-diff might help, though.
-
-
-			Linus
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index c79c98f..5356e5b 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -563,7 +563,7 @@ _git_add ()
+ 	--*)
+ 		__gitcomp "
+ 			--interactive --refresh --patch --update --dry-run
+-			--ignore-errors
++			--ignore-errors --intent-to-add
+ 			"
+ 		return
+ 	esac
+-- 
+1.6.1.rc2.14.g5363d
