@@ -1,69 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] bash completion: Use 'git add' completions for
-	'git stage'
-Date: Wed, 10 Dec 2008 11:59:57 -0800
-Message-ID: <20081210195957.GE11928@spearce.org>
-References: <1228937958-5091-1-git-send-email-lee.marlow@gmail.com> <1228937958-5091-2-git-send-email-lee.marlow@gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH 2/3] gitweb: Cache $parent_commit info in git_blame()
+Date: Wed, 10 Dec 2008 12:05:30 -0800 (PST)
+Message-ID: <710873.22344.qm@web31806.mail.mud.yahoo.com>
+References: <200812101615.55340.jnareb@gmail.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Lee Marlow <lee.marlow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 21:01:49 2008
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 10 21:07:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAVFS-0003i3-Lw
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 21:01:31 +0100
+	id 1LAVKc-0005mP-LU
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 21:06:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755730AbYLJT77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 14:59:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbYLJT76
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 14:59:58 -0500
-Received: from george.spearce.org ([209.20.77.23]:36526 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755480AbYLJT76 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 14:59:58 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 96ED138200; Wed, 10 Dec 2008 19:59:57 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1228937958-5091-2-git-send-email-lee.marlow@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753967AbYLJUFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 15:05:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753607AbYLJUFc
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 15:05:32 -0500
+Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:43186 "HELO
+	web31806.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753232AbYLJUFc (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2008 15:05:32 -0500
+Received: (qmail 25497 invoked by uid 60001); 10 Dec 2008 20:05:30 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:X-Mailer:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type;
+  b=Qej88PZl/+zh7ln/q3xDZJymj/82d1wXav2znLHDJi03/xSrL0HiAxU1Dh31fZrLcwRKLvs9ZJ2OyAHtyaPgiSvPOKbz26GnXgNFojnGmIRu2/v0QpWIR44XtcYYfSzZClP59XHudv+2O2IunTP0mr5jaTwQxpWEEvh1scSA7kc=  ;
+Received: from [71.132.209.19] by web31806.mail.mud.yahoo.com via HTTP; Wed, 10 Dec 2008 12:05:30 PST
+X-Mailer: YahooMailWebService/0.7.260.1
+In-Reply-To: <200812101615.55340.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102709>
 
-Lee Marlow <lee.marlow@gmail.com> wrote:
-> Signed-off-by: Lee Marlow <lee.marlow@gmail.com>
-> ---
->  contrib/completion/git-completion.bash |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
 
-Also,
-
-Trivially-Acked-by: Shawn O. Pearce <spearce@spearce.org>
- 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 5356e5b..7e2b482 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1660,6 +1660,7 @@ _git ()
->  	show)        _git_show ;;
->  	show-branch) _git_show_branch ;;
->  	stash)       _git_stash ;;
-> +	stage)       _git_add ;;
->  	submodule)   _git_submodule ;;
->  	svn)         _git_svn ;;
->  	tag)         _git_tag ;;
-> -- 
-> 1.6.1.rc2.14.g5363d
+--- On Wed, 12/10/08, Jakub Narebski <jnareb@gmail.com> wrote:
+> > Have you tested this patch that it gives the same
+> commit chain
+> > as before it?
 > 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> The only difference between precious version and this patch
+> is that
+> now, if you calculate sha-1 of $long_rev^, it is stored in 
+> $metainfo{$long_rev}{'parent'} and not calculated
+> second time.
 
--- 
-Shawn.
+Yes, I agree a patch to this effect would improve performance
+proportionally to the history of the lines of a file.  So it's a
+good thing, as most commits change a contiguous block of size more
+than one line of a file.
+
+"$parent_commit" depends on "$full_rev^" which depends on "$full_rev".
+So as soon as "$full_rev" != "$old_full_rev", you'd know that you need
+to update "$parent_commit".  "$old_full_rev" needs to exist outside the
+scope of "while (1)".  I didn't see this in the code or in the patch.
+
+> But I have checked that (at least for single example file)
+> the blame output is identical for before and after this patch.
+
+I've always tested it on something like "gitweb.perl", etc.
+
+    Luben
