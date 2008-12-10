@@ -1,89 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] rebase: improve error messages about dirty state
-Date: Wed, 10 Dec 2008 04:25:19 -0500
-Message-ID: <20081210092518.GA14424@coredump.intra.peff.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] make sure packs to be replaced are closed beforehand
+Date: Wed, 10 Dec 2008 10:36:05 +0100
+Message-ID: <81b0412b0812100136j6ae4f3few2ab00a475643b538@mail.gmail.com>
+References: <81b0412b0811190313p643c0cb4vad620ea942aeea93@mail.gmail.com>
+	 <4923FE58.3090503@viscovery.net>
+	 <alpine.LFD.2.00.0811190753420.27509@xanadu.home>
+	 <81b0412b0811190534r4f71f981s53de415f79e56e25@mail.gmail.com>
+	 <49241AEF.1080808@viscovery.net>
+	 <alpine.LFD.2.00.0811190940480.27509@xanadu.home>
+	 <81b0412b0811260518o52adb107tbddafb324e7fd97b@mail.gmail.com>
+	 <alpine.LFD.2.00.0811260931030.14328@xanadu.home>
+	 <alpine.LFD.2.00.0812091414030.14328@xanadu.home>
+	 <493F71B7.60804@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 10 10:26:44 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Sixt" <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Dec 10 10:37:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LALL6-00018u-PQ
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 10:26:41 +0100
+	id 1LALVb-0004Vd-0m
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 10:37:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751669AbYLJJZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 04:25:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751561AbYLJJZX
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 04:25:23 -0500
-Received: from peff.net ([208.65.91.99]:2323 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751408AbYLJJZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 04:25:22 -0500
-Received: (qmail 7707 invoked by uid 111); 10 Dec 2008 09:25:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 10 Dec 2008 04:25:21 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Dec 2008 04:25:19 -0500
+	id S1753416AbYLJJgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 04:36:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753415AbYLJJgI
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 04:36:08 -0500
+Received: from rv-out-0506.google.com ([209.85.198.239]:4143 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753141AbYLJJgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 04:36:07 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so338111rvb.1
+        for <git@vger.kernel.org>; Wed, 10 Dec 2008 01:36:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Y8RuqMbCbEBu4/tDjmfCZy5T1uXedxKraETpqcXIm5I=;
+        b=eIfJQ6j1BaGmaRGjvI9AY3Sy3WnsRTzTeNv2txIWl5lMB0/My8Nr65tH5uVSONmd5f
+         ZFGIOSIV3sXQ4JTXzTN60ugzlQOCmkP00MooRRe5U+E4WG7H5eCD5am7tp3H/lb9JrYp
+         MMNd5s9DX9Uxbu3nSkWGitcepbe9HdUdNL/Hk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=QLxTxoYPGB86Rk12sVs0LcgYU7IHgUPBU8cMdoSrmPLqtjTn84vThwc5Y84kITAIWU
+         bLsoJ/LqZ9KDwOBxRt/MzeTRyjlOY2qkNzO7Ai3L2072mHgARp1xLrWZoNYyJWj5hY+I
+         OfJ3GwrWVK5DdTcwrdeWZwF4RoSlPwMp3xBcE=
+Received: by 10.114.191.1 with SMTP id o1mr800853waf.209.1228901765977;
+        Wed, 10 Dec 2008 01:36:05 -0800 (PST)
+Received: by 10.114.74.15 with HTTP; Wed, 10 Dec 2008 01:36:05 -0800 (PST)
+In-Reply-To: <493F71B7.60804@viscovery.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102679>
 
-If you have unstaged changes in your working tree and try to
-rebase, you will get the cryptic "foo: needs update"
-message, but nothing else.  If you have staged changes, you
-get "your index is not up-to-date".
+2008/12/10 Johannes Sixt <j.sixt@viscovery.net>:
+> Nicolas Pitre schrieb:
+>> Especially on Windows where an opened file cannot be replaced, make
+>> sure pack-objects always close packs it is about to replace. Even on
+>> non Windows systems, this could save potential bad results if ever
+>> objects were to be read from the new pack file using offset from the old
+>> index.
+>>
+>> This should fix t5303 on Windows.
+> ...
+>> OK, here it is at last.  Please confirm it works on Windows before Junio
+>> merges it.
+>
+> I can confirm that this patch fixes t5303 on Windows (MinGW).
+>
 
-Let's improve this situation in two ways:
-
- - for unstaged changes, let's also tell them we are
-   canceling the rebase, and why (in addition to the "needs
-   update" lines)
-
- - for the staged changes case, let's use language that is a
-   little more clear to the user: their index contains
-   uncommitted changes
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I am cleaning up some old branches, and I think this is worth applying.
-It came out of a "rebase's error message is confusing" thread back in
-April:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/78698
-
-It would be nice also to say "foo: locally modified" instead of "foo:
-needs update" but the REFRESH_SAY_CHANGED functionality isn't exposed
-via the command line.
-
- git-rebase.sh |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index ea7720d..ebd4df3 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -332,11 +332,14 @@ else
- fi
- 
- # The tree must be really really clean.
--git update-index --ignore-submodules --refresh || exit
-+if ! git update-index --ignore-submodules --refresh; then
-+	echo >&2 "cannot rebase: you have unstaged changes"
-+	exit 1
-+fi
- diff=$(git diff-index --cached --name-status -r --ignore-submodules HEAD --)
- case "$diff" in
--?*)	echo "cannot rebase: your index is not up-to-date"
--	echo "$diff"
-+?*)	echo >&2 "cannot rebase: your index contains uncommitted changes"
-+	echo >&2 "$diff"
- 	exit 1
- 	;;
- esac
--- 
-1.6.1.rc2.15.g7752a
+And it does that for me, FWIW.
