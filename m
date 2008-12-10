@@ -1,76 +1,89 @@
 From: Alexander Potashev <aspotashev@gmail.com>
-Subject: [PATCH] remove unnecessary 'if'
-Date: Wed, 10 Dec 2008 17:09:16 +0300
-Message-ID: <1228918156-3953-1-git-send-email-aspotashev@gmail.com>
-Cc: gitster@pobox.com, Alexander Potashev <aspotashev@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 10 15:10:25 2008
+Subject: Re: builtin-add.c patch
+Date: Wed, 10 Dec 2008 17:26:32 +0300
+Message-ID: <20081210142632.GA4137@myhost>
+References: <200812101238.mBACcWQk023480@axiom-developer.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: daly@axiom-developer.org
+X-From: git-owner@vger.kernel.org Wed Dec 10 15:27:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAPlU-00052u-7P
-	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 15:10:12 +0100
+	id 1LAQ2K-0003f6-8R
+	for gcvg-git-2@gmane.org; Wed, 10 Dec 2008 15:27:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755188AbYLJOIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 09:08:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754773AbYLJOIw
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 09:08:52 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:30618 "EHLO
+	id S1752408AbYLJO0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 09:26:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752223AbYLJO0K
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 09:26:10 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:42756 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752309AbYLJOIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 09:08:51 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so229384fgg.17
-        for <git@vger.kernel.org>; Wed, 10 Dec 2008 06:08:49 -0800 (PST)
+	with ESMTP id S1752198AbYLJO0J (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 09:26:09 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so233278fgg.17
+        for <git@vger.kernel.org>; Wed, 10 Dec 2008 06:26:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=rNFDELDhlp1iMH4Kfa5ZPv7Uo3kPtOLXECpPbeOjgMo=;
-        b=AwRFxv95Oi52Og8agQcxlC1fJbSoaJZZ/M6M2GDTdlGLLhYQ7uiBM01BWzJi3s1M63
-         3NnfV9Fw01pLe1aSpZv30L8FVGWM6BliRFyH2o+wecV1NxAhc+7hUJ8n6PN0rjkQYGZ8
-         eVycmqhHCnkZa8ms79v5mwZNEJPbCg3oZNRds=
+        h=domainkey-signature:received:received:received:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=84SkLdAuFGr5qEGpCGzWFkKvi5F/9lYOQwW0VyrJ67U=;
+        b=Fwc0pK4QiKgDgghepYxig5vk1b+PWXqbYr7bJDFMTIABQ8RqlGxPDABUZck3pZNnY6
+         BShy8GNZSIy+s22gDEnNrBK1AcmYcfKgJBrudJ2q3kBN+Jswcfpyv5Z3NZiLdskXLrUl
+         jGlMN+hOKt2OMiW3xvVUh768YHoWdCjArnbVA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=CDjqGpEgoZmGWsaB/6hkpmA0eH2g8kdAJqQ89frBUmTrT5I9maDjfNzOG3d4yifDkg
-         ZKnb5d8OKDlUpwR920DNLNxC5R4p3P/RZW7rtHrI0K4xKbyxfIMgX4BDUAOygxym4j5p
-         daIKdxG2XuSU4SrF3A80cXNL/fiPcpOklQkfc=
-Received: by 10.86.59.18 with SMTP id h18mr692368fga.35.1228918129920;
-        Wed, 10 Dec 2008 06:08:49 -0800 (PST)
-Received: from localhost.localdomain (ppp91-78-100-86.pppoe.mtu-net.ru [91.78.100.86])
-        by mx.google.com with ESMTPS id 4sm681464fge.30.2008.12.10.06.08.47
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=kSA80g5BDluYV0M2Bs7VAD49JBuY1GuVEng/86FjS5piFXKabvc55oqRslKPubGLNB
+         eDwPrJ2NPOYtUEO5o0B4FAbMHUd6FdoZFOsM0eiGz2pzpP6osp1eY3omokfGfb+vLou7
+         OJKGPBos3NaINyM9Yud2aUWjw9VuMMZn18JSU=
+Received: by 10.86.31.18 with SMTP id e18mr676526fge.72.1228919167087;
+        Wed, 10 Dec 2008 06:26:07 -0800 (PST)
+Received: from smtp.gmail.com ([91.78.100.86])
+        by mx.google.com with ESMTPS id e20sm2412761fga.57.2008.12.10.06.26.03
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 10 Dec 2008 06:08:48 -0800 (PST)
-X-Mailer: git-send-email 1.6.0.4
+        Wed, 10 Dec 2008 06:26:05 -0800 (PST)
+Received: by smtp.gmail.com (sSMTP sendmail emulation); Wed, 10 Dec 2008 17:26:32 +0300
+Content-Disposition: inline
+In-Reply-To: <200812101238.mBACcWQk023480@axiom-developer.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102689>
 
-'patch->is_new' is always <= 0 at this point (look at 'assert' at the
-beginning of the function). In both cases ('is_new < 0' and 'is_new == 0')
-the result of those two lines is zeroing of 'is_new'.
+Hello, Tim!
 
-Signed-off-by: Alexander Potashev <aspotashev@gmail.com>
----
- builtin-apply.c |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+On 06:38 Wed 10 Dec     , daly@axiom-developer.org wrote:
+> A trivial patch to fix a typo -- Tim Daly
+> 
+> 
+> diff --git a/builtin-add.c b/builtin-add.c
+> index ea4e771..5f2e68b 100644
+> --- a/builtin-add.c
+> +++ b/builtin-add.c
+> @@ -23,7 +23,7 @@ static void fill_pathspec_matches(const char **pathspec, char *seen, int specs)
+>  	int num_unmatched = 0, i;
+>  
+>  	/*
+> -	 * Since we are walking the index as if we are warlking the directory,
+> +	 * Since we are walking the index as if we are walking the directory,
+We probably should use subjunctive here:
+"Since we are walking the index as if we _were_ walking the directory,".
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 4c4d1e1..904a748 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -2440,8 +2440,7 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
- 	if (!cached)
- 		st_mode = ce_mode_from_stat(*ce, st->st_mode);
- 
--	if (patch->is_new < 0)
--		patch->is_new = 0;
-+	patch->is_new = 0;
- 	if (!patch->old_mode)
- 		patch->old_mode = st_mode;
- 	if ((st_mode ^ patch->old_mode) & S_IFMT)
--- 
-1.6.0.4
+Are there any native English speakers? :)
+>  	 * we have to mark the matched pathspec as seen; otherwise we will
+>  	 * mistakenly think that the user gave a pathspec that did not match
+>  	 * anything.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+It's also better to change the commit message, one should be able to
+realize from it that the change is a typo fix in comments.
