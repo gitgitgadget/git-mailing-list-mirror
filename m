@@ -1,64 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] Add support for a pdf version of the user manual
-Date: Wed, 10 Dec 2008 16:37:40 -0800
-Message-ID: <7v8wqny2az.fsf@gitster.siamese.dyndns.org>
-References: <1228949090-22475-1-git-send-email-vmiklos@frugalware.org>
- <ee2a733e0812101606m1c522541j9380b6f5d5dc7fc8@mail.gmail.com>
- <7vd4fzy3il.fsf@gitster.siamese.dyndns.org>
- <ee2a733e0812101620s5fc2ff27p81826a5ff827e154@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: epic fsck SIGSEGV! (was Recovering from epic fail (deleted
+ .git/objects/pack))
+Date: Wed, 10 Dec 2008 16:45:13 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0812101636351.3340@localhost.localdomain>
+References: <1228867861.14165.19.camel@starfruit.local>  <7vd4g051ax.fsf@gitster.siamese.dyndns.org>  <1228903606.4445.53.camel@starfruit.local> <493FAA5A.8070801@viscovery.net>  <1228949523.27061.20.camel@starfruit.local>  <alpine.LFD.2.00.0812101523570.3340@localhost.localdomain>
+ <1228955062.27061.36.camel@starfruit.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Miklos Vajna" <vmiklos@frugalware.org>, git@vger.kernel.org
-To: SLONIK.AZ@gmail.com
-X-From: git-owner@vger.kernel.org Thu Dec 11 01:39:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "R. Tyler Ballance" <tyler@slide.com>
+X-From: git-owner@vger.kernel.org Thu Dec 11 01:47:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAZa7-0005fN-7i
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 01:39:07 +0100
+	id 1LAZhz-0007qR-0H
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 01:47:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752903AbYLKAht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 19:37:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752603AbYLKAhs
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 19:37:48 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47709 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751820AbYLKAhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 19:37:48 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B2091895F;
-	Wed, 10 Dec 2008 19:37:47 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3ACC818952; Wed,
- 10 Dec 2008 19:37:41 -0500 (EST)
-In-Reply-To: <ee2a733e0812101620s5fc2ff27p81826a5ff827e154@mail.gmail.com>
- (Leo Razoumov's message of "Wed, 10 Dec 2008 19:20:42 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EE5FC25A-C71B-11DD-95DC-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1753386AbYLKAp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 19:45:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752961AbYLKAp5
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 19:45:57 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35434 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752571AbYLKAp4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Dec 2008 19:45:56 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBB0jPmF025491
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 10 Dec 2008 16:45:26 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBB0jEfq000557;
+	Wed, 10 Dec 2008 16:45:18 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1228955062.27061.36.camel@starfruit.local>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.426 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102757>
 
-"Leo Razoumov" <slonik.az@gmail.com> writes:
 
-> On 12/10/08, Junio C Hamano <gitster@pobox.com> wrote:
->> "Leo Razoumov" <slonik.az@gmail.com> writes:
->>
->>  > BTW, for those of us without dblatex, is it possible to have pdf
->>  > manual pregenerated the same way html and man pages are pregenerated
->>  > for official releases in the git repo?
->>
->>
->> Those of us includes myself, so...
+
+On Wed, 10 Dec 2008, R. Tyler Ballance wrote:
 >
-> Ouch:-) Does it mean that such a useful patch has a low probability of
-> being accepted?
+> The stack size is 8M as you assumed, I'm curious as to how the kernel
+> handles a process that exceeds the ulimit(2) stacksize. I know from our
+> experience with this repository that when Git runs up against the
+> address space (ulimit -v) that an ENOMEM or something similar is
+> returned. Is there an E_NOSTACK? :) (figured I'd ask, given your
+> apparent knowledge on the subject ;))
 
-As an optional "make" target, as long as it works for people with the
-necessary toolchain, I have no problem with the patch, but I would
-complain if the usual "make doc" try to run the tool I do not want to run
-with my regular build.  I didn't check.
+Since stack expansion doesn't involve any system calls, and since there is 
+no way to recover from it anyway, the kernel has no choice: it just sends 
+a SIGSEGV.
+
+An application that wants to _can_ handle this case by installing a signal 
+handler, but since signal handling needs some stack-space too, a regular 
+"sigaction(SIGSEGV..)" isn't sufficient. You also need to set up a 
+separate signal stack ..
+
+Nobody really ever does that, except for some _really_ special programs. 
+But it's a way to handle errors in stack allocation if you really need to. 
+Git certainly does not do it.
+
+> > (You can do something like
+> > 
+> > 	git rev-list --first-parent HEAD | wc -l
+> 
+> tyler@ccnet:~/source/slide/brian_main>  git rev-list --first-parent HEAD | wc -l
+> 46751 
+
+Ahh. yes. The 80k number is because the callchain was that deep, but since 
+each recursion involves _two_ functions, it really only needed a 40k 
+commit depth to the root to get there.
+
+> > But we should definitely fix this braindamage in fsck. Rather than 
+> > recursively walk the commits, we should add them to a commit list and just 
+> > walk the list iteratively.
+> 
+> Given that this issue affects our internal (proprietary) repository, I
+> can't very well give access to it or publish a clone, but I'm willing to
+> help in any way I can. We maintain an internal fork of the Git tree, so
+> I can apply any changes you'd like to an internal 1.6.0.4 or 1.6.0.5
+> build. For obvious reasons I ran the fsck against an upstream maintained
+> (stable) build of Git.
+
+Can you try with a bigger stack? Just do
+
+	ulimit -s 16384
+
+and then re-try the fsck. Just to verify that this is it. If nothing else, 
+it will at least give you a working fsck, even if it's obviously not the 
+"correct" solution.
+
+		Linus
