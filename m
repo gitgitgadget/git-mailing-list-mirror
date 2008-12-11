@@ -1,76 +1,95 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: epic fsck SIGSEGV!
-Date: Wed, 10 Dec 2008 21:16:15 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0812102110020.14328@xanadu.home>
-References: <1228867861.14165.19.camel@starfruit.local>
- <7vd4g051ax.fsf@gitster.siamese.dyndns.org>
- <1228903606.4445.53.camel@starfruit.local> <493FAA5A.8070801@viscovery.net>
- <1228949523.27061.20.camel@starfruit.local>
- <alpine.LFD.2.00.0812101523570.3340@localhost.localdomain>
- <alpine.LFD.2.00.0812102031440.14328@xanadu.home>
- <7vskovwk99.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git fsck segmentation fault
+Date: Wed, 10 Dec 2008 18:33:20 -0800
+Message-ID: <7vljunwidr.fsf@gitster.siamese.dyndns.org>
+References: <200811271814.06941.simon@lst.de>
+ <200811272021.56108.simon@lst.de>
+ <alpine.LFD.2.00.0811271449500.14328@xanadu.home>
+ <200811280919.10685.simon@lst.de>
+ <alpine.LFD.2.00.0812091408560.14328@xanadu.home>
+ <20081210075338.GA7776@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	"R. Tyler Ballance" <tyler@slide.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 11 03:17:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, Simon Hausmann <simon@lst.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+X-From: git-owner@vger.kernel.org Thu Dec 11 03:34:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAb7T-0006su-1V
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 03:17:39 +0100
+	id 1LAbO6-0002qL-Ko
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 03:34:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754298AbYLKCQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 21:16:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754286AbYLKCQV
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 21:16:21 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:20659 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753780AbYLKCQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 21:16:21 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KBO000V1WZ3WY60@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 10 Dec 2008 21:16:15 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vskovwk99.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754263AbYLKCdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 21:33:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754219AbYLKCdd
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 21:33:33 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63289 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754156AbYLKCdc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 21:33:32 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DE6B11896E;
+	Wed, 10 Dec 2008 21:33:30 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B4E5F18965; Wed,
+ 10 Dec 2008 21:33:24 -0500 (EST)
+In-Reply-To: <20081210075338.GA7776@auto.tuwien.ac.at> (Martin Koegler's
+ message of "Wed, 10 Dec 2008 08:53:38 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 195CDD70-C72C-11DD-81D1-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102768>
 
-On Wed, 10 Dec 2008, Junio C Hamano wrote:
+mkoegler@auto.tuwien.ac.at (Martin Koegler) writes:
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > On Wed, 10 Dec 2008, Linus Torvalds wrote:
-> >
-> >> But we should definitely fix this braindamage in fsck. Rather than 
-> >> recursively walk the commits, we should add them to a commit list and just 
-> >> walk the list iteratively.
-> >
-> > What about:
-> >
-> > 	http://marc.info/?l=git&m=122889563424786&w=2
-> 
-> I have to dig that out of the mail archive (quoting message-id or $gmane
-> article number would have been easier for me),
+> Maybe something like this could help:
 
-Message-ID: <20081210075338.GA7776@auto.tuwien.ac.at>
+>>From 32be177cbb0825fc019200b172f3d79117b28140 Mon Sep 17 00:00:00 2001
+> From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> Date: Wed, 10 Dec 2008 08:42:08 +0100
+> Subject: [PATCH] fsck: use fewer stack
+>
+> This patch moves the state while traversing the tree
+> from the stack to the heap.
 
-> but should I take it as an Ack from you?
+Hmm, after the change:
 
-I was involved in that thread initially, until bisection showed commit 
-271b8d25b25e49b367087440e093e755e5f35aa9 as the culprit.  This might be 
-the same issue but I have not experienced it myself.
+	* mark_object() marks the object as reachable, and pushes the
+	  objects to the objectstack;
 
-So I'm merely only connecting email threads here.
+	* mark_object_reachable() marks the object using mark_object(),
+          and repeatedly calls mark_child_object() until the objectstack
+          is fully drained;
 
+	* mark_child_object() inspects the object taken from the
+          objectstack, calls fsck_walk() on it, with mark_object as the
+          callback;
 
-Nicolas
+	  * fsck_walk() calls the callback function (i.e. mark_object) on
+            the object given, and the objects immediately reachable from
+            it;
+
+            * mark_object() does not recurse, so these immediately
+              reachable objects are left in the objectstack, without a
+              deep recursion.
+        
+That seems to be what is going on, and this should be a good fix.
+
+A similar change would be needed for other callers of fsck_walk(), no?
+There seem to be one in builtin-unpack-objects.c (check_object calls
+fsck_walk as itself as the callback). 
+
+Another caller is in index-pack.c (sha1_object() calls fsck_walk with
+mark_link as the callback), but I do not think it would  recurse for the
+depth of the history, so we are safe there.
+
+I initially expected that the fix would be to introduce this "userspace
+work queue" (i.e. your objectstack) to be maintained on the
+fsck.c:fsck_walk() side (perhaps as an extra parameter to an actual queue
+for reentrancy), not by making the callee not to recurse, though.
