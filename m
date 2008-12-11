@@ -1,123 +1,77 @@
-From: rdkrsr <rdkrsr@googlemail.com>
-Subject: Fwd: after first git clone of linux kernel repository there are changed files in working dir
-Date: Thu, 11 Dec 2008 18:15:44 +0100
-Message-ID: <d304880b0812110915o6968050cufbb1e29c8bcea984@mail.gmail.com>
-References: <d304880b0812101019ufe85095h46ff0fe00d32bbd0@mail.gmail.com>
-	 <d304880b0812101022u2abe5d68ub3bda68ed39f830b@mail.gmail.com>
-	 <e32b7bb40812101220s370a64f1n3f7ecb56dd352405@mail.gmail.com>
-	 <d304880b0812110142g41b80745ic09a7200e02dcdb0@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: epic fsck SIGSEGV!
+Date: Thu, 11 Dec 2008 09:33:36 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0812110928060.3340@localhost.localdomain>
+References: <1228867861.14165.19.camel@starfruit.local> <7vd4g051ax.fsf@gitster.siamese.dyndns.org> <1228903606.4445.53.camel@starfruit.local> <493FAA5A.8070801@viscovery.net> <1228949523.27061.20.camel@starfruit.local> <alpine.LFD.2.00.0812101523570.3340@localhost.localdomain>
+ <alpine.LFD.2.00.0812102031440.14328@xanadu.home> <alpine.LFD.2.00.0812101854230.3340@localhost.localdomain> <alpine.LFD.2.00.0812101930590.3340@localhost.localdomain> <7v63lrupxk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-2022-JP
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 11 18:17:10 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>,
+	"R. Tyler Ballance" <tyler@slide.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 11 18:35:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAp9s-0007n2-Vi
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 18:17:05 +0100
+	id 1LApRn-0007io-JR
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 18:35:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756561AbYLKRPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 12:15:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756575AbYLKRPq
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 12:15:46 -0500
-Received: from rv-out-0506.google.com ([209.85.198.225]:36014 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756480AbYLKRPp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 12:15:45 -0500
-Received: by rv-out-0506.google.com with SMTP id f9so2035309rvb.4
-        for <git@vger.kernel.org>; Thu, 11 Dec 2008 09:15:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=00VOuI6UGVJpK/K3v0LXOaEtCWD0ZT6dhfIT4JkpNvE=;
-        b=BAUReHfrbjo1xXm3snmxnggzVVZE/Mgja8UD2fgTGqqxABwXeqbIiIdNDgTBcCG0as
-         xkRheZsgjkfwAUivfgs0WsGjOpNsGj0YiaAOGQ7TNrc/U6N9arg8oRMC3TKF+42wADII
-         4koqK40jK/lWMxKC0YPPP8G9pluBysxLgQyxY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=EPziV/Tg/UZNQ6amzs6qF0wr2yvsMHSbqe4grBoYQHExegy3Rw9ElWrNYdtQ3QvzTA
-         lMWDjx3Fh0fgAtVEGI9sH1JEsBpvn3sEhZSPyQy3nPAscShvUFuYwwgC6QzHX84QqOCU
-         MRFBrZ/NKIHU+JFnVs7T93pUukJtJ2C8t9Bug=
-Received: by 10.141.193.1 with SMTP id v1mr1373817rvp.186.1229015744118;
-        Thu, 11 Dec 2008 09:15:44 -0800 (PST)
-Received: by 10.140.172.16 with HTTP; Thu, 11 Dec 2008 09:15:44 -0800 (PST)
-In-Reply-To: <d304880b0812110142g41b80745ic09a7200e02dcdb0@mail.gmail.com>
-Content-Disposition: inline
+	id S1756658AbYLKReS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 12:34:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756651AbYLKReS
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 12:34:18 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54006 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756645AbYLKReR (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Dec 2008 12:34:17 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBBHXd3L008263
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 11 Dec 2008 09:33:40 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBBHXaQD006865;
+	Thu, 11 Dec 2008 09:33:37 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <7v63lrupxk.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.427 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102806>
-
-I'm sorry that I didn't answer to git mailing list address. So here
-comes the email again.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102807>
 
 
-Here is what I did:
 
-$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/li
-t linux-2.6
-Initialize linux-2.6/.git
-Initialized empty Git repository in c:/Dokumente und Einstellungen/Ge
-Eigene Dateien/vbox/linux-2.6/.git/
-remote: Counting objects: 980697, done.←[K
-remote: Compressing objects: 100% (161545/161545), done.←[K
-remote: Total 980697 (delta 818552), reused 978923 (delta 816954)←[K
-Receiving objects: 100% (980697/980697), 236.14 MiB | 90 KiB/s, done.
-Resolving deltas: 100% (818552/818552), done.
-Checking out files: 100% (25254/25254), done.
+On Wed, 10 Dec 2008, Junio C Hamano wrote:
+> 
+> I'll consider this signed-off and do the usual forging
 
-$ cd linux-2.6
+Yea. I've even tested it a bit now:
 
-$ git status
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#       modified:   Documentation/IO-mapping.txt
-#       modified:   include/linux/netfilter/xt_CONNMARK.h
-#       modified:   include/linux/netfilter/xt_DSCP.h
-#       modified:   include/linux/netfilter/xt_MARK.h
-#       modified:   include/linux/netfilter/xt_RATEEST.h
-#       modified:   include/linux/netfilter/xt_TCPMSS.h
-#       modified:   include/linux/netfilter_ipv4/ipt_CONNMARK.h
-#       modified:   include/linux/netfilter_ipv4/ipt_DSCP.h
-#       modified:   include/linux/netfilter_ipv4/ipt_ECN.h
-#       modified:   include/linux/netfilter_ipv4/ipt_MARK.h
-#       modified:   include/linux/netfilter_ipv4/ipt_TCPMSS.h
-#       modified:   include/linux/netfilter_ipv4/ipt_TOS.h
-#       modified:   include/linux/netfilter_ipv4/ipt_TTL.h
-#       modified:   include/linux/netfilter_ipv6/ip6t_HL.h
-#       modified:   include/linux/netfilter_ipv6/ip6t_MARK.h
-#       modified:   net/ipv4/netfilter/ipt_ECN.c
-#       modified:   net/ipv4/netfilter/ipt_TTL.c
-#       modified:   net/ipv6/netfilter/ip6t_HL.c
-#       modified:   net/netfilter/xt_CONNMARK.c
-#       modified:   net/netfilter/xt_DSCP.c
-#       modified:   net/netfilter/xt_MARK.c
-#       modified:   net/netfilter/xt_RATEEST.c
-#       modified:   net/netfilter/xt_TCPMSS.c
-#
-no changes added to commit (use "git add" and/or "git commit -a")
+	[torvalds@nehalem git]$ ulimit -s 1024
+	[torvalds@nehalem git]$ git fsck --full
+	Segmentation fault
+	[torvalds@nehalem git]$ ./git-fsck --full
+	dangling commit 3d00b49495ceff119de52dc5443731e2d8d84b6b
+	dangling commit 4e0a3c7de9af3cbb53cc421329f0579679edbb51
+	...
 
-2008/12/10 Brett Simmers <swtaarrs@gmail.com>:
-> On Wed, Dec 10, 2008 at 1:22 PM, rdkrsr <rdkrsr@googlemail.com> wrote:
->> I just fetched the sources without changing anything, but git diff
->> shows, that there are changes that are not yet updated (changed but not
->> updated: use git add to ...). Why is it like that?
->>
->> I use msysgit on windows, maybe that is one reason?
->
-> What are the filenames? I've seen git on Windows get confused if a
-> repository has two files that are the same except for the case of some
-> of the letters (since both can't exist by default on NTFS).
->
-> -Brett
->
+so it does seem to fix the issue, and the patch looks safe enough.
+
+It passes all the tests, and works fine on the kernel repo too (ugh, four 
+minutes! I used to run git-fsck religiously every day back in the early 
+days, now I realized that I must not have done so in _months_, and my 
+kernel tree has grown and so has fsck time).
+
+But obviously the true test for fsck is some complex corruption, and I 
+didn't test that. I can't imagine that it introduces any new problems 
+though - but the bugs you can't imagine are always the worst ones ;)
+
+			Linus
