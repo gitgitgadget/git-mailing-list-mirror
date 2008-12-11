@@ -1,63 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: epic fsck SIGSEGV!
-Date: Wed, 10 Dec 2008 23:33:11 -0800
-Message-ID: <7v63lrupxk.fsf@gitster.siamese.dyndns.org>
-References: <1228867861.14165.19.camel@starfruit.local>
- <7vd4g051ax.fsf@gitster.siamese.dyndns.org>
- <1228903606.4445.53.camel@starfruit.local> <493FAA5A.8070801@viscovery.net>
- <1228949523.27061.20.camel@starfruit.local>
- <alpine.LFD.2.00.0812101523570.3340@localhost.localdomain>
- <alpine.LFD.2.00.0812102031440.14328@xanadu.home>
- <alpine.LFD.2.00.0812101854230.3340@localhost.localdomain>
- <alpine.LFD.2.00.0812101930590.3340@localhost.localdomain>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: How track evolution of *file* across many branches?
+Date: Thu, 11 Dec 2008 08:34:44 +0100
+Message-ID: <81b0412b0812102334l4f82ed9du5a635b8679c9611a@mail.gmail.com>
+References: <20081211071354.GA22730@seberino.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>,
-	"R. Tyler Ballance" <tyler@slide.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Dec 11 08:34:53 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: chris@seberino.org
+X-From: git-owner@vger.kernel.org Thu Dec 11 08:36:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAg4O-0001QW-0H
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 08:34:48 +0100
+	id 1LAg5b-0001jF-Ft
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 08:36:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753247AbYLKHd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 02:33:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752012AbYLKHd1
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 02:33:27 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59544 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751094AbYLKHd1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 02:33:27 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 96273189A8;
-	Thu, 11 Dec 2008 02:33:24 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5ACDD189A6; Thu,
- 11 Dec 2008 02:33:16 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.0812101930590.3340@localhost.localdomain>
- (Linus Torvalds's message of "Wed, 10 Dec 2008 19:44:37 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FE72248C-C755-11DD-8149-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1754610AbYLKHeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 02:34:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbYLKHeq
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 02:34:46 -0500
+Received: from rv-out-0506.google.com ([209.85.198.234]:47285 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751407AbYLKHep (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 02:34:45 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so768756rvb.1
+        for <git@vger.kernel.org>; Wed, 10 Dec 2008 23:34:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=pQ38tpkvSE5huQHptuspzbF7GaZ7KyKjR46E83YvOwo=;
+        b=YMOe4YzEN+0ZC5cCUv/6wjM+htp5gZkK29NtmZ+kp6k4wkcadY/1mz15vHLQN2fZgi
+         7u+izK98I0+0uyiQKu4Ss+ZRt+ArkAJPqRXEi3oDF0Gna+w+/mEmmh4HIdxtA5O1B5JM
+         hby2w/3D3R21RMl3V3pnTccfInlcMXu4EP5yI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=itFxOofnTFi8PKFL9JHFm74OcoPZt+LBxnKWC8qOgmAlhssaMaK1RqzO/buVaF5G1Q
+         bDA2xNVp7/wud2sh63JP7Q8mXmtlvUeHrk5sdVkZyd8BVARdMcjvR7+qqWcRixRholMI
+         t2tT8MWabyust3Sxng5lgoUyJNrJUAVi+w/DE=
+Received: by 10.114.102.1 with SMTP id z1mr1628669wab.186.1228980884816;
+        Wed, 10 Dec 2008 23:34:44 -0800 (PST)
+Received: by 10.114.74.15 with HTTP; Wed, 10 Dec 2008 23:34:44 -0800 (PST)
+In-Reply-To: <20081211071354.GA22730@seberino.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102785>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+2008/12/11  <chris@seberino.org>:
+> How track a file across multiple branches.
+>
+> Specifically...
+>
+> 1. How find all branches a file appears in?
+>
+> 2. How find changes in each branch for that one file?
+>
 
-> I dunno. I like this patch better. It's a bit larger. I think it's a bit 
-> more clearly separated (ie a "mark_object_reachable()" _literally_ just 
-> puts the object on a list, and the whole traversal is a whole separate 
-> phase), but I guess it's a matter of taste.
-
-... which happens to match mine in this case ;-)
-
-I'll consider this signed-off and do the usual forging (for people new on
-the list, Cf. http://article.gmane.org/gmane.comp.version-control.git/19031).
+gitk --all -- file1
