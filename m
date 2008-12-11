@@ -1,106 +1,64 @@
-From: "James Youngman" <jay@gnu.org>
-Subject: Re: Clarifying "invalid tag signature file" error message from git filter-branch (and others)
-Date: Thu, 11 Dec 2008 22:34:53 +0000
-Message-ID: <c5df85930812111434m879f1faq80c64286714c3a1f@mail.gmail.com>
-References: <c5df85930812110214k2e12d926m60856fb630d45e80@mail.gmail.com>
-	 <P7E-5meNX4tXFurN9mnRguFHdJG1jaZYTn6WxFFpECSJ68KyYT3wqQ@cipher.nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] cgit in git?
+Date: Thu, 11 Dec 2008 14:35:34 -0800
+Message-ID: <7vwse6bart.fsf@gitster.siamese.dyndns.org>
+References: <8c5c35580812111348iceaf30dyb55183017cff5b1d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Brandon Casey" <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Dec 11 23:36:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Seth Vidal" <skvidal@fedoraproject.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Lars Hjemli" <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 11 23:37:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAu8j-0006Zu-P1
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 23:36:14 +0100
+	id 1LAu9U-0006sK-4V
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 23:37:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757139AbYLKWe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 17:34:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757133AbYLKWe4
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 17:34:56 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:29821 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757113AbYLKWez (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 17:34:55 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so581898yxm.1
-        for <git@vger.kernel.org>; Thu, 11 Dec 2008 14:34:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=islA9fWZc2/cbRnX8R6eopvTKBG2dCWbgJHA17HP5EM=;
-        b=YyXNv7bO8FKMP9vfnWy6OXyCw451uGSsVUf9dGUKpjOOy8ryOI4XtPRfMEN3KZ25Ad
-         abMOlAPNYIkfBSPM5NFKaDsW77A/y8nqBJhUw+v1hoefmxmlFYuPCbTen83cEGfams0X
-         1t5wMcHD2mXoxxWdngk2ipRTaTicFcTpmgrp8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=k8c4ObGbB4+Ga8paTmJHtcK1B3xmXNlLaztouhb2ICGdUWapcCYTf3Ztk9UCaK0D7W
-         ouTn1WCWA1ZGueEBNyibkmLYKOSJMuyv2auzl/h4A7JRHGJg0W8aV+xnrGws4LilL2pB
-         SVsmkjCC5d0FzzOuus+UdTBO4G/OOqPr4ecpM=
-Received: by 10.142.207.8 with SMTP id e8mr1020326wfg.30.1229034893604;
-        Thu, 11 Dec 2008 14:34:53 -0800 (PST)
-Received: by 10.143.168.8 with HTTP; Thu, 11 Dec 2008 14:34:53 -0800 (PST)
-In-Reply-To: <P7E-5meNX4tXFurN9mnRguFHdJG1jaZYTn6WxFFpECSJ68KyYT3wqQ@cipher.nrlssc.navy.mil>
-Content-Disposition: inline
-X-Google-Sender-Auth: cc4b5753f158eacc
+	id S1758034AbYLKWfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 17:35:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757948AbYLKWfm
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 17:35:42 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58466 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757870AbYLKWfl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 17:35:41 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B74A986A34;
+	Thu, 11 Dec 2008 17:35:39 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C804486A32; Thu,
+ 11 Dec 2008 17:35:35 -0500 (EST)
+In-Reply-To: <8c5c35580812111348iceaf30dyb55183017cff5b1d@mail.gmail.com>
+ (Lars Hjemli's message of "Thu, 11 Dec 2008 22:48:45 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 098069D2-C7D4-11DD-A5E8-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102834>
 
-On Thu, Dec 11, 2008 at 9:06 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
-> James Youngman wrote:
->> What do the errors "error: char88: malformed tagger field" and "fatal:
->> invalid tag signature file" and "Could not create new tag object for
->> FINDUTILS-4_1-10" signify in the session below?
->
-> It means the tagger field in the tag does not follow the correct form.
-> Specifically the testing in git-mktag (called by filter-branch) does:
->
->         * Check for correct form for name and email
->         * i.e. " <" followed by "> " on _this_ line
->         * No angle brackets within the name or email address fields.
->         * No spaces within the email address field.
->
-> What does 'git cat-file tag FINDUTILS-4_1-10' show you?
+"Lars Hjemli" <hjemli@gmail.com> writes:
 
-Before conversion:
-$ git cat-file tag FINDUTILS-4_1-10
-object ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
-type commit
-tag FINDUTILS-4_1-10
-tagger Kevin Dalley
-
-The conversion:
-
-After conversion:
-$ git cat-file tag FINDUTILS-4_1-10
-object ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
-type commit
-tag FINDUTILS-4_1-10
-tagger Kevin Dalley
-
-This is in the repo at
-http://git.savannah.gnu.org/gitweb/?p=findutils.git;a=commit;h=ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
-
->> Are any of those errors correctable (I can re-run the tree rewrite
->> script as many times as needed, I'm just using it on a test repository
->> for now).
+> 2) the cgit release tarballs includes the needed git sources
 >
-> If there are only a few, then you can manually retag with a corrected
-> tagger field, and then run your script.
->
-> Of course, depending on the output of the cat-file call above, the
-> testing in git-mktag may need to be relaxed.
->
-> -brandon
->
+> Option 2 is doable but still requires the fedora project to support
+> two git packages (but now the 'git-for-cgit' package is hidden inside
+> the cgit source tree). The good thing about this option is that it
+> only requires some minor modifications to the cgit releases.
+
+I do not understand why this is any extra work for fedora.  Instead of
+running "make get-git" and then running your build procedure, they need to
+just run your build procedure because you now ship your source with the
+matching version of the git source, which sounds like the right thing to
+me.  You do not install anything from the contained git.git area (we do
+not do shared objects, nor public header files) to the end product, right?
+
+Doesn't cgit bind git.git as a subproject at the source level?  I would
+expect that the most natural release tarball for such a project would be a
+single tarball that has both the superproject itself _and_ the submodules
+it contains already extracted, iow, the state of your tree after you run
+"make get-git".
