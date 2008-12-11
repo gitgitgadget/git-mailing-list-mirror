@@ -1,89 +1,64 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [RFC/PATCH] Add support for a pdf version of the user manual
-Date: Thu, 11 Dec 2008 01:35:57 +0100
-Message-ID: <20081211003557.GS5691@genesis.frugalware.org>
-References: <1228949090-22475-1-git-send-email-vmiklos@frugalware.org> <ee2a733e0812101606m1c522541j9380b6f5d5dc7fc8@mail.gmail.com> <7vd4fzy3il.fsf@gitster.siamese.dyndns.org> <ee2a733e0812101620s5fc2ff27p81826a5ff827e154@mail.gmail.com>
+Date: Wed, 10 Dec 2008 16:37:40 -0800
+Message-ID: <7v8wqny2az.fsf@gitster.siamese.dyndns.org>
+References: <1228949090-22475-1-git-send-email-vmiklos@frugalware.org>
+ <ee2a733e0812101606m1c522541j9380b6f5d5dc7fc8@mail.gmail.com>
+ <7vd4fzy3il.fsf@gitster.siamese.dyndns.org>
+ <ee2a733e0812101620s5fc2ff27p81826a5ff827e154@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jigfid2yHjNFZUTO"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Leo Razoumov <slonik.az@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 11 01:37:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Miklos Vajna" <vmiklos@frugalware.org>, git@vger.kernel.org
+To: SLONIK.AZ@gmail.com
+X-From: git-owner@vger.kernel.org Thu Dec 11 01:39:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAZYQ-0004yr-EM
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 01:37:22 +0100
+	id 1LAZa7-0005fN-7i
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 01:39:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753375AbYLKAgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Dec 2008 19:36:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753158AbYLKAgD
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 19:36:03 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:35413 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752451AbYLKAgA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Dec 2008 19:36:00 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 78690580D8;
-	Thu, 11 Dec 2008 01:35:59 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 2EC114465E;
-	Thu, 11 Dec 2008 01:35:59 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 2D0A911B8859; Thu, 11 Dec 2008 01:35:57 +0100 (CET)
-Content-Disposition: inline
+	id S1752903AbYLKAht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Dec 2008 19:37:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752603AbYLKAhs
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Dec 2008 19:37:48 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47709 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751820AbYLKAhs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Dec 2008 19:37:48 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B2091895F;
+	Wed, 10 Dec 2008 19:37:47 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3ACC818952; Wed,
+ 10 Dec 2008 19:37:41 -0500 (EST)
 In-Reply-To: <ee2a733e0812101620s5fc2ff27p81826a5ff827e154@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+ (Leo Razoumov's message of "Wed, 10 Dec 2008 19:20:42 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: EE5FC25A-C71B-11DD-95DC-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102756>
 
+"Leo Razoumov" <slonik.az@gmail.com> writes:
 
---jigfid2yHjNFZUTO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Dec 10, 2008 at 07:20:42PM -0500, Leo Razoumov <slonik.az@gmail.com=
-> wrote:
 > On 12/10/08, Junio C Hamano <gitster@pobox.com> wrote:
-> > "Leo Razoumov" <slonik.az@gmail.com> writes:
-> >
-> >  > BTW, for those of us without dblatex, is it possible to have pdf
-> >  > manual pregenerated the same way html and man pages are pregenerated
-> >  > for official releases in the git repo?
-> >
-> >
-> > Those of us includes myself, so...
->=20
+>> "Leo Razoumov" <slonik.az@gmail.com> writes:
+>>
+>>  > BTW, for those of us without dblatex, is it possible to have pdf
+>>  > manual pregenerated the same way html and man pages are pregenerated
+>>  > for official releases in the git repo?
+>>
+>>
+>> Those of us includes myself, so...
+>
 > Ouch:-) Does it mean that such a useful patch has a low probability of
 > being accepted?
 
-First, just like the info pages, I don't think it's a problem at all if
-the autogenerated pdf version is not part of git.git. I sent the patch
-to provide an easy way to do the pdf generation, not to request the
-autobuild of it as well.
-
-Second, I think the autogeneration for pdf should not be done similar to
-the man/html versions, as the pdf itself is 421K.
-
-However, I'm happy to set up a nightly cron job to build the pdf in case
-master is updated and/or there is a new release - in case there is
-demand for that.
-
---jigfid2yHjNFZUTO
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklAYG0ACgkQe81tAgORUJbXZQCcCHfIjtdsjDXzC9WfFjpPGDJ3
-w0EAnidRfXcF0A8ckJ9A9/dNi60tBJDr
-=pa73
------END PGP SIGNATURE-----
-
---jigfid2yHjNFZUTO--
+As an optional "make" target, as long as it works for people with the
+necessary toolchain, I have no problem with the patch, but I would
+complain if the usual "make doc" try to run the tool I do not want to run
+with my regular build.  I didn't check.
