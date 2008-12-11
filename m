@@ -1,48 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 4/5] Define Patch to parse a sequence of patch
-	FileHeaders
-Date: Thu, 11 Dec 2008 10:39:54 -0800
-Message-ID: <20081211183954.GH32487@spearce.org>
-References: <1228971522-28764-1-git-send-email-spearce@spearce.org> <1228971522-28764-4-git-send-email-spearce@spearce.org> <1228971522-28764-5-git-send-email-spearce@spearce.org> <200812111934.13218.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] submodule: Allow tracking of the newest revision of a
+ branch in a submodule
+Date: Thu, 11 Dec 2008 11:26:47 -0800
+Message-ID: <7voczicy2w.fsf@gitster.siamese.dyndns.org>
+References: <1229001361-9301-1-git-send-email-git@fabian-franz.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Dec 11 19:41:55 2008
+Cc: FabianFranz@gmx.de, git@vger.kernel.org, hjemli@gmail.com
+To: Fabian Franz <git@fabian-franz.de>
+X-From: git-owner@vger.kernel.org Thu Dec 11 20:28:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAqTJ-00026N-8u
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 19:41:13 +0100
+	id 1LArD8-00056j-0m
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 20:28:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755400AbYLKSj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 13:39:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755082AbYLKSj4
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 13:39:56 -0500
-Received: from george.spearce.org ([209.20.77.23]:54615 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754247AbYLKSjz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 13:39:55 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id BA36F38200; Thu, 11 Dec 2008 18:39:54 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200812111934.13218.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1756719AbYLKT1B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 14:27:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759462AbYLKT1A
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 14:27:00 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61701 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759457AbYLKT07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 14:26:59 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3767C1A16A;
+	Thu, 11 Dec 2008 14:26:57 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3CF8A1A168; Thu,
+ 11 Dec 2008 14:26:49 -0500 (EST)
+In-Reply-To: <1229001361-9301-1-git-send-email-git@fabian-franz.de> (Fabian
+ Franz's message of "Thu, 11 Dec 2008 11:16:01 -0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: ACBED054-C7B9-11DD-8DD9-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102813>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> > +		assertEquals(572, fRepositoryConfigTest.startOffset);
-> > +		assertEquals(1490, fRepositoryConfig.startOffset);
+Fabian Franz <git@fabian-franz.de> writes:
+
+> So my workflow really is:
 >
-> 1487 here
+> git checkout master # done long before
+> [...]
+> git checkout staging
+> # => in submodules/client/
+> # Checked out submodules/client/ staging.
+> # => in submodules/client/component1/
+> # Checked out submodules/client/component/1 staging.
+>
+> So I would like to have this recursively...
 
-Really?  1490 is the only value that the test vector passes with.
-What's the 3 bytes you think I'm off by?
-
--- 
-Shawn.
+Didn't we add foreach subcommand to the submodule command?
