@@ -1,128 +1,114 @@
-From: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
-Subject: Re: fatal output from git-show really wants a terminal
-Date: Thu, 11 Dec 2008 10:51:15 -0600
-Message-ID: <200812111051.20322.bss03@volumehost.net>
-References: <ghop5d$qud$1@ger.gmane.org> <200812101624.11255.bss03@volumehost.net> <alpine.DEB.1.00.0812111015140.18321@eeepc-johanness>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 2/5 v2] Add copy(InputStream) to TemporaryBuffer
+Date: Thu, 11 Dec 2008 08:53:45 -0800
+Message-ID: <20081211165345.GG32487@spearce.org>
+References: <1228971522-28764-1-git-send-email-spearce@spearce.org> <1228971522-28764-2-git-send-email-spearce@spearce.org> <1228971522-28764-3-git-send-email-spearce@spearce.org> <200812111640.34435.robin.rosenberg@dewire.com> <20081211155218.GF32487@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart15561858.essnumZemF";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Dec 11 17:53:36 2008
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Dec 11 17:55:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAomo-0005Pg-G5
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 17:53:14 +0100
+	id 1LAop0-0006Op-Tl
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 17:55:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757900AbYLKQvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 11:51:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757891AbYLKQvr
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 11:51:47 -0500
-Received: from ispmxmta09-srv.windstream.net ([166.102.165.170]:43241 "EHLO
-	ispmxmta09-srv.windstream.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757889AbYLKQvp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Dec 2008 11:51:45 -0500
-Received: from ispmxaamta05-gx.windstream.net ([166.102.154.15])
-          by ispmxmta09-srv.windstream.net with ESMTP
-          id <20081211165143.BJIG4904.ispmxmta09-srv.windstream.net@ispmxaamta05-gx.windstream.net>
-          for <git@vger.kernel.org>; Thu, 11 Dec 2008 10:51:43 -0600
-Received: from [192.168.1.123] (really [166.102.154.15])
-          by ispmxaamta05-gx.windstream.net with ESMTP
-          id <20081211165143.UFMB7110.ispmxaamta05-gx.windstream.net@[192.168.1.123]>;
-          Thu, 11 Dec 2008 10:51:43 -0600
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0812111015140.18321@eeepc-johanness>
-X-Cloudmark-Analysis: v=1.0 c=1 a=4x8eZqvhE5cA:10 a=cCwArZ2WySYA:10 a=imw7DGXsOz1VfKdyG2U9cg==:17 a=nEQGfrJnAAAA:8 a=3kvLEAULb9K0Zz103k4A:9 a=wq3KybP0ZUHnjLq7uGpvEL101P8A:4 a=B7iFY6Z7H_gA:10 a=LY0hPdMaydYA:10 a=B1tY8eBAA6NSCYE5N0EA:9 a=PcMlrSnLh_kzxCO9HCW7CDrq-gwA:4 a=rPt6xJ-oxjAA:10
+	id S1756461AbYLKQxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 11:53:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757796AbYLKQxr
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 11:53:47 -0500
+Received: from george.spearce.org ([209.20.77.23]:50737 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757788AbYLKQxq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 11:53:46 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id C27E638200; Thu, 11 Dec 2008 16:53:45 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20081211155218.GF32487@spearce.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102805>
 
---nextPart15561858.essnumZemF
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+In some places we may find ourselves with an InputStream we
+need to copy into a TemporaryBuffer, so we can flatten out the
+entire stream to a single byte[].  Putting the copy loop here
+is more useful then duplicating it in application level code.
 
-On Thursday 2008 December 11 03:15:47 you wrote:
->On Wed, 10 Dec 2008, Boyd Stephen Smith Jr. wrote:
->> On Wednesday 2008 December 10 13:46:50 you wrote:
->> >On Mittwoch, 10. Dezember 2008, Tim Olsen wrote:
->> >> It appears that when outputting a fatal error, git-show will choose
->> >> stdout over stderr if stdout is a terminal and stderr is not.
->> >
->> >This is by design.
->>
->> Then it is poor design. :P j/k
->
->Read up on the reasoning before trolling, will ya?  It's all in the Git
->history.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+  "Shawn O. Pearce" <spearce@spearce.org> wrote:
+  > Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+  > > torsdag 11 december 2008 05:58:39 skrev Shawn O. Pearce:
+  > > > +		final byte[] b = new byte[2048];
+  > >
+  > > Why not 8192 here too?
+  > 
+  > Blargh, you're right.  Actually what I should do is look to see
+  > if blocks != null, in which case I should alloc a block and read
+  > directly into it.  That would avoid one copy of the data.
 
-Seeing how I'm new, and this message indicated I had screwed up, I starting=
-=20
-going through the 'git log' looking for a commit message that either=20
-documented this behavior, or indicated the commit had documented this=20
-behavior.
+  And now we do that...
+  
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/TemporaryBuffer.java b/org.spearce.jgit/src/org/spearce/jgit/util/TemporaryBuffer.java
+index b1ffd6e..761f359 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/util/TemporaryBuffer.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/util/TemporaryBuffer.java
+@@ -42,6 +42,7 @@
+ import java.io.FileInputStream;
+ import java.io.FileOutputStream;
+ import java.io.IOException;
++import java.io.InputStream;
+ import java.io.OutputStream;
+ import java.util.ArrayList;
+ 
+@@ -135,6 +136,39 @@ public void write(final byte[] b, int off, int len) throws IOException {
+ 			diskOut.write(b, off, len);
+ 	}
+ 
++	/**
++	 * Copy all bytes remaining on the input stream into this buffer.
++	 * 
++	 * @param in
++	 *            the stream to read from, until EOF is reached.
++	 * @throws IOException
++	 *             an error occurred reading from the input stream, or while
++	 *             writing to a local temporary file.
++	 */
++	public void copy(final InputStream in) throws IOException {
++		if (blocks != null) {
++			for (;;) {
++				Block s = last();
++				if (s.isFull()) {
++					if (reachedInCoreLimit())
++						break;
++					s = new Block();
++					blocks.add(s);
++				}
++
++				final int n = in.read(s.buffer, s.count, Block.SZ - s.count);
++				if (n < 1)
++					return;
++				s.count += n;
++			}
++		}
++
++		final byte[] tmp = new byte[Block.SZ];
++		int n;
++		while ((n = in.read(tmp)) > 0)
++			diskOut.write(tmp, 0, n);
++	}
++
+ 	private Block last() {
+ 		return blocks.get(blocks.size() - 1);
+ 	}
+-- 
+1.6.1.rc2.306.ge5d5e
 
-Initially, I was looking for 'stdout' or 'stderr', and found many unrelated=
-=20
-commits.  I then figured it was part of the PAGER support, and began=20
-searching for that.  I did find an indication of why stdout and stderr are=
-=20
-both redirected to the PAGER's stdin -- but that makes sense to me; I wasn'=
-t=20
-questioning it.  At least not too much -- but when the user indicates stder=
-r=20
-and stdout should go to different locations, shouldn't they?
 
-I was mainly questioning using a pager AT ALL when the git command is used =
-in=20
-a non-interactive environment, and how git detects an interactive invocatio=
-n. =20
-I feel this should be done the same way a (POSIX standard) shell detects=20
-interactivity, and that in a non-interactive environment git should not=20
-default to using PAGER.
-
-Now, I certainly could have missed the commit message / commit with=20
-rationale / documentation.  'git log' output is a long document, and I mayb=
-e=20
-using the wrong keywords for my search.  It also is not all the documentati=
-on=20
-that is out there.  I'm not afraid to RTFM; but I'm not having much luck=20
-finding the right parts to R.
-
-=46inally, I didn't mean to offend.  I was hoping the smiley (":P") and "j/=
-k"=20
-would indicate that a was only half serious and know that I don't have the=
-=20
-benefit of following the project closely for very long.  I'm appreciative o=
-f=20
-the hard work that goes into git and don't mean to belittle that effort.
-=2D-=20
-Boyd Stephen Smith Jr. =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ,=3D ,-_-. =
-=3D.=20
-bss03@volumehost.net =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0((_/)o o(\_=
-))
-ICQ: 514984 YM/AIM: DaTwinkDaddy =A0 =A0 =A0 =A0 =A0 `-'(. .)`-'=20
-http://iguanasuicide.org/ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\_/ =
-=A0 =A0=20
-
---nextPart15561858.essnumZemF
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklBRQcACgkQdNbfk+86fC1XBQCfYqXSt6gNBuZCgLYaEPnvhPqB
-g/QAni28guPkUzqguCFYVO+vhdP3u+je
-=imPt
------END PGP SIGNATURE-----
-
---nextPart15561858.essnumZemF--
+-- 
+Shawn.
