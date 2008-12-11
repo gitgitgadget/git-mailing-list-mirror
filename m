@@ -1,84 +1,75 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: Fwd: after first git clone of linux kernel repository there are changed files in working dir
-Date: Thu, 11 Dec 2008 21:35:16 +0100
-Message-ID: <ghrti4$m53$1@ger.gmane.org>
-References: <d304880b0812101019ufe85095h46ff0fe00d32bbd0@mail.gmail.com> <d304880b0812101022u2abe5d68ub3bda68ed39f830b@mail.gmail.com> <e32b7bb40812101220s370a64f1n3f7ecb56dd352405@mail.gmail.com> <d304880b0812110142g41b80745ic09a7200e02dcdb0@mail.gmail.com> <d304880b0812110915o6968050cufbb1e29c8bcea984@mail.gmail.com> <alpine.LFD.2.00.0812110934180.3340@localhost.localdomain> <d304880b0812110958u3da52e4fs7e5154ebe9a353a@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] autodetect number of CPUs by default when using threads
+Date: Thu, 11 Dec 2008 15:36:47 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0812111524370.14328@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 11 21:37:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 11 21:38:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAsHD-000148-2q
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 21:36:51 +0100
+	id 1LAsIa-0001eV-KE
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 21:38:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757202AbYLKUfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 15:35:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756946AbYLKUfc
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 15:35:32 -0500
-Received: from main.gmane.org ([80.91.229.2]:34538 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756981AbYLKUfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 15:35:31 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LAsFn-0004mS-PX
-	for git@vger.kernel.org; Thu, 11 Dec 2008 20:35:23 +0000
-Received: from 78.13.53.163 ([78.13.53.163])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 11 Dec 2008 20:35:23 +0000
-Received: from giuseppe.bilotta by 78.13.53.163 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 11 Dec 2008 20:35:23 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 78.13.53.163
-User-Agent: KNode/0.10.9
-X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
+	id S1758035AbYLKUgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 15:36:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758020AbYLKUgz
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 15:36:55 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:61139 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757997AbYLKUgx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 15:36:53 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KBQ00AZRBW1JJ41@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 11 Dec 2008 15:36:01 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102822>
 
-On Thursday 11 December 2008 18:58, rdkrsr wrote:
+... and display the actual number of threads used when locally 
+repacking.  A remote server still won't tell you how many threads it 
+uses during a fetch though.
 
-> Thank you, Linus and Brett, for your answers.
-> 
-> I'm not developing linux kernel, I just wanted to experiment with git.
-> And then I didn't know if this is a normal behaviour of git. I'm using
-> windows xp and msysgit for this. And the file system is NTFS. I'm
-> using dual boot to sporadicly use linux and tried also linux in
-> virtual box. But both isn't really good. Maybe one day I dare to use
-> linux as my primary OS.
-> 
-> Red
-> 
-> 2008/12/11 Linus Torvalds <torvalds@linux-foundation.org>:
->>
->>
->> On Thu, 11 Dec 2008, rdkrsr wrote:
->>>
->>> I'm sorry that I didn't answer to git mailing list address. So here
->>> comes the email again.
->>
->> You have a broken filesystem.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
 
-Actually, the funny (in a grotesque kind of way) thing about NTFS
-is that it's a case-*sensitive* filesystem (in the sense that i
-can legally hold files with names that differ only for the case),
-but the Windows subsystems use it in case-preserving (but
-insensitive) mode. It is possible to use NTFS case insensitively
-under Windows, but it requires something such as the Interix
-subsystem, and in Windows XP (and possibly later versions) it also
-needs toggling a security policy that defaults to enforcing case
-insensitivity for all subsystems.
+I've spent quite a while wondering why repacking in one repo was faster 
+than repacking in a clone of that repo on the same machine.  So let's 
+display how many threads are actually used.
 
-Maybe the Windows ports to git (at least the cygwin one, maybe?)
-may be able to exploit this.
+We have comprehensive test in Makefile to determine if threads are 
+available, just to not use them by default.  I think that code has 
+proven itself for long enough now not to let people benefit from it.
 
--- 
-Giuseppe "Oblomov" Bilotta
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index cedef52..619e597 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -78,7 +78,7 @@ static int progress = 1;
+ static int window = 10;
+ static uint32_t pack_size_limit, pack_size_limit_cfg;
+ static int depth = 50;
+-static int delta_search_threads = 1;
++static int delta_search_threads;
+ static int pack_to_stdout;
+ static int num_preferred_base;
+ static struct progress *progress_state;
+@@ -1612,6 +1612,9 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ 		find_deltas(list, &list_size, window, depth, processed);
+ 		return;
+ 	}
++	if (progress > pack_to_stdout)
++		fprintf(stderr, "Delta compression using %d threads.\n",
++				delta_search_threads);
+ 
+ 	/* Partition the work amongst work threads. */
+ 	for (i = 0; i < delta_search_threads; i++) {
