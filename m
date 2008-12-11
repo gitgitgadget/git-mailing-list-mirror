@@ -1,57 +1,55 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: fatal: $HOME not set
-Date: Thu, 11 Dec 2008 12:09:32 +0100
-Message-ID: <4940F4EC.8070300@viscovery.net>
-References: <003a01c95b7c$65b93a40$312baec0$@com>
+From: Resul Cetin <Resul-Cetin@gmx.net>
+Subject: Specifying default checkout branch in url
+Date: Thu, 11 Dec 2008 12:21:36 +0100
+Message-ID: <200812111221.36561.Resul-Cetin@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: JD Guzman <jd@jdguzman.com>
-X-From: git-owner@vger.kernel.org Thu Dec 11 12:11:08 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 11 12:28:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAjRj-0006HO-Bv
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 12:11:07 +0100
+	id 1LAjiL-0003IG-1H
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 12:28:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754708AbYLKLJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 06:09:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753653AbYLKLJh
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 06:09:37 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:39653 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753867AbYLKLJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 06:09:36 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LAjQD-0003cd-B8; Thu, 11 Dec 2008 12:09:33 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id A90A154D; Thu, 11 Dec 2008 12:09:32 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <003a01c95b7c$65b93a40$312baec0$@com>
-X-Spam-Score: -1.4 (-)
+	id S1754925AbYLKLVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 06:21:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753867AbYLKLVk
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 06:21:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57388 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751130AbYLKLVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 06:21:40 -0500
+Received: (qmail invoked by alias); 11 Dec 2008 11:21:37 -0000
+Received: from unknown (EHLO rowo) [89.246.222.158]
+  by mail.gmx.net (mp069) with SMTP; 11 Dec 2008 12:21:37 +0100
+X-Authenticated: #13824512
+X-Provags-ID: V01U2FsdGVkX18itcpGVA8ioUyIraLRJ8JoNI9D0BqzaNiG4hMhGF
+	+ydKSt3jQOzylI
+User-Agent: KMail/1.10.3 (Linux/2.6.26-1-amd64; KDE/4.1.3; x86_64; ; )
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102794>
 
-JD Guzman schrieb:
-> This is probably a really stupid question but I'm trying to run git outside
-> of the shell provided by msysgit.
-> Everything works however when I try to set config options I get the error in
-> the subject line.  I would suspect this is because the windows command
-> prompt isn't providing any information about the user's home directory.  My
-> question is would this be something that I can set manually or does git rely
-> on the OS to provide this information?
+Hi,
+I have the problem that I want to checkout a specific branch in a git-clone 
+run. Someone at the debian-mentors mailing list[1] has suggested to use a url 
+like git://git.myserver.org/project.git#branchname to checkout a branch with 
+the name branchname by default. But this doesn't seem to work. Is there 
+already another way to encode this in the url?
+More information why I cannot change HEAD of the repository can be found in a 
+bug report against debcheckout[2].
 
-You can set it yourself to where you want git to store the .gitconfig
-file. Do this in Settings->System->Advanced->Environment Variables,
-section User variables. You can set it to %HOMEDRIVE%%HOMEPATH%  in order
-point it somewhere below C:\Documents and Settings.
+Regards,
+	Resul
 
--- Hannes
+[1] http://article.gmane.org/gmane.linux.debian.devel.mentors/34421
+[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=508433
