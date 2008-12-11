@@ -1,87 +1,61 @@
-From: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
-Subject: Re: Fwd: after first git clone of linux kernel repository there are changed files in working dir
-Date: Thu, 11 Dec 2008 14:23:28 -0600
-Message-ID: <200812111423.28468.bss03@volumehost.net>
-References: <d304880b0812101019ufe85095h46ff0fe00d32bbd0@mail.gmail.com> <alpine.LFD.2.00.0812110934180.3340@localhost.localdomain> <d304880b0812110958u3da52e4fs7e5154ebe9a353a@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH 4/5] Define Patch to parse a sequence of patch
+	FileHeaders
+Date: Thu, 11 Dec 2008 12:27:01 -0800
+Message-ID: <20081211202701.GI32487@spearce.org>
+References: <1228971522-28764-1-git-send-email-spearce@spearce.org> <200812111934.13218.robin.rosenberg.lists@dewire.com> <20081211183954.GH32487@spearce.org> <200812112123.49659.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3869580.KayCO829lB";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: rdkrsr <rdkrsr@googlemail.com>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 11 21:25:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Dec 11 21:28:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAs6D-0004Pv-E7
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 21:25:29 +0100
+	id 1LAs90-0005l3-Tr
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 21:28:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756798AbYLKUXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 15:23:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756859AbYLKUXw
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 15:23:52 -0500
-Received: from ispmxmta05-srv.windstream.net ([166.102.165.166]:57897 "EHLO
-	ispmxmta05-srv.windstream.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756779AbYLKUXv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Dec 2008 15:23:51 -0500
-Received: from ispmxaamta08-gx.windstream.net ([166.102.154.15])
-          by ispmxmta05-srv.windstream.net with ESMTP
-          id <20081211202349.JZUK4923.ispmxmta05-srv.windstream.net@ispmxaamta08-gx.windstream.net>
-          for <git@vger.kernel.org>; Thu, 11 Dec 2008 14:23:49 -0600
-Received: from [192.168.1.123] (really [166.102.154.15])
-          by ispmxaamta08-gx.windstream.net with ESMTP
-          id <20081211202349.IKBQ28131.ispmxaamta08-gx.windstream.net@[192.168.1.123]>;
-          Thu, 11 Dec 2008 14:23:49 -0600
-User-Agent: KMail/1.9.9
-In-Reply-To: <d304880b0812110958u3da52e4fs7e5154ebe9a353a@mail.gmail.com>
-X-Cloudmark-Analysis: v=1.0 c=1 a=aqz8vNbxarAA:10 a=Jv0FIbFwxXYA:10 a=imw7DGXsOz1VfKdyG2U9cg==:17 a=nEQGfrJnAAAA:8 a=AvKs4IsPrWu2JlF-LT0A:9 a=kAbXv7jR2hEXts-3s7buyPPtmfgA:4 a=B7iFY6Z7H_gA:10 a=LY0hPdMaydYA:10 a=QM5qeD-H-Y6wHBv7cSYA:9 a=GJxjYxrqcoWRcUZ1-6AsL5EZm6oA:4 a=rPt6xJ-oxjAA:10
+	id S1756751AbYLKU1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 15:27:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755735AbYLKU1E
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 15:27:04 -0500
+Received: from george.spearce.org ([209.20.77.23]:41507 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755450AbYLKU1D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 15:27:03 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B81F038200; Thu, 11 Dec 2008 20:27:01 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200812112123.49659.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102817>
 
---nextPart3869580.KayCO829lB
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> torsdag 11 december 2008 19:39:54 skrev Shawn O. Pearce:
+> > Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> > > > +		assertEquals(572, fRepositoryConfigTest.startOffset);
+> > > > +		assertEquals(1490, fRepositoryConfig.startOffset);
+> > >
+> > > 1487 here
+> > 
+> > Really?  1490 is the only value that the test vector passes with.
+> > What's the 3 bytes you think I'm off by?
+> 
+> Ah, --whitespace=fix did that.
 
-On Thursday 2008 December 11 11:58:01 rdkrsr wrote:
->I'm not developing linux kernel, I just wanted to experiment with git.
->And then I didn't know if this is a normal behaviour of git. I'm using
->windows xp and msysgit for this. And the file system is NTFS.
+Ok.  I know you like to apply with --whitespace=fix, but I would
+prefer to leave these *.patch test input files[*1*] exactly as they
+were created by git format-patch or git diff, so I'm sure we are
+parsing the same thing git would have produced and sent to us.
 
-You might want to choose a more MS Windows-friendly codebase to test with. =
-=20
-=46or codebases without filenames that differ only in case, git should work=
-=20
-fine on MS Windows.  For codebases with filenames that differ only in case,=
- I=20
-don't know a VCS that will handle them well on MS Windows.
-=2D-=20
-Boyd Stephen Smith Jr. =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ,=3D ,-_-. =
-=3D.=20
-bss03@volumehost.net =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0((_/)o o(\_=
-))
-ICQ: 514984 YM/AIM: DaTwinkDaddy =A0 =A0 =A0 =A0 =A0 `-'(. .)`-'=20
-http://iguanasuicide.org/ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\_/ =
-=A0 =A0=20
 
---nextPart3869580.KayCO829lB
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+*1*: I have more patches coming which add 2 more test inputs
+     to the same PatchTest suite.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklBdsAACgkQdNbfk+86fC0kbgCgiXxIOBlHFWIL+IkEcdtYIPo5
-GnUAn3JpQjH9CWu94D/selKr8PwO/EEA
-=MVmO
------END PGP SIGNATURE-----
-
---nextPart3869580.KayCO829lB--
+-- 
+Shawn.
