@@ -1,150 +1,128 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] Show a failure of rebase -p if the merge had a conflict
-Date: Thu, 11 Dec 2008 17:21:01 +0100
-Message-ID: <1229012461-31377-1-git-send-email-j6t@kdbg.org>
-Cc: Andreas Ericsson <ae@op5.se>,
-	Stephen Haberman <stephen@exigencecorp.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
+From: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
+Subject: Re: fatal output from git-show really wants a terminal
+Date: Thu, 11 Dec 2008 10:51:15 -0600
+Message-ID: <200812111051.20322.bss03@volumehost.net>
+References: <ghop5d$qud$1@ger.gmane.org> <200812101624.11255.bss03@volumehost.net> <alpine.DEB.1.00.0812111015140.18321@eeepc-johanness>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart15561858.essnumZemF";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Dec 11 17:23:49 2008
+X-From: git-owner@vger.kernel.org Thu Dec 11 17:53:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAoJH-00081Z-HT
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 17:22:44 +0100
+	id 1LAomo-0005Pg-G5
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 17:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756881AbYLKQVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 11:21:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756742AbYLKQVP
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 11:21:15 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:37267 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756881AbYLKQVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 11:21:15 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@eudaptics.com>)
-	id 1LAoHd-0003aR-N6; Thu, 11 Dec 2008 17:21:09 +0100
-Received: from srv.linz.viscovery (srv.linz.viscovery [192.168.1.4])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 66D6054D; Thu, 11 Dec 2008 17:21:01 +0100 (CET)
-Received: by srv.linz.viscovery (Postfix, from userid 1000)
-	id 3EEC8FA46; Thu, 11 Dec 2008 17:21:01 +0100 (CET)
-X-Mailer: git-send-email 1.6.1.rc2.22.gf3bf84
-X-Spam-Score: -1.4 (-)
+	id S1757900AbYLKQvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 11:51:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757891AbYLKQvr
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 11:51:47 -0500
+Received: from ispmxmta09-srv.windstream.net ([166.102.165.170]:43241 "EHLO
+	ispmxmta09-srv.windstream.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757889AbYLKQvp (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Dec 2008 11:51:45 -0500
+Received: from ispmxaamta05-gx.windstream.net ([166.102.154.15])
+          by ispmxmta09-srv.windstream.net with ESMTP
+          id <20081211165143.BJIG4904.ispmxmta09-srv.windstream.net@ispmxaamta05-gx.windstream.net>
+          for <git@vger.kernel.org>; Thu, 11 Dec 2008 10:51:43 -0600
+Received: from [192.168.1.123] (really [166.102.154.15])
+          by ispmxaamta05-gx.windstream.net with ESMTP
+          id <20081211165143.UFMB7110.ispmxaamta05-gx.windstream.net@[192.168.1.123]>;
+          Thu, 11 Dec 2008 10:51:43 -0600
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0812111015140.18321@eeepc-johanness>
+X-Cloudmark-Analysis: v=1.0 c=1 a=4x8eZqvhE5cA:10 a=cCwArZ2WySYA:10 a=imw7DGXsOz1VfKdyG2U9cg==:17 a=nEQGfrJnAAAA:8 a=3kvLEAULb9K0Zz103k4A:9 a=wq3KybP0ZUHnjLq7uGpvEL101P8A:4 a=B7iFY6Z7H_gA:10 a=LY0hPdMaydYA:10 a=B1tY8eBAA6NSCYE5N0EA:9 a=PcMlrSnLh_kzxCO9HCW7CDrq-gwA:4 a=rPt6xJ-oxjAA:10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102804>
 
-This extends t3409-rebase-preserve-merges by a case where the merge that
-is rebased has a conflict. Therefore, the rebase stops and expects that
-the user resolves the conflict. However, currently rebase --continue
-fails because .git/rebase-merge/author-script is missing.
+--nextPart15561858.essnumZemF
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-The test script had allocated two identical clones, but only one of them
-(clone2) was used. Now we use both as indicated in the comment. Also, an
-instance of && was missing in the setup part.
+On Thursday 2008 December 11 03:15:47 you wrote:
+>On Wed, 10 Dec 2008, Boyd Stephen Smith Jr. wrote:
+>> On Wednesday 2008 December 10 13:46:50 you wrote:
+>> >On Mittwoch, 10. Dezember 2008, Tim Olsen wrote:
+>> >> It appears that when outputting a fatal error, git-show will choose
+>> >> stdout over stderr if stdout is a terminal and stderr is not.
+>> >
+>> >This is by design.
+>>
+>> Then it is poor design. :P j/k
+>
+>Read up on the reasoning before trolling, will ya?  It's all in the Git
+>history.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
-  BTW, I'm not 100% sure whether the additional tests of what to expect
-  from the test if it did not fail are correct.
+Seeing how I'm new, and this message indicated I had screwed up, I starting=
+=20
+going through the 'git log' looking for a commit message that either=20
+documented this behavior, or indicated the commit had documented this=20
+behavior.
 
-  I am unable to fix the failure.
+Initially, I was looking for 'stdout' or 'stderr', and found many unrelated=
+=20
+commits.  I then figured it was part of the PAGER support, and began=20
+searching for that.  I did find an indication of why stdout and stderr are=
+=20
+both redirected to the PAGER's stdin -- but that makes sense to me; I wasn'=
+t=20
+questioning it.  At least not too much -- but when the user indicates stder=
+r=20
+and stdout should go to different locations, shouldn't they?
 
-  -- Hannes
+I was mainly questioning using a pager AT ALL when the git command is used =
+in=20
+a non-interactive environment, and how git detects an interactive invocatio=
+n. =20
+I feel this should be done the same way a (POSIX standard) shell detects=20
+interactivity, and that in a non-interactive environment git should not=20
+default to using PAGER.
 
-  [Sorry, Junio, for the resend. git send-email & PEBCAK. :-/ ]
+Now, I certainly could have missed the commit message / commit with=20
+rationale / documentation.  'git log' output is a long document, and I mayb=
+e=20
+using the wrong keywords for my search.  It also is not all the documentati=
+on=20
+that is out there.  I'm not afraid to RTFM; but I'm not having much luck=20
+finding the right parts to R.
 
- t/t3409-rebase-preserve-merges.sh |   43 ++++++++++++++++++++++++++++++++----
- 1 files changed, 38 insertions(+), 5 deletions(-)
+=46inally, I didn't mean to offend.  I was hoping the smiley (":P") and "j/=
+k"=20
+would indicate that a was only half serious and know that I don't have the=
+=20
+benefit of following the project closely for very long.  I'm appreciative o=
+f=20
+the hard work that goes into git and don't mean to belittle that effort.
+=2D-=20
+Boyd Stephen Smith Jr. =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ,=3D ,-_-. =
+=3D.=20
+bss03@volumehost.net =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0((_/)o o(\_=
+))
+ICQ: 514984 YM/AIM: DaTwinkDaddy =A0 =A0 =A0 =A0 =A0 `-'(. .)`-'=20
+http://iguanasuicide.org/ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\_/ =
+=A0 =A0=20
 
-diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
-index 8cde40f..02a6401 100755
---- a/t/t3409-rebase-preserve-merges.sh
-+++ b/t/t3409-rebase-preserve-merges.sh
-@@ -11,7 +11,7 @@ Run "git rebase -p" and check that merges are properly carried along
- GIT_AUTHOR_EMAIL=bogus_email_address
- export GIT_AUTHOR_EMAIL
- 
--#echo 'Setting up:
-+#Clone 1 (trivial merge):
- #
- #A1--A2  <-- origin/master
- # \   \
-@@ -19,7 +19,15 @@ export GIT_AUTHOR_EMAIL
- #   \
- #    B2  <-- origin/topic
- #
--#'
-+#Clone 2 (conflicting merge):
-+#
-+#A1--A2--B3   <-- origin/master
-+# \       \
-+#  B1------M  <-- topic
-+#   \
-+#    B2       <-- origin/topic
-+#
-+# In both cases, 'topic' is rebased onto 'origin/topic'.
- 
- test_expect_success 'setup for merge-preserving rebase' \
- 	'echo First > A &&
-@@ -37,12 +45,19 @@ test_expect_success 'setup for merge-preserving rebase' \
- 	cd clone1 &&
- 	git checkout -b topic origin/topic &&
- 	git merge origin/master &&
--	cd ..
-+	cd .. &&
-+
-+	echo Fifth > B &&
-+	git add B &&
-+	git commit -m "Add different B" &&
- 
- 	git clone ./. clone2
- 	cd clone2 &&
- 	git checkout -b topic origin/topic &&
--	git merge origin/master &&
-+	test_must_fail git merge origin/master &&
-+	echo Resolved > B &&
-+	git add B &&
-+	git commit -m "Merge origin/master into topic" &&
- 	cd .. &&
- 
- 	git checkout topic &&
-@@ -51,11 +66,29 @@ test_expect_success 'setup for merge-preserving rebase' \
- '
- 
- test_expect_success 'rebase -p fakes interactive rebase' '
--	cd clone2 &&
-+	(
-+	cd clone1 &&
- 	git fetch &&
- 	git rebase -p origin/topic &&
- 	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) &&
- 	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge commit" | wc -l)
-+	)
-+'
-+
-+test_expect_failure '--continue works after a conflict' '
-+	(
-+	cd clone2 &&
-+	git fetch &&
-+	test_must_fail git rebase -p origin/topic &&
-+	test 2 = $(git ls-files B | wc -l) &&
-+	echo Resolved again > B &&
-+	test_must_fail git rebase --continue &&
-+	git add B &&
-+	git rebase --continue &&
-+	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) &&
-+	test 1 = $(git rev-list --all --pretty=oneline | grep "Add different" | wc -l) &&
-+	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge origin" | wc -l)
-+	)
- '
- 
- test_done
--- 
-1.6.1.rc2.22.gf3bf84
+--nextPart15561858.essnumZemF
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAklBRQcACgkQdNbfk+86fC1XBQCfYqXSt6gNBuZCgLYaEPnvhPqB
+g/QAni28guPkUzqguCFYVO+vhdP3u+je
+=imPt
+-----END PGP SIGNATURE-----
+
+--nextPart15561858.essnumZemF--
