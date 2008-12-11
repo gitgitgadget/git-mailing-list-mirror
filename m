@@ -1,81 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: fatal output from git-show really wants a terminal
-Date: Thu, 11 Dec 2008 16:55:55 -0500
-Message-ID: <20081211215554.GA11565@sigill.intra.peff.net>
-References: <ghop5d$qud$1@ger.gmane.org> <200812101624.11255.bss03@volumehost.net> <alpine.DEB.1.00.0812111015140.18321@eeepc-johanness> <200812111051.20322.bss03@volumehost.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [RFC] cgit in git?
+Date: Thu, 11 Dec 2008 23:15:40 +0100
+Message-ID: <20081211221540.GA5691@genesis.frugalware.org>
+References: <8c5c35580812111348iceaf30dyb55183017cff5b1d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
-X-From: git-owner@vger.kernel.org Thu Dec 11 22:57:26 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Sx3M3By4KbPIrykT"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Seth Vidal <skvidal@fedoraproject.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 11 23:17:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAtX3-0008V6-UU
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 22:57:18 +0100
+	id 1LAtqE-00075l-W3
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 23:17:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757441AbYLKV4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 16:56:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757425AbYLKV4A
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 16:56:00 -0500
-Received: from peff.net ([208.65.91.99]:1731 "EHLO peff.net"
+	id S1757171AbYLKWPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 17:15:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757092AbYLKWPs
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 17:15:48 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:58816 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757380AbYLKVz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 16:55:59 -0500
-Received: (qmail 29462 invoked by uid 111); 11 Dec 2008 21:55:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 11 Dec 2008 16:55:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Dec 2008 16:55:55 -0500
+	id S1757019AbYLKWPr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 17:15:47 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 117CE58096;
+	Thu, 11 Dec 2008 23:15:45 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id CC91D4465E;
+	Thu, 11 Dec 2008 23:15:40 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 59EFA11B885F; Thu, 11 Dec 2008 23:15:40 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <200812111051.20322.bss03@volumehost.net>
+In-Reply-To: <8c5c35580812111348iceaf30dyb55183017cff5b1d@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102829>
 
-On Thu, Dec 11, 2008 at 10:51:15AM -0600, Boyd Stephen Smith Jr. wrote:
 
-> Initially, I was looking for 'stdout' or 'stderr', and found many unrelated 
-> commits.  I then figured it was part of the PAGER support, and began 
+--Sx3M3By4KbPIrykT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Try looking for isatty, which takes the numeric fd. I think the behavior
-you asked about would be this:
+On Thu, Dec 11, 2008 at 10:48:45PM +0100, Lars Hjemli <hjemli@gmail.com> wr=
+ote:
+> 2) the cgit release tarballs includes the needed git sources
+> 3) the cgit sources are subtree-merged into git
+> 4) cgit is modified to link against libgit2
+>=20
+> Option 1 seems unlikely to happen since such a 'git-for-cgit' package
+> would basically require the fedora project to support two git
+> packages.
+>=20
+> Option 2 is doable but still requires the fedora project to support
+> two git packages (but now the 'git-for-cgit' package is hidden inside
+> the cgit source tree). The good thing about this option is that it
+> only requires some minor modifications to the cgit releases.
 
-diff --git a/pager.c b/pager.c
-index aa0966c..19f8856 100644
---- a/pager.c
-+++ b/pager.c
-@@ -42,7 +42,7 @@ void setup_pager(void)
- {
- 	const char *pager = getenv("GIT_PAGER");
- 
--	if (!isatty(1))
-+	if (!isatty(0) || !isatty(2))
- 		return;
- 	if (!pager) {
- 		if (!pager_program)
+I don't say 2) is the ideal solution (probably 4) will be), but that's
+what we choosed for Frugalware and I think Fedora could live with it as
+well.
 
-which is what is mentioned in POSIX:
+--Sx3M3By4KbPIrykT
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-  http://www.opengroup.org/onlinepubs/009695399/utilities/sh.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-But I don't think that makes sense here. We are not talking about
-interactivity, but rather about where the output is going. So your test
-would consider this interactive:
+iEYEARECAAYFAklBkQwACgkQe81tAgORUJbmjgCgn9lAD+lJRduoPa+n/+NvNDDv
+tm0AnihNom9ypoGZwl9+lp5XYZzj4E87
+=O5Ik
+-----END PGP SIGNATURE-----
 
-  $ git log >foo.out
-
-and start a pager, which makes no sense.
-
-Now if you proposed checking stderr and stdin _in addition_ to stdout,
-that might make more sense, but I haven't thought too hard about any
-implications.
-
-And FWIW, I don't recall this ever being discussed before, but then I
-have not been involved with git since the very beginning.
-
--Peff
+--Sx3M3By4KbPIrykT--
