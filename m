@@ -1,73 +1,74 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: fatal output from git-show really wants a terminal
-Date: Thu, 11 Dec 2008 17:59:43 -0500
-Message-ID: <20081211225943.GA29311@coredump.intra.peff.net>
-References: <ghop5d$qud$1@ger.gmane.org> <200812111051.20322.bss03@volumehost.net> <20081211215554.GA11565@sigill.intra.peff.net> <200812111645.10067.bss03@volumehost.net>
+Date: Thu, 11 Dec 2008 15:03:29 -0800
+Message-ID: <7vr64eb9ha.fsf@gitster.siamese.dyndns.org>
+References: <ghop5d$qud$1@ger.gmane.org>
+ <200812111051.20322.bss03@volumehost.net>
+ <20081211215554.GA11565@sigill.intra.peff.net>
+ <200812111645.10067.bss03@volumehost.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
 To: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
-X-From: git-owner@vger.kernel.org Fri Dec 12 00:01:16 2008
+X-From: git-owner@vger.kernel.org Fri Dec 12 00:05:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAuWu-0007pT-Sd
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 00:01:13 +0100
+	id 1LAuaY-0000f8-Cu
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 00:04:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759234AbYLKW7r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 17:59:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759229AbYLKW7r
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 17:59:47 -0500
-Received: from peff.net ([208.65.91.99]:2846 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759171AbYLKW7q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 17:59:46 -0500
-Received: (qmail 29917 invoked by uid 111); 11 Dec 2008 22:59:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 11 Dec 2008 17:59:44 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Dec 2008 17:59:43 -0500
-Content-Disposition: inline
-In-Reply-To: <200812111645.10067.bss03@volumehost.net>
+	id S1758421AbYLKXDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 18:03:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758297AbYLKXDk
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 18:03:40 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48591 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757496AbYLKXDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 18:03:39 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C85041A18C;
+	Thu, 11 Dec 2008 18:03:37 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6F81E1A182; Thu,
+ 11 Dec 2008 18:03:31 -0500 (EST)
+In-Reply-To: <200812111645.10067.bss03@volumehost.net> (Boyd Stephen Smith,
+ Jr.'s message of "Thu, 11 Dec 2008 16:45:05 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F1B569A2-C7D7-11DD-9F0F-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102838>
 
-On Thu, Dec 11, 2008 at 04:45:05PM -0600, Boyd Stephen Smith Jr. wrote:
+"Boyd Stephen Smith Jr." <bss03@volumehost.net> writes:
 
-> I did see a commit message mentioning some unusual settings for PAGER, but in 
-> general, pagers are interactive.  I'd think the default behavior would 
-> be "interactive <-> pager", with a config option to turn the pager always off 
-> or always on.  From there, I would reason the test for interactivity should 
-> be the POSIX test.
+>>  $ git log >foo.out
+>>
+>>and start a pager, which makes no sense.
+>
+> Good point, I'll try and consider that while I investgate the history of the 
+> issue.
 
-Right, but then that leads to the case I mentioned before. I think you
-want to say "this is interactive _and_ our stdout is going to the
-interactive spot". Which by your definition would be isatty() on stdin,
-stderr, and stdout.
+Isn't the issue about 61b8050 (sending errors to stdout under $PAGER,
+2008-02-16)?  With that commit, we changed things so that when we send the
+standard output to the $PAGER, we dup stderr to the $PAGER as well,
+because otherwise any output to stderr will be wiped out by whatever the
+pager does and the user will not notice the breakage.  E.g.
 
-And maybe that is a better test, but I think it would be helpful to
-provide a concrete example where that behavior works and the current
-behavior doesn't.
+	$ git log
 
-> It looks like this test have have been attempting to follow the behavior 
-> of --color=auto to GNU less and GNU grep (and possibly others).  This 
-> certainly makes some sense as well, and may be less surprising.
+will just show reams of output, and you won't see any errors and warnings
+even if there were any encountered during the process.
 
-Yes. You'll see we use a similar test for git's "auto" color.
+Unfortunately we did it unconditionally.  There is no reason to dup stderr
+to the $PAGER if the command line was:
 
-> >And FWIW, I don't recall this ever being discussed before, but then I
-> >have not been involved with git since the very beginning.
-> 
-> Google should be able to find it.  And worst-case, I can tell wget to spider 
-> the archives and then run some sort of find/html2txt/grep on them.
+	$ git log 2>error.log
 
-I have the complete archive, and I couldn't find anything useful. ;)
-
-Let me know if you want a copy (or you can pull it straight from gmane,
-but it is somewhat slow IIRC).
-
--Peff
+in which case you would want to view the normal output in your $PAGER and
+you are keeping the log of the error output in a separate file.
