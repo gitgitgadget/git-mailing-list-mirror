@@ -1,93 +1,81 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] cgit in git?
-Date: Thu, 11 Dec 2008 14:28:21 -0800 (PST)
-Message-ID: <m3k5a6gxft.fsf@localhost.localdomain>
-References: <8c5c35580812111348iceaf30dyb55183017cff5b1d@mail.gmail.com>
+Subject: Re: [RFC/PATCH 4/3] gitweb: Incremental blame (proof of concept)
+Date: Thu, 11 Dec 2008 14:34:06 -0800 (PST)
+Message-ID: <m3fxkugx5m.fsf@localhost.localdomain>
+References: <20081209223703.28106.29198.stgit@localhost.localdomain>
+	<20081210200908.16899.36727.stgit@localhost.localdomain>
+	<m3r64ehba7.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Seth Vidal" <skvidal@fedoraproject.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 11 23:30:57 2008
+Cc: Petr Baudis <pasky@suse.cz>, Fredrik Kuivinen <frekui@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 11 23:35:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAu2h-00040a-Cq
-	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 23:29:59 +0100
+	id 1LAu86-0006J9-Tw
+	for gcvg-git-2@gmane.org; Thu, 11 Dec 2008 23:35:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757953AbYLKW21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 17:28:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758052AbYLKW21
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 17:28:27 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:48985 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757953AbYLKW2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 17:28:25 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so190131eyi.37
-        for <git@vger.kernel.org>; Thu, 11 Dec 2008 14:28:22 -0800 (PST)
+	id S1756950AbYLKWeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 17:34:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756918AbYLKWeK
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 17:34:10 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:42156 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756863AbYLKWeJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 17:34:09 -0500
+Received: by ewy10 with SMTP id 10so1503460ewy.13
+        for <git@vger.kernel.org>; Thu, 11 Dec 2008 14:34:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received
          :x-authentication-warning:to:cc:subject:references:from:in-reply-to
          :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=Tuf2J+SzZjuQ0nRY6fwrYU1KUxHVqEm40inmrcwbi4E=;
-        b=HRQZC89JvQ2Gd7jUD97HaQO/eRZkcwVGsK2jaRuiNXYBVko6RJExTh9iAmok4Qy22i
-         khNVFgTS26Pr8WmKp6tIy/e1NKrtin7AFIxfLByCyxlt96guP1i5u2o5zizhyDZOD+yh
-         PS3qtKcv1lVM0X7AvVO8dJgy4oSY+jc1ik8eA=
+        bh=9S/EgahEKIXjvISP5uFD+Rbe3eOleFotJF0xBj1Nczo=;
+        b=oRvy7/o6652D9cdYc0Az5sjtrGlrt9FLhsOlVxIncTfWKjieh8SZHYl26ITFhx4VZc
+         4dwU93RN9kVr//XdckA8G0UZ+rG9ib8DEvAMx9MBy4V+9PeOALul96F5pMjczNy9RdFu
+         jj86NSqzeo8VBLjqS8Txb7UbL51QDgGBt+nnk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
          :message-id:lines:user-agent:mime-version:content-type:date;
-        b=m9+jq7j9lSNVYV6V1QDrD03QB4XfbWPIW/NgaspncSq2Z1xdquIQnUSGNiwu9N9/yw
-         xBg+ADmIg19FGb/iY2wPCalcKSd7zGtW+bC6+21E65H6WR4k0HcSuZVfPqHprpZ/BBX+
-         N5vTfNcKrWDWkHK0UCaYSSELWdWpHdaPwhnG8=
-Received: by 10.210.117.1 with SMTP id p1mr14662ebc.53.1229034502091;
-        Thu, 11 Dec 2008 14:28:22 -0800 (PST)
+        b=cF/eWes51F9ZQpNwnWKXfZxNIl853hCZprkBEmZO/1qFZQf0NRJxxMiRGwzKrGNB8O
+         e0kTzuX/ySgWkEsK3kP5v+fwpFQEHNjIvja/kBI3veAoKxVsw9l7fAq1AKWEBufpmH7K
+         hKtL38iENv2A9VpCkqTluungaJRTAxeukU/+0=
+Received: by 10.210.136.10 with SMTP id j10mr3281020ebd.188.1229034847380;
+        Thu, 11 Dec 2008 14:34:07 -0800 (PST)
 Received: from localhost.localdomain (abvq79.neoplus.adsl.tpnet.pl [83.8.214.79])
-        by mx.google.com with ESMTPS id 5sm141321eyf.38.2008.12.11.14.28.04
+        by mx.google.com with ESMTPS id 7sm5798237nfv.14.2008.12.11.14.34.05
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Dec 2008 14:28:21 -0800 (PST)
+        Thu, 11 Dec 2008 14:34:06 -0800 (PST)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBBMRPR3026654;
-	Thu, 11 Dec 2008 23:27:37 +0100
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBBMXP11026738;
+	Thu, 11 Dec 2008 23:33:41 +0100
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBBMR3kt026649;
-	Thu, 11 Dec 2008 23:27:03 +0100
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBBMX9SS026731;
+	Thu, 11 Dec 2008 23:33:09 +0100
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <8c5c35580812111348iceaf30dyb55183017cff5b1d@mail.gmail.com>
+In-Reply-To: <m3r64ehba7.fsf@localhost.localdomain>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102832>
 
-"Lars Hjemli" <hjemli@gmail.com> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> But the buildsystem/policy used by the fedora project does not allow
-> network access during package builds, and since it is quite unlikely
-> that the git package always will match the exact release needed by the
-> cgit package, I only see four options:
-> 1) the fedora project makes a 'git-for-cgit' package containing the
-> needed release of the git sources
-> 2) the cgit release tarballs includes the needed git sources
+> New features (in short):
+>  * 3-coloring of lines with blame data during incremental blaming
+>  * Adding author initials below shortened SHA-1 of a commit
+>    (if there is place for it, i.e. if group has more than 1 row)
+>  * progress indicator: progress info and progress bar
+>  * information about how long it took to run 'blame_data',
+>    and how long it took to run JavaScript script
 
-2b) make cgit .spec use _two_ tarballs as a source, one with cgit
-sources, one with git sources.  This assumes that you always use
-released git version as a base.
-
-This is immediate solution.
-
-> 3) the cgit sources are subtree-merged into git
-
-I wonder how likely this would be.
-
-> 4) cgit is modified to link against libgit2
-
-Option 4) would be probably best in long term, but libgit2 doesn't
-exists yet.
+ * handling server ('blame_data') errors, i.e. status != 200.
+   (I needed that to debug blame.js when I entered URL incorrectly).
 
 -- 
 Jakub Narebski
