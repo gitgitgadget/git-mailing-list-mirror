@@ -1,93 +1,104 @@
-From: Fabian Emmes <fabian.emmes@rwth-aachen.de>
-Subject: [PATCH 1/2] cvsserver: add option to configure commit message
-Date: Fri, 12 Dec 2008 16:24:08 +0100
-Message-ID: <1229095449-24755-1-git-send-email-fabian.emmes@rwth-aachen.de>
-Content-Transfer-Encoding: 7BIT
-Cc: gitster@pobox.com, Fabian Emmes <fabian.emmes@rwth-aachen.de>,
-	Lars Noschinski <lars@public.noschinski.de>
-To: git@vger.kernel.org
+From: "Sverre Rabbelier" <srabbelier@gmail.com>
+Subject: Re: [JGIT PATCH 03/15] Add IntList as a more efficient representation of List<Integer>
+Date: Fri, 12 Dec 2008 16:50:32 +0100
+Message-ID: <bd6139dc0812120750j19b4d56an24b9c52a3ca60f20@mail.gmail.com>
+References: <1229049981-14152-1-git-send-email-spearce@spearce.org>
+	 <1229049981-14152-2-git-send-email-spearce@spearce.org>
+	 <1229049981-14152-3-git-send-email-spearce@spearce.org>
+	 <1229049981-14152-4-git-send-email-spearce@spearce.org>
+	 <bd6139dc0812120243y2b1a3dddu4975162114280e17@mail.gmail.com>
+	 <20081212151533.GM32487@spearce.org>
+	 <bd6139dc0812120733o7c828532qbcd78c46a321fe6b@mail.gmail.com>
+	 <20081212154115.GO32487@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
 X-From: git-owner@vger.kernel.org Fri Dec 12 16:56:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBAMV-0004zc-KU
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 16:55:32 +0100
+	id 1LBAMl-00058S-BY
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 16:55:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757307AbYLLPyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 10:54:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757314AbYLLPyP
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 10:54:15 -0500
-Received: from mta-2.ms.rz.RWTH-Aachen.DE ([134.130.7.73]:49789 "EHLO
-	mta-2.ms.rz.rwth-aachen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753027AbYLLPyN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Dec 2008 10:54:13 -0500
-X-Greylist: delayed 1800 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Dec 2008 10:54:12 EST
-Received: from ironport-out-1.rz.rwth-aachen.de ([134.130.5.40])
- by mta-2.ms.rz.RWTH-Aachen.de
- (Sun Java(tm) System Messaging Server 6.3-7.04 (built Sep 26 2008))
- with ESMTP id <0KBR004Q3S499H20@mta-2.ms.rz.RWTH-Aachen.de> for
- git@vger.kernel.org; Fri, 12 Dec 2008 16:24:09 +0100 (CET)
-X-IronPort-AV: E=Sophos;i="4.36,211,1228086000";   d="scan'208";a="93591619"
-Received: from smarthost-1.ms.rz.rwth-aachen.de (HELO smarthost.rwth-aachen.de)
- ([134.130.7.89]) by ironport-in-1.rz.rwth-aachen.de with ESMTP; Fri,
- 12 Dec 2008 16:24:09 +0100
-Received: from aprove.informatik.rwth-aachen.de
- (aprove.informatik.RWTH-Aachen.DE [137.226.194.201])
-	by smarthost.rwth-aachen.de (8.13.8+Sun/8.13.8/1)
- with ESMTP id mBCFO9dY028367; Fri, 12 Dec 2008 16:24:09 +0100 (CET)
-Received: by aprove.informatik.rwth-aachen.de (Postfix, from userid 1005)
-	id 7BFAE11B745; Fri, 12 Dec 2008 16:24:09 +0100 (CET)
-X-Mailer: git-send-email 1.6.0.2
+	id S1757444AbYLLPyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 10:54:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757314AbYLLPyS
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 10:54:18 -0500
+Received: from mail-bw0-f13.google.com ([209.85.218.13]:42154 "EHLO
+	mail-bw0-f13.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757408AbYLLPyR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 10:54:17 -0500
+Received: by bwz6 with SMTP id 6so3596824bwz.13
+        for <git@vger.kernel.org>; Fri, 12 Dec 2008 07:54:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=1VTb90zn4bcCcy4cRRA4CxYMQlTNaPTLX/82EaH3Opg=;
+        b=HqcgMY0P+JZcH8ZMqDe/RdDDfRvFMxbRw2zMrBtUkl38qZrPHSMIBbD9YwfJPhKDia
+         0hax6H/wW3hpTyGxUayet9z3TYqYQENVt0MkUT0TKHv5ySPHu77ohGMw7fjOG9aJhf3N
+         vAg8IfxxQcsg9FEhIrfxzu/BdtQqfH5GXRo5M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=YBbBiMLilr44ZJUHuaW40Yohw8XPV1CrSKGoRu7ymYbVjibGYEB6zBKCfnNdcepG85
+         hQH+6BvWLU5LWIqzFCjCZBl1gcJrYIeZBhcD3i1h/01I0oL9Beap7lyiclmpsGByEp2Y
+         D3J2+LgsGiZDddBLa/M01TGQbVPy8VBDo4QPY=
+Received: by 10.223.110.144 with SMTP id n16mr4313157fap.55.1229097032743;
+        Fri, 12 Dec 2008 07:50:32 -0800 (PST)
+Received: by 10.223.103.142 with HTTP; Fri, 12 Dec 2008 07:50:32 -0800 (PST)
+In-Reply-To: <20081212154115.GO32487@spearce.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: 464def918888bfc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102908>
 
-cvsserver annotates each commit message by "via git-CVS emulator". This is
-made configurable via gitcvs.commitmsgannotation.
+On Fri, Dec 12, 2008 at 16:41, Shawn O. Pearce <spearce@spearce.org> wrote:
+> If you'd like to send a patch to change it, I'll apply it.  But I
+> don't think its worth my time to make this toString() more efficient.
 
-Signed-off-by: Fabian Emmes <fabian.emmes@rwth-aachen.de>
-Signed-off-by: Lars Noschinski <lars@public.noschinski.de>
----
- Documentation/config.txt |    4 ++++
- git-cvsserver.perl       |    8 +++++++-
- 2 files changed, 11 insertions(+), 1 deletions(-)
+I mainly mentioned it because it's in a Class meant to be more optimal
+than what Java ships with, but I agree with your reasoning that this
+toString is not part of what needs to be optimized.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index b233fe5..ee937fe 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -723,6 +723,10 @@ gc.rerereunresolved::
- 	kept for this many days when 'git-rerere gc' is run.
- 	The default is 15 days.  See linkgit:git-rerere[1].
- 
-+gitcvs.commitmsgannotation::
-+	Append this string to each commit message. Set to empty string
-+	to disable this feature. Defaults to "via git-CVS emulator".
-+
- gitcvs.enabled::
- 	Whether the CVS server interface is enabled for this repository.
- 	See linkgit:git-cvsserver[1].
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index b0a805c..cbcaeb4 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -1358,7 +1358,13 @@ sub req_ci
-     # write our commit message out if we have one ...
-     my ( $msg_fh, $msg_filename ) = tempfile( DIR => $TEMP_DIR );
-     print $msg_fh $state->{opt}{m};# if ( exists ( $state->{opt}{m} ) );
--    print $msg_fh "\n\nvia git-CVS emulator\n";
-+    if ( defined ( $cfg->{gitcvs}{commitmsgannotation} ) ) {
-+        if ($cfg->{gitcvs}{commitmsgannotation} !~ /^\s*$/ ) {
-+            print $msg_fh "\n\n".$cfg->{gitcvs}{commitmsgannotation}."\n"
-+        }
-+    } else {
-+        print $msg_fh "\n\nvia git-CVS emulator\n";
-+    }
-     close $msg_fh;
- 
-     my $commithash = `git-commit-tree $treehash -p $parenthash < $msg_filename`;
+> Other areas of JGit I do try to micro-optimize, because they are
+> right smack in the middle of the critical paths.
+
+Hehe, I very much agree with not optimizing prematurely, and if you do
+optimize to go for it all the way.
+
+> E.g. look at ObjectId.equals(byte[],int,byte[],int). I hand-unrolled
+> the memcmp loop because the JIT on x86 does *soooo* much better
+> when the code is spelled out:
+
+<code snipped>
+
+Kind of sad that you have to write this kind of code if you want good
+performance, ah well, perhaps someday... (import java.lang.optimized
+;) ).
+
+> This block is in the critical path for any tree diff code, in
+> particular for a "git log -- a/" sort of operation.  Its used
+> to compare the SHA-1s from two different tree records to see if
+> they differ.  Not unrolling this was a huge penalty.
+
+I reckon that is done a lot :). Ashame the JRE can't do that kind of
+optimization for you. e.g., if you do:
+for(int i = 0; i < constant; i++) {
+  some_code;
+}
+
 -- 
-1.6.1.rc2.20.gde0d
+Cheers,
+
+Sverre Rabbelier
