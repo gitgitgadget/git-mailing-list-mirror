@@ -1,84 +1,68 @@
-From: Thomas Jarosch <thomas.jarosch@intra2net.com>
-Subject: Re: help needed: Splitting a git repository after subversion migration
-Date: Fri, 12 Dec 2008 15:22:15 +0100
-Organization: Intra2net AG
-Message-ID: <200812121522.38791.thomas.jarosch@intra2net.com>
-References: <493C0AAD.1040208@intra2net.com> <200812101733.36221.thomas.jarosch@intra2net.com> <20081211081009.GA14639@atjola.homenet>
+From: "Ramon Tayag" <ramon.tayag@gmail.com>
+Subject: Unable to index file
+Date: Fri, 12 Dec 2008 22:47:29 +0800
+Message-ID: <f25d5ad20812120647m646698d7t9849c8ccb08c465e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: =?iso-8859-1?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Dec 12 15:24:25 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 12 15:48:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LB8wK-0008Ar-R7
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 15:24:25 +0100
+	id 1LB9Jy-0001yz-55
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 15:48:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758890AbYLLOWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 09:22:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758170AbYLLOWt
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 09:22:49 -0500
-Received: from re01.intra2net.com ([82.165.28.202]:49319 "EHLO
-	re01.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758797AbYLLOWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 09:22:47 -0500
-Received: from intranator.m.i2n (unknown [172.16.1.99])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by re01.intra2net.com (Postfix) with ESMTP id 41D344E6E;
-	Fri, 12 Dec 2008 15:22:46 +0100 (CET)
-Received: from localhost (intranator.m.i2n [127.0.0.1])
-	by localhost (Postfix) with ESMTP id D7A9B2AC4B;
-	Fri, 12 Dec 2008 15:22:45 +0100 (CET)
-Received: from storm.localnet (storm.m.i2n [172.16.1.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by intranator.m.i2n (Postfix) with ESMTP id DB92A2AC4A;
-	Fri, 12 Dec 2008 15:22:44 +0100 (CET)
-User-Agent: KMail/1.10.3 (Linux/2.6.27.5-41.fc9.i686; KDE/4.1.3; i686; ; )
-In-Reply-To: <20081211081009.GA14639@atjola.homenet>
+	id S1756541AbYLLOrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 09:47:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756578AbYLLOra
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 09:47:30 -0500
+Received: from wf-out-1314.google.com ([209.85.200.171]:7100 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754930AbYLLOra (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 09:47:30 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so1346919wfd.4
+        for <git@vger.kernel.org>; Fri, 12 Dec 2008 06:47:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=MHyJ07vFCVwFLr997y5bxG942me4jTrNrnSCBlypNJ8=;
+        b=jR23n90b36lVc1ktumMT+MoE6pt5EcijlNdqmCTjZerLYLAUMxUrGkk8wRQND27kBi
+         HkF+9/a7wYd+jFPZyfhc0X2Tp2Bsl/BqOQ1E981kW7mnDEGtaiGclGhlf8Dnl/vGLf8o
+         IwiiRwEcowHZu/75N3+Gz5atIDa5jqYYJTjQ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=QYmoIw3M01bE3an0wFcO5Ns9FG6NGZ4c8W01oOLvlGkhlQqqC9p+ta9rs/hnQerC/+
+         V8T/Rlrmkb7qVS9f+DEO8dEOdBjmJOCcnLbnY8OYgbkfwAXkxDPAGwVOz+ulUyt1Fmro
+         enbQzal3X+lNWNOnLZVLKlV/dUlavzFm82tFs=
+Received: by 10.142.48.14 with SMTP id v14mr1387361wfv.166.1229093249483;
+        Fri, 12 Dec 2008 06:47:29 -0800 (PST)
+Received: by 10.142.191.15 with HTTP; Fri, 12 Dec 2008 06:47:29 -0800 (PST)
 Content-Disposition: inline
-X-Virus-Scanned: by Intranator (www.intranator.com) with AMaViS and F-Secure AntiVirus (fsavdb 2008-12-12_07)
-X-Spam-Status: hits=-2.9 tests=[ALL_TRUSTED=-1.8,BAYES_05=-1.11]
-X-Spam-Level: 971
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102899>
 
-On Thursday, 11. December 2008 09:10:09 you wrote:
-> > Now I'll manually check the history of the tags/ and branches/ folder
-> > for more funny tags and write down the revision. If I understood
-> > the git-svn man page correctly, I should be able to specifiy
-> > revision ranges it's going to import. I'll try to skip the broken tags.
->
-> As long as the breakage only involves branches/tags that are completely
-> useless, it's probably a lot easier to just delete them afterwards.
->
-> And if you accidently added changes to a tag, after it was created, it's
-> also easier to manually tag to right version in git, and just forgetting
-> about the additional commit.
->
-> And for a bunch of other cases, rebase -i/filter-branch are probably
-> also better options ;-)
->
-> Skipping revisions in a git-svn import sounds rather annoying and
-> error-prone.
+Hi everyone,
 
-Sounds very reasonable. When I'm done filtering with filter-branch,
-the original commits are still stored in "refs/originals" and the reflogs.
-What's the best way to get rid of those to free up the space?
+I've come across a problem that I don't believe lies in Rails.  You
+needn't be familiar, I think, with Rails to see what's wrong.
 
-A nice way to find the corresponding commit for a file can be found here: 
-http://stackoverflow.com/questions/223678/git-which-commit-has-this-blob
+I can't seem to add the files that are in
+http://dev.rubyonrails.org/archive/rails_edge.zip
 
-Thanks for your help so far!
+1) Unpack the zip
+2) Initialize a git repo inside the folder that was unpacked
+3) git add .
 
-Thomas
+See the errors.. :o http://pastie.org/337571
 
-PS: Yes, I have a backup copy of the repository ;-)
+Thanks,
+Ramon Tayag
