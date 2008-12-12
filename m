@@ -1,121 +1,121 @@
-From: Mike Ralphson <mike@abacus.co.uk>
-Subject: [JGIT PATCH] Fix typos in comments / testcase output
-Date: Fri, 12 Dec 2008 10:55:57 +0000
-Message-ID: <1229079357-19167-1-git-send-email-mike@abacus.co.uk>
-Cc: git@vger.kernel.org, Mike Ralphson <mike.ralphson@gmail.com>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Dec 12 11:47:18 2008
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: Clarifying "invalid tag signature file" error message from git filter-branch (and others)
+Date: Fri, 12 Dec 2008 12:02:44 +0100
+Message-ID: <87zlj1hd0r.fsf@rho.meyering.net>
+References: <c5df85930812110214k2e12d926m60856fb630d45e80@mail.gmail.com>
+	<P7E-5meNX4tXFurN9mnRguFHdJG1jaZYTn6WxFFpECSJ68KyYT3wqQ@cipher.nrlssc.navy.mil>
+	<c5df85930812111434m879f1faq80c64286714c3a1f@mail.gmail.com>
+	<LhfS_uc2B_Gje7rXd1882RMsQfSRjOEsBT24Z1Yza_bWhgl9lI-ZhQ@cipher.nrlssc.navy.mil>
+	<c5df85930812111559p287ea6afk54a9759302288d5e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Brandon Casey" <casey@nrlssc.navy.mil>, git@vger.kernel.org
+To: "James Youngman" <jay@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Dec 12 12:04:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LB5YE-0001W8-1j
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 11:47:18 +0100
+	id 1LB5op-0006y3-N5
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 12:04:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751556AbYLLKqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 05:46:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbYLLKqA
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 05:46:00 -0500
-Received: from [82.109.193.99] ([82.109.193.99]:5120 "EHLO orson.abacus.co.uk"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750719AbYLLKp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 05:45:59 -0500
-Received: by orson.abacus.co.uk (Postfix, from userid 1006)
-	id B8CBA1C7C83; Fri, 12 Dec 2008 10:55:57 +0000 (GMT)
-X-Mailer: git-send-email 1.6.0.2.229.g1293c
+	id S1751818AbYLLLDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 06:03:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751391AbYLLLDI
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 06:03:08 -0500
+Received: from smtp6-g19.free.fr ([212.27.42.36]:54219 "EHLO smtp6-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751373AbYLLLDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 06:03:07 -0500
+Received: from smtp6-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id B939919794;
+	Fri, 12 Dec 2008 12:03:03 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 51DD819761;
+	Fri, 12 Dec 2008 12:02:53 +0100 (CET)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id A954038304; Fri, 12 Dec 2008 12:02:44 +0100 (CET)
+In-Reply-To: <c5df85930812111559p287ea6afk54a9759302288d5e@mail.gmail.com>
+	(James Youngman's message of "Thu, 11 Dec 2008 23:59:29 +0000")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102894>
 
-Signed-off-by: Mike Ralphson <mike@abacus.co.uk>
----
+"James Youngman" <jay@gnu.org> wrote:
+> On Thu, Dec 11, 2008 at 11:13 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+>
+>>> Before conversion:
+>>> $ git cat-file tag FINDUTILS-4_1-10
+>>> object ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
+>>> type commit
+>>> tag FINDUTILS-4_1-10
+>>> tagger Kevin Dalley
+>>
+>> The tagger field is missing an email address, a timestamp, and a timezone. It
+>> should look something like:
+>>
+>>  tagger Kevin Dalley <kevin.dalley@somewhere.com> 1229036026 -0800
+>>
+>> git-mktag prevents improperly formatted tags from being created by checking
+>> that these fields exist and are well formed.
+>>
+>> If you know the correct values for the missing fields, then you could
+>
+> Yes for the email address.      But as for the timestamp, it's not in
+> the tag file; that only contains the sha1.
+> There is a timestamp in the object being tagged, is that the timestamp
+> you are talking about?
+>
+> $ git show --pretty=raw  ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
+> commit ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
+> tree 752cca144d39bc55d05fbe304752b274ba22641c
+> parent 9a998755249b0c8c47e8657cff712fa506aa30fc
+> author Kevin Dalley <kevin@seti.org> 830638152 +0000
+> committer Kevin Dalley <kevin@seti.org> 830638152 +0000
+>
+>     *** empty log message ***
+>
+> diff --git a/debian.Changelog b/debian.Changelog
+> index e3541eb..d0cd295 100644
+> --- a/debian.Changelog
+> +++ b/debian.Changelog
+> @@ -1,5 +1,7 @@
+>  Sat Apr 27 12:29:06 1996  Kevin Dalley
+> <kevin@aplysia.iway.aimnet.com (Kevin Dalley)>
+>
+> +       * find.info, find.info-1, find.info-2: updated to match find.texi
+> +
+>         * debian.rules (debian): update debian revision to 10
+>
+>         * getline.c (getstr): verify that nchars_avail is *really* greater
+>
+>
+>
+>
+>
+>> recreate the tags before doing the filter-branch. If they are unknown, it
+>> seems valid enough to use the values from the commit that the tag points
+>> to.
+>>
+>> i.e.
+>>
+>>  tagger Kevin Dalley <kevin@seti.org> 830638152 -0000
+>>
+>> What tool was used to convert this repository to git? It should be corrected
+>> to produce valid annotated tags. Especially if it is a tool within git.
+>
+> I don't know, Jim Meyering will know though, so I CC'ed him.
 
-Is it me, or is the actual maintainer of JGIT/EGIT not actually
-mentioned anywhere? Apologies if I've got the to and cc round
-the wrong way 8-)
+I used parsecvs, probably with git-master from the date of
+the initial conversion (check the archives for actual date).
+That was long enough ago that it was almost certainly before
+git-mktag learned to be more strict about its inputs.
 
-This patch is the product of
-find . -name "*.java" -type f -exec aspell --mode=ccpp -c {} \;
+James, since you're about to rewrite the history, you may want to
+start that process from a freshly-cvs-to-git-converted repository.
 
-I would post my aspell wordlists but they're polluted by other
-projects...
-
-Possibly also s/packes to/packs so/ in README?
-
- .../org/spearce/egit/core/GitMoveDeleteHook.java   |    2 +-
- .../org/spearce/jgit/lib/RepositoryTestCase.java   |    2 +-
- .../spearce/jgit/revwalk/RevCommitParseTest.java   |    2 +-
- .../spearce/jgit/transport/BundleWriterTest.java   |    2 +-
- .../spearce/jgit/transport/FetchConnection.java    |    2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java b/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java
-index cc4059c..7faa65a 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java
-@@ -122,7 +122,7 @@ public boolean moveFolder(final IResourceTree tree, final IFolder source,
- 			final IFolder destination, final int updateFlags,
- 			final IProgressMonitor monitor) {
- 		// TODO: Implement this. Should be relatively easy, but consider that
--		// Eclipse thinks folders are real thinsgs, while Git does not care.
-+		// Eclipse thinks folders are real things, while Git does not care.
- 		return FINISH_FOR_ME;
- 	}
- 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-index 8937145..9e48fde 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-@@ -94,7 +94,7 @@ protected void configure() {
- 
- 	/**
- 	 * Utility method to delete a directory recursively. It is
--	 * also used internally. If a file or directory cannote be removed
-+	 * also used internally. If a file or directory cannot be removed
- 	 * it throws an AssertionFailure.
- 	 *
- 	 * @param dir
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevCommitParseTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevCommitParseTest.java
-index 805e29e..9b95924 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevCommitParseTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevCommitParseTest.java
-@@ -226,7 +226,7 @@ public void testParse_explicit_bad_encoded() throws Exception {
- 	 *
- 	 * What happens here is that an encoding us given, but data is not encoded
- 	 * that way (and we can detect it), so we try other encodings. Here data could
--	 * actually be decoded in the stated encoding, but we overide using UTF-8.
-+	 * actually be decoded in the stated encoding, but we override using UTF-8.
- 	 *
- 	 * @throws Exception
- 	 */
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/BundleWriterTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/BundleWriterTest.java
-index 3cfb8b1..f13d25c 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/BundleWriterTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/BundleWriterTest.java
-@@ -117,7 +117,7 @@ assertEquals(db.resolve("c").name(), newRepo.resolve("refs/heads/cc")
- 			// Check that we actually needed the first bundle
- 			Repository newRepo2 = createNewEmptyRepo();
- 			fetchResult = fetchFromBundle(newRepo2, bundle);
--			fail("We should not be able to fetch from bundle with prerequisistes that are not fulfilled");
-+			fail("We should not be able to fetch from bundle with prerequisites that are not fulfilled");
- 		} catch (MissingBundlePrerequisiteException e) {
- 			assertTrue(e.getMessage()
- 					.indexOf(db.resolve("refs/heads/a").name()) >= 0);
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java
-index 461ad71..a56ca6c 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java
-@@ -126,7 +126,7 @@ public void fetch(final ProgressMonitor monitor, final Collection<Ref> want)
- 	 * able to supply a fully connected graph to the client (although it may
- 	 * only be transferring the parts the client does not yet have). Its faster
- 	 * to assume such remote peers are well behaved and send the correct
--	 * response to the client. In such tranports this method returns false.
-+	 * response to the client. In such transports this method returns false.
- 	 *
- 	 * @return true if the last fetch had to perform a connectivity check on the
- 	 *         client side in order to succeed; false if the last fetch assumed
--- 
-1.6.0.2
+I'm not very happy about using cvsparse (considering it's not
+really being maintained, afaik), so if the git crowd
+can recommend something better, I'm all ears.
