@@ -1,79 +1,53 @@
-From: Thomas Jarosch <thomas.jarosch@intra2net.com>
-Subject: [patch] documentation: Explain how to free up space after filter-branch
-Date: Fri, 12 Dec 2008 18:42:09 +0100
-Organization: Intra2net AG
-Message-ID: <200812121842.10438.thomas.jarosch@intra2net.com>
+From: Lars Noschinski <lars@public.noschinski.de>
+Subject: diff -b / -w and empty diffs
+Date: Fri, 12 Dec 2008 18:57:36 +0100
+Message-ID: <20081212175736.GA20046@lars.home.noschinski.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+Content-Type: text/plain; charset=us-ascii; format=flowed
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 12 18:43:34 2008
+X-From: git-owner@vger.kernel.org Fri Dec 12 19:04:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBC33-0001Kw-ID
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 18:43:34 +0100
+	id 1LBCNM-000264-41
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 19:04:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757104AbYLLRmP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Dec 2008 12:42:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756831AbYLLRmP
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 12:42:15 -0500
-Received: from re01.intra2net.com ([82.165.28.202]:59940 "EHLO
-	re01.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756760AbYLLRmP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Dec 2008 12:42:15 -0500
-Received: from intranator.m.i2n (unknown [172.16.1.99])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by re01.intra2net.com (Postfix) with ESMTP id 7CC6B24E6;
-	Fri, 12 Dec 2008 18:42:13 +0100 (CET)
-Received: from localhost (intranator.m.i2n [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 218E32AC4B;
-	Fri, 12 Dec 2008 18:42:13 +0100 (CET)
-Received: from storm.localnet (storm.m.i2n [172.16.1.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by intranator.m.i2n (Postfix) with ESMTP id 76B282AC4A;
-	Fri, 12 Dec 2008 18:42:11 +0100 (CET)
-User-Agent: KMail/1.10.3 (Linux/2.6.27.5-41.fc9.i686; KDE/4.1.3; i686; ; )
+	id S1758266AbYLLSDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 13:03:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758182AbYLLSDN
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 13:03:13 -0500
+Received: from smtprelay08.ispgateway.de ([80.67.29.8]:56523 "EHLO
+	smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757133AbYLLSDM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 13:03:12 -0500
+X-Greylist: delayed 332 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Dec 2008 13:03:12 EST
+Received: from [134.61.43.48] (helo=vertikal.home.noschinski.de)
+	by smtprelay08.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <lars@public.noschinski.de>)
+	id 1LBCGf-0007mc-0r
+	for git@vger.kernel.org; Fri, 12 Dec 2008 18:57:37 +0100
+Received: from lars by vertikal.home.noschinski.de with local (Exim 4.69)
+	(envelope-from <lars@public.noschinski.de>)
+	id 1LBCGe-0005GY-AQ
+	for git@vger.kernel.org; Fri, 12 Dec 2008 18:57:36 +0100
 Content-Disposition: inline
-X-Virus-Scanned: by Intranator (www.intranator.com) with AMaViS and F-Secure AntiVirus (fsavdb 2008-12-12_08)
-X-Spam-Status: hits=-2.5 tests=[ALL_TRUSTED=-1.8,BAYES_20=-0.74]
-X-Spam-Level: 975
+User-Agent: mutt-ng/devel-r804 (Linux)
+X-Df-Sender: 336680
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102920>
 
-Explain how to free up space after filter-branch.
-Thanks to Bj=F6rn Steinbrink for pointing me in the right direction.
+Hello!
 
-Signed-off-by: Thomas Jarosch <thomas.jarosch@intra2net.com>
+If the difference between two files is only whitespace, "git diff -b"
+leads to diffs just consisting of the "diff" and "index" lines. I would
+like an option to suppress those files in the diff output because it
+breaks "git diff -b > patch; git apply patch" workflows (and often I'm
+just interested in "real" changes).
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-fi=
-lter-branch.txt
-index fed6de6..1432380 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -319,6 +319,18 @@ git filter-branch --index-filter \
- 	 mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
- ---------------------------------------------------------------
-=20
-+Free up the space in .git if the rewritten version is correct
-+by deleting refs/original and pruning the reflog:
-+
-+----------------------------------------------------
-+git for-each-ref --format=3D'%(refname)' refs/original
-+	| xargs -i git update-ref -d {}
-+
-+git reflog expire --expire=3D0 --all
-+git repack -a -d --depth=3D250 --window=3D250
-+git prune
-+----------------------------------------------------
-+
-=20
- Author
- ------
+Is there any reason why such behaviour is not implemented yet (besides
+the fact that nobody cared to do it)?
