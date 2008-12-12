@@ -1,85 +1,76 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2008, #06; Wed, 26)
-Date: Fri, 12 Dec 2008 23:13:27 +0700
-Message-ID: <fcaeb9bf0812120813m2949e36ar7905d5688b8f6ecb@mail.gmail.com>
-References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org>
-	 <fcaeb9bf0812060926r2ee443bfl3adb3f2d1129e5b8@mail.gmail.com>
-	 <alpine.LNX.1.00.0812061238260.19665@iabervon.org>
-	 <fcaeb9bf0812070427s64438216s41bf1294aa6398a3@mail.gmail.com>
-	 <alpine.LNX.1.00.0812071455020.19665@iabervon.org>
-	 <fcaeb9bf0812080451k6e213d0fo8d1da9bbac872649@mail.gmail.com>
-	 <alpine.LNX.1.00.0812081223140.19665@iabervon.org>
-	 <fcaeb9bf0812110504u1acfb612he3edae1df3774045@mail.gmail.com>
-	 <alpine.LNX.1.00.0812111520490.19665@iabervon.org>
-	 <7vy6ym9nm8.fsf@gitster.siamese.dyndns.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: Clarifying "invalid tag signature file" error message from git
+ filter-branch (and others)
+Date: Fri, 12 Dec 2008 10:21:30 -0600
+Message-ID: <ivc7ylNVmqD2RhGdI10MyG1ySwq00RZSzeh_UXbU05mhkw5od1QN8Q@cipher.nrlssc.navy.mil>
+References: <c5df85930812110214k2e12d926m60856fb630d45e80@mail.gmail.com> <P7E-5meNX4tXFurN9mnRguFHdJG1jaZYTn6WxFFpECSJ68KyYT3wqQ@cipher.nrlssc.navy.mil> <c5df85930812111434m879f1faq80c64286714c3a1f@mail.gmail.com> <LhfS_uc2B_Gje7rXd1882RMsQfSRjOEsBT24Z1Yza_bWhgl9lI-ZhQ@cipher.nrlssc.navy.mil> <c5df85930812111559p287ea6afk54a9759302288d5e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Daniel Barkalow" <barkalow@iabervon.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 12 17:14:49 2008
+Cc: git@vger.kernel.org, Jim Meyering <jim@meyering.net>
+To: James Youngman <jay@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Dec 12 17:23:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBAfA-0005Jv-G4
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 17:14:48 +0100
+	id 1LBAnD-0000LP-No
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 17:23:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757296AbYLLQNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 11:13:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757521AbYLLQNa
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 11:13:30 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:63680 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757133AbYLLQN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 11:13:29 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so733332fgg.17
-        for <git@vger.kernel.org>; Fri, 12 Dec 2008 08:13:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=k4AA9qN1nh/49byMdtweSi4YGP3ax2b8O91Vrr9Ofow=;
-        b=RwKirHCUHSMBRk0oRwc7vUdJ/a/zb4ttlyEPpXuFebjY0YCaxMKF0axVgCfSZR88T8
-         q129szzyi2LNrbRHjTNGOesbuvtUhAbWs14oJKvLgsYPfMb3AbWhm1ELkN/S4uwJpwqX
-         WlmZ3YB7I/yASRCB8ydupGsRKMVlfq6t7UXAQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=AoPySJyevzNp7uvi+lPAc+oq49O3XaT2hjO9tOGQ17kZJ4OpY1mpsl2x4N04CqRwlM
-         pNKh8CRfz5Wq97pFE+IZNqs3KeDGFUG1W2zLbcE3HwnmVxIMMfd2JydmZhissHTKPMQT
-         pmTGSrk9z02cGeJw5xBWOPotzb+SVE+PkIObE=
-Received: by 10.86.63.19 with SMTP id l19mr2131024fga.57.1229098408106;
-        Fri, 12 Dec 2008 08:13:28 -0800 (PST)
-Received: by 10.86.87.14 with HTTP; Fri, 12 Dec 2008 08:13:27 -0800 (PST)
-In-Reply-To: <7vy6ym9nm8.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1757534AbYLLQVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 11:21:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757520AbYLLQVt
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 11:21:49 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:45557 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757314AbYLLQVt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 11:21:49 -0500
+Received: by mail.nrlssc.navy.mil id mBCGLUrQ015047; Fri, 12 Dec 2008 10:21:30 -0600
+In-Reply-To: <c5df85930812111559p287ea6afk54a9759302288d5e@mail.gmail.com>
+X-OriginalArrivalTime: 12 Dec 2008 16:21:30.0620 (UTC) FILETIME=[B0EFBBC0:01C95C75]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102913>
 
-On 12/12/08, Junio C Hamano <gitster@pobox.com> wrote:
->  So "git grep -e frotz Documentation/", whether you only check out
->  Documentation or the whole tree, should grep only in Documentation area,
->  and "git grep -e frotz" should grep in the whole tree, even if you happen
->  to have a sparse checkout.  By definition, a sparse checkout has no
->  modifications outside the checkout area, so whenever grep wants to look
->  for strings outside the checkout area it should pretend as if the same
->  content as what the index records is in the work tree.  This is consistent
->  with the way how "git diff" in a sparsely checked out work tree should
->  behave.
+James Youngman wrote:
+> On Thu, Dec 11, 2008 at 11:13 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+> 
+>>> Before conversion:
+>>> $ git cat-file tag FINDUTILS-4_1-10
+>>> object ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
+>>> type commit
+>>> tag FINDUTILS-4_1-10
+>>> tagger Kevin Dalley
+>> The tagger field is missing an email address, a timestamp, and a timezone. It
+>> should look something like:
+>>
+>>  tagger Kevin Dalley <kevin.dalley@somewhere.com> 1229036026 -0800
+>>
+>> git-mktag prevents improperly formatted tags from being created by checking
+>> that these fields exist and are well formed.
+>>
+>> If you know the correct values for the missing fields, then you could
+> 
+> Yes for the email address.      But as for the timestamp, it's not in
+> the tag file; that only contains the sha1.
+> There is a timestamp in the object being tagged, is that the timestamp
+> you are talking about?
 
-Assume someone is using sparse checkout with KDE git repository. They
-sparse-checkout kdeutils module and do "git grep -e foo". I would
-expect that the command only searches in kdeutils only (and is the
-current behavior).
--- 
-Duy
+Yes and no. I meant that if you knew the "real" timestamp, possibly by
+extracting it from the original repository, then you can use that.
+Otherwise yes, as a workaround, use the timestamp in the object being
+tagged.
+
+> $ git show --pretty=raw  ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
+> commit ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
+> tree 752cca144d39bc55d05fbe304752b274ba22641c
+> parent 9a998755249b0c8c47e8657cff712fa506aa30fc
+> author Kevin Dalley <kevin@seti.org> 830638152 +0000
+> committer Kevin Dalley <kevin@seti.org> 830638152 +0000
+
+The committer information should be used, though in this repository it will
+probably always be the same as the author.
+
+-brandon
