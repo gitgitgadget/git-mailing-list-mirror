@@ -1,71 +1,130 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] git-branch: display sha1 on branch deletion
-Date: Fri, 12 Dec 2008 13:29:01 -0600
-Message-ID: <uTIFnEi0iyLKcAungf7u1Gu2xl50j9i-AMiZaQp-QTs1q-ppgyHZoelGLgvK7BFKpYE03BLRHJ4@cipher.nrlssc.navy.mil>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Dec 12 20:32:03 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb and unicode special characters
+Date: Fri, 12 Dec 2008 11:37:57 -0800 (PST)
+Message-ID: <m37i65gp6b.fsf@localhost.localdomain>
+References: <3f2beab60812121033r5d41894t77acc271b7c6955c@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Santhosh Thottingal" <santhosh00@gmail.com>
+To: "Praveen A" <pravi.a@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 12 20:39:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBDix-0002Qk-Ly
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 20:30:56 +0100
+	id 1LBDrM-0006IU-A0
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 20:39:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752016AbYLLT3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 14:29:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751951AbYLLT3h
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 14:29:37 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44909 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751942AbYLLT3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 14:29:36 -0500
-Received: by mail.nrlssc.navy.mil id mBCJTPdo024866; Fri, 12 Dec 2008 13:29:25 -0600
-X-OriginalArrivalTime: 12 Dec 2008 19:29:24.0874 (UTC) FILETIME=[F0EA5EA0:01C95C8F]
+	id S1752864AbYLLTiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 14:38:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752842AbYLLTiF
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 14:38:05 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:53319 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752600AbYLLTiA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 14:38:00 -0500
+Received: by ewy10 with SMTP id 10so1939228ewy.13
+        for <git@vger.kernel.org>; Fri, 12 Dec 2008 11:37:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=IjSGunVPsPON4WZB0NU0I2tN6CJt6tsptNewL3ou6Ow=;
+        b=UUP659mM2B+2A/4NzP+vjzv9oenL9xAPKWr2T6fPtxmN6+uKTUz4j+ytbR+SECRo2r
+         LNH11kRkQpCJG44TbIk3u8ukhZSF6DH8Rk9tJHxF4SrAYBsV6NBUvJcYxbs0elYbZmmX
+         /+f+R2tT75gjLlnBP/xZb6Y+l7ZVZvNQtuxWA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=FbxS3k21qefT7rUOokzJBWp7WrY3SctiYhozaoYWjshkn3jScq3ya38NrUg3zS68oS
+         EaJevbMGGhLQjR4v9oP6xrQJSTGtKVbfDab54IQdneiO+EmnsBeDSynz6fvnIqayC7T3
+         k0VmD8nD14Ggnu62xDC8E34s4B1lcxQA4OZco=
+Received: by 10.210.58.13 with SMTP id g13mr1235233eba.19.1229110678318;
+        Fri, 12 Dec 2008 11:37:58 -0800 (PST)
+Received: from localhost.localdomain (abvt119.neoplus.adsl.tpnet.pl [83.8.217.119])
+        by mx.google.com with ESMTPS id b33sm4255843ika.17.2008.12.12.11.37.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Dec 2008 11:37:57 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBCJbtGe002401;
+	Fri, 12 Dec 2008 20:37:56 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBCJbnAW002398;
+	Fri, 12 Dec 2008 20:37:49 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <3f2beab60812121033r5d41894t77acc271b7c6955c@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102932>
 
-Make it easier to recover from a mistaken branch deletion by displaying the
-sha1 of the branch's tip commit.
+"Praveen A" <pravi.a@gmail.com> writes:
 
-Update t3200.
+> Git currently does not handle unicode special characters ZWJ and ZWNJ,
+> both are heavily used in Malayalam and common in other languages
+> needing complex text layout like Sinhala and Arabic.
+> 
+> An example of this is shown in the commit message here
+> http://git.savannah.gnu.org/gitweb/?p=smc.git;a=commit;h=c3f368c60aabdc380c77608c614d91b0a628590a
+> 
+> \20014 and \20015 should have been ZWNJ and ZWJ respectively. You just
+> need to handle them as any other unicode character - especially it is
+> a commit message and expectation is normal pain text display.
+> 
+> I hope some one will fix this.
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- builtin-branch.c  |    3 ++-
- t/t3200-branch.sh |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+Well, I am bit stumped.  git_commit calls format_log_line_html, which
+in turn calls esc_html.  esc_html looks like this:
 
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 494cbac..b3d0d20 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -165,7 +165,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
- 			ret = 1;
- 		} else {
- 			struct strbuf buf = STRBUF_INIT;
--			printf("Deleted %sbranch %s.\n", remote, argv[i]);
-+			printf("Deleted %sbranch %s (%s).\n", remote, argv[i],
-+                                sha1_to_hex(sha1));
- 			strbuf_addf(&buf, "branch.%s", argv[i]);
- 			if (git_config_rename_section(buf.buf, NULL) < 0)
- 				warning("Update of config-file failed");
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 25e9971..e9bb6d5 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -194,7 +194,8 @@ test_expect_success 'test deleting branch deletes branch config' \
- 
- test_expect_success 'test deleting branch without config' \
-     'git branch my7 s &&
--     test "$(git branch -d my7 2>&1)" = "Deleted branch my7."'
-+     sha1=$(git rev-parse my7) &&
-+     test "$(git branch -d my7 2>&1)" = "Deleted branch my7 ($sha1)."'
- 
- test_expect_success 'test --track without .fetch entries' \
-     'git branch --track my8 &&
+  sub esc_html ($;%) {
+  	my $str = shift;
+  	my %opts = @_;
+  
+  **	$str = to_utf8($str);
+  	$str = $cgi->escapeHTML($str);
+  	if ($opts{'-nbsp'}) {
+  		$str =~ s/ /&nbsp;/g;
+  	}
+  **	$str =~ s|([[:cntrl:]])|(($1 ne "\t") ? quot_cec($1) : $1)|eg;
+  	return $str;
+  }
+
+The two important lines are marked with '**'.  Not to_utf8 subroutine
+is very simple wrapper:
+
+  # decode sequences of octets in utf8 into Perl's internal form,
+  # which is utf-8 with utf8 flag set if needed.  gitweb writes out
+  # in utf-8 thanks to "binmode STDOUT, ':utf8'" at beginning
+  sub to_utf8 {
+  	my $str = shift;
+  	if (utf8::valid($str)) {
+  		utf8::decode($str);
+  		return $str;
+  	} else {
+  		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+  	}
+  }
+
+So it looks like Perl treats \20014 and \20015 (ZWNJ and ZWJ) as
+belonging to '[:cntrl:]' class. I don't know if it is correct from the
+point of view of Unicode character classes, therefore if it is a bug
+in Perl, or just in gitweb.
+
+We might need protecting similar to ($1 ne "\t"), like (ord($1) < 127)
+or something... or perhaps we shouldn't use POSIX character class
+[:cntrl:] but something different when dealing with Unicode,
+e.g. \p{Cc} or \p{Control}, or perhaps \p{C} (other). I don't know
+Perl (nor Unicode) enough to decide...
+
+
+P.S. Even that might not help much, as Savannah uses git and gitwev
+version 1.5.6.5, which is probably version released with some major
+distribution.  As of now we are at 1.6.0.5...
 -- 
-1.6.0.4.794.g35fad
+Jakub Narebski
+Poland
+ShadeHawk on #git
