@@ -1,107 +1,110 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] git-branch: display sha1 on branch deletion
-Date: Fri, 12 Dec 2008 17:17:44 -0600
-Message-ID: <AeIdfC6dcUaLaDHDaAdSq8Mxz6QoUdeypSUI24erUEyAHVz4HeTSCw@cipher.nrlssc.navy.mil>
-References: <uTIFnEi0iyLKcAungf7u1Gu2xl50j9i-AMiZaQp-QTs1q-ppgyHZoelGLgvK7BFKpYE03BLRHJ4@cipher.nrlssc.navy.mil> <20081212194349.GA5486@sigill.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 15/15 v2] Treat "diff --combined" the same as "diff
+	--cc"
+Date: Fri, 12 Dec 2008 15:18:15 -0800
+Message-ID: <20081212231815.GT32487@spearce.org>
+References: <1229049981-14152-1-git-send-email-spearce@spearce.org> <1229049981-14152-15-git-send-email-spearce@spearce.org> <1229049981-14152-16-git-send-email-spearce@spearce.org> <200812130011.37854.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 13 00:19:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Sat Dec 13 00:19:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBHIH-0003fz-E5
-	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 00:19:37 +0100
+	id 1LBHII-0003fz-5X
+	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 00:19:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753183AbYLLXRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 18:17:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751061AbYLLXRw
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 18:17:52 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50093 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751611AbYLLXRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 18:17:52 -0500
-Received: by mail.nrlssc.navy.mil id mBCNHijx002522; Fri, 12 Dec 2008 17:17:44 -0600
-In-Reply-To: <20081212194349.GA5486@sigill.intra.peff.net>
-X-OriginalArrivalTime: 12 Dec 2008 23:17:44.0621 (UTC) FILETIME=[D699DDD0:01C95CAF]
+	id S1753714AbYLLXSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 18:18:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753859AbYLLXSR
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 18:18:17 -0500
+Received: from george.spearce.org ([209.20.77.23]:47068 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751061AbYLLXSQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 18:18:16 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 92FD438200; Fri, 12 Dec 2008 23:18:15 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200812130011.37854.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102966>
 
-Jeff King wrote:
-> On Fri, Dec 12, 2008 at 01:29:01PM -0600, Brandon Casey wrote:
-> 
->> Make it easier to recover from a mistaken branch deletion by displaying the
->> sha1 of the branch's tip commit.
-> 
-> I think this is reasonable behavior, but I have two comments:
-> 
->> -			printf("Deleted %sbranch %s.\n", remote, argv[i]);
->> +			printf("Deleted %sbranch %s (%s).\n", remote, argv[i],
->> +                                sha1_to_hex(sha1));
-> 
-> 1. Any reason not to use find_unique_abbrev(sha1, DEFAULT_ABBREV) here?
+According to the git diff manual page these two formats
+share the same file structure, so we can parse them with
+the same function.
 
-I didn't consider using find_unique_abbrev(). I used the same format
-that 'git stash drop' uses. There is enough room for a 20-char branch
-name without overflowing an 80-char line (unless you're deleting a
-remote branch). I kind of like the exactness of the full sha1 in this
-case.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+  Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+  > 
+  > The source for CombinedFileHeader would be nice. 
 
->    The full 40-character sha1 kind of dominates the line, especially if
->    you have short branch name. And this is not really for long-term
->    usage, but rather "oops, I didn't mean to have just deleted that".
+  Dammit, that wasn't added until 12/12 of the final series.
+  A new 12/12 v2 will be sent in a minute.
+   
+  > Btw, I moved the patches to the test-rsrc directory to make it possible
+  > to run the unit tests throuh maven.
+  
+  Oh.
 
-Actually, I'm more worried about line wrapping with a long branch name
-than a short branch name being dominated by the 40-char sha1. I'd even
-consider dropping the the word "branch " from the "Deleted branch ..."
-message since the user already knows that a branch is being deleted.
-So, this word-wrapping argument holds weight with me.
+ .../src/org/spearce/jgit/patch/Patch.java          |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
 
-We read left to right and the sha1 is delimited by parenthesis, so I'm
-not sure if the sha1 is dominating the line to the extent that it would
-cause confusion.
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/patch/Patch.java b/org.spearce.jgit/src/org/spearce/jgit/patch/Patch.java
+index e1e79b7..9ae2635 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/patch/Patch.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/patch/Patch.java
+@@ -57,6 +57,8 @@
+ 
+ 	private static final byte[] DIFF_CC = encodeASCII("diff --cc ");
+ 
++	private static final byte[] DIFF_COMBINED = encodeASCII("diff --combined ");
++
+ 	private static final byte[][] BIN_HEADERS = new byte[][] {
+ 			encodeASCII("Binary files "), encodeASCII("Files "), };
+ 
+@@ -177,7 +179,9 @@ private int parseFile(final byte[] buf, int c, final int end) {
+ 			if (match(buf, c, DIFF_GIT) >= 0)
+ 				return parseDiffGit(buf, c, end);
+ 			if (match(buf, c, DIFF_CC) >= 0)
+-				return parseDiffCC(buf, c, end);
++				return parseDiffCombined(DIFF_CC, buf, c, end);
++			if (match(buf, c, DIFF_COMBINED) >= 0)
++				return parseDiffCombined(DIFF_COMBINED, buf, c, end);
+ 
+ 			// Junk between files? Leading junk? Traditional
+ 			// (non-git generated) patch?
+@@ -227,9 +231,10 @@ private int parseDiffGit(final byte[] buf, final int start, final int end) {
+ 		return ptr;
+ 	}
+ 
+-	private int parseDiffCC(final byte[] buf, final int start, final int end) {
++	private int parseDiffCombined(final byte[] hdr, final byte[] buf,
++			final int start, final int end) {
+ 		final FileHeader fh = new FileHeader(buf, start);
+-		int ptr = fh.parseGitFileName(start + DIFF_CC.length, end);
++		int ptr = fh.parseGitFileName(start + hdr.length, end);
+ 		if (ptr < 0)
+ 			return skipFile(buf, start, end);
+ 
+@@ -269,6 +274,8 @@ private int parseHunks(final FileHeader fh, int c, final int end) {
+ 				break;
+ 			if (match(buf, c, DIFF_CC) >= 0)
+ 				break;
++			if (match(buf, c, DIFF_COMBINED) >= 0)
++				break;
+ 			if (match(buf, c, OLD_NAME) >= 0)
+ 				break;
+ 			if (match(buf, c, NEW_NAME) >= 0)
+-- 
+1.6.1.rc2.306.ge5d5e
 
-For comparison:
 
-  $ git stash drop
-  Dropped refs/stash@{0} (a8381dd3d3ea4e7bc83c2bfe7d1c27fa180632ee)
-
-compared to:
-
-  $ git branch -d my_branch_name
-  Deleted branch my_branch_name (ca26e31d5442f3d1ef8ae1cb69970fb31ed4b841).
-
-or
-
-  $ git branch -d my_branch_name
-  Deleted branch my_branch_name (ca26e31d).
-
-or
-
-  $ git branch -d my_branch_name
-  Deleted my_branch_name (ca26e31d5442f3d1ef8ae1cb69970fb31ed4b841).
-
-But since the longest branch that has been merged in the git history
-was 40 characters, maybe it does make sense to abbreviate the sha1.
-
-> 2. I wonder if it is confusing to new users to simply say "Delete branch
->    $branch ($sha1)". We haven't deleted $sha1, just the branch pointer.
->    $sha1 is probably still in the HEAD reflog, if not in another branch.
->    Maybe something like "(was $sha1)" would be appropriate.
->
-> I don't know if '2' is a big deal. I haven't been a new user for a long
-> time, so I didn't personally find it confusing (especially with '1' so
-> that you actually notice the branch name rather than the gigantic sha1).
-
-  Deleted branch my_branch_name (was ca26e31d).
-
-I don't find it confusing (obviously) without the addition of "was ", but
-I too haven't been a new user in a while.
-
--brandon
+-- 
+Shawn.
