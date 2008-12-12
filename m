@@ -1,133 +1,147 @@
-From: "James Youngman" <jay@gnu.org>
-Subject: Re: Clarifying "invalid tag signature file" error message from git filter-branch (and others)
-Date: Thu, 11 Dec 2008 23:59:29 +0000
-Message-ID: <c5df85930812111559p287ea6afk54a9759302288d5e@mail.gmail.com>
-References: <c5df85930812110214k2e12d926m60856fb630d45e80@mail.gmail.com>
-	 <P7E-5meNX4tXFurN9mnRguFHdJG1jaZYTn6WxFFpECSJ68KyYT3wqQ@cipher.nrlssc.navy.mil>
-	 <c5df85930812111434m879f1faq80c64286714c3a1f@mail.gmail.com>
-	 <LhfS_uc2B_Gje7rXd1882RMsQfSRjOEsBT24Z1Yza_bWhgl9lI-ZhQ@cipher.nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v3 3/3] gitweb: Optional grouping of projects by category
+Date: Fri, 12 Dec 2008 01:13:45 +0100
+Message-ID: <200812120113.47051.jnareb@gmail.com>
+References: <87wsei1uvp.wl%seb@cine7.net> <200812051145.09732.jnareb@gmail.com> <878wqmz3pl.wl%seb@cine7.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jim Meyering" <jim@meyering.net>
-To: "Brandon Casey" <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Dec 12 01:00:58 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>,
+	Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
+To: =?iso-8859-1?q?S=E9bastien_Cevey?= <seb@cine7.net>
+X-From: git-owner@vger.kernel.org Fri Dec 12 01:15:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAvSg-00033d-Ue
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 01:00:55 +0100
+	id 1LAvge-0007Gi-6J
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 01:15:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756526AbYLKX7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 18:59:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756486AbYLKX7b
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 18:59:31 -0500
-Received: from rv-out-0506.google.com ([209.85.198.227]:8082 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755349AbYLKX7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 18:59:30 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so1116642rvb.1
-        for <git@vger.kernel.org>; Thu, 11 Dec 2008 15:59:29 -0800 (PST)
+	id S1756224AbYLLANw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Dec 2008 19:13:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756221AbYLLANw
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 19:13:52 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:53778 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755349AbYLLANv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 19:13:51 -0500
+Received: by ewy10 with SMTP id 10so1525489ewy.13
+        for <git@vger.kernel.org>; Thu, 11 Dec 2008 16:13:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=qTdKYmYMPC9c4nDJvlyATBOniyUNbGLFLumFQyyuQPY=;
-        b=yDeQ6dahYuF7WXiVaWfHMsDNGmMB5vH4D1EfTgjl5npbKURWM7lLxJPci/TUUfMpRM
-         ZvCgfpRMw4Qt3beEBnsE+RzQUt5mac7zxHQqO1sSQ7xtvP486u7hcPr6MKYCTlpAuYm8
-         pEVfPLCeWzXxFYspXJmUbSn6DWHfBGmF2+spM=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=yD4teGJiKFSsDVnkYNKpID5RbomIiwTWLmbao0gIr90=;
+        b=Pmc0kYhckeK/WhWE6aW7BSO3qnjQ4Kq9hU1qCzqNw+IvauD7WXFzINfj7siFL2uNvP
+         m5mO+2nZYS2fW/3zi3E/1uk8TR+c1sXM6AA2/HfwJKtgf/2gL580tB2rNF3TGGa5EtIn
+         8utiRLfEQw1i8+/A0twiZxLH04ZrJOAbcmbTU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=lJWOOfweDO/YDgl/CblDvUg5IPgM5GclJOK7BqusmWUKwB0UQzMboa67IXuOO19vKc
-         wf9EM9/FvW5DoLY7WpI4DdrF07yYH0ogko+Qqss/03/yq+IXt9gasP4E372NwgsQS/R0
-         TOEudeQGz+2LWA8xgCb2gOs6J1VcYlwB4MF7E=
-Received: by 10.140.207.2 with SMTP id e2mr1577645rvg.65.1229039969195;
-        Thu, 11 Dec 2008 15:59:29 -0800 (PST)
-Received: by 10.141.22.4 with HTTP; Thu, 11 Dec 2008 15:59:29 -0800 (PST)
-In-Reply-To: <LhfS_uc2B_Gje7rXd1882RMsQfSRjOEsBT24Z1Yza_bWhgl9lI-ZhQ@cipher.nrlssc.navy.mil>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=VD8NrpMBfIocfjAdgfhD9eQPdRANF+iYkl1aYGbGY677Lxp9vgttaSn2ZweESPRI/L
+         NCCV6jYy8vt5PtdY3/E3OnkOMPhsSM1imG6vAAmpkue8j5c5V7cOdo/78bBiPPxGkorG
+         iz3Fztgi6bDO8jziS5410OzcM9YeqH8tkCYoc=
+Received: by 10.210.139.15 with SMTP id m15mr3410253ebd.118.1229040828997;
+        Thu, 11 Dec 2008 16:13:48 -0800 (PST)
+Received: from ?192.168.1.11? (abvq79.neoplus.adsl.tpnet.pl [83.8.214.79])
+        by mx.google.com with ESMTPS id 20sm8084eyc.43.2008.12.11.16.13.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 11 Dec 2008 16:13:47 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <878wqmz3pl.wl%seb@cine7.net>
 Content-Disposition: inline
-X-Google-Sender-Auth: 8243eba296b469c8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102849>
 
-On Thu, Dec 11, 2008 at 11:13 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+On Fri, 12 Dec 2008, S=E9bastien Cevey wrote:
+> At Fri, 5 Dec 2008 11:45:08 +0100, Jakub Narebski wrote:
+>=20
+>>>> Nice... but perhaps it would be better to simply pass $from / $to =
+to
+>>>> build_projlist_by_category function, and have in %categories only
+>>>> projects which are shown...
+>>>=20
+>>> Ah you're right, we could do that, I hadn't thought of it.  Sounds
+>>> cleaner than the $from/$to dance I did in this patch.
+>>
+>> [...] we can simply pass $from and $to to
+>> build_projlist_by_category(), and use loop $from..$to there.
+>=20
+> I just tried, it works but we first need to sort @projects by
+> category.
 
->> Before conversion:
->> $ git cat-file tag FINDUTILS-4_1-10
->> object ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
->> type commit
->> tag FINDUTILS-4_1-10
->> tagger Kevin Dalley
->
-> The tagger field is missing an email address, a timestamp, and a timezone. It
-> should look something like:
->
->  tagger Kevin Dalley <kevin.dalley@somewhere.com> 1229036026 -0800
->
-> git-mktag prevents improperly formatted tags from being created by checking
-> that these fields exist and are well formed.
->
-> If you know the correct values for the missing fields, then you could
+I don't understand. You have the following code:
 
-Yes for the email address.      But as for the timestamp, it's not in
-the tag file; that only contains the sha1.
-There is a timestamp in the object being tagged, is that the timestamp
-you are talking about?
-
-$ git show --pretty=raw  ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
-commit ce25eb352de8dc53a9a7805ba9efc1c9215d28c2
-tree 752cca144d39bc55d05fbe304752b274ba22641c
-parent 9a998755249b0c8c47e8657cff712fa506aa30fc
-author Kevin Dalley <kevin@seti.org> 830638152 +0000
-committer Kevin Dalley <kevin@seti.org> 830638152 +0000
-
-    *** empty log message ***
-
-diff --git a/debian.Changelog b/debian.Changelog
-index e3541eb..d0cd295 100644
---- a/debian.Changelog
-+++ b/debian.Changelog
-@@ -1,5 +1,7 @@
- Sat Apr 27 12:29:06 1996  Kevin Dalley
-<kevin@aplysia.iway.aimnet.com (Kevin Dalley)>
-
-+       * find.info, find.info-1, find.info-2: updated to match find.texi
++# returns a hash of categories, containing the list of project
++# belonging to each category
++sub build_projlist_by_category {
++=A0=A0=A0=A0=A0=A0=A0my $projlist =3D shift;
++=A0=A0=A0=A0=A0=A0=A0my %categories;
 +
-        * debian.rules (debian): update debian revision to 10
++=A0=A0=A0=A0=A0=A0=A0for my $pr (@$projlist) {
++=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0push @{$categories{ $pr->=
+{'category'} }}, $pr;
++=A0=A0=A0=A0=A0=A0=A0}
++
++=A0=A0=A0=A0=A0=A0=A0return %categories;
++}
 
-        * getline.c (getstr): verify that nchars_avail is *really* greater
+I propose to change it to:
+
++# returns a hash of categories, containing the list of project
++# belonging to each category
++sub build_projlist_by_category {
++       my ($projlist, $from, $to) =3D shift;                       # <=
+<<<<<<<<<<<<<<<<<<<<<<
++	$from =3D 0 unless defined $from;                           # +++++++=
+++++++++++++++++
++	$to =3D $#$projlist if (!defined $to || $#$projlist < $to); # +++++++=
+++++++++++++++++
++       my %categories;
++
++       for (my $i =3D $from; $i <=3D $to; $i++) {                    #=
+ <<<<<<<<<<<<<<<<<<<<<<<
++		$pr =3D $projlist->[$i];                            # ++++++++++++++=
++++++++++
++               push @{$categories{ $pr->{'category'} }}, $pr;
++       }
++
++       return %categories;
++}
+
+And of course update callers to pass $from and $to parameters.
+
+This code doesn't change _anything_ beside the fact that it can operate
+only on part of @$projlist.
 
 
+But as you have noticed some kinds of limiting shown project list size
+make sense only if done _after_ dividing into categories. Some but not
+all. For example page length limiting after sorting by name,=20
+description, owner or age (sorting which takes place before dividing
+into categories) makes sense if it is done _before_ categorization:
+we want to show e.g. 100 freshest projects, and not up to 100 projects
+from first categories, with last category showing maybe only freshest
+projects in this category.
 
 
+Besides making selection of projects to show operate on list of project=
+s
+instead of being done just before display is IMHO better, more flexible=
+,
+and more robust solution.
 
-> recreate the tags before doing the filter-branch. If they are unknown, it
-> seems valid enough to use the values from the commit that the tag points
-> to.
->
-> i.e.
->
->  tagger Kevin Dalley <kevin@seti.org> 830638152 -0000
->
-> What tool was used to convert this repository to git? It should be corrected
-> to produce valid annotated tags. Especially if it is a tool within git.
+> I'm gonna re-send the three patches as a new version.
 
-I don't know, Jim Meyering will know though, so I CC'ed him.
+Thanks in advance.
 
-
-> The tag below was actually not converted. filter-branch bailed
-> out during the conversion and so left it alone.
-
-I see.
-
-Thanks,
-James.
+--=20
+Jakub Narebski
+Poland
