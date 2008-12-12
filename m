@@ -1,109 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] submodule: Allow tracking of the newest revision of a
-  branch in a submodule
-Date: Thu, 11 Dec 2008 17:17:57 -0800
-Message-ID: <7v3agub396.fsf@gitster.siamese.dyndns.org>
-References: <1229009982-2701-1-git-send-email-git@fabian-franz.de>
- <7vbpvicuk2.fsf@gitster.siamese.dyndns.org> <20081212002101.292020@gmx.net>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: [RFC] cgit in git?
+Date: Thu, 11 Dec 2008 19:15:46 -0500
+Message-ID: <20081212001546.GV13722@inocybe.teonanacatl.org>
+References: <8c5c35580812111348iceaf30dyb55183017cff5b1d@mail.gmail.com>
+ <7vwse6bart.fsf@gitster.siamese.dyndns.org>
+ <8c5c35580812111537v1144c9fdy19f2a3cc56e2a04f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@fabian-franz.de, j.sixt@viscovery.net, hjemli@gmail.com,
-	git@vger.kernel.org
-To: "Fabian Franz" <FabianFranz@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Dec 12 02:19:31 2008
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="HACzHn9G0kmbdSJa"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Seth Vidal <skvidal@fedoraproject.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 12 02:36:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAwgj-0008J9-1r
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 02:19:29 +0100
+	id 1LAwxS-0004F3-OT
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 02:36:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756776AbYLLBSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 20:18:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756093AbYLLBSK
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 20:18:10 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33746 "EHLO
+	id S1755455AbYLLBf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 20:35:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754765AbYLLBf3
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 20:35:29 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41797 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755977AbYLLBSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 20:18:09 -0500
+	with ESMTP id S1751138AbYLLBf2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 20:35:28 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4D7FC866BF;
-	Thu, 11 Dec 2008 20:18:07 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E24FB866BE; Thu,
- 11 Dec 2008 20:17:58 -0500 (EST)
-In-Reply-To: <20081212002101.292020@gmx.net> (Fabian Franz's message of "Fri,
- 12 Dec 2008 01:21:01 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BB810ACC-C7EA-11DD-897A-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4D8A1867D7;
+	Thu, 11 Dec 2008 20:35:26 -0500 (EST)
+Received: from inocybe.teonanacatl.org (unknown [69.248.23.23]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 29979867D6; Thu,
+ 11 Dec 2008 20:35:22 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <8c5c35580812111537v1144c9fdy19f2a3cc56e2a04f@mail.gmail.com>
+X-Listening-To: Nothing
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Pobox-Relay-ID: 26CBD4A4-C7ED-11DD-A9B0-5720C92D7133-09356542!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102856>
 
-"Fabian Franz" <FabianFranz@gmx.de> writes:
 
->> Fabian Franz <git@fabian-franz.de> writes:
->> 
->> > However I have both cases: Stable development, where I need one special
->> > version and "wild" development, where I always want the newest published
->> > one.
->> 
->> I do not think supporting both styles of development is a bad idea.
->> 
->> However, use of 0{40} in the index and the resulting commit object in the
->> superproject means that this is a project-wide decision, not your personal
->> preference.  It is not implausible that you would want to do a wild
->> expeeriment in your own clone of a project that uses the "Stable
->> development" approach (hence the upstream never would want to have 0{40}
->> gitlink in its commits).
+--HACzHn9G0kmbdSJa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Lars Hjemli wrote:
+> On Thu, Dec 11, 2008 at 23:35, Junio C Hamano <gitster@pobox.com>
+> wrote:
+>> Doesn't cgit bind git.git as a subproject at the source level?  I
+>> would expect that the most natural release tarball for such a
+>> project would be a single tarball that has both the superproject
+>> itself _and_ the submodules it contains already extracted, iow, the
+>> state of your tree after you run "make get-git".
 >
-> Yes, but at the same time I might want to record it permanently as a project decision or play at my own with it ...
->
-> So both styles should be supported.
+> Your expectation makes sense to me, thanks for elaborating.
+>=20
+> Seth: would such a self-contained tarball solve the problems on your
+> end?
 
-While I think they both _could_ have uses, I do not necessarily agree with
-your "should be".  First of all, I am not sure project wide 0{40} really
-makes sense.
+(I'm not Seth, nor do I play him on TV -- though I have been offered
+his role in a small town production of "How the Grinch Stole
+Christmas"... ;)
 
-By creating such a commit in your superproject, you are essentially
-claiming that you will work with _any_ future version of the subproject,
-which is rather absurd.
+The downside to this is that cgit would be duplicating the git
+sources, and thus, so would any distribution packages.  If there is a
+bug in git, both the git and cgit packages would need to be updated to
+fix it.
 
-And using 0{40} in trees and in the index to mark it is not really
-necessary, and here is why.
+Basically, Fedora tries hard to use system libraries rather than
+having applications include their own local copies.  (I recall some
+zlib vulnerabilities years back that required way too many packages to
+be rebuilt, since they each included their own copy of zlib.)
 
-You could tell the participants that you do not care the exact version by
-storing 0{40} in the trees and the index, but in order for you to tell
-them the tip of which branch of the subproject to use, you need to give
-that information (i.e. branch name) to them as well.  Obviously there is
-not enough space to put that information in gitlink (we could make room
-and I have another implementation in mind but that will be a more involved
-change so for a moment let's not go there).  The infomation will come
-somewhere out-of-band, not in trees nor in the index.  And at that point,
-the presense of such an out-of-band information itself is a good enough
-cue that such a path in the superproject is for the "wilder" style of
-development with the submodule.
+Obviously, since git is not intended to be used as a library, this
+doesn't exactly match that situation.  But cgit is using git as a
+library at the moment and if we could find a way to only have one copy
+of the git sources to maintain, that'd be ideal from a distribution /
+packaging perspective.  I do understand that it might not be as ideal
+=66rom either git or cgit developer / maintainer perspective, so the
+consideration you're giving the issue is very much appreciated.
 
-Such an out-of-band information is necessary to use submodules in
-distributed development already (iow, the commit object name in gitlink is
-not enough), and we already have a Porcelain convention for that.  The
-canonical repository URL for each submodule path is distributed as part of
-the superproject in .gitmodules.  I would imagine that the message from
-the project that says "we expect you to use 'wilder' development style
-with this submodule, and use the tip of frotz branch here", if it ever
-makes sense, can be recorded in .gitmodules as well.
+--=20
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+I never vote for anyone; I always vote against.
+    -- W.C. Fields
 
-When updating (or initializing) a submodule, we can check .gitmodules, and
-iff it is the "wilder" kind, we can set assume-unchanged in the index and
-run "cd there && git fetch $remote $branch && git checkout FETCH_HEAD^0"
-or whatever you did in your patch.
 
-If the supermodule did not work well with the updated submodule in such a
-checkout, at least you have one commit that you can reset your submodule
-checkout to, if you do not wipe that information with 0{40} in the trees
-and in the index.  The commit recorded in the gitlink can serve as the
-"project wide" suggested version to use, even in "wilder" development
-style that also suggests to use "tip of that branch".
+--HACzHn9G0kmbdSJa
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iQFDBAEBAgAtBQJJQa0tJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzjNgQIALH9O7dafqOEzT4fbyXNa1c20QdsoA/t2jkG
+q0048Xsd+NKOiV3sgsmfoL9B4/0vOSrs0Ch593y3GNwi/J+MfnvMHso6K5gL5SIJ
+7z9t3HuK7uWIXO46HVvV95s/JlPIQDRh7M/g+rkd5FHjk9MYt5aTuNpiWI5bc/o1
+kalgdsh1h6HkQw8sqYZ0eYdrymi4frrQCEZWIog0Ykcdnkshgeohpf2C3LWSTAwo
+5ZqHdn68EPGCwq5/Kaa53T6HlN7P0dyGfympTllMGL32DvxOadEatk1qVuqHa5sZ
+M3weJRL4Tu9+PdRBWMODLKzwNcvKgruS0EsrW4FrMtGL3Y+ZK+s=
+=q/G5
+-----END PGP SIGNATURE-----
+
+--HACzHn9G0kmbdSJa--
