@@ -1,68 +1,91 @@
-From: "Ramon Tayag" <ramon.tayag@gmail.com>
-Subject: Unable to index file
-Date: Fri, 12 Dec 2008 22:47:29 +0800
-Message-ID: <f25d5ad20812120647m646698d7t9849c8ccb08c465e@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: help needed: Splitting a git repository after subversion
+	migration
+Date: Fri, 12 Dec 2008 15:49:29 +0100
+Message-ID: <20081212144929.GA27445@atjola.homenet>
+References: <493C0AAD.1040208@intra2net.com> <200812101733.36221.thomas.jarosch@intra2net.com> <20081211081009.GA14639@atjola.homenet> <200812121522.38791.thomas.jarosch@intra2net.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 12 15:48:52 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Thomas Jarosch <thomas.jarosch@intra2net.com>
+X-From: git-owner@vger.kernel.org Fri Dec 12 15:50:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LB9Jy-0001yz-55
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 15:48:50 +0100
+	id 1LB9Lu-0002qR-TC
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 15:50:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756541AbYLLOrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 09:47:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756578AbYLLOra
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 09:47:30 -0500
-Received: from wf-out-1314.google.com ([209.85.200.171]:7100 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754930AbYLLOra (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 09:47:30 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so1346919wfd.4
-        for <git@vger.kernel.org>; Fri, 12 Dec 2008 06:47:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=MHyJ07vFCVwFLr997y5bxG942me4jTrNrnSCBlypNJ8=;
-        b=jR23n90b36lVc1ktumMT+MoE6pt5EcijlNdqmCTjZerLYLAUMxUrGkk8wRQND27kBi
-         HkF+9/a7wYd+jFPZyfhc0X2Tp2Bsl/BqOQ1E981kW7mnDEGtaiGclGhlf8Dnl/vGLf8o
-         IwiiRwEcowHZu/75N3+Gz5atIDa5jqYYJTjQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=QYmoIw3M01bE3an0wFcO5Ns9FG6NGZ4c8W01oOLvlGkhlQqqC9p+ta9rs/hnQerC/+
-         V8T/Rlrmkb7qVS9f+DEO8dEOdBjmJOCcnLbnY8OYgbkfwAXkxDPAGwVOz+ulUyt1Fmro
-         enbQzal3X+lNWNOnLZVLKlV/dUlavzFm82tFs=
-Received: by 10.142.48.14 with SMTP id v14mr1387361wfv.166.1229093249483;
-        Fri, 12 Dec 2008 06:47:29 -0800 (PST)
-Received: by 10.142.191.15 with HTTP; Fri, 12 Dec 2008 06:47:29 -0800 (PST)
+	id S1757160AbYLLOtd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Dec 2008 09:49:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757148AbYLLOtd
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 09:49:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39629 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755031AbYLLOtc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 09:49:32 -0500
+Received: (qmail invoked by alias); 12 Dec 2008 14:49:30 -0000
+Received: from i577BA41C.versanet.de (EHLO atjola.local) [87.123.164.28]
+  by mail.gmx.net (mp007) with SMTP; 12 Dec 2008 15:49:30 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+p00Y9of2p0w3weHt9T9FUggsaJ6DLGi7+ZMl3Kp
+	tb5R/RE5KXOxqc
 Content-Disposition: inline
+In-Reply-To: <200812121522.38791.thomas.jarosch@intra2net.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102900>
 
-Hi everyone,
+On 2008.12.12 15:22:15 +0100, Thomas Jarosch wrote:
+> On Thursday, 11. December 2008 09:10:09 you wrote:
+> > > Now I'll manually check the history of the tags/ and branches/ fo=
+lder
+> > > for more funny tags and write down the revision. If I understood
+> > > the git-svn man page correctly, I should be able to specifiy
+> > > revision ranges it's going to import. I'll try to skip the broken=
+ tags.
+> >
+> > As long as the breakage only involves branches/tags that are comple=
+tely
+> > useless, it's probably a lot easier to just delete them afterwards.
+> >
+> > And if you accidently added changes to a tag, after it was created,=
+ it's
+> > also easier to manually tag to right version in git, and just forge=
+tting
+> > about the additional commit.
+> >
+> > And for a bunch of other cases, rebase -i/filter-branch are probabl=
+y
+> > also better options ;-)
+> >
+> > Skipping revisions in a git-svn import sounds rather annoying and
+> > error-prone.
+>=20
+> Sounds very reasonable. When I'm done filtering with filter-branch,
+> the original commits are still stored in "refs/originals" and the ref=
+logs.
+> What's the best way to get rid of those to free up the space?
 
-I've come across a problem that I don't believe lies in Rails.  You
-needn't be familiar, I think, with Rails to see what's wrong.
+See the "purging unwanted history" thread:
 
-I can't seem to add the files that are in
-http://dev.rubyonrails.org/archive/rails_edge.zip
+http://n2.nabble.com/purging-unwanted-history-td1507638.html
 
-1) Unpack the zip
-2) Initialize a git repo inside the folder that was unpacked
-3) git add .
+The commands there (starting with the "git for-each-ref") should clean
+out all the pre-filter-branch stuff.
 
-See the errors.. :o http://pastie.org/337571
+> A nice way to find the corresponding commit for a file can be found h=
+ere:=20
+> http://stackoverflow.com/questions/223678/git-which-commit-has-this-b=
+lob
 
-Thanks,
-Ramon Tayag
+Yeah, I think something similar (or even the same?) is in the git wiki
+somewhere. I never had any use for it though ;-)
+
+Bj=F6rn
