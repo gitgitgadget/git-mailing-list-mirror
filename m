@@ -1,59 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH] Fix typos in comments / testcase output
-Date: Fri, 12 Dec 2008 07:30:25 -0800
-Message-ID: <20081212153025.GN32487@spearce.org>
-References: <1229079357-19167-1-git-send-email-mike@abacus.co.uk>
+From: "Sverre Rabbelier" <srabbelier@gmail.com>
+Subject: Re: [JGIT PATCH 03/15] Add IntList as a more efficient representation of List<Integer>
+Date: Fri, 12 Dec 2008 16:33:16 +0100
+Message-ID: <bd6139dc0812120733o7c828532qbcd78c46a321fe6b@mail.gmail.com>
+References: <1229049981-14152-1-git-send-email-spearce@spearce.org>
+	 <1229049981-14152-2-git-send-email-spearce@spearce.org>
+	 <1229049981-14152-3-git-send-email-spearce@spearce.org>
+	 <1229049981-14152-4-git-send-email-spearce@spearce.org>
+	 <bd6139dc0812120243y2b1a3dddu4975162114280e17@mail.gmail.com>
+	 <20081212151533.GM32487@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Mike Ralphson <mike.ralphson@gmail.com>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-To: Mike Ralphson <mike@abacus.co.uk>
-X-From: git-owner@vger.kernel.org Fri Dec 12 16:32:12 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Dec 12 16:38:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LB9zW-0003Ly-Lc
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 16:31:47 +0100
+	id 1LBA5f-0005xq-TM
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 16:38:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757131AbYLLPa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 10:30:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756789AbYLLPa1
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 10:30:27 -0500
-Received: from george.spearce.org ([209.20.77.23]:57281 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755341AbYLLPa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 10:30:27 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C30DB38200; Fri, 12 Dec 2008 15:30:25 +0000 (UTC)
+	id S1757026AbYLLPgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 10:36:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755341AbYLLPgo
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 10:36:44 -0500
+Received: from mail-bw0-f13.google.com ([209.85.218.13]:48328 "EHLO
+	mail-bw0-f13.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752808AbYLLPgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 10:36:43 -0500
+Received: by bwz6 with SMTP id 6so3581403bwz.13
+        for <git@vger.kernel.org>; Fri, 12 Dec 2008 07:36:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=A9VT3/tTDh/FR8R6Zii5FwCV2ehm7Z3Zdo2N7Tfl/ZY=;
+        b=tV9byHLi/r1OP2SqQgdRJ+XmhaWGHL1yT47lElxS3tx5kKAEFezuagERBDLTr4jbmB
+         IyL7SqCexVszkzD+3eCBZnjfyudar9VDRhAUW2logPKbBHP4YGa6reYU83kY1Aeee70L
+         l1zEAoMh/7touzPIlgm8pBry+AUWJ3NhP4YbY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=GDYw/tGF5X5mMIualnBVzxi+L4lrNKx74hk7C6VrrDoxL9IvDXjWoOgGXRHVIqHB19
+         eMhGUzWEgc7JQPWCc3aklBxsaMBgOG7IHVauVsJV2GgMfMTZ65uK04r6AVSUOIF3CpIq
+         PsiDeMZ2nUNxsVU6gpp/NXX6VigNvpPL4DeEM=
+Received: by 10.223.124.137 with SMTP id u9mr186177far.96.1229095996365;
+        Fri, 12 Dec 2008 07:33:16 -0800 (PST)
+Received: by 10.223.103.142 with HTTP; Fri, 12 Dec 2008 07:33:16 -0800 (PST)
+In-Reply-To: <20081212151533.GM32487@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <1229079357-19167-1-git-send-email-mike@abacus.co.uk>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Google-Sender-Auth: 8d3475271a6a9911
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102904>
 
-Mike Ralphson <mike@abacus.co.uk> wrote:
-> Signed-off-by: Mike Ralphson <mike@abacus.co.uk>
+On Fri, Dec 12, 2008 at 16:15, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Hmm, yea, good point.  But I don't care too much about the toString()
+> in this case, its meant as a debugging aid and not something one
+> would rely upon.  Hence I didn't think it was worth testing for the
+> empty list, writing the first entry, then doing a loop for [1,count).
 
-Thanks, I've applied this change, and the README correction you
-noted but didn't send a patch for.  :-)
-
-> Is it me, or is the actual maintainer of JGIT/EGIT not actually
-> mentioned anywhere? Apologies if I've got the to and cc round
-> the wrong way 8-)
-
-Robin and I run JGit and EGit as a dual-maintainer approach.
-We both have write access to the master repository and we apply
-each other's patches rather than push directly ourselves.  It
-helps keep us from cutting corners.
-
-Although I just broke that rule by pushing my own patch to README
-and my own patch to SUBMITTING_PATCHES to address the other points
-you raised, but these are two auxiliary documents that we don't
-pay much attention to, hence they have fallen into disarray... :-\
+Fair enough :).
 
 -- 
-Shawn.
+Cheers,
+
+Sverre Rabbelier
