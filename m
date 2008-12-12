@@ -1,76 +1,100 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: What's cooking in git.git (Nov 2008, #06; Wed, 26)
-Date: Fri, 12 Dec 2008 17:45:34 +0100
-Message-ID: <4942952E.1060706@viscovery.net>
-References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org>	 <fcaeb9bf0812060926r2ee443bfl3adb3f2d1129e5b8@mail.gmail.com>	 <alpine.LNX.1.00.0812061238260.19665@iabervon.org>	 <fcaeb9bf0812070427s64438216s41bf1294aa6398a3@mail.gmail.com>	 <alpine.LNX.1.00.0812071455020.19665@iabervon.org>	 <fcaeb9bf0812080451k6e213d0fo8d1da9bbac872649@mail.gmail.com>	 <alpine.LNX.1.00.0812081223140.19665@iabervon.org>	 <fcaeb9bf0812110504u1acfb612he3edae1df3774045@mail.gmail.com>	 <alpine.LNX.1.00.0812111520490.19665@iabervon.org>	 <7vy6ym9nm8.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0812120813m2949e36ar7905d5688b8f6ecb@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Clarifying "invalid tag signature file" error message from git filter-branch (and others)
+Date: Fri, 12 Dec 2008 08:53:40 -0800 (PST)
+Message-ID: <m3bpvhgws3.fsf@localhost.localdomain>
+References: <c5df85930812110214k2e12d926m60856fb630d45e80@mail.gmail.com>
+	<P7E-5meNX4tXFurN9mnRguFHdJG1jaZYTn6WxFFpECSJ68KyYT3wqQ@cipher.nrlssc.navy.mil>
+	<c5df85930812111434m879f1faq80c64286714c3a1f@mail.gmail.com>
+	<LhfS_uc2B_Gje7rXd1882RMsQfSRjOEsBT24Z1Yza_bWhgl9lI-ZhQ@cipher.nrlssc.navy.mil>
+	<c5df85930812111559p287ea6afk54a9759302288d5e@mail.gmail.com>
+	<87zlj1hd0r.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 12 17:47:18 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "James Youngman" <jay@gnu.org>,
+	"Brandon Casey" <casey@nrlssc.navy.mil>, git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Fri Dec 12 17:55:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBBAQ-0002GC-6W
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 17:47:06 +0100
+	id 1LBBIN-0005oG-0Z
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 17:55:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757572AbYLLQpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 11:45:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757570AbYLLQpq
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 11:45:46 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:58245 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757545AbYLLQpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 11:45:45 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LBB8x-0007kN-1O; Fri, 12 Dec 2008 17:45:35 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id BC46C6EF; Fri, 12 Dec 2008 17:45:34 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <fcaeb9bf0812120813m2949e36ar7905d5688b8f6ecb@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1759434AbYLLQxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 11:53:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759432AbYLLQxp
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 11:53:45 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:4857 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757773AbYLLQxn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 11:53:43 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so741765fgg.17
+        for <git@vger.kernel.org>; Fri, 12 Dec 2008 08:53:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=tfSAZSKVc2i7QyAdY9UvGmtx4V9jqL4zu17FWp8nKdA=;
+        b=bccF4SIv61yL5EfT3AyAYAn6nmVTY9zDDOICGNhCC9QsoZqLG/AEMopPjUcw45epz0
+         7Ptyro5MW4HwPQ3mNGxs82iBe5PtF6RxuxG0xhtpFdtSaJ0A/rBzyup4G44uaiZi7tHk
+         tEIY5SkiYgYktBuafHhbkH1JjlfpcvtD7Avas=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=kk+s+bCssObE7X/llRBGx99LpCeECIJduPgMpF8M3H5cwA+NhbElenT88K5S2KZa19
+         u4Zr8p4C0N6K+1aKzhYXNdVju2bCjEJTmqLM4wfQkTk3O750+m2cRto61C4CdXJ757pQ
+         NZ9RIufiOoOCw3dHKzlzvvUIKc51JbjzLQZRk=
+Received: by 10.86.59.18 with SMTP id h18mr2121910fga.77.1229100822135;
+        Fri, 12 Dec 2008 08:53:42 -0800 (PST)
+Received: from localhost.localdomain (abvt119.neoplus.adsl.tpnet.pl [83.8.217.119])
+        by mx.google.com with ESMTPS id l12sm1660889fgb.14.2008.12.12.08.53.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Dec 2008 08:53:40 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBCGrbYc000854;
+	Fri, 12 Dec 2008 17:53:38 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBCGrXqp000850;
+	Fri, 12 Dec 2008 17:53:33 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <87zlj1hd0r.fsf@rho.meyering.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102916>
 
-Nguyen Thai Ngoc Duy schrieb:
-> On 12/12/08, Junio C Hamano <gitster@pobox.com> wrote:
->>  So "git grep -e frotz Documentation/", whether you only check out
->>  Documentation or the whole tree, should grep only in Documentation area,
->>  and "git grep -e frotz" should grep in the whole tree, even if you happen
->>  to have a sparse checkout.  By definition, a sparse checkout has no
->>  modifications outside the checkout area, so whenever grep wants to look
->>  for strings outside the checkout area it should pretend as if the same
->>  content as what the index records is in the work tree.  This is consistent
->>  with the way how "git diff" in a sparsely checked out work tree should
->>  behave.
+Jim Meyering <jim@meyering.net> writes:
+
+> I used parsecvs, probably with git-master from the date of
+> the initial conversion (check the archives for actual date).
+> That was long enough ago that it was almost certainly before
+> git-mktag learned to be more strict about its inputs.
 > 
-> Assume someone is using sparse checkout with KDE git repository. They
-> sparse-checkout kdeutils module and do "git grep -e foo". I would
-> expect that the command only searches in kdeutils only (and is the
-> current behavior).
+> James, since you're about to rewrite the history, you may want to
+> start that process from a freshly-cvs-to-git-converted repository.
+> 
+> I'm not very happy about using parsecvs (considering it's not
+> really being maintained, afaik), so if the git crowd
+> can recommend something better, I'm all ears.
 
-But what if the same persion notices a #define in a kdeutils header file
-and want's to know whether it is unused in order to remove it:
+The page you might want to consult is
 
-    $ git grep FOO
-    kdeutils/foo.h:#define FOO bar
+  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
 
-Conclusion from this output: "It's only defined, but not used anywhere."
-But this conclusion is not necessarily correct because FOO could be used
-outside kdeutils.
+There you have listed git-cvsimport, which uses cvsps to extract
+patchset, is in git, and is as far as I know the only tool that allow
+incremental import; parsecvs which requires access to *,v files you
+use; cvs2svn (cvs2git) which have learned fast-import format and can
+be used to import (fast) CVS repositories, but incremental import
+(difficult that it is) is only in plans, AFAIK.
 
-So, no, "git grep" should disregard the checkout area.
-
--- Hannes
+So I would recommend trying cvs2svn / cvs2git.
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
