@@ -1,112 +1,106 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: What's cooking in git.git (Nov 2008, #06; Wed, 26)
-Date: Thu, 11 Dec 2008 21:40:47 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0812112045120.19665@iabervon.org>
-References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0811290502j5db4056fo9b125aaa8b564314@mail.gmail.com> <fcaeb9bf0811300229v4e7bfbb7g9a0ac72dcddb4326@mail.gmail.com> <alpine.LNX.1.00.0811301509070.19665@iabervon.org>
- <fcaeb9bf0812060926r2ee443bfl3adb3f2d1129e5b8@mail.gmail.com> <alpine.LNX.1.00.0812061238260.19665@iabervon.org> <fcaeb9bf0812070427s64438216s41bf1294aa6398a3@mail.gmail.com> <alpine.LNX.1.00.0812071455020.19665@iabervon.org>
- <fcaeb9bf0812080451k6e213d0fo8d1da9bbac872649@mail.gmail.com> <alpine.LNX.1.00.0812081223140.19665@iabervon.org> <fcaeb9bf0812110504u1acfb612he3edae1df3774045@mail.gmail.com> <alpine.LNX.1.00.0812111520490.19665@iabervon.org>
- <7vy6ym9nm8.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 12 03:42:08 2008
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 00/15] More patch parsing support
+Date: Thu, 11 Dec 2008 18:46:06 -0800
+Message-ID: <1229049981-14152-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Dec 12 03:48:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAxyh-0003k0-1D
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 03:42:07 +0100
+	id 1LAy4u-00057A-GS
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 03:48:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757169AbYLLCkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 21:40:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757195AbYLLCkt
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 21:40:49 -0500
-Received: from iabervon.org ([66.92.72.58]:33967 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757089AbYLLCkt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 21:40:49 -0500
-Received: (qmail 30889 invoked by uid 1000); 12 Dec 2008 02:40:47 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Dec 2008 02:40:47 -0000
-In-Reply-To: <7vy6ym9nm8.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1756786AbYLLCqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 21:46:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755889AbYLLCqY
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 21:46:24 -0500
+Received: from george.spearce.org ([209.20.77.23]:41565 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755894AbYLLCqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 21:46:23 -0500
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id BE63838215; Fri, 12 Dec 2008 02:46:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 9457A38194;
+	Fri, 12 Dec 2008 02:46:21 +0000 (UTC)
+X-Mailer: git-send-email 1.6.1.rc2.306.ge5d5e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102865>
 
-On Thu, 11 Dec 2008, Junio C Hamano wrote:
+Unit test improvements, introduction of IntList (which Dscho also
+needs for his diff code, its probably a drop-in replacement for him),
+and support for parsing the meta data of binary patches.
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> >> That's the point. CE_VALID does not define checkout area while
-> >> CE_NO_CHECKOUT does.  If an entry is CE_VALID, it is still in checkout
-> >> area. But if it is CE_NO_CHECKOUT, "git grep" should ignore that path.
-> >> core.defaultsparse has nothing to do here.
-> >
-> > My point is that the index cannot tell git grep whether it should search a 
-> > path if the path isn't in the index.
-> 
-> Let's step back a bit.  I think "git grep" that stays silent outside of
-> the checkout area when used to grep in the work tree or in the index is a
-> mistake.
-> 
-> The problem "sparse checkout" attempts to address is not this:
-> 
->     I ran "git init && git add ." in /usr/src by mistake.  There is no
->     reason for coreutils that is in /usr/src/coreutils and gnucash that is
->     in /usr/src/gnucash to share the same development history nor their
->     should be any ordering between commits in these two independent
->     projects.  I should have done N separate "init & add" independently at
->     one level deeper in the directory hierarchy, but I am too lazy to
->     filter branch the resulting mess now.
-> 
-> At least, it should not be that, at least to me.
-> 
-> "Sparse" is "I am not going to modify the files in these areas, and I know
-> they do not need to be present for my purposes (e.g. build), so I do not
-> need copies in the work tree."  It still works on the whole tree structure
-> recorded in the commit, but gives you a way to work inside a sparsely
-> populated work tree, iow, without checking everything out.
+I'm writing the "diff --cc" parser right now but the unit tests
+for it still fail so I'm not including those changes just yet.
 
-There's the meta question of: "Do people who have declared that they 
-aren't going to modify or build with some files want their searches to 
-tell them about those files?"
 
-Say I'm the "tr" guy, and I care about the build system, library code, and 
-"tr.c", and I run "make tr"; my sparse checkout doesn't include "head.c", 
-and I totally ignore all the other stuff that's in coreutils. Maybe I want 
-"git grep" to exclude the other stuff.
+Shawn O. Pearce (15):
+  Correct use of TemporaryBuffer in Patch
+  Add tests for TemporaryBuffer
+  Add IntList as a more efficient representation of List<Integer>
+  Add lineMap computer to RawParseUtils to index locations of line
+    starts
+  Define FileHeader.PatchType to report the style of patch used
+  Test for non-git binary files and mark them as PatchType.BINARY
+  Set empty patches with no Git metadata to PatchType.BINARY
+  Always use the FileHeader buffer during Patch.parseHunks
+  Parse "GIT binary patch" style patch metadata
+  Record patch parsing errors for later inspection by applications
+  Fix Patch.parse to honor the end point passed in
+  Correctly handle hunk headers such as "@@ -0,0 +1 @@"
+  Patch parse test comparing "git log -p" output to "git log --numstat"
+  Abstract the hunk header testing into a method
+  Treat "diff --combined" the same as "diff --cc"
 
-I don't really have a firm position on whether "git grep" should ignore 
-"head.c" or not, but I think it should be consistent between "git grep" 
-and "git grep origin/next", and I think that, if origin/next has a new 
-"foot.c" that isn't in the current branch to by marked as NO_CHECKOUT, it 
-should be skipped if "tail.c" (which is in my current branch) is skipped.
-
-> So "git grep -e frotz Documentation/", whether you only check out
-> Documentation or the whole tree, should grep only in Documentation area,
-> and "git grep -e frotz" should grep in the whole tree, even if you happen
-> to have a sparse checkout.  By definition, a sparse checkout has no
-> modifications outside the checkout area, so whenever grep wants to look
-> for strings outside the checkout area it should pretend as if the same
-> content as what the index records is in the work tree.  This is consistent
-> with the way how "git diff" in a sparsely checked out work tree should
-> behave.
-
-"git diff" is an ambiguous model for "git grep". It equally describes 
-the behavior of "git diff" to say that it treats files outside the 
-checkout area as matching the index or to say that it never lists files 
-outside the checkout area. On the other hand, there is the question of 
-whether "git diff branch1 branch2" shows differences that are outside the 
-checkout area, and whether "git log" shows commits that only change things 
-outside the checkout area, and "git grep" should match the behavior of 
-these.
-
-	-Daniel
-*This .sig left intentionally blank*
+ .../spearce/jgit/patch/EGitPatchHistoryTest.java   |  221 ++++++++++++
+ .../tst/org/spearce/jgit/patch/FileHeaderTest.java |   70 +++-
+ .../tst/org/spearce/jgit/patch/PatchErrorTest.java |  174 +++++++++
+ .../tst/org/spearce/jgit/patch/PatchTest.java      |   78 ++++
+ .../spearce/jgit/patch/testError_BodyTooLong.patch |   17 +
+ .../jgit/patch/testError_DisconnectedHunk.patch    |   30 ++
+ .../jgit/patch/testError_GarbageBetweenFiles.patch |   33 ++
+ .../patch/testError_GitBinaryNoForwardHunk.patch   |   10 +
+ .../jgit/patch/testError_TruncatedNew.patch        |   15 +
+ .../jgit/patch/testError_TruncatedOld.patch        |   15 +
+ .../spearce/jgit/patch/testParse_GitBinary.patch   |  135 +++++++
+ .../spearce/jgit/patch/testParse_NoBinary.patch    |   83 +++++
+ .../tst/org/spearce/jgit/util/IntListTest.java     |  156 ++++++++
+ .../jgit/util/RawParseUtils_LineMapTest.java       |   88 +++++
+ .../org/spearce/jgit/util/TemporaryBufferTest.java |  374 ++++++++++++++++++++
+ .../tst/org/spearce/jgit/util/TestRng.java         |   61 ++++
+ .../src/org/spearce/jgit/patch/BinaryHunk.java     |  127 +++++++
+ .../src/org/spearce/jgit/patch/FileHeader.java     |   94 +++++-
+ .../src/org/spearce/jgit/patch/FormatError.java    |   95 +++++
+ .../src/org/spearce/jgit/patch/HunkHeader.java     |   41 ++-
+ .../src/org/spearce/jgit/patch/Patch.java          |  197 ++++++++---
+ .../src/org/spearce/jgit/util/IntList.java         |  128 +++++++
+ .../src/org/spearce/jgit/util/RawParseUtils.java   |   31 ++
+ .../src/org/spearce/jgit/util/TemporaryBuffer.java |    4 +-
+ 24 files changed, 2187 insertions(+), 90 deletions(-)
+ create mode 100644 org.spearce.jgit.test/exttst/org/spearce/jgit/patch/EGitPatchHistoryTest.java
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/patch/PatchErrorTest.java
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/patch/testError_BodyTooLong.patch
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/patch/testError_DisconnectedHunk.patch
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/patch/testError_GarbageBetweenFiles.patch
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/patch/testError_GitBinaryNoForwardHunk.patch
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/patch/testError_TruncatedNew.patch
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/patch/testError_TruncatedOld.patch
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/patch/testParse_GitBinary.patch
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/patch/testParse_NoBinary.patch
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/IntListTest.java
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/RawParseUtils_LineMapTest.java
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/TemporaryBufferTest.java
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/TestRng.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/patch/BinaryHunk.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/patch/FormatError.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/util/IntList.java
