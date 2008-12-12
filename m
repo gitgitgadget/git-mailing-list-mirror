@@ -1,180 +1,121 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v3 3/3] gitweb: Optional grouping of projects by category
-Date: Fri, 12 Dec 2008 10:26:06 +0100
-Message-ID: <200812121026.07694.jnareb@gmail.com>
-References: <87wsei1uvp.wl%seb@cine7.net> <200812120303.56997.jnareb@gmail.com> <87y6ymxf4k.wl%seb@cine7.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Petr Baudis <pasky@suse.cz>,
-	Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
-To: =?iso-8859-1?q?S=E9bastien_Cevey?= <seb@cine7.net>
-X-From: git-owner@vger.kernel.org Fri Dec 12 10:27:53 2008
+From: Mike Ralphson <mike@abacus.co.uk>
+Subject: [JGIT PATCH] Fix typos in comments / testcase output
+Date: Fri, 12 Dec 2008 10:55:57 +0000
+Message-ID: <1229079357-19167-1-git-send-email-mike@abacus.co.uk>
+Cc: git@vger.kernel.org, Mike Ralphson <mike.ralphson@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Dec 12 11:47:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LB4JH-0000oa-8D
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 10:27:47 +0100
+	id 1LB5YE-0001W8-1j
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 11:47:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755894AbYLLJ0Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Dec 2008 04:26:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756204AbYLLJ0X
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 04:26:23 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:36937 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751586AbYLLJ0U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 04:26:20 -0500
-Received: by ewy10 with SMTP id 10so1658702ewy.13
-        for <git@vger.kernel.org>; Fri, 12 Dec 2008 01:26:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=WgB7ZdMio9dKMORCDASvUGO1y1YTUX+3lBKoTQxIW9k=;
-        b=AG+rRuKd7/IbGkMHPrULO8QulNtVK83Ux6FCEzO3rh2HEwVxhlZR7W3NqE9WXKVQ5N
-         Pf15qA2bqwv+RaTKYQUxDxBBU+jslS0jvLHAiVpT3dMQSiLXDSbBXFmw6SE9J1kKd81H
-         +i8ivCT+rP6MrjaNqbro5WODXjyXZqCnokkP4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=paT4u6qDnIp64rI0nTm1kdBvDnsfoOOokdcT8REXGlSR6fS+D7H8rCjCVJJR224rZA
-         5z/bgNyI3INpJ9rOptybzq4Bfe6GpCYOjHZPjEfkhGq2GvclnoK6tRHzxQbx8Aq7jsYW
-         P2YFzkM3igeo/Ni7ZR+cgbjwL6x200YlfxTFQ=
-Received: by 10.210.119.16 with SMTP id r16mr3825871ebc.161.1229073978603;
-        Fri, 12 Dec 2008 01:26:18 -0800 (PST)
-Received: from ?192.168.1.11? (abvt119.neoplus.adsl.tpnet.pl [83.8.217.119])
-        by mx.google.com with ESMTPS id 5sm65436eyh.27.2008.12.12.01.26.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Dec 2008 01:26:16 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <87y6ymxf4k.wl%seb@cine7.net>
-Content-Disposition: inline
+	id S1751556AbYLLKqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 05:46:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbYLLKqA
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 05:46:00 -0500
+Received: from [82.109.193.99] ([82.109.193.99]:5120 "EHLO orson.abacus.co.uk"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750719AbYLLKp7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 05:45:59 -0500
+Received: by orson.abacus.co.uk (Postfix, from userid 1006)
+	id B8CBA1C7C83; Fri, 12 Dec 2008 10:55:57 +0000 (GMT)
+X-Mailer: git-send-email 1.6.0.2.229.g1293c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102893>
 
-On Fri, 12 Dec 2008, S=E9bastien Cevey wrote:
-> At Fri, 12 Dec 2008 03:03:55 +0100, Jakub Narebski wrote:
->=20
-> > And no, we don't need to sort by categories first.  Let me explain
-> > in more detail a bit.
->=20
-> Thanks for the detailed explanation, I understand your preference.
-> But as you said, it's a bit arbitrary, I think none is completely
-> obvious.
+Signed-off-by: Mike Ralphson <mike@abacus.co.uk>
+---
 
-=46irst, I feel a bit bad for derailing this patch. Currently gitweb
-does not do pagination of projects list; it is not even possible in
-a sane way with current way project searching/selecting is implemented.
-So the whole build_projlist_by_category() respecting $from and $to is
-moot point.
+Is it me, or is the actual maintainer of JGIT/EGIT not actually
+mentioned anywhere? Apologies if I've got the to and cc round
+the wrong way 8-)
 
-So if we don't use it, even if it is nice to have for the future, we
-don't need to pay cost of extra stable sorting.
+This patch is the product of
+find . -name "*.java" -type f -exec aspell --mode=ccpp -c {} \;
 
->=20
-> I don't really have a strong opinion about which is best, but just to
-> illustrate what made me go for the solution B, let me show another
-> example:
->=20
-> name / date / cat
-> 1      2006    A
-> 2      2003    B
-> 3      2005    B
-> 4      2003    A
-> 5      2000    A
-> 6      2008    C
-> 7      2007    C
-> 8      2001    B
-> 9      2005    A
->=20
-> We then sort by name and split in pages of N=3D3 (sorted by cat on ea=
-ch
-> page):
->=20
-> A:sort(name) split(max=3D3) subsort(cat)
->   1  2006  A     4  2003  A     9  2005  A
->   2  2003  B     5  2000  A     8  2001  B
->   3  2005  B     6  2008  C     7  2007  C
->=20
-> B:sort(cat) subsort(name) split(max=3D3)
->   1  2006  A     9  2005  A     8  2001  B
->   4  2003  A     2  2003  B     6  2008  C
->   5  2000  A     3  2005  B     7  2007  C
->=20
-> With B, we have the second top-entry (2) relegated to the second page=
-,
-> which might be surprising because we ordered by name.  But what I fin=
-d
-> weird about A is that because of the per-page category sorting, the
-> "top-sorted entries at the top" isn't true either (page 3).  We have
-> "reshuffled" the result of 'sort(name) split(max=3D3)' on each page.
+I would post my aspell wordlists but they're polluted by other
+projects...
 
-[...]
-> It's perhaps even more apparent if we sort by date:
->=20
-> A:sort(year) split(max=3D3) subsort(cat)
->   1  2006  A     9  2005  A     4  2003  A
->   6  2008  C     3  2005  B     5  2000  A
->   7  2007  C     2  2003  B     8  2001  B
->=20
-> B:sort(cat) subsort(year) split(max=3D4)
->   1  2006  A     4  2003  A     3  2005  B
->   9  2005  A     8  2001  B     7  2007  C
->   5  2000  A     2  2003  B     6  2008  C
->=20
-> It feels kind of unnatural that not only projects are not sorted by
-> date on each page (they are inside categories), but moreover
-> categories are spread over all pages.
->=20
->=20
-> I guess it depends on your use case, and whether categories are
-> important or known by the user.  I personally don't really care (I
-> never split stuff into pages in the gitweb I use), so I can do a new
-> version of my patch that does A if you prefer, just let me know.  I
-> just wanted to clarify that both solutions sort of suck :-)
+Possibly also s/packes to/packs so/ in README?
 
-Well, with version A you can (I think) simply change
+ .../org/spearce/egit/core/GitMoveDeleteHook.java   |    2 +-
+ .../org/spearce/jgit/lib/RepositoryTestCase.java   |    2 +-
+ .../spearce/jgit/revwalk/RevCommitParseTest.java   |    2 +-
+ .../spearce/jgit/transport/BundleWriterTest.java   |    2 +-
+ .../spearce/jgit/transport/FetchConnection.java    |    2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-  foreach my $cat (sort keys %categories) {
-
-to
-
-  foreach my $cat (sort=20
-  	{ cmp_cat($projlist, \%categories, $oi, $a, $b) } keys %categories) =
-{
-
-to have the following output (see the difference on page 3)
-
-A':sort(name) split(max=3D3) subsort(sort(cat,name))
-  1  2006  A     4  2003  A     7  2007  C
-  2  2003  B     5  2000  A     8  2001  B
-  3  2005  B     6  2008  C     9  2005  A
-
-where sort_cat might be something like (we took advantage that
-categories in %categories have at least one project):
-
-  sub cmp_cat {
-  	my ($projlist, $cats, $oi, $a, $b) =3D @_;
-  	my ($aa, $bb);
-  	# projects in categories are sorted, so we can compare first
-  	# project from a category to sort categories in given ordering
-  	$aa =3D $projlist->{$cats->{$a}[0]};
-  	$bb =3D $projlist->{$cats->{$b}[0]};
-  	if ($oi->{'type'} eq 'str') {
-		return $aa->{$oi->{'key'}} cmp $bb->{$oi->{'key'}};
-	} else {
-		return $aa->{$oi->{'key'}} <=3D> $bb->{$oi->{'key'}};
-	}
-  }
-
---=20
-Jakub Narebski
-Poland
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java b/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java
+index cc4059c..7faa65a 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/GitMoveDeleteHook.java
+@@ -122,7 +122,7 @@ public boolean moveFolder(final IResourceTree tree, final IFolder source,
+ 			final IFolder destination, final int updateFlags,
+ 			final IProgressMonitor monitor) {
+ 		// TODO: Implement this. Should be relatively easy, but consider that
+-		// Eclipse thinks folders are real thinsgs, while Git does not care.
++		// Eclipse thinks folders are real things, while Git does not care.
+ 		return FINISH_FOR_ME;
+ 	}
+ 
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
+index 8937145..9e48fde 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
+@@ -94,7 +94,7 @@ protected void configure() {
+ 
+ 	/**
+ 	 * Utility method to delete a directory recursively. It is
+-	 * also used internally. If a file or directory cannote be removed
++	 * also used internally. If a file or directory cannot be removed
+ 	 * it throws an AssertionFailure.
+ 	 *
+ 	 * @param dir
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevCommitParseTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevCommitParseTest.java
+index 805e29e..9b95924 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevCommitParseTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevCommitParseTest.java
+@@ -226,7 +226,7 @@ public void testParse_explicit_bad_encoded() throws Exception {
+ 	 *
+ 	 * What happens here is that an encoding us given, but data is not encoded
+ 	 * that way (and we can detect it), so we try other encodings. Here data could
+-	 * actually be decoded in the stated encoding, but we overide using UTF-8.
++	 * actually be decoded in the stated encoding, but we override using UTF-8.
+ 	 *
+ 	 * @throws Exception
+ 	 */
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/BundleWriterTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/BundleWriterTest.java
+index 3cfb8b1..f13d25c 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/BundleWriterTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/BundleWriterTest.java
+@@ -117,7 +117,7 @@ assertEquals(db.resolve("c").name(), newRepo.resolve("refs/heads/cc")
+ 			// Check that we actually needed the first bundle
+ 			Repository newRepo2 = createNewEmptyRepo();
+ 			fetchResult = fetchFromBundle(newRepo2, bundle);
+-			fail("We should not be able to fetch from bundle with prerequisistes that are not fulfilled");
++			fail("We should not be able to fetch from bundle with prerequisites that are not fulfilled");
+ 		} catch (MissingBundlePrerequisiteException e) {
+ 			assertTrue(e.getMessage()
+ 					.indexOf(db.resolve("refs/heads/a").name()) >= 0);
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java
+index 461ad71..a56ca6c 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchConnection.java
+@@ -126,7 +126,7 @@ public void fetch(final ProgressMonitor monitor, final Collection<Ref> want)
+ 	 * able to supply a fully connected graph to the client (although it may
+ 	 * only be transferring the parts the client does not yet have). Its faster
+ 	 * to assume such remote peers are well behaved and send the correct
+-	 * response to the client. In such tranports this method returns false.
++	 * response to the client. In such transports this method returns false.
+ 	 *
+ 	 * @return true if the last fetch had to perform a connectivity check on the
+ 	 *         client side in order to succeed; false if the last fetch assumed
+-- 
+1.6.0.2
