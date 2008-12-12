@@ -1,79 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: David Howells <dhowells@redhat.com>
 Subject: Re: [PATCH] Simplified GIT usage guide
-Date: Fri, 12 Dec 2008 19:57:38 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812121952320.5873@eeepc-johanness>
-References: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: torvalds@osdl.org, git@vger.kernel.org,
+Date: Fri, 12 Dec 2008 19:02:41 +0000
+Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
+	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
+	Kingdom.
+	Registered in England and Wales under Company Registration No. 3798903
+Message-ID: <28996.1229108561@redhat.com>
+References: <20081212185347.GK5691@genesis.frugalware.org> <20081212182827.28408.40963.stgit@warthog.procyon.org.uk>
+Cc: dhowells@redhat.com, torvalds@osdl.org, git@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-To: David Howells <dhowells@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Dec 12 19:57:55 2008
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Dec 12 20:04:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBDCl-00065v-5U
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 19:57:39 +0100
+	id 1LBDJf-0000Ih-Iz
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 20:04:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751017AbYLLS4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 13:56:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751036AbYLLS4Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 13:56:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44953 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750886AbYLLS4P (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 13:56:15 -0500
-Received: (qmail invoked by alias); 12 Dec 2008 18:56:12 -0000
-Received: from ini-firewall.unizh.ch (EHLO eeepc-johanness) [130.60.5.218]
-  by mail.gmx.net (mp015) with SMTP; 12 Dec 2008 19:56:12 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/T4W1/GxfTOeb2gFYHL6wLzsQhHzf1Ds4x+Kcdn8
-	1K5+QySzzuE+Ef
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1751183AbYLLTDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 14:03:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750927AbYLLTDY
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 14:03:24 -0500
+Received: from mx2.redhat.com ([66.187.237.31]:54499 "EHLO mx2.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750761AbYLLTDX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 14:03:23 -0500
+Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
+	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id mBCJ2iZb013408;
+	Fri, 12 Dec 2008 14:02:44 -0500
+Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
+	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id mBCJ2huv025590;
+	Fri, 12 Dec 2008 14:02:43 -0500
+Received: from warthog.cambridge.redhat.com (kibblesnbits.boston.devel.redhat.com [10.16.60.12])
+	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id mBCJ2ffq018771;
+	Fri, 12 Dec 2008 14:02:42 -0500
+Received: from [127.0.0.1] (helo=redhat.com)
+	by warthog.cambridge.redhat.com with esmtp (Exim 4.68 #1 (Red Hat Linux))
+	id 1LBDHd-0007Xh-ME; Fri, 12 Dec 2008 19:02:41 +0000
+In-Reply-To: <20081212185347.GK5691@genesis.frugalware.org>
+X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102927>
 
-Hi,
+Miklos Vajna <vmiklos@frugalware.org> wrote:
 
-On Fri, 12 Dec 2008, David Howells wrote:
+> This is incorrect, a 'blob' contains only the contents of the blob, the
+> file mode is stored in the 'tree' object.
 
->  Documentation/git-haters-guide.txt | 1283 ++++++++++++++++++++++++++++++++++++
+It seems I understand GIT's database less well than I thought.
 
-I am sure we want to have something like that in git.git.
+> Is there any reason you hide the tag object?
 
-> +I don't really know what I'm doing with GIT either.
+What's a tag object?
 
-Strike the "either".
+> Using git clone --mirror would be much efficient, I think.
 
-> +===============
-> +OVERVIEW OF GIT
-> +===============
+	warthog>man git-clone | grep mirror
+	warthog1>
 
-Your overview seems to be what "Git from the bottom up" is all about (see 
-the Git Wiki for more information where to find it).
+> Here and later below, IIRC -l is the default for local clones.
 
->From my experience with new users, this is exactly the wrong way to go 
-about it.  You don't introduce object types of the Git database before 
-telling the users what the heck they are good for.  And most users do not 
-need to bother with tree objects either, anyway.  So maybe you just tell 
-them what the heck the object types are good for, without even teaching 
-them the object types at all.
+Okay.
 
-So I think that your document might do a good job scaring people away from 
-Git.  But I do not believe that your document, especially in the tone it 
-is written, does a good job of helping Git newbies.
+> --bare implies -n.
 
-Ciao,
-Dscho
+Obvious.
 
-P.S.: No, I haven't read the whole document.  Still, I think I am 
-qualified enough to estimate what the average reader's first impression 
-would be.
+> Why not using git stash and git stash pop?
+
+I didn't know such existed.  That's why I want a crib sheet.
+
+David
