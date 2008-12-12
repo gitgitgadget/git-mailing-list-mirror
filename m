@@ -1,81 +1,180 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: Saving patches from this list
-Date: Fri, 12 Dec 2008 09:07:44 +0000
-Message-ID: <e2b179460812120107t74a4a8e3y1654233fe2870ac7@mail.gmail.com>
-References: <loom.20081212T072326-350@post.gmane.org>
-	 <49421AEE.8090902@viscovery.net>
-	 <loom.20081212T082629-274@post.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v3 3/3] gitweb: Optional grouping of projects by category
+Date: Fri, 12 Dec 2008 10:26:06 +0100
+Message-ID: <200812121026.07694.jnareb@gmail.com>
+References: <87wsei1uvp.wl%seb@cine7.net> <200812120303.56997.jnareb@gmail.com> <87y6ymxf4k.wl%seb@cine7.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, "Johannes Sixt" <j.sixt@viscovery.net>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "=?UTF-8?Q?Stefan_N=C3=A4we?=" <stefan.naewe+git@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 12 10:09:17 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>,
+	Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
+To: =?iso-8859-1?q?S=E9bastien_Cevey?= <seb@cine7.net>
+X-From: git-owner@vger.kernel.org Fri Dec 12 10:27:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LB41L-0003bL-IV
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 10:09:16 +0100
+	id 1LB4JH-0000oa-8D
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 10:27:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756454AbYLLJHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 04:07:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756622AbYLLJHs
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 04:07:48 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:48890 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756190AbYLLJHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 04:07:46 -0500
-Received: by qyk4 with SMTP id 4so1562573qyk.13
-        for <git@vger.kernel.org>; Fri, 12 Dec 2008 01:07:44 -0800 (PST)
+	id S1755894AbYLLJ0Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Dec 2008 04:26:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756204AbYLLJ0X
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 04:26:23 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:36937 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751586AbYLLJ0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 04:26:20 -0500
+Received: by ewy10 with SMTP id 10so1658702ewy.13
+        for <git@vger.kernel.org>; Fri, 12 Dec 2008 01:26:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=0sT80PGIgTSbFLjPXpzkE/5BPD3X9iNWTOphGmb3RYw=;
-        b=K3sDXnh70TMqxrRmq3ZB/q2i/N+4ZT8soHKSyI1mt/tg0IdSGMVOjLUf3ZYRp0jEEK
-         qTfjpbl2H7ZGi7UY7pHQ4fECUlkOThLKmmZX1yCHxDjv0uXY5sniqtqCTngVK/Kjoq8J
-         5JWn5pslGNkTsfUH+zF+suJLdxvqsf5NVDuq4=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=WgB7ZdMio9dKMORCDASvUGO1y1YTUX+3lBKoTQxIW9k=;
+        b=AG+rRuKd7/IbGkMHPrULO8QulNtVK83Ux6FCEzO3rh2HEwVxhlZR7W3NqE9WXKVQ5N
+         Pf15qA2bqwv+RaTKYQUxDxBBU+jslS0jvLHAiVpT3dMQSiLXDSbBXFmw6SE9J1kKd81H
+         +i8ivCT+rP6MrjaNqbro5WODXjyXZqCnokkP4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=g3+Mtoh3tN4GARZBMiNLkPBKIpk2wxhSJXFSSAbEn7DxIwjx4lwAT+c4O94VeEP3Cl
-         Q5vN2VCd0lydY2KCENiCHZiVnAvLKZjn4QlmbkbhVFDBhdjsQrbVnV1KsjBpn0pzrD/G
-         FBn2+qiNJQuXdEXodSGJXdBCrzlzGJd9Copzw=
-Received: by 10.214.215.17 with SMTP id n17mr4812663qag.280.1229072864374;
-        Fri, 12 Dec 2008 01:07:44 -0800 (PST)
-Received: by 10.214.215.5 with HTTP; Fri, 12 Dec 2008 01:07:44 -0800 (PST)
-In-Reply-To: <loom.20081212T082629-274@post.gmane.org>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=paT4u6qDnIp64rI0nTm1kdBvDnsfoOOokdcT8REXGlSR6fS+D7H8rCjCVJJR224rZA
+         5z/bgNyI3INpJ9rOptybzq4Bfe6GpCYOjHZPjEfkhGq2GvclnoK6tRHzxQbx8Aq7jsYW
+         P2YFzkM3igeo/Ni7ZR+cgbjwL6x200YlfxTFQ=
+Received: by 10.210.119.16 with SMTP id r16mr3825871ebc.161.1229073978603;
+        Fri, 12 Dec 2008 01:26:18 -0800 (PST)
+Received: from ?192.168.1.11? (abvt119.neoplus.adsl.tpnet.pl [83.8.217.119])
+        by mx.google.com with ESMTPS id 5sm65436eyh.27.2008.12.12.01.26.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Dec 2008 01:26:16 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <87y6ymxf4k.wl%seb@cine7.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102892>
 
-MjAwOC8xMi8xMiBTdGVmYW4gTsOkd2UgPHN0ZWZhbi5uYWV3ZStnaXRAZ21haWwuY29tPgo+Cj4g
-Sm9oYW5uZXMgU2l4dCA8ai5zaXh0IDxhdD4gdmlzY292ZXJ5Lm5ldD4gd3JpdGVzOgo+Cj4gPgo+
-ID4gU3RlZmFuIE7DpHdlIHNjaHJpZWI6Cj4gPiA+IFdoYXQncyB0aGUgYmVzdCB3YXkgdG8gZ2V0
-IHBhdGNoZXMgc2VudCB0byB0aGlzIGxpc3QgaW4gYSBmb3JtIHN1aXRhYmxlCj4gPiA+IGZvciAn
-Z2l0IGFtJyB3aXRob3V0IHN1YnNjcmliaW5nIHRvIHRoaXMgbGlzdCA/Cj4gPgo+ID4gU3Vic2Ny
-aWJlIHRvIGdtYW5lLmNvbXAudmVyc2lvbi1jb250cm9sLmdpdCBvbiBuZXdzLmdtYW5lLm9yZyB3
-aXRoIHlvdXIKPiA+IGZhdm9yaXRlIG5ld3MgcmVhZGVyIGFuZCBicm93c2UgdGhlIGxpc3Qgd2hl
-bmV2ZXIgeW91IGZlZWwgbGlrZSBpdC4KPgo+IERvIHlvdSBrbm93IGhvdyBzdHViYm9ybiBmaXJl
-d2FsbCBhZG1pbmlzdHJhdG9ycyBjYW4gYmUgPwo+Cj4gSU9XLCB0aGF0J3MgdW5mb3J0dW5hdGVs
-eSBub3QgYW4gb3B0aW9uIGZvciBtZS4KCklmIGl0J3Mgb25seSB0aGUgb2NjYXNpb25hbCBwYXRj
-aCAtIChJIHNlZSB5b3UncmUgb24gZ21haWwgdG9vKSwgc2hvdwpvcmlnaW5hbCBhbmQgY29weS1h
-bmQtcGFzdGUgaW50byBhbiBlZGl0b3Igd2l0aCB0YWJzIHNldCB1cAphcHByb3ByaWF0ZWx5LiBX
-b3JrcyBmb3IgbWUuCgpKdW5pbydzIGJsb2dbMV0gc2hvd3MgaGUncyBsb29raW5nIGF0IHBhdGNo
-d29yay4gUGVyc29uYWxseSBJIHRoaW5rIGl0CndvdWxkIGJlIGZhbnRhc3RpYyB0byBoYXZlIGEg
-cHVibGljIHBhdGNod29yayBzZXJ2ZXIgYXZhaWxhYmxlLiBJdAptaWdodCBhdm9pZCB0aGUgY2hp
-Y2tlbiBhbmQgZWdnIHByb2JsZW0gaW4gdGhhdCBpdCdzIGN1cnJlbnRseSBlYXNpZXIKKGZvciBz
-b21lIHBlb3BsZSkgdG8gZ2V0IGhvbGQgb2YgYSBwYXRjaCB0byBwbGF5IHdpdGggLyByZXZpZXcg
-b25seQphZnRlciBpdCdzIGFjY2VwdGVkLgoKVGhhdCBzYWlkLCBJIHRoaW5rIGluY2x1ZGluZyBh
-IGxpbmsgdG8gYSByZXBvL2JyYW5jaCBmcm9tIHdoaWNoIHRoZQpjdXJyZW50IHZlcnNpb24gb2Yg
-YSBwYXRjaCBzZXJpZXMgY291bGQgYmUgZmV0Y2hlZCB3b3VsZCBiZSBhbgphbWF6aW5nbHkgdXNl
-ZnVsIGFkZGl0aW9uIHRvIG1vc3QgW1BBVENIIDAvbl0gY292ZXItbGV0dGVycy4uLgoKTWlrZQoK
-WzFdIGh0dHA6Ly9naXRzdGVyLmxpdmVqb3VybmFsLmNvbS8xODY5Ni5odG1sCg==
+On Fri, 12 Dec 2008, S=E9bastien Cevey wrote:
+> At Fri, 12 Dec 2008 03:03:55 +0100, Jakub Narebski wrote:
+>=20
+> > And no, we don't need to sort by categories first.  Let me explain
+> > in more detail a bit.
+>=20
+> Thanks for the detailed explanation, I understand your preference.
+> But as you said, it's a bit arbitrary, I think none is completely
+> obvious.
+
+=46irst, I feel a bit bad for derailing this patch. Currently gitweb
+does not do pagination of projects list; it is not even possible in
+a sane way with current way project searching/selecting is implemented.
+So the whole build_projlist_by_category() respecting $from and $to is
+moot point.
+
+So if we don't use it, even if it is nice to have for the future, we
+don't need to pay cost of extra stable sorting.
+
+>=20
+> I don't really have a strong opinion about which is best, but just to
+> illustrate what made me go for the solution B, let me show another
+> example:
+>=20
+> name / date / cat
+> 1      2006    A
+> 2      2003    B
+> 3      2005    B
+> 4      2003    A
+> 5      2000    A
+> 6      2008    C
+> 7      2007    C
+> 8      2001    B
+> 9      2005    A
+>=20
+> We then sort by name and split in pages of N=3D3 (sorted by cat on ea=
+ch
+> page):
+>=20
+> A:sort(name) split(max=3D3) subsort(cat)
+>   1  2006  A     4  2003  A     9  2005  A
+>   2  2003  B     5  2000  A     8  2001  B
+>   3  2005  B     6  2008  C     7  2007  C
+>=20
+> B:sort(cat) subsort(name) split(max=3D3)
+>   1  2006  A     9  2005  A     8  2001  B
+>   4  2003  A     2  2003  B     6  2008  C
+>   5  2000  A     3  2005  B     7  2007  C
+>=20
+> With B, we have the second top-entry (2) relegated to the second page=
+,
+> which might be surprising because we ordered by name.  But what I fin=
+d
+> weird about A is that because of the per-page category sorting, the
+> "top-sorted entries at the top" isn't true either (page 3).  We have
+> "reshuffled" the result of 'sort(name) split(max=3D3)' on each page.
+
+[...]
+> It's perhaps even more apparent if we sort by date:
+>=20
+> A:sort(year) split(max=3D3) subsort(cat)
+>   1  2006  A     9  2005  A     4  2003  A
+>   6  2008  C     3  2005  B     5  2000  A
+>   7  2007  C     2  2003  B     8  2001  B
+>=20
+> B:sort(cat) subsort(year) split(max=3D4)
+>   1  2006  A     4  2003  A     3  2005  B
+>   9  2005  A     8  2001  B     7  2007  C
+>   5  2000  A     2  2003  B     6  2008  C
+>=20
+> It feels kind of unnatural that not only projects are not sorted by
+> date on each page (they are inside categories), but moreover
+> categories are spread over all pages.
+>=20
+>=20
+> I guess it depends on your use case, and whether categories are
+> important or known by the user.  I personally don't really care (I
+> never split stuff into pages in the gitweb I use), so I can do a new
+> version of my patch that does A if you prefer, just let me know.  I
+> just wanted to clarify that both solutions sort of suck :-)
+
+Well, with version A you can (I think) simply change
+
+  foreach my $cat (sort keys %categories) {
+
+to
+
+  foreach my $cat (sort=20
+  	{ cmp_cat($projlist, \%categories, $oi, $a, $b) } keys %categories) =
+{
+
+to have the following output (see the difference on page 3)
+
+A':sort(name) split(max=3D3) subsort(sort(cat,name))
+  1  2006  A     4  2003  A     7  2007  C
+  2  2003  B     5  2000  A     8  2001  B
+  3  2005  B     6  2008  C     9  2005  A
+
+where sort_cat might be something like (we took advantage that
+categories in %categories have at least one project):
+
+  sub cmp_cat {
+  	my ($projlist, $cats, $oi, $a, $b) =3D @_;
+  	my ($aa, $bb);
+  	# projects in categories are sorted, so we can compare first
+  	# project from a category to sort categories in given ordering
+  	$aa =3D $projlist->{$cats->{$a}[0]};
+  	$bb =3D $projlist->{$cats->{$b}[0]};
+  	if ($oi->{'type'} eq 'str') {
+		return $aa->{$oi->{'key'}} cmp $bb->{$oi->{'key'}};
+	} else {
+		return $aa->{$oi->{'key'}} <=3D> $bb->{$oi->{'key'}};
+	}
+  }
+
+--=20
+Jakub Narebski
+Poland
