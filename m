@@ -1,10 +1,9 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 03/15] Add IntList as a more efficient representation of List<Integer>
-Date: Thu, 11 Dec 2008 18:46:09 -0800
-Message-ID: <1229049981-14152-4-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 02/15] Add tests for TemporaryBuffer
+Date: Thu, 11 Dec 2008 18:46:08 -0800
+Message-ID: <1229049981-14152-3-git-send-email-spearce@spearce.org>
 References: <1229049981-14152-1-git-send-email-spearce@spearce.org>
  <1229049981-14152-2-git-send-email-spearce@spearce.org>
- <1229049981-14152-3-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
 X-From: git-owner@vger.kernel.org Fri Dec 12 03:48:35 2008
@@ -12,64 +11,49 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LAy4v-00057A-Vd
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 03:48:34 +0100
+	id 1LAy4w-00057A-OD
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 03:48:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757313AbYLLCqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Dec 2008 21:46:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757089AbYLLCqb
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 21:46:31 -0500
-Received: from george.spearce.org ([209.20.77.23]:41575 "EHLO
+	id S1757213AbYLLCqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Dec 2008 21:46:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757275AbYLLCqd
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Dec 2008 21:46:33 -0500
+Received: from george.spearce.org ([209.20.77.23]:41572 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757213AbYLLCq0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Dec 2008 21:46:26 -0500
+	with ESMTP id S1757195AbYLLCqZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Dec 2008 21:46:25 -0500
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 4B0F938267; Fri, 12 Dec 2008 02:46:25 +0000 (UTC)
+	id 71FBE38260; Fri, 12 Dec 2008 02:46:24 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id C3FEF38194;
+	by george.spearce.org (Postfix) with ESMTP id 5B55238210;
 	Fri, 12 Dec 2008 02:46:22 +0000 (UTC)
 X-Mailer: git-send-email 1.6.1.rc2.306.ge5d5e
-In-Reply-To: <1229049981-14152-3-git-send-email-spearce@spearce.org>
+In-Reply-To: <1229049981-14152-2-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102866>
-
-Java's generic container types can only handle reference values,
-which means making a List of ints requires boxing each value. A
-boxed int typically requires at least 12 bytes more space per
-value over an unboxed int, as it has an additional object header
-and a cell to hold the object reference.
-
-IntList uses an int[] internally to hold the values, rather than
-an Object[] like List<Integer> would use.
-
-We don't conform to the List (or even Collection) APIs as doing
-so would require that we box return values, which is even less
-efficient than just using ArrayList<Integer>, because we would
-be boxing every return value each time it is accessed.  Instead
-we use an API that smells the same, so there is some finger feel
-to using the class.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102867>
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../tst/org/spearce/jgit/util/IntListTest.java     |  132 ++++++++++++++++++++
- .../src/org/spearce/jgit/util/IntList.java         |  113 +++++++++++++++++
- 2 files changed, 245 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/IntListTest.java
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/util/IntList.java
+ .../org/spearce/jgit/util/TemporaryBufferTest.java |  374 ++++++++++++++++++++
+ .../tst/org/spearce/jgit/util/TestRng.java         |   61 ++++
+ .../src/org/spearce/jgit/util/TemporaryBuffer.java |    4 +-
+ 3 files changed, 437 insertions(+), 2 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/TemporaryBufferTest.java
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/TestRng.java
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/util/IntListTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/util/IntListTest.java
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/util/TemporaryBufferTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/util/TemporaryBufferTest.java
 new file mode 100644
-index 0000000..f943075
+index 0000000..e532d98
 --- /dev/null
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/util/IntListTest.java
-@@ -0,0 +1,132 @@
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/util/TemporaryBufferTest.java
+@@ -0,0 +1,374 @@
 +/*
 + * Copyright (C) 2008, Google Inc.
 + *
@@ -108,106 +92,348 @@ index 0000000..f943075
 + */
 +
 +package org.spearce.jgit.util;
++
++import java.io.ByteArrayInputStream;
++import java.io.ByteArrayOutputStream;
++import java.io.IOException;
++import java.util.Arrays;
 +
 +import junit.framework.TestCase;
 +
-+public class IntListTest extends TestCase {
-+	public void testEmpty_DefaultCapacity() {
-+		final IntList i = new IntList();
-+		assertEquals(0, i.size());
++public class TemporaryBufferTest extends TestCase {
++	public void testEmpty() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
 +		try {
-+			i.get(0);
-+			fail("Accepted 0 index on empty list");
-+		} catch (ArrayIndexOutOfBoundsException e) {
-+			assertTrue(true);
++			b.close();
++			assertEquals(0, b.length());
++			final byte[] r = b.toByteArray();
++			assertNotNull(r);
++			assertEquals(0, r.length);
++		} finally {
++			b.destroy();
 +		}
 +	}
 +
-+	public void testEmpty_SpecificCapacity() {
-+		final IntList i = new IntList(5);
-+		assertEquals(0, i.size());
++	public void testOneByte() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
++		final byte test = (byte) new TestRng(getName()).nextInt();
 +		try {
-+			i.get(0);
-+			fail("Accepted 0 index on empty list");
-+		} catch (ArrayIndexOutOfBoundsException e) {
-+			assertTrue(true);
++			b.write(test);
++			b.close();
++			assertEquals(1, b.length());
++			{
++				final byte[] r = b.toByteArray();
++				assertNotNull(r);
++				assertEquals(1, r.length);
++				assertEquals(test, r[0]);
++			}
++			{
++				final ByteArrayOutputStream o = new ByteArrayOutputStream();
++				b.writeTo(o, null);
++				o.close();
++				final byte[] r = o.toByteArray();
++				assertEquals(1, r.length);
++				assertEquals(test, r[0]);
++			}
++		} finally {
++			b.destroy();
 +		}
 +	}
 +
-+	public void testAdd_SmallGroup() {
-+		final IntList i = new IntList();
-+		final int n = 5;
-+		for (int v = 0; v < n; v++)
-+			i.add(10 + v);
-+		assertEquals(n, i.size());
-+
-+		for (int v = 0; v < n; v++)
-+			assertEquals(10 + v, i.get(v));
++	public void testOneBlock_BulkWrite() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
++		final byte[] test = new TestRng(getName())
++				.nextBytes(TemporaryBuffer.Block.SZ);
 +		try {
-+			i.get(n);
-+			fail("Accepted out of bound index on list");
-+		} catch (ArrayIndexOutOfBoundsException e) {
-+			assertTrue(true);
++			b.write(test, 0, 2);
++			b.write(test, 2, 4);
++			b.write(test, 6, test.length - 6 - 2);
++			b.write(test, test.length - 2, 2);
++			b.close();
++			assertEquals(test.length, b.length());
++			{
++				final byte[] r = b.toByteArray();
++				assertNotNull(r);
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++			{
++				final ByteArrayOutputStream o = new ByteArrayOutputStream();
++				b.writeTo(o, null);
++				o.close();
++				final byte[] r = o.toByteArray();
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++		} finally {
++			b.destroy();
 +		}
 +	}
 +
-+	public void testAdd_ZeroCapacity() {
-+		final IntList i = new IntList(0);
-+		assertEquals(0, i.size());
-+		i.add(1);
-+		assertEquals(1, i.get(0));
-+	}
-+
-+	public void testAdd_LargeGroup() {
-+		final IntList i = new IntList();
-+		final int n = 500;
-+		for (int v = 0; v < n; v++)
-+			i.add(10 + v);
-+		assertEquals(n, i.size());
-+
-+		for (int v = 0; v < n; v++)
-+			assertEquals(10 + v, i.get(v));
++	public void testOneBlockAndHalf_BulkWrite() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
++		final byte[] test = new TestRng(getName())
++				.nextBytes(TemporaryBuffer.Block.SZ * 3 / 2);
 +		try {
-+			i.get(n);
-+			fail("Accepted out of bound index on list");
-+		} catch (ArrayIndexOutOfBoundsException e) {
-+			assertTrue(true);
++			b.write(test, 0, 2);
++			b.write(test, 2, 4);
++			b.write(test, 6, test.length - 6 - 2);
++			b.write(test, test.length - 2, 2);
++			b.close();
++			assertEquals(test.length, b.length());
++			{
++				final byte[] r = b.toByteArray();
++				assertNotNull(r);
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++			{
++				final ByteArrayOutputStream o = new ByteArrayOutputStream();
++				b.writeTo(o, null);
++				o.close();
++				final byte[] r = o.toByteArray();
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++		} finally {
++			b.destroy();
 +		}
 +	}
 +
-+	public void testClear() {
-+		final IntList i = new IntList();
-+		final int n = 5;
-+		for (int v = 0; v < n; v++)
-+			i.add(10 + v);
-+		assertEquals(n, i.size());
-+
-+		i.clear();
-+		assertEquals(0, i.size());
++	public void testOneBlockAndHalf_SingleWrite() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
++		final byte[] test = new TestRng(getName())
++				.nextBytes(TemporaryBuffer.Block.SZ * 3 / 2);
 +		try {
-+			i.get(0);
-+			fail("Accepted 0 index on empty list");
-+		} catch (ArrayIndexOutOfBoundsException e) {
-+			assertTrue(true);
++			for (int i = 0; i < test.length; i++)
++				b.write(test[i]);
++			b.close();
++			assertEquals(test.length, b.length());
++			{
++				final byte[] r = b.toByteArray();
++				assertNotNull(r);
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++			{
++				final ByteArrayOutputStream o = new ByteArrayOutputStream();
++				b.writeTo(o, null);
++				o.close();
++				final byte[] r = o.toByteArray();
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++		} finally {
++			b.destroy();
 +		}
 +	}
 +
-+	public void testToString() {
-+		final IntList i = new IntList();
-+		i.add(1);
-+		assertEquals("[1]", i.toString());
-+		i.add(13);
-+		i.add(5);
-+		assertEquals("[1, 13, 5]", i.toString());
++	public void testOneBlockAndHalf_Copy() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
++		final byte[] test = new TestRng(getName())
++				.nextBytes(TemporaryBuffer.Block.SZ * 3 / 2);
++		try {
++			final ByteArrayInputStream in = new ByteArrayInputStream(test);
++			b.write(in.read());
++			b.copy(in);
++			b.close();
++			assertEquals(test.length, b.length());
++			{
++				final byte[] r = b.toByteArray();
++				assertNotNull(r);
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++			{
++				final ByteArrayOutputStream o = new ByteArrayOutputStream();
++				b.writeTo(o, null);
++				o.close();
++				final byte[] r = o.toByteArray();
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++		} finally {
++			b.destroy();
++		}
++	}
++
++	public void testLarge_SingleWrite() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
++		final byte[] test = new TestRng(getName())
++				.nextBytes(TemporaryBuffer.DEFAULT_IN_CORE_LIMIT * 3);
++		try {
++			b.write(test);
++			b.close();
++			assertEquals(test.length, b.length());
++			{
++				final byte[] r = b.toByteArray();
++				assertNotNull(r);
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++			{
++				final ByteArrayOutputStream o = new ByteArrayOutputStream();
++				b.writeTo(o, null);
++				o.close();
++				final byte[] r = o.toByteArray();
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++		} finally {
++			b.destroy();
++		}
++	}
++
++	public void testInCoreLimit_SwitchOnAppendByte() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
++		final byte[] test = new TestRng(getName())
++				.nextBytes(TemporaryBuffer.DEFAULT_IN_CORE_LIMIT + 1);
++		try {
++			b.write(test, 0, test.length - 1);
++			b.write(test[test.length - 1]);
++			b.close();
++			assertEquals(test.length, b.length());
++			{
++				final byte[] r = b.toByteArray();
++				assertNotNull(r);
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++			{
++				final ByteArrayOutputStream o = new ByteArrayOutputStream();
++				b.writeTo(o, null);
++				o.close();
++				final byte[] r = o.toByteArray();
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++		} finally {
++			b.destroy();
++		}
++	}
++
++	public void testInCoreLimit_SwitchBeforeAppendByte() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
++		final byte[] test = new TestRng(getName())
++				.nextBytes(TemporaryBuffer.DEFAULT_IN_CORE_LIMIT * 3);
++		try {
++			b.write(test, 0, test.length - 1);
++			b.write(test[test.length - 1]);
++			b.close();
++			assertEquals(test.length, b.length());
++			{
++				final byte[] r = b.toByteArray();
++				assertNotNull(r);
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++			{
++				final ByteArrayOutputStream o = new ByteArrayOutputStream();
++				b.writeTo(o, null);
++				o.close();
++				final byte[] r = o.toByteArray();
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++		} finally {
++			b.destroy();
++		}
++	}
++
++	public void testInCoreLimit_SwitchOnCopy() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
++		final byte[] test = new TestRng(getName())
++				.nextBytes(TemporaryBuffer.DEFAULT_IN_CORE_LIMIT * 2);
++		try {
++			final ByteArrayInputStream in = new ByteArrayInputStream(test,
++					TemporaryBuffer.DEFAULT_IN_CORE_LIMIT, test.length
++							- TemporaryBuffer.DEFAULT_IN_CORE_LIMIT);
++			b.write(test, 0, TemporaryBuffer.DEFAULT_IN_CORE_LIMIT);
++			b.copy(in);
++			b.close();
++			assertEquals(test.length, b.length());
++			{
++				final byte[] r = b.toByteArray();
++				assertNotNull(r);
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++			{
++				final ByteArrayOutputStream o = new ByteArrayOutputStream();
++				b.writeTo(o, null);
++				o.close();
++				final byte[] r = o.toByteArray();
++				assertEquals(test.length, r.length);
++				assertTrue(Arrays.equals(test, r));
++			}
++		} finally {
++			b.destroy();
++		}
++	}
++
++	public void testDestroyWhileOpen() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
++		try {
++			b.write(new TestRng(getName())
++					.nextBytes(TemporaryBuffer.DEFAULT_IN_CORE_LIMIT * 2));
++		} finally {
++			b.destroy();
++		}
++	}
++
++	public void testRandomWrites() throws IOException {
++		final TemporaryBuffer b = new TemporaryBuffer();
++		final TestRng rng = new TestRng(getName());
++		final int max = TemporaryBuffer.DEFAULT_IN_CORE_LIMIT * 2;
++		final byte[] expect = new byte[max];
++		try {
++			int written = 0;
++			boolean onebyte = true;
++			while (written < max) {
++				if (onebyte) {
++					final byte v = (byte) rng.nextInt();
++					b.write(v);
++					expect[written++] = v;
++				} else {
++					final int len = Math
++							.min(rng.nextInt() & 127, max - written);
++					final byte[] tmp = rng.nextBytes(len);
++					b.write(tmp, 0, len);
++					System.arraycopy(tmp, 0, expect, written, len);
++					written += len;
++				}
++				onebyte = !onebyte;
++			}
++			assertEquals(expect.length, written);
++			b.close();
++
++			assertEquals(expect.length, b.length());
++			{
++				final byte[] r = b.toByteArray();
++				assertNotNull(r);
++				assertEquals(expect.length, r.length);
++				assertTrue(Arrays.equals(expect, r));
++			}
++			{
++				final ByteArrayOutputStream o = new ByteArrayOutputStream();
++				b.writeTo(o, null);
++				o.close();
++				final byte[] r = o.toByteArray();
++				assertEquals(expect.length, r.length);
++				assertTrue(Arrays.equals(expect, r));
++			}
++		} finally {
++			b.destroy();
++		}
 +	}
 +
 +}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/IntList.java b/org.spearce.jgit/src/org/spearce/jgit/util/IntList.java
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/util/TestRng.java b/org.spearce.jgit.test/tst/org/spearce/jgit/util/TestRng.java
 new file mode 100644
-index 0000000..1445f88
+index 0000000..d74a534
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/util/IntList.java
-@@ -0,0 +1,113 @@
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/util/TestRng.java
+@@ -0,0 +1,61 @@
 +/*
 + * Copyright (C) 2008, Google Inc.
 + *
@@ -247,79 +473,49 @@ index 0000000..1445f88
 +
 +package org.spearce.jgit.util;
 +
-+/** A more efficient List<Integer> using a primitive integer array. */
-+public class IntList {
-+	private int[] entries;
++/** Toy RNG to ensure we get predictable numbers during unit tests. */
++public class TestRng {
++	private int next;
 +
-+	private int count;
-+
-+	/** Create an empty list with a default capacity. */
-+	public IntList() {
-+		this(10);
++	public TestRng(final String seed) {
++		next = 0;
++		for (int i = 0; i < seed.length(); i++)
++			next = next * 11 + seed.charAt(i);
 +	}
 +
-+	/**
-+	 * Create an empty list with the specified capacity.
-+	 * 
-+	 * @param capacity
-+	 *            number of entries the list can initially hold.
-+	 */
-+	public IntList(final int capacity) {
-+		entries = new int[capacity];
++	public byte[] nextBytes(final int cnt) {
++		final byte[] r = new byte[cnt];
++		for (int i = 0; i < cnt; i++)
++			r[i] = (byte) nextInt();
++		return r;
 +	}
 +
-+	/** @return number of entries in this list */
-+	public int size() {
-+		return count;
-+	}
-+
-+	/**
-+	 * @param i
-+	 *            index to read, must be in the range [0, {@link #size()}).
-+	 * @return the number at the specified index
-+	 * @throws ArrayIndexOutOfBoundsException
-+	 *             the index outside the valid range
-+	 */
-+	public int get(final int i) {
-+		if (count <= i)
-+			throw new ArrayIndexOutOfBoundsException(i);
-+		return entries[i];
-+	}
-+
-+	/** Empty this list */
-+	public void clear() {
-+		count = 0;
-+	}
-+
-+	/**
-+	 * Add an entry to the end of the list.
-+	 * 
-+	 * @param n
-+	 *            the number to add.
-+	 */
-+	public void add(final int n) {
-+		if (count == entries.length)
-+			grow();
-+		entries[count++] = n;
-+	}
-+
-+	private void grow() {
-+		final int[] n = new int[(entries.length + 16) * 3 / 2];
-+		System.arraycopy(entries, 0, n, 0, count);
-+		entries = n;
-+	}
-+
-+	public String toString() {
-+		final StringBuilder r = new StringBuilder();
-+		r.append('[');
-+		for (int i = 0; i < count; i++) {
-+			if (i > 0)
-+				r.append(", ");
-+			r.append(entries[i]);
-+		}
-+		r.append(']');
-+		return r.toString();
++	public int nextInt() {
++		next = next * 1103515245 + 12345;
++		return next;
 +	}
 +}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/TemporaryBuffer.java b/org.spearce.jgit/src/org/spearce/jgit/util/TemporaryBuffer.java
+index 8f91246..6267fb5 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/util/TemporaryBuffer.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/util/TemporaryBuffer.java
+@@ -60,7 +60,7 @@
+  * after this stream has been properly closed by {@link #close()}.
+  */
+ public class TemporaryBuffer extends OutputStream {
+-	private static final int DEFAULT_IN_CORE_LIMIT = 1024 * 1024;
++	static final int DEFAULT_IN_CORE_LIMIT = 1024 * 1024;
+ 
+ 	/** Chain of data, if we are still completely in-core; otherwise null. */
+ 	private ArrayList<Block> blocks;
+@@ -297,7 +297,7 @@ public void destroy() {
+ 		}
+ 	}
+ 
+-	private static class Block {
++	static class Block {
+ 		static final int SZ = 8 * 1024;
+ 
+ 		final byte[] buffer = new byte[SZ];
 -- 
 1.6.1.rc2.306.ge5d5e
