@@ -1,109 +1,90 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2008, #06; Wed, 26)
-Date: Fri, 12 Dec 2008 23:54:43 +0700
-Message-ID: <fcaeb9bf0812120854k1c366327o9bc696184ea4f02e@mail.gmail.com>
-References: <7v7i6qc8r0.fsf@gitster.siamese.dyndns.org>
-	 <fcaeb9bf0812070427s64438216s41bf1294aa6398a3@mail.gmail.com>
-	 <alpine.LNX.1.00.0812071455020.19665@iabervon.org>
-	 <fcaeb9bf0812080451k6e213d0fo8d1da9bbac872649@mail.gmail.com>
-	 <alpine.LNX.1.00.0812081223140.19665@iabervon.org>
-	 <fcaeb9bf0812110504u1acfb612he3edae1df3774045@mail.gmail.com>
-	 <alpine.LNX.1.00.0812111520490.19665@iabervon.org>
-	 <7vy6ym9nm8.fsf@gitster.siamese.dyndns.org>
-	 <fcaeb9bf0812120813m2949e36ar7905d5688b8f6ecb@mail.gmail.com>
-	 <4942952E.1060706@viscovery.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/3 (edit v2)] gitweb: Cache $parent_commit info in git_blame()
+Date: Fri, 12 Dec 2008 18:20:33 +0100
+Message-ID: <200812121820.34695.jnareb@gmail.com>
+References: <20081209224622.28106.89325.stgit@localhost.localdomain> <200812110133.33124.jnareb@gmail.com> <7vr64e9jq6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Daniel Barkalow" <barkalow@iabervon.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Dec 12 17:56:09 2008
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
+	Luben Tuikov <ltuikov@yahoo.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 12 18:22:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBBJ6-00067h-7w
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 17:56:04 +0100
+	id 1LBBiD-0000Q0-4N
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 18:22:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757807AbYLLQyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Dec 2008 11:54:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758240AbYLLQyq
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 11:54:46 -0500
-Received: from fg-out-1718.google.com ([72.14.220.153]:9506 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757133AbYLLQyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 11:54:45 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so741954fgg.17
-        for <git@vger.kernel.org>; Fri, 12 Dec 2008 08:54:43 -0800 (PST)
+	id S1756929AbYLLRUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 12:20:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756817AbYLLRUn
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 12:20:43 -0500
+Received: from ik-out-1112.google.com ([66.249.90.179]:59989 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756799AbYLLRUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 12:20:42 -0500
+Received: by ik-out-1112.google.com with SMTP id c29so393875ika.5
+        for <git@vger.kernel.org>; Fri, 12 Dec 2008 09:20:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=TBpVkO4dR5v14r2+y8NFURFgiqxG3v1+EDUSwSB4Jz0=;
-        b=eu5kZbJknj6LgVbHHt7RKT8XiQhw0c1xrxleayUJnjz3566RxArQuG7IQMvxjiGCg8
-         WJEsoc/XwmFkEtmC2sw1os/MmwTXebDY3olA4CQjil57vMgsbQX0F0k0R315uUCY1czp
-         FBhElVKaf3Hs8VW3x7nNtG3BEhJXEyeB7PkPI=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=k16QAZkpSwVktLeS3K34si4NV8KYMGXUBdLZBaAeWM0=;
+        b=F0rnOkIN4oXBiCuOzMHBpIHvjDOIkKeAO4f2rdYtNjVdWSFpletgxuifMJ9QfaY083
+         gNVIuUYbwG7YsUNH6tG/msIORhVTX7f0Wm+IqDcRBEKSfBU/j4JnaeW3xuidTicoAWIU
+         m8+1X2ozu8xF1z67rMRtChRbJGNlr3ZOcI4Bc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=nfwKrjwI6ylViK/grgwzpM+DkDdJxjMLd8JhfQSChPpOCgqMBtH+TIYApQc/h5aAG0
-         vhd1ybhSmTXnt0a9h1FXI8qT5mW7qCsRqDl11I8xZsiNCmP7pgCp8stb0iZEbcNns48F
-         1+UJ7hdaDPlBWuRXHFMMaTh8fFKLMtdg/b1ew=
-Received: by 10.86.59.2 with SMTP id h2mr2120465fga.73.1229100883801;
-        Fri, 12 Dec 2008 08:54:43 -0800 (PST)
-Received: by 10.86.87.14 with HTTP; Fri, 12 Dec 2008 08:54:43 -0800 (PST)
-In-Reply-To: <4942952E.1060706@viscovery.net>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=A2wY+3ERW2DQDLL9CiZ5d2TXZG6Wattey6qnHZejwd6R7n3l2CNthhlpShnD8Js1Fv
+         6TpWeApCYBqM+P5sYXkWXh1FKCfiWu8auMzFgYDAexy0jE44Rk1R+w5Fc6kjpajH970O
+         jncyOQRZPOspQuY4DXzN8kponDUtondlyhJAU=
+Received: by 10.67.119.20 with SMTP id w20mr5934625ugm.78.1229102439757;
+        Fri, 12 Dec 2008 09:20:39 -0800 (PST)
+Received: from ?192.168.1.11? (abvt119.neoplus.adsl.tpnet.pl [83.8.217.119])
+        by mx.google.com with ESMTPS id y6sm11882814uge.28.2008.12.12.09.20.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Dec 2008 09:20:38 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vr64e9jq6.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102918>
 
-On 12/12/08, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Nguyen Thai Ngoc Duy schrieb:
->
-> > On 12/12/08, Junio C Hamano <gitster@pobox.com> wrote:
->  >>  So "git grep -e frotz Documentation/", whether you only check out
->  >>  Documentation or the whole tree, should grep only in Documentation area,
->  >>  and "git grep -e frotz" should grep in the whole tree, even if you happen
->  >>  to have a sparse checkout.  By definition, a sparse checkout has no
->  >>  modifications outside the checkout area, so whenever grep wants to look
->  >>  for strings outside the checkout area it should pretend as if the same
->  >>  content as what the index records is in the work tree.  This is consistent
->  >>  with the way how "git diff" in a sparsely checked out work tree should
->  >>  behave.
->  >
->  > Assume someone is using sparse checkout with KDE git repository. They
->  > sparse-checkout kdeutils module and do "git grep -e foo". I would
->  > expect that the command only searches in kdeutils only (and is the
->  > current behavior).
->
->
-> But what if the same persion notices a #define in a kdeutils header file
->  and want's to know whether it is unused in order to remove it:
->
->     $ git grep FOO
->     kdeutils/foo.h:#define FOO bar
+On Fri, 12 Dec 2008, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 
-"git grep --cached FOO" ?
+> > Only commit message has changed.
+> 
+> Which is a bit unnice, because it will conflict with the original [3/3]
+> that I queued already (with a pair of fixes, including but not limited to
+> the one you sent "Oops, it should have been like this" for).
+> 
+> I can hand wiggle the patch to make it apply, but I'd prefer if I did not
+> have to do this every time I receive a patch.
 
->  Conclusion from this output: "It's only defined, but not used anywhere."
->  But this conclusion is not necessarily correct because FOO could be used
->  outside kdeutils.
->
->  So, no, "git grep" should disregard the checkout area.
->
->  -- Hannes
->
+I'm sorry about that; I have forgot to change order of patches to have
+original 1/3, 3/3, 2/3 (I should have used 'stg float' for that).
 
+> I think the conflict was trivial (just a single s/rev/short_rev/) and I
+> did not make a silly mistake when I fixed it up, but please check the
+> result on 'pu' after I push the results out.
 
+I did the reordering, and gitweb on compared top of reordered stack
+of patches with gitweb from top of 'pu' branch, and the only
+difference in the area touched by git_blame improvements series is
+one comment I have added in v2 of 3/3.
+
+Thank you for your work.
 -- 
-Duy
+Jakub Narebski
+Poland
