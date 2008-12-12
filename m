@@ -1,64 +1,57 @@
-From: Stefan =?utf-8?b?TsOkd2U=?= <stefan.naewe+git@gmail.com>
-Subject: Re: Saving patches from this list
-Date: Fri, 12 Dec 2008 08:28:42 +0000 (UTC)
-Message-ID: <loom.20081212T082629-274@post.gmane.org>
-References: <loom.20081212T072326-350@post.gmane.org> <49421AEE.8090902@viscovery.net>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] git-config.txt: fix a typo
+Date: Fri, 12 Dec 2008 10:00:41 +0100
+Message-ID: <87hc59ix8m.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 12 09:30:31 2008
+Content-Type: text/plain; charset=us-ascii
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 12 10:02:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LB3Pk-0001BT-7p
-	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 09:30:24 +0100
+	id 1LB3uV-0001Un-39
+	for gcvg-git-2@gmane.org; Fri, 12 Dec 2008 10:02:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750870AbYLLI3F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Dec 2008 03:29:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752615AbYLLI3E
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 03:29:04 -0500
-Received: from main.gmane.org ([80.91.229.2]:37776 "EHLO ciao.gmane.org"
+	id S1757248AbYLLJAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Dec 2008 04:00:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757137AbYLLJAo
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Dec 2008 04:00:44 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:58964 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750858AbYLLI3D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Dec 2008 03:29:03 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LB3OM-0003MH-N7
-	for git@vger.kernel.org; Fri, 12 Dec 2008 08:28:58 +0000
-Received: from lxsrv96.atlas.de ([194.156.172.86])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Dec 2008 08:28:58 +0000
-Received: from stefan.naewe+git by lxsrv96.atlas.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Dec 2008 08:28:58 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 194.156.172.86 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/528.5 (KHTML, like Gecko) Iron/0.4.155.0 Safari/528.5)
+	id S1756959AbYLLJAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Dec 2008 04:00:44 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 6BEC017B54F
+	for <git@vger.kernel.org>; Fri, 12 Dec 2008 10:00:42 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 5869017B54E
+	for <git@vger.kernel.org>; Fri, 12 Dec 2008 10:00:42 +0100 (CET)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 1049F50033; Fri, 12 Dec 2008 10:00:42 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102890>
 
-Johannes Sixt <j.sixt <at> viscovery.net> writes:
 
->=20
-> Stefan N=C3=A4we schrieb:
-> > What's the best way to get patches sent to this list in a form suit=
-able
-> > for 'git am' without subscribing to this list ?
->=20
-> Subscribe to gmane.comp.version-control.git on news.gmane.org with yo=
-ur
-> favorite news reader and browse the list whenever you feel like it.
+---
+ Documentation/git-config.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Do you know how stubborn firewall administrators can be ?
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 28e1861..19a8917 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -279,7 +279,7 @@ If you want to know all the values for a multivar, do:
+ % git config --get-all core.gitproxy
+ ------------
 
-IOW, that's unfortunately not an option for me.
+-If you like to live dangerous, you can replace *all* core.gitproxy by a
++If you like to live dangerously, you can replace *all* core.gitproxy by a
+ new one with
 
-Regards,
-  Stefan
+ ------------
+--
+1.6.1.rc2.299.gead4c
