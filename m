@@ -1,102 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/2] gitweb: allow access to forks with strict_export
-Date: Sat, 13 Dec 2008 23:51:33 +0100
-Message-ID: <200812132351.37420.jnareb@gmail.com>
-References: <1229203014.31181.7.camel@mattlaptop2.local> <m3prjvg2st.fsf@localhost.localdomain> <7vr64b4sib.fsf@gitster.siamese.dyndns.org>
+From: Nick Andrew <nick@nick-andrew.net>
+Subject: Re: [PATCH] Simplified GIT usage guide
+Date: Sun, 14 Dec 2008 10:05:05 +1100
+Message-ID: <20081213230504.GA21912@mail.local.tull.net>
+References: <alpine.DEB.1.00.0812121952320.5873@eeepc-johanness> <20081212182827.28408.40963.stgit@warthog.procyon.org.uk> <29095.1229109133@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Matt McCutchen <matt@mattmccutchen.net>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 13 23:53:03 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	torvalds@osdl.org, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>
+To: David Howells <dhowells@redhat.com>
+X-From: git-owner@vger.kernel.org Sun Dec 14 00:06:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBdM5-0006se-Sd
-	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 23:53:02 +0100
+	id 1LBdZE-0002PY-SJ
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 00:06:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752043AbYLMWvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 17:51:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752039AbYLMWvn
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 17:51:43 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:19912 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751971AbYLMWvn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 17:51:43 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so327185nfc.21
-        for <git@vger.kernel.org>; Sat, 13 Dec 2008 14:51:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=uSqYQlkedt1dyLyS4tedxiOhisaltC7/sy4sLcfiEO8=;
-        b=r1kuA702X3bZ9vQUir8FI0puIPum346pVJ5HFICNXAq2+zxikn5rNkcy5tPAeQ8Akr
-         SxIlVuekjiLDKdzUEDoPH2thCmWPmSvKJOrcrzJO4EPqd8E681wnb+vdabPV8kp4I8Bh
-         xJgYYJKvBezKY2QizDhtQ8rmpV27aSBoGCO9I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=sgF7fq+kw9fM+/dZFrJ/UsR/khHLx2kHXcGVRUHDIldkUwO9Q1pTll9FrddE9iSFKy
-         2Hu5P0cPm7gQ0qVvf58PoLANJ8GDQNrIQbroiyCYN3tn+Ywc6xgQODdWjiKJLpXaYUkT
-         Q09igDY5yeW8oeKWk/AkydW62rjqBM0bn6F0k=
-Received: by 10.67.89.15 with SMTP id r15mr795323ugl.59.1229208701046;
-        Sat, 13 Dec 2008 14:51:41 -0800 (PST)
-Received: from ?192.168.1.11? (abvz56.neoplus.adsl.tpnet.pl [83.8.223.56])
-        by mx.google.com with ESMTPS id 19sm2395243ugl.12.2008.12.13.14.51.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 13 Dec 2008 14:51:40 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vr64b4sib.fsf@gitster.siamese.dyndns.org>
+	id S1752065AbYLMXFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 18:05:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752057AbYLMXFK
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 18:05:10 -0500
+Received: from vps1.tull.net ([66.180.172.116]:59636 "HELO vps1.tull.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751884AbYLMXFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 18:05:09 -0500
+Received: (qmail 1481 invoked by uid 1015); 14 Dec 2008 10:05:08 +1100
+Received: from [10.0.0.67] (HELO tull.net) (10.0.0.67) by vps1.tull.net (qpsmtpd/0.26) with SMTP; Sun, 14 Dec 2008 10:05:08 +1100
+Received: (qmail 22335 invoked by uid 1000); 14 Dec 2008 10:05:05 +1100
 Content-Disposition: inline
+In-Reply-To: <29095.1229109133@redhat.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SMTPD: qpsmtpd/0.26, http://develooper.com/code/qpsmtpd/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103034>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> > Matt McCutchen <matt@mattmccutchen.net> writes:
->>
->> CC-ed Petr Baudis, author of forks support in gitweb.
->>
->>> git_get_projects_list excludes forks in order to unclutter the main
->>> project list, but this caused the strict_export check, which also relies
->>> on git_get_project_list, to incorrectly fail for forks.  This patch adds
->>> an argument so git_get_projects_list knows when it is being called for a
->>> strict_export check (as opposed to a user-visible project list) and
->>> doesn't exclude the forks.
->>>
->>> Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
->>
->> Looks good for me.
+On Fri, Dec 12, 2008 at 07:12:13PM +0000, David Howells wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+
+> > So I think that your document might do a good job scaring people away from 
+> > Git.  But I do not believe that your document, especially in the tone it 
+> > is written, does a good job of helping Git newbies.
 > 
-> That sounds like a broken API to me.
-> 
-> At least, please have the decency to not call the extra parameter "for
-> strict export".  I would understand it if the extra parameter is called
-> "toplevel_only" (or its negation, "include_forks").
-> 
-> IOW, don't name a parameter after the name of one caller that happens to
-> want an unspecified special semantics, without saying what that special
-> semantics is.  Instead, name it after the special semantics that the
-> argument triggers.
- 
-Ahhh... true. 
+> Hmmm.  So what would you suggest is a good way to write for GIT newbies?  Is
+> it just that the overview should be canned or drastically simplified?
 
-"no_hide" (currently "include_forks") allows us to _not_ passing this
-parameter in other places than project_in_list(); undef is falsy.
+The way I did it was to start with the directed acyclic graph of
+commits, explaining how branches fork the graph and merges join
+it. This was presented to people who know subversion, and so they
+immediately became aware that there are other ways to manage source
+code than in a linear r1 r2 r3 r4 r5. I described tags and branch
+heads briefly.
 
-By the way, doesn't git_project_index and perhaps git_opml also need
-this parameter passed to git_get_projects_list?
+Next up I described the things you'd do with git: add new commits,
+create a branch, merge a branch, rebase, tag, push and fetch and
+showed what that does with the dag of commits.
 
-Then patch subject would change...
--- 
-Jakub Narebski
-Poland
+Finally I showed the actual commands used to perform those actions.
+I didn't get into the object database structure at all (that was
+prepared in case I had extra time).
+
+I think a tutorial shouldn't be written in a way that polarises
+peoples' opinions or they come to regard git as a "necessary evil".
+If the audience is a person who knows nothing about git, that's
+hardly a "git hater" and I think the document starts off on the
+wrong foot as a result.
+
+Nick.
