@@ -1,79 +1,68 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Optimizing cloning of a high object count repository
-Date: Sat, 13 Dec 2008 13:56:19 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0812131347130.30035@xanadu.home>
-References: <200812131624.57618.Resul-Cetin@gmx.net>
- <fcaeb9bf0812130746l38a12f37wde26f31d5fa0d2a2@mail.gmail.com>
- <200812131714.05472.Resul-Cetin@gmx.net>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH] bash completion: remove deprecated --prune from git-gc
+Date: Sat, 13 Dec 2008 20:08:08 +0100
+Message-ID: <200812132008.08543.markus.heidelberg@web.de>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	gentoo-scm@gentoo.org
-To: Resul Cetin <Resul-Cetin@gmx.net>
-X-From: git-owner@vger.kernel.org Sat Dec 13 19:57:54 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Dec 13 20:09:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBZgY-0004dO-45
-	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 19:57:54 +0100
+	id 1LBZry-00080v-Kv
+	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 20:09:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201AbYLMS40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 13:56:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbYLMS40
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 13:56:26 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:18459 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751078AbYLMS4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 13:56:25 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KBT0079YWKL8OQ1@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 13 Dec 2008 13:55:34 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <200812131714.05472.Resul-Cetin@gmx.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751602AbYLMTIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 14:08:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751540AbYLMTIN
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 14:08:13 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:48470 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751452AbYLMTIK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 14:08:10 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate01.web.de (Postfix) with ESMTP id F00E7FA897BB;
+	Sat, 13 Dec 2008 20:08:08 +0100 (CET)
+Received: from [91.19.61.9] (helo=pluto)
+	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.109 #226)
+	id 1LBZqS-0001fa-00; Sat, 13 Dec 2008 20:08:08 +0100
+User-Agent: KMail/1.9.9
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1/vtlIwVtnKygZXF1WuVHaKaXYP2BQACacWkW2z
+	BtZGe/qlmjgta31WcPVyuP3n1hsVcHxvawxK/SfEy2XL9gcFOh
+	kB4q+swXz16xd0EiLq8g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103010>
-
-On Sat, 13 Dec 2008, Resul Cetin wrote:
-
-> On Saturday 13 December 2008 16:46:50 you wrote:
-> [...]
-> > >  The size of the linux repository seems to be smaller but in the same
-> > > range object count and repository size but clones are much much faster.
-> > > Is there any way to optimize the server operations like counting and
-> > > compressing of objects to get the same speed as we get from
-> > > git.kernel.org (which does it in nearly no time and the only limiting
-> > > factor seems to be my bandwith)?
-> > >  The only other information I have is that Robin H. Johnson made a single
-> > >  ~910MiB pack for the whole repository.
-> >
-> > Make yearly packed repository snapshots and publish them via http.
-> > People can wget the latest snapshot, then pull updates later.
-> That would be a workaround but it doesn't explain why git.kernel.org deliveres 
-> torvalds repository without any notable counting and compressing time. Maybe 
-> it has something todo with the config I found inside the repository:
-> http://git.overlays.gentoo.org/gitroot/exp/gentoo-x86.git/config
-> It says that it isnt a bare repository.
-
-That's not relevant.
-
-The counting time is a bit unfortunate (although I have plans to speed 
-that up, if only I can find the time).
-
-You should be able to skip the compression time entirely though, if you 
-do repack the repository first.  And you want it to be as tightly packed 
-as possible for public access.  I'm currently cloning it and the 
-counting phase is not _that_ bad compared to the compression phase.  Try 
-something like 'git repack -a -f -d --window=200' and let it run 
-overnight if necessary.  You need to do this only once, and preferably 
-on a machine with lots of RAM, and preferably on a 64-bit machine.  Once 
-this is done then things should go much more smoothly afterwards.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103011>
 
 
-Nicolas
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
+ contrib/completion/git-completion.bash |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index c79c98f..9e0c48b 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -835,7 +835,7 @@ _git_gc ()
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+ 	case "$cur" in
+ 	--*)
+-		__gitcomp "--prune --aggressive"
++		__gitcomp "--aggressive"
+ 		return
+ 		;;
+ 	esac
+-- 
+1.6.1.rc1.54.gd1643
