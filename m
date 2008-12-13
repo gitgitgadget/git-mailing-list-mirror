@@ -1,77 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Adding Exit status documentation to all git commands starting
- with git status
-Date: Sat, 13 Dec 2008 12:04:52 -0800
-Message-ID: <7v4p176duj.fsf@gitster.siamese.dyndns.org>
-References: <200812132036.39318.nadim@khemir.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] pack-objects: don't use too many threads with few objects
+Date: Sat, 13 Dec 2008 15:06:40 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0812131456040.30035@xanadu.home>
+References: <alpine.LFD.2.00.0812111524370.14328@xanadu.home>
+ <20081213133238.GA6718@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git list" <git@vger.kernel.org>
-To: nadim khemir <nadim@khemir.net>
-X-From: git-owner@vger.kernel.org Sat Dec 13 21:06:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 13 21:08:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBakj-0000t5-9h
-	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 21:06:17 +0100
+	id 1LBamj-0001VP-Ez
+	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 21:08:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751664AbYLMUE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 15:04:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751671AbYLMUE6
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 15:04:58 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52689 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751657AbYLMUE6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 15:04:58 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 104F287A22;
-	Sat, 13 Dec 2008 15:04:57 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3768687A21; Sat,
- 13 Dec 2008 15:04:54 -0500 (EST)
-In-Reply-To: <200812132036.39318.nadim@khemir.net> (nadim khemir's message of
- "Sat, 13 Dec 2008 20:36:39 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5077AFB6-C951-11DD-B4F5-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751730AbYLMUHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 15:07:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751731AbYLMUHD
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 15:07:03 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:62215 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751695AbYLMUHB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 15:07:01 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KBT00A1ZZV42V50@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 13 Dec 2008 15:06:40 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20081213133238.GA6718@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103017>
 
-nadim khemir <nadim@khemir.net> writes:
+If there are few objects to deltify, they might be split amongst threads 
+so that there is simply no other objects left to delta against within 
+the same thread.  Let's use the same 2*window treshold as used for the 
+final load balancing to allow extra threads to be created.
 
-> There are different styles to add exit status, give me your input on why and 
-> why not using one or the other. I list 3 solutions and what I think about 
-> them.
+This fixes the benign t5300 test failure.
 
-No matter what you do, I think EXIT STATUS section should consistently
-come near the end of the document, immediately before SEE ALSO, which is
-where people who know how manual pages are written expect to find it.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
 
-> EXIT STATUS
-> -----------
-> The command exits with non-zero status if there is no path that is 
-> different between the index file and the current HEAD commit (i.e.,
-> there is nothing to commit by running `git commit`).
+On Sat, 13 Dec 2008, Jeff King wrote:
 
-Prose is much easier to read as long as it is brief enough, than two-item
-enumeration:
+> On Thu, Dec 11, 2008 at 03:36:47PM -0500, Nicolas Pitre wrote:
+> 
+> > ... and display the actual number of threads used when locally 
+> > repacking.  A remote server still won't tell you how many threads it 
+> > uses during a fetch though.
+> 
+> Hrm. I have no idea how, but this patch reliably causes t5300 to fail on
+> my FreeBSD test box ("next" is broken, bisection pointed to 43cc2b42).
 
-> EXIT STATUS
-> -----------
-> Zero status:      There is a different between the index file and HEAD.
-> Non-zero status:  There is nothing to commit by running `git commit`. 
-
-whose use of "Zero status" makes it look doubly funny (traditionally
-manual pages do not seem to spell out exit status 0 as "zero", but
-"non-zero" is Ok).
-
-Avoid talking about only one side of the condition if you can without
-being too verbose.
-
-        The command exits with status 0 if there is something to commit by
-        running `git commit` with corresponding arguments, and non-zero
-        otherwise.
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 619e597..e851534 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1620,6 +1620,10 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ 	for (i = 0; i < delta_search_threads; i++) {
+ 		unsigned sub_size = list_size / (delta_search_threads - i);
+ 
++		/* don't use too small segments or no deltas will be found */
++		if (sub_size < 2*window && i+1 < delta_search_threads)
++			sub_size = 0;
++
+ 		p[i].window = window;
+ 		p[i].depth = depth;
+ 		p[i].processed = processed;
