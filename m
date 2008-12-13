@@ -1,67 +1,61 @@
-From: "Tim Visher" <tim.visher@gmail.com>
-Subject: Re: Announce: TortoiseGit 0.1 preview version
-Date: Sat, 13 Dec 2008 09:21:47 -0500
-Message-ID: <c115fd3c0812130621p5df742ffs98d69cd922ebc972@mail.gmail.com>
-References: <1976ea660812130033m2d54cc57tfe134fab0d687d71@mail.gmail.com>
+From: Resul Cetin <Resul-Cetin@gmx.net>
+Subject: Optimizing cloning of a high object count repository
+Date: Sat, 13 Dec 2008 16:24:56 +0100
+Message-ID: <200812131624.57618.Resul-Cetin@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
-To: "=?UTF-8?B?5p2O5pm6?=" <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 13 15:23:29 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: gentoo-scm@gentoo.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 13 16:26:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBVOy-0006f8-QT
-	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 15:23:29 +0100
+	id 1LBWO0-0001te-03
+	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 16:26:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757392AbYLMOVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 09:21:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757132AbYLMOVz
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 09:21:55 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:61236 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756102AbYLMOVt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 09:21:49 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so859799yxm.1
-        for <git@vger.kernel.org>; Sat, 13 Dec 2008 06:21:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Xdk0yXw0OwcGug+Hbtw3DC7Z78m8XD65m2xTa5P+5kw=;
-        b=XXRNJaAh3nrrCC34gjZQfqU45/pcKA7eiE9VX8Y7dVRHY9VRuSfXTn7Lhc4LvMAyEf
-         1sEObge6lMYgNcZ4r0cTlAPzuUrZ2728RUGCoxf0aCXVbVyeBMiF3OdW9/VqJeVBRqzd
-         6NsVWFIRoKz1R3PSnllY1lyL5y/j8hNm+iwCY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Wxb+Bdxsf2vZF7tHE214JKz5Gh3PendcoKteVG6yLS1j34r/g4i3lmutBFKF0Z1kjB
-         BaIPOyrkaGgFXMrxP8aoILnZpHgfATvtYtuM04+a+ShxHeqykPcuSNmOFvO+/E518nWU
-         zXpMbiI97VxtHff1K03QOU87EmrRk8kQEPdso=
-Received: by 10.100.190.14 with SMTP id n14mr3575865anf.19.1229178107641;
-        Sat, 13 Dec 2008 06:21:47 -0800 (PST)
-Received: by 10.100.198.2 with HTTP; Sat, 13 Dec 2008 06:21:47 -0800 (PST)
-In-Reply-To: <1976ea660812130033m2d54cc57tfe134fab0d687d71@mail.gmail.com>
+	id S1755804AbYLMPZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 10:25:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755501AbYLMPZG
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 10:25:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34007 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754742AbYLMPZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 10:25:04 -0500
+Received: (qmail invoked by alias); 13 Dec 2008 15:25:01 -0000
+Received: from i59F6A60F.versanet.de (EHLO rowo) [89.246.166.15]
+  by mail.gmx.net (mp005) with SMTP; 13 Dec 2008 16:25:01 +0100
+X-Authenticated: #13824512
+X-Provags-ID: V01U2FsdGVkX1+cRn8f0HOcLqls4UIzXaZA7nwwHQW7y5x+/1o0E0
+	dV5BDjTR3vekdO
+User-Agent: KMail/1.10.3 (Linux/2.6.26-1-amd64; KDE/4.1.3; x86_64; ; )
 Content-Disposition: inline
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103001>
 
-T24gU2F0LCBEZWMgMTMsIDIwMDggYXQgMzozMyBBTSwg5p2O5pm6IDxsem51YWFAZ21haWwuY29t
-PiB3cm90ZToKCj4gVG9ydG9pc2VHaXQgaXMgcG9ydGluZyBmcm9tIFRvcnRvaXNlU1ZOLgoKVGhh
-bmtzIHNvIG11Y2ggZm9yIHRoaXMhCgpNeSB0ZWFtIGFuZCBJIHdlcmUganVzdCB0YWxraW5nIGFi
-b3V0IGhvdyB0aGUgYmlnZ2VzdCBiYXJyaWVyIHRvIGVudHJ5CmF0IHRoaXMgcG9pbnQgZm9yIF9z
-b21lXyBvZiB1cyBoYXMgYmVlbiB0aGUgbGFjayBvZiBhIGdyZWF0IHRvb2wgbGlrZQpUb3J0b2lz
-ZSBmb3IgR2l0LiAgTXkgb3BpbmlvbiB3YXMgdGhhdCBzb21lb25lIHdvdWxkIHNvb24gd3JpdGUg
-aXQuCkFuZCBsby1hbmQtYmVob2xkLCBoZXJlIGl0IGlzIQoKSSdsbCBsb29rIGZvcndhcmQgdG8g
-d2F0Y2hpbmcgdGhpcyBwcm9ncmVzcywgYW5kIGNvbnRpbnVlIGhhcHBpbHkKdXNpbmcgbXkgY2xp
-IHZlcnNpb24gdGhlIHNhbWUuCgotLSAKCkluIENocmlzdCwKClRpbW15IFYuCgpodHRwOi8vYnVy
-bmluZ29uZXMuY29tLwpodHRwOi8vZml2ZS5zZW50ZW5jLmVzLyAtIFNwZW5kIGxlc3MgdGltZSBv
-biBlLW1haWwK
+Hi,
+there are currently different ideas to move gentoo's cvs repository to an 
+other scm. Current tests showed that svn will not make anything better (it 
+gets in most perfomance and size based benchmarks even worse). Another idea is 
+to move to git. It looks really promising in size based benchmarks but cloning 
+seems nearly impossible. The current test repository is available at 
+git://git.overlays.gentoo.org/exp/gentoo-x86.git and is around 900MB in size 
+and has 4696137 objects. It really takes ages to do the counting of the 
+objects on the server and compressing takes much longer.
+The size of the linux repository seems to be smaller but in the same range 
+object count and repository size but clones are much much faster. Is there any 
+way to optimize the server operations like counting and compressing of objects 
+to get the same speed as we get from git.kernel.org (which does it in nearly 
+no time and the only limiting factor seems to be my bandwith)?
+The only other information I have is that Robin H. Johnson made a single 
+~910MiB pack for the whole repository.
+
+Thx in advance,
+	Resul
