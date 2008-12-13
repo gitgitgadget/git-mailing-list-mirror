@@ -1,82 +1,78 @@
-From: "Sverre Rabbelier" <alturin@gmail.com>
-Subject: Re: is gitosis secure?
-Date: Sat, 13 Dec 2008 19:07:07 +0100
-Message-ID: <bd6139dc0812131007va4f07f2k54289163932f0c2b@mail.gmail.com>
-References: <200812090956.48613.thomas@koch.ro>
-	 <bd6139dc0812090138l5dbaf20bsd1cde00f52bb94e5@mail.gmail.com>
-	 <87hc58hwmi.fsf@hades.wkstn.nix>
-Reply-To: sverre@rabbelier.nl
+From: Alexey Zaytsev <alexey.zaytsev@gmail.com>
+Subject: [PATCH] Let git remote accept up as alias to update
+Date: Sat, 13 Dec 2008 21:18:56 +0300
+Message-ID: <20081213181704.20126.4200.stgit@zaytsev.su>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Thomas Koch" <thomas@koch.ro>,
-	"Git Mailing List" <git@vger.kernel.org>, dabe@ymc.ch
-To: Nix <nix@esperi.org.uk>
-X-From: git-owner@vger.kernel.org Sat Dec 13 19:08:33 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 13 19:11:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBYui-0005im-6h
-	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 19:08:28 +0100
+	id 1LBYxI-0006X8-Er
+	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 19:11:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004AbYLMSHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 13:07:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750967AbYLMSHK
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 13:07:10 -0500
-Received: from yw-out-2324.google.com ([74.125.46.30]:15357 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750834AbYLMSHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 13:07:08 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so879029ywe.1
-        for <git@vger.kernel.org>; Sat, 13 Dec 2008 10:07:07 -0800 (PST)
+	id S1751010AbYLMSJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 13:09:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750968AbYLMSJr
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 13:09:47 -0500
+Received: from mu-out-0910.google.com ([209.85.134.190]:9972 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750933AbYLMSJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 13:09:46 -0500
+Received: by mu-out-0910.google.com with SMTP id g7so1103344muf.1
+        for <git@vger.kernel.org>; Sat, 13 Dec 2008 10:09:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=gKxRGquy37t+0sUDBTzDXEwvsC099THvfu/qI916CcM=;
-        b=FsGxpSgrt8/DNFlZNtyGcLU3YBhPzqPsgXknQhpUIN1qKZ+HauGdNXRhPIn8k2kc3j
-         8QaK+8+x6/kF2WrZpboTKp3TKZP54kZhzuTvbKQMZr2FJ3jxTU3cP7+A//a8jy6QEK3I
-         c2LtBtRAxFct0Yrzx2YVm/0SgJb2WdRD6+kI4=
+        h=domainkey-signature:received:received:subject:to:from:date
+         :message-id:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=8fhPSVb8XnMxCk9jFPW5JuEu6wrR73SRhogAdENNpzE=;
+        b=nF/1VknBwwdrp9PsC1svHDMVabYb2nMnGiTSJya47f3mBgoNFcdTGgu849ooUhxFkp
+         IU3pfUdk1MV2ba1RA1pACsaUefaaTBSGtXb31mfNoTCxFtupHwOcPs+4YqRKZL2TsFVW
+         HhRb1kpFm+iM2H+VpBmaPqP1gL0+mZeX7VToE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=FJAxz5aLxGkoUnfE5cIQ1XcMCy8CjLS3HeaXtXsgqO25HGt5teKlG4Cw8IHUqADtjS
-         wT29MYCzgu54OUShQ92NDVgHaasYCwHMPt0UuiHUjmn2gClkw1HB1ssJYF8eNZaCFUif
-         w3mVLdBrX25muZOEWwA2o+4diyEIWMmOnLvV0=
-Received: by 10.150.225.14 with SMTP id x14mr8873230ybg.173.1229191627175;
-        Sat, 13 Dec 2008 10:07:07 -0800 (PST)
-Received: by 10.151.13.13 with HTTP; Sat, 13 Dec 2008 10:07:07 -0800 (PST)
-In-Reply-To: <87hc58hwmi.fsf@hades.wkstn.nix>
-Content-Disposition: inline
+        h=subject:to:from:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        b=kLcuXSPMcVPtRYEFVaAGPH1DgfpfuQqL394v55bPmc3WVEMGLlmkXU4J8UN4h0+pbS
+         PUXUKOoZc3QWk+kD1UxjV5Kt6UO8bTDurSwf+niYvcrwtccyq17XNLTNfn27blF3tulI
+         MBFeo7CYUa8UkQmkovMfGwwHKUYD7lFRNv3dk=
+Received: by 10.103.213.10 with SMTP id p10mr2343363muq.17.1229191784513;
+        Sat, 13 Dec 2008 10:09:44 -0800 (PST)
+Received: from zaytsev.su ([77.221.155.68])
+        by mx.google.com with ESMTPS id j10sm8670512muh.57.2008.12.13.10.09.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 13 Dec 2008 10:09:43 -0800 (PST)
+User-Agent: StGit/0.14.3.292.gb975
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103008>
 
-On Sat, Dec 13, 2008 at 17:23, Nix <nix@esperi.org.uk> wrote:
-> telnet. I do not jest, this is our sysadmins' stated reasons for not
-> opening the git port and for tweaking their (mandatory) HTTP proxy to
-> block HTTP traffic from git.
+Signed-off-by: Alexey Zaytsev <alexey.zaytsev@gmail.com>
+---
 
-I don't know what to say to this :P.
+Don't know why, but I keep typing remote up instead of
+remote update. As update is probably by far the most
+used remote action, can we please have this alias?
 
-> (Telnet over some horrible impossibly slow buggy proprietary VPN.
-> It takes >5min to bring up a single connection.)
+ builtin-remote.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I feel for you man, try and get that guy fired and have them hire some
-_real_ sysadmins!
-
-> Do not underestimate the stupidity and hideboundedness of undertrained
-> system administrators, for it is vast.
-
-This is beyond doubt.
-
--- 
-Cheers,
-
-Sverre Rabbelier
+diff --git a/builtin-remote.c b/builtin-remote.c
+index abc8dd8..8f5cd6d 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -893,7 +893,7 @@ int cmd_remote(int argc, const char **argv, const char *prefix)
+ 		result = show(argc, argv);
+ 	else if (!strcmp(argv[0], "prune"))
+ 		result = prune(argc, argv);
+-	else if (!strcmp(argv[0], "update"))
++	else if (!strcmp(argv[0], "update") || !strcmp(argv[0], "up"))
+ 		result = update(argc, argv);
+ 	else {
+ 		error("Unknown subcommand: %s", argv[0]);
