@@ -1,71 +1,87 @@
-From: "=?GB2312?B?wO7Wxw==?=" <lznuaa@gmail.com>
-Subject: Announce: TortoiseGit 0.1 preview version
-Date: Sat, 13 Dec 2008 16:33:22 +0800
-Message-ID: <1976ea660812130033m2d54cc57tfe134fab0d687d71@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: characterizing commits
+Date: Sat, 13 Dec 2008 03:52:28 -0500
+Message-ID: <20081213085228.GA20282@coredump.intra.peff.net>
+References: <4943721C.7070200@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 13 09:34:43 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: William Pursell <bill.pursell@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 13 09:53:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBPxS-0004HZ-D7
-	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 09:34:42 +0100
+	id 1LBQFz-0007vR-FA
+	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 09:53:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754196AbYLMIdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 03:33:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754019AbYLMIdY
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 03:33:24 -0500
-Received: from mail-gx0-f12.google.com ([209.85.217.12]:56350 "EHLO
-	mail-gx0-f12.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753874AbYLMIdY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 03:33:24 -0500
-Received: by gxk5 with SMTP id 5so1259457gxk.13
-        for <git@vger.kernel.org>; Sat, 13 Dec 2008 00:33:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=fwdJYru2WPM6z4j//8nG1tkw/4rnkku04OlCZymJ7Z8=;
-        b=tC93ITUdlvZptsuMgtH8FS+XdY/JWCxDqPZhhExLf9dPVwmU30CVdQ0gBiavop4+sl
-         iHzfCd+0V8JgpAPposAxWenC18LUdIYQzuwdGCS96ntImheUu1AFNNteEV6QS7594uYh
-         uoTVYDpnwiylxEw1syre8xvMbXZHyY/xJqZI0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=rBN/2vrnKXy8+RfJ4iWiGbVoVrdOnkR/goJ7wpD4V1jhZzs8jjiIIY0QbK4/MWihlC
-         Kg/MXsGNni+v4cjB4Ps/ltE9cdPcwScSlWLNNOzf9EymxbWtGg9VBd8GCWjGkSYa2Fb5
-         j4+8ZogFGwN38u5ONQBTJunrAGHCVYIDPfqEU=
-Received: by 10.150.192.4 with SMTP id p4mr6476226ybf.243.1229157202947;
-        Sat, 13 Dec 2008 00:33:22 -0800 (PST)
-Received: by 10.151.134.2 with HTTP; Sat, 13 Dec 2008 00:33:22 -0800 (PST)
+	id S1753637AbYLMIwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 03:52:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752581AbYLMIwb
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 03:52:31 -0500
+Received: from peff.net ([208.65.91.99]:3916 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752024AbYLMIwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 03:52:31 -0500
+Received: (qmail 20198 invoked by uid 111); 13 Dec 2008 08:52:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 13 Dec 2008 03:52:29 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Dec 2008 03:52:28 -0500
 Content-Disposition: inline
+In-Reply-To: <4943721C.7070200@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/102994>
 
-TortoiseGit is porting from TortoiseSVN.  It is explore extension.
-This version just finish a min set of TortoiseSVN porting
+On Sat, Dec 13, 2008 at 08:28:12AM +0000, William Pursell wrote:
 
-1.Context menu(subset of TortoiseSVN)
-2.Icon Overlay(version controled\unversion controled at directory)
-3.Unified DIFF
-4.Use third part diff tools (such as kdiff3)
+> A lot of commits in any given project can be grouped into
+> different types.  eg, looking at the history for git,
+> there are a lot of merge commits, a lot of commits
+> that only touch gitk, a lot of 'auto-generated manpages',
+> a lot of 'typo in documentation' etc.  In my own
+> projects, I have a fairly high percentage of commits
+> that are trivial (eg whitespace only, typos, etc).
+> What I'm after is the ability to do something like:
+> 
+> git log --group=!trivial
+> git log --group=importance:3+
+>
+> [...]
 
-5.Commit change
-6.Show Log
-7.Create Repository
+> Is there already a mechanism for filtering
+> commits that I could extend to accomplish this?
 
-Project Home Page at:
-http://code.google.com/p/tortoisegit/
+Generally you would put a pseudo-header into your commit message, like:
 
-Source code at
-http://repo.or.cz/w/TortoiseGit.git
+  Status: trivial
+  Importance: 3
 
-It need msysgit 1.6.0.2.
+and then use --grep to filter matching commits:
+
+  git log --grep="Status: trivial"
+  git log --grep="Importance: [3-9]"
+
+Obviously the syntax is a little bit clunkier. You could fix that with
+an option to parse arbitrary pseudo-headers (and even support numeric
+relations), something like:
+
+  git log --filter='importance > 3'
+
+which would be converted internally to a grep of the commit message like
+this:
+
+  /^importance: (\d+)/i
+
+and compare the result to 3.
+
+The nice thing about that approach is that the storage remains the same:
+text in the commit message. That means it gets displayed when you look
+at the commit, people with older versions of git can still read it, etc.
+
+One thing this _doesn't_ get you is annotating commits after the fact.
+This has been discussed in the past; try searching the list for "notes".
+
+-Peff
