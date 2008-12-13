@@ -1,124 +1,56 @@
-From: Matt McCutchen <matt@mattmccutchen.net>
-Subject: [PATCH] gitweb: Add option to put a trailing slash on
- pathinfo-style project URLs
-Date: Sat, 13 Dec 2008 14:10:21 -0500
-Message-ID: <1229195421.3943.8.camel@mattlaptop2.local>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] autodetect number of CPUs by default when using threads
+Date: Sat, 13 Dec 2008 14:27:04 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0812131425540.30035@xanadu.home>
+References: <alpine.LFD.2.00.0812111524370.14328@xanadu.home>
+ <20081213133238.GA6718@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 13 20:11:50 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 13 20:28:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBZtt-0000Cc-SC
-	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 20:11:42 +0100
+	id 1LBaA9-0005JF-RI
+	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 20:28:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbYLMTKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 14:10:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbYLMTKY
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 14:10:24 -0500
-Received: from mailbigip.dreamhost.com ([208.97.132.5]:51548 "EHLO
-	jankymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751211AbYLMTKX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Dec 2008 14:10:23 -0500
-Received: from [129.2.207.232] (ml2.student.umd.edu [129.2.207.232])
-	by jankymail-a1.g.dreamhost.com (Postfix) with ESMTP id 8C4719869D;
-	Sat, 13 Dec 2008 11:10:22 -0800 (PST)
-X-Mailer: Evolution 2.24.3 
+	id S1751304AbYLMT1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 14:27:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbYLMT1M
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 14:27:12 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:37152 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751277AbYLMT1L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 14:27:11 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KBT00HUXY14RZ00@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 13 Dec 2008 14:27:05 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20081213133238.GA6718@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103013>
 
-My Web site uses pathinfo mode and some rewrite magic to show the gitweb
-interface at the URL of the real repository directory (which users also
-pull from).  In this case, it's desirable to end generated links to the
-project in a trailing slash so the Web server doesn't have to redirect
-the client to add the slash.  This patch adds a second element to the
-"pathinfo" feature configuration to control the trailing slash.
----
+On Sat, 13 Dec 2008, Jeff King wrote:
 
-What do you think of this?  I've been using it on my Web site for a
-while now.
+> On Thu, Dec 11, 2008 at 03:36:47PM -0500, Nicolas Pitre wrote:
+> 
+> > ... and display the actual number of threads used when locally 
+> > repacking.  A remote server still won't tell you how many threads it 
+> > uses during a fetch though.
+> 
+> Hrm. I have no idea how, but this patch reliably causes t5300 to fail on
+> my FreeBSD test box ("next" is broken, bisection pointed to 43cc2b42).
+> Sample verbose output is below.
 
-Matt
+Hmmm... Interesting.
 
- gitweb/gitweb.perl |   28 ++++++++++++++++++++++------
- 1 files changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 6eb370d..86511cf 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -270,6 +270,11 @@ our %feature = (
- 	# $feature{'pathinfo'}{'default'} = [1];
- 	# Project specific override is not supported.
- 
-+	# If you want a trailing slash on the project path (because, for
-+	# example, you have a real directory at that URL and are using
-+	# some rewrite magic to invoke gitweb), then set:
-+	# $feature{'pathinfo'}{'default'} = [1, 1];
-+
- 	# Note that you will need to change the default location of CSS,
- 	# favicon, logo and possibly other files to an absolute URL. Also,
- 	# if gitweb.cgi serves as your indexfile, you will need to force
-@@ -829,8 +834,8 @@ sub href (%) {
- 		}
- 	}
- 
--	my $use_pathinfo = gitweb_check_feature('pathinfo');
--	if ($use_pathinfo) {
-+	my @use_pathinfo = gitweb_get_feature('pathinfo');
-+	if ($use_pathinfo[0]) {
- 		# try to put as many parameters as possible in PATH_INFO:
- 		#   - project name
- 		#   - action
-@@ -845,7 +850,12 @@ sub href (%) {
- 		$href =~ s,/$,,;
- 
- 		# Then add the project name, if present
--		$href .= "/".esc_url($params{'project'}) if defined $params{'project'};
-+		my $proj_href = undef;
-+		if (defined $params{'project'}) {
-+			$href .= "/".esc_url($params{'project'});
-+			# Save for trailing-slash check below.
-+			$proj_href = $href;
-+		}
- 		delete $params{'project'};
- 
- 		# since we destructively absorb parameters, we keep this
-@@ -903,6 +913,10 @@ sub href (%) {
- 			$href .= $known_snapshot_formats{$fmt}{'suffix'};
- 			delete $params{'snapshot_format'};
- 		}
-+
-+		# If requested in the configuration, add a trailing slash to a URL that
-+		# has nothing appended after the project path.
-+		$href .= '/' if ($use_pathinfo[1] && defined $proj_href && $href eq $proj_href);
- 	}
- 
- 	# now encode the parameters explicitly
-@@ -2987,13 +3001,15 @@ EOF
- 			$search_hash = "HEAD";
- 		}
- 		my $action = $my_uri;
--		my $use_pathinfo = gitweb_check_feature('pathinfo');
--		if ($use_pathinfo) {
-+		my @use_pathinfo = gitweb_get_feature('pathinfo');
-+		if ($use_pathinfo[0]) {
- 			$action .= "/".esc_url($project);
-+			# Add a trailing slash if requested in the configuration.
-+			$action .= '/' if ($use_pathinfo[1]);
- 		}
- 		print $cgi->startform(-method => "get", -action => $action) .
- 		      "<div class=\"search\">\n" .
--		      (!$use_pathinfo &&
-+		      (!$use_pathinfo[0] &&
- 		      $cgi->input({-name=>"p", -value=>$project, -type=>"hidden"}) . "\n") .
- 		      $cgi->input({-name=>"a", -value=>"search", -type=>"hidden"}) . "\n" .
- 		      $cgi->input({-name=>"h", -value=>$search_hash, -type=>"hidden"}) . "\n" .
--- 
-1.6.1.rc2.24.gf17b3c.dirty
+Nicolas
