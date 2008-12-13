@@ -1,192 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [patch] Fix a corner case in git update-index --index-info
-Date: Sat, 13 Dec 2008 11:29:12 -0800
-Message-ID: <7viqpn6fhz.fsf@gitster.siamese.dyndns.org>
-References: <200812131403.08740.thomas.jarosch@intra2net.com>
+From: nadim khemir <nadim@khemir.net>
+Subject: Adding Exit status documentation to all git commands starting with git status
+Date: Sat, 13 Dec 2008 20:36:39 +0100
+Message-ID: <200812132036.39318.nadim@khemir.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Thomas Jarosch <thomas.jarosch@intra2net.com>
-X-From: git-owner@vger.kernel.org Sat Dec 13 20:30:40 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "git list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 13 20:36:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBaCD-0005z9-N5
-	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 20:30:38 +0100
+	id 1LBaHu-000831-QK
+	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 20:36:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751332AbYLMT3U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Dec 2008 14:29:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbYLMT3U
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 14:29:20 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39010 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751211AbYLMT3T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Dec 2008 14:29:19 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B59E87859;
-	Sat, 13 Dec 2008 14:29:18 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E651B87858; Sat,
- 13 Dec 2008 14:29:14 -0500 (EST)
-In-Reply-To: <200812131403.08740.thomas.jarosch@intra2net.com> (Thomas
- Jarosch's message of "Sat, 13 Dec 2008 14:03:06 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 558D251C-C94C-11DD-9F52-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751286AbYLMTfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 14:35:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751277AbYLMTfM
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 14:35:12 -0500
+Received: from mail1.perspektivbredband.net ([81.186.254.13]:33689 "EHLO
+	mail1.perspektivbredband.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751211AbYLMTfL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Dec 2008 14:35:11 -0500
+Received: from khemir.net (h51bafc0a.c46-01-06.sta.perspektivbredband.net [81.186.252.10])
+	by mail1.perspektivbredband.net (Postfix) with ESMTP id 73D0894009A
+	for <git@vger.kernel.org>; Sat, 13 Dec 2008 20:35:09 +0100 (CET)
+Received: from naquadim.khemir.lan (naquadim.khemir.lan [192.168.1.234])
+	by khemir.net (Postfix) with ESMTP id AA20D1264002
+	for <git@vger.kernel.org>; Sat, 13 Dec 2008 20:35:08 +0100 (CET)
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
+X-Spam-Status: No, score=-1.2 required=5.0 tests=AWL,BAYES_00,
+	UNPARSEABLE_RELAY autolearn=ham version=3.2.5-gr0
+X-Spam-Checker-Version: SpamAssassin 3.2.5-gr0 (2008-06-10) on firewall
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103015>
 
-Thomas Jarosch <thomas.jarosch@intra2net.com> writes:
+I was asking on the irc channel about how to know if I need to commit. I 
+promptely got answered but during the discussion, the few of us still awake 
+in the middle of the night (for me at least), agreed that it would be good to 
+have a EXIT STATUS in all the commands documentation starting with 
+the 'status' command.
 
-> Fix a corner case in git update-index --index-info:
-> If there are no input lines, it won't create an empty index.
->
-> Here's a short test for this:
-> echo -n "" |GIT_INDEX_FILE=3Dindex.new git update-index --index-info
-> -> The index "index.new" won't get created
->
-> It failed for me while I was using
-> git filter-branch as described in the man page:
->
->     git filter-branch --index-filter \
->             =C2=B4git ls-files -s | sed "s-\t-&newsubdir/-" |
->                     GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
->                             git update-index --index-info &&
->             mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE=C2=B4 HEAD
->
-> The conversion aborted because the first commit was empty.
-> (created by cvs2svn)
+The current documentation of 'git status' does cover exit status and looks 
+like:
+<original>
+...
+shows what would be committed if the same options are given to
+'git-commit'.
 
-If you are doing a filter-branch and the commits near the beginning of =
-the
-history did not have any path you are interested in, I do not think you
-would want to even create corresponding commits for them that record an
-empty tree to begin with, so I do not necessarily agree with the above
-command line.  The mv would fail due to absense of index.new file, and =
-you
-can take it as a sign that you can skip that commit.
+If there is no path that is different between the index file and
+the current HEAD commit (i.e., there is nothing to commit by running
+`git commit`), the command exits with non-zero status.
 
-Outside the context of your command line above, I am slightly more
-sympathetic than neutral to the argument that "update-index --index-inf=
-o"
-(and "update-index --stdin", which I suspect would have the same issue,
-but I did not check) should create an output file if one did not exist.
 
-You should note however that such a change would rob from you a way to
-detect that you did not feed anything to the command by checking the la=
-ck
-of the output.  Such a change would break people's existing scripts tha=
-t
-relied on the existing behaviour; one example is that the above "The mv
-would fail...and you can" would be made impossible.
+OUTPUT
+------
+</original>
 
-> @@ -308,6 +309,8 @@ static void read_index_info(int line_termination)
->  		unsigned long ul;
->  		int stage;
-> =20
-> +		found_something =3D 1;
-> +
->  		/* This reads lines formatted in one of three formats:
->  		 *
->  		 * (1) mode         SP sha1          TAB path
-> @@ -383,6 +386,11 @@ static void read_index_info(int line_termination=
-)
->  	bad_line:
->  		die("malformed index info %s", buf.buf);
->  	}
-> +
-> +	/* Force creation of empty index - needed by git filter-branch */
+There are different styles to add exit status, give me your input on why and 
+why not using one or the other. I list 3 solutions and what I think about 
+them.
 
-As I already mentioned, I do not agree with this "needed by" at all.
+<solution 1, least change, easier to recognize although all the negations and 
+the explaination being about when the command ~fails~ makes newbies head spin 
+for a few seconds>
 
-> +	if (!found_something)
-> +		active_cache_changed =3D 1;
-> +
->  	strbuf_release(&buf);
->  	strbuf_release(&uq);
->  }
+...
+shows what would be committed if the same options are given to
+'git-commit'.
 
-I think this implementation is conceptually wrong, even if we assume it=
- is
-the right thing to always create a new file.  The --index-info mode may
-well be fed with the same information as it already records, in which c=
-ase
-active_cache_changed shouldn't be toggled, and if it is fed something
-different from what is recorded, active_cache_changed should be marked =
-as
-changed, and that decision should be left to the add_cache_entry() that=
- is
-called from add_cacheinfo().  What you did is to make it _always_ write
-the new index out, even if we started with an existing index, and there
-was no change, or even if we started with missing index, and there was =
-no
-input.  You only wanted the latter but you did both.
+EXIT STATUS
+-----------
+The command exits with non-zero status if there is no path that is 
+different between the index file and the current HEAD commit (i.e.,
+there is nothing to commit by running `git commit`).
 
-If that is what you want to do, you can get rid of found_something logi=
-c
-altogether and flip active_cache_changed unconditionally to do the same
-thing, but it feels wrong to write the index out when nothing changed.
 
-Since I said I am slightly more sympathetic than neutral, here is a pat=
-ch
-that forces creation of an empty index file without making it write out
-the same thing if the index already existed.
+OUTPUT
+------
+</solution 1>
 
-But again, this would break people who have been relying on the existin=
-g
-behaviour that no resulting file, when GIT_INDEX_FILE points at a
-nonexistent file, signals no operation.
 
-I think it is a bad idea to do this in -rc period, even if we were to
-change the semantics.
 
- builtin-update-index.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+<solution 2, both zero and non zero status>
 
-diff --git c/builtin-update-index.c w/builtin-update-index.c
-index 65d5775..9abc0b2 100644
---- c/builtin-update-index.c
-+++ w/builtin-update-index.c
-@@ -566,6 +566,7 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
- 	char set_executable_bit =3D 0;
- 	unsigned int refresh_flags =3D 0;
- 	int lock_error =3D 0;
-+	int was_unborn;
- 	struct lock_file *lock_file;
-=20
- 	git_config(git_default_config, NULL);
-@@ -580,6 +581,7 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
- 	entries =3D read_cache();
- 	if (entries < 0)
- 		die("cache corrupted");
-+	was_unborn =3D is_cache_unborn();
-=20
- 	for (i =3D 1 ; i < argc; i++) {
- 		const char *path =3D argv[i];
-@@ -677,7 +679,7 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
- 					die("--index-info must be at the end");
- 				allow_add =3D allow_replace =3D allow_remove =3D 1;
- 				read_index_info(line_termination);
--				break;
-+				goto finish;
- 			}
- 			if (!strcmp(path, "--unresolve")) {
- 				has_errors =3D do_unresolve(argc - i, argv + i,
-@@ -738,7 +740,7 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
- 	}
-=20
-  finish:
--	if (active_cache_changed) {
-+	if (active_cache_changed || was_unborn) {
- 		if (newfd < 0) {
- 			if (refresh_flags & REFRESH_QUIET)
- 				exit(128);
+...
+shows what would be committed if the same options are given to
+'git-commit'.
+
+EXIT STATUS
+-----------
+Zero status:      There is a different between the index file and HEAD.
+Non-zero status:  There is nothing to commit by running `git commit`. 
+
+
+OUTPUT
+------
+</solution 2>
+
+
+
+<solution 3, Only zero status, non zero is easilly deducted. Clearest IMO>
+
+...
+shows what would be committed if the same options are given to
+'git-commit'.
+
+EXIT STATUS
+-----------
+Zero status: There is a different between the index and HEAD; running 
+`git commit` would create a new commit. 
+
+
+OUTPUT
+------
+</solution 3>
+
+
+
+A few things could be better explained:
+	- The command is to be run with '-a' as option. 
+	- The fact that non add'ed files are not taken into account is not
+completely obvious. The first paragraph of the DESCRIPTION explains it but it  
+is not the clearest explaination ever (maybe because it's not easy to explain 
+and man pages are references not user manuals)
+
+Cheers, Nadim.
