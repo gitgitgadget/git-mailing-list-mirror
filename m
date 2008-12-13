@@ -1,78 +1,67 @@
-From: Alexey Zaytsev <alexey.zaytsev@gmail.com>
-Subject: [PATCH] Let git remote accept up as alias to update
-Date: Sat, 13 Dec 2008 21:18:56 +0300
-Message-ID: <20081213181704.20126.4200.stgit@zaytsev.su>
+From: Resul Cetin <Resul-Cetin@gmx.net>
+Subject: Re: Optimizing cloning of a high object count repository
+Date: Sat, 13 Dec 2008 19:20:50 +0100
+Message-ID: <200812131920.50736.Resul-Cetin@gmx.net>
+References: <200812131624.57618.Resul-Cetin@gmx.net> <200812131714.05472.Resul-Cetin@gmx.net> <4943E657.9040204@gmx.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Cc: "Jean-Luc Herren" <jlh@gmx.ch>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	gentoo-scm@gentoo.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 13 19:11:09 2008
+X-From: git-owner@vger.kernel.org Sat Dec 13 19:23:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBYxI-0006X8-Er
-	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 19:11:08 +0100
+	id 1LBZ8m-00024U-92
+	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 19:23:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751010AbYLMSJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 13:09:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750968AbYLMSJr
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 13:09:47 -0500
-Received: from mu-out-0910.google.com ([209.85.134.190]:9972 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750933AbYLMSJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 13:09:46 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so1103344muf.1
-        for <git@vger.kernel.org>; Sat, 13 Dec 2008 10:09:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:to:from:date
-         :message-id:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=8fhPSVb8XnMxCk9jFPW5JuEu6wrR73SRhogAdENNpzE=;
-        b=nF/1VknBwwdrp9PsC1svHDMVabYb2nMnGiTSJya47f3mBgoNFcdTGgu849ooUhxFkp
-         IU3pfUdk1MV2ba1RA1pACsaUefaaTBSGtXb31mfNoTCxFtupHwOcPs+4YqRKZL2TsFVW
-         HhRb1kpFm+iM2H+VpBmaPqP1gL0+mZeX7VToE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:to:from:date:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        b=kLcuXSPMcVPtRYEFVaAGPH1DgfpfuQqL394v55bPmc3WVEMGLlmkXU4J8UN4h0+pbS
-         PUXUKOoZc3QWk+kD1UxjV5Kt6UO8bTDurSwf+niYvcrwtccyq17XNLTNfn27blF3tulI
-         MBFeo7CYUa8UkQmkovMfGwwHKUYD7lFRNv3dk=
-Received: by 10.103.213.10 with SMTP id p10mr2343363muq.17.1229191784513;
-        Sat, 13 Dec 2008 10:09:44 -0800 (PST)
-Received: from zaytsev.su ([77.221.155.68])
-        by mx.google.com with ESMTPS id j10sm8670512muh.57.2008.12.13.10.09.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 13 Dec 2008 10:09:43 -0800 (PST)
-User-Agent: StGit/0.14.3.292.gb975
+	id S1750933AbYLMSUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 13:20:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750965AbYLMSUx
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 13:20:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56499 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750919AbYLMSUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 13:20:52 -0500
+Received: (qmail invoked by alias); 13 Dec 2008 18:20:50 -0000
+Received: from i59F6A60F.versanet.de (EHLO rowo) [89.246.166.15]
+  by mail.gmx.net (mp040) with SMTP; 13 Dec 2008 19:20:50 +0100
+X-Authenticated: #13824512
+X-Provags-ID: V01U2FsdGVkX1/d21gpSYLd6wCxha3vnYs1aTnZofS5lER1IY3tl2
+	hJcA7/tMgySBwU
+User-Agent: KMail/1.10.3 (Linux/2.6.26-1-amd64; KDE/4.1.3; x86_64; ; )
+In-Reply-To: <4943E657.9040204@gmx.ch>
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103009>
 
-Signed-off-by: Alexey Zaytsev <alexey.zaytsev@gmail.com>
----
+On Saturday 13 December 2008 17:44:07 you wrote:
+> Resul Cetin wrote:
+> > That would be a workaround but it doesn't explain why git.kernel.org
+> > deliveres torvalds repository without any notable counting and
+> > compressing time.
+>
+> If I remember right, git.kernel.org is a quite beefy machine.  But
+> then again it has a lot more traffic too.  It might be interesting
+> to know what machine you're on, compared to git.kernel.org.
+I dont know what type of machine git.overlay.g.o is but my athlon64 3500+ with 
+4GB ram has exactly the same problem without any other load. I made a clone  
+over http and did no other changes to the repository until now.
 
-Don't know why, but I keep typing remote up instead of
-remote update. As update is probably by far the most
-used remote action, can we please have this alias?
+http://git.overlays.gentoo.org/gitroot/exp/gentoo-x86.git/ is the http clone 
+url.
 
- builtin-remote.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I will try some stuff to reduce the time spend before sending anything..... If 
+anyone has some ideas how to do that....
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index abc8dd8..8f5cd6d 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -893,7 +893,7 @@ int cmd_remote(int argc, const char **argv, const char *prefix)
- 		result = show(argc, argv);
- 	else if (!strcmp(argv[0], "prune"))
- 		result = prune(argc, argv);
--	else if (!strcmp(argv[0], "update"))
-+	else if (!strcmp(argv[0], "update") || !strcmp(argv[0], "up"))
- 		result = update(argc, argv);
- 	else {
- 		error("Unknown subcommand: %s", argv[0]);
+Regards,
+	Resul
