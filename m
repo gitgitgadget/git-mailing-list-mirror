@@ -1,88 +1,91 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git weekly news: 2008-50
-Date: Sat, 13 Dec 2008 14:18:29 -0800 (PST)
-Message-ID: <m38wqjg1n1.fsf@localhost.localdomain>
-References: <94a0d4530812121710u7755b8a9m87dd134b0c8b04ea@mail.gmail.com>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH try 2] gitweb: Add option to put a trailing slash on pathinfo-style project URLs
+Date: Sat, 13 Dec 2008 23:23:09 +0100
+Message-ID: <cb7bb73a0812131423h1f629ec1n9e8eacd657a4901@mail.gmail.com>
+References: <1229195421.3943.8.camel@mattlaptop2.local>
+	 <1229202689.31181.1.camel@mattlaptop2.local>
+	 <m3tz97g329.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git list" <git@vger.kernel.org>
-To: "Felipe Contreras" <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 13 23:19:52 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Matt McCutchen" <matt@mattmccutchen.net>, git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 13 23:24:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBcpy-0005zK-Di
-	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 23:19:50 +0100
+	id 1LBcuV-0007Eg-4Q
+	for gcvg-git-2@gmane.org; Sat, 13 Dec 2008 23:24:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658AbYLMWSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 17:18:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751680AbYLMWSc
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 17:18:32 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:43202 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751618AbYLMWSc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 17:18:32 -0500
-Received: by ewy10 with SMTP id 10so2364755ewy.13
-        for <git@vger.kernel.org>; Sat, 13 Dec 2008 14:18:29 -0800 (PST)
+	id S1752004AbYLMWXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 17:23:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751957AbYLMWXN
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 17:23:13 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:12181 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751877AbYLMWXM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 17:23:12 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so324723nfc.21
+        for <git@vger.kernel.org>; Sat, 13 Dec 2008 14:23:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=JnAzW6ddMPX87h2PxvTBwpe8RBLCUeLiE4kSfL/3KTY=;
-        b=dh6/E6hXCWDMYOJHw9SlBH550lTV/Y/FoK9oE/+y54j9ZU/DAfD6eXpt55KIxilsim
-         Yy6Rn+A4zVdwEh5E9fdh8y2uKSAxWqmGSVdKrBCYlFNNsd1n5tqBRoik0T5HiyQOoGBl
-         T+/dmRrCEAlrOQXP4vjZNnuw2XkdK+xBf9bbs=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Tc7Mptk7ckedKSZrBIs4CvU8iC5eBq+7SPtsMMpqsC8=;
+        b=DdvspVjZiHlal1+15WQ/235ESsK3HMaKjZLCVH3JppaB0nks71NNKfAqK6UnzW3RKF
+         hWKTH2Pg+CW4d45V55s60cFAqxWd/1pVD8iW2CidF0IxvYxHFCWQaxuS1FwLu90j2gaq
+         9jLYmtWTYZJJaPTEy3+RWQ+5utmk4DiYtHKmM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=MC+C8eNs29u4mzzKLLIAKP/O8rX0qgbepeL7mXMU0374ozgYhtwUzWVwgOKrmXdUlB
-         R1DkXBZSgBlNV+ZKL6ytZPfonlwyHFWfGuqE/ZqttEMFcty+zvZIdOyOFNb7B7187FNG
-         syVmuMP0CEGkoEcIthvdMoeDxJOukJmZ9x1aU=
-Received: by 10.210.49.7 with SMTP id w7mr5955505ebw.6.1229206709769;
-        Sat, 13 Dec 2008 14:18:29 -0800 (PST)
-Received: from localhost.localdomain (abvz56.neoplus.adsl.tpnet.pl [83.8.223.56])
-        by mx.google.com with ESMTPS id 3sm686664eyj.55.2008.12.13.14.18.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 13 Dec 2008 14:18:29 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBDMIRsq011798;
-	Sat, 13 Dec 2008 23:18:28 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBDMIQXk011795;
-	Sat, 13 Dec 2008 23:18:26 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <94a0d4530812121710u7755b8a9m87dd134b0c8b04ea@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Rryqg43ei3Zluiq37LA0GZ0mpiWfK4ii4mBaq9I5VsJRby0gZ6O5KMF6WEVu6otaSR
+         XKtCH4kwV8fOdRdzH/Xw7tvdTLUTKjz61lV0iaX4pEzDhq/fP7k8J+5SIXNs7u/KCNbt
+         yXzS/gFd7RmLDcYkXPJOwXKx/wdfPb7bF8Rxk=
+Received: by 10.210.88.7 with SMTP id l7mr2657389ebb.124.1229206989824;
+        Sat, 13 Dec 2008 14:23:09 -0800 (PST)
+Received: by 10.210.79.12 with HTTP; Sat, 13 Dec 2008 14:23:09 -0800 (PST)
+In-Reply-To: <m3tz97g329.fsf@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103030>
 
-"Felipe Contreras" <felipe.contreras@gmail.com> writes:
+On Sat, Dec 13, 2008 at 10:47 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> Matt McCutchen <matt@mattmccutchen.net> writes:
+>
+>> My Web site uses pathinfo mode and some rewrite magic to show the gitweb
+>> interface at the URL of the real repository directory (which users also
+>> pull from).  In this case, it's desirable to end generated links to the
+>> project in a trailing slash so the Web server doesn't have to redirect
+>> the client to add the slash.  This patch adds a second element to the
+>> "pathinfo" feature configuration to control the trailing slash.
+>>
+>> Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
+>
+> Did you check that it does not confuse gitweb if filename parameter is
+> passed using pathinfo?  Gitweb used to rely on final '/' to
+> distinguish directory pathnames from ordinary pathnames, but I think
+> currently thanks to the fact that gitweb now embeds action in pathinfo
+> URL, and does not need to guess type, it is not an issue.
+>
+> Or only project URLs (i.e. only with project parameter, i.e. only
+> "http://git.example.com/project.git/" but not other path_info links)
+> have trailing slash added?
+>
+> Errr... I see that it adds trailing slash only for project-only
+> path_info links, but the commit message was not entirely clear for me.
 
-> This week I'm trying to address some of the issues mentioned here. I
-> still would like people to request user accounts to this blog if they
-> wish to make some git related posts.
-> 
-> http://gitlog.wordpress.com/2008/12/13/git-weekly-links-2008-50/
-> 
-> == Articles ==
-> 
-> Why Subversion does not suck
-> http://blog.assembla.com/assemblablog/tabid/12618/bid/7437/Why-Subversion-does-not-suck.aspx
-[...]
-
-Thanks a lot. I quite like the new format, both HTML version on blog,
-and the format used here in this email.
-
-P.S. Small nitpick: you have changed the title of blog post, but not
-subject of email.
+If indeed the additional / is only asked for in summary view, I think
+there's no need for a feature toggle, we can always put it there. If
+not, I'm really curious about seeing the rewrite rules (they might
+also be worth adding to the gitweb documentation as examples of 'power
+usage').
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Giuseppe "Oblomov" Bilotta
