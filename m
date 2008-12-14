@@ -1,80 +1,69 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: What's cooking in git.git (Dec 2008, #02; Sun, 14)
-Date: Sun, 14 Dec 2008 14:15:08 +0100
-Message-ID: <20081214131508.GA5691@genesis.frugalware.org>
-References: <7v7i632mg9.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0812141142300.2014@eeepc-johanness> <m3ljujdn2k.fsf@localhost.localdomain>
+From: "Sverre Rabbelier" <alturin@gmail.com>
+Subject: Re: Announce: TortoiseGit 0.1 preview version
+Date: Sun, 14 Dec 2008 14:28:20 +0100
+Message-ID: <bd6139dc0812140528w4591ee03h9723ba66a967051b@mail.gmail.com>
+References: <1976ea660812130033m2d54cc57tfe134fab0d687d71@mail.gmail.com>
+	 <m3d4fuewe0.fsf@localhost.localdomain>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="dgVgbXf0Vb2tUvlQ"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 14 14:16:31 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "=?BIG5?B?p/W0vA==?=" <lznuaa@gmail.com>, git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 14 14:29:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBqpg-0007CX-NJ
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 14:16:29 +0100
+	id 1LBr2U-0002Nm-Aj
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 14:29:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752962AbYLNNPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Dec 2008 08:15:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752905AbYLNNPL
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 08:15:11 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:48142 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752835AbYLNNPK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Dec 2008 08:15:10 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id F235658091;
-	Sun, 14 Dec 2008 14:15:07 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id B45164465E;
-	Sun, 14 Dec 2008 14:15:07 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 11C6D11B887E; Sun, 14 Dec 2008 14:15:08 +0100 (CET)
+	id S1753049AbYLNN2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Dec 2008 08:28:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753040AbYLNN2W
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 08:28:22 -0500
+Received: from yw-out-2324.google.com ([74.125.46.29]:35415 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753005AbYLNN2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Dec 2008 08:28:21 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so965441ywe.1
+        for <git@vger.kernel.org>; Sun, 14 Dec 2008 05:28:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Ii+PWNcBpLN3Co+5zOAwXq/6fU5LMmTnHDrFAOSXqo0=;
+        b=djofuiG/Hsw54YIFuDktKQw1NJXOqimaC2DwtTsJpkEN9275JYXG9dILk/TYm+qMeB
+         kloVGj/8jOhbP6u94SupWPNk8ay6kjjdutYmSwtTFNjJjOvsIsrptaPIxrChVPf7gGh2
+         DpP4HU/dRC3EPTRuqGAJ8G2TCmOqjCHZ5mG38=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=XPs33VpMbw16lCWuXPBmnIJ3jhK4/XaBOI14LhRBIGd62aNWqOY6jRfzJaoDJCZr3U
+         UEKYh2Cf+Evbl+AjL3eUQFaqTtwYhZ+vDLZvfjjtkrKTg19adu26VHv17kMxV7aDSOT5
+         alKAvTfzjsUPEDezr0DV9Azf0fp3g6KjndyDE=
+Received: by 10.150.149.19 with SMTP id w19mr10515655ybd.114.1229261300476;
+        Sun, 14 Dec 2008 05:28:20 -0800 (PST)
+Received: by 10.151.13.13 with HTTP; Sun, 14 Dec 2008 05:28:20 -0800 (PST)
+In-Reply-To: <m3d4fuewe0.fsf@localhost.localdomain>
 Content-Disposition: inline
-In-Reply-To: <m3ljujdn2k.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103081>
 
+2008/12/14 Jakub Narebski <jnareb@gmail.com>:
+> How it differs from GitCheetah project?
 
---dgVgbXf0Vb2tUvlQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I really think it's a shame if this does not get integrated with
+GitCheetah. We need a good client not just on Windows, but on all
+platforms, with shell integration of course.
 
-On Sun, Dec 14, 2008 at 03:17:05AM -0800, Jakub Narebski <jnareb@gmail.com>=
- wrote:
-> So the answer is that AsciiDoc does not generate LaTeX, so pdflatex
-> would be not enough.
->=20
-> By the way, from the AsciiDoc page:
->=20
->  NOTE: Owning to to other commitments, Benjamin is unable to maintain
->        this backend. I don't have the expertise or time to take this
->        on consequently the LaTeX backend has not been tested or
->        updated since AsciiDoc version 8.2.7 and is currently
->        unsupported.
+-- 
+Cheers,
 
-Yes, this is the LaTeX backend, which would allow not to use dblatex,
-but generate tex directly from asciidoc. That's why my patch uses
-dblatex instead.
-
---dgVgbXf0Vb2tUvlQ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklFBtsACgkQe81tAgORUJYRPwCgl7ID8kCBT/+mmsBJlxXW54L2
-fNQAoJbV2+iz4DNetVn5EeBSO1oHeQiU
-=Y2/T
------END PGP SIGNATURE-----
-
---dgVgbXf0Vb2tUvlQ--
+Sverre Rabbelier
