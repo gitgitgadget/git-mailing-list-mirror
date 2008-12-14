@@ -1,97 +1,141 @@
-From: martin <martin@siamect.com>
-Subject: Re: is gitosis secure?
-Date: Sun, 14 Dec 2008 18:02:57 +0700
-Message-ID: <4944E7E1.2030907@siamect.com>
-References: <200812090956.48613.thomas@koch.ro> <bd6139dc0812090138l5dbaf20bsd1cde00f52bb94e5@mail.gmail.com> <87hc58hwmi.fsf@hades.wkstn.nix> <gi1qsl$22p$1@ger.gmane.org> <alpine.DEB.1.10.0812132126470.17688@asgard.lang.hm> <4944D4F7.7050501@siamect.com> <alpine.DEB.1.10.0812140304320.17688@asgard.lang.hm>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2008, #02; Sun, 14)
+Date: Sun, 14 Dec 2008 03:08:24 -0800 (PST)
+Message-ID: <m3prjvdngm.fsf@localhost.localdomain>
+References: <7v7i632mg9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun Dec 14 12:04:28 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 14 12:09:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBolu-0000ce-JB
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 12:04:27 +0100
+	id 1LBor7-00020p-06
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 12:09:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591AbYLNLDB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Dec 2008 06:03:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752787AbYLNLDB
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 06:03:01 -0500
-Received: from smtp4.ksc.net.th ([203.107.129.14]:6595 "EHLO smtp4.ksc.net.th"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752591AbYLNLDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Dec 2008 06:03:01 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApcBAMB2REl8eO3f/2dsb2JhbAAIjB6GB7wHgn4
-X-IronPort-AV: E=Sophos;i="4.36,218,1228064400"; 
-   d="scan'208";a="94549248"
-Received: from ppp-124-120-237-223.revip2.asianet.co.th (HELO [192.168.0.200]) ([124.120.237.223])
-  by smtp4.ksc.net.th with ESMTP; 14 Dec 2008 18:02:58 +0700
-User-Agent: Thunderbird 2.0.0.17 (X11/20081017)
-In-Reply-To: <alpine.DEB.1.10.0812140304320.17688@asgard.lang.hm>
+	id S1752886AbYLNLI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Dec 2008 06:08:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752447AbYLNLI2
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 06:08:28 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:45407 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752787AbYLNLI0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Dec 2008 06:08:26 -0500
+Received: by ewy10 with SMTP id 10so2514295ewy.13
+        for <git@vger.kernel.org>; Sun, 14 Dec 2008 03:08:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=uhG6ZQ0ltC4gVRYoHqMLkKnr74caGWxm+PZUAaSa+b0=;
+        b=hPXb7IlUWGRx67JDRAY3/h8VPGgieOmn7u+svMK6foTWm5YyXTUX5U4T+UVqCwvheV
+         4uPwrGsmXac7nonPwv0Fe+VtDrDrdpbE+CnTcfyIpHBzJlK/IbtKiUsQLPQIvRLdVDCC
+         pfU7z/TfoCKnQO9ydKhnMVio0ueCQ5C1XvuOw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=ZVD7Y0J+ACKrwDiT8NQE6rSwiHPxa4zjy/Jsc2vrZcCvN1fDzXn2J0nX2S1mx10cDB
+         BsQ3Om+ykkfRLYhHjVyA3BOSHnvioJn4s3K7a67wKyVahKHcBiCzL666tkLE1ve1N2g2
+         fJhkpWsZiL2D6Ql6ZN2Wey4anYVxl2nWL4HTg=
+Received: by 10.210.122.5 with SMTP id u5mr6457173ebc.83.1229252904849;
+        Sun, 14 Dec 2008 03:08:24 -0800 (PST)
+Received: from localhost.localdomain (abxb72.neoplus.adsl.tpnet.pl [83.8.251.72])
+        by mx.google.com with ESMTPS id 5sm800036eyf.18.2008.12.14.03.08.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 14 Dec 2008 03:08:24 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBEB7roj015811;
+	Sun, 14 Dec 2008 12:07:58 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBEB7bmA015806;
+	Sun, 14 Dec 2008 12:07:37 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7v7i632mg9.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103065>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
+> ----------------------------------------------------------------
+> [New Topics]
+> 
+> * jn/gitweb-blame (Thu Dec 11 01:33:29 2008 +0100) 3 commits
+>  - gitweb: cache $parent_commit info in git_blame()
+>  - gitweb: A bit of code cleanup in git_blame()
+>  - gitweb: Move 'lineno' id from link to row element in git_blame
+> 
+> I've briefly looked at the resurrection of Ajaxy blame that comes on top
+> of this series and it looked promising.
 
-david@lang.hm wrote:
-> On Sun, 14 Dec 2008, martin wrote:
->
->> Dear David.
->> Why do you trust VPN more than the SSH?
->> I ask because I have just removed the "first VPN then SSH" solution 
->> in favor for a SSH only solution using Gitosis just to get rid of the 
->> VPN which I believe is less secure than SSH (well until I read you 
->> comments below).
->> I thought I was doing something right for once but maybe I'm not?
->> Thanks and best regards
->> Martin
->
-> in part it's that a VPN is a single point of control for all remote 
-> access.
->
-> If you use ssh you end up exposing all the individual machines
->
-> 1. data leakage of just what machines exist to possibly hostile users.
->
-> 2. the many machines are configured seperatly, frequently by different 
-> people. this makes it far more likely that sometime some machine will 
-> get misconfigured.
->
-> 3. people who are focused on providing features have a strong 
-> temptation to cut corners and just test that the feature works and not 
-> test that everything that isn't supposed to work actually doesn't 
-> work. as a result, in many companies there is a deliberate seperation 
-> (and tension) between a group focused on controlling and auditing 
-> access and one that is focused on creating fucntionality and features.
->
-> also from a polical/social point of view everyone recognises that if 
-> you grant someone VPN access you are trusting them, but people don't 
-> seem to think the same way with ssh.
->
-> David Lang
->
+AJAXy blame in my opinion is not yet ready.  Close, but not yet.
+At minimal I'd have to remove or separate the 'time to generate'
+patch.
 
-I opened port 22 in the firewall to just those hosts that I need to 
-reach, which is one in this case...the rest of the machines I cannot reach.
-I did a brief port scan and the thing is silent... so I don't think I 
-reveal any of the other hosts... but I should not say is it's secure 
-with your measures...
+I wonder if it should made into 1.6.1 for the performance improvements
+in 'blame' view...
+ 
+> * sc/gitweb-category (Fri Dec 12 00:45:12 2008 +0100) 3 commits
+>  - gitweb: Optional grouping of projects by category
+>  - gitweb: Split git_project_list_body in two functions
+>  - gitweb: Modularized git_get_project_description to be more generic
 
-Your point two I don't understand...   If you are in charge of the 
-firewall you also know what machines you let people reach. If these 
-machines are numerous then I think there is a management problem 
-somewhere else...
+It shapes nicely, and I think with one more commit on top (or with
+extending topmost commit) we can have categories sorted in given
+order, and not hardcoded to always be in alphabetic order.
 
+> ----------------------------------------------------------------
+> [Post 1.6.1 items]
+> 
+> * gb/gitweb-patch (Sat Dec 6 16:02:35 2008 +0100) 3 commits
+>  - gitweb: link to patch(es) view from commit and log views
+>  - gitweb: add patches view
+>  - gitweb: add patch view
+> 
+> Updated series.  Reviews and Acks?
 
-Point 3 is correct but I fail to see how this is less of a problem with 
-VPN than SSH.
+I'll try to find time to review (and most probably Ack) later today.
+ 
+> ----------------------------------------------------------------
+> [Graduated to "master"]
+>
+> * jn/gitweb-utf8 (Mon Dec 1 19:01:42 2008 +0100) 1 commit
+>  + gitweb: Fix handling of non-ASCII characters in inserted HTML
+>    files.
+> 
+> A bugfix.
 
-Thanks and Best regards
-Martin
+What about
+
+   + gitweb: Fix bug in insert_file() subroutine
+
+Isn't it in the same topic branch?
+
+I am very sorry for buginess of this patch series...
+
+[...] 
+> ----------------------------------------------------------------
+> [On Hold]
+> 
+> * jc/stripspace (Sun Mar 9 00:30:35 2008 -0800) 6 commits
+>  - git-am --forge: add Signed-off-by: line for the author
+>  - git-am: clean-up Signed-off-by: lines
+>  - stripspace: add --log-clean option to clean up signed-off-by:
+>    lines
+>  - stripspace: use parse_options()
+>  - Add "git am -s" test
+>  - git-am: refactor code to add signed-off-by line for the committer
+
+What happened to this series to be so stale^Wstalled?
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
