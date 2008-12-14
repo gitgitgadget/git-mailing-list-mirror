@@ -1,91 +1,93 @@
-From: david@lang.hm
-Subject: Re: is gitosis secure?
-Date: Sat, 13 Dec 2008 21:40:24 -0800 (PST)
-Message-ID: <alpine.DEB.1.10.0812132126470.17688@asgard.lang.hm>
-References: <200812090956.48613.thomas@koch.ro> <bd6139dc0812090138l5dbaf20bsd1cde00f52bb94e5@mail.gmail.com> <87hc58hwmi.fsf@hades.wkstn.nix> <gi1qsl$22p$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-fast-import possible memory corruption problem
+Date: Sat, 13 Dec 2008 21:53:55 -0800
+Message-ID: <7vskor2tfw.fsf@gitster.siamese.dyndns.org>
+References: <20081214020822.GB4121@les.ath.cx>
+ <7vd4fv4e3u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 14 05:40:49 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: YONETANI Tomokazu <qhwt+git@les.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Dec 14 06:55:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBimc-0003sP-VX
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 05:40:47 +0100
+	id 1LBjwy-0004L5-3c
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 06:55:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752340AbYLNEjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 23:39:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752438AbYLNEjT
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 23:39:19 -0500
-Received: from mail.lang.hm ([64.81.33.126]:46670 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751660AbYLNEjS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 23:39:18 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id mBE4dEsC028202;
-	Sat, 13 Dec 2008 20:39:14 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <gi1qsl$22p$1@ger.gmane.org>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1750749AbYLNFyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Dec 2008 00:54:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750699AbYLNFyE
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 00:54:04 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51225 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750696AbYLNFyD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Dec 2008 00:54:03 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2DFA287960;
+	Sun, 14 Dec 2008 00:54:01 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2FC168795B; Sun,
+ 14 Dec 2008 00:53:57 -0500 (EST)
+In-Reply-To: <7vd4fv4e3u.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat, 13 Dec 2008 19:42:13 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9B3493A0-C9A3-11DD-B315-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103050>
 
-this is really a reply to an earlier message that I deleted.
+Junio C Hamano <gitster@pobox.com> writes:
 
-the question was asked 'what would the security people like instead of 
-SSH'
+>> As the `round out' takes place AFTER it found the room in the mem_pool,
+>> there's a small chance of p->next_free being set outside of the chosen
+>> area, up to (sizeof(uintmax_t) - 1) bytes.  pool_strdup() is one of the
+>> functions which can trigger the problem, when pool_alloc() finds a room
+>> at the end of a pool entry and the requested length is not multiple of
+>> size(uintmax_t).  I believe attached patch addresses this problem.
+>
+> Thanks -- do you mean your reproducible crash does not reproduce with the
+> patch anymore?
+>
+> I think your change to move the "round up" logic up in the codepath makes
+> perfect sense.  But your patch seems to conflate totally unrelated change
+> to move memzero from the caller to callee into it, and I do not see the
+> reason why it should be that way.  If the caller asked 10 bytes to calloc
+> from the pool, and the underlying pool allocator gives you a 16-byte
+> block, you only have to guarantee that the first 10 bytes are cleared, and
+> can leave the trailing padding 6 bytes at the end untouched.
 
-as a security person who doesn't like how ssh is used for everything, let 
-me list a couple of concerns.
+That is, something like this...
 
-ssh is default allow (it lets you run any commands), you can lock it down 
-with effort.
+ fast-import.c |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-ssh defaults to establishing a tunnel between machines that other network 
-traffic can use to bypass your system. yes I know that with enough effort 
-and control of both systems you can tunnel over anything, the point is 
-that ssh is eager to do this for you (overly eager IMHO)
-
-ssh depends primarily on certificates that reside on untrusted machines. 
-it can be made to work with tokens or such, but it takes a fair bit of 
-effort.
-
-sshd runs as root on just about every system
-
-people trust ssh too much. they tend to think that anything is acceptable 
-if it's done over ssh (this isn't a technical issue, but it is a social 
-issue)
-
-
-what would I like to see in an ideal world?
-
-something that runs as the git user, does not enable tunneling, and only 
-does the data transfer functions needed for a push. it should use 
-off-the-shelf libraries for certificate authentication and tie into PAM 
-for additional authentication.
-
-the authentication would not be any better than with SSH, but the rest 
-would be better. I was very pleased to watch the git-daemon development, 
-and the emphisis on it running with minimum privilages and provide just 
-the functionality that was needed, and appropriately assuming that any 
-connection from the outside is hostile until proven otherwise.
-
-
-what would I do with current tools?
-
-I would say that developers working from outside should VPN into the 
-company network before doing the push with SSH rather than exposing the 
-SSH daemon to the entire Internet.
-
-in the medium term, if the git-over-http gets finished, I would like to 
-see a seperate cgi created to allow push as well. http is overused as a 
-tunneling protocol, but it's easy to setup a server that can't do anything 
-except what you want, so this tunneling is generally not a threat to 
-servers (it's a horrible threat to client systems)
-
-David Lang
+diff --git c/fast-import.c w/fast-import.c
+index 3c035a5..3276d5d 100644
+--- c/fast-import.c
++++ w/fast-import.c
+@@ -554,6 +554,10 @@ static void *pool_alloc(size_t len)
+ 	struct mem_pool *p;
+ 	void *r;
+ 
++	/* round up to a 'uintmax_t' alignment */
++	if (len & (sizeof(uintmax_t) - 1))
++		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
++
+ 	for (p = mem_pool; p; p = p->next_pool)
+ 		if ((p->end - p->next_free >= len))
+ 			break;
+@@ -572,9 +576,6 @@ static void *pool_alloc(size_t len)
+ 	}
+ 
+ 	r = p->next_free;
+-	/* round out to a 'uintmax_t' alignment */
+-	if (len & (sizeof(uintmax_t) - 1))
+-		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
+ 	p->next_free += len;
+ 	return r;
+ }
