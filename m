@@ -1,93 +1,177 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-fast-import possible memory corruption problem
-Date: Sat, 13 Dec 2008 21:53:55 -0800
-Message-ID: <7vskor2tfw.fsf@gitster.siamese.dyndns.org>
-References: <20081214020822.GB4121@les.ath.cx>
- <7vd4fv4e3u.fsf@gitster.siamese.dyndns.org>
+Subject: What's in git.git (Dec 2008, #02; Sun, 14)
+Date: Sun, 14 Dec 2008 00:24:44 -0800
+Message-ID: <7v8wqj2mgj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: YONETANI Tomokazu <qhwt+git@les.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Dec 14 06:55:32 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 14 09:26:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBjwy-0004L5-3c
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 06:55:32 +0100
+	id 1LBmIj-0001w1-W2
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 09:26:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750749AbYLNFyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Dec 2008 00:54:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750699AbYLNFyE
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 00:54:04 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51225 "EHLO
+	id S1751239AbYLNIYv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Dec 2008 03:24:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbYLNIYv
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 03:24:51 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39537 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750696AbYLNFyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Dec 2008 00:54:03 -0500
+	with ESMTP id S1751038AbYLNIYu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Dec 2008 03:24:50 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2DFA287960;
-	Sun, 14 Dec 2008 00:54:01 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CE1D387E6D;
+	Sun, 14 Dec 2008 03:24:48 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2FC168795B; Sun,
- 14 Dec 2008 00:53:57 -0500 (EST)
-In-Reply-To: <7vd4fv4e3u.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat, 13 Dec 2008 19:42:13 -0800")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C48EE87E6C; Sun,
+ 14 Dec 2008 03:24:46 -0500 (EST)
+X-maint-at: 544ddb045a4bd49da9ffc1d9da80bdc0d71b2518
+X-master-at: 7e76aba317b690932c8236311219b0faf97f1571
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9B3493A0-C9A3-11DD-B315-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: AC07804C-C9B8-11DD-A9B4-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103051>
 
-Junio C Hamano <gitster@pobox.com> writes:
+There are a handful fixes since 1.6.1-rc2 on 'master' and I am hoping t=
+hat
+we can do -rc3 later today, and declare the 1.6.1 final on the 20th or
+so.
 
->> As the `round out' takes place AFTER it found the room in the mem_pool,
->> there's a small chance of p->next_free being set outside of the chosen
->> area, up to (sizeof(uintmax_t) - 1) bytes.  pool_strdup() is one of the
->> functions which can trigger the problem, when pool_alloc() finds a room
->> at the end of a pool entry and the requested length is not multiple of
->> size(uintmax_t).  I believe attached patch addresses this problem.
->
-> Thanks -- do you mean your reproducible crash does not reproduce with the
-> patch anymore?
->
-> I think your change to move the "round up" logic up in the codepath makes
-> perfect sense.  But your patch seems to conflate totally unrelated change
-> to move memzero from the caller to callee into it, and I do not see the
-> reason why it should be that way.  If the caller asked 10 bytes to calloc
-> from the pool, and the underlying pool allocator gives you a 16-byte
-> block, you only have to guarantee that the first 10 bytes are cleared, and
-> can leave the trailing padding 6 bytes at the end untouched.
+----------------------------------------------------------------
 
-That is, something like this...
+* The 'maint' branch has these fixes since the last announcement.
 
- fast-import.c |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+Brandon Casey (11):
+  t7700: demonstrate mishandling of objects in packs with a .keep file
+  packed_git: convert pack_local flag into a bitfield and add pack_keep
+  pack-objects: new option --honor-pack-keep
+  repack: don't repack local objects in packs with .keep file
+  repack: do not fall back to incremental repacking with [-a|-A]
+  builtin-gc.c: use new pack_keep bitfield to detect .keep file existen=
+ce
+  t7700: demonstrate mishandling of loose objects in an alternate ODB
+  sha1_file.c: split has_loose_object() into local and non-local
+    counterparts
+  pack-objects: extend --local to mean ignore non-local loose objects t=
+oo
+  t7700: test that 'repack -a' packs alternate packed objects
+  repack: only unpack-unreachable if we are deleting redundant packs
 
-diff --git c/fast-import.c w/fast-import.c
-index 3c035a5..3276d5d 100644
---- c/fast-import.c
-+++ w/fast-import.c
-@@ -554,6 +554,10 @@ static void *pool_alloc(size_t len)
- 	struct mem_pool *p;
- 	void *r;
- 
-+	/* round up to a 'uintmax_t' alignment */
-+	if (len & (sizeof(uintmax_t) - 1))
-+		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
-+
- 	for (p = mem_pool; p; p = p->next_pool)
- 		if ((p->end - p->next_free >= len))
- 			break;
-@@ -572,9 +576,6 @@ static void *pool_alloc(size_t len)
- 	}
- 
- 	r = p->next_free;
--	/* round out to a 'uintmax_t' alignment */
--	if (len & (sizeof(uintmax_t) - 1))
--		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
- 	p->next_free += len;
- 	return r;
- }
+Davide Libenzi (1):
+  xdiff: give up scanning similar lines early
+
+Deskin Miller (1):
+  git-svn: Make following parents atomic
+
+Jakub Narebski (1):
+  gitweb: Make project specific override for 'grep' feature work
+
+Jeff King (2):
+  commit: Fix stripping of patch in verbose mode.
+  tag: delete TAG_EDITMSG only on successful tag
+
+Jim Meyering (1):
+  git-config.txt: fix a typo
+
+Johannes Sixt (1):
+  compat/mingw.c: Teach mingw_rename() to replace read-only files
+
+Junio C Hamano (2):
+  GIT 1.6.0.5
+  work around Python warnings from AsciiDoc
+
+Linus Torvalds (1):
+  fsck: reduce stack footprint
+
+Matt McCutchen (1):
+  "git diff <tree>{3,}": do not reverse order of arguments
+
+Miklos Vajna (1):
+  http.c: use 'git_config_string' to get 'curl_http_proxy'
+
+Nicolas Pitre (1):
+  make sure packs to be replaced are closed beforehand
+
+Thomas Rast (1):
+  fetch-pack: Avoid memcpy() with src=3D=3Ddst
+
+
+* The 'master' branch has these since the last announcement
+  in addition to the above.
+
+Alex Riesen (3):
+  Make some of fwrite/fclose/write/close failures visible
+  Make chdir failures visible
+  Report symlink failures in merge-recursive
+
+Alexander Potashev (2):
+  Fix typos in documentation
+  Fix typo in comment in builtin-add.c
+
+Alexey Borzenkov (1):
+  Define linkgit macro in [macros] section
+
+Brandon Casey (1):
+  git-branch: display sha1 on branch deletion
+
+Deskin Miller (1):
+  git-svn: Make branch use correct svn-remote
+
+Jakub Narebski (2):
+  gitweb: Fix handling of non-ASCII characters in inserted HTML files
+  gitweb: Fix bug in insert_file() subroutine
+
+Jeff King (6):
+  add stage to gitignore
+  reorder ALLOW_TEXTCONV option setting
+  diff: allow turning on textconv explicitly for plumbing
+  diff: fix handling of binary rewrite diffs
+  diff: respect textconv in rewrite diffs
+  rebase: improve error messages about dirty state
+
+Junio C Hamano (16):
+  builtin-rm.c: explain and clarify the "local change" logic
+  git add --intent-to-add: fix removal of cached emptiness
+  git add --intent-to-add: do not let an empty blob be committed by
+    accident
+  Install git-stage in exec-path
+  git-am --whitespace: do not lose the command line option
+  git-am: propagate -C<n>, -p<n> options as well
+  git-am: propagate --3way options as well
+  Test that git-am does not lose -C/-p/--whitespace options
+  git-am: rename apply_opt_extra file to apply-opt
+  Update draft release notes to 1.6.1
+  Update draft release notes for 1.6.1
+  Revert "git-stash: use git rev-parse -q"
+  Point "stale" 1.6.0.5 documentation from the main git documentation p=
+age
+  builtin-checkout.c: check error return from read_cache()
+  read-cache.c: typofix in comment
+  Fix t4031
+
+Markus Heidelberg (1):
+  builtin-commit: remove unused message variable
+
+Miklos Vajna (5):
+  filter-branch: use git rev-parse -q
+  lost-found: use git rev-parse -q
+  pull: use git rev-parse -q
+  rebase: use git rev-parse -q
+  submodule: use git rev-parse -q
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
+  Extend index to save more flags
+
+Ralf Wildenhues (1):
+  Improve language in git-merge.txt and related docs
+
+Tor Arvid Lund (2):
+  git-p4: Fix bug in p4Where method.
+  git-p4: Fix regression in p4Where method.
