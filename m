@@ -1,74 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-fast-import possible memory corruption problem
-Date: Sat, 13 Dec 2008 19:42:13 -0800
-Message-ID: <7vd4fv4e3u.fsf@gitster.siamese.dyndns.org>
-References: <20081214020822.GB4121@les.ath.cx>
+Subject: Re: [PATCH v3] git-sh-setup: Fix scripts whose PWD is a symlink into
+ a git work-dir
+Date: Sat, 13 Dec 2008 19:54:49 -0800
+Message-ID: <7v4p174diu.fsf@gitster.siamese.dyndns.org>
+References: <7viqprzsvs.fsf@gitster.siamese.dyndns.org>
+ <1229201231-12586-1-git-send-email-marcel@oak.homeunix.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: YONETANI Tomokazu <qhwt+git@les.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Dec 14 04:43:41 2008
+Cc: git@vger.kernel.org, jnareb@gmail.com, ae@op5.se,
+	j.sixt@viscovery.net
+To: "Marcel M. Cary" <marcel@oak.homeunix.org>
+X-From: git-owner@vger.kernel.org Sun Dec 14 04:56:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBhtN-0002uM-4V
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 04:43:41 +0100
+	id 1LBi5e-00055R-0N
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 04:56:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752118AbYLNDmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 22:42:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbYLNDmV
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 22:42:21 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65078 "EHLO
+	id S1752156AbYLNDzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 22:55:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752325AbYLNDzD
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 22:55:03 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:32946 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751660AbYLNDmU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 22:42:20 -0500
+	with ESMTP id S1751660AbYLNDzB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 22:55:01 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3480B1A402;
-	Sat, 13 Dec 2008 22:42:19 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 991F21A405;
+	Sat, 13 Dec 2008 22:54:59 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0D0971A401; Sat,
- 13 Dec 2008 22:42:15 -0500 (EST)
-In-Reply-To: <20081214020822.GB4121@les.ath.cx> (YONETANI Tomokazu's message
- of "Sun, 14 Dec 2008 11:08:22 +0900")
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 596161A402; Sat,
+ 13 Dec 2008 22:54:50 -0500 (EST)
+In-Reply-To: <1229201231-12586-1-git-send-email-marcel@oak.homeunix.org>
+ (Marcel M. Cary's message of "Sat, 13 Dec 2008 12:47:11 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 354352BE-C991-11DD-B90C-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FA80F3BE-C992-11DD-B90C-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103048>
 
-YONETANI Tomokazu <qhwt+git@les.ath.cx> writes:
+"Marcel M. Cary" <marcel@oak.homeunix.org> writes:
 
-> While trying to convert NetBSD CVS repository to Git, I've been
-> experiencing 100% reproducible crash of git-fast-import.  After
-> poking here and there and I noticed a dubious code fragment in
-> pool_alloc():
-> 	:
+> I also removed the "pwd -P" from the unit test.
+
+Hmm, really...?
+
+>> > +# Prove that the remote end really is a repo, and other commands
+>> > +# work fine in this context.
+>> > +#
+>> > +test_debug "
+>> > +    test_expect_success 'pushing from symlinked subdir' '
+>> > +
+>> > +        git push
+>> > +    '
+>> > +"
+>> 
+>> Why should this be hidden inside test_debug?
 >
->         r = p->next_free;
->         /* round out to a 'uintmax_t' alignment */
->         if (len & (sizeof(uintmax_t) - 1))
->                 len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
->         p->next_free += len;
->         return r;
->
-> As the `round out' takes place AFTER it found the room in the mem_pool,
-> there's a small chance of p->next_free being set outside of the chosen
-> area, up to (sizeof(uintmax_t) - 1) bytes.  pool_strdup() is one of the
-> functions which can trigger the problem, when pool_alloc() finds a room
-> at the end of a pool entry and the requested length is not multiple of
-> size(uintmax_t).  I believe attached patch addresses this problem.
+> I'm not particularly trying to test "git push" or "git pull" in general
+> here.  That's also why the other "git pull" was in a test_debug.  I
+> thought it was really only useful to someone trying to understand the
+> contents of the test file.  There are other files that cover push and
+> pull.  Do you think these test cases should run all the time here?
 
-Thanks -- do you mean your reproducible crash does not reproduce with the
-patch anymore?
+I'd say so.  Your supporting argument could be "See, push works just fine
+with this layout, but pull doesn't because it is a shell script that can
+be fooled, and this change is to fix the inconsistencies between them."
+Having these test enabled would be a good way to do so.  Then it becomes
+irrelevant if "jump into the middle of a directory hierarchy sideways via
+symlink" is worth supporting or not ;-)
 
-I think your change to move the "round up" logic up in the codepath makes
-perfect sense.  But your patch seems to conflate totally unrelated change
-to move memzero from the caller to callee into it, and I do not see the
-reason why it should be that way.  If the caller asked 10 bytes to calloc
-from the pool, and the underlying pool allocator gives you a 16-byte
-block, you only have to guarantee that the first 10 bytes are cleared, and
-can leave the trailing padding 6 bytes at the end untouched.
+But whether it is inside test_debug or not, the test should check not just
+the exit status from 'git push' but also check what happened to the
+receiving repository at least to make sure it is pushing to the location
+you are expecting it to.
+
+> diff --git a/t/t2300-cd-to-toplevel.sh b/t/t2300-cd-to-toplevel.sh
+> new file mode 100755
+> index 0000000..05854b4
+> --- /dev/null
+> +++ b/t/t2300-cd-to-toplevel.sh
+> @@ -0,0 +1,37 @@
+> +#!/bin/sh
+> +
+> +test_description='cd_to_toplevel'
+> +
+> +. ./test-lib.sh
+> +
+> +test_cd_to_toplevel () {
+> +	test_expect_success "$2" '
+> +		(
+> +			cd '"'$1'"' &&
+> +			. git-sh-setup &&
+> +			cd_to_toplevel &&
+> +			[ "$(pwd -P)" = "$TOPLEVEL" ]
+> +		)
+> +	'
+> +}
+
+The quoting of $1 here is a bit tricky, but I think it is good enough for
+directory names used in tests that use this function.
