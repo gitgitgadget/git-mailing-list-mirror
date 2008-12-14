@@ -1,101 +1,59 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2008, #02; Sun, 14)
-Date: Sun, 14 Dec 2008 03:17:05 -0800 (PST)
-Message-ID: <m3ljujdn2k.fsf@localhost.localdomain>
-References: <7v7i632mg9.fsf@gitster.siamese.dyndns.org>
-	<alpine.DEB.1.00.0812141142300.2014@eeepc-johanness>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] bash completion: remove deprecated --prune from git-gc
+Date: Sun, 14 Dec 2008 06:19:39 -0500
+Message-ID: <20081214111939.GC6499@coredump.intra.peff.net>
+References: <200812132008.08543.markus.heidelberg@web.de> <alpine.DEB.1.00.0812141137350.2014@eeepc-johanness> <20081214111213.GA6499@coredump.intra.peff.net> <alpine.DEB.1.00.0812141216120.2014@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Miklos Vajna <vmiklos@frugalware.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Markus Heidelberg <markus.heidelberg@web.de>, gitster@pobox.com,
+	git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Dec 14 12:18:38 2008
+X-From: git-owner@vger.kernel.org Sun Dec 14 12:20:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBozd-00048V-GT
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 12:18:37 +0100
+	id 1LBp1v-0004du-BG
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 12:20:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752972AbYLNLRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Dec 2008 06:17:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753005AbYLNLRT
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 06:17:19 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:35734 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752918AbYLNLRT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Dec 2008 06:17:19 -0500
-Received: by ewy10 with SMTP id 10so2516365ewy.13
-        for <git@vger.kernel.org>; Sun, 14 Dec 2008 03:17:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=fWdb8qx0UzxlyAY42JAVxhWe9IUXDAhlkXxtiiK4JOs=;
-        b=sW/EGH9bzUptOJQVi2dioyckmlx0kOHQqNdS7PhbTVMiGHMHh/g1t6wCtT+exGk9J7
-         0R4LKD0YfN3F3pDunePNtiZ+kMHFIrOtOzNwmKrl2iE+1eqxxINXZiyWrta0JpQB9oTw
-         Gf0IF3zXuoJ9E68As+Gve9dDT0r72OjLyfj/M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=qumNHwQ06Mssv5PYLu+mF69VhfYlJtbQUNCYK5v/7JsqiJdajCWw/u20ZM297ZNRU4
-         estCXhDbpZ8Nd1HmQdAeNJs+bje42azw9LsboN4SEv39qqPILCAUAXBhdBsUkKDQWL1D
-         6R8smhx86yIZJJlgQ3na3kk6BhZFrImg3/JX8=
-Received: by 10.210.81.3 with SMTP id e3mr6475633ebb.21.1229253437184;
-        Sun, 14 Dec 2008 03:17:17 -0800 (PST)
-Received: from localhost.localdomain (abxb72.neoplus.adsl.tpnet.pl [83.8.251.72])
-        by mx.google.com with ESMTPS id k9sm48861nfh.57.2008.12.14.03.17.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 14 Dec 2008 03:17:05 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBEBGQVk015890;
-	Sun, 14 Dec 2008 12:16:37 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBEBG3JA015875;
-	Sun, 14 Dec 2008 12:16:03 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.DEB.1.00.0812141142300.2014@eeepc-johanness>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753010AbYLNLTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Dec 2008 06:19:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753127AbYLNLTm
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 06:19:42 -0500
+Received: from peff.net ([208.65.91.99]:2729 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752901AbYLNLTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Dec 2008 06:19:41 -0500
+Received: (qmail 29169 invoked by uid 111); 14 Dec 2008 11:19:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 14 Dec 2008 06:19:40 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 14 Dec 2008 06:19:39 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0812141216120.2014@eeepc-johanness>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103070>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> On Sun, 14 Dec 2008, Junio C Hamano wrote:
+On Sun, Dec 14, 2008 at 12:17:07PM +0100, Johannes Schindelin wrote:
+
+> > Which annoyingly has no discussion about _why_ it no longer has an
+> > effect. But I suspect it has something to do with 25ee973 (gc: call
+> > "prune --expire 2.weeks.ago" by default, 2008-03-12) by you.
 > 
-> > * mv/um-pdf (Wed Dec 10 23:44:50 2008 +0100) 1 commit
-> >  - Add support for a pdf version of the user manual
-> > 
-> > I do not have a new enough combination of dblatex and asciidoc myself 
-> > but this would help interested people.
+> Oops.
 > 
-> I haven't had a look at the patches, but isn't "pdflatex" supposed to be 
-> the common way to get .pdf files from LaTeX sources?
+> But I thought that git gc --prune does expire _all_ dangling loose 
+> objects _now_, not with --expire 2.weeks.ago.
 
-The problem is that AsciiDoc, from what I understand, by itself
-generates only XML-ish formats, namely HTML, XHTML and DocBook, and
-the rest of formats are generated in postprocessing step by extra
-tools from DocBook format:
- * manpages require xmlto
- * info requires docbook2X and makeinfo
- * PDF requires dblatex (db = DocBook), or FOP and xmlto
+Nope, see 25ee973. You explicitly wrote:
 
-So the answer is that AsciiDoc does not generate LaTeX, so pdflatex
-would be not enough.
+      Note that this new behaviour makes "--prune" be a no-op.
 
-By the way, from the AsciiDoc page:
+That being said, I think that is perhaps a reasonable thing for --prune
+to do (and I don't think there is any conflict with the name, because
+that is what it _used_ to do before becoming a no-op). But nobody has
+actually implemented it.
 
- NOTE: Owning to to other commitments, Benjamin is unable to maintain
-       this backend. I don't have the expertise or time to take this
-       on consequently the LaTeX backend has not been tested or
-       updated since AsciiDoc version 8.2.7 and is currently
-       unsupported.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+-Peff
