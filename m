@@ -1,106 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] git-sh-setup: Fix scripts whose PWD is a symlink into
- a git work-dir
-Date: Sat, 13 Dec 2008 19:54:49 -0800
-Message-ID: <7v4p174diu.fsf@gitster.siamese.dyndns.org>
-References: <7viqprzsvs.fsf@gitster.siamese.dyndns.org>
- <1229201231-12586-1-git-send-email-marcel@oak.homeunix.org>
+From: david@lang.hm
+Subject: Re: is gitosis secure?
+Date: Sat, 13 Dec 2008 21:40:24 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0812132126470.17688@asgard.lang.hm>
+References: <200812090956.48613.thomas@koch.ro> <bd6139dc0812090138l5dbaf20bsd1cde00f52bb94e5@mail.gmail.com> <87hc58hwmi.fsf@hades.wkstn.nix> <gi1qsl$22p$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jnareb@gmail.com, ae@op5.se,
-	j.sixt@viscovery.net
-To: "Marcel M. Cary" <marcel@oak.homeunix.org>
-X-From: git-owner@vger.kernel.org Sun Dec 14 04:56:24 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 14 05:40:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBi5e-00055R-0N
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 04:56:22 +0100
+	id 1LBimc-0003sP-VX
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 05:40:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156AbYLNDzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 22:55:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752325AbYLNDzD
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 22:55:03 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:32946 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751660AbYLNDzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 22:55:01 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 991F21A405;
-	Sat, 13 Dec 2008 22:54:59 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 596161A402; Sat,
- 13 Dec 2008 22:54:50 -0500 (EST)
-In-Reply-To: <1229201231-12586-1-git-send-email-marcel@oak.homeunix.org>
- (Marcel M. Cary's message of "Sat, 13 Dec 2008 12:47:11 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FA80F3BE-C992-11DD-B90C-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752340AbYLNEjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 23:39:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752438AbYLNEjT
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 23:39:19 -0500
+Received: from mail.lang.hm ([64.81.33.126]:46670 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751660AbYLNEjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 23:39:18 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id mBE4dEsC028202;
+	Sat, 13 Dec 2008 20:39:14 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <gi1qsl$22p$1@ger.gmane.org>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103049>
 
-"Marcel M. Cary" <marcel@oak.homeunix.org> writes:
+this is really a reply to an earlier message that I deleted.
 
-> I also removed the "pwd -P" from the unit test.
+the question was asked 'what would the security people like instead of 
+SSH'
 
-Hmm, really...?
+as a security person who doesn't like how ssh is used for everything, let 
+me list a couple of concerns.
 
->> > +# Prove that the remote end really is a repo, and other commands
->> > +# work fine in this context.
->> > +#
->> > +test_debug "
->> > +    test_expect_success 'pushing from symlinked subdir' '
->> > +
->> > +        git push
->> > +    '
->> > +"
->> 
->> Why should this be hidden inside test_debug?
->
-> I'm not particularly trying to test "git push" or "git pull" in general
-> here.  That's also why the other "git pull" was in a test_debug.  I
-> thought it was really only useful to someone trying to understand the
-> contents of the test file.  There are other files that cover push and
-> pull.  Do you think these test cases should run all the time here?
+ssh is default allow (it lets you run any commands), you can lock it down 
+with effort.
 
-I'd say so.  Your supporting argument could be "See, push works just fine
-with this layout, but pull doesn't because it is a shell script that can
-be fooled, and this change is to fix the inconsistencies between them."
-Having these test enabled would be a good way to do so.  Then it becomes
-irrelevant if "jump into the middle of a directory hierarchy sideways via
-symlink" is worth supporting or not ;-)
+ssh defaults to establishing a tunnel between machines that other network 
+traffic can use to bypass your system. yes I know that with enough effort 
+and control of both systems you can tunnel over anything, the point is 
+that ssh is eager to do this for you (overly eager IMHO)
 
-But whether it is inside test_debug or not, the test should check not just
-the exit status from 'git push' but also check what happened to the
-receiving repository at least to make sure it is pushing to the location
-you are expecting it to.
+ssh depends primarily on certificates that reside on untrusted machines. 
+it can be made to work with tokens or such, but it takes a fair bit of 
+effort.
 
-> diff --git a/t/t2300-cd-to-toplevel.sh b/t/t2300-cd-to-toplevel.sh
-> new file mode 100755
-> index 0000000..05854b4
-> --- /dev/null
-> +++ b/t/t2300-cd-to-toplevel.sh
-> @@ -0,0 +1,37 @@
-> +#!/bin/sh
-> +
-> +test_description='cd_to_toplevel'
-> +
-> +. ./test-lib.sh
-> +
-> +test_cd_to_toplevel () {
-> +	test_expect_success "$2" '
-> +		(
-> +			cd '"'$1'"' &&
-> +			. git-sh-setup &&
-> +			cd_to_toplevel &&
-> +			[ "$(pwd -P)" = "$TOPLEVEL" ]
-> +		)
-> +	'
-> +}
+sshd runs as root on just about every system
 
-The quoting of $1 here is a bit tricky, but I think it is good enough for
-directory names used in tests that use this function.
+people trust ssh too much. they tend to think that anything is acceptable 
+if it's done over ssh (this isn't a technical issue, but it is a social 
+issue)
+
+
+what would I like to see in an ideal world?
+
+something that runs as the git user, does not enable tunneling, and only 
+does the data transfer functions needed for a push. it should use 
+off-the-shelf libraries for certificate authentication and tie into PAM 
+for additional authentication.
+
+the authentication would not be any better than with SSH, but the rest 
+would be better. I was very pleased to watch the git-daemon development, 
+and the emphisis on it running with minimum privilages and provide just 
+the functionality that was needed, and appropriately assuming that any 
+connection from the outside is hostile until proven otherwise.
+
+
+what would I do with current tools?
+
+I would say that developers working from outside should VPN into the 
+company network before doing the push with SSH rather than exposing the 
+SSH daemon to the entire Internet.
+
+in the medium term, if the git-over-http gets finished, I would like to 
+see a seperate cgi created to allow push as well. http is overused as a 
+tunneling protocol, but it's easy to setup a server that can't do anything 
+except what you want, so this tunneling is generally not a threat to 
+servers (it's a horrible threat to client systems)
+
+David Lang
