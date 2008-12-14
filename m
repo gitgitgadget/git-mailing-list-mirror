@@ -1,62 +1,56 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Simplified GIT usage guide
-Date: Sun, 14 Dec 2008 11:33:38 +0100
-Message-ID: <vpq7i63nj0d.fsf@bauges.imag.fr>
-References: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] bash completion: remove deprecated --prune from git-gc
+Date: Sun, 14 Dec 2008 11:38:17 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812141137350.2014@eeepc-johanness>
+References: <200812132008.08543.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-To: David Howells <dhowells@redhat.com>
-X-From: git-owner@vger.kernel.org Sun Dec 14 11:38:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Sun Dec 14 11:38:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBoMK-0002sD-2Q
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 11:38:00 +0100
+	id 1LBoMZ-0002wW-QD
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 11:38:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752592AbYLNKgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Dec 2008 05:36:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbYLNKgh
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 05:36:37 -0500
-Received: from imag.imag.fr ([129.88.30.1]:58741 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752438AbYLNKgh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Dec 2008 05:36:37 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id mBEAXdPa023122
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 14 Dec 2008 11:33:39 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LBoI6-0003E0-SF; Sun, 14 Dec 2008 11:33:38 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LBoI6-0003OS-Pq; Sun, 14 Dec 2008 11:33:38 +0100
-In-Reply-To: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk> (David Howells's message of "Fri\, 12 Dec 2008 18\:28\:27 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 14 Dec 2008 11:33:39 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752726AbYLNKgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Dec 2008 05:36:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbYLNKgv
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 05:36:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50373 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752591AbYLNKgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Dec 2008 05:36:51 -0500
+Received: (qmail invoked by alias); 14 Dec 2008 10:36:49 -0000
+Received: from ini-firewall.unizh.ch (EHLO eeepc-johanness) [130.60.5.218]
+  by mail.gmx.net (mp027) with SMTP; 14 Dec 2008 11:36:49 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1++MTw2VIG+xcSaxUanW/8IMsc52AVxP1jHunTqCh
+	VWvBDUBiuJfwCQ
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <200812132008.08543.markus.heidelberg@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103058>
 
-David Howells <dhowells@redhat.com> writes:
+Hi,
 
-> +So, you want to do some Linux kernel development?  And you hear there's this
-> +piece of software called 'GIT' that you probably ought to be using when dealing
-> +with the kernel community?
+On Sat, 13 Dec 2008, Markus Heidelberg wrote:
 
-I'm afraid too many people read this as "Git is only about kernel
-hacking, if you're not a kernel hacker, find something else".
+> -		__gitcomp "--prune --aggressive"
+> +		__gitcomp "--aggressive"
 
-(and I think far too many people already think that indeed)
+git gc --prune is deprecated?  That's news to me.
 
--- 
-Matthieu
+How would you suggest, then, to remove the loose objects you always get 
+with conflicts in a merge?
+
+Ciao,
+Dscho
