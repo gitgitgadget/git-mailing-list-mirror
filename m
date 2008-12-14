@@ -1,136 +1,62 @@
-From: david@lang.hm
-Subject: Re: is gitosis secure?
-Date: Sun, 14 Dec 2008 03:25:17 -0800 (PST)
-Message-ID: <alpine.DEB.1.10.0812140304320.17688@asgard.lang.hm>
-References: <200812090956.48613.thomas@koch.ro> <bd6139dc0812090138l5dbaf20bsd1cde00f52bb94e5@mail.gmail.com> <87hc58hwmi.fsf@hades.wkstn.nix> <gi1qsl$22p$1@ger.gmane.org> <alpine.DEB.1.10.0812132126470.17688@asgard.lang.hm> <4944D4F7.7050501@siamect.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Simplified GIT usage guide
+Date: Sun, 14 Dec 2008 11:33:38 +0100
+Message-ID: <vpq7i63nj0d.fsf@bauges.imag.fr>
+References: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: martin <martin@siamect.com>
-X-From: git-owner@vger.kernel.org Sun Dec 14 11:29:34 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: David Howells <dhowells@redhat.com>
+X-From: git-owner@vger.kernel.org Sun Dec 14 11:38:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBoE8-00015N-HL
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 11:29:32 +0100
+	id 1LBoMK-0002sD-2Q
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 11:38:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752536AbYLNKYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Dec 2008 05:24:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752464AbYLNKYQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 05:24:16 -0500
-Received: from mail.lang.hm ([64.81.33.126]:37354 "EHLO bifrost.lang.hm"
+	id S1752592AbYLNKgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Dec 2008 05:36:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbYLNKgh
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 05:36:37 -0500
+Received: from imag.imag.fr ([129.88.30.1]:58741 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752438AbYLNKYP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Dec 2008 05:24:15 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id mBEAO6n2029651;
-	Sun, 14 Dec 2008 02:24:06 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <4944D4F7.7050501@siamect.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1752438AbYLNKgh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Dec 2008 05:36:37 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id mBEAXdPa023122
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 14 Dec 2008 11:33:39 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LBoI6-0003E0-SF; Sun, 14 Dec 2008 11:33:38 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LBoI6-0003OS-Pq; Sun, 14 Dec 2008 11:33:38 +0100
+In-Reply-To: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk> (David Howells's message of "Fri\, 12 Dec 2008 18\:28\:27 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 14 Dec 2008 11:33:39 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103057>
 
-On Sun, 14 Dec 2008, martin wrote:
+David Howells <dhowells@redhat.com> writes:
 
-> Dear David.
-> Why do you trust VPN more than the SSH?
-> I ask because I have just removed the "first VPN then SSH" solution in favor 
-> for a SSH only solution using Gitosis just to get rid of the VPN which I 
-> believe is less secure than SSH (well until I read you comments below).
-> I thought I was doing something right for once but maybe I'm not?
-> Thanks and best regards
-> Martin
+> +So, you want to do some Linux kernel development?  And you hear there's this
+> +piece of software called 'GIT' that you probably ought to be using when dealing
+> +with the kernel community?
 
-in part it's that a VPN is a single point of control for all remote 
-access.
+I'm afraid too many people read this as "Git is only about kernel
+hacking, if you're not a kernel hacker, find something else".
 
-If you use ssh you end up exposing all the individual machines
+(and I think far too many people already think that indeed)
 
-1. data leakage of just what machines exist to possibly hostile users.
-
-2. the many machines are configured seperatly, frequently by different 
-people. this makes it far more likely that sometime some machine will get 
-misconfigured.
-
-3. people who are focused on providing features have a strong temptation 
-to cut corners and just test that the feature works and not test that 
-everything that isn't supposed to work actually doesn't work. as a 
-result, in many companies there is a deliberate seperation (and tension) 
-between a group focused on controlling and auditing access and one that is 
-focused on creating fucntionality and features.
-
-also from a polical/social point of view everyone recognises that if you 
-grant someone VPN access you are trusting them, but people don't seem to 
-think the same way with ssh.
-
-David Lang
-
-> david@lang.hm wrote:
->> this is really a reply to an earlier message that I deleted.
->> 
->> the question was asked 'what would the security people like instead of SSH'
->> 
->> as a security person who doesn't like how ssh is used for everything, let 
->> me list a couple of concerns.
->> 
->> ssh is default allow (it lets you run any commands), you can lock it down 
->> with effort.
->> 
->> ssh defaults to establishing a tunnel between machines that other network 
->> traffic can use to bypass your system. yes I know that with enough effort 
->> and control of both systems you can tunnel over anything, the point is that 
->> ssh is eager to do this for you (overly eager IMHO)
->> 
->> ssh depends primarily on certificates that reside on untrusted machines. it 
->> can be made to work with tokens or such, but it takes a fair bit of effort.
->> 
->> sshd runs as root on just about every system
->> 
->> people trust ssh too much. they tend to think that anything is acceptable 
->> if it's done over ssh (this isn't a technical issue, but it is a social 
->> issue)
->> 
->> 
->> what would I like to see in an ideal world?
->> 
->> something that runs as the git user, does not enable tunneling, and only 
->> does the data transfer functions needed for a push. it should use 
->> off-the-shelf libraries for certificate authentication and tie into PAM for 
->> additional authentication.
->> 
->> the authentication would not be any better than with SSH, but the rest 
->> would be better. I was very pleased to watch the git-daemon development, 
->> and the emphisis on it running with minimum privilages and provide just the 
->> functionality that was needed, and appropriately assuming that any 
->> connection from the outside is hostile until proven otherwise.
->> 
->> 
->> what would I do with current tools?
->> 
->> I would say that developers working from outside should VPN into the 
->> company network before doing the push with SSH rather than exposing the SSH 
->> daemon to the entire Internet.
->> 
->> in the medium term, if the git-over-http gets finished, I would like to see 
->> a seperate cgi created to allow push as well. http is overused as a 
->> tunneling protocol, but it's easy to setup a server that can't do anything 
->> except what you want, so this tunneling is generally not a threat to 
->> servers (it's a horrible threat to client systems)
->> 
->> David Lang
->> -- 
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->> 
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+-- 
+Matthieu
