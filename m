@@ -1,68 +1,107 @@
-From: "=?ISO-8859-2?Q?=A3ukasz_Lew?=" <lukasz.lew@gmail.com>
-Subject: How to maintain private/secret/confidential branch.
-Date: Sun, 14 Dec 2008 14:49:50 +0100
-Message-ID: <c55009e70812140549t6547c1d6jf7780f91b5074e73@mail.gmail.com>
+From: Kalle Olavi Niemitalo <kon@iki.fi>
+Subject: Re: [PATCH] Add support for an info version of the user manual
+Date: Sun, 14 Dec 2008 16:30:08 +0200
+Message-ID: <87ljuiu8wf.fsf@Astalo.kon.iki.fi>
+References: <86ir7tc5xk.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 14 14:51:12 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Dec 14 15:31:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBrNG-00086E-LK
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 14:51:11 +0100
+	id 1LBs0U-0002NS-8T
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 15:31:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753255AbYLNNtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Dec 2008 08:49:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753243AbYLNNtw
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 08:49:52 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:14211 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753224AbYLNNtw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Dec 2008 08:49:52 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so990417fgg.17
-        for <git@vger.kernel.org>; Sun, 14 Dec 2008 05:49:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=BbeJkeq/gmNbQVgHP/jkqW1XrK7Bo9qXUab4pyJVMnA=;
-        b=KNRKXRW/RiBs2d7GNtZpi1wgzLwSJg8DPx/r1HnSROTq04xYpRslq2mLWlHg+mQ/UL
-         HHGGa91rolpvV6wGE0FfkF6H02w17yfR0kd0srdwU3s8A4Wcrl3ZWlMWIDpw1EX+D/MX
-         /I3w9/lBXF9H6ICONN/jY3n5lh9jfUNtHNKcI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=hAxEFTFeoF5/FhIE3J/ypAtOB/PIf7zn17+cynKuzm2bASHlp34XrweYmiDULw5xKr
-         Om/PAYP5s0BBHab/8RqegujOWJ1riYAyjoBh0Lju6VsPRBDVfhMXe15A0YJs4IBYzuz9
-         iI8xkPpHR23bl/GLbfosJIFCaShYzc9G3M8h0=
-Received: by 10.86.4.14 with SMTP id 14mr3176580fgd.76.1229262590531;
-        Sun, 14 Dec 2008 05:49:50 -0800 (PST)
-Received: by 10.86.93.2 with HTTP; Sun, 14 Dec 2008 05:49:50 -0800 (PST)
-Content-Disposition: inline
+	id S1752453AbYLNOaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Dec 2008 09:30:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752264AbYLNOaO
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 09:30:14 -0500
+Received: from smtp4.dnainternet.fi ([87.94.96.72]:50117 "EHLO
+	smtp4.dnainternet.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752237AbYLNOaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Dec 2008 09:30:12 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp4.dnainternet.fi (Postfix) with ESMTP id 30CF4CC004A;
+	Sun, 14 Dec 2008 16:30:11 +0200 (EET)
+X-Virus-Scanned: DNA Postiturva at dnainternet.net
+X-Spam-Flag: NO
+X-Spam-Score: 0
+X-Spam-Level: 
+X-Spam-Status: No, score=0 tagged_above=-100 required=7 tests=[RDNS_DYNAMIC=0]
+Received: from Astalo.kon.iki.fi (85-23-32-64-Rajakyla-TR1.suomi.net [85.23.32.64])
+	by smtp4.dnainternet.fi (Postfix) with ESMTP;
+	Sun, 14 Dec 2008 16:30:08 +0200 (EET)
+Received: from Kalle by Astalo.kon.iki.fi with local (Exim 4.52)
+	id 1LBryy-0005b1-N4; Sun, 14 Dec 2008 16:30:08 +0200
+In-Reply-To: <86ir7tc5xk.fsf@lola.quinscape.zz> (David Kastrup's message of
+	"Mon, 6 Aug 2007 12:22:57 +0200")
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/23.0.51 (gnu/linux)
+X-Accept-Language: fi;q=1.0, en;q=0.9, sv;q=0.5, de;q=0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103085>
 
-Hi,
+David Kastrup <dak@gnu.org> posted to the git mailing list in 2007:
 
-I don't know how to make such a scenario work:
-- two repositories: pub, priv
-- priv is clone/branch of pub
-- there is some constant developement both in pub and priv
-- there are regular syncs with pub in priv
+> awk is used for patching up sub-par file and directory information in
+> the Texinfo file.  It would be cleaner to place the respective info
+> straight into user-manual.txt or the conversion configurations, but I
+> find myself unable to find out how to do this with Asciidoc/Texinfo.
 
-Problem:
-Occasionally I want to push some changes from priv to pub.
-Then after syncing with pub I want to get as few conflicts as possible.
+I found how to do this, but it's not worth the trouble.
 
-Is it possible to do with git?
+Apparently, there are two ways to specify the description for the
+Info directory entry generated by docbook2X 0.8.3:
 
-Thanks
-Lukasz
+(a) Set it in the docbook2x-texi command line, with the option:
+
+    -g description="A fast distributed revision control system"
+
+    This could easily be placed in the Makefile.
+
+(b) Add a /book/bookinfo/abstract[@role="texinfo-node"] element:
+
+    <abstract role="texinfo-node"><simpara>A fast distributed
+    revision control system</simpara></abstract>
+
+    docbook2x-0.8.3/xslt/texi/menudescrip.xsl claims that the role
+    should be "make-texinfo-node", but the template in that file
+    actually looks for role="texinfo-node".  docbook2X 0.8.8
+    documents the role correctly.
+
+    The /book/bookinfo element currently comes from the [header]
+    section in docbook.conf of AsciiDoc.  That docbook.conf does
+    not currently provide a way to add an abstract like that.
+    So, Git would have to override the whole header, unless
+    such a feature were added to AsciiDoc.
+
+Then, docbook2x-texi would take the title "Git User's Manual (for
+version 1.5.3 or newer)" and convert it to "Git User_s Manual
+[for version 1_5_3 or newer]", presumably to avoid some reserved
+characters in Info.  To get a prettier title like "Git" in the
+Info directory entry:
+
+(a) A Git-specific XSL template could read the entry title from
+    /book/bookinfo/titleabbrev, which would also have to be added
+    to the header in the AsciiDoc configuration.
+
+(b) Alternatively, the template could use a command-line parameter.
+    Makefile would provide -g info-dir-title="Git", and the
+    template would then use $info-dir-title.
+
+Finally, to make the Info directory entry link to the right file,
+one would have to add -g output-file=git to the docbook2x-texi
+invocation.
+
+In summary, it is certainly possible to make AsciiDoc and
+docbook2X together generate the right kind of directory entry,
+but I suspect the current Perl hack is more likely to survive
+toolchain upgrades than a more proper implementation would be.
+If the necessary features were added to the upstream AsciiDoc
+and docbook2X, then things would be different, but I guess Git
+wouldn't dare require new versions until after a year or so.
