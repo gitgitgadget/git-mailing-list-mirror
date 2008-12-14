@@ -1,67 +1,74 @@
-From: Matt McCutchen <matt@mattmccutchen.net>
-Subject: Sending a threaded patch series with Evolution
-Date: Sat, 13 Dec 2008 21:34:18 -0500
-Message-ID: <1229222058.2838.22.camel@mattlaptop2.local>
-References: <4ba6b6c3fc183002407f322663d7ab53c1c28a91.1229202740.git.matt@mattmccutchen.net>
-	 <1229203007.31181.6.camel@mattlaptop2.local>
-	 <m3ljujg2eh.fsf@localhost.localdomain>
-	 <m3hc57g28b.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-fast-import possible memory corruption problem
+Date: Sat, 13 Dec 2008 19:42:13 -0800
+Message-ID: <7vd4fv4e3u.fsf@gitster.siamese.dyndns.org>
+References: <20081214020822.GB4121@les.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 14 03:35:45 2008
+To: YONETANI Tomokazu <qhwt+git@les.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Dec 14 04:43:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBgpb-00081A-LB
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 03:35:44 +0100
+	id 1LBhtN-0002uM-4V
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 04:43:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751689AbYLNCe0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 21:34:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751656AbYLNCe0
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 21:34:26 -0500
-Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:60300
-	"EHLO jankymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751087AbYLNCe0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Dec 2008 21:34:26 -0500
-Received: from [129.2.130.102] (129-2-130-102.wireless.umd.edu [129.2.130.102])
-	by jankymail-a4.g.dreamhost.com (Postfix) with ESMTP id 02CE41810FA;
-	Sat, 13 Dec 2008 18:34:24 -0800 (PST)
-In-Reply-To: <m3hc57g28b.fsf@localhost.localdomain>
-X-Mailer: Evolution 2.24.3 
+	id S1752118AbYLNDmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 22:42:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbYLNDmV
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 22:42:21 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65078 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751660AbYLNDmU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 22:42:20 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3480B1A402;
+	Sat, 13 Dec 2008 22:42:19 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0D0971A401; Sat,
+ 13 Dec 2008 22:42:15 -0500 (EST)
+In-Reply-To: <20081214020822.GB4121@les.ath.cx> (YONETANI Tomokazu's message
+ of "Sun, 14 Dec 2008 11:08:22 +0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 354352BE-C991-11DD-B90C-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103047>
 
-On Sat, 2008-12-13 at 14:05 -0800, Jakub Narebski wrote: 
-> By the way, your message [PATCH 2/2] should be threaded, i.e. be
-> response to [PATCH 1/2] (or to cover letter [PATCH 0/2]), to not
-> mistake it with other [PATCH 2/2] patches.
+YONETANI Tomokazu <qhwt+git@les.ath.cx> writes:
 
-I'm using Evolution 2.24 as my mail client, and I have a wrapper script
-"git draft-patch" that runs "git format-patch" and loads the patches
-into my Evolution Drafts folder so I can look them over in the composer
-and add non-commit-message text below the "---" if I wish before
-sending.  I did pass --thread, but the composer changed the Message-Id,
-breaking the threading.
+> While trying to convert NetBSD CVS repository to Git, I've been
+> experiencing 100% reproducible crash of git-fast-import.  After
+> poking here and there and I noticed a dubious code fragment in
+> pool_alloc():
+> 	:
+>
+>         r = p->next_free;
+>         /* round out to a 'uintmax_t' alignment */
+>         if (len & (sizeof(uintmax_t) - 1))
+>                 len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
+>         p->next_free += len;
+>         return r;
+>
+> As the `round out' takes place AFTER it found the room in the mem_pool,
+> there's a small chance of p->next_free being set outside of the chosen
+> area, up to (sizeof(uintmax_t) - 1) bytes.  pool_strdup() is one of the
+> functions which can trigger the problem, when pool_alloc() finds a room
+> at the end of a pool entry and the requested length is not multiple of
+> size(uintmax_t).  I believe attached patch addresses this problem.
 
-I'll try to get this right in the future.  I can see two approaches to
-doing so:
+Thanks -- do you mean your reproducible crash does not reproduce with the
+patch anymore?
 
-1. Check over / edit the patches in a text editor before loading them
-into Drafts, and then send them by moving them directly to Outbox
-(without using the composer) so that the Message-Id won't change.
-
-2. Send the first patch, then manually edit the Message-Id Evolution
-assigned it into the second patch, etc.
-
-Neither of these approaches is particularly nice.  Does anyone have a
-better idea?
-
--- 
-Matt
+I think your change to move the "round up" logic up in the codepath makes
+perfect sense.  But your patch seems to conflate totally unrelated change
+to move memzero from the caller to callee into it, and I do not see the
+reason why it should be that way.  If the caller asked 10 bytes to calloc
+from the pool, and the underlying pool allocator gives you a 16-byte
+block, you only have to guarantee that the first 10 bytes are cleared, and
+can leave the trailing padding 6 bytes at the end untouched.
