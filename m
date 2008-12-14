@@ -1,129 +1,52 @@
-From: YONETANI Tomokazu <qhwt+git@les.ath.cx>
-Subject: [PATCH] git-fast-import possible memory corruption problem
-Date: Sun, 14 Dec 2008 11:08:22 +0900
-Message-ID: <20081214020822.GB4121@les.ath.cx>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pack-objects: don't use too many threads with few
+	objects
+Date: Sat, 13 Dec 2008 21:20:26 -0500
+Message-ID: <20081214022025.GA22571@coredump.intra.peff.net>
+References: <alpine.LFD.2.00.0812111524370.14328@xanadu.home> <20081213133238.GA6718@sigill.intra.peff.net> <alpine.LFD.2.00.0812131456040.30035@xanadu.home>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="vGgW1X5XWziG23Ko"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 14 03:20:35 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sun Dec 14 03:22:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBgaw-0004su-55
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 03:20:34 +0100
+	id 1LBgc5-00059K-Tc
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 03:21:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752318AbYLNCTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 21:19:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752229AbYLNCTJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 21:19:09 -0500
-Received: from x219233.ppp.asahi-net.or.jp ([122.249.219.233]:3762 "EHLO
-	les.ath.cx" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751932AbYLNCTI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 21:19:08 -0500
-X-Greylist: delayed 641 seconds by postgrey-1.27 at vger.kernel.org; Sat, 13 Dec 2008 21:19:08 EST
-Received: by les.ath.cx (Postfix, from userid 1000)
-	id 24CAC86653; Sun, 14 Dec 2008 11:08:23 +0900 (JST)
+	id S1752356AbYLNCU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 21:20:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752357AbYLNCU2
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 21:20:28 -0500
+Received: from peff.net ([208.65.91.99]:1527 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752334AbYLNCU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 21:20:28 -0500
+Received: (qmail 24228 invoked by uid 111); 14 Dec 2008 02:20:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 13 Dec 2008 21:20:27 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Dec 2008 21:20:26 -0500
 Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <alpine.LFD.2.00.0812131456040.30035@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103044>
 
+On Sat, Dec 13, 2008 at 03:06:40PM -0500, Nicolas Pitre wrote:
 
---vGgW1X5XWziG23Ko
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Hello.
-While trying to convert NetBSD CVS repository to Git, I've been
-experiencing 100% reproducible crash of git-fast-import.  After
-poking here and there and I noticed a dubious code fragment in
-pool_alloc():
-	:
-
-        r = p->next_free;
-        /* round out to a 'uintmax_t' alignment */
-        if (len & (sizeof(uintmax_t) - 1))
-                len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
-        p->next_free += len;
-        return r;
-
-As the `round out' takes place AFTER it found the room in the mem_pool,
-there's a small chance of p->next_free being set outside of the chosen
-area, up to (sizeof(uintmax_t) - 1) bytes.  pool_strdup() is one of the
-functions which can trigger the problem, when pool_alloc() finds a room
-at the end of a pool entry and the requested length is not multiple of
-size(uintmax_t).  I believe attached patch addresses this problem.
-
-Best regards,
-YONETANI Tomokazu.
-
---vGgW1X5XWziG23Ko
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="git-fast-import.patch"
-
-diff --git a/fast-import.c b/fast-import.c
-index 3c035a5..fb4367a 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -549,11 +549,15 @@ static unsigned int hc_str(const char *s, size_t len)
- 	return r;
- }
+> If there are few objects to deltify, they might be split amongst threads 
+> so that there is simply no other objects left to delta against within 
+> the same thread.  Let's use the same 2*window treshold as used for the 
+> final load balancing to allow extra threads to be created.
+>
+> This fixes the benign t5300 test failure.
  
--static void *pool_alloc(size_t len)
-+static void *_pool_alloc(size_t len, int zero)
- {
- 	struct mem_pool *p;
- 	void *r;
- 
-+	/* round out to a 'uintmax_t' alignment */
-+	if (len & (sizeof(uintmax_t) - 1))
-+		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
-+
- 	for (p = mem_pool; p; p = p->next_pool)
- 		if ((p->end - p->next_free >= len))
- 			break;
-@@ -561,7 +565,8 @@ static void *pool_alloc(size_t len)
- 	if (!p) {
- 		if (len >= (mem_pool_alloc/2)) {
- 			total_allocd += len;
--			return xmalloc(len);
-+			r = xmalloc(len);
-+			goto out;
- 		}
- 		total_allocd += sizeof(struct mem_pool) + mem_pool_alloc;
- 		p = xmalloc(sizeof(struct mem_pool) + mem_pool_alloc);
-@@ -572,19 +577,22 @@ static void *pool_alloc(size_t len)
- 	}
- 
- 	r = p->next_free;
--	/* round out to a 'uintmax_t' alignment */
--	if (len & (sizeof(uintmax_t) - 1))
--		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
- 	p->next_free += len;
-+out:
-+	if (zero)
-+		memset(r, 0, len);
- 	return r;
- }
- 
-+static void *pool_alloc(size_t len)
-+{
-+	return _pool_alloc(len, 0);
-+}
-+
- static void *pool_calloc(size_t count, size_t size)
- {
- 	size_t len = count * size;
--	void *r = pool_alloc(len);
--	memset(r, 0, len);
--	return r;
-+	return _pool_alloc(len, 1);
- }
- 
- static char *pool_strdup(const char *s)
+I can confirm this fixes my t5300 failure. Thanks.
 
---vGgW1X5XWziG23Ko--
+Tested-by: Jeff King <peff@peff.net>
+
+-Peff
