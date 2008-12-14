@@ -1,52 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pack-objects: don't use too many threads with few
-	objects
-Date: Sat, 13 Dec 2008 21:20:26 -0500
-Message-ID: <20081214022025.GA22571@coredump.intra.peff.net>
-References: <alpine.LFD.2.00.0812111524370.14328@xanadu.home> <20081213133238.GA6718@sigill.intra.peff.net> <alpine.LFD.2.00.0812131456040.30035@xanadu.home>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: is gitosis secure?
+Date: Sun, 14 Dec 2008 02:26:29 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <gi1qsl$22p$1@ger.gmane.org>
+References: <200812090956.48613.thomas@koch.ro>
+ <bd6139dc0812090138l5dbaf20bsd1cde00f52bb94e5@mail.gmail.com>
+ <87hc58hwmi.fsf@hades.wkstn.nix>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sun Dec 14 03:22:27 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 14 03:31:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBgc5-00059K-Tc
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 03:21:46 +0100
+	id 1LBgle-0007Dy-6k
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 03:31:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752356AbYLNCU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Dec 2008 21:20:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752357AbYLNCU2
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 21:20:28 -0500
-Received: from peff.net ([208.65.91.99]:1527 "EHLO peff.net"
+	id S1751619AbYLNCaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Dec 2008 21:30:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbYLNCaG
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 21:30:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:51128 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752334AbYLNCU2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 21:20:28 -0500
-Received: (qmail 24228 invoked by uid 111); 14 Dec 2008 02:20:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 13 Dec 2008 21:20:27 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Dec 2008 21:20:26 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0812131456040.30035@xanadu.home>
+	id S1751087AbYLNCaF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Dec 2008 21:30:05 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LBgk6-00051y-D2
+	for git@vger.kernel.org; Sun, 14 Dec 2008 02:30:02 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 14 Dec 2008 02:30:02 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 14 Dec 2008 02:30:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103045>
 
-On Sat, Dec 13, 2008 at 03:06:40PM -0500, Nicolas Pitre wrote:
+On 2008-12-13, Nix <nix@esperi.org.uk> wrote:
+> telnet. I do not jest, this is our sysadmins' stated reasons for not
+> opening the git port and for tweaking their (mandatory) HTTP proxy to
+> block HTTP traffic from git.
 
-> If there are few objects to deltify, they might be split amongst threads 
-> so that there is simply no other objects left to delta against within 
-> the same thread.  Let's use the same 2*window treshold as used for the 
-> final load balancing to allow extra threads to be created.
->
-> This fixes the benign t5300 test failure.
- 
-I can confirm this fixes my t5300 failure. Thanks.
+Wow -- my sympathies!
 
-Tested-by: Jeff King <peff@peff.net>
+But on occasion, when real or imaginary issues prevented me
+from making a live connection, I have used "git bundle" to
+do the job.  Not as satisfactory as a real connection, but
+when you have a proper, non-fast-forwarding, repo as the
+"mother ship", git bundle with some custom procmail scripts
+on both sides can work OK enough.
 
--Peff
+To do that with a public repo you'd have to mirror that on a
+home machine and let your restricted environment work
+against that.
+
+> Do not underestimate the stupidity and hideboundedness of undertrained
+> system administrators, for it is vast.
+
+These same administrators also underestimate (i) the number
+of well connected home machines and (ii) the idea that on
+his own machine, everyone is root.
+
+Most of these blocks are "default allow", and your home IP
+is not on that list and they don't have the smarts to figure
+out that you're getting around their blocks :-) Add dynamic
+IP and a dyndns hostname (and dyndns has a hundred or so 2nd
+level domains to choose your 3rd level hostname from!) and
+clueless admins don't stand a chance.
+
+[sorry this is so badly off-topic...]
