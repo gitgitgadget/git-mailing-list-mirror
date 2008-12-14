@@ -1,59 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] bash completion: remove deprecated --prune from git-gc
-Date: Sun, 14 Dec 2008 06:19:39 -0500
-Message-ID: <20081214111939.GC6499@coredump.intra.peff.net>
-References: <200812132008.08543.markus.heidelberg@web.de> <alpine.DEB.1.00.0812141137350.2014@eeepc-johanness> <20081214111213.GA6499@coredump.intra.peff.net> <alpine.DEB.1.00.0812141216120.2014@eeepc-johanness>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Dec 2008, #02; Sun, 14)
+Date: Sun, 14 Dec 2008 12:24:17 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812141224030.2014@eeepc-johanness>
+References: <7v7i632mg9.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0812141142300.2014@eeepc-johanness> <20081214111548.GB6499@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Markus Heidelberg <markus.heidelberg@web.de>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Dec 14 12:20:59 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Dec 14 12:24:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBp1v-0004du-BG
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 12:20:59 +0100
+	id 1LBp4z-0005N0-Kq
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 12:24:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753010AbYLNLTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Dec 2008 06:19:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753127AbYLNLTm
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 06:19:42 -0500
-Received: from peff.net ([208.65.91.99]:2729 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752901AbYLNLTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Dec 2008 06:19:41 -0500
-Received: (qmail 29169 invoked by uid 111); 14 Dec 2008 11:19:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 14 Dec 2008 06:19:40 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 14 Dec 2008 06:19:39 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0812141216120.2014@eeepc-johanness>
+	id S1753140AbYLNLWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Dec 2008 06:22:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753015AbYLNLWw
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 06:22:52 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36513 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752918AbYLNLWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Dec 2008 06:22:51 -0500
+Received: (qmail invoked by alias); 14 Dec 2008 11:22:49 -0000
+Received: from ini-firewall.unizh.ch (EHLO eeepc-johanness) [130.60.5.218]
+  by mail.gmx.net (mp011) with SMTP; 14 Dec 2008 12:22:49 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19ZdQBWvABZEbLTUGOl0zCXkarAHbQjq2/WUgqKHv
+	Jq+FQ6Uen7mvMk
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <20081214111548.GB6499@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103071>
 
-On Sun, Dec 14, 2008 at 12:17:07PM +0100, Johannes Schindelin wrote:
+Hi,
 
-> > Which annoyingly has no discussion about _why_ it no longer has an
-> > effect. But I suspect it has something to do with 25ee973 (gc: call
-> > "prune --expire 2.weeks.ago" by default, 2008-03-12) by you.
+On Sun, 14 Dec 2008, Jeff King wrote:
+
+> On Sun, Dec 14, 2008 at 11:44:23AM +0100, Johannes Schindelin wrote:
 > 
-> Oops.
+> > > * mv/um-pdf (Wed Dec 10 23:44:50 2008 +0100) 1 commit
+> > >  - Add support for a pdf version of the user manual
+> > > 
+> > > I do not have a new enough combination of dblatex and asciidoc myself 
+> > > but this would help interested people.
+> > 
+> > I haven't had a look at the patches, but isn't "pdflatex" supposed to be 
+> > the common way to get .pdf files from LaTeX sources?
 > 
-> But I thought that git gc --prune does expire _all_ dangling loose 
-> objects _now_, not with --expire 2.weeks.ago.
+> But we don't have latex sources; we have docbook sources. Hence dblatex
+> (which does the conversion to PDF internally, so it is a bit of a
+> misnomer).
 
-Nope, see 25ee973. You explicitly wrote:
+Indeed, I was fooled.
 
-      Note that this new behaviour makes "--prune" be a no-op.
-
-That being said, I think that is perhaps a reasonable thing for --prune
-to do (and I don't think there is any conflict with the name, because
-that is what it _used_ to do before becoming a no-op). But nobody has
-actually implemented it.
-
--Peff
+Thanks for the clarification,
+Dscho
