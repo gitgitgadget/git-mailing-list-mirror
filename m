@@ -1,72 +1,77 @@
-From: "Tim Visher" <tim.visher@gmail.com>
-Subject: Re: TortoiseGit
-Date: Sun, 14 Dec 2008 12:00:00 -0500
-Message-ID: <c115fd3c0812140900k69b07101k7ce16002727c8268@mail.gmail.com>
-References: <8836F27A-CEE2-4D72-B2D1-7A3D19975D4F@alcidesfonseca.com>
-	 <1976ea660812140147o40e014cbn46d920781db029a1@mail.gmail.com>
-	 <937EE54D-1FC0-4FFA-B273-C98C7CF321D4@alcidesfonseca.com>
+From: Marcin Slusarz <marcin.slusarz@gmail.com>
+Subject: Re: [PATCH] Simplified GIT usage guide
+Date: Sun, 14 Dec 2008 18:33:50 +0100
+Message-ID: <20081214173152.GA6557@joi>
+References: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Li Frank" <lznuaa@gmail.com>, git@vger.kernel.org
-To: "Alcides Fonseca" <me@alcidesfonseca.com>
-X-From: git-owner@vger.kernel.org Sun Dec 14 18:01:26 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: torvalds@osdl.org, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+To: David Howells <dhowells@redhat.com>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1754789AbYLNRel@vger.kernel.org Sun Dec 14 18:36:02 2008
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1754789AbYLNRel@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBuLN-0001he-AZ
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 18:01:25 +0100
+	id 1LBusr-0003ZG-Pg
+	for glk-linux-kernel-3@gmane.org; Sun, 14 Dec 2008 18:36:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753516AbYLNRAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Dec 2008 12:00:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753509AbYLNRAF
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 12:00:05 -0500
-Received: from an-out-0708.google.com ([209.85.132.240]:51997 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753508AbYLNRAD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Dec 2008 12:00:03 -0500
-Received: by an-out-0708.google.com with SMTP id d40so976572and.1
-        for <git@vger.kernel.org>; Sun, 14 Dec 2008 09:00:00 -0800 (PST)
+	id S1754789AbYLNRel (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 14 Dec 2008 12:34:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753611AbYLNRea
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Sun, 14 Dec 2008 12:34:30 -0500
+Received: from mu-out-0910.google.com ([209.85.134.185]:52922 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753593AbYLNRea (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 14 Dec 2008 12:34:30 -0500
+Received: by mu-out-0910.google.com with SMTP id g7so1242286muf.1
+        for <linux-kernel@vger.kernel.org>; Sun, 14 Dec 2008 09:34:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=c/zg4DWbNtwpAI3C6//CDbchXV+DvqMyHOG7Y4+fy0M=;
-        b=v3yolDz5Jp4kzBKzZgfWsRd9RQcYbFHRqN7n8hbM3+sTLxL/7UOGyzysb+Sn/xSYYq
-         13sDtgJFV/6UDrtc5+eAnt5C03aYQMq1wxu1rP3wQAeelqhutKGy3A7MQOoSDtqsxaSh
-         ZNGk+rdgk/rRyP8OaHEKzL7M0KpubXAcm0nCM=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=gcKoK715ITtdxXMOpJTDJgLv994npYhaDCC3jP3W1Rw=;
+        b=KZL7P47kZPpilIUDjv8M5vtkRErdnbUwTlOXG+h2aFGbAi5LkGECF7TwT7QWgIIr77
+         1lIdN3GVOQBkZ5hUVuK0C75CecAM+fChJW5j2o0qmBtdr/OWhzQYkPW9jyARQ0gSfRnk
+         CDxAxRSYIpju+yGwHHHsBaz5kkmwFN/Fx9o+g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=cmHv/cDzvJ+zLaFLVhXl7HGgAnzaKUVjl2cH9rr/NFQEMbifbCjoULSpXE71mtlCf6
-         3T8yclO6nhT2fBPjvN93IbBifu5CHDks9EZFyBfbvaBNxa6kb9xxmPqDA9h4huRRyBrI
-         F6DZdH8NbUejvHFHAN9YLeMtXtoqJbcHOKY6A=
-Received: by 10.100.122.8 with SMTP id u8mr4038200anc.131.1229274000513;
-        Sun, 14 Dec 2008 09:00:00 -0800 (PST)
-Received: by 10.100.198.2 with HTTP; Sun, 14 Dec 2008 09:00:00 -0800 (PST)
-In-Reply-To: <937EE54D-1FC0-4FFA-B273-C98C7CF321D4@alcidesfonseca.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=FykKYDRfJkgxLgIB83HcIEShYmWQTRR8reeKSkgdl9MRqR+xkoD6vlRJzF/19xVPvk
+         YaPqpI0w9c617JW2F3TMYnD8YPMyRPDXW/W2AX0J9BTdC2NrxSoDdX1NqIJQN2lrzRXT
+         J8ZYYorUSHuhYtJji0GjkR//2IL94eUy39thY=
+Received: by 10.103.214.8 with SMTP id r8mr2642988muq.6.1229276067309;
+        Sun, 14 Dec 2008 09:34:27 -0800 (PST)
+Received: from @ (public-gprs50551.centertel.pl [91.94.70.5])
+        by mx.google.com with ESMTPS id e10sm7837120muf.18.2008.12.14.09.34.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 14 Dec 2008 09:34:14 -0800 (PST)
 Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103094>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103095>
 
-On Sun, Dec 14, 2008 at 7:26 AM, Alcides Fonseca <me@alcidesfonseca.com> wrote:
+On Fri, Dec 12, 2008 at 06:28:27PM +0000, David Howells wrote:
+> +REVERTING COMMITTED CHANGES
+> +---------------------------
+> +
+> +And sometimes you'll want to revert changes that you've committed, but that are
+> +now buried beneath other commits.  Short of discarding and reapplying commits,
+> +you have to apply a reverse patch:
+> +
+> +	git diff %COMMIT_ID | patch -p1 -R
+> +
+> +and then commit it.  Both the original application and the reversion will be
+> +retained by GIT.
 
-> have your main git repo in github.com
+"git revert $commit" is a bit shorter.
 
-+1
-
--- 
-
-In Christ,
-
-Timmy V.
-
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+Marcin
