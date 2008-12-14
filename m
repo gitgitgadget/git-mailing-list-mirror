@@ -1,101 +1,117 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: is gitosis secure?
-Date: Sun, 14 Dec 2008 02:47:31 -0800 (PST)
-Message-ID: <m3zlizdofy.fsf@localhost.localdomain>
+Date: Sun, 14 Dec 2008 02:51:26 -0800 (PST)
+Message-ID: <m3vdtndo9b.fsf@localhost.localdomain>
 References: <200812090956.48613.thomas@koch.ro>
 	<bd6139dc0812090138l5dbaf20bsd1cde00f52bb94e5@mail.gmail.com>
 	<87hc58hwmi.fsf@hades.wkstn.nix> <gi1qsl$22p$1@ger.gmane.org>
+	<alpine.DEB.1.10.0812132126470.17688@asgard.lang.hm>
+	<4944D4F7.7050501@siamect.com>
+	<alpine.DEB.1.10.0812140304320.17688@asgard.lang.hm>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nix <nix@esperi.org.uk>,
-	Thomas Koch <thomas@koch.ro>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 14 11:49:06 2008
+Cc: martin <martin@siamect.com>, git@vger.kernel.org
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Sun Dec 14 11:52:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LBoWr-0005Nn-Tk
-	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 11:48:54 +0100
+	id 1LBoad-0006Qr-8t
+	for gcvg-git-2@gmane.org; Sun, 14 Dec 2008 11:52:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752884AbYLNKrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Dec 2008 05:47:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821AbYLNKrg
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 05:47:36 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:45149 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752621AbYLNKre (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Dec 2008 05:47:34 -0500
-Received: by ewy10 with SMTP id 10so2509211ewy.13
-        for <git@vger.kernel.org>; Sun, 14 Dec 2008 02:47:32 -0800 (PST)
+	id S1752621AbYLNKva (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Dec 2008 05:51:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbYLNKva
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Dec 2008 05:51:30 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:42196 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752447AbYLNKv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Dec 2008 05:51:29 -0500
+Received: by ey-out-2122.google.com with SMTP id 6so309312eyi.37
+        for <git@vger.kernel.org>; Sun, 14 Dec 2008 02:51:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received
          :x-authentication-warning:to:cc:subject:references:from:in-reply-to
          :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=evR+HyNwwocrvOp2MxDVmW+/vixpHCsueHwnF9TPMxk=;
-        b=rssueyUXUS1/wZV5a0jT5/IsLOorA+FiyzSJ5UtnIl6yv/WkOz3yAx/O3548MDW3Fh
-         5TnlyHnWERmMEYhK2P2JH06x8yA7k8BKtJl3M4fH9H7UJ7BR2bAkuEqtyEyIqBaBhdZH
-         JSZ0+bw81haz1krIPV4O414Xvyl0PQ3iunxPk=
+        bh=adgmxALcWpWsa+vOep0hn8HXxtYXS9b12/yS6RujiNo=;
+        b=Pa6NCv+KwmQL0zSY2kPpTkHwmUI5pE2nCXPQYiR5uRVvAVdoaINJI148nhPCQdQJZl
+         seduOYB3Y3fyT7pLBVZIYZ58oFqY0bR7g9ABO6ZCh9itl/rVcY5zHN9oY24EusR7XgOv
+         r1Ocrj2NJZMYx2LQSXd1P2j92b+HoM9mA8oZ0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
          :message-id:lines:user-agent:mime-version:content-type:date;
-        b=KTFWog/Dzhmguw/b1e51GF2V39dgOksPIqUz1lJ0IrsdnmT4srcQ/+y7EiSftkdw2n
-         6YD7+fOnQ8DIlyEe7aor4C1IFN6SYx1si5cD7JrxOquPaKicisJi0q+i1WwtUdasy7Ou
-         wFxmwTDm471U0ryDi7nhK8fs19+xouPiJToIM=
-Received: by 10.210.87.19 with SMTP id k19mr3153420ebb.64.1229251652854;
-        Sun, 14 Dec 2008 02:47:32 -0800 (PST)
+        b=htr/sfVHTltSwssbIlDr5r+dfeQWoXC4b33Hv7w8lXRu2hDrFWwLiOWnzjTkYkBDS6
+         jUUdHNmdtE+OH7DocxXp3smVm9dShZ3B0LZaPrR1NwCqpfo4DzZJi0phuNHnJN4ea9p0
+         D04OnBLCzw92v2+80ImJXcXw3rVXA6PaUWl6s=
+Received: by 10.210.62.12 with SMTP id k12mr6424284eba.140.1229251887143;
+        Sun, 14 Dec 2008 02:51:27 -0800 (PST)
 Received: from localhost.localdomain (abxb72.neoplus.adsl.tpnet.pl [83.8.251.72])
-        by mx.google.com with ESMTPS id 20sm784442eyk.4.2008.12.14.02.47.30
+        by mx.google.com with ESMTPS id h4sm12215122nfh.62.2008.12.14.02.51.25
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 14 Dec 2008 02:47:31 -0800 (PST)
+        Sun, 14 Dec 2008 02:51:26 -0800 (PST)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBEAkllE015669;
-	Sun, 14 Dec 2008 11:46:57 +0100
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBEAol0s015698;
+	Sun, 14 Dec 2008 11:50:57 +0100
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBEAkQYb015665;
-	Sun, 14 Dec 2008 11:46:26 +0100
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBEAoOvv015694;
+	Sun, 14 Dec 2008 11:50:24 +0100
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <gi1qsl$22p$1@ger.gmane.org>
+In-Reply-To: <alpine.DEB.1.10.0812140304320.17688@asgard.lang.hm>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103063>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
-> On 2008-12-13, Nix <nix@esperi.org.uk> wrote:
-
-> > telnet. I do not jest, this is our sysadmins' stated reasons for not
-> > opening the git port and for tweaking their (mandatory) HTTP proxy to
-> > block HTTP traffic from git.
+david@lang.hm writes:
+> On Sun, 14 Dec 2008, martin wrote:
 > 
-> Wow -- my sympathies!
+> > Dear David.
+> > Why do you trust VPN more than the SSH?
+> > I ask because I have just removed the "first VPN then SSH" solution
+> > in favor for a SSH only solution using Gitosis just to get rid of
+> > the VPN which I believe is less secure than SSH (well until I read
+> > you comments below).
+> > I thought I was doing something right for once but maybe I'm not?
+> > Thanks and best regards
+> > Martin
 > 
-> But on occasion, when real or imaginary issues prevented me
-> from making a live connection, I have used "git bundle" to
-> do the job.  Not as satisfactory as a real connection, but
-> when you have a proper, non-fast-forwarding, repo as the
-> "mother ship", git bundle with some custom procmail scripts
-> on both sides can work OK enough.
+> in part it's that a VPN is a single point of control for all remote
+> access.
+> 
+> If you use ssh you end up exposing all the individual machines
+> 
+> 1. data leakage of just what machines exist to possibly hostile users.
 
-Perhaps one would be interested in adding bundle support to gitweb.
-The problem is in the interface, but I think in simplest case gitweb
-could present 'bundle' link along snapshot link(s) in the 'heads' view
-(showing branches), which link would generate bundle for a given
-branch, starting from latest annotated tag.  But this is only for
-download...
+Errr... what? One of established practices is expose only _one_
+machine to outside; you have to SSH to gateway.
  
-Another solution would be to help with "smart" HTTP protocol,
-i.e. git-over-http solution.  This would hopefully change signature so
-at least for some time it would pas proxy filters.  Also only for
-download.
+> 2. the many machines are configured seperatly, frequently by different
+> people. this makes it far more likely that sometime some machine will
+> get misconfigured.
 
+See above.
 
-BTW. is outgoing SSH transport (from network to outside) blocked as
-well?
+> 3. people who are focused on providing features have a strong
+> temptation to cut corners and just test that the feature works and not
+> test that everything that isn't supposed to work actually doesn't
+> work. as a result, in many companies there is a deliberate seperation
+> (and tension) between a group focused on controlling and auditing
+> access and one that is focused on creating fucntionality and features.
+
+And that differs from VPN in what way?
+
+> also from a polical/social point of view everyone recognises that if
+> you grant someone VPN access you are trusting them, but people don't
+> seem to think the same way with ssh.
+
+Errr... what?  I think everybody knows that unrestricted SSH access
+(without limiting done by shell used) means that you trust user.
+
 -- 
 Jakub Narebski
 Poland
