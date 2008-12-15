@@ -1,71 +1,90 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [usability bug] git branch -a does not disambiguate remote and local branches
-Date: Mon, 15 Dec 2008 20:24:10 +0100
-Message-ID: <8c5c35580812151124h5f9b8704l492a5a9a7eb48d1a@mail.gmail.com>
-References: <85647ef50812151015t4d5bc2b8p4ea53a0e4ad25e64@mail.gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: New script to convert p4 repositories to git - git-p4c version
+	1.
+Date: Mon, 15 Dec 2008 14:30:58 -0500
+Message-ID: <20081215193058.GA5098@osc.edu>
+References: <1228818317.5504.23.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Constantine Plotnikov" <constantine.plotnikov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 15 20:25:38 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: John Chapman <thestar@fussycoder.id.au>
+X-From: git-owner@vger.kernel.org Mon Dec 15 20:32:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCJ4N-0008QU-B9
-	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 20:25:31 +0100
+	id 1LCJAx-0002UD-Iw
+	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 20:32:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751624AbYLOTYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 14:24:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751589AbYLOTYM
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 14:24:12 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:30012 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751533AbYLOTYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 14:24:11 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so1182755yxm.1
-        for <git@vger.kernel.org>; Mon, 15 Dec 2008 11:24:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=YnXPV1WtIh5UCS//kMr8mUyuoILDjOI7tiEYLnkZpFY=;
-        b=k3jKNI4MI/jvdqZWo51cby7hDrK9J/hwh+O9EGph5afnM1m8bTeJfj2oxT7fywodvH
-         yCYrYzg6204EwCab4C7ohqsThiAz0nE78BQ9YFQ/y0WVLmkTg0vJPLe9EcckeRGketZK
-         HvZDVq/glzao41xz9YmO875NsCSPcIGpmS5q4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=oc0gd7ha4GCyqMeqRCAEml3y+lRvOOWS6kCvdCkALk7Wtt3ergMP20GvHd8cKjBffu
-         eozmMHldSoNi11tsUS7oVsgdWL9kC31drTGrq9wzl1RHjlFyMgVe54lra/cGaadgNy7R
-         x2DezE0ofo1GzpGSArG0UEvoxvuxCyMYmUjCU=
-Received: by 10.150.211.4 with SMTP id j4mr12055882ybg.187.1229369050508;
-        Mon, 15 Dec 2008 11:24:10 -0800 (PST)
-Received: by 10.151.82.10 with HTTP; Mon, 15 Dec 2008 11:24:10 -0800 (PST)
-In-Reply-To: <85647ef50812151015t4d5bc2b8p4ea53a0e4ad25e64@mail.gmail.com>
+	id S1751772AbYLOTbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 14:31:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbYLOTbA
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 14:31:00 -0500
+Received: from marge.padd.com ([99.188.165.110]:40519 "EHLO marge.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751357AbYLOTa7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 14:30:59 -0500
+Received: from oink.padd.com (oink.padd.com [69.36.12.13])
+	by marge.padd.com (Postfix) with ESMTPSA id 372A710F8186;
+	Mon, 15 Dec 2008 11:28:53 -0800 (PST)
+Received: by oink.padd.com (Postfix, from userid 7770)
+	id 0F2FEFD4164; Mon, 15 Dec 2008 14:30:58 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <1228818317.5504.23.camel@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103199>
 
-On Mon, Dec 15, 2008 at 19:15, Constantine Plotnikov
-<constantine.plotnikov@gmail.com> wrote:
-> After this scenario is executed, git branch -a will give the following output:
->  master
-> * origin/master
->  origin/master
->
-> Note that there is two origin/master entries, but it is not clear
-> which is remote is and which is the local.
+thestar@fussycoder.id.au wrote on Tue, 09 Dec 2008 21:25 +1100:
+> I couldn't use git-p4 on my system because I kept running out of memory,
+> and I didn't like the workflow it imposed.
+> Also, it had various other issues with the repo I was trying to use,
+> mainly because it is not an ideal repository, however those are
+> (generally) the fault of the particular repo I was using, and not
+> git-p4. (Which is an excellent script by itself).
+> 
+> This script is severely crippled in that it doesn't (yet) allow one to
+> contribute changesets back to perforce, however it manages to read from
+> perforce with:
+> * No need to rebase.
+> * Mangling of file names. (Especially with regards to case sensitivity).
+> * Tagging of revisions with the perforce changesets.
+> * Ability to handle branches with spaces in the name.
+> * Ability to pretend that perforce doesn't exist. (That's the plan,
+> anyway).
+> * Be extremely memory efficient. It does NOT require as much memory as
+> does git-p4, even when the size of the change is large.
+> * Be easy to manually modify the repository, particularly if bad things
+> happen.
 
-You can use `git branch -a --color` to see the difference (issue `git
-config --global color.branch true` to use --color automatically).
+I like how your script imports one change at a time, as the initial
+import using git-p4 here does indeed get close to exhasting virtual
+memory, but I'm running into a different limitation with p4c.
 
---
-larsh
+The command:
+
+    p4 -G changes -l -t
+
+is adminstratively limited to a paltry six-digit number, and
+produces only an error message.
+
+The other feature I need is the ability to use a client
+specification.  We merge together 40-odd different chunks of //depot
+into a single checked-out client, and use some other number of
+"-//depot/..." rules to exclude some parts of the full depot.
+
+If I hack p4c to limit the changes with "-m 10" or so, then things
+are a bit better in that I get two objects (changesets) but no
+diffs.  Had to hack the on_branch() code somewhat, in that no form
+of --branches seemed to produce an "interesting" changeset by your
+definition.  Could be my lack of understanding here.
+
+If you think you want to handle client specifications, and can think
+of a way around the "p4 changes" limitation, I'll be happy to poke
+at your next version.  Perhaps I'm not in your target audience,
+though.  I don't necessarily need to have a full git history of the
+entire p4, but this seems to be a fundamental part of your approach.
+
+		-- Pete
