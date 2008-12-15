@@ -1,63 +1,64 @@
-From: "Constantine Plotnikov" <constantine.plotnikov@gmail.com>
-Subject: Interactive rebase encoding
-Date: Mon, 15 Dec 2008 15:42:08 +0300
-Message-ID: <85647ef50812150442n48609eadl4f3e47fcc715e643@mail.gmail.com>
+From: Bruce Stephens <bruce.stephens@isode.com>
+Subject: "git gc" doesn't seem to remove loose objects any more
+Date: Mon, 15 Dec 2008 12:52:34 +0000
+Message-ID: <808wqhzjl9.fsf@tiny.isode.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 15 13:43:36 2008
+X-From: git-owner@vger.kernel.org Mon Dec 15 13:54:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCCnP-0002Zs-Eo
-	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 13:43:35 +0100
+	id 1LCCxT-0005s8-QX
+	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 13:54:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751279AbYLOMmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 07:42:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751237AbYLOMmL
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 07:42:11 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:33290 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750935AbYLOMmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 07:42:10 -0500
-Received: by bwz14 with SMTP id 14so1768732bwz.13
-        for <git@vger.kernel.org>; Mon, 15 Dec 2008 04:42:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=cqYXlzQqU42bBD9Vju0gFb36pr7JrmIxb4Pu3t7MLaA=;
-        b=A9Yxu9I32h5nJ0l6Hsgnz1McdV88+bkc8LimkxFMRe3SkfOOKj44E5nlzpLs5EpqSn
-         0dsGPexpWWn0pP/BZWy4jZzzbaA3WIsBYpYCk66yjlm8mNUOlZePxG43OSo50K6vX1fz
-         d9aiywT8OWLKsYSwF/DUxxhOdGPI/md275iXg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=P8eeQHuFLr/Y1e+N32EVei6/ESZ58TvPzC4E1akeyQYR93+m8vWVBQvLGNDYIjsLTc
-         /Q4s/e4F1lIKsswIDpi3nxI815NyaW/nUixgerSrBPDA6qk0Q2GaZWfgwhdBSXbFCBxm
-         wHf6hADdcWNfDp67Hj/0ZqjEIe1WzJZEIIsuA=
-Received: by 10.181.226.19 with SMTP id d19mr2523323bkr.35.1229344928277;
-        Mon, 15 Dec 2008 04:42:08 -0800 (PST)
-Received: by 10.181.143.16 with HTTP; Mon, 15 Dec 2008 04:42:08 -0800 (PST)
-Content-Disposition: inline
+	id S1751379AbYLOMwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 07:52:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751337AbYLOMwi
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 07:52:38 -0500
+Received: from rufus.isode.com ([62.3.217.251]:44113 "EHLO rufus.isode.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751271AbYLOMwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 07:52:37 -0500
+Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
+          by rufus.isode.com (smtp internal) via TCP with SMTP 
+          id <SUZTEgB05cRa@rufus.isode.com> for <git@vger.kernel.org>;
+          Mon, 15 Dec 2008 12:52:35 +0000
+Received: by tiny.isode.net (sSMTP sendmail emulation);
+          Mon, 15 Dec 2008 12:52:34 +0000
+X-Hashcash: 1:20:081215:git@vger.kernel.org::XVjlrcIgxwWhzXod:0000000000000000000000000000000000000000000gwg
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103160>
 
-The interactive rebase command builds a text file and passes it to
-editor specified as environment variable or as configuration
-parameter. However the man page for rebase operation says nothing
-about which encoding will be used for that file. Apparently
-i18n.logoutputencoding is used. I think that the man page for rebase
-operation should explicitly specify it.
+I couldn't see a test for this, but perhaps I'm just missing it?
 
-Also it might make sense to use explicit encoding parameter for
-interactive rebase operation.
+    brs% git count-objects
+    161 objects, 1552 kilobytes
+    brs% git gc
+    Counting objects: 80621, done.
+    Compressing objects: 100% (22372/22372), done.
+    Writing objects: 100% (80621/80621), done.
+    Total 80621 (delta 57160), reused 80305 (delta 56884)
+    brs% git count-objects
+    207 objects, 2048 kilobytes
 
-Constantine
+
+And I see lots of directories under .git/objects which confirms
+things.
+
+I don't think I've changed any relevant configuration.
+
+This is with 8befc50c49e8a271fd3cd7fb34258fe88d1dfcad (also whatever
+version I used before, erm, probably
+de0db422782ddaf7754ac5b03fdc6dc5de1a9ae4), and possibly earlier
+versions---I've just started noticing now that the number of loose
+objects has started causing git gui to complain.
+
+(Hmm, I note that git gui reports a larger number of loose objects
+than git count-objects.  Ah, OK, it really is just an approximation,
+so no surprise.)
