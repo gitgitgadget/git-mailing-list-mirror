@@ -1,99 +1,122 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [RFCv4 1/3] gitweb: add patch view
-Date: Mon, 15 Dec 2008 14:48:20 +0100
-Message-ID: <cb7bb73a0812150548w526a8c0eu13ec95785e0ab824@mail.gmail.com>
-References: <1228575755-13432-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1228575755-13432-2-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200812151417.16372.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Announce: TortoiseGit 0.1 preview version
+Date: Mon, 15 Dec 2008 14:56:27 +0100
+Message-ID: <200812151456.27750.jnareb@gmail.com>
+References: <1976ea660812130033m2d54cc57tfe134fab0d687d71@mail.gmail.com> <m3d4fuewe0.fsf@localhost.localdomain> <1976ea660812140529k1499b410u4437645be0dc7dfc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 15 14:49:43 2008
+Content-Type: text/plain; charset=gb2312
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Li Frank" <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 15 14:57:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCDpN-0007Cw-Px
-	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 14:49:42 +0100
+	id 1LCDxK-0001Mi-RN
+	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 14:57:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751604AbYLONsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 08:48:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752439AbYLONsW
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 08:48:22 -0500
-Received: from ey-out-2122.google.com ([74.125.78.25]:30775 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751011AbYLONsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 08:48:22 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so373753eyi.37
-        for <git@vger.kernel.org>; Mon, 15 Dec 2008 05:48:20 -0800 (PST)
+	id S1753191AbYLON4d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Dec 2008 08:56:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821AbYLON4d
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 08:56:33 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:34108 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752440AbYLON4c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 08:56:32 -0500
+Received: by ewy10 with SMTP id 10so3032601ewy.13
+        for <git@vger.kernel.org>; Mon, 15 Dec 2008 05:56:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=xLZqrro5yY5CaB3cWmXARSurbdODKhI9GAzrElDOiEs=;
-        b=iEu7ro0Qq2KU8SgNdzXIJVCzuAylWXIaClTlaJVr8knLSqCuER9UBg+P5zEx7PhzE/
-         CSAOwAdxz7AcW+kGZPGxDd+LHL4QfvNPxNxX2FETp6cY7rGk40LBaW/pKzHCEekQqJhY
-         oOtf4+6mjrXJFiafaxTtuLtNQhS3jBImGcp30=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=lUJoQ7ZqoNJGUxdVUajPTucZzHe4q5m79YCfZvFaUHA=;
+        b=J6wOe014Jk4ayawiJR68oP3tg2hSUBpLMr9ieZl7+xzGQh2nkgm190qPNXpgfrr7KH
+         xGnEyWcVVloJ5P8VR5fdnx2SoMGwcFkDTyVtNY6OI3EzTALkW1jENuxK+KevUcnVpbdH
+         z+QcQPZWMrt7ldttycDS7fQhMC6kPxTueovTc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=wUceU5BRszUuG5v3kKCVHKw8BZ74lzOV5jUNTG6wpzuVoWhzcN+2Uu5THvz208FXpv
-         wmlPsoueBtX3GiQFix3UcvNwmuxAMx+NDzIfuHJ8suHBDQzOl7fqG1cxvRFdJStcxo4K
-         Ap/tgyiC9U5IEvEHzVlYf+sYrZhEJ/BsaY5vQ=
-Received: by 10.210.122.5 with SMTP id u5mr7759412ebc.83.1229348900142;
-        Mon, 15 Dec 2008 05:48:20 -0800 (PST)
-Received: by 10.210.136.4 with HTTP; Mon, 15 Dec 2008 05:48:20 -0800 (PST)
-In-Reply-To: <200812151417.16372.jnareb@gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Cz/mZ5HgcNr8NGXQImN7K9iHKDecuxKetBOl6GkvBAhTh3jV8l2metzbXrymFZurWK
+         cfowcnRvN2hbQaGI+zq2jpu3QfEMAAQPbKJQiiXUwb5UwXplvZT2tyabtwtzgqLvS5b+
+         ugBmxRZhwOp47ORZOvJkCyiv0cyy99ZOrH4pM=
+Received: by 10.210.131.6 with SMTP id e6mr7782118ebd.77.1229349390926;
+        Mon, 15 Dec 2008 05:56:30 -0800 (PST)
+Received: from ?192.168.1.11? (abva128.neoplus.adsl.tpnet.pl [83.8.198.128])
+        by mx.google.com with ESMTPS id 5sm531132eyh.37.2008.12.15.05.56.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 15 Dec 2008 05:56:29 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1976ea660812140529k1499b410u4437645be0dc7dfc@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103164>
 
-On Mon, Dec 15, 2008 at 2:17 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->> +     my $patch_max;
->> +     if ($format eq 'patch') {
->> +             $patch_max = gitweb_check_feature('patches');
->> +             die_error(403, "Patch view not allowed") unless $patch_max;
->> +     }
->> +
->
-> Hmmm... gitweb_check_feature
+On Sun, 14 Dec 2008, Li Frank wrote:
 
-You're right, it's an abuse. I'll make it gitweb_get_feature()[0]
+>=20
+> 2008/12/14 Jakub Narebski <jnareb@gmail.com>:
+>> "=C0=EE=D6=C7" <lznuaa@gmail.com> writes:
+>>
+>>> TortoiseGit is porting from TortoiseSVN.  It is explore extension.
+>>> This version just finish a minimum set of TortoiseSVN porting
+>>
+>> How it differs from GitCheetah project?
+> GitCheetah just show git-gui &git-bash at context menu!
+>=20
+> TortoiseGit is full porting from TortoiseSVN. Overlay icon can show
+> modified file, add file and conflicted file whith different icon.
+>=20
+> TortoiseGit can commit change, show log, checkout ... at Context menu=
+!
+> It is full git fontend.
 
-> I am wondering if we could somehow mark (encode) either $hash_parent
-> or number of patches in proposed filename... but I don't think it is
-> worth it.
+>> [...]
+>>> Project Home Page at:
+>>> http://code.google.com/p/tortoisegit/
+>>>
+>>> Source code at
+>>> http://repo.or.cz/w/TortoiseGit.git
+>>>
+>>> It need msysgit 1.6.0.2.
+>>
+>> Do you feel it is mature enough to be added to git wiki page
+>>  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
+>> just above "Git Extensions" entry?  Would you do it, or should
+>> I do this?
+>=20
+> TortoiseGit is in very early stage. I just implement min set feature
+> and not mature . I hope there are more and more people involve this
+> project and make it mature as TortoiseSVN.
 
-Including hash_parent if defined is quite possible. I'm not sure it's
-really worth it considering that the typical usage would be to publish
-a patchset for a particular feature (in which case the hash/branch
-name would be enough).
+I have added information about TortoiseGit to git wiki at
+http://git.or.cz/gitwiki/InterfacesFrontendsAndTools#head-803ff1eef7a32=
+fd1d8fe86713de343af18605047
 
->> +     } elsif ($format eq 'patch') {
->> +             local $/ = undef;
->> +             print <$fd>;
->> +             close $fd
->> +                     or print "Reading git-format-patch failed\n";
->
-> Nice, although... I'd prefer for Perl expert to say if it is better
-> to dump file as a whole in such way (it might be quite large), or
-> to do it line by line, i.e. without "local $/ = undef;", or using
-> "print while <$fd>;" also without "local $/ = undef;".
+Please correct it if the information there (copy below) is wrong.
+=46eel free to extend this short info.
 
-I'm just sticking to whatever the existing code does :-)
+Hopefully this way more people would find your project, and be able
+to contribute to it.
 
-As soon as you finish the patchset review I'll have a new version
-taking into consideration all the other suggestions and remarks I
-snipped from this reply.
 
--- 
-Giuseppe "Oblomov" Bilotta
+  =3D=3D=3D TortoiseGit =3D=3D=3D
+ =20
+  TortoiseGit[1] (gitweb[2]) by Li Frank is a port of TortoiseSVN[3]
+  to Git.  It is Microsoft Windows shell (Explorer) extension, written
+  in C++.  TortoiseGit is in very early stages of development,
+  implementing currently only minimal set of features.
+
+  [1] http://code.google.com/p/tortoisegit/
+  [2] http://repo.or.cz/w/TortoiseGit.git
+  [3] http://tortoisesvn.tigris.org/
+
+--=20
+Jakub Narebski
+Poland
