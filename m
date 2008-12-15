@@ -1,64 +1,68 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Followup: management of OO files - warning about "rezip" approach
-Date: Mon, 15 Dec 2008 15:41:13 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0812151535410.21677@ds9.cixit.se>
-References: <loom.20081214T123442-862@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 15 15:42:37 2008
+From: Matt Kraai <kraai@ftbfs.org>
+Subject: [PATCH] gitweb: make feature_blame return a list
+Date: Mon, 15 Dec 2008 06:51:48 -0800
+Message-ID: <1229352709-4663-1-git-send-email-kraai@ftbfs.org>
+Cc: Matt Kraai <kraai@ftbfs.org>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Dec 15 15:53:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCEea-0000eL-Mj
-	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 15:42:37 +0100
+	id 1LCEpB-0004Vz-M8
+	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 15:53:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752341AbYLOOlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 09:41:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753181AbYLOOlT
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 09:41:19 -0500
-Received: from ds9.cixit.se ([193.15.169.228]:60320 "EHLO ds9.cixit.se"
+	id S1753316AbYLOOwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 09:52:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753273AbYLOOwO
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 09:52:14 -0500
+Received: from neon.ftbfs.org ([83.168.236.214]:52320 "EHLO neon.ftbfs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751571AbYLOOlS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 09:41:18 -0500
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mBFEfEac007661
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 15 Dec 2008 15:41:14 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mBFEfDmo007655;
-	Mon, 15 Dec 2008 15:41:13 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <loom.20081214T123442-862@post.gmane.org>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Mon, 15 Dec 2008 15:41:14 +0100 (CET)
+	id S1753223AbYLOOwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 09:52:13 -0500
+Received: from pool-71-119-193-199.lsanca.dsl-w.verizon.net ([71.119.193.199] helo=macbookpro.ftbfs.org)
+	by neon.ftbfs.org with esmtpa (Exim 4.63)
+	(envelope-from <kraai@ftbfs.org>)
+	id 1LCEne-0000jd-9x; Mon, 15 Dec 2008 06:52:03 -0800
+Received: from kraai by macbookpro.ftbfs.org with local (Exim 4.69)
+	(envelope-from <kraai@ftbfs.org>)
+	id 1LCEnV-0001EV-ON; Mon, 15 Dec 2008 06:51:49 -0800
+X-Mailer: git-send-email 1.5.6.5
+X-Spam-Score-Int: -41
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103170>
 
-Sergio Callegari:
+The feature defaults are expected to be a list, but feature_blame was
+returning a scalar.  This change makes it consistent with the other
+boolean feature subroutines.
 
-> E.g. patch the rezip script so that
-> 
-> PROFILE_UNZIP_ODF_UNCOMPRESS='-b -qq'
-> PROFILE_ZIP_ODF_UNCOMPRESS='-q -r -D -0 -X'
-> PROFILE_UNZIP_ODF_COMPRESS='-b -qq'
-> PROFILE_ZIP_ODF_COMPRESS='-q -r -D -6 -X'
+Signed-off-by: Matt Kraai <kraai@ftbfs.org>
+---
+ gitweb/gitweb.perl |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-Yeah, that is exactly what I ended up doing.
-
-I've been running the rezip script for quite a long time now,
-versioning a spreadsheet that I update by adding stuff to up to several
-times a week. Using this approach has shrunk the compressed .git
-directory by about 90 % (before I started using rezip, it was about 9
-megabytes, with rezip and 30 % more commits, it is now 1 megabyte).
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 6eb370d..145e712 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -367,12 +367,12 @@ sub feature_blame {
+ 	my ($val) = git_get_project_config('blame', '--bool');
+ 
+ 	if ($val eq 'true') {
+-		return 1;
++		return (1);
+ 	} elsif ($val eq 'false') {
+-		return 0;
++		return (0);
+ 	}
+ 
+-	return $_[0];
++	return ($_[0]);
+ }
+ 
+ sub feature_snapshot {
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+1.5.6.5
