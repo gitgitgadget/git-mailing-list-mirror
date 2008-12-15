@@ -1,79 +1,61 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Interactive rebase encoding
-Date: Mon, 15 Dec 2008 16:13:22 +0100
-Message-ID: <20081215151322.GI5691@genesis.frugalware.org>
+Date: Mon, 15 Dec 2008 16:54:17 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812151652400.30769@pacific.mpi-cbg.de>
 References: <85647ef50812150442n48609eadl4f3e47fcc715e643@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Z+vV71AWp02Mr0PV"
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 15 16:14:48 2008
+X-From: git-owner@vger.kernel.org Mon Dec 15 16:47:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCF9h-0004Xm-83
-	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 16:14:45 +0100
+	id 1LCFek-0008NZ-CA
+	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 16:46:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751021AbYLOPNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 10:13:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751029AbYLOPNZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 10:13:25 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:57217 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751011AbYLOPNZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 10:13:25 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id DC5DA580A1;
-	Mon, 15 Dec 2008 16:13:22 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 90D294465E;
-	Mon, 15 Dec 2008 16:13:22 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 5AB4111B862F; Mon, 15 Dec 2008 16:13:22 +0100 (CET)
-Content-Disposition: inline
+	id S1751876AbYLOPpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 10:45:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751602AbYLOPpb
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 10:45:31 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41797 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751165AbYLOPpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 10:45:31 -0500
+Received: (qmail invoked by alias); 15 Dec 2008 15:45:28 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp041) with SMTP; 15 Dec 2008 16:45:28 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/VOblDVyrVkSJGGNssK9KIYNMZ+AZTAyTDXLyz01
+	l1fvi8gOt16C70
+X-X-Sender: schindelin@pacific.mpi-cbg.de
 In-Reply-To: <85647ef50812150442n48609eadl4f3e47fcc715e643@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103173>
 
+Hi,
 
---Z+vV71AWp02Mr0PV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Mon, 15 Dec 2008, Constantine Plotnikov wrote:
 
-On Mon, Dec 15, 2008 at 03:42:08PM +0300, Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
-> The interactive rebase command builds a text file and passes it to
-> editor specified as environment variable or as configuration
-> parameter. However the man page for rebase operation says nothing
-> about which encoding will be used for that file. Apparently
-> i18n.logoutputencoding is used. I think that the man page for rebase
-> operation should explicitly specify it.
+> The interactive rebase command builds a text file and passes it to 
+> editor specified as environment variable or as configuration parameter. 
+> However the man page for rebase operation says nothing about which 
+> encoding will be used for that file. Apparently i18n.logoutputencoding 
+> is used.
 
-Care to send a patch?
+As rebase -i does nothing else than piping the output of git log into a 
+file (at least this is the first step), I thought it would be obvious that 
+it uses the output encoding preferred by the user.
 
-> Also it might make sense to use explicit encoding parameter for
-> interactive rebase operation.
+Indeed, I cannot think of any scenario where it might make sense to have a 
+different encoding in git rebase -i than in git log.
 
-Do you have a use-case where having a different encoding for log output
-and rebase -i todo list makes sense?
-
-Thanks.
-
---Z+vV71AWp02Mr0PV
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklGdBIACgkQe81tAgORUJa3MQCgo/4rEjVluhimXYtg/MT7kPi5
-83EAoJRz/bVj9pPtEqOPxTodieGrQctE
-=viVo
------END PGP SIGNATURE-----
-
---Z+vV71AWp02Mr0PV--
+Ciao,
+Dscho
