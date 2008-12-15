@@ -1,99 +1,128 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] modify/delete conflict resolution overwrites untracked file
-Date: Mon, 15 Dec 2008 10:50:37 +0000
-Message-ID: <e2b179460812150250t6e028330xf0e0ff626c1b6b3c@mail.gmail.com>
-References: <20081210201259.GA12928@localhost>
-	 <20081215004651.GA16205@localhost>
-	 <7v63lm1c76.fsf@gitster.siamese.dyndns.org>
-	 <7vmyeyyuuh.fsf@gitster.siamese.dyndns.org>
-	 <20081215095949.GA7403@localhost>
-	 <7vskopwxej.fsf@gitster.siamese.dyndns.org>
+From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+Subject: Re: [patch] Fix a corner case in git update-index --index-info
+Date: Mon, 15 Dec 2008 11:52:25 +0100
+Organization: Intra2net AG
+Message-ID: <200812151152.59451.thomas.jarosch@intra2net.com>
+References: <200812131403.08740.thomas.jarosch@intra2net.com> <7viqpn6fhz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Clemens Buchacher" <drizzd@aon.at>, git@vger.kernel.org,
-	johannes.schindelin@gmx.de, raa.lkml@gmail.com
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 15 11:52:05 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 15 11:54:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCB3N-0002wN-S7
-	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 11:51:58 +0100
+	id 1LCB5k-0003k2-50
+	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 11:54:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753265AbYLOKuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 05:50:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753323AbYLOKuj
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 05:50:39 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:51172 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753009AbYLOKuj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 05:50:39 -0500
-Received: by qyk4 with SMTP id 4so2573435qyk.13
-        for <git@vger.kernel.org>; Mon, 15 Dec 2008 02:50:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=WWkhdYbaGQj+KAnwAR2clnVGXLz0WdKOHhN2wyq0J5U=;
-        b=BK4O5ciDM80RyuC+8p9eXX/422prH0tlrNCvOmT+R3TgZPwHlootrdB6afzJsNdjs9
-         dgQ4dDpXk84m/V2F6zv9dXeIS49X1/xT95DUcvFr55XXQV5z/Ijzm4fGu/CaeAcYf9Tp
-         jogpLM+ytvFZ8gMbVWldSuwVvrhYE/D4mgfBE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=tNYb4UZhV9qpt8d9IKsp331oxEvAk11e5xAkJWOvLQkaHlVfHBVAbK3WgAn+KCBgeb
-         hdBZ/pvrnETlcv6prxdAGp/NAMiOFL+cAEQ6BI9uUWHRPFt9ULkNAK55NM1LmQacbFXl
-         vPAyqhTYocL7dJm1OHKbbS/TaSV7G6l0XAbsg=
-Received: by 10.214.81.5 with SMTP id e5mr7328603qab.305.1229338237619;
-        Mon, 15 Dec 2008 02:50:37 -0800 (PST)
-Received: by 10.214.150.9 with HTTP; Mon, 15 Dec 2008 02:50:37 -0800 (PST)
-In-Reply-To: <7vskopwxej.fsf@gitster.siamese.dyndns.org>
+	id S1753413AbYLOKxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 05:53:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753323AbYLOKxF
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 05:53:05 -0500
+Received: from rs02.intra2net.com ([81.169.173.116]:46775 "EHLO
+	rs02.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752791AbYLOKxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 05:53:03 -0500
+Received: from intranator.m.i2n (unknown [172.16.1.99])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by rs02.intra2net.com (Postfix) with ESMTP id 1DB2D4C47;
+	Mon, 15 Dec 2008 11:53:01 +0100 (CET)
+Received: from localhost (intranator.m.i2n [127.0.0.1])
+	by localhost (Postfix) with ESMTP id B02F42AC4B;
+	Mon, 15 Dec 2008 11:53:00 +0100 (CET)
+Received: from storm.localnet (storm.m.i2n [172.16.1.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by intranator.m.i2n (Postfix) with ESMTP id C0F962AC4A;
+	Mon, 15 Dec 2008 11:52:59 +0100 (CET)
+User-Agent: KMail/1.10.3 (Linux/2.6.27.5-41.fc9.i686; KDE/4.1.3; i686; ; )
+In-Reply-To: <7viqpn6fhz.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
+X-Virus-Scanned: by Intranator (www.intranator.com) with AMaViS and F-Secure AntiVirus (fsavdb 2008-12-15_02)
+X-Spam-Status: hits=-2.0 tests=[ALL_TRUSTED=-1.8,BAYES_40=-0.185]
+X-Spam-Level: 980
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103155>
 
-2008/12/15 Junio C Hamano <gitster@pobox.com>:
-> Clemens Buchacher <drizzd@aon.at> writes:
+On Saturday, 13. December 2008 20:29:12 you wrote:
+> If you are doing a filter-branch and the commits near the beginning of the
+> history did not have any path you are interested in, I do not think you
+> would want to even create corresponding commits for them that record an
+> empty tree to begin with, so I do not necessarily agree with the above
+> command line.  The mv would fail due to absense of index.new file, and you
+> can take it as a sign that you can skip that commit.
+
+True. I killed the empty commit later using rebase -i. Great tool :-)
+
+> Outside the context of your command line above, I am slightly more
+> sympathetic than neutral to the argument that "update-index --index-info"
+> (and "update-index --stdin", which I suspect would have the same issue,
+> but I did not check) should create an output file if one did not exist.
 >
->> On Sun, Dec 14, 2008 at 07:34:46PM -0800, Junio C Hamano wrote:
->>> merge-recursive: do not clobber untracked working tree garbage
->>>
->>> When merge-recursive wanted to create a new file in the work tree (either
->>> as the final result, or a hint for reference purposes while delete/modify
->>> conflicts), it unconditionally overwrote an untracked file in the working
->>> tree.  Be careful not to lose whatever the user has that is not tracked.
->>
->> This leaves the index in an unmerged state, however, so that a subsequent
->> git reset --hard still kills the file. And I just realized that the same
->> goes for merge-resolve. So I'd prefer to abort the merge, leave everything
->> unchanged and tell the user to clean up first.
+> You should note however that such a change would rob from you a way to
+> detect that you did not feed anything to the command by checking the lack
+> of the output.  Such a change would break people's existing scripts that
+> relied on the existing behaviour; one example is that the above "The mv
+> would fail...and you can" would be made impossible.
+
+That is also true. OTOH there would be no way to create an empty tree,
+f.e. if you do positive filtering like --subdirectory-filter
+just with multiple subdirs:
+
+git filter-branch --tag-name-filter cat --index-filter \
+    'git ls-files -s |grep -P "\t(DIR1|DIR2)" \
+    |GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info &&
+    mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' -- --all
+
+Later on I removed all empty commits in a second run.
+
+> > +	if (!found_something)
+> > +		active_cache_changed = 1;
+> > +
+> >  	strbuf_release(&buf);
+> >  	strbuf_release(&uq);
+> >  }
 >
-> That is unfortunately asking for a moon, I am afraid.
->
-> It needs a major restructuring of the code so that the recursive works
-> more like the way resolve works, namely, changing the final "writeout"
-> into two phase thing (the first phase making sure nothing is clobbered in
-> the work tree, and then the second phase actually touching the work tree).
+> I think this implementation is conceptually wrong, even if we assume it is
+> the right thing to always create a new file.  The --index-info mode may
+> well be fed with the same information as it already records, in which case
+> active_cache_changed shouldn't be toggled, and if it is fed something
+> different from what is recorded, active_cache_changed should be marked as
+> changed, and that decision should be left to the add_cache_entry() that is
+> called from add_cacheinfo().  What you did is to make it _always_ write
+> the new index out, even if we started with an existing index, and there
+> was no change, or even if we started with missing index, and there was no
+> input.  You only wanted the latter but you did both.
 
-I wonder if another approach is workable... to read 'vulnerable'
-untracked working tree files into a new (temporary, uncommittable)
-stage in the index, perform whatever merging is required, then
-reinstate all entries from the new stage.
+The idea was to toggle the active_cache_changed variable only if we didn't get 
+a single line of input from stdin. If you feed back the same index information
+f.e. via "git ls-tree -s", the active_cache_changed=1 code shouldn't be 
+executed. Though I didn't explicitly test this case, so I guess you are right.
 
-Thus the merge should normally succeed under the covers, and the
-previously untracked file(s) would now show up as modified against the
-tracked content.
+> But again, this would break people who have been relying on the existing
+> behaviour that no resulting file, when GIT_INDEX_FILE points at a
+> nonexistent file, signals no operation.
 
-Two problems I foresee - potential loss of untracked metadata, and
-ensuring we reinstate the untracked contents in all possible paths the
-user can use to abort or resolve the merge.
+See my remark about "positive list" filtering above.
 
-Mike
+> I think it is a bad idea to do this in -rc period, even if we were to
+> change the semantics.
+
+Yes, this is something one doesn't want in a -rc :-)
+
+Thanks for your implementation.
+
+btw: I sent a small documentation update to the list and forgot to add you
+to the CC: list. The subject line was
+
+"[patch] documentation: Explain how to free up space after filter-branch"
+
+Cheers,
+Thomas
