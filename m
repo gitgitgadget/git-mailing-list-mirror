@@ -1,62 +1,62 @@
-From: Farrukh Najmi <farrukh@wellfleetsoftware.com>
-Subject: Re: ETA for release of gjit 0.4?
-Date: Mon, 15 Dec 2008 17:52:43 -0500
-Message-ID: <4946DFBB.6030300@wellfleetsoftware.com>
-References: <49393BFC.6010606@wellfleetsoftware.com>
- <200812061947.27905.robin.rosenberg.lists@dewire.com>
- <493ACAFC.5040605@wellfleetsoftware.com> <20081208162123.GD31551@spearce.org>
- <493D4CDB.2010100@wellfleetsoftware.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] modify/delete conflict resolution overwrites untracked
+	file
+Date: Tue, 16 Dec 2008 00:02:05 +0100
+Message-ID: <20081215230205.GA19538@localhost>
+References: <20081210201259.GA12928@localhost> <20081215004651.GA16205@localhost> <7v63lm1c76.fsf@gitster.siamese.dyndns.org> <7vmyeyyuuh.fsf@gitster.siamese.dyndns.org> <20081215095949.GA7403@localhost> <7vskopwxej.fsf@gitster.siamese.dyndns.org> <7vej09w0hy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Dec 15 23:54:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, raa.lkml@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 16 00:03:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCMKv-0004qb-Ca
-	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 23:54:49 +0100
+	id 1LCMT7-0007P2-8Y
+	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 00:03:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752342AbYLOWxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 17:53:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752329AbYLOWxb
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 17:53:31 -0500
-Received: from vms046pub.verizon.net ([206.46.252.46]:41622 "EHLO
-	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751960AbYLOWxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 17:53:31 -0500
-Received: from [192.168.1.101] ([71.184.123.62])
- by vms046.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0KBX009C9WWGHV80@vms046.mailsrvcs.net> for
- git@vger.kernel.org; Mon, 15 Dec 2008 16:53:15 -0600 (CST)
-In-reply-to: <493D4CDB.2010100@wellfleetsoftware.com>
-User-Agent: Thunderbird 2.0.0.18 (X11/20081125)
+	id S1752087AbYLOXB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 18:01:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752176AbYLOXB7
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 18:01:59 -0500
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:55756 "EHLO
+	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751960AbYLOXB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 18:01:59 -0500
+Received: from darc.dyndns.org ([84.154.98.216]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 16 Dec 2008 00:01:56 +0100
+Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1LCMRx-0005Xt-To; Tue, 16 Dec 2008 00:02:05 +0100
+Content-Disposition: inline
+In-Reply-To: <7vej09w0hy.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-OriginalArrivalTime: 15 Dec 2008 23:01:57.0263 (UTC) FILETIME=[212BC1F0:01C95F09]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103216>
 
+On Mon, Dec 15, 2008 at 02:13:13PM -0800, Junio C Hamano wrote:
+> You can do a merge inside a dirty work tree, and the merge will fail
+> without clobbering your work tree files that are dirty when it needs to be
+> able to overwrite to do its job.  The set of "dirty files" in this
+> sentence of course includes paths that are modified since HEAD, but it
+> also includes also paths that do not exist in HEAD (i.e. "new files").
+> 
+> But we already caution users that you need to know what you are doing when
+> working in such a dirty work tree.  Namely, after a failed merge, your
+> next "git reset --hard" will blow away your local modifications.  And
+> local modifications in this context includes the files you could have
+> added to the index but you haven't.
 
-Hi Shawn,
+I strongly disagree. With the suggested behavior I would have to
+double-check every single untracked file in my tree for conflicts before
+trying a throw-away merge followed by git reset --hard, for example. The
+file could even be ignored! Whatever happened to git reset doesn't touch
+untracked files?
 
-I was wondering if there are any updates on my question on whether we 
-can have a 0.4 release of jgit (no SNAPSHOT).
-I am ready to release my software but maven wont let me release it 
-because its dependency jgit is a SNAPSHOT release.
-
-As I recall you had planned to release 0.4 and make it available on the 
-maven repo at:
-
-<http://egit.googlecode.com/svn/maven/snapshot-repository/org/spearce/jgit>
-
-I do not see it there yet. Any chance of getting that today? Thanks.
-
--- 
-Regards,
-Farrukh Najmi
-
-Web: http://www.wellfleetsoftware.com
+I would even prefer breaking t6023 (until we can properly implement this
+feature) in order to avoid that.
