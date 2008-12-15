@@ -1,62 +1,111 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] modify/delete conflict resolution overwrites untracked
-	file
-Date: Tue, 16 Dec 2008 00:02:05 +0100
-Message-ID: <20081215230205.GA19538@localhost>
-References: <20081210201259.GA12928@localhost> <20081215004651.GA16205@localhost> <7v63lm1c76.fsf@gitster.siamese.dyndns.org> <7vmyeyyuuh.fsf@gitster.siamese.dyndns.org> <20081215095949.GA7403@localhost> <7vskopwxej.fsf@gitster.siamese.dyndns.org> <7vej09w0hy.fsf@gitster.siamese.dyndns.org>
+From: John Chapman <thestar@fussycoder.id.au>
+Subject: Re: New script to convert p4 repositories to git - git-p4c version
+	1.
+Date: Tue, 16 Dec 2008 08:52:32 +1100
+Message-ID: <1229377952.18839.11.camel@therock.nsw.bigpond.net.au>
+References: <1228818317.5504.23.camel@localhost>
+	 <20081215193058.GA5098@osc.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, raa.lkml@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 16 00:03:45 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Tue Dec 16 00:30:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCMT7-0007P2-8Y
-	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 00:03:17 +0100
+	id 1LCMtY-0007ta-VT
+	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 00:30:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752087AbYLOXB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 18:01:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752176AbYLOXB7
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 18:01:59 -0500
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:55756 "EHLO
-	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751960AbYLOXB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 18:01:59 -0500
-Received: from darc.dyndns.org ([84.154.98.216]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 16 Dec 2008 00:01:56 +0100
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1LCMRx-0005Xt-To; Tue, 16 Dec 2008 00:02:05 +0100
-Content-Disposition: inline
-In-Reply-To: <7vej09w0hy.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 15 Dec 2008 23:01:57.0263 (UTC) FILETIME=[212BC1F0:01C95F09]
+	id S1752595AbYLOX3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 18:29:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbYLOX3K
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 18:29:10 -0500
+Received: from nskntqsrv01p.mx.bigpond.com ([61.9.168.231]:16651 "EHLO
+	nskntqsrv01p.mx.bigpond.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752078AbYLOX3J (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Dec 2008 18:29:09 -0500
+Received: from nskntotgx01p.mx.bigpond.com ([58.173.132.215])
+          by nskntmtas06p.mx.bigpond.com with ESMTP
+          id <20081215214211.DOXW17301.nskntmtas06p.mx.bigpond.com@nskntotgx01p.mx.bigpond.com>;
+          Mon, 15 Dec 2008 21:42:11 +0000
+Received: from therock.local ([58.173.132.215])
+          by nskntotgx01p.mx.bigpond.com with ESMTP
+          id <20081215214210.KUHY17478.nskntotgx01p.mx.bigpond.com@therock.local>;
+          Mon, 15 Dec 2008 21:42:10 +0000
+In-Reply-To: <20081215193058.GA5098@osc.edu>
+X-Mailer: Evolution 2.6.3 
+X-RPD-ScanID: Class unknown; VirusThreatLevel unknown, RefID str=0001.0A150201.4946CF33.0031,ss=1,fgs=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103217>
 
-On Mon, Dec 15, 2008 at 02:13:13PM -0800, Junio C Hamano wrote:
-> You can do a merge inside a dirty work tree, and the merge will fail
-> without clobbering your work tree files that are dirty when it needs to be
-> able to overwrite to do its job.  The set of "dirty files" in this
-> sentence of course includes paths that are modified since HEAD, but it
-> also includes also paths that do not exist in HEAD (i.e. "new files").
+On Mon, 2008-12-15 at 14:30 -0500, Pete Wyckoff wrote:
+<snip>
+> I'm running into a different limitation with p4c.
 > 
-> But we already caution users that you need to know what you are doing when
-> working in such a dirty work tree.  Namely, after a failed merge, your
-> next "git reset --hard" will blow away your local modifications.  And
-> local modifications in this context includes the files you could have
-> added to the index but you haven't.
+> The command:
+> 
+>     p4 -G changes -l -t
+> 
+> is adminstratively limited to a paltry six-digit number, and
+> produces only an error message.
+Hmm, I'm not sure how to resolve this, the repo I use this with so far
+only uses 6 digit numbers, will have to review the p4 client documents
+on this.
+> 
+> The other feature I need is the ability to use a client
+> specification.  We merge together 40-odd different chunks of //depot
+> into a single checked-out client, and use some other number of
+> "-//depot/..." rules to exclude some parts of the full depot.
+> 
+> If I hack p4c to limit the changes with "-m 10" or so, then things
+> are a bit better in that I get two objects (changesets) but no
+> diffs.  Had to hack the on_branch() code somewhat, in that no form
+> of --branches seemed to produce an "interesting" changeset by your
+> definition.  Could be my lack of understanding here.
+Modifying the on_branch code is the right place to do what you want,
+however I was hoping that specifying your 'interesting' branches by
+regexp would be sufficient?  All those places that do not get matched
+are effectively ignored and do not become part of the git repo.
 
-I strongly disagree. With the suggested behavior I would have to
-double-check every single untracked file in my tree for conflicts before
-trying a throw-away merge followed by git reset --hard, for example. The
-file could even be ignored! Whatever happened to git reset doesn't touch
-untracked files?
+There is a bug in which the case of the branch name sometimes seems to
+change in my repo, and thus my newer version always lower-cases the
+names.
 
-I would even prefer breaking t6023 (until we can properly implement this
-feature) in order to avoid that.
+Do you need to use a client spec here, or is it possible to just use
+regexps?  I'd like to try and avoid the need to parse the clientspec,
+that's all.
+
+> If you think you want to handle client specifications, and can think
+> of a way around the "p4 changes" limitation, I'll be happy to poke
+> at your next version.  Perhaps I'm not in your target audience,
+> though.  I don't necessarily need to have a full git history of the
+> entire p4, but this seems to be a fundamental part of your approach.
+
+I'm not sure about client specifications, but I definetly do want to
+think of a way around the p4 changes limitation.
+I'll get a new version out to you soon (Which includes several bug
+fixes), however before I go, I should mention that a deliberate design
+decision was to allow the git administrator maximum flexibility.
+
+The script does try to import the full history, however it starts that
+history only at the most recent change, which is defined as a tag.
+
+Thus, if your main branch is 'trunk', then you should be able to
+manually import your changes, tag it as 'trunk/102388', to indicate
+that's p4's revision 102388 of trunk, and the script should then begin
+checking out changeset 102389.  I haven't had a chance to test that
+theory yet, but it should work.
+
+Thankyou for your valuable feedback.
+
+> 
+> 		-- Pete
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
