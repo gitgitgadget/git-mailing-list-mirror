@@ -1,78 +1,81 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: "git gc" doesn't seem to remove loose objects any more
-Date: Mon, 15 Dec 2008 17:59:43 +0100
-Message-ID: <200812151759.44420.johan@herland.net>
-References: <808wqhzjl9.fsf@tiny.isode.net> <20081215155610.GA11502@mit.edu> <20081215161212.GE31145@sirena.org.uk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: hooks/post-update execs git-update-server-info
+Date: Mon, 15 Dec 2008 09:06:20 -0800 (PST)
+Message-ID: <m3zlixcqrb.fsf@localhost.localdomain>
+References: <gi600m$tts$2@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Mark Brown <broonie@sirena.org.uk>, Theodore Tso <tytso@mit.edu>,
-	Bj?rn Steinbrink <B.Steinbrink@gmx.de>,
-	Mikael Magnusson <mikachu@gmail.com>,
-	Bruce Stephens <bruce.stephens@isode.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 15 18:02:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 15 18:07:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCGpP-0003Ut-2L
-	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 18:01:55 +0100
+	id 1LCGuz-0005Xy-Ro
+	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 18:07:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753925AbYLORAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 12:00:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753244AbYLORAh
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 12:00:37 -0500
-Received: from sam.opera.com ([213.236.208.81]:59151 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753925AbYLORAg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 12:00:36 -0500
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id mBFGxiiu018007
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 15 Dec 2008 16:59:50 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <20081215161212.GE31145@sirena.org.uk>
-Content-Disposition: inline
+	id S1753775AbYLORGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 12:06:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753916AbYLORGY
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 12:06:24 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:58487 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753775AbYLORGX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 12:06:23 -0500
+Received: by ewy10 with SMTP id 10so3147714ewy.13
+        for <git@vger.kernel.org>; Mon, 15 Dec 2008 09:06:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=eM7/01kLXyusgq/GJHDe+Vxj4+qCYi7b+3rRUUE7pJA=;
+        b=uNv/MRTTE4tgZUjy1dAWrXgk0GCrO+MnY2JIqW0D3xRWyslfMNSD9mn0qyT0f/1weS
+         noFDOmvZMWhm+gu2Uhu2ORI6omX/BFmsSs0h8BJ/n8/saGpcG2Mc5AbVKcq9EGgfI+ng
+         3os8x5bZHlLelUGW5q6mkH52PlNOTMXBUaQpM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=uzo+25VJkhhXorZo2kEYbQs2kGIihnkfcxAGu2yhKGvNVkcIyK8LZBZNDqdndV/zDr
+         qnrjafXROsyKgy+vjXwZOPjOvVufheDPl2EVoTd72SLkrDsw/YOT4hgzkSFdjszCa7Ev
+         MNwuBRHpOHyxYoGKLiCr7G/gX0iGafL8T2fv4=
+Received: by 10.210.67.4 with SMTP id p4mr7989219eba.150.1229360781178;
+        Mon, 15 Dec 2008 09:06:21 -0800 (PST)
+Received: from localhost.localdomain (abva128.neoplus.adsl.tpnet.pl [83.8.198.128])
+        by mx.google.com with ESMTPS id 3sm1078612eyj.55.2008.12.15.09.06.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 15 Dec 2008 09:06:20 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBFH6IvO003638;
+	Mon, 15 Dec 2008 18:06:18 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBFH6HsP003635;
+	Mon, 15 Dec 2008 18:06:17 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <gi600m$tts$2@ger.gmane.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103184>
 
-On Monday 15 December 2008, Mark Brown wrote:
-> On Mon, Dec 15, 2008 at 10:56:10AM -0500, Theodore Tso wrote:
-> > On Mon, Dec 15, 2008 at 03:08:34PM +0100, Bj?rn Steinbrink wrote:
-> > > To clarify that a bit more: git gc keeps unreachable objects
-> > > unpacked, so that git prune can drop them. And git gc invokes git
-> > > prune so that only unreachable objects older than 2 weeks are
-> > > dropped.
-> >
-> > To be even more explicit, "git gc" will **unpack** objects that
-> > have become unreachable and were currently in packs.  As a result,
-> > the amount of disk space used by a git repository can actually go
-> > **up** dramatically after a "git gc" operation, which could be
-> > surprising for someone who is running close to full on their
-> > filesystem, deletes a number of branches from a tracking
-> > repository, and then does a "git gc" may get a very unpleasant
-> > surprise.
->
-> It can also cause things like the "please repack" warning in git gui
-> to go off.  This is especially unhelpful since they tend to tell you
-> to go and do a gc to resolve the problem.
+Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-Instead of exploding all unreachable objects into loose objects, does it 
-make sense to repack them into a separate pack? AFAICS, that would 
-solve both the disk usage problem and the git-gui-"please repack" 
-problem. Also, it might make git-prune's job much easier, since 
-unreachable objects are now located in a single pack only?
+> shouldn't .git/hooks/post-update contain "exec git
+> update-server-info" (note the space not hyphen) instead of
+> "exec git-update-server-info"?
+> 
+> Either I am horribly confused or HTTP pulls have not been
+> working on post 1.6 gits and no one has noticed till now :-)
 
-
-Have fun!
-
-...Johan
+If I understand correctly hooks run with GIT_EXEC_PATH prepended to
+PATH, so everything should work; and it has to work to not force users
+to upgrade their (perhaps customized) hooks after upgrading git.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Jakub Narebski
+Poland
+ShadeHawk on #git
