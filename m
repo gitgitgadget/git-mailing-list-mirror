@@ -1,57 +1,99 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: is gitosis secure?
-Date: Mon, 15 Dec 2008 08:17:37 +0100
-Organization: glandium.org
-Message-ID: <20081215071737.GA32387@glandium.org>
-References: <200812090956.48613.thomas@koch.ro> <bd6139dc0812090138l5dbaf20bsd1cde00f52bb94e5@mail.gmail.com> <87hc58hwmi.fsf@hades.wkstn.nix> <gi1qsl$22p$1@ger.gmane.org> <alpine.DEB.1.10.0812132126470.17688@asgard.lang.hm> <4944D4F7.7050501@siamect.com> <alpine.DEB.1.10.0812140304320.17688@asgard.lang.hm> <4944E7E1.2030907@siamect.com> <alpine.DEB.1.10.0812141655150.17688@asgard.lang.hm>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: fatal output from git-show really wants a terminal
+Date: Mon, 15 Dec 2008 00:15:38 -0800
+Message-ID: <7v3agpzwet.fsf@gitster.siamese.dyndns.org>
+References: <ghop5d$qud$1@ger.gmane.org>
+ <200812111051.20322.bss03@volumehost.net>
+ <20081211215554.GA11565@sigill.intra.peff.net>
+ <200812111645.10067.bss03@volumehost.net>
+ <7vr64eb9ha.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: martin <martin@siamect.com>, git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Mon Dec 15 08:56:15 2008
+Cc: Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Boyd Stephen Smith Jr." <bss03@volumehost.net>
+X-From: git-owner@vger.kernel.org Mon Dec 15 09:17:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LC8JK-0006Yl-9p
-	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 08:56:14 +0100
+	id 1LC8da-0002Zk-93
+	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 09:17:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752030AbYLOHy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 02:54:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752025AbYLOHy4
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 02:54:56 -0500
-Received: from vuizook.err.no ([194.24.252.247]:38940 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752008AbYLOHy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 02:54:56 -0500
-X-Greylist: delayed 2401 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Dec 2008 02:54:56 EST
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1LC7fB-0004Wf-Ne; Mon, 15 Dec 2008 08:14:48 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1LC7hx-0000Qp-5p; Mon, 15 Dec 2008 08:17:37 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.10.0812141655150.17688@asgard.lang.hm>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1752032AbYLOIPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 03:15:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752012AbYLOIPv
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 03:15:51 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48239 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752008AbYLOIPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 03:15:51 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id ABBC587387;
+	Mon, 15 Dec 2008 03:15:49 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 76CDB87386; Mon,
+ 15 Dec 2008 03:15:44 -0500 (EST)
+In-Reply-To: <7vr64eb9ha.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 11 Dec 2008 15:03:29 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9510DAF0-CA80-11DD-BD8F-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103138>
 
-On Sun, Dec 14, 2008 at 05:00:14PM -0800, david@lang.hm wrote:
-> 1. if you are running multiple different applications that all want to be 
-> exposed via port 22 (like git for 'git push') then you may need to expose 
-> numerous machines. tools that use SSH don't tend to have the ability to  
-> use a gateway box before they start executing commands, they assume that  
-> you will SSH directly into the destination box.
+Junio C Hamano <gitster@pobox.com> writes:
 
-But ssh itself allows you to do proxying. See ProxyCommand in
-ssh_config's manpage.
+> "Boyd Stephen Smith Jr." <bss03@volumehost.net> writes:
+>
+>>>  $ git log >foo.out
+>>>
+>>>and start a pager, which makes no sense.
+>>
+>> Good point, I'll try and consider that while I investgate the history of the 
+>> issue.
+>
+> Isn't the issue about 61b8050 (sending errors to stdout under $PAGER,
+> 2008-02-16)?  With that commit, we changed things so that when we send the
+> standard output to the $PAGER, we dup stderr to the $PAGER as well,
+> because otherwise any output to stderr will be wiped out by whatever the
+> pager does and the user will not notice the breakage.  E.g.
+>
+> 	$ git log
+>
+> will just show reams of output, and you won't see any errors and warnings
+> even if there were any encountered during the process.
+>
+> Unfortunately we did it unconditionally.  There is no reason to dup stderr
+> to the $PAGER if the command line was:
+>
+> 	$ git log 2>error.log
+>
+> in which case you would want to view the normal output in your $PAGER and
+> you are keeping the log of the error output in a separate file.
 
-Mike
+I haven't heard anything more about this, but if you were indeed
+discussing the change made by 61b8050, I think the fix should just be like
+this.
+
+ pager.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git c/pager.c w/pager.c
+index aa0966c..f19ddbc 100644
+--- c/pager.c
++++ w/pager.c
+@@ -70,7 +70,8 @@ void setup_pager(void)
+ 
+ 	/* original process continues, but writes to the pipe */
+ 	dup2(pager_process.in, 1);
+-	dup2(pager_process.in, 2);
++	if (isatty(2))
++		dup2(pager_process.in, 2);
+ 	close(pager_process.in);
+ 
+ 	/* this makes sure that the parent terminates after the pager */
