@@ -1,50 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: unify boolean feature subroutines
-Date: Mon, 15 Dec 2008 14:21:13 -0800
-Message-ID: <7v3agpw04m.fsf@gitster.siamese.dyndns.org>
-References: <1229352709-4663-1-git-send-email-kraai@ftbfs.org>
- <1229352709-4663-2-git-send-email-kraai@ftbfs.org>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] gitweb: make feature_blame return a list
+Date: Mon, 15 Dec 2008 23:52:38 +0100
+Message-ID: <gi6n3m$kvc$1@ger.gmane.org>
+References: <1229352709-4663-1-git-send-email-kraai@ftbfs.org> <7v7i61w06k.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matt Kraai <kraai@ftbfs.org>
-X-From: git-owner@vger.kernel.org Mon Dec 15 23:22:56 2008
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 15 23:54:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCLpt-0001qw-Ci
-	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 23:22:45 +0100
+	id 1LCMKK-0004fd-BS
+	for gcvg-git-2@gmane.org; Mon, 15 Dec 2008 23:54:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751533AbYLOWVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 17:21:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755221AbYLOWVV
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 17:21:21 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33501 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754865AbYLOWVU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 17:21:20 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 87D7C1A593;
-	Mon, 15 Dec 2008 17:21:19 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E17A31A58A; Mon,
- 15 Dec 2008 17:21:15 -0500 (EST)
-In-Reply-To: <1229352709-4663-2-git-send-email-kraai@ftbfs.org> (Matt Kraai's
- message of "Mon, 15 Dec 2008 06:51:49 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B270136A-CAF6-11DD-9ABA-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752165AbYLOWwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 17:52:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752045AbYLOWwy
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 17:52:54 -0500
+Received: from main.gmane.org ([80.91.229.2]:36130 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751988AbYLOWwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 17:52:53 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LCMIx-0004xN-CL
+	for git@vger.kernel.org; Mon, 15 Dec 2008 22:52:47 +0000
+Received: from 78.13.57.58 ([78.13.57.58])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Dec 2008 22:52:47 +0000
+Received: from giuseppe.bilotta by 78.13.57.58 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Dec 2008 22:52:47 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 78.13.57.58
+User-Agent: KNode/0.10.9
+X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103214>
 
-Matt Kraai <kraai@ftbfs.org> writes:
+On Monday 15 December 2008 23:20, Junio C Hamano wrote:
 
-> The boolean feature subroutines were identical except for the name of
-> the configuration option, so make that a parameter and unify them.
+> Matt Kraai <kraai@ftbfs.org> writes:
+> 
+>> The feature defaults are expected to be a list, but feature_blame was
+>> returning a scalar.  This change makes it consistent with the other
+>> boolean feature subroutines.
+>>
+>> Signed-off-by: Matt Kraai <kraai@ftbfs.org>
+>> ---
+>>  gitweb/gitweb.perl |    6 +++---
+>>  1 files changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 6eb370d..145e712 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -367,12 +367,12 @@ sub feature_blame {
+>>      my ($val) = git_get_project_config('blame', '--bool');
+>>  
+>>      if ($val eq 'true') {
+>> -            return 1;
+>> +            return (1);
+>>      } elsif ($val eq 'false') {
+>> -            return 0;
+>> +            return (0);
+>>      }
+>>  
+>> -    return $_[0];
+>> +    return ($_[0]);
+>>  }
+> 
+> My Perl may be getting rusty, but does the above make any difference?
+> How?
 
-I think this makes sense but unfortunately it comes after the other one
-that I do not know what its point is...
+It's formally more correct and makes the blame feature fit with the
+general feature framework, although the feature works correctly even
+without the (). I was actually going to send a similar patch myself, 
+having missed it during the cleanup and get/check splitup patchset.
+
+Matt's patch gets my Ack, for what it's worth.
+
+
+-- 
+Giuseppe "Oblomov" Bilotta
