@@ -1,111 +1,70 @@
-From: John Chapman <thestar@fussycoder.id.au>
-Subject: Re: New script to convert p4 repositories to git - git-p4c version
-	1.
-Date: Tue, 16 Dec 2008 08:52:32 +1100
-Message-ID: <1229377952.18839.11.camel@therock.nsw.bigpond.net.au>
-References: <1228818317.5504.23.camel@localhost>
-	 <20081215193058.GA5098@osc.edu>
+From: jidanni@jidanni.org
+Subject: git-clone --how-much-disk-space-will-this-cost-me? [--depth n]
+Date: Tue, 16 Dec 2008 07:53:42 +0800
+Message-ID: <878wqhxaex.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Tue Dec 16 00:30:38 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 16 00:55:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCMtY-0007ta-VT
-	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 00:30:37 +0100
+	id 1LCNHE-0006jC-SD
+	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 00:55:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752595AbYLOX3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 18:29:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbYLOX3K
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 18:29:10 -0500
-Received: from nskntqsrv01p.mx.bigpond.com ([61.9.168.231]:16651 "EHLO
-	nskntqsrv01p.mx.bigpond.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752078AbYLOX3J (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Dec 2008 18:29:09 -0500
-Received: from nskntotgx01p.mx.bigpond.com ([58.173.132.215])
-          by nskntmtas06p.mx.bigpond.com with ESMTP
-          id <20081215214211.DOXW17301.nskntmtas06p.mx.bigpond.com@nskntotgx01p.mx.bigpond.com>;
-          Mon, 15 Dec 2008 21:42:11 +0000
-Received: from therock.local ([58.173.132.215])
-          by nskntotgx01p.mx.bigpond.com with ESMTP
-          id <20081215214210.KUHY17478.nskntotgx01p.mx.bigpond.com@therock.local>;
-          Mon, 15 Dec 2008 21:42:10 +0000
-In-Reply-To: <20081215193058.GA5098@osc.edu>
-X-Mailer: Evolution 2.6.3 
-X-RPD-ScanID: Class unknown; VirusThreatLevel unknown, RefID str=0001.0A150201.4946CF33.0031,ss=1,fgs=0
+	id S1753396AbYLOXxq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 18:53:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753353AbYLOXxq
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 18:53:46 -0500
+Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:44808 "EHLO
+	homiemail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753282AbYLOXxp (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Dec 2008 18:53:45 -0500
+Received: from jidanni2.jidanni.org (122-127-35-251.dynamic.hinet.net [122.127.35.251])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by homiemail-a1.g.dreamhost.com (Postfix) with ESMTP id BBDBE119E1C
+	for <git@vger.kernel.org>; Mon, 15 Dec 2008 15:53:44 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103218>
 
-On Mon, 2008-12-15 at 14:30 -0500, Pete Wyckoff wrote:
-<snip>
-> I'm running into a different limitation with p4c.
-> 
-> The command:
-> 
->     p4 -G changes -l -t
-> 
-> is adminstratively limited to a paltry six-digit number, and
-> produces only an error message.
-Hmm, I'm not sure how to resolve this, the repo I use this with so far
-only uses 6 digit numbers, will have to review the p4 client documents
-on this.
-> 
-> The other feature I need is the ability to use a client
-> specification.  We merge together 40-odd different chunks of //depot
-> into a single checked-out client, and use some other number of
-> "-//depot/..." rules to exclude some parts of the full depot.
-> 
-> If I hack p4c to limit the changes with "-m 10" or so, then things
-> are a bit better in that I get two objects (changesets) but no
-> diffs.  Had to hack the on_branch() code somewhat, in that no form
-> of --branches seemed to produce an "interesting" changeset by your
-> definition.  Could be my lack of understanding here.
-Modifying the on_branch code is the right place to do what you want,
-however I was hoping that specifying your 'interesting' branches by
-regexp would be sufficient?  All those places that do not get matched
-are effectively ignored and do not become part of the git repo.
+The git-clone manpage should mention how to determine how much disk
+space will be used.
 
-There is a bug in which the case of the branch name sometimes seems to
-change in my repo, and thus my newer version always lower-cases the
-names.
+You see we beginners (who haven't learned git yet, so no patches
+forthcoming, thank you) are often told "Just do git-clone
+git://git.example.org/bla/ to get started!". Being smart, we read up on
+--depth 1 to limit potential disk occupation, but we still have no
+idea of how much disk space we will need. We cant just use HEAD(1)
+because this is not HTTP.
 
-Do you need to use a client spec here, or is it possible to just use
-regexps?  I'd like to try and avoid the need to parse the clientspec,
-that's all.
+Therefore the git-clone man page, one of the main entry points for the
+beginner, should say how to determine how much disk space we will need
+for git-clone or git-clone --depth 1 etc.
 
-> If you think you want to handle client specifications, and can think
-> of a way around the "p4 changes" limitation, I'll be happy to poke
-> at your next version.  Perhaps I'm not in your target audience,
-> though.  I don't necessarily need to have a full git history of the
-> entire p4, but this seems to be a fundamental part of your approach.
+And don't tell us to just figure it out from the progress messages
+after the download begins, and hit ^C if we don't like it.
 
-I'm not sure about client specifications, but I definetly do want to
-think of a way around the p4 changes limitation.
-I'll get a new version out to you soon (Which includes several bug
-fixes), however before I go, I should mention that a deliberate design
-decision was to allow the git administrator maximum flexibility.
+Let's take a look at those messages while were at it,
+$ git-clone --depth 1 git://git.sv.gnu.org/coreutils/
+Initialized empty Git repository in /usr/local/src/jidanni/coreutils/.git/
+remote: Counting objects: 26240, done.
+remote: Compressing objects: 100% (14001/14001), done.
+remote: Total 26240 (delta 21577), reused 15354 (delta 12095)
+Receiving objects: 100% (26240/26240), 15.76 MiB | 26 KiB/s, done.
+Resolving deltas: 100% (21577/21577), done.
+$ du -sh
+27M  .
+Nope, nowhere does it directly say "You Holmes, are in for 27
+Megabytes (on your piddly modem)". There obviously is math involved to
+figure it out... math!
 
-The script does try to import the full history, however it starts that
-history only at the most recent change, which is defined as a tag.
+Also add examples of how one first probes a remote tree one has been
+told about, determines what parts of it he might want, and then
+finally git-clones just those parts.
 
-Thus, if your main branch is 'trunk', then you should be able to
-manually import your changes, tag it as 'trunk/102388', to indicate
-that's p4's revision 102388 of trunk, and the script should then begin
-checking out changeset 102389.  I haven't had a chance to test that
-theory yet, but it should work.
-
-Thankyou for your valuable feedback.
-
-> 
-> 		-- Pete
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Also document what --depth 0 or even -1 will do.
