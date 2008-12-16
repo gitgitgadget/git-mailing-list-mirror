@@ -1,60 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-diff should not fire up $PAGER if there is no diff
-Date: Tue, 16 Dec 2008 02:44:14 -0500
-Message-ID: <20081216074414.GB2468@coredump.intra.peff.net>
-References: <874p15x94i.fsf@jidanni.org> <20081216005658.GB3679@coredump.intra.peff.net> <d4bc1a2a0812152235l14ec80bbr130a7ab152ad6b8@mail.gmail.com>
+From: "Govind Salinas" <govind@sophiasuchtig.com>
+Subject: Git Notes idea.
+Date: Tue, 16 Dec 2008 02:15:47 -0600
+Message-ID: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: jidanni@jidanni.org, git@vger.kernel.org
-To: Stefan Karpinski <stefan.karpinski@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 16 08:45:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 16 09:17:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCUca-00027A-L4
-	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 08:45:37 +0100
+	id 1LCV75-0000hQ-Kr
+	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 09:17:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752113AbYLPHoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2008 02:44:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752340AbYLPHoR
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 02:44:17 -0500
-Received: from peff.net ([208.65.91.99]:2555 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752276AbYLPHoQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2008 02:44:16 -0500
-Received: (qmail 11565 invoked by uid 111); 16 Dec 2008 07:44:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 16 Dec 2008 02:44:15 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Dec 2008 02:44:14 -0500
+	id S1750859AbYLPIPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2008 03:15:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750853AbYLPIPt
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 03:15:49 -0500
+Received: from mail-gx0-f12.google.com ([209.85.217.12]:34573 "EHLO
+	mail-gx0-f12.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750787AbYLPIPs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2008 03:15:48 -0500
+Received: by gxk5 with SMTP id 5so2292277gxk.13
+        for <git@vger.kernel.org>; Tue, 16 Dec 2008 00:15:47 -0800 (PST)
+Received: by 10.151.100.17 with SMTP id c17mr14189065ybm.204.1229415347440;
+        Tue, 16 Dec 2008 00:15:47 -0800 (PST)
+Received: by 10.151.74.12 with HTTP; Tue, 16 Dec 2008 00:15:47 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <d4bc1a2a0812152235l14ec80bbr130a7ab152ad6b8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103257>
 
-On Tue, Dec 16, 2008 at 01:35:53AM -0500, Stefan Karpinski wrote:
+Hi All,
 
-> > On Mon, Dec 15, 2008 at 7:56 PM, Jeff King <peff@peff.net> wrote:
-> >  2. detect EOF before starting the pager. We in fact already delay
-> >     running the pager in the forked process until we have some activity
-> >     on the pipe, but I don't know if there is a portable way of
-> >     detecting that that activity is EOF without performing an actual
-> >     read() call (which is undesirable, since it eats the first byte of
-> >     output that should go to the pager).
-> 
-> Wouldn't ungetc work? Or is that not portable enough? (It would only
-> work here because the EOF has to be the first character.)
+I was thinking about possible ideas for my little pet project and I
+had and idea for way to tack on notes to a commit, or any object
+really.  I know that the idea has been flying around for a long time
+but there has never been any implementation or a concept that people
+liked enough to use (unless I have missed something).
 
-No, it won't work. ungetc works on the buffered stdio object, so it is
-useful for pushing back characters onto the buffer to be read later in
-the program from the same buffer. But in this case, we are going to
-execv() (or on Windows, spawn) the pager, meaning it will throw away
-anything that has been read() from the pipe and put in the buffer.
+Here is my idea.
 
-So we would need a system call to push a character back to the OS, so
-that it was available for read() by the pager process.
+.git/refs/notes  contains a tree-id (assuming that using a tree-id
+will not cause any problems, otherwise a commit object can be used.
+it does not *need* a history, but it *could* have one).
 
--Peff
+That tree has a structure similar to the layout of .git/objects, where
+it is 2 letter subdirectories for the notes objects.
+
+Given a git object (commit, tree, blob, tag), use its sha as the
+path/filename in this tree.
+    If I have a commit 1234567890123456789012345678901234567890 then
+the notes tree will have a file
+12/34567890123456789012345678901234567890
+
+That file has a list of sha1s (one per line).  These shas are object
+IDs for blobs that have the notes or whatever that you want attached
+to the item.
+
+I think you get the idea.  When looking up an item, it should be
+fairly easy to have the notes tree and subtrees available for doing
+lookups.  And as far as I know stuff under .git/refs can be
+pushed/pulled even if its not under heads or remotes or tags using
+already existing machinery.  I am not sure, but I think that would
+satisfy gc operations as well.  Also, these trees and blobs never have
+to be put in the working directory.
+
+Does this sound like something that is workable?  I thought it might
+appeal since it uses only features that are already present.
+
+This could be extended so that you have different sets of notes under
+.git/refs/notes/<my note set> or whatever.  So that you can have some
+notes you keep private and some that you publish or whatever.
+
+OK, hopefully this isn't a off the wall,
+thats-what-you-get-for-being-up-at-2-AM idea.
+
+Thanks,
+Govind.
