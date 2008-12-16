@@ -1,189 +1,91 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFCv4 3/3] gitweb: link to patch(es) view from commit and log views
-Date: Tue, 16 Dec 2008 02:03:28 +0100
-Message-ID: <200812160203.29425.jnareb@gmail.com>
-References: <1228575755-13432-1-git-send-email-giuseppe.bilotta@gmail.com> <1228575755-13432-3-git-send-email-giuseppe.bilotta@gmail.com> <1228575755-13432-4-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] modify/delete conflict resolution overwrites untracked file
+Date: Mon, 15 Dec 2008 17:09:22 -0800 (PST)
+Message-ID: <m3r649c4e7.fsf@localhost.localdomain>
+References: <20081210201259.GA12928@localhost>
+	<20081215004651.GA16205@localhost>
+	<7v63lm1c76.fsf@gitster.siamese.dyndns.org>
+	<7vmyeyyuuh.fsf@gitster.siamese.dyndns.org>
+	<20081215095949.GA7403@localhost>
+	<7vskopwxej.fsf@gitster.siamese.dyndns.org>
+	<7vej09w0hy.fsf@gitster.siamese.dyndns.org>
+	<20081215230205.GA19538@localhost>
+	<7vprjtug8u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 16 02:05:01 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
+	johannes.schindelin@gmx.de, raa.lkml@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 16 02:10:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCOMm-0001Ev-DB
-	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 02:04:52 +0100
+	id 1LCOSS-0002m5-Fb
+	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 02:10:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751AbYLPBDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 20:03:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751020AbYLPBDd
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 20:03:33 -0500
-Received: from ey-out-2122.google.com ([74.125.78.26]:47055 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750769AbYLPBDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 20:03:32 -0500
-Received: by ey-out-2122.google.com with SMTP id 6so419956eyi.37
-        for <git@vger.kernel.org>; Mon, 15 Dec 2008 17:03:30 -0800 (PST)
+	id S1751334AbYLPBJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 20:09:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751165AbYLPBJ0
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 20:09:26 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:56893 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750769AbYLPBJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 20:09:25 -0500
+Received: by ewy10 with SMTP id 10so3404410ewy.13
+        for <git@vger.kernel.org>; Mon, 15 Dec 2008 17:09:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=LquPPT2ZUEPz4OyM5R5mYvkAiGVMampoWOLSbtO9LZM=;
-        b=xdw9baadlvxAjNoIzq6qlcp9zNCDXkRlOgpQqWsymRV1xl/2STMn5Z2E6w+0+z7bFo
-         T8py2SKqSsLfoMkXkpvgwsL0vMMiPuv98PAOLcNxtc7LNxS4wQuiHvMzbSjPZBE+29J1
-         oiZhpzHDwSN3CwqKgDVdyZk7eD/numHIHGT/c=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=yC6zL773bb5vOhTpPvVUKPrI+g38kb/WG7XqkRQ+tl8=;
+        b=I/JO9wFI+HeZmd04WpoC7sGMPvL95P/u89PsQhlomNzCtrKPW++ESb5+YMZ4KGr1Qa
+         IIMAGfIYugZr7f3sqhLmRDzoVXTyNyho4VPSNSS9ANfibEGpApuzU5dfgD2vj5q40YMu
+         r600hLd4yHeUOkaQZnrjNzIrLrOI4tMsVDBSo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=QqVEQQSAKeOSPd9Kukmx5Kwtlqky98RmLj6NXhPXHCCSnJwcNApXlDnPMBIT6/FRw3
-         OCJAqkf/ghq2Zt+/ZOrhXTLLQxtEK9MsgmhAdt40oAgQUo/UGwIJZviuJNlFB7LIIQCB
-         JcyHO+RKbzPpPxezXF4ZuLnu7TXzJIX376kWk=
-Received: by 10.210.87.14 with SMTP id k14mr3932257ebb.159.1229389410460;
-        Mon, 15 Dec 2008 17:03:30 -0800 (PST)
-Received: from ?192.168.1.11? (abve222.neoplus.adsl.tpnet.pl [83.8.202.222])
-        by mx.google.com with ESMTPS id 7sm625129eyg.52.2008.12.15.17.03.27
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=wbXvmqMy3QZSKjxOVake87+F+YHIj90bqBsUyA/LyzNH7eViQM99ce89fWMoVtsgI2
+         Qt60nm+5JT6j7MOwt9kQrpn3IY/WNL0Gpne7MznCRkflivZDatl06boTtLPVeUDwO0Bf
+         WTsW/+aByst9CJdVy2mZvNYEPSs769Ow3maxQ=
+Received: by 10.210.50.5 with SMTP id x5mr8577366ebx.3.1229389763693;
+        Mon, 15 Dec 2008 17:09:23 -0800 (PST)
+Received: from localhost.localdomain (abve222.neoplus.adsl.tpnet.pl [83.8.202.222])
+        by mx.google.com with ESMTPS id 20sm1217501eyc.13.2008.12.15.17.09.21
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Dec 2008 17:03:28 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1228575755-13432-4-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+        Mon, 15 Dec 2008 17:09:22 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBG19NB5006288;
+	Tue, 16 Dec 2008 02:09:23 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBG19LVi006284;
+	Tue, 16 Dec 2008 02:09:21 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vprjtug8u.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103226>
 
-On Sat, 6 Dec 2008, Giuseppe Bilotta wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> We link to patch view in commit and commitdiff view, and to patches view
-> in log and shortlog view.
+> Clemens Buchacher <drizzd@aon.at> writes:
 > 
-> In (short)log view, the link is only offered when the number of commits
-> shown is no more than the allowed maximum number of patches.
+> > I strongly disagree. With the suggested behavior I would have to
+> > double-check every single untracked file in my tree for conflicts before
+> > trying a throw-away merge followed by git reset --hard, for example.
 > 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-
-A few remarks, but otherwise:
-
-Acked-by: Jakub Narebski <jnareb@gmail.com>
-
-> ---
->  gitweb/gitweb.perl |   30 ++++++++++++++++++++++++++++--
->  1 files changed, 28 insertions(+), 2 deletions(-)
+> AFAICS, that's not "suggested behaviour" for merge, but it is the
+> behaviour that has been true for eternity.
 > 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index dfc7128..8198875 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -5019,6 +5019,15 @@ sub git_log {
->  
->  	my $paging_nav = format_paging_nav('log', $hash, $head, $page, $#commitlist >= 100);
->  
-> +	my $patch_max = gitweb_check_feature('patches');
+> You can suggest to fix "reset --hard", though.
 
-If you change other places to use git_get_feature, then you should
-change it too. I'm not sure if it is worth it...
-
-> +	if ($patch_max) {
-> +		if ($patch_max < 0 || @commitlist <= $patch_max) {
-> +			$paging_nav .= " &sdot; " .
-> +				$cgi->a({-href => href(action=>"patches", -replay=>1)},
-> +					@commitlist > 1 ? "patchset" : "patch");
-
-I think it would be better to always use "patches" here, as it is
-series of patches by design, only by accident it is one commit long.
-
-I wonder if it would make sense to pass
-
-   href(..., hash_parent => $commitlist[-1]{'id'}, ...)
-
-here. But I think having separate "patches" action, with intent being
-displaying series of patches, is a better solution. This way you can
-see in URL and in the page title (thus also in window title, or in
-bookmark name) if it is single patch or patch series (perhaps consisting
-of single patch).
-
-> +		}
-> +	}
-> +
->  	git_header_html();
->  	git_print_page_nav('log','', $hash,undef,undef, $paging_nav);
->  
-> @@ -5098,6 +5107,11 @@ sub git_commit {
->  			} @$parents ) .
->  			')';
->  	}
-> +	if (gitweb_check_feature('patches')) {
-> +		$formats_nav .= " | " .
-> +			$cgi->a({-href => href(action=>"patch", -replay=>1)},
-> +				"patch");
-> +	}
-
-Here using gitweb_check_feature makes perfect sense.
-
->  
->  	if (!defined $parent) {
->  		$parent = "--root";
-> @@ -5413,9 +5427,8 @@ sub git_commitdiff {
->  	# if only a single commit is passed?
->  	my $single_patch = shift && 1;
->  
-> -	my $patch_max;
-> +	my $patch_max = gitweb_check_feature('patches');
-
-gitweb_check_feature or gitweb_get_feature?...
-
->  	if ($format eq 'patch') {
-> -		$patch_max = gitweb_check_feature('patches');
->  		die_error(403, "Patch view not allowed") unless $patch_max;
->  	}
->  
-> @@ -5433,6 +5446,11 @@ sub git_commitdiff {
->  		$formats_nav =
->  			$cgi->a({-href => href(action=>"commitdiff_plain", -replay=>1)},
->  			        "raw");
-> +		if ($patch_max) {
-> +			$formats_nav .= " | " .
-> +				$cgi->a({-href => href(action=>"patch", -replay=>1)},
-> +					"patch");
-> +		}
-
-Nice reusing $patch_max in different way, as $have_patch if $format is
-'html', and as limiter ($patch_max) if $format is 'patch'/'patches'
-
->  
->  		if (defined $hash_parent &&
->  		    $hash_parent ne '-c' && $hash_parent ne '--cc') {
-> @@ -5989,6 +6007,14 @@ sub git_shortlog {
->  			$cgi->a({-href => href(-replay=>1, page=>$page+1),
->  			         -accesskey => "n", -title => "Alt-n"}, "next");
->  	}
-> +	my $patch_max = gitweb_check_feature('patches');
-> +	if ($patch_max) {
-> +		if ($patch_max < 0 || @commitlist <= $patch_max) {
-> +			$paging_nav .= " &sdot; " .
-> +				$cgi->a({-href => href(action=>"patches", -replay=>1)},
-> +					@commitlist > 1 ? "patchset" : "patch");
-> +		}
-> +	}
-
-Same comment as for git_log...
-
->  
->  	git_header_html();
->  	git_print_page_nav('shortlog','', $hash,$hash,$hash, $paging_nav);
-> -- 
-> 1.5.6.5
-> 
-> 
-
+Errr... what about using "reset --merge" instead?
 -- 
 Jakub Narebski
 Poland
+ShadeHawk on #git
