@@ -1,97 +1,88 @@
-From: Boaz Harrosh <bharrosh@panasas.com>
-Subject: Re: git filter-branch and superproject
-Date: Tue, 16 Dec 2008 15:01:00 +0200
-Message-ID: <4947A68C.1010503@panasas.com>
-References: <loom.20081216T114923-354@post.gmane.org>
+From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+Subject: Re: [PATCH v3] git-svn: Make following parents atomic
+Date: Tue, 16 Dec 2008 14:22:44 +0100
+Organization: Intra2net AG
+Message-ID: <200812161422.58814.thomas.jarosch@intra2net.com>
+References: <20081207222444.GA10881@euler> <20081208133131.GA9190@euler> <20081208233523.GB21675@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 16 14:03:32 2008
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Leonard <talex5@gmail.com>,
+	=?iso-8859-1?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+To: Deskin Miller <deskinm@umich.edu>
+X-From: git-owner@vger.kernel.org Tue Dec 16 14:24:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCZZJ-0007M0-1Q
-	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 14:02:33 +0100
+	id 1LCZub-0006wT-3n
+	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 14:24:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754622AbYLPNBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2008 08:01:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754590AbYLPNBI
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 08:01:08 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:58858 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754579AbYLPNBG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2008 08:01:06 -0500
-Received: by ewy10 with SMTP id 10so3643491ewy.13
-        for <git@vger.kernel.org>; Tue, 16 Dec 2008 05:01:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=Myh6gRs2Zqcnij/V5Vpf6mUq2wfZYMPkwP+5KSOuun4=;
-        b=fSJ5vthpLUXmqJY+c17bys0bwbxaEaJ5AuQHSp6/lqDp7P1DlSUVS/9ixXM1yPxejr
-         xo/TKSnQYSCERVqb3J4vL2k63YJ6FIVl9s/p9POYH7McuJP5xmids//CI7M+/cSZScnv
-         907l0JpO6DG82DG9hsXDjYOvyxPfuNLoT34mM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=kfm9Dadwk82Vz8Py9//gKQOXcIKlO2fXKnpJ1M1NcnTmyC8vsYVhSRhFd3HESHXRjY
-         3LkdJ5M3MTZ4+pmDIMO4rbgKff+2rFhwaxVMkqEFSIrLw55ixUstGtsClg5I3kww6flw
-         bOHJrnz5QREckzHt/48hQz5CAsy8m5BjPfQS0=
-Received: by 10.210.87.19 with SMTP id k19mr5909550ebb.51.1229432464969;
-        Tue, 16 Dec 2008 05:01:04 -0800 (PST)
-Received: from bh-buildlin2.bhalevy.com (DSL212-235-53-3.bb.netvision.net.il [212.235.53.3])
-        by mx.google.com with ESMTPS id 3sm1297606eyj.55.2008.12.16.05.01.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 16 Dec 2008 05:01:04 -0800 (PST)
-User-Agent: Thunderbird/3.0a2 (X11; 2008072418)
-In-Reply-To: <loom.20081216T114923-354@post.gmane.org>
+	id S1753252AbYLPNXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2008 08:23:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753501AbYLPNXF
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 08:23:05 -0500
+Received: from re01.intra2net.com ([82.165.28.202]:60619 "EHLO
+	re01.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753047AbYLPNXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2008 08:23:04 -0500
+Received: from intranator.m.i2n (unknown [172.16.1.99])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by re01.intra2net.com (Postfix) with ESMTP id CD70D5EED;
+	Tue, 16 Dec 2008 14:23:02 +0100 (CET)
+Received: from localhost (intranator.m.i2n [127.0.0.1])
+	by localhost (Postfix) with ESMTP id 6C4482AC4B;
+	Tue, 16 Dec 2008 14:23:02 +0100 (CET)
+Received: from storm.localnet (storm.m.i2n [172.16.1.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by intranator.m.i2n (Postfix) with ESMTP id 252EC2AC4A;
+	Tue, 16 Dec 2008 14:23:00 +0100 (CET)
+User-Agent: KMail/1.10.3 (Linux/2.6.27.5-41.fc9.i686; KDE/4.1.3; i686; ; )
+In-Reply-To: <20081208233523.GB21675@hand.yhbt.net>
+Content-Disposition: inline
+X-Virus-Scanned: by Intranator (www.intranator.com) with AMaViS and F-Secure AntiVirus (fsavdb 2008-12-16_10)
+X-Spam-Status: hits=-2.5 tests=[ALL_TRUSTED=-1.8,BAYES_20=-0.74]
+X-Spam-Level: 975
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103280>
 
-Sergio Callegari wrote:
-> Hi,
-> 
-> once a sub-project has been rewritten by filter branch, there is a problem with
-> references in superproject.
-> 
-> This is obviously a case where something "has been published" so filter-branch
-> is not a good idea.  However, super-projects are a very special case of
-> publication since they might be "in full control" of whom did the rewriting of
-> their submodules.
-> 
-> Is there a way to filter branch the superproject so that whatever commit is
-> referenced that is in refs/original/something in the subproject gets updated to
-> the corresponding rewritten commit (or an error is given if such a
-> correspondance does not exist)?
-> 
-> Namely, can filter-branch on the subproject deliver a "commit conversion table"
-> that can then be fed to a filter-branch in a superproject?  
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+On Tuesday, 9. December 2008 00:35:23 you wrote:
+> > To fix this, when we initialise the Git::SVN object $gs to search for
+> > and perhaps fetch history, we check if there are any commits in SVN in
+> > the range between the current revision $gs is at, and the top revision
+> > for which we were asked to fill history.  If there are commits we're
+> > missing in that range, we continue the fetch from the current revision
+> > to the top, properly getting all history before using it as the parent
+> > for the branch we're trying to create.
+> >
+> > Signed-off-by: Deskin Miller <deskinm@umich.edu>
+>
+> Looks good Deskin, thanks
 
-If I recall correctly, submodule was recently enabled to reference
-a soft label, like a branch name, instead of an hard UID. Look it up
-in the newest git.
+This patch has a very nice side effect, it seems to fix a long standing 
+problem with subversion imports. Here's the original report:
+https://kerneltrap.org/mailarchive/git/2008/4/8/1377514/thread
 
-But your post brings up another concern. The HEAD referenced by the
-superproject does not have any hold in the subproject. So if the
-subproject under-gone a git-gc the reference UID might disappear, as
-in your case. I wish the git-submodule command would create a TAG or BRANCH
-in the subproject of all referenced HEADs, so they will not disappear
-in future maintenance of the subproject tree. (And it could be very
-informative when viewing in gitweb). The subproject TAG name could, for
-example, be the commit and date of the superproject's submodule commit.
+Many of the 121 tags in my SVN tree were created by cvs2svn,
+which often created tags by copying older revisions
+of sub paths into the current tree. 
 
-Boaz
+I've written a small script that checks out the same tag via git and SVN.
+It runs a diff against those two trees and saves the result to a file
+so I can manually check it. With git-svn from 1.6.0.5, the results are 
+horrible: Over 30% of the tags didn't match the code in SVN.
+
+With git-svn from 1.6.1rc3, my first two manual probes look very good.
+Right now I'm reimporting the svn tree and will have the results
+of the complete "checkout comparison" tomorrow.
+
+Cheers,
+Thomas
