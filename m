@@ -1,140 +1,105 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv5 3/3] gitweb: link to patch(es) view in commit(diff) and (short)log view
-Date: Tue, 16 Dec 2008 11:11:30 +0100
-Message-ID: <1229422290-6213-4-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1229422290-6213-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1229422290-6213-2-git-send-email-giuseppe.bilotta@gmail.com>
- <1229422290-6213-3-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 16 11:13:22 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFCv4 3/3] gitweb: link to patch(es) view from commit and log views
+Date: Tue, 16 Dec 2008 11:14:34 +0100
+Message-ID: <200812161114.35336.jnareb@gmail.com>
+References: <1228575755-13432-1-git-send-email-giuseppe.bilotta@gmail.com> <200812160203.29425.jnareb@gmail.com> <cb7bb73a0812160202n1f4f7f4fi7f71455eb42bcd31@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 16 11:16:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCWvX-0001zn-2I
-	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 11:13:19 +0100
+	id 1LCWy7-0002tW-I3
+	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 11:16:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662AbYLPKLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2008 05:11:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752633AbYLPKLo
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 05:11:44 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:46170 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752576AbYLPKLm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2008 05:11:42 -0500
-Received: by mail-bw0-f21.google.com with SMTP id 14so3470952bwz.13
-        for <git@vger.kernel.org>; Tue, 16 Dec 2008 02:11:41 -0800 (PST)
+	id S1752613AbYLPKOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2008 05:14:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752595AbYLPKOl
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 05:14:41 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:12136 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752560AbYLPKOl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2008 05:14:41 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so255429ugf.37
+        for <git@vger.kernel.org>; Tue, 16 Dec 2008 02:14:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=6ErbfCiOOVCmlFhdXftMk2D/zTN8q7ol4a4hXV2W53s=;
-        b=CgRtxtUjp8zs3zRfzFB2L/LQhG7l0cmGd5K0MfZmMiZbLqQLeBAO7fs8DnYkcSNHlL
-         jcaPGg1QirWuIImAoE8IBtT0GgI9UVtTgxXXI6TyjTL8CEOApFbR8scsHkRS8hMF8Vjx
-         VVesRukITSx7HG7BiwH5choCZYVRw5s3ePzJE=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=vrpycKYAmXWqtMPTR76zNiJl5giU88n9Qm4Gi9vO8ug=;
+        b=W24DkissWiQpdwwPBqdHvVzl0J6OHuqV1lewKB1BnSazvfEe7X/SbboElC8hTZlbhY
+         i+SMyYho2YLZk/t4clleMGM7X01TUBfR6tJYljvgZoSTl2f92ljADm8wEH7x1n0Mz7Yu
+         265sLpCCUQmnUgKo0pjVx7OF7PN0HnrNjQPZE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=LEO/q+2YtDk6QI4OT8zxM5JojfLP2s+iw+0WAasFsus1ROnNs04Zppr+EM9cAd4CSX
-         40cbITyMe0UxeiPRglSm7H1u6knTcfNAcdqCjR6B5wETCPIWRo66czzcYzz2ctJgjiq9
-         6XNYHhNE6h10xUKtScgV6V84SXiNy2PWp7ZNY=
-Received: by 10.223.114.207 with SMTP id f15mr7675026faq.90.1229422301232;
-        Tue, 16 Dec 2008 02:11:41 -0800 (PST)
-Received: from localhost ([78.13.57.58])
-        by mx.google.com with ESMTPS id k29sm9352559fkk.23.2008.12.16.02.11.39
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=hQP//RWg4LiRoZCeWfLK+C9h7CxxSKM+tqUHyBqlASvvEQgHMWzt3D+//vWaJOYaLq
+         0vONbSSI+DYZB0RXX7jHacgSWoSgpkhoedKQExlihtnyvQH4tKmxmiW4yNc1NJJkoh0+
+         o/jU+X4NfvbiLP/5S6GalbIcYz7+HEM4f/upY=
+Received: by 10.67.115.16 with SMTP id s16mr2561527ugm.47.1229422479292;
+        Tue, 16 Dec 2008 02:14:39 -0800 (PST)
+Received: from ?192.168.1.11? (abve222.neoplus.adsl.tpnet.pl [83.8.202.222])
+        by mx.google.com with ESMTPS id p39sm1014456ugd.54.2008.12.16.02.14.37
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 16 Dec 2008 02:11:40 -0800 (PST)
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1229422290-6213-3-git-send-email-giuseppe.bilotta@gmail.com>
+        Tue, 16 Dec 2008 02:14:38 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <cb7bb73a0812160202n1f4f7f4fi7f71455eb42bcd31@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103268>
 
-We link to patch view in commit and commitdiff view, and to patches view
-in log and shortlog view.
+You lost CC, somehow...
 
-In (short)log view, the link is only offered when the number of commits
-shown is no more than the allowed maximum number of patches.
+On Tue, 16 Dec 2008, Giuseppe Bilotta wrote:
+> On Tue, Dec 16, 2008 at 2:03 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> > On Sat, 6 Dec 2008, Giuseppe Bilotta wrote:
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- gitweb/gitweb.perl |   30 ++++++++++++++++++++++++++++--
- 1 files changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e7a6477..168deb7 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -5024,6 +5024,15 @@ sub git_log {
+>>> +     if ($patch_max) {
+>>> +             if ($patch_max < 0 || @commitlist <= $patch_max) {
+>>> +                     $paging_nav .= " &sdot; " .
+>>> +                             $cgi->a({-href => href(action=>"patches", -replay=>1)},
+>>> +                                     @commitlist > 1 ? "patchset" : "patch");
+
+[...]
+>> I wonder if it would make sense to pass
+>>
+>>   href(..., hash_parent => $commitlist[-1]{'id'}, ...)
+>>
+>> here. But I think having separate "patches" action, with intent being
+>> displaying series of patches, is a better solution. This way you can
+>> see in URL and in the page title (thus also in window title, or in
+>> bookmark name) if it is single patch or patch series (perhaps consisting
+>> of single patch).
+> 
+> I'm not sure I'm following you here. Do you mean as in manually adding
+> the parent endpoint to the URL when it's not specified in the log view
+> itself? I think that would change the behaviour for > 100 patches.
+
+First, I meant here that having separate "patches" action is a good
+idea in itself, whether we pass explicitly and always $hash_parent
+parameter here or not.
  
- 	my $paging_nav = format_paging_nav('log', $hash, $head, $page, $#commitlist >= 100);
- 
-+	my ($patch_max) = gitweb_get_feature('patches');
-+	if ($patch_max) {
-+		if ($patch_max < 0 || @commitlist <= $patch_max) {
-+			$paging_nav .= " &sdot; " .
-+				$cgi->a({-href => href(action=>"patches", -replay=>1)},
-+					"patches");
-+		}
-+	}
-+
- 	git_header_html();
- 	git_print_page_nav('log','', $hash,undef,undef, $paging_nav);
- 
-@@ -5103,6 +5112,11 @@ sub git_commit {
- 			} @$parents ) .
- 			')';
- 	}
-+	if (gitweb_check_feature('patches')) {
-+		$formats_nav .= " | " .
-+			$cgi->a({-href => href(action=>"patch", -replay=>1)},
-+				"patch");
-+	}
- 
- 	if (!defined $parent) {
- 		$parent = "--root";
-@@ -5416,9 +5430,8 @@ sub git_commitdiff {
- 	my $format = shift || 'html';
- 	my %params = @_;
- 
--	my $patch_max;
-+	my ($patch_max) = gitweb_get_feature('patches');
- 	if ($format eq 'patch') {
--		($patch_max) = gitweb_get_feature('patches');
- 		die_error(403, "Patch view not allowed") unless $patch_max;
- 	}
- 
-@@ -5436,6 +5449,11 @@ sub git_commitdiff {
- 		$formats_nav =
- 			$cgi->a({-href => href(action=>"commitdiff_plain", -replay=>1)},
- 			        "raw");
-+		if ($patch_max) {
-+			$formats_nav .= " | " .
-+				$cgi->a({-href => href(action=>"patch", -replay=>1)},
-+					"patch");
-+		}
- 
- 		if (defined $hash_parent &&
- 		    $hash_parent ne '-c' && $hash_parent ne '--cc') {
-@@ -5992,6 +6010,14 @@ sub git_shortlog {
- 			$cgi->a({-href => href(-replay=>1, page=>$page+1),
- 			         -accesskey => "n", -title => "Alt-n"}, "next");
- 	}
-+	my $patch_max = gitweb_check_feature('patches');
-+	if ($patch_max) {
-+		if ($patch_max < 0 || @commitlist <= $patch_max) {
-+			$paging_nav .= " &sdot; " .
-+				$cgi->a({-href => href(action=>"patches", -replay=>1)},
-+					"patches");
-+		}
-+	}
- 
- 	git_header_html();
- 	git_print_page_nav('shortlog','', $hash,$hash,$hash, $paging_nav);
+Second, I haven't thought about interaction with (short)log
+pagination; in $patch_max < 0, i.e. unlimited patches, and most
+common case of running 'shortlog' action without 'hp' (hash_parent)
+limiter used, one would make 'patches' limited to page size,
+other unlimited.  On one hand side limiting to page size makes
+"patches" be more of equivalent of current "shortlog" view; on the
+other hand it makes 'unlimited' actually be limited to page size,
+at least in this situation...
+
 -- 
-1.5.6.5
+Jakub Narebski
+Poland
