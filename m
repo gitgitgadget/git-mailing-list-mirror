@@ -1,69 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Dec 2008, #02; Sun, 14)
-Date: Mon, 15 Dec 2008 17:42:47 -0800
-Message-ID: <7vr648uc88.fsf@gitster.siamese.dyndns.org>
-References: <7v7i632mg9.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0812151423390.19665@iabervon.org>
+From: "Scott Chacon" <schacon@gmail.com>
+Subject: Re: [TortoiseGit]: Anyone seen this challenge?
+Date: Mon, 15 Dec 2008 18:06:10 -0800
+Message-ID: <d411cc4a0812151806v47f96245mb770faef7d423ead@mail.gmail.com>
+References: <c115fd3c0812150820m158d3c9fuc01a05771f445fa5@mail.gmail.com>
+	 <1976ea660812151738m4d63739dv6c07a0d97f3c176f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Dec 16 02:44:14 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Tim Visher" <tim.visher@gmail.com>, git@vger.kernel.org
+To: "Frank Li" <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 16 03:07:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCOyq-0002VY-Dh
-	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 02:44:12 +0100
+	id 1LCPLP-00082k-3C
+	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 03:07:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752271AbYLPBmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 20:42:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752298AbYLPBmy
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 20:42:54 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51727 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752239AbYLPBmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 20:42:53 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 79A0F1A5C5;
-	Mon, 15 Dec 2008 20:42:52 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 532681A5BD; Mon,
- 15 Dec 2008 20:42:48 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DA6483F8-CB12-11DD-8002-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751767AbYLPCGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 21:06:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751787AbYLPCGN
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 21:06:13 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:14037 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751658AbYLPCGM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 21:06:12 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1406740wah.21
+        for <git@vger.kernel.org>; Mon, 15 Dec 2008 18:06:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=YkfL6rU1vPNtb8w/6y/rC2KMC17M2mtQtiS8QJcazPE=;
+        b=LizTB1gXCTMNrV307UAaPmFixlU8H29OUIcKadRI7tl3lJ0gDRaBwA6rP4cyYGR9Le
+         UUW0U4Sbd1XNqVvmXkM7hgQ7bmX+cRoytQeg9O/sJh+aluZ1UqvkBKBxZaNFN8k8YrDP
+         Tt60a+/TFMoitoFAD4wJMf7K3Ey/JNyuwgfdI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=FrmoYAoZOLEbzyzkAB9QaXFl2MeVjoZqDun4TOA2CIeQ+o+VoKsra36DwKeADxmtAI
+         ACs7tlt402S5ta7mVffaHhlvIqEpiKW0HedhWaQGjrH47kR4x02OxecVhVZysjccujBp
+         ///7o5e5AbGxl/0ikkCGZbb/qdRmFfV9fhJsc=
+Received: by 10.114.150.1 with SMTP id x1mr5375901wad.93.1229393170462;
+        Mon, 15 Dec 2008 18:06:10 -0800 (PST)
+Received: by 10.114.254.17 with HTTP; Mon, 15 Dec 2008 18:06:10 -0800 (PST)
+In-Reply-To: <1976ea660812151738m4d63739dv6c07a0d97f3c176f@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103233>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+By the way, this project already comes pretty close to what we were
+trying to get people to do.  If you would like a free large account
+for your work on this (you won't need it for this project since it's
+open source, but for any commercial or private stuff you do), I would
+be happy to set you up.  Thanks for your work on it, it looks
+incredibly promising.
 
-> On Sun, 14 Dec 2008, Junio C Hamano wrote:
+Scott
+
+On Mon, Dec 15, 2008 at 5:38 PM, Frank Li <lznuaa@gmail.com> wrote:
+> I add comments at this page to tell tortoisegit project.
 >
->> [On Hold]
->> 
->> * nd/narrow (Sun Nov 30 17:54:38 2008 +0700) 17 commits
->>  - wt-status: show sparse checkout info
->>  - Introduce default sparse patterns (core.defaultsparse)
->>  - checkout: add new options to support sparse checkout
->>  - clone: support sparse checkout with --sparse-checkout option
->>  - unpack_trees(): add support for sparse checkout
->>  - unpack_trees(): keep track of unmerged entries
->>  - Introduce "sparse patterns"
->>  - Merge branch 'master' into nd/narrow
->>  + t2104: touch portability fix
->>  + grep: skip files outside sparse checkout area
->>  + checkout_entry(): CE_NO_CHECKOUT on checked out entries.
->>  + Prevent diff machinery from examining worktree outside sparse
->>    checkout
+> 2008/12/16 Tim Visher <tim.visher@gmail.com>:
+>> Anyone aware of this challenge?
+>>
+>> http://github.com/blog/256-tortoisegit-challenge
+>>
+>> They've noted the existence of the google code project.
+>>
+>> --
+>>
+>> In Christ,
+>>
+>> Timmy V.
+>>
+>> http://burningones.com/
+>> http://five.sentenc.es/ - Spend less time on e-mail
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 >
-> I think this patch (slightly reframed) would be good to have independantly 
-> of the series; it also means that we won't do weird things if someone 
-> changes a file in the worktree which is marked as CE_VALID, and may well 
-> may CE_VALID sufficient for the index representation of paths outside the 
-> checkout.
-
-It is a bit unclear which one you meant by "this patch", sorry.
