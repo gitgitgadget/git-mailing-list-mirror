@@ -1,70 +1,65 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Undo a git stash clear
-Date: Tue, 16 Dec 2008 13:20:39 +0100
-Message-ID: <vpq1vw81fc8.fsf@bauges.imag.fr>
-References: <c6c947f60812160407l1b2593e1pde817f5cfb091d59@mail.gmail.com>
-	<57518fd10812160412j1edc2ea0mff732825f1f6c4a2@mail.gmail.com>
+From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+Subject: git-svn and empty directories
+Date: Tue, 16 Dec 2008 13:53:43 +0100
+Organization: Intra2net AG
+Message-ID: <200812161353.49796.thomas.jarosch@intra2net.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Alexander Gladysh" <agladysh@gmail.com>, git@vger.kernel.org,
-	git-users@googlegroups.com
-To: "Jonathan del Strother" <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Tue Dec 16 13:25:52 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>,
+	Deskin Miller <deskinm@umich.edu>
+X-From: git-owner@vger.kernel.org Tue Dec 16 13:55:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCYzm-0002ad-Jl
-	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 13:25:51 +0100
+	id 1LCZST-0004iE-EO
+	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 13:55:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753181AbYLPMY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2008 07:24:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755187AbYLPMY3
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 07:24:29 -0500
-Received: from imag.imag.fr ([129.88.30.1]:54170 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756084AbYLPMY1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2008 07:24:27 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id mBGCKesT016610
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 16 Dec 2008 13:20:41 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LCYul-0003GL-QJ; Tue, 16 Dec 2008 13:20:39 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LCYul-0004Bs-O0; Tue, 16 Dec 2008 13:20:39 +0100
-In-Reply-To: <57518fd10812160412j1edc2ea0mff732825f1f6c4a2@mail.gmail.com> (Jonathan del Strother's message of "Tue\, 16 Dec 2008 12\:12\:52 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 16 Dec 2008 13:20:41 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753907AbYLPMyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2008 07:54:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752149AbYLPMyA
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 07:54:00 -0500
+Received: from rs02.intra2net.com ([81.169.173.116]:51578 "EHLO
+	rs02.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751443AbYLPMx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2008 07:53:59 -0500
+Received: from intranator.m.i2n (unknown [172.16.1.99])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by rs02.intra2net.com (Postfix) with ESMTP id E45844DA4;
+	Tue, 16 Dec 2008 13:53:57 +0100 (CET)
+Received: from localhost (intranator.m.i2n [127.0.0.1])
+	by localhost (Postfix) with ESMTP id 735BB2AC4B;
+	Tue, 16 Dec 2008 13:53:57 +0100 (CET)
+Received: from storm.localnet (storm.m.i2n [172.16.1.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by intranator.m.i2n (Postfix) with ESMTP id BDEA22AC4A;
+	Tue, 16 Dec 2008 13:53:55 +0100 (CET)
+User-Agent: KMail/1.10.3 (Linux/2.6.27.5-41.fc9.i686; KDE/4.1.3; i686; ; )
+Content-Disposition: inline
+X-Virus-Scanned: by Intranator (www.intranator.com) with AMaViS and F-Secure AntiVirus (fsavdb 2008-12-16_09)
+X-Spam-Status: hits=-2.5 tests=[ALL_TRUSTED=-1.8,BAYES_20=-0.74]
+X-Spam-Level: 975
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103278>
 
-"Jonathan del Strother" <maillist@steelskies.com> writes:
+Hello Eric and Deskin,
 
-> On Tue, Dec 16, 2008 at 12:07 PM, Alexander Gladysh <agladysh@gmail.com> wrote:
->> Hi, list!
->>
->> I've stashed some valuable changes and then I accidentally did git
->> stash clear. (Yes, today is not my day).
->>
->> Is it possible to restore stashed changes?
->
-> I ran into this exact problem on Friday.  Some helpful person on IRC
-> suggested using
+I'm currently looking into preserving empty directories from a SVN repository 
+by automatically creating empty .gitignore files for them.
 
-(and the obvious advice before anything else : don't "git gc", don't
-"git prune", and if possible back-up the repository before anything
-else)
+The control flow of the git-svn code is still a jungle to me,
+maybe you have a hint how to implement a proof-of-concept code?
 
--- 
-Matthieu
+I don't think I can just touch a .gitignore file in get_untracked()
+and those files will magically turn up in git's index...
+
+Thanks,
+Thomas
