@@ -1,52 +1,71 @@
-From: jidanni@jidanni.org
+From: Jeff King <peff@peff.net>
 Subject: Re: git-clone --how-much-disk-space-will-this-cost-me? [--depth n]
-Date: Tue, 16 Dec 2008 08:37:02 +0800
-Message-ID: <87zlixvtu9.fsf@jidanni.org>
-References: <4946F4D9.8050803@gmx.ch>
+Date: Mon, 15 Dec 2008 19:43:40 -0500
+Message-ID: <20081216004339.GA3679@coredump.intra.peff.net>
+References: <878wqhxaex.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: jlh@gmx.ch
-X-From: git-owner@vger.kernel.org Tue Dec 16 01:38:56 2008
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Tue Dec 16 01:45:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCNxf-0002j9-O3
-	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 01:38:56 +0100
+	id 1LCO3b-0004FC-9W
+	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 01:45:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753050AbYLPAhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 19:37:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753160AbYLPAhG
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 19:37:06 -0500
-Received: from sd-green-bigip-202.dreamhost.com ([208.97.132.202]:46827 "EHLO
-	homiemail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753018AbYLPAhF (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Dec 2008 19:37:05 -0500
-Received: from jidanni2.jidanni.org (122-127-35-251.dynamic.hinet.net [122.127.35.251])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a1.g.dreamhost.com (Postfix) with ESMTP id D5834119DE5;
-	Mon, 15 Dec 2008 16:37:04 -0800 (PST)
+	id S1753828AbYLPAnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 19:43:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755256AbYLPAnn
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 19:43:43 -0500
+Received: from peff.net ([208.65.91.99]:3241 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753018AbYLPAnn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 19:43:43 -0500
+Received: (qmail 9232 invoked by uid 111); 16 Dec 2008 00:43:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 15 Dec 2008 19:43:42 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Dec 2008 19:43:40 -0500
+Content-Disposition: inline
+In-Reply-To: <878wqhxaex.fsf@jidanni.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103223>
 
->> And don't tell us to just figure it out from the progress messages
->> after the download begins, and hit ^C if we don't like it.
+On Tue, Dec 16, 2008 at 07:53:42AM +0800, jidanni@jidanni.org wrote:
 
-JH> Maybe that's a dumb answer, but... why not?  This works pretty
-JH> well for me.
+> The git-clone manpage should mention how to determine how much disk
+> space will be used.
 
-Sounds like my last marriage. "Just hit ^C if you don't like it". How
-do you think the in-laws will feel? Nope, plan ahead I now say.
+OK. Do you have a suggestion for how to figure that out?
 
-JH> So maybe what you really want is an ETA display during the cloning
-JH> process?  Sounds like a good idea to me.
+> Let's take a look at those messages while were at it,
+> $ git-clone --depth 1 git://git.sv.gnu.org/coreutils/
+> Initialized empty Git repository in /usr/local/src/jidanni/coreutils/.git/
+> remote: Counting objects: 26240, done.
+> remote: Compressing objects: 100% (14001/14001), done.
+> remote: Total 26240 (delta 21577), reused 15354 (delta 12095)
+> Receiving objects: 100% (26240/26240), 15.76 MiB | 26 KiB/s, done.
+> Resolving deltas: 100% (21577/21577), done.
+> $ du -sh
+> 27M  .
+> Nope, nowhere does it directly say "You Holmes, are in for 27
+> Megabytes (on your piddly modem)". There obviously is math involved to
+> figure it out... math!
 
-ETA implies that git has an estimate of what is going to happen.
+That's because we don't know that it will be 27 megabytes. That progress
+counter is counting the number of _objects_, not bytes. So you can make
+a rough estimate, but only after receiving some objects, and even then
+it can be wildly off (because you are assuming the size of the objects
+still to get averages the same as the size of the objects you have
+already gotten).
 
-The key is to now allow the user to get such an estimate too, before
-deciding to git-clone or not.
+AFAIK, nowhere in the sent data is there an indication of how many bytes
+are in the resulting pack (and in many cases, the pack is generated on
+the fly and the information not only is not sent, but is not available
+anywhere).
+
+-Peff
