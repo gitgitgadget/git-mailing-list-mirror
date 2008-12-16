@@ -1,56 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pack-objects: don't use too many threads with few
-	objects
-Date: Mon, 15 Dec 2008 22:20:17 -0500
-Message-ID: <20081216032016.GA4247@coredump.intra.peff.net>
-References: <alpine.LFD.2.00.0812111524370.14328@xanadu.home> <20081213133238.GA6718@sigill.intra.peff.net> <alpine.LFD.2.00.0812131456040.30035@xanadu.home> <e2b179460812151038y5a39b33cv1d7b41faf10563e@mail.gmail.com> <7vy6ygudhb.fsf@gitster.siamese.dyndns.org>
+From: "Frank Li" <lznuaa@gmail.com>
+Subject: Re: [TortoiseGit]: Anyone seen this challenge?
+Date: Tue, 16 Dec 2008 11:34:13 +0800
+Message-ID: <1976ea660812151934s421afb8v36244d33f2025c03@mail.gmail.com>
+References: <c115fd3c0812150820m158d3c9fuc01a05771f445fa5@mail.gmail.com>
+	 <1976ea660812151738m4d63739dv6c07a0d97f3c176f@mail.gmail.com>
+	 <d411cc4a0812151806v47f96245mb770faef7d423ead@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Pitre <nico@cam.org>,
-	Mike Ralphson <mike.ralphson@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 16 04:21:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Scott Chacon" <schacon@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 16 04:35:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCQV8-00083h-4e
-	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 04:21:38 +0100
+	id 1LCQic-0002Kd-34
+	for gcvg-git-2@gmane.org; Tue, 16 Dec 2008 04:35:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751344AbYLPDUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Dec 2008 22:20:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750965AbYLPDUU
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 22:20:20 -0500
-Received: from peff.net ([208.65.91.99]:2204 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750736AbYLPDUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Dec 2008 22:20:19 -0500
-Received: (qmail 10006 invoked by uid 111); 16 Dec 2008 03:20:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 15 Dec 2008 22:20:18 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Dec 2008 22:20:17 -0500
+	id S1752613AbYLPDeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Dec 2008 22:34:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752606AbYLPDeP
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Dec 2008 22:34:15 -0500
+Received: from yw-out-2324.google.com ([74.125.46.30]:63718 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752594AbYLPDeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Dec 2008 22:34:15 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so1258961ywe.1
+        for <git@vger.kernel.org>; Mon, 15 Dec 2008 19:34:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=l03hxnJ0Q97gDK5BkiQsW4w2lfklq9xHMZma0DLpIwM=;
+        b=JK1FzFZsvmLmg+E/7Z1IlD18zqY0xzFBJ89mLvR8zmayEcBCrcS7vH7nkQ3sZXIRU9
+         7qqY4FSQDP2YFloLZ3liUiczyGeLdL3Kh+QR3bbArhZJEni6GLPhatjf5qLl02cbmlHR
+         6kbgNJdpsw5UaHe/LCAAjZSj7q/XsYinQZzXY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=JMeKt+2WAGVhNRkUrhAO6GCOc2XMRPQ8FY25FajFA5fGAIi5GlZX/tE+GpuFKDgdSK
+         wCwtNL7RfA8Exka2ACRe7YmabL/mREb6O0wKHL1xDshbi2ZzCN+Q5ERhzAynBfJ180nI
+         C1Aq3Q6vpxKFULzjrywWyGyruZFHTG0YaKNcg=
+Received: by 10.151.44.15 with SMTP id w15mr6966297ybj.92.1229398453926;
+        Mon, 15 Dec 2008 19:34:13 -0800 (PST)
+Received: by 10.151.134.2 with HTTP; Mon, 15 Dec 2008 19:34:13 -0800 (PST)
+In-Reply-To: <d411cc4a0812151806v47f96245mb770faef7d423ead@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vy6ygudhb.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103239>
 
-On Mon, Dec 15, 2008 at 05:15:44PM -0800, Junio C Hamano wrote:
+I don't know If I understand your means correctly.
+You need some account to push code.
 
-> Perhaps the two runs are seeing different number of CPUs (hence threads)
-> available?  That would then change the distribution of the work itself
-> (i.e. what slice of obj-list goes as a single chunk to be processed) and
-> would affect the outcome.
+TortoiseGit is open source project.
+If you contribute enough code, I can open account for you.
 
-I am seeing the same failure as Mike on one of my boxen.  Each run sees
-the same number of threads (4 in my case).
 
-> Does the second test this patch adds fail?
-
-With your patch, the added "both should match" test fails. So it seems
-to be about doing a second run at all, not the difference in index
-versions.
-
--Peff
+2008/12/16 Scott Chacon <schacon@gmail.com>:
+> By the way, this project already comes pretty close to what we were
+> trying to get people to do.  If you would like a free large account
+> for your work on this (you won't need it for this project since it's
+> open source, but for any commercial or private stuff you do), I would
+> be happy to set you up.  Thanks for your work on it, it looks
+> incredibly promising.
+>
+> Scott
+>
+> On Mon, Dec 15, 2008 at 5:38 PM, Frank Li <lznuaa@gmail.com> wrote:
+>> I add comments at this page to tell tortoisegit project.
+>>
+>> 2008/12/16 Tim Visher <tim.visher@gmail.com>:
+>>> Anyone aware of this challenge?
+>>>
+>>> http://github.com/blog/256-tortoisegit-challenge
+>>>
+>>> They've noted the existence of the google code project.
+>>>
+>>> --
+>>>
+>>> In Christ,
+>>>
+>>> Timmy V.
+>>>
+>>> http://burningones.com/
+>>> http://five.sentenc.es/ - Spend less time on e-mail
+>>> --
+>>> To unsubscribe from this list: send the line "unsubscribe git" in
+>>> the body of a message to majordomo@vger.kernel.org
+>>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>>>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>>
+>
