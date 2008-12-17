@@ -1,60 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] Make 'index_path()' use 'strbuf_readlink()'
-Date: Wed, 17 Dec 2008 12:37:38 -0800
-Message-ID: <7vskomler1.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH 4/5] Make 'diff_populate_filespec()' use the new
+ 'strbuf_readlink()'
+Date: Wed, 17 Dec 2008 12:37:43 -0800
+Message-ID: <7vmyeuleqw.fsf@gitster.siamese.dyndns.org>
 References: <alpine.LFD.2.00.0812171034520.14014@localhost.localdomain>
  <alpine.LFD.2.00.0812171042120.14014@localhost.localdomain>
  <alpine.LFD.2.00.0812171042500.14014@localhost.localdomain>
  <alpine.LFD.2.00.0812171043180.14014@localhost.localdomain>
+ <alpine.LFD.2.00.0812171043440.14014@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Dec 17 21:39:09 2008
+X-From: git-owner@vger.kernel.org Wed Dec 17 21:39:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD3Ad-0001QI-4B
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 21:39:03 +0100
+	id 1LD3Ay-0001Yq-UZ
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 21:39:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751440AbYLQUho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 15:37:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751304AbYLQUho
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 15:37:44 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34579 "EHLO
+	id S1751489AbYLQUhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 15:37:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbYLQUhu
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 15:37:50 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63730 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751279AbYLQUhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 15:37:43 -0500
+	with ESMTP id S1751304AbYLQUht (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 15:37:49 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 371511A7FF;
-	Wed, 17 Dec 2008 15:37:43 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E45198775F;
+	Wed, 17 Dec 2008 15:37:47 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0D1AC1A7FB; Wed,
- 17 Dec 2008 15:37:39 -0500 (EST)
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1A44A8775E; Wed,
+ 17 Dec 2008 15:37:44 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8E0ABEA0-CC7A-11DD-B048-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 90D9494E-CC7A-11DD-9EED-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103385>
 
 Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> @@ -2537,20 +2536,17 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, int write
->  				     path);
->  		break;
->  	case S_IFLNK:
-> -		len = xsize_t(st->st_size);
-> -		target = xmalloc(len + 1);
-> -		if (readlink(path, target, len + 1) != st->st_size) {
-> +		if (strbuf_readlink(&sb, path, st->st_size)) {
->  			char *errstr = strerror(errno);
-> -			free(target);
->  			return error("readlink(\"%s\"): %s", path,
->  			             errstr);
+> diff --git a/diff.c b/diff.c
+> index afefe08..4b2029c 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1773,19 +1773,17 @@ int diff_populate_filespec(struct diff_filespec *s, int size_only)
+>  		s->size = xsize_t(st.st_size);
+>  		if (!s->size)
+>  			goto empty;
+> -		if (size_only)
+> -			return 0;
+>  		if (S_ISLNK(st.st_mode)) {
+>  ...
+>  		}
+> +		if (size_only)
+> +			return 0;
 
-Thanks; as strbuf_readlink() does not do any iffy library calls that would
-stomp on errno, the error reporting should still be valid here.
+It is unfortunate that we need to always readlink even when we only would
+want to cull differences early (e.g. --raw without any fancy filters such
+as rename detection), but symbolic links should be minorities in any sane
+repo, and it should not be worth trying to optimize this for sane
+filesystems by making it conditional.
