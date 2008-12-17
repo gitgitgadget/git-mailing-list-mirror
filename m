@@ -1,98 +1,73 @@
-From: tekkub <tekkub@gmail.com>
-Subject: Re: Announcement: Git Extensions stable (windows shell extensions)
-Date: Wed, 17 Dec 2008 11:51:02 -0800 (PST)
-Message-ID: <1229543462897-1669467.post@n2.nabble.com>
-References: <1229540813648-1669264.post@n2.nabble.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH] Documentation: fix description for enabling hooks
+Date: Wed, 17 Dec 2008 20:55:45 +0100
+Message-ID: <200812172055.45905.markus.heidelberg@web.de>
+References: <200812170359.24109.markus.heidelberg@web.de> <4948ADE8.2050804@viscovery.net> <20081217143627.GB5691@genesis.frugalware.org>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 17 20:52:32 2008
+Cc: Johannes Sixt <j.sixt@viscovery.net>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Dec 17 20:57:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD2RW-0006yH-Dj
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 20:52:26 +0100
+	id 1LD2Vm-0000NK-Ay
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 20:56:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbYLQTvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 14:51:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbYLQTvE
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 14:51:04 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:46897 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751157AbYLQTvE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 14:51:04 -0500
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1LD2QA-00079J-TC
-	for git@vger.kernel.org; Wed, 17 Dec 2008 11:51:02 -0800
-In-Reply-To: <1229540813648-1669264.post@n2.nabble.com>
-X-Nabble-From: tekkub@gmail.com
+	id S1751340AbYLQTza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 14:55:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbYLQTz3
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 14:55:29 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:36057 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751288AbYLQTz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 14:55:29 -0500
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate03.web.de (Postfix) with ESMTP id C5489F58296D;
+	Wed, 17 Dec 2008 20:55:27 +0100 (CET)
+Received: from [91.19.64.135] (helo=pluto)
+	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.109 #226)
+	id 1LD2UR-0008HW-00; Wed, 17 Dec 2008 20:55:27 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <20081217143627.GB5691@genesis.frugalware.org>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX189dGVd48GyCTL6QJyM+Euqk8o1FblpVVA60A0Y
+	sTspmktfpLoVHXzK542i3UALU2KtRotQ5oEvqyPsTwX0qqm9Xf
+	qiX+7G3HjLqxhxWx/rhQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103376>
 
-
-Very nice, however I ran into the following error while trying to install:
-http://www.flickr.com/photos/26681170@N03/3115836831/
-
-Can't wait to try it out!
---tek
-
-
-Henk wrote:
+Miklos Vajna, 17.12.2008:
+> On Wed, Dec 17, 2008 at 08:44:40AM +0100, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> > > This is true, but having the executable bit is necessary as well. I
+> > > think it would be better to just append this requirement instead of
+> > > replacing the old one with this.
+> > 
+> > Markus's proposed new wording is correct because the .sample hooks *are*
+> > already executable.
 > 
-> This is a shameless announcement of my latest personal project; Git
-> Extensions. Git Extensions is a Tortoise-like windows shell extension for
-> git. Yesterday I finished version 0.9, the first stable release. I
-> included about all git commands I know about, so I think it is pretty
-> complete but I'm open to suggestions. 
->  
-> It is written mostly in C#, except for shell extension part which is
-> written in C++. The project is open source, the sources can be found on
-> GitHub. In case there is someone interrested in the sources, be warned;
-> the sources are not very well documented yet and the solution is a still
-> bit messy, I will clean this up very soon. 
->  
-> Main features
-> - Shell extensions
-> - Visual studio plugin
-> - Seperate git application
->  
-> Features:
-> - Browse repository (incl. visual graph)
-> - Add files
-> - Apply patch
-> - Checkout branch/revision
-> - Cherry pick
-> - Create branch/tag
-> - Delete branch/tag
-> - Clone
-> - Commit
-> - Create (format) patch
-> - Init new repository
-> - Merge branches
-> - Pull
-> - Push
-> - Run mergetool
-> - Stash
-> - View differences
->  
-> Information about the project and a installer package can be found here:
-> http://sourceforge.net/projects/gitextensions/
-> The installation requires msysgit to be installed AND git.exe to in the
-> system path.
-> 
-> ps.
-> I know there is a TortoiseGit project also, I just didn't know about that
-> at the time I started. If I knew about TortoiseGit, I probably never
-> started writing my own tool.
-> 
+> I thought about the following situation: The user reads the
+> documentation while working in an older repo (initialized a few versions
+> ago). S/he sees that the .sample suffix is already missing, so s/he
+> assumes that the hook is already active. Which is not true, because the
+> +x bit is missing.
 
--- 
-View this message in context: http://n2.nabble.com/Announcement%3A-Git-Extensions-stable-%28windows-shell-extensions%29-tp1669264p1669467.html
-Sent from the git mailing list archive at Nabble.com.
+Valid point, I think, but not critical in this case, since the patch
+only affected gitrepository-layout(5) and gitglossary(7).
+
+When you want to learn how to use hooks, you will probably rather read
+githooks(5), where the need for the executable bit is not even
+explicitly mentioned. Maybe it should be added there?
+
+Markus
