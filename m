@@ -1,58 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: rebasing commits that have notes, was Re: Git Notes idea.
-Date: Wed, 17 Dec 2008 01:12:25 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812170110160.14632@racer>
-References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <20081216085108.GA3031@coredump.intra.peff.net>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH] Documentation: fix description for enabling hooks
+Date: Wed, 17 Dec 2008 03:59:23 +0100
+Message-ID: <200812170359.24109.markus.heidelberg@web.de>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Govind Salinas <govind@sophiasuchtig.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 17 01:15:12 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Dec 17 04:00:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCk3x-0003Tg-Me
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 01:14:54 +0100
+	id 1LCmeE-0006RC-Qj
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 04:00:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760863AbYLQANW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2008 19:13:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760848AbYLQANV
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 19:13:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42381 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760562AbYLQANU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2008 19:13:20 -0500
-Received: (qmail invoked by alias); 17 Dec 2008 00:13:18 -0000
-Received: from pD9EB298D.dip0.t-ipconnect.de (EHLO noname) [217.235.41.141]
-  by mail.gmx.net (mp069) with SMTP; 17 Dec 2008 01:13:18 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/I26lbFVnIy/mj6A4v+ucDPLxPXXNNtFcZwXTG6W
-	XQ+4MrkNzWRocX
-X-X-Sender: gene099@racer
-In-Reply-To: <20081216085108.GA3031@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1752360AbYLQC7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2008 21:59:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752222AbYLQC7M
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 21:59:12 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:57875 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750967AbYLQC7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2008 21:59:11 -0500
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate03.web.de (Postfix) with ESMTP id D65B2F57AB0A;
+	Wed, 17 Dec 2008 03:59:09 +0100 (CET)
+Received: from [91.19.62.172] (helo=pluto)
+	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.109 #226)
+	id 1LCmcv-0007PK-00; Wed, 17 Dec 2008 03:59:09 +0100
+User-Agent: KMail/1.9.9
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX19QDe+37rAPKxScz3a9zds0u+zW2NK0iv8tMUk2
+	npTOenWMC/PU1/HD8fe+jwUcEGfu1jod8Nevs+qQP4ZKV9eHkp
+	wxaDQAMBDzFpfnleZfJg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103302>
 
-Hi,
+Since f98f8cb (Ship sample hooks with .sample suffix, 2008-06-24) hooks
+are not enabled by making them executable anymore, but by removing the
+'.sample' suffix from the filename.
 
-On Tue, 16 Dec 2008, Jeff King wrote:
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
+ Documentation/gitrepository-layout.txt |    3 ++-
+ Documentation/glossary-content.txt     |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
->   Some discussion of the interaction of notes and rebase:
->   http://thread.gmane.org/gmane.comp.version-control.git/100533
-
-Oh, I misinterpreted that label... of course you can track rebases in 
-notes, but some issue that we did not look into yet (I think) is the issue 
-that you can cherry-pick and rebase commits and lose notes in the process.
-
-It seems that the notes idea is not that unintrusive as I thought...
-
-Ciao,
-Dscho
+diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
+index a969b3f..1befca9 100644
+--- a/Documentation/gitrepository-layout.txt
++++ b/Documentation/gitrepository-layout.txt
+@@ -134,7 +134,8 @@ hooks::
+ 	Hooks are customization scripts used by various git
+ 	commands.  A handful of sample hooks are installed when
+ 	'git-init' is run, but all of them are disabled by
+-	default.  To enable, they need to be made executable.
++	default.  To enable, the `.sample` suffix has to be
++	removed from the filename by renaming.
+ 	Read linkgit:githooks[5] for more details about
+ 	each hook.
+ 
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index 9b4a4f4..9afca75 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -183,7 +183,8 @@ to point at the new commit.
+ 	and potentially aborted, and allow for a post-notification after the
+ 	operation is done. The hook scripts are found in the
+ 	`$GIT_DIR/hooks/` directory, and are enabled by simply
+-	making them executable.
++	removing the `.sample` suffix from the filename. In earlier versions
++	of git you had to make them executable.
+ 
+ [[def_index]]index::
+ 	A collection of files with stat information, whose contents are stored
+-- 
+1.6.1.rc3.23.gaf48b
