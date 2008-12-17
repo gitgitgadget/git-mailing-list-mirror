@@ -1,121 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git Notes idea.
-Date: Wed, 17 Dec 2008 12:38:53 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812171233270.28560@intel-tinevez-2-302>
-References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <20081216085108.GA3031@coredump.intra.peff.net> <5d46db230812161043m4a5873a8w4c323d634b639ba0@mail.gmail.com> <alpine.DEB.1.00.0812170003540.14632@racer>
- <5d46db230812161815s1c48af9dwc96a4701fb2a669b@mail.gmail.com> <alpine.DEB.1.00.0812170420560.14632@racer> <20081217101110.GC18265@coredump.intra.peff.net>
+From: "Mark Ryden" <markryde@gmail.com>
+Subject: Re: white spaces in a patch
+Date: Wed, 17 Dec 2008 13:44:01 +0200
+Message-ID: <dac45060812170344u368ffd7fx4e86253b4a13ffc7@mail.gmail.com>
+References: <dac45060812162331k19272488r4e95e0555e7a6db9@mail.gmail.com>
+	 <7vej07p84i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Govind Salinas <govind@sophiasuchtig.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 17 12:40:17 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 17 12:45:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCulE-0001Kw-Hu
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 12:40:17 +0100
+	id 1LCuqH-00036f-KP
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 12:45:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750994AbYLQLi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 06:38:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750970AbYLQLi5
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 06:38:57 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58315 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750859AbYLQLi4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 06:38:56 -0500
-Received: (qmail invoked by alias); 17 Dec 2008 11:38:54 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp052) with SMTP; 17 Dec 2008 12:38:54 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18rBEtxhTUruHtDJu3pd1xql/xuz8RPtix9SEgMZr
-	c/ZG6q19JrDYJt
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20081217101110.GC18265@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1751686AbYLQLoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 06:44:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751577AbYLQLoF
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 06:44:05 -0500
+Received: from rn-out-0910.google.com ([64.233.170.191]:27084 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751334AbYLQLoC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 06:44:02 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so2945550rnd.17
+        for <git@vger.kernel.org>; Wed, 17 Dec 2008 03:44:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=QnPIoRqP/DNbSdDFXnujhDQ4iOpKhSjjCM+V9qWRWCM=;
+        b=tssVtkNoW8vttOi4UlSJ6tSMp6FPhTvrS0zSgxhQ31kE6tUy9B3sH3BdfUhjwiKEci
+         GUQaK+jpyGS5PluCpDv/9wUQoRUT06wrwGx2kltpMM6DBKhwyCzryFFsQ1BfVcW1T3Qn
+         3Qxf5nVlpbvbooLHLU3/4jcwScsPhkhINLaxI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Vfb8erK2/rW6x3CBeTMusPtwGtDmFsDyrZ9ZDrAKDjmcGW0dcRP8zvJvl8Mxz9DCLV
+         k4zGkC3E1eW/UgTNUm4dGOJz9qgv5uVRTO24tc+byZI2yyc/QykradpizrSt959GJ86z
+         maBtUJBA84Rj5wInc3KrFedgOpi+xVDHU3yVo=
+Received: by 10.90.105.6 with SMTP id d6mr299011agc.22.1229514241539;
+        Wed, 17 Dec 2008 03:44:01 -0800 (PST)
+Received: by 10.90.26.11 with HTTP; Wed, 17 Dec 2008 03:44:01 -0800 (PST)
+In-Reply-To: <7vej07p84i.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103332>
 
-Hi,
+Hello,
 
-On Wed, 17 Dec 2008, Jeff King wrote:
+I tried:
+git apply patch1.txt
+patch1.txt:34: trailing whitespace.
+				
+patch1.txt:53: trailing whitespace.
 
-> On Wed, Dec 17, 2008 at 04:43:57AM +0100, Johannes Schindelin wrote:
-> 
-> > > I agree, I haven't thought of any fix along these lines other than 
-> > > to make gc do the clean up.
-> > 
-> > I have, and IIRC I briefly mentioned it back then.  Basically, you 
-> > will have to add a "git notes gc" or some such, which basically reads 
-> > in the whole notes, traverses all reachable commits, marking the 
-> > corresponding notes, and then writes out all marked notes (leaving the 
-> > other notes behind).
-> 
-> I was thinking something similar, but I think it is even easier. Make
-> the rule "if we still have the object, then we still have the note".
-> That has three benefits:
-> 
->  - implementation is simple: for each note $n, delete it unless
->    has_sha1_file($n).
-> 
->  - it handles notes on non-commit objects
-> 
->  - it kills off notes when an object is _pruned_, not when it stops
->    being _reachable_. So if I delete a branch with a commit found
->    nowhere else, its notes will hang around until it is actually pruned.
->    If I pull it from lost+found, I still keep the notes.
-> 
-> Note that all of this garbage collection of notes is really just 
-> removing them from the most current notes _tree_. If the notes structure 
-> is actually composed of commits, then old notes that are "deleted" will 
-> still be available historically.
+And
+"git diff"  show differences but **does not**
+highlight anything.
+I tried in tchs and in Bash.
 
-Right.  So my original proposal to use separate refs for separate purposes 
-might make sense again, so you can have private as well as public notes.
+Any ideas ? does "git diff" does  highlight for anyone ?
 
-> > I wonder why you speak as if none of that had been implemented yet.  
-> > From my work, it is obvious that hashtable is better than sorted list 
-> > (except for the fan-out, which obviously wants to be an array), and 
-> > from Peff's it is obvious that we want to keep the hashtables in 
-> > memory.
-> 
-> If he is planning on doing a separate pyrite implementation, then it 
-> _hasn't_ been implemented yet. And I don't care there if he uses hash 
-> tables or sorted lists or whatever. I think the most important thing is 
-> getting down the design of the _data structure_, so that we can have a 
-> compatible implementation inside git itself.
+Rgs,
+Mark
 
-Well, I don't care about pyrite.  As far as I am concerned, it might as 
-well use an incompatible version.  I really don't care.
 
-> > > IMO notes are just a generallized tag.
-> > 
-> > IMO notes have nothing to do with a tag.  Tags point to commits (or 
-> > other objects, but that's beside the point here).  Notes are pointed 
-> > _to_ by commits.
-> 
-> I think maybe we are just talking about semantics, but I think notes are
-> not pointed to by commits. There is an external mapping of commits to
-> notes, which is very different. I can give you the commit without you
-> knowing the notes, or that the notes even exist.
-> 
-> But in practice, I don't know if this distinction is going to influence 
-> any of the design or use.
-
-You are correct, of course, that the commit does not point to the notes 
-explicitely, by having a SHA-1 _in_ the commit object.  But the main point 
-still stands: you go from commit to note, not from note to commit.  And 
-this is in stark contrast to tags, where you go from tag to commit, _not_ 
-from commit to tag.
-
-That is a fundamental _difference_ between tags and notes, so that I 
-refuse to accept the notion of notes being a generalized form of tags.
-
-Ciao,
-Dscho
+On Wed, Dec 17, 2008 at 9:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Mark Ryden" <markryde@gmail.com> writes:
+>
+>> 1) Is there a way to check whether there are white spaces in this
+>> file without running git-apply?
+>
+> "sed -n -e '/^+.*[      ]$/p' patch.txt" perhaps?
+>
+>> 2) Is there a way to get some messages about that there are white spaces
+>> when creating a git patch?
+>
+> Doesn't "git diff" highlight whitespace errors?  That way, you can catch
+> errors  before you make a commit that has them.
+>
