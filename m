@@ -1,70 +1,120 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Documentation: fix description for enabling hooks
-Date: Wed, 17 Dec 2008 05:13:12 +0100
-Message-ID: <20081217041312.GZ5691@genesis.frugalware.org>
-References: <200812170359.24109.markus.heidelberg@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Strange untracked file behaviour
+Date: Wed, 17 Dec 2008 06:09:16 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812170605300.14632@racer>
+References: <20081216232452.GV5691@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="5UN41tlPsqEEbq75"
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Wed Dec 17 05:14:31 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Dec 17 06:11:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCnnr-0005X0-6D
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 05:14:31 +0100
+	id 1LCoh0-0000YR-LF
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 06:11:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750909AbYLQENN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2008 23:13:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750806AbYLQENN
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 23:13:13 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:54198 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750706AbYLQENN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2008 23:13:13 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id E5006580A1;
-	Wed, 17 Dec 2008 05:13:11 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id DF74F4465E;
-	Wed, 17 Dec 2008 05:13:11 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 120A611B862F; Wed, 17 Dec 2008 05:13:12 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <200812170359.24109.markus.heidelberg@web.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1750836AbYLQFKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 00:10:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750803AbYLQFKL
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 00:10:11 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42057 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750772AbYLQFKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 00:10:10 -0500
+Received: (qmail invoked by alias); 17 Dec 2008 05:10:08 -0000
+Received: from pD9EB298D.dip0.t-ipconnect.de (EHLO noname) [217.235.41.141]
+  by mail.gmx.net (mp016) with SMTP; 17 Dec 2008 06:10:08 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19aQ2s/T8Fa90u4IcPUhYPgVU+sWeZUvlpctOoOej
+	wLoptjMgbxIb1W
+X-X-Sender: gene099@racer
+In-Reply-To: <20081216232452.GV5691@genesis.frugalware.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103306>
 
+Hi,
 
---5UN41tlPsqEEbq75
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Wed, 17 Dec 2008, Miklos Vajna wrote:
 
-On Wed, Dec 17, 2008 at 03:59:23AM +0100, Markus Heidelberg <markus.heidelberg@web.de> wrote:
-> Since f98f8cb (Ship sample hooks with .sample suffix, 2008-06-24) hooks
-> are not enabled by making them executable anymore, but by removing the
-> '.sample' suffix from the filename.
+> Here is a copy of the udev repo I cloned some time ago:
+> 
+> http://frugalware.org/~vmiklos/files/udev.tar.bz2
+> 
+> I did not modify it, so I thought a simple 'git pull' can update it.
+> 
+> $ git pull
+> Updating 661a0be..b6626d0
+> error: Untracked working tree file 'test/sys/class/misc/rtc/dev' would
+> be removed by merge.
 
-This is true, but having the executable bit is necessary as well. I
-think it would be better to just append this requirement instead of
-replacing the old one with this.
+I just spent three hours narrowing it down to this test case (but now I 
+have to catch 3 hours of sleep):
 
---5UN41tlPsqEEbq75
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+-- snipsnap --
+[PATCH] Miklos' testcase
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Even if we would not handle symlink/directory conflicts gracefully (which 
+we do, though), those conflicts should not affect unchanged files at all, 
+especially not claiming that they are untracked.
 
-iEYEARECAAYFAklIfFgACgkQe81tAgORUJb2vgCfdQt/4SjWvmclBGPCxpLDJLb8
-EmUAn25n+egyGfugnS0S6nfSaVUC/K1Y
-=xgVt
------END PGP SIGNATURE-----
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t1008-read-tree-sd.sh |   39 +++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 39 insertions(+), 0 deletions(-)
+ create mode 100644 t/t1008-read-tree-sd.sh
 
---5UN41tlPsqEEbq75--
+diff --git a/t/t1008-read-tree-sd.sh b/t/t1008-read-tree-sd.sh
+new file mode 100644
+index 0000000..4d74430
+--- /dev/null
++++ b/t/t1008-read-tree-sd.sh
+@@ -0,0 +1,39 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 Johannes E. Schindelin
++#
++
++test_description='symlink/directory conflict'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++
++	mkdir -p alpha/beta/gamma &&
++	ln -s delta alpha/beta/gamma/epsilon &&
++	mkdir -p alpha/beta/theta &&
++	ln -s zeta alpha/beta/theta/eta &&
++	mkdir -p iota/kappa/lambda/ &&
++	: > iota/kappa/lambda/mu &&
++	git add . &&
++	test_tick &&
++	git commit -m initial &&
++
++	git rm -r alpha/beta/gamma &&
++	ln -s nu alpha/beta/gamma &&
++	git rm -r alpha/beta/theta &&
++	ln -s xi alpha/beta/theta &&
++	git add . &&
++	test_tick &&
++	git commit -m 2nd
++
++'
++
++test_expect_failure 'read-tree -u -m handles symlinks gracefully' '
++
++	git checkout -b side HEAD^ &&
++	git read-tree -u -m master
++
++'
++
++test_done
+-- 
+1.6.0.4.1189.g8876f
