@@ -1,70 +1,92 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] doc/git-reset: add reference to git-stash
-Date: Wed, 17 Dec 2008 03:59:36 +0100
-Message-ID: <200812170359.36253.markus.heidelberg@web.de>
-Reply-To: markus.heidelberg@web.de
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] doc/git-reset: add reference to git-stash
+Date: Wed, 17 Dec 2008 05:11:59 +0100
+Message-ID: <20081217041159.GY5691@genesis.frugalware.org>
+References: <200812170359.36253.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Dec 17 04:00:45 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="J/rMgauiyHIRVABE"
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Wed Dec 17 05:13:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCmeS-0006Ti-GF
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 04:00:44 +0100
+	id 1LCnmw-0005J6-F5
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 05:13:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753242AbYLQC7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2008 21:59:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752222AbYLQC7X
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 21:59:23 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:57970 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753242AbYLQC7W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2008 21:59:22 -0500
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 84CC2F57AB03;
-	Wed, 17 Dec 2008 03:59:21 +0100 (CET)
-Received: from [91.19.62.172] (helo=pluto)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.109 #226)
-	id 1LCmd7-00074X-00; Wed, 17 Dec 2008 03:59:21 +0100
-User-Agent: KMail/1.9.9
-Jabber-ID: markus.heidelberg@web.de
+	id S1750834AbYLQEMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2008 23:12:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750706AbYLQEMH
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 23:12:07 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:54194 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750703AbYLQEMG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2008 23:12:06 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id C4383580A1;
+	Wed, 17 Dec 2008 05:12:03 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 9F18D4465E;
+	Wed, 17 Dec 2008 05:11:59 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 9666B11B862F; Wed, 17 Dec 2008 05:11:59 +0100 (CET)
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX18/0k7uNpjVGn71Ql7ZGjQaSWYuif9pCge/W7y3
-	vLeEFtgX3wSedZk2/CS+YrodENazbyiZ2IrdCbBPXjOQZcVybM
-	wC+5MDF/velPmvidi1xg==
+In-Reply-To: <200812170359.36253.markus.heidelberg@web.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103304>
 
-The "Interrupted workflow" situation is a good example for using
-git-stash.
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+--J/rMgauiyHIRVABE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Dec 17, 2008 at 03:59:36AM +0100, Markus Heidelberg <markus.heidelb=
+erg@web.de> wrote:
+> ++
+> +See also linkgit:git-stash[1].
+
+Manpages have a dedicated "SEE-ALSO" section. What about this?
+
+(See Documentation/git-commit.txt for an example.)
+
 ---
- Documentation/git-reset.txt |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ Documentation/git-reset.txt |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
 diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 52aab5e..29156f6 100644
+index 52aab5e..e7ddc43 100644
 --- a/Documentation/git-reset.txt
 +++ b/Documentation/git-reset.txt
-@@ -177,6 +177,8 @@ $ git reset                                       <3>
- <3> At this point the index file still has all the WIP changes you
-     committed as 'snapshot WIP'.  This updates the index to show your
-     WIP files as uncommitted.
-++
-+See also linkgit:git-stash[1].
- 
- Reset a single file in the index::
- +
--- 
-1.6.1.rc3.23.gaf48b
+@@ -195,6 +195,10 @@ $ git add frotz.c                           <3>
+ <2> This commits all other changes in the index.
+ <3> Adds the file to the index again.
+=20
++SEE ALSO
++--------
++linkgit:git-stash[1]
++
+ Author
+ ------
+ Written by Junio C Hamano <gitster@pobox.com> and Linus Torvalds <torvalds=
+@osdl.org>
+
+--J/rMgauiyHIRVABE
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAklIfA8ACgkQe81tAgORUJZjGgCeLJepKXrxKca9gYXSxaHiyrzP
+AnkAoI1lcYVU8piJvwzN8tljYFOo6SyX
+=jXus
+-----END PGP SIGNATURE-----
+
+--J/rMgauiyHIRVABE--
