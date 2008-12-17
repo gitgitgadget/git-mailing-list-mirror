@@ -1,57 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Can I forbid somebody to pull some branch or tag from my repo
- with git protocol?
-Date: Wed, 17 Dec 2008 13:25:59 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812171322330.28560@intel-tinevez-2-302>
-References: <856bfe0e0812170103w1007cf4fs1e83e506c6dd909@mail.gmail.com>  <7v1vw7p3r8.fsf@gitster.siamese.dyndns.org> <856bfe0e0812170115p73d72495ve81046127e68c281@mail.gmail.com>
+From: "Mark Ryden" <markryde@gmail.com>
+Subject: Re: white spaces in a patch
+Date: Wed, 17 Dec 2008 14:22:30 +0200
+Message-ID: <dac45060812170422yc259d39vd1b198c1530a40a5@mail.gmail.com>
+References: <dac45060812162331k19272488r4e95e0555e7a6db9@mail.gmail.com>
+	 <bd6139dc0812170413j5ed2d9eak89df8517bc91c5fd@mail.gmail.com>
+	 <dac45060812170413w7c8cffaifa1a0f3b649474e4@mail.gmail.com>
+	 <200812171316.21531.thomas.jarosch@intra2net.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Emily Ren <lingyan.ren@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 17 13:27:34 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Sverre Rabbelier" <srabbelier@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Thomas Jarosch" <thomas.jarosch@intra2net.com>
+X-From: git-owner@vger.kernel.org Wed Dec 17 13:33:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCvUs-0001qm-Tl
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 13:27:27 +0100
+	id 1LCvZz-0003uU-9G
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 13:32:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753396AbYLQM0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 07:26:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753424AbYLQM0I
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 07:26:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43745 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753065AbYLQM0C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 07:26:02 -0500
-Received: (qmail invoked by alias); 17 Dec 2008 12:26:00 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp011) with SMTP; 17 Dec 2008 13:26:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18w+CZjl1swJMXdcUzD5zrM5JXuULDotnbdVq9h7F
-	rUk4aOLQz+26wK
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <856bfe0e0812170115p73d72495ve81046127e68c281@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1759194AbYLQMat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 07:30:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759195AbYLQMas
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 07:30:48 -0500
+Received: from yx-out-2324.google.com ([74.125.44.30]:52226 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759088AbYLQMar (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 07:30:47 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so1534579yxm.1
+        for <git@vger.kernel.org>; Wed, 17 Dec 2008 04:30:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=zdlrzMDSMUGnmfNR73KyYv3PxtyczP+In/2croonRTw=;
+        b=dhWDRhjv8U5S9cHVi4MESOP2WekpV704qlHQGr9f9FwlOangQsLyqCIZhUlueJVuce
+         bV+GLTaQGVBAgFVj/auQEOctNq5Go0SiP20IUhyVpSnKXtsxID6fd0gNWX3tIkiR0j+8
+         vgvFWhWicBPUjcxNHFP5BS2Y+44Ei7X4ai+rI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=UO+Ft9X6hVRiIfc7otjff3LHQsRTVZlTDo+vMqySuSZKp4c2n/cSuurpUarv9nOWBV
+         sbPvw+LPJUV4RXsTy4rxaTjgGlmM6jxPSw7tDc96ZDd7TrUpAVbPYrohqJvipt/GlEUN
+         CyKn1+Vk42SGFx3tQxJnDtymR9wqbEtUy2vsY=
+Received: by 10.90.67.10 with SMTP id p10mr192615aga.106.1229516550105;
+        Wed, 17 Dec 2008 04:22:30 -0800 (PST)
+Received: by 10.90.26.11 with HTTP; Wed, 17 Dec 2008 04:22:30 -0800 (PST)
+In-Reply-To: <200812171316.21531.thomas.jarosch@intra2net.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103346>
 
-Hi,
+Thnks!
+In fact, the first line was enough!
+git config --global color.diff auto
+Mark
 
-On Wed, 17 Dec 2008, Emily Ren wrote:
 
-> I want some group can pull these branches or tags from my repo, while
-> other's can't, Need I maintain two repositories ?
 
-Either that (that would be the easy method, and also the proper one, since 
-people would not even know what you hide), but you could patch 
-upload-pack so that it runs a hook with the rev-list arguments in 
-do_rev_list() in upload-pack.c, and die() if the hook returns non-zero.
-
-Ciao,
-Dscho
+On Wed, Dec 17, 2008 at 2:15 PM, Thomas Jarosch
+<thomas.jarosch@intra2net.com> wrote:
+> On Wednesday, 17. December 2008 13:13:34 Mark Ryden wrote:
+> [colors in diff]
+>> What do you mean ?
+>> where ? how ?
+>
+> This should do the trick:
+>
+> git config --global color.diff auto
+> git config --global color.status auto
+> git config --global color.branch auto
+>
+> Thomas
+>
+>
