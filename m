@@ -1,144 +1,79 @@
-From: "=?ISO-8859-2?Q?=A3ukasz_Lew?=" <lukasz.lew@gmail.com>
-Subject: Re: How to maintain private/secret/confidential branch.
-Date: Wed, 17 Dec 2008 20:57:35 +0100
-Message-ID: <c55009e70812171157s7932c0b3u7a8ee6557c140d56@mail.gmail.com>
-References: <c55009e70812140549t6547c1d6jf7780f91b5074e73@mail.gmail.com>
-	 <20081214145518.GA26380@mail.local.tull.net>
-	 <c55009e70812140738l8b51adax77cc6e507971554e@mail.gmail.com>
-	 <20081214160645.GA21358@myhost>
-	 <c55009e70812140848j79202b0aqc6ffbfecfff50757@mail.gmail.com>
-	 <alpine.LNX.1.00.0812151501570.19665@iabervon.org>
+From: "Tim Visher" <tim.visher@gmail.com>
+Subject: Re: Announcement: Git Extensions stable (windows shell extensions)
+Date: Wed, 17 Dec 2008 15:04:01 -0500
+Message-ID: <c115fd3c0812171204ve560583w4c76aac0ac08d8ae@mail.gmail.com>
+References: <1229540813648-1669264.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: base64
-Cc: "Alexander Potashev" <aspotashev@gmail.com>,
-	"Nick Andrew" <nick@nick-andrew.net>, git@vger.kernel.org
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Dec 17 20:59:24 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Henk <henk_westhuis@hotmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 17 21:06:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD2Xq-0001NR-QY
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 20:58:59 +0100
+	id 1LD2eS-0003sx-3L
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 21:05:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751396AbYLQT5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 14:57:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbYLQT5i
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 14:57:38 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:1839 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751251AbYLQT5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 14:57:37 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so34351fgg.17
-        for <git@vger.kernel.org>; Wed, 17 Dec 2008 11:57:35 -0800 (PST)
+	id S1751248AbYLQUEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 15:04:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbYLQUEE
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 15:04:04 -0500
+Received: from an-out-0708.google.com ([209.85.132.243]:25891 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751226AbYLQUED (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 15:04:03 -0500
+Received: by an-out-0708.google.com with SMTP id d40so33323and.1
+        for <git@vger.kernel.org>; Wed, 17 Dec 2008 12:04:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=XWDh4XUW88b3tcww+wX3NlDuxOldxOgkRdFw6/DxmfM=;
-        b=ZljXMWKsCyC3EErltKqxFhYYyNk0gR/KbnVke0b2wRw3YHeeEIxW8xzxEZ3RjSvYCr
-         wwj0lV4CZbh4CuigG6ccfJTTbU5V/OiIGWvoc/mNk3jmSaGWwGqImK25CRao2rS5sJnq
-         6XlqpSsijybnY7i/9pVdX7JiPZpyB5RxyFa3Q=
+        bh=IoeY5QT5HRkuQmHfI6//27He8l+yNO/dOPcWIvXjkU0=;
+        b=JxMqHL1MAwzYt7ZK8l4He3HhZPzdYX1aXpEXWkoWJZxEnxKwx9VTpeENb0IAQw7uah
+         oBX5kl3rNDz+7Y3w9WWcQx8MMtVlvpsz7E8RuTuJ2JTxdITBmudQeEB8oJngtr6neK1P
+         1YeCyjTMY22wTQBiwI4lRCbR6TlZXGjirtztU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=YX0EqSwdKyTnEYfKhpVBYOq1+c/f1jO+l48yWssMHCpmsCVcG5mdsOzZRvWJi3BZRl
-         M/MsBQINEoO1BYxu47DWPv0tv/1TxugcgWD+FRKpOgGzEOd/tMGSMMNuqtpzl3AZ7wvQ
-         +LGMFk0T+IcpEuW9pMlj9V34OEJvc9tx/GASE=
-Received: by 10.86.59.18 with SMTP id h18mr640207fga.75.1229543855212;
-        Wed, 17 Dec 2008 11:57:35 -0800 (PST)
-Received: by 10.86.93.2 with HTTP; Wed, 17 Dec 2008 11:57:35 -0800 (PST)
-In-Reply-To: <alpine.LNX.1.00.0812151501570.19665@iabervon.org>
+        b=fwbYHxb4E0JnMtFTmivWW4EbVgHNQplqkdQT0+fLM0gCb2bNC15wNbZb2A9yVfIZP/
+         PQ4uoazWFuHE+FyVIMu5wb3ziEyk7w15euMHyt1WKOvWU4YO2TRcBH8MuYfpZZr2IPXR
+         BP24V0nk15P9+L3p33QgKW5furSUcZpThR+Ls=
+Received: by 10.100.9.19 with SMTP id 19mr920881ani.8.1229544241845;
+        Wed, 17 Dec 2008 12:04:01 -0800 (PST)
+Received: by 10.100.198.2 with HTTP; Wed, 17 Dec 2008 12:04:01 -0800 (PST)
+In-Reply-To: <1229540813648-1669264.post@n2.nabble.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103379>
 
-V2VsbCwgSSBhbSBzdGlsbCBhIGJlZ2lubmVyIGluIGdpdC4gSSBqdXN0IHN3aXRjaGVkIGZyb20g
-bWVyY3VyaWFsLgpTb21lIGlubGluZSBmb2xsb3dzOgoKMjAwOC8xMi8xNSBEYW5pZWwgQmFya2Fs
-b3cgPGJhcmthbG93QGlhYmVydm9uLm9yZz46Cj4gT24gU3VuLCAxNCBEZWMgMjAwOCwgo3VrYXN6
-IExldyB3cm90ZToKPgo+PiBIaSBBbGV4YW5kZXIsCj4+Cj4+IE9uIFN1biwgRGVjIDE0LCAyMDA4
-IGF0IDE3OjA2LCBBbGV4YW5kZXIgUG90YXNoZXYgPGFzcG90YXNoZXZAZ21haWwuY29tPiB3cm90
-ZToKPj4gPiBIZWxsbywgo3VrYXN6IQo+PiA+Cj4+ID4gT24gMTY6MzggU3VuIDE0IERlYyAgICAg
-LCCjdWthc3ogTGV3IHdyb3RlOgo+PiA+PiBUaGFua3MgTmljaywgdGhhdHMgcmVhbGx5IGhlbHBm
-dWwgKGFuZCBzdXJwcmlzaW5nbHkgc2ltcGxlKS4KPj4gPj4gSSBoYXZlIGEgY291cGxlIG1vcmUg
-cXVlc3Rpb25zOgo+PiA+Pgo+PiA+PiBPbiBTdW4sIERlYyAxNCwgMjAwOCBhdCAxNTo1NSwgTmlj
-ayBBbmRyZXcgPG5pY2tAbmljay1hbmRyZXcubmV0PiB3cm90ZToKPj4gPj4gPiBPbiBTdW4sIERl
-YyAxNCwgMjAwOCBhdCAwMjo0OTo1MFBNICswMTAwLCCjdWthc3ogTGV3IHdyb3RlOgo+PiA+PiA+
-PiBJIGRvbid0IGtub3cgaG93IHRvIG1ha2Ugc3VjaCBhIHNjZW5hcmlvIHdvcms6Cj4+ID4+ID4+
-IC0gdHdvIHJlcG9zaXRvcmllczogcHViLCBwcml2Cj4+ID4+ID4+IC0gcHJpdiBpcyBjbG9uZS9i
-cmFuY2ggb2YgcHViCj4+ID4+ID4+IC0gdGhlcmUgaXMgc29tZSBjb25zdGFudCBkZXZlbG9wZW1l
-bnQgYm90aCBpbiBwdWIgYW5kIHByaXYKPj4gPj4gPj4gLSB0aGVyZSBhcmUgcmVndWxhciBzeW5j
-cyB3aXRoIHB1YiBpbiBwcml2Cj4+ID4+ID4+Cj4+ID4+ID4+IFByb2JsZW06Cj4+ID4+ID4+IE9j
-Y2FzaW9uYWxseSBJIHdhbnQgdG8gcHVzaCBzb21lIGNoYW5nZXMgZnJvbSBwcml2IHRvIHB1Yi4K
-Pj4gPj4gPj4gVGhlbiBhZnRlciBzeW5jaW5nIHdpdGggcHViIEkgd2FudCB0byBnZXQgYXMgZmV3
-IGNvbmZsaWN0cyBhcyBwb3NzaWJsZS4KPj4gPj4gPj4KPj4gPj4gPj4gSXMgaXQgcG9zc2libGUg
-dG8gZG8gd2l0aCBnaXQ/Cj4+ID4+ID4KPj4gPj4gPiBHaXQgY2FuIGRvIGFsbW9zdCBhbnl0aGlu
-Zy4gT25lIHNob3VsZCBpbnN0ZWFkIGFzayAiSG93IHRvIGRvIHRoaXMKPj4gPj4gPiB3aXRoIGdp
-dD8iIDotKQo+PiA+Pgo+PiA+PiBTbyBJJ3ZlIGhlYXJkLCBidXQgbm90IHlldCBleHBlcmllbmNl
-ZCBpdCBteXNlbGYuIEknbSB0aHJpbGxlZCB0byB0cnkuCj4+ID4+Cj4+ID4+ID4KPj4gPj4gPiBJ
-ZiBJIHVuZGVyc3RhbmQgeW91ciBwcm9ibGVtLCB5b3UgY291bGQgc29sdmUgaXQgd2l0aCBnaXQg
-Y2hlcnJ5LXBpY2sKPj4gPj4gPiBhbmQgcmViYXNlLiBPbiBwcml2LCBtYWtlIGEgZm9yLXB1Ymxp
-YyBicmFuY2ggZnJvbSBhIHB1YiBicmFuY2guIFRoZW4KPj4gPj4gPiBjaGVycnktcGljayB0aGUg
-Y29tbWl0cyB5b3Ugd2FudCBmcm9tIHlvdXIgcHJpdmF0ZSBicmFuY2ggaW50byB0aGUKPj4gPj4g
-PiBmb3ItcHVibGljIGJyYW5jaC4KPj4gPj4KPj4gPj4gVGhhdCBhbG1vc3Qgd29ya3MuIENhbiBJ
-IHNvbWVob3cgc3BsaXQgZXhpc3RpbmcgY29tbWl0cyBqdXN0IGxpa2UgaW4gZ2l0LWFkZCAtcD8K
-Pj4gPiBJdCdzLCBob3dldmVyLCBiZXR0ZXIgdG8gbWFrZSBtb3JlIGNvbW1pdHMgdG8gbm90IGV4
-cGVyaWVuY2UgdGhlIG5lZWQgb2YKPj4gPiBjb21taXQgc3BsaXR0aW5nLgo+Pgo+PiBJbmRlZWQg
-Z29vZCBhZHZpY2UgYW5kIGJlc3QgcHJhY3RpY2UsIGJ1dCBhbm90aGVyIGJlc3QgcHJhY3RpY2Ug
-aXMgdG8KPj4gbm90IGNvbW1pdCBub3QgY29tcGlsaW5nIHN0YXRlLgo+Cj4gSW4geW91ciBwcml2
-YXRlIGJyYW5jaGVzLCBpdCdzIGFjdHVhbGx5IGdvb2QgcHJhY3RpY2UgdG8gY29tbWl0IGFsbCBz
-b3J0cwo+IG9mIGp1bmsuIFRoYXQgd2F5LCB3aGVuIHlvdSBtZXNzIHVwIGJhZGx5IHdoaWxlIHRy
-eWluZyB0byBnZXQgaXQgdG8KPiBjb21waWxlLCB5b3Ugd29uJ3QgaGF2ZSBsb3N0IHlvdXIgd29y
-ay4gT2YgY291cnNlLCB0aGF0IG1lYW5zIHlvdXIgY29tbWl0cwo+IGFyZSBnb2luZyB0byBuZWVk
-IG1vcmUgY2xlYW51cCBiZWZvcmUgZ29pbmcgcHVibGljLgoKSSBzdGFydGVkIHRvIGZvbGxvdyB5
-b3VyIGFkdmlzZS4KVGhlbiBJIHJlYmFzZSAtaS4KSSBmb3VuZCBvdXQgSSBuZWVkIG1vcmUgcHJl
-Y2lzZSBjb21taXQgbWVzc2FnZXMuIDopCgo+Cj4+IE15IGNvbW1vbiBzY2VuYXJpbyBpcyB0aGF0
-IEkgY29kZSBhIGJpZyBjaGFuZ2UgaW4gcHJpdiByZXBvc2l0b3J5LCBhbmQKPj4gYWZ0ZXIgdGhh
-dCBJIGZpbmQgdGhhdCBzb21lIG9mIGl0cyBwYXJ0cyBjYW4gYW5kIHNob3VsZCBiZSBtb3ZlZCB0
-bwo+PiBwdWIuCj4KPiBJIHVzdWFsbHkgZW5kIHVwIHdpdGggbXkgcHJpdmF0ZSBicmFuY2ggY29u
-dGFpbmluZyB0aGUgcHVibGljIGJyYW5jaCwgcGx1cwo+IGEgYnVuY2ggb2YgY29tbWl0cyB0aGF0
-IGludHJvZHVjZTogYnVncywgbGF0ZXIgZml4ZWQ7IG1peGVkIGltcHJvdmVtZW50czsKPiBhbmQg
-ZGVidWdnaW5nIGNydWZ0LiBJIHdhbnQgdG8gZ2VuZXJhdGUgbmljZSBjb21taXRzIHRoYXQgYXJl
-IGluZGl2aWR1YWwKPiBpbXByb3ZlbWVudHMuIEkgZ2VuZXJhbGx5IGRvOgo+ICQgZ2l0IGNoZWNr
-b3V0IC1iIHN1Ym1pdCBvcmlnaW4vbWFzdGVyICh0aGUgZmlyc3QgdGltZSwgdG8gc2V0IGl0IHVw
-KQo+Cj4gJCBnaXQgY2hlY2tvdXQgc3VibWl0Cj4gJCBnaXQgZGlmZiBzdWJtaXQgbWl4ZWQtd29y
-awo+IGxvb2sgYXQgaXQgZm9yIGdvb2QgY2hhbmdlcywgZmluZCBzb21lIGluIGZpbGUxIGFuZCBm
-aWxlMgo+ICQgZ2l0IGRpZmYgc3VibWl0IG1peGVkLXdvcmsgLS0gZmlsZTEgZmlsZTIgfCBnaXQg
-YXBwbHkKCkJ1dCB3aXRoIHRoaXMgY29tbWFuZCB3ZSBkbyBub3QgcHJlc2VydmUgb2JqZWN0cyBp
-ZGVudGl0eS4KSS5lOiB3aGVuIHlvdSBtZXJnZSB3aXRoIG1peGVkLXdvcmsgeW91IGhhdmUgZHVw
-bGljYXRlIGNoYW5nZXMuCklzIGl0IG9rPwoKPiBTb21ldGltZXMsIGNsZWFuIHVwIGJpdHMgdGhh
-dCBhcmVuJ3QgaWRlYWwKPiAkIGdpdCBhZGQgLWkKPiBBZGQgdGhlIGdvb2QgcGFydHMKPiAkIGdp
-dCBjaGVja291dCAuIChyZXZlcnQgdGhlIHdvcmtpbmcgdHJlZSB0byB0aGUgaW5kZXgpCj4gJCBt
-YWtlIHRlc3QgKGRpZCBJIGV4dHJhY3QgdGhlIGNoYW5nZSBjb3JyZWN0bHk/KQo+ICQgZ2l0IGNv
-bW1pdAo+IFdyaXRlIGEgZ29vZCBtZXNzYWdlLCBzaWduIG9mZiwgZXRjCj4gJCBnaXQgY2hlY2tv
-dXQgbWl4ZWQtd29yawo+ICQgZ2l0IHJlYmFzZSAtaSBzdWJtaXQKCi4uLiBBaCBJIHNlZSwgd2Ug
-dGhyb3cgYXdheSBvbGQgY29tbWl0cyBhbnl3YXkgd2l0aCByZWJhc2luZy4KCj4gT2Z0ZW4sIHJl
-c29sdmUgZWFzeSBjb25mbGljdHMgd2hlcmUgbXkgbWl4ZWQtd29yayBicmFuY2ggaW50cm9kdWNl
-ZCBidWdzCj4gdGhhdCBJIGZpeGVkIGxhdGVyIGFuZCBoYXZlIG5vdyBhZG9wdGVkIHRoZSBmaXhl
-ZCBjb2RlCj4KPiBUaGVuIEkgcmVwZWF0IHVudGlsIEkgZG9uJ3QgaGF2ZSBhbnkgbW9yZSBnb29k
-IGNoYW5nZXMgaW4gbWl4ZWQtd29yawo+IChlaXRoZXIgSSBoYXZlIG5vdGhpbmcsIG9ubHkgZGVi
-dWdnaW5nIGNydWZ0LCBvciBvbmx5IHN0dWZmIEkgaGF2ZW4ndAo+IGdvdHRlbiB0byB3b3JrIHll
-dCkuIElmIHRoZXJlJ3Mgbm90aGluZyBidXQgY3J1ZnQsIEkndmUgZnVsbHkgbWVyZ2VkIHRoZQo+
-IHRvcGljLCBhbmQgSSBkZWxldGUgdGhlIGJyYW5jaC4KPgo+IEV2ZW50dWFsbHksIEknbSBzYXRp
-c2ZpZWQgd2l0aCB3aGF0IEkndmUgY2xlYW5lZCB1cCwgYW5kIEkgZG86Cj4gJCBnaXQgcHVzaCBv
-cmlnaW4gc3VibWl0Om1hc3Rlcgo+Cj4gQWxzbywgSSBnZW5lcmFsbHkgaGF2ZSBhIGJ1bmNoIG9m
-ICJtaXhlZC13b3JrIiBicmFuY2hlcywgZWFjaCBjb250YWluaW5nCj4gZGlmZmVyZW50IHN0dWZm
-IHRoYXQgaXNuJ3QgcmVhZHkuIEknbGwgcGVyaW9kaWNseSBnbyB0aHJvdWdoIGFsbCBvZiB0aGVt
-Cj4gYW5kIHJlYmFzZSBvbnRvICJzdWJtaXQiIG9yICJvcmlnaW4vbWFzdGVyIiAob3IsIHNvbWV0
-aW1lcywgZ2l2ZSB1cCBvbgo+IHRoZW0gYW5kIGRlbGV0ZSB0aGVtKS4KPgo+IChPbmUgdGhpbmcg
-dGhhdCB3b3VsZCBiZSBuaWNlIHRvIGhhdmUgaXMgYSAiZ2l0IGFwcGx5IC0taW50ZXJhY3RpdmUi
-IHdoaWNoCj4gYXBwbGllcyB0aGUgdXNlcidzIGNob2ljZSBvZiBodW5rcywgbGlrZSAiZ2l0IGFk
-ZCAtaSIgYWRkcyB0aGVtKQoKSSB0b3RhbGx5IGFncmVlLgoKSSB3b3VsZCBhcHByaWNpYXRlIHJl
-YmFzZSAtLWNvcHkgb3B0aW9uLCB3aGljaCBkb2Vzbid0IG1vdmUsIGJ1dCBjb3B5CnRoZSBjaGFu
-Z2VsaXN0cyBsaWtlIGNoZXJyeS1waWNrLgpUaGVuIHdlIGNvdWxkIHVzZSByZWJhc2UgLWkgKHdp
-dGggZWRpdCkgaW5zdGVhZCBvZiBhcHBseS4KClBTCldoeSBhZnRlciBlZGl0IGluIHJlYmFzZSAt
-aSB0aGUgY2hhbmdlIGlzIGFscmVhZHkgY29tbWl0ZWQ/IEkgYWx3YXlzCmhhdmUgdG8gcmVzZXQ7
-YWRkIC1pCgo+Cj4gICAgICAgIC1EYW5pZWwKPiAqVGhpcyAuc2lnIGxlZnQgaW50ZW50aW9uYWxs
-eSBibGFuayoK
+On Wed, Dec 17, 2008 at 2:06 PM, Henk <henk_westhuis@hotmail.com> wrote:
+>
+> This is a shameless announcement of my latest personal project; Git
+> Extensions. Git Extensions is a Tortoise-like windows shell extension for
+> git. Yesterday I finished version 0.9, the first stable release. I included
+> about all git commands I know about, so I think it is pretty complete but
+> I'm open to suggestions.
+
+Nice!  With all of this TortoiseGit-like activity we're bound to have
+something pretty usable pretty quickly! :)  I'll have to check out the
+sources soon and see if I can get involved.  Maybe any of the
+developers who were planning on working on TortoiseGit could
+officially move over to Git Extensions since it seems to be much
+further along?
+
+-- 
+
+In Christ,
+
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
