@@ -1,68 +1,72 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] gitk: Swap positions of 'next' and 'prev' buttons in the
- 'Find' section.
-Date: Wed, 17 Dec 2008 12:50:17 +0100
-Message-ID: <4948E779.9080909@viscovery.net>
+From: "Sverre Rabbelier" <srabbelier@gmail.com>
+Subject: Re: Can I forbid somebody to pull some branch or tag from my repo with git protocol?
+Date: Wed, 17 Dec 2008 12:53:13 +0100
+Message-ID: <bd6139dc0812170353y5d78f03ao1c0619c9bd68f309@mail.gmail.com>
+References: <856bfe0e0812170103w1007cf4fs1e83e506c6dd909@mail.gmail.com>
+	 <7v1vw7p3r8.fsf@gitster.siamese.dyndns.org>
+	 <856bfe0e0812170115p73d72495ve81046127e68c281@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Dec 17 12:52:41 2008
+Cc: "Git Mailinglist" <git@vger.kernel.org>
+To: "Emily Ren" <lingyan.ren@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 17 12:54:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCuwF-0005by-Vw
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 12:51:40 +0100
+	id 1LCuz3-0006oH-MP
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 12:54:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751694AbYLQLuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 06:50:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751510AbYLQLuU
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 06:50:20 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:12138 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751010AbYLQLuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 06:50:19 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LCuuv-0004LJ-KG; Wed, 17 Dec 2008 12:50:17 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 561ED54D; Wed, 17 Dec 2008 12:50:17 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.0 (-)
+	id S1752295AbYLQLxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 06:53:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752272AbYLQLxP
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 06:53:15 -0500
+Received: from yx-out-2324.google.com ([74.125.44.30]:43125 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751516AbYLQLxO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 06:53:14 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so1530272yxm.1
+        for <git@vger.kernel.org>; Wed, 17 Dec 2008 03:53:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=OgWoPKHHkzg87Hi1OBoMP/f1GIz9hTxob6fl+9zJYtw=;
+        b=gVO8NrMgbrNEcsuSU1RM11JdgdKMu4b3vMudWCRLnFVl+mZEgbJa2vjsXujNV6mdkO
+         J/MW8dQCZ/623Asn3aKpj2w6JMatUVbH1W9byyeOMPWIP4DOHipWZSl0YPtt4fqz0mnT
+         T3vfSlEpmaK0Anw7HU/FEjKUS9lyB2yjJXoCY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=x3gIhinf/ehOY1j0kYeOC6ccSwgLx8QgXdGoExNBXaQk13HqIJSkPbyDW9IzLb6W5J
+         IJkrToBq9ejrQsdtJqJzy3avnoUX7kTK+F1pSw3fj96R3GEd+G1LfNiwjeoIJJOOQIFF
+         5miHLGFjnDF9Oq68c1gk/LHeJLuoo/3VX3LM0=
+Received: by 10.151.112.3 with SMTP id p3mr1199519ybm.216.1229514793227;
+        Wed, 17 Dec 2008 03:53:13 -0800 (PST)
+Received: by 10.151.13.13 with HTTP; Wed, 17 Dec 2008 03:53:13 -0800 (PST)
+In-Reply-To: <856bfe0e0812170115p73d72495ve81046127e68c281@mail.gmail.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: f1ef39fa14acc7f7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103335>
 
-From: Johannes Sixt <j6t@kdbg.org>
+On Wed, Dec 17, 2008 at 10:15, Emily Ren <lingyan.ren@gmail.com> wrote:
+> I want some group can pull these branches or tags from my repo, while
+> other's can't, Need I maintain two repositories ?
 
-The button order 'prev' left of 'next' feels more natural than the other
-way round, in particular, compared to the order of the forward and backward
-arrows that are in the line above.
+I think gitosis should be able to do that? Otherwise you could look
+into hosting sites like github or gitorious, I think they have at
+least some form of access control, yes?
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- gitk-git/gitk |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index b63109b..1c8d98e 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2052,7 +2052,7 @@ proc makewindow {} {
-     button .tf.lbar.fnext -text [mc "next"] -command {dofind 1 1}
-     button .tf.lbar.fprev -text [mc "prev"] -command {dofind -1 1}
-     label .tf.lbar.flab2 -text " [mc "commit"] "
--    pack .tf.lbar.flabel .tf.lbar.fnext .tf.lbar.fprev .tf.lbar.flab2 \
-+    pack .tf.lbar.flabel .tf.lbar.fprev .tf.lbar.fnext .tf.lbar.flab2 \
- 	-side left -fill y
-     set gdttype [mc "containing:"]
-     set gm [tk_optionMenu .tf.lbar.gdttype gdttype \
 -- 
-1.6.1.rc3.980.ga0bb
+Cheers,
+
+Sverre Rabbelier
