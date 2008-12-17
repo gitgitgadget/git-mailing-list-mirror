@@ -1,76 +1,64 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git-format-patch patch
-Date: Wed, 17 Dec 2008 22:55:35 +0100
-Message-ID: <20081217215535.GI5691@genesis.frugalware.org>
-References: <877i5yy149.fsf@jidanni.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-diff should not fire up $PAGER, period!
+Date: Wed, 17 Dec 2008 14:02:33 -0800
+Message-ID: <7viqpijw92.fsf@gitster.siamese.dyndns.org>
+References: <20081216005658.GB3679@coredump.intra.peff.net>
+ <8763lixyps.fsf_-_@jidanni.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="70fLfmUGd5x0AJTB"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Wed Dec 17 22:57:07 2008
+X-From: git-owner@vger.kernel.org Wed Dec 17 23:04:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD4O0-0007Ov-Qe
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 22:56:57 +0100
+	id 1LD4Up-0001Yo-6J
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 23:03:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751661AbYLQVzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 16:55:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbYLQVzi
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 16:55:38 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:55592 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751489AbYLQVzi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 16:55:38 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 35A0C5809C;
-	Wed, 17 Dec 2008 22:55:36 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 175354465E;
-	Wed, 17 Dec 2008 22:55:35 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id BB0AB11B862F; Wed, 17 Dec 2008 22:55:35 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <877i5yy149.fsf@jidanni.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751226AbYLQWCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 17:02:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751154AbYLQWCk
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 17:02:40 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42011 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750806AbYLQWCk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 17:02:40 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3453B1A828;
+	Wed, 17 Dec 2008 17:02:39 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 123771A807; Wed,
+ 17 Dec 2008 17:02:35 -0500 (EST)
+In-Reply-To: <8763lixyps.fsf_-_@jidanni.org> (jidanni@jidanni.org's message
+ of "Thu, 18 Dec 2008 05:45:35 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6B7CFF04-CC86-11DD-B7CE-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103399>
 
+jidanni@jidanni.org writes:
 
---70fLfmUGd5x0AJTB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> I mean here I am in emacs, and
+>
+> -*- mode: compilation; default-directory: "...coreutils/" -*-
+> Compilation started at Thu Dec 18 03:15:14
+> git-diff
+> WARNING: terminal is not fully functional^M
+> ^M-  (press RETURN)
 
-On Thu, Dec 18, 2008 at 04:53:42AM +0800, jidanni@jidanni.org wrote:
-> I'm still reading the manpage about submitting proper patches, so for now:
+Any semi-good emacs users (let alone hackers) export PAGER=cat to be used
+in compilation mode (and possibly shell mode), so this is not a problem in
+practice.
 
-It is not a manual page, it lives under Documentation/SubmittingPatches.
+I have something like this in my .emacs:
 
-Problems with the current patch:
+    (setenv "PAGER" "cat")
 
-- It is not a unidiff.
-
-- No signoff
-
-- No commit message
-
-Hope this helps. :)
-
---70fLfmUGd5x0AJTB
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklJdVcACgkQe81tAgORUJYL3wCfcuqkQ0EB2kdJ02Qpp0eAMJPs
-zsgAnA76xchyB8enjzDQlD+Lit9DGs98
-=rqCv
------END PGP SIGNATURE-----
-
---70fLfmUGd5x0AJTB--
+I suspect (I am just a user not a hacker) this will have bad interaction
+with emacs terminal emulation mode, but I do not use the mode, so it is
+enough for me.
