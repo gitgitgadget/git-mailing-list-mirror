@@ -1,47 +1,52 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Git Notes idea.
-Date: Wed, 17 Dec 2008 13:21:58 +0100
-Message-ID: <20081217122158.GD3640@machine.or.cz>
-References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <20081216085108.GA3031@coredump.intra.peff.net> <5d46db230812161043m4a5873a8w4c323d634b639ba0@mail.gmail.com> <alpine.DEB.1.00.0812170003540.14632@racer>
+From: Jeff King <peff@peff.net>
+Subject: Re: white spaces in a patch
+Date: Wed, 17 Dec 2008 07:22:41 -0500
+Message-ID: <20081217122240.GA14342@coredump.intra.peff.net>
+References: <dac45060812162331k19272488r4e95e0555e7a6db9@mail.gmail.com> <bd6139dc0812170413j5ed2d9eak89df8517bc91c5fd@mail.gmail.com> <dac45060812170413w7c8cffaifa1a0f3b649474e4@mail.gmail.com> <200812171316.21531.thomas.jarosch@intra2net.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Govind Salinas <govind@sophiasuchtig.com>,
-	Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 17 13:23:28 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Mark Ryden <markryde@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Jarosch <thomas.jarosch@intra2net.com>
+X-From: git-owner@vger.kernel.org Wed Dec 17 13:24:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCvR1-0000NJ-1y
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 13:23:27 +0100
+	id 1LCvRZ-0000Zd-Ug
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 13:24:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751010AbYLQMWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 07:22:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbYLQMWD
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 07:22:03 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:36360 "EHLO machine.or.cz"
+	id S1751391AbYLQMWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 07:22:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbYLQMWo
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 07:22:44 -0500
+Received: from peff.net ([208.65.91.99]:3547 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750991AbYLQMWB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 07:22:01 -0500
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 8D588393A66A; Wed, 17 Dec 2008 13:21:58 +0100 (CET)
+	id S1751334AbYLQMWn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 07:22:43 -0500
+Received: (qmail 26265 invoked by uid 111); 17 Dec 2008 12:22:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 17 Dec 2008 07:22:42 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Dec 2008 07:22:41 -0500
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0812170003540.14632@racer>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <200812171316.21531.thomas.jarosch@intra2net.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103344>
 
-On Wed, Dec 17, 2008 at 12:48:02AM +0100, Johannes Schindelin wrote:
-> Again, do not limit your design by your expectations.  People already talk 
-> about having cover letters for their patch series as notes, and Pasky 
-> seems to discuss tracking explicit renames with notes when he does not 
-> play Go, instead of maintaining repo.or.cz and git.or.cz.
+On Wed, Dec 17, 2008 at 01:15:56PM +0100, Thomas Jarosch wrote:
 
-I don't really play Go that much anymore! ;-)
+> This should do the trick:
+> 
+> git config --global color.diff auto
+> git config --global color.status auto
+> git config --global color.branch auto
 
-				Petr "Pasky" Baudis
+These days we have
+
+  git config --global color.ui auto
+
+-Peff
