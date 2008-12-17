@@ -1,67 +1,58 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH] doc/git-reset: add reference to git-stash
-Date: Wed, 17 Dec 2008 09:49:42 +0100
-Message-ID: <200812170949.42753.markus.heidelberg@web.de>
-References: <200812170359.36253.markus.heidelberg@web.de> <20081217041159.GY5691@genesis.frugalware.org>
-Reply-To: markus.heidelberg@web.de
+From: "Emily Ren" <lingyan.ren@gmail.com>
+Subject: Can I forbid somebody to pull some branch or tag from my repo with git protocol?
+Date: Wed, 17 Dec 2008 17:03:07 +0800
+Message-ID: <856bfe0e0812170103w1007cf4fs1e83e506c6dd909@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Dec 17 09:50:56 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 17 10:04:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCs7J-00041Y-Mx
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 09:50:54 +0100
+	id 1LCsKU-0008Kd-Rc
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 10:04:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759635AbYLQItb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 03:49:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759643AbYLQItb
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 03:49:31 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:56176 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759633AbYLQIt3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 03:49:29 -0500
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 66E20F57C3F3;
-	Wed, 17 Dec 2008 09:49:26 +0100 (CET)
-Received: from [91.19.64.135] (helo=pluto)
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.109 #226)
-	id 1LCs5u-00078e-00; Wed, 17 Dec 2008 09:49:26 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <20081217041159.GY5691@genesis.frugalware.org>
-Jabber-ID: markus.heidelberg@web.de
+	id S1756261AbYLQJDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 04:03:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755909AbYLQJDL
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 04:03:11 -0500
+Received: from ag-out-0708.google.com ([72.14.246.240]:49795 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753302AbYLQJDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 04:03:08 -0500
+Received: by ag-out-0708.google.com with SMTP id 31so3121879agc.10
+        for <git@vger.kernel.org>; Wed, 17 Dec 2008 01:03:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=e3oolkDWawLZbDXZW1JHotPfAjPShSXDW0wNkbk/mfQ=;
+        b=fB1p0ZjKKjkdIFdo/87dMeQDU+lM/8Z9CXh9ArM41RvumsSh0ienhje5FHK7SKPrw6
+         UhR67cIkSTd9qLJgowXsQFCq4pya9ymFedSQWRpZkmf+KqHvrVWM/rTzbhAonqhtLNaL
+         OaGF3cey6HZuHHN5wIruaOYpqHSp6l8ChqOSw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=j9TxkqHXCoxD92BL8/KqLxyyjyVVc+mD0z1VU0PBbZ8eBCGh7IAtdKHa4+eG2vVc8e
+         FEkK0Mnldd2N1P4brEaOJrIhBD3WWuKmji5xxD5EY/M2+06ZQ6MJVD+YTkt9gCFs1wuZ
+         etkydRziCzEATzNgk4wRkCL53TugxhZ+cvQaQ=
+Received: by 10.151.143.3 with SMTP id v3mr986913ybn.101.1229504587191;
+        Wed, 17 Dec 2008 01:03:07 -0800 (PST)
+Received: by 10.151.11.2 with HTTP; Wed, 17 Dec 2008 01:03:07 -0800 (PST)
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX191zy7PUyx0ClZV1LLBBvCdAjCVNaWzVd64qNJz
-	oDlTjLvhV3gI8VqX/CKtlwjktr2LXUzUIfvtL/5eV4wAoNfp2y
-	2pu4AplKuWkivGZrh4Rg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103323>
 
-Miklos Vajna, 17.12.2008:
-> On Wed, Dec 17, 2008 at 03:59:36AM +0100, Markus Heidelberg <markus.heidelberg@web.de> wrote:
-> > ++
-> > +See also linkgit:git-stash[1].
-> 
-> Manpages have a dedicated "SEE-ALSO" section. What about this?
+Hi,
+I created a repository, and I don't want somebody to pull some branch
+or tag from my repository with git protocol. How can I do ?
 
-That's only appropriate if the commands are generally related to each
-other, which isn't true for git-reset and git-stash.
-
-> (See Documentation/git-commit.txt for an example.)
-
-man git-commit
-/See
--> I get 4 search matches outside of the "SEE ALSO" section and it makes
-sense in these cases.
-
-Markus
+Thanks,
+Emily
