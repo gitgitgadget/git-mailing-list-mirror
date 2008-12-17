@@ -1,71 +1,124 @@
-From: "Emily Ren" <lingyan.ren@gmail.com>
-Subject: Re: Can I forbid somebody to pull some branch or tag from my repo with git protocol?
-Date: Wed, 17 Dec 2008 17:15:12 +0800
-Message-ID: <856bfe0e0812170115p73d72495ve81046127e68c281@mail.gmail.com>
-References: <856bfe0e0812170103w1007cf4fs1e83e506c6dd909@mail.gmail.com>
-	 <7v1vw7p3r8.fsf@gitster.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: rebasing commits that have notes, was Re: Git Notes idea.
+Date: Wed, 17 Dec 2008 10:15:45 +0100
+Message-ID: <200812171015.45303.johan@herland.net>
+References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com>
+ <20081216085108.GA3031@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0812170110160.14632@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 17 10:16:36 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	Govind Salinas <govind@sophiasuchtig.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 17 10:20:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCsWC-0003jH-8W
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 10:16:36 +0100
+	id 1LCsZv-0004ym-0Z
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 10:20:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759384AbYLQJPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 04:15:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758992AbYLQJPQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 04:15:16 -0500
-Received: from ag-out-0708.google.com ([72.14.246.251]:50254 "EHLO
-	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758438AbYLQJPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 04:15:14 -0500
-Received: by ag-out-0708.google.com with SMTP id 31so3125099agc.10
-        for <git@vger.kernel.org>; Wed, 17 Dec 2008 01:15:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=FLlgf3sUwsYn1M++grsOg83rT2pEEI7pndJdYB6VDy8=;
-        b=TntuS5xDfBV7PTK8Cqc6sXdZTfC87C2AuZjVMWKfYoCNp4erzj3kEC1RzPXdtjJIjn
-         hgKbNn9Ji8c6i956k1zZROTxL9V/kYwnIlcdkzNemhFe4gPX65p+z/4z7Uc6e7M8pQnP
-         /6JBDTO/Y7lcWhFI3K2VFMdY5QuxrCH2BmS2I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=poGuvQoKfHsMA1D5Xik4+qp+9vJ9VtCOGtIdjhK2tjj7gycrQ4RGZxy156D9FO/rTk
-         fPJaiURyTMilh7HS9M1tM9Sp/POYMfDhna13JMkYXRfnw8Av47cRkajNVHbGljQF1t9Y
-         Pj3Zm9L9rGhGsXKqzK8EcCxPPcGgRJDnNI71w=
-Received: by 10.150.205.21 with SMTP id c21mr988756ybg.169.1229505312794;
-        Wed, 17 Dec 2008 01:15:12 -0800 (PST)
-Received: by 10.151.11.2 with HTTP; Wed, 17 Dec 2008 01:15:12 -0800 (PST)
-In-Reply-To: <7v1vw7p3r8.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1756075AbYLQJTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 04:19:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752237AbYLQJTJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 04:19:09 -0500
+Received: from smtp.getmail.no ([84.208.20.33]:58520 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750806AbYLQJTF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 04:19:05 -0500
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0KC000KC6KJRFD00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 17 Dec 2008 10:19:03 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KC00057AKEA9WE0@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 17 Dec 2008 10:15:46 +0100 (CET)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KC000A7DKE9EFHN@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Wed, 17 Dec 2008 10:15:46 +0100 (CET)
+In-reply-to: <alpine.DEB.1.00.0812170110160.14632@racer>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103327>
 
-I want some group can pull these branches or tags from my repo, while
-other's can't, Need I maintain two repositories ?
+On Wednesday 17 December 2008, Johannes Schindelin wrote:
+> Hi,
+>
+> On Tue, 16 Dec 2008, Jeff King wrote:
+> >   Some discussion of the interaction of notes and rebase:
+> >   http://thread.gmane.org/gmane.comp.version-control.git/100533
+>
+> Oh, I misinterpreted that label... of course you can track rebases in
+> notes, but some issue that we did not look into yet (I think) is the
+> issue that you can cherry-pick and rebase commits and lose notes in the
+> process.
+>
+> It seems that the notes idea is not that unintrusive as I thought...
 
-On Wed, Dec 17, 2008 at 5:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Emily Ren" <lingyan.ren@gmail.com> writes:
->
->> I created a repository, and I don't want somebody to pull some branch
->> or tag from my repository with git protocol. How can I do ?
->
-> By not putting that tag or branch in that repository (note that you can
-> have a repository only to publish which is different from your main
-> working repository).
-> .
->
+So we have two issues here:
+
+1. Using notes to annotate the rebase/cherry-pick action itself.
+
+2. Preserving (or at least giving the user the option of preserving) notes 
+across a rebase/cherry-pick.
+
+
+I think issue #1 has already been discussed, and is largely resolved: People 
+can do this if they want to; it probably only makes sense when 
+rebasing/cherry-picking public branches; etc... AFAICS there are no 
+remaining problems here that needs an intrusive solution (see below for one 
+such unintrusive alternative).
+
+Issue #2, however, is a little more involved. We can discuss the merits of 
+wanting to preserve notes across a rebase/cherry-pick itself; e.g. when it 
+makes sense to preserve notes, and when it doesn't make sense, but I think 
+this is orthogonal to the issue of HOW to preserve them, so instead of 
+focusing on WHY, I'll focus on HOW:
+
+If notes are named according to the "refs/notes:<first byte in hex>/<rest of 
+bytes>/<referenced object SHA-1>" scheme (and AFAICS this is still being 
+discussed, so it's indeed a big IF), then rebase/cherry-pick of the 
+referenced object simply translates to a rename/copy of the corresponding 
+note (this is of course assuming that the note itself does not contain the 
+SHA-1 of the referenced object). This could probably be solved fairly 
+unintrusively in the current code, but there are (as always) complications:
+
+- The user may want to amend the note after the rebase/cherry-pick (just as 
+(s)he may want to amend the commit message).
+
+- In some cases it may even make sense to fold (parts of) the note _into_ 
+the commit message.
+
+- probably more reasons...
+
+So what about the following proposal: Add hooks that are invoked by 
+rebase/cherry-pick with the <from-SHA1> and <to-SHA1> as arguments. A 
+typical hook script can then use this information to look up notes 
+referencing <from-SHA1> and update these to reference <to-SHA1> instead, 
+and in the process, prompt the user to do whatever changes (s)he wants to. 
+The hook scripts can do other things as well, e.g. implementing issue #1 
+above (adding notes for annotating the rebase/cherry-pick itself.)
+
+
+Have fun! :)
+
+...Johan
+
+
+PS: What's the current status on git-sequencer? It's probably the best place 
+to invoke these hooks.
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
