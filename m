@@ -1,66 +1,58 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH 2/2] Fixed an old failed EGit unit test.
-Date: Wed, 17 Dec 2008 01:07:19 +0100
-Message-ID: <1229472439-24104-3-git-send-email-robin.rosenberg@dewire.com>
-References: <1229472439-24104-1-git-send-email-robin.rosenberg@dewire.com>
- <1229472439-24104-2-git-send-email-robin.rosenberg@dewire.com>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Dec 17 01:10:47 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: rebasing commits that have notes, was Re: Git Notes idea.
+Date: Wed, 17 Dec 2008 01:12:25 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812170110160.14632@racer>
+References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <20081216085108.GA3031@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Govind Salinas <govind@sophiasuchtig.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 17 01:15:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCjzy-0002Ha-BE
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 01:10:46 +0100
+	id 1LCk3x-0003Tg-Me
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 01:14:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759852AbYLQAH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Dec 2008 19:07:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759916AbYLQAH2
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 19:07:28 -0500
-Received: from mail.dewire.com ([83.140.172.130]:4316 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759852AbYLQAH0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Dec 2008 19:07:26 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id F1475147E525;
-	Wed, 17 Dec 2008 01:07:23 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Xm9JUO4PRXyQ; Wed, 17 Dec 2008 01:07:21 +0100 (CET)
-Received: from localhost.localdomain (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 2F7AC147E527;
-	Wed, 17 Dec 2008 01:07:20 +0100 (CET)
-X-Mailer: git-send-email 1.6.0.3.640.g6331a
-In-Reply-To: <1229472439-24104-2-git-send-email-robin.rosenberg@dewire.com>
+	id S1760863AbYLQANW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Dec 2008 19:13:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760848AbYLQANV
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Dec 2008 19:13:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42381 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760562AbYLQANU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Dec 2008 19:13:20 -0500
+Received: (qmail invoked by alias); 17 Dec 2008 00:13:18 -0000
+Received: from pD9EB298D.dip0.t-ipconnect.de (EHLO noname) [217.235.41.141]
+  by mail.gmx.net (mp069) with SMTP; 17 Dec 2008 01:13:18 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/I26lbFVnIy/mj6A4v+ucDPLxPXXNNtFcZwXTG6W
+	XQ+4MrkNzWRocX
+X-X-Sender: gene099@racer
+In-Reply-To: <20081216085108.GA3031@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103301>
 
-The index was dropped from the history with Shawns revision walker.
+Hi,
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../egit/core/internal/mapping/T0002_history.java  |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
+On Tue, 16 Dec 2008, Jeff King wrote:
 
-diff --git a/org.spearce.egit.core.test/src/org/spearce/egit/core/internal/mapping/T0002_history.java b/org.spearce.egit.core.test/src/org/spearce/egit/core/internal/mapping/T0002_history.java
-index b540e10..71f5cc5 100644
---- a/org.spearce.egit.core.test/src/org/spearce/egit/core/internal/mapping/T0002_history.java
-+++ b/org.spearce.egit.core.test/src/org/spearce/egit/core/internal/mapping/T0002_history.java
-@@ -98,8 +98,7 @@ public void testShallowHistory() {
- 		IFileHistoryProvider fileHistoryProvider = provider.getFileHistoryProvider();
- 		IFileHistory fileHistory = fileHistoryProvider.getFileHistoryFor(project.getProject().getWorkspace().getRoot().findMember("Project-1/A.txt"), IFileHistoryProvider.SINGLE_LINE_OF_DESCENT, new NullProgressMonitor());
- 		IFileRevision[] fileRevisions = fileHistory.getFileRevisions();
--		assertEquals(2, fileRevisions.length);
--		assertEquals("Index", fileRevisions[0].getContentIdentifier());
--		assertEquals("6dd8f0b51204fa24a01734971947847549ec4ba8", fileRevisions[1].getContentIdentifier());
-+		assertEquals(1, fileRevisions.length);
-+		assertEquals("6dd8f0b51204fa24a01734971947847549ec4ba8", fileRevisions[0].getContentIdentifier());
- 	}
- }
--- 
-1.6.0.3.640.g6331a
+>   Some discussion of the interaction of notes and rebase:
+>   http://thread.gmane.org/gmane.comp.version-control.git/100533
+
+Oh, I misinterpreted that label... of course you can track rebases in 
+notes, but some issue that we did not look into yet (I think) is the issue 
+that you can cherry-pick and rebase commits and lose notes in the process.
+
+It seems that the notes idea is not that unintrusive as I thought...
+
+Ciao,
+Dscho
