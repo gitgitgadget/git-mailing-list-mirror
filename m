@@ -1,114 +1,111 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH] Committer, author and tagger time should not be
-	parsed as 32 bit signed int
-Date: Wed, 17 Dec 2008 14:48:44 -0800
-Message-ID: <20081217224844.GK32487@spearce.org>
-References: <200812172328.07371.robin.rosenberg.lists@dewire.com> <1229553172-2038-1-git-send-email-robin.rosenberg@dewire.com>
+From: "Tim Visher" <tim.visher@gmail.com>
+Subject: Re: Is it possible to roll back unstaged changes while leaving the staged ones for the next commit?
+Date: Wed, 17 Dec 2008 17:48:50 -0500
+Message-ID: <c115fd3c0812171448o3db6f4c1oc24e39f9a68ed1d3@mail.gmail.com>
+References: <c115fd3c0812171157m3d180534gb5630fbcf39b2bbd@mail.gmail.com>
+	 <7vy6yelf2m.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Dec 17 23:50:33 2008
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 17 23:50:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD5Dm-0002bW-65
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 23:50:26 +0100
+	id 1LD5Dm-0002bW-UE
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 23:50:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277AbYLQWsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 17:48:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752249AbYLQWsp
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 17:48:45 -0500
-Received: from george.spearce.org ([209.20.77.23]:34091 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752138AbYLQWsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 17:48:45 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 7230F38200; Wed, 17 Dec 2008 22:48:44 +0000 (UTC)
+	id S1752376AbYLQWsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 17:48:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbYLQWsw
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 17:48:52 -0500
+Received: from rn-out-0910.google.com ([64.233.170.189]:26388 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752349AbYLQWsv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 17:48:51 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so128965rnd.17
+        for <git@vger.kernel.org>; Wed, 17 Dec 2008 14:48:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=x3ut3fLdXfvhE1BIgBgWpYb1ddmVKDdvAM6e00LaTis=;
+        b=S3RGB2eN76ohHTuJ5NNdUNcQfbgfdE1T4UKqyTas9oCEMRVwJnMosVn8Vx10y/aD+W
+         jpT3TQm57oXimX2/Sz/1530Q3OOttA/LIfvb+QaF0pl03pPY+wmaBca+6odTRt7W40wT
+         QJGi4L8Yoch1UeqrJEhB9Brt1b5bezx6bCyeg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=T0BRliXK26IG/CsDl63ATnuJT+gmWoVU19N6hR3oLz8KevnQkPe61Qql7MaomXQMeU
+         nGG7nCa5L+2I4NUJOFQeFZNzXTRfxPEqBgNat6HiJ7hV22IQXH2oUAdQJJcaQyB5F+Eh
+         HQ6ahAJkCKxDRZTl/I1HDucCJcNmKH6EcLieg=
+Received: by 10.100.48.19 with SMTP id v19mr1018472anv.46.1229554130600;
+        Wed, 17 Dec 2008 14:48:50 -0800 (PST)
+Received: by 10.100.198.2 with HTTP; Wed, 17 Dec 2008 14:48:50 -0800 (PST)
+In-Reply-To: <7vy6yelf2m.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <1229553172-2038-1-git-send-email-robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103407>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> If not dates past 2038 will be parsed the wrong way when
-> parsed into a RevCommit or RevTag object.
+On Wed, Dec 17, 2008 at 3:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> The last part of the sentence after "because" does not parse for me at
+> all...
 
-Uhm, sure.
+Sorry for the double/triple/quadruple negatives I threw in there.
+Makes the statement incredibly unclear.
 
-But there's also the commitTime field in RevCommit, its used to
-sort commits during walking.  In 2038 that will also overflow.
+> , but I think you are after one of the following:
+>
+>  (1) if you want to get rid of garbage changes in your work tree, you
+>     would want "git checkout $that_path";
+>
+>  (2) if you want to temporarily stash away further changes in your work
+>     tree, because you would want to first test what is staged, commit it,
+>     and then later continue to refine the changes stashed away thusly,
+>     you would want "git stash --keep-index".
+>
+>
 
-Also, if you search the code for '2038' you'll find a remark
-about the year 2038 in DirCacheEntry.smudgeRacilyClean.  Last
-I looked at the git sources I think this field in the index is
-treated as a signed time_t so we can't set the high bits and
-extend it out another 60+ years.
+If I could attempt to make my situation a little clearer.
 
-Honestly, I'm not sure this patch is worth the code duplication
-without fixing our other two known 2038 problem spots... and
-I really don't want to make RevCommit.commitTime into a long,
-as that will bloat out the object allocations and slow down the
-comparsion on 32 bit JVMs.  Right now at the end of 2008 the memory
-isn't as readily available and there's still a lot of 32 bit JVMs.
-Another 10 years we'll probably be looking at 256 bit wide registers
-being very common, and 1 PB of core memory, and extending these
-fields out to a long will be trivial.  And we'll still have 20
-years to make the transition.
+I had two very similar files (I know, I know, DRY, blah blah. :\ It's
+not my source tree to begin with... bleh) and I wanted to duplicate a
+bunch of simple edits (adding white space, comments, etc.) from one of
+them to the other without having to manually compare them.
 
-I'd rather just tag the fields with "2038" so we can search for
-them in the future.  Like say this:
+Then, a light bulb went off in my head and I thought to myself that it
+would make a ton of sense to use `git add -i` to add only the changes
+that I wanted to the files and leave the stuff I wanted to be
+different between the two of them out.  I `cp`ed the edited file over
+the other file and then fired up `git add -i` and proceeded to stage
+all of the edits that I wanted.  This left me with a staged version of
+the file that was exactly what I wanted and a locally modified file
+with contents that I didn't want.  However, the changes were still
+untested.
 
---8<--
-Mark the other two locations that break in the year 2038
+What I wanted to do was basically get rid of the unstaged edits on
+this file but keep the staged ones.  Without committing.
 
-When the 32 bit timestamp rolls over in 2038 these spots in JGit
-will break, unless we upgrade them to use a 64 bit long before then.
-For now its too time and memory intensive to use a full long here,
-but in another 10 years we should have enough computing power that
-this is a moot point and we can upgrade the code paths marked with
-by 'git grep 2038'.
+Unfortunately I couldn't figure out how to do this.  The solution I
+came up with was to go ahead and `git commit` the staged changes and
+then `git checkout PATH` the just committed file to overwrite the
+local edits with the version of the file I wanted.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/revwalk/RevCommit.java    |    2 ++
- .../src/org/spearce/jgit/util/RawParseUtils.java   |    2 ++
- 2 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevCommit.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevCommit.java
-index 9d30018..bcfd8c4 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevCommit.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevCommit.java
-@@ -129,6 +129,8 @@ else if (nParents == 1) {
- 		ptr = RawParseUtils.committer(raw, ptr);
- 		if (ptr > 0) {
- 			ptr = RawParseUtils.nextLF(raw, ptr, '>');
-+
-+			// In 2038 commitTime will overflow unless it is changed to long.
- 			commitTime = RawParseUtils.parseBase10(raw, ptr, null);
- 		}
- 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
-index 55a3001..c2d591b 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
-@@ -414,6 +414,8 @@ public static PersonIdent parsePersonIdent(final byte[] raw, final int nameB) {
- 		final String email = decode(cs, raw, emailB, emailE - 1);
- 
- 		final MutableInteger ptrout = new MutableInteger();
-+
-+		// In 2038 "when" will overflow.  Switch to a long before then.
- 		final int when = parseBase10(raw, emailE + 1, ptrout);
- 		final int tz = parseTimeZoneOffset(raw, ptrout.value);
- 
--- 
-1.6.1.rc3.302.gb14d9
-
+I want to know if it was possible to accomplish this without the commit stage.
 
 -- 
-Shawn.
+
+In Christ,
+
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
