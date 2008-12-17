@@ -1,82 +1,76 @@
-From: jidanni@jidanni.org
-Subject: git-diff should not fire up $PAGER, period!
-Date: Thu, 18 Dec 2008 05:45:35 +0800
-Message-ID: <8763lixyps.fsf_-_@jidanni.org>
-References: <20081216005658.GB3679@coredump.intra.peff.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: git-format-patch patch
+Date: Wed, 17 Dec 2008 22:55:35 +0100
+Message-ID: <20081217215535.GI5691@genesis.frugalware.org>
+References: <877i5yy149.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 17 22:47:39 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="70fLfmUGd5x0AJTB"
+Cc: git@vger.kernel.org
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Wed Dec 17 22:57:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD4Eq-0003qF-HF
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 22:47:29 +0100
+	id 1LD4O0-0007Ov-Qe
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 22:56:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752437AbYLQVpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 16:45:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751843AbYLQVpl
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 16:45:41 -0500
-Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:51261 "EHLO
-	homiemail-a4.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751925AbYLQVpk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Dec 2008 16:45:40 -0500
-Received: from jidanni2.jidanni.org (122-127-36-47.dynamic.hinet.net [122.127.36.47])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a4.dreamhost.com (Postfix) with ESMTP id 9C65841489
-	for <git@vger.kernel.org>; Wed, 17 Dec 2008 13:45:38 -0800 (PST)
+	id S1751661AbYLQVzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 16:55:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbYLQVzi
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 16:55:38 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:55592 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751489AbYLQVzi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 16:55:38 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 35A0C5809C;
+	Wed, 17 Dec 2008 22:55:36 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 175354465E;
+	Wed, 17 Dec 2008 22:55:35 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id BB0AB11B862F; Wed, 17 Dec 2008 22:55:35 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <877i5yy149.fsf@jidanni.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103398>
 
-Gentlemen, I have found the solution to your problem.
 
-Unbundle git-diff and $PAGER.
+--70fLfmUGd5x0AJTB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Ask yourself, does diff(1) call $PAGER?
+On Thu, Dec 18, 2008 at 04:53:42AM +0800, jidanni@jidanni.org wrote:
+> I'm still reading the manpage about submitting proper patches, so for now:
 
-No. That's because the Unix designers were smart enough not to glue
-everything together.
+It is not a manual page, it lives under Documentation/SubmittingPatches.
 
-Now's your chance to repent, as you haven't even yet mentioned $PAGER
-on the git-diff man page. Yes, do mention it: "EXAMPLES: git-diff|less"
-I.e., the user can page the output if he feels inclined, just like any
-other output. I mean one already has a wallet. The bank need not give
-the user one every time they make a withdraw.
+Problems with the current patch:
 
-I mean here I am in emacs, and
+- It is not a unidiff.
 
--*- mode: compilation; default-directory: "...coreutils/" -*-
-Compilation started at Thu Dec 18 03:15:14
-git-diff
-WARNING: terminal is not fully functional^M
-^M-  (press RETURN)
+- No signoff
 
-"It's all emacs' fault for emulating a tty too well"... no, it's all
-your fault for gumming things together. No I don't want my cookies
-with obligatory milk. I'll using git-diff|cat for now instead of
-complaining that emacs is all wrong. Even using git-diff|cat|less is
-better than messing with the LESS=F bug. Repent, whippersnappers!
+- No commit message
 
-OK, doing test x$EMACS = xt && PAGER=cat in .bashrc. That will help
-for emacs' shell buffers, but not compilation mode buffers... "then
-just make a hook"... 13 hooks to combat one poor design choice.
-And one notices git-show is gummed up too.
+Hope this helps. :)
 
-Hmm, looking in changelogs, we see
+--70fLfmUGd5x0AJTB
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
- * Error messages used to be sent to stderr, only to get hidden,
-   when $PAGER was in use.  They now are sent to stdout along
-   with the command output to be shown in the $PAGER.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Well, if you had left paging to the user, no one would have blamed you
-for making error messages disappear, and you could have left stderr as
-the elders intended.
+iEYEARECAAYFAklJdVcACgkQe81tAgORUJYL3wCfcuqkQ0EB2kdJ02Qpp0eAMJPs
+zsgAnA76xchyB8enjzDQlD+Lit9DGs98
+=rqCv
+-----END PGP SIGNATURE-----
 
-Wait,
-$ git-config --global core.pager ""
-Cool. Bye.
+--70fLfmUGd5x0AJTB--
