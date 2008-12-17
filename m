@@ -1,97 +1,118 @@
-From: "Emily Ren" <lingyan.ren@gmail.com>
-Subject: Re: Can I forbid somebody to pull some branch or tag from my repo with git protocol?
-Date: Wed, 17 Dec 2008 21:37:36 +0800
-Message-ID: <856bfe0e0812170537n78abbd57pfe33b3829941ebb9@mail.gmail.com>
-References: <856bfe0e0812170103w1007cf4fs1e83e506c6dd909@mail.gmail.com>
-	 <7v1vw7p3r8.fsf@gitster.siamese.dyndns.org>
-	 <856bfe0e0812170115p73d72495ve81046127e68c281@mail.gmail.com>
-	 <bd6139dc0812170353y5d78f03ao1c0619c9bd68f309@mail.gmail.com>
-	 <856bfe0e0812170435t32fce496q41f825c01ee7045c@mail.gmail.com>
-	 <bd6139dc0812170447h7546cbf0v3151166668ad1248@mail.gmail.com>
+From: demerphq <demerphq@gmail.com>
+Subject: git clone rsync:// broken
+Date: Wed, 17 Dec 2008 14:45:23 +0100
+Message-ID: <9b18b3110812170545y59eb5732sf776504da578c2fd@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailinglist" <git@vger.kernel.org>
-To: "Sverre Rabbelier" <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 17 14:39:00 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 17 14:46:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCwc6-0003YX-Ir
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 14:38:59 +0100
+	id 1LCwjd-00066L-0i
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 14:46:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750959AbYLQNhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 08:37:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750972AbYLQNhk
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 08:37:40 -0500
-Received: from wa-out-1112.google.com ([209.85.146.183]:21954 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750847AbYLQNhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 08:37:39 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1761406wah.21
-        for <git@vger.kernel.org>; Wed, 17 Dec 2008 05:37:37 -0800 (PST)
+	id S1750848AbYLQNp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 08:45:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbYLQNp0
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 08:45:26 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:64692 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750847AbYLQNpZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 08:45:25 -0500
+Received: by qyk4 with SMTP id 4so3732855qyk.13
+        for <git@vger.kernel.org>; Wed, 17 Dec 2008 05:45:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Gnqaos6uzMndqMmw3P2ByWJZKDYkQIKOv2MU07NmwD0=;
-        b=HEzhRMRtfbE3PmVajZe8i0u1q1pGernBjhEbXMAzKs4Ev++xiMWkTVdoRAI3aLfK0V
-         gaT4QA3fTgtblmZW9F9ULsR3V4XD4ePgfJGu2vaJ5Td/Xx2h6xeN3Og492WkryWePNsk
-         FdG8HghV3kM6Vf0yi/+wk5E7uOUrSIIixeqlo=
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=2u7Ve3R4nFbYjjGYz96/63eIi+ECXFymJMdDWOY14C4=;
+        b=BtFmropCtYLmTefA28lyqH8zaXZ5gg1P41M83iPxooIfqLyLsIzo0LSXw/bjuvqSOa
+         +Mef4XwCNQxw7atq7iXsDa2hp5be2bqlNBcMM1YmzV+IfvOVKQea4O40pUs92//Rt+lg
+         KV5QDfcbVrddLU4sThrmK9Zvj9xwAtA8Gcgtk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=O+ceL63DsgOrq4WAkXqEqYIYZfuXSDVIAMHbhxOgP/h+e0YPToNZHDuRvOI2efGOYU
-         IfhUPDQrNj+X6XYwfQ7zvmSRuojhQ8pmi+/4uNR8m0IcTFc2cCk34YG6/vpN3GWeQPof
-         oDM8zDcLI9n4LSToD1AHxT7zCn2g0LoCpWMww=
-Received: by 10.114.24.5 with SMTP id 5mr350111wax.106.1229521056918;
-        Wed, 17 Dec 2008 05:37:36 -0800 (PST)
-Received: by 10.114.25.10 with HTTP; Wed, 17 Dec 2008 05:37:36 -0800 (PST)
-In-Reply-To: <bd6139dc0812170447h7546cbf0v3151166668ad1248@mail.gmail.com>
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=LqUs+vl3ho1iXh88nekNHQaEcDFAqyfg8J8k8jk+sbpK6Xlc4lxFuzmXcm7zGW3a7C
+         jW11GrSw8gxLMeRYXgqRM55dARUiAfFH5Y+VLmUPpVT0m7KgoF1FGBWmkSxxeDIyKm4Q
+         FcbIkefLqh4Kjf//3T2d0sv1p3fxHgP1gDkg0=
+Received: by 10.214.25.15 with SMTP id 15mr772752qay.119.1229521523080;
+        Wed, 17 Dec 2008 05:45:23 -0800 (PST)
+Received: by 10.214.241.11 with HTTP; Wed, 17 Dec 2008 05:45:23 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103350>
 
-Sverre, Johannes,
+Hi,
 
-Thank you very much for sharing your good idea ! Yes, maintaining two
-separate rep maybe best.
+Summary:
 
-Johannes,
-Does your second suggestion mean that I need to write a script and use
-git hook to enable it ?
+There seems to be a problem with cloning via rsync in that a corrupted
+packed-refs file is/maybe transmitted, and the HEAD file is not
+correctly transfered.
 
-Thanks,
-Emily
+Detail:
+
+I've been encountering some problems getting things set up so people
+can clone using rsync.
+
+The object repository seems to transfer fine, in that the resulting
+directory is the right size approximately, but the cloning fails with
+the error message
+
+    warning: remote HEAD refers to nonexistent ref, unable to checkout
+
+Inspecting the .git/HEAD file it points at refs/heads/master,  which
+doesn't exist as for historical reasons our master is called 'blead'.
+
+Looking at the packed-refs file there was a duplicate incorrect entry
+in the file. Which was remedied by executing
+
+    git pack-refs --all
+
+on the source repository which improves the situation somewhat, as
+after a clone fails we were able do a
+
+   git checkout -b blead origin/blead
+
+and things seem ok. But the clone still fails as the HEAD is not correct.
+
+If we use git://, http://, or ssh:// protocols to clone everything
+transfers fine.
+
+I checked in the #git channel and there were a number of comments by
+people that helped me investigate:
+
+because git transport via rsync seems to assume packed-refs is sorted
+- which it maybe wasnt (cant check now anymore).
+That caused the failure like "fatal: Duplicated ref, and SHA1s don't
+match: refs/remotes/origin/p4/maint-5.10/perl"
+The remaining problem is, that HEAD seems not get fetched at all
+And I dont see how HEAD should get fetched in the transport.c code
+The other dumb protocol aka http explicitly gets it
+So i would bugreport this
+
+For anyone wanting to try the repo is public at:
+perl5.git.perl.org/perl, which works fine with http://, and git://,
+but currently rsync:// is broken.
+
+This isnt the official perl repository yet. We were planning to go
+live with it tomorrow. Meaning if you do clone it please be aware that
+we might replace the repository with a complete new version before it
+goes live.
+
+cheers,
+Yves
+ps: Im not on list, so please cc me in any replies.
 
 
-On Wed, Dec 17, 2008 at 8:47 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> [It is common not to top-post on this list :)]
->
-> On Wed, Dec 17, 2008 at 13:35, Emily Ren <lingyan.ren@gmail.com> wrote:
->> As far as I know, gitosis can control someone readonly/writable to
->> some repo, it has no access control on branch/tag level. Am I right ?
->
-> Ah, sorry, I meant to control access to different repo's for different groups.
->
->> I'll look at github and gitorious, are they free software ?
->
-> IIRC gitorious is open source, but I just checked and I don't see any
-> access control there; which leaves github, which is not free software
-> I'm afraid.
->
-> I think, as Johannes said, keeping two seperate repo's and using some
-> form of access control on those would be best.
->
-> --
-> Cheers,
->
-> Sverre Rabbelier
->
+
+-- 
+perl -Mre=debug -e "/just|another|perl|hacker/"
