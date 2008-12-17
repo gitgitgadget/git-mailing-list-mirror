@@ -1,118 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Can I forbid somebody to pull some branch or tag from my repo
- with git protocol?
-Date: Wed, 17 Dec 2008 11:36:26 -0800
-Message-ID: <7vd4fqoapx.fsf@gitster.siamese.dyndns.org>
-References: <856bfe0e0812170103w1007cf4fs1e83e506c6dd909@mail.gmail.com>
- <7v1vw7p3r8.fsf@gitster.siamese.dyndns.org>
- <856bfe0e0812170115p73d72495ve81046127e68c281@mail.gmail.com>
- <alpine.DEB.1.00.0812171322330.28560@intel-tinevez-2-302>
+From: tekkub <tekkub@gmail.com>
+Subject: Re: Announcement: Git Extensions stable (windows shell extensions)
+Date: Wed, 17 Dec 2008 11:51:02 -0800 (PST)
+Message-ID: <1229543462897-1669467.post@n2.nabble.com>
+References: <1229540813648-1669264.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Emily Ren <lingyan.ren@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 17 20:37:57 2008
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 17 20:52:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD2DR-0000ub-V4
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 20:37:54 +0100
+	id 1LD2RW-0006yH-Dj
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 20:52:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751279AbYLQTgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 14:36:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751301AbYLQTgg
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 14:36:36 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60211 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751047AbYLQTgf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 14:36:35 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6B8198701F;
-	Wed, 17 Dec 2008 14:36:32 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3AD6D8701C; Wed,
- 17 Dec 2008 14:36:28 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0812171322330.28560@intel-tinevez-2-302>
- (Johannes Schindelin's message of "Wed, 17 Dec 2008 13:25:59 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 02156394-CC72-11DD-A257-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751301AbYLQTvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 14:51:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbYLQTvE
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 14:51:04 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:46897 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751157AbYLQTvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 14:51:04 -0500
+Received: from tervel.nabble.com ([192.168.236.150])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1LD2QA-00079J-TC
+	for git@vger.kernel.org; Wed, 17 Dec 2008 11:51:02 -0800
+In-Reply-To: <1229540813648-1669264.post@n2.nabble.com>
+X-Nabble-From: tekkub@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103375>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Wed, 17 Dec 2008, Emily Ren wrote:
->
->> I want some group can pull these branches or tags from my repo, while
->> other's can't, Need I maintain two repositories ?
->
-> Either that (that would be the easy method, and also the proper one, since 
-> people would not even know what you hide), but you could patch 
-> upload-pack so that it runs a hook with the rev-list arguments in 
-> do_rev_list() in upload-pack.c, and die() if the hook returns non-zero.
+Very nice, however I ran into the following error while trying to install:
+http://www.flickr.com/photos/26681170@N03/3115836831/
 
-I do not think that would work very well as you expect.  Two branches can
-be pointing at the same commit, and Emily may want to hide one but not the
-other.  The time you obtain from "want" is too late.
+Can't wait to try it out!
+--tek
 
-If you were to extend upload-pack, the place to narrow would be the
-initial "here are the refs and the objects they point at" announcement
-that is done at the very beginning.  You would do something like the
-pseudo patch attached at the end.
 
-read_set_of_exposed_refs_from_hook() should return, depending on who the
-user is (which is obviously not available if this connection is over the
-anonymous git-daemon service, but local and usual ssh connection you could
-do whoami, and on gitosis there would be some environment variable to
-distinguish who you are that you can use), the set of refs that the user
-is allowed to see.
+Henk wrote:
+> 
+> This is a shameless announcement of my latest personal project; Git
+> Extensions. Git Extensions is a Tortoise-like windows shell extension for
+> git. Yesterday I finished version 0.9, the first stable release. I
+> included about all git commands I know about, so I think it is pretty
+> complete but I'm open to suggestions. 
+>  
+> It is written mostly in C#, except for shell extension part which is
+> written in C++. The project is open source, the sources can be found on
+> GitHub. In case there is someone interrested in the sources, be warned;
+> the sources are not very well documented yet and the solution is a still
+> bit messy, I will clean this up very soon. 
+>  
+> Main features
+> - Shell extensions
+> - Visual studio plugin
+> - Seperate git application
+>  
+> Features:
+> - Browse repository (incl. visual graph)
+> - Add files
+> - Apply patch
+> - Checkout branch/revision
+> - Cherry pick
+> - Create branch/tag
+> - Delete branch/tag
+> - Clone
+> - Commit
+> - Create (format) patch
+> - Init new repository
+> - Merge branches
+> - Pull
+> - Push
+> - Run mergetool
+> - Stash
+> - View differences
+>  
+> Information about the project and a installer package can be found here:
+> http://sourceforge.net/projects/gitextensions/
+> The installation requires msysgit to be installed AND git.exe to in the
+> system path.
+> 
+> ps.
+> I know there is a TortoiseGit project also, I just didn't know about that
+> at the time I started. If I knew about TortoiseGit, I probably never
+> started writing my own tool.
+> 
 
-diff --git i/upload-pack.c w/upload-pack.c
-index e5adbc0..129aa1e 100644
---- i/upload-pack.c
-+++ w/upload-pack.c
-@@ -10,6 +10,10 @@
- #include "revision.h"
- #include "list-objects.h"
- #include "run-command.h"
-+#include "string-list.h"
-+
-+static int use_ref_limiting;
-+static struct string_list exposed_refs;
- 
- static const char upload_pack_usage[] = "git-upload-pack [--strict] [--timeout=nn] <dir>";
- 
-@@ -574,8 +578,14 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	static const char *capabilities = "multi_ack thin-pack side-band"
- 		" side-band-64k ofs-delta shallow no-progress"
- 		" include-tag";
--	struct object *o = parse_object(sha1);
-+	struct object *o;
-+
-+	if (use_ref_limiting && !string_list_has_string(&exposed_refs, refname)) {
-+		/* The downloader is not allowed to know the presense of this ref */
-+		return 0;
-+	}
- 
-+	o = parse_object(sha1);
- 	if (!o)
- 		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
- 
-@@ -600,6 +610,12 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- static void upload_pack(void)
- {
- 	reset_timeout();
-+
-+	if ("limit exposed refs" hook is available) {
-+		use_ref_limiting = 1;
-+		read_set_of_exposed_refs_from_hook(&exposed_refs);
-+	}
-+
- 	head_ref(send_ref, NULL);
- 	for_each_ref(send_ref, NULL);
- 	packet_flush(1);
+-- 
+View this message in context: http://n2.nabble.com/Announcement%3A-Git-Extensions-stable-%28windows-shell-extensions%29-tp1669264p1669467.html
+Sent from the git mailing list archive at Nabble.com.
