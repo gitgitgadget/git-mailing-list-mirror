@@ -1,111 +1,64 @@
-From: "Tim Visher" <tim.visher@gmail.com>
-Subject: Re: Is it possible to roll back unstaged changes while leaving the staged ones for the next commit?
-Date: Wed, 17 Dec 2008 17:48:50 -0500
-Message-ID: <c115fd3c0812171448o3db6f4c1oc24e39f9a68ed1d3@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Is it possible to roll back unstaged changes while leaving the
+ staged ones for the next commit?
+Date: Wed, 17 Dec 2008 14:59:22 -0800
+Message-ID: <7vbpvajtmd.fsf@gitster.siamese.dyndns.org>
 References: <c115fd3c0812171157m3d180534gb5630fbcf39b2bbd@mail.gmail.com>
-	 <7vy6yelf2m.fsf@gitster.siamese.dyndns.org>
+ <7vy6yelf2m.fsf@gitster.siamese.dyndns.org>
+ <c115fd3c0812171448o3db6f4c1oc24e39f9a68ed1d3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 17 23:50:41 2008
+To: "Tim Visher" <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 00:00:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD5Dm-0002bW-UE
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 23:50:27 +0100
+	id 1LD5Nn-000708-Qi
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 00:00:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752376AbYLQWsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 17:48:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbYLQWsw
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 17:48:52 -0500
-Received: from rn-out-0910.google.com ([64.233.170.189]:26388 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752349AbYLQWsv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 17:48:51 -0500
-Received: by rn-out-0910.google.com with SMTP id k40so128965rnd.17
-        for <git@vger.kernel.org>; Wed, 17 Dec 2008 14:48:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=x3ut3fLdXfvhE1BIgBgWpYb1ddmVKDdvAM6e00LaTis=;
-        b=S3RGB2eN76ohHTuJ5NNdUNcQfbgfdE1T4UKqyTas9oCEMRVwJnMosVn8Vx10y/aD+W
-         jpT3TQm57oXimX2/Sz/1530Q3OOttA/LIfvb+QaF0pl03pPY+wmaBca+6odTRt7W40wT
-         QJGi4L8Yoch1UeqrJEhB9Brt1b5bezx6bCyeg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=T0BRliXK26IG/CsDl63ATnuJT+gmWoVU19N6hR3oLz8KevnQkPe61Qql7MaomXQMeU
-         nGG7nCa5L+2I4NUJOFQeFZNzXTRfxPEqBgNat6HiJ7hV22IQXH2oUAdQJJcaQyB5F+Eh
-         HQ6ahAJkCKxDRZTl/I1HDucCJcNmKH6EcLieg=
-Received: by 10.100.48.19 with SMTP id v19mr1018472anv.46.1229554130600;
-        Wed, 17 Dec 2008 14:48:50 -0800 (PST)
-Received: by 10.100.198.2 with HTTP; Wed, 17 Dec 2008 14:48:50 -0800 (PST)
-In-Reply-To: <7vy6yelf2m.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752142AbYLQW73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 17:59:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752014AbYLQW73
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 17:59:29 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47141 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751833AbYLQW73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 17:59:29 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CA9331A766;
+	Wed, 17 Dec 2008 17:59:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 480C01A728; Wed,
+ 17 Dec 2008 17:59:23 -0500 (EST)
+In-Reply-To: <c115fd3c0812171448o3db6f4c1oc24e39f9a68ed1d3@mail.gmail.com>
+ (Tim Visher's message of "Wed, 17 Dec 2008 17:48:50 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5B2E4510-CC8E-11DD-B0E2-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103408>
 
-On Wed, Dec 17, 2008 at 3:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> The last part of the sentence after "because" does not parse for me at
-> all...
+"Tim Visher" <tim.visher@gmail.com> writes:
 
-Sorry for the double/triple/quadruple negatives I threw in there.
-Makes the statement incredibly unclear.
+> On Wed, Dec 17, 2008 at 3:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>>  (1) if you want to get rid of garbage changes in your work tree, you
+>>     would want "git checkout $that_path";
+>>
+>>  (2) if you want to temporarily stash away further changes in your work
+>>     tree, because you would want to first test what is staged, commit it,
+>>     and then later continue to refine the changes stashed away thusly,
+>>     you would want "git stash --keep-index".
+> ...
+> Unfortunately I couldn't figure out how to do this.  The solution I
+> came up with was to go ahead and `git commit` the staged changes and
+> then `git checkout PATH` the just committed file to overwrite the
+> local edits with the version of the file I wanted.
 
-> , but I think you are after one of the following:
->
->  (1) if you want to get rid of garbage changes in your work tree, you
->     would want "git checkout $that_path";
->
->  (2) if you want to temporarily stash away further changes in your work
->     tree, because you would want to first test what is staged, commit it,
->     and then later continue to refine the changes stashed away thusly,
->     you would want "git stash --keep-index".
->
->
-
-If I could attempt to make my situation a little clearer.
-
-I had two very similar files (I know, I know, DRY, blah blah. :\ It's
-not my source tree to begin with... bleh) and I wanted to duplicate a
-bunch of simple edits (adding white space, comments, etc.) from one of
-them to the other without having to manually compare them.
-
-Then, a light bulb went off in my head and I thought to myself that it
-would make a ton of sense to use `git add -i` to add only the changes
-that I wanted to the files and leave the stuff I wanted to be
-different between the two of them out.  I `cp`ed the edited file over
-the other file and then fired up `git add -i` and proceeded to stage
-all of the edits that I wanted.  This left me with a staged version of
-the file that was exactly what I wanted and a locally modified file
-with contents that I didn't want.  However, the changes were still
-untested.
-
-What I wanted to do was basically get rid of the unstaged edits on
-this file but keep the staged ones.  Without committing.
-
-Unfortunately I couldn't figure out how to do this.  The solution I
-came up with was to go ahead and `git commit` the staged changes and
-then `git checkout PATH` the just committed file to overwrite the
-local edits with the version of the file I wanted.
-
-I want to know if it was possible to accomplish this without the commit stage.
-
--- 
-
-In Christ,
-
-Timmy V.
-
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+How about omitting the "git commit" and do "git checkout PATH" after you
+are done with the staging?  IOW, (1) above.
