@@ -1,124 +1,156 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: rebasing commits that have notes, was Re: Git Notes idea.
-Date: Wed, 17 Dec 2008 10:15:45 +0100
-Message-ID: <200812171015.45303.johan@herland.net>
-References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com>
- <20081216085108.GA3031@coredump.intra.peff.net>
- <alpine.DEB.1.00.0812170110160.14632@racer>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git Notes idea.
+Date: Wed, 17 Dec 2008 04:38:44 -0500
+Message-ID: <20081217093843.GA18265@coredump.intra.peff.net>
+References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <20081216085108.GA3031@coredump.intra.peff.net> <5d46db230812161043m4a5873a8w4c323d634b639ba0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Govind Salinas <govind@sophiasuchtig.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 17 10:20:29 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Govind Salinas <govind@sophiasuchtig.com>
+X-From: git-owner@vger.kernel.org Wed Dec 17 10:40:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCsZv-0004ym-0Z
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 10:20:27 +0100
+	id 1LCssz-0002ek-65
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 10:40:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756075AbYLQJTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 04:19:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752237AbYLQJTJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 04:19:09 -0500
-Received: from smtp.getmail.no ([84.208.20.33]:58520 "EHLO smtp.getmail.no"
+	id S1751219AbYLQJiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 04:38:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750992AbYLQJiv
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 04:38:51 -0500
+Received: from peff.net ([208.65.91.99]:2178 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750806AbYLQJTF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 04:19:05 -0500
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0KC000KC6KJRFD00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 17 Dec 2008 10:19:03 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KC00057AKEA9WE0@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 17 Dec 2008 10:15:46 +0100 (CET)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KC000A7DKE9EFHN@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Wed, 17 Dec 2008 10:15:46 +0100 (CET)
-In-reply-to: <alpine.DEB.1.00.0812170110160.14632@racer>
-Content-disposition: inline
-User-Agent: KMail/1.9.9
+	id S1750865AbYLQJit (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 04:38:49 -0500
+Received: (qmail 25144 invoked by uid 111); 17 Dec 2008 09:38:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 17 Dec 2008 04:38:45 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Dec 2008 04:38:44 -0500
+Content-Disposition: inline
+In-Reply-To: <5d46db230812161043m4a5873a8w4c323d634b639ba0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103328>
 
-On Wednesday 17 December 2008, Johannes Schindelin wrote:
-> Hi,
->
-> On Tue, 16 Dec 2008, Jeff King wrote:
-> >   Some discussion of the interaction of notes and rebase:
-> >   http://thread.gmane.org/gmane.comp.version-control.git/100533
->
-> Oh, I misinterpreted that label... of course you can track rebases in
-> notes, but some issue that we did not look into yet (I think) is the
-> issue that you can cherry-pick and rebase commits and lose notes in the
-> process.
->
-> It seems that the notes idea is not that unintrusive as I thought...
+On Tue, Dec 16, 2008 at 12:43:55PM -0600, Govind Salinas wrote:
 
-So we have two issues here:
+> I was thinking I would do my first implementation in pyrite and if I find
+> that it works well I will port it.
 
-1. Using notes to annotate the rebase/cherry-pick action itself.
+OK, though your performance will probably suck unless you dump the notes
+tree into a local hash at the beginning of your program. And looking up
+every commit's note during revision traversal is one of the intended
+uses (e.g., decorating git-log output, or filtering commits based on a
+particular note).
 
-2. Preserving (or at least giving the user the option of preserving) notes 
-across a rebase/cherry-pick.
+And as Dscho mentioned, most of what you need is already there in C.
+You are welcome to implement whatever you want in pyrite, of course, but
+there is a desire to have this accessible to the revision traversal
+machinery. And that means if you want your version in pyrite to be
+compatible with what ends up in git, the data structure design needs to
+be suitable for both.
 
+> I just read the proposal from Johannes, he seems to want to use a
+> similar layout.  However, I would like to modify my proposal slightly
+> to make it work better when a gc is run.  I would modify the tree to
+> look like this...
+> 
+> let 1234567890123456789012345678901234567890 be the
+> id of the item that is annotated.
+> 
+> let abcdef7890123456789012345678901234567890 be the
+> id of the note to be attached
+> 
+> root/
+>      12/
+>          34567890123456789012345678901234567890/
+>              abcdef7890123456789012345678901234567890
+> 
+> This way all the notes are attached to a tree, so that gc won't
+> think they are unreferenced objects.
 
-I think issue #1 has already been discussed, and is largely resolved: People 
-can do this if they want to; it probably only makes sense when 
-rebasing/cherry-picking public branches; etc... AFAICS there are no 
-remaining problems here that needs an intrusive solution (see below for one 
-such unintrusive alternative).
+But you have lost the ordering in your list, then, since they will not
+be ordered by sha1 of the note contents. I don't know if you care. The
+second sha1 is pointless, anyway, since nobody will know that number as
+a reference; why not just name them monotonically starting at 1?
 
-Issue #2, however, is a little more involved. We can discuss the merits of 
-wanting to preserve notes across a rebase/cherry-pick itself; e.g. when it 
-makes sense to preserve notes, and when it doesn't make sense, but I think 
-this is orthogonal to the issue of HOW to preserve them, so instead of 
-focusing on WHY, I'll focus on HOW:
+One of the things I don't like about having several notes is that it
+introduces an extra level of indirection that every user has to pay for,
+whether they want it or not. If a note can be a blob _or_ a tree, then
+those who want to use blobs can reap the performance benefit. Those who
+want multiple named notes in a hierarchy can pay the extra indirection
+cost.
 
-If notes are named according to the "refs/notes:<first byte in hex>/<rest of 
-bytes>/<referenced object SHA-1>" scheme (and AFAICS this is still being 
-discussed, so it's indeed a big IF), then rebase/cherry-pick of the 
-referenced object simply translates to a rename/copy of the corresponding 
-note (this is of course assuming that the note itself does not contain the 
-SHA-1 of the referenced object). This could probably be solved fairly 
-unintrusively in the current code, but there are (as always) complications:
+I haven't measured how big a cost that is (but bearing in mind that we
+might want to do this lookup once per revision in a traversal, even one
+extra object lookup can have an impact).
 
-- The user may want to amend the note after the rebase/cherry-pick (just as 
-(s)he may want to amend the commit message).
+I'm also still not convinced the fan-out is worthwhile, but I can see
+how it might be. It would be nice to see numbers for both.
 
-- In some cases it may even make sense to fold (parts of) the note _into_ 
-the commit message.
+> Perhaps I am missing something, how is it a linear search?.  Since we
 
-- probably more reasons...
+I think Johannes explained in detail in another message, but it is a
+linear search to look up directly in a tree object. Of course you can
+build a hash or a sorted fixed-size list as an index.
 
-So what about the following proposal: Add hooks that are invoked by 
-rebase/cherry-pick with the <from-SHA1> and <to-SHA1> as arguments. A 
-typical hook script can then use this information to look up notes 
-referencing <from-SHA1> and update these to reference <to-SHA1> instead, 
-and in the process, prompt the user to do whatever changes (s)he wants to. 
-The hook scripts can do other things as well, e.g. implementing issue #1 
-above (adding notes for annotating the rebase/cherry-pick itself.)
+> Also, how large do you expect the list to be under reasonable
+> circumstances.
 
+As many notes as there are commits is my goal (e.g., it is not hard to
+imagine an automated process to add notes on build status). Ideally, we
+could handle as many notes as there are objects; I see no reason not to
+allow annotating arbitrary sha1's (I don't know if there is a use for
+that, but the more scalable the implementation, the better).
 
-Have fun! :)
+> >  Some thoughts from me on naming issues:
+> >  http://article.gmane.org/gmane.comp.version-control.git/100402
+> 
+> On naming.  I strongly support a ref/notes/sha1/sha1 approach.  If
+> having a type to the note is important, then perhaps the first line of
+> a note could be considered a type or a set of "tags".  This way you
 
-...Johan
+I don't think we are talking about the same thing. What I mean by naming
+is "here is a shorthand for referring to notes" that is not necessarily
+coupled with the implementation. That is, I would like to do something
+like:
 
+  git log --notes-filter="foo:bar == 1"
 
-PS: What's the current status on git-sequencer? It's probably the best place 
-to invoke these hooks.
+and have that "foo:bar" as a shorthand on each commit for:
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+  refs/notes/foo:$COMMIT/bar
+
+Without a left-hand side (e.g., "bar"), we get:
+
+  refs/notes/default:$COMMIT/bar
+
+Or without a right-hand side (e.g., "foo:"), we get:
+
+  refs/notes/foo:$COMMIT
+
+So you can group related notes in the same tree (which gives you fast
+lookup if you are looking at multiple ones, since you only have to do
+the tree lookup once), or you can keep notes in separate trees (which
+means you can distribute some but not others).
+
+I think your "list of notes" proposal on top of that would be for any
+note resolution to provide a tree instead of a blob, with sequenced
+elements. I.e., foo:bar might have multiple notes, like:
+
+  refs/notes/foo:$COMMIT/bar/1
+  refs/notes/foo:$COMMIT/bar/2
+  refs/notes/foo:$COMMIT/bar/3
+
+> drawback is that you have to open the blob to see the type.  A hybrid
+> approach that uses refs/notes/acked/sha/sha which is one lookup if
+
+Right, that is possible, but implementing only half of what I suggested
+above. I think you should be flexible enough to have grouped notes for
+fast lookup, or ungrouped notes for more flexibility.
+
+-Peff
