@@ -1,80 +1,78 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH 1/2] Revert "Fix commit id in egit test
-	T0001_ConnectProviderOperationTest"
-Date: Wed, 17 Dec 2008 08:09:33 -0800
-Message-ID: <20081217160933.GD32487@spearce.org>
-References: <1229472439-24104-1-git-send-email-robin.rosenberg@dewire.com> <1229472439-24104-2-git-send-email-robin.rosenberg@dewire.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git-clone --how-much-disk-space-will-this-cost-me? [--depth n]
+Date: Wed, 17 Dec 2008 11:15:56 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0812171104340.30035@xanadu.home>
+References: <4946F4D9.8050803@gmx.ch> <87zlixvtu9.fsf@jidanni.org>
+ <49470D65.40808@gmx.ch> <alpine.LFD.2.00.0812160039180.30035@xanadu.home>
+ <20081217154407.GZ32487@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Dec 17 17:11:14 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jean-Luc Herren <jlh@gmx.ch>, jidanni@jidanni.org,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Dec 17 17:17:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LCyzR-0006fN-DP
-	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 17:11:13 +0100
+	id 1LCz5V-0000qr-Em
+	for gcvg-git-2@gmane.org; Wed, 17 Dec 2008 17:17:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753353AbYLQQJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 11:09:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754636AbYLQQJf
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 11:09:35 -0500
-Received: from george.spearce.org ([209.20.77.23]:42717 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753353AbYLQQJe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 11:09:34 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id DA1A138200; Wed, 17 Dec 2008 16:09:33 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1229472439-24104-2-git-send-email-robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751379AbYLQQQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 11:16:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751010AbYLQQQE
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 11:16:04 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:55593 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751229AbYLQQQD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 11:16:03 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KC100KA13T9C0C0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 17 Dec 2008 11:15:10 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20081217154407.GZ32487@spearce.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103358>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> This reverts commit 61133091d5f22398828b350ff772165e9945db8a.
+On Wed, 17 Dec 2008, Shawn O. Pearce wrote:
+
+> Nicolas Pitre <nico@cam.org> wrote:
+> > The fact is, fundamentally, we don't know how many bytes to push when 
+> > generating a pack to answer the clone request.  Sometimes we _could_ but 
+> > not always.  It is therefore better to be consistent and let people know 
+> > that there is simply no ETA.
 > 
-> Bisect says this is the commit that failed, which is odd. Bad QA.
+> Hmm.
+> 
+> What if on an initial clone (no "have" lines received) we sum up
+> the sizes of the *.pack and all of the loose objects and sent
+> that as an initial size estimate.  Its going to be the upper bound
+> of the final pack that we send.  At worst it over-estimates on the
+> size and download finishes faster.
 
-Hmmph.  This revert fails here.
+It is a kludge.  It makes the system imprecise for little benefit. Once 
+you start adding kludges like that into your system, people will always 
+ask for more kludges, and in the end your system isn't as reliable.  We 
+all know about some other operating system which was designed like that. 
+I personally don't want to go there.
 
-> diff --git a/org.spearce.egit.core.test/src/org/spearce/egit/core/op/T0001_ConnectProviderOperationTest.java b/org.spearce.egit.core.test/src/org/spearce/egit/core/op/T0001_ConnectProviderOperationTest.java
-> index 0ce2d7f..aae1ef4 100644
-> --- a/org.spearce.egit.core.test/src/org/spearce/egit/core/op/T0001_ConnectProviderOperationTest.java
-> +++ b/org.spearce.egit.core.test/src/org/spearce/egit/core/op/T0001_ConnectProviderOperationTest.java
-> @@ -99,8 +99,9 @@ assertTrue("tree missing", new File(gitDir,
->  				"objects/08/ccc3d91a14d337a45f355d3d63bd97fd5e4db9").exists());
->  		assertTrue("tree missing", new File(gitDir,
->  				"objects/9d/aeec817090098f05eeca858e3a552d78b0a346").exists());
-> +
->  		assertTrue("commit missing", new File(gitDir,
-> -				"objects/09/6f1a84091b90b6d9fb12f95848da69496305c1").exists());
-> +				"objects/45/df73fd9abbc2c61620c036948b1157e4d21253").exists());
+> Yea, a single stray binary of some *.mpg or *.iso accidentally
+> added and then removed (and now unreachable) will vastly inflate
+> the numbers.  In which case the repository owner will be encouraged
+> to prune when people won't clone his estimated 8 GiB download,
+> which is actually only 1 MiB.
 
-Debugging this test shows that the commit we created in the test
-is actually:
+And I consider any system doing such thing completely stupid.  Either 
+you consistently know the information or you don't.  When you don't, it 
+is best to not create expectations for the user.  And so far I think 
+that 99.9% of git users are just fine with the progress display we 
+currently provide.
 
---
-$ git cat-file commit 4c1bc1435f93c9409c93db5239e111271a8ccf55
-tree 9daeec817090098f05eeca858e3a552d78b0a346
-author J. Git <j.git@egit.org> 60876086400 +0100
-committer J. Git <j.git@egit.org> 60876086400 +0100
 
-testNewUnsharedFile
-
-Junit tests
---
-
-Which has me starting to wonder, what the heck is different
-between systems that is being reflected in this commit object?
-The only thing I can think of is the timestamp we are creating by
-the deprecated Date constructor call back on line 82.  Perhaps
-on different JVMs it is using different values for the hh:mm:ss
-parts of the timestamp value?
-
--- 
-Shawn.
+Nicolas
