@@ -1,84 +1,74 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 4/5] Make 'diff_populate_filespec()' use the new
- 'strbuf_readlink()'
-Date: Thu, 18 Dec 2008 08:55:50 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0812180851120.14014@localhost.localdomain>
-References: <alpine.LFD.2.00.0812171034520.14014@localhost.localdomain> <alpine.LFD.2.00.0812171042120.14014@localhost.localdomain> <alpine.LFD.2.00.0812171042500.14014@localhost.localdomain> <alpine.LFD.2.00.0812171043180.14014@localhost.localdomain>
- <alpine.LFD.2.00.0812171043440.14014@localhost.localdomain> <20081218121118.3635c53c@crow>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 4/5] Make 'diff_populate_filespec()' use the new   'strbuf_readlink()'
+Date: Thu, 18 Dec 2008 17:56:51 +0100
+Message-ID: <494A80D3.7070605@lsrfire.ath.cx>
+References: <alpine.LFD.2.00.0812171034520.14014@localhost.localdomain>	<alpine.LFD.2.00.0812171042120.14014@localhost.localdomain>	<alpine.LFD.2.00.0812171042500.14014@localhost.localdomain>	<alpine.LFD.2.00.0812171043180.14014@localhost.localdomain>	<alpine.LFD.2.00.0812171043440.14014@localhost.localdomain> <20081218121118.3635c53c@crow>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Mark Burton <markb@ordern.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 17:58:22 2008
+X-From: git-owner@vger.kernel.org Thu Dec 18 17:58:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDMCI-0001ZM-2h
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 17:58:02 +0100
+	id 1LDMCZ-0001iG-Ef
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 17:58:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751229AbYLRQ4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 11:56:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750892AbYLRQ4o
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 11:56:44 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:46579 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750762AbYLRQ4n (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 11:56:43 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBIGtpQ6009205
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 18 Dec 2008 08:55:52 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBIGtoRO011245;
-	Thu, 18 Dec 2008 08:55:51 -0800
-X-X-Sender: torvalds@localhost.localdomain
+	id S1751069AbYLRQ5A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Dec 2008 11:57:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751412AbYLRQ5A
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 11:57:00 -0500
+Received: from india601.server4you.de ([85.25.151.105]:36808 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750892AbYLRQ47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 11:56:59 -0500
+Received: from [10.0.1.101] (p57B7E582.dip.t-dialin.net [87.183.229.130])
+	by india601.server4you.de (Postfix) with ESMTPSA id 0AB792F805F;
+	Thu, 18 Dec 2008 17:56:56 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
 In-Reply-To: <20081218121118.3635c53c@crow>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.923 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103472>
 
-
-
-On Thu, 18 Dec 2008, Mark Burton wrote:
-> 
+Mark Burton schrieb:
+> Howdy folks,
+>=20
+> When I compile this latest version of diff.c on a i686 dual-core Pent=
+ium box
+> I see:
+>=20
+> diff.c: In function =E2=80=98diff_populate_filespec=E2=80=99:
+> diff.c:1781: warning: passing argument 2 of =E2=80=98strbuf_detach=E2=
+=80=99 from incompatible pointer type
+>=20
+> The same code compiles without warning on a x86_64 AMD box. Both
+> machines are running stock Ubuntu 8.04.
+>=20
 > Does it need a cast on some architectures?
 
-Gaah. My bad. It should work fine ("unsigned long" is physically the same 
-type as "size_t" in your case), but on 32-bit x86, size_t is generally 
-"unsigned int" - which is the same physical type there (both int and long 
-are 32-bit) but causes a valid warning.
+The type of the size member of struct stat is off_t, while strbuf_detac=
+h expects
+a size_t pointer.  This patch should fix the warning:
 
-I think we should just make the "size" member "size_t". I use "unsigned 
-long" out of much too long habit, since we traditionally avoided "size_t" 
-in the kernel due to it just being another unnecessary architecture- 
-specific detail.
-
-So the proper patch is probably just the following. Sorry about that,
-
-		Linus
----
- diffcore.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/diffcore.h b/diffcore.h
-index 5b63458..16a73e6 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -30,7 +30,7 @@ struct diff_filespec {
- 	void *data;
- 	void *cnt_data;
- 	const char *funcname_pattern_ident;
--	unsigned long size;
-+	size_t size;
- 	int count;               /* Reference count */
- 	int xfrm_flags;		 /* for use by the xfrm */
- 	int rename_used;         /* Count of rename users */
+diff --git a/diff.c b/diff.c
+index f160c1a..0484601 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1778,7 +1778,8 @@ int diff_populate_filespec(struct diff_filespec *=
+s, int size_only)
+=20
+ 			if (strbuf_readlink(&sb, s->path, s->size))
+ 				goto err_empty;
+-			s->data =3D strbuf_detach(&sb, &s->size);
++			s->size =3D sb.len;
++			s->data =3D strbuf_detach(&sb, NULL);
+ 			s->should_free =3D 1;
+ 			return 0;
+ 		}
