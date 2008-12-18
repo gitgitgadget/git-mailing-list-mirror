@@ -1,82 +1,73 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] fast-export: deal with tag objects that do not have a
-	tagger
-Date: Fri, 19 Dec 2008 00:38:43 +0100
-Message-ID: <20081218233843.GA21154@genesis.frugalware.org>
-References: <20081218164614.GS5691@genesis.frugalware.org> <7vbpv9guqd.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0812182044100.6952@intel-tinevez-2-302> <20081218213407.GX5691@genesis.frugalware.org> <7viqphf4ua.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Odd merge behaviour involving reverts
+Date: Thu, 18 Dec 2008 15:58:37 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0812181534310.14014@localhost.localdomain>
+References: <1229642734.5770.25.camel@rotwang.fnordora.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="qDbXVdCdHGoSgWSk"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, scott@canonical.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 19 00:40:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Alan <alan@clueserver.org>
+X-From: git-owner@vger.kernel.org Fri Dec 19 01:01:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDSTQ-0002tM-Fc
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 00:40:08 +0100
+	id 1LDSnq-00026v-5C
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 01:01:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752552AbYLRXis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 18:38:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752514AbYLRXis
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 18:38:48 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:53127 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752270AbYLRXis (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 18:38:48 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 51A71580A7;
-	Fri, 19 Dec 2008 00:38:46 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id E5BED4465E;
-	Fri, 19 Dec 2008 00:38:43 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id D48A411B862F; Fri, 19 Dec 2008 00:38:43 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7viqphf4ua.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751511AbYLRX7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 18:59:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751502AbYLRX7x
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 18:59:53 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:44063 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751480AbYLRX7x (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 18:59:53 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBINwc2s001281
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 18 Dec 2008 15:58:39 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBINwbKH006312;
+	Thu, 18 Dec 2008 15:58:38 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1229642734.5770.25.camel@rotwang.fnordora.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.424 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103511>
 
 
---qDbXVdCdHGoSgWSk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Dec 18, 2008 at 03:20:29PM -0800, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> Such a "faking" can well be done, and should be done, on the consuming end
-> of the information.  If you fake using the commit authorship, you would
-> never be able to tell from the result which one is faked and which one is
-> genuine.
->=20
-> I think you'd rather want to see "Unspecified Tagger" in the resulting tag
-> object (or even better, a tag object without the tagger field created by
-> the fast-import process), and leave the interpretation of missing tagger
-> information to the consumers.
+On Thu, 18 Dec 2008, Alan wrote:
+> 
+> What am i doing wrong here?
 
-Aah, I missed that Dscho's patch will not just not die(), but it _will_
-output a stream that fast-import will import. So just forget my
-complain. :-)
+Reverting a merge is your problem.
 
-And Dscho, thanks!
+You can do it, but you seem to have done it without understanding what it 
+causes.
 
---qDbXVdCdHGoSgWSk
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+A revert of a merge becomes a regular commit that just undoes everything 
+that the merge did in your branch. When you then do the next merge, you'll 
+do that merge with that in mind, so now git will essentially consider the 
+previous merge to be the base line, but your revert undid everything that 
+that one brought in, so the new merge will really only contain the new 
+stuff from the branch you are merging. 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+So if a merge causes problems, you generally should either undo it 
+_entirely_ (ie do a 'git reset --hard ORIG_HEAD'), not revert it. 
 
-iEYEARECAAYFAklK3wMACgkQe81tAgORUJbVVACfeC3aaoXpiGK2saqCZ12B9w71
-eAwAn3p/0YDnsxm6a9UjKeQczW6ZelPo
-=d3IS
------END PGP SIGNATURE-----
+Of course, if you had already made the merged state public, or done 
+development on top of it, you can't really do that. In which case a revert 
+works, but if you want it back, you should revert the revert, not merge 
+the branch again - because what you merged last time you threw away, and 
+won't be applied again.
 
---qDbXVdCdHGoSgWSk--
+		Linus
