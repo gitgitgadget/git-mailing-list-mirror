@@ -1,74 +1,108 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv5 2/3] gitweb: add patches view
-Date: Thu, 18 Dec 2008 20:57:43 +0100
-Message-ID: <cb7bb73a0812181157r20b0cbc3t290e32454a435b0c@mail.gmail.com>
-References: <1229422290-6213-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1229422290-6213-3-git-send-email-giuseppe.bilotta@gmail.com>
-	 <7v4p12hv5q.fsf@gitster.siamese.dyndns.org>
-	 <200812181915.48556.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Fabien Thomas <thomas.fabien@gmail.com>
+Subject: [topgit] shared topic branch
+Date: Thu, 18 Dec 2008 21:02:33 +0100
+Message-ID: <EFB70468-7900-4B22-925D-3FC5F05F951B@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Petr Baudis" <pasky@suse.cz>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 20:59:08 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 18 21:04:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDP1U-0003Eq-7K
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 20:59:04 +0100
+	id 1LDP6C-0005DG-NC
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 21:03:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752136AbYLRT5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 14:57:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752131AbYLRT5q
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 14:57:46 -0500
-Received: from ik-out-1112.google.com ([66.249.90.183]:53053 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752098AbYLRT5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 14:57:45 -0500
-Received: by ik-out-1112.google.com with SMTP id c29so134634ika.5
-        for <git@vger.kernel.org>; Thu, 18 Dec 2008 11:57:43 -0800 (PST)
+	id S1753514AbYLRUCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 15:02:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753509AbYLRUCj
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 15:02:39 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:60643 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753487AbYLRUCi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 15:02:38 -0500
+Received: by bwz14 with SMTP id 14so2350674bwz.13
+        for <git@vger.kernel.org>; Thu, 18 Dec 2008 12:02:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=RJ+oiiJw7KpMjdP7eusn3sEXQepgeJBSes0MGIoaaz4=;
-        b=OcPq0rWerEuvDG/lfi2gkbJ4X2dqvIOvM8RALOv0zZGODSoK8UYU5O5k0o4d/OFmIi
-         r+TA+Lk0H5HXmSabR0yqIVbOJ77rlgzgJmtIaTc2Xcmv4sho3Ryr57Je9hGIjT7cIxU0
-         wOA1PN5K7ypCmw2RweM2gV1aTzNSM5/J0XKec=
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=NMGexxEZBKSjTu3BhPTZePrLzEAU0ZzC9k5HIhwaN1w=;
+        b=spH5CyaGvyMZLKwm4mhcdG70BQXaKuntROXlYMuA1OdDmE7on4h0l1unTwYh30iaU+
+         l2nY8QnxTb0+Qgxz7ktCMUOla68uOZ8h25U3a5g1XqM+oiGsKDWy7NeyWSpbRn7BrwQp
+         a4HFNahC90hzU1MI+MXEuCmyJMoQrJZ8xHuW4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=fYjkVWg5FSQr2pLpKuJsPjuqcxrWria9DOse6S/WbS+rKBxEb+nyorZ2w1xHI8A+gK
-         ZzSxDOMd6jFVN0KpTvePBoFkZFz0Ual5C9CXzQEFZCf6YKZzUutsZcD2rDlkM5gr0G39
-         CCYkDzuLlJaxexnXbZR5RS5rclXzNTqTdOjG8=
-Received: by 10.210.24.12 with SMTP id 12mr2784054ebx.34.1229630263915;
-        Thu, 18 Dec 2008 11:57:43 -0800 (PST)
-Received: by 10.210.136.4 with HTTP; Thu, 18 Dec 2008 11:57:43 -0800 (PST)
-In-Reply-To: <200812181915.48556.jnareb@gmail.com>
-Content-Disposition: inline
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=pn3/G5tyYTQhbLRb+mh3w3GmWvRbsIvUinjDp0KTndwCEZxImwsuNh1JpXRRan+lVD
+         PeB+KJeVlpqbMgvK271KwO7hTYT2qJ1wOOEGDKriiM/zPtcHveUIi12ler39v3mxSbo4
+         2QXii4wEpK1osvPyUDXhnjiIAhH2Nm8ZAtwCg=
+Received: by 10.103.238.4 with SMTP id p4mr917609mur.68.1229630555935;
+        Thu, 18 Dec 2008 12:02:35 -0800 (PST)
+Received: from ?192.168.0.1? (abo-9-36-69.lil.modulonet.fr [85.69.36.9])
+        by mx.google.com with ESMTPS id 7sm6711879mup.40.2008.12.18.12.02.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 18 Dec 2008 12:02:35 -0800 (PST)
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103488>
 
-On Thu, Dec 18, 2008 at 7:15 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->
-> Just a though, but does it really take much sense to have "patch" and
-> "patches" views handled in git_commitdiff? I can understand in the
-> first version, where it was more about better 'commitdiff_plain', but
-> I wonder about now, where patch(es) view is something between git show
-> and log_plain format... Wouldn't it be simpler to use separate
-> subroutine, for example git_format_patch or something?
+Hi,
 
-I don't feel like much has changed since the beginning when IYO it
-made sense to have it part of commitdiff, honestly
+I'm testing topgit 0.5 in a shared env. (multiple user working on same  
+patch).
 
--- 
-Giuseppe "Oblomov" Bilotta
+After following the tutorial i end up with something like this:
+
+$ git branch
+   master
+   topic/test1
+* topic/test2
+$ git branch -r
+   origin/HEAD
+   origin/master
+   origin/svn_stable_7
+   origin/svn_trunk
+   origin/top-bases/topic/test1
+   origin/top-bases/topic/test2
+   origin/topic/test1
+   origin/topic/test2
+
+My problem is that when i want to push my local work i'm doing "git  
+push" that will force update the remote branch.
+The problem is that each time master is not up to date i will push my  
+entire master or topic branch to the remote.
+
+After looking at git config file it seems that this is something  
+normal generated by "tg remote --populate origin":
+
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = ssh://git@xxx.com
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	fetch = +refs/top-bases/*:refs/remotes/origin/top-bases/*
+	push = +refs/top-bases/*:refs/top-bases/*
+	push = +refs/heads/*:refs/heads/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[merge "ours"]
+	name = \"always keep ours\" merge driver
+	driver = touch %A
+[topgit]
+	remote = origin
+
+What i'm doing wrong ?
+
+Regards,
+Fabien
