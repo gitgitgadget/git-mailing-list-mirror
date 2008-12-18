@@ -1,60 +1,60 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: Git with Hudson
-Date: Thu, 18 Dec 2008 16:07:34 -0600
-Organization: Exigence
-Message-ID: <20081218160734.b1992eb8.stephen@exigencecorp.com>
-References: <D2F0F023-862A-4BAB-88B9-BFEFC5592D10@strakersoftware.com>
+From: jidanni@jidanni.org
+Subject: negated list in .gitignore no fun
+Date: Fri, 19 Dec 2008 05:53:23 +0800
+Message-ID: <87hc51tajw.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Indy Nagpal <indy@strakersoftware.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 23:09:20 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: joey@kitenet.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 18 23:21:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDR3N-00048s-J0
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 23:09:10 +0100
+	id 1LDRFf-0000HG-3I
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 23:21:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752547AbYLRWHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 17:07:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752415AbYLRWHt
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 17:07:49 -0500
-Received: from smtp152.sat.emailsrvr.com ([66.216.121.152]:39881 "EHLO
-	smtp152.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801AbYLRWHs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 17:07:48 -0500
-Received: from relay5.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay5.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id ABD55DABD8;
-	Thu, 18 Dec 2008 17:07:44 -0500 (EST)
-Received: by relay5.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTPSA id DA9A5DB510;
-	Thu, 18 Dec 2008 17:07:43 -0500 (EST)
-In-Reply-To: <D2F0F023-862A-4BAB-88B9-BFEFC5592D10@strakersoftware.com>
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1753329AbYLRWUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 17:20:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247AbYLRWUd
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 17:20:33 -0500
+Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:59763 "EHLO
+	homiemail-a4.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753041AbYLRWUc (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 17:20:32 -0500
+Received: from jidanni1.jidanni.org (122-127-37-70.dynamic.hinet.net [122.127.37.70])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by homiemail-a4.dreamhost.com (Postfix) with ESMTP id 1403C414BB;
+	Thu, 18 Dec 2008 14:20:31 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103502>
 
+I discovered git is so negative: it has very good .gitignore negative
+matching facilities, but not as good positive matching facilities.
+(Maybe positive glob lists are merely fed to git-add from the command line.)
 
-> However, before we do that I wanted to check if anyone has had any
-> experience/feedback in integrating Git with Hudson CI server?
+I had dreams of tracking only a few files in a large tree.
+I thought I would maintain that list as a negated list in .gitignore,
+and then always use "git-add ." to keep git's index reflecting my list.
 
-We tried using the Hudson git plugin that you can download from the
-Hudson site and ended up with problems--whether we had too many branches
-or something, the plugin has some funny "figure out what needs to be
-built" logic that issued near-constant git rev-list commands. To the
-point where our own "git fetch" calls would get starved for 20-30
-seconds.
+However that's just not possible.
 
-We eventually wrote our own Hudson git plugin that is simpler and
-doesn't do any funny rev-listing/walking. It just stores last hash
-built and rebuilds once that doesn't match the branch tip. Once that
-was in place, it worked great.
-
-I've got permission to publish it if you're interested--just haven't
-yet.
-
-- Stephen
+# head -n 5 .gitignore
+*
+!X11/xorg.conf
+!anacrontab
+!apt/apt.conf.d/10jidanni
+!apt/sources.list
+# git-add .
+But git-status only shows anacrontab got added. None of the files in
+the subdirectories get added. We continue,
+# sed -n s/^!//p .gitignore|xargs git-add #no help!
+# sed -n s/^!//p .gitignore|xargs -n 1 git-add #Geez. Finally worked.
+OK, I suppose my next step is just to rm .gitignore and just add any
+future files I want to add to my list one by one with git-add... like
+git was designed to do in the first place. OK, thanks. Bye.
+Next episode: some kind of middle ground with etckeeper.
