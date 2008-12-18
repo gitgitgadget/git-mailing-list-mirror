@@ -1,70 +1,67 @@
-From: Francois Marier <francois@debian.org>
-Subject: Suggestion: better error reporting when setting HEAD
-Date: Thu, 18 Dec 2008 18:58:25 +1300
-Message-ID: <20081218055825.GQ6708@isafjordur.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: sam.vilain@catalyst.net.nz
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCHv6 0/4] gitweb: patch view
+Date: Thu, 18 Dec 2008 08:13:15 +0100
+Message-ID: <1229584399-23879-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 18 07:20:46 2008
+X-From: git-owner@vger.kernel.org Thu Dec 18 08:14:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDCFW-0003rR-2F
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 07:20:42 +0100
+	id 1LDD5k-0007I7-Qq
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 08:14:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbYLRGTZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 01:19:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752551AbYLRGTZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 01:19:25 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:45591 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751716AbYLRGTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 01:19:24 -0500
-X-Greylist: delayed 1030 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Dec 2008 01:19:24 EST
-Received: from [2404:130:0:1000:218:f3ff:fe82:f661] (helo=isafjordur)
-	by mail1.catalyst.net.nz with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <fmarier@gmail.com>)
-	id 1LDBxa-0007LK-73; Thu, 18 Dec 2008 19:02:10 +1300
-Received: from francois by isafjordur with local (Exim 4.69)
-	(envelope-from <fmarier@gmail.com>)
-	id 1LDBtx-0000Py-T4; Thu, 18 Dec 2008 19:02:13 +1300
-Received: by isafjordur (hashcash-sendmail, from uid 1000);
-	Thu, 18 Dec 2008 18:58:25 +1300
-Content-Disposition: inline
-X-Request-PGP: http://people.debian.org/~francois/public_key.asc
-X-Hashcash: 1:28:081218:git@vger.kernel.org::kCTtbqIXSyC3W4cM:000000000000000000
-	00000000000000000000000GKqc3
-X-Hashcash: 1:28:081218:sam.vilain@catalyst.net.nz::SaRCIReKPDiTkaK3:00000000000
-	00000000000000000000000CEfNE
+	id S1751375AbYLRHNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 02:13:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbYLRHNU
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 02:13:20 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:15163 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750837AbYLRHNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 02:13:20 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so119795fgg.17
+        for <git@vger.kernel.org>; Wed, 17 Dec 2008 23:13:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=1KmLqDsipd7En0isSvuvpLmA/N7CDtGqevGqaVOjgGE=;
+        b=ruXubMh7nK8FetfDFW4vEOANhVxcEwBWN78WS+Coo9hdwNEZMpPL+S36439uLLqzSm
+         w1x8kgxYW3gzPUkfzPL9K1OTwP9c9IaBMah9403DYKrWAy5WDeiOGue25EgiVmfjg1ri
+         V3EsiS43P6W71Q1zu8hsWE3GGN6xmDrDpQo7k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=bdbGnwNiS6JK7V4swOpg8Ubq1qyWQrZa37vCchi1Q+HtaJrjmJUzq+4Uz4KC5odkOn
+         E7fDdZg0ckmhSJkugdkCiz/l5sfYGoZzDgAFQV4SPEuc7Smd3UrMnPP7qopxxA5k+iHB
+         TOmGW5gsO1D68tqkhp3Jqbo9j3IU/Fr+WJA1s=
+Received: by 10.86.60.14 with SMTP id i14mr931026fga.21.1229584398364;
+        Wed, 17 Dec 2008 23:13:18 -0800 (PST)
+Received: from localhost ([78.13.57.58])
+        by mx.google.com with ESMTPS id l19sm4860571fgb.6.2008.12.17.23.13.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 17 Dec 2008 23:13:17 -0800 (PST)
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103437>
 
-(Please CC me on your replies, thanks)
+Sixth iteration of the patch view in gitweb, that exposes the
+git-format-patch output directly, allowing patchset exchange via gitweb.
 
-If you take any valid git repo and then do the following:
+As suggested by Junio, the call pattern for git_commitdiff is changed to
+use named parameters even for the first parameter (-format).
 
-  git symbolic-ref HEAD master
-  (instead of "git symbolic-ref HEAD refs/heads/master")
+Giuseppe Bilotta (4):
+  gitweb: add patch view
+  gitweb: change call pattern for git_commitdiff
+  gitweb: add patches view
+  gitweb: link to patch(es) view in commit(diff) and (short)log view
 
-then other git commands (e.g. "git log") will return this error message:
-
-  fatal: Not a git repository
-
-I'd like to suggest two "usability" improvements:
-
-1- changing the error message to explain why the directory is no longer
-   considered a git repo. Maybe something along the lines of:
-
-     fatal: Invalid reference in .git/HEAD
-
-2- To prevent this error from happening in the first place, git-symbolic-ref
-   could refuse to change HEAD to a non-existent ref.
-
-Cheers,
-Francois
+ gitweb/gitweb.perl |  109 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 108 insertions(+), 1 deletions(-)
