@@ -1,57 +1,62 @@
-From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+From: "Sverre Rabbelier" <srabbelier@gmail.com>
 Subject: Re: is it possible filter the revision history of a single file into another repository?
-Date: Thu, 18 Dec 2008 15:04:01 +0100
-Organization: Intra2net AG
-Message-ID: <200812181504.02105.thomas.jarosch@intra2net.com>
+Date: Thu, 18 Dec 2008 15:15:04 +0100
+Message-ID: <bd6139dc0812180615v34d9aa7dj4b24ddf049b5615e@mail.gmail.com>
 References: <8ec76080812180551p8c97a0dqa2025e67792946c7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: "Whit Armstrong" <armstrong.whit@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 15:06:14 2008
+X-From: git-owner@vger.kernel.org Thu Dec 18 15:16:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDJVM-0001uY-Ks
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 15:05:55 +0100
+	id 1LDJfu-000412-8M
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 15:16:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751483AbYLROEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 09:04:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751150AbYLROEM
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 09:04:12 -0500
-Received: from rs02.intra2net.com ([81.169.173.116]:45829 "EHLO
-	rs02.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116AbYLROEL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 09:04:11 -0500
-Received: from intranator.m.i2n (unknown [172.16.1.99])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by rs02.intra2net.com (Postfix) with ESMTP id 01B4F4C87;
-	Thu, 18 Dec 2008 15:04:09 +0100 (CET)
-Received: from localhost (intranator.m.i2n [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 84E222AC4B;
-	Thu, 18 Dec 2008 15:04:09 +0100 (CET)
-Received: from storm.localnet (storm.m.i2n [172.16.1.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by intranator.m.i2n (Postfix) with ESMTP id 685512AC4A;
-	Thu, 18 Dec 2008 15:04:02 +0100 (CET)
-User-Agent: KMail/1.10.3 (Linux/2.6.27.5-41.fc9.i686; KDE/4.1.3; i686; ; )
+	id S1751430AbYLROPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 09:15:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751380AbYLROPJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 09:15:09 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:46626 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751277AbYLROPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 09:15:08 -0500
+Received: by bwz14 with SMTP id 14so1622688bwz.13
+        for <git@vger.kernel.org>; Thu, 18 Dec 2008 06:15:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=Yxo3hmffpfE/nybhUPr+77W9roGzK2qhU7RYoIFvbUk=;
+        b=NFUuwVBRp0P10IL3xSjPq155y6IY6bHz9f/sZGX87docY0xlUBhST0B/geRgGrfmzn
+         +ICSms8c2/GveGrj6DGsBAx4UjI4ylJasGBUUJ9j2flRqms6JCgqShABvA16wllGZulE
+         6hL1dFJYS8nwh1fd+IdvuXPdyATh1XQG8269Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=Zh3N1Y0X9e02ie2V6bEPuFK4wrgHaWp/kLuZPcYrWFNalm5eS61rqv9BUQ5b5W7Qdd
+         V/3F9z2lnaVbf+JMFmqB0lBZdBPWj00Fi6Mf52Fe1iC6C9b4AKDdZXtw9wKZfN4UstqD
+         TECRBRxLt6aXLYZ891PtprcfQc/gzWnL5ljbw=
+Received: by 10.223.109.199 with SMTP id k7mr1706419fap.45.1229609704222;
+        Thu, 18 Dec 2008 06:15:04 -0800 (PST)
+Received: by 10.223.103.142 with HTTP; Thu, 18 Dec 2008 06:15:04 -0800 (PST)
 In-Reply-To: <8ec76080812180551p8c97a0dqa2025e67792946c7@mail.gmail.com>
 Content-Disposition: inline
-X-Virus-Scanned: by Intranator (www.intranator.com) with AMaViS and F-Secure AntiVirus (fsavdb 2008-12-18_09)
-X-Spam-Status: hits=-1.8 tests=[ALL_TRUSTED=-1.8,BAYES_50=0.001]
-X-Spam-Level: 982
+X-Google-Sender-Auth: b6887df3cc9214e5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103464>
 
-On Thursday, 18. December 2008 14:51:12 Whit Armstrong wrote:
+On Thu, Dec 18, 2008 at 14:51, Whit Armstrong <armstrong.whit@gmail.com> wrote:
 > For instance, if my repository contains foo.c, and 100 other files.
 >
 > I would like to create a new and separate repository containing only
@@ -60,26 +65,10 @@ On Thursday, 18. December 2008 14:51:12 Whit Armstrong wrote:
 > Would someone mind pointing me at some documentation for this
 > procedure if it exists?
 
-This worked for me:
+I think "git filter-branch" is what you need. Have it filter out
+changes to files but foo.c, and then remove all empty commits.
 
-git filter-branch --tag-name-filter cat --index-filter \
-    'git ls-files -s |grep -P "\t(DIR1|DIR2)" \
-    |GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info &&
-    mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' -- --all
-
-Run "git ls-files -s" to see the output format.
-Replace the "DIR1|DIR2" with "foo.c".
-
-Later on you might want to remove empty commits from the history:
-git filter-branch --tag-name-filter cat --commit-filter 'if [ z$1 = z`git rev-parse $3^{tree}` ]; then skip_commit "$@"; else git commit-tree "$@"; fi' "$@" -- --all
-
-If you want to run two filter-branch commands in a row
-or you want to free up the space in .git afterwards:
-
-- git for-each-ref --format='%(refname)' refs/original | xargs -i git update-ref -d {}
-- git reflog expire --expire=0 --all
-- git repack -a -d
-- git prune
-
+-- 
 Cheers,
-Thomas
+
+Sverre Rabbelier
