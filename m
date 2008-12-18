@@ -1,68 +1,122 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add git-edit-index.perl
-Date: Thu, 18 Dec 2008 20:47:13 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812182046060.6952@intel-tinevez-2-302>
-References: <20081217204749.GA18261@janet.wally> <20081218043734.GD20749@coredump.intra.peff.net> <alpine.DEB.1.00.0812181446430.6952@intel-tinevez-2-302> <20081218140411.GB6706@coredump.intra.peff.net> <alpine.DEB.1.00.0812181723340.6952@intel-tinevez-2-302>
- <20081218163654.GR5691@genesis.frugalware.org>
+From: "Whit Armstrong" <armstrong.whit@gmail.com>
+Subject: Re: is it possible filter the revision history of a single file into another repository?
+Date: Thu, 18 Dec 2008 14:51:38 -0500
+Message-ID: <8ec76080812181151y4a5a6f5cna57785c935032e77@mail.gmail.com>
+References: <8ec76080812180551p8c97a0dqa2025e67792946c7@mail.gmail.com>
+	 <200812181504.02105.thomas.jarosch@intra2net.com>
+	 <8ec76080812180619k78a28e30t591b514148202869@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Neil Roberts <bpeeluk@yahoo.co.uk>,
-	git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Dec 18 20:49:04 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Thomas Jarosch" <thomas.jarosch@intra2net.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 20:58:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDOrK-0007NL-HF
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 20:48:35 +0100
+	id 1LDP15-00035R-Pb
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 20:58:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069AbYLRTrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 14:47:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752043AbYLRTrR
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 14:47:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54181 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752041AbYLRTrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 14:47:16 -0500
-Received: (qmail invoked by alias); 18 Dec 2008 19:47:14 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp044) with SMTP; 18 Dec 2008 20:47:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX191Ex9ECfF1s1qGMfKJ3RF6DRfEvfFNFTK6W0b5ce
-	WDcDTP41463rPp
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20081218163654.GR5691@genesis.frugalware.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1752112AbYLRT5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 14:57:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbYLRT5V
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 14:57:21 -0500
+Received: from yw-out-2324.google.com ([74.125.46.30]:13995 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752094AbYLRT5U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 14:57:20 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so238725ywe.1
+        for <git@vger.kernel.org>; Thu, 18 Dec 2008 11:57:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=tjslZPfHa0t7hffScacs5WtdXn+qh1PSA0vEvsooyRc=;
+        b=i5MQz4oUSMX4P6o3jZ9/MbH5s0eeodKncgQEYef3m4G666rC4/ZV1zujWjsHrzXwhf
+         WoGcikUce8Y4pvQYCxWIOCse5KjQZGR3A+WxAz5vSXQE+FRLe44D30NjWsDFt03ok68L
+         nqNFWmN6YBmTkYGDmmtWaIKCDA8x0bwXuquJI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=mIHXa5uZaikvbPziVyqEqCMgHvg0Tnq2ii/VuZb7SPfuM1TsVIAF+CwcZaWs9DJUb3
+         mRzBRZxA8SDmHM2LOGqdDY2KCSssBvd1fEWP9CObVG/ZW8Wh1kTjHvDaSywEwAsOq2JZ
+         fyHJehFC4GY7gwqg2MwOuc7YjVW13OUAFo1iU=
+Received: by 10.151.109.11 with SMTP id l11mr2606021ybm.71.1229629898598;
+        Thu, 18 Dec 2008 11:51:38 -0800 (PST)
+Received: by 10.151.136.2 with HTTP; Thu, 18 Dec 2008 11:51:38 -0800 (PST)
+In-Reply-To: <8ec76080812180619k78a28e30t591b514148202869@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103486>
 
-Hi,
+Sorry, seem to be getting this error:
+`/home/whit/dvl/risk.metrics.utils/RiskMetrics/.git-rewrite/t/../index.new':
+No such file or directory
 
-On Thu, 18 Dec 2008, Miklos Vajna wrote:
+do I need to set up the index file first?
 
-> On Thu, Dec 18, 2008 at 05:24:00PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
-> > On Thu, 18 Dec 2008, Jeff King wrote:
-> > 
-> > > It _would_ be a nicer workflow to say "I don't want these changes 
-> > > yet" and selectively put them elsewhere, test what's in the working 
-> > > tree, commit, and then grab some more changes from your stash. But 
-> > > we don't have interactive stashing and unstashing yet, which would 
-> > > be required for that.
-> > 
-> > git stash -i... Yes, I'd like that!
-> 
-> Or git checkout -i?
+Is there a good site that documents this procedure?
 
-Frankly, I need to move changes away much more often.  Plus, you could 
-have what you wished for with a "git checkout -- <path> && git stash -i".  
-It's just that you would move out the changes you would not want yet.
+[whit@linuxsvr RiskMetrics]$ git filter-branch --tag-name-filter cat
+--index-filter \
+>    'git ls-files -s |grep -P "riskmetrics.rb" \
+>    |GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info &&
+>    mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' -- --all
+Rewrite 8f1a0eaae033d109f4a3a4b410bd8e04dd9997db (1/481)mv: cannot
+stat `/home/whit/dvl/risk.metrics.utils/RiskMetrics/.git-rewrite/t/../index.new':
+No such file or directory
+index filter failed: git ls-files -s |grep -P "riskmetrics.rb" \
+   |GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info &&
+   mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE
+[whit@linuxsvr RiskMetrics]$
 
-Ciao,
-Dscho
+
+
+On Thu, Dec 18, 2008 at 9:19 AM, Whit Armstrong
+<armstrong.whit@gmail.com> wrote:
+> thanks, I will give this a try.
+>
+> On Thu, Dec 18, 2008 at 9:04 AM, Thomas Jarosch
+> <thomas.jarosch@intra2net.com> wrote:
+>> On Thursday, 18. December 2008 14:51:12 Whit Armstrong wrote:
+>>> For instance, if my repository contains foo.c, and 100 other files.
+>>>
+>>> I would like to create a new and separate repository containing only
+>>> the revision history of foo.c.
+>>>
+>>> Would someone mind pointing me at some documentation for this
+>>> procedure if it exists?
+>>
+>> This worked for me:
+>>
+>> git filter-branch --tag-name-filter cat --index-filter \
+>>    'git ls-files -s |grep -P "\t(DIR1|DIR2)" \
+>>    |GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info &&
+>>    mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' -- --all
+>>
+>> Run "git ls-files -s" to see the output format.
+>> Replace the "DIR1|DIR2" with "foo.c".
+>>
+>> Later on you might want to remove empty commits from the history:
+>> git filter-branch --tag-name-filter cat --commit-filter 'if [ z$1 = z`git rev-parse $3^{tree}` ]; then skip_commit "$@"; else git commit-tree "$@"; fi' "$@" -- --all
+>>
+>> If you want to run two filter-branch commands in a row
+>> or you want to free up the space in .git afterwards:
+>>
+>> - git for-each-ref --format='%(refname)' refs/original | xargs -i git update-ref -d {}
+>> - git reflog expire --expire=0 --all
+>> - git repack -a -d
+>> - git prune
+>>
+>> Cheers,
+>> Thomas
+>>
+>>
+>
