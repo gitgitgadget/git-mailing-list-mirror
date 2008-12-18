@@ -1,66 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git - index-pack missing
-Date: Wed, 17 Dec 2008 19:15:00 -0800
-Message-ID: <7vr646i37v.fsf@gitster.siamese.dyndns.org>
-References: <54F47863-AF55-4FB7-8A43-A4253E1F782C@michaelbutros.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] gitk: force focus to main window
+Date: Thu, 18 Dec 2008 04:14:25 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812180413240.14632@racer>
+References: <4948E771.4050705@viscovery.net> <18761.29020.237388.687560@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Boutros <me@michaelboutros.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 04:16:33 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Thu Dec 18 04:16:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD9NA-00023x-JL
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 04:16:25 +0100
+	id 1LD9NP-00027t-Ol
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 04:16:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515AbYLRDPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 22:15:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbYLRDPI
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 22:15:08 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60897 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479AbYLRDPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 22:15:06 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C14C88815D;
-	Wed, 17 Dec 2008 22:15:05 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 002878815C; Wed,
- 17 Dec 2008 22:15:02 -0500 (EST)
-In-Reply-To: <54F47863-AF55-4FB7-8A43-A4253E1F782C@michaelbutros.com>
- (Michael Boutros's message of "Wed, 17 Dec 2008 18:40:40 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1151B82C-CCB2-11DD-9C06-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751549AbYLRDPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 22:15:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751521AbYLRDPW
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 22:15:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56144 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751487AbYLRDPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 22:15:21 -0500
+Received: (qmail invoked by alias); 18 Dec 2008 03:15:19 -0000
+Received: from pD9EB2D4F.dip0.t-ipconnect.de (EHLO noname) [217.235.45.79]
+  by mail.gmx.net (mp067) with SMTP; 18 Dec 2008 04:15:19 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18I0G4uEj4IBDc1J8NeYZCsSp6rlBHGbcJcOcEaGM
+	tYSHZQHRFW5ldu
+X-X-Sender: gene099@racer
+In-Reply-To: <18761.29020.237388.687560@cargo.ozlabs.ibm.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103424>
 
-Michael Boutros <me@michaelboutros.com> writes:
+Hi,
 
-> I'm trying to clone a repository for the first time on a hosting
-> account that just got setup with Git. However, the problem is that for
-> some reason there is no git-index-pack. I cannot find any reason that
-> that one particular command would not be installed, but for some
-> reason that seems to be the case.
+On Thu, 18 Dec 2008, Paul Mackerras wrote:
 
-You may want to study output from "git help --all" to see if there is
-anything *else* that is missing.  You did not say which version of git you
-use, and how it was built and installed with which non-standard options
-and in what way, so it is hard to guess what is going on.
+> Johannes Sixt writes:
+> 
+> > On msysGit, the focus is first on the (Tk) console.  This console is 
+> > then hidden, but keeps the focus.  Work around that by forcing the 
+> > focus onto the gitk window.
+> 
+> Hmmm, I don't like doing focus -force unconditionally on all platforms.  
+> I hate it when applications decide they know best and override what the 
+> window manager decides.
 
-Perhaps:
+>From my previous experience with my patches to gitk, I did not expect 
+otherwise.  That is why I did not even bother with this one.
 
-	$ cd ~root
-        $ grep 'rm .*index-pack' .history .bash_history
+> At least put a if {[tk windowingsystem] eq "win32"} in there. (msysGit 
+> is a windows thing, isn't it?)
 
-could help locating the cause of breakage, but there are other ways to
-break your installation, so...
+Yeah, because on other platforms, when you start gitk, you don't want it 
+to take focus.  Yeah, right.
 
-> Has anyone ever heard of anything like this?
-
-Not me.
+Ciao,
+Dscho
