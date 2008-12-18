@@ -1,90 +1,77 @@
-From: "Tim Visher" <tim.visher@gmail.com>
-Subject: Re: Is it possible to roll back unstaged changes while leaving the staged ones for the next commit?
-Date: Thu, 18 Dec 2008 07:24:11 -0500
-Message-ID: <c115fd3c0812180424q3ac080a8iad53803fd3f2bb4d@mail.gmail.com>
-References: <c115fd3c0812171157m3d180534gb5630fbcf39b2bbd@mail.gmail.com>
-	 <7vy6yelf2m.fsf@gitster.siamese.dyndns.org>
-	 <c115fd3c0812171448o3db6f4c1oc24e39f9a68ed1d3@mail.gmail.com>
-	 <7vbpvajtmd.fsf@gitster.siamese.dyndns.org>
-	 <c115fd3c0812171722g93dbeefw2fb5bf7641dfe394@mail.gmail.com>
-	 <20081218123456.6117@nanako3.lavabit.com>
+From: "Sverre Rabbelier" <srabbelier@gmail.com>
+Subject: Re: Announcement: Git Extensions stable (windows shell extensions)
+Date: Thu, 18 Dec 2008 14:44:41 +0100
+Message-ID: <bd6139dc0812180544h2af10f9bsd76fb148bca1ee3e@mail.gmail.com>
+References: <1229540813648-1669264.post@n2.nabble.com>
+	 <c115fd3c0812171204ve560583w4c76aac0ac08d8ae@mail.gmail.com>
+	 <1976ea660812171757s37e8435cxc4d34ade04635b81@mail.gmail.com>
+	 <1229587749729-1672012.post@n2.nabble.com>
+	 <bd6139dc0812180036m4c70dea4gfe160a5fff1faf65@mail.gmail.com>
+	 <1976ea660812180540g5efbcb42oe498503216d8a3c9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Nanako Shiraishi" <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 13:31:06 2008
+Cc: Henk <henk_westhuis@hotmail.com>, git@vger.kernel.org
+To: "Frank Li" <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 14:46:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDI1y-0000aQ-5H
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 13:31:06 +0100
+	id 1LDJCV-0002jw-0y
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 14:46:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751395AbYLRM3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 07:29:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbYLRM3p
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 07:29:45 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:33928 "EHLO
+	id S1751348AbYLRNon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 08:44:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751310AbYLRNon
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 08:44:43 -0500
+Received: from yx-out-2324.google.com ([74.125.44.29]:1453 "EHLO
 	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750963AbYLRM3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 07:29:44 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so146362yxm.1
-        for <git@vger.kernel.org>; Thu, 18 Dec 2008 04:29:43 -0800 (PST)
+	with ESMTP id S1751216AbYLRNom (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 08:44:42 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so156630yxm.1
+        for <git@vger.kernel.org>; Thu, 18 Dec 2008 05:44:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=pxz59BxZMRUWan6T8WWgEsOj7XxRJoAqVigGJlQUtII=;
-        b=BfRXGvsKgzKGFF+OLM/vPjSIG8qNC8DCFpegpRhl37G3O++C40VPtnH/ffwK1TGyou
-         hyagJTfd2QWCQzEeb08p90Tflbe7p28CuvWsBdiuVpJiWk/mtf7qmQPzdVSi9PHqRQ1n
-         cKIXUcF/5c26LFoTKSRubweRh7Q2dA5zTfG40=
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=1PTXu243qUHi/4QvXY3C3RfsypEeMzNOiTAs9uWYqoE=;
+        b=KXBRYzv6mjppqEKjVzZ/c150vyoZbbScd0RzADIQDZmub0jWXpBYK5X0PitjmNBJgn
+         GfKGJf7wzIL+AUFZ7qZC6FT54JoM9lEusd+c3SnQPbqmGiqAFVhEkwzeZFX1Xrwe8L+R
+         tr4STUJG+BQR2eQNtmniezdZi3pvamqvG4wd4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=baVRlMhrVOR1JxUOGEmZ8qe8uQWL3HAYFOYvJlE0TX6eKXLupzOFkZ5nI3Zzz3PDJe
-         /spiPQRuAZFYx1Q7OBQyvlu8KMzm0xr0kzlUGqIkY69Ga6XRFTwGAkG9e2ljyNC94RPz
-         IfnVxPy0gJ/yHRsq2eyLbC0/SDP9y7EtXWGAw=
-Received: by 10.100.93.19 with SMTP id q19mr1332515anb.156.1229603051802;
-        Thu, 18 Dec 2008 04:24:11 -0800 (PST)
-Received: by 10.100.198.2 with HTTP; Thu, 18 Dec 2008 04:24:11 -0800 (PST)
-In-Reply-To: <20081218123456.6117@nanako3.lavabit.com>
+         :references:x-google-sender-auth;
+        b=SuOm+839vwbZVrTDB6Xj1WQxfzyEbS51ASz5VZtFzhkRNBBJVVhYbC6cEf1edWZnaN
+         IrydCMCjkYr9kCuT1S2N3KglOAq1/BW2EUBRASeq586pZemPjKMd6WnUJelyAeCWz9Zn
+         uN98cwgBs2mgzExbzLJXVZArqJ0IrPvPUSlSw=
+Received: by 10.150.181.7 with SMTP id d7mr3570213ybf.12.1229607881238;
+        Thu, 18 Dec 2008 05:44:41 -0800 (PST)
+Received: by 10.151.13.13 with HTTP; Thu, 18 Dec 2008 05:44:41 -0800 (PST)
+In-Reply-To: <1976ea660812180540g5efbcb42oe498503216d8a3c9@mail.gmail.com>
 Content-Disposition: inline
+X-Google-Sender-Auth: fdbf76f026f629d2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103458>
 
-On Wed, Dec 17, 2008 at 10:34 PM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
+On Thu, Dec 18, 2008 at 14:40, Frank Li <lznuaa@gmail.com> wrote:
+> I am considerring how to implement clone.
+>
+> I hope Git can provide a client library like SVN.
+> I see libgit2 project. I hope git itself should use the same library.
 
-> A short answer is "no it is not the case."
-
-Thanks.
-
-> I was about to quote "git checkout" documentation to you because I was reasonably sure that Junio won't respond to people who ask a question whose answer is plainly described in the manual pages, but I think the description of the command is a little confusing especially for people who read it for the first time.
-
-Agreed.
-
->  When <paths> are given, this command does *not* switch
->  branches.  It updates the named paths in the working tree from
->  the index file, or from a named <tree-ish> (most often a commit).  In
->  this case, the `-b` options is meaningless and giving
->  either of them results in an error.  <tree-ish> argument can be
->  used to specify a specific tree-ish (i.e. commit, tag or tree)
-
-Works a lot better.
-
-Thanks for the help!
+The goal of libgit2 is to provide a library that git will use itself
+for basic object manipulation. I do not know if operations like clone
+are planned.
 
 -- 
+Cheers,
 
-In Christ,
-
-Timmy V.
-
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+Sverre Rabbelier
