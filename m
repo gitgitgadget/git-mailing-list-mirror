@@ -1,9 +1,10 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv6 2/4] gitweb: change call pattern for git_commitdiff
-Date: Thu, 18 Dec 2008 08:13:17 +0100
-Message-ID: <1229584399-23879-3-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCHv6 3/4] gitweb: add patches view
+Date: Thu, 18 Dec 2008 08:13:18 +0100
+Message-ID: <1229584399-23879-4-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1229584399-23879-1-git-send-email-giuseppe.bilotta@gmail.com>
  <1229584399-23879-2-git-send-email-giuseppe.bilotta@gmail.com>
+ <1229584399-23879-3-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
 	Junio C Hamano <gitster@pobox.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
@@ -13,82 +14,95 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDD66-0007LV-1U
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 08:15:02 +0100
+	id 1LDD66-0007LV-PH
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 08:15:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751525AbYLRHN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 02:13:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751467AbYLRHN0
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 02:13:26 -0500
+	id S1751891AbYLRHNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 02:13:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751803AbYLRHN3
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 02:13:29 -0500
 Received: from fg-out-1718.google.com ([72.14.220.159]:15163 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751409AbYLRHNY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 02:13:24 -0500
+	with ESMTP id S1751392AbYLRHN1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 02:13:27 -0500
 Received: by fg-out-1718.google.com with SMTP id 19so119795fgg.17
-        for <git@vger.kernel.org>; Wed, 17 Dec 2008 23:13:23 -0800 (PST)
+        for <git@vger.kernel.org>; Wed, 17 Dec 2008 23:13:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=TsNxinyEI3fmwrtBytETjxeaRYxTTE6loVa3HtkI4II=;
-        b=DoGE7OirF/t46YuRznEJ1Gap3Jich3+C5lvAZsfp1bDsTi8zJBCPfoe1fG+8gcmBbl
-         iv/V0q7I7b7t8gmBtYmKZZT43ooP/Z8eR7TXHCOWBUuDVuqaPNy7SipGFa7WdZ+DPaSy
-         w0Y9dADSk/iKdi3x+FRt7meor3wKnmUZK2who=
+        bh=QtpuifmEgihP2MTuRTqT1OAZcOBue0AcJKTTKp3Q/Vc=;
+        b=AF9qjWSs594/irNGXyHpA8RHxWFc0suXQ7z3aV7gjZT/ZdlPFVgGN8LLBR/FB6sO/V
+         o8kFZ6E1L4agIVnRJel8hrKfTC2w1Bz47vf8lLCGqnWxkFD0hqOzaE9c1YORaMIqlL/D
+         6AUjOfsLqowdsgbJzVtL4dxGTXSyN/SCnw89E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=FHj36+kFlzEThkNxJSSXvQ3Wh/vrE4fk8o+Y1+XMpPk/X71qJYwotw+swfp2O4Uqu7
-         oXMFHCH9kHIbVJwNI0LP8y29/PNoTwdo/lKvcPaUvThKvYTf6UMzI7SPWnfk8MeyY331
-         FMFpns9CSWgu86OD6ROSy3eXSPW5/hQZwWC6c=
-Received: by 10.86.100.19 with SMTP id x19mr942825fgb.18.1229584403490;
-        Wed, 17 Dec 2008 23:13:23 -0800 (PST)
+        b=aMjszo7i6gmGLTJ3EBhIRxvrjMg8WSIo0iUNU/EFx01YSCgrrAACL9ZtmrYF900a/I
+         I8iqKm8z55l/HY+qi/kscKN38j/HGrdk+lIld3D3yAmkaTImQy3M2mLPrdCl0V6F0ju+
+         aan22ydCmarqXahgVTTAZ35HFOuombWzP9NYU=
+Received: by 10.86.3.4 with SMTP id 4mr930728fgc.44.1229584405887;
+        Wed, 17 Dec 2008 23:13:25 -0800 (PST)
 Received: from localhost ([78.13.57.58])
-        by mx.google.com with ESMTPS id 4sm5615130fgg.57.2008.12.17.23.13.22
+        by mx.google.com with ESMTPS id d4sm4162907fga.41.2008.12.17.23.13.24
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 17 Dec 2008 23:13:22 -0800 (PST)
+        Wed, 17 Dec 2008 23:13:25 -0800 (PST)
 X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1229584399-23879-2-git-send-email-giuseppe.bilotta@gmail.com>
+In-Reply-To: <1229584399-23879-3-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103440>
 
-Since we are going to introduce an additional parameter for
-git_commitdiff to tune patch view, we switch to named/hash-based
-parameter passing for clarity and robustness.
+The only difference between patch and patches view is in the treatement
+of single commits: the former only displays a single patch, whereas the
+latter displays a patchset leading to the specified commit.
+
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- gitweb/gitweb.perl |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+ gitweb/gitweb.perl |   15 ++++++++++++++-
+ 1 files changed, 14 insertions(+), 1 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1006dfe..18d43e7 100755
+index 18d43e7..78aaebe 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -5412,7 +5412,8 @@ sub git_blobdiff_plain {
- }
- 
- sub git_commitdiff {
--	my $format = shift || 'html';
-+	my %params = @_;
-+	my $format = $params{-format} || 'html';
- 
- 	my $patch_max;
- 	if ($format eq 'patch') {
-@@ -5620,12 +5621,12 @@ sub git_commitdiff {
- }
- 
- sub git_commitdiff_plain {
--	git_commitdiff('plain');
-+	git_commitdiff(-format => 'plain');
- }
+@@ -530,6 +530,7 @@ our %actions = (
+ 	"history" => \&git_history,
+ 	"log" => \&git_log,
+ 	"patch" => \&git_patch,
++	"patches" => \&git_patches,
+ 	"rss" => \&git_rss,
+ 	"atom" => \&git_atom,
+ 	"search" => \&git_search,
+@@ -5530,7 +5531,15 @@ sub git_commitdiff {
+ 			}
+ 			push @commit_spec, '-n', "$hash_parent..$hash";
+ 		} else {
+-			push @commit_spec, '-1', '--root', $hash;
++			if ($params{-single}) {
++				push @commit_spec, '-1';
++			} else {
++				if ($patch_max > 0) {
++					push @commit_spec, "-$patch_max";
++				}
++				push @commit_spec, "-n";
++			}
++			push @commit_spec, '--root', $hash;
+ 		}
+ 		open $fd, "-|", git_cmd(), "format-patch", '--encoding=utf8',
+ 			'--stdout', @commit_spec
+@@ -5626,6 +5635,10 @@ sub git_commitdiff_plain {
  
  # format-patch-style patches
  sub git_patch {
--	git_commitdiff('patch');
-+	git_commitdiff(-format => 'patch');
++	git_commitdiff(-format => 'patch', -single=> 1);
++}
++
++sub git_patches {
+ 	git_commitdiff(-format => 'patch');
  }
  
- sub git_history {
 -- 
 1.5.6.5
