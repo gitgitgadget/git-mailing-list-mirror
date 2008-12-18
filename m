@@ -1,63 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-diff should not fire up $PAGER, period!
-Date: Wed, 17 Dec 2008 18:26:09 -0800
-Message-ID: <7vy6yei5ha.fsf@gitster.siamese.dyndns.org>
-References: <3c6c07c20812171818k6b6e3555ja991e20d74d8291b@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git Notes idea.
+Date: Thu, 18 Dec 2008 04:08:20 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812180407580.14632@racer>
+References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <20081216085108.GA3031@coredump.intra.peff.net> <5d46db230812161043m4a5873a8w4c323d634b639ba0@mail.gmail.com> <alpine.DEB.1.00.0812170003540.14632@racer>
+ <5d46db230812161815s1c48af9dwc96a4701fb2a669b@mail.gmail.com> <alpine.DEB.1.00.0812170420560.14632@racer> <20081217101110.GC18265@coredump.intra.peff.net> <alpine.DEB.1.00.0812171233270.28560@intel-tinevez-2-302>
+ <7voczaobhb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Mike Coleman" <tutufan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 03:28:04 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>,
+	Govind Salinas <govind@sophiasuchtig.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 04:10:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD8cK-0008D0-L4
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 03:28:01 +0100
+	id 1LD9Hf-0000lA-3Y
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 04:10:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260AbYLRC0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 21:26:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbYLRC0T
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 21:26:19 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47482 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751078AbYLRC0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 21:26:19 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 89A9987D25;
-	Wed, 17 Dec 2008 21:26:17 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D409187D20; Wed,
- 17 Dec 2008 21:26:14 -0500 (EST)
-In-Reply-To: <3c6c07c20812171818k6b6e3555ja991e20d74d8291b@mail.gmail.com>
- (Mike Coleman's message of "Wed, 17 Dec 2008 20:18:38 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3FF5911E-CCAB-11DD-8E5C-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751441AbYLRDJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 22:09:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbYLRDJT
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 22:09:19 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45871 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751350AbYLRDJT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 22:09:19 -0500
+Received: (qmail invoked by alias); 18 Dec 2008 03:09:16 -0000
+Received: from pD9EB2D4F.dip0.t-ipconnect.de (EHLO noname) [217.235.45.79]
+  by mail.gmx.net (mp027) with SMTP; 18 Dec 2008 04:09:16 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+9jVxra6m90Uvmdc9pw/CKE96gC/Bs6ObEHsqxCo
+	ydf7zDQ9rpoYj2
+X-X-Sender: gene099@racer
+In-Reply-To: <7voczaobhb.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103422>
 
-"Mike Coleman" <tutufan@gmail.com> writes:
+Hi,
 
-> To me, the most important nugget from the original complaint was that
-> git-diff sends its error messages to stdout.  I understand why it
-> might be done, but I'd worry about losing the stderr diagnostic for a
-> command that matters.  [I've been playing around with this for a few
-> minutes trying to see errors going to stdout and I can't reproduce
-> it--I wonder if they really do.]
+On Wed, 17 Dec 2008, Junio C Hamano wrote:
 
-They indeed did but it has hopefully been fixed.  See a833502 (pager: do
-not dup2 stderr if it is already redirected, 2008-12-15).
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > ...  But the main point still stands: you go from commit to note, not 
+> > from note to commit.  And this is in stark contrast to tags, where you 
+> > go from tag to commit, _not_ from commit to tag.
+> >
+> > That is a fundamental _difference_ between tags and notes, so that I 
+> > refuse to accept the notion of notes being a generalized form of tags.
+> 
+> Hmm, how would you explain things like "git describe" (and "name-rev")?
 
-> ...  Like Junio, I also eschew doing terminal emulation
-> inside of emacs.
+Programs?
 
-Come to think of it, it may have been from you that I picked up the trick
-of setting PAGER to cat inside an Emacs environment.
-
-> Good evening from the icy midwest,
-
-Good evening from rainy and chilly SoCal.
+Ciao,
+Dscho
