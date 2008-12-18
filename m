@@ -1,63 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add git-edit-index.perl
-Date: Thu, 18 Dec 2008 14:48:39 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812181446430.6952@intel-tinevez-2-302>
-References: <20081217204749.GA18261@janet.wally> <20081218043734.GD20749@coredump.intra.peff.net>
+From: "Whit Armstrong" <armstrong.whit@gmail.com>
+Subject: is it possible filter the revision history of a single file into another repository?
+Date: Thu, 18 Dec 2008 08:51:12 -0500
+Message-ID: <8ec76080812180551p8c97a0dqa2025e67792946c7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Neil Roberts <bpeeluk@yahoo.co.uk>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 18 14:50:09 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 18 14:52:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDJGN-0004Wq-Dd
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 14:50:03 +0100
+	id 1LDJIn-0005Qr-Rg
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 14:52:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421AbYLRNso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 08:48:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbYLRNso
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 08:48:44 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51127 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750985AbYLRNsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 08:48:43 -0500
-Received: (qmail invoked by alias); 18 Dec 2008 13:48:40 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp007) with SMTP; 18 Dec 2008 14:48:40 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+h/GoM9y2hbClKTAic9FvZUXL0RUsmyyCaVzrg6X
-	tEXZaAgMBr2il6
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20081218043734.GD20749@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1751468AbYLRNvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 08:51:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751462AbYLRNvO
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 08:51:14 -0500
+Received: from wa-out-1112.google.com ([209.85.146.183]:35225 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751444AbYLRNvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 08:51:14 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so228669wah.21
+        for <git@vger.kernel.org>; Thu, 18 Dec 2008 05:51:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=FRRl2yv6gL1Td7w0atCnDC+pWncTFmktunS1yMzGnuw=;
+        b=dgHnVPbAB06Sl/efX74gvmN9Uq0n3yLWN/3ac1qqaA8dxprozptZEwhRp63V7HhJA7
+         whiUhMPXJO+eP47GA+EKRbjpv7HXdv4ZxVgbpR9UYizMkVGw9EmDiR4+xT+UKSq8fJZt
+         zan836TXpD5+nVSG58XMunslMoBjxY0O8vVx8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=NLHrRksFud8slzZYnxgrNNxF1xy53hME/s7Jp/7E4CnRslSFFGudbA1hUSlQpTpgXM
+         15huvxIGuyiJoeg52kMVia3ElEEEGoqLkduXl0OJCagz9GJF3wBO0BT4J1rtqHTuVVGV
+         PdtfRuB29aNn94MDrVFZOhDQeXssgRu9Rb4ig=
+Received: by 10.114.193.1 with SMTP id q1mr1106039waf.153.1229608272414;
+        Thu, 18 Dec 2008 05:51:12 -0800 (PST)
+Received: by 10.114.136.7 with HTTP; Thu, 18 Dec 2008 05:51:12 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103460>
 
-Hi,
+For instance, if my repository contains foo.c, and 100 other files.
 
-On Wed, 17 Dec 2008, Jeff King wrote:
+I would like to create a new and separate repository containing only
+the revision history of foo.c.
 
-> On Wed, Dec 17, 2008 at 08:47:49PM +0000, Neil Roberts wrote:
-> 
-> > This script can be used to edit a file in the index without affecting 
-> > your working tree. It checkouts a copy of the file to a temporary file 
-> > and runs an editor on it. If the editor completes successfully with a 
-> > non-empty file then it updates the index with the new data.
-> 
-> Hmm. Neat idea.
+Would someone mind pointing me at some documentation for this
+procedure if it exists?
 
-Yes, it is a neat idea.  But I always keep in mind what Junio had to say 
-about my "add -e" thing (that I use pretty frequently myself): you will 
-put something into the index that has _never_ been tested.
-
-Would we really want to bless such a workflow with "official" support?
-
-Ciao,
-Dscho
+Thanks very much,
+Whit
