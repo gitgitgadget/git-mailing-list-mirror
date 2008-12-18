@@ -1,74 +1,144 @@
-From: "Geoffrey Lee" <geoffreyj.lee@gmail.com>
-Subject: Re: Announcement: Git Extensions stable (windows shell extensions)
-Date: Wed, 17 Dec 2008 16:53:17 -0800
-Message-ID: <83d7aaa40812171653tcfa69eex23a22985fc23d3c5@mail.gmail.com>
-References: <1229540813648-1669264.post@n2.nabble.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: how to work in hirarchical git model?
+Date: Thu, 18 Dec 2008 02:00:57 +0100
+Message-ID: <200812180200.57847.johan@herland.net>
+References: <703400.93370.qm@web112210.mail.gq1.yahoo.com>
+ <200812170933.04080.johan@herland.net>
+ <897592.56642.qm@web112219.mail.gq1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Henk <henk_westhuis@hotmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 01:54:38 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Gili Pearl <gili.pearl@yahoo.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 18 02:02:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD79x-0001Xt-7L
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 01:54:37 +0100
+	id 1LD7Hj-0003yO-2z
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 02:02:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752746AbYLRAxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 19:53:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752693AbYLRAxT
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 19:53:19 -0500
-Received: from mail-gx0-f16.google.com ([209.85.217.16]:60928 "EHLO
-	mail-gx0-f16.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752745AbYLRAxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 19:53:18 -0500
-Received: by gxk9 with SMTP id 9so236946gxk.16
-        for <git@vger.kernel.org>; Wed, 17 Dec 2008 16:53:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=3fsZ6TzDY64jCnqX31/nCwv2K6J9UZXnNsvMLPsZAB8=;
-        b=Xb5GK5Ez/MuLL5b8TND58orJAibjWfWCQHo2YurxkKQY7IkHGnlsPB0ba2Ai7zFSgi
-         AJ1sDfNS/aEYoVquRex1BN/pcCbDXTODMTF8GXXL501OPGTYyyyYMe/moehYc5KiXJmd
-         TFWZUK4lNO8JpPAIwtXptwoWD+uwroOKlOWa0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=kLPdoW9jGkDE5CNWCHq+HQW9oqU+Hci8GhmI/LjxnKMbLOamIqGUUcEWmJb2gFw85f
-         62FUnEmPMMkBNWExgbYkrvDpcslSOUUsllm+fdD8KCMWMbIQX+sUqUyABA/cZOipUaUu
-         fvWwdJOec5YCN9luyZ3jQbBG2NGUO9BWOl5E8=
-Received: by 10.151.99.3 with SMTP id b3mr2351042ybm.215.1229561597113;
-        Wed, 17 Dec 2008 16:53:17 -0800 (PST)
-Received: by 10.151.122.12 with HTTP; Wed, 17 Dec 2008 16:53:17 -0800 (PST)
-In-Reply-To: <1229540813648-1669264.post@n2.nabble.com>
-Content-Disposition: inline
+	id S1752760AbYLRBBV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Dec 2008 20:01:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752693AbYLRBBV
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 20:01:21 -0500
+Received: from smtp.getmail.no ([84.208.20.33]:42869 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752628AbYLRBBU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Dec 2008 20:01:20 -0500
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0KC100I47S67V200@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 18 Dec 2008 02:01:19 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KC100B4JS5MC550@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 18 Dec 2008 02:00:58 +0100 (CET)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KC100AFSS5MEFIQ@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Thu, 18 Dec 2008 02:00:58 +0100 (CET)
+In-reply-to: <897592.56642.qm@web112219.mail.gq1.yahoo.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103417>
 
-On Wed, Dec 17, 2008 at 11:06 AM, Henk <henk_westhuis@hotmail.com> wrote:
+On Wednesday 17 December 2008, Gili Pearl wrote:
+> > From: Johan Herland <johan@herland.net>
+> > On Wednesday 17 December 2008, Gili Pearl wrote:
+> > > But what if K-L-M conflict with C-D? The one who should take care
+> > > about it is=A0 the mid-level1 maintainer (or possibly one of the
+> > > low-level1 maintainers).
+> >
+> > If there is a merge conflict, mid-level1 maintainer will typically
+> > merge D and M into a new merge commit N:
+> >
+> > top-level : A----B----C----D
+> > =A0 =A0 =A0 =A0 =A0 =A0  \=A0 =A0 =A0 =A0 =A0 =A0 =A0 \
+> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 \=A0 =A0 =A0 =A0 =A0 =A0 =A0 \
+> > mid-level1:=A0 =A0 K----L----M----N
 >
-> This is a shameless announcement of my latest personal project; Git
-> Extensions. Git Extensions is a Tortoise-like windows shell extension for
-> git. Yesterday I finished version 0.9, the first stable release. I included
-> about all git commands I know about, so I think it is pretty complete but
-> I'm open to suggestions.
+> There's one thing that still bothers me and I'd like to understand.
+> What if someone looks both on top-level repo and mid-level1 repo, and=
+ he
+> want to=A0diff some local commit X against commit D. I didn't try it,=
+ but I
+> wonder how git knows against which=A0D to compare? On the top-level=A0=
+D means
+> A-B-C-D while on the mid-level1 C=A0means A-K-L-M-B-C-D (that is what
+> git-log on mid-level shows). I'm probably missing something here...
+> commit id cannot represent two different histories, right?
 
-I'm curious... How are you dealing with Windows' low limit on icon
-overlay handlers? TortoiseSVN already hits the system limit, hence
-their development of TortoiseOverlay to provide a common icon overlay
-handler for all the Tortoise* projects. Have you gotten GitExtensions
-to work side-by-side with TortoiseSVN? You might want to take a look
-at this document, username "guest" and no password:
+D will always be the same commit in both top-level repo and mid-level1 =
+repo.=20
+Remember that D precedes the merge commit N, so D is not changed by the=
+=20
+merge at all (then we could no longer call it D).
 
-http://tortoisesvn.tigris.org/svn/tortoisesvn/trunk/src/TortoiseOverlays/Documentation.txt
+The diagram above is slightly misleading, in that it does not say wheth=
+er=20
+the merge commit N has been pulled into the top-level repo or not. Here=
+ are=20
+more descriptive illustrations:
 
--Geoffrey Lee
+A) Before the merge:
+
+  A----B----C----D    <-- top-level
+   \
+    \
+     K----L----M    <-- mid-level1
+
+B) After mid-level1 has done the merge
+
+  A----B----C----D    <-- top-level
+   \              \
+    \              \
+     K----L----M----N    <-- mid-level1
+
+C) After top-level has pulled the merge from mid-level1 (assuming top-l=
+evel=20
+has done nothing in the meantime, and can fast-forward to N)
+
+  A----B----C----D
+   \              \
+    \              \
+     K----L----M----N    <-- mid-level1 & top-level
+
+> > ...and then ask top-level maintainer to merge N (which should have =
+no
+> > conflicts by now). The merge can also be done by low-level1 develop=
+er.
+>
+> How can it be done by low-level1? you mean by bypassing mid-level and
+> merging top-level directly?
+
+No. low-level1 will do the merge commit in his repo (typically by creat=
+ing a=20
+new branch at M (thus keeping X & Y out of the way), and then merging D=
+=20
+into this new branch to produce N), and will then ask mid-level1 to pul=
+l=20
+the merge into her repo. From there, the situation is similar to the ab=
+ove=20
+diagrams.
+
+In principle, it's possible for low-level1 to ask top-level directly to=
+ pull=20
+his merge commit, but this is probably frowned upon, because it breaks =
+the=20
+project conventions (although git itself has no problem with this).
+
+
+=2E..Johan
+
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
