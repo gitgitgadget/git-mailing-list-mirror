@@ -1,108 +1,86 @@
-From: Fabien Thomas <thomas.fabien@gmail.com>
-Subject: [topgit] shared topic branch
-Date: Thu, 18 Dec 2008 21:02:33 +0100
-Message-ID: <EFB70468-7900-4B22-925D-3FC5F05F951B@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 18 21:04:02 2008
+From: "Pickens, James E" <james.e.pickens@intel.com>
+Subject: [RFC PATCH 0/2] Add support for multi threaded checkout
+Date: Thu, 18 Dec 2008 13:51:57 -0700
+Message-ID: <3BA20DF9B35F384F8B7395B001EC3FB3265B2A01@azsmsx507.amr.corp.intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 18 21:53:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDP6C-0005DG-NC
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 21:03:57 +0100
+	id 1LDPs6-0000R4-9b
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 21:53:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753514AbYLRUCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 15:02:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753509AbYLRUCj
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 15:02:39 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:60643 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753487AbYLRUCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 15:02:38 -0500
-Received: by bwz14 with SMTP id 14so2350674bwz.13
-        for <git@vger.kernel.org>; Thu, 18 Dec 2008 12:02:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=NMGexxEZBKSjTu3BhPTZePrLzEAU0ZzC9k5HIhwaN1w=;
-        b=spH5CyaGvyMZLKwm4mhcdG70BQXaKuntROXlYMuA1OdDmE7on4h0l1unTwYh30iaU+
-         l2nY8QnxTb0+Qgxz7ktCMUOla68uOZ8h25U3a5g1XqM+oiGsKDWy7NeyWSpbRn7BrwQp
-         a4HFNahC90hzU1MI+MXEuCmyJMoQrJZ8xHuW4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=pn3/G5tyYTQhbLRb+mh3w3GmWvRbsIvUinjDp0KTndwCEZxImwsuNh1JpXRRan+lVD
-         PeB+KJeVlpqbMgvK271KwO7hTYT2qJ1wOOEGDKriiM/zPtcHveUIi12ler39v3mxSbo4
-         2QXii4wEpK1osvPyUDXhnjiIAhH2Nm8ZAtwCg=
-Received: by 10.103.238.4 with SMTP id p4mr917609mur.68.1229630555935;
-        Thu, 18 Dec 2008 12:02:35 -0800 (PST)
-Received: from ?192.168.0.1? (abo-9-36-69.lil.modulonet.fr [85.69.36.9])
-        by mx.google.com with ESMTPS id 7sm6711879mup.40.2008.12.18.12.02.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 18 Dec 2008 12:02:35 -0800 (PST)
-X-Mailer: Apple Mail (2.930.3)
+	id S1751511AbYLRUwI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Dec 2008 15:52:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbYLRUwH
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 15:52:07 -0500
+Received: from mga01.intel.com ([192.55.52.88]:43322 "EHLO mga01.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750915AbYLRUwE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 15:52:04 -0500
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga101.fm.intel.com with ESMTP; 18 Dec 2008 12:43:26 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.36,245,1228118400"; 
+   d="scan'208";a="650961641"
+Received: from unknown (HELO azsmsx601.amr.corp.intel.com) ([10.2.121.193])
+  by fmsmga001.fm.intel.com with ESMTP; 18 Dec 2008 12:52:32 -0800
+Received: from azsmsx507.amr.corp.intel.com ([10.2.121.87]) by
+ azsmsx601.amr.corp.intel.com ([10.2.121.193]) with mapi; Thu, 18 Dec 2008
+ 13:51:58 -0700
+Thread-Topic: [RFC PATCH 0/2] Add support for multi threaded checkout
+Thread-Index: AclhUndRFOK7yuM8TN2LtoebHpxfhg==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103489>
 
-Hi,
 
-I'm testing topgit 0.5 in a shared env. (multiple user working on same  
-patch).
+There was some discussion a while back about improving git performance =
+on
+NFS (http://article.gmane.org/gmane.comp.version-control.git/100950).
+This led to Linus adding the 'preload_index' function, which improves
+performance of several commands using multi threading.  He also briefly
+described how to do the same for 'git checkout'.  Well, I finally found
+some time to work on it, and will post patches shortly.  This is my fir=
+st
+patch; apologies if I screwed something up.
 
-After following the tutorial i end up with something like this:
+Patch 1 adds the functionality, and 2 adds a config option to
+enable/disable it.
 
-$ git branch
-   master
-   topic/test1
-* topic/test2
-$ git branch -r
-   origin/HEAD
-   origin/master
-   origin/svn_stable_7
-   origin/svn_trunk
-   origin/top-bases/topic/test1
-   origin/top-bases/topic/test2
-   origin/topic/test1
-   origin/topic/test2
+Much of the patch is literally copy/paste from preload-index.c into
+unpack-trees.c.  Many of the functions called during checkout are not
+thread safe, so I added a mutex in entry.c to serialize basically
+everything except writing the files to disk.  I also added a mutex in
+unpack-trees.c for the progress meter.
 
-My problem is that when i want to push my local work i'm doing "git  
-push" that will force update the remote branch.
-The problem is that each time master is not up to date i will push my  
-entire master or topic branch to the remote.
+It passes the test suite, and seems fairly safe to my na=EFve eyes.
 
-After looking at git config file it seems that this is something  
-normal generated by "tg remote --populate origin":
+Here are some benchmarks, cloning a linux kernel repo I had on an NFS
+drive:
 
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-[remote "origin"]
-	url = ssh://git@xxx.com
-	fetch = +refs/heads/*:refs/remotes/origin/*
-	fetch = +refs/top-bases/*:refs/remotes/origin/top-bases/*
-	push = +refs/top-bases/*:refs/top-bases/*
-	push = +refs/heads/*:refs/heads/*
-[branch "master"]
-	remote = origin
-	merge = refs/heads/master
-[merge "ours"]
-	name = \"always keep ours\" merge driver
-	driver = touch %A
-[topgit]
-	remote = origin
+                   NFS->NFS    NFS->Local
+master (53682f0c)    2:46.1          13.3
+with threads           36.6          18.2
 
-What i'm doing wrong ?
+So it improved performance on NFS significantly.  Unfortunately it also
+degraded performance on the local disk significantly.  I'm hoping someo=
+ne
+will suggest a way to mitigate that... I think it would be reasonable t=
+o
+disable the threading except when the work dir is on NFS, but I don't
+know how to detect that.  Even in that case it will have *some* impact
+from locking/unlocking the mutex, but I think it would be in the noise.
 
-Regards,
-Fabien
+James
