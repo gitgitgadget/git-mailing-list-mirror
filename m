@@ -1,141 +1,82 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv6 4/4] gitweb: link to patch(es) view in commit(diff) and (short)log view
-Date: Thu, 18 Dec 2008 08:13:19 +0100
-Message-ID: <1229584399-23879-5-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1229584399-23879-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1229584399-23879-2-git-send-email-giuseppe.bilotta@gmail.com>
- <1229584399-23879-3-git-send-email-giuseppe.bilotta@gmail.com>
- <1229584399-23879-4-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 18 08:15:09 2008
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH v2] gitk: force the focus to the main window on Windows
+Date: Thu, 18 Dec 2008 08:30:49 +0100
+Message-ID: <4949FC29.2080200@viscovery.net>
+References: <4948E771.4050705@viscovery.net> <18761.29020.237388.687560@cargo.ozlabs.ibm.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Thu Dec 18 08:32:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDD67-0007LV-Gj
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 08:15:04 +0100
+	id 1LDDMk-0002b1-F4
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 08:32:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751860AbYLRHNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 02:13:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751803AbYLRHNc
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 02:13:32 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:15163 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751690AbYLRHN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 02:13:29 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so119795fgg.17
-        for <git@vger.kernel.org>; Wed, 17 Dec 2008 23:13:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=sBOmnhlV0/3c/WPq9WsP2DNi31Y4R7MYScAq2xTBkAk=;
-        b=sGjMQ6KuECbbUQ8mYuV8hpWsg0M9bMmsry3r4pW6Usa4wVy1wL6EgOnYu98hh/TfyG
-         kQp4xvn0tls/NX2HsUQzqqQCK4CxmzfbwMWlIx8HEdJ2a9pgJ/mWCOQcby4rujjnqA+A
-         AUvgKun9HmXkekVh6JpLTdz1Pv6TiiJFGYSeg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=sy9Pf7/WTsZDldEaydtNUKEFHfEQYVdvHAgZ6S5JU0PigU9l7IJKOYwwdSzOA/9gEq
-         INrFZY6SbqTk2VcmEY2HBX6/gkhJTCzs5rkx3Vm+M1sI8HTU5OX+3Z4K7KXT1K4GXc/0
-         ihNMTXTtq9hBxQ5GmxtIa0KSq32YjQu+1EftI=
-Received: by 10.86.95.20 with SMTP id s20mr931525fgb.39.1229584408098;
-        Wed, 17 Dec 2008 23:13:28 -0800 (PST)
-Received: from localhost ([78.13.57.58])
-        by mx.google.com with ESMTPS id 12sm858081fgg.5.2008.12.17.23.13.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 17 Dec 2008 23:13:27 -0800 (PST)
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1229584399-23879-4-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1750963AbYLRHaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 02:30:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750762AbYLRHaz
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 02:30:55 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:19460 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750757AbYLRHay (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 02:30:54 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LDDLN-0005qp-Qf; Thu, 18 Dec 2008 08:30:50 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 6B86A6EF; Thu, 18 Dec 2008 08:30:49 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <18761.29020.237388.687560@cargo.ozlabs.ibm.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103442>
 
-We link to patch view in commit and commitdiff view, and to patches view
-in log and shortlog view.
+From: Johannes Sixt <j6t@kdbg.org>
 
-In (short)log view, the link is only offered when the number of commits
-shown is no more than the allowed maximum number of patches.
+On msysGit, the focus is first on the (Tk) console.  This console is then
+hidden, but keeps the focus.  Work around that by forcing the focus onto
+the gitk window.
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+This fixes msysGit issue 14. Diagnosed and originally fixed by
+Johannes Schindelin.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- gitweb/gitweb.perl |   30 ++++++++++++++++++++++++++++--
- 1 files changed, 28 insertions(+), 2 deletions(-)
+Paul Mackerras schrieb:
+> At least put a if {[tk windowingsystem] eq "win32"} in there.
+> (msysGit is a windows thing, isn't it?)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 78aaebe..fd8bc29 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -5024,6 +5024,15 @@ sub git_log {
- 
- 	my $paging_nav = format_paging_nav('log', $hash, $head, $page, $#commitlist >= 100);
- 
-+	my ($patch_max) = gitweb_get_feature('patches');
-+	if ($patch_max) {
-+		if ($patch_max < 0 || @commitlist <= $patch_max) {
-+			$paging_nav .= " &sdot; " .
-+				$cgi->a({-href => href(action=>"patches", -replay=>1)},
-+					"patches");
-+		}
-+	}
+I did that.
+
+-- Hannes
+
+ gitk |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/gitk b/gitk
+index b63109b..121b621 100644
+--- a/gitk
++++ b/gitk
+@@ -10898,4 +10898,9 @@ if {[info exists permviews]} {
+ 	addviewmenu $n
+     }
+ }
 +
- 	git_header_html();
- 	git_print_page_nav('log','', $hash,undef,undef, $paging_nav);
- 
-@@ -5103,6 +5112,11 @@ sub git_commit {
- 			} @$parents ) .
- 			')';
- 	}
-+	if (gitweb_check_feature('patches')) {
-+		$formats_nav .= " | " .
-+			$cgi->a({-href => href(action=>"patch", -replay=>1)},
-+				"patch");
-+	}
- 
- 	if (!defined $parent) {
- 		$parent = "--root";
-@@ -5416,9 +5430,8 @@ sub git_commitdiff {
- 	my %params = @_;
- 	my $format = $params{-format} || 'html';
- 
--	my $patch_max;
-+	my ($patch_max) = gitweb_get_feature('patches');
- 	if ($format eq 'patch') {
--		($patch_max) = gitweb_get_feature('patches');
- 		die_error(403, "Patch view not allowed") unless $patch_max;
- 	}
- 
-@@ -5436,6 +5449,11 @@ sub git_commitdiff {
- 		$formats_nav =
- 			$cgi->a({-href => href(action=>"commitdiff_plain", -replay=>1)},
- 			        "raw");
-+		if ($patch_max) {
-+			$formats_nav .= " | " .
-+				$cgi->a({-href => href(action=>"patch", -replay=>1)},
-+					"patch");
-+		}
- 
- 		if (defined $hash_parent &&
- 		    $hash_parent ne '-c' && $hash_parent ne '--cc') {
-@@ -5992,6 +6010,14 @@ sub git_shortlog {
- 			$cgi->a({-href => href(-replay=>1, page=>$page+1),
- 			         -accesskey => "n", -title => "Alt-n"}, "next");
- 	}
-+	my $patch_max = gitweb_check_feature('patches');
-+	if ($patch_max) {
-+		if ($patch_max < 0 || @commitlist <= $patch_max) {
-+			$paging_nav .= " &sdot; " .
-+				$cgi->a({-href => href(action=>"patches", -replay=>1)},
-+					"patches");
-+		}
-+	}
- 
- 	git_header_html();
- 	git_print_page_nav('shortlog','', $hash,$hash,$hash, $paging_nav);
++if {[tk windowingsystem] eq "win32"} {
++    focus -force .
++}
++
+ getcommits {}
 -- 
-1.5.6.5
+1.6.1.rc3.950.g5dd2
