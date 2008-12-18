@@ -1,90 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 2/3] gitweb: add patches view
-Date: Thu, 18 Dec 2008 18:28:10 +0100
-Message-ID: <200812181828.11815.jnareb@gmail.com>
-References: <1229422290-6213-1-git-send-email-giuseppe.bilotta@gmail.com> <200812181033.57360.jnareb@gmail.com> <cb7bb73a0812180823y5249abcakd419d4fee9942d84@mail.gmail.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 4/5] Make 'diff_populate_filespec()' use the new   'strbuf_readlink()'
+Date: Thu, 18 Dec 2008 18:41:43 +0100
+Message-ID: <494A8B57.6070106@lsrfire.ath.cx>
+References: <alpine.LFD.2.00.0812171034520.14014@localhost.localdomain> <alpine.LFD.2.00.0812171042120.14014@localhost.localdomain> <alpine.LFD.2.00.0812171042500.14014@localhost.localdomain> <alpine.LFD.2.00.0812171043180.14014@localhost.localdomain> <alpine.LFD.2.00.0812171043440.14014@localhost.localdomain> <20081218121118.3635c53c@crow> <alpine.LFD.2.00.0812180851120.14014@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Petr Baudis" <pasky@suse.cz>
-To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 18:30:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mark Burton <markb@ordern.com>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Dec 18 18:43:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDMhf-00085c-Lu
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 18:30:28 +0100
+	id 1LDMtx-00054w-MP
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 18:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753052AbYLRR22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 12:28:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753030AbYLRR22
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 12:28:28 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:33415 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752927AbYLRR20 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 12:28:26 -0500
-Received: by bwz14 with SMTP id 14so2041985bwz.13
-        for <git@vger.kernel.org>; Thu, 18 Dec 2008 09:28:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=3gjjYlehnK++5PpS3hIq71+G7VIZSHJ5YVptRuQK0uk=;
-        b=c0DbD3bsR97KzwySFYB/OWLdZ3Eivk1fVm6Ptb0lmWaBmqB34p3jN4+Jv5j5DSEaXe
-         /CqLAgfGSSdH7ZYZXWnGh3ngzRCH291uZMOf5LnIHJ7y/NVGV0mjOXxpTCCGl9MxPEhu
-         xwlKv67G5vwnFDl+jGvg2sP4brCZCJdNH2pvQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=B+KxSxlaGbqcc4bbCa/CjsP67/O62pMcCgQEVfnp/DpkTmx6dGTPS+Ud98hozNJ2X+
-         x+aUrb2nl5RRXoVPniOBvQxVzTW954bXxIbNYFMBMq0k4IP1bq3BDcIrLK94CdO8Wujk
-         URADD2Fyl5SuKNRulDkcXtcjkQ8cNNHoNPKEc=
-Received: by 10.223.104.68 with SMTP id n4mr1952789fao.4.1229621304424;
-        Thu, 18 Dec 2008 09:28:24 -0800 (PST)
-Received: from ?192.168.1.11? (abwk173.neoplus.adsl.tpnet.pl [83.8.234.173])
-        by mx.google.com with ESMTPS id b17sm11572686fka.17.2008.12.18.09.28.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 18 Dec 2008 09:28:23 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0812180823y5249abcakd419d4fee9942d84@mail.gmail.com>
-Content-Disposition: inline
+	id S1751527AbYLRRlv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Dec 2008 12:41:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751543AbYLRRlv
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 12:41:51 -0500
+Received: from india601.server4you.de ([85.25.151.105]:35237 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750917AbYLRRlv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 12:41:51 -0500
+Received: from [10.0.1.101] (p57B7E582.dip.t-dialin.net [87.183.229.130])
+	by india601.server4you.de (Postfix) with ESMTPSA id 15B042F805F;
+	Thu, 18 Dec 2008 18:41:49 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <alpine.LFD.2.00.0812180851120.14014@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103476>
 
-On Thu, Dec 18, 2008, Giuseppe Bilotta wrote:
-> On Thu, Dec 18, 2008, Jakub Narebski <jnareb@gmail.com> wrote:
->> On Thu, 18 Dec 2008, Junio C Hamano wrote:
+Linus Torvalds schrieb:
+>=20
+> On Thu, 18 Dec 2008, Mark Burton wrote:
+>> Does it need a cast on some architectures?
+>=20
+> Gaah. My bad. It should work fine ("unsigned long" is physically the =
+same=20
+> type as "size_t" in your case), but on 32-bit x86, size_t is generall=
+y=20
+> "unsigned int" - which is the same physical type there (both int and =
+long=20
+> are 32-bit) but causes a valid warning.
+>=20
+> I think we should just make the "size" member "size_t". I use "unsign=
+ed=20
+> long" out of much too long habit, since we traditionally avoided "siz=
+e_t"=20
+> in the kernel due to it just being another unnecessary architecture-=20
+> specific detail.
+>=20
+> So the proper patch is probably just the following. Sorry about that,
+>=20
+> 		Linus
+> ---
+>  diffcore.h |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/diffcore.h b/diffcore.h
+> index 5b63458..16a73e6 100644
+> --- a/diffcore.h
+> +++ b/diffcore.h
+> @@ -30,7 +30,7 @@ struct diff_filespec {
+>  	void *data;
+>  	void *cnt_data;
+>  	const char *funcname_pattern_ident;
+> -	unsigned long size;
+> +	size_t size;
+>  	int count;               /* Reference count */
+>  	int xfrm_flags;		 /* for use by the xfrm */
+>  	int rename_used;         /* Count of rename users */
 
->>> [...] wouldn't it make more sense to also do this?
->>>
->>>       git_commitdiff(--format => 'patch', --single => 1);
->>>       git_commitdiff(--format => 'html');
->>
->> The first argument (format) is _required_, second is _optional_;
->> I'd rather use named parameters trick only for optional parameters.
->> Because with more than one optional parameter function call begins
->> to be cryptic; also flag (boolean) parameters are more readable
->> when used as named parameters.
-> 
-> I have mixed feelings about this: on the one hand we have href() (say)
-> that takes all its params from a has, but on the other hand we have
-> esc_html() (say) that takes only additional options from a hash. [...]
+Yes, but now I get two new warnings:
 
-It is not "on one hand".  href() is a bit special case. It has _all_
-parameters optional, especially now that -replay=>1 was introduced.
-It has no required parameters. Therefore all parameters are named.
+diff.c: In function `diff_populate_filespec':
+diff.c:1809: warning: passing arg 2 of `sha1_object_info' from
+incompatible pointer type
+diff.c:1811: warning: passing arg 3 of `read_sha1_file' from
+incompatible pointer type
 
-Beside, href() mimics a bit CGI interface...
+If we followed that way along we'd convert just about everything to use
+size_t, which is going a bit too far during the -rc phase..
 
--- 
-Jakub Narebski
-Poland
+Ren=E9
+
+
+PS: In the other subthread, I was missing the "t" in "st" in line 1757,
+not 1760.  Ahem.
