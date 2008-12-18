@@ -1,122 +1,74 @@
-From: "Whit Armstrong" <armstrong.whit@gmail.com>
-Subject: Re: is it possible filter the revision history of a single file into another repository?
-Date: Thu, 18 Dec 2008 14:51:38 -0500
-Message-ID: <8ec76080812181151y4a5a6f5cna57785c935032e77@mail.gmail.com>
-References: <8ec76080812180551p8c97a0dqa2025e67792946c7@mail.gmail.com>
-	 <200812181504.02105.thomas.jarosch@intra2net.com>
-	 <8ec76080812180619k78a28e30t591b514148202869@mail.gmail.com>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv5 2/3] gitweb: add patches view
+Date: Thu, 18 Dec 2008 20:57:43 +0100
+Message-ID: <cb7bb73a0812181157r20b0cbc3t290e32454a435b0c@mail.gmail.com>
+References: <1229422290-6213-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1229422290-6213-3-git-send-email-giuseppe.bilotta@gmail.com>
+	 <7v4p12hv5q.fsf@gitster.siamese.dyndns.org>
+	 <200812181915.48556.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Thomas Jarosch" <thomas.jarosch@intra2net.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 20:58:45 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Petr Baudis" <pasky@suse.cz>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 20:59:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDP15-00035R-Pb
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 20:58:40 +0100
+	id 1LDP1U-0003Eq-7K
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 20:59:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752112AbYLRT5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 14:57:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbYLRT5V
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 14:57:21 -0500
-Received: from yw-out-2324.google.com ([74.125.46.30]:13995 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752094AbYLRT5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 14:57:20 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so238725ywe.1
-        for <git@vger.kernel.org>; Thu, 18 Dec 2008 11:57:19 -0800 (PST)
+	id S1752136AbYLRT5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 14:57:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752131AbYLRT5q
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 14:57:46 -0500
+Received: from ik-out-1112.google.com ([66.249.90.183]:53053 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752098AbYLRT5p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 14:57:45 -0500
+Received: by ik-out-1112.google.com with SMTP id c29so134634ika.5
+        for <git@vger.kernel.org>; Thu, 18 Dec 2008 11:57:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=tjslZPfHa0t7hffScacs5WtdXn+qh1PSA0vEvsooyRc=;
-        b=i5MQz4oUSMX4P6o3jZ9/MbH5s0eeodKncgQEYef3m4G666rC4/ZV1zujWjsHrzXwhf
-         WoGcikUce8Y4pvQYCxWIOCse5KjQZGR3A+WxAz5vSXQE+FRLe44D30NjWsDFt03ok68L
-         nqNFWmN6YBmTkYGDmmtWaIKCDA8x0bwXuquJI=
+        bh=RJ+oiiJw7KpMjdP7eusn3sEXQepgeJBSes0MGIoaaz4=;
+        b=OcPq0rWerEuvDG/lfi2gkbJ4X2dqvIOvM8RALOv0zZGODSoK8UYU5O5k0o4d/OFmIi
+         r+TA+Lk0H5HXmSabR0yqIVbOJ77rlgzgJmtIaTc2Xcmv4sho3Ryr57Je9hGIjT7cIxU0
+         wOA1PN5K7ypCmw2RweM2gV1aTzNSM5/J0XKec=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=mIHXa5uZaikvbPziVyqEqCMgHvg0Tnq2ii/VuZb7SPfuM1TsVIAF+CwcZaWs9DJUb3
-         mRzBRZxA8SDmHM2LOGqdDY2KCSssBvd1fEWP9CObVG/ZW8Wh1kTjHvDaSywEwAsOq2JZ
-         fyHJehFC4GY7gwqg2MwOuc7YjVW13OUAFo1iU=
-Received: by 10.151.109.11 with SMTP id l11mr2606021ybm.71.1229629898598;
-        Thu, 18 Dec 2008 11:51:38 -0800 (PST)
-Received: by 10.151.136.2 with HTTP; Thu, 18 Dec 2008 11:51:38 -0800 (PST)
-In-Reply-To: <8ec76080812180619k78a28e30t591b514148202869@mail.gmail.com>
+        b=fYjkVWg5FSQr2pLpKuJsPjuqcxrWria9DOse6S/WbS+rKBxEb+nyorZ2w1xHI8A+gK
+         ZzSxDOMd6jFVN0KpTvePBoFkZFz0Ual5C9CXzQEFZCf6YKZzUutsZcD2rDlkM5gr0G39
+         CCYkDzuLlJaxexnXbZR5RS5rclXzNTqTdOjG8=
+Received: by 10.210.24.12 with SMTP id 12mr2784054ebx.34.1229630263915;
+        Thu, 18 Dec 2008 11:57:43 -0800 (PST)
+Received: by 10.210.136.4 with HTTP; Thu, 18 Dec 2008 11:57:43 -0800 (PST)
+In-Reply-To: <200812181915.48556.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103487>
 
-Sorry, seem to be getting this error:
-`/home/whit/dvl/risk.metrics.utils/RiskMetrics/.git-rewrite/t/../index.new':
-No such file or directory
-
-do I need to set up the index file first?
-
-Is there a good site that documents this procedure?
-
-[whit@linuxsvr RiskMetrics]$ git filter-branch --tag-name-filter cat
---index-filter \
->    'git ls-files -s |grep -P "riskmetrics.rb" \
->    |GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info &&
->    mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' -- --all
-Rewrite 8f1a0eaae033d109f4a3a4b410bd8e04dd9997db (1/481)mv: cannot
-stat `/home/whit/dvl/risk.metrics.utils/RiskMetrics/.git-rewrite/t/../index.new':
-No such file or directory
-index filter failed: git ls-files -s |grep -P "riskmetrics.rb" \
-   |GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info &&
-   mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE
-[whit@linuxsvr RiskMetrics]$
-
-
-
-On Thu, Dec 18, 2008 at 9:19 AM, Whit Armstrong
-<armstrong.whit@gmail.com> wrote:
-> thanks, I will give this a try.
+On Thu, Dec 18, 2008 at 7:15 PM, Jakub Narebski <jnareb@gmail.com> wrote:
 >
-> On Thu, Dec 18, 2008 at 9:04 AM, Thomas Jarosch
-> <thomas.jarosch@intra2net.com> wrote:
->> On Thursday, 18. December 2008 14:51:12 Whit Armstrong wrote:
->>> For instance, if my repository contains foo.c, and 100 other files.
->>>
->>> I would like to create a new and separate repository containing only
->>> the revision history of foo.c.
->>>
->>> Would someone mind pointing me at some documentation for this
->>> procedure if it exists?
->>
->> This worked for me:
->>
->> git filter-branch --tag-name-filter cat --index-filter \
->>    'git ls-files -s |grep -P "\t(DIR1|DIR2)" \
->>    |GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info &&
->>    mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' -- --all
->>
->> Run "git ls-files -s" to see the output format.
->> Replace the "DIR1|DIR2" with "foo.c".
->>
->> Later on you might want to remove empty commits from the history:
->> git filter-branch --tag-name-filter cat --commit-filter 'if [ z$1 = z`git rev-parse $3^{tree}` ]; then skip_commit "$@"; else git commit-tree "$@"; fi' "$@" -- --all
->>
->> If you want to run two filter-branch commands in a row
->> or you want to free up the space in .git afterwards:
->>
->> - git for-each-ref --format='%(refname)' refs/original | xargs -i git update-ref -d {}
->> - git reflog expire --expire=0 --all
->> - git repack -a -d
->> - git prune
->>
->> Cheers,
->> Thomas
->>
->>
->
+> Just a though, but does it really take much sense to have "patch" and
+> "patches" views handled in git_commitdiff? I can understand in the
+> first version, where it was more about better 'commitdiff_plain', but
+> I wonder about now, where patch(es) view is something between git show
+> and log_plain format... Wouldn't it be simpler to use separate
+> subroutine, for example git_format_patch or something?
+
+I don't feel like much has changed since the beginning when IYO it
+made sense to have it part of commitdiff, honestly
+
+-- 
+Giuseppe "Oblomov" Bilotta
