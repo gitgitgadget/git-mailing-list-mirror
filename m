@@ -1,65 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git Notes idea.
-Date: Thu, 18 Dec 2008 04:08:20 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812180407580.14632@racer>
-References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <20081216085108.GA3031@coredump.intra.peff.net> <5d46db230812161043m4a5873a8w4c323d634b639ba0@mail.gmail.com> <alpine.DEB.1.00.0812170003540.14632@racer>
- <5d46db230812161815s1c48af9dwc96a4701fb2a669b@mail.gmail.com> <alpine.DEB.1.00.0812170420560.14632@racer> <20081217101110.GC18265@coredump.intra.peff.net> <alpine.DEB.1.00.0812171233270.28560@intel-tinevez-2-302>
- <7voczaobhb.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git - index-pack missing
+Date: Wed, 17 Dec 2008 19:15:00 -0800
+Message-ID: <7vr646i37v.fsf@gitster.siamese.dyndns.org>
+References: <54F47863-AF55-4FB7-8A43-A4253E1F782C@michaelbutros.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>,
-	Govind Salinas <govind@sophiasuchtig.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 18 04:10:43 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Boutros <me@michaelboutros.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 04:16:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD9Hf-0000lA-3Y
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 04:10:43 +0100
+	id 1LD9NA-00023x-JL
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 04:16:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751441AbYLRDJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 22:09:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbYLRDJT
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 22:09:19 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45871 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751350AbYLRDJT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 22:09:19 -0500
-Received: (qmail invoked by alias); 18 Dec 2008 03:09:16 -0000
-Received: from pD9EB2D4F.dip0.t-ipconnect.de (EHLO noname) [217.235.45.79]
-  by mail.gmx.net (mp027) with SMTP; 18 Dec 2008 04:09:16 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+9jVxra6m90Uvmdc9pw/CKE96gC/Bs6ObEHsqxCo
-	ydf7zDQ9rpoYj2
-X-X-Sender: gene099@racer
-In-Reply-To: <7voczaobhb.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+	id S1751515AbYLRDPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 22:15:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbYLRDPI
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 22:15:08 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60897 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751479AbYLRDPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 22:15:06 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C14C88815D;
+	Wed, 17 Dec 2008 22:15:05 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 002878815C; Wed,
+ 17 Dec 2008 22:15:02 -0500 (EST)
+In-Reply-To: <54F47863-AF55-4FB7-8A43-A4253E1F782C@michaelbutros.com>
+ (Michael Boutros's message of "Wed, 17 Dec 2008 18:40:40 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1151B82C-CCB2-11DD-9C06-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103423>
 
-Hi,
+Michael Boutros <me@michaelboutros.com> writes:
 
-On Wed, 17 Dec 2008, Junio C Hamano wrote:
+> I'm trying to clone a repository for the first time on a hosting
+> account that just got setup with Git. However, the problem is that for
+> some reason there is no git-index-pack. I cannot find any reason that
+> that one particular command would not be installed, but for some
+> reason that seems to be the case.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > ...  But the main point still stands: you go from commit to note, not 
-> > from note to commit.  And this is in stark contrast to tags, where you 
-> > go from tag to commit, _not_ from commit to tag.
-> >
-> > That is a fundamental _difference_ between tags and notes, so that I 
-> > refuse to accept the notion of notes being a generalized form of tags.
-> 
-> Hmm, how would you explain things like "git describe" (and "name-rev")?
+You may want to study output from "git help --all" to see if there is
+anything *else* that is missing.  You did not say which version of git you
+use, and how it was built and installed with which non-standard options
+and in what way, so it is hard to guess what is going on.
 
-Programs?
+Perhaps:
 
-Ciao,
-Dscho
+	$ cd ~root
+        $ grep 'rm .*index-pack' .history .bash_history
+
+could help locating the cause of breakage, but there are other ways to
+break your installation, so...
+
+> Has anyone ever heard of anything like this?
+
+Not me.
