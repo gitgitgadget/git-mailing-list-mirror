@@ -1,85 +1,84 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: git-fast-export and tags without a tagger
-Date: Thu, 18 Dec 2008 17:46:14 +0100
-Message-ID: <20081218164614.GS5691@genesis.frugalware.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 4/5] Make 'diff_populate_filespec()' use the new
+ 'strbuf_readlink()'
+Date: Thu, 18 Dec 2008 08:55:50 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0812180851120.14014@localhost.localdomain>
+References: <alpine.LFD.2.00.0812171034520.14014@localhost.localdomain> <alpine.LFD.2.00.0812171042120.14014@localhost.localdomain> <alpine.LFD.2.00.0812171042500.14014@localhost.localdomain> <alpine.LFD.2.00.0812171043180.14014@localhost.localdomain>
+ <alpine.LFD.2.00.0812171043440.14014@localhost.localdomain> <20081218121118.3635c53c@crow>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Gf9uwQCH04IP1HVU"
-Cc: git@vger.kernel.org, scott@canonical.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Dec 18 17:47:46 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mark Burton <markb@ordern.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 17:58:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDM2I-0005Ow-90
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 17:47:42 +0100
+	id 1LDMCI-0001ZM-2h
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 17:58:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751901AbYLRQqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 11:46:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbYLRQqQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 11:46:16 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:34489 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751801AbYLRQqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 11:46:15 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 2030458095;
-	Thu, 18 Dec 2008 17:46:14 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 03C174465E;
-	Thu, 18 Dec 2008 17:46:13 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 3DF3311B862F; Thu, 18 Dec 2008 17:46:14 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751229AbYLRQ4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 11:56:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750892AbYLRQ4o
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 11:56:44 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:46579 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750762AbYLRQ4n (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 11:56:43 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBIGtpQ6009205
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 18 Dec 2008 08:55:52 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBIGtoRO011245;
+	Thu, 18 Dec 2008 08:55:51 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <20081218121118.3635c53c@crow>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.923 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103471>
 
 
---Gf9uwQCH04IP1HVU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-Hi,
+On Thu, 18 Dec 2008, Mark Burton wrote:
+> 
+> Does it need a cast on some architectures?
 
-Tags created with ancient versions of git have no tagger. The udev repo
-has such tags, for example:
+Gaah. My bad. It should work fine ("unsigned long" is physically the same 
+type as "size_t" in your case), but on 32-bit x86, size_t is generally 
+"unsigned int" - which is the same physical type there (both int and long 
+are 32-bit) but causes a valid warning.
 
-$ git cat-file tag 4ea98ca6db3b84f5bc16eac8574e5c209ec823ce
-object face198a5f21027fefe796dc01e19e349a2d36ce
-type commit
-tag 062
+I think we should just make the "size" member "size_t". I use "unsigned 
+long" out of much too long habit, since we traditionally avoided "size_t" 
+in the kernel due to it just being another unnecessary architecture- 
+specific detail.
 
-fast-export will fail on these repos. From IRC:
+So the proper patch is probably just the following. Sorry about that,
 
-20:05 < Keybuk> vmiklos: exactly the same error with 1.6.0.5
-20:07 < Keybuk> $ git fast-export --signed-tag=strip --all
-20:07 < Keybuk> fatal: No tagger for tag 4ea98ca6db3b84f5bc16eac8574e5c209ec823ce
+		Linus
+---
+ diffcore.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I think it would be nice to handle the situation better than just die().
-
-What about a --force option that would fake the tagger in case the tag
-points to a commmit and use the commiter from there?
-
-I'm willing to work on this, but I thought it's better to discuss the
-right solution for the problem first.
-
-Thanks.
-
---Gf9uwQCH04IP1HVU
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklKflYACgkQe81tAgORUJbDigCgliEplcZLoNYnQaJCthjKltm2
-bU4AoJBPHfXgQK07g/7i9BsV3P3AyS5A
-=3PrH
------END PGP SIGNATURE-----
-
---Gf9uwQCH04IP1HVU--
+diff --git a/diffcore.h b/diffcore.h
+index 5b63458..16a73e6 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -30,7 +30,7 @@ struct diff_filespec {
+ 	void *data;
+ 	void *cnt_data;
+ 	const char *funcname_pattern_ident;
+-	unsigned long size;
++	size_t size;
+ 	int count;               /* Reference count */
+ 	int xfrm_flags;		 /* for use by the xfrm */
+ 	int rename_used;         /* Count of rename users */
