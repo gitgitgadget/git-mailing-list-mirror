@@ -1,58 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-fast-export and tags without a tagger
-Date: Thu, 18 Dec 2008 11:15:54 -0800
-Message-ID: <7vbpv9guqd.fsf@gitster.siamese.dyndns.org>
-References: <20081218164614.GS5691@genesis.frugalware.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, scott@canonical.com
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Dec 18 20:17:27 2008
+From: Indy Nagpal <indy@strakersoftware.com>
+Subject: Git with Hudson
+Date: Fri, 19 Dec 2008 08:23:19 +1300
+Message-ID: <D2F0F023-862A-4BAB-88B9-BFEFC5592D10@strakersoftware.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 18 20:24:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDONA-0002hY-AU
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 20:17:24 +0100
+	id 1LDOUH-0005Zh-Ks
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 20:24:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752006AbYLRTQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 14:16:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751801AbYLRTQF
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 14:16:05 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56439 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751527AbYLRTQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 14:16:03 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5DA9188EF2;
-	Thu, 18 Dec 2008 14:16:02 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6176088EF1; Thu,
- 18 Dec 2008 14:15:57 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4F5367AC-CD38-11DD-B32E-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752841AbYLRTX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 14:23:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752250AbYLRTX0
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 14:23:26 -0500
+Received: from wa-out-1112.google.com ([209.85.146.180]:6508 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751959AbYLRTXZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 14:23:25 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so299717wah.21
+        for <git@vger.kernel.org>; Thu, 18 Dec 2008 11:23:25 -0800 (PST)
+Received: by 10.114.167.10 with SMTP id p10mr1318982wae.198.1229628204635;
+        Thu, 18 Dec 2008 11:23:24 -0800 (PST)
+Received: from ?192.168.0.102? (121-72-160-74.dsl.telstraclear.net [121.72.160.74])
+        by mx.google.com with ESMTPS id m28sm3125550poh.25.2008.12.18.11.23.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 18 Dec 2008 11:23:23 -0800 (PST)
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103482>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Hi
 
-> Tags created with ancient versions of git have no tagger. The udev repo
-> has such tags, for example:
->
-> $ git cat-file tag 4ea98ca6db3b84f5bc16eac8574e5c209ec823ce
-> object face198a5f21027fefe796dc01e19e349a2d36ce
-> type commit
-> tag 062
->
-> fast-export will fail on these repos. From IRC:
+Currently we use Subversion as our VCS. This ties into our CI process  
+that uses Hudson.
 
-Is "fast-export" the only thing that chokes on these tags?
+I've been using git svn with great success over the last few months  
+and a few our developers have also started using it. We now almost  
+ready to switch our repository from SVN to Git.
 
-What I am worried about is if we have accidentally/stupidly/by mistake
-made other codepaths that check the validity of a tag object too strict,
-which would result things like "git show $such_a_tag" to barf.
+However, before we do that I wanted to check if anyone has had any  
+experience/feedback in integrating Git with Hudson CI server?
+
+Thanks
+
+Indy
+
+PS: Apologies if this is posted a couple of times to the list. Gmail  
+is refusing to send the email to the mailing list address, so trying  
+to send it in a couple of different ways
+
+-- 
+Indiver Nagpal
+Straker Interactive
