@@ -1,80 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add git-edit-index.perl
-Date: Thu, 18 Dec 2008 13:40:34 -0800
-Message-ID: <7vprjpf9gt.fsf@gitster.siamese.dyndns.org>
-References: <20081217204749.GA18261@janet.wally>
- <20081218043734.GD20749@coredump.intra.peff.net>
- <alpine.DEB.1.00.0812181446430.6952@intel-tinevez-2-302>
- <20081218140411.GB6706@coredump.intra.peff.net>
+From: "James Pickens" <jepicken@gmail.com>
+Subject: Re: [RFC PATCH 0/2] Add support for multi threaded checkout
+Date: Thu, 18 Dec 2008 14:42:21 -0700
+Message-ID: <885649360812181342u2978038fj3a11670acd9fd873@mail.gmail.com>
+References: <3BA20DF9B35F384F8B7395B001EC3FB3265B2A01@azsmsx507.amr.corp.intel.com>
+	 <494ABDC9.9060001@morey-chaisemartin.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Neil Roberts <bpeeluk@yahoo.co.uk>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 18 22:42:22 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: devel@morey-chaisemartin.com
+X-From: git-owner@vger.kernel.org Thu Dec 18 22:43:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDQd8-0002K2-LJ
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 22:42:03 +0100
+	id 1LDQej-00030E-IJ
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 22:43:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752266AbYLRVko (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 16:40:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752227AbYLRVko
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 16:40:44 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52864 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752183AbYLRVko (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 16:40:44 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0628A1A979;
-	Thu, 18 Dec 2008 16:40:43 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F2F191A988; Thu,
- 18 Dec 2008 16:40:36 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 85642BBA-CD4C-11DD-A167-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752675AbYLRVmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 16:42:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752557AbYLRVmX
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 16:42:23 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:19121 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752331AbYLRVmW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 16:42:22 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so328262wah.21
+        for <git@vger.kernel.org>; Thu, 18 Dec 2008 13:42:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=rI5UeiNwVc3rlDXzgDGnOEBeF3Neg/TJH+6LCCaXwQ0=;
+        b=HZKZ3PNtRhddBl8jg8wqOXglm8lntvsMi0365/fSpzd7/+jsVqgYkhLwCfHGi+aTf5
+         MgxwWntBY4sniHLYesI36Q0ByrZvPT7viPluA86gJp6an0dPIN6YYm8kF/pHqKFEZGWj
+         Qtk+B2VX+OEqROixE2Sa2yveL6Dqif7BuwJCU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=hDni26gTftBvDS8a8/GtQw9SsfebwzIeaIlDMt2v+gH7CK4RzAx0yBXRH8E6ZT4+/l
+         y8aktv23k/i9LlCdgJo4JSsMUta+HRsEZkur6Yh4S2GqujZ4e9YJFCPolE1ZK0auYu2c
+         qaEfB0lxmEWeH999pfgHfRvL6ITPuuuybvx6g=
+Received: by 10.114.197.1 with SMTP id u1mr1414537waf.120.1229636541288;
+        Thu, 18 Dec 2008 13:42:21 -0800 (PST)
+Received: by 10.114.80.15 with HTTP; Thu, 18 Dec 2008 13:42:21 -0800 (PST)
+In-Reply-To: <494ABDC9.9060001@morey-chaisemartin.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103498>
 
-Jeff King <peff@peff.net> writes:
-
-> On Thu, Dec 18, 2008 at 02:48:39PM +0100, Johannes Schindelin wrote:
+On Thu, Dec 18, 2008 at 2:16 PM, Nicolas Morey-Chaisemartin
+<devel@morey-chaisemartin.com> wrote:
+> I guess you could do something like :
 >
->> Yes, it is a neat idea.  But I always keep in mind what Junio had to say 
->> about my "add -e" thing (that I use pretty frequently myself): you will 
->> put something into the index that has _never_ been tested.
->> 
->> Would we really want to bless such a workflow with "official" support?
-
-Back in stone ages of git, there wasn't usable tool support to make random
-unproven commits, later to be tested separately before releasing.  The old
-aversion to committing something that has never existed as a whole in the
-work tree comes from those days.
-
-The world has changed quite a bit since then, and I do not think the
-argument holds anymore when better tool support for "commit first,
-validate and fix-up as needed later" workflow is available.
-
-> That is definitely something to be concerned about. Which is why my
-> workflow is something like:
+> #define checkout_lock()         core_threaded_checkout ?pthread_mutex_lock(&checkout_mutex) : (void) 0
+> #define checkout_unlock()               core_threaded_checkout ?pthread_mutex_unlock(&checkout_mutex) : (void) 0
 >
->   $ hack hack hack
->   $ while ! git diff; do
->       git add -p
->       git commit
->     done
->   $ for i in `git rev-list origin..`; do
->       git checkout $i && make test || barf
->     done
+> It should be faster when you don't actually use threaded checkouts, as you won't unnecessarily lock/unlock your mutex.
 >
-> That is, it is not inherently a problem to put something untested into
-> the index as long as you are doing it so that you can go back and test
-> later.
+> Have you looked at the perf from local to local? I'm just curious.
 
-Yeah, I do not think there is anything inherently wrong about it, either.
+
+I had looked at it before but didn't record any numbers.  I just took the
+following timings (2 runs each):
+
+master             13.78    12.79
+threads enabled    16.84    20.45
+threads disabled   14.07    13.27
+
+James
