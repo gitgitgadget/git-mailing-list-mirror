@@ -1,71 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fast-export: deal with tag objects that do not have a
- tagger
-Date: Thu, 18 Dec 2008 15:20:29 -0800
-Message-ID: <7viqphf4ua.fsf@gitster.siamese.dyndns.org>
-References: <20081218164614.GS5691@genesis.frugalware.org>
- <7vbpv9guqd.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0812182044100.6952@intel-tinevez-2-302>
- <20081218213407.GX5691@genesis.frugalware.org>
+From: Alan <alan@clueserver.org>
+Subject: Odd merge behaviour involving reverts
+Date: Thu, 18 Dec 2008 15:25:34 -0800
+Message-ID: <1229642734.5770.25.camel@rotwang.fnordora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, scott@canonical.com
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Dec 19 00:22:00 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 19 00:27:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDSBr-0005br-6E
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 00:21:59 +0100
+	id 1LDSGn-0007He-EX
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 00:27:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752743AbYLRXUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 18:20:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752552AbYLRXUj
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 18:20:39 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33496 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752504AbYLRXUi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 18:20:38 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5D519887D8;
-	Thu, 18 Dec 2008 18:20:37 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 39E18887D6; Thu,
- 18 Dec 2008 18:20:32 -0500 (EST)
-In-Reply-To: <20081218213407.GX5691@genesis.frugalware.org> (Miklos Vajna's
- message of "Thu, 18 Dec 2008 22:34:07 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7A4E5F26-CD5A-11DD-80A0-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752470AbYLRXZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 18:25:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752227AbYLRXZp
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 18:25:45 -0500
+Received: from 216-99-213-120.dsl.aracnet.com ([216.99.213.120]:47780 "EHLO
+	clueserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751258AbYLRXZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 18:25:44 -0500
+Received: from [127.0.0.1] (blackbox.fnordora.org [127.0.0.1])
+	by clueserver.org (Postfix) with ESMTP id 6BE7CF501C8
+	for <git@vger.kernel.org>; Thu, 18 Dec 2008 15:25:37 -0800 (PST)
+X-Mailer: Evolution 2.24.2 (2.24.2-1.fc10) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103508>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+I am encountering an odd problem with how merging branches are working.
+I expect I am doing something wrong, I just need to know what.
 
-> On Thu, Dec 18, 2008 at 08:45:44PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> 	I think so.  The responsible code is in fast-export.c, in any 
->> 	case.  Of course, fast-import refuses to import a tag without a 
->> 	tagger, so...
->
-> That's why I asked. I think it's a reasonable assumption that in most
-> cases the tagger and the committer of the tagged commit is the same. So
-> in case the tagger info is missing and we tag a commit, we could fake
-> that info on export.
->
-> Obviously this should not be the default, but I think such a mode would
-> be useful in real-life.
+Here is my situation...
 
-Such a "faking" can well be done, and should be done, on the consuming end
-of the information.  If you fake using the commit authorship, you would
-never be able to tell from the result which one is faked and which one is
-genuine.
+I have a master branch.  We have a branch off of that that some
+developers are doing work on.  They claim it is ready. We merge it into
+the master branch.  It breaks something so we revert the merge.  They
+make changes to the code.  they get it to a point where they say it is
+ok and we merge again.
 
-I think you'd rather want to see "Unspecified Tagger" in the resulting tag
-object (or even better, a tag object without the tagger field created by
-the fast-import process), and leave the interpretation of missing tagger
-information to the consumers.
+When examined, we find that code changes made before the revert are not
+in the master branch, but code changes after are in the master branch.
+
+We now have code that does not contain all of the changes in the branch.
+
+Is there a different way to undo merges into a branch that does not
+block further merges from that branch?
+
+What am i doing wrong here?
