@@ -1,74 +1,90 @@
-From: Mark Burton <markb@ordern.com>
-Subject: Re: [PATCH 4/5] Make 'diff_populate_filespec()' use the new
- 'strbuf_readlink()'
-Date: Thu, 18 Dec 2008 12:11:18 +0000
-Organization: Order N Ltd.
-Message-ID: <20081218121118.3635c53c@crow>
-References: <alpine.LFD.2.00.0812171034520.14014@localhost.localdomain>
-	<alpine.LFD.2.00.0812171042120.14014@localhost.localdomain>
-	<alpine.LFD.2.00.0812171042500.14014@localhost.localdomain>
-	<alpine.LFD.2.00.0812171043180.14014@localhost.localdomain>
-	<alpine.LFD.2.00.0812171043440.14014@localhost.localdomain>
+From: "Tim Visher" <tim.visher@gmail.com>
+Subject: Re: Is it possible to roll back unstaged changes while leaving the staged ones for the next commit?
+Date: Thu, 18 Dec 2008 07:24:11 -0500
+Message-ID: <c115fd3c0812180424q3ac080a8iad53803fd3f2bb4d@mail.gmail.com>
+References: <c115fd3c0812171157m3d180534gb5630fbcf39b2bbd@mail.gmail.com>
+	 <7vy6yelf2m.fsf@gitster.siamese.dyndns.org>
+	 <c115fd3c0812171448o3db6f4c1oc24e39f9a68ed1d3@mail.gmail.com>
+	 <7vbpvajtmd.fsf@gitster.siamese.dyndns.org>
+	 <c115fd3c0812171722g93dbeefw2fb5bf7641dfe394@mail.gmail.com>
+	 <20081218123456.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Dec 18 13:13:23 2008
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Nanako Shiraishi" <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 13:31:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDHkn-00025d-3a
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 13:13:21 +0100
+	id 1LDI1y-0000aQ-5H
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 13:31:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751496AbYLRMMF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Dec 2008 07:12:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbYLRMMF
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 07:12:05 -0500
-Received: from c2beaomr04.btconnect.com ([213.123.26.182]:17053 "EHLO
-	c2beaomr04.btconnect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751431AbYLRMME convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 07:12:04 -0500
-Received: from crow.ordern.com (host86-128-197-104.range86-128.btcentralplus.com [86.128.197.104])
-	by c2beaomr04.btconnect.com
-	with ESMTP id AON56808;
-	Thu, 18 Dec 2008 12:11:19 GMT
-Received: from crow (localhost [127.0.0.1])
-	by crow.ordern.com (Postfix) with ESMTP id CF0BE190CDE;
-	Thu, 18 Dec 2008 12:11:18 +0000 (GMT)
-In-Reply-To: <alpine.LFD.2.00.0812171043440.14014@localhost.localdomain>
-X-Mailer: Claws Mail 3.6.1 (GTK+ 2.12.9; x86_64-pc-linux-gnu)
-X-Junkmail-Status: score=10/50, host=c2beaomr04.btconnect.com
-X-Junkmail-SD-Raw: score=unknown,
-	refid=str=0001.0A0B0207.494A3DEB.035A,ss=1,fgs=0,
-	ip=86.128.197.104,
-	so=2007-10-30 19:00:17,
-	dmn=5.7.1/2008-09-02
-X-Junkmail-IWF: false
+	id S1751395AbYLRM3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 07:29:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbYLRM3p
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 07:29:45 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:33928 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750963AbYLRM3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 07:29:44 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so146362yxm.1
+        for <git@vger.kernel.org>; Thu, 18 Dec 2008 04:29:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=pxz59BxZMRUWan6T8WWgEsOj7XxRJoAqVigGJlQUtII=;
+        b=BfRXGvsKgzKGFF+OLM/vPjSIG8qNC8DCFpegpRhl37G3O++C40VPtnH/ffwK1TGyou
+         hyagJTfd2QWCQzEeb08p90Tflbe7p28CuvWsBdiuVpJiWk/mtf7qmQPzdVSi9PHqRQ1n
+         cKIXUcF/5c26LFoTKSRubweRh7Q2dA5zTfG40=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=baVRlMhrVOR1JxUOGEmZ8qe8uQWL3HAYFOYvJlE0TX6eKXLupzOFkZ5nI3Zzz3PDJe
+         /spiPQRuAZFYx1Q7OBQyvlu8KMzm0xr0kzlUGqIkY69Ga6XRFTwGAkG9e2ljyNC94RPz
+         IfnVxPy0gJ/yHRsq2eyLbC0/SDP9y7EtXWGAw=
+Received: by 10.100.93.19 with SMTP id q19mr1332515anb.156.1229603051802;
+        Thu, 18 Dec 2008 04:24:11 -0800 (PST)
+Received: by 10.100.198.2 with HTTP; Thu, 18 Dec 2008 04:24:11 -0800 (PST)
+In-Reply-To: <20081218123456.6117@nanako3.lavabit.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103457>
 
+On Wed, Dec 17, 2008 at 10:34 PM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
 
-Howdy folks,
+> A short answer is "no it is not the case."
 
-When I compile this latest version of diff.c on a i686 dual-core Pentiu=
-m box
-I see:
+Thanks.
 
-diff.c: In function =E2=80=98diff_populate_filespec=E2=80=99:
-diff.c:1781: warning: passing argument 2 of =E2=80=98strbuf_detach=E2=80=
-=99 from incompatible pointer type
+> I was about to quote "git checkout" documentation to you because I was reasonably sure that Junio won't respond to people who ask a question whose answer is plainly described in the manual pages, but I think the description of the command is a little confusing especially for people who read it for the first time.
 
-The same code compiles without warning on a x86_64 AMD box. Both
-machines are running stock Ubuntu 8.04.
+Agreed.
 
-Does it need a cast on some architectures?
+>  When <paths> are given, this command does *not* switch
+>  branches.  It updates the named paths in the working tree from
+>  the index file, or from a named <tree-ish> (most often a commit).  In
+>  this case, the `-b` options is meaningless and giving
+>  either of them results in an error.  <tree-ish> argument can be
+>  used to specify a specific tree-ish (i.e. commit, tag or tree)
 
-Cheers,
+Works a lot better.
 
-Mark
+Thanks for the help!
+
+-- 
+
+In Christ,
+
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
