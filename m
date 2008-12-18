@@ -1,77 +1,83 @@
-From: "James Pickens" <jepicken@gmail.com>
-Subject: Re: [RFC PATCH 0/2] Add support for multi threaded checkout
-Date: Thu, 18 Dec 2008 14:42:21 -0700
-Message-ID: <885649360812181342u2978038fj3a11670acd9fd873@mail.gmail.com>
-References: <3BA20DF9B35F384F8B7395B001EC3FB3265B2A01@azsmsx507.amr.corp.intel.com>
-	 <494ABDC9.9060001@morey-chaisemartin.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 1/2] Add support for multi threaded checkout
+Date: Thu, 18 Dec 2008 13:41:48 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0812181333150.14014@localhost.localdomain>
+References: <3BA20DF9B35F384F8B7395B001EC3FB3265B2A01@azsmsx507.amr.corp.intel.com> <1229633811-3877-1-git-send-email-james.e.pickens@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: devel@morey-chaisemartin.com
-X-From: git-owner@vger.kernel.org Thu Dec 18 22:43:50 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: James Pickens <james.e.pickens@intel.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 22:44:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDQej-00030E-IJ
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 22:43:42 +0100
+	id 1LDQei-00030E-Qf
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 22:43:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752675AbYLRVmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 16:42:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752557AbYLRVmX
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 16:42:23 -0500
-Received: from wa-out-1112.google.com ([209.85.146.177]:19121 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752331AbYLRVmW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 16:42:22 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so328262wah.21
-        for <git@vger.kernel.org>; Thu, 18 Dec 2008 13:42:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=rI5UeiNwVc3rlDXzgDGnOEBeF3Neg/TJH+6LCCaXwQ0=;
-        b=HZKZ3PNtRhddBl8jg8wqOXglm8lntvsMi0365/fSpzd7/+jsVqgYkhLwCfHGi+aTf5
-         MgxwWntBY4sniHLYesI36Q0ByrZvPT7viPluA86gJp6an0dPIN6YYm8kF/pHqKFEZGWj
-         Qtk+B2VX+OEqROixE2Sa2yveL6Dqif7BuwJCU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=hDni26gTftBvDS8a8/GtQw9SsfebwzIeaIlDMt2v+gH7CK4RzAx0yBXRH8E6ZT4+/l
-         y8aktv23k/i9LlCdgJo4JSsMUta+HRsEZkur6Yh4S2GqujZ4e9YJFCPolE1ZK0auYu2c
-         qaEfB0lxmEWeH999pfgHfRvL6ITPuuuybvx6g=
-Received: by 10.114.197.1 with SMTP id u1mr1414537waf.120.1229636541288;
-        Thu, 18 Dec 2008 13:42:21 -0800 (PST)
-Received: by 10.114.80.15 with HTTP; Thu, 18 Dec 2008 13:42:21 -0800 (PST)
-In-Reply-To: <494ABDC9.9060001@morey-chaisemartin.com>
-Content-Disposition: inline
+	id S1752427AbYLRVmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 16:42:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbYLRVmV
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 16:42:21 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:34780 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751960AbYLRVmU (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 16:42:20 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBILfn9b026775
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 18 Dec 2008 13:41:50 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBILfmAK010791;
+	Thu, 18 Dec 2008 13:41:48 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1229633811-3877-1-git-send-email-james.e.pickens@intel.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.923 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103499>
 
-On Thu, Dec 18, 2008 at 2:16 PM, Nicolas Morey-Chaisemartin
-<devel@morey-chaisemartin.com> wrote:
-> I guess you could do something like :
+
+
+On Thu, 18 Dec 2008, James Pickens wrote:
 >
-> #define checkout_lock()         core_threaded_checkout ?pthread_mutex_lock(&checkout_mutex) : (void) 0
-> #define checkout_unlock()               core_threaded_checkout ?pthread_mutex_unlock(&checkout_mutex) : (void) 0
->
-> It should be faster when you don't actually use threaded checkouts, as you won't unnecessarily lock/unlock your mutex.
->
-> Have you looked at the perf from local to local? I'm just curious.
+> This speeds up operations like 'git clone' on NFS drives tremendously, but
+> slows down the same operations on local disks.
+> 
+> Partitioning the work and launching threads is done in unpack-trees.c.  The code
+> is mostly copied from preload_index.c.  The maximum number of threads is set to
+> 8, which seemed to give a reasonable tradeoff between performance improvement on
+> NFS and degradation on local disks.
 
+Hmm. I don't really like this very much.
 
-I had looked at it before but didn't record any numbers.  I just took the
-following timings (2 runs each):
+Why? Because as your locking shows, we can really only parallelise the 
+actual write-out anyway, and rather than do any locking there, wouldn't it 
+be better to have a notion of "queued work" (which would be just the 
+write-out) to be done in parallel?
 
-master             13.78    12.79
-threads enabled    16.84    20.45
-threads disabled   14.07    13.27
+So instead of doing all the unpacking etc in parallel (with locking around 
+it to serialize it), I'd suggest doing ll the unpacking serially since 
+that isn't the problem anyway (and since you have to protect it with a 
+lock anyway), and just have a "write out and free the buffer" phase that 
+is done in the threads.
 
-James
+The alternative would be to actually do what your patch suggests, but 
+actually try to make the code git SHA1 object handling be thread-safe. At 
+that point, the ugly locking in write_entry() would go away, and you might 
+actually improve performance on SMP thanks to doing the CPU part in 
+parallel.
+
+But as-is, I think the patch is a bit ugly. The reason I liked the index 
+pre-reading was that it could be done entirely locklessly, so it really 
+did parallelize it _fully_ (even if the IO latency part was the much 
+bigger issue), and that was also why it actually ended up helping even on 
+a local disk (only if you have multiple cores, of course).
+
+		Linus
