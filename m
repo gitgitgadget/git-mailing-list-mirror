@@ -1,87 +1,63 @@
-From: "Mike Coleman" <tutufan@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git-diff should not fire up $PAGER, period!
-Date: Wed, 17 Dec 2008 20:18:38 -0600
-Message-ID: <3c6c07c20812171818k6b6e3555ja991e20d74d8291b@mail.gmail.com>
+Date: Wed, 17 Dec 2008 18:26:09 -0800
+Message-ID: <7vy6yei5ha.fsf@gitster.siamese.dyndns.org>
+References: <3c6c07c20812171818k6b6e3555ja991e20d74d8291b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 18 03:20:01 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Mike Coleman" <tutufan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 03:28:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD8Ub-0006VV-4Q
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 03:20:01 +0100
+	id 1LD8cK-0008D0-L4
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 03:28:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260AbYLRCSl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 21:18:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbYLRCSl
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 21:18:41 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:40973 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751250AbYLRCSk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 21:18:40 -0500
-Received: by bwz14 with SMTP id 14so766809bwz.13
-        for <git@vger.kernel.org>; Wed, 17 Dec 2008 18:18:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=+jXk1fbAqTsQ80Bouy8Zq+e1RFH2017+ReKL/d8XquI=;
-        b=bCjQvAEo8v3QnrDjhYNuMG7psr1Gf+cALdE3LcQe98Ptw2kdOgenkBKc/4oOs6NW5l
-         n5g/5k/bnMXvZyPjkiJFL1KCU2g68lImlL7nn6ZmCWU6ry2C6dFMtCfh6/ctQLQXqOxt
-         eAVbKGOmGEG262gbrPYNMjNtp94MSUeDKp8ag=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=Hur6+shl8b3rf+ZGkoAhHwJNxIAriBvgpfoBbjvSfXya+q7aMe1X/d88g6YkGA31PZ
-         p4Pg2gQJBhIgTOLGRKWOqi+p1+AuoczbOHARoXw4Ul9dsAXNlyWvaqqbB6yFLiHSQfVl
-         vTQf5dDyt6B5Q+B5/BwvnGHEAaMvF22njwHu8=
-Received: by 10.181.56.1 with SMTP id i1mr461769bkk.195.1229566718178;
-        Wed, 17 Dec 2008 18:18:38 -0800 (PST)
-Received: by 10.181.156.8 with HTTP; Wed, 17 Dec 2008 18:18:38 -0800 (PST)
-Content-Disposition: inline
+	id S1751260AbYLRC0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 21:26:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbYLRC0T
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 21:26:19 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47482 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751078AbYLRC0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 21:26:19 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 89A9987D25;
+	Wed, 17 Dec 2008 21:26:17 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D409187D20; Wed,
+ 17 Dec 2008 21:26:14 -0500 (EST)
+In-Reply-To: <3c6c07c20812171818k6b6e3555ja991e20d74d8291b@mail.gmail.com>
+ (Mike Coleman's message of "Wed, 17 Dec 2008 20:18:38 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3FF5911E-CCAB-11DD-8E5C-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103421>
 
-It's so cold here my car wouldn't start this morning, so I feel
-fortunate to have these flames to keep me warm!  :-)
+"Mike Coleman" <tutufan@gmail.com> writes:
 
+> To me, the most important nugget from the original complaint was that
+> git-diff sends its error messages to stdout.  I understand why it
+> might be done, but I'd worry about losing the stderr diagnostic for a
+> command that matters.  [I've been playing around with this for a few
+> minutes trying to see errors going to stdout and I can't reproduce
+> it--I wonder if they really do.]
 
-I still find git-diff's unsolicited invocation of $PAGER a bit
-jarring, but I also find that I like it.  It has a sort of Windows-ish
-feel to it (am I straying from the true path?).  It's convenient,
-though honestly "git-diff|l" would only be two extra characters.  From
-a UI perspective, the oddest thing about it is that all (not, in
-fact?) of the other git programs which might also produce lengthy
-output *don't* invoke $PAGER--git-status particularly comes to mind.
-There are a large number of Unix programs that would be more
-convenient if their output was automatically paged, but I'm not sure
-it'd be better if they were all changed to do this.  (The best analog
-I can think of where this seems desirable is man(1).)
+They indeed did but it has hopefully been fixed.  See a833502 (pager: do
+not dup2 stderr if it is already redirected, 2008-12-15).
 
-To me, the most important nugget from the original complaint was that
-git-diff sends its error messages to stdout.  I understand why it
-might be done, but I'd worry about losing the stderr diagnostic for a
-command that matters.  [I've been playing around with this for a few
-minutes trying to see errors going to stdout and I can't reproduce
-it--I wonder if they really do.]
+> ...  Like Junio, I also eschew doing terminal emulation
+> inside of emacs.
 
+Come to think of it, it may have been from you that I picked up the trick
+of setting PAGER to cat inside an Emacs environment.
 
-Regarding the emacs complaint, as an emacs user I'd say I'm not
-surprised this didn't quite work right.  In the particular case of the
-compilation buffer, I wonder if the solution isn't to just unset TERM,
-the existence of which (together with the fact that there's a pty)
-could be taken as an invitation for the subordinate process to start
-doing awful raw-terminal things.  (Similar logic applies to the
-DISPLAY variable.)  Like Junio, I also eschew doing terminal emulation
-inside of emacs.
+> Good evening from the icy midwest,
 
-Good evening from the icy midwest,
-Mike
+Good evening from rainy and chilly SoCal.
