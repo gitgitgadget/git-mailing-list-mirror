@@ -1,64 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: rsync deprecated?
-Date: Wed, 17 Dec 2008 19:20:59 -0800
-Message-ID: <7vljuei2xw.fsf@gitster.siamese.dyndns.org>
-References: <200812180041.10312.markus.heidelberg@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-diff should not fire up $PAGER, period!
+Date: Thu, 18 Dec 2008 04:22:31 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812180419090.14632@racer>
+References: <3c6c07c20812171818k6b6e3555ja991e20d74d8291b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Thu Dec 18 04:22:34 2008
+To: Mike Coleman <tutufan@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 04:24:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LD9T3-0003I2-73
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 04:22:29 +0100
+	id 1LD9VF-0003gL-ME
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 04:24:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751780AbYLRDVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Dec 2008 22:21:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbYLRDVJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 22:21:09 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65196 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750947AbYLRDVI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Dec 2008 22:21:08 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B3ED7881AA;
-	Wed, 17 Dec 2008 22:21:07 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E1FD9881A4; Wed,
- 17 Dec 2008 22:21:04 -0500 (EST)
-In-Reply-To: <200812180041.10312.markus.heidelberg@web.de> (Markus
- Heidelberg's message of "Thu, 18 Dec 2008 00:41:10 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E90E0266-CCB2-11DD-831C-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751838AbYLRDX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Dec 2008 22:23:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751819AbYLRDX0
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Dec 2008 22:23:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39432 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751807AbYLRDXZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Dec 2008 22:23:25 -0500
+Received: (qmail invoked by alias); 18 Dec 2008 03:23:23 -0000
+Received: from pD9EB2D4F.dip0.t-ipconnect.de (EHLO noname) [217.235.45.79]
+  by mail.gmx.net (mp049) with SMTP; 18 Dec 2008 04:23:23 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/BgSxdRgTB8SYotX+mzHhrSb4sD33D/e8C2ARvLX
+	hvRbNCKwOhS/Up
+X-X-Sender: gene099@racer
+In-Reply-To: <3c6c07c20812171818k6b6e3555ja991e20d74d8291b@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103427>
 
-Markus Heidelberg <markus.heidelberg@web.de> writes:
+Hi,
 
-> in the "Merging external work" section of the gitcore-tutorial it is
-> stated that the rsync transport is deprecated. The description was added
-> in commit 914328a (Update tutorial., 2005-08-30) together with the
-> "deprecated" note. Having never heard/read this before and since this
-> commit is quite old, I wonder if it is still the case or there was a
-> solution for this problem.
+On Wed, 17 Dec 2008, Mike Coleman wrote:
 
-Sorry, I do not quite understand what you perceive as "this problem".
+> I still find git-diff's unsolicited invocation of $PAGER a bit
+> jarring, but I also find that I like it.
 
-It has been deprecated for too long a time.  Maybe it is time to remove
-the support, instead of carrying the deprecated command forever?  Is that
-the problem you are talking about?
+It might have its reason in that it follows the common flow, where 
+interactive use of _any_ diff program is _just useless_ unless piped to a 
+pager.
 
-I tend to agree that rsync transport way outlived its usefulness, and not
-maintained at all.  There may be unnoticed and undiagnosed bugs lurking,
-but nobody knows about it because nobody uses it.
+And no, redirecting to a file is not interactive.
 
-But the next release (1.6.1) won't be a good timing for removal.  Perhaps
-we can make an announcement now that it will be removed in a future major
-update, and actually remove it in 1.7.0 or so.
+Can we please stop with those bogus and pointless, not to mention 
+uninformed, discussions about design decisions that have been verified to 
+be useful, or at least not harmful in any way, for a _long_, _long_ time?
+
+The git list is high volume already, but at least so far it was high 
+signal/noise ratio.
+
+Let's keep it that way,
+Dscho
