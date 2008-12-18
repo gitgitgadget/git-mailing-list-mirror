@@ -1,68 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-format-patch patch
-Date: Thu, 18 Dec 2008 03:35:15 -0500
-Message-ID: <20081218083515.GB29356@coredump.intra.peff.net>
-References: <877i5yy149.fsf@jidanni.org>
+From: "Sverre Rabbelier" <srabbelier@gmail.com>
+Subject: Re: Announcement: Git Extensions stable (windows shell extensions)
+Date: Thu, 18 Dec 2008 09:36:01 +0100
+Message-ID: <bd6139dc0812180036m4c70dea4gfe160a5fff1faf65@mail.gmail.com>
+References: <1229540813648-1669264.post@n2.nabble.com>
+	 <c115fd3c0812171204ve560583w4c76aac0ac08d8ae@mail.gmail.com>
+	 <1976ea660812171757s37e8435cxc4d34ade04635b81@mail.gmail.com>
+	 <1229587749729-1672012.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Thu Dec 18 09:36:36 2008
+To: Henk <henk_westhuis@hotmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 18 09:37:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDEN1-000292-3z
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 09:36:35 +0100
+	id 1LDENq-0002NP-Tu
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 09:37:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751356AbYLRIfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 03:35:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbYLRIfS
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 03:35:18 -0500
-Received: from peff.net ([208.65.91.99]:1166 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751288AbYLRIfR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 03:35:17 -0500
-Received: (qmail 32747 invoked by uid 111); 18 Dec 2008 08:35:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 18 Dec 2008 03:35:16 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Dec 2008 03:35:15 -0500
+	id S1751396AbYLRIgH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 03:36:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751384AbYLRIgF
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 03:36:05 -0500
+Received: from yx-out-2324.google.com ([74.125.44.30]:61368 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751260AbYLRIgC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 03:36:02 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so124110yxm.1
+        for <git@vger.kernel.org>; Thu, 18 Dec 2008 00:36:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=lvExh2NNec/fIvutK0jGUlSelxh3D4JpFPK06TzUJ0I=;
+        b=JnxK/oy/LHyGc6lMPFqpERIwtCbgNBGfxBvkQ25i0XL25oBSOTzM0bP6pplzEoGdIj
+         p690azCWRTskxxMki6v6ucRvM1WVfQ1w0G+BjuLCLbhLZ+QWjNXOTOkUXl4yW0uuHXUa
+         a1+RjhHEE+Kz06LAq7tuEkhGCu7hPGLyXfCas=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=auTjtX6hVo2Q2u3LpiFrZV4CvlRKKzy9CbJ7MwBfLSDGAoBiu0My2x+DlAnmtSQepQ
+         j2nB6zUuMKBpyMCe2w5IlLvhJ5hQaJJ7+PsR5nRBEJfRzy+CEvJDlXCjnaULWwwQzCYU
+         8CmSpeJlxeRc5T4JgPkTnAwmLOr+6d+Rz1wNE=
+Received: by 10.150.177.20 with SMTP id z20mr1443644ybe.141.1229589361607;
+        Thu, 18 Dec 2008 00:36:01 -0800 (PST)
+Received: by 10.151.13.13 with HTTP; Thu, 18 Dec 2008 00:36:01 -0800 (PST)
+In-Reply-To: <1229587749729-1672012.post@n2.nabble.com>
 Content-Disposition: inline
-In-Reply-To: <877i5yy149.fsf@jidanni.org>
+X-Google-Sender-Auth: e6367f0fe593078e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103447>
 
-On Thu, Dec 18, 2008 at 04:53:42AM +0800, jidanni@jidanni.org wrote:
+On Thu, Dec 18, 2008 at 09:09, Henk <henk_westhuis@hotmail.com> wrote:
+> If you have problems during development, please ask, I might allready
+> encountered some. Especially when you are starting on the features that need
+> userinteraction like push/pull/clone/mergetool. These cannot just be run as
+> a command and catching the standard output. In the version of GitExtensions
+> I published I just run the commands, but I allready have a prototype build
+> in c# combined with some c++ that directly calls some (exported) Git
+> functions. Just executing git.exe is the fastest way of creating a gui, but
+> its not the best way of doiing things.
 
-> I'm still reading the manpage about submitting proper patches, so for now:
+Perhaps you could consider contributing to libgit2 for this purpose, I
+reckon C# has some way to import C libraries, yes?
 
-It looks like you didn't even use git to create it (since it is a
-context diff and the filenames are obviously bogus). If you are
-committed to improving git, then surely using it is not so bad? :)
+-- 
+Cheers,
 
-Try cloning git://git.kernel.org/pub/scm/git/git.git, or if you just
-have a tarball, at least do "cd /path/to/git && git init && git add . &&
-git commit -m 'import from git version $whatever'". Then you can make
-your changes and have git track them and prepare them for submission.
-
-Then read Documentation/SubmittingPatches, which covers some of the
-basics. Besides the format not being applicable by regular git tools:
-
- - there is no commit message describing the changes, nor the reasoning
-   behind them
-
- - it was not sent to the maintainer (who does read the list, but does
-   not always read every message).
-
->   --in-reply-to=Message-Id::
->   	Make the first mail (or all the mails with --no-thread) appear as a
->   	reply to the given Message-Id, which avoids breaking threads to
-> ! 	provide a new patch series. Generates coresponding References and
-> ! 	In-Reply-To headers. Angle brackets around <Message-Id> are optional.
-
-As for the change itself, it looks reasonable to me.
-
--Peff
+Sverre Rabbelier
