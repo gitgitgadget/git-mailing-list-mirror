@@ -1,161 +1,58 @@
-From: Wu Fengguang <fengguang.wu@intel.com>
-Subject: [PATCH] guilt doc: use literal paragraphs for example commands
-Date: Thu, 18 Dec 2008 19:39:34 +0800
-Message-ID: <20081218113934.GA16171@localhost>
+From: the_jack <josip@yopmail.com>
+Subject: Retrieving last tag of a working tree
+Date: Thu, 18 Dec 2008 04:07:19 -0800 (PST)
+Message-ID: <21071491.post@talk.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Josef Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Thu Dec 18 12:41:13 2008
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 18 13:08:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDHFe-00018n-EN
-	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 12:41:10 +0100
+	id 1LDHgM-0001g8-6D
+	for gcvg-git-2@gmane.org; Thu, 18 Dec 2008 13:08:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751554AbYLRLjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 06:39:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751320AbYLRLjq
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 06:39:46 -0500
-Received: from mga03.intel.com ([143.182.124.21]:12637 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751359AbYLRLjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 06:39:45 -0500
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga101.ch.intel.com with ESMTP; 18 Dec 2008 03:39:44 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.36,242,1228118400"; 
-   d="scan'208";a="91609589"
-Received: from unknown (HELO localhost) ([10.254.153.195])
-  by azsmga001.ch.intel.com with ESMTP; 18 Dec 2008 03:39:40 -0800
-Received: from wfg by localhost with local (Exim 4.69)
-	(envelope-from <fengguang.wu@intel.com>)
-	id 1LDHE6-0004F6-6v; Thu, 18 Dec 2008 19:39:34 +0800
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751823AbYLRMHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 07:07:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751782AbYLRMHW
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 07:07:22 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:40328 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751524AbYLRMHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 07:07:21 -0500
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1LDHex-0002Lk-Su
+	for git@vger.kernel.org; Thu, 18 Dec 2008 04:07:19 -0800
+X-Nabble-From: josip@yopmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103455>
 
-Display example commands verbatim by indenting the paragraphs.
 
-Signed-off-by: Wu Fengguang <fengguang.wu@intel.com>
----
- Documentation/guilt-add.txt    |    4 ++--
- Documentation/guilt-delete.txt |    2 +-
- Documentation/guilt-diff.txt   |    2 +-
- Documentation/guilt-help.txt   |    4 ++--
- Documentation/guilt-init.txt   |    7 +++----
- Documentation/guilt-new.txt    |    6 +++---
- Documentation/guilt-rebase.txt |    5 ++---
- 7 files changed, 14 insertions(+), 16 deletions(-)
+I'm using msys git on Windows XP for version tracking embedded design project
+in C. I mostly work with GUIs (git-gui and qgit), I use bash only when I
+have to.
 
---- guilt.orig/Documentation/guilt-add.txt
-+++ guilt/Documentation/guilt-add.txt
-@@ -23,8 +23,8 @@ EXAMPLES
- 
- Create and add a new file example.c
- 
--$ touch example.c
--$ guilt-add example.c
-+	$ touch example.c
-+	$ guilt-add example.c
- 
- Author
- ------
---- guilt.orig/Documentation/guilt-delete.txt
-+++ guilt/Documentation/guilt-delete.txt
-@@ -25,7 +25,7 @@ EXAMPLES
- --------
- Delete a patch called 'foobar':
- 
--$ guilt-delete foobar
-+	$ guilt-delete foobar
- 
- Author
- ------
---- guilt.orig/Documentation/guilt-diff.txt
-+++ guilt/Documentation/guilt-diff.txt
-@@ -18,7 +18,7 @@ OPTIONS
- -------
- -z::
- 	Output a interdiff against the top-most applied patch. This should
--	produce the same diff as "guilt-new -f foo".
-+	produce the same diff as "+guilt-new -f foo+".
- 
- <path>...::
- 	Restrict diff output to a given set of files.
---- guilt.orig/Documentation/guilt-help.txt
-+++ guilt/Documentation/guilt-help.txt
-@@ -18,11 +18,11 @@ EXAMPLES
- 
- Open the guilt-status man page 
- 
--$ guilt-help status
-+	$ guilt-help status
- 
- Open the guilt man page 
- 
--$ guilt-help
-+	$ guilt-help
- 
- Author
- ------
---- guilt.orig/Documentation/guilt-init.txt
-+++ guilt/Documentation/guilt-init.txt
-@@ -17,13 +17,12 @@ EXAMPLES
- --------
- First, get a repository to work on. Here's one that we'll use as an example:
- 
--$ git-clone git://git.kernel.org/pub/scm/linux/kernel/jsipek/guilt-hello.git
-+	$ git-clone git://git.kernel.org/pub/scm/linux/kernel/jsipek/guilt-hello.git
- 
- Now, it initialize the patches directory using guilt's init command:
- 
--$ cd hello
--
--$ guilt-init
-+	$ cd hello
-+	$ guilt-init
- 
- Author
- ------
---- guilt.orig/Documentation/guilt-new.txt
-+++ guilt/Documentation/guilt-new.txt
-@@ -42,16 +42,16 @@ EXAMPLES
- 
- Create a new patch called 'foobar':
- 
--$ guilt-new foobar
-+	$ guilt-new foobar
- 
- Create a patch called 'foo' and supply a patch description interactively:
- 
--$ guilt-new -e foo
-+	$ guilt-new -e foo
- 
- Create a patch called 'bar' with a provided patch description and sign off
- on the patch:
- 
--$ guilt-new -s -m patch-fu bar
-+	$ guilt-new -s -m patch-fu bar
- 
- Author
- ------
---- guilt.orig/Documentation/guilt-rebase.txt
-+++ guilt/Documentation/guilt-rebase.txt
-@@ -24,9 +24,8 @@ EXAMPLES
- 
- Rebase current tree against Linus's 2.6 tree
- 
--$ git-fetch git://git.kernel.org/pub/scm/linux/kernel/git/tovalds/linux-2.6.git
--
--$ guilt-rebase FETCH_HEAD
-+	$ git-fetch git://git.kernel.org/pub/scm/linux/kernel/git/tovalds/linux-2.6.git
-+	$ guilt-rebase FETCH_HEAD
- 
- Author
- ------
+I need to be able to access version from software. To do that, I use tags to
+mark all released versions, and that version string is written to file
+version.h (the file is not tracked) by pre-build command:
+
+#define KDK_SOFTWARE_VERSION "0.72"
+
+Precompiler assigns this string to a variable. At this moment, version.h is
+filled by python script that calls "git-describe --tag HEAD" and parses the
+output. This works, but it's not quite reliable. There has to be a better
+way for getting the last tag of current working tree. If I checkout an
+earlier tagged version (0.70), I would need to automatically get 0.70 inside
+version.h
+
+Can anyone shed any light on this?
+-- 
+View this message in context: http://www.nabble.com/Retrieving-last-tag-of-a-working-tree-tp21071491p21071491.html
+Sent from the git mailing list archive at Nabble.com.
