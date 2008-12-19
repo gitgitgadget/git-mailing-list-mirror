@@ -1,95 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-rm -n leaves .git/index.lock if not allowed to finish
-Date: Thu, 18 Dec 2008 17:31:57 -0800
-Message-ID: <7vljuddk6q.fsf@gitster.siamese.dyndns.org>
-References: <87prjptfo7.fsf@jidanni.org>
- <20081219002524.GB21154@genesis.frugalware.org>
- <7v4p11f18d.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: jidanni@jidanni.org, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Dec 19 02:33:24 2008
+From: "Kirill A. Korinskiy" <catap@catap.ru>
+Subject: [PATCH] Remove the requirement opaquelocktoken uri scheme
+Date: Fri, 19 Dec 2008 04:51:31 +0300
+Message-ID: <1229651491-23060-1-git-send-email-catap@catap.ru>
+Cc: gitster@pobox.com, "Kirill A. Korinskiy" <catap@catap.ru>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 19 02:53:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDUF1-00034a-2c
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 02:33:23 +0100
+	id 1LDUYk-0008PU-81
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 02:53:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752162AbYLSBcH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 20:32:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752089AbYLSBcG
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 20:32:06 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50968 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751742AbYLSBcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 20:32:05 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8B3A08836D;
-	Thu, 18 Dec 2008 20:32:03 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7AFB78836C; Thu,
- 18 Dec 2008 20:31:59 -0500 (EST)
-In-Reply-To: <7v4p11f18d.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 18 Dec 2008 16:38:26 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D6D7529A-CD6C-11DD-8A30-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751836AbYLSBw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 20:52:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751644AbYLSBw1
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 20:52:27 -0500
+Received: from void.catap.ru ([213.248.54.140]:45196 "EHLO void.catap.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750789AbYLSBw1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 20:52:27 -0500
+Received: (qmail 1260 invoked from network); 19 Dec 2008 01:52:25 -0000
+Received: from catap.dialup.corbina.ru (HELO mx3.catap.ru) (85.21.143.245)
+  by void.catap.ru with ESMTPS (AES256-SHA encrypted); 19 Dec 2008 01:52:25 -0000
+Received: from localhost
+	([127.0.0.1] helo=satellite.home.catap.ru ident=catap)
+	by mx3.catap.ru with esmtp (Exim 4.63)
+	(envelope-from <catap@catap.ru>)
+	id 1LDUXQ-0001cp-6s; Fri, 19 Dec 2008 04:52:24 +0300
+Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
+	(envelope-from <catap@satellite.home.catap.ru>)
+	id 1LDUWZ-00060m-ED; Fri, 19 Dec 2008 04:51:31 +0300
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103528>
 
-Subject: [PATCH] Make sure lockfiles are unlocked when dying on SIGPIPE
+Server can use any URI for token by rfc 4918 section 6.5 paragraph five
 
-We cleaned up lockfiles upon receiving the usual suspects HUP, TERM, QUIT
-but a wicked user could kill us of asphyxiation by piping our output to a
-pipe that does not read.  Protect ourselves by catching SIGPIPE and clean
-up the lockfiles as well in such a case.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
 ---
- lockfile.c    |    1 +
- t/t3600-rm.sh |   17 +++++++++++++++++
- 2 files changed, 18 insertions(+), 0 deletions(-)
+ http-push.c |   14 ++++++--------
+ 1 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git c/lockfile.c w/lockfile.c
-index 6d75608..8589155 100644
---- c/lockfile.c
-+++ w/lockfile.c
-@@ -140,6 +140,7 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 			signal(SIGHUP, remove_lock_file_on_signal);
- 			signal(SIGTERM, remove_lock_file_on_signal);
- 			signal(SIGQUIT, remove_lock_file_on_signal);
-+			signal(SIGPIPE, remove_lock_file_on_signal);
- 			atexit(remove_lock_file);
+diff --git a/http-push.c b/http-push.c
+index 5cecef434a7740a3f853462978c3e071b4da7e74..7c6460919bf3eba10c46cede11ffdd9c53fd2dd2 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -595,7 +595,7 @@ static int refresh_lock(struct remote_lock *lock)
+ 	lock->refreshing = 1;
+ 
+ 	if_header = xmalloc(strlen(lock->token) + 25);
+-	sprintf(if_header, "If: (<opaquelocktoken:%s>)", lock->token);
++	sprintf(if_header, "If: (<%s>)", lock->token);
+ 	sprintf(timeout_header, "Timeout: Second-%ld", lock->timeout);
+ 	dav_headers = curl_slist_append(dav_headers, if_header);
+ 	dav_headers = curl_slist_append(dav_headers, timeout_header);
+@@ -1120,10 +1120,8 @@ static void handle_new_lock_ctx(struct xml_ctx *ctx, int tag_closed)
+ 				lock->timeout =
+ 					strtol(ctx->cdata + 7, NULL, 10);
+ 		} else if (!strcmp(ctx->name, DAV_ACTIVELOCK_TOKEN)) {
+-			if (!prefixcmp(ctx->cdata, "opaquelocktoken:")) {
+-				lock->token = xmalloc(strlen(ctx->cdata) - 15);
+-				strcpy(lock->token, ctx->cdata + 16);
+-			}
++			lock->token = xmalloc(strlen(ctx->cdata) + 1);
++			strcpy(lock->token, ctx->cdata);
  		}
- 		lk->owner = getpid();
-diff --git c/t/t3600-rm.sh w/t/t3600-rm.sh
-index b7d46e5..95542e9 100755
---- c/t/t3600-rm.sh
-+++ w/t/t3600-rm.sh
-@@ -251,4 +251,21 @@ test_expect_success 'refresh index before checking if it is up-to-date' '
+ 	}
+ }
+@@ -1308,7 +1306,7 @@ static int unlock_remote(struct remote_lock *lock)
+ 	int rc = 0;
  
- '
+ 	lock_token_header = xmalloc(strlen(lock->token) + 31);
+-	sprintf(lock_token_header, "Lock-Token: <opaquelocktoken:%s>",
++	sprintf(lock_token_header, "Lock-Token: <%s>",
+ 		lock->token);
+ 	dav_headers = curl_slist_append(dav_headers, lock_token_header);
  
-+test_expect_success 'choking "git rm" should not let it die with cruft' '
-+	git reset -q --hard &&
-+	H=0000000000000000000000000000000000000000 &&
-+	i=0 &&
-+	while test $i -lt 12000
-+	do
-+	    echo "100644 $H 0	some-file-$i"
-+	    i=$(( $i + 1 ))
-+	done | git update-index --index-info &&
-+	git rm -n "some-file-*" | :;
-+	test -f .git/index.lock
-+	status=$?
-+	rm -f .git/index.lock
-+	git reset -q --hard
-+	test "$status" != 0
-+'
-+
- test_done
+@@ -1722,7 +1720,7 @@ static int update_remote(unsigned char *sha1, struct remote_lock *lock)
+ 	struct curl_slist *dav_headers = NULL;
+ 
+ 	if_header = xmalloc(strlen(lock->token) + 25);
+-	sprintf(if_header, "If: (<opaquelocktoken:%s>)", lock->token);
++	sprintf(if_header, "If: (<%s>)", lock->token);
+ 	dav_headers = curl_slist_append(dav_headers, if_header);
+ 
+ 	strbuf_addf(&out_buffer.buf, "%s\n", sha1_to_hex(sha1));
+@@ -1941,7 +1939,7 @@ static void update_remote_info_refs(struct remote_lock *lock)
+ 		  add_remote_info_ref, &buffer.buf);
+ 	if (!aborted) {
+ 		if_header = xmalloc(strlen(lock->token) + 25);
+-		sprintf(if_header, "If: (<opaquelocktoken:%s>)", lock->token);
++		sprintf(if_header, "If: (<%s>)", lock->token);
+ 		dav_headers = curl_slist_append(dav_headers, if_header);
+ 
+ 		slot = get_active_slot();
+-- 
+1.5.6.5
