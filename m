@@ -1,197 +1,290 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 0/4] Notes reloaded
-Date: Sat, 20 Dec 2008 00:34:20 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812192347261.30769@pacific.mpi-cbg.de>
-References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <20081216085108.GA3031@coredump.intra.peff.net>
+Subject: [PATCH 1/4] Introduce commit notes
+Date: Sat, 20 Dec 2008 00:35:06 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812200034450.30769@pacific.mpi-cbg.de>
+References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <20081216085108.GA3031@coredump.intra.peff.net> <alpine.DEB.1.00.0812192347261.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Govind Salinas <govind@sophiasuchtig.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 20 00:27:55 2008
+X-From: git-owner@vger.kernel.org Sat Dec 20 00:29:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDol4-00051h-Mx
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 00:27:51 +0100
+	id 1LDomG-0005Kg-EF
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 00:29:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbYLSX0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2008 18:26:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752130AbYLSX0U
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 18:26:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36202 "HELO mail.gmx.net"
+	id S1755097AbYLSX1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2008 18:27:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755215AbYLSX1M
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 18:27:12 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34736 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752048AbYLSX0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2008 18:26:19 -0500
-Received: (qmail invoked by alias); 19 Dec 2008 23:26:18 -0000
+	id S1755463AbYLSX1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Dec 2008 18:27:05 -0500
+Received: (qmail invoked by alias); 19 Dec 2008 23:27:04 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp015) with SMTP; 20 Dec 2008 00:26:18 +0100
+  by mail.gmx.net (mp023) with SMTP; 20 Dec 2008 00:27:04 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+P9wsnwX2Pr1IOIr0a9X5vyhM+d0tXxRxNmmlF5C
-	qQrzlWaO/n5Cr1
+X-Provags-ID: V01U2FsdGVkX18n1iBBR2YnxlblyhZq+yXhwKLJZDLubC8WLgV86v
+	h1mAmrUaj6XKQc
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20081216085108.GA3031@coredump.intra.peff.net>
+In-Reply-To: <alpine.DEB.1.00.0812192347261.30769@pacific.mpi-cbg.de>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+X-FuHaFi: 0.42
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103600>
-
-Hi,
-
-On Tue, 16 Dec 2008, Jeff King wrote:
-
->   Johannes Schindelin's notes proposal (which is more or less 
->   the current proposal, but I think the on-disk notes index was not 
->   well liked): 
->   http://thread.gmane.org/gmane.comp.version-control.git/52598
-
-I redid the benchmark (this time with a bit beefier machine), just 
-comparing no notes with David's/Peff's idea:
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103601>
 
 
--- snip --
-$ GIT_NOTES_TIMING_TESTS=1 sh t3302-notes-index-expensive.sh -i -v
-Initialized empty Git repository in /home/gitte/git/t/trash directory.t3302-notes-index-expensive/.git/
-* expecting success: create_repo 10
-Initialized empty Git repository in /home/gitte/git/t/trash directory.t3302-notes-index-expensive/10/.git/
-*   ok 1: setup 10
+Commit notes are blobs which are shown together with the commit
+message.  These blobs are taken from the notes ref, which you can
+configure by the config variable core.notesRef, which in turn can
+be overridden by the environment variable GIT_NOTES_REF.
 
-* expecting success: test_notes 10
-*   ok 2: notes work
+The notes ref is a branch which contains "files" whose names are
+the names of the corresponding commits (i.e. the SHA-1).
 
-* expecting success: time_notes 100
-no-notes
-0.08user 0.10system 0:00.18elapsed 95%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+58926minor)pagefaults 0swaps
-notes
-0.14user 0.07system 0:00.54elapsed 38%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+60319minor)pagefaults 0swaps
-*   ok 3: notes timing
+The rationale for putting this information into a ref is this: we
+want to be able to fetch and possibly union-merge the notes,
+maybe even look at the date when a note was introduced, and we
+want to store them efficiently together with the other objects.
 
-* expecting success: create_repo 100
-Initialized empty Git repository in /home/gitte/git/t/trash directory.t3302-notes-index-expensive/100/.git/
-*   ok 1: setup 100
-
-* expecting success: test_notes 100
-*   ok 2: notes work
-
-* expecting success: time_notes 100
-no-notes
-0.23user 0.21system 0:00.45elapsed 96%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+68043minor)pagefaults 0swaps
-notes
-0.38user 0.21system 0:00.59elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+78829minor)pagefaults 0swaps
-*   ok 3: notes timing
-
-* expecting success: create_repo 1000
-Initialized empty Git repository in /home/gitte/git/t/trash directory.t3302-notes-index-expensive/1000/.git/
-*   ok 1: setup 1000
-
-* expecting success: test_notes 1000
-*   ok 2: notes work
-
-* expecting success: time_notes 100
-no-notes
-2.06user 0.95system 0:04.26elapsed 70%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+159115minor)pagefaults 0swaps
-notes
-2.83user 1.54system 0:04.38elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+267416minor)pagefaults 0swaps
-*   ok 3: notes timing
-
-* expecting success: create_repo 10000
-Initialized empty Git repository in /home/gitte/git/t/trash directory.t3302-notes-index-expensive/10000/.git/
-*   ok 1: setup 10000
-
-* expecting success: test_notes 10000
-*   ok 2: notes work
-
-* expecting success: time_notes 100
-no-notes
-20.46user 7.63system 0:28.30elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+1083378minor)pagefaults 0swaps
-notes
-28.78user 13.74system 0:42.85elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+2240296minor)pagefaults 0swaps
-*   ok 3: notes timing
-
-* passed all 0 test(s)
--- snap --
-
-
-Keep in mind that the tests run "git log" 99 times, and show the 
-accumulated time.
-
-So it seems that an increase of roughly 40% in the user time, and roughly 
-70% in the system time is the price to have notes associated with every 
-single commit.
-
-Note that in that very same repository, a single "git show" goes from
-
-0.00user 0.00system 0:00.00elapsed 0%CPU (0avgtext+0avgdata 
-0maxresident)k
-0inputs+0outputs (0major+561minor)pagefaults 0swaps
-
-to this:
-
-0.03user 0.02system 0:00.04elapsed 113%CPU (0avgtext+0avgdata 
-0maxresident)k
-0inputs+0outputs (0major+2294minor)pagefaults 0swaps
-
-(In another run, it only used 90%CPU)
-
-That's not too shabby, given that Git needs to unpack double the number of 
-objects in this test when using notes vs. no notes.
-
-For comparison, the numbers back then were something like 10% in user time 
-with a penalty of an extraordinary magnitude everytime the notes are 
-updated: around 800%.
-
-Note: all these numbers are worst-case numbers, i.e. every commit has one 
-note.
-
-To be frank, I do not completely understand why the numbers are that high.  
-I would have understood an increase roughly 4 seconds for reading the 
-quite large tree 99 times, and then the same ~0.20 seconds back then.  
-Maybe I made a huge mistake when implementing the thing.
-
-And BTW, my code does not yet handle the case when 
-refs/notes/commits:$commit is a tree instead of a blob.  That is left as 
-an exercise to the reader.
-
-
-
-Johannes Schindelin (4):
-  Introduce commit notes
-  Add a script to edit/inspect notes
-  Speed up git notes lookup
-  Add an expensive test for git-notes
-
- .gitignore                       |    1 +
- Documentation/config.txt         |   15 ++++
- Documentation/git-notes.txt      |   46 +++++++++++
- Makefile                         |    3 +
- cache.h                          |    3 +
- command-list.txt                 |    1 +
- commit.c                         |    1 +
- config.c                         |    5 +
- environment.c                    |    1 +
- git-notes.sh                     |   65 +++++++++++++++
- notes.c                          |  159 ++++++++++++++++++++++++++++++++++++++
- notes.h                          |    7 ++
- pretty.c                         |    5 +
- t/t3301-notes.sh                 |   65 +++++++++++++++
- t/t3302-notes-index-expensive.sh |   98 +++++++++++++++++++++++
- 15 files changed, 475 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-notes.txt
- create mode 100755 git-notes.sh
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/config.txt |   15 ++++++++++
+ Makefile                 |    2 +
+ cache.h                  |    3 ++
+ commit.c                 |    1 +
+ config.c                 |    5 +++
+ environment.c            |    1 +
+ notes.c                  |   68 ++++++++++++++++++++++++++++++++++++++++++++++
+ notes.h                  |    7 +++++
+ pretty.c                 |    5 +++
+ 9 files changed, 107 insertions(+), 0 deletions(-)
  create mode 100644 notes.c
  create mode 100644 notes.h
- create mode 100755 t/t3301-notes.sh
- create mode 100755 t/t3302-notes-index-expensive.sh
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 4089362..3248524 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -431,6 +431,21 @@ core.inithook::
+ 	linkgit:git-init[1].  The hook is called with the argument
+ 	"reinit" if an existing repository is re-initialized.
+ 
++core.notesRef::
++	When showing commit messages, also show notes which are stored in
++	the given ref.  This ref is expected to contain paths of the form
++	??/*, where the directory name consists of the first two
++	characters of the commit name, and the base name consists of
++	the remaining 38 characters.
+++
++If such a path exists in the given ref, the referenced blob is read, and
++appended to the commit message, separated by a "Notes:" line.  If the
++given ref itself does not exist, it is not an error, but means that no
++notes should be print.
+++
++This setting defaults to "refs/notes/commits", and can be overridden by
++the `GIT_NOTES_REF` environment variable.
++
+ alias.*::
+ 	Command aliases for the linkgit:git[1] command wrapper - e.g.
+ 	after defining "alias.last = cat-file commit HEAD", the invocation
+diff --git a/Makefile b/Makefile
+index 5e293fe..7871f52 100644
+--- a/Makefile
++++ b/Makefile
+@@ -371,6 +371,7 @@ LIB_H += ll-merge.h
+ LIB_H += log-tree.h
+ LIB_H += mailmap.h
+ LIB_H += merge-recursive.h
++LIB_H += notes.h
+ LIB_H += object.h
+ LIB_H += pack.h
+ LIB_H += pack-refs.h
+@@ -454,6 +455,7 @@ LIB_OBJS += match-trees.o
+ LIB_OBJS += merge-file.o
+ LIB_OBJS += merge-recursive.o
+ LIB_OBJS += name-hash.o
++LIB_OBJS += notes.o
+ LIB_OBJS += object.o
+ LIB_OBJS += pack-check.o
+ LIB_OBJS += pack-refs.o
+diff --git a/cache.h b/cache.h
+index b393c2d..30981de 100644
+--- a/cache.h
++++ b/cache.h
+@@ -375,6 +375,8 @@ static inline enum object_type object_type(unsigned int mode)
+ #define GITATTRIBUTES_FILE ".gitattributes"
+ #define INFOATTRIBUTES_FILE "info/attributes"
+ #define ATTRIBUTE_MACRO_PREFIX "[attr]"
++#define GIT_NOTES_REF_ENVIRONMENT "GIT_NOTES_REF"
++#define GIT_NOTES_DEFAULT_REF "refs/notes/commits"
+ 
+ extern int is_bare_repository_cfg;
+ extern int is_bare_repository(void);
+@@ -548,6 +550,7 @@ enum rebase_setup_type {
+ extern enum branch_track git_branch_track;
+ extern enum rebase_setup_type autorebase;
+ extern int keep_hard_links;
++extern char *notes_ref_name;
+ 
+ #define GIT_REPO_VERSION 0
+ extern int repository_format_version;
+diff --git a/commit.c b/commit.c
+index 00f4774..547b88f 100644
+--- a/commit.c
++++ b/commit.c
+@@ -5,6 +5,7 @@
+ #include "utf8.h"
+ #include "diff.h"
+ #include "revision.h"
++#include "notes.h"
+ 
+ int save_commit_buffer = 1;
+ 
+diff --git a/config.c b/config.c
+index 8ff2b4b..9ab9d21 100644
+--- a/config.c
++++ b/config.c
+@@ -469,6 +469,11 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.notesref")) {
++		notes_ref_name = xstrdup(value);
++		return 0;
++	}
++
+ 	if (!strcmp(var, "core.pager"))
+ 		return git_config_string(&pager_program, var, value);
+ 
+diff --git a/environment.c b/environment.c
+index fc91809..5724ad2 100644
+--- a/environment.c
++++ b/environment.c
+@@ -46,6 +46,7 @@ int keep_hard_links = 0;
+ 
+ /* Parallel index stat data preload? */
+ int core_preload_index = 0;
++char *notes_ref_name;
+ 
+ /* This is set by setup_git_dir_gently() and/or git_default_config() */
+ char *git_work_tree_cfg;
+diff --git a/notes.c b/notes.c
+new file mode 100644
+index 0000000..91ec77f
+--- /dev/null
++++ b/notes.c
+@@ -0,0 +1,68 @@
++#include "cache.h"
++#include "commit.h"
++#include "notes.h"
++#include "refs.h"
++#include "utf8.h"
++#include "strbuf.h"
++
++static int initialized;
++
++void get_commit_notes(const struct commit *commit, struct strbuf *sb,
++		const char *output_encoding)
++{
++	static const char *utf8 = "utf-8";
++	struct strbuf name = STRBUF_INIT;
++	const char *hex;
++	unsigned char sha1[20];
++	char *msg;
++	unsigned long msgoffset, msglen;
++	enum object_type type;
++
++	if (!initialized) {
++		const char *env = getenv(GIT_NOTES_REF_ENVIRONMENT);
++		if (env)
++			notes_ref_name = getenv(GIT_NOTES_REF_ENVIRONMENT);
++		else if (!notes_ref_name)
++			notes_ref_name = GIT_NOTES_DEFAULT_REF;
++		if (notes_ref_name && read_ref(notes_ref_name, sha1))
++			notes_ref_name = NULL;
++		initialized = 1;
++	}
++
++	if (!notes_ref_name)
++		return;
++
++	strbuf_addf(&name, "%s:%s", notes_ref_name,
++			sha1_to_hex(commit->object.sha1));
++	if (get_sha1(name.buf, sha1))
++		return;
++
++	if (!(msg = read_sha1_file(sha1, &type, &msglen)) || !msglen ||
++			type != OBJ_BLOB)
++		return;
++
++	if (output_encoding && *output_encoding &&
++			strcmp(utf8, output_encoding)) {
++		char *reencoded = reencode_string(msg, output_encoding, utf8);
++		if (reencoded) {
++			free(msg);
++			msg = reencoded;
++			msglen = strlen(msg);
++		}
++	}
++
++	/* we will end the annotation by a newline anyway */
++	if (msglen && msg[msglen - 1] == '\n')
++		msglen--;
++
++	strbuf_addstr(sb, "\nNotes:\n");
++
++	for (msgoffset = 0; msgoffset < msglen;) {
++		int linelen = strchrnul(msg, '\n') - msg;
++
++		strbuf_addstr(sb, "    ");
++		strbuf_add(sb, msg + msgoffset, linelen);
++		msgoffset += linelen;
++	}
++	free(msg);
++}
+diff --git a/notes.h b/notes.h
+new file mode 100644
+index 0000000..79d21b6
+--- /dev/null
++++ b/notes.h
+@@ -0,0 +1,7 @@
++#ifndef NOTES_H
++#define NOTES_H
++
++void get_commit_notes(const struct commit *commit, struct strbuf *sb,
++		const char *output_encoding);
++
++#endif
+diff --git a/pretty.c b/pretty.c
+index 5f9a0c7..c2bf451 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -6,6 +6,7 @@
+ #include "string-list.h"
+ #include "mailmap.h"
+ #include "log-tree.h"
++#include "notes.h"
+ 
+ static char *user_format;
+ 
+@@ -911,5 +912,9 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+ 	 */
+ 	if (fmt == CMIT_FMT_EMAIL && sb->len <= beginning_of_body)
+ 		strbuf_addch(sb, '\n');
++
++	if (fmt != CMIT_FMT_ONELINE)
++		get_commit_notes(commit, sb, encoding);
++
+ 	free(reencoded);
+ }
+-- 
+1.6.1.rc3.368.g63acc
