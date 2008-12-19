@@ -1,40 +1,39 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 1/2] Add support for multi threaded checkout
-Date: Thu, 18 Dec 2008 16:13:13 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0812181606250.14014@localhost.localdomain>
-References: <3BA20DF9B35F384F8B7395B001EC3FB3265B2A01@azsmsx507.amr.corp.intel.com>  <1229633811-3877-1-git-send-email-james.e.pickens@intel.com>  <alpine.LFD.2.00.0812181333150.14014@localhost.localdomain>
- <885649360812181535h36d24b0gb31acddded452a0@mail.gmail.com>
+Subject: Re: Odd merge behaviour involving reverts
+Date: Thu, 18 Dec 2008 16:21:25 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0812181614070.14014@localhost.localdomain>
+References: <1229642734.5770.25.camel@rotwang.fnordora.org>  <alpine.LFD.2.00.0812181534310.14014@localhost.localdomain> <1229645511.5770.29.camel@rotwang.fnordora.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 19 01:14:46 2008
+To: Alan <alan@clueserver.org>
+X-From: git-owner@vger.kernel.org Fri Dec 19 01:23:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDT0n-0006IR-Bp
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 01:14:37 +0100
+	id 1LDT98-0000em-AU
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 01:23:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884AbYLSANR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 19:13:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751742AbYLSANR
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 19:13:17 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:47452 "EHLO
+	id S1752140AbYLSAVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 19:21:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751955AbYLSAVy
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 19:21:54 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:58787 "EHLO
 	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751571AbYLSANQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 19:13:16 -0500
+	by vger.kernel.org with ESMTP id S1751976AbYLSAVy (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 19:21:54 -0500
 Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBJ0DEnZ002151
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBJ0LQX1002588
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 18 Dec 2008 16:13:15 -0800
+	Thu, 18 Dec 2008 16:21:27 -0800
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBJ0DD9Q016331;
-	Thu, 18 Dec 2008 16:13:14 -0800
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBJ0LPat021922;
+	Thu, 18 Dec 2008 16:21:26 -0800
 X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <885649360812181535h36d24b0gb31acddded452a0@mail.gmail.com>
+In-Reply-To: <1229645511.5770.29.camel@rotwang.fnordora.org>
 User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.924 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Status: No, hits=-3.424 required=5 tests=AWL,BAYES_00
 X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
 X-MIMEDefang-Filter: lf$Revision: 1.188 $
 X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
@@ -42,31 +41,35 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103516>
 
 
 
-On Thu, 18 Dec 2008, James Pickens wrote:
-
-> On Thu, Dec 18, 2008, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> > So instead of doing all the unpacking etc in parallel (with locking around
-> > it to serialize it), I'd suggest doing ll the unpacking serially since
-> > that isn't the problem anyway (and since you have to protect it with a
-> > lock anyway), and just have a "write out and free the buffer" phase that
-> > is done in the threads.
+On Thu, 18 Dec 2008, Alan wrote:
 > 
-> That's certainly a more elegant way to do it, but unless I'm missing
-> something, it requires rewriting a good bit of code.  The main reason I
-> went with the locking was to keep the patch as simple and non-intrusive
-> as possible.
+> I think I know how to fix it.  I am just concerned about having it occur
+> again if someone else makes the same mistake I did.
 
-Yeah, I looked a bit more at it, and one problem is that we don't just 
-write out the file, we also refresh the cache with the stat information 
-after writing it out. If we just write the thing out, it would be simpler: 
-we'd just make the thread locklessly write things out and free the data 
-from a simple set of lockless threads - no need for any access to git data 
-structures.
+I suspect we should warn about reverting merges. I'm surprised we don't 
+already. Reverting a merge isn't "wrong", but it's a whole lot more subtle 
+than reverting a regular commit.
 
-Ho humm. I'll think about it a bit more.
+Reverting a regular commit just effectively undoes what that commit did, 
+and is fairly straightforward. But reverting a merge commit also undoes 
+the _data_ that the commit changed, but it does absolutely nothing to the 
+effects on _history_ that the merge had.
 
-		Linus
+So the merge will still exist, and it will still be seen as joining the 
+two branches together, and future merges will see that merge as the last 
+shared state - and the revert that reverted the merge brought in will not 
+affect that at all.
+
+So a "revert" undoes the data changes, but it's very much _not_ an "undo" 
+in the sense that it doesn't undo the effects of a commit on the 
+repository history.
+
+So if you think of "revert" as "undo", then you're going to always miss 
+this part of reverts. Yes, it undoes the data, but no, it doesn't undo 
+history.
+
+			Linus
