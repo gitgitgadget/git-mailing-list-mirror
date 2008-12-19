@@ -1,76 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] Simplified GIT usage guide
-Date: Fri, 19 Dec 2008 10:26:16 +0100
-Message-ID: <494B68B8.20107@drmicha.warpmail.net>
-References: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk> <c6d9bea0812181647n55fbb6b9w333702fc80127198@mail.gmail.com>
+From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+Subject: Re: is it possible filter the revision history of a single file into another repository?
+Date: Fri, 19 Dec 2008 10:44:37 +0100
+Organization: Intra2net AG
+Message-ID: <200812191044.47830.thomas.jarosch@intra2net.com>
+References: <8ec76080812180551p8c97a0dqa2025e67792946c7@mail.gmail.com> <8ec76080812180619k78a28e30t591b514148202869@mail.gmail.com> <8ec76080812181151y4a5a6f5cna57785c935032e77@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: David Howells <dhowells@redhat.com>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-To: "C. Scott Ananian" <cscott@laptop.org>
-X-From: git-owner@vger.kernel.org Fri Dec 19 10:27:47 2008
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Whit Armstrong" <armstrong.whit@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 19 10:46:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDbe0-0004kX-CI
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 10:27:40 +0100
+	id 1LDbvu-0001yk-MR
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 10:46:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750853AbYLSJ0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2008 04:26:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbYLSJ0W
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 04:26:22 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:32959 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750853AbYLSJ0U (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Dec 2008 04:26:20 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id DCFF41E725B;
-	Fri, 19 Dec 2008 04:26:18 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 19 Dec 2008 04:26:18 -0500
-X-Sasl-enc: n+fN1dgr/jZ6yXDJdJCxn65bs5MaEwlj+QQb/22o7WDS 1229678778
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 140E212479;
-	Fri, 19 Dec 2008 04:26:17 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.18 (X11/20081105)
-In-Reply-To: <c6d9bea0812181647n55fbb6b9w333702fc80127198@mail.gmail.com>
+	id S1751483AbYLSJow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2008 04:44:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751421AbYLSJow
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 04:44:52 -0500
+Received: from rs02.intra2net.com ([81.169.173.116]:33070 "EHLO
+	rs02.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751361AbYLSJov (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Dec 2008 04:44:51 -0500
+Received: from intranator.m.i2n (unknown [172.16.1.99])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by rs02.intra2net.com (Postfix) with ESMTP id 6FAD5A016;
+	Fri, 19 Dec 2008 10:44:49 +0100 (CET)
+Received: from localhost (intranator.m.i2n [127.0.0.1])
+	by localhost (Postfix) with ESMTP id F32C02AC4B;
+	Fri, 19 Dec 2008 10:44:48 +0100 (CET)
+Received: from storm.localnet (storm.m.i2n [172.16.1.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by intranator.m.i2n (Postfix) with ESMTP id 22F1A2AC4A;
+	Fri, 19 Dec 2008 10:44:48 +0100 (CET)
+User-Agent: KMail/1.10.3 (Linux/2.6.27.5-41.fc9.i686; KDE/4.1.3; i686; ; )
+In-Reply-To: <8ec76080812181151y4a5a6f5cna57785c935032e77@mail.gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: by Intranator (www.intranator.com) with AMaViS and F-Secure AntiVirus (fsavdb 2008-12-19_03)
+X-Spam-Status: hits=-2.0 tests=[ALL_TRUSTED=-1.8,BAYES_40=-0.185]
+X-Spam-Level: 980
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103557>
 
-C. Scott Ananian venit, vidit, dixit 19.12.2008 01:47:
-> On Fri, Dec 12, 2008 at 1:28 PM, David Howells <dhowells@redhat.com> wrote:
->> Add a guide to using GIT's simpler features.
->> diff --git a/Documentation/git-haters-guide.txt b/Documentation/git-haters-guide.txt
->> +In the above example, I've assumed that you've got your own tree with the head
->> +at commit C3, and that you've got a branch that you want to merge, which has
->> +its head at commit B3.  After merging them, you'd end up with a directed,
->> +cyclic tree:
-> 
-> That should be, "acyclic".  There are no cycles, because the graph is directed.
+On Thursday, 18. December 2008 20:51:38 Whit Armstrong wrote:
+> Sorry, seem to be getting this error:
+> `/home/whit/dvl/risk.metrics.utils/RiskMetrics/.git-rewrite/t/../index.new'
+>: No such file or directory
+>
+> do I need to set up the index file first?
 
-Well, directed graphs can have cycles. But the revision graph of a
-revision control system has to be an acyclic directed graph. Otherwise
-parenthood would be a complicated matter ;)
+Hmm, I guess you have an empty commit in your repository like I did.
+This is currently a corner case in update-index, which does not create empty 
+index files. I posted a patch a few days ago and Junio posted an updated 
+version of that. I could send you my version for git 1.6.0.5 if you need it.
 
-And no, trees by definition don't have cycles. Also, a "tree" in git
-lingo is not the graph theoretic notion (which David uses, though
-incorrectly); this only adds unnecessary points of confusion.
+> Is there a good site that documents this procedure?
 
-For whatever reason the graphs in version control systems are called
-"dag"s, i.e. directed acyclic graphs, even though "acyclicity" depends
-on whether you look at the directed or undirected graphs. (Branching
-then merging gives an undirected cycle.) I guess one may read "directed"
-as an attribute to "acyclic" here, i.e. ((directed acyclic) graph)
-rather than (directed (acyclic graph)); so to say "directedly acyclic
-graph". Or it's just that "dag" reads much better than "adg"...
+A good start is the git-filter-branch man page and the mailinglist archive.
 
-So, please: Simplification yes, but not if it's unnecessarily misleading
-or even plain wrong (referring to the original proposal, not the comment).
-
-Cheers,
-Michael
+Thomas
