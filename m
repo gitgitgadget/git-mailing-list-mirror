@@ -1,72 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: jidanni@jidanni.org
 Subject: Re: How to extract files out of a "git bundle", no matter what?
-Date: Fri, 19 Dec 2008 12:07:09 -0800
-Message-ID: <7vtz906iaa.fsf@gitster.siamese.dyndns.org>
-References: <87iqpgc6bn.fsf@jidanni.org>
+Date: Sat, 20 Dec 2008 04:13:26 +0800
+Message-ID: <87zlirc49l.fsf@jidanni.org>
+References: <494BFCAF.9060703@verizon.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: mdl123@verizon.net, git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Fri Dec 19 21:09:26 2008
+Cc: spearce@spearce.org, git@vger.kernel.org
+To: mdl123@verizon.net
+X-From: git-owner@vger.kernel.org Fri Dec 19 21:14:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDleI-0004La-9x
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 21:08:38 +0100
+	id 1LDlkF-0006n1-JR
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 21:14:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019AbYLSUHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2008 15:07:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbYLSUHU
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 15:07:20 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36558 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750874AbYLSUHT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2008 15:07:19 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 410C21AAAC;
-	Fri, 19 Dec 2008 15:07:17 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2447A1AAAB; Fri,
- 19 Dec 2008 15:07:11 -0500 (EST)
-In-Reply-To: <87iqpgc6bn.fsf@jidanni.org> (jidanni@jidanni.org's message of
- "Sat, 20 Dec 2008 03:29:00 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A2830060-CE08-11DD-8EDC-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751056AbYLSUN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2008 15:13:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751216AbYLSUN3
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 15:13:29 -0500
+Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:45801 "EHLO
+	homiemail-a4.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750874AbYLSUN3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Dec 2008 15:13:29 -0500
+Received: from jidanni.org (122-127-33-249.dynamic.hinet.net [122.127.33.249])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by homiemail-a4.dreamhost.com (Postfix) with ESMTP id 088B7414B0;
+	Fri, 19 Dec 2008 12:13:28 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103579>
 
-jidanni@jidanni.org writes:
+SOP> If the bundle requires 0 refs (like above) then you can init a
+SOP> new repository and should be able to fetch from it:
 
-> Someone has handed you a "git bundle".
-> How do you get the files out of it?
-> If it were cpio, you would use -i, if it were tar, you would use -x...
-> You read the git-bundle man page.
-> You only get as far as
-> # git-bundle verify bundle.bdl
-> The bundle contains 1 ref
-> d01... /heads/master
-> The bundle requires these 0 ref
-> bundle.bdl is okay
->
-> The rest is mish-mosh.
+SOP> 	git init
+SOP> 	git pull bundle.bdl master
 
-The last example in the git-bundle man page might be a bit cryptic but
-that is how bundles are expected to be used.  To give people repository
-access who do not have real network connection other than Sneakernet.
+Phew, that worked. Thank you!
 
-For one shot extraction, defining a remote in the config is overkill and
-you could just say:
+ML> With relatively recent git (not sure the version), you can just do
+ML>    git clone bundle.bdl
+Not with git version 1.5.6.5, Debian sid.
 
-	git ls-remote bundle.bdl
+Anyway, for man page completeness, I still see the day when:
 
-to see what branches it contains and if you are interested in its
-master branch and want to merge it to your history, then
+SOP> You can't just "get the files out".  A bundle contains deltas,
+SOP> where you need the base in order to recreate the file content.
+SOP> It can't be unpacked in a vacuum.
 
-	git pull bundle.bdl master
+That is nice by we here at the forensics department of XYZ police
+force just need to get the files out. We tried "PK UNZIP" but that
+didn't extract them. We contacted the Computer Science Dept. but
+that's who they're holding hostage.
 
-should do that.
+SOP> To unpack a bundle you need to clone the project and then fetch
+SOP> from it:
+
+SOP> 	git clone src...
+SOP> 	git pull bundle.bdl master
+
+That is nice but the perpetrators have destroyed everything except for
+that one bundle.bdl file, which contains the password to defuse the
+time bomb.
+
+There must be a way to make a "phony tree" or whatever to "attach to"
+so extraction can proceed. Be sure to spell it all out on the
+git-bundle man page as a reference in case some non-computer people
+need to do aforementioned emergency extraction one day.
