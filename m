@@ -1,52 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff.c: fix pointer type warning
-Date: Fri, 19 Dec 2008 15:09:51 -0800
-Message-ID: <7vd4fn7oe8.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.2.00.0812171034520.14014@localhost.localdomain>
- <alpine.LFD.2.00.0812171042120.14014@localhost.localdomain>
- <alpine.LFD.2.00.0812171042500.14014@localhost.localdomain>
- <alpine.LFD.2.00.0812171043180.14014@localhost.localdomain>
- <alpine.LFD.2.00.0812171043440.14014@localhost.localdomain>
- <20081218121118.3635c53c@crow> <494C1BE8.20607@lsrfire.ath.cx>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: Odd merge behaviour involving reverts
+Date: Sat, 20 Dec 2008 08:12:38 +0900
+Message-ID: <20081220081238.6117@nanako3.lavabit.com>
+References: <7vljub7oko.fsf@gitster.siamese.dyndns.org>
+ <7vocz8a6zk.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.2.00.0812181534310.14014@localhost.localdomain>
+ <1229642734.5770.25.camel@rotwang.fnordora.org>
+ <20081219124452.6117@nanako3.lavabit.com>
+ <20081220064532.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mark Burton <markb@ordern.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Dec 20 00:11:25 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Alan <alan@clueserver.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 20 00:16:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDoVA-0008NA-Ck
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 00:11:24 +0100
+	id 1LDoaH-0001ZW-BA
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 00:16:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751742AbYLSXKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2008 18:10:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751698AbYLSXKG
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 18:10:06 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54780 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751515AbYLSXKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2008 18:10:04 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 28F7B17F34;
-	Fri, 19 Dec 2008 18:10:00 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5462A1AA8C; Fri,
- 19 Dec 2008 18:09:53 -0500 (EST)
-In-Reply-To: <494C1BE8.20607@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?= Scharfe's
- message of "Fri, 19 Dec 2008 23:10:48 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 28E921CA-CE22-11DD-8D7A-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751932AbYLSXPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2008 18:15:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751918AbYLSXPX
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 18:15:23 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:52769 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751801AbYLSXPW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Dec 2008 18:15:22 -0500
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id 10452C7A71;
+	Fri, 19 Dec 2008 17:15:20 -0600 (CST)
+Received: from 1808.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id HRR2K8T74BR9; Fri, 19 Dec 2008 17:15:20 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=vdns8oC2/pHEX2ULX/lAL0gY89547hJud76+SLkYW3TBVcGcWIdL13R0IUNGFDrzUxHqLuRMYjPSD/Kgoz7Zj0xKB80UhZ/boGVTiVf79KCW54Zebaf3zw/7yWypEVfOBo1sJ3yHPbo1EbOMrrNdG2hFs9QQGtKnAJzyp9EP9Gk=;
+  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7vljub7oko.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103598>
 
-Thanks; I think I already have it in my tree from your yesterday's
-e-mail.  I just have been too busy to whip the other branches into shape
-to push the results out.
+Quoting Junio C Hamano <gitster@pobox.com>:
+
+> Nanako Shiraishi <nanako3@lavabit.com> writes:
+>
+>> I think your explanation will help people if we make it part of the
+>> documentation.  Especially because two different cases need two
+>> different recovery methods, and people need to learn which is which.
+>
+> Sure.  It needs copyediting to make it readable standalone by not
+> mentioning "your misunderstanding", inlining "earlier Linus's suggestion",
+> etc., though.
+>
+> Patches welcome ;-)
+
+Okay, I'll send one later.
+
+Thanks.
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
