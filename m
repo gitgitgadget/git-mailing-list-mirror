@@ -1,78 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Make git revert warn the user when reverting a merge
  commit.
-Date: Fri, 19 Dec 2008 03:57:57 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812190353520.14632@racer>
+Date: Thu, 18 Dec 2008 19:03:46 -0800
+Message-ID: <7vej04eui5.fsf@gitster.siamese.dyndns.org>
 References: <200812182039.15169.bss@iguanasuicide.net>
+ <alpine.DEB.1.00.0812190353520.14632@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-X-From: git-owner@vger.kernel.org Fri Dec 19 04:00:12 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Dec 19 04:05:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDVb2-00076o-BQ
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 04:00:12 +0100
+	id 1LDVft-00086k-5p
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 04:05:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752214AbYLSC6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 21:58:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751955AbYLSC6y
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 21:58:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57465 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751480AbYLSC6x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 21:58:53 -0500
-Received: (qmail invoked by alias); 19 Dec 2008 02:58:51 -0000
-Received: from pD9EB3AF0.dip0.t-ipconnect.de (EHLO noname) [217.235.58.240]
-  by mail.gmx.net (mp047) with SMTP; 19 Dec 2008 03:58:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18M60ofBpMM4xyIAU95w+3XSFVi817A6CAfvg8WeR
-	J43rSav/dWXCg7
-X-X-Sender: gene099@racer
-In-Reply-To: <200812182039.15169.bss@iguanasuicide.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1752462AbYLSDDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 22:03:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752428AbYLSDDy
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 22:03:54 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58108 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751519AbYLSDDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 22:03:54 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1E89288BB6;
+	Thu, 18 Dec 2008 22:03:53 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EFB0588BB4; Thu,
+ 18 Dec 2008 22:03:48 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0812190353520.14632@racer> (Johannes
+ Schindelin's message of "Fri, 19 Dec 2008 03:57:57 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: AACA880E-CD79-11DD-948B-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103534>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Thu, 18 Dec 2008, Boyd Stephen Smith Jr. wrote:
+> Wow.  That must be one of the, uhm, less beautiful ways to write
+>
+> 		if (action == REVERT)
+> 			warning("revert on a merge commit may not do what you "
+> 				"expect.");
+> 		else if (action != CHERRY_PICK)
+> 			die("Unknown action on a merge commit.");
+>
+> Besides, I am actually pretty much against this change.  You already have 
+> to ask very explicitely to revert a merge, by specifying a parent number.  
+> If I ask for something explicitely, I do not want the tool to tell me that 
+> it's dangerous.  I know that already, thankyouverymuch.
 
-> +		do {
-> +			switch (action) {
-> +			case REVERT:
-> +				warning("revert on a merge commit may not do what you expect.");
-> +				continue;
-> +			case CHERRY_PICK:
-> +				/* Cherry picking a merge doesn't merge the history, but
-> +				 * I don't think many people expect that.
-> +				 */
-> +				continue;
-> +			}
-> +			/* Unhandled enum member. */
-> +			die("Unknown action on a merge commit.");
-> +		} while (0);
-> +
-
-Wow.  That must be one of the, uhm, less beautiful ways to write
-
-		if (action == REVERT)
-			warning("revert on a merge commit may not do what you "
-				"expect.");
-		else if (action != CHERRY_PICK)
-			die("Unknown action on a merge commit.");
-
-Besides, I am actually pretty much against this change.  You already have 
-to ask very explicitely to revert a merge, by specifying a parent number.  
-If I ask for something explicitely, I do not want the tool to tell me that 
-it's dangerous.  I know that already, thankyouverymuch.
-
-Ciao,
-Dscho
+Or you may not have known that it is dangerous, but the new warning does
+not give you enough clue where to go next, so this warning does not give
+real value.  It is pretty much meaningless noise to users.
