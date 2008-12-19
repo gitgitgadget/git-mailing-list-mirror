@@ -1,76 +1,70 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: Odd merge behaviour involving reverts
-Date: Fri, 19 Dec 2008 12:44:52 +0900
-Message-ID: <20081219124452.6117@nanako3.lavabit.com>
-References: <alpine.LFD.2.00.0812181534310.14014@localhost.localdomain>
- <1229642734.5770.25.camel@rotwang.fnordora.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: git-rm -n leaves .git/index.lock if not allowed to finish
+Date: Fri, 19 Dec 2008 04:47:57 +0100
+Message-ID: <20081219034757.GC21154@genesis.frugalware.org>
+References: <87prjptfo7.fsf@jidanni.org> <20081219002524.GB21154@genesis.frugalware.org> <7v63lhf1cl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Alan <alan@clueserver.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Dec 19 04:46:55 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="4jXrM3lyYWu4nBt5"
+Cc: jidanni@jidanni.org, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 19 04:49:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDWKC-0000Aq-Dr
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 04:46:52 +0100
+	id 1LDWMZ-0000kg-1x
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 04:49:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752430AbYLSDpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 22:45:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752382AbYLSDpc
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 22:45:32 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:52380 "EHLO karen.lavabit.com"
+	id S1752457AbYLSDsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 22:48:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752329AbYLSDsA
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 22:48:00 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:35909 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752429AbYLSDpb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 22:45:31 -0500
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id C12B0C8441;
-	Thu, 18 Dec 2008 21:45:30 -0600 (CST)
-Received: from 9623.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id 0Q2YQYB4B6DW; Thu, 18 Dec 2008 21:45:30 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=bBhkhR+mOqAeJeoCPR0ovHvRXYAdarXeT/4D7/SOet/uJFFxcRG6cSnKEsdOFIH+FpeCcqAULEl+lNXcXpntHluB7UCskc2HYDSmk+aDmWx/YS89HBkzfCwLjFh1C23TlQ9mz5EZ8KDjqjc5L1RzZpRDfhrRdE1T1NrtvkzFkv0=;
-  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <alpine.LFD.2.00.0812181534310.14014@localhost.localdomain>
+	id S1752382AbYLSDr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 22:47:59 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 396205809F;
+	Fri, 19 Dec 2008 04:47:58 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id C86FE4465E;
+	Fri, 19 Dec 2008 04:47:57 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id B68AB11B862F; Fri, 19 Dec 2008 04:47:57 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7v63lhf1cl.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103539>
 
-Quoting Linus Torvalds <torvalds@linux-foundation.org>:
 
-> On Thu, 18 Dec 2008, Alan wrote:
->> 
->> What am i doing wrong here?
->
-> Reverting a merge is your problem.
->
-> You can do it, but you seem to have done it without understanding what it 
-> causes.
->
-> A revert of a merge becomes a regular commit that just undoes everything 
-> that the merge did in your branch. When you then do the next merge, you'll 
-> do that merge with that in mind, so now git will essentially consider the 
-> previous merge to be the base line, but your revert undid everything that 
-> that one brought in, so the new merge will really only contain the new 
-> stuff from the branch you are merging. 
->
-> So if a merge causes problems, you generally should either undo it 
-> _entirely_ (ie do a 'git reset --hard ORIG_HEAD'), not revert it. 
->
-> Of course, if you had already made the merged state public, or done 
-> development on top of it, you can't really do that. In which case a revert 
-> works, but if you want it back, you should revert the revert, not merge 
-> the branch again - because what you merged last time you threw away, and 
-> won't be applied again.
+--4jXrM3lyYWu4nBt5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-If I understand Alan's case correctly, I think he does not want to "undo" the revert but wants to merge an updated version of the branch, as if no mistaken merge nor its revert happened in the past.
+On Thu, Dec 18, 2008 at 04:35:54PM -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> I think you need to have tons of files to cause the pipe buffer to fill up
+> with the "rm 'frotz'" output, triggering a SIGPIPE to kill the upstream
+> process of the pipe.
 
-If you revert the revert on the branch before merging, doesn't it mean that you will be merging what the older version of the branch did (that is in the revert of the revert as a single huge patch) and what the updated version of the branch wants to do?  Wouldn't that lead to a mess with huge conflicts?
+Ah, you are right. I did exactly what is in the lockfile.c part of your
+patch, but I did not think about "if I don't get a SIGPIPE for 2 lines,
+I may get one for 1000 lines". ;-)
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+--4jXrM3lyYWu4nBt5
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAklLGW0ACgkQe81tAgORUJbdCwCbB7sPmD/o8riumc5LMmAHpWVg
+4boAn0j1j0LUVhhizRQd3KGXFDvOxOwE
+=R2yv
+-----END PGP SIGNATURE-----
+
+--4jXrM3lyYWu4nBt5--
