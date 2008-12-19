@@ -1,93 +1,82 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git-rm -n leaves .git/index.lock if not allowed to finish
-Date: Fri, 19 Dec 2008 01:25:24 +0100
-Message-ID: <20081219002524.GB21154@genesis.frugalware.org>
-References: <87prjptfo7.fsf@jidanni.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Simplified GIT usage guide
+Date: Thu, 18 Dec 2008 16:28:11 -0800
+Message-ID: <7vabatf1pg.fsf@gitster.siamese.dyndns.org>
+References: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk>
+ <alpine.DEB.1.00.0812121952320.5873@eeepc-johanness>
+ <20081219000218.GA23990@linux.vnet.ibm.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="gj572EiMnwbLXET9"
-Cc: git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Fri Dec 19 01:26:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	David Howells <dhowells@redhat.com>, torvalds@osdl.org,
+	git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: paulmck@linux.vnet.ibm.com
+X-From: git-owner@vger.kernel.org Fri Dec 19 01:29:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDTCZ-0001Yy-85
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 01:26:47 +0100
+	id 1LDTFb-0002OQ-KN
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 01:29:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbYLSAZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 19:25:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752018AbYLSAZ1
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 19:25:27 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:35522 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751952AbYLSAZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 19:25:27 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 9787C580AC;
-	Fri, 19 Dec 2008 01:25:25 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 6E6684465E;
-	Fri, 19 Dec 2008 01:25:25 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id C2B7D11B862F; Fri, 19 Dec 2008 01:25:24 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <87prjptfo7.fsf@jidanni.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753453AbYLSA2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 19:28:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751667AbYLSA2X
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 19:28:23 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60569 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751906AbYLSA2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 19:28:22 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0E39688DE1;
+	Thu, 18 Dec 2008 19:28:21 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A0F5488DDF; Thu,
+ 18 Dec 2008 19:28:13 -0500 (EST)
+In-Reply-To: <20081219000218.GA23990@linux.vnet.ibm.com> (Paul E. McKenney's
+ message of "Thu, 18 Dec 2008 16:02:18 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F07251FE-CD63-11DD-8A9B-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103518>
 
+"Paul E. McKenney" <paulmck@linux.vnet.ibm.com> writes:
 
---gj572EiMnwbLXET9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Fri, Dec 12, 2008 at 07:57:38PM +0100, Johannes Schindelin wrote:
+> ...
+>> I am sure we want to have something like that in git.git.
+>
+> So am I.  Except that I am not being sarcastic.  ;-)
 
-On Fri, Dec 19, 2008 at 04:02:48AM +0800, jidanni@jidanni.org wrote:
-> Bug: if git-rm -n is not allowed to write all it wants to write, it
-> will leave a .git/index.lock file:
-> # git-rm -n -r . 2>&1|sed q
-> error: '.etckeeper' has changes staged in the index
-> # git-rm -n -r . 2>&1|sed q
-> fatal: unable to create '.git/index.lock': File exists
+Hmm, but we seem to already have too many intro-to-git documents in tree.
+Perhaps good points in the document can be used to augment or replace
+parts of existing documents?  For example, which part of the new
+documentation would have helped you avoid the pain you mentioned below...
 
-Can't reproduce:
+> In particular, David's guide was quite helpful to me.  It would have been
+> even more helpful had it existed when I first tried (unsuccessfully)
+> to use GIT.  In particular, GIT's requirement that I tell it about new
+> versions of existing files (either with "git add" or "git commit -a")
+> was extremely counter-intuitive, and caused me no end of pain.
 
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index b7d46e5..1581691 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -251,4 +251,12 @@ test_expect_success 'refresh index before checking if =
-it is up-to-date' '
-=20
- '
-=20
-+test_expect_success 'test from jidanni' '
-+
-+	git reset --hard &&
-+	git rm -n -r . 2>&1|sed q &&
-+	git rm -n -r . 2>&1|sed q
-+
-+'
-+
- test_done
+... and which part of the existing user manual or tutorial should have
+talked about it to help you?
 
-passes here just fine. Yes, there are multiple files in the repo.
+> But my experience is that git is at best an acquired taste for those of
+> us who grew up with traditional source-code control systems.  Such
+> people will benefit greatly from a git-haters guide,...
 
---gj572EiMnwbLXET9
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+"Acquired taste" is a much nicer and more diplomatic way to say the same
+thing as what Linus often refers as "unlearning the braindamage inflicted
+by years of using CVS." ;-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+> ..., and git's user
+> population will grow as a result.
 
-iEYEARECAAYFAklK6fQACgkQe81tAgORUJaFuQCfad/y5tnuolmBiY4s9D2oHxpY
-bSEAnAvBGytvOxC9rUs8yW2ELGJvUosh
-=yAYR
------END PGP SIGNATURE-----
-
---gj572EiMnwbLXET9--
+I do not think it constitutes any basis for judging the merit of having
+the document in git.git tree.  The world domination is not our goal, but
+it may come as a mere side effect of being the best in the business.
