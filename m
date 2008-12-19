@@ -1,64 +1,85 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Announcement: Git Extensions stable (windows shell extensions)
-Date: Fri, 19 Dec 2008 11:36:25 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0812191134220.6540@ds9.cixit.se>
-References: <1229540813648-1669264.post@n2.nabble.com>
- <1229543462897-1669467.post@n2.nabble.com> <1229547366402-1669761.post@n2.nabble.com>
+From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+Subject: remote tracking branch deletion problem
+Date: Fri, 19 Dec 2008 12:57:11 +0100
+Organization: Intra2net AG
+Message-ID: <200812191257.18678.thomas.jarosch@intra2net.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Henk <henk_westhuis@hotmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 19 11:37:50 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 19 12:58:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDcjt-0000jw-Jl
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 11:37:50 +0100
+	id 1LDe08-00025D-LY
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 12:58:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753115AbYLSKgb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2008 05:36:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752925AbYLSKgb
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 05:36:31 -0500
-Received: from ds9.cixit.se ([193.15.169.228]:53288 "EHLO ds9.cixit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751106AbYLSKgb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2008 05:36:31 -0500
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mBJAaQac031110
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 19 Dec 2008 11:36:26 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id mBJAaPsM031102;
-	Fri, 19 Dec 2008 11:36:25 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <1229547366402-1669761.post@n2.nabble.com>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Fri, 19 Dec 2008 11:36:26 +0100 (CET)
+	id S1752224AbYLSL5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2008 06:57:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751619AbYLSL5W
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 06:57:22 -0500
+Received: from rs02.intra2net.com ([81.169.173.116]:47030 "EHLO
+	rs02.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751139AbYLSL5W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Dec 2008 06:57:22 -0500
+Received: from intranator.m.i2n (unknown [172.16.1.99])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by rs02.intra2net.com (Postfix) with ESMTP id 6D2C8880F;
+	Fri, 19 Dec 2008 12:57:20 +0100 (CET)
+Received: from localhost (intranator.m.i2n [127.0.0.1])
+	by localhost (Postfix) with ESMTP id BF9162AC4B;
+	Fri, 19 Dec 2008 12:57:19 +0100 (CET)
+Received: from storm.localnet (storm.m.i2n [172.16.1.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by intranator.m.i2n (Postfix) with ESMTP id DD8742AC4A;
+	Fri, 19 Dec 2008 12:57:18 +0100 (CET)
+User-Agent: KMail/1.10.3 (Linux/2.6.27.7-53.fc9.i686; KDE/4.1.3; i686; ; )
+Content-Disposition: inline
+X-Virus-Scanned: by Intranator (www.intranator.com) with AMaViS and F-Secure AntiVirus (fsavdb 2008-12-19_03)
+X-Spam-Status: hits=-2.5 tests=[ALL_TRUSTED=-1.8,BAYES_20=-0.74]
+X-Spam-Level: 975
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103559>
 
-Henk:
+Hello together,
 
-> I just rereleased a 0.9 version without the visual studio plugin. Too bad it
-> causes problems, I will try to fix them soon. I was able to reproduce the
-> error on my laptop, so thats a good start.
+while playing around with git, I stumbled upon a strange remote tracking 
+branch deletion problem. It seems I'm unable to delete the remote tracking 
+branch "origin/HEAD" using git 1.6.0.5. Here's what I did:
 
-I tried with the 0.91 version but ran into a different problem:
+[tomj@storm repo]$ git init
+Initialized empty Git repository in /tmp/repo/.git/
 
-  "The system cannot open the device or file specified."
+[tomj@storm repo]$ echo "test" >test
+[tomj@storm repo]$ git add test
+[tomj@storm repo]$ git commit -m "Test"
 
-followed by
+[tomj@storm tmp]$ git clone repo alice
+Initialized empty Git repository in /tmp/alice/.git/
 
-  "The installer has encountered an unexpected error installing this
-   package. This may indicate a problem with this package. The error code
-   is 2755."
+[tomj@storm alice]$ git branch -r
+  origin/HEAD
+  origin/master
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+[tomj@storm alice]$ git branch -r -d origin/HEAD
+Deleted remote branch origin/HEAD.
+[tomj@storm alice]$ git branch -r -d origin/master
+Deleted remote branch origin/master.
+
+[tomj@storm alice]$ ls -al .git/refs/remotes/origin/HEAD
+-rw-rw---- 1 tomj intra2net 32 19. Dec 12:43 .git/refs/remotes/origin/HEAD
+[tomj@storm alice]$ git branch -r
+error: refs/remotes/origin/HEAD points nowhere!
+
+Is this supposed to be? git 1.6.1.rc3.35.gc0ceb shows a similar behavior.
+
+Cheers,
+Thomas
