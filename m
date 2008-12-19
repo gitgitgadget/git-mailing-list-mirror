@@ -1,104 +1,76 @@
-From: Wu Fengguang <fengguang.wu@intel.com>
-Subject: [PATCH] git-send-email: handle email address with quoted comma
-Date: Fri, 19 Dec 2008 11:40:12 +0800
-Message-ID: <1229658012-9240-1-git-send-email-fengguang.wu@intel.com>
-Cc: Wu Fengguang <fengguang.wu@intel.com>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 19 04:44:06 2008
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: Odd merge behaviour involving reverts
+Date: Fri, 19 Dec 2008 12:44:52 +0900
+Message-ID: <20081219124452.6117@nanako3.lavabit.com>
+References: <alpine.LFD.2.00.0812181534310.14014@localhost.localdomain>
+ <1229642734.5770.25.camel@rotwang.fnordora.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Alan <alan@clueserver.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Dec 19 04:46:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDWHV-00084x-JO
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 04:44:06 +0100
+	id 1LDWKC-0000Aq-Dr
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 04:46:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752283AbYLSDml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 22:42:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752237AbYLSDml
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 22:42:41 -0500
-Received: from mga14.intel.com ([143.182.124.37]:27969 "EHLO mga14.intel.com"
+	id S1752430AbYLSDpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 22:45:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752382AbYLSDpc
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 22:45:32 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:52380 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752173AbYLSDmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 22:42:40 -0500
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga102.ch.intel.com with ESMTP; 18 Dec 2008 19:42:40 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.36,246,1228118400"; 
-   d="scan'208";a="91937769"
-Received: from unknown (HELO localhost) ([10.254.153.195])
-  by azsmga001.ch.intel.com with ESMTP; 18 Dec 2008 19:42:18 -0800
-Received: from wfg by localhost with local (Exim 4.69)
-	(envelope-from <fengguang.wu@intel.com>)
-	id 1LDWDk-0002Pe-Hi; Fri, 19 Dec 2008 11:40:12 +0800
-X-Mailer: git-send-email 1.6.0.4
+	id S1752429AbYLSDpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 22:45:31 -0500
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id C12B0C8441;
+	Thu, 18 Dec 2008 21:45:30 -0600 (CST)
+Received: from 9623.lavabit.com (212.62.97.23)
+	by lavabit.com with ESMTP id 0Q2YQYB4B6DW; Thu, 18 Dec 2008 21:45:30 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=bBhkhR+mOqAeJeoCPR0ovHvRXYAdarXeT/4D7/SOet/uJFFxcRG6cSnKEsdOFIH+FpeCcqAULEl+lNXcXpntHluB7UCskc2HYDSmk+aDmWx/YS89HBkzfCwLjFh1C23TlQ9mz5EZ8KDjqjc5L1RzZpRDfhrRdE1T1NrtvkzFkv0=;
+  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <alpine.LFD.2.00.0812181534310.14014@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103538>
 
-Correctly handle email addresses containing quoted commas, e.g.
+Quoting Linus Torvalds <torvalds@linux-foundation.org>:
 
-	"Zhu, Yi" <yi.zhu@intel.com>, "Li, Shaohua" <shaohua.li@intel.com>
+> On Thu, 18 Dec 2008, Alan wrote:
+>> 
+>> What am i doing wrong here?
+>
+> Reverting a merge is your problem.
+>
+> You can do it, but you seem to have done it without understanding what it 
+> causes.
+>
+> A revert of a merge becomes a regular commit that just undoes everything 
+> that the merge did in your branch. When you then do the next merge, you'll 
+> do that merge with that in mind, so now git will essentially consider the 
+> previous merge to be the base line, but your revert undid everything that 
+> that one brought in, so the new merge will really only contain the new 
+> stuff from the branch you are merging. 
+>
+> So if a merge causes problems, you generally should either undo it 
+> _entirely_ (ie do a 'git reset --hard ORIG_HEAD'), not revert it. 
+>
+> Of course, if you had already made the merged state public, or done 
+> development on top of it, you can't really do that. In which case a revert 
+> works, but if you want it back, you should revert the revert, not merge 
+> the branch again - because what you merged last time you threw away, and 
+> won't be applied again.
 
-Here the commas inside the double quotes are NOT email separators.
+If I understand Alan's case correctly, I think he does not want to "undo" the revert but wants to merge an updated version of the branch, as if no mistaken merge nor its revert happened in the past.
 
-Signed-off-by: Wu Fengguang <fengguang.wu@intel.com>
----
- git-send-email.perl |   13 ++++++++++---
- 1 files changed, 10 insertions(+), 3 deletions(-)
+If you revert the revert on the branch before merging, doesn't it mean that you will be merging what the older version of the branch did (that is in the revert of the revert as a single huge patch) and what the updated version of the branch wants to do?  Wouldn't that lead to a mess with huge conflicts?
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 3112f76..d44e99c 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -20,6 +20,7 @@ use strict;
- use warnings;
- use Term::ReadLine;
- use Getopt::Long;
-+use Text::ParseWords;
- use Data::Dumper;
- use Term::ANSIColor;
- use File::Temp qw/ tempdir /;
-@@ -359,6 +360,12 @@ foreach my $entry (@bcclist) {
- 	die "Comma in --bcclist entry: $entry'\n" unless $entry !~ m/,/;
- }
- 
-+sub split_addrs($) {
-+	my ($addrs) = @_;
-+
-+	return &quotewords('\s*,\s*', 1, $addrs);
-+}
-+
- my %aliases;
- my %parse_alias = (
- 	# multiline formats can be supported in the future
-@@ -367,7 +374,7 @@ my %parse_alias = (
- 			my ($alias, $addr) = ($1, $2);
- 			$addr =~ s/#.*$//; # mutt allows # comments
- 			 # commas delimit multiple addresses
--			$aliases{$alias} = [ split(/\s*,\s*/, $addr) ];
-+			$aliases{$alias} = [ split_addrs($addr) ];
- 		}}},
- 	mailrc => sub { my $fh = shift; while (<$fh>) {
- 		if (/^alias\s+(\S+)\s+(.*)$/) {
-@@ -379,7 +386,7 @@ my %parse_alias = (
- 			chomp $x;
- 		        $x .= $1 while(defined($_ = <$fh>) && /^ +(.*)$/);
- 			$x =~ /^(\S+)$f\t\(?([^\t]+?)\)?(:?$f){0,2}$/ or next;
--			$aliases{$1} = [ split(/\s*,\s*/, $2) ];
-+			$aliases{$1} = [ split_addrs($2) ];
- 		}},
- 	gnus => sub { my $fh = shift; while (<$fh>) {
- 		if (/\(define-mail-alias\s+"(\S+?)"\s+"(\S+?)"\)/) {
-@@ -588,7 +595,7 @@ if (!@to) {
- 	}
- 
- 	my $to = $_;
--	push @to, split /,\s*/, $to;
-+	push @to, split_addrs($to);
- 	$prompting++;
- }
- 
 -- 
-1.6.0.4
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
