@@ -1,102 +1,92 @@
-From: Thomas Jarosch <thomas.jarosch@intra2net.com>
-Subject: Re: is it possible filter the revision history of a single file into another repository?
-Date: Fri, 19 Dec 2008 14:17:05 +0100
-Organization: Intra2net AG
-Message-ID: <200812191417.13147.thomas.jarosch@intra2net.com>
-References: <8ec76080812180551p8c97a0dqa2025e67792946c7@mail.gmail.com> <200812191044.47830.thomas.jarosch@intra2net.com> <8ec76080812190508v2ef0f982pab66a698f06a80d5@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: remote tracking branch deletion problem
+Date: Fri, 19 Dec 2008 15:56:55 +0100
+Message-ID: <494BB637.3070304@drmicha.warpmail.net>
+References: <200812191257.18678.thomas.jarosch@intra2net.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-To: "Whit Armstrong" <armstrong.whit@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 19 14:18:37 2008
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Thomas Jarosch <thomas.jarosch@intra2net.com>
+X-From: git-owner@vger.kernel.org Fri Dec 19 15:58:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDfFT-00033O-JJ
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 14:18:36 +0100
+	id 1LDgo6-00063O-7B
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 15:58:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752956AbYLSNRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2008 08:17:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752893AbYLSNRR
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 08:17:17 -0500
-Received: from re01.intra2net.com ([82.165.28.202]:45830 "EHLO
-	re01.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751529AbYLSNRR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2008 08:17:17 -0500
-Received: from intranator.m.i2n (unknown [172.16.1.99])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by re01.intra2net.com (Postfix) with ESMTP id 11B2250EE;
-	Fri, 19 Dec 2008 14:17:15 +0100 (CET)
-Received: from localhost (intranator.m.i2n [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 7C7292AC4B;
-	Fri, 19 Dec 2008 14:17:14 +0100 (CET)
-Received: from storm.localnet (storm.m.i2n [172.16.1.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by intranator.m.i2n (Postfix) with ESMTP id 5EDF32AC4A;
-	Fri, 19 Dec 2008 14:17:13 +0100 (CET)
-User-Agent: KMail/1.10.3 (Linux/2.6.27.7-53.fc9.i686; KDE/4.1.3; i686; ; )
-In-Reply-To: <8ec76080812190508v2ef0f982pab66a698f06a80d5@mail.gmail.com>
-Content-Disposition: inline
-X-Virus-Scanned: by Intranator (www.intranator.com) with AMaViS and F-Secure AntiVirus (fsavdb 2008-12-19_06)
-X-Spam-Status: hits=-2.9 tests=[ALL_TRUSTED=-1.8,BAYES_05=-1.11]
-X-Spam-Level: 971
+	id S1750961AbYLSO5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2008 09:57:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750963AbYLSO5A
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 09:57:00 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48439 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750957AbYLSO47 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Dec 2008 09:56:59 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 962A31E9A45;
+	Fri, 19 Dec 2008 09:56:58 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 19 Dec 2008 09:56:58 -0500
+X-Sasl-enc: sSD2ECHxUTRgo1xVC8n74KhZSA6ax3gVhLwnSvNNI/d3 1229698618
+Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E791D1C206;
+	Fri, 19 Dec 2008 09:56:57 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081105)
+In-Reply-To: <200812191257.18678.thomas.jarosch@intra2net.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103564>
 
-On Friday, 19. December 2008 14:08:23 Whit Armstrong wrote:
-> thanks, Thomas. I could definitely pull from your tree.  seems like
-> the path of least resistance to get my repo split.
+Thomas Jarosch venit, vidit, dixit 19.12.2008 12:57:
+> Hello together,
+> 
+> while playing around with git, I stumbled upon a strange remote tracking 
+> branch deletion problem. It seems I'm unable to delete the remote tracking 
+> branch "origin/HEAD" using git 1.6.0.5. Here's what I did:
+> 
+> [tomj@storm repo]$ git init
+> Initialized empty Git repository in /tmp/repo/.git/
+> 
+> [tomj@storm repo]$ echo "test" >test
+> [tomj@storm repo]$ git add test
+> [tomj@storm repo]$ git commit -m "Test"
+> 
+> [tomj@storm tmp]$ git clone repo alice
+> Initialized empty Git repository in /tmp/alice/.git/
+> 
+> [tomj@storm alice]$ git branch -r
+>   origin/HEAD
+>   origin/master
+> 
+> [tomj@storm alice]$ git branch -r -d origin/HEAD
+> Deleted remote branch origin/HEAD.
+> [tomj@storm alice]$ git branch -r -d origin/master
+> Deleted remote branch origin/master.
+> 
+> [tomj@storm alice]$ ls -al .git/refs/remotes/origin/HEAD
+> -rw-rw---- 1 tomj intra2net 32 19. Dec 12:43 .git/refs/remotes/origin/HEAD
+> [tomj@storm alice]$ git branch -r
+> error: refs/remotes/origin/HEAD points nowhere!
+> 
+> Is this supposed to be? git 1.6.1.rc3.35.gc0ceb shows a similar behavior.
 
-Here's the patch I use for git 1.6.0.5. According to Junio
-it has the small drawback of always writing out the index,
-even if there are no changes.
+I think the point here is that HEAD is really a symref. "git remote rm
+origin" makes sure that symrefs are removed, and is the right command to
+use here.
 
-If you need an updated patch against HEAD, look for Junio's reply
-to my patch in the list archive.
+"git branch -r -d", as well as "git update-ref -d" fail to remove HEAD
+because it's really not a branch but a symref.
 
-Enjoy,
-Thomas
+You can use "git update-ref -d --no-deref" to remove HEAD.
 
-Signed-off-by: Thomas Jarosch <thomas.jarosch@intra2net.com>
+Making builtin-branch use delete_ref(,,REF_ISSYMREF) leads to success
+for your above commands. I don't know about side effects, though all
+tests pass. Is this sensible?
 
---- git-1.6.0.5/builtin-update-index.c	2008-12-08 02:21:49.000000000 +0100
-+++ git-1.6.0.5.index/builtin-update-index.c	2008-12-13 12:43:14.000000000 
-+0100
-@@ -297,6 +297,8 @@ static void read_index_info(int line_ter
- 	struct strbuf buf;
- 	struct strbuf uq;
- 
-+	int found_something = 0;
-+
- 	strbuf_init(&buf, 0);
- 	strbuf_init(&uq, 0);
- 	while (strbuf_getline(&buf, stdin, line_termination) != EOF) {
-@@ -307,6 +309,8 @@ static void read_index_info(int line_ter
- 		unsigned long ul;
- 		int stage;
- 
-+		found_something = 1;
-+
- 		/* This reads lines formatted in one of three formats:
- 		 *
- 		 * (1) mode         SP sha1          TAB path
-@@ -382,6 +386,11 @@ static void read_index_info(int line_ter
- 	bad_line:
- 		die("malformed index info %s", buf.buf);
- 	}
-+
-+	/* Force creation of empty index - needed by git filter-branch */
-+	if (!found_something)
-+		active_cache_changed = 1;
-+
- 	strbuf_release(&buf);
- 	strbuf_release(&uq);
- }
+I guess I should come up with a test for this along with the patch.
+
+Michael
