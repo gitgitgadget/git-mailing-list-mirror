@@ -1,73 +1,140 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Odd merge behaviour involving reverts
-Date: Thu, 18 Dec 2008 15:58:37 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0812181534310.14014@localhost.localdomain>
-References: <1229642734.5770.25.camel@rotwang.fnordora.org>
+From: "Paul E. McKenney" <paulmck@linux.vnet.ibm.com>
+Subject: Re: [PATCH] Simplified GIT usage guide
+Date: Thu, 18 Dec 2008 16:02:18 -0800
+Message-ID: <20081219000218.GA23990@linux.vnet.ibm.com>
+References: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk> <alpine.DEB.1.00.0812121952320.5873@eeepc-johanness>
+Reply-To: paulmck@linux.vnet.ibm.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Alan <alan@clueserver.org>
-X-From: git-owner@vger.kernel.org Fri Dec 19 01:01:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: David Howells <dhowells@redhat.com>, torvalds@osdl.org,
+	git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Dec 19 01:03:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDSnq-00026v-5C
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 01:01:14 +0100
+	id 1LDSqG-000310-Hl
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 01:03:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbYLRX7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 18:59:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751502AbYLRX7x
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 18:59:53 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:44063 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751480AbYLRX7x (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 18:59:53 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBINwc2s001281
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 18 Dec 2008 15:58:39 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBINwbKH006312;
-	Thu, 18 Dec 2008 15:58:38 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <1229642734.5770.25.camel@rotwang.fnordora.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.424 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752190AbYLSAC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 19:02:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753387AbYLSACZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 19:02:25 -0500
+Received: from e1.ny.us.ibm.com ([32.97.182.141]:46447 "EHLO e1.ny.us.ibm.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752371AbYLSACV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 19:02:21 -0500
+Received: from d01relay04.pok.ibm.com (d01relay04.pok.ibm.com [9.56.227.236])
+	by e1.ny.us.ibm.com (8.13.1/8.13.1) with ESMTP id mBJ01Vt7020890;
+	Thu, 18 Dec 2008 19:01:31 -0500
+Received: from d01av04.pok.ibm.com (d01av04.pok.ibm.com [9.56.224.64])
+	by d01relay04.pok.ibm.com (8.13.8/8.13.8/NCO v9.1) with ESMTP id mBJ02KO6139756;
+	Thu, 18 Dec 2008 19:02:20 -0500
+Received: from d01av04.pok.ibm.com (loopback [127.0.0.1])
+	by d01av04.pok.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id mBJ12Tr7029931;
+	Thu, 18 Dec 2008 20:02:30 -0500
+Received: from paulmck-laptop.localdomain (paulmck-laptop-009047022065.beaverton.ibm.com [9.47.22.65])
+	by d01av04.pok.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id mBJ12SOc029720;
+	Thu, 18 Dec 2008 20:02:28 -0500
+Received: by paulmck-laptop.localdomain (Postfix, from userid 1000)
+	id A1F6F14FBEE; Thu, 18 Dec 2008 16:02:18 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0812121952320.5873@eeepc-johanness>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103512>
 
-
-
-On Thu, 18 Dec 2008, Alan wrote:
+On Fri, Dec 12, 2008 at 07:57:38PM +0100, Johannes Schindelin wrote:
+> Hi,
 > 
-> What am i doing wrong here?
+> On Fri, 12 Dec 2008, David Howells wrote:
+> 
+> >  Documentation/git-haters-guide.txt | 1283 ++++++++++++++++++++++++++++++++++++
+> 
+> I am sure we want to have something like that in git.git.
 
-Reverting a merge is your problem.
+So am I.  Except that I am not being sarcastic.  ;-)
 
-You can do it, but you seem to have done it without understanding what it 
-causes.
+> > +I don't really know what I'm doing with GIT either.
+> 
+> Strike the "either".
 
-A revert of a merge becomes a regular commit that just undoes everything 
-that the merge did in your branch. When you then do the next merge, you'll 
-do that merge with that in mind, so now git will essentially consider the 
-previous merge to be the base line, but your revert undid everything that 
-that one brought in, so the new merge will really only contain the new 
-stuff from the branch you are merging. 
+Not in my case.  And I am far from alone.
 
-So if a merge causes problems, you generally should either undo it 
-_entirely_ (ie do a 'git reset --hard ORIG_HEAD'), not revert it. 
+Let's face it, if you really do know what you are doing with GIT, you
+probably are not a GIT-hater, and thus not in the target audience for
+Dave's document.
 
-Of course, if you had already made the merged state public, or done 
-development on top of it, you can't really do that. In which case a revert 
-works, but if you want it back, you should revert the revert, not merge 
-the branch again - because what you merged last time you threw away, and 
-won't be applied again.
+> > +===============
+> > +OVERVIEW OF GIT
+> > +===============
+> 
+> Your overview seems to be what "Git from the bottom up" is all about (see 
+> the Git Wiki for more information where to find it).
+> 
+> From my experience with new users, this is exactly the wrong way to go 
+> about it.  You don't introduce object types of the Git database before 
+> telling the users what the heck they are good for.  And most users do not 
+> need to bother with tree objects either, anyway.  So maybe you just tell 
+> them what the heck the object types are good for, without even teaching 
+> them the object types at all.
+> 
+> So I think that your document might do a good job scaring people away from 
+> Git.  But I do not believe that your document, especially in the tone it 
+> is written, does a good job of helping Git newbies.
+> 
+> Ciao,
+> Dscho
+> 
+> P.S.: No, I haven't read the whole document.  Still, I think I am 
+> qualified enough to estimate what the average reader's first impression 
+> would be.
 
-		Linus
+Not sure I agree.  You might well know too much about git to understand
+what it looks like to a new user, particularly a new user with a
+couple decades experience with earlier source-code control system.
+(RCS, anyone?)
+
+In particular, David's guide was quite helpful to me.  It would have been
+even more helpful had it existed when I first tried (unsuccessfully)
+to use GIT.  In particular, GIT's requirement that I tell it about new
+versions of existing files (either with "git add" or "git commit -a")
+was extremely counter-intuitive, and caused me no end of pain.
+
+There might well be a need for different approaches for different types
+of newbies.  Guys like myself who have used source-code control tools
+of one type or another for a couple decades can -definitely- benefit
+from Dave's approach.  In particular, Dave's broad-brush description of
+GIT's internals is enough to explain why the heck I should have to tell
+GIT about a new version of a file THAT IT ALREADY KNOWS ABOUT!!!
+"Why should I need to add a file that is already there???"
+
+Don't get me wrong -- as I have gained experience with GIT over the past
+six months or so, I have found a number of situations where GIT's
+insisting that I tell it about new versions of existing files has been
+helpful, for example, when I suddenly realize that a given change should
+be applied in multiple commits, with different groups of files in each
+commit.  In that case, doing a series of "git add" and "git commit"
+commands works very nicely.
+
+So I am -not- suggesting changing git.  Once you get used to it, it
+works out well.  I suppose that you could have a "git new-version"
+command as a synonym for "git add", but I doubt that it is worth it.
+
+But the "git add" issue turned me away from git several times in the past
+three years.  And for quite some time, I used git in read-only mode,
+because very strange things happened (from my viewpoint) whenever I
+tried changing anything.
+
+After using GIT reasonably heavily for the past six months, I am actually
+learning to like it, and have even starting using it for my own projects.
+But my experience is that git is at best an acquired taste for those of
+us who grew up with traditional source-code control systems.  Such
+people will benefit greatly from a git-haters guide, and git's user
+population will grow as a result.
+
+							Thanx, Paul
