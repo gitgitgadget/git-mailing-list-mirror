@@ -1,71 +1,96 @@
-From: "C. Scott Ananian" <cscott@laptop.org>
-Subject: Re: [PATCH] Simplified GIT usage guide
-Date: Thu, 18 Dec 2008 19:47:12 -0500
-Message-ID: <c6d9bea0812181647n55fbb6b9w333702fc80127198@mail.gmail.com>
-References: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Odd merge behaviour involving reverts
+Date: Thu, 18 Dec 2008 16:46:51 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0812181637140.14014@localhost.localdomain>
+References: <1229642734.5770.25.camel@rotwang.fnordora.org>  <alpine.LFD.2.00.0812181534310.14014@localhost.localdomain>  <1229645511.5770.29.camel@rotwang.fnordora.org>  <alpine.LFD.2.00.0812181614070.14014@localhost.localdomain>
+ <1229646948.5770.33.camel@rotwang.fnordora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-To: "David Howells" <dhowells@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Dec 19 01:48:35 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Alan <alan@clueserver.org>
+X-From: git-owner@vger.kernel.org Fri Dec 19 01:48:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDTXe-0007fy-Bg
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 01:48:34 +0100
+	id 1LDTXt-0007kZ-If
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 01:48:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752356AbYLSArO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 19:47:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752276AbYLSArO
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 19:47:14 -0500
-Received: from rv-out-0506.google.com ([209.85.198.232]:9660 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750753AbYLSArN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Dec 2008 19:47:13 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so658932rvb.1
-        for <multiple recipients>; Thu, 18 Dec 2008 16:47:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=/kqjlcURylyoXxs4lcfFu7HfIcKSmKEQUnRQITuLiHM=;
-        b=vZ3fQqUHR7Ua7qamZomW9i8hos9Fi7Ia3KqdAm4B5imdAdb7q38A2bT9PJ2fNHYNkr
-         v/VYTH1/etbi9buJ2Dvs7e8ntRWod7pizu+2EcCMo1rh/U/NRcKMHfnq4pcnZEtHL1bV
-         RHyxVleUjVehT5SfTwRR652ssaaJq1o/n6eNI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=ueYJgsiTVP2zWtmkp6G8ohY1AeiGnBjrbvEIa86RNyWymqfdFeoSRZRaobDG+Op1Ga
-         S2TFCxVydukoJ8Iur3StdY2ZB1BgVR2mGNgPtN9yfExrc1MkzgEJpvfWcQJtVl974aZG
-         dHTc8k064/sZ4DQraVQYara3X+wv+7a3NpsYE=
-Received: by 10.141.26.19 with SMTP id d19mr1257783rvj.184.1229647632225;
-        Thu, 18 Dec 2008 16:47:12 -0800 (PST)
-Received: by 10.141.34.13 with HTTP; Thu, 18 Dec 2008 16:47:12 -0800 (PST)
-In-Reply-To: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk>
-Content-Disposition: inline
-X-Google-Sender-Auth: 6ea204e53f7bbc54
+	id S1753936AbYLSArW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 19:47:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753551AbYLSArV
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 19:47:21 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:38463 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752883AbYLSArU (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 19:47:20 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBJ0kqAe004240
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 18 Dec 2008 16:46:53 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBJ0kpeE006716;
+	Thu, 18 Dec 2008 16:46:51 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1229646948.5770.33.camel@rotwang.fnordora.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.423 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103523>
 
-On Fri, Dec 12, 2008 at 1:28 PM, David Howells <dhowells@redhat.com> wrote:
-> Add a guide to using GIT's simpler features.
-> diff --git a/Documentation/git-haters-guide.txt b/Documentation/git-haters-guide.txt
-> +In the above example, I've assumed that you've got your own tree with the head
-> +at commit C3, and that you've got a branch that you want to merge, which has
-> +its head at commit B3.  After merging them, you'd end up with a directed,
-> +cyclic tree:
 
-That should be, "acyclic".  There are no cycles, because the graph is directed.
-  --scott
 
--- 
-                         ( http://cscott.net/ )
+On Thu, 18 Dec 2008, Alan wrote:
+> 
+> So what is the recommended way to undo mistaken merges caught after the
+> fact that will not fubar later merges?
+
+Oh, I suspect reverting is the right thing, it's just that then you need 
+to remember to revert the revert if you intend to merge that branch again 
+later.
+
+So reverting a merge isn't _wrong_ per se. It's just that you need to be 
+aware of the consequences, and if it becomes a common situation, you have 
+a problem in your usage patterns.
+
+Btw, even with non-merge commits, "revert" can have interesting effects 
+exactly because it doesn't change history. For example, let's say that you 
+had a history like this, with two branches:
+
+	--> a --> b --> c --> d
+	      |
+	      +-> e --> !a
+
+where the second branch reverts 'a', but the first one does not. What 
+happens when you merge the two branches? Is the revert sticky? In this 
+case, yes, a merge will cause the revert to stick. But what happens if you 
+had
+
+	--> a --> b --> c --> d
+	      |
+	      +-> e --> f --> !e
+
+and 'b' and 'e' were the same patch (just applied in two different 
+branches), and '!e' reverts that patch in the second branch. What happens 
+to 'b' when you merge? Would you expect for 'b' to go away, since the 
+revert undid the same data in the second branch?
+
+In that second case, the revert of 'e' will basically make git act as if 
+'e' didn't happen at all in the second branch, and so when you merge them, 
+'b' _will_ exist in the end result, so now the revert didn't "take".
+
+All of this is very self-consistent (it's a very direct result of how 
+merges work and how revert works), but I'm just bringing these things up 
+as examples of how 'revert' is not a totally trivial matter. You'll always 
+find cases where you might have wished that it had acted differently when 
+you merge things.
+
+
+
+			Linus
