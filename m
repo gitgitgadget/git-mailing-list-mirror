@@ -1,60 +1,58 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: jgit doesn't support "compare with" and "replace with"?
-Date: Fri, 19 Dec 2008 21:39:20 +0100
-Message-ID: <200812192139.20597.robin.rosenberg.lists@dewire.com>
-References: <1229677848765-1677009.post@n2.nabble.com> <20081219152045.GR32487@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: How to extract files out of a "git bundle", no matter what?
+Date: Fri, 19 Dec 2008 15:51:00 -0500
+Message-ID: <20081219205100.GA26671@coredump.intra.peff.net>
+References: <20081219202118.GA26513@coredump.intra.peff.net> <87vdtfc389.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Martin_S" <iksdrijf@yahoo.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Dec 19 21:45:52 2008
+Content-Type: text/plain; charset=utf-8
+Cc: mdl123@verizon.net, spearce@spearce.org, git@vger.kernel.org
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Fri Dec 19 21:52:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDmEF-0001HS-TG
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 21:45:48 +0100
+	id 1LDmKn-0003mK-Jr
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 21:52:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751350AbYLSUoa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2008 15:44:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751337AbYLSUoa
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 15:44:30 -0500
-Received: from pne-smtpout1-sn2.hy.skanova.net ([81.228.8.83]:56882 "EHLO
-	pne-smtpout1-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751084AbYLSUo3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Dec 2008 15:44:29 -0500
-Received: from sleipner.localnet (213.67.100.250) by pne-smtpout1-sn2.hy.skanova.net (7.3.129)
-        id 48A144C502147FCB; Fri, 19 Dec 2008 21:39:26 +0100
-User-Agent: KMail/1.10.3 (Linux/2.6.27-10-generic; KDE/4.1.3; i686; ; )
-In-Reply-To: <20081219152045.GR32487@spearce.org>
+	id S1754020AbYLSUvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2008 15:51:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753369AbYLSUvG
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 15:51:06 -0500
+Received: from peff.net ([208.65.91.99]:3488 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754111AbYLSUvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Dec 2008 15:51:04 -0500
+Received: (qmail 19744 invoked by uid 111); 19 Dec 2008 20:51:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 19 Dec 2008 15:51:02 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Dec 2008 15:51:00 -0500
 Content-Disposition: inline
+In-Reply-To: <87vdtfc389.fsf@jidanni.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103583>
 
-fredag 19 december 2008 16:20:45 skrev Shawn O. Pearce:
-> Martin_S <iksdrijf@yahoo.com> wrote:
-> > 
-> > Hi, I'm using eclipse 3.4 and jgit 0.4. The right click context menus don't
-> > list "compare with" and "replace with". Am I doing something wrong?
+On Sat, Dec 20, 2008 at 04:35:50AM +0800, jidanni@jidanni.org wrote:
+
+> JK>   - the object pack in the bundle is "thin", meaning it may contain
+> JK>     deltas against objects that are reachable from A, but not B. So even
+> JK>     _within_ a changed file, you may see only the changes from A to B.
 > 
-> We haven't implemented them in EGit.  So its not surprising that
-> they aren't appearing.
+> OK, we here at the police forensics department would be very happy if
+> we could at least get some ASCII out of that .BDL file, even if it is
+> just a diff shred,
+> -       The password to the time bomb was BLORFZ
+> +       The password to the time bomb is  NORFLZ
+> that would be fine. All we know is after the work PACK it is all
+> binary, and git-unpack-objects and git-unpack-file don't work on it.
 
-Actually, we had it in v0.3 though it didn't always work. In particular it didn't work on
-Windows... 
+AFAIK, there is no tool to try salvaging strings from an incomplete pack
+(and you can't just run "strings" because the deltas are zlib
+compressed). So if I were in the police forensics department, I think I
+would read Documentation/technical/pack-format.txt and start hacking a
+solution as quickly as possible.
 
-The history rewrited killed it, but re-adding it would not be to hard, It's mostly about passing two explicit
-versions to compare, which is already done in 
-
-The old version disappeared in 07f04ae5b1771069667028d225196daff29402a0, checkout out and rebuild
-if you are really desperate. Reverting it is an option, but that is not trivial either so going forward and 
-reimplementing it (correctly this time) is a more appealing approach. Dependig on your needs, i.e. if
-you only don't need clone/fetch/push you could go back to the commit mentioned above. The closest
-tagged version is v0.3.1. As a bonus it draws the graph correctly, though it is not optimal.
-
--- robin
+-Peff
