@@ -1,76 +1,72 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] diff.c: fix pointer type warning
-Date: Fri, 19 Dec 2008 23:10:48 +0100
-Message-ID: <494C1BE8.20607@lsrfire.ath.cx>
-References: <alpine.LFD.2.00.0812171034520.14014@localhost.localdomain>	<alpine.LFD.2.00.0812171042120.14014@localhost.localdomain>	<alpine.LFD.2.00.0812171042500.14014@localhost.localdomain>	<alpine.LFD.2.00.0812171043180.14014@localhost.localdomain>	<alpine.LFD.2.00.0812171043440.14014@localhost.localdomain> <20081218121118.3635c53c@crow>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Clarify git-format-patch --in-reply-to
+Date: Fri, 19 Dec 2008 23:22:09 +0100
+Message-ID: <20081219222209.GG21154@genesis.frugalware.org>
+References: <87k59wc73n.fsf@jidanni.org> <7vzlitho1o.fsf@gitster.siamese.dyndns.org> <20081220065135.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Burton <markb@ordern.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 19 23:13:04 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="3Gf/FFewwPeBMqCJ"
+Cc: jidanni@jidanni.org, gitster@pobox.com, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Dec 19 23:23:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDnah-0006Fs-CX
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 23:13:03 +0100
+	id 1LDnks-0001DS-CE
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 23:23:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758536AbYLSWK4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Dec 2008 17:10:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756629AbYLSWK4
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 17:10:56 -0500
-Received: from india601.server4you.de ([85.25.151.105]:32788 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758522AbYLSWKz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2008 17:10:55 -0500
-Received: from [10.0.1.101] (p57B7D545.dip.t-dialin.net [87.183.213.69])
-	by india601.server4you.de (Postfix) with ESMTPSA id 1D0FD2F805F;
-	Fri, 19 Dec 2008 23:10:53 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <20081218121118.3635c53c@crow>
+	id S1752620AbYLSWWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2008 17:22:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbYLSWWO
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 17:22:14 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:59159 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752128AbYLSWWO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Dec 2008 17:22:14 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 4B7FC58085;
+	Fri, 19 Dec 2008 23:22:12 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 967AA4465E;
+	Fri, 19 Dec 2008 23:22:09 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 695E411B862F; Fri, 19 Dec 2008 23:22:09 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20081220065135.6117@nanako3.lavabit.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103589>
 
-As Mark Burton noted, the conversion to strbuf_readlink() caused a
-compile warning on some architectures:
 
-> diff.c: In function =E2=80=98diff_populate_filespec=E2=80=99:
-> diff.c:1781: warning: passing argument 2 of =E2=80=98strbuf_detach=E2=
-=80=99 from incompatible pointer type
+--3Gf/FFewwPeBMqCJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-A pointer to an unsigned long is given while a pointer to a size_t is
-expected; the two types are not considered to be equivalent everywhere.
+On Sat, Dec 20, 2008 at 06:51:35AM +0900, Nanako Shiraishi <nanako3@lavabit.com> wrote:
+> I understand that "Signed-off-by" is about code ownership and thought
+> that the official history prefers to have a real name instead of a
+> pseudonym. Perhaps you would want to say "Dan Jacobson
+> <jidanni@jidanni.org>" or something similar?
 
-The real fix would be to change the type of the size member of struct
-diff_filespec to size_t, but that would cause other warnings in
-connection with functions expecting unsigned long, and attempts to fix
-them might loose an avalanche of changes.  Later.  This patch just
-silences the warning by adding an (implicit) casting step.
+I don't think it's a requirement, see 2b36b14 for example. Though yes,
+in general it's considered childish to hide behind a nickname, instead
+of using your real name. (ESR has a section about this in the "hacker
+howto".)
 
-Reported-by: Mark Burton <markb@ordern.com>
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- diff.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+--3Gf/FFewwPeBMqCJ
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-diff --git a/diff.c b/diff.c
-index f160c1a..0484601 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1778,7 +1778,8 @@ int diff_populate_filespec(struct diff_filespec *=
-s, int size_only)
-=20
- 			if (strbuf_readlink(&sb, s->path, s->size))
- 				goto err_empty;
--			s->data =3D strbuf_detach(&sb, &s->size);
-+			s->size =3D sb.len;
-+			s->data =3D strbuf_detach(&sb, NULL);
- 			s->should_free =3D 1;
- 			return 0;
- 		}
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAklMHpEACgkQe81tAgORUJZjlgCeJfB43y0Jt2AoPrsEzpsmRjJT
+1uoAoIhgCMzevidhpZQJrouk9tUgQlte
+=LDBt
+-----END PGP SIGNATURE-----
+
+--3Gf/FFewwPeBMqCJ--
