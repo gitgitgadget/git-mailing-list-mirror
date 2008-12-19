@@ -1,75 +1,93 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Odd merge behaviour involving reverts
-Date: Thu, 18 Dec 2008 16:21:25 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0812181614070.14014@localhost.localdomain>
-References: <1229642734.5770.25.camel@rotwang.fnordora.org>  <alpine.LFD.2.00.0812181534310.14014@localhost.localdomain> <1229645511.5770.29.camel@rotwang.fnordora.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: git-rm -n leaves .git/index.lock if not allowed to finish
+Date: Fri, 19 Dec 2008 01:25:24 +0100
+Message-ID: <20081219002524.GB21154@genesis.frugalware.org>
+References: <87prjptfo7.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="gj572EiMnwbLXET9"
 Cc: git@vger.kernel.org
-To: Alan <alan@clueserver.org>
-X-From: git-owner@vger.kernel.org Fri Dec 19 01:23:16 2008
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Fri Dec 19 01:26:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDT98-0000em-AU
-	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 01:23:14 +0100
+	id 1LDTCZ-0001Yy-85
+	for gcvg-git-2@gmane.org; Fri, 19 Dec 2008 01:26:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752140AbYLSAVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Dec 2008 19:21:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751955AbYLSAVy
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 19:21:54 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:58787 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751976AbYLSAVy (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Dec 2008 19:21:54 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBJ0LQX1002588
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 18 Dec 2008 16:21:27 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id mBJ0LPat021922;
-	Thu, 18 Dec 2008 16:21:26 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <1229645511.5770.29.camel@rotwang.fnordora.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.424 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752078AbYLSAZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Dec 2008 19:25:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752018AbYLSAZ1
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Dec 2008 19:25:27 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:35522 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751952AbYLSAZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Dec 2008 19:25:27 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 9787C580AC;
+	Fri, 19 Dec 2008 01:25:25 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 6E6684465E;
+	Fri, 19 Dec 2008 01:25:25 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id C2B7D11B862F; Fri, 19 Dec 2008 01:25:24 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <87prjptfo7.fsf@jidanni.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103517>
 
 
+--gj572EiMnwbLXET9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 18 Dec 2008, Alan wrote:
-> 
-> I think I know how to fix it.  I am just concerned about having it occur
-> again if someone else makes the same mistake I did.
+On Fri, Dec 19, 2008 at 04:02:48AM +0800, jidanni@jidanni.org wrote:
+> Bug: if git-rm -n is not allowed to write all it wants to write, it
+> will leave a .git/index.lock file:
+> # git-rm -n -r . 2>&1|sed q
+> error: '.etckeeper' has changes staged in the index
+> # git-rm -n -r . 2>&1|sed q
+> fatal: unable to create '.git/index.lock': File exists
 
-I suspect we should warn about reverting merges. I'm surprised we don't 
-already. Reverting a merge isn't "wrong", but it's a whole lot more subtle 
-than reverting a regular commit.
+Can't reproduce:
 
-Reverting a regular commit just effectively undoes what that commit did, 
-and is fairly straightforward. But reverting a merge commit also undoes 
-the _data_ that the commit changed, but it does absolutely nothing to the 
-effects on _history_ that the merge had.
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index b7d46e5..1581691 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -251,4 +251,12 @@ test_expect_success 'refresh index before checking if =
+it is up-to-date' '
+=20
+ '
+=20
++test_expect_success 'test from jidanni' '
++
++	git reset --hard &&
++	git rm -n -r . 2>&1|sed q &&
++	git rm -n -r . 2>&1|sed q
++
++'
++
+ test_done
 
-So the merge will still exist, and it will still be seen as joining the 
-two branches together, and future merges will see that merge as the last 
-shared state - and the revert that reverted the merge brought in will not 
-affect that at all.
+passes here just fine. Yes, there are multiple files in the repo.
 
-So a "revert" undoes the data changes, but it's very much _not_ an "undo" 
-in the sense that it doesn't undo the effects of a commit on the 
-repository history.
+--gj572EiMnwbLXET9
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-So if you think of "revert" as "undo", then you're going to always miss 
-this part of reverts. Yes, it undoes the data, but no, it doesn't undo 
-history.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-			Linus
+iEYEARECAAYFAklK6fQACgkQe81tAgORUJaFuQCfad/y5tnuolmBiY4s9D2oHxpY
+bSEAnAvBGytvOxC9rUs8yW2ELGJvUosh
+=yAYR
+-----END PGP SIGNATURE-----
+
+--gj572EiMnwbLXET9--
