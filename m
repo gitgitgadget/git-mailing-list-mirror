@@ -1,99 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git weekly links: 2008-51
-Date: Sat, 20 Dec 2008 11:50:25 -0800 (PST)
-Message-ID: <m3ej02d3tq.fsf@localhost.localdomain>
-References: <94a0d4530812200416m1caa96f2je2bf478f65bd7d12@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: Change whatchanged to report changes from merges by
+ default?
+Date: Sat, 20 Dec 2008 12:09:05 -0800
+Message-ID: <7vvdtewqvy.fsf@gitster.siamese.dyndns.org>
+References: <20081220104232.5ff1b7c0@crow>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git list" <git@vger.kernel.org>
-To: "Felipe Contreras" <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 20 20:52:44 2008
+Cc: git@vger.kernel.org
+To: Mark Burton <markb@ordern.com>
+X-From: git-owner@vger.kernel.org Sat Dec 20 21:10:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LE7sS-0004pR-4e
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 20:52:44 +0100
+	id 1LE89o-0001hc-6s
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 21:10:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753046AbYLTTua (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 14:50:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752775AbYLTTu3
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 14:50:29 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:31244 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752735AbYLTTu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 14:50:29 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so635627ugf.37
-        for <git@vger.kernel.org>; Sat, 20 Dec 2008 11:50:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=2NlW+UtvHD1J6WfkYdUc7P1P+Q5ypSl21zul16+hfmM=;
-        b=R4wI10ksrdp9hDu7NIzB1xVGZ72ABXthCtPF4JekDee6lyf2QMYtNFVld9A5m+bRQQ
-         /zQqAfWFTisynFPFe4EOLd9JE8Vbu8KttW7EkQ3vosg5/3AxPLP7+rJN8n1xE16zDMR3
-         bhMXri6zOI2x22pwZ0LyUmNlEIO/Io73ypsFE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=x5Co1a+zJpQkS8AaE/ElotXTnbRKx0pGLalph4PpzmeC3M6iM5F9LIL3mkr+uL+zVV
-         a7LjBp1bV9+PEHvpGKwV8QYwIzUZWaRUQ1+kPtK4HnXGGR4HqvYL9SYNQ1DhyZd8x0L6
-         wJ20kFFw1X/BPYVfbgY0eSRyPZ75uB2pW605g=
-Received: by 10.67.92.10 with SMTP id u10mr5443525ugl.21.1229802626183;
-        Sat, 20 Dec 2008 11:50:26 -0800 (PST)
-Received: from localhost.localdomain (abwp146.neoplus.adsl.tpnet.pl [83.8.239.146])
-        by mx.google.com with ESMTPS id 20sm5245266uga.49.2008.12.20.11.50.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 20 Dec 2008 11:50:25 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBKJo4ku011162;
-	Sat, 20 Dec 2008 20:50:15 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBKJnrwg011156;
-	Sat, 20 Dec 2008 20:49:53 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <94a0d4530812200416m1caa96f2je2bf478f65bd7d12@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753258AbYLTUJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 15:09:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753248AbYLTUJN
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 15:09:13 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36403 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753198AbYLTUJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 15:09:13 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 855D01A7CA;
+	Sat, 20 Dec 2008 15:09:10 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5E37C1AB73; Sat,
+ 20 Dec 2008 15:09:06 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1071EED2-CED2-11DD-8754-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103656>
 
-"Felipe Contreras" <felipe.contreras@gmail.com> writes:
+Mark Burton <markb@ordern.com> writes:
 
-> This week tortoisegit stole the spotlight. Maybe there weren't many
-> other links, or maybe I failed to notice them. Also, many people liked
-> the comment of Linus Torvalds regarding C++ in git.
-> 
-> blog version:
-> http://gitlog.wordpress.com/2008/12/20/git-weekly-links-2008-51/
-> 
-> == Articles ==
->
-> Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-> Linus Torvalds creates some buzz
-> http://lwn.net/Articles/249460/
+> Is it just an accident of history or by design that whatchanged
+> requires the -m option to show changes introduced by merges but
+> diff and git log show those changes without requiring any extra
+> options?
 
-A not countered counter:
-C++ is a horrible language
-http://skepticalmethodologist.wordpress.com/2008/12/17/c-is-a-horrible-language/
- 
-> == General links ==
-> 
-> tortoisegit
-> http://code.google.com/p/tortoisegit/
+Mostly personal preference and inertia..
 
-What about "Git Extensions":
-https://sourceforge.net/projects/gitextensions/
-http://github.com/spdr870/gitextensions/
+I personally do not see any reason for anybody to use whatchanged (what a
+long single-word to type!) since around git version v1.0.0 or so.  Back
+then, whatchanged was a good way to satisfy "I want a quick sanity check,
+but I want to see a bit more than just names of files to assure me.  But I
+want to get that without actually running the diffs or stats because I
+consider that anything that takes more than half a second is too
+expensive."  But ever since we made the diff generation built-in, the
+performance objection ceased to be an issue.  These days I'd imagine that
+"log --name-only" or even "log --stat" would be perfectly acceptable and
+easier to explain alternative, especially if you happen to be a very early
+adopter whose fingers are trained to type "whatchanged".
 
-And "TortoiseGit Challenge":
-http://github.com/blog/256-tortoisegit-challenge
+IOW, I consider "whatchanged" a command that is kept only for old timers'
+sake.  There is no reason to promote it, but there is no reason to
+deprecate it, either.  Which means the answer to this question...
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> Would it not make more sense to have git whatchanged show the changes
+> introduced by merges by default and then people can use the (already
+> supported) --no-merges option to suppress that behaviour?
+
+... is a NO spelled in capital letters.
