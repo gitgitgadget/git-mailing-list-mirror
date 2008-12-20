@@ -1,50 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email: handle email address with quoted comma
-Date: Fri, 19 Dec 2008 22:48:28 -0800
-Message-ID: <7vabar1gw3.fsf@gitster.siamese.dyndns.org>
-References: <1229658012-9240-1-git-send-email-fengguang.wu@intel.com>
- <7vej04d5wy.fsf@gitster.siamese.dyndns.org>
- <20081219081010.GA12494@localhost>
+Subject: Re: [PATCH] Documentation: fix typos, grammar, asciidoc syntax
+Date: Fri, 19 Dec 2008 22:48:42 -0800
+Message-ID: <7v3agj1gvp.fsf@gitster.siamese.dyndns.org>
+References: <200812191314.19302.markus.heidelberg@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Matt Kraai <kraai@ftbfs.org>
-To: Wu Fengguang <fengguang.wu@intel.com>
-X-From: git-owner@vger.kernel.org Sat Dec 20 07:49:55 2008
+Cc: git@vger.kernel.org
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Sat Dec 20 07:50:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDvet-0002VQ-AJ
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 07:49:55 +0100
+	id 1LDvf5-0002Xy-Mw
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 07:50:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752195AbYLTGsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 01:48:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752186AbYLTGsg
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 01:48:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53840 "EHLO
+	id S1752318AbYLTGss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 01:48:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752331AbYLTGsr
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 01:48:47 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35634 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752021AbYLTGsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 01:48:35 -0500
+	with ESMTP id S1752273AbYLTGsr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 01:48:47 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8661E1AB2B;
-	Sat, 20 Dec 2008 01:48:35 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E817789D97;
+	Sat, 20 Dec 2008 01:48:46 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DB6881AB22; Sat,
- 20 Dec 2008 01:48:30 -0500 (EST)
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1809689D96; Sat,
+ 20 Dec 2008 01:48:43 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 395B3A58-CE62-11DD-A21A-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4026B0C4-CE62-11DD-8C75-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103626>
 
-Wu Fengguang <fengguang.wu@intel.com> writes:
+Markus Heidelberg <markus.heidelberg@web.de> writes:
 
-> Thank you for the helpful information. The patch is updated and tested
+> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+> ---
+>  Documentation/diff-format.txt         |    2 +-
+>  Documentation/diff-generate-patch.txt |    6 +++---
+>  Documentation/git-commit.txt          |    2 +-
+>  Documentation/git-diff-tree.txt       |    4 ++--
+>  Documentation/git-mailinfo.txt        |    2 +-
+>  Documentation/git-receive-pack.txt    |    4 ++--
+>  Documentation/git-reflog.txt          |    4 ++--
+>  Documentation/git-show-branch.txt     |    4 ++--
+>  Documentation/git-submodule.txt       |    2 +-
+>  Documentation/git-update-index.txt    |    8 ++++----
+>  Documentation/gitcore-tutorial.txt    |    8 ++++----
+>  Documentation/gitk.txt                |    4 ++--
+>  Documentation/i18n.txt                |    4 ++--
+>  13 files changed, 27 insertions(+), 27 deletions(-)
 
-Thanks.  I'll apply but it would be nice to have an additional test script
-somewhere in t/t9001-send-email.sh to protect this change from regression
-by future changes.
+Whew, quite a lot of typos there are.
+
+> @@ -172,7 +172,7 @@ only the primary branches.  In addition, if you happen to be on
+>  your topic branch, it is shown as well.
+>  
+>  ------------
+> -$ git show-branch --reflog='10,1 hour ago' --list master
+> +$ git show-branch --reflog="10,1 hour ago" --list master
+>  ------------
+
+Is this just a personal taste, or a correction to typography?
+
+Other than this one, I did not find anything else in your patch that
+looked iffy.  Thanks for lending a good set of eyeballs.
