@@ -1,62 +1,88 @@
-From: Mark Burton <markb@ordern.com>
-Subject: RFC: Change whatchanged to report changes from merges by default?
-Date: Sat, 20 Dec 2008 10:42:32 +0000
-Organization: Order N Ltd.
-Message-ID: <20081220104232.5ff1b7c0@crow>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [Security] gitweb local privilege escalation (fix)
+Date: Sat, 20 Dec 2008 02:54:25 -0800 (PST)
+Message-ID: <m3myerce39.fsf@localhost.localdomain>
+References: <7vljub1h92.fsf@gitster.siamese.dyndns.org>
+	<7vhc4z1gys.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 20 11:43:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 20 11:55:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDzJL-0002PY-8L
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 11:43:55 +0100
+	id 1LDzUr-0005YL-LJ
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 11:55:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752138AbYLTKmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 05:42:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbYLTKmg
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 05:42:36 -0500
-Received: from c2bthomr02.btconnect.com ([213.123.20.120]:26092 "EHLO
-	c2bthomr02.btconnect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751500AbYLTKmg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 05:42:36 -0500
-Received: from crow.ordern.com (host86-128-197-104.range86-128.btcentralplus.com [86.128.197.104])
-	by c2bthomr02.btconnect.com
-	with ESMTP id JNM32590;
-	Sat, 20 Dec 2008 10:42:33 GMT
-Received: from crow (localhost [127.0.0.1])
-	by crow.ordern.com (Postfix) with ESMTP id D7D81190CFB
-	for <git@vger.kernel.org>; Sat, 20 Dec 2008 10:42:32 +0000 (GMT)
-X-Mailer: Claws Mail 3.6.1 (GTK+ 2.12.9; x86_64-pc-linux-gnu)
-X-Junkmail-Status: score=10/50, host=c2bthomr02.btconnect.com
-X-Junkmail-SD-Raw: score=unknown,
-	refid=str=0001.0A090203.494CCC19.0208,ss=1,fgs=0,
-	ip=86.128.197.104,
-	so=2007-10-30 19:00:17,
-	dmn=5.7.1/2008-09-02
-X-Junkmail-IWF: false
+	id S1752342AbYLTKy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 05:54:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752217AbYLTKy3
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 05:54:29 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:45873 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752148AbYLTKy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 05:54:27 -0500
+Received: by ewy10 with SMTP id 10so1469589ewy.13
+        for <multiple recipients>; Sat, 20 Dec 2008 02:54:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=ZXRDP8UN9ITFBclckzbVZsan5y+9vOMDQRLKZmGpOvE=;
+        b=qZTaQeG1tX2/pH35dUz0LV+0INrgpOPa6bWn/NTlo0GDFjAhsVZHcUQwKKmLVtkNJc
+         oWGmaUzTbSpCoDtr6CokdAG51sgnxLUKCvz6rhx7LuoqdWn1pt8UCZUK5BN/ZToUghun
+         ohv5P0B5FBZJ/8HiSgTsLYCvciBpXlHJL1Khk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=iDgXu8Fj2mDaPcEeig7BcmMAlnJCO9TixCp0BlOUo5lDDAmyG14WF4FWHM/2ezpSO2
+         r2NxGkQFhsK9TkknQZaFvTm+dnEcN56mdYPp1IGvq5HKKq7Mb6eSrf56Kt5riCCM9gAP
+         zVLM410Xfi64ph9Mr169nQB/56kjwqFfFab5Q=
+Received: by 10.210.119.16 with SMTP id r16mr1270355ebc.143.1229770465628;
+        Sat, 20 Dec 2008 02:54:25 -0800 (PST)
+Received: from localhost.localdomain (abvm23.neoplus.adsl.tpnet.pl [83.8.210.23])
+        by mx.google.com with ESMTPS id 5sm94222eyh.58.2008.12.20.02.54.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 20 Dec 2008 02:54:25 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBKArpwb008184;
+	Sat, 20 Dec 2008 11:54:01 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBKArVoF008177;
+	Sat, 20 Dec 2008 11:53:31 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vhc4z1gys.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103637>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-Hi,
+> Current gitweb has a possible local privilege escalation bug that allows a
+> malicious repository owner to run a command of his choice by specifying
+> diff.external configuration variable in his repository and running a
+> crafted gitweb query.
+> 
+> Recent (post 1.4.3) gitweb itself never generates a link that would result
+> in such a query, and the safest and cleanest fix to this issue is to
+> simply drop the support for it.  Maintenance release v1.6.0.6, v1.5.6.6,
+> v1.5.5.6 and v1.5.4.7 are already available at k.org (see the announcement
+> for v1.6.0.6 I sent out a few minutes ago), and the master branch and
+> others pushed out tonight have the same fix.
 
-Is it just an accident of history or by design that whatchanged
-requires the -m option to show changes introduced by merges but
-diff and git log show those changes without requiring any extra
-options?
+>From what I have found diff.external works only since v1.5.4 (see
+commit cbe02100), so when gitweb started using git-diff for old
+legacy links to not use $tmpdir and /usr/bin/diff -u it wasn't an
+issue...
 
-Would it not make more sense to have git whatchanged show the changes
-introduced by merges by default and then people can use the (already
-supported) --no-merges option to suppress that behaviour?
-
-It appears that just setting rev.ignore_merges to 0 in cmd_whatchanged()
-would do the trick. Shall I submit a patch?
-
-Mark
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
