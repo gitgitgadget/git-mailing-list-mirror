@@ -1,7 +1,7 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2 1/4] Introduce commit notes
-Date: Sat, 20 Dec 2008 13:05:14 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812201304580.30769@pacific.mpi-cbg.de>
+Subject: [PATCH v2 2/4] Add a script to edit/inspect notes
+Date: Sat, 20 Dec 2008 13:05:33 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812201305230.30769@pacific.mpi-cbg.de>
 References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <20081216085108.GA3031@coredump.intra.peff.net> <alpine.DEB.1.00.0812192347261.30769@pacific.mpi-cbg.de> <alpine.DEB.1.00.0812200034450.30769@pacific.mpi-cbg.de>
  <20081220065337.GA2581@coredump.intra.peff.net> <alpine.DEB.1.00.0812201304210.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
@@ -9,28 +9,28 @@ Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Govind Salinas <govind@sophiasuchtig.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 20 12:58:56 2008
+X-From: git-owner@vger.kernel.org Sat Dec 20 12:59:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LE0Tt-0005jR-Mi
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 12:58:54 +0100
+	id 1LE0UD-0005rB-5U
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 12:59:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752721AbYLTL5f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 06:57:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752704AbYLTL5f
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 06:57:35 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45276 "HELO mail.gmx.net"
+	id S1752743AbYLTL5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 06:57:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752704AbYLTL5z
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 06:57:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38198 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751516AbYLTL5e (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 06:57:34 -0500
-Received: (qmail invoked by alias); 20 Dec 2008 11:57:32 -0000
+	id S1752694AbYLTL5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 06:57:53 -0500
+Received: (qmail invoked by alias); 20 Dec 2008 11:57:52 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp044) with SMTP; 20 Dec 2008 12:57:32 +0100
+  by mail.gmx.net (mp013) with SMTP; 20 Dec 2008 12:57:52 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18jUsIEezIjKijk54Sw/QURKy647OQCE7+vB3zZFt
-	h2dbDNIUjr5Y4Z
+X-Provags-ID: V01U2FsdGVkX1/1I7U8n/D1M7A/r1VhucKku5YbPf034jdBJihhXK
+	wYfZlP7eu1+uvf
 X-X-Sender: schindelin@pacific.mpi-cbg.de
 In-Reply-To: <alpine.DEB.1.00.0812201304210.30769@pacific.mpi-cbg.de>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
@@ -40,252 +40,260 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103644>
 
 
-Commit notes are blobs which are shown together with the commit
-message.  These blobs are taken from the notes ref, which you can
-configure by the config variable core.notesRef, which in turn can
-be overridden by the environment variable GIT_NOTES_REF.
+The script 'git notes' allows you to edit and show commit notes, by
+calling either
 
-The notes ref is a branch which contains "files" whose names are
-the names of the corresponding commits (i.e. the SHA-1).
+	git notes show <commit>
 
-The rationale for putting this information into a ref is this: we
-want to be able to fetch and possibly union-merge the notes,
-maybe even look at the date when a note was introduced, and we
-want to store them efficiently together with the other objects.
+or
+
+	git notes edit <commit>
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/config.txt |   15 ++++++++++
- Makefile                 |    2 +
- cache.h                  |    3 ++
- commit.c                 |    1 +
- config.c                 |    5 +++
- environment.c            |    1 +
- notes.c                  |   68 ++++++++++++++++++++++++++++++++++++++++++++++
- notes.h                  |    7 +++++
- pretty.c                 |    5 +++
- 9 files changed, 107 insertions(+), 0 deletions(-)
- create mode 100644 notes.c
- create mode 100644 notes.h
+ .gitignore                  |    1 +
+ Documentation/git-notes.txt |   46 ++++++++++++++++++++++++++++++
+ Makefile                    |    1 +
+ command-list.txt            |    1 +
+ git-notes.sh                |   65 +++++++++++++++++++++++++++++++++++++++++++
+ t/t3301-notes.sh            |   65 +++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 179 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-notes.txt
+ create mode 100755 git-notes.sh
+ create mode 100755 t/t3301-notes.sh
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 21ea165..b35a32a 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -422,6 +422,21 @@ relatively high IO latencies.  With this set to 'true', git will do the
- index comparison to the filesystem data in parallel, allowing
- overlapping IO's.
- 
-+core.notesRef::
-+	When showing commit messages, also show notes which are stored in
-+	the given ref.  This ref is expected to contain paths of the form
-+	??/*, where the directory name consists of the first two
-+	characters of the commit name, and the base name consists of
-+	the remaining 38 characters.
-++
-+If such a path exists in the given ref, the referenced blob is read, and
-+appended to the commit message, separated by a "Notes:" line.  If the
-+given ref itself does not exist, it is not an error, but means that no
-+notes should be print.
-++
-+This setting defaults to "refs/notes/commits", and can be overridden by
-+the `GIT_NOTES_REF` environment variable.
+diff --git a/.gitignore b/.gitignore
+index 327e660..ac5fbf4 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -82,6 +82,7 @@ git-mktag
+ git-mktree
+ git-name-rev
+ git-mv
++git-notes
+ git-pack-redundant
+ git-pack-objects
+ git-pack-refs
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+new file mode 100644
+index 0000000..3d93625
+--- /dev/null
++++ b/Documentation/git-notes.txt
+@@ -0,0 +1,46 @@
++git-notes(1)
++============
 +
- alias.*::
- 	Command aliases for the linkgit:git[1] command wrapper - e.g.
- 	after defining "alias.last = cat-file commit HEAD", the invocation
++NAME
++----
++git-notes - Add/inspect commit notes
++
++SYNOPSIS
++--------
++[verse]
++'git-notes' (edit | show) [commit]
++
++DESCRIPTION
++-----------
++This command allows you to add notes to commit messages, without
++changing the commit.  To discern these notes from the message stored
++in the commit object, the notes are indented like the message, after
++an unindented line saying "Notes:".
++
++To disable commit notes, you have to set the config variable
++core.notesRef to the empty string.  Alternatively, you can set it
++to a different ref, something like "refs/notes/bugzilla".  This setting
++can be overridden by the environment variable "GIT_NOTES_REF".
++
++
++SUBCOMMANDS
++-----------
++
++edit::
++	Edit the notes for a given commit (defaults to HEAD).
++
++show::
++	Show the notes for a given commit (defaults to HEAD).
++
++
++Author
++------
++Written by Johannes Schindelin <johannes.schindelin@gmx.de>
++
++Documentation
++-------------
++Documentation by Johannes Schindelin
++
++GIT
++---
++Part of the gitlink:git[7] suite
 diff --git a/Makefile b/Makefile
-index 5fcff9a..dc0a324 100644
+index dc0a324..5082f0f 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -370,6 +370,7 @@ LIB_H += ll-merge.h
- LIB_H += log-tree.h
- LIB_H += mailmap.h
- LIB_H += merge-recursive.h
-+LIB_H += notes.h
- LIB_H += object.h
- LIB_H += pack.h
- LIB_H += pack-refs.h
-@@ -451,6 +452,7 @@ LIB_OBJS += match-trees.o
- LIB_OBJS += merge-file.o
- LIB_OBJS += merge-recursive.o
- LIB_OBJS += name-hash.o
-+LIB_OBJS += notes.o
- LIB_OBJS += object.o
- LIB_OBJS += pack-check.o
- LIB_OBJS += pack-refs.o
-diff --git a/cache.h b/cache.h
-index 9dabcc7..9192853 100644
---- a/cache.h
-+++ b/cache.h
-@@ -375,6 +375,8 @@ static inline enum object_type object_type(unsigned int mode)
- #define GITATTRIBUTES_FILE ".gitattributes"
- #define INFOATTRIBUTES_FILE "info/attributes"
- #define ATTRIBUTE_MACRO_PREFIX "[attr]"
-+#define GIT_NOTES_REF_ENVIRONMENT "GIT_NOTES_REF"
-+#define GIT_NOTES_DEFAULT_REF "refs/notes/commits"
- 
- extern int is_bare_repository_cfg;
- extern int is_bare_repository(void);
-@@ -546,6 +548,7 @@ enum rebase_setup_type {
- 
- extern enum branch_track git_branch_track;
- extern enum rebase_setup_type autorebase;
-+extern char *notes_ref_name;
- 
- #define GIT_REPO_VERSION 0
- extern int repository_format_version;
-diff --git a/commit.c b/commit.c
-index c99db16..10e532a 100644
---- a/commit.c
-+++ b/commit.c
-@@ -5,6 +5,7 @@
- #include "utf8.h"
- #include "diff.h"
- #include "revision.h"
-+#include "notes.h"
- 
- int save_commit_buffer = 1;
- 
-diff --git a/config.c b/config.c
-index 790405a..e5d5b4b 100644
---- a/config.c
-+++ b/config.c
-@@ -469,6 +469,11 @@ static int git_default_core_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.notesref")) {
-+		notes_ref_name = xstrdup(value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "core.pager"))
- 		return git_config_string(&pager_program, var, value);
- 
-diff --git a/environment.c b/environment.c
-index e278bce..0edae21 100644
---- a/environment.c
-+++ b/environment.c
-@@ -45,6 +45,7 @@ enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
- 
- /* Parallel index stat data preload? */
- int core_preload_index = 0;
-+char *notes_ref_name;
- 
- /* This is set by setup_git_dir_gently() and/or git_default_config() */
- char *git_work_tree_cfg;
-diff --git a/notes.c b/notes.c
-new file mode 100644
-index 0000000..91ec77f
+@@ -258,6 +258,7 @@ SCRIPT_SH += git-merge-octopus.sh
+ SCRIPT_SH += git-merge-one-file.sh
+ SCRIPT_SH += git-merge-resolve.sh
+ SCRIPT_SH += git-mergetool.sh
++SCRIPT_SH += git-notes.sh
+ SCRIPT_SH += git-parse-remote.sh
+ SCRIPT_SH += git-pull.sh
+ SCRIPT_SH += git-quiltimport.sh
+diff --git a/command-list.txt b/command-list.txt
+index 3583a33..2dc2c33 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -73,6 +73,7 @@ git-mktag                               plumbingmanipulators
+ git-mktree                              plumbingmanipulators
+ git-mv                                  mainporcelain common
+ git-name-rev                            plumbinginterrogators
++git-notes                               mainporcelain
+ git-pack-objects                        plumbingmanipulators
+ git-pack-redundant                      plumbinginterrogators
+ git-pack-refs                           ancillarymanipulators
+diff --git a/git-notes.sh b/git-notes.sh
+new file mode 100755
+index 0000000..bfdbaa8
 --- /dev/null
-+++ b/notes.c
-@@ -0,0 +1,68 @@
-+#include "cache.h"
-+#include "commit.h"
-+#include "notes.h"
-+#include "refs.h"
-+#include "utf8.h"
-+#include "strbuf.h"
++++ b/git-notes.sh
+@@ -0,0 +1,65 @@
++#!/bin/sh
 +
-+static int initialized;
++USAGE="(edit | show) [commit]"
++. git-sh-setup
 +
-+void get_commit_notes(const struct commit *commit, struct strbuf *sb,
-+		const char *output_encoding)
-+{
-+	static const char *utf8 = "utf-8";
-+	struct strbuf name = STRBUF_INIT;
-+	const char *hex;
-+	unsigned char sha1[20];
-+	char *msg;
-+	unsigned long msgoffset, msglen;
-+	enum object_type type;
++test -n "$3" && usage
 +
-+	if (!initialized) {
-+		const char *env = getenv(GIT_NOTES_REF_ENVIRONMENT);
-+		if (env)
-+			notes_ref_name = getenv(GIT_NOTES_REF_ENVIRONMENT);
-+		else if (!notes_ref_name)
-+			notes_ref_name = GIT_NOTES_DEFAULT_REF;
-+		if (notes_ref_name && read_ref(notes_ref_name, sha1))
-+			notes_ref_name = NULL;
-+		initialized = 1;
-+	}
++test -z "$1" && usage
++ACTION="$1"; shift
 +
-+	if (!notes_ref_name)
-+		return;
++test -z "$GIT_NOTES_REF" && GIT_NOTES_REF="$(git config core.notesref)"
++test -z "$GIT_NOTES_REF" && GIT_NOTES_REF="refs/notes/commits"
 +
-+	strbuf_addf(&name, "%s:%s", notes_ref_name,
-+			sha1_to_hex(commit->object.sha1));
-+	if (get_sha1(name.buf, sha1))
-+		return;
++COMMIT=$(git rev-parse --verify --default HEAD "$@") ||
++die "Invalid commit: $@"
 +
-+	if (!(msg = read_sha1_file(sha1, &type, &msglen)) || !msglen ||
-+			type != OBJ_BLOB)
-+		return;
++MESSAGE="$GIT_DIR"/new-notes-$COMMIT
++trap '
++	test -f "$MESSAGE" && rm "$MESSAGE"
++' 0
 +
-+	if (output_encoding && *output_encoding &&
-+			strcmp(utf8, output_encoding)) {
-+		char *reencoded = reencode_string(msg, output_encoding, utf8);
-+		if (reencoded) {
-+			free(msg);
-+			msg = reencoded;
-+			msglen = strlen(msg);
-+		}
-+	}
++case "$ACTION" in
++edit)
++	GIT_NOTES_REF= git log -1 $COMMIT | sed "s/^/#/" > "$MESSAGE"
 +
-+	/* we will end the annotation by a newline anyway */
-+	if (msglen && msg[msglen - 1] == '\n')
-+		msglen--;
++	GIT_INDEX_FILE="$MESSAGE".idx
++	export GIT_INDEX_FILE
 +
-+	strbuf_addstr(sb, "\nNotes:\n");
++	CURRENT_HEAD=$(git show-ref "$GIT_NOTES_REF" | cut -f 1 -d ' ')
++	if [ -z "$CURRENT_HEAD" ]; then
++		PARENT=
++	else
++		PARENT="-p $CURRENT_HEAD"
++		git read-tree "$GIT_NOTES_REF" || die "Could not read index"
++		git cat-file blob :$COMMIT >> "$MESSAGE" 2> /dev/null
++	fi
 +
-+	for (msgoffset = 0; msgoffset < msglen;) {
-+		int linelen = strchrnul(msg, '\n') - msg;
++	${VISUAL:-${EDITOR:-vi}} "$MESSAGE"
 +
-+		strbuf_addstr(sb, "    ");
-+		strbuf_add(sb, msg + msgoffset, linelen);
-+		msgoffset += linelen;
-+	}
-+	free(msg);
-+}
-diff --git a/notes.h b/notes.h
-new file mode 100644
-index 0000000..79d21b6
++	grep -v ^# < "$MESSAGE" | git stripspace > "$MESSAGE".processed
++	mv "$MESSAGE".processed "$MESSAGE"
++	if [ -s "$MESSAGE" ]; then
++		BLOB=$(git hash-object -w "$MESSAGE") ||
++			die "Could not write into object database"
++		git update-index --add --cacheinfo 0644 $BLOB $COMMIT ||
++			die "Could not write index"
++	else
++		test -z "$CURRENT_HEAD" &&
++			die "Will not initialise with empty tree"
++		git update-index --force-remove $COMMIT ||
++			die "Could not update index"
++	fi
++
++	TREE=$(git write-tree) || die "Could not write tree"
++	NEW_HEAD=$(echo Annotate $COMMIT | git commit-tree $TREE $PARENT) ||
++		die "Could not annotate"
++	git update-ref -m "Annotate $COMMIT" \
++		"$GIT_NOTES_REF" $NEW_HEAD $CURRENT_HEAD
++;;
++show)
++	git show "$GIT_NOTES_REF":$COMMIT
++;;
++*)
++	usage
++esac
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+new file mode 100755
+index 0000000..ba42c45
 --- /dev/null
-+++ b/notes.h
-@@ -0,0 +1,7 @@
-+#ifndef NOTES_H
-+#define NOTES_H
++++ b/t/t3301-notes.sh
+@@ -0,0 +1,65 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Johannes E. Schindelin
++#
 +
-+void get_commit_notes(const struct commit *commit, struct strbuf *sb,
-+		const char *output_encoding);
++test_description='Test commit notes'
 +
-+#endif
-diff --git a/pretty.c b/pretty.c
-index f6ff312..2d2872f 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -6,6 +6,7 @@
- #include "string-list.h"
- #include "mailmap.h"
- #include "log-tree.h"
-+#include "notes.h"
- 
- static char *user_format;
- 
-@@ -881,5 +882,9 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
- 	 */
- 	if (fmt == CMIT_FMT_EMAIL && sb->len <= beginning_of_body)
- 		strbuf_addch(sb, '\n');
++. ./test-lib.sh
 +
-+	if (fmt != CMIT_FMT_ONELINE)
-+		get_commit_notes(commit, sb, encoding);
++cat > fake_editor.sh << \EOF
++echo "$MSG" > "$1"
++echo "$MSG" >& 2
++EOF
++chmod a+x fake_editor.sh
++VISUAL=./fake_editor.sh
++export VISUAL
 +
- 	free(reencoded);
- }
++test_expect_success 'cannot annotate non-existing HEAD' '
++	! MSG=3 git notes edit
++'
++
++test_expect_success setup '
++	: > a1 &&
++	git add a1 &&
++	test_tick &&
++	git commit -m 1st &&
++	: > a2 &&
++	git add a2 &&
++	test_tick &&
++	git commit -m 2nd
++'
++
++test_expect_success 'need valid notes ref' '
++	! MSG=1 GIT_NOTES_REF='/' git notes edit &&
++	! MSG=2 GIT_NOTES_REF='/' git notes show
++'
++
++test_expect_success 'create notes' '
++	git config core.notesRef refs/notes/commits &&
++	MSG=b1 git notes edit &&
++	test ! -f .git/new-notes &&
++	test 1 = $(git ls-tree refs/notes/commits | wc -l) &&
++	test b1 = $(git notes show) &&
++	git show HEAD^ &&
++	! git notes show HEAD^
++'
++
++cat > expect << EOF
++commit 268048bfb8a1fb38e703baceb8ab235421bf80c5
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:14:13 2005 -0700
++
++    2nd
++
++Notes:
++    b1
++EOF
++
++test_expect_success 'show notes' '
++	! (git cat-file commit HEAD | grep b1) &&
++	git log -1 > output &&
++	git diff expect output
++'
++
++test_done
 -- 
 1.6.1.rc3.412.ga72b
