@@ -1,67 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/4] Introduce commit notes
-Date: Sat, 20 Dec 2008 03:05:47 -0500
-Message-ID: <20081220080546.GA4580@coredump.intra.peff.net>
-References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <alpine.DEB.1.00.0812200034450.30769@pacific.mpi-cbg.de> <20081220065337.GA2581@coredump.intra.peff.net> <200812200855.14915.robin.rosenberg.lists@dewire.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: rsync deprecated?
+Date: Sat, 20 Dec 2008 09:15:11 +0100
+Organization: glandium.org
+Message-ID: <20081220081511.GA28212@glandium.org>
+References: <200812180041.10312.markus.heidelberg@web.de> <7vljuei2xw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Govind Salinas <govind@sophiasuchtig.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Dec 20 09:07:20 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 20 09:13:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDwrn-00081y-NA
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 09:07:20 +0100
+	id 1LDwy4-0000vH-MB
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 09:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752429AbYLTIFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 03:05:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752428AbYLTIFu
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 03:05:50 -0500
-Received: from peff.net ([208.65.91.99]:2213 "EHLO peff.net"
+	id S1752895AbYLTILy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 03:11:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753984AbYLTILy
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 03:11:54 -0500
+Received: from vuizook.err.no ([194.24.252.247]:41595 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752390AbYLTIFt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 03:05:49 -0500
-Received: (qmail 22607 invoked by uid 111); 20 Dec 2008 08:05:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 20 Dec 2008 03:05:48 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 20 Dec 2008 03:05:47 -0500
+	id S1752869AbYLTILx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 03:11:53 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1LDww4-0004mN-UM; Sat, 20 Dec 2008 09:11:47 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1LDwzP-0007OA-42; Sat, 20 Dec 2008 09:15:11 +0100
 Content-Disposition: inline
-In-Reply-To: <200812200855.14915.robin.rosenberg.lists@dewire.com>
+In-Reply-To: <7vljuei2xw.fsf@gitster.siamese.dyndns.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103631>
 
-On Sat, Dec 20, 2008 at 08:55:14AM +0100, Robin Rosenberg wrote:
-
-> > Hmm. I wanted to try some performance comparisons based on this
-> > implementation, but I can't get your 1/4 to apply. Conflicts in
-> > config.txt and cache.h when applying to master, and "sha1 information is
-> > lacking or useless" for a 3-way merge. What did you base this on?
+On Wed, Dec 17, 2008 at 07:20:59PM -0800, Junio C Hamano wrote:
+> Markus Heidelberg <markus.heidelberg@web.de> writes:
 > 
-> patch(1) however can crunch it, with the exception of cache.h. Shouldn't
-> git am/appy and patch agree on git generated patches (without binary diffs)?
+> > in the "Merging external work" section of the gitcore-tutorial it is
+> > stated that the rsync transport is deprecated. The description was added
+> > in commit 914328a (Update tutorial., 2005-08-30) together with the
+> > "deprecated" note. Having never heard/read this before and since this
+> > commit is quite old, I wonder if it is still the case or there was a
+> > solution for this problem.
+> 
+> Sorry, I do not quite understand what you perceive as "this problem".
+> 
+> It has been deprecated for too long a time.  Maybe it is time to remove
+> the support, instead of carrying the deprecated command forever?  Is that
+> the problem you are talking about?
+> 
+> I tend to agree that rsync transport way outlived its usefulness, and not
+> maintained at all.  There may be unnoticed and undiagnosed bugs lurking,
+> but nobody knows about it because nobody uses it.
 
-No. git apply is intentionally much more strict about applying under the
-assumption that it is better to force a conflict than to silently apply
-something that has a reasonable chance of being completely wrong.
+Something that could well make this transport be maintained would be to
+make it share code/internal API with the "local file transport".
+Ideally, http, rsync and file could all share the same basis, and
+ensuring the file transport to be functional would pretty much guarantee
+all work.
 
-And usually it is not a big deal because falling back to the 3-way merge
-is a much nicer way of handling any conflicts _anyway_ (I find .rej
-files so much more useless than conflict markers, personally).
+Anyways, I'm not the right person to say that, as I've been failing to
+deliver a beginning of such code for a year, now (damn, time goes too
+fast).
 
-In this case I was able to:
+Maybe libgit2 could be a good occasion to start some API like this,
+though.
 
-  1. git am /the/patch
-  2. patch -p1 <.git/rebase-apply/patch
-  3. manually inspect the results for sanity, and fix up the cache.h
-     bit that failed totally
-  4. git add -u && git add notes.[ch]
-  5. git am --resolved
-
--Peff
+Mike
