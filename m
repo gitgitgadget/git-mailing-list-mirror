@@ -1,92 +1,71 @@
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Subject: Git weekly links: 2008-51
-Date: Sat, 20 Dec 2008 14:16:53 +0200
-Message-ID: <94a0d4530812200416m1caa96f2je2bf478f65bd7d12@mail.gmail.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH] Documentation: fix typos, grammar, asciidoc syntax
+Date: Sat, 20 Dec 2008 14:18:38 +0100
+Message-ID: <200812201418.38707.markus.heidelberg@web.de>
+References: <200812191314.19302.markus.heidelberg@web.de> <7v3agj1gvp.fsf@gitster.siamese.dyndns.org>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: "git list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Dec 20 13:18:24 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 20 14:20:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LE0mk-0002lB-AU
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 13:18:22 +0100
+	id 1LE1kL-00035Y-Iw
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 14:19:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751185AbYLTMQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 07:16:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbYLTMQ4
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 07:16:56 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:34059 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751086AbYLTMQz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 07:16:55 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so539345fgg.17
-        for <git@vger.kernel.org>; Sat, 20 Dec 2008 04:16:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=4cB6xd7dRFtVObtZtbhmV3s1SLh/3jvXREO5AHJdjWo=;
-        b=kvoQxOrn9A5fx/43iMOBBAEpHntVzxbSXCch0N4KQB7ZqZLEN9YDTbq3XBETsMYant
-         HRxgF7bllFdKsALZxX0nlUCFr+QB9xb1otG12mnW1mxBL36VQGJNbdOKMfLIcCRJXVVN
-         kLE9iYhNBPQR2omZR60aBsjIh1iTHRStMYkF4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=QxUCPwVxHrRtFw0k+UpZZs1nfOSqg2IXGWQyqUyaYjFRjoXzKOcYt+ra8f8w7OMhxI
-         pA0ZddDK3WihMPBmYvwM/uEfaGEBL2OA3JgxuYzUTq1gszOlWmHO7W1kleeyaUHfzofA
-         N9sxppOMYEjqPTo3L4z8C9RNZ/gpBlh96yYa4=
-Received: by 10.86.68.2 with SMTP id q2mr2408521fga.68.1229775413770;
-        Sat, 20 Dec 2008 04:16:53 -0800 (PST)
-Received: by 10.86.77.17 with HTTP; Sat, 20 Dec 2008 04:16:53 -0800 (PST)
+	id S1751578AbYLTNSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 08:18:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751483AbYLTNSj
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 08:18:39 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:57476 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751472AbYLTNSi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 08:18:38 -0500
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 4BEE6F7EBA13;
+	Sat, 20 Dec 2008 14:18:37 +0100 (CET)
+Received: from [91.19.0.168] (helo=pluto)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #273)
+	id 1LE1j2-0001xv-00; Sat, 20 Dec 2008 14:18:36 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <7v3agj1gvp.fsf@gitster.siamese.dyndns.org>
+Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18Ctf6eM/aMh9vdzoAQM9Kmsm5X1eZVeiohMVQX
+	TmRqH9pTWm8G6hmilkOWHHg4VV11C+ZYKISo1Q4PKD+VzIv782
+	fBQ7WnH3iVsHoqBUmS1A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103648>
 
-Hi,
+Junio C Hamano, 20.12.2008:
+> Markus Heidelberg <markus.heidelberg@web.de> writes:
+> 
+> > @@ -172,7 +172,7 @@ only the primary branches.  In addition, if you happen to be on
+> >  your topic branch, it is shown as well.
+> >  
+> >  ------------
+> > -$ git show-branch --reflog='10,1 hour ago' --list master
+> > +$ git show-branch --reflog="10,1 hour ago" --list master
+> >  ------------
+> 
+> Is this just a personal taste, or a correction to typography?
 
-This week tortoisegit stole the spotlight. Maybe there weren't many
-other links, or maybe I failed to notice them. Also, many people liked
-the comment of Linus Torvalds regarding C++ in git.
+When using single quotes, the manpage displayed backticks. I don't know
+how to obtain single quotes in the manpage, if this is preferred. The
+HTML page worked though: single quotes were translated to single quotes,
+double quotes to double quotes.
 
-blog version:
-http://gitlog.wordpress.com/2008/12/20/git-weekly-links-2008-51/
+> Other than this one, I did not find anything else in your patch that
+> looked iffy.  Thanks for lending a good set of eyeballs.
 
-== Articles ==
-
-Agile git and the story branch pattern
-Practical explanation about how to use feature branches and why they are good.
-http://blog.hasmanythrough.com/2008/12/18/agile-git-and-the-story-branch-pattern
-
-Using Git to Maintain Your Website
-http://dmiessler.com/blog/using-git-to-maintain-your-website
-
-How I Turned Down $300,000 from Microsoft to go Full-Time on GitHub
-http://mojombo.github.com/2008/10/18/how-i-turned-down-300k.html
-
-Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Linus Torvalds creates some buzz
-http://lwn.net/Articles/249460/
-
-== General links ==
-
-tortoisegit
-http://code.google.com/p/tortoisegit/
-
-Blog posts on Git (usage)
-http://git.or.cz/gitwiki/BlogPosts
-
-== My picks ==
-
-Learning git-svn in 5min
-http://tsunanet.blogspot.com/2007/07/learning-git-svn-in-5min.html
-
--- 
-Felipe Contreras
+Thanks, this happens when reading a lot of documentation :)
