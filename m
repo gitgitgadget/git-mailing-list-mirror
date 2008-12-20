@@ -1,122 +1,96 @@
-From: "Kirill A. Korinskiy" <catap@catap.ru>
-Subject: [PATCH] Remove the requirement opaquelocktoken uri scheme
-Date: Sat, 20 Dec 2008 09:19:46 +0300
-Message-ID: <1229753986-5193-1-git-send-email-catap@catap.ru>
-References: <7vljucbows.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org, catap@catap.ru
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 20 07:25:14 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] GIT 1.6.0.6
+Date: Fri, 19 Dec 2008 22:40:41 -0800
+Message-ID: <7vljub1h92.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 20 07:42:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDvGv-0006rG-Qo
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 07:25:10 +0100
+	id 1LDvXV-00018c-Fw
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 07:42:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751636AbYLTGUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 01:20:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751990AbYLTGUs
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 01:20:48 -0500
-Received: from void.catap.ru ([213.248.54.140]:56755 "EHLO void.catap.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751608AbYLTGUr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 01:20:47 -0500
-Received: (qmail 21672 invoked from network); 20 Dec 2008 06:20:44 -0000
-Received: from catap.dialup.corbina.ru (HELO mx3.catap.ru) (85.21.143.245)
-  by void.catap.ru with ESMTPS (AES256-SHA encrypted); 20 Dec 2008 06:20:44 -0000
-Received: from localhost
-	([127.0.0.1] helo=satellite.home.catap.ru ident=catap)
-	by mx3.catap.ru with esmtp (Exim 4.63)
-	(envelope-from <catap@catap.ru>)
-	id 1LDvCb-0004zt-2w; Sat, 20 Dec 2008 09:20:41 +0300
-Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
-	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1LDvBi-0001ND-UA; Sat, 20 Dec 2008 09:19:46 +0300
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <7vljucbows.fsf@gitster.siamese.dyndns.org>
+	id S1752219AbYLTGkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 01:40:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752157AbYLTGkx
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 01:40:53 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53357 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752141AbYLTGkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 01:40:52 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9B2F91AB28;
+	Sat, 20 Dec 2008 01:40:49 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B318D1AB25; Sat,
+ 20 Dec 2008 01:40:43 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 23A27B82-CE61-11DD-8EB0-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103623>
 
-The program flow of pushing over http is:
+The latest maintenance release GIT 1.6.0.6 is available at the
+usual places:
 
- - call lock_remote() to issue a DAV_LOCK request to the server to lock
-   info/refs and branch refs being pushed into; handle_new_lock_ctx() is
-   used to parse its response to populate "struct remote_lock" that is
-   returned from lock_remote();
+  http://www.kernel.org/pub/software/scm/git/
 
- - send objects;
+  git-1.6.0.6.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.6.0.6.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.6.0.6.tar.{gz,bz2}		(preformatted docs)
 
- - call unlock_remote() to drop the lock.
+The RPM binary packages for a few architectures are also provided
+as courtesy.
 
-The handle_new_lock_ctx() function assumed that the server will use a
-lock token in opaquelocktoken URI scheme, which may have been an Ok
-assumption under RFC 2518, but under RFC 4918 which obsoletes the older
-standard it is not necessarily true.
+  RPMS/$arch/git-*-1.6.0.6-1.fc9.$arch.rpm	(RPM)
 
-This resulted in push failure (often resulted in "cannot lock existing
-info/refs" error message) when talking to a server that does not use
-opaquelocktoken URI scheme.
+Among miscellaneous fixes, this contains a local gitweb security fix.
+Maintenance releases for older versions (v1.5.4.7, v1.5.5.6 and v1.5.6.6)
+are also available at the same place.
 
-Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
----
- http-push.c |   14 ++++++--------
- 1 files changed, 6 insertions(+), 8 deletions(-)
+----------------------------------------------------------------
 
-diff --git a/http-push.c b/http-push.c
-index 5cecef434a7740a3f853462978c3e071b4da7e74..7c6460919bf3eba10c46cede11ffdd9c53fd2dd2 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -595,7 +595,7 @@ static int refresh_lock(struct remote_lock *lock)
- 	lock->refreshing = 1;
- 
- 	if_header = xmalloc(strlen(lock->token) + 25);
--	sprintf(if_header, "If: (<opaquelocktoken:%s>)", lock->token);
-+	sprintf(if_header, "If: (<%s>)", lock->token);
- 	sprintf(timeout_header, "Timeout: Second-%ld", lock->timeout);
- 	dav_headers = curl_slist_append(dav_headers, if_header);
- 	dav_headers = curl_slist_append(dav_headers, timeout_header);
-@@ -1120,10 +1120,8 @@ static void handle_new_lock_ctx(struct xml_ctx *ctx, int tag_closed)
- 				lock->timeout =
- 					strtol(ctx->cdata + 7, NULL, 10);
- 		} else if (!strcmp(ctx->name, DAV_ACTIVELOCK_TOKEN)) {
--			if (!prefixcmp(ctx->cdata, "opaquelocktoken:")) {
--				lock->token = xmalloc(strlen(ctx->cdata) - 15);
--				strcpy(lock->token, ctx->cdata + 16);
--			}
-+			lock->token = xmalloc(strlen(ctx->cdata) + 1);
-+			strcpy(lock->token, ctx->cdata);
- 		}
- 	}
- }
-@@ -1308,7 +1306,7 @@ static int unlock_remote(struct remote_lock *lock)
- 	int rc = 0;
- 
- 	lock_token_header = xmalloc(strlen(lock->token) + 31);
--	sprintf(lock_token_header, "Lock-Token: <opaquelocktoken:%s>",
-+	sprintf(lock_token_header, "Lock-Token: <%s>",
- 		lock->token);
- 	dav_headers = curl_slist_append(dav_headers, lock_token_header);
- 
-@@ -1722,7 +1720,7 @@ static int update_remote(unsigned char *sha1, struct remote_lock *lock)
- 	struct curl_slist *dav_headers = NULL;
- 
- 	if_header = xmalloc(strlen(lock->token) + 25);
--	sprintf(if_header, "If: (<opaquelocktoken:%s>)", lock->token);
-+	sprintf(if_header, "If: (<%s>)", lock->token);
- 	dav_headers = curl_slist_append(dav_headers, if_header);
- 
- 	strbuf_addf(&out_buffer.buf, "%s\n", sha1_to_hex(sha1));
-@@ -1941,7 +1939,7 @@ static void update_remote_info_refs(struct remote_lock *lock)
- 		  add_remote_info_ref, &buffer.buf);
- 	if (!aborted) {
- 		if_header = xmalloc(strlen(lock->token) + 25);
--		sprintf(if_header, "If: (<opaquelocktoken:%s>)", lock->token);
-+		sprintf(if_header, "If: (<%s>)", lock->token);
- 		dav_headers = curl_slist_append(dav_headers, if_header);
- 
- 		slot = get_active_slot();
--- 
-1.5.6.5
+Changes since v1.6.0.5 are as follows:
+
+David Aguilar (1):
+      git-mergetool: properly handle "git mergetool -- filename"
+
+Deskin Miller (1):
+      git-svn: Make following parents atomic
+
+Jim Meyering (1):
+      git-config.txt: fix a typo
+
+Johannes Schindelin (2):
+      fast-import: close pack before unlinking it
+      fast-export: deal with tag objects that do not have a tagger
+
+Junio C Hamano (6):
+      work around Python warnings from AsciiDoc
+      git-show: do not segfault when showing a bad tag
+      pager: do not dup2 stderr if it is already redirected
+      gitweb: do not run "git diff" that is Porcelain
+      GIT 1.5.4.7
+      fast-import: make tagger information optional
+
+Linus Torvalds (1):
+      fsck: reduce stack footprint
+
+Markus Heidelberg (1):
+      Documentation: fix typos, grammar, asciidoc syntax
+
+Miklos Vajna (1):
+      SubmittingPatches: mention the usage of real name in Signed-off-by: lines
+
+Nicolas Pitre (1):
+      make sure packs to be replaced are closed beforehand
+
+Wu Fengguang (1):
+      git-send-email: handle email address with quoted comma
