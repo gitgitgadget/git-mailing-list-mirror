@@ -1,78 +1,54 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: just can't live without a user.name
-Date: Sat, 20 Dec 2008 01:08:03 +0100
-Message-ID: <20081220000803.GK21154@genesis.frugalware.org>
-References: <20081219223306.GH21154@genesis.frugalware.org> <87fxkjbvl3.fsf_-_@jidanni.org>
+Date: Fri, 19 Dec 2008 16:18:24 -0800
+Message-ID: <7vmyer66nj.fsf@gitster.siamese.dyndns.org>
+References: <20081219223306.GH21154@genesis.frugalware.org>
+ <87fxkjbvl3.fsf_-_@jidanni.org>
+ <20081220000803.GK21154@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="svZFHVx8/dhPCe52"
-Cc: nanako3@lavabit.com, gitster@pobox.com, git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Sat Dec 20 01:09:30 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: jidanni@jidanni.org, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Dec 20 01:19:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDpPO-000061-0u
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 01:09:30 +0100
+	id 1LDpZQ-0002lJ-93
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 01:19:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751666AbYLTAIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2008 19:08:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751685AbYLTAIL
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 19:08:11 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:42774 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751611AbYLTAIK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2008 19:08:10 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id AD8B65808F;
-	Sat, 20 Dec 2008 01:08:07 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 3FA3E44697;
-	Sat, 20 Dec 2008 01:08:03 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 3AAF011B862F; Sat, 20 Dec 2008 01:08:03 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <87fxkjbvl3.fsf_-_@jidanni.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751833AbYLTASe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2008 19:18:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751647AbYLTASe
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 19:18:34 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59936 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751540AbYLTASd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Dec 2008 19:18:33 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3A4ED1AA70;
+	Fri, 19 Dec 2008 19:18:30 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DD7E81AA5D; Fri,
+ 19 Dec 2008 19:18:25 -0500 (EST)
+In-Reply-To: <20081220000803.GK21154@genesis.frugalware.org> (Miklos Vajna's
+ message of "Sat, 20 Dec 2008 01:08:03 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: BAB419BC-CE2B-11DD-962B-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103608>
 
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
---svZFHVx8/dhPCe52
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> On Sat, Dec 20, 2008 at 07:20:56AM +0800, jidanni@jidanni.org wrote:
+>> Actually it's all git's fault for not working if user.name is null or
+>> unset.
+>
+> Please don't turn this thread into a flame.
 
-On Sat, Dec 20, 2008 at 07:20:56AM +0800, jidanni@jidanni.org wrote:
-> Actually it's all git's fault for not working if user.name is null or
-> unset.
-
-Please don't turn this thread into a flame.
-
-If I understand correctly, you said you hide your name because you can't
-use your real name and using some limited ASCII replacement makes you
-unhappy.
-
-I said you can use utf-8 in the user.name field and showed you an
-example about this.
-
-Instead of replying to this, you just did not quote any parts of my
-message, but started to talk about you don't want to show your real name
-at all. What's the point of doing so?
-
---svZFHVx8/dhPCe52
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklMN2IACgkQe81tAgORUJaPJQCfcZJWbfwMGLl0vtLdJfiBewmA
-OdoAn0KjYi0NPoKHL/m8xcMwMpxfegUC
-=Pgx3
------END PGP SIGNATURE-----
-
---svZFHVx8/dhPCe52--
+Just pay attention to messages in which he says something that adds value
+to the discussion, and simply ignore the rest.
