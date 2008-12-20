@@ -1,80 +1,97 @@
-From: James Cloos <cloos@jhcloos.com>
-Subject: Re: how to check remote git repo for updates without pull/fetch
-Date: Sat, 20 Dec 2008 12:32:45 -0500
-Message-ID: <m3skoi21m3.fsf@lugabout.jhcloos.org>
-References: <494BC89F.9070107@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Applying patches from a patch set
+Date: Sat, 20 Dec 2008 11:25:58 -0800 (PST)
+Message-ID: <m3iqped4yi.fsf@localhost.localdomain>
+References: <dac45060812200637m49c71aa5x3c25010fa00f4a63@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ivan Zorin <ivan.a.zorin@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 20 18:42:04 2008
+To: "Mark Ryden" <markryde@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 20 20:27:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LE5pu-0000OM-5K
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 18:41:58 +0100
+	id 1LE7Tu-0005tT-1B
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 20:27:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752919AbYLTRju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 12:39:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752905AbYLTRju
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 12:39:50 -0500
-Received: from eagle.jhcloos.com ([207.210.242.212]:53555 "EHLO
-	eagle.jhcloos.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752771AbYLTRjt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 12:39:49 -0500
-X-Greylist: delayed 372 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Dec 2008 12:39:49 EST
-Received: by eagle.jhcloos.com (Postfix, from userid 10)
-	id 8C38440090; Sat, 20 Dec 2008 17:33:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jhcloos.com;
-	s=eagle; t=1229794416; bh=ZoqHAEMAp/rf/aRNY3XeHMvt1ItjAoIHx/rmQSXY7
-	rE=; h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BhMqhAP5+4v3szDYGRMddSyIp25ZMG4mfJ8/m
-	vhySpeAVLt+fT2FEuX0wq/Pgq1sdD5w4yjgcGyLeNBH6w3bXKx3fuRYTIgNcL2/fYj5
-	BtCqigkR5i456ZyMsdh0It+GMxazeoe2x5vmlV7lk3BuQWLdl8dbUJaWV5Hz4oJlMPY
-	=
-Received: by lugabout.jhcloos.org (Postfix, from userid 500)
-	id 364C8C556D; Sat, 20 Dec 2008 17:33:11 +0000 (UTC)
-In-Reply-To: <494BC89F.9070107@gmail.com> (Ivan Zorin's message of "Fri, 19
-	Dec 2008 19:15:27 +0300")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0.60 (gnu/linux)
-Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAI1J
- REFUOE+lU9ESgCAIg64P1y+ngUdxhl5H8wFbbM0OmUiEhKkCYaZThXCo6KE5sCbA1DDX3genvO4d
- eBQgEMaM5qy6uWk4SfBYfdu9jvBN9nSVDOKRtwb+I3epboOsOX5pZbJNsBJFvmQQ05YMfieIBnYX
- FK2N6dOawd97r/e8RjkTLzmMsiVgrAoEugtviCM3v2WzjgAAAABJRU5ErkJggg==
-Copyright: Copyright 2008 James Cloos
-OpenPGP: ED7DAEA6; url=http://jhcloos.com/public_key/0xED7DAEA6.asc
-OpenPGP-Fingerprint: E9E9 F828 61A4 6EA9 0F2B  63E7 997A 9F17 ED7D AEA6
-X-Hashcash: 1:23:081220:ivan.a.zorin@gmail.com::ch9w8abn/5HMg917:0000000000000000000000000000000000000007fUi
-X-Hashcash: 1:23:081220:git@vger.kernel.org::8OJzuw6FrwRKTA9k:00000000000000000000000000000000000000000065fn
+	id S1752537AbYLTT0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 14:26:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752580AbYLTT0C
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 14:26:02 -0500
+Received: from ik-out-1112.google.com ([66.249.90.179]:21128 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752371AbYLTT0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 14:26:00 -0500
+Received: by ik-out-1112.google.com with SMTP id c29so314955ika.5
+        for <git@vger.kernel.org>; Sat, 20 Dec 2008 11:25:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=Sc0Rp2QvndK/JVwajb8o5PSjpWaZhoT4ttflSoXClOU=;
+        b=KfKwX+aT7HlQDzy8Iqa+zOLt5VsMlWbHLY2Vl5/KcqEbniAqEG0tjbsMUBOzW686P6
+         Lq2iDfjUbI15dO7tSb8bSIglTGrMWqivkv7PXkok+0PnRweQe5V3OB0fZsIYd7ML6kH9
+         aLhLibF0UBBZRiHY1Vmskzqp6EiFG4rXDyj7k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=nQpA2F/6uW60kX5yK4cUkTXxwZuHc2+ytvYYZqI0qCFcCr/Zc7G2qBa2DGIMZYi8ED
+         me/Spy+GCozlUopYmVOocMK2mU4zgRiCReBkbdMDkKLsnCom1E6GmBGPMS3MOWGnQD9X
+         JxtXTyecKT4UsjVh0LHS+pXQJ4a9AIEeRxw30=
+Received: by 10.66.250.1 with SMTP id x1mr5438170ugh.4.1229801158939;
+        Sat, 20 Dec 2008 11:25:58 -0800 (PST)
+Received: from localhost.localdomain (abwp146.neoplus.adsl.tpnet.pl [83.8.239.146])
+        by mx.google.com with ESMTPS id o30sm10710545ugd.35.2008.12.20.11.25.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 20 Dec 2008 11:25:58 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBKJPaWU011001;
+	Sat, 20 Dec 2008 20:25:47 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBKJPQ2x010997;
+	Sat, 20 Dec 2008 20:25:26 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <dac45060812200637m49c71aa5x3c25010fa00f4a63@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103654>
 
---=-=-=
+"Mark Ryden" <markryde@gmail.com> writes:
 
-Here is the script I use:
+>   I am subscribed to some linux kernel subsystem mailing list; in this
+> list there are sometimes patchsets with more than
+> 30-40 patches.
 
+I hope in proper patch series...
 
---=-=-=
-Content-Disposition: inline; filename=git-need-pull-p
+> I am using gmail web interface client.
 
-#!/bin/bash
-#
-# does this git repo need a pull?
-#
-l=$(git log|head -1|awk '{print $NF}')
-r=$(git ls-remote origin heads/master|awk '{print $1}')
-test "${r}" != "${l}"
-
-
---=-=-=
+Better use some standalone mail program. Patch series should be send
+in thread, either as reply to the cover letter message, or threaded
+each being reply to previous patch... beside being numbered; IIRC
+GMail web interface doesn't have threading implemented...
 
 
--JimC 
+> In order to apply a patch set I copy and paste each patch from the
+> patchset into a file, and then apply that patch.
+
+You use raw view, I assume? Otherwise you would fail afoul word
+wrapping and other whitespace mangling, at least...
+
+[...]
+
+> (I remember there was something called git apply-mbox in the past).
+
+You can use "git am" for that, which is modern equivalent, and which
+can do (almost) everything git-apply-mbox did.
+
 -- 
-James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
-
---=-=-=--
+Jakub Narebski
+Poland
+ShadeHawk on #git
