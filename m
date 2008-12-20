@@ -1,58 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/4] Introduce commit notes
-Date: Sat, 20 Dec 2008 03:23:04 -0500
-Message-ID: <20081220082304.GA5693@coredump.intra.peff.net>
-References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <alpine.DEB.1.00.0812200034450.30769@pacific.mpi-cbg.de> <20081220065337.GA2581@coredump.intra.peff.net> <200812200855.14915.robin.rosenberg.lists@dewire.com> <20081220080546.GA4580@coredump.intra.peff.net> <7vk59vz2dx.fsf@gitster.siamese.dyndns.org>
+From: demerphq <demerphq@gmail.com>
+Subject: Re: rsync deprecated?
+Date: Sat, 20 Dec 2008 11:12:11 +0100
+Message-ID: <9b18b3110812200212o46edf51eoaff43ec1b8fc3913@mail.gmail.com>
+References: <200812180041.10312.markus.heidelberg@web.de>
+	 <7vljuei2xw.fsf@gitster.siamese.dyndns.org>
+	 <20081220081511.GA28212@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Govind Salinas <govind@sophiasuchtig.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 20 09:24:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Mike Hommey" <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sat Dec 20 11:17:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDx8M-0003Pl-AE
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 09:24:26 +0100
+	id 1LDytI-0004TY-He
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 11:17:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752625AbYLTIXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 03:23:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751984AbYLTIXH
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 03:23:07 -0500
-Received: from peff.net ([208.65.91.99]:1242 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752560AbYLTIXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 03:23:06 -0500
-Received: (qmail 22782 invoked by uid 111); 20 Dec 2008 08:23:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 20 Dec 2008 03:23:05 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 20 Dec 2008 03:23:04 -0500
+	id S1751399AbYLTKMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 05:12:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbYLTKMO
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 05:12:14 -0500
+Received: from qw-out-2122.google.com ([74.125.92.25]:8606 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751143AbYLTKMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 05:12:12 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so487945qwe.37
+        for <git@vger.kernel.org>; Sat, 20 Dec 2008 02:12:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=iYIh4ytydZkgHJMx2uYs+YPragMmkmgUugAsVP5DTGI=;
+        b=NxmHaPoqaoa66PA1rYhZtL1IZsN/ZZPkPOLY7Qd6kJn+13fUuKZ2duP/TsbEM8o152
+         LQDWusnIXsNyqY+6jlNWZKgfMlVHaKcFIk+e8LdgWjpNZqds8dpIefWMHRfBJsn5Aq7y
+         yBaxCPJ3hhHT0sUk5KqHIy84y+HzQHlB/EeBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=U7vwIuk4dtfYhSke1SzcMIPoPRYlSGIWD/CyYlIJ2v+cd2jymefp5Qxi7eq2RivRqV
+         Z2pyvf8Oku7BfvSkwxJ9xwSh5PDin120LlZlbTWtouG89bUdvh9z/maML2V8nzKblxRL
+         6zPO+qCori4GQ0ITi97CVKVgbMycp4cjhRyNU=
+Received: by 10.214.60.5 with SMTP id i5mr4938962qaa.168.1229767931218;
+        Sat, 20 Dec 2008 02:12:11 -0800 (PST)
+Received: by 10.214.241.11 with HTTP; Sat, 20 Dec 2008 02:12:11 -0800 (PST)
+In-Reply-To: <20081220081511.GA28212@glandium.org>
 Content-Disposition: inline
-In-Reply-To: <7vk59vz2dx.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103635>
 
-On Sat, Dec 20, 2008 at 12:17:46AM -0800, Junio C Hamano wrote:
+2008/12/20 Mike Hommey <mh@glandium.org>:
+> On Wed, Dec 17, 2008 at 07:20:59PM -0800, Junio C Hamano wrote:
+>> Markus Heidelberg <markus.heidelberg@web.de> writes:
+>>
+>> > in the "Merging external work" section of the gitcore-tutorial it is
+>> > stated that the rsync transport is deprecated. The description was added
+>> > in commit 914328a (Update tutorial., 2005-08-30) together with the
+>> > "deprecated" note. Having never heard/read this before and since this
+>> > commit is quite old, I wonder if it is still the case or there was a
+>> > solution for this problem.
+>>
+>> Sorry, I do not quite understand what you perceive as "this problem".
+>>
+>> It has been deprecated for too long a time.  Maybe it is time to remove
+>> the support, instead of carrying the deprecated command forever?  Is that
+>> the problem you are talking about?
+>>
+>> I tend to agree that rsync transport way outlived its usefulness, and not
+>> maintained at all.  There may be unnoticed and undiagnosed bugs lurking,
+>> but nobody knows about it because nobody uses it.
+>
+> Something that could well make this transport be maintained would be to
+> make it share code/internal API with the "local file transport".
+> Ideally, http, rsync and file could all share the same basis, and
+> ensuring the file transport to be functional would pretty much guarantee
+> all work.
 
-> >   1. git am /the/patch
-> >   2. patch -p1 <.git/rebase-apply/patch
-> >   3. manually inspect the results for sanity, and fix up the cache.h
-> >      bit that failed totally
-> >   4. git add -u && git add notes.[ch]
-> >   5. git am --resolved
-> 
-> I usually skip 2-4 and edit .git/rebase-apply/patch in place instead, and
-> run "git am" instead of step 5.
+Just for the record: cloning via rsync is broken currently. I reported
+this actually only shortly before Junio made this comment. Apparently
+the code to copy across HEAD is missing from the rsync code, although
+it is present for HTTP code.
 
-How do you track down the source of the conflict to do the patch fixup?
-In this case, it was a context line in the patch that had been deleted
-in my version. Do you just find the appropriate chunk in what you have
-already and visually compare?
+Is there a bug tracking tool that git uses? I asked on #git on irc and
+they said to just mail the list, but ive not seen any response to my
+mail at all and the timing of Junios comment makes me wonder if my
+report was seen by list regulars at all.
 
--Peff
+cheers,
+Yves
+
+
+
+-- 
+perl -Mre=debug -e "/just|another|perl|hacker/"
