@@ -1,204 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2 3/4] Speed up git notes lookup
-Date: Sat, 20 Dec 2008 13:05:47 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812201305390.30769@pacific.mpi-cbg.de>
-References: <5d46db230812160015t55b4ff2fubbf1e2f826a97b98@mail.gmail.com> <20081216085108.GA3031@coredump.intra.peff.net> <alpine.DEB.1.00.0812192347261.30769@pacific.mpi-cbg.de> <alpine.DEB.1.00.0812200034450.30769@pacific.mpi-cbg.de>
- <20081220065337.GA2581@coredump.intra.peff.net> <alpine.DEB.1.00.0812201304210.30769@pacific.mpi-cbg.de>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Git weekly links: 2008-51
+Date: Sat, 20 Dec 2008 14:16:53 +0200
+Message-ID: <94a0d4530812200416m1caa96f2je2bf478f65bd7d12@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Govind Salinas <govind@sophiasuchtig.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 20 12:59:50 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "git list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 20 13:18:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LE0US-0005xX-W8
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 12:59:29 +0100
+	id 1LE0mk-0002lB-AU
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 13:18:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704AbYLTL6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 06:58:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752684AbYLTL6J
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 06:58:09 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44681 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752606AbYLTL6I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 06:58:08 -0500
-Received: (qmail invoked by alias); 20 Dec 2008 11:58:05 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp062) with SMTP; 20 Dec 2008 12:58:05 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19YKt4t0IVYutecWw3xni1H4+8pnTVSzbYuilksQh
-	8I6dsqx9eWFN12
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0812201304210.30769@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.47
+	id S1751185AbYLTMQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 07:16:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbYLTMQ4
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 07:16:56 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:34059 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751086AbYLTMQz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 07:16:55 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so539345fgg.17
+        for <git@vger.kernel.org>; Sat, 20 Dec 2008 04:16:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=4cB6xd7dRFtVObtZtbhmV3s1SLh/3jvXREO5AHJdjWo=;
+        b=kvoQxOrn9A5fx/43iMOBBAEpHntVzxbSXCch0N4KQB7ZqZLEN9YDTbq3XBETsMYant
+         HRxgF7bllFdKsALZxX0nlUCFr+QB9xb1otG12mnW1mxBL36VQGJNbdOKMfLIcCRJXVVN
+         kLE9iYhNBPQR2omZR60aBsjIh1iTHRStMYkF4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=QxUCPwVxHrRtFw0k+UpZZs1nfOSqg2IXGWQyqUyaYjFRjoXzKOcYt+ra8f8w7OMhxI
+         pA0ZddDK3WihMPBmYvwM/uEfaGEBL2OA3JgxuYzUTq1gszOlWmHO7W1kleeyaUHfzofA
+         N9sxppOMYEjqPTo3L4z8C9RNZ/gpBlh96yYa4=
+Received: by 10.86.68.2 with SMTP id q2mr2408521fga.68.1229775413770;
+        Sat, 20 Dec 2008 04:16:53 -0800 (PST)
+Received: by 10.86.77.17 with HTTP; Sat, 20 Dec 2008 04:16:53 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103647>
 
+Hi,
 
-To avoid looking up each and every commit in the notes ref's tree
-object, which is very expensive, speed things up by slurping the tree
-object's contents into a hash_map.
+This week tortoisegit stole the spotlight. Maybe there weren't many
+other links, or maybe I failed to notice them. Also, many people liked
+the comment of Linus Torvalds regarding C++ in git.
 
-The idea fo the hashmap singleton is from David Reiss, initial
-benchmarking by Jeff King.
+blog version:
+http://gitlog.wordpress.com/2008/12/20/git-weekly-links-2008-51/
 
-Note: the implementation allows for arbitrary entries in the notes
-tree object, ignoring those that do not reference a valid object.  This
-allows you to annotate arbitrary branches, or objects.
+== Articles ==
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- notes.c |  113 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++------
- 1 files changed, 102 insertions(+), 11 deletions(-)
+Agile git and the story branch pattern
+Practical explanation about how to use feature branches and why they are good.
+http://blog.hasmanythrough.com/2008/12/18/agile-git-and-the-story-branch-pattern
 
-diff --git a/notes.c b/notes.c
-index 91ec77f..68bcb24 100644
---- a/notes.c
-+++ b/notes.c
-@@ -4,16 +4,112 @@
- #include "refs.h"
- #include "utf8.h"
- #include "strbuf.h"
-+#include "tree-walk.h"
-+
-+struct entry {
-+	unsigned char commit_sha1[20];
-+	unsigned char notes_sha1[20];
-+};
-+
-+struct hash_map {
-+	struct entry *entries;
-+	off_t count, size;
-+};
- 
- static int initialized;
-+static struct hash_map hash_map;
-+
-+static int hash_index(struct hash_map *map, const unsigned char *sha1)
-+{
-+	int i = ((*(unsigned int *)sha1) % map->size);
-+
-+	for (;;) {
-+		unsigned char *current = map->entries[i].commit_sha1;
-+
-+		if (!hashcmp(sha1, current))
-+			return i;
-+
-+		if (is_null_sha1(current))
-+			return -1 - i;
-+
-+		if (++i == map->size)
-+			i = 0;
-+	}
-+}
-+
-+static void add_entry(const unsigned char *commit_sha1,
-+		const unsigned char *notes_sha1)
-+{
-+	int index;
-+
-+	if (hash_map.count + 1 > hash_map.size >> 1) {
-+		int i, old_size = hash_map.size;
-+		struct entry *old = hash_map.entries;
-+
-+		hash_map.size = old_size ? old_size << 1 : 64;
-+		hash_map.entries = (struct entry *)
-+			xcalloc(sizeof(struct entry), hash_map.size);
-+
-+		for (i = 0; i < old_size; i++)
-+			if (!is_null_sha1(old[i].commit_sha1)) {
-+				index = -1 - hash_index(&hash_map,
-+						old[i].commit_sha1);
-+				memcpy(hash_map.entries + index, old + i,
-+					sizeof(struct entry));
-+			}
-+		free(old);
-+	}
-+
-+	index = hash_index(&hash_map, commit_sha1);
-+	if (index < 0) {
-+		index = -1 - index;
-+		hash_map.count++;
-+	}
-+
-+	hashcpy(hash_map.entries[index].commit_sha1, commit_sha1);
-+	hashcpy(hash_map.entries[index].notes_sha1, notes_sha1);
-+}
-+
-+static void initialize_hash_map(const char *notes_ref_name)
-+{
-+	unsigned char sha1[20], commit_sha1[20];
-+	unsigned *mode;
-+	struct tree_desc desc;
-+	struct name_entry entry;
-+	void *buf;
-+
-+	if (!notes_ref_name || read_ref(notes_ref_name, commit_sha1) ||
-+			get_tree_entry(commit_sha1, "", sha1, mode))
-+		return;
-+
-+	buf = fill_tree_descriptor(&desc, sha1);
-+	if (!buf)
-+		die ("Could not read %s for notes-index", sha1_to_hex(sha1));
-+
-+	while (tree_entry(&desc, &entry))
-+		if (!get_sha1(entry.path, commit_sha1))
-+			add_entry(commit_sha1, entry.sha1);
-+	free(buf);
-+}
-+
-+static unsigned char *lookup_notes(const unsigned char *commit_sha1)
-+{
-+	int index;
-+
-+	if (!hash_map.size)
-+		return NULL;
-+
-+	index = hash_index(&hash_map, commit_sha1);
-+	if (index < 0)
-+		return NULL;
-+	return hash_map.entries[index].notes_sha1;
-+}
- 
- void get_commit_notes(const struct commit *commit, struct strbuf *sb,
- 		const char *output_encoding)
- {
- 	static const char *utf8 = "utf-8";
--	struct strbuf name = STRBUF_INIT;
--	const char *hex;
--	unsigned char sha1[20];
-+	unsigned char *sha1;
- 	char *msg;
- 	unsigned long msgoffset, msglen;
- 	enum object_type type;
-@@ -24,17 +120,12 @@ void get_commit_notes(const struct commit *commit, struct strbuf *sb,
- 			notes_ref_name = getenv(GIT_NOTES_REF_ENVIRONMENT);
- 		else if (!notes_ref_name)
- 			notes_ref_name = GIT_NOTES_DEFAULT_REF;
--		if (notes_ref_name && read_ref(notes_ref_name, sha1))
--			notes_ref_name = NULL;
-+		initialize_hash_map(notes_ref_name);
- 		initialized = 1;
- 	}
- 
--	if (!notes_ref_name)
--		return;
--
--	strbuf_addf(&name, "%s:%s", notes_ref_name,
--			sha1_to_hex(commit->object.sha1));
--	if (get_sha1(name.buf, sha1))
-+	sha1 = lookup_notes(commit->object.sha1);
-+	if (!sha1)
- 		return;
- 
- 	if (!(msg = read_sha1_file(sha1, &type, &msglen)) || !msglen ||
+Using Git to Maintain Your Website
+http://dmiessler.com/blog/using-git-to-maintain-your-website
+
+How I Turned Down $300,000 from Microsoft to go Full-Time on GitHub
+http://mojombo.github.com/2008/10/18/how-i-turned-down-300k.html
+
+Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Linus Torvalds creates some buzz
+http://lwn.net/Articles/249460/
+
+== General links ==
+
+tortoisegit
+http://code.google.com/p/tortoisegit/
+
+Blog posts on Git (usage)
+http://git.or.cz/gitwiki/BlogPosts
+
+== My picks ==
+
+Learning git-svn in 5min
+http://tsunanet.blogspot.com/2007/07/learning-git-svn-in-5min.html
+
 -- 
-1.6.1.rc3.412.ga72b
+Felipe Contreras
