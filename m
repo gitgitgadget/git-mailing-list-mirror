@@ -1,106 +1,92 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: [PATCH] Make git revert warn the user when reverting a merge commit.
-Date: Sat, 20 Dec 2008 16:54:19 -0600
-Message-ID: <200812201654.23110.bss@iguanasuicide.net>
-References: <200812182039.15169.bss@iguanasuicide.net> <200812200808.02011.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1928902.SKiRPElBL4";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 20 23:56:51 2008
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH] Use the possible resources's specific encoding for quickdiff
+Date: Sun, 21 Dec 2008 00:14:28 +0100
+Message-ID: <1229814868-13916-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sun Dec 21 00:15:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEAkX-0003k0-2w
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 23:56:45 +0100
+	id 1LEB31-0000M9-T5
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 00:15:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751604AbYLTWyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 17:54:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751658AbYLTWyL
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 17:54:11 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:35903 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751529AbYLTWyK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 17:54:10 -0500
-Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.123])
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LEAi0-00009h-UV; Sat, 20 Dec 2008 22:54:09 +0000
-User-Agent: KMail/1.9.9
-In-Reply-To: <200812200808.02011.robin.rosenberg.lists@dewire.com>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1754089AbYLTXOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 18:14:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753993AbYLTXOd
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 18:14:33 -0500
+Received: from mail.dewire.com ([83.140.172.130]:6172 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751799AbYLTXOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 18:14:32 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id DC9F31484F40;
+	Sun, 21 Dec 2008 00:14:29 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id F4egEbGsZMfe; Sun, 21 Dec 2008 00:14:29 +0100 (CET)
+Received: from localhost.localdomain (unknown [10.9.0.6])
+	by dewire.com (Postfix) with ESMTP id D8240802E24;
+	Sun, 21 Dec 2008 00:14:28 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.rc3.56.gd0306
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103672>
 
---nextPart1928902.SKiRPElBL4
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Encoding can be defined in many places. It could be defined for a specific
+resource, workspace, JVM invocation or platform. Let Eclipse handle the
+logic. We always ask for the current revisions encoding, which in theory
+could be different from the encoding specified for the version we are
+retrieving.
 
-On Saturday 2008 December 20 01:08:01 Robin Rosenberg wrote:
-> fredag 19 december 2008 03:39:15 skrev Boyd Stephen Smith Jr.:
-> > On Thursday 2008 December 18 18:21:25 Linus Torvalds wrote:
-> > > I suspect we should warn about reverting merges.
->
-> Or mention the reverted parent in the commit message since it is not
-> obvious.
->
-> ---
->  builtin-revert.c |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
->
-> diff --git a/builtin-revert.c b/builtin-revert.c
-> index 4038b41..fc59229 100644
-> --- a/builtin-revert.c
-> +++ b/builtin-revert.c
-> @@ -352,6 +352,10 @@ static int revert_or_cherry_pick(int argc, const char
-> **argv) add_to_msg(oneline_body + 1);
->  		add_to_msg("\"\n\nThis reverts commit ");
->  		add_to_msg(sha1_to_hex(commit->object.sha1));
-> +		if (commit->parents->next) {
-> +			add_to_msg(" removing\ncontributions from ");
-> +			add_to_msg(sha1_to_hex(parent->object.sha1));
-> +		}
->  		add_to_msg(".\n");
->  	} else {
->  		base =3D parent;
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../egit/ui/internal/decorators/GitDocument.java   |   20 +++++++++++++++++++-
+ 1 files changed, 19 insertions(+), 1 deletions(-)
 
-I'm still new to the code, but parent is the "mainline" specified on the=20
-command-line, which (I think) is actually the parent to be reverted to, so =
-we=20
-are actually removing contributions from all the *other* parents.  So, the=
-=20
-message may be backward.  Because of that, I'd say the patch doesn't handle=
-=20
-octopus merges well, either.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
-
---nextPart1928902.SKiRPElBL4
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklNd58ACgkQdNbfk+86fC24mACfa/DzrbBl8i8Y7wPPfa+6c64c
-D5IAn3o3a+WvG153BQFF0RCbmlDKXNUl
-=q9d4
------END PGP SIGNATURE-----
-
---nextPart1928902.SKiRPElBL4--
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitDocument.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitDocument.java
+index a985a68..a9c0c7d 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitDocument.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitDocument.java
+@@ -9,8 +9,10 @@
+ 
+ import java.io.IOException;
+ 
++import org.eclipse.core.resources.IEncodedStorage;
+ import org.eclipse.core.resources.IProject;
+ import org.eclipse.core.resources.IResource;
++import org.eclipse.core.runtime.CoreException;
+ import org.eclipse.jface.text.Document;
+ import org.eclipse.team.core.RepositoryProvider;
+ import org.spearce.egit.core.GitProvider;
+@@ -66,7 +68,23 @@ void populate() throws IOException {
+ 			Activator.trace("(GitQuickDiffProvider) compareTo: " + baseline);
+ 			ObjectLoader loader = repository.openBlob(blobEnry.getId());
+ 			byte[] bytes = loader.getBytes();
+-			String s = new String(bytes); // FIXME Platform default charset. should be Eclipse default
++			String charset;
++			// Get the encoding for the current version. As a matter of
++			// principle one might want to use the eclipse settings for the
++			// version we are retrieving as that may be defined by the
++			// project settings, but there is no historic API for this.
++			IEncodedStorage encodedStorage = ((IEncodedStorage)resource);
++			try {
++				if (encodedStorage != null)
++					charset = encodedStorage.getCharset();
++				else
++					charset = resource.getParent().getDefaultCharset();
++			} catch (CoreException e) {
++				charset = Constants.CHARACTER_ENCODING;
++			}
++			// Finally we could consider validating the content with respect
++			// to the content. We don't do that here.
++			String s = new String(bytes, charset);
+ 			set(s);
+ 			Activator.trace("(GitQuickDiffProvider) has reference doc, size=" + s.length() + " bytes");
+ 		} else {
+-- 
+1.6.1.rc3.56.gd0306
