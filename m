@@ -1,54 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: just can't live without a user.name
-Date: Fri, 19 Dec 2008 16:18:24 -0800
-Message-ID: <7vmyer66nj.fsf@gitster.siamese.dyndns.org>
-References: <20081219223306.GH21154@genesis.frugalware.org>
- <87fxkjbvl3.fsf_-_@jidanni.org>
- <20081220000803.GK21154@genesis.frugalware.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: jidanni@jidanni.org, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Dec 20 01:19:52 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] SubmittingPatches: mention the usage of real name in Signed-off-by: lines
+Date: Sat, 20 Dec 2008 01:20:27 +0100
+Message-ID: <1229732427-14740-1-git-send-email-vmiklos@frugalware.org>
+References: <7vhc4z7oia.fsf@gitster.siamese.dyndns.org>
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, jidanni@jidanni.org,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 20 01:20:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LDpZQ-0002lJ-93
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 01:19:52 +0100
+	id 1LDpZe-0002nz-D3
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 01:20:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751833AbYLTASe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Dec 2008 19:18:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751647AbYLTASe
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 19:18:34 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59936 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751540AbYLTASd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Dec 2008 19:18:33 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3A4ED1AA70;
-	Fri, 19 Dec 2008 19:18:30 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DD7E81AA5D; Fri,
- 19 Dec 2008 19:18:25 -0500 (EST)
-In-Reply-To: <20081220000803.GK21154@genesis.frugalware.org> (Miklos Vajna's
- message of "Sat, 20 Dec 2008 01:08:03 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BAB419BC-CE2B-11DD-962B-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752330AbYLTASs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Dec 2008 19:18:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752403AbYLTASs
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Dec 2008 19:18:48 -0500
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:54264 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751540AbYLTASr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Dec 2008 19:18:47 -0500
+Received: from vmobile.example.net (catv-80-98-230-81.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 23B24446CDE;
+	Sat, 20 Dec 2008 01:18:45 +0100 (CET)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 1065C19DBE1; Sat, 20 Dec 2008 01:20:27 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.rc1.35.gae26e.dirty
+In-Reply-To: <7vhc4z7oia.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103609>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Especially with something that is supposed to hopefully have some legal
+value down the line if somebody starts making noises, it really would be
+nice to have a real person to associate things with. Suggest this in the
+SubmittingPatches document.
 
-> On Sat, Dec 20, 2008 at 07:20:56AM +0800, jidanni@jidanni.org wrote:
->> Actually it's all git's fault for not working if user.name is null or
->> unset.
->
-> Please don't turn this thread into a flame.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-Just pay attention to messages in which he says something that adds value
-to the discussion, and simply ignore the rest.
+On Fri, Dec 19, 2008 at 03:07:25PM -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> An earlier mistake does not justify adding new ones.  Besides, I think
+> ALASCM once revealed his "real name" on the list.
+
+Ah, true ($gmane/7946). Then maybe something like this would be good to
+have? The commit message is mostly copy&paste from Linus' message.
+
+ Documentation/SubmittingPatches |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index f0295c6..530aa25 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -222,6 +222,9 @@ D-C-O.  Indeed you are encouraged to do so.  Do not forget to
+ place an in-body "From: " line at the beginning to properly attribute
+ the change to its true author (see (2) above).
+ 
++Also notice that a real name is used in the Signed-off-by: line. Please
++don't be childish and don't hide your real name.
++
+ Some people also put extra tags at the end.
+ 
+ "Acked-by:" says that the patch was reviewed by the person who
+-- 
+1.6.1.rc1.35.gae26e.dirty
