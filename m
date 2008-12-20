@@ -1,71 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: Change whatchanged to report changes from merges by
- default?
-Date: Sat, 20 Dec 2008 12:09:05 -0800
-Message-ID: <7vvdtewqvy.fsf@gitster.siamese.dyndns.org>
-References: <20081220104232.5ff1b7c0@crow>
+Subject: Re: [PATCH] Documentation: fix typos, grammar, asciidoc syntax
+Date: Sat, 20 Dec 2008 12:08:51 -0800
+Message-ID: <7v3agiy5gs.fsf@gitster.siamese.dyndns.org>
+References: <200812191314.19302.markus.heidelberg@web.de>
+ <7v3agj1gvp.fsf@gitster.siamese.dyndns.org>
+ <200812201418.38707.markus.heidelberg@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Mark Burton <markb@ordern.com>
-X-From: git-owner@vger.kernel.org Sat Dec 20 21:10:42 2008
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Sat Dec 20 21:10:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LE89o-0001hc-6s
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 21:10:40 +0100
+	id 1LE89n-0001hc-G2
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 21:10:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753258AbYLTUJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 15:09:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753248AbYLTUJN
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 15:09:13 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36403 "EHLO
+	id S1753222AbYLTUI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 15:08:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753198AbYLTUI6
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 15:08:58 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50363 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753198AbYLTUJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 15:09:13 -0500
+	with ESMTP id S1753181AbYLTUI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 15:08:57 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 855D01A7CA;
-	Sat, 20 Dec 2008 15:09:10 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DAFC38736C;
+	Sat, 20 Dec 2008 15:08:56 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5E37C1AB73; Sat,
- 20 Dec 2008 15:09:06 -0500 (EST)
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0B2A18736B; Sat,
+ 20 Dec 2008 15:08:53 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1071EED2-CED2-11DD-8754-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 084ED67A-CED2-11DD-9FAE-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103657>
 
-Mark Burton <markb@ordern.com> writes:
+Markus Heidelberg <markus.heidelberg@web.de> writes:
 
-> Is it just an accident of history or by design that whatchanged
-> requires the -m option to show changes introduced by merges but
-> diff and git log show those changes without requiring any extra
-> options?
+> Junio C Hamano, 20.12.2008:
+>> Markus Heidelberg <markus.heidelberg@web.de> writes:
+>> 
+>> > @@ -172,7 +172,7 @@ only the primary branches.  In addition, if you happen to be on
+>> >  your topic branch, it is shown as well.
+>> >  
+>> >  ------------
+>> > -$ git show-branch --reflog='10,1 hour ago' --list master
+>> > +$ git show-branch --reflog="10,1 hour ago" --list master
+>> >  ------------
+>> 
+>> Is this just a personal taste, or a correction to typography?
+>
+> When using single quotes, the manpage displayed backticks.
 
-Mostly personal preference and inertia..
+It does not seem to do that to me:
 
-I personally do not see any reason for anybody to use whatchanged (what a
-long single-word to type!) since around git version v1.0.0 or so.  Back
-then, whatchanged was a good way to satisfy "I want a quick sanity check,
-but I want to see a bit more than just names of files to assure me.  But I
-want to get that without actually running the diffs or stats because I
-consider that anything that takes more than half a second is too
-expensive."  But ever since we made the diff generation built-in, the
-performance objection ceased to be an issue.  These days I'd imagine that
-"log --name-only" or even "log --stat" would be perfectly acceptable and
-easier to explain alternative, especially if you happen to be a very early
-adopter whose fingers are trained to type "whatchanged".
+    $ git help show-branch | grep 10,1 | od -bc
+    0000000 040 040 040 040 040 040 040 040 040 040 044 040 147 151 164 040
+                                                      $       g   i   t
+    0000020 163 150 157 167 055 142 162 141 156 143 150 040 055 055 162 145
+              s   h   o   w   -   b   r   a   n   c   h       -   -   r   e
+    0000040 146 154 157 147 075 342 200 231 061 060 054 061 040 150 157 165
+              f   l   o   g   = 342 200 231   1   0   ,   1       h   o   u
+    0000060 162 040 141 147 157 342 200 231 040 055 055 154 151 163 164 040
+              r       a   g   o 342 200 231       -   -   l   i   s   t
+    0000100 155 141 163 164 145 162 012
+              m   a   s   t   e   r  \n
 
-IOW, I consider "whatchanged" a command that is kept only for old timers'
-sake.  There is no reason to promote it, but there is no reason to
-deprecate it, either.  Which means the answer to this question...
+It does not use ASCII single quote ' (\047) but the result still does
+render well enough to keep anybody who are typing, following the printed
+examples, from mistaking it from a backquote:
 
-> Would it not make more sense to have git whatchanged show the changes
-> introduced by merges by default and then people can use the (already
-> supported) --no-merges option to suppress that behaviour?
+    http://pics.livejournal.com/gitster/pic/00009pk0/g6
 
-... is a NO spelled in capital letters.
+But in this particular case, because sq/dq does not make any difference to
+the example, I am Ok to change it to dq.  But I suspect there are many
+other places that do need to use sq in examples, so...
