@@ -1,59 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email: handle email address with quoted comma
-Date: Sat, 20 Dec 2008 12:09:44 -0800
-Message-ID: <7v3agiwquv.fsf@gitster.siamese.dyndns.org>
-References: <1229658012-9240-1-git-send-email-fengguang.wu@intel.com>
- <7vej04d5wy.fsf@gitster.siamese.dyndns.org>
- <20081219081010.GA12494@localhost> <loom.20081219T162504-25@post.gmane.org>
+From: Mark Burton <markb@ordern.com>
+Subject: Re: RFC: Change whatchanged to report changes from merges by
+ default?
+Date: Sat, 20 Dec 2008 20:21:09 +0000
+Organization: Order N Ltd.
+Message-ID: <20081220202109.336d0a5e@crow>
+References: <20081220104232.5ff1b7c0@crow>
+	<7vvdtewqvy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Matt Kraai <kraai@ftbfs.org>
-X-From: git-owner@vger.kernel.org Sat Dec 20 21:11:15 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 20 21:22:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LE8AM-0001sA-4H
-	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 21:11:14 +0100
+	id 1LE8LS-00056A-Ff
+	for gcvg-git-2@gmane.org; Sat, 20 Dec 2008 21:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753348AbYLTUJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 15:09:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753345AbYLTUJu
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 15:09:50 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36445 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753318AbYLTUJu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 15:09:50 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C45C61ABD1;
-	Sat, 20 Dec 2008 15:09:49 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5477F1AB81; Sat,
- 20 Dec 2008 15:09:45 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 27D83C34-CED2-11DD-97B9-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1753127AbYLTUVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 15:21:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753077AbYLTUVY
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 15:21:24 -0500
+Received: from c2bthomr09.btconnect.com ([213.123.20.127]:15927 "EHLO
+	c2bthomr09.btconnect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752775AbYLTUVX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 15:21:23 -0500
+Received: from crow.ordern.com (host86-128-197-104.range86-128.btcentralplus.com [86.128.197.104])
+	by c2bthomr09.btconnect.com
+	with ESMTP id CHL00952;
+	Sat, 20 Dec 2008 20:21:09 GMT
+Received: from crow (localhost [127.0.0.1])
+	by crow.ordern.com (Postfix) with ESMTP id 67BDF190CFB;
+	Sat, 20 Dec 2008 20:21:09 +0000 (GMT)
+In-Reply-To: <7vvdtewqvy.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.6.1 (GTK+ 2.12.9; x86_64-pc-linux-gnu)
+X-Junkmail-Status: score=10/50, host=c2bthomr09.btconnect.com
+X-Junkmail-SD-Raw: score=unknown,
+	refid=str=0001.0A090206.494D53BD.01C5,ss=1,fgs=0,
+	ip=86.128.197.104,
+	so=2007-10-30 19:00:17,
+	dmn=5.7.1/2008-09-02
+X-Junkmail-IWF: false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103663>
 
-Matt Kraai <kraai@ftbfs.org> writes:
 
-> Howdy,
->
-> Wu Fengguang <fengguang.wu <at> intel.com> writes:
->> +sub split_addrs {
->> +	return parse_line('\s*,\s*', 1, @_);
->> +}
->> +
->
-> I'm not sure it's still a good idea to use parse_line.  It should work OK for
-> now, since split_addrs is only passed one string.  If anyone ever tries to pass
-> it a list of strings, however, parse_line will ignore all but the first.
+On Sat, 20 Dec 2008 12:09:05 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
 
-Yikes, I should have caught this.  As you point out, this is a breakage
-waiting to happen until somebody restructures the callers.  We should
-futureproof it by using quotewords() instead.
+> IOW, I consider "whatchanged" a command that is kept only for old timers'
+> sake.  There is no reason to promote it, but there is no reason to
+> deprecate it, either.  Which means the answer to this question...
+> 
+> > Would it not make more sense to have git whatchanged show the changes
+> > introduced by merges by default and then people can use the (already
+> > supported) --no-merges option to suppress that behaviour?  
+> 
+> ... is a NO spelled in capital letters.
+
+OK (spelled in capital letters), I won't submit the patch.
+
+Cheers,
+
+Mark
