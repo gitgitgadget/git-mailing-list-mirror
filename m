@@ -1,100 +1,98 @@
 From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: [PATCH] Make git revert warn the user when reverting a merge commit.
-Date: Sun, 21 Dec 2008 15:13:22 -0600
-Message-ID: <200812211513.26808.bss@iguanasuicide.net>
-References: <200812182039.15169.bss@iguanasuicide.net> <200812211359.31991.bss@iguanasuicide.net> <7vwsdtmg5m.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCHv2] Have manpage reference new documentation on reverting merges.
+Date: Sun, 21 Dec 2008 15:35:18 -0600
+Message-ID: <E1LEVxk-0001jS-Cc@rei.iguanasuicide.net>
+References: <200812201832.48992.bss@iguanasuicide.net> <7vtz8ytft0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2102758.dhLRhiygNJ";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
+Cc: git@vger.kernel.org, Nanako Shiraishi <nanako3@lavabit.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 21 22:15:38 2008
+X-From: git-owner@vger.kernel.org Sun Dec 21 22:37:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEVeD-0006z9-6r
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 22:15:37 +0100
+	id 1LEVzO-0004Tg-KD
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 22:37:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751198AbYLUVNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 16:13:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbYLUVNN
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 16:13:13 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:57486 "EHLO
+	id S1751330AbYLUVfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 16:35:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbYLUVfu
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 16:35:50 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:37472 "EHLO
 	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751171AbYLUVNN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 16:13:13 -0500
+	with ESMTP id S1751241AbYLUVfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 16:35:50 -0500
 Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.123])
 	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
 	(Exim 4.63)
 	(envelope-from <bss@iguanasuicide.net>)
-	id 1LEVbq-0001iE-Ge; Sun, 21 Dec 2008 21:13:10 +0000
+	id 1LEVxk-0001jS-Cc; Sun, 21 Dec 2008 21:35:48 +0000
 User-Agent: KMail/1.9.9
-In-Reply-To: <7vwsdtmg5m.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7vtz8ytft0.fsf@gitster.siamese.dyndns.org>
 X-Eric-Conspiracy: There is no conspiracy.
+X-KMail-SignatureActionEnabled: false
+X-KMail-EncryptActionEnabled: false
+X-KMail-CryptoMessageFormat: 2
+Content-Disposition: inline
 X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103711>
 
---nextPart2102758.dhLRhiygNJ
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-On Sunday 2008 December 21 14:23:17 Junio C Hamano wrote:
+Signed-off-by: Boyd Stephen Smith Jr <bss@iguanasuicide.net>
+---
+On Saturday 2008 December 20 20:36:43 Junio C Hamano wrote:
 > "Boyd Stephen Smith Jr." <bss@iguanasuicide.net> writes:
-> > Then why not have "-m 1" be assumed instead of forcing the user to
-> > specify it?
+> > +	Reverting a merge commit does not completely "undo" the effect of the
+> > +	merge and it may make future merges more difficult.  For more details,
+> > +	please read Documentation/howto/revert-a-faulty-merge.txt.
 >
-> The reason we don't is because until very recently we did not even allow
-> you to revert a merge relative to any parent.  We wanted to avoid
-> surprising people who are _relying on_ that behaviour to make sure that
-> they do not revert a merge by accident.
+> I think these new lines need to be dedented, and the previous blank line
+> should be turned into a line with a single '+'.
 
-That makes sense.
+Fixed, I wasn't familiar with asciidoc.
 
-> We could certainly do what you suggest to imply "-m 1" when the commit
-> requested to be reverted happens to be a merge, but we shouldn't be doing
-> that without thinking things through.  It will break people's longstanding
-> expectations.
+> I'd also suggest removing "does not ... merge and it" from the above
+> sentence to avoid confusing readers, because people who read only the
+> above and do not read the howto document may get a wrong impression that
+> the resulting tree may have some changes that came from the merge even
+> after the revert, which is not the case.
+>
+> An alternative is to give a complete but brief explanation.  Perhaps like
+> this:
 
-I wasn't really suggesting that.  I was pointing out what I thought was an=
-=20
-inconsistency: making the user specify the parent but not making the commit=
-=20
-message specify the parent.
+I took the alternative approach.
 
-I still think the parent we are reverting to should be mentioned in the=20
-automatically generated commit message, even if it is the first parent.  Ev=
-en=20
-if it is decided to elide that information for the first parent, I agree=20
-that, at least for now, the "-m" should still be required when reverting a=
-=20
-merge commit.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+ Documentation/git-revert.txt |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index caa0729..daa77a9 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -44,6 +44,13 @@ OPTIONS
+ 	option specifies the parent number (starting from 1) of
+ 	the mainline and allows revert to reverse the change
+ 	relative to the specified parent.
+++
++Reverting a merge commit declares to git that you will never want the tree
++changes brought in by the merge but never alters the history changes caused by
++the merge.  The history allows git to remember you rejected the tree changes
++and, as a result, later merges will only bring in changes introduced by commits
++that are not ancestors of the revert commit.  This may or may not be what you
++want.  See the 'revert-a-faulty-merge' HOWTO for more details.
+ 
+ --no-edit::
+ 	With this option, 'git-revert' will not start the commit
+-- 
+1.5.6
+-- 
+Boyd Stephen Smith Jr.                     ,= ,-_-. =. 
 bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
-
---nextPart2102758.dhLRhiygNJ
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklOsXYACgkQdNbfk+86fC2vhQCdF53UEgo1YlvwwudpXo7D1ehY
-5VcAn0Hwbl3BHI5LvMcRkk4IyRFhfXTM
-=P/tW
------END PGP SIGNATURE-----
-
---nextPart2102758.dhLRhiygNJ--
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-' 
+http://iguanasuicide.net/                      \_/     
