@@ -1,112 +1,82 @@
-From: "Mark Ryden" <markryde@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Applying patches from a patch set
-Date: Sun, 21 Dec 2008 20:34:35 +0200
-Message-ID: <dac45060812211034w38691627scf2a36ed814353f9@mail.gmail.com>
+Date: Sun, 21 Dec 2008 10:53:21 -0800 (PST)
+Message-ID: <m3abapcqck.fsf@localhost.localdomain>
 References: <dac45060812200637m49c71aa5x3c25010fa00f4a63@mail.gmail.com>
-	 <slrngkrv22.knd.sitaramc@sitaramc.homelinux.net>
+	<slrngkrv22.knd.sitaramc@sitaramc.homelinux.net>
+	<dac45060812211034w38691627scf2a36ed814353f9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Sitaram Chamarty" <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 21 19:37:01 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Sitaram Chamarty" <sitaramc@gmail.com>, git@vger.kernel.org
+To: "Mark Ryden" <markryde@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 21 19:55:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LETAi-0005M8-JB
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 19:37:01 +0100
+	id 1LETSE-0001m2-6V
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 19:55:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751041AbYLUSei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 13:34:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750917AbYLUSei
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 13:34:38 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:52603 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750874AbYLUSeh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 13:34:37 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so615911yxm.1
-        for <git@vger.kernel.org>; Sun, 21 Dec 2008 10:34:35 -0800 (PST)
+	id S1751106AbYLUSxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 13:53:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751041AbYLUSxZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 13:53:25 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:34310 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750917AbYLUSxZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 13:53:25 -0500
+Received: by ey-out-2122.google.com with SMTP id 22so178151eye.37
+        for <git@vger.kernel.org>; Sun, 21 Dec 2008 10:53:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=mWV6tTCt/YMZa65NWeGMWfjaBjlCFJmz3wgrTBTSoT8=;
-        b=W8ugiOD8vhoxkAv5RMb8K8dZR8i3Se8YmnWzo/LGL72rGu8VmF6rMQ9usfbES/Iag4
-         K+W+rrsR/TXKH51ggAShKF7ucD7GsrjPIiaN3K0iWvR1X1Fmif48CD6clRyNOQg6xjCq
-         doHNjv47CBXu6WwolnZVaEfsZ0eEt3+zgI6dk=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=Mzq4lY1Fim5tEg484JWaHFa6VM3ueOKrPWp11MgQ5LA=;
+        b=t8VxjHUiZzeNQaqqLIUN5HEkk/Hi/71H9WSH69d49bNQtiuLyPRQnbqPg7TWtLciTX
+         iLlRiN6QCw+IuFFCq/xDdXHIL4W7CTembV3iKnJ7gXoc9ZbAIVfXz92Z6vWhU3Lejyst
+         cJLNYf+V600SmbkEqb4BdFHapuai+YoElbgN8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=EPWCj3qkq+hu16+0dxatfSNFFlZ7Zpy3NDMXQMY9SWC+UB4rytxHpnHmqFnhYRQG0R
-         rPSoX6XOrqR3wEftpLQYPSwsZogUcZ0xxhtp/A2mv6J1CwSK0ruWDFLa6KjMaJ//VWIE
-         OTpZioCCsIPm/gqMOvj2/IUKtDYbutHC4rWZQ=
-Received: by 10.90.90.4 with SMTP id n4mr2857479agb.103.1229884475801;
-        Sun, 21 Dec 2008 10:34:35 -0800 (PST)
-Received: by 10.90.26.11 with HTTP; Sun, 21 Dec 2008 10:34:35 -0800 (PST)
-In-Reply-To: <slrngkrv22.knd.sitaramc@sitaramc.homelinux.net>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=II0waSBn1TZVTQHKXyMZggyKFnCYXDlORDYKPcEmtOdYRRrYySFEeFiJ0R4Xqj2QGH
+         HF1oGCtm4Coo/4nayVg6bfzVoZrm/Lcq+1HndNgY0m5uSDkeXjUvo2beMcKPdQJzijTc
+         f6/Nc/nCflfJy3kbp42M3FRZ2xAtWPZUJwosI=
+Received: by 10.210.126.18 with SMTP id y18mr6460410ebc.44.1229885603102;
+        Sun, 21 Dec 2008 10:53:23 -0800 (PST)
+Received: from localhost.localdomain (abww40.neoplus.adsl.tpnet.pl [83.8.246.40])
+        by mx.google.com with ESMTPS id 7sm1323511eyb.11.2008.12.21.10.53.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 21 Dec 2008 10:53:21 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBLIrKBa017049;
+	Sun, 21 Dec 2008 19:53:20 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBLIrGdq017045;
+	Sun, 21 Dec 2008 19:53:16 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <dac45060812211034w38691627scf2a36ed814353f9@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103706>
 
-Hello,
-  Thanks a lot for your answer ! I was not aware of the option using a
-newsreader like slrn to access the list via gmane.
+"Mark Ryden" <markryde@gmail.com> writes:
 
-The list I want to work with **does** have a gmane interface.
-It is :
-http://thread.gmane.org/gmane.linux.kernel.wireless.general
+> However, after I tried:
+> setenv NNTPSERVER gmane.linux.kernel.wireless.general
 
-However, after I tried:
-setenv NNTPSERVER gmane.linux.kernel.wireless.general
-and
-slrn -f /root/.jnewsrc --create
-I got:
-slrn 0.9.8.1pl2 [2005-02-17]
+This is not a _NNTP server_; this is _news group_ name.
+You should use news.gmane.org for NNTPSERVER.
 
-Reading startup file /etc/slrn.rc.
-Using newsrc file /root/.jnewsrc for server gmane.linux.kernel.wireless.general.
-Connecting to host gmane.linux.kernel.wireless.general ...
-Failed to resolve gmane.linux.kernel.wireless.general
+> I assume that this is some silly mistake I had done,.Any ideas?
 
-Run-Time Error
-slrn fatal error:
-Failed to initialize server.
+setenv NNTPSERVER news.gmane.org
 
-
-I assume that this is some silly mistake I had done,.Any ideas?
-
-Rgs,
-Mark
-
-
-
-
-On Sun, Dec 21, 2008 at 10:20 AM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
-> On 2008-12-20, Mark Ryden <markryde@gmail.com> wrote:
->
->>   I am subscribed to some linux kernel subsystem mailing list; in this
->> list there are sometimes patchsets with more than
->> 30-40 patches.
->> I am using gmail web interface client.
->
-> solution 1: see if that list is mirrored by gmane and use a
-> newsreader like slrn to access the list via gmane
->
-> solution 2: enable pop/imap access on your gmail account and
-> pull emails from there using whatever command line mail
-> client you like (like mutt maybe).  Not tested, but should
-> work.  For some definition of "work" (not sure how gmail's
-> "tags" map to imap folders, which might trip you...)
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
