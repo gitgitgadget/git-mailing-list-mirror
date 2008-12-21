@@ -1,63 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make git revert warn the user when reverting a merge
- commit.
-Date: Sun, 21 Dec 2008 02:59:30 -0800
-Message-ID: <7v8wq9rdyl.fsf@gitster.siamese.dyndns.org>
-References: <200812182039.15169.bss@iguanasuicide.net>
- <7viqpetfs3.fsf@gitster.siamese.dyndns.org>
- <200812202111.17831.bss@iguanasuicide.net>
- <200812211109.36788.robin.rosenberg.lists@dewire.com>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Re: Memory issue with fast-import, why track branches?
+Date: Sun, 21 Dec 2008 13:23:05 +0200
+Message-ID: <94a0d4530812210323q2ae392d5o2381fd990be708e8@mail.gmail.com>
+References: <94a0d4530812202154l26dfe0dfm49397c63dbfdfdf9@mail.gmail.com>
+	 <1229847042.798.5.camel@therock.nsw.bigpond.net.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Dec 21 12:00:59 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git list" <git@vger.kernel.org>
+To: "John Chapman" <thestar@fussycoder.id.au>
+X-From: git-owner@vger.kernel.org Sun Dec 21 12:24:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEM3O-00007y-5z
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 12:00:58 +0100
+	id 1LEMQH-0005MJ-Ts
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 12:24:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208AbYLUK7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 05:59:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751320AbYLUK7j
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 05:59:39 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48019 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751037AbYLUK7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 05:59:38 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8F2C01A568;
-	Sun, 21 Dec 2008 05:59:37 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3707D1A533; Sun,
- 21 Dec 2008 05:59:31 -0500 (EST)
-In-Reply-To: <200812211109.36788.robin.rosenberg.lists@dewire.com> (Robin
- Rosenberg's message of "Sun, 21 Dec 2008 11:09:36 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 756C53AA-CF4E-11DD-A005-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751480AbYLULXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 06:23:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbYLULXI
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 06:23:08 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:20859 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751037AbYLULXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 06:23:07 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so637488fgg.17
+        for <git@vger.kernel.org>; Sun, 21 Dec 2008 03:23:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=2GBWj5A9IXIZBjYFiDfBOUyTxHtXA5tdffoR6CYrArM=;
+        b=Yv+XG81NpfYdvy6KJU2C27i1hHQXNs2Bpj4n+GI9zSsiDG8P+Nq2RblwGXQp3AHT3+
+         mgBOiC8v8huQLCH06Dx+dGaxTz19zCYtQMLMr6Qjc7XBM3YwdT5tttf1o0cZFDZ9n4b8
+         LHaPPYrixx969MANetrgP79PYPfle/VinDKJQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=fFx0ZrLVH52K3ek/tQIf09gIpxtE3qaob5dQEkwKupXrcX4ydx7PeFamijuSGBIs9G
+         6D2Tua9JzTckgXb7/odhWRCm+4HSeY7jq8QnY/QTyJ+akIVaplhmsc/aHqm536jD7eje
+         ylEFbLLKHkI0W87TdM9H1dodrPdF+DlJzWuI8=
+Received: by 10.86.31.18 with SMTP id e18mr2988950fge.72.1229858585230;
+        Sun, 21 Dec 2008 03:23:05 -0800 (PST)
+Received: by 10.86.77.17 with HTTP; Sun, 21 Dec 2008 03:23:05 -0800 (PST)
+In-Reply-To: <1229847042.798.5.camel@therock.nsw.bigpond.net.au>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103697>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
+On Sun, Dec 21, 2008 at 10:10 AM, John Chapman <thestar@fussycoder.id.au> wrote:
+> My first response was along the lines of "Why the heck are you storing
+> sha1's like that!?", until I realised that you're not storing actual git
+> sha1's, but mtn's hashes, which does make sense.
 
-> One could consider keeping the contributions from ^1 a special case and not
-> mention the parent, making it look like any revert commit. I guess most merge
-> reverts are like this in practice.
+Yes :)
 
-I think that makes sense.  There are cases where the mainline maintainer
-punts a merge and pass the baton to a subsystem maintainer, saying "Your
-tree has many conflicts with my tip, and I'd rather ask you to resolve it"
-(and after such a merge, the mainline maintainer will fast forward to the
-result), in which case the merge will be in the reverse direction, but
-that should be rare.  Reverting such a merge later from the mainline's
-point of view would involve "revert -m 2".
+> I'm doing something very similar with my perforce scripts, however I am
+> doing a bit more magic instead of making so many branches.
+>
+> Instead of making branches, I make a tag instead, for each and every
+> changeset.  Every time I make a new git commit, if I need to do it from
+> a tag, I first read the tag and determine the sha1 I should use, and use
+> that instead.
 
-So if your patch is tightened a bit to record extra information only in
-such a case, I think that would be an acceptable approach to the issue.
+Well, simple tags and branches are exactly the same thing: refs. tags
+are in 'refs/tags' and branches in 'refs/heads'; 'refs/mtn' are not
+really branches.
+
+> Alternatively, you could choose to manage your mapping yourself, and
+> write them to a .git/mtg-git-map file.
+
+The advantage of my approach is that the git tools handle all the mtn
+sha1's almost as good as git sha1's, I just need to prepend 'mtn/'.
+
+Also, git name-rev finds the mtn revision of a git commit. It' all so
+convenient.
+
+The only problem is that fast-import seems to be doing something wrong
+with those "branches".
+
+-- 
+Felipe Contreras
