@@ -1,86 +1,144 @@
-From: =?ISO-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] fast-import.c: stricter strtoul check, silence compiler
- warning
-Date: Sun, 21 Dec 2008 02:28:48 +0100
-Message-ID: <1229822928.31765.30.camel@ubuntu.ubuntu-domain>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 21 02:30:26 2008
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 1/2] fast-import: add special mode; copy from parent.
+Date: Sun, 21 Dec 2008 04:11:41 +0200
+Message-ID: <1229825502-963-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 21 03:13:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LED9F-0007QI-5m
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 02:30:25 +0100
+	id 1LEDov-00074a-7Q
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 03:13:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752564AbYLUB2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 20:28:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751534AbYLUB2w
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 20:28:52 -0500
-Received: from india601.server4you.de ([85.25.151.105]:51104 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752427AbYLUB2v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 20:28:51 -0500
-Received: from [10.0.1.101] (p57B7C7C1.dip.t-dialin.net [87.183.199.193])
-	by india601.server4you.de (Postfix) with ESMTPSA id 4BC4B2F805F;
-	Sun, 21 Dec 2008 02:28:49 +0100 (CET)
-X-Mailer: Evolution 2.24.2 
+	id S1751479AbYLUCLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 21:11:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751359AbYLUCLr
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 21:11:47 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:37167 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751115AbYLUCLq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 21:11:46 -0500
+Received: by bwz14 with SMTP id 14so6034723bwz.13
+        for <git@vger.kernel.org>; Sat, 20 Dec 2008 18:11:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=U/pTqkQwsO6pQNbSEC0+gStRCDLTbo2YpFouGRy5rQc=;
+        b=noXpr0zqlfIR3HTDDao7CjRPqqgjys3vv1oUbxCzp0N/zq0+nKd65AeJX6oop/u18o
+         SoFS3zkvEGtmitDW+n8zPePcraBsklGngrZB9I12pIdrV1xbSNvnKbKv7Tw7xLGl526M
+         YWoEq0yqR6SYNbKoOIGO3GF8ilReD4bJsgdR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=gVWHOWwQ/zDgsaitryP5boMYfK/tvV+rscH3WTA1Agav8nEUszXHxdmy/VmkkPNhsi
+         LvYX7sLP3SB01A96T9Q5IXv5jCj27x+gAkBzCL9wDFV01EmRohtaElyxXnS2O0hDrdOx
+         juIFe4TO85+r1tYzdIappakXy9ryluNCssNUE=
+Received: by 10.181.20.13 with SMTP id x13mr1708206bki.164.1229825504385;
+        Sat, 20 Dec 2008 18:11:44 -0800 (PST)
+Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
+        by mx.google.com with ESMTPS id k29sm11691324fkk.3.2008.12.20.18.11.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 20 Dec 2008 18:11:43 -0800 (PST)
+X-Mailer: git-send-email 1.6.0.6.3.g7ccbd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103680>
 
-Store the return value of strtoul() in order to avoid compiler
-warnings on Ubuntu 8.10.
-
-Also check errno after each call, which is the only way to notice
-an overflow without making ULONG_MAX an illegal date.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
-I don't really like the first part, as we're ignoring the return
-value anyway, even if we store it in the variable "date", so this
-is quite useless.  But better to have a bit more useless code
-than to see these equally useless warnings on every build.
-Turning them off completely is not a good idea, since some of
-them resulted in useful fixes (see 47d32af2, 304dcf26, 7be77de2).
+ Documentation/git-fast-import.txt |    1 +
+ fast-import.c                     |   41 +++++++++++++++++++++---------------
+ 2 files changed, 25 insertions(+), 17 deletions(-)
 
- fast-import.c |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
-
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index c2f483a..9d4231e 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -484,6 +484,7 @@ in octal.  Git only supports the following modes:
+ * `160000`: A gitlink, SHA-1 of the object refers to a commit in
+   another repository. Git links can only be specified by SHA or through
+   a commit mark. They are used to implement submodules.
++* `-`: A special mode; copy the parent's mode.
+ 
+ In both formats `<path>` is the complete path of the file to be added
+ (if not already existing) or modified (if already existing).
 diff --git a/fast-import.c b/fast-import.c
-index 171d178..a6bce66 100644
+index 3c035a5..a00d3fe 100644
 --- a/fast-import.c
 +++ b/fast-import.c
-@@ -1748,18 +1748,21 @@ static int validate_raw_date(const char *src, char *result, int maxlen)
+@@ -1356,7 +1356,7 @@ static int tree_content_set(
+ 	struct tree_entry *root,
+ 	const char *p,
+ 	const unsigned char *sha1,
+-	const uint16_t mode,
++	uint16_t mode,
+ 	struct tree_content *subtree)
  {
- 	const char *orig_src = src;
- 	char *endp, sign;
-+	unsigned long date;
+ 	struct tree_content *t = root->tree;
+@@ -1382,7 +1382,9 @@ static int tree_content_set(
+ 						&& e->versions[1].mode == mode
+ 						&& !hashcmp(e->versions[1].sha1, sha1))
+ 					return 0;
+-				e->versions[1].mode = mode;
++				if (mode == S_IFREG)
++					mode = e->versions[0].mode;
++				e->versions[1].mode = (mode == S_IFREG) ? (S_IFREG | 0644) : mode;
+ 				hashcpy(e->versions[1].sha1, sha1);
+ 				if (e->tree)
+ 					release_tree_content_recursive(e->tree);
+@@ -1417,7 +1419,7 @@ static int tree_content_set(
+ 		tree_content_set(e, slash1 + 1, sha1, mode, subtree);
+ 	} else {
+ 		e->tree = subtree;
+-		e->versions[1].mode = mode;
++		e->versions[1].mode = (mode == S_IFREG) ? (S_IFREG | 0644) : mode;
+ 		hashcpy(e->versions[1].sha1, sha1);
+ 	}
+ 	hashclr(root->versions[1].sha1);
+@@ -1862,20 +1864,25 @@ static void file_change_m(struct branch *b)
+ 	unsigned char sha1[20];
+ 	uint16_t mode, inline_data = 0;
  
--	strtoul(src, &endp, 10);
--	if (endp == src || *endp != ' ')
-+	errno = 0;
-+
-+	date = strtoul(src, &endp, 10);
-+	if (errno || endp == src || *endp != ' ')
- 		return -1;
+-	p = get_mode(p, &mode);
+-	if (!p)
+-		die("Corrupt mode: %s", command_buf.buf);
+-	switch (mode) {
+-	case S_IFREG | 0644:
+-	case S_IFREG | 0755:
+-	case S_IFLNK:
+-	case S_IFGITLINK:
+-	case 0644:
+-	case 0755:
+-		/* ok */
+-		break;
+-	default:
+-		die("Corrupt mode: %s", command_buf.buf);
++	if (!prefixcmp(p, "- ")) {
++		mode = 0;
++		p += 2;
++	} else {
++		p = get_mode(p, &mode);
++		if (!p)
++			die("Corrupt mode: %s", command_buf.buf);
++		switch (mode) {
++		case S_IFREG | 0644:
++		case S_IFREG | 0755:
++		case S_IFLNK:
++		case S_IFGITLINK:
++		case 0644:
++		case 0755:
++			/* ok */
++			break;
++		default:
++			die("Corrupt mode: %s", command_buf.buf);
++		}
+ 	}
  
- 	src = endp + 1;
- 	if (*src != '-' && *src != '+')
- 		return -1;
- 	sign = *src;
- 
--	strtoul(src + 1, &endp, 10);
--	if (endp == src || *endp || (endp - orig_src) >= maxlen)
-+	date = strtoul(src + 1, &endp, 10);
-+	if (errno || endp == src || *endp || (endp - orig_src) >= maxlen)
- 		return -1;
- 
- 	strcpy(result, orig_src);
+ 	if (*p == ':') {
 -- 
-1.6.1.rc3.52.g589372
+1.6.0.6.3.g7ccbd
