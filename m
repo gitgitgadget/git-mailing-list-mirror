@@ -1,74 +1,77 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] fast-import: add special '-' blob reference to use
-	the previous one.
-Date: Sun, 21 Dec 2008 14:33:35 -0800
-Message-ID: <20081221223335.GF17355@spearce.org>
-References: <1229825502-963-1-git-send-email-felipe.contreras@gmail.com> <1229825502-963-2-git-send-email-felipe.contreras@gmail.com> <20081221221149.GB17355@spearce.org> <7vlju9kvyg.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make git revert warn the user when reverting a merge
+ commit.
+Date: Sun, 21 Dec 2008 14:38:53 -0800
+Message-ID: <7vhc4xkvb6.fsf@gitster.siamese.dyndns.org>
+References: <200812182039.15169.bss@iguanasuicide.net>
+ <200812211359.31991.bss@iguanasuicide.net>
+ <7vwsdtmg5m.fsf@gitster.siamese.dyndns.org>
+ <200812211513.26808.bss@iguanasuicide.net>
+ <7vprjlkwbb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 21 23:35:05 2008
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org
+To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+X-From: git-owner@vger.kernel.org Sun Dec 21 23:40:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEWsw-00030r-DQ
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 23:34:54 +0100
+	id 1LEWyJ-0004bL-5C
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 23:40:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751394AbYLUWdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 17:33:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbYLUWdg
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 17:33:36 -0500
-Received: from george.spearce.org ([209.20.77.23]:51990 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751005AbYLUWdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 17:33:35 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 1AD4838200; Sun, 21 Dec 2008 22:33:35 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vlju9kvyg.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751005AbYLUWjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 17:39:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbYLUWjD
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 17:39:03 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58151 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750963AbYLUWjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 17:39:01 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 42FC61AD08;
+	Sun, 21 Dec 2008 17:39:00 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 447A61AD02; Sun,
+ 21 Dec 2008 17:38:54 -0500 (EST)
+In-Reply-To: <7vprjlkwbb.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 21 Dec 2008 14:17:12 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 29274C90-CFB0-11DD-A943-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103727>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > Hmph, so if create a new path with a blob of "-" the repository
-> > will be corrupt because the zero id was used and error was produced.
-> >
-> > Actually I think you have the same bug in the prior patch with the
-> > mode being inherited.  I wonder if we shouldn't put error checking
-> > in too to validate that versions[0] describes a file entry.
-> 
-> Why are these patches necessary?
-> 
-> The proposed commit message describes what it does, but does not give hint
-> to even guess being able to use this new feature helps in what situation.
-> As far as I can see, these changes allow the exporter to say "this aspect
-> of the new data is the same as the previous one", but I thought that the
-> way in which fast-import works already revolves around "you have this
-> tree, and the next tree is different from it in this and that way."  Why
-> does one need be able to mention "this is the same as the previous one"
-> explicitly in the first place?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Hmm.  Actually, imagine you were dumping from git-diff output style
-stream into a fast-import stream.
+>   Ok, so here is Robin's patch with a bit of rewording.  I want to have
+>   something usable now, so that I can tag -rc4 and still have time left
+>   for sipping my Caipirinha in the evening ;-)
+> ...
+> +			add_to_msg(",\nreverting damages made to %s");
+> +			add_to_msg(sha1_to_hex(parent->object.sha1));
 
-If a file changes only content, the mode is shown in the index line.
-Yay us.  But what if the index line wasn't present in the diff? You
-don't know the prior mode of the file, but you do have its content.
+Crap.  Scratch that.  Obviously I should have done this:
 
-If a file changes only mode, we get no content hints in the diff.
-How do you send that into fast-import without making the frontend
-keep track of every path's current mode?
-
-Though I agree, these details should be described in the commit
-messages, not left as an exercise for the maintainer to make up.
-
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 4038b41..c188150 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -352,6 +352,11 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 		add_to_msg(oneline_body + 1);
+ 		add_to_msg("\"\n\nThis reverts commit ");
+ 		add_to_msg(sha1_to_hex(commit->object.sha1));
++
++		if (commit->parents->next) {
++			add_to_msg(",\nreverting damages made to ");
++			add_to_msg(sha1_to_hex(parent->object.sha1));
++		}
+ 		add_to_msg(".\n");
+ 	} else {
+ 		base = parent;
 -- 
-Shawn.
+1.6.1.rc3.72.gf4bf6
