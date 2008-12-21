@@ -1,90 +1,72 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Retrieving last tag of a working tree
-Date: Sun, 21 Dec 2008 16:28:56 +0100
-Message-ID: <200812211628.59120.trast@student.ethz.ch>
-References: <21071491.post@talk.nabble.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH] doc/git-fsck: change the way for getting heads' SHA1s
+Date: Sun, 21 Dec 2008 17:30:22 +0100
+Message-ID: <200812211730.22466.markus.heidelberg@web.de>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart5085823.sxvG7prKkX";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "the_jack" <josip@yopmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 21 16:30:51 2008
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Dec 21 17:31:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEQGR-0001ZD-QX
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 16:30:44 +0100
+	id 1LERDS-0001P7-MR
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 17:31:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754644AbYLUP2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 10:28:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753953AbYLUP2v
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 10:28:51 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:33615 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752620AbYLUP2u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 10:28:50 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 21 Dec 2008 16:28:48 +0100
-Received: from [192.168.0.3] ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 21 Dec 2008 16:28:48 +0100
+	id S1752945AbYLUQaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 11:30:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900AbYLUQaR
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 11:30:17 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:53972 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752823AbYLUQaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 11:30:16 -0500
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 09A12F7F6C9A;
+	Sun, 21 Dec 2008 17:30:15 +0100 (CET)
+Received: from [91.19.14.55] (helo=pluto)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #273)
+	id 1LERC2-00050c-00; Sun, 21 Dec 2008 17:30:14 +0100
 User-Agent: KMail/1.9.9
-In-Reply-To: <21071491.post@talk.nabble.com>
-X-OriginalArrivalTime: 21 Dec 2008 15:28:48.0344 (UTC) FILETIME=[D1CA7580:01C96380]
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1/Phh7ngiPWFV/9rG2TKKdFjrtw7cc1oMniu3RK
+	OsYOTne/dL1fx8Hp2MaSp1j16RT8ACbNmPs9u2gQeG53vHFuSo
+	A4Xqi9g7lN8mNCZ0pMLQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103704>
 
---nextPart5085823.sxvG7prKkX
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+The straightforward way with using 'cat .git/refs/heads/*' doesn't work
+with packed refs as well as branches of the form topic/topic1. So let's
+use git-for-each-ref for getting the heads' SHA1s in this example.
 
-the_jack wrote:
-> Precompiler assigns this string to a variable. At this moment, version.h =
-is
-> filled by python script that calls "git-describe --tag HEAD" and parses t=
-he
-> output. This works, but it's not quite reliable. There has to be a better
-> way for getting the last tag of current working tree. If I checkout an
-> earlier tagged version (0.70), I would need to automatically get 0.70 ins=
-ide
-> version.h
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
+ Documentation/git-fsck.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-'git describe' is indeed the tool for this.  You have not said in what
-way it fails, so here's an educated guess:
-
-Up until 7e425c4 (describe: Make --tags and --all match lightweight
-tags more often, 2008-10-13) which will only be in 1.6.1, using --tags
-does not match a lightweight tag if there is also an annotated tag
-available.
-
-=2DThomas
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
-
-
-
-
---nextPart5085823.sxvG7prKkX
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklOYLsACgkQqUud07tmzP3GzQCggACWpb4WJ3Tg9QMUdel0twDW
-pjwAn2C3wZUliUHV/j1aPT8x+Jjv8/ep
-=ii7m
------END PGP SIGNATURE-----
-
---nextPart5085823.sxvG7prKkX--
+diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
+index d5a7647..287c4fc 100644
+--- a/Documentation/git-fsck.txt
++++ b/Documentation/git-fsck.txt
+@@ -79,7 +79,8 @@ that aren't readable from any of the specified head nodes.
+ 
+ So for example
+ 
+-	git fsck --unreachable HEAD $(cat .git/refs/heads/*)
++	git fsck --unreachable HEAD \
++		$(git for-each-ref --format="%(objectname)" refs/heads)
+ 
+ will do quite a _lot_ of verification on the tree. There are a few
+ extra validity tests to be added (make sure that tree objects are
+-- 
+1.6.1.rc3.54.g7bef0
