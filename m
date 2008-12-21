@@ -1,52 +1,59 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make git revert warn the user when reverting a merge
- commit.
-Date: Sat, 20 Dec 2008 18:37:16 -0800
-Message-ID: <7viqpetfs3.fsf@gitster.siamese.dyndns.org>
-References: <200812182039.15169.bss@iguanasuicide.net>
- <200812200808.02011.robin.rosenberg.lists@dewire.com>
- <200812201654.23110.bss@iguanasuicide.net>
- <200812210031.08443.robin.rosenberg.lists@dewire.com>
+Subject: Re: Git weekly links: 2008-51
+Date: Sat, 20 Dec 2008 18:37:22 -0800
+Message-ID: <7vd4fmtfrx.fsf@gitster.siamese.dyndns.org>
+References: <94a0d4530812200416m1caa96f2je2bf478f65bd7d12@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Cc: "git list" <git@vger.kernel.org>
+To: "Felipe Contreras" <felipe.contreras@gmail.com>
 X-From: git-owner@vger.kernel.org Sun Dec 21 03:38:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEEDS-0003FQ-5Q
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 03:38:50 +0100
+	id 1LEEDS-0003FQ-R0
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 03:38:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752086AbYLUChY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Dec 2008 21:37:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751959AbYLUChX
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 21:37:23 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51305 "EHLO
+	id S1752128AbYLUCha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Dec 2008 21:37:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752112AbYLUCha
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Dec 2008 21:37:30 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58334 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751932AbYLUChW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Dec 2008 21:37:22 -0500
+	with ESMTP id S1751959AbYLUCh3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Dec 2008 21:37:29 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5ECAF8910B;
-	Sat, 20 Dec 2008 21:37:22 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A72E51AC1C;
+	Sat, 20 Dec 2008 21:37:27 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 993768910A; Sat,
- 20 Dec 2008 21:37:18 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AEBA71AC16; Sat,
+ 20 Dec 2008 21:37:24 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4B7708E2-CF08-11DD-8523-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 4E9F2C2A-CF08-11DD-9E91-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103685>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
+"Felipe Contreras" <felipe.contreras@gmail.com> writes:
 
-> An alternative, would be "removing changes relative to .."
-> (mainline). The changes are the contributions from all other parents. I
-> have to huge interest in the exact phrase used.
+> This week tortoisegit stole the spotlight. Maybe there weren't many
+> other links, or maybe I failed to notice them. Also, many people liked
+> the comment of Linus Torvalds regarding C++ in git.
 
-But that is exactly what "This reverts commit X" means, isn't it?
+It seems that the week was quieter than usual, perhaps?
+
+Many are rather old news.  People who know git world better, but do not
+know how you are generating this list and for what purpose, may interpret
+this as "Here are links I recommend you to follow and read this week" and
+incorrectly think "why is this bozo listing these ancient news as this
+week's?"
+
+I do not think you would want that.  You may want to briefly mention at
+the beginning of each issue (say two-line paragraph) how the links listed
+here are chosen, primarily to explain that these are not hand-picked by
+you, but culled from the public bookmarks, i.e. "what people are reading
+this week" or something like that.
