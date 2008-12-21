@@ -1,61 +1,63 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Style changes per suggestions from Junio in #git
-Date: Sun, 21 Dec 2008 23:03:37 +0100
-Message-ID: <vpqbpv5mbie.fsf@bauges.imag.fr>
-References: <1229895454-19498-1-git-send-email-tyler@slide.com>
-	<1229895454-19498-2-git-send-email-tyler@slide.com>
-	<1229895454-19498-3-git-send-email-tyler@slide.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 1/2] fast-import: add special mode; copy from parent.
+Date: Sun, 21 Dec 2008 14:07:57 -0800
+Message-ID: <20081221220757.GA17355@spearce.org>
+References: <1229825502-963-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Sun Dec 21 23:07:48 2008
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 21 23:09:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEWSi-00041c-7o
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 23:07:48 +0100
+	id 1LEWU8-0004OJ-R9
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 23:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751394AbYLUWGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 17:06:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751358AbYLUWGa
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 17:06:30 -0500
-Received: from imag.imag.fr ([129.88.30.1]:58313 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751291AbYLUWG3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 17:06:29 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id mBLM3bVr010247
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 21 Dec 2008 23:03:38 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LEWOf-0002mo-Ay; Sun, 21 Dec 2008 23:03:37 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LEWOf-0006Ra-8c; Sun, 21 Dec 2008 23:03:37 +0100
-In-Reply-To: <1229895454-19498-3-git-send-email-tyler@slide.com> (R. Tyler Ballance's message of "Sun\, 21 Dec 2008 15\:37\:34 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751439AbYLUWH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 17:07:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751380AbYLUWH7
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 17:07:59 -0500
+Received: from george.spearce.org ([209.20.77.23]:52499 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751378AbYLUWH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 17:07:58 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id BE2CB38200; Sun, 21 Dec 2008 22:07:57 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1229825502-963-1-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103717>
 
-"R. Tyler Ballance" <tyler@slide.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> +	if (!prefixcmp(p, "- ")) {
+> +		mode = 0;
+> +		p += 2;
 
-> Moving includes into git-compat-util.h, move away from malloc(2)
+This part made me wonder, why are we always doing "S_IFREG | mode"
+further down?
 
-Usually, those cleanup patches are merged with the actual patch before
-inclusion. This helps review (i.e. let reviewers not have to say or
-think "you shouldn't do that - oh, ok, you're actually not doing it"),
-and avoids having bad commits at all in Junio's repository.
+> +	} else {
+> +		p = get_mode(p, &mode);
+> +		if (!p)
+> +			die("Corrupt mode: %s", command_buf.buf);
+> +		switch (mode) {
+> +		case S_IFREG | 0644:
+> +		case S_IFREG | 0755:
+> +		case S_IFLNK:
+> +		case S_IFGITLINK:
+> +		case 0644:
+> +		case 0755:
+> +			/* ok */
+> +			break;
+> +		default:
+> +			die("Corrupt mode: %s", command_buf.buf);
+> +		}
 
 -- 
-Matthieu
+Shawn.
