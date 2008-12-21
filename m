@@ -1,139 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2008, #03; Sun, 21)
-Date: Sun, 21 Dec 2008 11:03:42 -0800 (PST)
-Message-ID: <m363ldcpv9.fsf@localhost.localdomain>
-References: <7vr641pvid.fsf@gitster.siamese.dyndns.org>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: [PATCH] Make git revert warn the user when reverting a merge commit.
+Date: Sun, 21 Dec 2008 13:59:14 -0600
+Message-ID: <200812211359.31991.bss@iguanasuicide.net>
+References: <200812182039.15169.bss@iguanasuicide.net> <200812202111.17831.bss@iguanasuicide.net> <200812211109.36788.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Simon Schubert" <corecode@fs.ei.tum.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 21 20:06:57 2008
+Content-Type: multipart/signed;
+  boundary="nextPart9782748.Cv6txiLDXj";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Sun Dec 21 21:00:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LETde-00056r-AJ
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 20:06:54 +0100
+	id 1LEUTc-0002p7-Qm
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 21:00:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750921AbYLUTDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 14:03:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750915AbYLUTDp
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 14:03:45 -0500
-Received: from ey-out-2122.google.com ([74.125.78.26]:19003 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750782AbYLUTDp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 14:03:45 -0500
-Received: by ey-out-2122.google.com with SMTP id 22so178481eye.37
-        for <git@vger.kernel.org>; Sun, 21 Dec 2008 11:03:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=hSdgfA+6MFbSFDSAa+5y252Y8ZpHH207mGRWzTvzN5M=;
-        b=bSYw69TVWXxrGTVJaxrz2s9/MTgBOF3OE3/7i32PdY4ttH7Xkv95rKPEjPi7vOsEWM
-         ErLlQDUM/9dJyYjU7+NGFs0YXsU0gy7xeI7D3Z7Ex4Geid0orkoS1FD5HYZT22FfVncP
-         XnIYLHH4IncIX5NTqwwn7NhBOV4nQyxnybxZY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=upeo0ra2igSb/uXMTnIaZ29l+m9xVyXtTosyx/1Rx+lf/mZVLedNa29+ZFpIiIz1ps
-         Q0KcBwNVQJmmUewA7QV68j9WVIZCmys3D7OdPhTRNxghCSgcAIeLzSUYkBhJipTzp4Fd
-         Y7uT4KCQud3INViJWOs5Cxs/fwULWuhVj6dM8=
-Received: by 10.66.220.12 with SMTP id s12mr5814542ugg.22.1229886223248;
-        Sun, 21 Dec 2008 11:03:43 -0800 (PST)
-Received: from localhost.localdomain (abww40.neoplus.adsl.tpnet.pl [83.8.246.40])
-        by mx.google.com with ESMTPS id 40sm12955222uge.51.2008.12.21.11.03.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 21 Dec 2008 11:03:42 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id mBLJ3e7P017112;
-	Sun, 21 Dec 2008 20:03:40 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id mBLJ3cKP017109;
-	Sun, 21 Dec 2008 20:03:38 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vr641pvid.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751115AbYLUT7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 14:59:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751124AbYLUT7S
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 14:59:18 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:43500 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751050AbYLUT7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 14:59:17 -0500
+Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.123])
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LEUSJ-0001fV-3x; Sun, 21 Dec 2008 19:59:15 +0000
+User-Agent: KMail/1.9.9
+In-Reply-To: <200812211109.36788.robin.rosenberg.lists@dewire.com>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103708>
 
-Junio C Hamano <gitster@pobox.com> writes:
+--nextPart9782748.Cv6txiLDXj
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> ----------------------------------------------------------------
-> [New Topics]
-> 
-> * mk/gitweb-feature (Mon Dec 15 22:16:19 2008 -0800) 1 commit
->  - gitweb: unify boolean feature subroutines
+On Sunday 2008 December 21 04:09:36 Robin Rosenberg wrote:
+> s=F6ndag 21 december 2008 04:11:13 skrev Boyd Stephen Smith Jr.:
+> > On Saturday 2008 December 20 20:37:16 Junio C Hamano wrote:
+> > > Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
+> > > > An alternative, would be "removing changes relative to .."
+> > > > (mainline).
+> > >
+> > > But that is exactly what "This reverts commit X" means, isn't it?
+> >
+> > When X is a merge commit, the phrase "the reverts commit X" is ambiguou=
+s.
+> >  Did you revert the tree to X^, X^2, or X^8?  I'd be fine with "This
+> > reverts commit X to X^y", but we definitely need some mention of X^y.
+>
+> One could consider keeping the contributions from ^1 a special case and n=
+ot
+> mention the parent, making it look like any revert commit. I guess most
+> merge reverts are like this in practice.
 
-The last version, I assume? IMHO it is a good change.
- 
-> * js/notes (Sat Dec 20 13:06:03 2008 +0100) 4 commits
->  - Add an expensive test for git-notes
->  - Speed up git notes lookup
->  - Add a script to edit/inspect notes
->  - Introduce commit notes
+Then why not have "-m 1" be assumed instead of forcing the user to specify =
+it? =20
+If we force the user to specify that information, shouldn't we hold the cod=
+e=20
+to the same standard and have it output a message with that information?
 
-Nice to see it resurrected.
- 
-> * jn/gitweb-blame (Thu Dec 11 01:33:29 2008 +0100) 3 commits
->  - gitweb: cache $parent_commit info in git_blame()
->  - gitweb: A bit of code cleanup in git_blame()
->  - gitweb: Move 'lineno' id from link to row element in git_blame
-> 
-> I've briefly looked at the resurrection of Ajaxy blame that comes on top
-> of this series and it looked promising.
+I think git should mention the parent to which we reverted whenever there a=
+re=20
+multiple parents.
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
 
-There are a few issues to test and to resolve with Ajaxy blame
-(blame_incremental):
- * does it work correctly with browsers other than Mozilla 1.17.2
-   and Konqueror 3.5.3?
- * what gives better performance, and better visible performance
-   on the client side: onreadystatechange or setInterval (and what
-   interval)?
- * is it better to do more work on the server side, and for example
-   send JSON with ready commits data; it is better to enable autoflush
-   if sending raw "git blame --incremental" output?
- * the 'how long it took to generate page' patch should be decoupled,
-   improved, and send separately...
- 
-> * sc/gitweb-category (Fri Dec 12 00:45:12 2008 +0100) 3 commits
->  - gitweb: Optional grouping of projects by category
->  - gitweb: Split git_project_list_body in two functions
->  - gitweb: Modularized git_get_project_description to be more generic
+--nextPart9782748.Cv6txiLDXj
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-I think it is not yet finished, but it looks nice.
- 
-> * gb/gitweb-patch (Thu Dec 18 08:13:19 2008 +0100) 4 commits
->  - gitweb: link to patch(es) view in commit(diff) and (short)log view
->  - gitweb: add patches view
->  - gitweb: change call pattern for git_commitdiff
->  - gitweb: add patch view
-> 
-> Updated series.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-I'd have to review resend series, but I think it would get Ack from
-me.
+iEYEABECAAYFAklOoCMACgkQdNbfk+86fC1nRQCeIKob9ZsWg3fDf5x3ov7nXous
++rwAnj7n21wJ9wWtpIvHAUyW2Xduzxjf
+=M9K0
+-----END PGP SIGNATURE-----
 
-> * cc/bisect-replace (Mon Nov 24 22:20:30 2008 +0100) 9 commits
-> * nd/narrow (Sun Nov 30 17:54:38 2008 +0700) 17 commits
-> * jc/clone-symref-2 (Sat Nov 29 23:38:21 2008 -0800) 7 commits
-> * jc/clone-symref (Sat Nov 29 23:38:21 2008 -0800) 6 commits
-
-Those are interesting...
-
-> * jc/apply (Sun Sep 7 14:36:24 2008 -0700) 1 commit
->  . WIP
-
-Uh?
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+--nextPart9782748.Cv6txiLDXj--
