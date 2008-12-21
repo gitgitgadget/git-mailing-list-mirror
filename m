@@ -1,90 +1,167 @@
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Subject: Re: Memory issue with fast-import, why track branches?
-Date: Sun, 21 Dec 2008 13:23:05 +0200
-Message-ID: <94a0d4530812210323q2ae392d5o2381fd990be708e8@mail.gmail.com>
-References: <94a0d4530812202154l26dfe0dfm49397c63dbfdfdf9@mail.gmail.com>
-	 <1229847042.798.5.camel@therock.nsw.bigpond.net.au>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's in git.git (Dec 2008, #03; Sun, 21)
+Date: Sun, 21 Dec 2008 04:22:52 -0800
+Message-ID: <7vskohpvj7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git list" <git@vger.kernel.org>
-To: "John Chapman" <thestar@fussycoder.id.au>
-X-From: git-owner@vger.kernel.org Sun Dec 21 12:24:39 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 21 13:24:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEMQH-0005MJ-Ts
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 12:24:38 +0100
+	id 1LENMG-0003BL-PR
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 13:24:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbYLULXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 06:23:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbYLULXI
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 06:23:08 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:20859 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751037AbYLULXH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 06:23:07 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so637488fgg.17
-        for <git@vger.kernel.org>; Sun, 21 Dec 2008 03:23:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=2GBWj5A9IXIZBjYFiDfBOUyTxHtXA5tdffoR6CYrArM=;
-        b=Yv+XG81NpfYdvy6KJU2C27i1hHQXNs2Bpj4n+GI9zSsiDG8P+Nq2RblwGXQp3AHT3+
-         mgBOiC8v8huQLCH06Dx+dGaxTz19zCYtQMLMr6Qjc7XBM3YwdT5tttf1o0cZFDZ9n4b8
-         LHaPPYrixx969MANetrgP79PYPfle/VinDKJQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=fFx0ZrLVH52K3ek/tQIf09gIpxtE3qaob5dQEkwKupXrcX4ydx7PeFamijuSGBIs9G
-         6D2Tua9JzTckgXb7/odhWRCm+4HSeY7jq8QnY/QTyJ+akIVaplhmsc/aHqm536jD7eje
-         ylEFbLLKHkI0W87TdM9H1dodrPdF+DlJzWuI8=
-Received: by 10.86.31.18 with SMTP id e18mr2988950fge.72.1229858585230;
-        Sun, 21 Dec 2008 03:23:05 -0800 (PST)
-Received: by 10.86.77.17 with HTTP; Sun, 21 Dec 2008 03:23:05 -0800 (PST)
-In-Reply-To: <1229847042.798.5.camel@therock.nsw.bigpond.net.au>
-Content-Disposition: inline
+	id S1751685AbYLUMXH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Dec 2008 07:23:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751902AbYLUMXG
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 07:23:06 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59033 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751797AbYLUMXE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Dec 2008 07:23:04 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E879489D19;
+	Sun, 21 Dec 2008 07:23:01 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6654089D18; Sun,
+ 21 Dec 2008 07:22:54 -0500 (EST)
+X-maint-at: 718258e256b74622aa55f5ee0cb9cff4cce6bf9f
+X-master-at: b3eae84dc10e452add0e79c7373ceee16f73f7f0
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1C46F904-CF5A-11DD-8D3B-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103698>
 
-On Sun, Dec 21, 2008 at 10:10 AM, John Chapman <thestar@fussycoder.id.au> wrote:
-> My first response was along the lines of "Why the heck are you storing
-> sha1's like that!?", until I realised that you're not storing actual git
-> sha1's, but mtn's hashes, which does make sense.
+The 'maint' branch is at 1.6.0.6, which hopefully will be the last
+maintenance release until 1.6.1 final.
 
-Yes :)
+Earlier I said I'd like to have 1.6.1 final this weekend, but I'd rathe=
+r
+play safe and tag -rc4 tonight (gee, it is already 04:00am), and leave =
+the
+final 1.6.0 as Christmas present to git users.
 
-> I'm doing something very similar with my perforce scripts, however I am
-> doing a bit more magic instead of making so many branches.
->
-> Instead of making branches, I make a tag instead, for each and every
-> changeset.  Every time I make a new git commit, if I need to do it from
-> a tag, I first read the tag and determine the sha1 I should use, and use
-> that instead.
+ * Paul has one patch on his gitk branch I have fetched but not merged =
+yet;
+   waiting for his go-ahead.
 
-Well, simple tags and branches are exactly the same thing: refs. tags
-are in 'refs/tags' and branches in 'refs/heads'; 'refs/mtn' are not
-really branches.
+ * I am undecided whether I should include the "rebase -i -p" patch fro=
+m
+   j6t in 1.6.1 and have been waiting for comments from Dscho.
 
-> Alternatively, you could choose to manage your mapping yourself, and
-> write them to a .git/mtg-git-map file.
+ * A documentation patch from Boyd Stephen Smith Jr. to add a reference=
+ to
+   the new HowTo page from git-revert manpage and an additional warning=
+ to
+   git-revert from Robin Rosenberg are still not in yet, but I would li=
+ke
+   to have them with updates in 1.6.1 final.
 
-The advantage of my approach is that the git tools handle all the mtn
-sha1's almost as good as git sha1's, I just need to prepend 'mtn/'.
+Other than that, the 'master' I am pusing out is pretty much it for
+1.6.1.
 
-Also, git name-rev finds the mtn revision of a git commit. It' all so
-convenient.
+By the way, 'master' and 'maint' of git.git repository are also mirrore=
+d
+at git://git.sourceforge.jp/gitroot/git-core/git.git (and they have git=
+web
+http://git.sourceforge.jp/view?p=3Dgit-core/git.git).  People who are
+following my blog may already have been aware of this, though.
 
-The only problem is that fast-import seems to be doing something wrong
-with those "branches".
+----------------------------------------------------------------
 
--- 
-Felipe Contreras
+* The 'master' branch has these since the last announcement.
+
+Alexander Gavrilov (3):
+  git-gui: Fix handling of relative paths in blame.
+  git-gui: Fix commit encoding handling.
+  Documentation: Describe git-gui Tools menu configuration options.
+
+Arjen Laarhoven (1):
+  Enable threaded delta search on Mac OS X/Darwin
+
+Christian Stimming (1):
+  git-gui: Update German (completed) translation.
+
+=46redrik Skolmli (1):
+  git-gui: Starting translation for Norwegian
+
+Johannes Schindelin (2):
+  Get rid of the last remnants of GIT_CONFIG_LOCAL
+  git-gui: Get rid of the last remnants of GIT_CONFIG_LOCAL
+
+Junio C Hamano (6):
+  gitweb: do not run "git diff" that is Porcelain
+  make_absolute_path(): check bounds when seeing an overlong symlink
+  builtin-blame.c: use strbuf_readlink()
+  combine-diff.c: use strbuf_readlink()
+  Make sure lockfiles are unlocked when dying on SIGPIPE
+  send-email: futureproof split_addrs() sub
+
+Kirill A. Korinskiy (1):
+  Remove the requirement opaquelocktoken uri scheme
+
+Lee Marlow (2):
+  bash completion: Sort config completion variables
+  bash completion: Sync config variables with their man pages
+
+Linus Torvalds (5):
+  Add generic 'strbuf_readlink()' helper function
+  Make 'ce_compare_link()' use the new 'strbuf_readlink()'
+  Make 'index_path()' use 'strbuf_readlink()'
+  Make 'diff_populate_filespec()' use the new 'strbuf_readlink()'
+  Make 'prepare_temp_file()' ignore st_size for symlinks
+
+Marcel M. Cary (1):
+  git-sh-setup: Fix scripts whose PWD is a symlink into a git work-dir
+
+Markus Heidelberg (5):
+  Documentation: fix description for enabling hooks
+  doc/git-reset: add reference to git-stash
+  Documentation: sync example output with git output
+  Documentation: fix typos, grammar, asciidoc syntax
+  Documentation/git-show-branch: work around "single quote" typesetting
+    glitch
+
+Michael J Gruber (1):
+  test overlapping ignore patterns
+
+Michele Ballabio (1):
+  git gui: update Italian translation
+
+Miklos Vajna (3):
+  git-gui: Update Hungarian translation for 0.12
+  git-daemon documentation: use {tilde}
+  githooks documentation: add a note about the +x mode
+
+Nanako Shiraishi (3):
+  git-gui: Update Japanese translation for 0.12
+  Clarify documentation of "git checkout <tree-ish> paths" syntax
+  Add a documentat on how to revert a faulty merge
+
+Peter Krefting (2):
+  git-gui: Updated Swedish translation (515t0f0u).
+  git-gui: Fixed typos in Swedish translation.
+
+Ren=C3=A9 Scharfe (3):
+  Fix type-mismatch compiler warning from diff_populate_filespec()
+  connect.c: stricter port validation, silence compiler warning
+  fast-import.c: stricter strtoul check, silence compiler warning
+
+Shawn O. Pearce (2):
+  git-gui: Update po template to include 'Mirroring %s' message
+  git-gui 0.12
+
+YONETANI Tomokazu (1):
+  git-fast-import possible memory corruption problem
