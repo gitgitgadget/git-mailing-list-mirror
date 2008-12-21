@@ -1,72 +1,74 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] git-commit: colored status when color.ui is set
-Date: Sun, 21 Dec 2008 23:15:00 +0100
-Message-ID: <200812212315.00740.markus.heidelberg@web.de>
-Reply-To: markus.heidelberg@web.de
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Memory issue with fast-import, why track branches?
+Date: Sun, 21 Dec 2008 14:17:02 -0800
+Message-ID: <20081221221702.GC17355@spearce.org>
+References: <94a0d4530812202154l26dfe0dfm49397c63dbfdfdf9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Dec 21 23:16:16 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 21 23:18:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEWar-00062X-5x
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 23:16:13 +0100
+	id 1LEWd2-0006ke-RD
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 23:18:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750956AbYLUWOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 17:14:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751507AbYLUWOw
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 17:14:52 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:39470 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750853AbYLUWOw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 17:14:52 -0500
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 3F1D3FADB818;
-	Sun, 21 Dec 2008 23:14:51 +0100 (CET)
-Received: from [91.19.14.55] (helo=pluto)
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #273)
-	id 1LEWZX-0005hz-00; Sun, 21 Dec 2008 23:14:51 +0100
-User-Agent: KMail/1.9.9
-Jabber-ID: markus.heidelberg@web.de
+	id S1751437AbYLUWRG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 17:17:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbYLUWRF
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 17:17:05 -0500
+Received: from george.spearce.org ([209.20.77.23]:46520 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751309AbYLUWRE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 17:17:04 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 6C95538200; Sun, 21 Dec 2008 22:17:02 +0000 (UTC)
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+NKKCOVe8TFUemFFT5UMLDlc1ZajHnTcW635vU
-	UOZ5kwuODtWhCRQj3VP+gT9kjISnpxxAbWWhU7KxHHo9ZaNA1v
-	iyetmpL15DAzPj6A/Q/w==
+In-Reply-To: <94a0d4530812202154l26dfe0dfm49397c63dbfdfdf9@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103721>
 
-When using "git commit" and there was nothing to commit (the editor
-wasn't launched), the status output wasn't colored, even though color.ui
-was set. Only when setting color.status it worked.
+Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> I tracked down an issue I have when importing a big repository. For
+> some reason memory usage keeps increasing until there is no more
+> memory.
+> 
+> After looking at the code my guess is that I have a humongous amount
+> of branches.
+> 
+> Actually they are not really branches, but refs. For each git commit
+> there's an original mtn ref that I store in 'refs/mtn/sha1', but since
+> I'm using 'commit refs/mtn/sha1' to store it, a branch is created for
+> every commit.
+> 
+> I guess there are many ways to fix the issue, but for starters I
+> wonder why is fast-import keeping track of all the branches? In my
+> case I would like fast-import to work exactly the same if I specify
+> branches or not (I'll update them later).
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
----
- builtin-commit.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+Because fast-import has to buffer them until the pack file is done.
+The objects aren't available to the repository until after a
+checkpoint is sent or until the stream ends.  Either way until
+then fast-import has to buffer the refs so they don't get exposed
+to other git processes reading that same repository, because they
+would point to objects that the process cannot find.
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index ac88dc2..7cf227a 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -948,6 +948,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_commit_config, NULL);
- 
-+	if (wt_status_use_color == -1)
-+		wt_status_use_color = git_use_color_default;
-+
- 	argc = parse_and_validate_options(argc, argv, builtin_commit_usage, prefix);
- 
- 	index_file = prepare_index(argc, argv, prefix);
+I guess it could release the brnach memory after it dumps the
+branches in a checkpoint, but its memory allocators work under an
+assumption that strings (like branch and file names) will be reused
+heavily by the frontend and thus they are poooled inside of a string
+pool.  The branch objects are also pooled inside of a common alloc
+pool, to ammortize the cost of malloc's block headers out over the
+data used.
+
+IOW, fast-import was designed for ~5k branches, not ~1 million
+unique branches.
+
 -- 
-1.6.1.rc3.62.g7c0a2
+Shawn.
