@@ -1,141 +1,91 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: [PATCH] Have manpage reference new documentation on reverting merges.
-Date: Sat, 20 Dec 2008 23:35:14 -0600
-Message-ID: <200812202335.19006.bss@iguanasuicide.net>
-References: <200812201832.48992.bss@iguanasuicide.net> <7vtz8ytft0.fsf@gitster.siamese.dyndns.org>
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Subject: Memory issue with fast-import, why track branches?
+Date: Sun, 21 Dec 2008 07:54:57 +0200
+Message-ID: <94a0d4530812202154l26dfe0dfm49397c63dbfdfdf9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart23235527.9Rga1i86Rr";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 21 06:36:40 2008
+To: "git list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 21 06:58:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEGzT-0007Dp-Kw
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 06:36:36 +0100
+	id 1LEHKG-0002OH-VE
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 06:58:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750918AbYLUFfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 00:35:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750942AbYLUFfF
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 00:35:05 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:54111 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750898AbYLUFfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 00:35:03 -0500
-Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.123])
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LEGxx-0000ed-CJ; Sun, 21 Dec 2008 05:35:01 +0000
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vtz8ytft0.fsf@gitster.siamese.dyndns.org>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1750962AbYLUFzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 00:55:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750984AbYLUFzD
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 00:55:03 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:33623 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750898AbYLUFzA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 00:55:00 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so617954fgg.17
+        for <git@vger.kernel.org>; Sat, 20 Dec 2008 21:54:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=TmeS6OzQSrt4uFwXlVH7Y4x0qx4uW9Dm0pakOLIi+AQ=;
+        b=MrfNZ68CmK0ZsVXLJ3waxZXvEME4BLw0sZr/f2uZ/sZRvJh0yOfYYFMhGzIG2aTe/D
+         XUvJiyVGOO753K5/skE8QEnS0qdfhZuUj+tA0tg48mQaXZH4sBoIZbM255C6T8hnxi+T
+         mTooUTB48uhaB86aUryB6Hsp3+E1sP3Rrdp38=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=D3XgFzQ7r7RcytrZy4Edo5G2jr+7pK4bnTKuZehi1nHErl52/SNIn3SuoqcNZy8Hcy
+         F0/oKCNM7qKyePvSRXPViV1fNIRDVZ6FJgL033Hqi1rikxJ5CCL6R6CTifZ2+UgeFLxY
+         LuBbh0DLcyGJeT2t+9pFdtb9sdMjq5Ib/C0Ag=
+Received: by 10.86.76.20 with SMTP id y20mr2847306fga.37.1229838897976;
+        Sat, 20 Dec 2008 21:54:57 -0800 (PST)
+Received: by 10.86.77.17 with HTTP; Sat, 20 Dec 2008 21:54:57 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103688>
 
---nextPart23235527.9Rga1i86Rr
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-On Saturday 2008 December 20 20:36:43 Junio C Hamano wrote:
-> "Boyd Stephen Smith Jr." <bss@iguanasuicide.net> writes:
-> > ---
-> > An example addition to the manpage for revert that references Nanako
-> > Shiraishi's new documentation.
-> >
-> >  Documentation/git-revert.txt |    4 ++++
-> >  1 files changed, 4 insertions(+), 0 deletions(-)
-> >
-> > diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-> > index caa0729..ea36bdf 100644
-> > --- a/Documentation/git-revert.txt
-> > +++ b/Documentation/git-revert.txt
-> > @@ -45,6 +45,10 @@ OPTIONS
-> >  	the mainline and allows revert to reverse the change
-> >  	relative to the specified parent.
-> >
-> > +	Reverting a merge commit does not completely "undo" the effect of the
-> > +	merge and it may make future merges more difficult.  For more details,
-> > +	please read Documentation/howto/revert-a-faulty-merge.txt.
-> > +
->
-> I think these new lines need to be dedented, and the previous blank line
-> should be turned into a line with a single '+'.
+I tracked down an issue I have when importing a big repository. For
+some reason memory usage keeps increasing until there is no more
+memory.
 
-Can do.
+Here is what valgrind shows:
+==21034== 471,080,280 bytes in 114,517 blocks are still reachable in
+loss record 8 of 8
+==21034==    at 0x4004BA2: calloc (vg_replace_malloc.c:397)
+==21034==    by 0x806A340: xcalloc (wrapper.c:75)
+==21034==    by 0x8063BC1: use_pack (sha1_file.c:808)
+==21034==    by 0x8063DA9: unpack_object_header (sha1_file.c:1443)
+==21034==    by 0x8064F4F: unpack_entry (sha1_file.c:1736)
+==21034==    by 0x8065393: cache_or_unpack_entry (sha1_file.c:1606)
+==21034==    by 0x8065464: read_packed_sha1 (sha1_file.c:2000)
+==21034==    by 0x80655E5: read_object (sha1_file.c:2090)
+==21034==    by 0x8065677: read_sha1_file (sha1_file.c:2106)
+==21034==    by 0x8056AE9: parse_object (object.c:190)
+==21034==    by 0x805E90A: write_ref_sha1 (refs.c:1214)
+==21034==    by 0x804CC4F: update_branch (fast-import.c:1558)
 
-> I'd also suggest removing "does not ... merge and it" from the above
-> sentence to avoid confusing readers, because people who read only the
-> above and do not read the howto document may get a wrong impression that
-> the resulting tree may have some changes that came from the merge even
-> after the revert, which is not the case.  Revert will erase the effect the
-> merge had to your tree and that part is complete.
+After looking at the code my guess is that I have a humongous amount
+of branches.
 
-But that is not the whole effect of the merge.  The effect of the merge is=
-=20
-both the modifications it makes to the tree and the modifications it makes =
-to=20
-the history.
+Actually they are not really branches, but refs. For each git commit
+there's an original mtn ref that I store in 'refs/mtn/sha1', but since
+I'm using 'commit refs/mtn/sha1' to store it, a branch is created for
+every commit.
 
-Going from the dictionary meaning for "revert", one might expect the those=
-=20
-effects to go away as well.  I think a warning that the revert subcommand=20
-does not fully revert the merge is appropriate.
+I guess there are many ways to fix the issue, but for starters I
+wonder why is fast-import keeping track of all the branches? In my
+case I would like fast-import to work exactly the same if I specify
+branches or not (I'll update them later).
 
-> Linus's "does not completely undo" only refers to the history part of the
-> merge, and that only affects future re-merges from the same branch, which
-> the reader who is interested in doing a revert of a merge right now (that
-> is why s/he is reading this paragraph) may not yet care about.
+Cheers.
 
-They may not care about it now, but it doesn't make much sense to warn abou=
-t=20
-it during the later merge (plus it might be computationally expensive to=20
-detect).
-
-> An alternative is to give a complete but brief explanation.  Perhaps like
-> this:
->
->     By reverting a merge, you are declaring that you will never want the
->     changes that were brought in by that merge you are reverting in your
->     tree.  If you do merge from the same branch again in the future after
->     it is updated, git remembers your declaration, and only the changes on
->     the branch that were made after the reverted merge will be brought in.
->     This may or may not be what you want.  See 'revert-a-faulty-merge'
->     HOWTO for more details.
-
-I think the wording might need to be changed a little bit, but I do like th=
-e=20
-longer, more complete and clear explanation and I'll work on a patch that h=
-as=20
-one.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
-
---nextPart23235527.9Rga1i86Rr
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklN1ZYACgkQdNbfk+86fC0TRwCcCSz7B/n/70scXVXVk9bghtrP
-rCYAnRiJzK3GYzsYGquezEdjk/bgnenx
-=WqSp
------END PGP SIGNATURE-----
-
---nextPart23235527.9Rga1i86Rr--
+-- 
+Felipe Contreras
