@@ -1,91 +1,70 @@
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-Subject: Memory issue with fast-import, why track branches?
-Date: Sun, 21 Dec 2008 07:54:57 +0200
-Message-ID: <94a0d4530812202154l26dfe0dfm49397c63dbfdfdf9@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn and empty directories
+Date: Sun, 21 Dec 2008 07:08:54 +0000
+Message-ID: <20081221070854.GA22014@hand.yhbt.net>
+References: <200812161353.49796.thomas.jarosch@intra2net.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "git list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 21 06:58:06 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Deskin Miller <deskinm@umich.edu>, git@vger.kernel.org
+To: Thomas Jarosch <thomas.jarosch@intra2net.com>
+X-From: git-owner@vger.kernel.org Sun Dec 21 08:13:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEHKG-0002OH-VE
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 06:58:05 +0100
+	id 1LEIUy-0005F3-84
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 08:13:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750962AbYLUFzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 00:55:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750984AbYLUFzD
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 00:55:03 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:33623 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750898AbYLUFzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 00:55:00 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so617954fgg.17
-        for <git@vger.kernel.org>; Sat, 20 Dec 2008 21:54:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=TmeS6OzQSrt4uFwXlVH7Y4x0qx4uW9Dm0pakOLIi+AQ=;
-        b=MrfNZ68CmK0ZsVXLJ3waxZXvEME4BLw0sZr/f2uZ/sZRvJh0yOfYYFMhGzIG2aTe/D
-         XUvJiyVGOO753K5/skE8QEnS0qdfhZuUj+tA0tg48mQaXZH4sBoIZbM255C6T8hnxi+T
-         mTooUTB48uhaB86aUryB6Hsp3+E1sP3Rrdp38=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=D3XgFzQ7r7RcytrZy4Edo5G2jr+7pK4bnTKuZehi1nHErl52/SNIn3SuoqcNZy8Hcy
-         F0/oKCNM7qKyePvSRXPViV1fNIRDVZ6FJgL033Hqi1rikxJ5CCL6R6CTifZ2+UgeFLxY
-         LuBbh0DLcyGJeT2t+9pFdtb9sdMjq5Ib/C0Ag=
-Received: by 10.86.76.20 with SMTP id y20mr2847306fga.37.1229838897976;
-        Sat, 20 Dec 2008 21:54:57 -0800 (PST)
-Received: by 10.86.77.17 with HTTP; Sat, 20 Dec 2008 21:54:57 -0800 (PST)
+	id S1751208AbYLUHI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 02:08:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751195AbYLUHI5
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 02:08:57 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:39234 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751176AbYLUHI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 02:08:56 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 229742DC01A;
+	Sun, 21 Dec 2008 07:08:55 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <200812161353.49796.thomas.jarosch@intra2net.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103689>
 
-Hi,
+Thomas Jarosch <thomas.jarosch@intra2net.com> wrote:
+> Hello Eric and Deskin,
+> 
+> I'm currently looking into preserving empty directories from a SVN repository 
+> by automatically creating empty .gitignore files for them.
+> 
+> The control flow of the git-svn code is still a jungle to me,
+> maybe you have a hint how to implement a proof-of-concept code?
+> 
+> I don't think I can just touch a .gitignore file in get_untracked()
+> and those files will magically turn up in git's index...
 
-I tracked down an issue I have when importing a big repository. For
-some reason memory usage keeps increasing until there is no more
-memory.
+Hi Thomas,
 
-Here is what valgrind shows:
-==21034== 471,080,280 bytes in 114,517 blocks are still reachable in
-loss record 8 of 8
-==21034==    at 0x4004BA2: calloc (vg_replace_malloc.c:397)
-==21034==    by 0x806A340: xcalloc (wrapper.c:75)
-==21034==    by 0x8063BC1: use_pack (sha1_file.c:808)
-==21034==    by 0x8063DA9: unpack_object_header (sha1_file.c:1443)
-==21034==    by 0x8064F4F: unpack_entry (sha1_file.c:1736)
-==21034==    by 0x8065393: cache_or_unpack_entry (sha1_file.c:1606)
-==21034==    by 0x8065464: read_packed_sha1 (sha1_file.c:2000)
-==21034==    by 0x80655E5: read_object (sha1_file.c:2090)
-==21034==    by 0x8065677: read_sha1_file (sha1_file.c:2106)
-==21034==    by 0x8056AE9: parse_object (object.c:190)
-==21034==    by 0x805E90A: write_ref_sha1 (refs.c:1214)
-==21034==    by 0x804CC4F: update_branch (fast-import.c:1558)
+Modern git-svn never touches the working tree during fetch, it hashes
+objects into the database and adds those to the indexes directly.
 
-After looking at the code my guess is that I have a humongous amount
-of branches.
+However, I don't think your proposal is a good idea since it adds too
+much "magic".  Complex special cases for delta application if the
+.gitignore gets real content and backwards-incompatibility since I know
+some git-svn users already rely on pushing .gitignore files (empty or
+otherwise) to an upstream SVN repo.
 
-Actually they are not really branches, but refs. For each git commit
-there's an original mtn ref that I store in 'refs/mtn/sha1', but since
-I'm using 'commit refs/mtn/sha1' to store it, a branch is created for
-every commit.
+The minor problem of missing empty directories isn't big enough to be
+worth the trouble IMHO.
 
-I guess there are many ways to fix the issue, but for starters I
-wonder why is fast-import keeping track of all the branches? In my
-case I would like fast-import to work exactly the same if I specify
-branches or not (I'll update them later).
-
-Cheers.
+The unhandled.log is made to be machine parseable, so if somebody really
+wanted to recreate empty direct after checkout, they could write a
+script that parses it and creates it based on the history of the current
+working tree.
 
 -- 
-Felipe Contreras
+Eric Wong
