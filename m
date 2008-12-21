@@ -1,167 +1,295 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (Dec 2008, #03; Sun, 21)
-Date: Sun, 21 Dec 2008 04:22:52 -0800
-Message-ID: <7vskohpvj7.fsf@gitster.siamese.dyndns.org>
+Subject: What's cooking in git.git (Dec 2008, #03; Sun, 21)
+Date: Sun, 21 Dec 2008 04:23:22 -0800
+Message-ID: <7vr641pvid.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Simon Schubert" <corecode@fs.ei.tum.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 21 13:24:33 2008
+X-From: git-owner@vger.kernel.org Sun Dec 21 13:24:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LENMG-0003BL-PR
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 13:24:33 +0100
+	id 1LENMe-0003GY-Aw
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 13:24:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751685AbYLUMXH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Dec 2008 07:23:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751902AbYLUMXG
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 07:23:06 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59033 "EHLO
+	id S1751902AbYLUMXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 07:23:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbYLUMXb
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 07:23:31 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59124 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751797AbYLUMXE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Dec 2008 07:23:04 -0500
+	with ESMTP id S1751604AbYLUMX3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 07:23:29 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E879489D19;
-	Sun, 21 Dec 2008 07:23:01 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5B1BE89D20;
+	Sun, 21 Dec 2008 07:23:29 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6654089D18; Sun,
- 21 Dec 2008 07:22:54 -0500 (EST)
-X-maint-at: 718258e256b74622aa55f5ee0cb9cff4cce6bf9f
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D054989D1D; Sun,
+ 21 Dec 2008 07:23:23 -0500 (EST)
 X-master-at: b3eae84dc10e452add0e79c7373ceee16f73f7f0
+X-next-at: 43db18a982c1bdb5d2c1849c429ae3a456b8a51e
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1C46F904-CF5A-11DD-8D3B-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 2C9F074C-CF5A-11DD-8865-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103699>
 
-The 'maint' branch is at 1.6.0.6, which hopefully will be the last
-maintenance release until 1.6.1 final.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The ones marked with '.' do not appear in any of the branches,
+but I am still holding onto them.
 
-Earlier I said I'd like to have 1.6.1 final this weekend, but I'd rathe=
-r
-play safe and tag -rc4 tonight (gee, it is already 04:00am), and leave =
-the
-final 1.6.0 as Christmas present to git users.
+The topics list the commits in reverse chronological order.  The topics
+meant to be merged to the maintenance series have "maint-" in their names.
 
- * Paul has one patch on his gitk branch I have fetched but not merged =
-yet;
-   waiting for his go-ahead.
-
- * I am undecided whether I should include the "rebase -i -p" patch fro=
-m
-   j6t in 1.6.1 and have been waiting for comments from Dscho.
-
- * A documentation patch from Boyd Stephen Smith Jr. to add a reference=
- to
-   the new HowTo page from git-revert manpage and an additional warning=
- to
-   git-revert from Robin Rosenberg are still not in yet, but I would li=
-ke
-   to have them with updates in 1.6.1 final.
-
-Other than that, the 'master' I am pusing out is pretty much it for
-1.6.1.
-
-By the way, 'master' and 'maint' of git.git repository are also mirrore=
-d
-at git://git.sourceforge.jp/gitroot/git-core/git.git (and they have git=
-web
-http://git.sourceforge.jp/view?p=3Dgit-core/git.git).  People who are
-following my blog may already have been aware of this, though.
+As we have already passed -rc3, things queued in 'next' let alone 'pu' are
+unlikely to be merged to 'master' by the end of year unless otherwise
+noted.
 
 ----------------------------------------------------------------
+[New Topics]
 
-* The 'master' branch has these since the last announcement.
+* mk/gitweb-feature (Mon Dec 15 22:16:19 2008 -0800) 1 commit
+ - gitweb: unify boolean feature subroutines
 
-Alexander Gavrilov (3):
-  git-gui: Fix handling of relative paths in blame.
-  git-gui: Fix commit encoding handling.
-  Documentation: Describe git-gui Tools menu configuration options.
+* cb/merge-recursive-fix (Mon Dec 15 02:41:24 2008 -0800) 3 commits
+ - Merge branch 'cb/maint-merge-recursive-fix' into cb/merge-
+   recursive-fix
+ - merge-recursive: do not clobber untracked working tree garbage
+ - modify/delete conflict resolution overwrites untracked file
 
-Arjen Laarhoven (1):
-  Enable threaded delta search on Mac OS X/Darwin
+* cb/maint-merge-recursive-fix (Sun Dec 14 19:40:09 2008 -0800) 2 commits
+ - merge-recursive: do not clobber untracked working tree garbage
+ - modify/delete conflict resolution overwrites untracked file
 
-Christian Stimming (1):
-  git-gui: Update German (completed) translation.
+* js/notes (Sat Dec 20 13:06:03 2008 +0100) 4 commits
+ - Add an expensive test for git-notes
+ - Speed up git notes lookup
+ - Add a script to edit/inspect notes
+ - Introduce commit notes
 
-=46redrik Skolmli (1):
-  git-gui: Starting translation for Norwegian
+* js/rebase-i-p (Mon Dec 15 11:05:31 2008 +0100) 2 commits
+ - rebase -i -p: Fix --continue after a merge could not be redone
+ - Show a failure of rebase -p if the merge had a conflict
 
-Johannes Schindelin (2):
-  Get rid of the last remnants of GIT_CONFIG_LOCAL
-  git-gui: Get rid of the last remnants of GIT_CONFIG_LOCAL
+I am undecided whether I should include these in 1.6.1 and have been
+waiting for comments from Dscho.
 
-Junio C Hamano (6):
-  gitweb: do not run "git diff" that is Porcelain
-  make_absolute_path(): check bounds when seeing an overlong symlink
-  builtin-blame.c: use strbuf_readlink()
-  combine-diff.c: use strbuf_readlink()
-  Make sure lockfiles are unlocked when dying on SIGPIPE
-  send-email: futureproof split_addrs() sub
+----------------------------------------------------------------
+[Post 1.6.1 items]
 
-Kirill A. Korinskiy (1):
-  Remove the requirement opaquelocktoken uri scheme
+* wp/add-p-goto (Thu Dec 4 10:22:40 2008 +0000) 2 commits
+ + Add 'g' command to go to a hunk
+ + Add subroutine to display one-line summary of hunks
 
-Lee Marlow (2):
-  bash completion: Sort config completion variables
-  bash completion: Sync config variables with their man pages
+* jn/gitweb-blame (Thu Dec 11 01:33:29 2008 +0100) 3 commits
+ - gitweb: cache $parent_commit info in git_blame()
+ - gitweb: A bit of code cleanup in git_blame()
+ - gitweb: Move 'lineno' id from link to row element in git_blame
 
-Linus Torvalds (5):
-  Add generic 'strbuf_readlink()' helper function
-  Make 'ce_compare_link()' use the new 'strbuf_readlink()'
-  Make 'index_path()' use 'strbuf_readlink()'
-  Make 'diff_populate_filespec()' use the new 'strbuf_readlink()'
-  Make 'prepare_temp_file()' ignore st_size for symlinks
+I've briefly looked at the resurrection of Ajaxy blame that comes on top
+of this series and it looked promising.
 
-Marcel M. Cary (1):
-  git-sh-setup: Fix scripts whose PWD is a symlink into a git work-dir
+* mv/um-pdf (Wed Dec 10 23:44:50 2008 +0100) 1 commit
+ - Add support for a pdf version of the user manual
 
-Markus Heidelberg (5):
-  Documentation: fix description for enabling hooks
-  doc/git-reset: add reference to git-stash
-  Documentation: sync example output with git output
-  Documentation: fix typos, grammar, asciidoc syntax
-  Documentation/git-show-branch: work around "single quote" typesetting
-    glitch
+I do not have a new enough combination of dblatex and asciidoc myself but
+this may help interested people.
 
-Michael J Gruber (1):
-  test overlapping ignore patterns
+* np/auto-thread (Mon Dec 15 20:44:30 2008 +0100) 3 commits
+ + Force t5302 to use a single thread
+ + pack-objects: don't use too many threads with few objects
+ + autodetect number of CPUs by default when using threads
 
-Michele Ballabio (1):
-  git gui: update Italian translation
+* sc/gitweb-category (Fri Dec 12 00:45:12 2008 +0100) 3 commits
+ - gitweb: Optional grouping of projects by category
+ - gitweb: Split git_project_list_body in two functions
+ - gitweb: Modularized git_get_project_description to be more generic
 
-Miklos Vajna (3):
-  git-gui: Update Hungarian translation for 0.12
-  git-daemon documentation: use {tilde}
-  githooks documentation: add a note about the +x mode
+* gb/gitweb-patch (Thu Dec 18 08:13:19 2008 +0100) 4 commits
+ - gitweb: link to patch(es) view in commit(diff) and (short)log view
+ - gitweb: add patches view
+ - gitweb: change call pattern for git_commitdiff
+ - gitweb: add patch view
 
-Nanako Shiraishi (3):
-  git-gui: Update Japanese translation for 0.12
-  Clarify documentation of "git checkout <tree-ish> paths" syntax
-  Add a documentat on how to revert a faulty merge
+Updated series.
 
-Peter Krefting (2):
-  git-gui: Updated Swedish translation (515t0f0u).
-  git-gui: Fixed typos in Swedish translation.
+* lt/reset-merge (Wed Dec 3 18:00:12 2008 -0800) 2 commits
+ + Document "git-reset --merge"
+ + Add 'merge' mode to 'git reset'
 
-Ren=C3=A9 Scharfe (3):
-  Fix type-mismatch compiler warning from diff_populate_filespec()
-  connect.c: stricter port validation, silence compiler warning
-  fast-import.c: stricter strtoul check, silence compiler warning
+* wp/add-patch-find (Thu Nov 27 04:08:03 2008 +0000) 3 commits
+ . In add --patch, Handle K,k,J,j slightly more gracefully.
+ . Add / command in add --patch
+ . git-add -i/-p: Change prompt separater from slash to comma
 
-Shawn O. Pearce (2):
-  git-gui: Update po template to include 'Mirroring %s' message
-  git-gui 0.12
+I am still holding onto this earlier topic to add '/' subcommand to allow
+finding a hunk with given text, but I'd rather not merge/rebase it on top
+of wp/add-p-goto series myself.  Waiting for a reroll.
 
-YONETANI Tomokazu (1):
-  git-fast-import possible memory corruption problem
+* cb/mergetool (Fri Dec 12 21:48:41 2008 +0000) 4 commits
+ - mergetool: Don't keep temporary merge files unless told to
+ - mergetool: Add prompt to continue after failing to merge a file
+ - Add -y/--no-prompt option to mergetool
+ - Fix some tab/space inconsistencies in git-mergetool.sh
+
+Updated series.  Waiting for comments from the original author (Ted) and
+other interested parties.
+
+----------------------------------------------------------------
+[Graduated to "master"]
+
+Nothing cooking was "not so trivial but want to have in final".
+
+----------------------------------------------------------------
+[Will merge to "master" soon]
+
+What are you looking for?  We are in -rc ;-)
+
+----------------------------------------------------------------
+[On Hold]
+
+* kb/am-directory (Fri Aug 29 15:27:50 2008 -0700) 1 commit
+ . git-am: Pass the --directory option through to git-apply
+
+A reroll of this by Simon Schubert triggered a series to fix a parameter
+propagation bug, and another reroll to add "git am --directory=path/"
+should be much easier now.  I am not likely to use the feature myself, so
+it is up to intrested volunteers to carry it forward.
+
+* jc/blame (Wed Jun 4 22:58:40 2008 -0700) 2 commits
+ + blame: show "previous" information in --porcelain/--incremental
+   format
+ + git-blame: refactor code to emit "porcelain format" output
+
+* ds/uintmax-config (Mon Nov 3 09:14:28 2008 -0900) 1 commit
+ - autoconf: Enable threaded delta search when pthreads are supported
+
+Rebased to 'master', that introduced NO_PTHREADS.
+
+* cc/bisect-replace (Mon Nov 24 22:20:30 2008 +0100) 9 commits
+ - bisect: add "--no-replace" option to bisect without using replace
+   refs
+ - rev-list: make it possible to disable replacing using "--no-
+   bisect-replace"
+ - bisect: use "--bisect-replace" options when checking merge bases
+ - merge-base: add "--bisect-replace" option to use fixed up revs
+ - commit: add "bisect_replace_all" prototype to "commit.h"
+ - rev-list: add "--bisect-replace" to list revisions with fixed up
+   history
+ - Documentation: add "git bisect replace" documentation
+ - bisect: add test cases for "git bisect replace"
+ - bisect: add "git bisect replace" subcommand
+
+I really hate the idea of introducing a potentially much more useful
+replacement of the existing graft mechanism and tie it very tightly to
+bisect, making it unusable from outside.
+
+ (1) I do not think "bisect replace" workflow is a practical and usable
+     one;
+
+ (2) The underlying mechanism to express "this object replaces that other
+     object" is much easier to work with than what the graft does which is
+     "the parents of this commit are these", and idea to use the normal
+     ref to point at them means this can potentially be used for
+     transferring the graft information across repositories, which the
+     current graft mechanism cannot do.
+
+ (3) Because I like the aspect (2) of this series so much, it deeply
+     disappoints and troubles me that this is implemented minimally near
+     the surface, and that it is controlled by the "bisect" Porcelain
+     alone, by explicitly passing command line arguments.
+
+I think a mechanism like this should be added to replace grafts, but it
+should always be enabled for normal revision traversal operation, while
+always disabled for object enumeration and transfer operation (iow, fsck,
+fetch and push should use the real ancestry information recorded in the
+underlying objects, while rev-list, log, etc. should always use the
+replaced objects).  I have a suspicion that even cat-file could honor it.
+
+* nd/narrow (Sun Nov 30 17:54:38 2008 +0700) 17 commits
+ - wt-status: show sparse checkout info
+ - Introduce default sparse patterns (core.defaultsparse)
+ - checkout: add new options to support sparse checkout
+ - clone: support sparse checkout with --sparse-checkout option
+ - unpack_trees(): add support for sparse checkout
+ - unpack_trees(): keep track of unmerged entries
+ - Introduce "sparse patterns"
+ - Merge branch 'master' into nd/narrow
+ + t2104: touch portability fix
+ + grep: skip files outside sparse checkout area
+ + checkout_entry(): CE_NO_CHECKOUT on checked out entries.
+ + Prevent diff machinery from examining worktree outside sparse
+   checkout
+ + ls-files: Add tests for --sparse and friends
+ + update-index: add --checkout/--no-checkout to update
+   CE_NO_CHECKOUT bit
+ + update-index: refactor mark_valid() in preparation for new options
+ + ls-files: add options to support sparse checkout
+ + Introduce CE_NO_CHECKOUT bit
+
+Kicked back to 'on hold' until 1.6.1 final by popular demand; will be
+dropped from 'next' (see recent discussion on the interaction between the
+checkout area and commands such as "grep").
+
+* jc/clone-symref-2 (Sat Nov 29 23:38:21 2008 -0800) 7 commits
+ - clone: test the new HEAD detection logic
+ - Merge commit 'HEAD@{2}' into HEAD
+ - upload-pack: send the HEAD information
+ - clone: find the current branch more explicitly
+ - connect.c::read_extra_info(): find where HEAD points at
+ - connect.c::read_extra_info(): prepare to receive more than server
+   capabilities
+ - get_remote_heads(): refactor code to read "server capabilities"
+
+This is no way meant for 1.6.1, let alone next, yet.
+
+* jc/send-pack-tell-me-more (Thu Mar 20 00:44:11 2008 -0700) 1 commit
+ - "git push": tellme-more protocol extension
+
+This seems to have a deadlock during communication between the peers.
+Someone needs to pick up this topic and resolve the deadlock before it can
+continue.
+
+* jk/renamelimit (Sat May 3 13:58:42 2008 -0700) 1 commit
+ - diff: enable "too large a rename" warning when -M/-C is explicitly
+   asked for
+
+This would be the right thing to do for command line use,
+but gitk will be hit due to tcl/tk's limitation, so I am holding
+this back for now.
+
+* jc/stripspace (Sun Mar 9 00:30:35 2008 -0800) 6 commits
+ - git-am --forge: add Signed-off-by: line for the author
+ - git-am: clean-up Signed-off-by: lines
+ - stripspace: add --log-clean option to clean up signed-off-by:
+   lines
+ - stripspace: use parse_options()
+ - Add "git am -s" test
+ - git-am: refactor code to add signed-off-by line for the committer
+
+* jc/post-simplify (Fri Aug 15 01:34:51 2008 -0700) 2 commits
+ . revision --simplify-merges: incremental simplification
+ . revision --simplify-merges: prepare for incremental simplification
+
+* jc/clone-symref (Sat Nov 29 23:38:21 2008 -0800) 6 commits
+ . clone: test the new HEAD detection logic
+ . Merge sender side of "symbolic-ref" protocol extension
+ . upload-pack: implement protocol extension "symbolic-ref"
+ . clone: find the current branch more explicitly
+ . get_remote_heads(): do not assume that the operation is one-way
+ . upload-pack.c: refactor receive_needs()
+
+* jk/valgrind (Thu Oct 23 04:30:45 2008 +0000) 2 commits
+ . valgrind: ignore ldso errors
+ . add valgrind support in test scripts
+
+* jc/apply (Sun Sep 7 14:36:24 2008 -0700) 1 commit
+ . WIP
