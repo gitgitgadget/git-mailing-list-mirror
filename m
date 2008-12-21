@@ -1,94 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] handle_remote_ls_ctx can parsing href starting at
- http://
-Date: Sun, 21 Dec 2008 01:42:42 -0800
-Message-ID: <7vr641rhil.fsf@gitster.siamese.dyndns.org>
-References: <1229772213-11932-1-git-send-email-catap@catap.ru>
+From: James Cloos <cloos@jhcloos.com>
+Subject: Re: how to check remote git repo for updates without pull/fetch
+Date: Sun, 21 Dec 2008 04:53:38 -0500
+Message-ID: <m38wq9zwee.fsf@lugabout.jhcloos.org>
+References: <494BC89F.9070107@gmail.com> <m3skoi21m3.fsf@lugabout.jhcloos.org>
+	<402731c90812201541r510170tbe1d56b7261e8146@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Kirill A. Korinskiy" <catap@catap.ru>
-X-From: git-owner@vger.kernel.org Sun Dec 21 10:47:44 2008
+Cc: "Ivan Zorin" <ivan.a.zorin@gmail.com>, git@vger.kernel.org
+To: "David Aguilar" <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 21 10:56:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEKuV-0008Dz-JH
-	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 10:47:44 +0100
+	id 1LEL31-0001je-G6
+	for gcvg-git-2@gmane.org; Sun, 21 Dec 2008 10:56:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751442AbYLUJmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Dec 2008 04:42:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751433AbYLUJmx
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 04:42:53 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45214 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751313AbYLUJmv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Dec 2008 04:42:51 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 637D61AC6C;
-	Sun, 21 Dec 2008 04:42:49 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2CB361AC6B; Sun,
- 21 Dec 2008 04:42:44 -0500 (EST)
-In-Reply-To: <1229772213-11932-1-git-send-email-catap@catap.ru> (Kirill A.
- Korinskiy's message of "Sat, 20 Dec 2008 14:23:33 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BAC100DC-CF43-11DD-82E5-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751483AbYLUJyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Dec 2008 04:54:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751474AbYLUJyU
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Dec 2008 04:54:20 -0500
+Received: from eagle.jhcloos.com ([207.210.242.212]:39812 "EHLO
+	eagle.jhcloos.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751459AbYLUJyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Dec 2008 04:54:19 -0500
+Received: by eagle.jhcloos.com (Postfix, from userid 10)
+	id 3A21D40090; Sun, 21 Dec 2008 09:53:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jhcloos.com;
+	s=eagle; t=1229853258; bh=pkWtLG72RJk1VoOBpJh15XcawTTURF8d5m+aIaFZ4
+	fE=; h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Xz7VD+cnVU6jDzrL1UuatclLYeX6l+ukdzdM0
+	l9sqb4Zq5NrWfDbO6PipvzwA2ue4UU//WM0QLpq/yccor9iXlwuIR3VaJ8xb52Vc7lA
+	gvZPPbiNjud3k6Q9O3hGWFlneT8Eg7fhYJ9yHgVq0vRTyoTi3MYCIkbvWbUXffQpzus
+	=
+Received: by lugabout.jhcloos.org (Postfix, from userid 500)
+	id C06D7FEC1E; Sun, 21 Dec 2008 09:54:01 +0000 (UTC)
+In-Reply-To: <402731c90812201541r510170tbe1d56b7261e8146@mail.gmail.com>
+	(David Aguilar's message of "Sat, 20 Dec 2008 15:41:13 -0800")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0.60 (gnu/linux)
+Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAI1J
+ REFUOE+lU9ESgCAIg64P1y+ngUdxhl5H8wFbbM0OmUiEhKkCYaZThXCo6KE5sCbA1DDX3genvO4d
+ eBQgEMaM5qy6uWk4SfBYfdu9jvBN9nSVDOKRtwb+I3epboOsOX5pZbJNsBJFvmQQ05YMfieIBnYX
+ FK2N6dOawd97r/e8RjkTLzmMsiVgrAoEugtviCM3v2WzjgAAAABJRU5ErkJggg==
+Copyright: Copyright 2008 James Cloos
+OpenPGP: ED7DAEA6; url=http://jhcloos.com/public_key/0xED7DAEA6.asc
+OpenPGP-Fingerprint: E9E9 F828 61A4 6EA9 0F2B  63E7 997A 9F17 ED7D AEA6
+X-Hashcash: 1:23:081221:davvid@gmail.com::fiR8igsqmutHq5aJ:09wuW
+X-Hashcash: 1:23:081221:ivan.a.zorin@gmail.com::WTGZmN/IGlvAcYtB:000000000000000000000000000000000000000jI4z
+X-Hashcash: 1:23:081221:git@vger.kernel.org::jodk8M61yQ130y8l:0000000000000000000000000000000000000000016s/r
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103694>
 
-"Kirill A. Korinskiy" <catap@catap.ru> writes:
+>>>>> "David" == David Aguilar <davvid@gmail.com> writes:
 
-> The program call remote_ls() to get remote objects over http;
-> handle_remote_ls_ctx() is used to parse it's response to populated
-> "struct remote_ls_ctx" that is returned from remote_ls().
->
-> The handle_remote_ls_ctx() function assumed that the server will
-> returned local path in href field, but RFC 4918 demand of support full
-> URI (http://localhost/repo.git for example).
+David> Your script will report false positives if you run that in a branch
+David> where you've made local commits since git log's output will list a
+David> commit that's not on the remote side.
 
-Do you mean "the client should support both server-relative '/repo.git'
-and full 'http://localhost/repo.git'", or "the client should reject
-'/repo.git' and insist on full 'http://localhost/repo.git'"?  I am
-guessing the former but it is not quite clear.  Where in 4918 is this
-specified?
+Ah.  Yes.  I forgot to mention that.  Good catch.
 
-> This resulted in push failure (git-http-push ask server
-> PROPFIND /repo.git/alhost:8080/repo.git/refs/) when a server returned
-> full URI.
+I wrote the script specifically for use with the repos created by Gentoo's
+git eclass (used when installing packages from git repos rather than from
+tars or the like).  As such, it only needed to deal with pristine clones.
 
-This is an interesting but confusing example.
-
-Do you mean the bug is:
-
- (1) the client asks PROPFIND /repo.git/;
-
- (2) the server gives http://localhost/repo.git/refs back;
-
- (3) the client incorrectly assumes that the response would start with
-     /repo.git/ (e.g. "/repo.git/refs"), so strips 10 bytes from the
-     beginning of this result and uses the remainder as the "new"
-     information to dig deeper; i.e. "alhost/repo.git/refs";
-
- (4) the new part is appended to the original path and the client forms
-     the next request "PROPFIND /repo.git/alhost/repo.git/refs/";
-
- (5) instead, the client should strip the proto://host part (if exists)
-     and request "PROPFIND /repo.git/refs/".
-
-> @@ -1424,9 +1425,10 @@ static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
->  				ls->userFunc(ls);
->  			}
->  		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
-> -			ls->dentry_name = xmalloc(strlen(ctx->cdata) -
-> +			char *path = strstr(ctx->cdata, remote->path);
-> +			ls->dentry_name = xmalloc(strlen(path) -
->  						  remote->path_len + 1);
-
-What if you are talking to http://repo.git/repo.git/?  Doesn't this
-strstr() misbehave?  Instead, shouldn't you be checking if the response
-begins with proto://host/ and stripping it iff so?
+-JimC
+-- 
+James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
