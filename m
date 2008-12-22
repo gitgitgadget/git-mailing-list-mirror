@@ -1,126 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Automagic patch merge ack emails
-Date: Mon, 22 Dec 2008 12:29:03 -0800
-Message-ID: <7v8wq8hs34.fsf@gitster.siamese.dyndns.org>
-References: <2d460de70812220607j7f218ee3r7722bc8147a3dab4@mail.gmail.com>
+From: "Le" <le_wen@distributel.ca>
+Subject: Bugs in sub argsfromdir of git-cvsserver
+Date: Mon, 22 Dec 2008 15:33:45 -0500
+Message-ID: <494FF9A9.9060706@distributel.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Richard Hartmann" <richih.mailinglist@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 22 21:30:35 2008
+Content-Type: text/plain;
+	format=flowed;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 22 21:35:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LErQ7-00031i-38
-	for gcvg-git-2@gmane.org; Mon, 22 Dec 2008 21:30:31 +0100
+	id 1LErUY-0004bD-D8
+	for gcvg-git-2@gmane.org; Mon, 22 Dec 2008 21:35:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754093AbYLVU3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2008 15:29:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753825AbYLVU3M
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Dec 2008 15:29:12 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47389 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753783AbYLVU3L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2008 15:29:11 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id ECF641ADF1;
-	Mon, 22 Dec 2008 15:29:09 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8054C1ADDA; Mon,
- 22 Dec 2008 15:29:06 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 302ECA2E-D067-11DD-80E7-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1754303AbYLVUds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2008 15:33:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754082AbYLVUds
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Dec 2008 15:33:48 -0500
+Received: from ottexbe01.corp.distributel.ca ([206.80.252.36]:8165 "EHLO
+	ottexbe01.corp.distributel.ca" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754025AbYLVUdr (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Dec 2008 15:33:47 -0500
+thread-index: AclkdJbD/3B228jxSD+M7ESXfkit2g==
+Content-Class: urn:content-classes:message
+Importance: normal
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4073
+Received: from [192.168.1.46] ([192.168.1.46]) by ottexbe01.corp.distributel.ca with Microsoft SMTPSVC(6.0.3790.3959); Mon, 22 Dec 2008 15:33:46 -0500
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.17) Gecko/20080829 SeaMonkey/1.1.12 (Ubuntu-1.1.12+nobinonly-0ubuntu1)
+X-OriginalArrivalTime: 22 Dec 2008 20:33:46.0297 (UTC) FILETIME=[96A24290:01C96474]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103765>
 
-"Richard Hartmann" <richih.mailinglist@gmail.com> writes:
+Hi, all,
 
-> I poked around the docs, but I could not find any option to have git
-> send email to people who signed off a patch when it's merged.
+I found a bug in git-cvsserver.
+sub argsfromdir
+{
 
-The correcty way to say that "the changes from a patch get incorporated"
-is "it's applied", not "merged".  There is no "post-am" hook you can use
-to make an announcement.  Nor the sample post-commit hook that is called
-after every commit mentions anything about e-mails.
+    if ( scalar(@{$state->{args}}) == 1 )
+    {
+        my $arg = $state->{args}[0];
+        #$arg .= $state->{prependdir} if ( defined ( 
+$state->{prependdir} ) );
+        $arg = $state->{prependdir} . $arg if ( defined ( 
+$state->{prependdir} ) );
+        $log->info("Only one arg specified, checking for directory 
+expansion on '$arg'");
+...
+    }
+...
+}
 
-And these are good things, and here is why.
+It makes not sense of the above remarked out code.
 
-It does not matter a whit to you if/when I applied your patch to a topic
-branch in my private repository that I work in, preparing for eventual
-pushout to the public tree.  Patches are reviewed in e-mail form, and
-obvious typos and logic mistakes are corrected while still I am reading
-your patch in my MUA, if they are trivial (otherwise you will get a reply
-saying to which points I do not agree with your patch).  After your patch
-passes this process, it may be applied somewhere, perhaps directly on
-'master' or 'maint', or perhaps on a new topic branch to house your
-changes.
+But when I use the code followed remarked out, I have problem to use cvs 
+diff or cvs log in a sub directory of the root (may other commands as 
+well). Eg.:
 
-But that is only the beginning of the story.  I'll apply many more changes
-from other people, testing each step, rebasing and amending these changes
-as necessary to fix breakages, and I may realize that some patches are not
-quite ready to be in the public history during this process.  Your patches
-may be part of these patches discarded that way.
+I have a project called test1 and in test1 there is a test2 subdirectory 
+and a file test2/test3.txt.
+I have no problem to cvs diff and cvs log in test1 directory. But if I 
+enter test1/test2 to check these commands then they are not working.
 
-When I decide not to apply your patch (iow, it hits my mailbox but I
-reject it while it is in my MUA), git obviously would not know about it at
-all [*1*].
+I tried to fixed the problem to remarked out the code:
+#$filename = filecleanup($filename);
+in req_log and req_diff, then both cvs diff and cvs log work.
 
-Even after I apply your patch somewhere, I may decide not to include it in
-in any of the public branches after testing and re-reviewing.  I may merge
-the topic branch I created to host your patch to 'next', but after testing
-and re-reviewing, I may decide it is not ready, and I'd rebuild 'next'
-without the topic before pushing the results out.  And I'd delete such a
-topic branch after I am done with it.
+In
+sub filecleanup
+{
+...
+$filename = $state->{prependdir} . $filename;
+return $filename;
+}
 
-What this means is that the time a commit is made (either by patch
-application or "git pull" from somebody else's tree) is too early to make
-any announcement.  "git am" hook would not be useful for that purpose.
+inserts $state->{prependdir} into the $filename.
 
-The only time that it may make a difference to you is when things are
-pushed out to the public repository, and there is a mechanism for
-automating tasks after new commits hits the public repository: the
-post-receive hook.  contrib/hooks/post-receive-email may be a good example
-to study if you are interested (I use it in my day job repository, but I
-do not use the hook in git.git because the style of announcing I adopted
-on this list is to send out "What's in/cooking" messages once or twice a
-week).
+But I don't know if what I did brings incompatibilities.
 
-> Does anyone else think this is useful? Does anyone else think it should
-> make it into main so it can be enabled via config, not via a hook that
-> needs to be imported into each and every repo?
+Can anybody check this issue?
 
-If your "each and every" repository is used for the same uniform purpose
-(namely, publishing to the public), then they can be initialized with the
-same hook scripts using the templates mechanism, so in a sense, there
-already is a mechanism for that.
+Thanks!
 
-But it is very unlikely your repositories are uniform, so I doubt that the
-mechanism based on custom templates, or your built-in announcement
-mechanism triggered by configuration, would be very useful.
-
-Most of the freedom in a DVCS workflow comes from the separation between
-making commits (including patch application and merges) and publishing the
-result.  You do not want to fear committing crap, because you can
-carefully check the result before making it public.
-
-Because of that, private repositories where the real work takes place and
-public repositories that serve as distribution points have very different
-needs.  You do not want to have any announcement triggers in the former
-(that's the whole point of separating "making commits" and "publishing the
-result"), while some people like announcement triggers in the latter.
-
-[Footnote]
-
-*1* There are two kinds of patches that rejected that way.
-
- * One with good intention but wrong execution receives suggestion for
-   improvements.
-
- * One with misguided intention or misleading description is requested to
-   clarify why the change is needed, before receiving comments on the
-   implementation.
+Le Wen
