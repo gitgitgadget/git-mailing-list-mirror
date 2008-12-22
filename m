@@ -1,64 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'Theirs' merge between branches on a binary file.
-Date: Mon, 22 Dec 2008 15:18:44 -0800
-Message-ID: <7v3agfhk8b.fsf@gitster.siamese.dyndns.org>
-References: <c115fd3c0812221256l494bb824ga8e1640efb07b20c@mail.gmail.com>
- <7vr63zhq4k.fsf@gitster.siamese.dyndns.org>
- <c115fd3c0812221316y24ce0c7q29807cd349a99e83@mail.gmail.com>
- <7vd4fjhlf8.fsf@gitster.siamese.dyndns.org>
- <c115fd3c0812221458q3444cbcai7ab1716b9195ad08@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Perl 5 now uses Git for version control
+Date: Mon, 22 Dec 2008 18:24:50 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0812221608410.19665@iabervon.org>
+References: <a92222c80812212356p766345aaj5f4dc31ebba616aa@mail.gmail.com> <9b18b3110812220332u4cae3a89rf957cbf96af530bf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: "Tim Visher" <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 00:20:11 2008
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 00:26:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEu4J-0002u3-7l
-	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 00:20:11 +0100
+	id 1LEuAL-0004U3-Tz
+	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 00:26:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754421AbYLVXSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2008 18:18:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753941AbYLVXSw
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Dec 2008 18:18:52 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62140 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753215AbYLVXSw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2008 18:18:52 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 665371A97E;
-	Mon, 22 Dec 2008 18:18:50 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D23D81A83D; Mon,
- 22 Dec 2008 18:18:46 -0500 (EST)
-In-Reply-To: <c115fd3c0812221458q3444cbcai7ab1716b9195ad08@mail.gmail.com>
- (Tim Visher's message of "Mon, 22 Dec 2008 17:58:39 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E43433E4-D07E-11DD-8113-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1755477AbYLVXYx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2008 18:24:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755511AbYLVXYx
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Dec 2008 18:24:53 -0500
+Received: from iabervon.org ([66.92.72.58]:47778 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755477AbYLVXYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2008 18:24:52 -0500
+Received: (qmail 1500 invoked by uid 1000); 22 Dec 2008 23:24:50 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 22 Dec 2008 23:24:50 -0000
+In-Reply-To: <9b18b3110812220332u4cae3a89rf957cbf96af530bf@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103781>
 
-"Tim Visher" <tim.visher@gmail.com> writes:
+On Mon, 22 Dec 2008, demerphq wrote:
 
-> On Mon, Dec 22, 2008 at 5:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> That sounds like "git checkout --theirs"...
->
-> I'm sorry, Junio.  I don't mean to be dense but I can't find that in
-> the docs and when I execute it it comes back as an unknown command.
+> In true open source style, Sam Vilain converted Perl's history from
+> Perforce to Git. He did the work both in his spare time and in time
+> donated by his employer, Catalyst IT. He spent more than a year building
+> custom tools to transform 21 years of Perl history into the first
+> ever unified repository of every single change to Perl. In addition
+> to changes from Perforce, Sam patched together a comprehensive view
+> of Perl's history incorporating publicly available snapshot releases,
+> changes from historical mailing list archives and patch sets recovered
+> from the hard drives of previous Perl release engineers.
 
-Hmph, I meant to point you at:
+At some point, some of the custom tools were visible to the public 
+(although not widely announced), and they include such things as an 
+elaborate algorithm to figure out what a perforce depot's contents is 
+supposed to mean in a number of weird cases. Are these going to be 
+officially released, or are they considered to have served their purpose 
+and be no longer interesting?
 
-    http://www.kernel.org/pub/software/scm/git/docs/git-checkout.html
+I'd be interested to see the final version, and I think it would be useful 
+to anyone working on interoperation between perforce and git (even though 
+the actual code needs a copy of the perforce database and is not 
+incremental).
 
-I think you can use "git checkout-index --stage=3 path" if your git is
-older than that one with the option.
-
-v1.6.0.1-15-g38901a4 (checkout --ours/--theirs: allow checking out one
-side of a conflicting merge, 2008-08-30) introduced the feature.
+	-Daniel
+*This .sig left intentionally blank*
