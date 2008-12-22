@@ -1,91 +1,52 @@
-From: "Le" <le_wen@distributel.ca>
-Subject: Bugs in sub argsfromdir of git-cvsserver
-Date: Mon, 22 Dec 2008 15:33:45 -0500
-Message-ID: <494FF9A9.9060706@distributel.ca>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Move-delete merge conflict is not displayed using git ls-files
+ --unmerged
+Date: Mon, 22 Dec 2008 12:48:09 -0800
+Message-ID: <7v4p0whr7a.fsf@gitster.siamese.dyndns.org>
+References: <85647ef50812220629o46134a70waf159bb6cd6d6e72@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 22 21:35:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: "Constantine Plotnikov" <constantine.plotnikov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 22 21:49:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LErUY-0004bD-D8
-	for gcvg-git-2@gmane.org; Mon, 22 Dec 2008 21:35:06 +0100
+	id 1LEria-0001VD-Ct
+	for gcvg-git-2@gmane.org; Mon, 22 Dec 2008 21:49:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754303AbYLVUds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2008 15:33:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754082AbYLVUds
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Dec 2008 15:33:48 -0500
-Received: from ottexbe01.corp.distributel.ca ([206.80.252.36]:8165 "EHLO
-	ottexbe01.corp.distributel.ca" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754025AbYLVUdr (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Dec 2008 15:33:47 -0500
-thread-index: AclkdJbD/3B228jxSD+M7ESXfkit2g==
-Content-Class: urn:content-classes:message
-Importance: normal
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4073
-Received: from [192.168.1.46] ([192.168.1.46]) by ottexbe01.corp.distributel.ca with Microsoft SMTPSVC(6.0.3790.3959); Mon, 22 Dec 2008 15:33:46 -0500
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.17) Gecko/20080829 SeaMonkey/1.1.12 (Ubuntu-1.1.12+nobinonly-0ubuntu1)
-X-OriginalArrivalTime: 22 Dec 2008 20:33:46.0297 (UTC) FILETIME=[96A24290:01C96474]
+	id S1754184AbYLVUsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2008 15:48:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754108AbYLVUsS
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Dec 2008 15:48:18 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34393 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754016AbYLVUsR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2008 15:48:17 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EB0D389096;
+	Mon, 22 Dec 2008 15:48:15 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0BE1D89090; Mon,
+ 22 Dec 2008 15:48:10 -0500 (EST)
+In-Reply-To: <85647ef50812220629o46134a70waf159bb6cd6d6e72@mail.gmail.com>
+ (Constantine Plotnikov's message of "Mon, 22 Dec 2008 17:29:02 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DB3F9D56-D069-11DD-9F50-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103766>
 
-Hi, all,
+"Constantine Plotnikov" <constantine.plotnikov@gmail.com> writes:
 
-I found a bug in git-cvsserver.
-sub argsfromdir
-{
+> I think that if git merge reports the conflicts, such conflicts should
+> be discoverable using git ls-files and prevent commit with resolving
+> the conflict like it is done with modify-delete conflicts.
 
-    if ( scalar(@{$state->{args}}) == 1 )
-    {
-        my $arg = $state->{args}[0];
-        #$arg .= $state->{prependdir} if ( defined ( 
-$state->{prependdir} ) );
-        $arg = $state->{prependdir} . $arg if ( defined ( 
-$state->{prependdir} ) );
-        $log->info("Only one arg specified, checking for directory 
-expansion on '$arg'");
-...
-    }
-...
-}
-
-It makes not sense of the above remarked out code.
-
-But when I use the code followed remarked out, I have problem to use cvs 
-diff or cvs log in a sub directory of the root (may other commands as 
-well). Eg.:
-
-I have a project called test1 and in test1 there is a test2 subdirectory 
-and a file test2/test3.txt.
-I have no problem to cvs diff and cvs log in test1 directory. But if I 
-enter test1/test2 to check these commands then they are not working.
-
-I tried to fixed the problem to remarked out the code:
-#$filename = filecleanup($filename);
-in req_log and req_diff, then both cvs diff and cvs log work.
-
-In
-sub filecleanup
-{
-...
-$filename = $state->{prependdir} . $filename;
-return $filename;
-}
-
-inserts $state->{prependdir} into the $filename.
-
-But I don't know if what I did brings incompatibilities.
-
-Can anybody check this issue?
-
-Thanks!
-
-Le Wen
+Yeah, I think so, too.
