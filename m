@@ -1,7 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 12/13] Implement the git-receive-pack process in Java
-Date: Mon, 22 Dec 2008 16:27:22 -0800
-Message-ID: <1229992043-1053-13-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 13/13] Add basic git daemon support to publish receive-pack
+Date: Mon, 22 Dec 2008 16:27:23 -0800
+Message-ID: <1229992043-1053-14-git-send-email-spearce@spearce.org>
 References: <1229992043-1053-1-git-send-email-spearce@spearce.org>
  <1229992043-1053-2-git-send-email-spearce@spearce.org>
  <1229992043-1053-3-git-send-email-spearce@spearce.org>
@@ -14,94 +14,78 @@ References: <1229992043-1053-1-git-send-email-spearce@spearce.org>
  <1229992043-1053-10-git-send-email-spearce@spearce.org>
  <1229992043-1053-11-git-send-email-spearce@spearce.org>
  <1229992043-1053-12-git-send-email-spearce@spearce.org>
+ <1229992043-1053-13-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 01:30:09 2008
+X-From: git-owner@vger.kernel.org Tue Dec 23 01:30:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEv9z-0005lu-TV
+	id 1LEvA1-0005lu-8A
 	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 01:30:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752975AbYLWA1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2008 19:27:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752758AbYLWA1x
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Dec 2008 19:27:53 -0500
-Received: from george.spearce.org ([209.20.77.23]:54495 "EHLO
+	id S1753044AbYLWA15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2008 19:27:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753012AbYLWA14
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Dec 2008 19:27:56 -0500
+Received: from george.spearce.org ([209.20.77.23]:54497 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751755AbYLWA1c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2008 19:27:32 -0500
+	with ESMTP id S1752600AbYLWA1e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2008 19:27:34 -0500
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 6F69338210; Tue, 23 Dec 2008 00:27:31 +0000 (UTC)
+	id CE99938211; Tue, 23 Dec 2008 00:27:32 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 1846E38211;
+	by george.spearce.org (Postfix) with ESMTP id 99C0C38197;
 	Tue, 23 Dec 2008 00:27:28 +0000 (UTC)
 X-Mailer: git-send-email 1.6.1.rc4.301.g5497a
-In-Reply-To: <1229992043-1053-12-git-send-email-spearce@spearce.org>
+In-Reply-To: <1229992043-1053-13-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103792>
 
-This implementation provides a basic git-receive-pack service within
-Java.  Two hooks APIs are supported before and after commands are
-executed within the connection, allowing daemons to customize the
-behavior of the updates.
+The git:// daemon service receives anonymous TCP connections and runs
+commands as they are received.
 
-Logic to bind the ReceivePack class to a pipe or network socket is
-omitted, as it depends on the transport.  SSH servers will need a
-pure Java SSH implementation such as Apache MINA SSHD.  Anonymous
-push over git:// requires a basic git-daemon functionality.  Local
-pipe access might use pure-Java pipes, or System.in/System.out.
+Currently we only support the server portion of send-pack/receive-pack,
+so that is the only service registered in our Daemon class.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../org/spearce/jgit/transport/PacketLineIn.java   |   12 +
- .../spearce/jgit/transport/PostReceiveHook.java    |   77 ++
- .../org/spearce/jgit/transport/PreReceiveHook.java |   94 +++
- .../org/spearce/jgit/transport/ReceiveCommand.java |  223 ++++++
- .../org/spearce/jgit/transport/ReceivePack.java    |  793 ++++++++++++++++++++
- 5 files changed, 1199 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/PostReceiveHook.java
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/PreReceiveHook.java
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/ReceiveCommand.java
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java
+ .../services/org.spearce.jgit.pgm.TextBuiltin      |    1 +
+ .../src/org/spearce/jgit/pgm/Daemon.java           |  125 ++++++++
+ .../src/org/spearce/jgit/transport/Daemon.java     |  309 ++++++++++++++++++++
+ .../org/spearce/jgit/transport/DaemonClient.java   |  106 +++++++
+ .../org/spearce/jgit/transport/DaemonService.java  |  120 ++++++++
+ .../spearce/jgit/transport/TransportGitAnon.java   |    3 +-
+ 6 files changed, 662 insertions(+), 2 deletions(-)
+ create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Daemon.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/Daemon.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/DaemonClient.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/transport/DaemonService.java
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/PacketLineIn.java b/org.spearce.jgit/src/org/spearce/jgit/transport/PacketLineIn.java
-index f87517d..ef218be 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/PacketLineIn.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/PacketLineIn.java
-@@ -111,6 +111,18 @@ String readString() throws IOException {
- 		return RawParseUtils.decode(Constants.CHARSET, raw, 0, len);
- 	}
- 
-+	String readStringNoLF() throws IOException {
-+		int len = readLength();
-+		if (len == 0)
-+			return "";
-+
-+		len -= 4; // length header (4 bytes)
-+
-+		final byte[] raw = new byte[len];
-+		NB.readFully(in, raw, 0, len);
-+		return RawParseUtils.decode(Constants.CHARSET, raw, 0, len);
-+	}
-+
- 	private void readLF() throws IOException {
- 		if (in.read() != '\n')
- 			throw new IOException("Protocol error: expected LF");
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/PostReceiveHook.java b/org.spearce.jgit/src/org/spearce/jgit/transport/PostReceiveHook.java
+diff --git a/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin b/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
+index e2e7938..5fb0953 100644
+--- a/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
++++ b/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
+@@ -1,4 +1,5 @@
+ org.spearce.jgit.pgm.Branch
++org.spearce.jgit.pgm.Daemon
+ org.spearce.jgit.pgm.DiffTree
+ org.spearce.jgit.pgm.Fetch
+ org.spearce.jgit.pgm.Glog
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Daemon.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Daemon.java
 new file mode 100644
-index 0000000..060efb3
+index 0000000..aafc82e
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/PostReceiveHook.java
-@@ -0,0 +1,77 @@
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Daemon.java
+@@ -0,0 +1,125 @@
 +/*
 + * Copyright (C) 2008, Google Inc.
 + *
@@ -139,381 +123,100 @@ index 0000000..060efb3
 + * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 + */
 +
-+package org.spearce.jgit.transport;
++package org.spearce.jgit.pgm;
 +
-+import java.util.Collection;
++import java.io.File;
++import java.net.InetSocketAddress;
++import java.util.ArrayList;
++import java.util.List;
 +
-+/**
-+ * Hook invoked by {@link ReceivePack} after all updates are executed.
-+ * <p>
-+ * The hook is called after all commands have been processed. Only commands with
-+ * a status of {@link ReceiveCommand.Result#OK} are passed into the hook. To get
-+ * all commands within the hook, see {@link ReceivePack#getAllCommands()}.
-+ * <p>
-+ * Any post-receive hook implementation should not update the status of a
-+ * command, as the command has already completed or failed, and the status has
-+ * already been returned to the client.
-+ * <p>
-+ * Hooks should execute quickly, as they block the server and the client from
-+ * completing the connection.
-+ */
-+public interface PostReceiveHook {
-+	/** A simple no-op hook. */
-+	public static final PostReceiveHook NULL = new PostReceiveHook() {
-+		public void onPostReceive(final ReceivePack rp,
-+				final Collection<ReceiveCommand> commands) {
-+			// Do nothing.
-+		}
-+	};
++import org.kohsuke.args4j.Argument;
++import org.kohsuke.args4j.Option;
++import org.spearce.jgit.lib.Repository;
++import org.spearce.jgit.transport.DaemonService;
 +
-+	/**
-+	 * Invoked after all commands are executed and status has been returned.
-+	 * 
-+	 * @param rp
-+	 *            the process handling the current receive. Hooks may obtain
-+	 *            details about the destination repository through this handle.
-+	 * @param commands
-+	 *            unmodifiable set of successfully completed commands. May be
-+	 *            the empty set.
-+	 */
-+	public void onPostReceive(ReceivePack rp,
-+			Collection<ReceiveCommand> commands);
-+}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/PreReceiveHook.java b/org.spearce.jgit/src/org/spearce/jgit/transport/PreReceiveHook.java
-new file mode 100644
-index 0000000..0af466d
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/PreReceiveHook.java
-@@ -0,0 +1,94 @@
-+/*
-+ * Copyright (C) 2008, Google Inc.
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
++@Command(common = true, usage = "Export repositories over git://")
++class Daemon extends TextBuiltin {
++	@Option(name = "--port", metaVar = "PORT", usage = "port number to listen on")
++	int port = org.spearce.jgit.transport.Daemon.DEFAULT_PORT;
 +
-+package org.spearce.jgit.transport;
++	@Option(name = "--listen", metaVar = "HOSTNAME", usage = "hostname (or ip) to listen on")
++	String host;
 +
-+import java.util.Collection;
++	@Option(name = "--enable", metaVar = "SERVICE", usage = "enable the service in all repositories", multiValued = true)
++	final List<String> enable = new ArrayList<String>();
 +
-+/**
-+ * Hook invoked by {@link ReceivePack} before any updates are executed.
-+ * <p>
-+ * The hook is called with any commands that are deemed valid after parsing them
-+ * from the client and applying the standard receive configuration options to
-+ * them:
-+ * <ul>
-+ * <li><code>receive.denyDenyDeletes</code></li>
-+ * <li><code>receive.denyNonFastForwards</code></li>
-+ * </ul>
-+ * This means the hook will not receive a non-fast-forward update command if
-+ * denyNonFastForwards is set to true in the configuration file. To get all
-+ * commands within the hook, see {@link ReceivePack#getAllCommands()}.
-+ * <p>
-+ * As the hook is invoked prior to the commands being executed, the hook may
-+ * choose to block any command by setting its result status with
-+ * {@link ReceiveCommand#setResult(ReceiveCommand.Result)}.
-+ * <p>
-+ * The hook may also choose to perform the command itself (or merely pretend
-+ * that it has performed the command), by setting the result status to
-+ * {@link ReceiveCommand.Result#OK}.
-+ * <p>
-+ * Hooks should run quickly, as they block the caller thread and the client
-+ * process from completing.
-+ * <p>
-+ * Hooks may send optional messages back to the client via methods on
-+ * {@link ReceivePack}. Implementors should be aware that not all network
-+ * transports support this output, so some (or all) messages may simply be
-+ * discarded. These messages should be advisory only.
-+ */
-+public interface PreReceiveHook {
-+	/** A simple no-op hook. */
-+	public static final PreReceiveHook NULL = new PreReceiveHook() {
-+		public void onPreReceive(final ReceivePack rp,
-+				final Collection<ReceiveCommand> commands) {
-+			// Do nothing.
-+		}
-+	};
++	@Option(name = "--disable", metaVar = "SERVICE", usage = "disable the service in all repositories", multiValued = true)
++	final List<String> disable = new ArrayList<String>();
 +
-+	/**
-+	 * Invoked just before commands are executed.
-+	 * <p>
-+	 * See the class description for how this method can impact execution.
-+	 * 
-+	 * @param rp
-+	 *            the process handling the current receive. Hooks may obtain
-+	 *            details about the destination repository through this handle.
-+	 * @param commands
-+	 *            unmodifiable set of valid commands still pending execution.
-+	 *            May be the empty set.
-+	 */
-+	public void onPreReceive(ReceivePack rp, Collection<ReceiveCommand> commands);
-+}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/ReceiveCommand.java b/org.spearce.jgit/src/org/spearce/jgit/transport/ReceiveCommand.java
-new file mode 100644
-index 0000000..b07b976
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/ReceiveCommand.java
-@@ -0,0 +1,223 @@
-+/*
-+ * Copyright (C) 2008, Google Inc.
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
++	@Option(name = "--allow-override", metaVar = "SERVICE", usage = "configure the service in daemon.servicename", multiValued = true)
++	final List<String> canOverride = new ArrayList<String>();
 +
-+package org.spearce.jgit.transport;
++	@Option(name = "--forbid-override", metaVar = "SERVICE", usage = "configure the service in daemon.servicename", multiValued = true)
++	final List<String> forbidOverride = new ArrayList<String>();
 +
-+import org.spearce.jgit.lib.ObjectId;
-+import org.spearce.jgit.lib.Ref;
-+
-+/**
-+ * A command being processed by {@link ReceivePack}.
-+ * <p>
-+ * This command instance roughly translates to the server side representation of
-+ * the {@link RemoteRefUpdate} created by the client.
-+ */
-+public class ReceiveCommand {
-+	/** Type of operation requested. */
-+	public static enum Type {
-+		/** Create a new ref; the ref must not already exist. */
-+		CREATE,
-+
-+		/**
-+		 * Update an existing ref with a fast-forward update.
-+		 * <p>
-+		 * During a fast-forward update no changes will be lost; only new
-+		 * commits are inserted into the ref.
-+		 */
-+		UPDATE,
-+
-+		/**
-+		 * Update an existing ref by potentially discarding objects.
-+		 * <p>
-+		 * The current value of the ref is not fully reachable from the new
-+		 * value of the ref, so a successful command may result in one or more
-+		 * objects becoming unreachable.
-+		 */
-+		UPDATE_NONFASTFORWARD,
-+
-+		/** Delete an existing ref; the ref should already exist. */
-+		DELETE;
-+	}
-+
-+	/** Result of the update command. */
-+	public static enum Result {
-+		/** The command has not yet been attempted by the server. */
-+		NOT_ATTEMPTED,
-+
-+		/** The server is configured to deny creation of this ref. */
-+		REJECTED_NOCREATE,
-+
-+		/** The server is configured to deny deletion of this ref. */
-+		REJECTED_NODELETE,
-+
-+		/** The update is a non-fast-forward update and isn't permitted. */
-+		REJECTED_NONFASTFORWARD,
-+
-+		/** The update affects <code>HEAD</code> and cannot be permitted. */
-+		REJECTED_CURRENT_BRANCH,
-+
-+		/**
-+		 * One or more objects aren't in the repository.
-+		 * <p>
-+		 * This is severe indication of either repository corruption on the
-+		 * server side, or a bug in the client wherein the client did not supply
-+		 * all required objects during the pack transfer.
-+		 */
-+		REJECTED_MISSING_OBJECT,
-+
-+		/** Other failure; see {@link ReceiveCommand#getMessage()}. */
-+		REJECTED_OTHER_REASON,
-+
-+		/** The ref could not be locked and updated atomically; try again. */
-+		LOCK_FAILURE,
-+
-+		/** The change was completed successfully. */
-+		OK;
-+	}
-+
-+	private final ObjectId oldId;
-+
-+	private final ObjectId newId;
-+
-+	private final String name;
-+
-+	private Type type;
-+
-+	private Ref ref;
-+
-+	private Result status;
-+
-+	private String message;
-+
-+	/**
-+	 * Create a new command for {@link ReceivePack}.
-+	 * 
-+	 * @param oldId
-+	 *            the old object id; must not be null. Use
-+	 *            {@link ObjectId#zeroId()} to indicate a ref creation.
-+	 * @param newId
-+	 *            the new object id; must not be null. Use
-+	 *            {@link ObjectId#zeroId()} to indicate a ref deletion.
-+	 * @param name
-+	 *            name of the ref being affected.
-+	 */
-+	public ReceiveCommand(final ObjectId oldId, final ObjectId newId,
-+			final String name) {
-+		this.oldId = oldId;
-+		this.newId = newId;
-+		this.name = name;
-+
-+		type = Type.UPDATE;
-+		if (ObjectId.zeroId().equals(oldId))
-+			type = Type.CREATE;
-+		if (ObjectId.zeroId().equals(newId))
-+			type = Type.DELETE;
-+		status = Result.NOT_ATTEMPTED;
-+	}
-+
-+	/** @return the old value the client thinks the ref has. */
-+	public ObjectId getOldId() {
-+		return oldId;
-+	}
-+
-+	/** @return the requested new value for this ref. */
-+	public ObjectId getNewId() {
-+		return newId;
-+	}
-+
-+	/** @return the name of the ref being updated. */
-+	public String getRefName() {
-+		return name;
-+	}
-+
-+	/** @return the type of this command; see {@link Type}. */
-+	public Type getType() {
-+		return type;
-+	}
-+
-+	/** @return the ref, if this was advertised by the connection. */
-+	public Ref getRef() {
-+		return ref;
-+	}
-+
-+	/** @return the current status code of this command. */
-+	public Result getResult() {
-+		return status;
-+	}
-+
-+	/** @return the message associated with a failure status. */
-+	public String getMessage() {
-+		return message;
-+	}
-+
-+	/**
-+	 * Set the status of this command.
-+	 * 
-+	 * @param s
-+	 *            the new status code for this command.
-+	 */
-+	public void setResult(final Result s) {
-+		setResult(s, null);
-+	}
-+
-+	/**
-+	 * Set the status of this command.
-+	 * 
-+	 * @param s
-+	 *            new status code for this command.
-+	 * @param m
-+	 *            optional message explaining the new status.
-+	 */
-+	public void setResult(final Result s, final String m) {
-+		status = s;
-+		message = m;
-+	}
-+
-+	void setRef(final Ref r) {
-+		ref = r;
-+	}
-+
-+	void setType(final Type t) {
-+		type = t;
-+	}
++	@Argument(metaVar = "DIRECTORY", usage = "directories to export")
++	final List<File> directory = new ArrayList<File>();
 +
 +	@Override
-+	public String toString() {
-+		return getType().name() + ": " + getOldId().name() + " "
-+				+ getNewId().name() + " " + getRefName();
++	protected void run() throws Exception {
++		final org.spearce.jgit.transport.Daemon d;
++
++		d = new org.spearce.jgit.transport.Daemon(
++				host != null ? new InetSocketAddress(host, port)
++						: new InetSocketAddress(port));
++
++		for (final String n : enable)
++			service(d, n).setEnabled(true);
++		for (final String n : disable)
++			service(d, n).setEnabled(false);
++
++		for (final String n : canOverride)
++			service(d, n).setOverridable(true);
++		for (final String n : forbidOverride)
++			service(d, n).setOverridable(false);
++
++		if (directory.isEmpty()) {
++			export(d, db);
++		} else {
++			for (final File f : directory) {
++				out.println("Exporting " + f.getAbsolutePath());
++				d.exportDirectory(f);
++			}
++		}
++		d.start();
++		out.println("Listening on " + d.getAddress());
++	}
++
++	private DaemonService service(final org.spearce.jgit.transport.Daemon d,
++			final String n) {
++		final DaemonService svc = d.getService(n);
++		if (svc == null)
++			throw die("Service '" + n + "' not supported");
++		return svc;
++	}
++
++	private void export(final org.spearce.jgit.transport.Daemon daemon,
++			final Repository repo) {
++		File d = repo.getDirectory();
++		String name = d.getName();
++		while (name.equals(".git") || name.equals(".")) {
++			d = d.getParentFile();
++			name = d.getName();
++		}
++		if (!name.endsWith(".git"))
++			name += ".git";
++
++		out.println("Exporting current repository as \"" + name + "\"");
++		daemon.exportRepository(name, repo);
 +	}
 +}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java b/org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/Daemon.java b/org.spearce.jgit/src/org/spearce/jgit/transport/Daemon.java
 new file mode 100644
-index 0000000..95519b8
+index 0000000..c225740
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java
-@@ -0,0 +1,793 @@
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/Daemon.java
+@@ -0,0 +1,309 @@
 +/*
 + * Copyright (C) 2008, Google Inc.
 + *
@@ -553,759 +256,527 @@ index 0000000..95519b8
 +
 +package org.spearce.jgit.transport;
 +
-+import java.io.BufferedWriter;
-+import java.io.EOFException;
++import java.io.BufferedInputStream;
++import java.io.BufferedOutputStream;
++import java.io.File;
++import java.io.IOException;
++import java.io.InterruptedIOException;
++import java.net.InetSocketAddress;
++import java.net.ServerSocket;
++import java.net.Socket;
++import java.net.SocketAddress;
++import java.util.ArrayList;
++import java.util.Collection;
++import java.util.HashMap;
++import java.util.Map;
++import java.util.regex.Pattern;
++
++import org.spearce.jgit.lib.Repository;
++
++/** Basic daemon for the anonymous <code>git://</code> transport protocol. */
++public class Daemon {
++	/** 9418: IANA assigned port number for Git. */
++	public static final int DEFAULT_PORT = 9418;
++
++	private static final int BACKLOG = 5;
++
++	private static final Pattern SAFE_REPOSITORY_NAME = Pattern
++			.compile("^[A-Za-z][A-Za-z0-9/_ -]+(\\.git)?$");
++
++	private InetSocketAddress myAddress;
++
++	private final DaemonService[] services;
++
++	private final ThreadGroup processors;
++
++	private Map<String, Repository> exports;
++
++	private Collection<File> exportBase;
++
++	private boolean run;
++
++	private Thread acceptThread;
++
++	/** Configure a daemon to listen on any available network port. */
++	public Daemon() {
++		this(null);
++	}
++
++	/**
++	 * Configure a new daemon for the specified network address.
++	 * 
++	 * @param addr
++	 *            address to listen for connections on. If null, any available
++	 *            port will be chosen on all network interfaces.
++	 */
++	public Daemon(final InetSocketAddress addr) {
++		myAddress = addr;
++		exports = new HashMap<String, Repository>();
++		exportBase = new ArrayList<File>();
++		processors = new ThreadGroup("Git-Daemon");
++
++		services = new DaemonService[] { new DaemonService("receive-pack",
++				"receivepack") {
++			@Override
++			protected void execute(final DaemonClient dc, final Repository db)
++					throws IOException {
++				final ReceivePack rp = new ReceivePack(db);
++				rp.receive(dc.getInputStream(), dc.getOutputStream(), null);
++			}
++		} };
++	}
++
++	/** @return the address connections are received on. */
++	public synchronized InetSocketAddress getAddress() {
++		return myAddress;
++	}
++
++	/**
++	 * Lookup a supported service so it can be reconfigured.
++	 * 
++	 * @param name
++	 *            name of the service; e.g. "receive-pack"/"git-receive-pack" or
++	 *            "upload-pack"/"git-upload-pack".
++	 * @return the service; null if this daemon implementation doesn't support
++	 *         the requested service type.
++	 */
++	public synchronized DaemonService getService(String name) {
++		if (!name.startsWith("git-"))
++			name = "git-" + name;
++		for (final DaemonService s : services) {
++			if (s.getCommandName().equals(name))
++				return s;
++		}
++		return null;
++	}
++
++	/**
++	 * Add a single repository to the set that is exported by this daemon.
++	 * <p>
++	 * The existence (or lack-thereof) of <code>git-daemon-export-ok</code> is
++	 * ignored by this method. The repository is always published.
++	 * 
++	 * @param name
++	 *            name the repository will be published under.
++	 * @param db
++	 *            the repository instance.
++	 */
++	public void exportRepository(final String name, final Repository db) {
++		synchronized (exports) {
++			exports.put(name, db);
++		}
++	}
++
++	/**
++	 * Recursively export all Git repositories within a directory.
++	 * 
++	 * @param dir
++	 *            the directory to export. This directory must not itself be a
++	 *            git repository, but any directory below it which has a file
++	 *            named <code>git-daemon-export-ok</code> will be published.
++	 */
++	public void exportDirectory(final File dir) {
++		synchronized (exportBase) {
++			exportBase.add(dir);
++		}
++	}
++
++	/**
++	 * Start this daemon on a background thread.
++	 * 
++	 * @throws IOException
++	 *             the server socket could not be opened.
++	 * @throws IllegalStateException
++	 *             the daemon is already running.
++	 */
++	public synchronized void start() throws IOException {
++		if (acceptThread != null)
++			throw new IllegalStateException("Daemon already running");
++
++		final ServerSocket listenSock = new ServerSocket(
++				myAddress != null ? myAddress.getPort() : 0, BACKLOG,
++				myAddress != null ? myAddress.getAddress() : null);
++		myAddress = (InetSocketAddress) listenSock.getLocalSocketAddress();
++
++		run = true;
++		acceptThread = new Thread(processors, "Git-Daemon-Accept") {
++			public void run() {
++				while (isRunning()) {
++					try {
++						startClient(listenSock.accept());
++					} catch (InterruptedIOException e) {
++						// Test again to see if we should keep accepting.
++					} catch (IOException e) {
++						break;
++					}
++				}
++
++				try {
++					listenSock.close();
++				} catch (IOException err) {
++					//
++				} finally {
++					synchronized (Daemon.this) {
++						acceptThread = null;
++					}
++				}
++			}
++		};
++		acceptThread.start();
++	}
++
++	/** @return true if this daemon is receiving connections. */
++	public synchronized boolean isRunning() {
++		return run;
++	}
++
++	/** Stop this daemon. */
++	public synchronized void stop() {
++		if (acceptThread != null) {
++			run = false;
++			acceptThread.interrupt();
++		}
++	}
++
++	private void startClient(final Socket s) {
++		final DaemonClient dc = new DaemonClient(this);
++
++		final SocketAddress peer = s.getRemoteSocketAddress();
++		if (peer instanceof InetSocketAddress)
++			dc.setRemoteAddress(((InetSocketAddress) peer).getAddress());
++
++		new Thread(processors, "Git-Daemon-Client " + peer.toString()) {
++			public void run() {
++				try {
++					dc.execute(new BufferedInputStream(s.getInputStream()),
++							new BufferedOutputStream(s.getOutputStream()));
++				} catch (IOException e) {
++					// Ignore unexpected IO exceptions from clients
++					e.printStackTrace();
++				} finally {
++					try {
++						s.getInputStream().close();
++					} catch (IOException e) {
++						// Ignore close exceptions
++					}
++					try {
++						s.getOutputStream().close();
++					} catch (IOException e) {
++						// Ignore close exceptions
++					}
++				}
++			}
++		}.start();
++	}
++
++	synchronized DaemonService matchService(final String cmd) {
++		for (final DaemonService d : services) {
++			if (d.handles(cmd))
++				return d;
++		}
++		return null;
++	}
++
++	Repository openRepository(String name) {
++		if (!name.startsWith("/"))
++			return null;
++		name = name.substring(1);
++
++		Repository db;
++		synchronized (exports) {
++			db = exports.get(name);
++			if (db != null)
++				return db;
++
++			db = exports.get(name + ".git");
++			if (db != null)
++				return db;
++		}
++
++		if (SAFE_REPOSITORY_NAME.matcher(name).matches()) {
++			final File[] search;
++			synchronized (exportBase) {
++				search = exportBase.toArray(new File[exportBase.size()]);
++			}
++			for (final File f : search) {
++				db = openRepository(new File(f, name));
++				if (db != null)
++					return db;
++
++				db = openRepository(new File(f, name + ".git"));
++				if (db != null)
++					return db;
++
++				db = openRepository(new File(f, name + "/.git"));
++				if (db != null)
++					return db;
++			}
++		}
++		return null;
++	}
++
++	private Repository openRepository(final File d) {
++		if (d.isDirectory() && new File(d, "git-daemon-export-ok").exists()) {
++			try {
++				return new Repository(d);
++			} catch (IOException err) {
++				// Ignore
++			}
++		}
++		return null;
++	}
++}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/DaemonClient.java b/org.spearce.jgit/src/org/spearce/jgit/transport/DaemonClient.java
+new file mode 100644
+index 0000000..636cf22
+--- /dev/null
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/DaemonClient.java
+@@ -0,0 +1,106 @@
++/*
++ * Copyright (C) 2008, Google Inc.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.transport;
++
 +import java.io.IOException;
 +import java.io.InputStream;
 +import java.io.OutputStream;
-+import java.io.OutputStreamWriter;
-+import java.io.PrintWriter;
-+import java.util.ArrayList;
-+import java.util.Collections;
-+import java.util.HashSet;
-+import java.util.Iterator;
-+import java.util.List;
-+import java.util.Map;
-+import java.util.Set;
++import java.net.InetAddress;
 +
-+import org.spearce.jgit.errors.MissingObjectException;
-+import org.spearce.jgit.errors.PackProtocolException;
-+import org.spearce.jgit.lib.Constants;
-+import org.spearce.jgit.lib.NullProgressMonitor;
-+import org.spearce.jgit.lib.ObjectId;
-+import org.spearce.jgit.lib.Ref;
-+import org.spearce.jgit.lib.RefComparator;
-+import org.spearce.jgit.lib.RefUpdate;
-+import org.spearce.jgit.lib.Repository;
-+import org.spearce.jgit.lib.RepositoryConfig;
-+import org.spearce.jgit.revwalk.ObjectWalk;
-+import org.spearce.jgit.revwalk.RevCommit;
-+import org.spearce.jgit.revwalk.RevObject;
-+import org.spearce.jgit.revwalk.RevWalk;
-+import org.spearce.jgit.transport.ReceiveCommand.Result;
++/** Active network client of {@link Daemon}. */
++public class DaemonClient {
++	private final Daemon daemon;
 +
-+/**
-+ * Implements the server side of a push connection, receiving objects.
-+ */
-+public class ReceivePack {
-+	static final String CAPABILITY_REPORT_STATUS = BasePackPushConnection.CAPABILITY_REPORT_STATUS;
-+
-+	static final String CAPABILITY_DELETE_REFS = BasePackPushConnection.CAPABILITY_DELETE_REFS;
-+
-+	/** Database we write the stored objects into. */
-+	private final Repository db;
-+
-+	/** Revision traversal support over {@link #db}. */
-+	private final RevWalk walk;
-+
-+	/** Should an incoming transfer validate objects? */
-+	private boolean checkReceivedObjects;
-+
-+	/** Should an incoming transfer permit create requests? */
-+	private boolean allowCreates;
-+
-+	/** Should an incoming transfer permit delete requests? */
-+	private boolean allowDeletes;
-+
-+	/** Should an incoming transfer permit non-fast-forward requests? */
-+	private boolean allowNonFastForwards;
-+
-+	/** Hook to validate the update commands before execution. */
-+	private PreReceiveHook preReceive;
-+
-+	/** Hook to report on the commands after execution. */
-+	private PostReceiveHook postReceive;
++	private InetAddress peer;
 +
 +	private InputStream rawIn;
 +
 +	private OutputStream rawOut;
 +
-+	private PacketLineIn pckIn;
-+
-+	private PacketLineOut pckOut;
-+
-+	private PrintWriter msgs;
-+
-+	/** The refs we advertised as existing at the start of the connection. */
-+	private Map<String, Ref> refs;
-+
-+	/** Capabilities requested by the client. */
-+	private Set<String> enabledCapablities;
-+
-+	/** Commands to execute, as received by the client. */
-+	private List<ReceiveCommand> commands;
-+
-+	/** An exception caught while unpacking and fsck'ing the objects. */
-+	private Throwable unpackError;
-+
-+	/** if {@link #enabledCapablities} has {@link #CAPABILITY_REPORT_STATUS} */
-+	private boolean reportStatus;
-+
-+	/**
-+	 * Create a new pack receive for an open repository.
-+	 * 
-+	 * @param into
-+	 *            the destination repository.
-+	 */
-+	public ReceivePack(final Repository into) {
-+		db = into;
-+		walk = new RevWalk(db);
-+
-+		final RepositoryConfig cfg = db.getConfig();
-+		checkReceivedObjects = cfg.getBoolean("receive", "fsckobjects", false);
-+		allowCreates = true;
-+		allowDeletes = !cfg.getBoolean("receive", "denydeletes", false);
-+		allowNonFastForwards = !cfg.getBoolean("receive",
-+				"denynonfastforwards", false);
-+		preReceive = PreReceiveHook.NULL;
-+		postReceive = PostReceiveHook.NULL;
++	DaemonClient(final Daemon d) {
++		daemon = d;
 +	}
 +
-+	/** @return the repository this receive completes into. */
-+	public final Repository getRepository() {
-+		return db;
++	void setRemoteAddress(final InetAddress ia) {
++		peer = ia;
 +	}
 +
-+	/** @return the RevWalk instance used by this connection. */
-+	public final RevWalk getRevWalk() {
-+		return walk;
++	/** @return the daemon which spawned this client. */
++	public Daemon getDaemon() {
++		return daemon;
 +	}
 +
-+	/**
-+	 * @return true if this instance will verify received objects are formatted
-+	 *         correctly. Validating objects requires more CPU time on this side
-+	 *         of the connection.
-+	 */
-+	public boolean isCheckReceivedObjects() {
-+		return checkReceivedObjects;
++	/** @return Internet address of the remote client. */
++	public InetAddress getRemoteAddress() {
++		return peer;
 +	}
 +
-+	/**
-+	 * @param check
-+	 *            true to enable checking received objects; false to assume all
-+	 *            received objects are valid.
-+	 */
-+	public void setCheckReceivedObjects(final boolean check) {
-+		checkReceivedObjects = check;
++	/** @return input stream to read from the connected client. */
++	public InputStream getInputStream() {
++		return rawIn;
 +	}
 +
-+	/** @return true if the client can request refs to be created. */
-+	public boolean isAllowCreates() {
-+		return allowCreates;
++	/** @return output stream to send data to the connected client. */
++	public OutputStream getOutputStream() {
++		return rawOut;
 +	}
 +
-+	/**
-+	 * @param canCreate
-+	 *            true to permit create ref commands to be processed.
-+	 */
-+	public void setAllowCreates(final boolean canCreate) {
-+		allowCreates = canCreate;
-+	}
-+
-+	/** @return true if the client can request refs to be deleted. */
-+	public boolean isAllowDeletes() {
-+		return allowDeletes;
-+	}
-+
-+	/**
-+	 * @param canDelete
-+	 *            true to permit delete ref commands to be processed.
-+	 */
-+	public void setAllowDeletes(final boolean canDelete) {
-+		allowDeletes = canDelete;
-+	}
-+
-+	/**
-+	 * @return true if the client can request non-fast-forward updates of a ref,
-+	 *         possibly making objects unreachable.
-+	 */
-+	public boolean isAllowNonFastForwards() {
-+		return allowNonFastForwards;
-+	}
-+
-+	/**
-+	 * @param canRewind
-+	 *            true to permit the client to ask for non-fast-forward updates
-+	 *            of an existing ref.
-+	 */
-+	public void setAllowNonFastForwards(final boolean canRewind) {
-+		allowNonFastForwards = canRewind;
-+	}
-+
-+	/** @return get the hook invoked before updates occur. */
-+	public PreReceiveHook getPreReceiveHook() {
-+		return preReceive;
-+	}
-+
-+	/**
-+	 * Set the hook which is invoked prior to commands being executed.
-+	 * <p>
-+	 * Only valid commands (those which have no obvious errors according to the
-+	 * received input and this instance's configuration) are passed into the
-+	 * hook. The hook may mark a command with a result of any value other than
-+	 * {@link Result#NOT_ATTEMPTED} to block its execution.
-+	 * <p>
-+	 * The hook may be called with an empty command collection if the current
-+	 * set is completely invalid.
-+	 * 
-+	 * @param h
-+	 *            the hook instance; may be null to disable the hook.
-+	 */
-+	public void setPreReceiveHook(final PreReceiveHook h) {
-+		preReceive = h != null ? h : PreReceiveHook.NULL;
-+	}
-+
-+	/** @return get the hook invoked after updates occur. */
-+	public PostReceiveHook getPostReceiveHook() {
-+		return postReceive;
-+	}
-+
-+	/**
-+	 * Set the hook which is invoked after commands are executed.
-+	 * <p>
-+	 * Only successful commands (type is {@link Result#OK}) are passed into the
-+	 * hook. The hook may be called with an empty command collection if the
-+	 * current set all resulted in an error.
-+	 * 
-+	 * @param h
-+	 *            the hook instance; may be null to disable the hook.
-+	 */
-+	public void setPostReceiveHook(final PostReceiveHook h) {
-+		postReceive = h != null ? h : PostReceiveHook.NULL;
-+	}
-+
-+	/** @return all of the command received by the current request. */
-+	public List<ReceiveCommand> getAllCommands() {
-+		return Collections.unmodifiableList(commands);
-+	}
-+
-+	/**
-+	 * Send an error message to the client, if it supports receiving them.
-+	 * <p>
-+	 * If the client doesn't support receiving messages, the message will be
-+	 * discarded, with no other indication to the caller or to the client.
-+	 * <p>
-+	 * {@link PreReceiveHook}s should always try to use
-+	 * {@link ReceiveCommand#setResult(Result, String)} with a result status of
-+	 * {@link Result#REJECTED_OTHER_REASON} to indicate any reasons for
-+	 * rejecting an update. Messages attached to a command are much more likely
-+	 * to be returned to the client.
-+	 * 
-+	 * @param what
-+	 *            string describing the problem identified by the hook. The
-+	 *            string must not end with an LF, and must not contain an LF.
-+	 */
-+	public void sendError(final String what) {
-+		sendMessage("error", what);
-+	}
-+
-+	/**
-+	 * Send a message to the client, if it supports receiving them.
-+	 * <p>
-+	 * If the client doesn't support receiving messages, the message will be
-+	 * discarded, with no other indication to the caller or to the client.
-+	 * 
-+	 * @param what
-+	 *            string describing the problem identified by the hook. The
-+	 *            string must not end with an LF, and must not contain an LF.
-+	 */
-+	public void sendMessage(final String what) {
-+		sendMessage("remote", what);
-+	}
-+
-+	private void sendMessage(final String type, final String what) {
-+		if (msgs != null)
-+			msgs.println(type + ": " + what);
-+	}
-+
-+	/**
-+	 * Execute the receive task on the socket.
-+	 * 
-+	 * @param input
-+	 *            raw input to read client commands and pack data from. Caller
-+	 *            must ensure the input is buffered, otherwise read performance
-+	 *            may suffer.
-+	 * @param output
-+	 *            response back to the Git network client. Caller must ensure
-+	 *            the output is buffered, otherwise write performance may
-+	 *            suffer.
-+	 * @param messages
-+	 *            secondary "notice" channel to send additional messages out
-+	 *            through. When run over SSH this should be tied back to the
-+	 *            standard error channel of the command execution. For most
-+	 *            other network connections this should be null.
-+	 * @throws IOException
-+	 */
-+	public void receive(final InputStream input, final OutputStream output,
-+			final OutputStream messages) throws IOException {
-+		try {
-+			rawIn = input;
-+			rawOut = output;
-+
-+			pckIn = new PacketLineIn(rawIn);
-+			pckOut = new PacketLineOut(rawOut);
-+			if (messages != null) {
-+				msgs = new PrintWriter(new BufferedWriter(
-+						new OutputStreamWriter(messages, Constants.CHARSET),
-+						8192)) {
-+					@Override
-+					public void println() {
-+						print('\n');
-+					}
-+				};
-+			}
-+
-+			enabledCapablities = new HashSet<String>();
-+			commands = new ArrayList<ReceiveCommand>();
-+
-+			service();
-+		} finally {
-+			try {
-+				if (msgs != null) {
-+					msgs.flush();
-+				}
-+			} finally {
-+				rawIn = null;
-+				rawOut = null;
-+				pckIn = null;
-+				pckOut = null;
-+				msgs = null;
-+				refs = null;
-+				enabledCapablities = null;
-+				commands = null;
-+			}
-+		}
-+	}
-+
-+	private void service() throws IOException {
-+		sendAdvertisedRefs();
-+		recvCommands();
-+		if (!commands.isEmpty()) {
-+			enableCapabilities();
-+
-+			if (needPack()) {
-+				try {
-+					receivePack();
-+					if (isCheckReceivedObjects())
-+						checkConnectivity();
-+					unpackError = null;
-+				} catch (IOException err) {
-+					unpackError = err;
-+				} catch (RuntimeException err) {
-+					unpackError = err;
-+				} catch (Error err) {
-+					unpackError = err;
-+				}
-+			}
-+
-+			if (unpackError == null) {
-+				validateCommands();
-+				executeCommands();
-+			}
-+
-+			if (reportStatus) {
-+				sendStatusReport(true, new Reporter() {
-+					void sendString(final String s) throws IOException {
-+						pckOut.writeString(s + "\n");
-+					}
-+				});
-+				pckOut.end();
-+			} else if (msgs != null) {
-+				sendStatusReport(false, new Reporter() {
-+					void sendString(final String s) throws IOException {
-+						msgs.println(s);
-+					}
-+				});
-+				msgs.flush();
-+			}
-+
-+			postReceive.onPostReceive(this, filterCommands(Result.OK));
-+		}
-+	}
-+
-+	private void sendAdvertisedRefs() throws IOException {
-+		refs = db.getAllRefs();
-+
-+		final StringBuilder m = new StringBuilder(100);
-+		final char[] idtmp = new char[2 * Constants.OBJECT_ID_LENGTH];
-+		final Iterator<Ref> i = RefComparator.sort(refs.values()).iterator();
-+		{
-+			if (i.hasNext()) {
-+				final Ref r = i.next();
-+				format(m, idtmp, r.getObjectId(), r.getOrigName());
-+			} else {
-+				format(m, idtmp, ObjectId.zeroId(), "capabilities^{}");
-+			}
-+			m.append('\0');
-+			m.append(' ');
-+			m.append(CAPABILITY_DELETE_REFS);
-+			m.append(' ');
-+			m.append(CAPABILITY_REPORT_STATUS);
-+			m.append(' ');
-+			writeAdvertisedRef(m);
-+		}
-+
-+		while (i.hasNext()) {
-+			final Ref r = i.next();
-+			format(m, idtmp, r.getObjectId(), r.getOrigName());
-+			writeAdvertisedRef(m);
-+		}
-+		pckOut.end();
-+	}
-+
-+	private void format(final StringBuilder m, final char[] idtmp,
-+			final ObjectId id, final String name) {
-+		m.setLength(0);
-+		id.copyTo(idtmp, m);
-+		m.append(' ');
-+		m.append(name);
-+	}
-+
-+	private void writeAdvertisedRef(final StringBuilder m) throws IOException {
-+		m.append('\n');
-+		pckOut.writeString(m.toString());
-+	}
-+
-+	private void recvCommands() throws IOException {
-+		for (;;) {
-+			String line;
-+			try {
-+				line = pckIn.readStringNoLF();
-+			} catch (EOFException eof) {
-+				if (commands.isEmpty())
-+					return;
-+				throw eof;
-+			}
-+
-+			if (commands.isEmpty()) {
-+				final int nul = line.indexOf('\0');
-+				if (nul >= 0) {
-+					for (String c : line.substring(nul + 1).split(" "))
-+						enabledCapablities.add(c);
-+					line = line.substring(0, nul);
-+				}
-+			}
-+
-+			if (line.length() == 0)
-+				break;
-+			if (line.length() < 83) {
-+				final String m = "error: invalid protocol: wanted 'old new ref'";
-+				sendError(m);
-+				throw new PackProtocolException(m);
-+			}
-+
-+			final ObjectId oldId = ObjectId.fromString(line.substring(0, 40));
-+			final ObjectId newId = ObjectId.fromString(line.substring(41, 81));
-+			final String name = line.substring(82);
-+			final ReceiveCommand cmd = new ReceiveCommand(oldId, newId, name);
-+			cmd.setRef(refs.get(cmd.getRefName()));
-+			commands.add(cmd);
-+		}
-+	}
-+
-+	private void enableCapabilities() {
-+		reportStatus = enabledCapablities.contains(CAPABILITY_REPORT_STATUS);
-+	}
-+
-+	private boolean needPack() {
-+		for (final ReceiveCommand cmd : commands) {
-+			if (cmd.getType() != ReceiveCommand.Type.DELETE)
-+				return true;
-+		}
-+		return false;
-+	}
-+
-+	private void receivePack() throws IOException {
-+		final IndexPack ip = IndexPack.create(db, rawIn);
-+		ip.setFixThin(true);
-+		ip.setObjectChecking(isCheckReceivedObjects());
-+		ip.index(NullProgressMonitor.INSTANCE);
-+		ip.renameAndOpenPack();
-+	}
-+
-+	private void checkConnectivity() throws IOException {
-+		final ObjectWalk ow = new ObjectWalk(db);
-+		for (final ReceiveCommand cmd : commands) {
-+			if (cmd.getResult() != Result.NOT_ATTEMPTED)
-+				continue;
-+			if (cmd.getType() == ReceiveCommand.Type.DELETE)
-+				continue;
-+			ow.markStart(ow.parseAny(cmd.getNewId()));
-+		}
-+		for (final Ref ref : refs.values())
-+			ow.markUninteresting(ow.parseAny(ref.getObjectId()));
-+		ow.checkConnectivity();
-+	}
-+
-+	private void validateCommands() {
-+		for (final ReceiveCommand cmd : commands) {
-+			final Ref ref = cmd.getRef();
-+			if (cmd.getResult() != Result.NOT_ATTEMPTED)
-+				continue;
-+
-+			if (cmd.getType() == ReceiveCommand.Type.DELETE
-+					&& !isAllowDeletes()) {
-+				// Deletes are not supported on this repository.
-+				//
-+				cmd.setResult(Result.REJECTED_NODELETE);
-+				continue;
-+			}
-+
-+			if (cmd.getType() == ReceiveCommand.Type.CREATE) {
-+				if (!isAllowCreates()) {
-+					cmd.setResult(Result.REJECTED_NOCREATE);
-+					continue;
-+				}
-+
-+				if (ref != null && !isAllowNonFastForwards()) {
-+					// Creation over an existing ref is certainly not going
-+					// to be a fast-forward update. We can reject it early.
-+					//
-+					cmd.setResult(Result.REJECTED_NONFASTFORWARD);
-+					continue;
-+				}
-+
-+				if (ref != null) {
-+					// A well behaved client shouldn't have sent us an
-+					// update command for a ref we advertised to it.
-+					//
-+					cmd.setResult(Result.REJECTED_OTHER_REASON, "ref exists");
-+					continue;
-+				}
-+			}
-+
-+			if (cmd.getType() == ReceiveCommand.Type.DELETE && ref != null
-+					&& !ObjectId.zeroId().equals(cmd.getOldId())
-+					&& !ref.getObjectId().equals(cmd.getOldId())) {
-+				// Delete commands can be sent with the old id matching our
-+				// advertised value, *OR* with the old id being 0{40}. Any
-+				// other requested old id is invalid.
-+				//
-+				cmd.setResult(Result.REJECTED_OTHER_REASON,
-+						"invalid old id sent");
-+				continue;
-+			}
-+
-+			if (cmd.getType() == ReceiveCommand.Type.UPDATE) {
-+				if (ref == null) {
-+					// The ref must have been advertised in order to be updated.
-+					//
-+					cmd.setResult(Result.REJECTED_OTHER_REASON, "no such ref");
-+					continue;
-+				}
-+
-+				if (!ref.getObjectId().equals(cmd.getOldId())) {
-+					// A properly functioning client will send the same
-+					// object id we advertised.
-+					//
-+					cmd.setResult(Result.REJECTED_OTHER_REASON,
-+							"invalid old id sent");
-+					continue;
-+				}
-+
-+				// Is this possibly a non-fast-forward style update?
-+				//
-+				RevObject oldObj, newObj;
-+				try {
-+					oldObj = walk.parseAny(cmd.getOldId());
-+				} catch (IOException e) {
-+					cmd.setResult(Result.REJECTED_MISSING_OBJECT, cmd
-+							.getOldId().name());
-+					continue;
-+				}
-+
-+				try {
-+					newObj = walk.parseAny(cmd.getNewId());
-+				} catch (IOException e) {
-+					cmd.setResult(Result.REJECTED_MISSING_OBJECT, cmd
-+							.getNewId().name());
-+					continue;
-+				}
-+
-+				if (oldObj instanceof RevCommit && newObj instanceof RevCommit) {
-+					try {
-+						if (!walk.isMergedInto((RevCommit) oldObj,
-+								(RevCommit) newObj)) {
-+							cmd
-+									.setType(ReceiveCommand.Type.UPDATE_NONFASTFORWARD);
-+						}
-+					} catch (MissingObjectException e) {
-+						cmd.setResult(Result.REJECTED_MISSING_OBJECT, e
-+								.getMessage());
-+					} catch (IOException e) {
-+						cmd.setResult(Result.REJECTED_OTHER_REASON);
-+					}
-+				} else {
-+					cmd.setType(ReceiveCommand.Type.UPDATE_NONFASTFORWARD);
-+				}
-+			}
-+
-+			if (!cmd.getRefName().startsWith(Constants.R_REFS)
-+					|| !Repository.isValidRefName(cmd.getRefName())) {
-+				cmd.setResult(Result.REJECTED_OTHER_REASON, "funny refname");
-+			}
-+		}
-+	}
-+
-+	private void executeCommands() {
-+		preReceive.onPreReceive(this, filterCommands(Result.NOT_ATTEMPTED));
-+		for (final ReceiveCommand cmd : filterCommands(Result.NOT_ATTEMPTED))
-+			execute(cmd);
-+	}
-+
-+	private void execute(final ReceiveCommand cmd) {
-+		try {
-+			final RefUpdate ru = db.updateRef(cmd.getRefName());
-+			switch (cmd.getType()) {
-+			case DELETE:
-+				if (!ObjectId.zeroId().equals(cmd.getOldId())) {
-+					// We can only do a CAS style delete if the client
-+					// didn't bork its delete request by sending the
-+					// wrong zero id rather than the advertised one.
-+					//
-+					ru.setExpectedOldObjectId(cmd.getOldId());
-+				}
-+				ru.setForceUpdate(true);
-+				status(cmd, ru.delete(walk));
-+				break;
-+
-+			case CREATE:
-+			case UPDATE:
-+			case UPDATE_NONFASTFORWARD:
-+				ru.setForceUpdate(isAllowNonFastForwards());
-+				ru.setExpectedOldObjectId(cmd.getOldId());
-+				ru.setNewObjectId(cmd.getNewId());
-+				ru.setRefLogMessage("push", true);
-+				status(cmd, ru.update(walk));
-+				break;
-+			}
-+		} catch (IOException err) {
-+			cmd.setResult(Result.REJECTED_OTHER_REASON, "lock error: "
-+					+ err.getMessage());
-+		}
-+	}
-+
-+	private void status(final ReceiveCommand cmd, final RefUpdate.Result result) {
-+		switch (result) {
-+		case NOT_ATTEMPTED:
-+			cmd.setResult(Result.NOT_ATTEMPTED);
-+			break;
-+
-+		case LOCK_FAILURE:
-+		case IO_FAILURE:
-+			cmd.setResult(Result.LOCK_FAILURE);
-+			break;
-+
-+		case NO_CHANGE:
-+		case NEW:
-+		case FORCED:
-+		case FAST_FORWARD:
-+			cmd.setResult(Result.OK);
-+			break;
-+
-+		case REJECTED:
-+			cmd.setResult(Result.REJECTED_NONFASTFORWARD);
-+			break;
-+
-+		case REJECTED_CURRENT_BRANCH:
-+			cmd.setResult(Result.REJECTED_CURRENT_BRANCH);
-+			break;
-+
-+		default:
-+			cmd.setResult(Result.REJECTED_OTHER_REASON, result.name());
-+			break;
-+		}
-+	}
-+
-+	private List<ReceiveCommand> filterCommands(final Result want) {
-+		final List<ReceiveCommand> r = new ArrayList<ReceiveCommand>(commands
-+				.size());
-+		for (final ReceiveCommand cmd : commands) {
-+			if (cmd.getResult() == want)
-+				r.add(cmd);
-+		}
-+		return r;
-+	}
-+
-+	private void sendStatusReport(final boolean forClient, final Reporter out)
++	void execute(final InputStream in, final OutputStream out)
 +			throws IOException {
-+		if (unpackError != null) {
-+			out.sendString("unpack error " + unpackError.getMessage());
-+			if (forClient) {
-+				for (final ReceiveCommand cmd : commands) {
-+					out.sendString("ng " + cmd.getRefName()
-+							+ " n/a (unpacker error)");
-+				}
-+			}
++		rawIn = in;
++		rawOut = out;
++
++		String cmd = new PacketLineIn(rawIn).readStringNoLF();
++		if (cmd == null || cmd.length() == 0)
 +			return;
++
++		final int nul = cmd.indexOf('\0');
++		if (nul >= 0) {
++			// Newer clients hide a "host" header behind this byte.
++			// Currently we don't use it for anything, so we ignore
++			// this portion of the command.
++			//
++			cmd = cmd.substring(0, nul);
 +		}
 +
-+		if (forClient)
-+			out.sendString("unpack ok");
-+		for (final ReceiveCommand cmd : commands) {
-+			if (cmd.getResult() == Result.OK) {
-+				if (forClient)
-+					out.sendString("ok " + cmd.getRefName());
-+				continue;
-+			}
-+
-+			final StringBuilder r = new StringBuilder();
-+			r.append("ng ");
-+			r.append(cmd.getRefName());
-+			r.append(" ");
-+
-+			switch (cmd.getResult()) {
-+			case NOT_ATTEMPTED:
-+				r.append("server bug; ref not processed");
-+				break;
-+
-+			case REJECTED_NOCREATE:
-+				r.append("creation prohibited");
-+				break;
-+
-+			case REJECTED_NODELETE:
-+				r.append("deletion prohibited");
-+				break;
-+
-+			case REJECTED_NONFASTFORWARD:
-+				r.append("non-fast forward");
-+				break;
-+
-+			case REJECTED_CURRENT_BRANCH:
-+				r.append("branch is currently checked out");
-+				break;
-+
-+			case REJECTED_MISSING_OBJECT:
-+				if (cmd.getMessage() == null)
-+					r.append("missing object(s)");
-+				else if (cmd.getMessage().length() == 2 * Constants.OBJECT_ID_LENGTH)
-+					r.append("object " + cmd.getMessage() + " missing");
-+				else
-+					r.append(cmd.getMessage());
-+				break;
-+
-+			case REJECTED_OTHER_REASON:
-+				if (cmd.getMessage() == null)
-+					r.append("unspecified reason");
-+				else
-+					r.append(cmd.getMessage());
-+				break;
-+
-+			case LOCK_FAILURE:
-+				r.append("failed to lock");
-+				break;
-+
-+			case OK:
-+				// We shouldn't have reached this case (see 'ok' case above).
-+				continue;
-+			}
-+			out.sendString(r.toString());
-+		}
-+	}
-+
-+	static abstract class Reporter {
-+		abstract void sendString(String s) throws IOException;
++		final DaemonService srv = getDaemon().matchService(cmd);
++		if (srv == null)
++			return;
++		srv.execute(this, cmd);
 +	}
 +}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/DaemonService.java b/org.spearce.jgit/src/org/spearce/jgit/transport/DaemonService.java
+new file mode 100644
+index 0000000..775a506
+--- /dev/null
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/DaemonService.java
+@@ -0,0 +1,120 @@
++/*
++ * Copyright (C) 2008, Google Inc.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.transport;
++
++import java.io.IOException;
++
++import org.spearce.jgit.lib.Repository;
++
++/** A service exposed by {@link Daemon} over anonymous <code>git://</code>. */
++public abstract class DaemonService {
++	private final String command;
++
++	private final String config;
++
++	private boolean enabled;
++
++	private boolean overridable;
++
++	protected DaemonService(final String cmdName, final String cfgName) {
++		command = cmdName.startsWith("git-") ? cmdName : "git-" + cmdName;
++		config = cfgName;
++		overridable = true;
++	}
++
++	/** @return is this service enabled for invocation? */
++	public boolean isEnabled() {
++		return enabled;
++	}
++
++	/**
++	 * @param on
++	 *            true to allow this service to be used; false to deny it.
++	 */
++	public void setEnabled(final boolean on) {
++		enabled = on;
++	}
++
++	/** @return can this service be configured in the repository config file? */
++	public boolean isOverridable() {
++		return overridable;
++	}
++
++	/**
++	 * @param on
++	 *            true to permit repositories to override this service's enabled
++	 *            state with the <code>daemon.servicename</code> config setting.
++	 */
++	public void setOverridable(final boolean on) {
++		overridable = on;
++	}
++
++	/** @return name of the command requested by clients. */
++	public String getCommandName() {
++		return command;
++	}
++
++	/**
++	 * Determine if this service can handle the requested command.
++	 * 
++	 * @param commandLine
++	 *            input line from the client.
++	 * @return true if this command can accept the given command line.
++	 */
++	public boolean handles(final String commandLine) {
++		return command.length() + 1 < commandLine.length()
++				&& commandLine.charAt(command.length()) == ' '
++				&& commandLine.startsWith(command);
++	}
++
++	void execute(final DaemonClient client, final String commandLine)
++			throws IOException {
++		final String name = commandLine.substring(command.length() + 1);
++		final Repository db = client.getDaemon().openRepository(name);
++		if (db == null)
++			return;
++		boolean on = isEnabled();
++		if (isOverridable())
++			on = db.getConfig().getBoolean("daemon", config, on);
++		if (on)
++			execute(client, db);
++	}
++
++	protected abstract void execute(DaemonClient client, Repository db)
++			throws IOException;
++}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java
+index a80c335..a11f293 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitAnon.java
+@@ -56,8 +56,7 @@
+  * source projects, as there are no authentication or authorization overheads.
+  */
+ class TransportGitAnon extends PackTransport {
+-	/** IANA assigned port number for Git. */
+-	static final int GIT_PORT = 9418;
++	static final int GIT_PORT = Daemon.DEFAULT_PORT;
+ 
+ 	static boolean canHandle(final URIish uri) {
+ 		return "git".equals(uri.getScheme());
 -- 
 1.6.1.rc4.301.g5497a
