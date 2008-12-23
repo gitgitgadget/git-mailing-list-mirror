@@ -2,56 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,TVD_SPACE_RATIO,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-Received: (qmail 23506 invoked by uid 111); 13 Dec 2008 22:47:47 -0000
+X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+Received: (qmail 15448 invoked by uid 111); 23 Dec 2008 10:16:53 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 13 Dec 2008 17:47:44 -0500
+    by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 23 Dec 2008 05:16:52 -0500
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751947AbYLMWrf (ORCPT <rfc822;peff@peff.net>);
-	Sat, 13 Dec 2008 17:47:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751884AbYLMWrf
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Dec 2008 17:47:35 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:16996 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751837AbYLMWre (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Dec 2008 17:47:34 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so326824nfc.21
-        for <git@vger.kernel.org>; Sat, 13 Dec 2008 14:47:32 -0800 (PST)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        b=Qhmc3PsaDBFa5E+BE/Y+QJ/dUKlvDF/ZZSRdfpEFzdfcEbJkAhftGl3dowaq5yuv8N
-         GO4guimmo/XJOCYk+d6tUrwcouB65dRvkjwcooFuKBrOvdyADvu9s8zC4NNc2fhLkRau
-         9Df1XBFI7lkv5LiLZFlhIZzPIoEnH3xQwrF+4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=Pk3vuzgKdoXcKjzqmU3PADgJ3zCPwyPkWRG8sMILK9sLKC39jNsMvUeKlnxSRjmb0M
-         D/aaOTdEBz/ZP4igtj9MKFyVo8iza2jhpUkuxRlys33RFT1Kyh3w9BVNNSlk7LIGTHeU
-         /msdB5uypS2CqFI8nNVurcb6xboS4gfLG3Ra4=
-Received: by 10.210.51.18 with SMTP id y18mr5937832eby.103.1229208452799;
-        Sat, 13 Dec 2008 14:47:32 -0800 (PST)
-Received: from ?10.0.0.3? (bl7-9-231.dsl.telepac.pt [85.240.9.231])
-        by mx.google.com with ESMTPS id g12sm1323914nfb.46.2008.12.13.14.47.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 13 Dec 2008 14:47:31 -0800 (PST)
-Message-Id: <8836F27A-CEE2-4D72-B2D1-7A3D19975D4F@alcidesfonseca.com>
-From:	Alcides Fonseca <me@alcidesfonseca.com>
+	id S1753028AbYLWKQs (ORCPT <rfc822;peff@peff.net>);
+	Tue, 23 Dec 2008 05:16:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753453AbYLWKQs
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 05:16:48 -0500
+Received: from pan.madism.org ([88.191.52.104]:49325 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752420AbYLWKQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2008 05:16:47 -0500
+X-Greylist: delayed 654 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Dec 2008 05:16:47 EST
+Received: from madism.org (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id B8B622C158;
+	Tue, 23 Dec 2008 11:05:52 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 1E5922AFDF; Tue, 23 Dec 2008 11:05:50 +0100 (CET)
+From:	Pierre Habouzit <madcoder@debian.org>
 To:	git@vger.kernel.org
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Subject: TortoiseGit
-Date:	Sat, 13 Dec 2008 22:47:28 +0000
-X-Mailer: Apple Mail (2.929.2)
+Cc:	Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH] strbuf_readlink semantics update.
+Date:	Tue, 23 Dec 2008 11:05:49 +0100
+Message-Id: <1230026749-25360-1-git-send-email-madcoder@debian.org>
+X-Mailer: git-send-email 1.6.1.rc4.304.g3da087
+In-Reply-To: <alpine.LFD.2.00.0812171042120.14014@localhost.localdomain>
+References: <alpine.LFD.2.00.0812171042120.14014@localhost.localdomain>
+To:	Linus Torvalds <torvalds@linux-foundation.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
+
+strbuf_* operations are meant to append their results to a current buffer
+rather than _replace_ its content. Modify strbuf_readlink accordingly.
+
+Current callers only operate on empty buffers at the moment and this
+semantic change doesn't break any current code.
+
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+ strbuf.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/strbuf.c b/strbuf.c
+index bdf4954..254a7ee 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -299,12 +299,12 @@ int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
+ 		int len;
+ 
+ 		strbuf_grow(sb, hint);
+-		len = readlink(path, sb->buf, hint);
++		len = readlink(path, sb->buf + sb->len, hint);
+ 		if (len < 0) {
+ 			if (errno != ERANGE)
+ 				break;
+ 		} else if (len < hint) {
+-			strbuf_setlen(sb, len);
++			strbuf_setlen(sb, sb->len + len);
+ 			return 0;
+ 		}
+ 
+-- 
+1.6.1.rc4.304.g3da087
 
