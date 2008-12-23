@@ -1,121 +1,60 @@
-From: "Kirill A. Korinskiy" <catap@catap.ru>
-Subject: [PATCH] handle_remote_ls_ctx can parsing href starting at http://
-Date: Tue, 23 Dec 2008 11:31:15 +0300
-Message-ID: <1230021075-10113-1-git-send-email-catap@catap.ru>
-References: <7v3aghnv1t.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Git merge conflicts and encoding of logs
+Date: Tue, 23 Dec 2008 09:41:06 +0100
+Message-ID: <4950A422.5030100@viscovery.net>
+References: <87lju7h4yb.dancerj%dancer@netfort.gr.jp> <7vprjjfgi7.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+Cc: Junichi Uekawa <dancer@netfort.gr.jp>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 09:34:14 2008
+X-From: git-owner@vger.kernel.org Tue Dec 23 09:42:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LF2iN-0006K2-61
-	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 09:34:07 +0100
+	id 1LF2qX-00006S-08
+	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 09:42:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719AbYLWIc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2008 03:32:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbYLWIc3
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 03:32:29 -0500
-Received: from void.catap.ru ([213.248.54.140]:60298 "EHLO void.catap.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751432AbYLWIc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2008 03:32:28 -0500
-Received: (qmail 24393 invoked from network); 23 Dec 2008 08:32:26 -0000
-Received: from catap.dialup.corbina.ru (HELO mx3.catap.ru) (85.21.143.245)
-  by void.catap.ru with ESMTPS (AES256-SHA encrypted); 23 Dec 2008 08:32:26 -0000
-Received: from localhost
-	([127.0.0.1] helo=satellite.home.catap.ru ident=catap)
-	by mx3.catap.ru with esmtp (Exim 4.63)
-	(envelope-from <catap@catap.ru>)
-	id 1LF2gh-0003IG-GY; Tue, 23 Dec 2008 11:32:23 +0300
-Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
-	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1LF2fb-0002dg-Rh; Tue, 23 Dec 2008 11:31:15 +0300
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <7v3aghnv1t.fsf@gitster.siamese.dyndns.org>
+	id S1752910AbYLWIlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2008 03:41:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbYLWIlO
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 03:41:14 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:49251 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751432AbYLWIlO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2008 03:41:14 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LF2p9-0002DG-AW; Tue, 23 Dec 2008 09:41:07 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id F05C054D; Tue, 23 Dec 2008 09:41:06 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7vprjjfgi7.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103805>
 
-The program call remote_ls() to get remote objects over http;
-handle_remote_ls_ctx() is used to parse it's response to populated
-"struct remote_ls_ctx" that is returned from remote_ls().
+Junio C Hamano schrieb:
+> <<<<<<< HEAD:foo
+> これはサイドブランチの変更です。
+> やはり JIS コードで書いてます。
+> =======
+> 日本語のファイルです。
+> JIS コードで書いてます。
+>>>>>>>> master:foo
+> 
+> The above will probably come out as UTF-8 in this mail text, but the point
+> is that the confict side markers do not have anything but filename and the
+> branch name.  I am still scratching my head trying to see where in the
+> merge-recursive codepath you got snippet of log message.
 
-The handle_remote_ls_ctx() function assumed that the server will
-returned local path in href field, but RFC 4918 demand of support full
-URI (http://localhost/repo.git for example).
+Try rebase -i instead of merge: This should put summary lines onto the
+conflict markers.
 
-This resulted in push failure (git-http-push ask server
-PROPFIND /repo.git/alhost:8080/repo.git/refs/) when a server returned
-full URI.
-
-Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
----
- http-push.c |   25 +++++++++++++++++++------
- 1 files changed, 19 insertions(+), 6 deletions(-)
-
-diff --git a/http-push.c b/http-push.c
-index 7c6460919bf3eba10c46cede11ffdd9c53fd2dd2..a4b7d08663504a57008f66a39fffe293f62c1d08 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -87,6 +87,7 @@ static struct object_list *objects;
- struct repo
- {
- 	char *url;
-+	char *path;
- 	int path_len;
- 	int has_info_refs;
- 	int can_update_info_refs;
-@@ -1424,9 +1425,19 @@ static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
- 				ls->userFunc(ls);
- 			}
- 		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
--			ls->dentry_name = xmalloc(strlen(ctx->cdata) -
-+			char *path = ctx->cdata;
-+			if (*ctx->cdata == 'h') {
-+				path = strstr(path, "//");
-+				if (path) {
-+					path = strchr(path+2, '/');
-+				}
-+			}
-+			if (path) {
-+				path += remote->path_len;
-+			}
-+			ls->dentry_name = xmalloc(strlen(path) -
- 						  remote->path_len + 1);
--			strcpy(ls->dentry_name, ctx->cdata + remote->path_len);
-+			strcpy(ls->dentry_name, path + remote->path_len);
- 		} else if (!strcmp(ctx->name, DAV_PROPFIND_COLLECTION)) {
- 			ls->dentry_flags |= IS_DIR;
- 		}
-@@ -2206,10 +2217,11 @@ int main(int argc, char **argv)
- 		if (!remote->url) {
- 			char *path = strstr(arg, "//");
- 			remote->url = arg;
-+			remote->path_len = strlen(arg);
- 			if (path) {
--				path = strchr(path+2, '/');
--				if (path)
--					remote->path_len = strlen(path);
-+				remote->path = strchr(path+2, '/');
-+				if (remote->path)
-+					remote->path_len = strlen(remote->path);
- 			}
- 			continue;
- 		}
-@@ -2238,8 +2250,9 @@ int main(int argc, char **argv)
- 		rewritten_url = xmalloc(strlen(remote->url)+2);
- 		strcpy(rewritten_url, remote->url);
- 		strcat(rewritten_url, "/");
-+		remote->path = rewritten_url + (remote->path - remote->url);
-+		remote->path_len++;
- 		remote->url = rewritten_url;
--		++remote->path_len;
- 	}
- 
- 	/* Verify DAV compliance/lock support */
--- 
-1.5.6.5
+-- Hannes
