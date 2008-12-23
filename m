@@ -1,80 +1,57 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [announce] gc
-Date: Tue, 23 Dec 2008 15:06:24 +0000
-Message-ID: <e2b179460812230706p12e4f052v960f162e08011ae6@mail.gmail.com>
-References: <20081222212407.47c9ab1e.stephen@exigencecorp.com>
-	 <vpqabanc9v6.fsf@bauges.imag.fr>
-	 <20081223082207.f31ab2a3.stephen@exigencecorp.com>
+From: Christoph Hellwig <hch@lst.de>
+Subject: Re: git-cvsimport fuzzy commit log matching?
+Date: Tue, 23 Dec 2008 16:16:43 +0100
+Message-ID: <20081223151643.GA18657@lst.de>
+References: <20081223110302.GA9376@lst.de> <46a038f90812230453m4122e018l2cc22be3f40ab630@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Matthieu Moy" <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: "Stephen Haberman" <stephen@exigencecorp.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 16:08:05 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 16:19:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LF8rK-0001S6-2p
-	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 16:07:46 +0100
+	id 1LF91t-0005TQ-Lv
+	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 16:18:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751446AbYLWPG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2008 10:06:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751361AbYLWPG1
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 10:06:27 -0500
-Received: from qw-out-2122.google.com ([74.125.92.25]:55810 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751279AbYLWPG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2008 10:06:26 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so1623796qwe.37
-        for <git@vger.kernel.org>; Tue, 23 Dec 2008 07:06:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=2cHzBw2hYL1MGMen9Im22EqpiOPABfwkUdlQH9f4eWg=;
-        b=ULpptCAoA8pXuJtL9jF++Pm11n5ogd4yE32Xs80hlq9WVD7RzN3jyT8o8oTu2oik5E
-         eCnJMZA7pNJ0e4FEA4pIi2rrZOGTFhvFR/JIUr0rjY1ShE9rdRCrksu3DBu+qjy/LlBZ
-         wGkRM6/vBGc0HOT8hbqXs0Meic1OR1odXWIQA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=EWLb/95uMgiVOy1E3cD0cQwI2bvRKjbvsKSVSi4BavxGHmoJjs7tt+4odRB36bBURL
-         Tpc6GBlHTrFW/T6cJsHsNRgaxlf0cRiMpvya6oaFBowlvo3n+xWIE0A3uPmXyuclYlOd
-         q28zXWlFEttA2d+k8XdhYlA+qwWKKIuPoHjus=
-Received: by 10.214.130.2 with SMTP id c2mr1278792qad.159.1230044784939;
-        Tue, 23 Dec 2008 07:06:24 -0800 (PST)
-Received: by 10.214.150.9 with HTTP; Tue, 23 Dec 2008 07:06:24 -0800 (PST)
-In-Reply-To: <20081223082207.f31ab2a3.stephen@exigencecorp.com>
+	id S1751016AbYLWPQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2008 10:16:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750986AbYLWPQv
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 10:16:51 -0500
+Received: from verein.lst.de ([213.95.11.210]:59869 "EHLO verein.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750917AbYLWPQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2008 10:16:51 -0500
+Received: from verein.lst.de (localhost [127.0.0.1])
+	by verein.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id mBNFGhIF018735
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 23 Dec 2008 16:16:43 +0100
+Received: (from hch@localhost)
+	by verein.lst.de (8.12.3/8.12.3/Debian-6.6) id mBNFGhJt018733;
+	Tue, 23 Dec 2008 16:16:43 +0100
 Content-Disposition: inline
+In-Reply-To: <46a038f90812230453m4122e018l2cc22be3f40ab630@mail.gmail.com>
+User-Agent: Mutt/1.3.28i
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103828>
 
-2008/12/23 Stephen Haberman <stephen@exigencecorp.com>
->
-> > You should find a better name. I mean, one for which
-> >
-> >   http://www.google.com/search?q=git+YOUR-NAME-HERE
-> >
-> > has a chance to find you ...
->
-> Ah, good point.
->
-> Perhaps "git corporate hooks" or "git enterprise hooks".
->
-> I'm a little cautious about using words like corporate/enterprise as
-> there is nothing exclusively "corporate/enterprise" about any of the
-> hooks in the project, we just happened to be on a corporate/enterprise
-> project when we came up with them.
+On Tue, Dec 23, 2008 at 10:53:42AM -0200, Martin Langhoff wrote:
+> What you could do is
+> 
+>  1 - run cvsps with export to a file (I've posted in this list how to
+> run it exactly as cvsimport does)
+>  2 - post-process cvsps ouput with perl (there's a parser already in
+> cvsimport ;-) )
+>  3 - run cvsimport with the post-processed file
+> 
+> Or postprocess the imported git tree as others have suggested.
 
-As the workflows these seem to support are centralised (as you say
-these apply equally well in some non-corporate / enterprise projects),
-how about git-central?
-
-Mike
+Instead of post-processing I hacked cvsps.  It already has a different
+way to detect changesets when running in --bkcvs mode, and re-using that
+one for ptools works great.
