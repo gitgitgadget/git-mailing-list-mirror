@@ -1,74 +1,57 @@
-From: "Paul Vincent Craven" <paul@cravenfamily.com>
-Subject: Question with git push
-Date: Tue, 23 Dec 2008 10:59:10 -0600
-Message-ID: <5591393c0812230859n3b50b1f9k36153f40dd75ff57@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 23 18:00:51 2008
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: Installing git docs in Cygwin.
+Date: Tue, 23 Dec 2008 18:06:43 +0100
+Message-ID: <936218FB-9303-4FEE-B610-F48FB2F4FE0C@obry.net>
+References: <c115fd3c0812230639v78cee30cqbc7303b02633c8d1@mail.gmail.com>
+Mime-Version: 1.0 (iPhone Mail 5G77)
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 18:10:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LFAcg-0003ip-Tf
-	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 18:00:47 +0100
+	id 1LFAlm-0007CY-1y
+	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 18:10:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750951AbYLWQ7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2008 11:59:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750955AbYLWQ7M
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 11:59:12 -0500
-Received: from wf-out-1314.google.com ([209.85.200.172]:15611 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750930AbYLWQ7M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2008 11:59:12 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so2756166wfd.4
-        for <git@vger.kernel.org>; Tue, 23 Dec 2008 08:59:11 -0800 (PST)
-Received: by 10.142.52.9 with SMTP id z9mr3224902wfz.327.1230051550461;
-        Tue, 23 Dec 2008 08:59:10 -0800 (PST)
-Received: by 10.142.177.16 with HTTP; Tue, 23 Dec 2008 08:59:10 -0800 (PST)
-Content-Disposition: inline
+	id S1751089AbYLWRI0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Dec 2008 12:08:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751120AbYLWRI0
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 12:08:26 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:62974 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751069AbYLWRI0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Dec 2008 12:08:26 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so347298nfc.21
+        for <git@vger.kernel.org>; Tue, 23 Dec 2008 09:08:23 -0800 (PST)
+Received: by 10.210.79.9 with SMTP id c9mr9053583ebb.108.1230052086451;
+        Tue, 23 Dec 2008 09:08:06 -0800 (PST)
+Received: from ?10.36.40.6? ([193.253.141.73])
+        by mx.google.com with ESMTPS id f6sm3799975nfh.79.2008.12.23.09.08.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 23 Dec 2008 09:08:05 -0800 (PST)
+In-Reply-To: <c115fd3c0812230639v78cee30cqbc7303b02633c8d1@mail.gmail.com>
+X-Mailer: iPhone Mail (5G77)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103835>
 
-If I do a 'git push' to another repository, my changes are reverted
-the next time that repository is updated, unless I do a hard reset on
-the remote repository first. Of course, then I would lose my changes
-in the remote repository. What is the correct way of handling this?
 
-A quick example:
+Le 23 d=C3=A9c. 08 =C3=A0 15:39, "Tim Visher" <tim.visher@gmail.com> a =
+=C3=A9crit :
 
-mkdir -p RepositoryA/files RepositoryB
-cd RepositoryA/files
-echo "Test file" > test1.txt
-git init
-git add .
-git commit -a -m "Test Commit 1"
-cd ../../RepositoryB
-git clone ../RepositoryA/files
-cd files
-# I want this change to go to RepositoryA
-echo "More data" >> test1.txt
-git add .
-git commit -a -m "Test Commit 2"
-git push ../../RepositoryA/files
-cd ../../RepositoryA/files
-echo "Test file" > test2.txt
-git add .
-# This commit reverts test1.txt to not have "More data"
-git commit -a -m "Test Commit 3" # This reverts test1.txt to not
-git diff master^ master
+> working fine but when I do a `make
+> install-doc`, all of the pages compile fine but then make exits after
+> exiting git/Documentation with an `Error 2`.
+>
+> Thoughts?
 
-How do I change my commands so I keep the change I made in RepositoryB?
+Are you sure the docs were built fine. I had to revert to a previous =20
+version of asciidoc. Just an hint.
 
-Thanks,
-
--- 
-Paul Vincent Craven
-
---
-Paul Vincent Craven
-http://www.cravenfamily.com
+Pascal.
