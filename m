@@ -1,87 +1,65 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git-cvsimport fuzzy commit log matching?
-Date: Tue, 23 Dec 2008 10:53:42 -0200
-Message-ID: <46a038f90812230453m4122e018l2cc22be3f40ab630@mail.gmail.com>
-References: <20081223110302.GA9376@lst.de>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [announce] gc
+Date: Tue, 23 Dec 2008 14:13:49 +0100
+Message-ID: <vpqabanc9v6.fsf@bauges.imag.fr>
+References: <20081222212407.47c9ab1e.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Matthias Urlichs" <smurf@smurf.noris.de>, git@vger.kernel.org
-To: "Christoph Hellwig" <hch@lst.de>
-X-From: git-owner@vger.kernel.org Tue Dec 23 13:55:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 14:21:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LF6n5-0005U1-Nm
-	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 13:55:16 +0100
+	id 1LF7CF-0006E6-2u
+	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 14:21:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751059AbYLWMxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2008 07:53:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbYLWMxo
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 07:53:44 -0500
-Received: from yw-out-2324.google.com ([74.125.46.29]:12994 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750984AbYLWMxn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2008 07:53:43 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so849739ywe.1
-        for <git@vger.kernel.org>; Tue, 23 Dec 2008 04:53:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=hvtIOPm7SMu2hac3Cc8cgLQ9AW1YXwcu35NMhiS5D3k=;
-        b=FRm5uF6KoyRrIFnxSGGrFlU9v8bU/IFCjmmAKTQpCXgQ3eLIRRaJtNtdJtJ4ulksSU
-         cUhnTR2DyBtDvEIAVc70cn+OKWnxYpsLNycHsGU50+SOg9kX82iIENRCDCSC+i3KSrUb
-         da3UFSp8rMNAKOGzK+XT+pfYMY5JC8sfnEkRQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=he2dKpQ35v2k6wBR1PnRO+KLNKl1mTXI3Pe6k+XBfmYgV2YSxpxBMOy0SUDnuztV1e
-         GIvcXxgO9hOGCXOvoUbMpxC9kClbOLPouz4Et36S1zhUV4yxZ0QhNgENP2aCP852lwjq
-         lydPBwHZgAzYkUgeIrtgyF6hrNZpfz8LbbTK4=
-Received: by 10.100.178.2 with SMTP id a2mr4507997anf.114.1230036822592;
-        Tue, 23 Dec 2008 04:53:42 -0800 (PST)
-Received: by 10.100.3.14 with HTTP; Tue, 23 Dec 2008 04:53:42 -0800 (PST)
-In-Reply-To: <20081223110302.GA9376@lst.de>
-Content-Disposition: inline
+	id S1750945AbYLWNT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2008 08:19:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750963AbYLWNT4
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 08:19:56 -0500
+Received: from harmonie.imag.fr ([147.171.130.40]:45115 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750843AbYLWNT4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2008 08:19:56 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id mBNDHCKf003628;
+	Tue, 23 Dec 2008 14:17:12 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LF753-00032v-K2; Tue, 23 Dec 2008 14:13:49 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LF753-0007bZ-Hf; Tue, 23 Dec 2008 14:13:49 +0100
+In-Reply-To: <20081222212407.47c9ab1e.stephen@exigencecorp.com> (Stephen Haberman's message of "Mon\, 22 Dec 2008 21\:24\:07 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 23 Dec 2008 14:17:13 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103817>
 
-On Tue, Dec 23, 2008 at 9:03 AM, Christoph Hellwig <hch@lst.de> wrote:
-> Any idea how to tell git-cvsimport that if we have exactly the same
-> timestamp, and maybe the same author it really is the same changeset and
-> we want to merge the commit message?
+Stephen Haberman <stephen@exigencecorp.com> writes:
 
-Right now, cvsimport relies on cvsps for this. cvsps compares author,
-timestamp (with a fuzz factor 'cause cvs commits over slow networks or
-hosts can span minutes - you could dial down to 0, it's the -z flag)
-*and* commit msg.
+> Hi,
+>
+> This is just a small collections of hooks, scripts, and practices I
+> developed while working on a not-distributed/corporate project.
 
-What you could do is
+You should find a better name. I mean, one for which
 
- 1 - run cvsps with export to a file (I've posted in this list how to
-run it exactly as cvsimport does)
- 2 - post-process cvsps ouput with perl (there's a parser already in
-cvsimport ;-) )
- 3 - run cvsimport with the post-processed file
+  http://www.google.com/search?q=git+YOUR-NAME-HERE
 
-Or postprocess the imported git tree as others have suggested.
+has a chance to find you ...
 
-hth,
+My 2 cents,
 
-
-
-martin
 -- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+Matthieu
