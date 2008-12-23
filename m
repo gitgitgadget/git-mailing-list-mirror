@@ -1,65 +1,69 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [announce] gc
-Date: Tue, 23 Dec 2008 14:13:49 +0100
-Message-ID: <vpqabanc9v6.fsf@bauges.imag.fr>
-References: <20081222212407.47c9ab1e.stephen@exigencecorp.com>
+From: "Emily Ren" <lingyan.ren@gmail.com>
+Subject: Questions about repo and git submodule
+Date: Tue, 23 Dec 2008 22:01:28 +0800
+Message-ID: <856bfe0e0812230601m1765b483pe62c7902849e9cea@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Haberman <stephen@exigencecorp.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 14:21:15 2008
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+To: "Git Mailinglist" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 23 15:02:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LF7CF-0006E6-2u
-	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 14:21:15 +0100
+	id 1LF7qS-0003go-GS
+	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 15:02:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945AbYLWNT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2008 08:19:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750963AbYLWNT4
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 08:19:56 -0500
-Received: from harmonie.imag.fr ([147.171.130.40]:45115 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750843AbYLWNT4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2008 08:19:56 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id mBNDHCKf003628;
-	Tue, 23 Dec 2008 14:17:12 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LF753-00032v-K2; Tue, 23 Dec 2008 14:13:49 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LF753-0007bZ-Hf; Tue, 23 Dec 2008 14:13:49 +0100
-In-Reply-To: <20081222212407.47c9ab1e.stephen@exigencecorp.com> (Stephen Haberman's message of "Mon\, 22 Dec 2008 21\:24\:07 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 23 Dec 2008 14:17:13 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751084AbYLWOBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2008 09:01:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbYLWOBa
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 09:01:30 -0500
+Received: from yw-out-2324.google.com ([74.125.46.29]:32775 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751079AbYLWOB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2008 09:01:29 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so857520ywe.1
+        for <git@vger.kernel.org>; Tue, 23 Dec 2008 06:01:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=I2U1jJwebCsOUSNKIxtUSEne9BMG8NiM+T/DtCInuUI=;
+        b=MhmhwBSAXhYpaiAcpkibsO5coxvl7E9S70k01e50prkyqG7MyOJ2XhdjoZsgANl4ti
+         9dQRYob6G3iJTWe7y8hm+H7wZUUXtyMpPWDNriyyny59VEKSPPDXd0jgp53gyb29cbzE
+         KJXgk2cIbuo48IVe5Tu08R7K2W9rg1m/NdBY8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=JdHhUii163eZFjXrG3GLP1PW7Kh4f+HSD8nxvqGvP1HfS6w9sWLphZh5fxEVFPHQ5G
+         mOUcH+jicPI3zipsy5y1wak8U/D+NIh3UcrmZ+GSQQ2+rhfT2R5j8K9+oqcMrVlkFTL6
+         ZpwGD5NQ8O+NjQLaWNtJ9tOeLSuNadulSJPkg=
+Received: by 10.150.50.1 with SMTP id x1mr14006524ybx.58.1230040888716;
+        Tue, 23 Dec 2008 06:01:28 -0800 (PST)
+Received: by 10.150.143.3 with HTTP; Tue, 23 Dec 2008 06:01:28 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103818>
 
-Stephen Haberman <stephen@exigencecorp.com> writes:
+All,
 
-> Hi,
->
-> This is just a small collections of hooks, scripts, and practices I
-> developed while working on a not-distributed/corporate project.
+I have some questions about android repo and git submodule.
 
-You should find a better name. I mean, one for which
+I created a repo repository with below commands:
+1.  repo init -u git://android.git.kernel.org/platform/manifest.git
+2.  repo initialized in /android
 
-  http://www.google.com/search?q=git+YOUR-NAME-HERE
+1. The android dir is not a git repository, if other people clone my
+android code, how does it work?
+2. I want to make android dir to be a git repository, is it workable
+that I create submodule for each subdirectory in another directory? Is
+there a script for it?
 
-has a chance to find you ...
+Thank you ！
 
-My 2 cents,
-
--- 
-Matthieu
+Emily
