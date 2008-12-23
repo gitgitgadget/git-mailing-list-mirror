@@ -1,133 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git merge conflicts and encoding of logs
-Date: Tue, 23 Dec 2008 00:22:08 -0800
-Message-ID: <7vprjjfgi7.fsf@gitster.siamese.dyndns.org>
-References: <87lju7h4yb.dancerj%dancer@netfort.gr.jp>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
-Cc: git@vger.kernel.org
-To: Junichi Uekawa <dancer@netfort.gr.jp>
-X-From: git-owner@vger.kernel.org Tue Dec 23 09:23:38 2008
+From: "Kirill A. Korinskiy" <catap@catap.ru>
+Subject: [PATCH] handle_remote_ls_ctx can parsing href starting at http://
+Date: Tue, 23 Dec 2008 11:31:15 +0300
+Message-ID: <1230021075-10113-1-git-send-email-catap@catap.ru>
+References: <7v3aghnv1t.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 09:34:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LF2YC-0003ub-T8
-	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 09:23:37 +0100
+	id 1LF2iN-0006K2-61
+	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 09:34:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752624AbYLWIWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2008 03:22:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752416AbYLWIWS
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 03:22:18 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38210 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751515AbYLWIWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2008 03:22:17 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3FC1F1AE5F;
-	Tue, 23 Dec 2008 03:22:16 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A30761AE5E; Tue,
- 23 Dec 2008 03:22:11 -0500 (EST)
-In-Reply-To: <87lju7h4yb.dancerj%dancer@netfort.gr.jp> (Junichi Uekawa's
- message of "Tue, 23 Dec 2008 13:48:44 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CECCDE92-D0CA-11DD-8A65-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751719AbYLWIc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2008 03:32:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbYLWIc3
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 03:32:29 -0500
+Received: from void.catap.ru ([213.248.54.140]:60298 "EHLO void.catap.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751432AbYLWIc2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2008 03:32:28 -0500
+Received: (qmail 24393 invoked from network); 23 Dec 2008 08:32:26 -0000
+Received: from catap.dialup.corbina.ru (HELO mx3.catap.ru) (85.21.143.245)
+  by void.catap.ru with ESMTPS (AES256-SHA encrypted); 23 Dec 2008 08:32:26 -0000
+Received: from localhost
+	([127.0.0.1] helo=satellite.home.catap.ru ident=catap)
+	by mx3.catap.ru with esmtp (Exim 4.63)
+	(envelope-from <catap@catap.ru>)
+	id 1LF2gh-0003IG-GY; Tue, 23 Dec 2008 11:32:23 +0300
+Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
+	(envelope-from <catap@satellite.home.catap.ru>)
+	id 1LF2fb-0002dg-Rh; Tue, 23 Dec 2008 11:31:15 +0300
+X-Mailer: git-send-email 1.5.6.5
+In-Reply-To: <7v3aghnv1t.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103804>
 
---=-=-=
-Content-Type: text/plain; charset=iso-2022-jp
+The program call remote_ls() to get remote objects over http;
+handle_remote_ls_ctx() is used to parse it's response to populated
+"struct remote_ls_ctx" that is returned from remote_ls().
 
-Junichi Uekawa <dancer@netfort.gr.jp> writes:
+The handle_remote_ls_ctx() function assumed that the server will
+returned local path in href field, but RFC 4918 demand of support full
+URI (http://localhost/repo.git for example).
 
-> Git merge conflict will insert '<<< first line of commit log message'
-> '===' '>>>' markers to the text file that is causing a conflict.
->
-> Unfortunately, the encoding of the text file may be different from the
-> log message encoding, and that results in a file which has a mixed
-> encoding (which is pretty hard to edit from any editor BTW).
->
-> My use case is editing platex files (iso-2022-jp encoded) with log
-> messages of utf-8.
->
-> ... Thinking about it, it's probably the same encoding problem as git
-> blame.
+This resulted in push failure (git-http-push ask server
+PROPFIND /repo.git/alhost:8080/repo.git/refs/) when a server returned
+full URI.
 
-What 69cd8f6 (builtin-blame: Reencode commit messages according to git-log
-rules., 2008-10-22) does to git-blame is to re-encode the data taken from
-the commit log to i18n.logoutputencoding, and put that in the datastream.
+Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
+---
+ http-push.c |   25 +++++++++++++++++++------
+ 1 files changed, 19 insertions(+), 6 deletions(-)
 
-If your commit object have names and messages in utf-8, and if you set
-i18n.logoutputencoding to iso-2022-jp, that would reencode data taken from
-the commit object in iso-2022-jp and sprinkle them in the blame
-datastream.
-
-The issue would be certainly similar, *if* anything on your <<</===/>>>
-lines came from commit log message, but I couldn't trigger what you
-describe.  I prepared a history of this shape:
-
-   B
-  /
- o---A
-
-with ISO-2022-JP payload and UTF-8 commit log message.  Then, I added:
-
-        [i18n]
-                logoutputencoding = iso-2022-jp
-
-which lets me read "git log -p --all" quite comfortably.  Everything comes
-out as good old JISX0208.  So far, so good.
-
-Then while on branch B, I tried to merge A, which resulted in conflicts
-that looked like this:
-
-<<<<<<< HEAD:foo
-これはサイドブランチの変更です。
-やはり JIS コードで書いてます。
-=======
-日本語のファイルです。
-JIS コードで書いてます。
->>>>>>> master:foo
-
-The above will probably come out as UTF-8 in this mail text, but the point
-is that the confict side markers do not have anything but filename and the
-branch name.  I am still scratching my head trying to see where in the
-merge-recursive codepath you got snippet of log message.
-
-A bundle from my test repository is attached.  You can use it to reproduce
-the repository like this:
+diff --git a/http-push.c b/http-push.c
+index 7c6460919bf3eba10c46cede11ffdd9c53fd2dd2..a4b7d08663504a57008f66a39fffe293f62c1d08 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -87,6 +87,7 @@ static struct object_list *objects;
+ struct repo
+ {
+ 	char *url;
++	char *path;
+ 	int path_len;
+ 	int has_info_refs;
+ 	int can_update_info_refs;
+@@ -1424,9 +1425,19 @@ static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
+ 				ls->userFunc(ls);
+ 			}
+ 		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
+-			ls->dentry_name = xmalloc(strlen(ctx->cdata) -
++			char *path = ctx->cdata;
++			if (*ctx->cdata == 'h') {
++				path = strstr(path, "//");
++				if (path) {
++					path = strchr(path+2, '/');
++				}
++			}
++			if (path) {
++				path += remote->path_len;
++			}
++			ls->dentry_name = xmalloc(strlen(path) -
+ 						  remote->path_len + 1);
+-			strcpy(ls->dentry_name, ctx->cdata + remote->path_len);
++			strcpy(ls->dentry_name, path + remote->path_len);
+ 		} else if (!strcmp(ctx->name, DAV_PROPFIND_COLLECTION)) {
+ 			ls->dentry_flags |= IS_DIR;
+ 		}
+@@ -2206,10 +2217,11 @@ int main(int argc, char **argv)
+ 		if (!remote->url) {
+ 			char *path = strstr(arg, "//");
+ 			remote->url = arg;
++			remote->path_len = strlen(arg);
+ 			if (path) {
+-				path = strchr(path+2, '/');
+-				if (path)
+-					remote->path_len = strlen(path);
++				remote->path = strchr(path+2, '/');
++				if (remote->path)
++					remote->path_len = strlen(remote->path);
+ 			}
+ 			continue;
+ 		}
+@@ -2238,8 +2250,9 @@ int main(int argc, char **argv)
+ 		rewritten_url = xmalloc(strlen(remote->url)+2);
+ 		strcpy(rewritten_url, remote->url);
+ 		strcat(rewritten_url, "/");
++		remote->path = rewritten_url + (remote->path - remote->url);
++		remote->path_len++;
+ 		remote->url = rewritten_url;
+-		++remote->path_len;
+ 	}
  
-    $ cd /var/tmp && mkdir test && cd test && git init
-    $ git pull ../x.bndl master
-    $ git fetch ../x.bndl side:side
-
-
---=-=-=
-Content-Type: application/octet-stream
-Content-Disposition: attachment; filename=x.bndl
-Content-Transfer-Encoding: base64
-Content-Description: a bundle of the sample history
-
-IyB2MiBnaXQgYnVuZGxlCjQzYjk0NzQ2ZTU4ODNjMTA3MjcwZTM1NGJmYTc5ZjNmZGY1NjdlOWYg
-cmVmcy9oZWFkcy9tYXN0ZXIKZTBiMjZjODA2NjM3NzNmM2U0NzhjOGFjMDYxMjMwMGE3YTE0ZDdi
-NiByZWZzL2hlYWRzL3NpZGUKClBBQ0sAAAACAAAACZUQeJydyz1OwzAYgOHdp/guQPX5N7aEEBJL
-6coJ/AsZElfBlRibdKETEmthQ2JjgYGB21jNOegZur563jLECMi0MKpBKZ1KgYVkWOJaqMiV9yKE
-JonIKUWytkPsC3iH2gotKA1MJEMxMaa48ToY55pIaQxMaqmI3ZSHPMBq07cZbmBpO9tnuLxvy2OJ
-w/U6u/y08Lm7Aso4IjWSIVygRiSn2rXlpM66yfy2PT6/1/Hr+LGfDz91eoXV7R3U6bvu/upuX8fP
-+fBbx5e6ncg/iUlbR/UGQ7lHRuWIPBBycONUv6efP99Wfp94nAFlAJr/hQL3AS10cmVlIDgwZDIx
-M2FmMWQ4ZGE5N2Y5ODgwN2JmMDA4NTJiMTY4OTJjNjY0YzWRLWMCNzmRkjwpNzkgLTA4MDAKCuOC
-teOCpOODieODluODqeODs+ODgeOBruWkieabtApfCScgkgt4nJ3LXQpCIRBA4XdXMRsoZnRChYgg
-iGgX5k/5oHPxeqHld9fQ6+E7c+QMnE4lhhS1N8Gwy84Va22K6DUWomyTJWaKKmzzIwOeW68CN3iE
-FrrA+V3nOvO4LvKS7zFKuwBpg0ieHcMBHaLaa6tzV3/d6l7HOkF6Vj8eTTYSrwF4nDM0MDAzMVFI
-y89nWLHdunj3i+KlXpv4RcL87NXXrDvYAgCqpQwkswV4nJNWcVIxVslR8Vc1VVVR9VQNU81ULVZ1
-VPHzCrS0VHFXsVRUltZw4pIGKktR8VfJAnIUvDyDFYACqsaKNqqeKu62hSoqKm4qcTC1ANQpEOSv
-AXicMzQwMDMxUUjLz2c4dSmm56L9/hvft/+tOfIjP+hZfZISANAQD0y8A3ick1ZxcqvxjrHIUfFT
-DVVVVFVRzVZxV7FUVJbWcOLy8gxWkFZxUjVWtFH1VHG3LVRRUXFTiYNJAwCPdAxcrwF4nDM0MDAz
-MVFIy89neDb30exNF685e3drriuPunHoSU/wRADG7Q6cMHicAwAAAAABHfgkiRyNyDstRgoZTRUH
-BDqJgGw=
---=-=-=--
+ 	/* Verify DAV compliance/lock support */
+-- 
+1.5.6.5
