@@ -1,124 +1,70 @@
-From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH TOPGIT] tg export (quilt): Implement numbering the patches
-Date: Tue, 23 Dec 2008 15:32:24 +0100
-Message-ID: <1230042744-24675-3-git-send-email-u.kleine-koenig@pengutronix.de>
-References: <20081223143035.GA24087@cassiopeia.tralala>
- <1230042744-24675-1-git-send-email-u.kleine-koenig@pengutronix.de>
- <1230042744-24675-2-git-send-email-u.kleine-koenig@pengutronix.de>
+From: "Tim Visher" <tim.visher@gmail.com>
+Subject: Installing git docs in Cygwin.
+Date: Tue, 23 Dec 2008 09:39:02 -0500
+Message-ID: <c115fd3c0812230639v78cee30cqbc7303b02633c8d1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "martin f. krafft" <madduck@debian.org>, Petr Baudis <pasky@ucw.cz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 23 15:34:45 2008
+X-From: git-owner@vger.kernel.org Tue Dec 23 15:40:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LF8L0-0006Kv-Mo
-	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 15:34:23 +0100
+	id 1LF8Qz-00005R-2B
+	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 15:40:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751051AbYLWOc4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Dec 2008 09:32:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbYLWOc4
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 09:32:56 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:55310 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750986AbYLWOcz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2008 09:32:55 -0500
-Received: from ukl by metis.ext.pengutronix.de with local (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LF8JW-0006NR-Eh; Tue, 23 Dec 2008 15:32:54 +0100
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1230042744-24675-2-git-send-email-u.kleine-koenig@pengutronix.de>
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
-	metis.extern.pengutronix.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=4.5 tests=AWL,BAYES_00,NO_RELAYS
-	shortcircuit=no autolearn=ham version=3.2.4
-X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
-X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1750927AbYLWOjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2008 09:39:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbYLWOjG
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 09:39:06 -0500
+Received: from mail-gx0-f27.google.com ([209.85.217.27]:42219 "EHLO
+	mail-gx0-f27.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750905AbYLWOjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2008 09:39:05 -0500
+Received: by gxk8 with SMTP id 8so2142226gxk.13
+        for <git@vger.kernel.org>; Tue, 23 Dec 2008 06:39:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=kv53avcjOmDPU57jaPPoQDEtSaI4zVAlJ4iPWaz4nZs=;
+        b=o0jvPo5Y1+ZxsBq3xzv5o9gheDOOS1wzyNbAPt9Q8MQ8j38ysDM+dionfBWe73mZ/K
+         Vgkg1W98SkvvbSI6eEl8og5g1wLE/QU/6lkPZ0RzeMfgIofFYn0Rd/vCVxKP2XsOguXW
+         ffqDscF0l5D2dBhdNKe6TcH9xF97gFpJt8jRU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=MyHaYz6EUPymsYM1I9duwkZ5CcPU7zLpGPeGdtIwOlBN6skRDuHzgB+OroSyiGjSHV
+         fLbilffLHZ9a+e21LqXjeUZLy+RnOs4ms9nwAKPXTQH01fcY5DrkovbLs4pc/XgnaFiv
+         wtS98RxUr810b6FfOfwHKDtUwmamB620tOR+s=
+Received: by 10.100.119.17 with SMTP id r17mr4569474anc.130.1230043142615;
+        Tue, 23 Dec 2008 06:39:02 -0800 (PST)
+Received: by 10.100.198.2 with HTTP; Tue, 23 Dec 2008 06:39:02 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103825>
 
-To ease sending patches, with -n each patch gets a number prefix simila=
-r
-to git format-patch.
+Hey Everyone,
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
----
- tg-export.sh |   21 ++++++++++++++++++---
- 1 files changed, 18 insertions(+), 3 deletions(-)
+I was wondering if anyone has been able to install the git docs on
+Windows under Cygwin?  I just ran a successful compile of the core
+software and everything seems to be working fine but when I do a `make
+install-doc`, all of the pages compile fine but then make exits after
+exiting git/Documentation with an `Error 2`.
 
-diff --git a/tg-export.sh b/tg-export.sh
-index 06b9c8d..7a7d87a 100644
---- a/tg-export.sh
-+++ b/tg-export.sh
-@@ -8,6 +8,7 @@ branches=3D
- output=3D
- driver=3Dcollapse
- flatten=3Dfalse
-+numbered=3Dfalse
-=20
-=20
- ## Parse options
-@@ -19,6 +20,9 @@ while [ -n "$1" ]; do
- 		branches=3D"$1"; shift;;
- 	-f)
- 		flatten=3Dtrue;;
-+	-n)
-+		flatten=3Dtrue;
-+		numbered=3Dtrue;;
- 	--quilt)
- 		driver=3Dquilt;;
- 	--collapse)
-@@ -37,6 +41,9 @@ done
- [ -z "$branches" -o "$driver" =3D "quilt" ] ||
- 	die "-b works only with the quilt driver"
-=20
-+[ "$driver" =3D "quilt" ] || ! "$numbered" ||
-+	die "-n works only with the quilt driver";
-+
- [ "$driver" =3D "quilt" ] || ! "$flatten" ||
- 	die "-f works only with the quilt driver"
-=20
-@@ -155,18 +162,26 @@ quilt()
- 		fi;
- 	fi;
-=20
--	filename=3D"$output/$dn$bn";
--	if [ -e "$filename" ]; then
-+	if [ -e "$playground/$_dep" ]; then
- 		# We've already seen this dep
- 		return
- 	fi
-=20
-+	mkdir -p "$playground/$(dirname "$_dep")";
-+	touch "$playground/$_dep";
-+
- 	if branch_empty "$_dep"; then
- 		echo "Skip empty patch $_dep";
- 	else
-+		if "$numbered"; then
-+			number=3D"$(printf "%04u" $(($(cat "$playground/^number" 2>/dev/nul=
-l) + 1)))";
-+			bn=3D"$number-$bn";
-+			echo "$number" >"$playground/^number";
-+		fi;
-+
- 		echo "Exporting $_dep"
- 		mkdir -p "$output/$dn";
--		$tg patch "$_dep" >"$filename"
-+		$tg patch "$_dep" >"$output/$dn$bn"
- 		echo "$dn$bn -p1" >>"$output/series"
- 	fi
- }
---=20
-1.5.6.5
+Thoughts?
+
+-- 
+
+In Christ,
+
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
