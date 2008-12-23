@@ -1,95 +1,96 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Merge two repos with history included? (was Re: How do I..?)
-Date: Tue, 23 Dec 2008 01:44:07 +0100
-Message-ID: <20081223004407.GZ21154@genesis.frugalware.org>
-References: <e1a4c7f60812221404k57a5e150kac74f53c784b6b4a@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Vsi50HYs5tPfr+1I"
-Cc: git@vger.kernel.org
-To: Dylan Martin <dmartin@sccd.ctc.edu>
-X-From: git-owner@vger.kernel.org Tue Dec 23 01:46:55 2008
+Subject: [PATCH] t9129: skip the last two tests if UTF-8 locale not available
+Date: Tue, 23 Dec 2008 02:09:24 +0100
+Message-ID: <1229994564-5153-1-git-send-email-vmiklos@frugalware.org>
+References: <7vzliogcie.fsf@gitster.siamese.dyndns.org>
+Cc: Peter van der Does <peter@ourvirtualhome.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 23 02:09:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LEvQE-0001Yu-77
-	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 01:46:54 +0100
+	id 1LEvlg-0007xh-30
+	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 02:09:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752563AbYLWAoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Dec 2008 19:44:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752349AbYLWAoN
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Dec 2008 19:44:13 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:57131 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751335AbYLWAoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Dec 2008 19:44:12 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id B43D658096;
-	Tue, 23 Dec 2008 01:44:08 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 79F574465E;
-	Tue, 23 Dec 2008 01:44:08 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 02A9111B8630; Tue, 23 Dec 2008 01:44:07 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <e1a4c7f60812221404k57a5e150kac74f53c784b6b4a@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754167AbYLWBHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Dec 2008 20:07:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754036AbYLWBHo
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Dec 2008 20:07:44 -0500
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:50809 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753930AbYLWBHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Dec 2008 20:07:43 -0500
+Received: from vmobile.example.net (catv-80-98-230-81.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 2E3F3446CDE;
+	Tue, 23 Dec 2008 02:07:41 +0100 (CET)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id B7D7519DBE1; Tue, 23 Dec 2008 02:09:24 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.rc1.35.gae26e.dirty
+In-Reply-To: <7vzliogcie.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103797>
 
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
---Vsi50HYs5tPfr+1I
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Dec 22, 2008 at 12:50:49PM -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> I think some tests play nicer than this one and skip tests that want
+> UTF-8 locales; you may want to teach this script the same trick.
 
-On Mon, Dec 22, 2008 at 02:04:06PM -0800, Dylan Martin <dmartin@sccd.ctc.ed=
-u> wrote:
-> I tried converting an existing SVN repo to git and then adding it to
-> my main git repo using the subtree merge technique described at
-> http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree=
-=2Ehtml.
->  I now have the various files in my repo, but they have no history.
+What about this?
 
-They have, but you are right about that - due to the nature of subtree
-merge - git log <path> will show only the merge commits. (However git
-blame works fine, for example.)
+Tesed on two Linux boxes (where I have / do not have UTF-8) and HP-UX
+(where I do not have, either).
 
-> I checked, and my initial SVN to git conversion does contain history.
->=20
-> I'm trying to add an exising repo as a subdir of my main repo with
-> history included.  Can anyone tell me how to do that?
+ t/t9129-git-svn-i18n-commitencoding.sh |   30 +++++++++++++++++-------------
+ 1 files changed, 17 insertions(+), 13 deletions(-)
 
-I would try the following: Let's say you have super.git and foo.git, and
-you want to merge foo.git to the subdirectory 'foo' of super.git. Then
-you can do in foo.git:
-
-mkdir foo
-mv * foo
-git add foo
-git commit -a
-
-Then in super.git:
-
-git pull path/to/foo.git master
-
-And then git log --follow should work just fine on any merged files as
-well.
-
---Vsi50HYs5tPfr+1I
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklQNFcACgkQe81tAgORUJZGnACfVya2SWXiqgN0vIGT5hrAvbsH
-XRoAoJX5g/esG+3itJGtnfpZcqvzbcg8
-=ZXv2
------END PGP SIGNATURE-----
-
---Vsi50HYs5tPfr+1I--
+diff --git a/t/t9129-git-svn-i18n-commitencoding.sh b/t/t9129-git-svn-i18n-commitencoding.sh
+index 938b7fe..8a9dde4 100755
+--- a/t/t9129-git-svn-i18n-commitencoding.sh
++++ b/t/t9129-git-svn-i18n-commitencoding.sh
+@@ -60,21 +60,25 @@ do
+ 	'
+ done
+ 
+-test_expect_success 'ISO-8859-1 should match UTF-8 in svn' '
+-(
+-	cd ISO-8859-1 &&
+-	compare_svn_head_with "$TEST_DIRECTORY"/t3900/1-UTF-8.txt
+-)
+-'
+-
+-for H in EUCJP ISO-2022-JP
+-do
+-	test_expect_success '$H should match UTF-8 in svn' '
++if locale -a |grep -q en_US.utf8; then
++	test_expect_success 'ISO-8859-1 should match UTF-8 in svn' '
+ 	(
+-		cd $H &&
+-		compare_svn_head_with "$TEST_DIRECTORY"/t3900/2-UTF-8.txt
++		cd ISO-8859-1 &&
++		compare_svn_head_with "$TEST_DIRECTORY"/t3900/1-UTF-8.txt
+ 	)
+ 	'
+-done
++
++	for H in EUCJP ISO-2022-JP
++	do
++		test_expect_success '$H should match UTF-8 in svn' '
++		(
++			cd $H &&
++			compare_svn_head_with "$TEST_DIRECTORY"/t3900/2-UTF-8.txt
++		)
++		'
++	done
++else
++	say "UTF-8 locale not available, test skipped"
++fi
+ 
+ test_done
+-- 
+1.6.1.rc1.35.gae26e.dirty
