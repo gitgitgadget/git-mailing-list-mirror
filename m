@@ -1,97 +1,133 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: Re: Merge two repos with history included? (was Re: How do I..?)
-Date: Tue, 23 Dec 2008 10:58:01 +0300
-Organization: HOME
-Message-ID: <200812231058.02141.angavrilov@gmail.com>
-References: <e1a4c7f60812221404k57a5e150kac74f53c784b6b4a@mail.gmail.com> <20081223004407.GZ21154@genesis.frugalware.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git merge conflicts and encoding of logs
+Date: Tue, 23 Dec 2008 00:22:08 -0800
+Message-ID: <7vprjjfgi7.fsf@gitster.siamese.dyndns.org>
+References: <87lju7h4yb.dancerj%dancer@netfort.gr.jp>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Dylan Martin <dmartin@sccd.ctc.edu>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Dec 23 09:00:10 2008
+Content-Type: multipart/mixed; boundary="=-=-="
+Cc: git@vger.kernel.org
+To: Junichi Uekawa <dancer@netfort.gr.jp>
+X-From: git-owner@vger.kernel.org Tue Dec 23 09:23:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LF2BW-0007Bj-Dk
-	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 09:00:10 +0100
+	id 1LF2YC-0003ub-T8
+	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 09:23:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752523AbYLWH6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2008 02:58:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752683AbYLWH6w
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 02:58:52 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:44402 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752420AbYLWH6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Dec 2008 02:58:51 -0500
-Received: by bwz14 with SMTP id 14so9376180bwz.13
-        for <git@vger.kernel.org>; Mon, 22 Dec 2008 23:58:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=ZVpx+6ymBu5sXe490FXBkQc9WkS7V8wO5AjccuwSxXI=;
-        b=Q+H09C3qHmt5ASWQAoFVcRbsp2KxXFufQ60Jwf88A1Cwot9yFrqKfjVDm0c83GBe2L
-         bKBs3q6jvx4+DfHZPGcJGBUSm/orDwyQ7o9aC5J6K68iaptLTXahiJ+VPhJOoSgU1ZAU
-         18zme5mbwuyz9rNUh2ZZClRCCRGk6GAE0DOB8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=QgeH7yT5OVMJs7L8NDASWLpP7ZKUoAklC7H9iILVtYWEbR+Y55G6pyfwtia4AuAvXL
-         ZV29v9TkTV3vTyUcvZi7o/HClQubAF5UOp9z5Mc+YZrZJpzKThVkb2Ea57OpJRb6b0XU
-         jXQtNERtZXFzNR8AjscQUjpbme4PpQr+TL6J0=
-Received: by 10.223.116.10 with SMTP id k10mr5697667faq.100.1230019119392;
-        Mon, 22 Dec 2008 23:58:39 -0800 (PST)
-Received: from keydesk.localnet ([92.255.85.78])
-        by mx.google.com with ESMTPS id g28sm10527100fkg.1.2008.12.22.23.58.38
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 22 Dec 2008 23:58:38 -0800 (PST)
-User-Agent: KMail/1.10.3 (Linux/2.6.27.7-134.fc10.i686; KDE/4.1.3; i686; ; )
-In-Reply-To: <20081223004407.GZ21154@genesis.frugalware.org>
-Content-Disposition: inline
+	id S1752624AbYLWIWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2008 03:22:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752416AbYLWIWS
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 03:22:18 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38210 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751515AbYLWIWR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2008 03:22:17 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3FC1F1AE5F;
+	Tue, 23 Dec 2008 03:22:16 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A30761AE5E; Tue,
+ 23 Dec 2008 03:22:11 -0500 (EST)
+In-Reply-To: <87lju7h4yb.dancerj%dancer@netfort.gr.jp> (Junichi Uekawa's
+ message of "Tue, 23 Dec 2008 13:48:44 +0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: CECCDE92-D0CA-11DD-8A65-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103803>
 
-On Tuesday 23 December 2008 03:44:07 Miklos Vajna wrote:
-> On Mon, Dec 22, 2008 at 02:04:06PM -0800, Dylan Martin <dmartin@sccd.ctc.edu> wrote:
-> > I checked, and my initial SVN to git conversion does contain history.
-> > 
-> > I'm trying to add an exising repo as a subdir of my main repo with
-> > history included.  Can anyone tell me how to do that?
-> 
-> I would try the following: Let's say you have super.git and foo.git, and
-> you want to merge foo.git to the subdirectory 'foo' of super.git. Then
-> you can do in foo.git:
-> 
-> mkdir foo
-> mv * foo
-> git add foo
-> git commit -a
-> 
-> Then in super.git:
-> 
-> git pull path/to/foo.git master
-> 
-> And then git log --follow should work just fine on any merged files as
-> well.
-> 
+--=-=-=
+Content-Type: text/plain; charset=iso-2022-jp
+
+Junichi Uekawa <dancer@netfort.gr.jp> writes:
+
+> Git merge conflict will insert '<<< first line of commit log message'
+> '===' '>>>' markers to the text file that is causing a conflict.
+>
+> Unfortunately, the encoding of the text file may be different from the
+> log message encoding, and that results in a file which has a mixed
+> encoding (which is pretty hard to edit from any editor BTW).
+>
+> My use case is editing platex files (iso-2022-jp encoded) with log
+> messages of utf-8.
+>
+> ... Thinking about it, it's probably the same encoding problem as git
+> blame.
+
+What 69cd8f6 (builtin-blame: Reencode commit messages according to git-log
+rules., 2008-10-22) does to git-blame is to re-encode the data taken from
+the commit log to i18n.logoutputencoding, and put that in the datastream.
+
+If your commit object have names and messages in utf-8, and if you set
+i18n.logoutputencoding to iso-2022-jp, that would reencode data taken from
+the commit object in iso-2022-jp and sprinkle them in the blame
+datastream.
+
+The issue would be certainly similar, *if* anything on your <<</===/>>>
+lines came from commit log message, but I couldn't trigger what you
+describe.  I prepared a history of this shape:
+
+   B
+  /
+ o---A
+
+with ISO-2022-JP payload and UTF-8 commit log message.  Then, I added:
+
+        [i18n]
+                logoutputencoding = iso-2022-jp
+
+which lets me read "git log -p --all" quite comfortably.  Everything comes
+out as good old JISX0208.  So far, so good.
+
+Then while on branch B, I tried to merge A, which resulted in conflicts
+that looked like this:
+
+<<<<<<< HEAD:foo
+これはサイドブランチの変更です。
+やはり JIS コードで書いてます。
+=======
+日本語のファイルです。
+JIS コードで書いてます。
+>>>>>>> master:foo
+
+The above will probably come out as UTF-8 in this mail text, but the point
+is that the confict side markers do not have anything but filename and the
+branch name.  I am still scratching my head trying to see where in the
+merge-recursive codepath you got snippet of log message.
+
+A bundle from my test repository is attached.  You can use it to reproduce
+the repository like this:
+ 
+    $ cd /var/tmp && mkdir test && cd test && git init
+    $ git pull ../x.bndl master
+    $ git fetch ../x.bndl side:side
 
 
-If the conversion is one-shot, you can also try rewriting commits like this:
+--=-=-=
+Content-Type: application/octet-stream
+Content-Disposition: attachment; filename=x.bndl
+Content-Transfer-Encoding: base64
+Content-Description: a bundle of the sample history
 
-cd foo.git
-git filter-branch --commit-filter 'TREE=$1; shift; git commit-tree $(echo -e "040000 tree $TREE\tfoo" | git mktree) "$@"' master
-
-(Maybe there is a simpler way, though)
-
-I used this once to merge together the history of a bunch of interrelated (and now dead) projects.
-
-Alexander
+IyB2MiBnaXQgYnVuZGxlCjQzYjk0NzQ2ZTU4ODNjMTA3MjcwZTM1NGJmYTc5ZjNmZGY1NjdlOWYg
+cmVmcy9oZWFkcy9tYXN0ZXIKZTBiMjZjODA2NjM3NzNmM2U0NzhjOGFjMDYxMjMwMGE3YTE0ZDdi
+NiByZWZzL2hlYWRzL3NpZGUKClBBQ0sAAAACAAAACZUQeJydyz1OwzAYgOHdp/guQPX5N7aEEBJL
+6coJ/AsZElfBlRibdKETEmthQ2JjgYGB21jNOegZur563jLECMi0MKpBKZ1KgYVkWOJaqMiV9yKE
+JonIKUWytkPsC3iH2gotKA1MJEMxMaa48ToY55pIaQxMaqmI3ZSHPMBq07cZbmBpO9tnuLxvy2OJ
+w/U6u/y08Lm7Aso4IjWSIVygRiSn2rXlpM66yfy2PT6/1/Hr+LGfDz91eoXV7R3U6bvu/upuX8fP
++fBbx5e6ncg/iUlbR/UGQ7lHRuWIPBBycONUv6efP99Wfp94nAFlAJr/hQL3AS10cmVlIDgwZDIx
+M2FmMWQ4ZGE5N2Y5ODgwN2JmMDA4NTJiMTY4OTJjNjY0YzWRLWMCNzmRkjwpNzkgLTA4MDAKCuOC
+teOCpOODieODluODqeODs+ODgeOBruWkieabtApfCScgkgt4nJ3LXQpCIRBA4XdXMRsoZnRChYgg
+iGgX5k/5oHPxeqHld9fQ6+E7c+QMnE4lhhS1N8Gwy84Va22K6DUWomyTJWaKKmzzIwOeW68CN3iE
+FrrA+V3nOvO4LvKS7zFKuwBpg0ieHcMBHaLaa6tzV3/d6l7HOkF6Vj8eTTYSrwF4nDM0MDAzMVFI
+y89nWLHdunj3i+KlXpv4RcL87NXXrDvYAgCqpQwkswV4nJNWcVIxVslR8Vc1VVVR9VQNU81ULVZ1
+VPHzCrS0VHFXsVRUltZw4pIGKktR8VfJAnIUvDyDFYACqsaKNqqeKu62hSoqKm4qcTC1ANQpEOSv
+AXicMzQwMDMxUUjLz2c4dSmm56L9/hvft/+tOfIjP+hZfZISANAQD0y8A3ick1ZxcqvxjrHIUfFT
+DVVVVFVRzVZxV7FUVJbWcOLy8gxWkFZxUjVWtFH1VHG3LVRRUXFTiYNJAwCPdAxcrwF4nDM0MDAz
+MVFIy89neDb30exNF685e3drriuPunHoSU/wRADG7Q6cMHicAwAAAAABHfgkiRyNyDstRgoZTRUH
+BDqJgGw=
+--=-=-=--
