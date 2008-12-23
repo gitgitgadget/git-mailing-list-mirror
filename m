@@ -1,57 +1,66 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: Installing git docs in Cygwin.
-Date: Tue, 23 Dec 2008 18:06:43 +0100
-Message-ID: <936218FB-9303-4FEE-B610-F48FB2F4FE0C@obry.net>
-References: <c115fd3c0812230639v78cee30cqbc7303b02633c8d1@mail.gmail.com>
-Mime-Version: 1.0 (iPhone Mail 5G77)
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Tim Visher <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 23 18:10:13 2008
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Dec 2008, #03; Sun, 21)
+Date: Tue, 23 Dec 2008 12:34:40 -0500
+Message-ID: <20081223173438.GA25699@coredump.intra.peff.net>
+References: <7vr641pvid.fsf@gitster.siamese.dyndns.org> <20081223120534.GA21633@coredump.intra.peff.net> <alpine.DEB.1.00.0812231725270.30769@pacific.mpi-cbg.de> <20081223163811.GA25658@coredump.intra.peff.net> <alpine.DEB.1.00.0812231746250.30769@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 23 18:36:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LFAlm-0007CY-1y
-	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 18:10:10 +0100
+	id 1LFBAq-0000SV-Pj
+	for gcvg-git-2@gmane.org; Tue, 23 Dec 2008 18:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751089AbYLWRI0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Dec 2008 12:08:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751120AbYLWRI0
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 12:08:26 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:62974 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751069AbYLWRI0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Dec 2008 12:08:26 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so347298nfc.21
-        for <git@vger.kernel.org>; Tue, 23 Dec 2008 09:08:23 -0800 (PST)
-Received: by 10.210.79.9 with SMTP id c9mr9053583ebb.108.1230052086451;
-        Tue, 23 Dec 2008 09:08:06 -0800 (PST)
-Received: from ?10.36.40.6? ([193.253.141.73])
-        by mx.google.com with ESMTPS id f6sm3799975nfh.79.2008.12.23.09.08.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Dec 2008 09:08:05 -0800 (PST)
-In-Reply-To: <c115fd3c0812230639v78cee30cqbc7303b02633c8d1@mail.gmail.com>
-X-Mailer: iPhone Mail (5G77)
+	id S1751120AbYLWReq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2008 12:34:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751182AbYLWReq
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 12:34:46 -0500
+Received: from peff.net ([208.65.91.99]:3067 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751012AbYLWReq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Dec 2008 12:34:46 -0500
+Received: (qmail 3340 invoked by uid 111); 23 Dec 2008 17:34:43 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 23 Dec 2008 12:34:43 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Dec 2008 12:34:41 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0812231746250.30769@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103836>
 
+On Tue, Dec 23, 2008 at 05:52:54PM +0100, Johannes Schindelin wrote:
 
-Le 23 d=C3=A9c. 08 =C3=A0 15:39, "Tim Visher" <tim.visher@gmail.com> a =
-=C3=A9crit :
+> However, note that without something like core.notesref you will never be 
+> able to have private and public notes.
+> 
+> And I very much want to have private notes _and_ public notes on the very 
+> same commits of the very same branches.
 
-> working fine but when I do a `make
-> install-doc`, all of the pages compile fine but then make exits after
-> exiting git/Documentation with an `Error 2`.
->
-> Thoughts?
+Right. I think core.notesref doesn't go far enough, because it doesn't
+provide a way to talk about notes from two sources at the same time.
+Like:
 
-Are you sure the docs were built fine. I had to revert to a previous =20
-version of asciidoc. Just an hint.
+  git log --pretty=format:'%N(my-private-notes:foo) %N(public-notes:bar)'
 
-Pascal.
+> I just wanted to fiddle a little bit with profiling, as I really do not 
+> understand why the new notes perform that badly against the old notes, 
+> even allowing for reading a complete, possibly huge tree into a hashmap.
+
+I haven't looked closely at the latest series yet, so I can't comment.
+
+> And while I am almost sure that there is a stupid bug lurking that will 
+> kick the performance again, I think the basic design is sound, and it 
+> should be easy to modify no matter which way you want to change the 
+> behavior with regards to trees/blobs or refs.
+
+I agree that the data structure is sound, so I can probably work on top
+of what you posted, too. I was planning on doing git-notes in C, though.
+
+-Peff
