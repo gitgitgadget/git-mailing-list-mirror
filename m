@@ -1,66 +1,104 @@
-From: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
-Subject: [PATCH] builtin-shortlog.c: do not unnecessarily strdup before insertion in list
-Date: Wed, 24 Dec 2008 17:34:44 +0100
-Message-ID: <1230136484-12445-1-git-send-email-dato@net.com.org.es>
+From: "R. Tyler Ballance" <tyler@slide.com>
+Subject: Re: Git with Hudson
+Date: Wed, 24 Dec 2008 14:59:25 -0600
+Organization: Slide, Inc.
+Message-ID: <1230152365.14882.48.camel@starfruit>
+References: <D2F0F023-862A-4BAB-88B9-BFEFC5592D10@strakersoftware.com>
+	 <20081218160734.b1992eb8.stephen@exigencecorp.com>
+	 <c115fd3c0812181758m5fe4af95s860181d25f1992ee@mail.gmail.com>
+	 <20081222210018.f21d9e07.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Dec 24 17:48:35 2008
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-1ZkZwHWPK4/kuZNpKjMM"
+Cc: Tim Visher <tim.visher@gmail.com>,
+	Indy Nagpal <indy@strakersoftware.com>, git@vger.kernel.org
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Wed Dec 24 22:00:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LFWuO-0000Kk-J6
-	for gcvg-git-2@gmane.org; Wed, 24 Dec 2008 17:48:33 +0100
+	id 1LFaqZ-00049p-55
+	for gcvg-git-2@gmane.org; Wed, 24 Dec 2008 22:00:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751183AbYLXQqn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Dec 2008 11:46:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbYLXQqn
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Dec 2008 11:46:43 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:3469
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751183AbYLXQql (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Dec 2008 11:46:41 -0500
-Received: from chistera.yi.org (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id 433C68027904;
-	Wed, 24 Dec 2008 17:34:45 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LFWh2-0003MP-4s; Wed, 24 Dec 2008 17:34:44 +0100
-X-Mailer: git-send-email 1.6.0.4
+	id S1751007AbYLXU7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Dec 2008 15:59:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751065AbYLXU7c
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Dec 2008 15:59:32 -0500
+Received: from mx0.slide.com ([208.76.68.7]:38045 "EHLO mx0.slide.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750952AbYLXU7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Dec 2008 15:59:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=slide.com; s=slideinc; h=Subject:From:To:Date:Message-Id; bh=p
+	AFUdOZLeci8qc+0rE+3rjapmmWtv2ZxPi2q1O/MlL4=; b=XD/92l4tejHxONt2H
+	guie3xt2I7VS5IHrs5BsAeKwDidwXd6GMf6EU0h24sg6hIGdvHHMerlwHRk15YZd
+	71J9Z4J6kgYr2dbSFJ3luclNlvSV9GaGgKh89OBn4CekzhE6VDWXOz+pfUszV8e+
+	BxhzZJ/PtyNtz4aJYcWCkqUYzc=
+Received: from nat3.slide.com ([208.76.69.126]:38252 helo=calculon.corp.slide.com)
+	by mx0.slide.com with esmtp (Exim 4.69 #1)
+	id 1LFapF-0004DC-0O; Wed, 24 Dec 2008 12:59:29 -0800
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by calculon.corp.slide.com (Postfix) with ESMTP id EA7EEA6F0002;
+	Wed, 24 Dec 2008 12:59:28 -0800 (PST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from calculon.corp.slide.com ([127.0.0.1])
+	by localhost (calculon.corp.slide.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id rJiwobo18XxM; Wed, 24 Dec 2008 12:59:28 -0800 (PST)
+Received: from [10.12.0.194] (unknown [10.12.0.194])
+	by calculon.corp.slide.com (Postfix) with ESMTP id 37E39A6F0001;
+	Wed, 24 Dec 2008 12:59:28 -0800 (PST)
+In-Reply-To: <20081222210018.f21d9e07.stephen@exigencecorp.com>
+X-Mailer: Evolution 2.24.1.1 
+X-Content-Bypass: Bypassed by sending host IP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103863>
 
-The log->list always has "strdup_strings" activated, hence strdup'ing
-namebuf was unnecessary. This change also removes a latent memory leak
-in the old code.
 
-Signed-off-by: Adeodato Sim=C3=B3 <dato@net.com.org.es>
----
- builtin-shortlog.c |    5 +----
- 1 files changed, 1 insertions(+), 4 deletions(-)
+--=-1ZkZwHWPK4/kuZNpKjMM
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/builtin-shortlog.c b/builtin-shortlog.c
-index 4c5d761..90e76ae 100644
---- a/builtin-shortlog.c
-+++ b/builtin-shortlog.c
-@@ -67,12 +67,9 @@ static void insert_one_record(struct shortlog *log,
- 		snprintf(namebuf + len, room, " %.*s", maillen, boemail);
- 	}
-=20
--	buffer =3D xstrdup(namebuf);
--	item =3D string_list_insert(buffer, &log->list);
-+	item =3D string_list_insert(namebuf, &log->list);
- 	if (item->util =3D=3D NULL)
- 		item->util =3D xcalloc(1, sizeof(struct string_list));
--	else
--		free(buffer);
-=20
- 	/* Skip any leading whitespace, including any blank lines. */
- 	while (*oneline && isspace(*oneline))
+On Mon, 2008-12-22 at 21:00 -0600, Stephen Haberman wrote:
+> > I'm interested!  Please publish away!
+>=20
+> Here's the "git2" Hudson plugin that worked well for us:
+>=20
+> http://github.com/stephenh/hudson-git2
+>=20
+> There is a git.hpi file checked into the target directory so that you
+> don't have to build it yourself.
+
+I decided that I'd check this out, as the existing Git plugin chokes on
+our git-rev-list(1) on our enormous Git repository.
+
+Correct me if I'm wrong, but did you actually upload or check in the
+target/ directory? Your .markdown references target/git.hpi as well, but
+I can't seem to find it :-/
+
+
+Cheers
 --=20
-1.6.0.4
+-R. Tyler Ballance
+Slide, Inc.
+
+--=-1ZkZwHWPK4/kuZNpKjMM
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAklSoq0ACgkQFCbH3D9R4W9OeQCfaeMw6x70YEdHVgMxT2bnrN0J
+ZPUAoIKxV+epTfKh6DpYvOKhYnz6LieM
+=aC7V
+-----END PGP SIGNATURE-----
+
+--=-1ZkZwHWPK4/kuZNpKjMM--
