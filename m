@@ -1,79 +1,83 @@
-From: Matt McCutchen <matt@mattmccutchen.net>
-Subject: Re: [PATCH 2/2] gitweb: support hiding projects from user-visible
- lists
-Date: Tue, 23 Dec 2008 20:40:31 -0500
-Message-ID: <1230082831.2971.45.camel@localhost>
-References: <4ba6b6c3fc183002407f322663d7ab53c1c28a91.1229202740.git.matt@mattmccutchen.net>
-	 <1229203007.31181.6.camel@mattlaptop2.local>
-	 <m3ljujg2eh.fsf@localhost.localdomain>
+From: Valdis.Kletnieks@vt.edu
+Subject: Re: [PATCH] Simplified GIT usage guide
+Date: Tue, 23 Dec 2008 23:35:18 -0500
+Message-ID: <43952.1230093318@turing-police.cc.vt.edu>
+References: <20081212182827.28408.40963.stgit@warthog.procyon.org.uk> <alpine.DEB.1.00.0812121952320.5873@eeepc-johanness> <20081219000218.GA23990@linux.vnet.ibm.com> <7vabatf1pg.fsf@gitster.siamese.dyndns.org>
+            <20081219012723.GI6912@linux.vnet.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; boundary="==_Exmh_1230093318_3347P";
+	 micalg=pgp-sha1; protocol="application/pgp-signature"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 24 02:45:06 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	David Howells <dhowells@redhat.com>, torvalds@osdl.org,
+	git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: paulmck@linux.vnet.ibm.com
+X-From: git-owner@vger.kernel.org Wed Dec 24 05:37:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LFIo0-0008LW-W0
-	for gcvg-git-2@gmane.org; Wed, 24 Dec 2008 02:45:01 +0100
+	id 1LFLVB-0001hr-An
+	for gcvg-git-2@gmane.org; Wed, 24 Dec 2008 05:37:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435AbYLXBkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Dec 2008 20:40:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbYLXBkf
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 20:40:35 -0500
-Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:37466 "EHLO
-	jankymail-a3.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751169AbYLXBkf (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Dec 2008 20:40:35 -0500
-Received: from [192.168.1.46] (pool-71-163-191-168.washdc.east.verizon.net [71.163.191.168])
-	by jankymail-a3.g.dreamhost.com (Postfix) with ESMTP id 669C464CA2;
-	Tue, 23 Dec 2008 17:40:33 -0800 (PST)
-In-Reply-To: <m3ljujg2eh.fsf@localhost.localdomain>
-X-Mailer: Evolution 2.24.3 
+	id S1751481AbYLXEgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Dec 2008 23:36:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbYLXEgR
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Dec 2008 23:36:17 -0500
+Received: from turing-police.cc.vt.edu ([128.173.14.107]:43427 "EHLO
+	turing-police.cc.vt.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751168AbYLXEgR (ORCPT <RFC822;git@vger.kernel.org>);
+	Tue, 23 Dec 2008 23:36:17 -0500
+Received: from turing-police.cc.vt.edu (turing-police.cc.vt.edu [127.0.0.1])
+	by turing-police.cc.vt.edu (8.14.3/8.14.3) with ESMTP id mBO4ZIBC043956;
+	Tue, 23 Dec 2008 23:35:18 -0500
+X-Mailer: exmh version 2.7.2 01/07/2005 with nmh-1.2
+In-Reply-To: Your message of "Thu, 18 Dec 2008 17:27:23 PST."
+             <20081219012723.GI6912@linux.vnet.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103857>
 
-On Sat, 2008-12-13 at 14:02 -0800, Jakub Narebski wrote:
-> Cannot you do this with new $export_auth_hook gitweb configuration
-> variable, added by Alexander Gavrilov in 
->    dd7f5f1 (gitweb: Add a per-repository authorization hook.)
-> It is used in check_export_ok subroutine, and is is checked also when
-> getting list of project from file
-> 
-> >From gitweb/INSTALL
-> 
->   - Finally, it is possible to specify an arbitrary perl subroutine that
->     will be called for each project to determine if it can be exported.
->     The subroutine receives an absolute path to the project as its only
->     parameter.
-> 
->     For example, if you use mod_perl to run the script, and have dumb
->     http protocol authentication configured for your repositories, you
->     can use the following hook to allow access only if the user is
->     authorized to read the files:
-> 
->       $export_auth_hook = sub {
->           use Apache2::SubRequest ();
->           use Apache2::Const -compile => qw(HTTP_OK);
->           my $path = "$_[0]/HEAD";
->           my $r    = Apache2::RequestUtil->request;
->           my $sub  = $r->lookup_file($path);
->           return $sub->filename eq $path
->               && $sub->status == Apache2::Const::HTTP_OK;
->       };
+--==_Exmh_1230093318_3347P
+Content-Type: text/plain; charset=us-ascii
 
-$export_auth_hook would work, and it would have the nice (but not
-essential) feature of including private projects in the list shown to
-suitably authenticated users.  The only problem is that my Web host
-doesn't support mod_perl.  Is there a practical way to accomplish the
-same thing as the above example in a CGI script?  I would like to avoid
-reimplementing Apache authentication-checking functionality if at all
-possible.
+On Thu, 18 Dec 2008 17:27:23 PST, "Paul E. McKenney" said:
 
--- 
-Matt
+> I would be OK with it being in linux-2.6.git rather than git.git,
+> if that helps.  Certainly there seems to be room for a description
+> of how to use git within the Linux community.
+
+What might help a lot of people (me, for one) would be a cookbook listing
+how to do things that those of us on the fringe might want to do. For example:
+
+"type this to pull Linus's tree, and this to bisect it" (I already know how
+to do this one, actually)
+
+"type this to pull a linux-next tree, and this to bisect it" (Last time I tried,
+the pull went OK, but I couldn't figure out how to give 'git bisect' a
+start/end commit that it was happy with).
+
+"'git log foo/bar/baz.c' is your friend if you're chasing a recently added
+bug/regression in baz.c"
+
+Hmm... it occurs to me that my only actual use for git is to find a commit
+ID so when I whinge to a developer, we're on the same page... ;)
+
+
+
+--==_Exmh_1230093318_3347P
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+Comment: Exmh version 2.5 07/13/2001
+
+iD8DBQFJUbwGcC3lWbTT17ARAvi+AKCJ86HgkWoEL4cao/90pUu7iw5q+QCgheUr
+fxcO+TZCEih0XHc4Qn5TqQk=
+=g8eh
+-----END PGP SIGNATURE-----
+
+--==_Exmh_1230093318_3347P--
