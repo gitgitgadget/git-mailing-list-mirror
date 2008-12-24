@@ -1,63 +1,66 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: Git with Hudson
-Date: Wed, 24 Dec 2008 15:04:11 -0600
-Organization: Exigence
-Message-ID: <20081224150411.8ef6a2ff.stephen@exigencecorp.com>
-References: <D2F0F023-862A-4BAB-88B9-BFEFC5592D10@strakersoftware.com>
-	<20081218160734.b1992eb8.stephen@exigencecorp.com>
-	<c115fd3c0812181758m5fe4af95s860181d25f1992ee@mail.gmail.com>
-	<20081222210018.f21d9e07.stephen@exigencecorp.com>
-	<1230152365.14882.48.camel@starfruit>
+From: skillzero@gmail.com
+Subject: git rev-list with --name-status?
+Date: Wed, 24 Dec 2008 14:53:00 -0800
+Message-ID: <2729632a0812241453x4ae50362g4bcd3317e5be0429@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Tim Visher <tim.visher@gmail.com>,
-	Indy Nagpal <indy@strakersoftware.com>, git@vger.kernel.org
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Wed Dec 24 22:06:02 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 24 23:55:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LFav9-0005QE-7A
-	for gcvg-git-2@gmane.org; Wed, 24 Dec 2008 22:05:51 +0100
+	id 1LFcdh-00013F-85
+	for gcvg-git-2@gmane.org; Wed, 24 Dec 2008 23:55:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751158AbYLXVEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Dec 2008 16:04:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750952AbYLXVEK
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Dec 2008 16:04:10 -0500
-Received: from smtp192.sat.emailsrvr.com ([66.216.121.192]:35292 "EHLO
-	smtp192.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751143AbYLXVEK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Dec 2008 16:04:10 -0500
-Received: from relay19.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay19.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 888D11C17BD;
-	Wed, 24 Dec 2008 16:04:09 -0500 (EST)
-Received: by relay19.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTPSA id E7EFC1C1696;
-	Wed, 24 Dec 2008 16:04:08 -0500 (EST)
-In-Reply-To: <1230152365.14882.48.camel@starfruit>
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1751252AbYLXWxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Dec 2008 17:53:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbYLXWxE
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Dec 2008 17:53:04 -0500
+Received: from mail-gx0-f13.google.com ([209.85.217.13]:61779 "EHLO
+	mail-gx0-f13.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188AbYLXWxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Dec 2008 17:53:03 -0500
+Received: by gxk6 with SMTP id 6so2705699gxk.13
+        for <git@vger.kernel.org>; Wed, 24 Dec 2008 14:53:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=0sf1EhXGWUOuCMbOil4IS5AFZAoVzi71D7pmp2A98Ag=;
+        b=ldV7i5PnemDcJtV6I0RUysTVNFKjOlCWXXvdCO6S82nI30SARFU+Kt+5jlW8aLLz2u
+         JT/16nswCnoltjEN//RwHFnact/iG52ZJk0Jt9K08y4KRNhShii9rLoppiI+3Z2rstGg
+         T4YrRKjGcNtNUb4LwjwPGgvVaAzRBkfBbyi4s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=VGxoyxq65P2+JSemlLMKbQCx0pPa3s4gAKf+I37RvD2qXk4mxXyJCGvXk8cXU/I1bv
+         aJTGF0DKuHxjHcLGuic+q74OFha6e0QkzMEFiSSwYvASUi3WcK5MesKmit6E5bMIGvV2
+         3NAXcUV/Q0+J8eKP4tK4A8FdUHRqIZthCZeQM=
+Received: by 10.65.96.17 with SMTP id y17mr7202793qbl.2.1230159180374;
+        Wed, 24 Dec 2008 14:53:00 -0800 (PST)
+Received: by 10.65.192.6 with HTTP; Wed, 24 Dec 2008 14:53:00 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103865>
 
+Is there a way to print the equivalent of --name-status with git
+rev-list? The post-receive script that comes with git for sending
+comment emails does this to generate the commit log:
 
-> > Here's the "git2" Hudson plugin that worked well for us:
-> > 
-> > http://github.com/stephenh/hudson-git2
-> > 
-> > There is a git.hpi file checked into the target directory so that you
-> > don't have to build it yourself.
-> 
-> I decided that I'd check this out, as the existing Git plugin chokes on
-> our git-rev-list(1) on our enormous Git repository.
-> 
-> Correct me if I'm wrong, but did you actually upload or check in the
-> target/ directory? Your .markdown references target/git.hpi as well, but
-> I can't seem to find it :-/
+git rev-parse --not --branches | grep -v $(git rev-parse $refname) |
+	git rev-list --pretty --stdin $oldrev..$newrev
 
-Ack, sorry, just added it.
+I'd like to also include the output of --name-status so the email
+shows which files were changed by each commit (rather than just a
+summary at the end since our pushes sometimes have a lot of commits in
+them).
 
-- Stephen
+git rev-list doesn't seem to support --name-status and git log doesn't
+seem to support --stdin. Is there a better way to do what I want?
