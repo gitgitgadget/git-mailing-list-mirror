@@ -1,95 +1,56 @@
-From: martin f krafft <madduck@debian.org>
-Subject: Re: a few Topgit patches
-Date: Thu, 25 Dec 2008 15:58:34 +0100
-Organization: The Debian project
-Message-ID: <20081225145834.GA16852@lapse.rw.madduck.net>
-References: <20081223143035.GA24087@cassiopeia.tralala>
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: Re: [announce] gc
+Date: Thu, 25 Dec 2008 09:23:22 -0600
+Organization: Exigence
+Message-ID: <20081225092322.da6930c2.stephen@exigencecorp.com>
+References: <20081222212407.47c9ab1e.stephen@exigencecorp.com>
+	<vpqabanc9v6.fsf@bauges.imag.fr>
+	<20081223082207.f31ab2a3.stephen@exigencecorp.com>
+	<e2b179460812230706p12e4f052v960f162e08011ae6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ReaqsoxgOBHFXBhH"
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org,
-	Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Thu Dec 25 16:01:02 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: "Matthieu Moy" <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: "Mike Ralphson" <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 25 16:25:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LFrho-0002Qg-P2
-	for gcvg-git-2@gmane.org; Thu, 25 Dec 2008 16:00:57 +0100
+	id 1LFs54-0000VH-0k
+	for gcvg-git-2@gmane.org; Thu, 25 Dec 2008 16:24:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750927AbYLYO6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Dec 2008 09:58:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751279AbYLYO6v
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Dec 2008 09:58:51 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:44285 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750912AbYLYO6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Dec 2008 09:58:50 -0500
-Received: from lapse.rw.madduck.net (lapse-wlan.gauting.madduck.net [IPv6:2001:a60:f069:0:214:a4ff:fe04:eadc])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id 31D981D40A9;
-	Thu, 25 Dec 2008 15:58:36 +0100 (CET)
-Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
-	id 87F6D80F2; Thu, 25 Dec 2008 15:58:34 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20081223143035.GA24087@cassiopeia.tralala>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.27-1-686 i686
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/8798/Wed Dec 24 17:46:31 2008 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1751845AbYLYPXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Dec 2008 10:23:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751913AbYLYPXj
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Dec 2008 10:23:39 -0500
+Received: from smtp122.sat.emailsrvr.com ([66.216.121.122]:35928 "EHLO
+	smtp122.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751621AbYLYPXi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Dec 2008 10:23:38 -0500
+Received: from relay2.relay.sat.mlsrvr.com (localhost [127.0.0.1])
+	by relay2.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 11003CF613;
+	Thu, 25 Dec 2008 10:23:36 -0500 (EST)
+Received: by relay2.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTPSA id 9B0AAC49CB;
+	Thu, 25 Dec 2008 10:23:28 -0500 (EST)
+In-Reply-To: <e2b179460812230706p12e4f052v960f162e08011ae6@mail.gmail.com>
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103904>
 
 
---ReaqsoxgOBHFXBhH
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > I'm a little cautious about using words like corporate/enterprise as
+> > there is nothing exclusively "corporate/enterprise" about any of the
+> > hooks in the project, we just happened to be on a corporate/enterprise
+> > project when we came up with them.
+> 
+> As the workflows these seem to support are centralised (as you say
+> these apply equally well in some non-corporate / enterprise projects),
+> how about git-central?
 
-also sprach Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [2008.12.23=
-=2E1530 +0100]:
-> I hacked using topgit for some time now, and found the following changes
-> to topgit useful:
->=20
-> Uwe Kleine-K=F6nig (3):
->       tg export: implement skipping empty patches for collapse driver
->       tg export: Implement flattening patch paths for quilt mode
->       tg export (quilt): Implement numbering the patches
+Ah, that's excellent. Thanks for the suggestion.
 
-They all look good. I am a bit concerned about the use of
-single-letter options at this stage. tg-export is bound to grow, and
-using them all up now might mean breaking compatibility later, when
-a more common option needs e.g. -f, which has already been taken.
-
---=20
- .''`.   martin f. krafft <madduck@d.o>      Related projects:
-: :'  :  proud Debian developer               http://debiansystem.info
-`. `'`   http://people.debian.org/~madduck    http://vcs-pkg.org
-  `-  Debian - when you have better things to do than fixing systems
-=20
-"oh what a tangled web we weave,
- when first we practice to deceive.
- but my how we improve the score,
- as we practice more and more."
-                                                   -- sir walter scott
-
---ReaqsoxgOBHFXBhH
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklTn5MACgkQIgvIgzMMSnXCSQCdERzS23ySuMrWUfRX7FlC2BoX
-KTYAn0ISihEjtZ0tKv8NX4EcVNKkAYjw
-=rKeO
------END PGP SIGNATURE-----
-
---ReaqsoxgOBHFXBhH--
+- Stephen
