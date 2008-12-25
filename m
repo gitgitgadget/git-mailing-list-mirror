@@ -1,92 +1,98 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 21/23] Use an ArrayList for the reuseLoader collection in PackWriter
-Date: Wed, 24 Dec 2008 18:11:17 -0800
-Message-ID: <1230171079-17156-22-git-send-email-spearce@spearce.org>
-References: <1230171079-17156-1-git-send-email-spearce@spearce.org>
- <1230171079-17156-2-git-send-email-spearce@spearce.org>
- <1230171079-17156-3-git-send-email-spearce@spearce.org>
- <1230171079-17156-4-git-send-email-spearce@spearce.org>
- <1230171079-17156-5-git-send-email-spearce@spearce.org>
- <1230171079-17156-6-git-send-email-spearce@spearce.org>
- <1230171079-17156-7-git-send-email-spearce@spearce.org>
- <1230171079-17156-8-git-send-email-spearce@spearce.org>
- <1230171079-17156-9-git-send-email-spearce@spearce.org>
- <1230171079-17156-10-git-send-email-spearce@spearce.org>
- <1230171079-17156-11-git-send-email-spearce@spearce.org>
- <1230171079-17156-12-git-send-email-spearce@spearce.org>
- <1230171079-17156-13-git-send-email-spearce@spearce.org>
- <1230171079-17156-14-git-send-email-spearce@spearce.org>
- <1230171079-17156-15-git-send-email-spearce@spearce.org>
- <1230171079-17156-16-git-send-email-spearce@spearce.org>
- <1230171079-17156-17-git-send-email-spearce@spearce.org>
- <1230171079-17156-18-git-send-email-spearce@spearce.org>
- <1230171079-17156-19-git-send-email-spearce@spearce.org>
- <1230171079-17156-20-git-send-email-spearce@spearce.org>
- <1230171079-17156-21-git-send-email-spearce@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git rev-list with --name-status?
+Date: Wed, 24 Dec 2008 19:24:32 -0800
+Message-ID: <7vhc4tc4y7.fsf@gitster.siamese.dyndns.org>
+References: <2729632a0812241453x4ae50362g4bcd3317e5be0429@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Dec 25 03:14:09 2008
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Thu Dec 25 04:29:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LFfjR-00029A-TD
-	for gcvg-git-2@gmane.org; Thu, 25 Dec 2008 03:13:50 +0100
+	id 1LFgv5-0007Ao-Gp
+	for gcvg-git-2@gmane.org; Thu, 25 Dec 2008 04:29:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859AbYLYCMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Dec 2008 21:12:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751842AbYLYCMF
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Dec 2008 21:12:05 -0500
-Received: from george.spearce.org ([209.20.77.23]:59453 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751677AbYLYCLc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Dec 2008 21:11:32 -0500
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 8F2B23821F; Thu, 25 Dec 2008 02:11:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 9C7CF38200;
-	Thu, 25 Dec 2008 02:11:26 +0000 (UTC)
-X-Mailer: git-send-email 1.6.1.rc4.301.g5497a
-In-Reply-To: <1230171079-17156-21-git-send-email-spearce@spearce.org>
+	id S1751488AbYLYDYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Dec 2008 22:24:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbYLYDYm
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Dec 2008 22:24:42 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56368 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751479AbYLYDYl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Dec 2008 22:24:41 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A6A608A1D1;
+	Wed, 24 Dec 2008 22:24:37 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A64298A1CF; Wed,
+ 24 Dec 2008 22:24:34 -0500 (EST)
+In-Reply-To: <2729632a0812241453x4ae50362g4bcd3317e5be0429@mail.gmail.com>
+ (skillzero@gmail.com's message of "Wed, 24 Dec 2008 14:53:00 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8F14FC5C-D233-11DD-BCCE-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103890>
 
-Nulling out the elements of the array is quicker than deallocating
-LinkedList nodes and allocating new ones for the next use.
+skillzero@gmail.com writes:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/lib/PackWriter.java       |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+> I'd like to also include the output of --name-status so the email
+> shows which files were changed by each commit (rather than just a
+> summary at the end since our pushes sometimes have a lot of commits in
+> them).
+>
+> git rev-list doesn't seem to support --name-status and git log doesn't
+> seem to support --stdin. Is there a better way to do what I want?
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-index 3ef9154..69b4294 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-@@ -46,7 +46,6 @@
- import java.util.Collection;
- import java.util.Collections;
- import java.util.Iterator;
--import java.util.LinkedList;
- import java.util.List;
- import java.util.zip.Deflater;
- import java.util.zip.DeflaterOutputStream;
-@@ -577,8 +576,7 @@ public void writePack(OutputStream packStream) throws IOException {
- 
- 	private void searchForReuse() throws IOException {
- 		initMonitor.beginTask(SEARCHING_REUSE_PROGRESS, getObjectsNumber());
--		final Collection<PackedObjectLoader> reuseLoaders = new LinkedList<PackedObjectLoader>();
--
-+		final Collection<PackedObjectLoader> reuseLoaders = new ArrayList<PackedObjectLoader>();
- 		for (List<ObjectToPack> list : objectsLists) {
- 			for (ObjectToPack otp : list) {
- 				if (initMonitor.isCancelled())
--- 
-1.6.1.rc4.301.g5497a
+The plumbing rev-list never runs diff internally.
+
+Depending on what you want, "git log --stat" or "git log --name-only" or
+even "git log --name-status -B -C" may serve you nicely.
+
+"Depending on what you want" is the key phrase that indicates that what
+you are asking for would be most likely found in Porcelains, not plumbing.
+
+Even though there is not much reason to _avoid_ using "log" these days,
+you could do your own scripting for whatever reason; perhaps you feel like
+it would be a more macho thing to do (which isn't), perhaps you want more
+customization than options supported by the stock "log" Porcelain gives
+you.
+
+In olden days, people scripted around plumbing, partly because the
+Porcelains were implemented that way, and partly because the choices the
+Porcelains back then gave you was limited than what we have now.  Your
+script may look like this:
+
+    git-rev-list --parents $range |
+    while read commit parents
+    do
+            ... do whatever you want with them ...
+    done
+
+or
+
+    git-rev-list --pretty --parents $range |
+    perl -e '
+    	while (<>) {
+        	if (/^commit /../^$/) {
+			if (/^commit (\S+)(.*)?/) {
+				... we have a new commit; flush what
+                                ... you accumulated for the previous one.
+				... and prepare for this commit.
+				... $1 is the commit, $2 has parents you
+                                ... can further split
+                        }
+			... do "header" things here ...
+                        next;
+                }
+                s/^    //;
+                ... do "log" things here ...
+	}
+        ... flush what you accumulated for the last commit.
+    '                
