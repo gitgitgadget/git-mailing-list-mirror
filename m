@@ -1,98 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git rev-list with --name-status?
-Date: Wed, 24 Dec 2008 19:24:32 -0800
-Message-ID: <7vhc4tc4y7.fsf@gitster.siamese.dyndns.org>
-References: <2729632a0812241453x4ae50362g4bcd3317e5be0429@mail.gmail.com>
+From: "Emily Ren" <lingyan.ren@gmail.com>
+Subject: Re: Questions about repo and git submodule
+Date: Thu, 25 Dec 2008 14:28:06 +0800
+Message-ID: <856bfe0e0812242228o6a428702i296dc87c76cf9dba@mail.gmail.com>
+References: <856bfe0e0812230601m1765b483pe62c7902849e9cea@mail.gmail.com>
+	 <20081223152951.GB27865@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Thu Dec 25 04:29:56 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailinglist" <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Dec 25 07:32:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LFgv5-0007Ao-Gp
-	for gcvg-git-2@gmane.org; Thu, 25 Dec 2008 04:29:55 +0100
+	id 1LFjlh-000264-9A
+	for gcvg-git-2@gmane.org; Thu, 25 Dec 2008 07:32:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751488AbYLYDYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Dec 2008 22:24:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbYLYDYm
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Dec 2008 22:24:42 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56368 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479AbYLYDYl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Dec 2008 22:24:41 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A6A608A1D1;
-	Wed, 24 Dec 2008 22:24:37 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A64298A1CF; Wed,
- 24 Dec 2008 22:24:34 -0500 (EST)
-In-Reply-To: <2729632a0812241453x4ae50362g4bcd3317e5be0429@mail.gmail.com>
- (skillzero@gmail.com's message of "Wed, 24 Dec 2008 14:53:00 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8F14FC5C-D233-11DD-BCCE-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751428AbYLYG2K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Dec 2008 01:28:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbYLYG2J
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Dec 2008 01:28:09 -0500
+Received: from yw-out-2324.google.com ([74.125.46.28]:63041 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750948AbYLYG2I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Dec 2008 01:28:08 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so1101811ywe.1
+        for <git@vger.kernel.org>; Wed, 24 Dec 2008 22:28:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Jm/yme2z07MehtUkpDtG1vjauLuZqbTLie0zjD8sLZE=;
+        b=pIHf+JlKt4PQBt/BhbkW2LYSe9tJU/ZvP0rN1m6wauGZ4U2nTqP0Jy3O461s4gmalj
+         hM2ej3DhEgRDvHTTUZNceog0QZ5eFjwHkXD/0TiIStNxZvPfY5ajNZW6xW5XlZ29wo/N
+         v7lWGNb0iIXcnmGF7lTzQeq/QezX6EvDgfY9I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=gW7jkQHvuEbcl733Pyus8dz7LzBb1bJ7F8bOcPYTuC/u0hUhueMiFSevWFg71d2UEW
+         lhiTW/PoLlY9NqEWd7CDv4s9NMxb0wTJuDv3zww/EcjLRmQFBnB0yGqF2g4B+4vINlUi
+         hXv0eGMlVCJVGawGZCt9mI9JYBcdfdy431odg=
+Received: by 10.151.7.4 with SMTP id k4mr12501197ybi.226.1230186486859;
+        Wed, 24 Dec 2008 22:28:06 -0800 (PST)
+Received: by 10.150.143.3 with HTTP; Wed, 24 Dec 2008 22:28:06 -0800 (PST)
+In-Reply-To: <20081223152951.GB27865@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103891>
 
-skillzero@gmail.com writes:
+Hi Shawn,
 
-> I'd like to also include the output of --name-status so the email
-> shows which files were changed by each commit (rather than just a
-> summary at the end since our pushes sometimes have a lot of commits in
-> them).
+Merry Christmas !
+
+Thank you for your guide ! I've created git repository with submodules
+with a simple script successfully.
+
+Now I have another question,  since my android repo will always sync
+up from android.git.kernel.org, my git repository needs to be updated
+accordingly.  Is there a tool I can use to sync up from repo to git
+repositoy ?
+
+Thanks,
+Emily
+
+On Tue, Dec 23, 2008 at 11:29 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Emily Ren <lingyan.ren@gmail.com> wrote:
+>>
+>> I have some questions about android repo and git submodule.
+>>
+>> I created a repo repository with below commands:
+>> 1.  repo init -u git://android.git.kernel.org/platform/manifest.git
+>> 2.  repo initialized in /android
+>>
+>> 1. The android dir is not a git repository,
 >
-> git rev-list doesn't seem to support --name-status and git log doesn't
-> seem to support --stdin. Is there a better way to do what I want?
-
-The plumbing rev-list never runs diff internally.
-
-Depending on what you want, "git log --stat" or "git log --name-only" or
-even "git log --name-status -B -C" may serve you nicely.
-
-"Depending on what you want" is the key phrase that indicates that what
-you are asking for would be most likely found in Porcelains, not plumbing.
-
-Even though there is not much reason to _avoid_ using "log" these days,
-you could do your own scripting for whatever reason; perhaps you feel like
-it would be a more macho thing to do (which isn't), perhaps you want more
-customization than options supported by the stock "log" Porcelain gives
-you.
-
-In olden days, people scripted around plumbing, partly because the
-Porcelains were implemented that way, and partly because the choices the
-Porcelains back then gave you was limited than what we have now.  Your
-script may look like this:
-
-    git-rev-list --parents $range |
-    while read commit parents
-    do
-            ... do whatever you want with them ...
-    done
-
-or
-
-    git-rev-list --pretty --parents $range |
-    perl -e '
-    	while (<>) {
-        	if (/^commit /../^$/) {
-			if (/^commit (\S+)(.*)?/) {
-				... we have a new commit; flush what
-                                ... you accumulated for the previous one.
-				... and prepare for this commit.
-				... $1 is the commit, $2 has parents you
-                                ... can further split
-                        }
-			... do "header" things here ...
-                        next;
-                }
-                s/^    //;
-                ... do "log" things here ...
-	}
-        ... flush what you accumulated for the last commit.
-    '                
+> Correct, it is not a git repository.  The repo tool does not use
+> git submodules.  The top level of a repo client has a ".repo/"
+> directory with metadata, not a ".git/" directory.  The table of
+> contents (the subprojects) is stored in XML files under ".repo/".
+>
+> <aside>
+> I actually fought against the XML format for repo's manifest, but
+> others felt it was suitable.  And then walked away from the project
+> after Android open-sourced its code tree.  Leaving me to maintain it.
+> I see a file format simplification in the future for repo.
+> </aside>
+>
+>> if other people clone my
+>> android code, how does it work?
+>
+> Sadly this isn't supported correctly.  You can't initialize one
+> repo client from another, even though you can git clone one git
+> repository from any other.  Its a bug in repo's design.  The data
+> under ".repo/projects/" isn't laid out correctly to permit reuse
+> of one repo client to initialize another.
+>
+> Its something I keep meaning to fix, but its going to take some
+> real effort.
+>
+> In the mean time, there is a "--mirror" flag to repo init
+> which can be used to clone everything into bare repositories.
+> Those bare repositories can be published for others to repo init
+> from, though you need to customize the manifest.git:default.xml
+> so that the embedded URL refers back to your server and not
+> android.git.kernel.org.  Yet another thing I want to fix.
+>
+>> 2. I want to make android dir to be a git repository, is it workable
+>> that I create submodule for each subdirectory in another directory? Is
+>> there a script for it?
+>
+> You might be able to do something like this:
+>
+>        cd /android
+>        git init
+>        repo forall -c 'cd /android && git submodule add `pwd`'
+>
+> Also, you might want to consider asking questions related to repo
+> on the repo-discuss@googlegroups.com mailing list.  There's a lot
+> more repo users there than on the git mailing list, and they have
+> started to come up with their own "tips n tricks".
+>
+> --
+> Shawn.
+>
