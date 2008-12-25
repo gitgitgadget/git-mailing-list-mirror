@@ -1,284 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: A note from the maintainer
-Date: Wed, 24 Dec 2008 22:48:22 -0800
-Message-ID: <7vzlikbvih.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] handle_remote_ls_ctx can parsing href starting at
+ http://
+Date: Wed, 24 Dec 2008 23:04:46 -0800
+Message-ID: <7vmyekag6p.fsf@gitster.siamese.dyndns.org>
+References: <7v3aghnv1t.fsf@gitster.siamese.dyndns.org>
+ <1230021075-10113-1-git-send-email-catap@catap.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 25 07:50:33 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Kirill A. Korinskiy" <catap@catap.ru>
+X-From: git-owner@vger.kernel.org Thu Dec 25 08:10:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LFk3C-0005CV-TR
-	for gcvg-git-2@gmane.org; Thu, 25 Dec 2008 07:50:31 +0100
+	id 1LFkM9-0000OI-5w
+	for gcvg-git-2@gmane.org; Thu, 25 Dec 2008 08:10:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750914AbYLYGsa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Dec 2008 01:48:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750927AbYLYGsa
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Dec 2008 01:48:30 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36465 "EHLO
+	id S1750927AbYLYHE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Dec 2008 02:04:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750948AbYLYHE4
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Dec 2008 02:04:56 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52463 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750912AbYLYGs3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Dec 2008 01:48:29 -0500
+	with ESMTP id S1750912AbYLYHE4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Dec 2008 02:04:56 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E09008AC56;
-	Thu, 25 Dec 2008 01:48:26 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 90FC71AFF8;
+	Thu, 25 Dec 2008 02:04:52 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9810B8AC55; Thu,
- 25 Dec 2008 01:48:24 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5CD3A1AFAB; Thu,
+ 25 Dec 2008 02:04:47 -0500 (EST)
+In-Reply-To: <1230021075-10113-1-git-send-email-catap@catap.ru> (Kirill A.
+ Korinskiy's message of "Tue, 23 Dec 2008 11:31:15 +0300")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 08471A76-D250-11DD-9DB5-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 53C905F2-D252-11DD-8DBF-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103893>
-
-Welcome to git community.
-
-This message talks about how git.git is managed, and how you can work
-with it.
-
-* IRC and Mailing list
-
-Many active members of development community hang around on #git
-IRC channel on Freenode.  Its log is available at:
-
-        http://colabti.org/irclogger/irclogger_log/git
-
-The development however is primarily done on the git mailing list
-(git@vger.kernel.org).  If you have patches, please send them to the
-list, following Documentation/SubmittingPatches.
-
-I usually try to read all patches posted to the list, and follow
-almost all the discussions on the list, unless the topic is about an
-obscure corner that I do not personally use.  But I am obviously not
-perfect.  If you sent a patch that you did not hear from anybody for
-three days, that is a very good indication that it was dropped on the
-floor --- please do not hesitate to remind me.
-
-The list archive is available at a few public sites as well:
-
-        http://news.gmane.org/gmane.comp.version-control.git/
-        http://marc.theaimsgroup.com/?l=3Dgit
-        http://www.spinics.net/lists/git/
-
-and some people seem to prefer to read it over NNTP:
-
-        nntp://news.gmane.org/gmane.comp.version-control.git
-
-When you point at a message in a mailing list archive, using
-gmane is often the easiest to follow by readers, like this:
-
-        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
-=3D217
-
-as it also allows people who subscribe to the mailing list as
-gmane newsgroup to "jump to" the article.
-
-* Repositories, branches and documentation.
-
-My public git.git repository is at:
-
-        git://git.kernel.org/pub/scm/git/git.git/
-
-Immediately after I publish to the primary repository at kernel.org, I
-also push into an alternate here:
-
-        git://repo.or.cz/alt-git.git/
-
-Impatient people might have better luck with the latter one.
-
-Their gitweb interfaces are found at:
-
-        http://git.kernel.org/?p=3Dgit/git.git
-        http://repo.or.cz/w/alt-git.git
-
-There are three branches in git.git repository that are not
-about the source tree of git: "todo", "html" and "man".  The
-first one was meant to contain TODO list for me, but I am not
-good at maintaining such a list and it is not as often updated as
-it could/should be.  It also contains some helper scripts I use
-to maintain git.
-
-The "html" and "man" are autogenerated documentation from the
-tip of the "master" branch; the tip of "html" is extracted to be
-visible at kernel.org at:
-
-        http://www.kernel.org/pub/software/scm/git/docs/
-
-The above URL is the top-level documentation page, and it has
-links to documentation of older releases.
-
-The script to maintain these two documentation branches are
-found in "todo" branch as dodoc.sh, if you are interested.  It
-is a good demonstration of how to use an update hook to automate
-a task.
-
-There are four branches in git.git repository that track the
-source tree of git: "master", "maint", "next", and "pu".  I may
-add more maintenance branches (e.g. "maint-1.5.4") if we have
-hugely backward incompatible feature updates in the future to keep
-an older release alive; I may not, but the distributed nature of
-git means any volunteer can run a stable-tree like that herself.
-
-The "master" branch is meant to contain what are very well
-tested and ready to be used in a production setting.  There
-could occasionally be minor breakages or brown paper bag bugs
-but they are not expected to be anything major, and more
-importantly quickly and trivially fixable.  Every now and
-then, a "feature release" is cut from the tip of this branch and
-they typically are named with three dotted decimal digits.  The
-last such release was 1.6.1 done on Dec 24th 2008.  You
-can expect that the tip of the "master" branch is always more
-stable than any of the released versions.
-
-Whenever a feature release is made, "maint" branch is forked off
-from "master" at that point.  Obvious, safe and urgent fixes
-after a feature release are applied to this branch and
-maintenance releases are cut from it.  The maintenance releases
-are named with four dotted decimal, named after the feature
-release they are updates to; the last such release was 1.6.0.6.
-New features never go to this branch.  This branch is also
-merged into "master" to propagate the fixes forward.
-
-A trivial and safe enhancement goes directly on top of "master".
-A new development, either initiated by myself or more often by
-somebody who found his or her own itch to scratch, does not
-usually happen on "master", however.  Instead, a separate topic
-branch is forked from the tip of "master", and it first is
-tested in isolation; I may make minimum fixups at this point.
-Usually there are a handful such topic branches that are running
-ahead of "master" in git.git repository.  I do not publish the
-tip of these branches in my public repository, however, partly
-to keep the number of branches that downstream developers need
-to worry about low, and primarily because I am lazy.
-
-The quality of topic branches are judged primarily by the mailing list
-discussions.  Some of them start out as "good idea but obviously is
-broken in some areas (e.g. breaks the existing testsuite)" and then
-with some more work (either by the original contributor's effort or
-help from other people on the list) becomes "more or less done and can
-now be tested by wider audience".  Luckily, most of them start out in
-the latter, better shape.
-
-The "next" branch is to merge and test topic branches in the
-latter category.  In general, the branch always contains the tip
-of "master".  It might not be quite rock-solid production ready,
-but is expected to work more or less without major breakage.  I
-usually use "next" version of git for my own work, so it cannot
-be _that_ broken to prevent me from pushing the changes out.
-The "next" branch is where new and exciting things take place.
-
-The two branches "master" and "maint" are never rewound, and
-"next" usually will not be either (this automatically means the
-topics that have been merged into "next" are usually not
-rebased, and you can find the tip of topic branches you are
-interested in from the output of "git log next"). You should be
-able to safely track them.
-
-After a feature release is made from "master", however, "next"
-will be rebuilt from the tip of "master" using the surviving
-topics.  The commit that replaces the tip of the "next" will
-have the identical tree, but it will have different ancestry
-from the tip of "master".  An announcement will be made to warn
-people about such a rebasing.
-
-The "pu" (proposed updates) branch bundles all the remainder of
-topic branches.  The "pu" branch, and topic branches that are
-only in "pu", are subject to rebasing in general.  By the above
-definition of how "next" works, you can tell that this branch
-will contain quite experimental and obviously broken stuff.
-
-When a topic that was in "pu" proves to be in testable shape, it
-graduates to "next".  I do this with:
-
-        git checkout next
-        git merge that-topic-branch
-
-Sometimes, an idea that looked promising turns out to be not so
-good and the topic can be dropped from "pu" in such a case.
-
-A topic that is in "next" is expected to be tweaked and fixed to
-perfection before it is merged to "master" (that's why "master"
-can be expected to stay very stable).  Similarly to the above, I
-do it with this:
-
-        git checkout master
-        git merge that-topic-branch
-        git branch -d that-topic-branch
-
-Note that being in "next" is not a guarantee to appear in the
-next release (being in "master" is such a guarantee, unless it
-is later found seriously broken and reverted), or even in any
-future release.  There even were cases that topics needed
-reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" were entirely reverted
-from "next" because fatal flaws were found in them later.
-
-Starting from v1.5.0, "master" and "maint" have release notes
-for the next release in Documentation/RelNotes-* files, so that
-I do not have to run around summarizing what happened just
-before the release.
-
-
-* Other people's trees, trusted lieutenants and credits.
-
-Documentation/SubmittingPatches outlines who your changes should
-be sent to.  As described in contrib/README, I would delegate
-fixes and enhancements in contrib/ area to primary contributors
-of them.
-
-Although the following are included in git.git repository, they
-have their own authoritative repository and maintainers:
-
- - git-gui/ comes from Shawn Pearce's git-gui project:
-
-        git://repo.or.cz/git-gui.git
-
- - gitk-git/ comes from Paul Mackerras's gitk project:
-
-        git://git.kernel.org/pub/scm/gitk/gitk.git
-
-I would like to thank everybody who helped to raise git into the
-current shape.  Especially I would like to thank the git list
-regulars whose help I have relied on and expect to continue
-relying on heavily:
-
- - Linus on general design issues.
-
- - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
-   Ren=C3=A9 Scharfe and Jeff King on general implementation issues.
-
- - Shawn and Nicolas Pitre on pack issues.
-
- - Martin Langhoff and Frank Lichtenheld on cvsserver and cvsimport.
-
- - Paul Mackerras on gitk.
-
- - Eric Wong on git-svn.
-
- - Simon Hausmann on git-p4.
-
- - Jakub Narebski, Petr Baudis, and Luben Tuikov on gitweb.
-
- - J. Bruce Fields on documentaton issues.
-
- - Johannes Schindelin, Johannes Sixt and others for their effort
-   to move things forward on the Windows front.  Most of the fruits
-   from their porting efforts have been merged to the mainline git.git
-   repository in 1.6.0 release.
-
- - People on non-Linux platforms for keeping their eyes on
-   portability; especially, Randal Schwartz, Theodore Ts'o,
-   Jason Riedy, Thomas Glanzmann, but countless others as well.
-
-* This document
-
-The latest copy of this document is found in git.git repository,
-on 'todo' branch, as MaintNotes.
-
-I also keep a copy of it at http://members.cox.net/junkio/
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103894>
+
+"Kirill A. Korinskiy" <catap@catap.ru> writes:
+
+> The program call remote_ls() to get remote objects over http;
+> handle_remote_ls_ctx() is used to parse it's response to populated
+> "struct remote_ls_ctx" that is returned from remote_ls().
+>
+> The handle_remote_ls_ctx() function assumed that the server will
+> returned local path in href field, but RFC 4918 demand of support full
+> URI (http://localhost/repo.git for example).
+>
+> This resulted in push failure (git-http-push ask server
+> PROPFIND /repo.git/alhost:8080/repo.git/refs/) when a server returned
+> full URI.
+
+Thanks.
+
+Do you mean PROPFIND was made to that garbage with :8080 in it when the
+server returned a full URI http://localhost/repo.git as in the example in
+the previous paragraph, or are you using a different example here?
+
+I am contemplating of munging your commit log message like this...
+
+commit e1f33efe07b9a520505fccd71bea1292fc9448dd
+Author: Kirill A. Korinskiy <catap@catap.ru>
+Date:   Tue Dec 23 11:31:15 2008 +0300
+
+    http-push: support full URI in handle_remote_ls_ctx()
+    
+    The program calls remote_ls() to get list of files from the server over
+    HTTP; handle_remote_ls_ctx() is used to parse its response to populate
+    "struct remote_ls_ctx" that is returned from remote_ls().
+    
+    The handle_remote_ls_ctx() function assumed that the server returns a
+    local path in href field, but RFC 4918 (14.7) demand of support full URI
+    (e.g. "http://localhost:8080/repo.git").
+    
+    This resulted in push failure (e.g. git-http-push issues a PROPFIND
+    request to "/repo.git/alhost:8080/repo.git/refs/" to the server).
+    
+    Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
