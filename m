@@ -1,81 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] strbuf_readlink semantics update.
-Date: Wed, 24 Dec 2008 23:23:58 -0800
-Message-ID: <7viqp8afap.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.2.00.0812171042120.14014@localhost.localdomain>
- <1230026749-25360-1-git-send-email-madcoder@debian.org>
- <20081223102127.GA21485@artemis.corp>
- <alpine.LFD.2.00.0812231009220.3535@localhost.localdomain>
- <20081224101146.GA10008@artemis.corp> <4952532F.5050704@lsrfire.ath.cx>
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: [ANNOUNCE] GIT 1.6.1
+Date: Thu, 25 Dec 2008 09:32:32 +0100
+Message-ID: <46d6db660812250032h2e04b209mb3abd3bb747ddcf9@mail.gmail.com>
+References: <7v7i5odams.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Dec 25 08:25:37 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 25 09:33:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LFkb7-0002za-Lt
-	for gcvg-git-2@gmane.org; Thu, 25 Dec 2008 08:25:34 +0100
+	id 1LFlfI-0000GG-5C
+	for gcvg-git-2@gmane.org; Thu, 25 Dec 2008 09:33:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751214AbYLYHYL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Dec 2008 02:24:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbYLYHYL
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Dec 2008 02:24:11 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53121 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750948AbYLYHYK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Dec 2008 02:24:10 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 584521B08D;
-	Thu, 25 Dec 2008 02:24:09 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 136091B081; Thu,
- 25 Dec 2008 02:24:01 -0500 (EST)
-In-Reply-To: <4952532F.5050704@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
- Scharfe's message of "Wed, 24 Dec 2008 16:20:15 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0545AC34-D255-11DD-8439-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751042AbYLYIcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Dec 2008 03:32:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750952AbYLYIcf
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Dec 2008 03:32:35 -0500
+Received: from fk-out-0910.google.com ([209.85.128.187]:35494 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750912AbYLYIce (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Dec 2008 03:32:34 -0500
+Received: by fk-out-0910.google.com with SMTP id 18so1831296fkq.5
+        for <git@vger.kernel.org>; Thu, 25 Dec 2008 00:32:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=kTY2H7r/H0GZdkZJkQzigVZD4vgzROFMt0N3yCxup8s=;
+        b=EVNoXWNDyHdQT4xxjWSnSmqQ9+7amr7v5CkV+xymy+V3yeLbH/gJk55mgVLeGrWUyf
+         QLSSZYmG81osoUQTg6mgZ9AstYmaTwdRjfvwj1uDXtlc5OH9vDu1+twyYGVUV1GBGFxE
+         bFI5/UFI54qKABBLwFaYvTPXi5WU+jCFhOx0w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=GkRhaL11rO4gPAnpr2yl15IY8VzuWom+LsvYunTuBXRUr9vbOTHyn3K9SImfQk54Lj
+         /8TZa0BlnwYtBAmLTvFJcJrrauW030vq60doZXL9dpbiSiokLLNRUqodi5HnnNdxGODS
+         M0B30Y3Oa2faUhoa45iLwZRIjynkv68eTDmhM=
+Received: by 10.103.182.3 with SMTP id j3mr3432800mup.113.1230193952536;
+        Thu, 25 Dec 2008 00:32:32 -0800 (PST)
+Received: by 10.103.118.7 with HTTP; Thu, 25 Dec 2008 00:32:32 -0800 (PST)
+In-Reply-To: <7v7i5odams.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103896>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+On Thu, Dec 25, 2008 at 7:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> The latest feature release GIT 1.6.1 is available at the usual
+> places:
+>
 
-> Pierre Habouzit schrieb:
->> On Tue, Dec 23, 2008 at 06:16:01PM +0000, Linus Torvalds wrote:
->>>
->>> On Tue, 23 Dec 2008, Pierre Habouzit wrote:
->>>> when readlink fails, the strbuf shall not be destroyed. It's not h=
-ow
->>>> read_file_or_gitlink works for example.
->>> I disagree.
->>>
->>> This patch just makes things worse. Just leave the "strbuf_release(=
-)" in=20
->>> _one_ place.
-> ...
-> The "append or do nothing" rule is broken by strbuf_getline(), but I =
-agree
-> to your reasoning.  How about refining this rule a bit to "do your th=
-ing
-> and roll back changes if an error occurs"?  I think it's not worth to=
- undo
-> allocation extensions, but making reverting first time allocations se=
-ems
-> like a good idea.  Something like this?
+a nice christmas gift indeed! thanks for making this release possible.
 
-I think this is much better than Pierre's.  Pierre's "if it is called
-strbuf_*, it should always append" is a good uniformity to have in an A=
-PI,
-but making the caller suffer for clean-up is going backwards.  The reas=
-on
-we use strbuf when we can is so that the callers do not have to worry
-about memory allocation issues too much.
+my best wishes to the list for xmas and incoming 2009!
+
+-- 
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
