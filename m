@@ -1,87 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] describe: Avoid unnecessary warning when using --all
-Date: Fri, 26 Dec 2008 14:02:01 -0800
-Message-ID: <20081226220201.GA20516@spearce.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH] Add a commit.signoff configuration variable to always use --signoff.
+Date: Sat, 27 Dec 2008 07:02:28 +0900
+Message-ID: <20081227070228.6117@nanako3.lavabit.com>
+References: <1230296219-16408-1-git-send-email-dato@net.com.org.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: demerphq <demerphq@gmail.com>, rene.scharfe@lsrfire.ath.cx,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 26 23:03:23 2008
+Cc: git@vger.kernel.org
+To: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
+X-From: git-owner@vger.kernel.org Fri Dec 26 23:04:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGKmA-0002e8-He
-	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 23:03:23 +0100
+	id 1LGKna-0002wN-F0
+	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 23:04:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753137AbYLZWCG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Dec 2008 17:02:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753132AbYLZWCE
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 17:02:04 -0500
-Received: from george.spearce.org ([209.20.77.23]:33125 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753013AbYLZWCD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Dec 2008 17:02:03 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id D5D4B38200; Fri, 26 Dec 2008 22:02:01 +0000 (UTC)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753199AbYLZWDa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Dec 2008 17:03:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753179AbYLZWD3
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 17:03:29 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:48388 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753085AbYLZWD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Dec 2008 17:03:28 -0500
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id 09B6AC7A6D;
+	Fri, 26 Dec 2008 16:03:28 -0600 (CST)
+Received: from 8158.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id QBW6ZQPJJ7Q2; Fri, 26 Dec 2008 16:03:28 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=e6GPz9z6ctvxjGEQkxez0LzpvpIX2BxuTR8k7yJkcQoJUd5b6a53iMSY5E8AzwaNRYWqPqCZAn3wrxcQuHYNWsvI69EJtsAQjTpUbejzwAe3N43JqHMneY2BXESDoFiU/i8RSoWDJPlDp1EUE9OlKxFQG+mgWClE7uWbIB3t0r0=;
+  h=From:To:Cc:Subject:Date:MIME-Version:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <1230296219-16408-1-git-send-email-dato@net.com.org.es>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103955>
 
-In 212945d4 ("Teach git-describe to verify annotated tag names
-before output") git-describe learned how to output a warning if
-an annotated tag object was matched but its internal name doesn't
-match the local ref name.
+Quoting Adeodato Sim=C3=B3 <dato@net.com.org.es>:
 
-However, "git describe --all" causes the local ref name to be
-prefixed with "tags/", so we need to skip over this prefix before
-comparing the local ref name with the name recorded inside of the
-tag object.
+> I wrote:
+>> Has there even been talk of a commit.signoff configuration variable
+>> to always add a S-o-b line? This could allow to enable it on a
+>> per-project basis, which would be cool.
 
-Patch-by: Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx>
-Signed-off-by: Shawn O. Pearce <sop@google.com>
----
- IMHO, suitable for maint...
+There was a discussion in "http://thread.gmane.org/gmane.comp.version-c=
+ontrol.git/32503/focus=3D32522" about automatically adding S-o-b line.
 
- builtin-describe.c  |    2 +-
- t/t6120-describe.sh |    6 ++++++
- 2 files changed, 7 insertions(+), 1 deletions(-)
+Even though Junio said in his response "it certainly is a possibility",=
+ another solution that he referred to as "cleaner and more useful" in h=
+is message was made available in version 1.5.3 after this discussion.
 
-diff --git a/builtin-describe.c b/builtin-describe.c
-index d2cfb1b..3a007ed 100644
---- a/builtin-describe.c
-+++ b/builtin-describe.c
-@@ -158,7 +158,7 @@ static void display_name(struct commit_name *n)
- 		n->tag =3D lookup_tag(n->sha1);
- 		if (!n->tag || parse_tag(n->tag) || !n->tag->tag)
- 			die("annotated tag %s not available", n->path);
--		if (strcmp(n->tag->tag, n->path))
-+		if (strcmp(n->tag->tag, all ? n->path + 5 : n->path))
- 			warning("tag '%s' is really '%s' here", n->tag->tag, n->path);
- 	}
-=20
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index e6c9e59..8c7e081 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -100,6 +100,12 @@ check_describe B --tags HEAD^^2^
- check_describe B-0-* --long HEAD^^2^
- check_describe A-3-* --long HEAD^^2
-=20
-+: >err.expect
-+check_describe A --all A^0
-+test_expect_success 'no warning was displayed for A' '
-+	test_cmp err.expect err.actual
-+'
-+
- test_expect_success 'rename tag A to Q locally' '
- 	mv .git/refs/tags/A .git/refs/tags/Q
- '
 --=20
-1.6.1.302.gccd4d
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
