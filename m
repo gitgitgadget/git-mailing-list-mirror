@@ -1,88 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] ls-tree: add --full-tree option
-Date: Fri, 26 Dec 2008 13:38:06 -0800
-Message-ID: <7veizulirl.fsf@gitster.siamese.dyndns.org>
-References: <7v63l7rc1s.fsf@gitster.siamese.dyndns.org>
- <200812260916.45401.j6t@kdbg.org> <7vmyejpb6o.fsf@gitster.siamese.dyndns.org>
- <49553561.4030902@kdbg.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] describe: Avoid unnecessary warning when using --all
+Date: Fri, 26 Dec 2008 14:02:01 -0800
+Message-ID: <20081226220201.GA20516@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Deskin Miller <deskinm@umich.edu>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Dec 26 22:39:45 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: demerphq <demerphq@gmail.com>, rene.scharfe@lsrfire.ath.cx,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 26 23:03:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGKPB-00055V-MX
-	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 22:39:38 +0100
+	id 1LGKmA-0002e8-He
+	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 23:03:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752839AbYLZViQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Dec 2008 16:38:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752814AbYLZViQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 16:38:16 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58107 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752757AbYLZViP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Dec 2008 16:38:15 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 125E91B25E;
-	Fri, 26 Dec 2008 16:38:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8ABB51B25F; Fri,
- 26 Dec 2008 16:38:08 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7F51A6E0-D395-11DD-8B62-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1753137AbYLZWCG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Dec 2008 17:02:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753132AbYLZWCE
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 17:02:04 -0500
+Received: from george.spearce.org ([209.20.77.23]:33125 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753013AbYLZWCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Dec 2008 17:02:03 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id D5D4B38200; Fri, 26 Dec 2008 22:02:01 +0000 (UTC)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103954>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+In 212945d4 ("Teach git-describe to verify annotated tag names
+before output") git-describe learned how to output a warning if
+an annotated tag object was matched but its internal name doesn't
+match the local ref name.
 
-> I'm saying that if a script has to be fixed to use --full-tree, then
-> it can be fixed just as well by appending the colon to the ${rev}.
+However, "git describe --all" causes the local ref name to be
+prefixed with "tags/", so we need to skip over this prefix before
+comparing the local ref name with the name recorded inside of the
+tag object.
 
-I do not agree with your "just as well"; an existing script that feeds a
-tree object to the plumbing would be broken by such a change.
+Patch-by: Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx>
+Signed-off-by: Shawn O. Pearce <sop@google.com>
+---
+ IMHO, suitable for maint...
 
-But I think perhaps you were responding to the first paragraph of the
-commit log message that you omitted from your quote?
+ builtin-describe.c  |    2 +-
+ t/t6120-describe.sh |    6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletions(-)
 
-JC> The established behaviour of "git ls-tree $commit" run from a
-JC> subdirectory "sub/dir" in a work tree is to...
-
-If that is the case, I understand what you meant.
-
-The patch is about the behaviour of the command for not just $commit but
-any $tree_ish, so "git ls-tree ${commit}:" shares the exact same issue
-(i.e. historical background that forbids us from changing the behaviour
-without an explicit option, and that --full-tree can be a way to help new
-scripts without breaking existing scripts' expectations).
-
-I've updated the commit log message with s/$commit/$tree_ish/;
-
-> OTOH, you had yourself argued somewhat in favor of the current ls-tree
-> behavior:
->
-> http://thread.gmane.org/gmane.comp.version-control.git/46232/focus=46400
-
-That's not really "somewhat in favor".  I can be (and am more often than
-not) sympathetic without agreeing to the end result. My sympathy extends
-from "I can sort-of-kind-of imagine that it may hurt, and even though I do
-not think your approach is a way to properly address it at all, I'd agree
-it might be nice to have some solution to the issue" to "I do not think it
-is feasible to change this anymore, but I wish we could, too."
-
-In any case, the quoted message was from May 2007, way before v1.6.0 when
-we learned the hard way that people do not want any change.
-
-I really hate "take it or leave it", especially when it is not my itch to
-scratch, but in this case, I think I've spent enough time making myself
-clear that I think (1) that the current behaviour is a result of misguided
-attempt for interactive user expectation, which shouldn't have made to the
-plumbing, (2) that we cannot change the default behaviour now even (1) is
-true; and (3) that the only possible approach to help new scripts would be
-a new option.
+diff --git a/builtin-describe.c b/builtin-describe.c
+index d2cfb1b..3a007ed 100644
+--- a/builtin-describe.c
++++ b/builtin-describe.c
+@@ -158,7 +158,7 @@ static void display_name(struct commit_name *n)
+ 		n->tag =3D lookup_tag(n->sha1);
+ 		if (!n->tag || parse_tag(n->tag) || !n->tag->tag)
+ 			die("annotated tag %s not available", n->path);
+-		if (strcmp(n->tag->tag, n->path))
++		if (strcmp(n->tag->tag, all ? n->path + 5 : n->path))
+ 			warning("tag '%s' is really '%s' here", n->tag->tag, n->path);
+ 	}
+=20
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index e6c9e59..8c7e081 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -100,6 +100,12 @@ check_describe B --tags HEAD^^2^
+ check_describe B-0-* --long HEAD^^2^
+ check_describe A-3-* --long HEAD^^2
+=20
++: >err.expect
++check_describe A --all A^0
++test_expect_success 'no warning was displayed for A' '
++	test_cmp err.expect err.actual
++'
++
+ test_expect_success 'rename tag A to Q locally' '
+ 	mv .git/refs/tags/A .git/refs/tags/Q
+ '
+--=20
+1.6.1.302.gccd4d
