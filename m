@@ -1,112 +1,102 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Managing several threads of the same project in GIT
-Date: Fri, 26 Dec 2008 12:35:32 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngl9jsj.mos.sitaramc@sitaramc.homelinux.net>
-References: <loom.20081226T110416-269@post.gmane.org>
+From: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
+Subject: [PATCH] Add a commit.signoff configuration variable to always use --signoff.
+Date: Fri, 26 Dec 2008 13:56:59 +0100
+Message-ID: <1230296219-16408-1-git-send-email-dato@net.com.org.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 26 13:37:25 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Dec 26 13:59:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGBwD-0005iB-V3
-	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 13:37:10 +0100
+	id 1LGCHI-0002QX-1s
+	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 13:58:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752515AbYLZMfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Dec 2008 07:35:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752480AbYLZMfo
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 07:35:44 -0500
-Received: from main.gmane.org ([80.91.229.2]:53332 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752386AbYLZMfn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Dec 2008 07:35:43 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LGBuk-0006tn-JL
-	for git@vger.kernel.org; Fri, 26 Dec 2008 12:35:38 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Dec 2008 12:35:38 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Dec 2008 12:35:38 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1753988AbYLZM5G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Dec 2008 07:57:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752884AbYLZM5E
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 07:57:04 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:4600
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752598AbYLZM5B (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Dec 2008 07:57:01 -0500
+Received: from chistera.yi.org (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id C544C801BF66;
+	Fri, 26 Dec 2008 13:56:59 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LGCFP-0004HL-41; Fri, 26 Dec 2008 13:56:59 +0100
+X-Mailer: git-send-email 1.6.1.307.g07803
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103939>
 
-On 2008-12-26, pggrd <git@paggard.com> wrote:
+Signed-off-by: Adeodato Sim=C3=B3 <dato@net.com.org.es>
+---
+I wrote:
+> Has there even been talk of a commit.signoff configuration variable
+> to always add a S-o-b line? This could allow to enable it on a
+> per-project basis, which would be cool.
 
-> most of the code in the project is shared between the threads
-> in certain files there are different code parts to meet client requirements 
-> but even those files share the rest of the code
+Well, it seemed easy enough to do, so I went ahead. Comments would be
+welcome.
 
-How different are the chunks of code per client?  A few
-minor differences, or large chunks of code?
+ Documentation/config.txt     |    6 ++++++
+ Documentation/git-commit.txt |    3 ++-
+ builtin-commit.c             |    5 +++++
+ 3 files changed, 13 insertions(+), 1 deletions(-)
 
-> What I need to be able to do is:
-> - to get code for any thread I like at any time
-> - to be able to develop each thread separately
-> - to be able to merge certain changes from one thread to another, at the same
-> time without loosing the changes specific to the thread,
-> and keep track of merge history
-
-> With GIT strategy to treat content as a single unity - if
-> you will try to merge branches - everything will be merged
-> thus overwriting the changes that need to stay. But in the
-> example above, if I make a change in the shared code in
-> one thread, I need to be able to populate this change to
-> all the threads, but this change only.
-
-Seems largely the same as maintaining an older release and
-backporting changes from the main trunk to it (or sometimes
-the other direction), while keeping them distinct.  Which
-happens all the time...
-
-However, a maint release eventually atrophies -- changes
-stop coming in, and eventually your last customer using it
-has upgraded and the branch becomes unused.
-
-You can't do that with your "client branch", so eventually
-this will start diverging further and further from the
-trunk.
-
-The way to mitigate that is to have your main trunk contain
-only the stuff that is common to *all* your clients, and let
-each client branch maintain differences from this.  So in
-effect, those "topic branches" are never getting merged back
-to the mainline.  When you make changes that should go to
-every client, you make them on the master and merge them
-into the "topic branch" (your client branch).  When you want
-a commit from client A to be used for client B, you
-cherry-pick (cherry-pick from within gitk is pretty neat for
-occasional, manual, cherry picks).
-
-The only caveat I see is that once in a while you'll want to
-just rebase each client branch against the master just for
-sanity.  This should be done on one repository, and be a
-coordinated thing so that all the developers who're working
-on that particular client branch can re-fetch.  You might
-end up doing this once in a few months so it's not bad I
-guess.
-
-Sitaram
-
-PS: I think all this will work, but others with more
-experience need to weigh in... it's always a bad idea to ask
-questions during the holidays, you never know who's manning
-the support lines ;-)
-
-PPS: As Santi said in the other reply, you should also
-consider making these changes part of a single code base,
-with some sort of configuration deciding what actually gets
-done.  Would be cleaner in the long run I guess...
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 52786c7..6d195a3 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -591,6 +591,12 @@ color.ui::
+ commit.template::
+ 	Specify a file to use as the template for new commit messages.
+=20
++commit.signoff::
++	If set, 'git-commit' will always add a Signed-off-by line. If
++	you don't want it always active, you can still set it in the
++	repository specific configuration file for projects that require
++	a Signed-off-by line for all commits.
++
+ diff.autorefreshindex::
+ 	When using 'git-diff' to compare with work tree
+ 	files, do not consider stat-only change as changed.
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
+t
+index b5d81be..abab839 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -96,7 +96,8 @@ OPTIONS
+ -s::
+ --signoff::
+ 	Add Signed-off-by line by the committer at the end of the commit
+-	log message.
++	log message. This overrides the `commit.signoff` configuration
++	variable.
+=20
+ -n::
+ --no-verify::
+diff --git a/builtin-commit.c b/builtin-commit.c
+index e88b78f..fc09539 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -929,6 +929,11 @@ static int git_commit_config(const char *k, const =
+char *v, void *cb)
+ 	if (!strcmp(k, "commit.template"))
+ 		return git_config_string(&template_file, k, v);
+=20
++	if (!strcmp(k, "commit.signoff")) {
++		signoff =3D git_config_bool(k, v);
++		return 0;
++	}
++
+ 	return git_status_config(k, v, cb);
+ }
+=20
+--=20
+1.6.1.307.g07803
