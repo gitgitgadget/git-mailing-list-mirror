@@ -1,104 +1,65 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Strange large push operation.
-Date: Fri, 26 Dec 2008 14:48:47 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngl9rmf.r7h.sitaramc@sitaramc.homelinux.net>
-References: <4954CCD6.5000105@daysofwonder.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: getting started, happy with cmd line on windows [Scanned]
+Date: Fri, 26 Dec 2008 17:39:21 +0100
+Message-ID: <495508B9.7070103@lsrfire.ath.cx>
+References: <BB5F02FD3789B54E8964D38D6775E718242D07@ALTMORE-SVR.altmore.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 26 15:52:10 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Conor Rafferty <conor.rafferty@altmore.co.uk>
+X-From: git-owner@vger.kernel.org Fri Dec 26 17:40:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGE2q-0006mS-JB
-	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 15:52:09 +0100
+	id 1LGFk6-0002W6-EX
+	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 17:40:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752295AbYLZOtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Dec 2008 09:49:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752253AbYLZOs7
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 09:48:59 -0500
-Received: from main.gmane.org ([80.91.229.2]:41398 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752063AbYLZOs6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Dec 2008 09:48:58 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LGDzk-0002sW-8t
-	for git@vger.kernel.org; Fri, 26 Dec 2008 14:48:56 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Dec 2008 14:48:56 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Dec 2008 14:48:56 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1752570AbYLZQja convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Dec 2008 11:39:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752551AbYLZQja
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 11:39:30 -0500
+Received: from india601.server4you.de ([85.25.151.105]:47538 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752554AbYLZQja (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Dec 2008 11:39:30 -0500
+Received: from [10.0.1.101] (p57B7F73B.dip.t-dialin.net [87.183.247.59])
+	by india601.server4you.de (Postfix) with ESMTPSA id 955EA2F8003;
+	Fri, 26 Dec 2008 17:39:28 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <BB5F02FD3789B54E8964D38D6775E718242D07@ALTMORE-SVR.altmore.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103945>
 
-On 2008-12-26, Brice Figureau <brice+git@daysofwonder.com> wrote:
+Conor Rafferty schrieb:
+> I then deleted all files from the working directory, so I can pull ou=
+t
+> ONLY the ones in version A.
+> I tried both fetch and checkout - but nothing was copied into working
+> dir How do I do this ?
 
-> Then I wanted to push this newbranch as a remote branch with:
-> $ git push origin newbranch:refs/heads/newbranch
+git treats deleted files just like edited files: as having been changed
+in preparation for the next commit.  You can get back all of the tracke=
+d
+files using this command:
 
-I'd have just said "git push origin newbranch" :-)
+	$ git reset --hard
 
-> and obtained the following output:
-> Counting objects: 12767, done.
-> Compressing objects: 100% (3816/3816), done.
-> writing objects:   8% (935/11682), 2.40 MiB | 324 KiB/s
-> ^C
+It undoes _all_ changes: tracked edited files will be reverted to their
+in-repository state, deleted files created again.  You can also check
+out individual files like this:
 
-> I stopped the push because I don't get why there are so much objects to 
-> send while the diff between newbranch and branch is only 5 small commits 
->   (and it obviously wants to push a large part of the history).
+	$ git checkout ABC.txt
 
-Yes but you didn't actually say that the master has "branch"
--- perhaps it isn't as uptodate as you thought it was...?
-Or perhaps there was a rebase or something that changed a
-*lot* of stuff.
+If you just want to get rid of untracked files, you'd use the command
+"git clean".
 
-Try "git log -n 1 branch" on both machines to see if they
-point to the same hash.
+In general, if you switch your work tree from one revision to another
+(git checkout), git tries to minimize the I/O needed.  Files that are
+the same in both aren't touched.
 
-[Additionally, I'm not really sure if that progress is a
-worst case estimate or a real estimate...]
-
-> Is there a way to check what objects are sent to origin and why?
-
-My all-time favourite git command is "bundle" [which should
-tell you I work a lot with disconnected repos!]
-
-Try "git bundle create /tmp/temp.bdl branch..newbranch" then
-see how big that temp file is.  That'll be about what goes
-to the other side (assuming the other side has the same hash
-for "branch").
-
-You could even take it to the other side and do the
-following:
-    git ls-remote temp.bdl  # shows refs in bundle
-    git fetch temp.bdl one-of-the-refs-in-the-bundle
-    git merge FETCH_HEAD # merge it into current branch
-
-> What could be the cause of the issue?
-
-can't say.  Try the following commands also to get a birds
-eye view of the various branches on both sides
-    git fetch   # update your idea of what's on remote
-    git branch -a -v
-
-I also like
-    git log --graph --pretty=oneline --abbrev-commit --decorate --all
-which I've aliased to "lg"
-
-> (and found 5 unreachables objects in the local one, should I care?). I 
-
-Nope.  Lots of reasons to have unreachable objects...
+Ren=E9
