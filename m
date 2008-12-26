@@ -1,55 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] ls-tree: add --full-tree option
-Date: Fri, 26 Dec 2008 00:55:59 -0800
-Message-ID: <7vmyejpb6o.fsf@gitster.siamese.dyndns.org>
-References: <7v63l7rc1s.fsf@gitster.siamese.dyndns.org>
- <200812260916.45401.j6t@kdbg.org>
+From: "David Aguilar" <davvid@gmail.com>
+Subject: Re: [ANNOUNCE] git-cola 1.3.4
+Date: Fri, 26 Dec 2008 01:38:14 -0800
+Message-ID: <402731c90812260138t43903830m63c686f4811499dd@mail.gmail.com>
+References: <20081225233625.GA11029@gmail.com>
+	 <1230277737.14882.54.camel@starfruit>
+	 <402731c90812252359r5b6b9420hcadbfa076f561feb@mail.gmail.com>
+	 <1230281078.14882.89.camel@starfruit>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Deskin Miller <deskinm@umich.edu>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Dec 26 09:57:30 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "R. Tyler Ballance" <tyler@slide.com>
+X-From: git-owner@vger.kernel.org Fri Dec 26 10:39:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LG8Vb-0007DC-JI
-	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 09:57:28 +0100
+	id 1LG9AO-0006Wz-KE
+	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 10:39:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752949AbYLZI4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Dec 2008 03:56:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbYLZI4J
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 03:56:09 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40848 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752777AbYLZI4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Dec 2008 03:56:09 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 272198AFF3;
-	Fri, 26 Dec 2008 03:56:05 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5EE198AFF2; Fri,
- 26 Dec 2008 03:56:01 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 075B9DCC-D32B-11DD-92AC-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1754105AbYLZJiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Dec 2008 04:38:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753782AbYLZJiQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 04:38:16 -0500
+Received: from rv-out-0506.google.com ([209.85.198.239]:3687 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753430AbYLZJiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Dec 2008 04:38:15 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so3461462rvb.1
+        for <git@vger.kernel.org>; Fri, 26 Dec 2008 01:38:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=YZYEDEoQciGXux+tShQP5OeyTJkrH7QOxdUUv/ub8X4=;
+        b=LuxtC4E+7Fi5qnKSVSMS6PN8D3ZDwqPlF53S872s/MIzSuzRkYE5yNMgP8QSK/T8m1
+         a9jIJGf7jNQ3v9TT+ZJ8EXXws2OSP0ThTZcDReLxN2JmXYTzNyeNoRaxdaeEfiEeYYgf
+         dIdMfvFOPTuZX94OrF6jC6Ywz2j39eHwHwJ+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=EiDJ7ofNmrqadosvIU8QEvIGtyPkcG6FD5S682Fg5UDWnyUkET0QGuBfsGJ7KQpfbQ
+         UVR0X4OF1xikafQEzrLQks7KnQJcMI4NaKTrUe0LzWL8iWuHMOmh4zOfu0tanJh9lgAj
+         tKJtykUQqaAlJCy8IZvxc0NV5hyIsrSbsHLjg=
+Received: by 10.142.214.11 with SMTP id m11mr4360717wfg.22.1230284294347;
+        Fri, 26 Dec 2008 01:38:14 -0800 (PST)
+Received: by 10.142.241.20 with HTTP; Fri, 26 Dec 2008 01:38:14 -0800 (PST)
+In-Reply-To: <1230281078.14882.89.camel@starfruit>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103926>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Fri, Dec 26, 2008 at 12:44 AM, R. Tyler Ballance <tyler@slide.com> wrote:
 
-> On Freitag, 26. Dezember 2008, Junio C Hamano wrote:
->> This new option makes the command operate on the full tree object,
->> regardless of where in the work tree it is run from.  It also implies the
->> behaviour that is triggered by the existing --full-name option.
 >
-> What's wrong with using 'git ls-tree ${rev}:'?
+> This whole set up is very confusing to me, it appears that those files
+> (judging by your .gitignore) are being generated by the Qt4 .ui files,
+> but how that translates into submitting a patch I haven't the faintest
+> idea :)
 >
-> Except that it does not work...
+>
+> I got something running at the very least I suppose :)
+>
+> Cheers
+>
+> --
+> -R. Tyler Ballance
+> Slide, Inc.
+>
 
-Hmph... you seem to be describing the exact issue they discussed on #git,
-which triggered the patch in the message you are responding to.  I am not
-sure what to say to your "What's wrong with...".
+I figured out a workaround that'll work for now.  I've pushed it out
+so if you're building from source you should be golden.  I'll file a
+bug report and see what they have to say.  Until then we should be
+good to go =)
+
+Thanks for the report and let me know if there's anything else you run into.
+
+-- 
+    David
