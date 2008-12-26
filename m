@@ -1,77 +1,116 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Why does git-describe warn about something that you can't control?
-Date: Fri, 26 Dec 2008 14:44:44 +0100
-Message-ID: <4954DFCC.8010707@lsrfire.ath.cx>
-References: <9b18b3110812260350q6870700du982ec3a7a91950e2@mail.gmail.com>
+From: "Conor Rafferty" <conor.rafferty@altmore.co.uk>
+Subject: getting started, happy with cmd line on windows [Scanned]
+Date: Fri, 26 Dec 2008 13:52:15 -0000
+Message-ID: <BB5F02FD3789B54E8964D38D6775E718242D07@ALTMORE-SVR.altmore.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 26 14:46:27 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 26 14:53:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGD1H-00076V-4M
-	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 14:46:27 +0100
+	id 1LGD8F-0000JH-DQ
+	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 14:53:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752935AbYLZNou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Dec 2008 08:44:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752636AbYLZNot
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 08:44:49 -0500
-Received: from india601.server4you.de ([85.25.151.105]:55020 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751870AbYLZNot (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Dec 2008 08:44:49 -0500
-Received: from [10.0.1.101] (p57B7E108.dip.t-dialin.net [87.183.225.8])
-	by india601.server4you.de (Postfix) with ESMTPSA id BEB032F8003;
-	Fri, 26 Dec 2008 14:44:44 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (X11/20081125)
-In-Reply-To: <9b18b3110812260350q6870700du982ec3a7a91950e2@mail.gmail.com>
+	id S1752063AbYLZNwT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Dec 2008 08:52:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbYLZNwS
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 08:52:18 -0500
+Received: from sbs.altmore.co.uk ([217.39.150.193]:6046 "HELO
+	sbs.altmore.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751870AbYLZNwS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Dec 2008 08:52:18 -0500
+X-PMWin-Version: 3.0.0.0, Antivirus-Engine: 2.82.1, Antivirus-Data: 4.37E
+Content-Class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4133
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: getting started, happy with cmd line on windows [Scanned]
+thread-index: AclnUd8SEf2EvunUTPKoT6ApYI1nXQABHV6AAAKuqdA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103941>
 
-demerphq schrieb:
-> On the perl.git repo if I use git-describe --all on some commits I get
-> warnings like this:
-> 
-> $ git describe --all 3417e4f8422bcf13f799ce1acef44b27ccbef3d8
-> warning: tag 'perl-5.005_04' is really 'tags/perl-5.005_04' here
-> perl-5.005_04
-> 
-> Except there doesnt seem to be any explanation for why the warning is
-> being produced (it almost, but not quite looks random for the commits
-> im looking at), how to silence it, or how to force git-describe to for
-> instance use "tags/perl-5.8.0" instead so the warning is not
-> generated.
-> 
-> I think this behaviour is confusing, either the warning should go
-> away, or it should be improved and complemented by a switch to force
-> git-describe to use the qualified tagname instead, or at the very
-> least a switch to silence the warning (which is really annoying when
-> you are doing git-describe on hundreds of commits in a go).
+We want to use git to
+a) archive old versions of our project that have till now had no SCM
+applied
+b) moving forward, provide robust SCM on new versions of project
 
-The warning was introduced by 212945d4 ("Teach git-describe to verify
-annotated tag names before output") by Shawn (cc:'d).
+Just to get familiar, I created a folder, ran
 
-The following patch should fix your issue by making describe ignore the
-"tags/" path prefix of, well, tags, which is only present if you call
-it with the option --all.
+$ git init
 
-diff --git a/builtin-describe.c b/builtin-describe.c
-index d2cfb1b..3a007ed 100644
---- a/builtin-describe.c
-+++ b/builtin-describe.c
-@@ -158,7 +158,7 @@ static void display_name(struct commit_name *n)
- 		n->tag = lookup_tag(n->sha1);
- 		if (!n->tag || parse_tag(n->tag) || !n->tag->tag)
- 			die("annotated tag %s not available", n->path);
--		if (strcmp(n->tag->tag, n->path))
-+		if (strcmp(n->tag->tag, all ? n->path + 5 : n->path))
- 			warning("tag '%s' is really '%s' here", n->tag->tag, n->path);
- 	}
+then created a few files: ABC.txt, AC.txt, BC.txt, C.txt This mimics our
+real life sitch for purpose (a), files are in version A, but not in
+version B, which introduces new files, whick might not be in version C
+
+$ git add *c*.txt
+$ git commit -m "version A"
+
+so now ABC.txt and AC.txt are in the repo, at a commit with comment
+"version A"
+
+$ git show
+
+confirms this
+
+$ git status
+
+confirms that BC.txt and C.txt have not been tracked - great, as
+designed
+
+I then deleted all files from the working directory, so I can pull out
+ONLY the ones in version A.
+I tried both fetch and checkout - but nothing was copied into working
+dir How do I do this ?
+
+NB along the way I also tagged this first commit as "tag_versionA"
+also tried
+
+$ git checkout tag_versionA
+which changed HEAD back to version A, but didn't create the files
+
+Seems like I'm missing some fundamental concepts here - from other
+SCM's, I understood fetch or checkout would copy files into your working
+dir that were replicas of the versions stored in repository
+
+
+
+
+
+
+
+
+-- 
+
  
+<http://www.altmore.co.uk/xNON_SITE/SignatureFiles/AltmoreIT_signature_l
+ogo.JPG> 
+
+Conor Rafferty BSc (Hons.)
+REGIONAL MANAGER
+Altmore IT Recruitment
+Townsend Enterprise Park
+28 Townsend Street
+Belfast BT13 2ES 
+
+T: +44 (0)28 9032 8400
+E: conor.rafferty@altmore.co.uk
+W: www.altmore.co.uk <http://www.altmore.co.uk/>  
+
+LinkedIn: http://www.linkedin.com/in/conorrafferty
+
+________________________________
+
+This electronic message contains information from Altmore IT Recruitment
+which may be privileged or confidential. The information is intended to
+be for the use of the individual(s) or entity named above. If you are
+not the intended recipient be aware that any disclosure, copying
+distribution or use of the contents of this information is prohibited.
+If you have received this electronic message in error, please notify us
+by telephone or email (to the numbers or address above) immediately.
