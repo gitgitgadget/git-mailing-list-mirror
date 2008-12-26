@@ -1,76 +1,108 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Why does git-describe warn about something that you can't control?
-Date: Fri, 26 Dec 2008 12:50:41 +0100
-Message-ID: <9b18b3110812260350q6870700du982ec3a7a91950e2@mail.gmail.com>
+From: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
+Subject: [PATCH] git-shortlog.txt: improve documentation about .mailmap files
+Date: Fri, 26 Dec 2008 12:55:53 +0100
+Message-ID: <1230292553-7613-1-git-send-email-dato@net.com.org.es>
+References: <1230290283-6268-1-git-send-email-dato@net.com.org.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 26 12:52:23 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Dec 26 12:57:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGBEi-0002Y7-Q8
-	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 12:52:13 +0100
+	id 1LGBJc-00040V-Lf
+	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 12:57:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753806AbYLZLuo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Dec 2008 06:50:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753797AbYLZLuo
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 06:50:44 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:53654 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753792AbYLZLun (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Dec 2008 06:50:43 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so2743901qwe.37
-        for <git@vger.kernel.org>; Fri, 26 Dec 2008 03:50:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=zKCkqUWuZLypoZ/lyjCSQqHvI2raHCFaZN4Ge2GNAPk=;
-        b=euFj8/P+ZeLoAZdxk9okq+LICD54XUbo5vhM48JlQTtc+h1r2f2epamt/a+YrFGaSz
-         tGvhhOtQQLQAr5B8RwlH6ZgxwrBLAeoXsxtMg0KvLNP9Yf1hjNeYcc4Kw+ZMIIgxAP7j
-         92H2DqFw6GLt1XHi5PM3vadMYj1p9GMK2iiYs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=cjg+ZBsU7k8EERAjpBBnV8rao+ZtyZtAbTlHits8nJPX7h92lDv4Mecr6fbNjTCAwC
-         n+3lh9tmtMR/2/B98dpg8a1L3+NOI9xVvL48MQDR8CNwzWfmn19fdCE/tyqPga/axkfI
-         xpx2zvk5dTyBJGbht51sj7AJYtuw9hm2tBMm4=
-Received: by 10.214.149.15 with SMTP id w15mr9645192qad.94.1230292241051;
-        Fri, 26 Dec 2008 03:50:41 -0800 (PST)
-Received: by 10.214.217.13 with HTTP; Fri, 26 Dec 2008 03:50:41 -0800 (PST)
-Content-Disposition: inline
+	id S1753819AbYLZLz4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Dec 2008 06:55:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753811AbYLZLz4
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 06:55:56 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:4698
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753789AbYLZLzz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Dec 2008 06:55:55 -0500
+Received: from chistera.yi.org (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id 17EB9801BF66;
+	Fri, 26 Dec 2008 12:55:54 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LGBIH-0001zU-9S; Fri, 26 Dec 2008 12:55:53 +0100
+X-Mailer: git-send-email 1.6.1
+In-Reply-To: <1230290283-6268-1-git-send-email-dato@net.com.org.es>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103936>
 
-On the perl.git repo if I use git-describe --all on some commits I get
-warnings like this:
+The previous .mailmap example made it seem like .mailmap files are only
+useful for commits with a wrong address for an author, when they are ab=
+out
+fixing the real name. Explained this better in the text, and replaced t=
+he
+existing example with a new one that hopefully makes things clearer.
 
-$ git describe --all 3417e4f8422bcf13f799ce1acef44b27ccbef3d8
-warning: tag 'perl-5.005_04' is really 'tags/perl-5.005_04' here
-perl-5.005_04
+Signed-off-by: Adeodato Sim=C3=B3 <dato@net.com.org.es>
+---
 
-Except there doesnt seem to be any explanation for why the warning is
-being produced (it almost, but not quite looks random for the commits
-im looking at), how to silence it, or how to force git-describe to for
-instance use "tags/perl-5.8.0" instead so the warning is not
-generated.
+    Now with a Signed-off-by line. Has there even been talk of a=20
+    commit.signoff configuration variable to always add a S-o-b line?=20
+    This could allow to enable it on a per-project basis, which would b=
+e
+    cool.
 
-I think this behaviour is confusing, either the warning should go
-away, or it should be improved and complemented by a switch to force
-git-describe to use the qualified tagname instead, or at the very
-least a switch to silence the warning (which is really annoying when
-you are doing git-describe on hundreds of commits in a go).
+ Documentation/git-shortlog.txt |   31 ++++++++++++++++++++++++-------
+ 1 files changed, 24 insertions(+), 7 deletions(-)
 
-Details for the perl repo are in my signature.
-
-Yves
--- 
-git clone git://perl5.git.perl.org/perl
+diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlo=
+g.txt
+index 7ccf31c..69e10a4 100644
+--- a/Documentation/git-shortlog.txt
++++ b/Documentation/git-shortlog.txt
+@@ -48,15 +48,32 @@ OPTIONS
+ FILES
+ -----
+=20
+-If the file `.mailmap` exists, it will be used for mapping author
+-email addresses to a real author name. One mapping per line, first
+-the author name followed by the email address enclosed by
+-'<' and '>'. Use hash '#' for comments. Example:
++If a file `.mailmap` exists in the toplevel directory of the repositor=
+y,
++it will be used for mapping author email addresses to a canonical real
++name. This can be used to coalesce together commits by the same person
++where their name was spelled differently (whether with the same email
++address or not).
++
++The format of the file is one mapping per line, first the desired auth=
+or
++name followed by the email address enclosed by '<' and '>'. Use hash '=
+#'
++for comments. For example, if your history contains commits by these
++committers:
++
++------------
++Author: Joe Developer <joe@random.com>
++Author: Joe R. Developer <joe@random.com>
++Author: Jane Doe <jane@the-does.name>
++Author: Jane Doe <jane@laptop.(none)>
++Author: Jane D. <jane@desktop.(none)>
++------------
++
++Then a proper `.mailmap` file would be:
+=20
+ ------------
+-# Keep alphabetized
+-Adam Morrow <adam@localhost.localdomain>
+-Eve Jones <eve@laptop.(none)>
++# Note how we don't need an entry for <jane@laptop.(none)>, because th=
+e
++# real name of that author is correct already, and coalesced directly.
++Jane Doe <jane@desktop.(none)>
++Joe R. Developer <joe@random.com>
+ ------------
+=20
+ Author
+--=20
+1.6.1
