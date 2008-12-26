@@ -1,108 +1,90 @@
-From: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
-Subject: [PATCH] git-shortlog.txt: improve documentation about .mailmap files
-Date: Fri, 26 Dec 2008 12:55:53 +0100
-Message-ID: <1230292553-7613-1-git-send-email-dato@net.com.org.es>
-References: <1230290283-6268-1-git-send-email-dato@net.com.org.es>
+From: Brice Figureau <brice+git@daysofwonder.com>
+Subject: Strange large push operation.
+Date: Fri, 26 Dec 2008 13:23:50 +0100
+Message-ID: <4954CCD6.5000105@daysofwonder.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Dec 26 12:57:26 2008
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 26 13:35:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGBJc-00040V-Lf
-	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 12:57:17 +0100
+	id 1LGBuN-0005Db-05
+	for gcvg-git-2@gmane.org; Fri, 26 Dec 2008 13:35:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753819AbYLZLz4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Dec 2008 06:55:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753811AbYLZLz4
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 06:55:56 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:4698
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753789AbYLZLzz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Dec 2008 06:55:55 -0500
-Received: from chistera.yi.org (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id 17EB9801BF66;
-	Fri, 26 Dec 2008 12:55:54 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LGBIH-0001zU-9S; Fri, 26 Dec 2008 12:55:53 +0100
-X-Mailer: git-send-email 1.6.1
-In-Reply-To: <1230290283-6268-1-git-send-email-dato@net.com.org.es>
+	id S1752467AbYLZMbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Dec 2008 07:31:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752363AbYLZMbP
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 07:31:15 -0500
+Received: from mail.daysofwonder.com ([87.98.213.69]:58905 "EHLO
+	mail.daysofwonder.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751870AbYLZMbP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Dec 2008 07:31:15 -0500
+X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Dec 2008 07:31:14 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mail.daysofwonder.com (Postfix) with ESMTP id 89F2268088
+	for <git@vger.kernel.org>; Fri, 26 Dec 2008 13:23:52 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at daysofwonder.com
+Received: from mail.daysofwonder.com ([127.0.0.1])
+	by localhost (mail.daysofwonder.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id L9G79wPQkyPq for <git@vger.kernel.org>;
+	Fri, 26 Dec 2008 13:23:51 +0100 (CET)
+Received: from macbook.local (figureau.pck.nerim.net [213.41.177.193])
+	(Authenticated sender: brice)
+	by mail.daysofwonder.com (Postfix) with ESMTPSA id 7055968086
+	for <git@vger.kernel.org>; Fri, 26 Dec 2008 13:23:51 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Macintosh/20081105)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103937>
 
-The previous .mailmap example made it seem like .mailmap files are only
-useful for commits with a wrong address for an author, when they are ab=
-out
-fixing the real name. Explained this better in the text, and replaced t=
-he
-existing example with a new one that hopefully makes things clearer.
+Hi,
 
-Signed-off-by: Adeodato Sim=C3=B3 <dato@net.com.org.es>
----
+I'm a git user since about a year, but I can't say I'm really familiar 
+with its internals. I am using git v 1.5.6.5
 
-    Now with a Signed-off-by line. Has there even been talk of a=20
-    commit.signoff configuration variable to always add a S-o-b line?=20
-    This could allow to enable it on a per-project basis, which would b=
-e
-    cool.
+I have a quite large bare remote repository (around 1GiB, about 86k 
+objects), and I have a clone on my development computer (which was 
+cloned a long time ago). I use ssh to push/pull between those repositories.
 
- Documentation/git-shortlog.txt |   31 ++++++++++++++++++++++++-------
- 1 files changed, 24 insertions(+), 7 deletions(-)
+About 2 months ago, we created a remote branch (let's call it 'branch') 
+and pursued development on this branch and also on master, with a few 
+regular merge points from master to 'branch'.
 
-diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlo=
-g.txt
-index 7ccf31c..69e10a4 100644
---- a/Documentation/git-shortlog.txt
-+++ b/Documentation/git-shortlog.txt
-@@ -48,15 +48,32 @@ OPTIONS
- FILES
- -----
-=20
--If the file `.mailmap` exists, it will be used for mapping author
--email addresses to a real author name. One mapping per line, first
--the author name followed by the email address enclosed by
--'<' and '>'. Use hash '#' for comments. Example:
-+If a file `.mailmap` exists in the toplevel directory of the repositor=
-y,
-+it will be used for mapping author email addresses to a canonical real
-+name. This can be used to coalesce together commits by the same person
-+where their name was spelled differently (whether with the same email
-+address or not).
-+
-+The format of the file is one mapping per line, first the desired auth=
-or
-+name followed by the email address enclosed by '<' and '>'. Use hash '=
-#'
-+for comments. For example, if your history contains commits by these
-+committers:
-+
-+------------
-+Author: Joe Developer <joe@random.com>
-+Author: Joe R. Developer <joe@random.com>
-+Author: Jane Doe <jane@the-does.name>
-+Author: Jane Doe <jane@laptop.(none)>
-+Author: Jane D. <jane@desktop.(none)>
-+------------
-+
-+Then a proper `.mailmap` file would be:
-=20
- ------------
--# Keep alphabetized
--Adam Morrow <adam@localhost.localdomain>
--Eve Jones <eve@laptop.(none)>
-+# Note how we don't need an entry for <jane@laptop.(none)>, because th=
-e
-+# real name of that author is correct already, and coalesced directly.
-+Jane Doe <jane@desktop.(none)>
-+Joe R. Developer <joe@random.com>
- ------------
-=20
- Author
---=20
-1.6.1
+Two days ago, I wanted to start developping a new feature, and as such 
+created a local branch from this branch, which we'll call 'newbranch'. I 
+cherrypicked a couple of old (4 months) commits  that were in another 
+local branch, and then added more small commits (about 10 sloc of 
+changes on it) on top of these.
+
+Then I wanted to push this newbranch as a remote branch with:
+$ git push origin newbranch:refs/heads/newbranch
+
+and obtained the following output:
+Counting objects: 12767, done.
+Compressing objects: 100% (3816/3816), done.
+writing objects:   8% (935/11682), 2.40 MiB | 324 KiB/s
+^C
+
+I stopped the push because I don't get why there are so much objects to 
+send while the diff between newbranch and branch is only 5 small commits 
+  (and it obviously wants to push a large part of the history).
+
+Is there a way to check what objects are sent to origin and why?
+What could be the cause of the issue?
+What's wrong with those repositories?
+
+I tried to git gc both repositories, I also git fsck both repositories 
+(and found 5 unreachables objects in the local one, should I care?). I 
+also upgraded the remote git to latest 1.6.0.6 but this didn't change 
+anything. I also tried --thin but that didn't change anything.
+
+So what should I do to push only the changes between branch and newbranch?
+
+Many thanks for any answer,
+--
+Brice Figureau
