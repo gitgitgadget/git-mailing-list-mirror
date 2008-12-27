@@ -1,183 +1,94 @@
-From: =?ISO-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 3/3] pretty: support multiline subjects with format:
-Date: Sat, 27 Dec 2008 01:49:21 +0100
-Message-ID: <1230338961.8363.101.camel@ubuntu.ubuntu-domain>
-References: <1230337969.8363.84.camel@ubuntu.ubuntu-domain>
-	 <1230338375.8363.91.camel@ubuntu.ubuntu-domain>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: commit.template
+Date: Fri, 26 Dec 2008 18:53:51 -0600
+Message-ID: <200812261853.55464.bss@iguanasuicide.net>
+References: <200812261750.12204.bss@iguanasuicide.net> <87hc4qscz5.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed;
+  boundary="nextPart3948606.nnR20mMsUW";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Dec 27 01:50:47 2008
+Cc: jidanni@jidanni.org, nanako3@lavabit.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 27 01:54:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGNO9-0006gq-Pp
-	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 01:50:46 +0100
+	id 1LGNSE-0007RZ-6l
+	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 01:54:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752530AbYL0AtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Dec 2008 19:49:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752084AbYL0AtY
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 19:49:24 -0500
-Received: from india601.server4you.de ([85.25.151.105]:35804 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752095AbYL0AtX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Dec 2008 19:49:23 -0500
-Received: from [10.0.1.101] (p57B7F73B.dip.t-dialin.net [87.183.247.59])
-	by india601.server4you.de (Postfix) with ESMTPSA id 31A602F8003;
-	Sat, 27 Dec 2008 01:49:22 +0100 (CET)
-In-Reply-To: <1230338375.8363.91.camel@ubuntu.ubuntu-domain>
-X-Mailer: Evolution 2.24.2 
+	id S1752548AbYL0Axh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Dec 2008 19:53:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752363AbYL0Axh
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 19:53:37 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:36392 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752095AbYL0Axh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Dec 2008 19:53:37 -0500
+Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.124])
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LGNQu-0008Ev-5a; Sat, 27 Dec 2008 00:53:36 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <87hc4qscz5.fsf@jidanni.org>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103977>
 
-git log --pretty=format:%s (and tformat:) used to display the first
-line of the subject, unlike the other --pretty options, which would
-construct a subject line from all lines of the first paragraph of
-the commit message.
+--nextPart3948606.nnR20mMsUW
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-For consistency and increased code reuse, change format: to do the
-same as the other options.
+On Friday 2008 December 26 18:01:18 jidanni@jidanni.org wrote:
+> OK, both
+>
+> >> 1) man git-config mentions
+> >> commit.template
+>
+> and
+> BSS> git commit --help tells how this configuration option is used, in the
+> BSS> documentation of the "-t" option.
+> should
+>
+> >> mention what file is being used presently
 
-Before:
-	$ git log --pretty=oneline v1.6.1 | md5sum
-	7c0896d2a94fc3315a0372b9b3373a8f  -
-	$ git log --pretty=tformat:"%H %s" v1.6.1 | md5sum
-	298903b1c065002e15daa5329213c51f  -
+There is no file being used presently.  With the "-m" or "-F" option, no=20
+template is ever used.  Without those options, either the argument to "-t" =
+or=20
+the value of commit.template is used in that order; the editor is invoked o=
+n=20
+that.  Finally if neither of those are defined the editor is invoked on a=20
+new, empty file.
 
-After:
-	$ git log --pretty=tformat:"%H %s" v1.6.1 | md5sum
-	7c0896d2a94fc3315a0372b9b3373a8f  -
-	$ git log --pretty=oneline v1.6.1 | md5sum
-	7c0896d2a94fc3315a0372b9b3373a8f  -
+> as one needs a template in order to modify a template.
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- pretty.c |   53 ++++++++++++++++++++++++++++++++++-------------------
- 1 files changed, 34 insertions(+), 19 deletions(-)
+You aren't modifying the template with commit.template or "-t", you are=20
+specifying one.  You can create one from scratch in your editor of choice.
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
 
-diff --git a/pretty.c b/pretty.c
-index 632abc5..343dca5 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -424,13 +424,15 @@ struct chunk {
- struct format_commit_context {
- 	const struct commit *commit;
- 	enum date_mode dmode;
-+	unsigned commit_header_parsed:1;
-+	unsigned commit_message_parsed:1;
- 
- 	/* These offsets are relative to the start of the commit message. */
--	int commit_header_parsed;
--	struct chunk subject;
- 	struct chunk author;
- 	struct chunk committer;
- 	struct chunk encoding;
-+	size_t message_off;
-+	size_t subject_off;
- 	size_t body_off;
- 
- 	/* The following ones are relative to the result struct strbuf. */
-@@ -460,23 +462,14 @@ static void parse_commit_header(struct format_commit_context *context)
- {
- 	const char *msg = context->commit->buffer;
- 	int i;
--	enum { HEADER, SUBJECT, BODY } state;
- 
--	for (i = 0, state = HEADER; msg[i] && state < BODY; i++) {
-+	for (i = 0; msg[i]; i++) {
- 		int eol;
- 		for (eol = i; msg[eol] && msg[eol] != '\n'; eol++)
- 			; /* do nothing */
- 
--		if (state == SUBJECT) {
--			context->subject.off = i;
--			context->subject.len = eol - i;
--			i = eol;
--		}
- 		if (i == eol) {
--			state++;
--			/* strip empty lines */
--			while (msg[eol] == '\n' && msg[eol + 1] == '\n')
--				eol++;
-+			break;
- 		} else if (!prefixcmp(msg + i, "author ")) {
- 			context->author.off = i + 7;
- 			context->author.len = eol - i - 7;
-@@ -488,10 +481,8 @@ static void parse_commit_header(struct format_commit_context *context)
- 			context->encoding.len = eol - i - 9;
- 		}
- 		i = eol;
--		if (!msg[i])
--			break;
- 	}
--	context->body_off = i;
-+	context->message_off = i;
- 	context->commit_header_parsed = 1;
- }
- 
-@@ -508,6 +499,8 @@ static const char *format_subject(struct strbuf *sb, const char *msg,
- 		if (!linelen || is_empty_line(line, &linelen))
- 			break;
- 
-+		if (!sb)
-+			continue;
- 		strbuf_grow(sb, linelen + 2);
- 		if (!first)
- 			strbuf_addstr(sb, line_separator);
-@@ -517,6 +510,21 @@ static const char *format_subject(struct strbuf *sb, const char *msg,
- 	return msg;
- }
- 
-+static void parse_commit_message(struct format_commit_context *c)
-+{
-+	const char *msg = c->commit->buffer + c->message_off;
-+	const char *start = c->commit->buffer;
-+
-+	msg = skip_empty_lines(msg);
-+	c->subject_off = msg - start;
-+
-+	msg = format_subject(NULL, msg, NULL);
-+	msg = skip_empty_lines(msg);
-+	c->body_off = msg - start;
-+
-+	c->commit_message_parsed = 1;
-+}
-+
- static void format_decoration(struct strbuf *sb, const struct commit *commit)
- {
- 	struct name_decoration *d;
-@@ -636,9 +644,6 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 		parse_commit_header(c);
- 
- 	switch (placeholder[0]) {
--	case 's':	/* subject */
--		strbuf_add(sb, msg + c->subject.off, c->subject.len);
--		return 1;
- 	case 'a':	/* author ... */
- 		return format_person_part(sb, placeholder[1],
- 				   msg + c->author.off, c->author.len,
-@@ -650,6 +655,16 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 	case 'e':	/* encoding */
- 		strbuf_add(sb, msg + c->encoding.off, c->encoding.len);
- 		return 1;
-+	}
-+
-+	/* Now we need to parse the commit message. */
-+	if (!c->commit_message_parsed)
-+		parse_commit_message(c);
-+
-+	switch (placeholder[0]) {
-+	case 's':	/* subject */
-+		format_subject(sb, msg + c->subject_off, " ");
-+		return 1;
- 	case 'b':	/* body */
- 		strbuf_addstr(sb, msg + c->body_off);
- 		return 1;
--- 
-1.6.1
+--nextPart3948606.nnR20mMsUW
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAklVfKMACgkQdNbfk+86fC0jEgCfUZIsn0vHrcRB8qMPMVnJ5zPE
+WpEAniK8Onw7Sqp4e1qAQt1+S147zrXL
+=GgZH
+-----END PGP SIGNATURE-----
+
+--nextPart3948606.nnR20mMsUW--
