@@ -1,108 +1,113 @@
-From: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 1/2] grep: support --no-ext-grep to test builtin grep
-Date: Sat, 27 Dec 2008 15:21:04 +0700
-Message-ID: <1230366064-1306-2-git-send-email-pclouds@gmail.com>
-References: <1230366064-1306-1-git-send-email-pclouds@gmail.com>
+From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
+Subject: Re: [PATCH] Add a commit.signoff configuration variable to always
+	use --signoff.
+Date: Sat, 27 Dec 2008 09:26:20 +0100
+Message-ID: <20081227082620.GA5230@chistera.yi.org>
+References: <1230296219-16408-1-git-send-email-dato@net.com.org.es> <20081227070228.6117@nanako3.lavabit.com> <20081226221033.GA841@chistera.yi.org> <7vabaijvxl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sat Dec 27 09:23:06 2008
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 27 09:27:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGURo-0006uG-Oy
-	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 09:23:01 +0100
+	id 1LGUWO-0007pW-PQ
+	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 09:27:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751538AbYL0IVe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Dec 2008 03:21:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbYL0IVd
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 03:21:33 -0500
-Received: from rv-out-0506.google.com ([209.85.198.231]:27750 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751486AbYL0IVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Dec 2008 03:21:32 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so3764552rvb.1
-        for <git@vger.kernel.org>; Sat, 27 Dec 2008 00:21:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=UF/Cx1b/lFM/fpJGgkH8NZEulbI+vtNhxKR/arTDtSE=;
-        b=FkapKRXqwScp7O12wZSsmwLdaToy7BZJ4rHsygOHXOeELk79pfmwODaP97Drfo9uL3
-         a/umQSCb/a173vamRKaRv73MrR+ahVMywpUBwGZzqe3o5jrxGH1WD4ZvbKgcE6qPka94
-         IAHwJAM8vkqOpxF2pDDb9isa3NWBYp9oG+sQQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=CIISDoAISFm0o/0DIbS9oCzC0B0miKBuKhr8Md+Jj4EOGA8H7goTeUNuEwiNByjpxT
-         yychySjKg05kIEF8A0AA7O/MNRuw7iDw1kk39HFGXD32XWgLmAHgcGy9roLSIsYdhXZy
-         Kc1PHxXiTRoV09r1cIuuqUzR1q7ggrjvqDDmE=
-Received: by 10.141.203.2 with SMTP id f2mr5659642rvq.97.1230366092630;
-        Sat, 27 Dec 2008 00:21:32 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.192.118])
-        by mx.google.com with ESMTPS id f42sm2385488rvb.8.2008.12.27.00.21.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Dec 2008 00:21:31 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 27 Dec 2008 15:21:11 +0700
-X-Mailer: git-send-email 1.6.0.4.1116.g25b13
-In-Reply-To: <1230366064-1306-1-git-send-email-pclouds@gmail.com>
+	id S1751561AbYL0I0Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Dec 2008 03:26:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751543AbYL0I0Y
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 03:26:24 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:4242
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751518AbYL0I0X (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Dec 2008 03:26:23 -0500
+Received: from chistera.yi.org (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id C6647801BF66;
+	Sat, 27 Dec 2008 09:26:21 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LGUV2-0001Mm-Ak; Sat, 27 Dec 2008 09:26:20 +0100
+Mail-Followup-To: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <7vabaijvxl.fsf@gitster.siamese.dyndns.org>
+X-No-CC: Please respect my Mail-Followup-To header
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103989>
 
+* Junio C Hamano [Fri, 26 Dec 2008 16:36:38 -0800]:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- used by the next patch
+> Adeodato Sim=C3=B3 <dato@net.com.org.es> writes:
 
- builtin-grep.c |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+> > ... I'd
+> > still like to hear if my patch would be suitable for inclusion, bec=
+ause
+> > it's much more straightforward to use (and to discover).
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 624f86e..3c97c2c 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -20,6 +20,8 @@
- #endif
- #endif
-=20
-+static int builtin_grep;
-+
- /*
-  * git grep pathspecs are somewhat different from diff-tree pathspecs;
-  * pathname wildcards are allowed.
-@@ -389,7 +391,7 @@ static int grep_cache(struct grep_opt *opt, const c=
-har **paths, int cached)
- 	 * we grep through the checked-out files. It tends to
- 	 * be a lot more optimized
- 	 */
--	if (!cached) {
-+	if (!cached && !builtin_grep) {
- 		hit =3D external_grep(opt, paths, cached);
- 		if (hit >=3D 0)
- 			return hit;
-@@ -545,6 +547,10 @@ int cmd_grep(int argc, const char **argv, const ch=
-ar *prefix)
- 			cached =3D 1;
- 			continue;
- 		}
-+		if (!strcmp("--no-ext-grep", arg)) {
-+			builtin_grep =3D 1;
-+			continue;
-+		}
- 		if (!strcmp("-a", arg) ||
- 		    !strcmp("--text", arg)) {
- 			opt.binary =3D GREP_BINARY_TEXT;
+> But "straightforward to discover" is not an advantage in this case.
+
+> As long as it comes with documentation that clearly explains why this
+> feature should not be used blindly in order to avoid diluting the val=
+ue of
+> S-o-b, I think the feature itself is not a harmful thing to have.  Ds=
+cho's
+> argument in the quoted thread that says it should be a conscious act =
+to
+> add S-o-b (except for the part he misunderstands what S-o-b attests),=
+ is a
+> good one and still is valid.
+
+Does this sound good? If so, I'll send an amended patch (or should I se=
+nd an
+incremental/extra one instead?):
+
++commit.signoff::
++       If set, 'git-commit' will always add a Signed-off-by line.
++       Please use this option with care: by enabling it, you're statin=
+g
++       that all your commits will invariably meet the S-o-b
++       requirements for any project you send patches to. It's probably
++       best to only use it from your private repositories' .git/config
++       file, and only for projects who require a S-o-b as proof of
++       provenance of the patch, and not of its correctness or quality.
+
+> By the way, please do not deflect away responses meant to you by usin=
+g a
+> Mail-Followup-To header that points at the git mailing list.  It is r=
+ude.
+
+I set a M-F-T header because I prefer not to be CC'ed. I have other
+mechanisms in place that prevent me from missing replies to my messages
+(based on In-Reply-To/References headers).
+
+Nevertheless, if the list normally operates CC-based, I can see how pre=
+ssing
+Reply-to-all and not seing the original autor in the recipient list can=
+ be
+offputting, so I'll stop setting M-F-T in my messages to git@. (Hopeful=
+ly
+starting with this message already.)
+
+I didn't mean for it to be rude in any way.
+
+Thanks,
+
 --=20
-1.6.0.4.1116.g25b13
+Adeodato Sim=C3=B3                                     dato at net.com.=
+org.es
+Debian Developer                                  adeodato at debian.or=
+g
+=20
+A conference is a gathering of important people who singly can do nothi=
+ng
+but together can decide that nothing can be done.
+                -- Fred Allen
