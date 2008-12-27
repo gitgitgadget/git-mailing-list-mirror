@@ -1,72 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add a commit.signoff configuration variable to always
- use --signoff
-Date: Sat, 27 Dec 2008 03:53:47 -0800
-Message-ID: <7v8wq1esvo.fsf@gitster.siamese.dyndns.org>
-References: <7v63l6f1mc.fsf@gitster.siamese.dyndns.org>
- <1230368596-6865-1-git-send-email-dato@net.com.org.es>
+From: Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>
+Subject: Re: RFE: git-import-dsc should support http-links
+Date: Sat, 27 Dec 2008 12:49:10 +0100
+Message-ID: <20081227114910.GA6481@bogon.ms20.nix>
+References: <gj06ks$ao9$1@ger.gmane.org> <7vk59n93x7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Adeodato =?utf-8?Q?Sim=C3=B3?= <dato@net.com.org.es>
-X-From: git-owner@vger.kernel.org Sat Dec 27 12:55:22 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Rolf Leggewie <no2spam@nospam.arcornews.de>
+X-From: git-owner@vger.kernel.org Sat Dec 27 13:02:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGXlJ-0007Yo-Ko
-	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 12:55:22 +0100
+	id 1LGXrx-0000sf-VM
+	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 13:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753379AbYL0Lx5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Dec 2008 06:53:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbYL0Lx5
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 06:53:57 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55961 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753309AbYL0Lx5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Dec 2008 06:53:57 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BF2348AFC0;
-	Sat, 27 Dec 2008 06:53:52 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 040708AFBA; Sat,
- 27 Dec 2008 06:53:49 -0500 (EST)
-In-Reply-To: <1230368596-6865-1-git-send-email-dato@net.com.org.es> (Adeodato
- =?utf-8?Q?Sim=C3=B3's?= message of "Sat, 27 Dec 2008 10:03:16 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 082B39DC-D40D-11DD-B254-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1754256AbYL0MA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Dec 2008 07:00:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754162AbYL0MA5
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 07:00:57 -0500
+Received: from static-87-79-238-240.netcologne.de ([87.79.238.240]:52683 "EHLO
+	honk.sigxcpu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754077AbYL0MA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Dec 2008 07:00:56 -0500
+X-Greylist: delayed 646 seconds by postgrey-1.27 at vger.kernel.org; Sat, 27 Dec 2008 07:00:55 EST
+Received: from localhost (localhost [127.0.0.1])
+	by honk.sigxcpu.org (Postfix) with ESMTP id 99B1A9C003;
+	Sat, 27 Dec 2008 12:50:07 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at honk.sigxcpu.org
+Received: from honk.sigxcpu.org ([127.0.0.1])
+	by localhost (honk.sigxcpu.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NkbFxJHTK00e; Sat, 27 Dec 2008 12:50:06 +0100 (CET)
+Received: from bogon.sigxcpu.org (16.121.113.82.net.de.o2.com [82.113.121.16])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by honk.sigxcpu.org (Postfix) with ESMTPSA id 50B2C9C002;
+	Sat, 27 Dec 2008 12:50:01 +0100 (CET)
+Received: by bogon.sigxcpu.org (Postfix, from userid 1000)
+	id 5748211E7EC; Sat, 27 Dec 2008 12:49:10 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vk59n93x7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103999>
 
-Adeodato Sim=C3=B3 <dato@net.com.org.es> writes:
+Hi Rolf, Hi Junio,
+On Thu, Dec 25, 2008 at 04:27:16PM -0800, Junio C Hamano wrote:
+> Rolf Leggewie <no2spam@nospam.arcornews.de> writes:
+> 
+> > merry Christmas everyone.  I hope this is the right place for this, I
+> > looked around and it seemed to me it was, so here it goes.
+> 
+> Sorry, I have never heard of git-import-dsc and had to google for it, only
+> to find that it is one [*1*] of a set [*2*] of debian local tools somebody
+> I've never heard of (Cc'ed) on this list has written.
+> 
+> > It would be nice if the following just worked:
+> >
+> > "git-import-dsc
+> > http://ftp.de.debian.org/debian/pool/main/g/gnucash/gnucash_2.2.6-2.dsc"
+> > Regards
 
-> +commit.signoff::
-> +	If set, 'git commit' will behave as if '-s' option was given.
-> +	Please use this option with care: by enabling it, you're stating
-> +	that all your commits will invariably meet the S-o-b
-> +	requirements for any project you send patches to. It's probably
+dget http://ftp.de.debian.org/debian/pool/main/g/gnucash/gnucash_2.2.6-2.dsc
+git-import-dsc gnucash_2.2.6-2.dsc
 
-This is true only if you set it in your global configuration.  A more s=
-ane
-usage would be to have it per repository as you recommend in a later
-sentence, and "for any project" part is untrue when the reader does so.
+is what I'm using but having this in git-import-dsc itself is fine by me
+if someone sends a patch.
 
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.=
-txt
-> index b5d81be..abab839 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -96,7 +96,8 @@ OPTIONS
->  -s::
->  --signoff::
->  	Add Signed-off-by line by the committer at the end of the commit
-> -	log message.
-> +	log message. This overrides the `commit.signoff` configuration
-> +	variable.
-
-Good and careful thinking.  I like it.
+> > PS: How about some kind of official bug tracker for git?
+The Debian BTS (bugs.debian.org) is the official bugtracker for
+git-buildpackage.
+Cheers,
+ -- Guido
