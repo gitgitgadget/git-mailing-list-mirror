@@ -1,62 +1,60 @@
-From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
-Subject: Re: [PATCH] Add a commit.signoff configuration variable to always
- use --signoff.
-Date: Sat, 27 Dec 2008 20:15:41 +0100
-Message-ID: <20081227201541.4a352129@neuron>
-References: <1230296219-16408-1-git-send-email-dato@net.com.org.es>
-	<20081227190819.7257932a@neuron>
-	<20081227184001.GA31893@chistera.yi.org>
+From: skillzero@gmail.com
+Subject: Fix commit message after push?
+Date: Sat, 27 Dec 2008 13:13:46 -0800
+Message-ID: <2729632a0812271313l74e9bb85l857a3ad3a3f0d8d8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "Adeodato =?UTF-8?B?U2ltw7M=?=" <dato@net.com.org.es>
-X-From: git-owner@vger.kernel.org Sat Dec 27 20:17:06 2008
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 27 22:15:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGeem-0006YA-6N
-	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 20:17:04 +0100
+	id 1LGgV5-0000bU-IK
+	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 22:15:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754635AbYL0TPp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Dec 2008 14:15:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753509AbYL0TPp
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 14:15:45 -0500
-Received: from zoidberg.org ([213.133.99.5]:42149 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754628AbYL0TPo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Dec 2008 14:15:44 -0500
-Received: from neuron (xdsl-78-34-155-251.netcologne.de [::ffff:78.34.155.251])
-  (IDENT: unknown, AUTH: LOGIN jast, SSL: TLSv1/SSLv3,256bits,AES256-SHA)
-  by cthulhu.zoidberg.org with esmtp; Sat, 27 Dec 2008 20:15:44 +0100
-  id 00189B6C.49567EE0.00007C3B
-In-Reply-To: <20081227184001.GA31893@chistera.yi.org>
-X-Mailer: Claws Mail 3.3.1 (GTK+ 2.12.9; i486-pc-linux-gnu)
+	id S1751588AbYL0VNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Dec 2008 16:13:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751168AbYL0VNu
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 16:13:50 -0500
+Received: from an-out-0708.google.com ([209.85.132.241]:12597 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750905AbYL0VNt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Dec 2008 16:13:49 -0500
+Received: by an-out-0708.google.com with SMTP id d40so1334988and.1
+        for <git@vger.kernel.org>; Sat, 27 Dec 2008 13:13:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=9i6fs1NKaGcehn9ocqqKPYZCyRKpizoNIO1KaG14AKw=;
+        b=nQ0T88DrNc+QOiBfElfNoVHkIexEWgzYvYGxY2Dtn9bSuld/1SdvuwFiiDW6JgcSRN
+         Ef7PQg/vQdyFL1Zbp130Yy5M22qkagaZtrIcEyDVb06MlfGjaX5eSb+wNTKNH9f2NKi9
+         zRhp2agk2iswP5rrlASgb8XWx/4Qr8LmBqrMo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=AVCrWaRcjCPYokS/xLbNFRJCtX+Sxg7SxHFBsx3kOeAhtkPgyc26xjX1q5RHW6RSZ3
+         dCHIaXJT4V+w4yvNRPvIwMcP0lxccCguUHx1LjImo65/4MqKGRwb4InWWAMujq8yZE6p
+         S7rIGMxUI0z97ujJ/oZ+cu1TSlHnFmFj1Zbos=
+Received: by 10.64.209.6 with SMTP id h6mr9380836qbg.10.1230412426878;
+        Sat, 27 Dec 2008 13:13:46 -0800 (PST)
+Received: by 10.65.192.6 with HTTP; Sat, 27 Dec 2008 13:13:46 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104015>
 
-Hi,
-
-On Sat, 27 Dec 2008 19:40:01 +0100
-"Adeodato Sim=C3=B3" <dato@net.com.org.es> wrote:
-
-> > I think it might be a good idea to allow overriding the config
-> > variable in the other direction, i.e. a --no-signoff option to
-> > commit. [...]
->=20
-> Good catch.
->=20
-> --no-signoff exists already, so maybe git-rebase should just use it?
-
-Oh, yeah, I didn't notice the option mechanism worked this way and the
-options got parsed after processing the config variables. I guess
-rebase and rebase--interactive should use it, then, and perhaps there
-are other commands that should that I just don't know about (a grep
-across all commands implemented in shell script didn't find anything
-else, though).
-
--Jan
+Is there a way to fix a commit message after the commit has already
+pushed to someone else? I typed the wrong commit message then I pushed
+to the remote repository before realizing it. I tried git commit
+--amend to fix it in my local repository, but it rejects the
+subsequent push. I somewhat understand why it's rejecting it (my
+--amend rewrote history and now they are out-of-sync), but I was
+wondering if there is a general way to handle situations like this
+with git.
