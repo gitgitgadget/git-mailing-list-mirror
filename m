@@ -1,81 +1,114 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] describe: Avoid unnecessary warning when using --all
-Date: Sat, 27 Dec 2008 01:38:59 +0100
-Message-ID: <20081227003859.GU21154@genesis.frugalware.org>
-References: <20081226220201.GA20516@spearce.org> <7vmyeijws2.fsf@gitster.siamese.dyndns.org> <20081227002627.GA21386@spearce.org>
+From: =?ISO-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 2/3] pretty: factor out format_subject()
+Date: Sat, 27 Dec 2008 01:39:35 +0100
+Message-ID: <1230338375.8363.91.camel@ubuntu.ubuntu-domain>
+References: <1230337969.8363.84.camel@ubuntu.ubuntu-domain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+RqgOR8y65RRYhVY"
-Cc: Junio C Hamano <gitster@pobox.com>, demerphq <demerphq@gmail.com>,
-	rene.scharfe@lsrfire.ath.cx, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Dec 27 01:40:27 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 27 01:41:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGNE9-0004mt-Vf
-	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 01:40:26 +0100
+	id 1LGNEh-0004t9-M7
+	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 01:41:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752332AbYL0AjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Dec 2008 19:39:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752209AbYL0AjE
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 19:39:04 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:59223 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751785AbYL0AjD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Dec 2008 19:39:03 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 3486A58099;
-	Sat, 27 Dec 2008 01:39:00 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 65A514465E;
-	Sat, 27 Dec 2008 01:38:59 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 6B97C11B8630; Sat, 27 Dec 2008 01:38:59 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20081227002627.GA21386@spearce.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752367AbYL0Aji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Dec 2008 19:39:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752354AbYL0Aji
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Dec 2008 19:39:38 -0500
+Received: from india601.server4you.de ([85.25.151.105]:47592 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751058AbYL0Ajh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Dec 2008 19:39:37 -0500
+Received: from [10.0.1.101] (p57B7F73B.dip.t-dialin.net [87.183.247.59])
+	by india601.server4you.de (Postfix) with ESMTPSA id EF0E82F8003;
+	Sat, 27 Dec 2008 01:39:35 +0100 (CET)
+In-Reply-To: <1230337969.8363.84.camel@ubuntu.ubuntu-domain>
+X-Mailer: Evolution 2.24.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103973>
 
+The next patch will use it.
 
---+RqgOR8y65RRYhVY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In the version that was factored out, we can't rely on the len of the
+struct strbuf to find out if a line separator needs to be added, as
+it might already contain something.  Add a guard variable ("first")
+instead.
 
-On Fri, Dec 26, 2008 at 04:26:27PM -0800, "Shawn O. Pearce" <spearce@spearc=
-e.org> wrote:
-> Having two personalities is hard...  ;-)
->=20
-> Can you please amend to use my normal spearce@spearce.org address?
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ pretty.c |   42 ++++++++++++++++++++++++------------------
+ 1 files changed, 24 insertions(+), 18 deletions(-)
 
-BTW, what Pasky/Nice did was to keep the author field the same, but
-change the S-o-b line based on if they did it in their free time or in
-work hours.
-
-Like this one:
-
-http://article.gmane.org/gmane.comp.version-control.git/97419
-
-And the related thread:
-
-http://thread.gmane.org/gmane.comp.version-control.git/96690/focus=3D96768
-
---+RqgOR8y65RRYhVY
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAklVeSMACgkQe81tAgORUJY2bQCfesQVDaKNf7Mt8+tELHgHo1RT
-0YsAn0iqGJ2nC1ifDmYPHE/gdoPOhoHF
-=5FtX
------END PGP SIGNATURE-----
-
---+RqgOR8y65RRYhVY--
+diff --git a/pretty.c b/pretty.c
+index c43497b..632abc5 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -495,6 +495,28 @@ static void parse_commit_header(struct format_commit_context *context)
+ 	context->commit_header_parsed = 1;
+ }
+ 
++static const char *format_subject(struct strbuf *sb, const char *msg,
++				  const char *line_separator)
++{
++	int first = 1;
++
++	for (;;) {
++		const char *line = msg;
++		int linelen = get_one_line(line);
++
++		msg += linelen;
++		if (!linelen || is_empty_line(line, &linelen))
++			break;
++
++		strbuf_grow(sb, linelen + 2);
++		if (!first)
++			strbuf_addstr(sb, line_separator);
++		strbuf_add(sb, line, linelen);
++		first = 0;
++	}
++	return msg;
++}
++
+ static void format_decoration(struct strbuf *sb, const struct commit *commit)
+ {
+ 	struct name_decoration *d;
+@@ -718,27 +740,11 @@ void pp_title_line(enum cmit_fmt fmt,
+ 		   const char *encoding,
+ 		   int need_8bit_cte)
+ {
++	const char *line_separator = (fmt == CMIT_FMT_EMAIL) ? "\n " : " ";
+ 	struct strbuf title;
+ 
+ 	strbuf_init(&title, 80);
+-
+-	for (;;) {
+-		const char *line = *msg_p;
+-		int linelen = get_one_line(line);
+-
+-		*msg_p += linelen;
+-		if (!linelen || is_empty_line(line, &linelen))
+-			break;
+-
+-		strbuf_grow(&title, linelen + 2);
+-		if (title.len) {
+-			if (fmt == CMIT_FMT_EMAIL) {
+-				strbuf_addch(&title, '\n');
+-			}
+-			strbuf_addch(&title, ' ');
+-		}
+-		strbuf_add(&title, line, linelen);
+-	}
++	*msg_p = format_subject(&title, *msg_p, line_separator);
+ 
+ 	strbuf_grow(sb, title.len + 1024);
+ 	if (subject) {
+-- 
+1.6.1
