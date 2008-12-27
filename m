@@ -1,68 +1,85 @@
-From: "Devin Doucette" <devin@doucette.cc>
-Subject: [PATCH] gitweb: Fix export check in git_get_projects_list
-Date: Sat, 27 Dec 2008 02:39:31 -0700
-Message-ID: <a899d7ef0812270139u7dd28ee1q45a8c05f7c95db2f@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] Add a commit.signoff configuration variable to always use --signoff
+Date: Sat, 27 Dec 2008 12:04:11 +0100
+Message-ID: <200812271204.15268.trast@student.ethz.ch>
+References: <7v63l6f1mc.fsf@gitster.siamese.dyndns.org> <1230368596-6865-1-git-send-email-dato@net.com.org.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed;
+  boundary="nextPart26181911.o4OrD8YNoV";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: "Petr Baudis" <petr.baudis@novartis.com>,
-	"Jakub Narebski" <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 27 10:41:04 2008
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Adeodato =?utf-8?q?Sim=C3=B3?= <dato@net.com.org.es>
+X-From: git-owner@vger.kernel.org Sat Dec 27 12:05:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGVfD-0003E1-N4
-	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 10:40:56 +0100
+	id 1LGWzT-0004fd-30
+	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 12:05:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590AbYL0Jjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Dec 2008 04:39:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752300AbYL0Jje
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 04:39:34 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:53082 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751867AbYL0Jje (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Dec 2008 04:39:34 -0500
-Received: by ewy10 with SMTP id 10so4288275ewy.13
-        for <git@vger.kernel.org>; Sat, 27 Dec 2008 01:39:32 -0800 (PST)
-Received: by 10.210.66.1 with SMTP id o1mr13620432eba.0.1230370771922;
-        Sat, 27 Dec 2008 01:39:31 -0800 (PST)
-Received: by 10.210.22.20 with HTTP; Sat, 27 Dec 2008 01:39:31 -0800 (PST)
-Content-Disposition: inline
+	id S1754194AbYL0LEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Dec 2008 06:04:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754094AbYL0LEF
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 06:04:05 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:24806 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751650AbYL0LEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Dec 2008 06:04:04 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 27 Dec 2008 12:04:02 +0100
+Received: from [192.168.0.3] ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 27 Dec 2008 12:04:01 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <1230368596-6865-1-git-send-email-dato@net.com.org.es>
+X-OriginalArrivalTime: 27 Dec 2008 11:04:01.0904 (UTC) FILETIME=[D3369700:01C96812]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103994>
 
-When $filter was empty, the path passed to check_export_ok would
-contain an extra '/', which some implementations of export_auth_hook
-are sensitive to.
+--nextPart26181911.o4OrD8YNoV
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-It makes more sense to fix this here than to handle the special case
-in each implementation of export_auth_hook.
+Adeodato Sim=C3=B3 wrote:
+> +commit.signoff::
+> +	If set, 'git commit' will behave as if '-s' option was given.
+> +	Please use this option with care: by enabling it, you're stating
+> +	that all your commits will invariably meet the S-o-b
+> +	requirements for any project you send patches to. It's probably
+> +	best to only use it from your private repositories' .git/config
+> +	file, and only for projects who require a S-o-b as proof of
+                           ^^^^^^^^^^^^
 
-Signed-off-by: Devin Doucette <devin@doucette.cc>
----
- gitweb/gitweb.perl |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+"projects which ..." or "projects that ...".  "Who" can only stand for
+people, not objects.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 8f574c7..99f71b4 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2147,8 +2147,9 @@ sub git_get_projects_list {
+> +	provenance of the patch, and not of its correctness or quality.
 
- 				my $subdir = substr($File::Find::name, $pfxlen + 1);
- 				# we check related file in $projectroot
--				if (check_export_ok("$projectroot/$filter/$subdir")) {
--					push @list, { path => ($filter ? "$filter/" : '') . $subdir };
-+				my $path = ($filter ? "$filter/" : '') . $subdir;
-+				if (check_export_ok("$projectroot/$path")) {
-+					push @list, { path => $path };
- 					$File::Find::prune = 1;
- 				}
- 			},
--- 
-1.6.1.rc4
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+
+
+
+
+
+--nextPart26181911.o4OrD8YNoV
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAklWC68ACgkQqUud07tmzP0TAACffc9vK/6g3G3vt/MUV8aEd7JR
+gpUAoJEDcPYNryhq9Qt970Ve0EHDc58w
+=cZs7
+-----END PGP SIGNATURE-----
+
+--nextPart26181911.o4OrD8YNoV--
