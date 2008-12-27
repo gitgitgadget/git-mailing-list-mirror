@@ -1,68 +1,56 @@
-From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
-Subject: Re: [PATCH] Add a commit.signoff configuration variable to always
-	use --signoff
-Date: Sat, 27 Dec 2008 12:05:54 +0100
-Message-ID: <20081227110554.GA9314@chistera.yi.org>
-References: <7v63l6f1mc.fsf@gitster.siamese.dyndns.org> <1230368596-6865-1-git-send-email-dato@net.com.org.es> <200812271204.15268.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Dec 27 12:07:24 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [ANNOUNCE] MSYSGIT 1.6.1
+Date: Sat, 27 Dec 2008 11:31:01 +0100
+Message-ID: <E60BAAB7-2C39-4932-BCD0-B880E97EE235@zib.de>
+References: <7v7i5odams.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+X-From: git-owner@vger.kernel.org Sat Dec 27 12:14:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGX0n-0005Bc-7H
-	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 12:07:17 +0100
+	id 1LGX7u-0006nh-3u
+	for gcvg-git-2@gmane.org; Sat, 27 Dec 2008 12:14:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753048AbYL0LF6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Dec 2008 06:05:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752928AbYL0LF5
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 06:05:57 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:1156
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752766AbYL0LF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Dec 2008 06:05:56 -0500
-Received: from chistera.yi.org (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id 1FDAC801BF66;
-	Sat, 27 Dec 2008 12:05:55 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LGWzS-0002RC-9Q; Sat, 27 Dec 2008 12:05:54 +0100
-Content-Disposition: inline
-In-Reply-To: <200812271204.15268.trast@student.ethz.ch>
-X-No-CC: Please respect my Mail-Followup-To header
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752894AbYL0LNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Dec 2008 06:13:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752181AbYL0LNR
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 06:13:17 -0500
+Received: from mailer.zib.de ([130.73.108.11]:49564 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752372AbYL0LNR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Dec 2008 06:13:17 -0500
+X-Greylist: delayed 2058 seconds by postgrey-1.27 at vger.kernel.org; Sat, 27 Dec 2008 06:13:16 EST
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id mBRAVDVQ000998;
+	Sat, 27 Dec 2008 11:31:22 +0100 (CET)
+Received: from [192.168.1.35] (ppp-93-104-120-200.dynamic.mnet-online.de [93.104.120.200])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id mBRAV6bR006978
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sat, 27 Dec 2008 11:31:07 +0100 (MET)
+In-Reply-To: <7v7i5odams.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/103996>
 
-* Thomas Rast [Sat, 27 Dec 2008 12:04:11 +0100]:
 
-> Adeodato Sim=C3=B3 wrote:
-> > +commit.signoff::
-> > +	If set, 'git commit' will behave as if '-s' option was given.
-> > +	Please use this option with care: by enabling it, you're stating
-> > +	that all your commits will invariably meet the S-o-b
-> > +	requirements for any project you send patches to. It's probably
-> > +	best to only use it from your private repositories' .git/config
-> > +	file, and only for projects who require a S-o-b as proof of
->                            ^^^^^^^^^^^^
+On Dec 25, 2008, at 7:36 AM, Junio C Hamano wrote:
 
-> "projects which ..." or "projects that ...".  "Who" can only stand fo=
-r
-> people, not objects.
+> The latest feature release GIT 1.6.1 is available at the usual
+> places:
 
-Good catch, thank you. Hopefully Junio can amend.
 
---=20
-Adeodato Sim=C3=B3                                     dato at net.com.=
-org.es
-Debian Developer                                  adeodato at debian.or=
-g
-=20
-                                   Listening to: Miguel Bos=C3=A9 - Pue=
-de que
+The msysgit installer is available at
+
+     http://code.google.com/p/msysgit/downloads
+
+	Steffen
