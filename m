@@ -1,71 +1,81 @@
-From: "Zorba" <cr@altmore.co.uk>
-Subject: Re: for newbs = little exercise / tutorial / warmup for windows and other non-sophisticated new Git users :-)
-Date: Sun, 28 Dec 2008 01:29:46 -0000
-Message-ID: <gj6kqq$nvh$4@ger.gmane.org>
-References: <gj68a0$u56$3@ger.gmane.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 28 02:35:57 2008
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 3/3] pretty: support multiline subjects with format:
+Date: Sun, 28 Dec 2008 02:44:07 +0100
+Message-ID: <20081228014407.GD21154@genesis.frugalware.org>
+References: <200812280024.59096.markus.heidelberg@web.de> <1230338961.8363.101.camel@ubuntu.ubuntu-domain> <20081228090909.6117@nanako3.lavabit.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="BXhH8iG0/4JcYZU2"
+Cc: markus.heidelberg@web.de,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Sun Dec 28 02:50:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGkZQ-0006dH-4B
-	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 02:35:56 +0100
+	id 1LGknO-0000gM-UI
+	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 02:50:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754670AbYL1BaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Dec 2008 20:30:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754658AbYL1BaO
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 20:30:14 -0500
-Received: from main.gmane.org ([80.91.229.2]:33676 "EHLO ciao.gmane.org"
+	id S1754678AbYL1BoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Dec 2008 20:44:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754676AbYL1BoL
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 20:44:11 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:55609 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754642AbYL1BaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Dec 2008 20:30:13 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LGkTr-0005qG-H3
-	for git@vger.kernel.org; Sun, 28 Dec 2008 01:30:11 +0000
-Received: from 81.135.227.136 ([81.135.227.136])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 28 Dec 2008 01:30:11 +0000
-Received: from cr by 81.135.227.136 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 28 Dec 2008 01:30:11 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 81.135.227.136
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5512
-X-RFC2646: Format=Flowed; Response
+	id S1754673AbYL1BoK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Dec 2008 20:44:10 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id E1AFB5808D;
+	Sun, 28 Dec 2008 02:44:07 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id AD6D44465E;
+	Sun, 28 Dec 2008 02:44:07 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 9D5B811B8630; Sun, 28 Dec 2008 02:44:07 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20081228090909.6117@nanako3.lavabit.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.2 points;
- *  0.0 RCVD_BY_IP Received by mail server with no name
- *  4.0 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
- *  1.2 PRIORITY_NO_NAME Message has priority, but no X-Mailer/User-Agent
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104039>
 
-tidied up the formatting, added a few more comments where needed, fixed 
-errors/lack of clarity
 
-"Zorba" <cr@altmore.co.uk> wrote in message 
-news:gj68a0$u56$3@ger.gmane.org...
-> Here is a little exercise / tutorial / warm-up for someone starting out 
-> with Git. If you're anyting like me you may find the tutorials etc. on 
-> git.or.cz a bit daunting. I recommend you try this after reading the user 
-> manual but before tearing your hair out trying to follow all the examples 
-> in the user manual. After you've followed this simple workflow, then go 
-> back to the more advanced stuff  in the tutorials and user manuals (like 
-> cloning repositories and creating and merging branches).
->
-> I created this exercise to try and model our workflow and what we wanted 
-> to use git for = tracking a project with multiple files where the filebase 
-> might change frequently from one version to the next.
->
-> http://siliconmouth.wordpress.com/category/nerdy/
->
-> look for December 27, 2008 or "git warmup"
->
-> 
+--BXhH8iG0/4JcYZU2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Dec 28, 2008 at 09:09:09AM +0900, Nanako Shiraishi <nanako3@lavabit=
+=2Ecom> wrote:
+> The last message mentions a bug in "git rebase" that internally uses
+> "git am" when replaying the changes. It was corrected later with:
+>=20
+> 	http://thread.gmane.org/gmane.linux.ports.sh.devel/3833/focus=3D79735
+>=20
+> Reading the discussion in the messages in this thread will help
+> understanding the issues, after understanding why "the first line" was
+> problematic, as discussed in the other threads.
+
+Actually in that thread I asked if a patch that would make this
+configurable would be ever accepted (so I would work on it), but I got
+no answer. In the meantime I just learned to live with this, partially
+because the vim highlight script highlights anything written to the
+second line as red. ;-)
+
+--BXhH8iG0/4JcYZU2
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAklW2ecACgkQe81tAgORUJbKEwCghoKhzNUEsGqqSy5koxjqL4cN
+8HcAnAqldKzKkvQH9YKjN2Q4hwj3QRnH
+=i1uS
+-----END PGP SIGNATURE-----
+
+--BXhH8iG0/4JcYZU2--
