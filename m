@@ -1,112 +1,112 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Fix export check in git_get_projects_list
-Date: Sun, 28 Dec 2008 03:12:01 +0100
-Message-ID: <200812280312.02615.jnareb@gmail.com>
-References: <a899d7ef0812270139u7dd28ee1q45a8c05f7c95db2f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/diff-options.txt: unify options
+Date: Sat, 27 Dec 2008 22:52:49 -0800
+Message-ID: <7vvdt4aj0e.fsf@gitster.siamese.dyndns.org>
+References: <7vfxk9cm6w.fsf@gitster.siamese.dyndns.org>
+ <87lju1jmp9.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <petr.baudis@novartis.com>
-To: "Devin Doucette" <devin@doucette.cc>
-X-From: git-owner@vger.kernel.org Sun Dec 28 03:12:05 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Sun Dec 28 07:54:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGl8N-0004Jb-3f
-	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 03:12:03 +0100
+	id 1LGpXX-0000rX-7Y
+	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 07:54:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754642AbYL1CKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Dec 2008 21:10:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754571AbYL1CKo
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 21:10:44 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:35577 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753856AbYL1CKn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Dec 2008 21:10:43 -0500
-Received: by ewy10 with SMTP id 10so4523344ewy.13
-        for <git@vger.kernel.org>; Sat, 27 Dec 2008 18:10:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=ZU9IteomGgflOS2fhUSA90W5n4jvRsDjzQAho5IQCPk=;
-        b=w7J1Px4NoaXyHSM+uW7wzZACur5xqUDj/Ks7+5iYpft7W3CvXtbcmvuC6+mqGDeL0e
-         RABpmjG1CPnprvLFA7iDg5SHF9qWh3AnpmS64cIDt7CdW/ESJR5fkPJRi+oI7Hyp6f9w
-         5bUE9fa0GvGzgZFYISPvLtjsT5GpydJdlu8jM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=HZeapxbU7s0HjBvoMdhtcqxvSjFQRCZkZ/bguV4HrpUg170hX6cesq9deQvNsCEu/s
-         rFBQz9Bh5q+AiFcExxb85aMiMBv6233VU0XzSgWBdlkAqun8F6QuwtVODi9c96znuMTq
-         hlvtNVROu4Lu0rSBSUeJiD2Uwgjn7Xxcy7Acg=
-Received: by 10.210.12.13 with SMTP id 13mr9738057ebl.93.1230430241566;
-        Sat, 27 Dec 2008 18:10:41 -0800 (PST)
-Received: from ?192.168.1.11? (abvb166.neoplus.adsl.tpnet.pl [83.8.199.166])
-        by mx.google.com with ESMTPS id 23sm2348198eya.53.2008.12.27.18.10.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Dec 2008 18:10:39 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <a899d7ef0812270139u7dd28ee1q45a8c05f7c95db2f@mail.gmail.com>
-Content-Disposition: inline
+	id S1751868AbYL1GxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Dec 2008 01:53:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751795AbYL1Gw7
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Dec 2008 01:52:59 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35687 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751789AbYL1Gw7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Dec 2008 01:52:59 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A220A8BB75;
+	Sun, 28 Dec 2008 01:52:55 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B31AD8BB74; Sun,
+ 28 Dec 2008 01:52:52 -0500 (EST)
+In-Reply-To: <87lju1jmp9.fsf@jidanni.org> (jidanni@jidanni.org's message of
+ "Sun, 28 Dec 2008 06:08:18 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 27B36D02-D4AC-11DD-A1AE-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104041>
 
-On Sat, 27 Dec 2008, Devin Doucette wrote:
+jidanni@jidanni.org writes:
 
-> When $filter was empty, the path passed to check_export_ok would
-> contain an extra '/', which some implementations of export_auth_hook
-> are sensitive to.
-> 
-> It makes more sense to fix this here than to handle the special case
-> in each implementation of export_auth_hook.
-> 
-> Signed-off-by: Devin Doucette <devin@doucette.cc>
+> JCH> Sorry, but this patch is very unusual in that it lacks any context lines,
+> JCH> which makes it impossible to review.
+>
+> Trust me, I tried it with the default context lines and it was just
+> the same hard reading.
 
-Good catch. Thanks.
+Nonsense.
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
+Here is a snippet from your patch.
 
-> ---
->  gitweb/gitweb.perl |    5 +++--
->  1 files changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 8f574c7..99f71b4 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -2147,8 +2147,9 @@ sub git_get_projects_list {
-> 
->  				my $subdir = substr($File::Find::name, $pfxlen + 1);
->  				# we check related file in $projectroot
-> -				if (check_export_ok("$projectroot/$filter/$subdir")) {
-> -					push @list, { path => ($filter ? "$filter/" : '') . $subdir };
-> +				my $path = ($filter ? "$filter/" : '') . $subdir;
+        diff --git a/diff-options.txt b/diff-options.txt
+        index 5721548..b05503a 100644
+        --- a/diff-options.txt
+        +++ b/diff-options.txt
+        @@ -21,0 +22 @@ ifndef::git-format-patch[]
+        +-u::
+        @@ -26,3 +26,0 @@ endif::git-format-patch[]
+        --u::
+        -	Synonym for "-p".
+        -
 
-Nice and clear, but wouldn't be better to use slightly more effective
+The only thing anybody can guess without looking at the original (that is
+what "sending a patch without context" means) is that you moved "-u::" to
+somewhere else, and stripped of its description.  There is absolutely no
+clue to judge if the new home to "-u::" is an appropriate place.
 
-+				my $path = $filter ? "$filter/$subdir" : $subdir;
+In a normal patch with context, the same hunk would have looked like this:
 
-Or even, taking care of the case when $filter eq '0'
+        diff --git i/Documentation/diff-options.txt w/Documentation/diff-options.txt
+        index c62b45c..c4ca0a9 100644
+        --- i/Documentation/diff-options.txt
+        +++ w/Documentation/diff-options.txt
+        @@ -19,16 +19,12 @@ endif::git-format-patch[]
 
-+				my $path = defined $filter && $filter ne '' ? "$filter/$subdir" : $subdir;
+         ifndef::git-format-patch[]
+         -p::
+        +-u::
+                Generate patch (see section on generating patches).
+                {git-diff? This is the default.}
+         endif::git-format-patch[]
 
-> +				if (check_export_ok("$projectroot/$path")) {
-> +					push @list, { path => $path };
->  					$File::Find::prune = 1;
->  				}
->  			},
-> -- 
-> 1.6.1.rc4
-> 
+        --u::
+        -	Synonym for "-p".
+        -
+         -U<n>::
+        -	Shorthand for "--unified=<n>".
+        -
+         --unified=<n>::
 
--- 
-Jakub Narebski
-Poland
+Presented this way, it is much more clear what is going on, as there is no
+need to go back to the original and see if the new location for "-u::"
+makes sense (and I think it does, but that is something I can say after
+applying the patch and reviewing the result, because the patch itself is
+not reviewable).
+
+If you find yours just as easy to read as the one with context, your patch
+reading ability far exceeds mine, and I'd refuse to read your patches in
+the future to preserve my sanity.
+
+There is another issue that should be obvious to people who deal with
+patches every day.  The context-free patch you sent can be applied *ONLY*
+after locating the *EXACT* preimage of the file you used to produce your
+patch.  Before your patch is reviewed, other people may have already
+modified the same file, perhaps introducing a few new lines at the top of
+the file, and then what?  Your first hunk tells us that you would want to
+insert a line with "-u::" at line #21, but the context does not match
+anymore when your patch is reviewed.
