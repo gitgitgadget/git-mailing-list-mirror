@@ -1,63 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] pretty: support multiline subjects with format:
-Date: Sat, 27 Dec 2008 16:13:25 -0800
-Message-ID: <7vr63tb1i2.fsf@gitster.siamese.dyndns.org>
-References: <1230338961.8363.101.camel@ubuntu.ubuntu-domain>
- <200812280024.59096.markus.heidelberg@web.de>
+From: "Peter Harris" <git@peter.is-a-geek.org>
+Subject: Re: Git (svn) merge - but ignore certain commits?
+Date: Sat, 27 Dec 2008 19:17:25 -0500
+Message-ID: <eaa105840812271617n74406517x3335a05d224f5e0@mail.gmail.com>
+References: <49562749.9060705@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
-To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Sun Dec 28 01:14:57 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Peter_Valdemar_M=F8rch_(Lists)?=" 
+	<4ux6as402@sneakemail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 28 01:18:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGjJ1-0007Bp-El
-	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 01:14:55 +0100
+	id 1LGjMn-000842-A0
+	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 01:18:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754592AbYL1ANf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Dec 2008 19:13:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754582AbYL1ANf
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 19:13:35 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40871 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753558AbYL1ANe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Dec 2008 19:13:34 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A8181B32E;
-	Sat, 27 Dec 2008 19:13:33 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 75BF41B32C; Sat,
- 27 Dec 2008 19:13:28 -0500 (EST)
-In-Reply-To: <200812280024.59096.markus.heidelberg@web.de> (Markus
- Heidelberg's message of "Sun, 28 Dec 2008 00:24:58 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5D0524F6-D474-11DD-B25D-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1754536AbYL1AR2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Dec 2008 19:17:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754347AbYL1AR2
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 19:17:28 -0500
+Received: from mail-gx0-f13.google.com ([209.85.217.13]:42144 "EHLO
+	mail-gx0-f13.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753558AbYL1AR1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Dec 2008 19:17:27 -0500
+Received: by gxk6 with SMTP id 6so3449027gxk.13
+        for <git@vger.kernel.org>; Sat, 27 Dec 2008 16:17:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=lUwODbDk4dyUZrc/lUrGx+RXhOqewd8fhuQKGXYn4mk=;
+        b=TN8Qd6uuR0XP7jq3VG51e+iN4ylXeeD8Z4thD5ok/ITZhi1U/OErkKhw4OmAd2JW2q
+         o2YliGQ/Tl5kgaTM3nzlQv03qwkAMpkPofD2Of0MmXGT00Y14SriHQ292FBjTAFvanL+
+         WhqZJ7LccxHMTx8iVdDhMPMARkTt5Gse++i7U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=K+8uYRVA22PKtfCHkvwBvglRBJKvjVavZ6E7D63ckasrq24t3BcAPdMvhfGC29iwwn
+         Iq5s6q+QBtXqBj4Y02tEwMQSapIqY7tq2In7cX3AkjmFBbzE/ud6+tr95W/LQ9zNUBQj
+         wXrPjfXjIOjOmtPCGLWZ2vB+TJ5T5wpWkEKSQ=
+Received: by 10.65.200.13 with SMTP id c13mr9465287qbq.35.1230423445383;
+        Sat, 27 Dec 2008 16:17:25 -0800 (PST)
+Received: by 10.65.214.7 with HTTP; Sat, 27 Dec 2008 16:17:25 -0800 (PST)
+In-Reply-To: <49562749.9060705@sneakemail.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: 7ab50f5d4d2daf65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104036>
 
-Markus Heidelberg <markus.heidelberg@web.de> writes:
+On Sat, Dec 27, 2008 at 8:02 AM, "Peter Valdemar M=F8rch (Lists)" wrote=
+:
+>
+> * And now the trick: "git merge" "gitnewbranch" back to master. But I=
+ want
+> to avoid the "git revert" of the few commits that weren't ready yet.
+>
+> * "git svn dcommit" master to get the new functionality into svn trun=
+k.
+>
+> How do I "git merge" all of "gitnewbranch" except the reverts?
 
-> What's wrong with using the first line instead of the first paragraph
-> for the other pretty options and for cases where only a small subject
-> line is desired? A sentence would be broken into a small uncomplete part
-> for the subject for example. What else?
+"git rebase -i trunk" after you "git merge". Delete the lines that
+contain the will-be-reverted commits and the revert commits. Actually,
+skip the reverts in the first place to save time.
 
-The "first line" actually was what we used to do originally.
+Normally I wouldn't suggest it, since it will throw away your merge,
+but "git svn dcommit" does an implicit rebase anyway, so you will lose
+nothing.
 
-git-native commits did not have problem with this behaviour, but it caused
-countless complaints from people looking at the history converted from
-other cultures.
+> Is there a way to "git merge gitnewbranch" excluding the reverts, jus=
+t the
+> "new functionality", so the log of master doesn't even mention the re=
+verts
+> and so "git svn rebase" and "git svn dcommit" work properly?
 
-The behaviour was later fixed to avoid information loss when a commit from
-a different culture begins the log with a long sentence, choped at
-mid-sentence, to continue to the second line.
+If your branch is so ugly that you want to toss many of the commits
+anyway, maybe "git merge --squash" is what you are looking for? Or
+maybe you want to "git rebase -i" before merging?
 
-Please check the list archive for the details (sorry, I am bit too lazy to
-repeat the argument myself).
+> How do I do this "properly"?
+
+Use many short-lived feature branches, not few long-lived generic
+"development" branches. Merge-and-delete is easier than herding
+reverts.
+
+Peter Harris
