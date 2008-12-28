@@ -1,81 +1,63 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 3/3] pretty: support multiline subjects with format:
-Date: Sun, 28 Dec 2008 01:12:43 +0100
-Message-ID: <4956C47B.4020602@lsrfire.ath.cx>
-References: <1230338961.8363.101.camel@ubuntu.ubuntu-domain> <200812280024.59096.markus.heidelberg@web.de>
+Date: Sat, 27 Dec 2008 16:13:25 -0800
+Message-ID: <7vr63tb1i2.fsf@gitster.siamese.dyndns.org>
+References: <1230338961.8363.101.camel@ubuntu.ubuntu-domain>
+ <200812280024.59096.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
 To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Sun Dec 28 01:14:09 2008
+X-From: git-owner@vger.kernel.org Sun Dec 28 01:14:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGjIH-0006y1-3W
-	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 01:14:09 +0100
+	id 1LGjJ1-0007Bp-El
+	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 01:14:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754571AbYL1AMs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Dec 2008 19:12:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754566AbYL1AMs
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 19:12:48 -0500
-Received: from india601.server4you.de ([85.25.151.105]:39602 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754347AbYL1AMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Dec 2008 19:12:47 -0500
-Received: from [10.0.1.101] (p57B7C571.dip.t-dialin.net [87.183.197.113])
-	by india601.server4you.de (Postfix) with ESMTPSA id DB9F92F8003;
-	Sun, 28 Dec 2008 01:12:45 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <200812280024.59096.markus.heidelberg@web.de>
+	id S1754592AbYL1ANf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Dec 2008 19:13:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754582AbYL1ANf
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 19:13:35 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40871 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753558AbYL1ANe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Dec 2008 19:13:34 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A8181B32E;
+	Sat, 27 Dec 2008 19:13:33 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 75BF41B32C; Sat,
+ 27 Dec 2008 19:13:28 -0500 (EST)
+In-Reply-To: <200812280024.59096.markus.heidelberg@web.de> (Markus
+ Heidelberg's message of "Sun, 28 Dec 2008 00:24:58 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5D0524F6-D474-11DD-B25D-F83E113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104035>
 
-Markus Heidelberg schrieb:
->> git log --pretty=3Dformat:%s (and tformat:) used to display the firs=
-t
->> line of the subject, unlike the other --pretty options, which would
->> construct a subject line from all lines of the first paragraph of
->> the commit message.
->=20
-> And that can be very annoying when working on repositories with a
-> history not formatted after the recommendations of git (empty line af=
-ter
-> the summary). Then the output of commands like
-> "git log --pretty=3Doneline", "git format-patch" and "git show-branch=
-"
-> is unreadable.
->=20
-> Sorry, I haven't tested your patch set, what is the output of
-> git-shortlog like now?
+Markus Heidelberg <markus.heidelberg@web.de> writes:
 
-It's unchanged since it has it's own commit message parser.
-
->> For consistency and increased code reuse, change format: to do the
->> same as the other options.
->=20
 > What's wrong with using the first line instead of the first paragraph
 > for the other pretty options and for cases where only a small subject
-> line is desired? A sentence would be broken into a small uncomplete p=
-art
+> line is desired? A sentence would be broken into a small uncomplete part
 > for the subject for example. What else?
 
-I'm inching towards the goal of being able to replicate all of the othe=
-r
---pretty flavours with format: (or tformat:) strings.
+The "first line" actually was what we used to do originally.
 
---pretty=3Doneline used to print only the first line, but was changed t=
-o
-the way it's now in 4234a761 more than a year ago.  In my mind,
-"subject" is defined by "what oneline is printing", so I think changing
-the format: placeholder %s to show the whole first paragraph is a bug f=
-ix.
+git-native commits did not have problem with this behaviour, but it caused
+countless complaints from people looking at the history converted from
+other cultures.
 
-If you actually like the old behaviour then perhaps a new placeholder
-(%S ?) should be introduced instead?
+The behaviour was later fixed to avoid information loss when a commit from
+a different culture begins the log with a long sentence, choped at
+mid-sentence, to continue to the second line.
 
-Ren=C3=A9
+Please check the list archive for the details (sorry, I am bit too lazy to
+repeat the argument myself).
