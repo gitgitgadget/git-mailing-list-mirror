@@ -1,74 +1,56 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [STGIT][PATCH] new: translate non word characters in patch name to '-'
-Date: Sun, 28 Dec 2008 21:49:38 +0100
-Message-ID: <20081228204938.GA13143@diana.vm.bytemark.co.uk>
-References: <49562413.0437560a.287d.5133@mx.google.com>
+From: Rolf Leggewie <no2spam@nospam.arcornews.de>
+Subject: Re: RFE: git-import-dsc should support http-links
+Date: Sun, 28 Dec 2008 22:29:23 +0100
+Message-ID: <gj8r3h$afl$1@ger.gmane.org>
+References: <gj06ks$ao9$1@ger.gmane.org> <7vk59n93x7.fsf@gitster.siamese.dyndns.org> <20081227114910.GA6481@bogon.ms20.nix>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Hannes Eder <hannes@hanneseder.net>
-X-From: git-owner@vger.kernel.org Sun Dec 28 21:51:43 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 28 22:31:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LH2bs-00038g-Jl
-	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 21:51:41 +0100
+	id 1LH3Dz-0006a1-Qh
+	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 22:31:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750929AbYL1UuR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Dec 2008 15:50:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750874AbYL1UuR
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Dec 2008 15:50:17 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2423 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750809AbYL1UuP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Dec 2008 15:50:15 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1LH2Zu-0004mL-00; Sun, 28 Dec 2008 20:49:38 +0000
-Content-Disposition: inline
-In-Reply-To: <49562413.0437560a.287d.5133@mx.google.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1755967AbYL1V3l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Dec 2008 16:29:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755964AbYL1V3l
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Dec 2008 16:29:41 -0500
+Received: from main.gmane.org ([80.91.229.2]:42934 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753213AbYL1V3k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Dec 2008 16:29:40 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LH3CY-00073I-UD
+	for git@vger.kernel.org; Sun, 28 Dec 2008 21:29:35 +0000
+Received: from p5b3b2943.dip.t-dialin.net ([91.59.41.67])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 28 Dec 2008 21:29:34 +0000
+Received: from no2spam by p5b3b2943.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 28 Dec 2008 21:29:34 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p5b3b2943.dip.t-dialin.net
+User-Agent: Thunderbird 2.0.0.18 (X11/20081125)
+In-Reply-To: <20081227114910.GA6481@bogon.ms20.nix>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104060>
 
-On 2008-12-27 13:37:20 +0100, Hannes Eder wrote:
+Thanks, guys!
 
-> This allows following usage:
->
-> $ stg new full/path/file-fix-foobar
-> Now at patch "full-path-file-fix-foobar"
->
-> Signed-off-by: Hannes Eder <hannes@hanneseder.net>
-> ---
->
-> I ran into as a '/' in a patch messed up stgit.
->
-> I find this useful as 'stg uncommit' does the same translation.
 
-Clearly, bad path names shouldn't mess anything up -- see
+Guido G=FCnther wrote:
+>>> PS: How about some kind of official bug tracker for git?
+> The Debian BTS (bugs.debian.org) is the official bugtracker for
+> git-buildpackage.
 
-  https://gna.org/bugs/?10919
-
-But I would prefer "stg new" to quit with an error message when given
-an illegal patch name, not silently mangle it. (Of course, the
-commands that generate patch names from commit messages -- such as
-"stg new" when not given an explicit patch name -- should mangle the
-commit message as much as necessary. But when the user gives us a
-patch name, we should either use that as is or fail with an
-informative message.)
-
-I think the right thing to do would be to construct a function that
-validates patch names (I don't think we have one right now), and then
-call it whenever we need to check if a patch name is OK. Such as when
-the user gives us the name of a new patch. And when we've
-auto-generated a patch name from a commit message, we should probably
-assert that that the check function is OK with the name.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+http://bugs.debian.org/510036
