@@ -1,77 +1,66 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH 3/3] pretty: support multiline subjects with format:
-Date: Sun, 28 Dec 2008 15:26:21 +0100
-Message-ID: <200812281526.22152.markus.heidelberg@web.de>
-References: <1230338961.8363.101.camel@ubuntu.ubuntu-domain> <200812280024.59096.markus.heidelberg@web.de> <7vr63tb1i2.fsf@gitster.siamese.dyndns.org>
-Reply-To: markus.heidelberg@web.de
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: user manual question
+Date: Sun, 28 Dec 2008 14:38:09 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrnglf3qh.c7j.sitaramc@sitaramc.homelinux.net>
+References: <gj7mmo$fvk$4@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: =?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 28 15:27:45 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 28 15:39:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGwcK-00053M-Eg
-	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 15:27:44 +0100
+	id 1LGwo9-0007f6-T8
+	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 15:39:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752261AbYL1O0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Dec 2008 09:26:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbYL1O0U
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Dec 2008 09:26:20 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:58351 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751041AbYL1O0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Dec 2008 09:26:19 -0500
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate02.web.de (Postfix) with ESMTP id BA902F84431D;
-	Sun, 28 Dec 2008 15:26:18 +0100 (CET)
-Received: from [91.19.28.232] (helo=pluto)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #273)
-	id 1LGwav-0000AX-00; Sun, 28 Dec 2008 15:26:17 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vr63tb1i2.fsf@gitster.siamese.dyndns.org>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX18xJxwykcPYmZ7r9Ss7vcNDqF/SJbwzqEDP0MRV
-	hjxYYpVP8OotdeI1+zKMRQh4ADDtZNni6rtJhWv6ydF10oXnNM
-	eT8iK17+U3Hm9Ti8aeyQ==
+	id S1754722AbYL1OiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Dec 2008 09:38:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754713AbYL1OiU
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Dec 2008 09:38:20 -0500
+Received: from main.gmane.org ([80.91.229.2]:60688 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752261AbYL1OiT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Dec 2008 09:38:19 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LGwmX-0007pp-UJ
+	for git@vger.kernel.org; Sun, 28 Dec 2008 14:38:17 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 28 Dec 2008 14:38:17 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 28 Dec 2008 14:38:17 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104051>
 
-Junio C Hamano, 28.12.2008:
-> Markus Heidelberg <markus.heidelberg@web.de> writes:
-> 
-> > What's wrong with using the first line instead of the first paragraph
-> > for the other pretty options and for cases where only a small subject
-> > line is desired? A sentence would be broken into a small uncomplete part
-> > for the subject for example. What else?
-> 
-> The "first line" actually was what we used to do originally.
-> 
-> git-native commits did not have problem with this behaviour, but it caused
-> countless complaints from people looking at the history converted from
-> other cultures.
-> 
-> The behaviour was later fixed to avoid information loss when a commit from
-> a different culture begins the log with a long sentence, choped at
-> mid-sentence, to continue to the second line.
-> 
-> Please check the list archive for the details (sorry, I am bit too lazy to
-> repeat the argument myself).
+On 2008-12-28, Zorba <cr@altmore.co.uk> wrote:
+> Under "Examining an old version without creating a new branch" subsection in 
+> chapter1
+>
+> to aid my understanding, could the statement:
+>
+> "The HEAD then refers to the SHA1 of the commit instead of to a branch, and 
+> git branch shows that you are no longer on a branch:"
+>
+> be restated more explicitly as:
+>
+> "The HEAD then refers to the SHA1 of the commit instead of to a branch head, 
+> and git branch shows that you are no longer on a branch head:"
 
-I don't call this lazy. Normally I look myself and don't want others to
-spend time on searching for me. Reading that there already were
-discussions about this and that the current behaviour is thoughtful is
-enough for me to look for details myself. Thanks.
+Sure, but I prefer "tip"; reduces confusion between "head"
+and "HEAD" in spoken descriptions (I teach internal classes
+on git occasionally, once even on a conf call!)
 
-Markus
+The git glossary makes no mention of "tip", so this is
+probably "unblessed" :-)
