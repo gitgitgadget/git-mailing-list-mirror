@@ -1,68 +1,81 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
 Subject: Re: [PATCH 3/3] pretty: support multiline subjects with format:
-Date: Sun, 28 Dec 2008 09:09:09 +0900
-Message-ID: <20081228090909.6117@nanako3.lavabit.com>
-References: <200812280024.59096.markus.heidelberg@web.de>
- <1230338961.8363.101.camel@ubuntu.ubuntu-domain>
+Date: Sun, 28 Dec 2008 01:12:43 +0100
+Message-ID: <4956C47B.4020602@lsrfire.ath.cx>
+References: <1230338961.8363.101.camel@ubuntu.ubuntu-domain> <200812280024.59096.markus.heidelberg@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: =?utf-8?q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Sun Dec 28 01:11:49 2008
+X-From: git-owner@vger.kernel.org Sun Dec 28 01:14:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGjG1-0006Hi-7X
-	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 01:11:49 +0100
+	id 1LGjIH-0006y1-3W
+	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 01:14:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546AbYL1AKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Dec 2008 19:10:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754347AbYL1AKJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 19:10:09 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:43172 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754163AbYL1AKI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Dec 2008 19:10:08 -0500
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 97062C7A76;
-	Sat, 27 Dec 2008 18:09:59 -0600 (CST)
-Received: from 3075.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id YIHPJTP82LMP; Sat, 27 Dec 2008 18:09:59 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=aM5Oretl2i872TCRqwBwmjmM+CNIduv1ofeG/vYvTx3GstOdjeAHAh7jKIB4+lC/dxpP+mPPEMRyrv7PbEJybG7eDZIRwdTwiydxEkKTGG17N5ZnmlJvl/FyN5bmC72sYwhYfIf8SRFaN/mGdZ9EMtwNa+u5P9D6yelUDu6CCSI=;
-  h=From:To:Cc:Subject:Date:MIME-Version:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Message-Id;
+	id S1754571AbYL1AMs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Dec 2008 19:12:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754566AbYL1AMs
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Dec 2008 19:12:48 -0500
+Received: from india601.server4you.de ([85.25.151.105]:39602 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754347AbYL1AMr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Dec 2008 19:12:47 -0500
+Received: from [10.0.1.101] (p57B7C571.dip.t-dialin.net [87.183.197.113])
+	by india601.server4you.de (Postfix) with ESMTPSA id DB9F92F8003;
+	Sun, 28 Dec 2008 01:12:45 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
 In-Reply-To: <200812280024.59096.markus.heidelberg@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104034>
 
-Quoting Markus Heidelberg <markus.heidelberg@web.de>:
+Markus Heidelberg schrieb:
+>> git log --pretty=3Dformat:%s (and tformat:) used to display the firs=
+t
+>> line of the subject, unlike the other --pretty options, which would
+>> construct a subject line from all lines of the first paragraph of
+>> the commit message.
+>=20
+> And that can be very annoying when working on repositories with a
+> history not formatted after the recommendations of git (empty line af=
+ter
+> the summary). Then the output of commands like
+> "git log --pretty=3Doneline", "git format-patch" and "git show-branch=
+"
+> is unreadable.
+>=20
+> Sorry, I haven't tested your patch set, what is the output of
+> git-shortlog like now?
+
+It's unchanged since it has it's own commit message parser.
 
 >> For consistency and increased code reuse, change format: to do the
 >> same as the other options.
->
+>=20
 > What's wrong with using the first line instead of the first paragraph
 > for the other pretty options and for cases where only a small subject
-> line is desired?
+> line is desired? A sentence would be broken into a small uncomplete p=
+art
+> for the subject for example. What else?
 
-There were too many issues. The mail archive tells us that there were considerable discussions and thoughts behind the current behavior:
+I'm inching towards the goal of being able to replicate all of the othe=
+r
+--pretty flavours with format: (or tformat:) strings.
 
-	http://thread.gmane.org/gmane.comp.version-control.git/49694/focus=49922
-	http://thread.gmane.org/gmane.comp.version-control.git/46341/focus=46818
-	http://thread.gmane.org/gmane.comp.version-control.git/54020/focus=54132
-	http://thread.gmane.org/gmane.comp.version-control.git/21949/focus=21987
+--pretty=3Doneline used to print only the first line, but was changed t=
+o
+the way it's now in 4234a761 more than a year ago.  In my mind,
+"subject" is defined by "what oneline is printing", so I think changing
+the format: placeholder %s to show the whole first paragraph is a bug f=
+ix.
 
-The last message mentions a bug in "git rebase" that internally uses "git am" when replaying the changes. It was corrected later with:
+If you actually like the old behaviour then perhaps a new placeholder
+(%S ?) should be introduced instead?
 
-	http://thread.gmane.org/gmane.linux.ports.sh.devel/3833/focus=79735
-
-Reading the discussion in the messages in this thread will help understanding the issues, after understanding why "the first line" was problematic, as discussed in the other threads.
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Ren=C3=A9
