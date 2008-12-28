@@ -1,98 +1,67 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] modify/delete conflict resolution overwrites untracked
-	file
-Date: Sun, 28 Dec 2008 12:44:45 +0100
-Message-ID: <20081228114445.GA8511@localhost>
-References: <20081210201259.GA12928@localhost> <20081215004651.GA16205@localhost> <7v63lm1c76.fsf@gitster.siamese.dyndns.org> <7vmyeyyuuh.fsf@gitster.siamese.dyndns.org> <20081215095949.GA7403@localhost> <7vskopwxej.fsf@gitster.siamese.dyndns.org>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH 3/3] pretty: support multiline subjects with format:
+Date: Sun, 28 Dec 2008 15:08:02 +0100
+Message-ID: <200812281508.02658.markus.heidelberg@web.de>
+References: <200812280024.59096.markus.heidelberg@web.de> <1230338961.8363.101.camel@ubuntu.ubuntu-domain> <20081228090909.6117@nanako3.lavabit.com>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, raa.lkml@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 28 12:46:36 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: =?utf-8?q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Sun Dec 28 15:09:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LGu6L-0001uY-EF
-	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 12:46:33 +0100
+	id 1LGwKg-0000f9-Ts
+	for gcvg-git-2@gmane.org; Sun, 28 Dec 2008 15:09:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753823AbYL1Loz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Dec 2008 06:44:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753805AbYL1Loy
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Dec 2008 06:44:54 -0500
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:47977 "EHLO
-	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750847AbYL1Lox (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Dec 2008 06:44:53 -0500
-Received: from darc.dyndns.org ([80.123.242.182]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 28 Dec 2008 12:44:50 +0100
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1LGu4b-0002HW-3L; Sun, 28 Dec 2008 12:44:45 +0100
+	id S1754702AbYL1OIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Dec 2008 09:08:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754671AbYL1OIA
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Dec 2008 09:08:00 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:57583 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754642AbYL1OH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Dec 2008 09:07:59 -0500
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 6AF45F5FA46F;
+	Sun, 28 Dec 2008 15:07:58 +0100 (CET)
+Received: from [91.19.28.232] (helo=pluto)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #273)
+	id 1LGwJC-00030H-00; Sun, 28 Dec 2008 15:07:58 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <20081228090909.6117@nanako3.lavabit.com>
+Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
-In-Reply-To: <7vskopwxej.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 28 Dec 2008 11:44:50.0200 (UTC) FILETIME=[B0ECA980:01C968E1]
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX185KYBeurGeduFtE42ls2eIqyjayCG4L37FqeuY
+	VBxgHir5zbkwjNSXeKOhACaENQ/ke+o2n0p1Sbn8KHv5GjhPpG
+	jJlpm7BrBWXRaq+Lz7+Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104048>
 
-On Mon, Dec 15, 2008 at 02:22:28AM -0800, Junio C Hamano wrote:
-> Clemens Buchacher <drizzd@aon.at> writes:
-> > On Sun, Dec 14, 2008 at 07:34:46PM -0800, Junio C Hamano wrote:
-> >> merge-recursive: do not clobber untracked working tree garbage
-> >> 
-> >> When merge-recursive wanted to create a new file in the work tree (either
-> >> as the final result, or a hint for reference purposes while delete/modify
-> >> conflicts), it unconditionally overwrote an untracked file in the working
-> >> tree.  Be careful not to lose whatever the user has that is not tracked.
+Nanako Shiraishi, 28.12.2008:
+> Quoting Markus Heidelberg <markus.heidelberg@web.de>:
+> 
+> >> For consistency and increased code reuse, change format: to do the
+> >> same as the other options.
 > >
-> > This leaves the index in an unmerged state, however, so that a subsequent
-> > git reset --hard still kills the file. And I just realized that the same
-> > goes for merge-resolve. So I'd prefer to abort the merge, leave everything
-> > unchanged and tell the user to clean up first.
+> > What's wrong with using the first line instead of the first paragraph
+> > for the other pretty options and for cases where only a small subject
+> > line is desired?
 > 
-> That is unfortunately asking for a moon, I am afraid.
-> 
-> It needs a major restructuring of the code so that the recursive works
-> more like the way resolve works, namely, changing the final "writeout"
-> into two phase thing (the first phase making sure nothing is clobbered in
-> the work tree, and then the second phase actually touching the work tree).
+> There were too many issues. The mail archive tells us that there were
+> considerable discussions and thoughts behind the current behavior:
 
-I've been giving this some thought and I would like to propose the following
-solution:
+Many thanks for all the pointers. I thought there were reasons, but this
+thread just made me ask.
 
-1. Save index state.
-2. Merge using whichever strategy, in index only, ignoring work tree.
-   This step includes rename detection.
-3. Check that work tree files match original index, if index does not match
-   HEAD. Otherwise abort, restore index and leave everything unchanged.
-4. Checkout index, overwriting work tree files, and removing files which are
-   in HEAD, but not in the index.
-5. If the merge was clean, commit.
-
-AFAICS, this is largely the behavior right now, except that steps 3 and 4
-are intermingled with step 2, which makes it impossible to abort the merge
-if an untracked file is in the way after rename detection.
-
-The idea at step 3 is that we can decide whether or not to proceed, based
-only on the merge result, irrespective of the strategy used, possible rename
-detection, or conflict resolution.
-
-Apart from the fact that this seems like the sane thing to do, I want this
-behavior because it allows me to do
-
-git merge <branch>
-# Conflicts? I don't have time for that now.
-git reset --hard HEAD
-
-under all circumstances, without touching any untracked files.
-
-Do you agree that this is a desireable goal?
-
-I have not looked into d/f conflicts, but I am under the impression that
-this could also be handled at step 3, as far as the work tree is concerned.
-Is the above proposal a workable approach, which I can pursue independently
-of the major rewrite wrt. d/f conflicts Johannes indicated?
+Markus
