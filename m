@@ -1,76 +1,68 @@
-From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
-Subject: Re: [PATCH] t7500-commit.sh: do not call test_set_editor
-	unnecessarily, it's confusing
-Date: Mon, 29 Dec 2008 10:52:20 +0100
-Message-ID: <20081229095220.GA26942@chistera.yi.org>
-References: <1230542658-9758-1-git-send-email-dato@net.com.org.es> <7vmyefco11.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: some git-commands --help don't act like git commands --help
+Date: Mon, 29 Dec 2008 01:54:31 -0800
+Message-ID: <7vfxk7cnmw.fsf@gitster.siamese.dyndns.org>
+References: <87iqp333bk.fsf@jidanni.org>
+ <20081229175305.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 29 10:53:45 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: jidanni@jidanni.org, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Mon Dec 29 10:56:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHEoi-0006Br-H7
-	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 10:53:45 +0100
+	id 1LHEqx-0006i6-Fu
+	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 10:56:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753486AbYL2JwX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Dec 2008 04:52:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752965AbYL2JwX
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 04:52:23 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:1192
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752687AbYL2JwX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2008 04:52:23 -0500
-Received: from chistera.yi.org (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id A35F38027934;
-	Mon, 29 Dec 2008 10:52:21 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LHEnM-00072i-L9; Mon, 29 Dec 2008 10:52:20 +0100
-Content-Disposition: inline
-In-Reply-To: <7vmyefco11.fsf@gitster.siamese.dyndns.org>
-X-No-CC: Please respect my Mail-Followup-To header
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753549AbYL2Jyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2008 04:54:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752982AbYL2Jyl
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 04:54:41 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37689 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752910AbYL2Jyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2008 04:54:41 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7332E8B426;
+	Mon, 29 Dec 2008 04:54:37 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 924E88B424; Mon,
+ 29 Dec 2008 04:54:33 -0500 (EST)
+In-Reply-To: <20081229175305.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+ message of "Mon, 29 Dec 2008 17:53:05 +0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B4190616-D58E-11DD-9620-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104093>
 
-* Junio C Hamano [Mon, 29 Dec 2008 01:46:02 -0800]:
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-> Adeodato Sim=C3=B3 <dato@net.com.org.es> writes:
+> Quoting jidanni@jidanni.org:
+>
+>> Hmmm, some git-commands --help act just like git commands --help,
+>> $ git commit --help 2>&1|wc -l
+>> 336
+>> $ git-commit --help 2>&1|wc -l
+>> 336
+>>
+>> But others don't
+>> $ git am --help 2>&1|wc -l
+>> 152
+>> $ git-am --help 2>&1|wc -l
+>> 19
+>
+> Thank you for your observation; what do you want to do about it?
+>
+> Are you complaining that some commands do not have customized description that is not as long as the full manual page but not as terse as the short help "-h" output? Or are you complaining some other commands do not give you full manual pages for "--help"?
 
-> > I was reading this test case, and it took a small bit to figure out=
- the
-> > editor was not being used at all. I hope there was no hidden reason=
- for
-> > it to be there, and it can go away.
+I think he is comparing "git am" and "git-am" the latter of which is now
+deprecated and largely removed from the end user.
 
-> That 'zort' came from 1320857 (builtin-commit: fix --signoff, 2007-11=
--11),
-> and I _think_ it is trying to make sure that presense of "-F -" makes=
- the
-> editor not to trigger.
-
-Hm. Well, if that is true, then IMHO it should be in a /separate/ test
-case, for clarity. Probably in "message from stdin" test from t7501.
-
-That's of course just my opinion, and I'll accept if you prefer to
-maintain it the way it is now. I also volunteer to move it to t7501 if
-that's what you prefer, just let me know.
-
-Thanks,
-
---=20
-Adeodato Sim=C3=B3                                     dato at net.com.=
-org.es
-Debian Developer                                  adeodato at debian.or=
-g
-=20
-                              Listening to: Justin Nozuka - I'm In Peac=
-e
+IOW, the seeming inconsistency is not an issue anymore in practice in the
+post 1.6.0 era.
