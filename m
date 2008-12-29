@@ -1,83 +1,94 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: rebase -i: learn to rebase root commit
-Date: Mon, 29 Dec 2008 22:49:42 +0100
-Message-ID: <200812292249.45900.trast@student.ethz.ch>
-References: <cover.1230568082.git.trast@student.ethz.ch> <e8008f8e16a28c83a4fc6984966c91733b138598.1230569041.git.trast@student.ethz.ch> <5d0be6d15bbdaa8b95c1df161b67ecd4120d7ce4.1230569041.git.trast@student.ethz.ch>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: git svn rebase totally confused; just need some sorta reset
+Date: Mon, 29 Dec 2008 16:04:56 -0600
+Message-ID: <200812291605.00112.bss@iguanasuicide.net>
+References: <cd7145c4-a4bb-4ef6-95db-7c4058b6774c@m16g2000vbp.googlegroups.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed;
-  boundary="nextPart1761683.hyBAl2AzyQ";
+  boundary="nextPart2134257.HxuyXqMjVp";
   protocol="application/pgp-signature";
   micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junio@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 29 22:50:54 2008
+Cc: git@vger.kernel.org
+To: davetron5000 <davetron5000@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 29 23:06:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHQ0j-0002yX-4r
-	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 22:50:53 +0100
+	id 1LHQFK-0008AD-0A
+	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 23:05:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754022AbYL2Vtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2008 16:49:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753947AbYL2Vte
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 16:49:34 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:33173 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753791AbYL2Vtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2008 16:49:33 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 29 Dec 2008 22:49:32 +0100
-Received: from [192.168.0.3] ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 29 Dec 2008 22:49:31 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <5d0be6d15bbdaa8b95c1df161b67ecd4120d7ce4.1230569041.git.trast@student.ethz.ch>
-X-OriginalArrivalTime: 29 Dec 2008 21:49:31.0686 (UTC) FILETIME=[54C9D460:01C969FF]
+	id S1753342AbYL2WEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2008 17:04:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753272AbYL2WEh
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 17:04:37 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:42743 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753025AbYL2WEh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2008 17:04:37 -0500
+Received: from [206.104.162.243]
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LHQE0-0004GG-CU; Mon, 29 Dec 2008 22:04:36 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <cd7145c4-a4bb-4ef6-95db-7c4058b6774c@m16g2000vbp.googlegroups.com>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104131>
 
---nextPart1761683.hyBAl2AzyQ
+--nextPart2134257.HxuyXqMjVp
 Content-Type: text/plain;
-  charset="utf-8"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 Content-Disposition: inline
 
-Thomas Rast wrote:
-> Teach git-rebase -i a new option --root, which instructs it to rebase
-> the entire history leading up to <branch>.  This is mainly for
-> symmetry with ordinary git-rebase; it cannot be used to edit the root
-> commit in-place (it requires --onto).
+On Monday 2008 December 29 15:39:45 davetron5000 wrote:
+> Is there a way I can basically say:  commit XXX is the same as the
+> current HEAD of SVN, so treat things as if that's the case.
 
-Actually, I forgot the "rebase -i -p" code path, which dies if --root
-is used with -p.  Apologies.
+No, commits are immutable and their "name" is based on their contents. =20
+However, if you've fetched the current HEAD of SVN, you've already got a=20
+commit that corresponds (roughly) to the HEAD of SVN.
 
-So for now, consider this broken and RFC: is there any sensible
-use/interpretation of -p --root that I'm missing?  Or should it just
-disallow this combination?
+> i.e.=20
+> treat things the same as if I had just done a clean git svn clone.
 
+On my git-svn created repository, I have a special ref "git-svn" that appea=
+rs=20
+to refer to the "HEAD of SVN" commit.  ("git branch -a" shows it.)  If that=
+'s=20
+also the case with you:
 
-[I also seem to manage to shoot myself with format-patch & topgit
-every time, no matter how trivial the issue.]
+git branch -m master master.save
+git checkout -b master git-svn
+# Make sure you are seeing what you want.
+git branch -D master.save
 
+should get you to where you want.
+
+Heck, "git reset git-svn" might work.
 =2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
 
-
---nextPart1761683.hyBAl2AzyQ
+--nextPart2134257.HxuyXqMjVp
 Content-Type: application/pgp-signature; name=signature.asc 
 Content-Description: This is a digitally signed message part.
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.9 (GNU/Linux)
 
-iEYEABECAAYFAklZRfkACgkQqUud07tmzP1WWACfeo71n9irFr3gvHINH5F6ZWPn
-Ae8AoIQTpscUk/bloVeBaFE0qQIhYV0Q
-=knIp
+iEYEABECAAYFAklZSYwACgkQdNbfk+86fC1+bgCgg2A/UULXHVSYIG6cQczhcXRv
+6dcAnjZDqxBeQQZRXkubbES0+l0nfM3d
+=CS5d
 -----END PGP SIGNATURE-----
 
---nextPart1761683.hyBAl2AzyQ--
+--nextPart2134257.HxuyXqMjVp--
