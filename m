@@ -1,72 +1,81 @@
-From: Thomas Amsler <tpamsler@ucdavis.edu>
-Subject: gitweb $export_ok question
-Date: Mon, 29 Dec 2008 12:26:02 -0800
-Message-ID: <9B3762519053E645820D9CEBD18B3734023A9FBA00@XEDAMAIL2.ex.ad3.ucdavis.edu>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: "git-whatever" the new style vs. "git whatever"?
+Date: Mon, 29 Dec 2008 14:47:01 -0600
+Message-ID: <200812291447.01713.bss@iguanasuicide.net>
+References: <7vfxk7cnmw.fsf@gitster.siamese.dyndns.org> <87sko6lqmo.fsf_-_@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 29 21:40:32 2008
+Content-Type: multipart/signed;
+  boundary="nextPart1783512.H4qFnftQ0I";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Mon Dec 29 21:48:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHOuV-0003dG-Gn
-	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 21:40:24 +0100
+	id 1LHP26-0006Dx-GJ
+	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 21:48:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753642AbYL2UiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2008 15:38:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753595AbYL2UiU
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 15:38:20 -0500
-Received: from mx3.ucdavis.edu ([128.120.32.33]:60120 "EHLO mx3.ucdavis.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753474AbYL2UiT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Dec 2008 15:38:19 -0500
-X-Greylist: delayed 735 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Dec 2008 15:38:18 EST
-Received: from exhub.ex.ad3.ucdavis.edu ([169.237.229.110])
-	by mx3.ucdavis.edu (8.13.7/8.13.1/it-defang-5.4.0) with ESMTP id mBTKQ2cP027281
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Mon, 29 Dec 2008 12:26:02 -0800 (PST)
-Received: from XEDAMAIL2.ex.ad3.ucdavis.edu ([169.237.229.117]) by
- exhub1.ex.ad3.ucdavis.edu ([169.237.229.110]) with mapi; Mon, 29 Dec 2008
- 12:26:02 -0800
-Thread-Topic: gitweb $export_ok question
-Thread-Index: AQHJafOe/P7RtqWoT0Oz0hRHHfa2cw==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Virus-Scanned: ClamAV 0.93.3/8712/Tue Dec  2 09:14:43 2008
-	clamav-milter version 0.93.3 on av6
-X-Virus-Status: Clean
-X-Scanned-By: MIMEDefang 2.57 on 128.120.32.33
+	id S1752560AbYL2Uqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2008 15:46:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbYL2Uqi
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 15:46:38 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:44144 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751836AbYL2Uqh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2008 15:46:37 -0500
+Received: from [206.104.162.243]
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LHP0W-0004AC-62; Mon, 29 Dec 2008 20:46:36 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <87sko6lqmo.fsf_-_@jidanni.org>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104126>
 
-Hello,
+--nextPart1783512.H4qFnftQ0I
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I am trying to get the gitweb $export_ok to  work. According the installation instructions:
+On Monday 2008 December 29 13:37:19 jidanni@jidanni.org wrote:
+> JCH> I think he is comparing "git am" and "git-am" the latter of which is
+> JCH> now deprecated and largely removed from the end user.
+>
+> By the way, we here at the end user end have a hard time detecting if
+> "git-whatever" the new style vs. "git whatever"...
 
-Alternatively, you can configure gitweb to only list and allow
-viewing of the explicitly exported repositories, via the
+That shouldn't be a problem for much longer because "git-whatever" will sto=
+p=20
+working.  From what I understand, "git whatever" has always been the=20
+preferred form, and the fact that "git-whatever" worked was just a=20
+implementation detail.
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
 
+--nextPart1783512.H4qFnftQ0I
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-GITWEB_EXPORT_OK build configuration variable (or the $export_ok
-variable in gitweb config file). If it evaluates to true, gitweb
-shows repositories only if this file exists in its object database
-(if directory has the magic file named $export_ok).
+iEYEABECAAYFAklZN0UACgkQdNbfk+86fC0/JwCdEb96uy4YAiBBkZRRnkzT1BBe
+5h4Aniro4apvJ7wEgeXF7E8dZvvA9XpK
+=jVcI
+-----END PGP SIGNATURE-----
 
-
-
-... I set $export_ok = "true" in my /etc/gitweb.conf file. I don't know what "file" needs to be added to a repository in order for it to show up again in gitweb. I have tried several things, like specifying the file name in /etc/gitweb.con:
-
-$export_ok ="magic-file-name"
-
-etc. but that doesn't seem to work.
-
-What am I doing wrong here?
+--nextPart1783512.H4qFnftQ0I--
