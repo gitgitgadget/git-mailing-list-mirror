@@ -1,93 +1,95 @@
-From: david@lang.hm
-Subject: Re: turn off "LF will be replaced by CRLF" thingy
-Date: Mon, 29 Dec 2008 09:29:13 -0800 (PST)
-Message-ID: <alpine.DEB.1.10.0812290928370.15026@asgard.lang.hm>
-References: <gjaqta$tg7$4@ger.gmane.org> <37fcd2780812290758q3ef989c0w5156da3098d06068@mail.gmail.com> <gjat90$5la$4@ger.gmane.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Zorba <cr@altmore.co.uk>
-X-From: git-owner@vger.kernel.org Mon Dec 29 17:28:44 2008
+From: "Zorba" <cr@altmore.co.uk>
+Subject: Re: user manual question
+Date: Mon, 29 Dec 2008 16:38:30 -0000
+Message-ID: <gjauel$94s$4@ger.gmane.org>
+References: <gj7mmo$fvk$4@ger.gmane.org> <slrnglf3qh.c7j.sitaramc@sitaramc.homelinux.net> <gj96pl$885$4@ger.gmane.org> <slrnglg90m.olt.sitaramc@sitaramc.homelinux.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 29 17:40:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHKyj-0008Nh-5P
-	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 17:28:29 +0100
+	id 1LHLAE-0003bu-1i
+	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 17:40:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751836AbYL2Q1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2008 11:27:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751846AbYL2Q1L
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 11:27:11 -0500
-Received: from mail.lang.hm ([64.81.33.126]:49512 "EHLO bifrost.lang.hm"
+	id S1751872AbYL2QjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2008 11:39:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751860AbYL2QjD
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 11:39:03 -0500
+Received: from main.gmane.org ([80.91.229.2]:33964 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751623AbYL2Q1K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2008 11:27:10 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id mBTGR7UW001956;
-	Mon, 29 Dec 2008 08:27:07 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <gjat90$5la$4@ger.gmane.org>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1751846AbYL2QjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2008 11:39:01 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LHL8n-0000bZ-V6
+	for git@vger.kernel.org; Mon, 29 Dec 2008 16:38:54 +0000
+Received: from 81.135.227.136 ([81.135.227.136])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 29 Dec 2008 16:38:53 +0000
+Received: from cr by 81.135.227.136 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 29 Dec 2008 16:38:53 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 81.135.227.136
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5512
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5512
+X-RFC2646: Format=Flowed; Original
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104110>
 
-On Mon, 29 Dec 2008, Zorba wrote:
+so a detached HEAD is just a HEAD that is not sitting on a tip ?
 
-> Thanks Dmitry,
->
-> So I have two options to do this - edit the files direct or issue a command,
-> thank you !
->
-> Now, my next problem is taking all my changes ($ git add .  -> puts 5k files
-> into index, with LF in place of CRLF) out of the index.
->
-> Because I haven't committed anything in this repo yet...
+i.e. if I do $ git reset --hard HEAD^
 
-I think if you just do a git add . again it will put the files into the 
-index without doing the conversion.
+...pointing HEAD to the previous committ
 
-David Lang
+this is a detached HEAD
 
-> $ git reset --hard
->
-> ....falls over, as it has no HEAD to reset to
->
-> I think I read how to do this in a tutorial somewhere, maybe with
-> git-checkout, but I'm searching and can't find it.
-> Any kind soul can point me in the right direction ?
->
-> thanks !
-> "Dmitry Potapov" <dpotapov@gmail.com> wrote in message
-> news:37fcd2780812290758q3ef989c0w5156da3098d06068@mail.gmail.com...
->>> I'd rather not let git change any files, many of which are PHP that run
->>> on
->>> Apache
->>> I think I remember reading that this is a config option that gets
->>> swithced
->>> on by default on windows (which we are running git on)
->>>
->>> how do I switch it off ?
+(I thought a detached HEAD was maybe a head somewhere on another branch not 
+"reachable", i.e. a sibling, not a ancestor...
+or something like that)
+
+
+thanks guys
+
+"Sitaram Chamarty" <sitaramc@gmail.com> wrote in message 
+news:slrnglg90m.olt.sitaramc@sitaramc.homelinux.net...
+> On 2008-12-29, Zorba <cr@altmore.co.uk> wrote:
+>> Hi Sitaram!
 >>
->> git config core.autocrlf false
->>
->> or if you want to ensure that all your text files have only LF then
->>
->> git config core.autocrlf input
->>
->> or if you want to disable conversion for some specific files then you can
->> use 'crlf' attribute. See 'gitattributes' for more information.
->> http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
->>
->> Dmitry
+>> Thanks for clearing that one up.
 >
+> you're welcome; we've all done a bit of struggling I guess!
 >
+>> Also, I did wonder about HEAD and head. One can move, the other doesn't!
+>> (well, acually it does - head moves "forward", as the tip of the branch
+>> grows)
 >
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Here's an extract from my notes/internal talks on this:
 >
+>    === basic concepts
+>      * a branch is "an active line of development"
+>      * //master//: default branch in a project, by convention
+>      * //head//: tip of a branch
+>      * a repo can track many branches, but the working tree is associated 
+> with
+>        only one branch at a time
+>      * //HEAD//: tip of the branch associated with the working tree; this 
+> is
+>        where commits go
+>        ** except when it's "detached"
+>
+>> Thanks for your other post/reply too - I will be getting back to you on 
+>> that
+>> one
+>
+> Glad to be of help.  I don't consider myself a guru, and am
+> constantly waiting for one of the real gurus to strike me
+> down with a thunderbolt for saying something stupid :-)
+> 
