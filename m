@@ -1,84 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/diff-options.txt: unify options
-Date: Mon, 29 Dec 2008 00:47:49 -0800
-Message-ID: <7vabafe5ai.fsf@gitster.siamese.dyndns.org>
-References: <7vvdt4aj0e.fsf@gitster.siamese.dyndns.org>
- <8763l331l6.fsf@jidanni.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH] gitrepository-layout: No longer first two letters. Also add "down".
+Date: Mon, 29 Dec 2008 17:52:52 +0900
+Message-ID: <20081229175252.6117@nanako3.lavabit.com>
+References: <bd6139dc0812280900t12189c6anb583033e52a5b027@mail.gmail.com>
+ <E1LGFoE-0001EZ-0F@jidanni.org>  <20081227070232.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Mon Dec 29 09:49:20 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: jidanni@jidanni.org, git@vger.kernel.org
+To: "Sverre Rabbelier" <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 29 09:54:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHDoN-0007sn-5n
-	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 09:49:19 +0100
+	id 1LHDtk-0000b0-1v
+	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 09:54:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752718AbYL2Ir5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2008 03:47:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752689AbYL2Ir5
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 03:47:57 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61924 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752509AbYL2Ir4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2008 03:47:56 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 441BD1B489;
-	Mon, 29 Dec 2008 03:47:54 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2FC641B488; Mon,
- 29 Dec 2008 03:47:50 -0500 (EST)
-In-Reply-To: <8763l331l6.fsf@jidanni.org> (jidanni@jidanni.org's message of
- "Mon, 29 Dec 2008 15:03:17 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 62024AB2-D585-11DD-9C0E-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752526AbYL2Ixb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Dec 2008 03:53:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752509AbYL2Ixa
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 03:53:30 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:41611 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750881AbYL2Ix3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2008 03:53:29 -0500
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id DCC2EC8425;
+	Mon, 29 Dec 2008 02:53:28 -0600 (CST)
+Received: from 3893.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id JNMFJSEAMDVN; Mon, 29 Dec 2008 02:53:28 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=VM7MmdqIeipdibDIC5uIb6apZdVCxVRLkdb0ykc0JentswYDykyzeovcQFOX4Kzozrf07+afXnoXt5QI0bnE4ifGtFYsBdyJFnFnFC+Ywcv4W7D6g1qTEAzneDgFEMWGRzwRMcvbA4PVNqX3SjogVIZITS4weC89i4KOC6C6Tuc=;
+  h=From:To:Cc:Subject:Date:MIME-Version:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <bd6139dc0812280900t12189c6anb583033e52a5b027@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104083>
 
-Thanks.
+Quoting "Sverre Rabbelier" <srabbelier@gmail.com>:
 
-jidanni@jidanni.org writes:
-
-> (You were right about my previous patch being bad.
-> At least git-am gives an error message when fed
-> http://article.gmane.org/gmane.comp.version-control.git/104017/raw
-> git-apply however does nothing and returns 0! Must be a bug.)
-> OK, here's a better patch:
+> On Fri, Dec 26, 2008 at 16:02, Nanako Shiraishi <nanako3@lavabit.com>=
+ wrote:
+>> Quoting jidanni@jidanni.org:
+>>
+>>> Signed-off-by: jidanni <jidanni@jidanni.org>
+>>
+>> Didn't you mean "Signed-off-by: =E7=A9=8D=E4=B8=B9=E5=B0=BC <jidanni=
+@jidanni.org>"?
 >
-> Signed-off-by: jidanni <jidanni@jidanni.org>
+> Be nice, they are obviously a bit peculiar about their name/sign-off =
+name :).
 
-> ---
+If you are telling me that I said something un-nice, I apologize. I did=
+ not mean to offend anybody. But I do not understand.  Who do you mean =
+by they in your sentence? =20
 
-That commentary above your S-o-b is not a proper commit log message, but
-I'll come up with something and apply.
+> --=20
+> Cheers,
+>
+> Sverre Rabbelier
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-$ wget http://article.gmane.org/gmane.comp.version-control.git/104017/raw
-$ git apply raw
-error: diff-options.txt: No such file or directory
-$ echo $?
-1
-
-Even if you hand munge the "raw" file to have proper prefix, it will
-refuse to apply a context-free diff.
-
-$ git apply raw-edited
-error: patch failed: Documentation/diff-options.txt:26
-error: Documentation/diff-options.txt: patch does not apply
-$ echo $?
-1     
-
-This is to avoid applying the patch only by line number without context;
-see the last paragraph of <7vvdt4aj0e.fsf@gitster.siamese.dyndns.org> for
-the explanation.
-
-Upon a very rare case where you are absolutely sure that your copy is what the
-patch is based on and that it is safe to applying a context-free patch
-only by line number, you can give --unidiff-zero option to git-apply to
-countermand this safety measure, but a patch posted on the public mailing
-list for open source development rarely falls into that category.
+--=20
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
