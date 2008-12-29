@@ -1,147 +1,76 @@
-From: Michael Gaber <Michael.Gaber@gmx.net>
-Subject: Re: some git-commands --help don't act like git commands --help
-Date: Mon, 29 Dec 2008 10:48:07 +0100
-Message-ID: <49589CD7.4070104@gmx.net>
-References: <87iqp333bk.fsf@jidanni.org> <20081229175305.6117@nanako3.lavabit.com>
+From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
+Subject: Re: [PATCH] t7500-commit.sh: do not call test_set_editor
+	unnecessarily, it's confusing
+Date: Mon, 29 Dec 2008 10:52:20 +0100
+Message-ID: <20081229095220.GA26942@chistera.yi.org>
+References: <1230542658-9758-1-git-send-email-dato@net.com.org.es> <7vmyefco11.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg=sha1; boundary="------------ms040508080909010006070704"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 29 10:49:36 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 29 10:53:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHEkg-00057C-Ms
-	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 10:49:35 +0100
+	id 1LHEoi-0006Br-H7
+	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 10:53:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753599AbYL2JsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2008 04:48:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753548AbYL2JsM
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 04:48:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38546 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753488AbYL2JsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2008 04:48:11 -0500
-Received: (qmail invoked by alias); 29 Dec 2008 09:48:09 -0000
-Received: from e181195031.adsl.alicedsl.de (EHLO [192.168.178.68]) [85.181.195.31]
-  by mail.gmx.net (mp006) with SMTP; 29 Dec 2008 10:48:09 +0100
-X-Authenticated: #1286246
-X-Provags-ID: V01U2FsdGVkX1/Pg7s1TGnPq1qF4hFS1J1CSgyrgJ0yjHFzGNOC6m
-	xv9YYxfkc8fAGZ
-User-Agent: Thunderbird 2.0.0.18 (X11/20081121)
-In-Reply-To: <20081229175305.6117@nanako3.lavabit.com>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1753486AbYL2JwX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Dec 2008 04:52:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752965AbYL2JwX
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 04:52:23 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:1192
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752687AbYL2JwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2008 04:52:23 -0500
+Received: from chistera.yi.org (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id A35F38027934;
+	Mon, 29 Dec 2008 10:52:21 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LHEnM-00072i-L9; Mon, 29 Dec 2008 10:52:20 +0100
+Content-Disposition: inline
+In-Reply-To: <7vmyefco11.fsf@gitster.siamese.dyndns.org>
+X-No-CC: Please respect my Mail-Followup-To header
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104092>
 
-This is a cryptographically signed message in MIME format.
+* Junio C Hamano [Mon, 29 Dec 2008 01:46:02 -0800]:
 
---------------ms040508080909010006070704
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+> Adeodato Sim=C3=B3 <dato@net.com.org.es> writes:
 
-Nanako Shiraishi schrieb:
-> Quoting jidanni@jidanni.org:
-> 
->> Hmmm, some git-commands --help act just like git commands --help,
->> $ git commit --help 2>&1|wc -l
->> 336
->> $ git-commit --help 2>&1|wc -l
->> 336
->>
->> But others don't
->> $ git am --help 2>&1|wc -l
->> 152
->> $ git-am --help 2>&1|wc -l
->> 19
-> 
-> Thank you for your observation; what do you want to do about it?
-> 
-> Are you complaining that some commands do not have customized description that is not as long as the full manual page but not as terse as the short help "-h" output? Or are you complaining some other commands do not give you full manual pages for "--help"?
-> 
+> > I was reading this test case, and it took a small bit to figure out=
+ the
+> > editor was not being used at all. I hope there was no hidden reason=
+ for
+> > it to be there, and it can go away.
 
-I think he just wantet to state that the output of git-command --help
-and git command --help should be identical as the both do the same
-thing, don't they?
+> That 'zort' came from 1320857 (builtin-commit: fix --signoff, 2007-11=
+-11),
+> and I _think_ it is trying to make sure that presense of "-F -" makes=
+ the
+> editor not to trigger.
 
-Regards Michael
+Hm. Well, if that is true, then IMHO it should be in a /separate/ test
+case, for clarity. Probably in "message from stdin" test from t7501.
 
---------------ms040508080909010006070704
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+That's of course just my opinion, and I'll accept if you prefer to
+maintain it the way it is now. I also volunteer to move it to t7501 if
+that's what you prefer, just let me know.
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIKdjCC
-BTcwggMfoAMCAQICAwOSGTANBgkqhkiG9w0BAQUFADB5MRAwDgYDVQQKEwdSb290IENBMR4w
-HAYDVQQLExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmlu
-ZyBBdXRob3JpdHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZzAeFw0wNzA1
-MTExODI5NDlaFw0wOTA1MTAxODI5NDlaMD4xFjAUBgNVBAMTDU1pY2hhZWwgR2FiZXIxJDAi
-BgkqhkiG9w0BCQEWFU1pY2hhZWwuR2FiZXJAZ214Lm5ldDCCASIwDQYJKoZIhvcNAQEBBQAD
-ggEPADCCAQoCggEBANlvNCEKkhAhmwIpzXamq89nexUPZxbvGR05bN8NlABb/ZkrsUzq56ni
-E4uA61Uuwz3stsXXPN5SOV+oJABDWgvgUsk4fZavEMbP7Kk5iJpZf+ZYDc+z+cYEgxLcQ/v2
-I3j5r7sdT8L6KuB4mvJaQ2WLMcAzyE4J3b39IzPHjrKkTWHyNQP8UUVEJ8qIZ3oCNAYYkTar
-2nKv9uCz//ne40luTpPaEi4vrV5x3F9VKLVLWp1pjceE2xC6wSRlF9ZouOhk6aefTeJ0zMCK
-yiCxhk/4pDM5GfXePU7a05uP7NWtvFPPVt8ahIXoX4J4mRdxByijW1wIAqP2ghjL0IHWHlcC
-AwEAAaOCAQEwgf4wDAYDVR0TAQH/BAIwADBWBglghkgBhvhCAQ0ESRZHVG8gZ2V0IHlvdXIg
-b3duIGNlcnRpZmljYXRlIGZvciBGUkVFIGhlYWQgb3ZlciB0byBodHRwOi8vd3d3LkNBY2Vy
-dC5vcmcwQAYDVR0lBDkwNwYIKwYBBQUHAwQGCCsGAQUFBwMCBgorBgEEAYI3CgMEBgorBgEE
-AYI3CgMDBglghkgBhvhCBAEwMgYIKwYBBQUHAQEEJjAkMCIGCCsGAQUFBzABhhZodHRwOi8v
-b2NzcC5jYWNlcnQub3JnMCAGA1UdEQQZMBeBFU1pY2hhZWwuR2FiZXJAZ214Lm5ldDANBgkq
-hkiG9w0BAQUFAAOCAgEAzOZBrP0g6O72GC4sUht1eAe6QIKHlf4j+c2+mOOB1MHnIi1NHIvD
-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
-ChMHUm9vdCBDQTEeMBwGA1UECxMVaHR0cDovL3d3dy5jYWNlcnQub3JnMSIwIAYDVQQDExlD
-QSBDZXJ0IFNpZ25pbmcgQXV0aG9yaXR5MSEwHwYJKoZIhvcNAQkBFhJzdXBwb3J0QGNhY2Vy
-dC5vcmcCAwOSGTAJBgUrDgMCGgUAoIIB6DAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
-CSqGSIb3DQEJBTEPFw0wODEyMjkwOTQ4MDdaMCMGCSqGSIb3DQEJBDEWBBR5HLQPckB/u2P4
-hYFa6GjR6r52ajBfBgkqhkiG9w0BCQ8xUjBQMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzAO
-BggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgw
-gZEGCSsGAQQBgjcQBDGBgzCBgDB5MRAwDgYDVQQKEwdSb290IENBMR4wHAYDVQQLExVodHRw
-Oi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmluZyBBdXRob3JpdHkx
-ITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZwIDA5IZMIGTBgsqhkiG9w0BCRAC
-CzGBg6CBgDB5MRAwDgYDVQQKEwdSb290IENBMR4wHAYDVQQLExVodHRwOi8vd3d3LmNhY2Vy
-dC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmluZyBBdXRob3JpdHkxITAfBgkqhkiG9w0B
-CQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZwIDA5IZMA0GCSqGSIb3DQEBAQUABIIBAD6B28ax35lC
-H2nmEjpm59TDqNN40m7Qh7+bhWyPOnJrIcK58ferWjiEUC9IqH6537UFuzwUg7T0jGjFmBiI
-U9Ivsb1y8hXj1DLIY64Bqwy59inp1DwPSsZBIrXjuFtQn5tAvhYOMfTkYFkuW7XeWqGsY4Su
-8qFec9Zg3cLhBxD+qEIULWIJiXUvn9I5xBFmdJZ6GL7OnTpPO7yUoiK9LzZVj4In+0WxUH6F
-AqCmVPTg//79gPytStD+bF3L2RKo/WZqBLuyOf14wdYlAOr0f/areMvf5Yv6zPV7V9p2Rglx
-xv8MOSQSQuVQ/f8qeyCMHqvQc7mCvjskxlGgxgudzCIAAAAAAAA=
---------------ms040508080909010006070704--
+Thanks,
+
+--=20
+Adeodato Sim=C3=B3                                     dato at net.com.=
+org.es
+Debian Developer                                  adeodato at debian.or=
+g
+=20
+                              Listening to: Justin Nozuka - I'm In Peac=
+e
