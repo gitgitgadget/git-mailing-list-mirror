@@ -1,77 +1,120 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: user manual question
-Date: Mon, 29 Dec 2008 01:12:54 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrnglg90m.olt.sitaramc@sitaramc.homelinux.net>
-References: <gj7mmo$fvk$4@ger.gmane.org>
- <slrnglf3qh.c7j.sitaramc@sitaramc.homelinux.net>
- <gj96pl$885$4@ger.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 29 02:14:30 2008
+From: "Kirill A. Korinskiy" <catap@catap.ru>
+Subject: [PATCH] http-push: support full URI in handle_remote_ls_ctx()
+Date: Mon, 29 Dec 2008 05:32:15 +0300
+Message-ID: <1230517935-11299-1-git-send-email-catap@catap.ru>
+References: <7vmyekag6p.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 29 03:35:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LH6iC-0003Gz-DM
-	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 02:14:28 +0100
+	id 1LH7xw-00018j-NV
+	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 03:34:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752518AbYL2BNK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Dec 2008 20:13:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751800AbYL2BNJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Dec 2008 20:13:09 -0500
-Received: from main.gmane.org ([80.91.229.2]:59263 "EHLO ciao.gmane.org"
+	id S1751800AbYL2Cd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Dec 2008 21:33:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbYL2Cd0
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Dec 2008 21:33:26 -0500
+Received: from void.catap.ru ([213.248.54.140]:37897 "EHLO void.catap.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751620AbYL2BNH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Dec 2008 20:13:07 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LH6go-0007ol-L0
-	for git@vger.kernel.org; Mon, 29 Dec 2008 01:13:02 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 29 Dec 2008 01:13:02 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 29 Dec 2008 01:13:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1751196AbYL2Cd0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Dec 2008 21:33:26 -0500
+Received: (qmail 22741 invoked from network); 29 Dec 2008 02:33:24 -0000
+Received: from catap.dialup.corbina.ru (HELO mx3.catap.ru) (85.21.143.245)
+  by void.catap.ru with ESMTPS (AES256-SHA encrypted); 29 Dec 2008 02:33:24 -0000
+Received: from localhost
+	([127.0.0.1] helo=satellite.home.catap.ru ident=catap)
+	by mx3.catap.ru with esmtp (Exim 4.63)
+	(envelope-from <catap@catap.ru>)
+	id 1LH7wW-0004yc-J5; Mon, 29 Dec 2008 05:33:20 +0300
+Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
+	(envelope-from <catap@satellite.home.catap.ru>)
+	id 1LH7vT-0002wf-4w; Mon, 29 Dec 2008 05:32:15 +0300
+X-Mailer: git-send-email 1.5.6.5
+In-Reply-To: <7vmyekag6p.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104068>
 
-On 2008-12-29, Zorba <cr@altmore.co.uk> wrote:
-> Hi Sitaram!
->
-> Thanks for clearing that one up.
+The program calls remote_ls() to get list of files from the server
+over HTTP; handle_remote_ls_ctx() is used to parse its response to
+populate "struct remote_ls_ctx" that is returned from remote_ls().
 
-you're welcome; we've all done a bit of struggling I guess!
+The handle_remote_ls_ctx() function assumed that the server returns a
+local path in href field, but RFC 4918 (14.7) demand of support full
+URI (e.g. "http://localhost:8080/repo.git").
 
-> Also, I did wonder about HEAD and head. One can move, the other doesn't! 
-> (well, acually it does - head moves "forward", as the tip of the branch 
-> grows)
+This resulted in push failure (e.g. git-http-push issues a PROPFIND
+request to "/repo.git/alhost:8080/repo.git/refs/" to the server).
 
-Here's an extract from my notes/internal talks on this:
+Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
+---
+ http-push.c |   25 +++++++++++++++++++------
+ 1 files changed, 19 insertions(+), 6 deletions(-)
 
-    === basic concepts
-      * a branch is "an active line of development"
-      * //master//: default branch in a project, by convention
-      * //head//: tip of a branch
-      * a repo can track many branches, but the working tree is associated with
-        only one branch at a time
-      * //HEAD//: tip of the branch associated with the working tree; this is
-        where commits go
-        ** except when it's "detached"
-
-> Thanks for your other post/reply too - I will be getting back to you on that 
-> one
-
-Glad to be of help.  I don't consider myself a guru, and am
-constantly waiting for one of the real gurus to strike me
-down with a thunderbolt for saying something stupid :-)
+diff --git a/http-push.c b/http-push.c
+index 7c6460919bf3eba10c46cede11ffdd9c53fd2dd2..a4b7d08663504a57008f66a39fffe293f62c1d08 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -87,6 +87,7 @@ static struct object_list *objects;
+ struct repo
+ {
+ 	char *url;
++	char *path;
+ 	int path_len;
+ 	int has_info_refs;
+ 	int can_update_info_refs;
+@@ -1424,9 +1425,19 @@ static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
+ 				ls->userFunc(ls);
+ 			}
+ 		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
+-			ls->dentry_name = xmalloc(strlen(ctx->cdata) -
++			char *path = ctx->cdata;
++			if (*ctx->cdata == 'h') {
++				path = strstr(path, "//");
++				if (path) {
++					path = strchr(path+2, '/');
++				}
++			}
++			if (path) {
++				path += remote->path_len;
++			}
++			ls->dentry_name = xmalloc(strlen(path) -
+ 						  remote->path_len + 1);
+-			strcpy(ls->dentry_name, ctx->cdata + remote->path_len);
++			strcpy(ls->dentry_name, path + remote->path_len);
+ 		} else if (!strcmp(ctx->name, DAV_PROPFIND_COLLECTION)) {
+ 			ls->dentry_flags |= IS_DIR;
+ 		}
+@@ -2206,10 +2217,11 @@ int main(int argc, char **argv)
+ 		if (!remote->url) {
+ 			char *path = strstr(arg, "//");
+ 			remote->url = arg;
++			remote->path_len = strlen(arg);
+ 			if (path) {
+-				path = strchr(path+2, '/');
+-				if (path)
+-					remote->path_len = strlen(path);
++				remote->path = strchr(path+2, '/');
++				if (remote->path)
++					remote->path_len = strlen(remote->path);
+ 			}
+ 			continue;
+ 		}
+@@ -2238,8 +2250,9 @@ int main(int argc, char **argv)
+ 		rewritten_url = xmalloc(strlen(remote->url)+2);
+ 		strcpy(rewritten_url, remote->url);
+ 		strcat(rewritten_url, "/");
++		remote->path = rewritten_url + (remote->path - remote->url);
++		remote->path_len++;
+ 		remote->url = rewritten_url;
+-		++remote->path_len;
+ 	}
+ 
+ 	/* Verify DAV compliance/lock support */
+-- 
+1.5.6.5
