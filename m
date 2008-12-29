@@ -1,85 +1,106 @@
-From: "Jacob Helwig" <jacob.helwig@gmail.com>
-Subject: Re: git svn rebase totally confused; just need some sorta reset
-Date: Mon, 29 Dec 2008 14:04:04 -0800
-Message-ID: <8c9a060812291404m304e1920yd5ba7e40a6098b30@mail.gmail.com>
-References: <cd7145c4-a4bb-4ef6-95db-7c4058b6774c@m16g2000vbp.googlegroups.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 3/3] pretty: support multiline subjects with format:
+Date: Mon, 29 Dec 2008 23:15:50 +0100
+Message-ID: <49594C16.2010406@lsrfire.ath.cx>
+References: <1230338961.8363.101.camel@ubuntu.ubuntu-domain> <200812280024.59096.markus.heidelberg@web.de> <4956C47B.4020602@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: davetron5000 <davetron5000@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 29 23:06:36 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: markus.heidelberg@web.de, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 29 23:17:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHQEq-0008AD-GL
-	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 23:05:48 +0100
+	id 1LHQQN-0004eu-Uz
+	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 23:17:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753244AbYL2WEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2008 17:04:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753126AbYL2WEJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 17:04:09 -0500
-Received: from qw-out-2122.google.com ([74.125.92.25]:35578 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752861AbYL2WEI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2008 17:04:08 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so3872015qwe.37
-        for <git@vger.kernel.org>; Mon, 29 Dec 2008 14:04:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=w0+ipgjMQ2BpXmDmpwOWlO+r6dS5pKKi0lH635mz8Ls=;
-        b=VTs/0mzVgy/jaLKS6Rae9B+1+D5Q1oeyl+VcRgKyuCLS9li0iJ5S4XyIdEzoHCz8gs
-         DqTfNv8dDhFD/KFwhmjyP8W5FtmQSiup/dAnoHIDSJSuYCE/4MXlANfi7RMZZmmBanD8
-         gf5+WruIawzgRuj+ccJYunLb0QghzMQthU/ak=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=MiUVA4t0TcnEAx9OVCT6/cX4PiNBqD/di2Xyvih1ld3g9P5ryOTJK7qfD5Yj6fcG8S
-         Dh42jTDd6UC3A1Fsb9C3ZEu+sc9dNJPujONVRmqT2MyyOb8kr6TlBv+nUHt0bDLD57A3
-         tK216/2nTv3z3L+IOuL9k55E4DkcjsRt6O+yA=
-Received: by 10.215.41.2 with SMTP id t2mr11744141qaj.371.1230588244252;
-        Mon, 29 Dec 2008 14:04:04 -0800 (PST)
-Received: by 10.214.216.7 with HTTP; Mon, 29 Dec 2008 14:04:04 -0800 (PST)
-In-Reply-To: <cd7145c4-a4bb-4ef6-95db-7c4058b6774c@m16g2000vbp.googlegroups.com>
-Content-Disposition: inline
+	id S1753375AbYL2WP7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Dec 2008 17:15:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753290AbYL2WP7
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 17:15:59 -0500
+Received: from india601.server4you.de ([85.25.151.105]:59523 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753269AbYL2WP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2008 17:15:58 -0500
+Received: from [10.0.1.101] (p57B7FA67.dip.t-dialin.net [87.183.250.103])
+	by india601.server4you.de (Postfix) with ESMTPSA id 4F3342F803F;
+	Mon, 29 Dec 2008 23:15:56 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081125)
+In-Reply-To: <4956C47B.4020602@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104133>
 
-On Mon, Dec 29, 2008 at 13:39, davetron5000 <davetron5000@gmail.com> wrote:
-> So, my repo is in a weird state.  I have committed my changes to svn
-> via git svn dcommit, and it appears that the svn repository has all my
-> changes.
->
-> However, git svn rebase fails with conflicts, on almost every single
-> commit I've made.  I think that ultimately, I merged a branch in
-> numerous times and git seems confused.  BUT, I don't really care about
-> preserving that; I just want my master branch to be clean.
->
-> Is there a way I can basically say:  commit XXX is the same as the
-> current HEAD of SVN, so treat things as if that's the case.  i.e.
-> treat things the same as if I had just done a clean git svn clone.
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Ren=C3=A9 Scharfe schrieb:
+> Markus Heidelberg schrieb:
+>> Sorry, I haven't tested your patch set, what is the output of
+>> git-shortlog like now?
+>=20
+> It's unchanged since it has it's own commit message parser.
 
-git checkout local-branch-you-want-to-fix
-git reset --hard name-of-your-git-svn-branch  (probably trunk, or
-<prefix>/trunk, if you setup git-svn with the --prefix=<prefix>/
-option).
+=2E.. which displays the first line of the commit message, unlike
+--pretty=3Doneline.  Here's a quick fix.  I probably won't have time
+to come up with something prettier this year.
 
-This will wipe out anything you have in local-branch-you-want-to-fix,
-and reset it to the same state that name-of-your-git-svn-branch is in.
+Ren=C3=A9
 
--Jacob
+
+ builtin-shortlog.c |    9 ++++++---
+ pretty.c           |    4 ++--
+ 2 files changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/builtin-shortlog.c b/builtin-shortlog.c
+index d03f14f..e492906 100644
+--- a/builtin-shortlog.c
++++ b/builtin-shortlog.c
+@@ -29,6 +29,9 @@ static int compare_by_number(const void *a1, const vo=
+id *a2)
+ 		return -1;
+ }
+=20
++const char *format_subject(struct strbuf *sb, const char *msg,
++			   const char *line_separator);
++
+ static void insert_one_record(struct shortlog *log,
+ 			      const char *author,
+ 			      const char *oneline)
+@@ -41,6 +44,7 @@ static void insert_one_record(struct shortlog *log,
+ 	size_t len;
+ 	const char *eol;
+ 	const char *boemail, *eoemail;
++	struct strbuf subject =3D STRBUF_INIT;
+=20
+ 	boemail =3D strchr(author, '<');
+ 	if (!boemail)
+@@ -89,9 +93,8 @@ static void insert_one_record(struct shortlog *log,
+ 	while (*oneline && isspace(*oneline) && *oneline !=3D '\n')
+ 		oneline++;
+ 	len =3D eol - oneline;
+-	while (len && isspace(oneline[len-1]))
+-		len--;
+-	buffer =3D xmemdupz(oneline, len);
++	format_subject(&subject, oneline, " ");
++	buffer =3D strbuf_detach(&subject, NULL);
+=20
+ 	if (dot3) {
+ 		int dot3len =3D strlen(dot3);
+diff --git a/pretty.c b/pretty.c
+index 343dca5..421d9c5 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -486,8 +486,8 @@ static void parse_commit_header(struct format_commi=
+t_context *context)
+ 	context->commit_header_parsed =3D 1;
+ }
+=20
+-static const char *format_subject(struct strbuf *sb, const char *msg,
+-				  const char *line_separator)
++const char *format_subject(struct strbuf *sb, const char *msg,
++			   const char *line_separator)
+ {
+ 	int first =3D 1;
+=20
