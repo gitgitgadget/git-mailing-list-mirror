@@ -1,106 +1,94 @@
-From: jidanni@jidanni.org
-Subject: Re: [PATCH] Documentation/diff-options.txt: unify options
-Date: Mon, 29 Dec 2008 15:03:17 +0800
-Message-ID: <8763l331l6.fsf@jidanni.org>
-References: <7vvdt4aj0e.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] http-push: support full URI in handle_remote_ls_ctx()
+Date: Mon, 29 Dec 2008 08:17:10 +0100
+Organization: glandium.org
+Message-ID: <20081229071710.GA19175@glandium.org>
+References: <7vmyekag6p.fsf@gitster.siamese.dyndns.org> <1230517935-11299-1-git-send-email-catap@catap.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Dec 29 08:04:48 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Kirill A. Korinskiy" <catap@catap.ru>
+X-From: git-owner@vger.kernel.org Mon Dec 29 08:19:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHCBD-00044b-SV
-	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 08:04:48 +0100
+	id 1LHCPg-00079a-FT
+	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 08:19:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753258AbYL2HDY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2008 02:03:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752329AbYL2HDX
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 02:03:23 -0500
-Received: from sd-green-bigip-177.dreamhost.com ([208.97.132.177]:35450 "EHLO
-	homiemail-a3.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753767AbYL2HDW (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Dec 2008 02:03:22 -0500
-Received: from jidanni.org (122-127-43-85.dynamic.hinet.net [122.127.43.85])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a3.dreamhost.com (Postfix) with ESMTP id E35AEC595D;
-	Sun, 28 Dec 2008 23:03:19 -0800 (PST)
+	id S1752466AbYL2HNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2008 02:13:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbYL2HNU
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 02:13:20 -0500
+Received: from vuizook.err.no ([194.24.252.247]:48156 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752320AbYL2HNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2008 02:13:20 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1LHCJJ-0004DI-Qh; Mon, 29 Dec 2008 08:13:12 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1LHCNC-0005Kc-Kv; Mon, 29 Dec 2008 08:17:10 +0100
+Content-Disposition: inline
+In-Reply-To: <1230517935-11299-1-git-send-email-catap@catap.ru>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104076>
 
-(You were right about my previous patch being bad.
-At least git-am gives an error message when fed
-http://article.gmane.org/gmane.comp.version-control.git/104017/raw
-git-apply however does nothing and returns 0! Must be a bug.)
-OK, here's a better patch:
+On Mon, Dec 29, 2008 at 05:32:15AM +0300, Kirill A. Korinskiy wrote:
+> The program calls remote_ls() to get list of files from the server
+> over HTTP; handle_remote_ls_ctx() is used to parse its response to
+> populate "struct remote_ls_ctx" that is returned from remote_ls().
+> 
+> The handle_remote_ls_ctx() function assumed that the server returns a
+> local path in href field, but RFC 4918 (14.7) demand of support full
+> URI (e.g. "http://localhost:8080/repo.git").
+> 
+> This resulted in push failure (e.g. git-http-push issues a PROPFIND
+> request to "/repo.git/alhost:8080/repo.git/refs/" to the server).
+> 
+> Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
+> ---
+>  http-push.c |   25 +++++++++++++++++++------
+>  1 files changed, 19 insertions(+), 6 deletions(-)
+> 
+> diff --git a/http-push.c b/http-push.c
+> index 7c6460919bf3eba10c46cede11ffdd9c53fd2dd2..a4b7d08663504a57008f66a39fffe293f62c1d08 100644
+> --- a/http-push.c
+> +++ b/http-push.c
+> @@ -87,6 +87,7 @@ static struct object_list *objects;
+>  struct repo
+>  {
+>  	char *url;
+> +	char *path;
+>  	int path_len;
+>  	int has_info_refs;
+>  	int can_update_info_refs;
+> @@ -1424,9 +1425,19 @@ static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
+>  				ls->userFunc(ls);
+>  			}
+>  		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
+> -			ls->dentry_name = xmalloc(strlen(ctx->cdata) -
+> +			char *path = ctx->cdata;
+> +			if (*ctx->cdata == 'h') {
+> +				path = strstr(path, "//");
 
-Signed-off-by: jidanni <jidanni@jidanni.org>
----
- Documentation/diff-options.txt |   18 ++++--------------
- 1 files changed, 4 insertions(+), 14 deletions(-)
+I would make that a "://"
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index c62b45c..b432d25 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -19,16 +19,12 @@ endif::git-format-patch[]
- 
- ifndef::git-format-patch[]
- -p::
-+-u::
- 	Generate patch (see section on generating patches).
- 	{git-diff? This is the default.}
- endif::git-format-patch[]
- 
---u::
--	Synonym for "-p".
--
- -U<n>::
--	Shorthand for "--unified=<n>".
--
- --unified=<n>::
- 	Generate diffs with <n> lines of context instead of
- 	the usual three. Implies "-p".
-@@ -190,31 +186,25 @@ endif::git-format-patch[]
- 	can name which subdirectory to make the output relative
- 	to by giving a <path> as an argument.
- 
-+-a::
- --text::
- 	Treat all files as text.
- 
---a::
--	Shorthand for "--text".
--
- --ignore-space-at-eol::
- 	Ignore changes in whitespace at EOL.
- 
-+-b::
- --ignore-space-change::
- 	Ignore changes in amount of whitespace.  This ignores whitespace
- 	at line end, and considers all other sequences of one or
- 	more whitespace characters to be equivalent.
- 
---b::
--	Shorthand for "--ignore-space-change".
--
-+-w::
- --ignore-all-space::
- 	Ignore whitespace when comparing lines.  This ignores
- 	differences even if one line has whitespace where the other
- 	line has none.
- 
---w::
--	Shorthand for "--ignore-all-space".
--
- --exit-code::
- 	Make the program exit with codes similar to diff(1).
- 	That is, it exits with 1 if there were differences and
--- 
-1.5.6.5
+> +				if (path) {
+> +					path = strchr(path+2, '/');
+
+and s/2/3/, accordingly.
+
+But I realize the existing code already does something like what your
+are doing...
+
+Mike
