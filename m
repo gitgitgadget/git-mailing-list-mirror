@@ -1,60 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/diff-options.txt: unify options
-Date: Mon, 29 Dec 2008 01:10:15 -0800
-Message-ID: <7vwsdjcpoo.fsf@gitster.siamese.dyndns.org>
-References: <7vvdt4aj0e.fsf@gitster.siamese.dyndns.org>
- <8763l331l6.fsf@jidanni.org> <7vabafe5ai.fsf@gitster.siamese.dyndns.org>
+From: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
+Subject: [PATCH] t7500-commit.sh: do not call test_set_editor unnecessarily, it's confusing
+Date: Mon, 29 Dec 2008 10:24:18 +0100
+Message-ID: <1230542658-9758-1-git-send-email-dato@net.com.org.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Mon Dec 29 10:11:41 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Dec 29 10:25:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHE9z-0004Tn-Rx
-	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 10:11:40 +0100
+	id 1LHENa-0008De-EJ
+	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 10:25:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752683AbYL2JKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2008 04:10:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752468AbYL2JKV
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 04:10:21 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63133 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750881AbYL2JKU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2008 04:10:20 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1BE6C1B48A;
-	Mon, 29 Dec 2008 04:10:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1852F1B489; Mon,
- 29 Dec 2008 04:10:16 -0500 (EST)
-In-Reply-To: <7vabafe5ai.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 29 Dec 2008 00:47:49 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 84307412-D588-11DD-9C0E-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1753697AbYL2JYX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Dec 2008 04:24:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753502AbYL2JYX
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 04:24:23 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:2235
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753012AbYL2JYW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2008 04:24:22 -0500
+Received: from chistera.yi.org (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id 849488027934;
+	Mon, 29 Dec 2008 10:24:20 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LHEME-0002YR-KP; Mon, 29 Dec 2008 10:24:18 +0100
+X-Mailer: git-send-email 1.6.1.307.g07803
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104089>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Signed-off-by: Adeodato Sim=C3=B3 <dato@net.com.org.es>
+---
 
-> That commentary above your S-o-b is not a proper commit log message, but
-> I'll come up with something and apply.
+I was reading this test case, and it took a small bit to figure out the
+editor was not being used at all. I hope there was no hidden reason for
+it to be there, and it can go away.
 
-Here is what I came up with and applied.
+Cheers,
 
-    Documentation/diff-options.txt: unify options
-    
-    Instead of listing short option (e.g. "-U<n>") as a shorthand for its
-    longer counterpart (e.g. "--unified=<n>"), list the synonyms together.  It
-    saves one indirection to find what the reader wants.
-    
-    Signed-off-by: jidanni <jidanni@jidanni.org>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+ t/t7500-commit.sh |    5 +----
+ 1 files changed, 1 insertions(+), 4 deletions(-)
 
-Thanks.
+diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+index 6e18a96..5998baf 100755
+--- a/t/t7500-commit.sh
++++ b/t/t7500-commit.sh
+@@ -149,10 +149,7 @@ EOF
+=20
+ test_expect_success '--signoff' '
+ 	echo "yet another content *narf*" >> foo &&
+-	echo "zort" | (
+-		test_set_editor "$TEST_DIRECTORY"/t7500/add-content &&
+-		git commit -s -F - foo
+-	) &&
++	echo "zort" | git commit -s -F - foo &&
+ 	git cat-file commit HEAD | sed "1,/^$/d" > output &&
+ 	test_cmp expect output
+ '
+--=20
+1.6.1.307.g07803
