@@ -1,57 +1,54 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: many git sites homepages megabytes big
-Date: Sun, 28 Dec 2008 21:17:32 -0800
-Message-ID: <1230527852.6992.2.camel@localhost.localdomain>
-References: <87r63r374j.fsf@jidanni.org>
+From: jidanni@jidanni.org
+Subject: [PATCH] Documentation/git-config.txt: clarify order of option reading
+Date: Mon, 29 Dec 2008 14:13:22 +0800
+Message-ID: <87myef33wd.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Mon Dec 29 06:19:03 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 29 07:14:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHAWm-0003P7-DP
-	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 06:18:56 +0100
+	id 1LHBOq-0004H9-O7
+	for gcvg-git-2@gmane.org; Mon, 29 Dec 2008 07:14:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751094AbYL2FRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2008 00:17:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750884AbYL2FRe
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 00:17:34 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:51081 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750863AbYL2FRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2008 00:17:34 -0500
-Received: from [172.19.0.177] (c-67-164-30-157.hsd1.ca.comcast.net [67.164.30.157])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id mBT5HWmw015516
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 28 Dec 2008 21:17:32 -0800
-In-Reply-To: <87r63r374j.fsf@jidanni.org>
-X-Mailer: Evolution 2.12.3 (2.12.3-5.fc8) 
-X-Virus-Scanned: ClamAV 0.88.7/8806/Sun Dec 28 19:00:01 2008 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Sun, 28 Dec 2008 21:17:32 -0800 (PST)
+	id S1752067AbYL2GN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2008 01:13:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbYL2GN1
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 01:13:27 -0500
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:59903 "EHLO
+	homiemail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750818AbYL2GN0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Dec 2008 01:13:26 -0500
+Received: from jidanni.org (122-127-43-85.dynamic.hinet.net [122.127.43.85])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by homiemail-a2.g.dreamhost.com (Postfix) with ESMTP id 56E0ED26BD
+	for <git@vger.kernel.org>; Sun, 28 Dec 2008 22:13:25 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104071>
 
-There are lots of reasons fore and against what your proposing, and
-there is no good answer.  Yes it sends a lot of data, but one could
-argue - more data is better than less data.
+Signed-off-by: jidanni <jidanni@jidanni.org>
+---
+ Documentation/git-config.txt |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-- John 'Warthog9' Hawley
-
-On Mon, 2008-12-29 at 13:03 +0800, jidanni@jidanni.org wrote:
-> I notice the web interfaces to many git sites are very risky to just
-> click on. E.g., just clicking http://repo.or.cz/ sends megabytes to
-> the users browser. At least the homepage of such sites should be
-> something lighter in weight.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 19a8917..34041b1 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -176,6 +176,8 @@ $GIT_DIR/config::
+ $(prefix)/etc/gitconfig::
+ 	System-wide configuration file.
+ 
++Options found earlier in this sequence override those found later.
++
+ If no further options are given, all reading options will read all of these
+ files that are available. If the global or the system-wide configuration
+ file are not available they will be ignored. If the repository configuration
+-- 
+1.5.6.5
