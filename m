@@ -1,112 +1,112 @@
-From: "Zorba" <cr@altmore.co.uk>
-Subject: Re: for newbs = little exercise / tutorial / warmup for windows and other non-sophisticated new Git users :-)
-Date: Tue, 30 Dec 2008 12:19:54 -0000
-Message-ID: <gjd3lp$f1d$4@ger.gmane.org>
-References: <gj68a0$u56$3@ger.gmane.org> <gj6kqq$nvh$4@ger.gmane.org> <3ab397d0812291505v77824e6fvdecebc80f38a5f89@mail.gmail.com> <gjc7qa$jdj$4@ger.gmane.org> <3ab397d0812292133r7955e892g6c19ca46629e7103@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: rebase -i: learn to rebase root commit
+Date: Tue, 30 Dec 2008 13:23:27 +0100
+Message-ID: <200812301323.30550.trast@student.ethz.ch>
+References: <cover.1230568082.git.trast@student.ethz.ch> <200812292249.45900.trast@student.ethz.ch> <200812291621.35732.bss@iguanasuicide.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart2865655.cYEvi9gOFD";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 30 13:21:45 2008
+X-From: git-owner@vger.kernel.org Tue Dec 30 13:24:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHdbV-0008SK-EK
-	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 13:21:45 +0100
+	id 1LHdeI-0000sB-4E
+	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 13:24:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751810AbYL3MUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 07:20:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbYL3MUY
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 07:20:24 -0500
-Received: from main.gmane.org ([80.91.229.2]:52423 "EHLO ciao.gmane.org"
+	id S1751870AbYL3MXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 07:23:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751813AbYL3MXR
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 07:23:17 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:56465 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751755AbYL3MUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 07:20:24 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LHda7-0000Ue-6p
-	for git@vger.kernel.org; Tue, 30 Dec 2008 12:20:19 +0000
-Received: from 81.135.227.136 ([81.135.227.136])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Dec 2008 12:20:19 +0000
-Received: from cr by 81.135.227.136 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Dec 2008 12:20:19 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 81.135.227.136
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5512
-X-RFC2646: Format=Flowed; Original
+	id S1751780AbYL3MXR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 07:23:17 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 30 Dec 2008 13:23:15 +0100
+Received: from [192.168.0.3] ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 30 Dec 2008 13:23:15 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <200812291621.35732.bss@iguanasuicide.net>
+X-OriginalArrivalTime: 30 Dec 2008 12:23:15.0669 (UTC) FILETIME=[63EAD050:01C96A79]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104179>
 
-> I have been using $ git reset --hard <version> as an escalator to ascend /
-> descend the versions up and down
+--nextPart2865655.cYEvi9gOFD
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-you should probably be using git checkout for this
+Boyd Stephen Smith Jr. wrote:
+> Here's the interpretation that *I* come up with for -p --root used togeth=
+er:
+> The commit with no parents (OLD_ROOT) is rebased as if -p were not given,=
+ call=20
+> the resulting commit NEW_ROOT.  Then, the rebase continues as if "--onto=
+=20
+> NEW_ROOT OLD_ROOT <branch>" was specified instead of "--onto=3DNEW_ROOT^ =
+=2D-root=20
+> <branch>".
 
-> Surely it doesn't alter the history, as I can commit versionA, versionB,
-> versionC, and then reset to A, then reset to C, then reset to B.
+I like this logic, but it feels inconsistent as soon as there are
+several root commits.  (This may be somewhat academic, since any repo
+with several roots should also be able to cope with a merge...)
 
-i does alter the history.  i think this works because git isnt'
-deleting the actual blob objects in the git dir until you use the git
-prune, or gc or whatever (i never use it anyway).  but, you are
-altering history, and just happen to be recovering.
+Some digging into the -p code shows that it knows which commits were
+rewritten, and which were untouched.  It rewrites such that _all_
+commits in $(git merge-base --all $branch $upstream) are rewritten to
+look like $onto instead, i.e., all their occurrences in parent lists
+of commits are rewritten to $onto.  All other commits are only
+rewritten if they have a parent that was rewritten.
 
-** Ok!, so after commit B1, versionA doesn't store a link to versionB 
-natively on and of its own accord. In other words BA and C are now written 
-OUT of the history, as you say. I'm relying on some cached meta data that 
-allows me to go back up the version tree again (ie downstream) and write B 
-and/or C back into the history, which I should not rely on having access to 
-all the time. Now I'm understanding more about differences between git-reset 
-and git-checkout
+So I think one sane way is to define a virtual parent 'root', and
+think of parentless commits as having the (sole) parent 'root'.  Then
+we can rewrite such that 'root' becomes $onto, i.e., all occurrences
+of 'root' in parent lists become $onto, consistent with the normal
+operation.  (For the other commits, the same rule as above is
+applied.)
 
-> so when I reset to A, I've still got the ability to get to B or C again
+Of course this just boils down to saying that _all_ root commits
+reachable from $branch are rewritten to have $onto as their parent.
+Subsequently, all other commits will also be rewritten because they
+all must have at least one rewritten parent.
 
-with an uneasy conscience ;)
+> Basically, --root only changes how the first commit is handled, which I t=
+hink=20
+> is consistent with other uses of --root.  It's also similar to cherry-pic=
+king=20
+> the first commit, follwed by a non-root rebase, which I think is also=20
+> consistent with the intention of --root.
 
-** yes, if the metadata cache failed or got wiped, I'd be screwed for 
-getting back to later commits
-I see !
-I'm relying on something that isn't part of the intrinsic design... hmmm
+I believe this remark still holds if there is only a single root
+commit on $branch.
 
-> Now I appreciate that if I commit a new change from versionA (lets call it
-> B1), then HEAD is now at B1, and B, C etc are lost, correct ?
+I will reroll with an updated 2/3 shortly.
 
-yes! but this is not true if you had done a git checkout (there are
-measures to recover B and C, provided you haven't done a prune.  i
-think git reflog has some answers here, but i'm still a newbie).
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
-> Its pertinent to where I am right now, as I've goofed a commit, and want 
-> to
-> reset, and commit again but I'm worried about leaveing garbage lying 
-> around
-> (the commits for version B and C in the example above).
 
-you've goofed what commit (a1?, c?, d3?)?  where are you now and what
-do you want to do now? reset to what version?  if you're just worried
-about space used by B and C, i think git prune will purge these (look
-at man page, don't guess at the syntax).
+--nextPart2865655.cYEvi9gOFD
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-** I goofed B, so I reset to A, and redid the edits correctly this time 
-(using your tip from other post $ git add -A = thanks again!), so now am on 
-B1.
-Having read your notes, I am now comfortable about letting B and C hang 
-around, as I realise now they are out of the official picture. Sitaram's 
-comparison of a linked list helps since there is no branch/merge: B1 can 
-only have one parent, which is A, so A can only have one child which is B1 
-(and B and C are relying on the cached stuff to survive, so let 'em freeze 
-!)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-i half suspect that you want to git branch at some point, but if
-yo'ure just recretaing the other code bases' history form other files,
-you shouldn't be able to break too much by git reset --hard, or git
-prune.
+iEYEABECAAYFAklaEsIACgkQqUud07tmzP2qPACfVAcWj4yCkWVixGClfHxJboqy
+1h4An2s3cMayUEsVJQC66wuQZAFlh4xN
+=SxW/
+-----END PGP SIGNATURE-----
 
-** yes I might well want to at some point, but don't want to run before 
-walking. I'm the only one on this project currently, and still archiving old 
-versions into git. When I get the latest one in, I may branch so I can work 
-away without affecting a stable master branch.
+--nextPart2865655.cYEvi9gOFD--
