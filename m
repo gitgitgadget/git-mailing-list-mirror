@@ -1,83 +1,95 @@
-From: "Zorba" <cr@altmore.co.uk>
-Subject: Re: is there an easier way to do this ?
-Date: Tue, 30 Dec 2008 23:20:32 -0000
-Message-ID: <gjeacg$3r5$4@ger.gmane.org>
-References: <gjc52u$ehc$4@ger.gmane.org> <m3k59hb6xr.fsf@localhost.localdomain>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 31 00:22:41 2008
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: for newbs = little exercise / tutorial / warmup for windows and
+ other non-sophisticated new Git users :-)
+Date: Tue, 30 Dec 2008 18:29:17 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0812301730440.19665@iabervon.org>
+References: <gj68a0$u56$3@ger.gmane.org> <gj6kqq$nvh$4@ger.gmane.org> <3ab397d0812291505v77824e6fvdecebc80f38a5f89@mail.gmail.com> <gjdh0r$n3c$4@ger.gmane.org> <gjdlcl$5no$4@ger.gmane.org> <gjdmm6$9oj$4@ger.gmane.org> <3ab397d0812301035w3dcd872fkae9509629a0ed7de@mail.gmail.com>
+ <gje4ff$ip6$4@ger.gmane.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Zorba <cr@altmore.co.uk>
+X-From: git-owner@vger.kernel.org Wed Dec 31 00:30:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHnuw-0006JC-8m
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 00:22:30 +0100
+	id 1LHo2n-0008Py-Pz
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 00:30:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752418AbYL3XVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 18:21:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbYL3XVI
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 18:21:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:46398 "EHLO ciao.gmane.org"
+	id S1752503AbYL3X3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 18:29:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750811AbYL3X3T
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 18:29:19 -0500
+Received: from iabervon.org ([66.92.72.58]:38068 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750811AbYL3XVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 18:21:07 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LHntQ-0006qk-UV
-	for git@vger.kernel.org; Tue, 30 Dec 2008 23:20:57 +0000
-Received: from 81.135.227.136 ([81.135.227.136])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Dec 2008 23:20:56 +0000
-Received: from cr by 81.135.227.136 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Dec 2008 23:20:56 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 81.135.227.136
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5512
-X-RFC2646: Format=Flowed; Original
+	id S1752503AbYL3X3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 18:29:19 -0500
+Received: (qmail 17916 invoked by uid 1000); 30 Dec 2008 23:29:17 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 30 Dec 2008 23:29:17 -0000
+In-Reply-To: <gje4ff$ip6$4@ger.gmane.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.2 points;
- *  0.0 RCVD_BY_IP Received by mail server with no name
- *  4.0 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
- *  1.2 PRIORITY_NO_NAME Message has priority, but no X-Mailer/User-Agent
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104226>
 
-thanks Jakub, but I don't mind copying the versions in by hand and running 
-the git commits on them sequentially.
+On Tue, 30 Dec 2008, Zorba wrote:
 
-I only have 5 max historical versions to archive..
+> > good news, use "git checkout versionA", not "git checkout versionA ."
+> > (so, use it wihtout the dot), and you should be back in working order.
+> 
+> ** yes but I don't get the files copied out into the tree which is all my 
+> little heart ever desired
 
-"Jakub Narebski" <jnareb@gmail.com> wrote in message 
-news:m3k59hb6xr.fsf@localhost.localdomain...
-> "Zorba" <cr@altmore.co.uk> writes:
->
->> ok, now I'm in this for real, archiving versions of our website project 
->> (5k
->> files approx)
->>
->> so here is the workflow:
->>
->> - copy version 1 files into GIT dir
->>
->> - open git bash
->>
->> $ git init
->>
->> $ git add .
->>
->> $ git commit -m "version1"
->>
->> all vanilla ? cool
->> next job = store version 2 [...]
->
-> Check out contrib/fast-import/import-tars.perl
->
-> -- 
-> Jakub Narebski
-> Poland
-> ShadeHawk on #git 
+So in order for this to make sense, you're going to need to know a little 
+tiny bit about branches (which, fortunately, is trivial compared to 
+branches in most SCMs). In git, a branch is a mutable pointer to a commit, 
+which is the latest commit on the branch (all of the earlier commits on 
+the branch are linked off of the latest one; each commit points to the one 
+before). By default, you have a branch called "master", and that's the 
+branch that your series of commands builds up. Now, at any given time, you 
+can have a "current branch" (a.k.a. HEAD), which is the branch that you'd 
+put a new commit on if you made one. "master" is your current branch while 
+you're building up that history.
+
+When you want to navigate the history, however, you want to leave all of 
+the branches alone and take your working directory into the history. This 
+is known as being on "(no branch)" or, as Zippy would say, having a 
+"detached HEAD". This way you leave the "master" branch pointing to 
+versionD, which is, after all, the latest commit, while you get yourself 
+an old version. You can do this with:
+
+$ git checkout versionA
+
+because you've made a tag for it. In order to get back to developing (as 
+opposed to looking at history), you use:
+
+$ git checkout master
+
+(because "master" is your branch, while "versionA" is a tag).
+
+If you're on master, either after checking it out explicitly or before 
+you've used checkout at all, doing:
+
+$ git checkout versionA .
+
+with *not* switch you away from the current branch, but will get the 
+contents of "." from versionA into your index and working directory, and 
+it doesn't remove things that you have currently.
+
+> ** LOL, I have to admit I am enjoying this though, even if its driving me 
+> slightly potty - haha
+> I didn't write these early versions so I just wanna have them around to 
+> rollback to if I end up hacking the thing to bits.
+> But you're right - chances of using are slim - but you could say that about 
+> every version sitting in any given SCM repo.
+> Thats why we have SCM, and why we insure our cars etc etc. :-) 
+
+Even if you never rolling back to it, it's useful for figuring out what 
+you did when.
+
+	-Daniel
+*This .sig left intentionally blank*
