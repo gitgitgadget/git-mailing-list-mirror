@@ -1,139 +1,330 @@
-From: Michael Gaber <Michael.Gaber@gmx.net>
-Subject: Re: why still no empty directory support in git
-Date: Tue, 30 Dec 2008 15:21:21 +0100
-Message-ID: <495A2E61.3030702@gmx.net>
-References: <46dff0320812291942y6aeec941k9394586621e9151b@mail.gmail.com> <alpine.DEB.1.00.0812301308530.30769@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg=sha1; boundary="------------ms090005030209070403020006"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 30 15:22:50 2008
+From: Jason Riedy <jason@acm.org>
+Subject: [PATCH] Pass --upload-pack and --receive-pack through submodules.
+Date: Tue, 30 Dec 2008 10:09:42 -0500
+Message-ID: <1230649782-14710-1-git-send-email-jason@acm.org>
+References: <1230605055-30723-1-git-send-email-jason@acm.org>
+Cc: Jason Riedy <jason@acm.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 30 16:11:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHfUe-0000Te-73
-	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 15:22:48 +0100
+	id 1LHgFd-0005cn-3x
+	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 16:11:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752217AbYL3OVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 09:21:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752195AbYL3OVZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 09:21:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47518 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752069AbYL3OVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 09:21:24 -0500
-Received: (qmail invoked by alias); 30 Dec 2008 14:21:22 -0000
-Received: from e181201212.adsl.alicedsl.de (EHLO [192.168.178.68]) [85.181.201.212]
-  by mail.gmx.net (mp047) with SMTP; 30 Dec 2008 15:21:22 +0100
-X-Authenticated: #1286246
-X-Provags-ID: V01U2FsdGVkX1+wEz91KeuwY57JGyxfbyWiMlMf3JpQu5xwYBAeXQ
-	/zob7VkBu78ffF
-User-Agent: Thunderbird 2.0.0.18 (X11/20081121)
-In-Reply-To: <alpine.DEB.1.00.0812301308530.30769@pacific.mpi-cbg.de>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.73
+	id S1752272AbYL3PJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 10:09:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752221AbYL3PJ7
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 10:09:59 -0500
+Received: from a.mail.sonic.net ([64.142.16.245]:44721 "EHLO a.mail.sonic.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751965AbYL3PJ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 10:09:58 -0500
+Received: from localhost.localdomain (misc-148-78-88-138.pool.starband.net [148.78.88.138])
+	(authenticated bits=0)
+	by a.mail.sonic.net (8.13.8.Beta0-Sonic/8.13.7) with ESMTP id mBUF9lL3004033;
+	Tue, 30 Dec 2008 07:09:50 -0800
+X-Mailer: git-send-email 1.6.1.60.g1f086.dirty
+In-Reply-To: <1230605055-30723-1-git-send-email-jason@acm.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104188>
 
-This is a cryptographically signed message in MIME format.
+While I no longer have to worry about a zillion ancient OS versions,
+I now have to worry about a remote site where I cannot control the
+path for non-interactive shells.  Thus, submodules need to handle
+explicitly specified git-upload-pack and git-receive-pack programs.
 
---------------ms090005030209070403020006
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+There may be a fun shell quoting dance to avoid the extra conditionals.
+Any such dance would be even more confusing to read.
 
-Johannes Schindelin schrieb:
-> Hi,
-> 
-> On Tue, 30 Dec 2008, Ping Yin wrote:
-> 
->> Yes, i know this topic has been discussed for many times.
-> 
-> We have empty directory support in Git.  It works like this: for 
-> directories that you do want to keep, you add an empty .gitignore file.
-> 
-> No problem at all,
-> Dscho
+Signed-off-by: Jason Riedy <jason@acm.org>
+---
+  Sorry; I forgot the documentation patch last time.  And it might be
+  better just to copy the entire submodule config directly to the remote
+  section...
 
-well if i understood him correctly his use-case would soon remove that
-.whatever-file so it doesn't solve the problem
+ Documentation/git-submodule.txt |   15 +++++++-
+ Documentation/gitmodules.txt    |   13 ++++++-
+ git-submodule.sh                |   81 +++++++++++++++++++++++++++++++++++++--
+ t/t7404-submodule-packbin.sh    |   53 +++++++++++++++++++++++++
+ 4 files changed, 156 insertions(+), 6 deletions(-)
+ create mode 100755 t/t7404-submodule-packbin.sh
 
-Michael
-
---------------ms090005030209070403020006
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIKdjCC
-BTcwggMfoAMCAQICAwOSGTANBgkqhkiG9w0BAQUFADB5MRAwDgYDVQQKEwdSb290IENBMR4w
-HAYDVQQLExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmlu
-ZyBBdXRob3JpdHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZzAeFw0wNzA1
-MTExODI5NDlaFw0wOTA1MTAxODI5NDlaMD4xFjAUBgNVBAMTDU1pY2hhZWwgR2FiZXIxJDAi
-BgkqhkiG9w0BCQEWFU1pY2hhZWwuR2FiZXJAZ214Lm5ldDCCASIwDQYJKoZIhvcNAQEBBQAD
-ggEPADCCAQoCggEBANlvNCEKkhAhmwIpzXamq89nexUPZxbvGR05bN8NlABb/ZkrsUzq56ni
-E4uA61Uuwz3stsXXPN5SOV+oJABDWgvgUsk4fZavEMbP7Kk5iJpZf+ZYDc+z+cYEgxLcQ/v2
-I3j5r7sdT8L6KuB4mvJaQ2WLMcAzyE4J3b39IzPHjrKkTWHyNQP8UUVEJ8qIZ3oCNAYYkTar
-2nKv9uCz//ne40luTpPaEi4vrV5x3F9VKLVLWp1pjceE2xC6wSRlF9ZouOhk6aefTeJ0zMCK
-yiCxhk/4pDM5GfXePU7a05uP7NWtvFPPVt8ahIXoX4J4mRdxByijW1wIAqP2ghjL0IHWHlcC
-AwEAAaOCAQEwgf4wDAYDVR0TAQH/BAIwADBWBglghkgBhvhCAQ0ESRZHVG8gZ2V0IHlvdXIg
-b3duIGNlcnRpZmljYXRlIGZvciBGUkVFIGhlYWQgb3ZlciB0byBodHRwOi8vd3d3LkNBY2Vy
-dC5vcmcwQAYDVR0lBDkwNwYIKwYBBQUHAwQGCCsGAQUFBwMCBgorBgEEAYI3CgMEBgorBgEE
-AYI3CgMDBglghkgBhvhCBAEwMgYIKwYBBQUHAQEEJjAkMCIGCCsGAQUFBzABhhZodHRwOi8v
-b2NzcC5jYWNlcnQub3JnMCAGA1UdEQQZMBeBFU1pY2hhZWwuR2FiZXJAZ214Lm5ldDANBgkq
-hkiG9w0BAQUFAAOCAgEAzOZBrP0g6O72GC4sUht1eAe6QIKHlf4j+c2+mOOB1MHnIi1NHIvD
-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
-ChMHUm9vdCBDQTEeMBwGA1UECxMVaHR0cDovL3d3dy5jYWNlcnQub3JnMSIwIAYDVQQDExlD
-QSBDZXJ0IFNpZ25pbmcgQXV0aG9yaXR5MSEwHwYJKoZIhvcNAQkBFhJzdXBwb3J0QGNhY2Vy
-dC5vcmcCAwOSGTAJBgUrDgMCGgUAoIIB6DAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
-CSqGSIb3DQEJBTEPFw0wODEyMzAxNDIxMjFaMCMGCSqGSIb3DQEJBDEWBBTagmeTi+bvwlua
-DHltXTMLXscMGjBfBgkqhkiG9w0BCQ8xUjBQMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzAO
-BggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgw
-gZEGCSsGAQQBgjcQBDGBgzCBgDB5MRAwDgYDVQQKEwdSb290IENBMR4wHAYDVQQLExVodHRw
-Oi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmluZyBBdXRob3JpdHkx
-ITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZwIDA5IZMIGTBgsqhkiG9w0BCRAC
-CzGBg6CBgDB5MRAwDgYDVQQKEwdSb290IENBMR4wHAYDVQQLExVodHRwOi8vd3d3LmNhY2Vy
-dC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmluZyBBdXRob3JpdHkxITAfBgkqhkiG9w0B
-CQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZwIDA5IZMA0GCSqGSIb3DQEBAQUABIIBAAQitZABMi6c
-YiME6zuiJxMpmWfgHZCSAjTGsfg/L46KrDu4CvMhZaq2C7PpXTiYhgs70RV3+yXXzxrfjlI/
-8w9g9AsdWNIp41TGFCR8wUjiF4oj3B7JrpVpJZPiMTclPmzUqkGu63Ub4vWntgtw4DsmDTJt
-P7tviBhkzMVlXe6rdgfunT20xcG2Y5KNIDvjXCAJCFzx5wbUQDf1KZfoSzPxMHA2YYS/eDSt
-7nLSJwfIAm7RmMYAKexfx3AKmnn79wFaUxwfNc8Kwqw94aU1BI+6pTisPjeHw0iLKfILnrXX
-/lG3qIrOO+rR9S2WJxGPMjtQ0cbmpRNJxI59fDR8orYAAAAAAAA=
---------------ms090005030209070403020006--
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 2f207fb..9e2de16 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -9,7 +9,7 @@ git-submodule - Initialize, update or inspect submodules
+ SYNOPSIS
+ --------
+ [verse]
+-'git submodule' [--quiet] add [-b branch] [--] <repository> <path>
++'git submodule' [--quiet] add [-b branch] [-u <git-upload-pack>] [--receive-pack <git-receive-pack>] [--] <repository> <path>
+ 'git submodule' [--quiet] status [--cached] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+ 'git submodule' [--quiet] update [--init] [--] [<path>...]
+@@ -159,6 +159,19 @@ OPTIONS
+ --branch::
+ 	Branch of repository to add as submodule.
+ 
++--upload-pack <upload-pack>::
++-u <upload-pack>::
++	When given, and the repository to clone from is accessed
++	via ssh, this specifies a non-default path for the
++	'git-upload-pack' program on the remote end.  See
++	linkgit:git-fetch-pack[1].
++
++--receive-pack <receive-pack>::
++	When given, and the repository to clone from is accessed
++	via ssh, this specifies a non-default path for the
++	'git-receive-pack' program on the remote end.  See
++	linkgit:git-push[1].
++
+ --cached::
+ 	This option is only valid for status and summary commands.  These
+ 	commands typically use the commit found in the submodule HEAD, but
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index d1a17e2..3387951 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -30,6 +30,13 @@ submodule.<name>.path::
+ submodule.<name>.url::
+ 	Defines an url from where the submodule repository can be cloned.
+ 
++submodule.<name>.receivepack::
++	The default program to execute on the remote side when pushing.  See
++	option \--receive-pack of linkgit:git-push[1].
++
++submodule.<name>.uploadpack::
++	The default program to execute on the remote side when fetching.  See
++	option \--upload-pack of linkgit:git-fetch-pack[1].
+ 
+ EXAMPLES
+ --------
+@@ -42,12 +49,16 @@ Consider the following .gitmodules file:
+ 
+ 	[submodule "libbar"]
+ 		path = include/bar
+-		url = git://bar.com/git/lib.git
++		url = ssh://bar.com/~/git/lib.git
++		uploadpack = /home/you/bin/git-upload-pack-wrapper
++		receivepack = /home/you/bin/git-receive-pack-wrapper
+ 
+ 
+ This defines two submodules, `libfoo` and `libbar`. These are expected to
+ be checked out in the paths 'include/foo' and 'include/bar', and for both
+ submodules an url is specified which can be used for cloning the submodules.
++For `libbar`, packs are retrieved and stored via the upload and receive
++wrappers, respectively.
+ 
+ SEE ALSO
+ --------
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 2f47e06..1a8a968 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -90,6 +90,8 @@ module_clone()
+ {
+ 	path=$1
+ 	url=$2
++	uploadpack=$3
++	receivepack=$4
+ 
+ 	# If there already is a directory at the submodule path,
+ 	# expect it to be empty (since that is the default checkout
+@@ -105,8 +107,23 @@ module_clone()
+ 	test -e "$path" &&
+ 	die "A file already exist at path '$path'"
+ 
+-	git-clone -n "$url" "$path" ||
++	if test "$uploadpack"
++	then
++	    git-clone --upload-pack $uploadpack -n "$url" "$path"
++	else
++	    git-clone -n "$url" "$path"
++	fi ||
+ 	die "Clone of '$url' into submodule path '$path' failed"
++	if test "$uploadpack"
++	then
++	    git config -f "${path}/.git/config" remote.origin.uploadpack "$uploadpack" ||
++	    echo "  Warn: Failed to set uploadpack for '$url' in submodule path '$path'."
++	fi
++	if test "$receivepack"
++	then
++	    git config -f "${path}/.git/config" remote.origin.receivepack "$receivepack" ||
++	    echo "  Warn: Failed to set receivepack for '$url' in submodule path '$path'."
++	fi
+ }
+ 
+ #
+@@ -130,6 +147,16 @@ cmd_add()
+ 		-q|--quiet)
+ 			quiet=1
+ 			;;
++		-u|--upload-pack)
++			case "$2" in '') usage ;; esac
++			uploadpack=$2
++			shift
++			;;
++		--receive-pack)
++			case "$2" in '') usage ;; esac
++			receivepack=$2
++			shift
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -191,9 +218,17 @@ cmd_add()
+ 			;;
+ 		esac
+ 		git config submodule."$path".url "$url"
++		if test "$uploadpack"
++		then
++		    git config submodule."$path".uploadpack "$uploadpack"
++		fi
++		if test "$receivepack"
++		then
++		    git config submodule."$path".receivepack "$receivepack"
++		fi
+ 	else
+ 
+-		module_clone "$path" "$realrepo" || exit
++		module_clone "$path" "$realrepo" "$uploadpack" "$receivepack" || exit
+ 		(unset GIT_DIR; cd "$path" && git checkout -f -q ${branch:+-b "$branch" "origin/$branch"}) ||
+ 		die "Unable to checkout submodule '$path'"
+ 	fi
+@@ -202,7 +237,19 @@ cmd_add()
+ 	die "Failed to add submodule '$path'"
+ 
+ 	git config -f .gitmodules submodule."$path".path "$path" &&
+-	git config -f .gitmodules submodule."$path".url "$repo" &&
++	git config -f .gitmodules submodule."$path".url "$repo" ||
++	die "Failed to register submodule '$path'"
++
++	if test "$uploadpack"
++        then
++	    git config -f .gitmodules submodule."$path".uploadpack "$uploadpack" ||
++	    die "Failed to register submodule '$path'"
++	fi
++	if test "$receivepack"
++        then
++	    git config -f .gitmodules submodule."$path".receivepack "$receivepack" ||
++	    die "Failed to register submodule '$path'"
++	fi
+ 	git add .gitmodules ||
+ 	die "Failed to register submodule '$path'"
+ }
+@@ -277,6 +324,19 @@ cmd_init()
+ 		git config submodule."$name".url "$url" ||
+ 		die "Failed to register url for submodule path '$path'"
+ 
++		uploadpack=$(git config -f .gitmodules submodule."$name".uploadpack)
++		receivepack=$(git config -f .gitmodules submodule."$name".receivepack)
++		if test "$uploadpack"
++		then
++		    git config submodule."$name".uploadpack "$uploadpack" ||
++		    echo "  Warn: Failed to set uploadpack for '$url' in submodule path '$path'."
++		fi
++		if test "$receivepack"
++		then
++		    git config submodule."$name".receivepack "$receivepack" ||
++		    echo "  Warn: Failed to set receivepack for '$url' in submodule path '$path'."
++		fi
++
+ 		say "Submodule '$name' ($url) registered for path '$path'"
+ 	done
+ }
+@@ -330,7 +390,8 @@ cmd_update()
+ 
+ 		if ! test -d "$path"/.git -o -f "$path"/.git
+ 		then
+-			module_clone "$path" "$url" || exit
++			module_clone "$path" "$url" "$(git config submodule."$name".uploadpack)" \
++			    "$(git config submodule."$name".receivepack)" || exit
+ 			subsha1=
+ 		else
+ 			subsha1=$(unset GIT_DIR; cd "$path" &&
+@@ -655,6 +716,18 @@ cmd_sync()
+ 			remote=$(get_default_remote)
+ 			say "Synchronizing submodule url for '$name'"
+ 			git config remote."$remote".url "$url"
++			uploadpack=$(git config -f .gitmodules submodule."$name".uploadpack)
++			receivepack=$(git config -f .gitmodules submodule."$name".receivepack)
++			if test "$uploadpack"
++			then
++			    git config submodule."$name".uploadpack "$uploadpack" ||
++			    echo "  Warn: Failed to set uploadpack for '$url' in submodule path '$name'."
++			fi
++			if test "$receivepack"
++			then
++			    git config submodule."$name".receivepack "$receivepack" ||
++			    echo "  Warn: Failed to set receivepack for '$url' in submodule path '$name'."
++			fi
+ 		)
+ 		fi
+ 	done
+diff --git a/t/t7404-submodule-packbin.sh b/t/t7404-submodule-packbin.sh
+new file mode 100755
+index 0000000..d46b3e6
+--- /dev/null
++++ b/t/t7404-submodule-packbin.sh
+@@ -0,0 +1,53 @@
++#!/bin/sh
++#
++# Copyright (c) 2008 E. Jason Riedy
++#
++
++test_description='git submodule with explicit pack programs
++
++These tests exercise git submodule with --upload-pack and --receive-pack arguments.
++'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	echo file > file &&
++	git add file &&
++	test_tick &&
++	git commit -m upstream
++	git clone . super &&
++	git clone super submodule &&
++	(cd super &&
++	 git submodule add --upload-pack "${GIT_EXEC_PATH}/git-upload-pack" --receive-pack "${GIT_EXEC_PATH}/git-receive-pack" ../submodule submodule &&
++	 test_tick &&
++	 git commit -m "submodule"
++	) &&
++	git clone super super-clone &&
++	(cd super-clone && git submodule update --init)
++'
++
++test_expect_success 'push submodule change' '
++	(cd super &&
++         cd submodule &&
++         git checkout master &&
++	 echo second line >> file &&
++	 test_tick &&
++	 git commit -a -m "change submodule inside" &&
++         git push origin +master:pushed
++	)
++'
++
++test_expect_success 'pull submodule change' '
++	(cd submodule &&
++         git pull . pushed &&
++	 echo second line >> file &&
++	 test_tick &&
++	 git commit -a -m "change submodule outside"
++	) &&
++        (cd super &&
++         cd submodule &&
++         git pull origin master
++        )
++'
++
++test_done
+-- 
+1.6.1.60.g1f086.dirty
