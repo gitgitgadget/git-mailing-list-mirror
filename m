@@ -1,98 +1,65 @@
-From: "Zorba" <cr@altmore.co.uk>
-Subject: Re: for newbs = little exercise / tutorial / warmup for windows and other non-sophisticated new Git users :-)
-Date: Tue, 30 Dec 2008 21:39:41 -0000
-Message-ID: <gje4ff$ip6$4@ger.gmane.org>
-References: <gj68a0$u56$3@ger.gmane.org> <gj6kqq$nvh$4@ger.gmane.org> <3ab397d0812291505v77824e6fvdecebc80f38a5f89@mail.gmail.com> <gjdh0r$n3c$4@ger.gmane.org> <gjdlcl$5no$4@ger.gmane.org> <gjdmm6$9oj$4@ger.gmane.org> <3ab397d0812301035w3dcd872fkae9509629a0ed7de@mail.gmail.com>
+From: skillzero@gmail.com
+Subject: Why can't git pull --rebase work if there are modified files?
+Date: Tue, 30 Dec 2008 13:40:22 -0800
+Message-ID: <2729632a0812301340y735c3946weee55c9856d4e6a9@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 30 22:41:39 2008
+X-From: git-owner@vger.kernel.org Tue Dec 30 22:41:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHmLJ-0000xV-PZ
-	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 22:41:38 +0100
+	id 1LHmLY-00011k-0j
+	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 22:41:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752407AbYL3VkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 16:40:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752048AbYL3VkU
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 16:40:20 -0500
-Received: from main.gmane.org ([80.91.229.2]:55643 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752021AbYL3VkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 16:40:18 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LHmJw-0003Zz-80
-	for git@vger.kernel.org; Tue, 30 Dec 2008 21:40:12 +0000
-Received: from 81.135.227.136 ([81.135.227.136])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Dec 2008 21:40:12 +0000
-Received: from cr by 81.135.227.136 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Dec 2008 21:40:12 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 81.135.227.136
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5512
-X-RFC2646: Format=Flowed; Original
+	id S1752441AbYL3Vk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 16:40:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752430AbYL3VkZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 16:40:25 -0500
+Received: from yx-out-1718.google.com ([74.125.44.158]:38455 "EHLO
+	yx-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752425AbYL3VkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 16:40:25 -0500
+Received: by yx-out-1718.google.com with SMTP id 3so1908385yxi.72
+        for <git@vger.kernel.org>; Tue, 30 Dec 2008 13:40:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=IpA5zBdRA+6sX6H7Y7m5obIGrMSg0CPoaJFmBIAiYFA=;
+        b=Os60zuSjHRzjm/0L75z46bSsBthSJjZy7pINBRkvQAIcEsYMF4QuzY1lyowtZAPWUc
+         +lVwJ6BEX7el5TCkhMHm6rNqlH7ICO5NxakBO0bdwZ+/BMh3CFfM32XC6MxemK8X0VAB
+         aZGSwybZb6TVYhgJOjCj7PEOh7caju5DxTGLg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=gVsItf9NoFs2GPefaO9pxwts7kTz5HCuWME/HGh9PMvfq94FyXNXfeSzr8Qp4a0CUc
+         q7tucEjRIZRZVIeMy/f45taKe7g2mfmGvZLbfW13EhNTNxOytoJ4wbe8tAQY8dw/NInx
+         bLlurcTcr4xzMQ/jFfCQJYaI/h0LRCnAGkOCE=
+Received: by 10.64.251.17 with SMTP id y17mr11719061qbh.9.1230673222750;
+        Tue, 30 Dec 2008 13:40:22 -0800 (PST)
+Received: by 10.65.192.6 with HTTP; Tue, 30 Dec 2008 13:40:22 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.2 points;
- *  0.0 RCVD_BY_IP Received by mail server with no name
- *  4.0 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
- *  1.2 PRIORITY_NO_NAME Message has priority, but no X-Mailer/User-Agent
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104210>
 
-Thnks for reviewing !
+If I have locally modified files and I try to 'git pull --rebase', it
+fails because of the locally modified files. If I don't use the
+--rebase option, it works (but generates a merge commit if I have
+local commits). Why does rebasing require an unmodified checkout? It
+seems like it should only stop if I something in the newly fetched
+changes conflict with my local changes.
 
-"Jeff Whiteside" <jeff.m.whiteside@gmail.com> wrote in message 
-news:3ab397d0812301035w3dcd872fkae9509629a0ed7de@mail.gmail.com...
->> commit -a detects that files have been deleted, and takes them out of the 
->> index !
->> could also have used $ git rm <specific files> and then $ git commit ..
->
-> hey! i like your changes! the post is pretty polished now.  the only
-> thing else i would change (srysry), is the above.  "-a detects that
-> files have been deleted"  -> heh, not true.  you don't need -a here;
-> it does something else.
-
-** haven't had time to review this but from what you say it looks like I 
-forgot to take this out
-
-> okay i just recreated your repo and did the same thing.  with your
-> syntax "git checkout versionA ." i got the same result, and i'm not
-> sure why, but i think it was because of the detached head.
-
-** at Yves' (demerphq) request I reproduced and posted the exact sequence of 
-commands
-this was from a reboot, going straight into git bash and running the warmup 
-with NO git-resets at all
-
-> good news, use "git checkout versionA", not "git checkout versionA ."
-> (so, use it wihtout the dot), and you should be back in working order.
-
-** yes but I don't get the files copied out into the tree which is all my 
-little heart ever desired
-
-> the other (good?)  news is that you probably _do_ want to be using git
-> reset --hard in your case, because you're trying to build up a history
-> from some project, so you do want to erase some faulty commits after
-> you bodge something or miss some files.
-
-** yes, now I know that git-reset is only for destruction, not navigation
-
-> the bad news is that my opinion is that you should probably move on
-> with your life, because my own past tells me that you'll never
-> actually use those old project versions, hahah :p
-
-** LOL, I have to admit I am enjoying this though, even if its driving me 
-slightly potty - haha
-I didn't write these early versions so I just wanna have them around to 
-rollback to if I end up hacking the thing to bits.
-But you're right - chances of using are slim - but you could say that about 
-every version sitting in any given SCM repo.
-Thats why we have SCM, and why we insure our cars etc etc. :-) 
+I almost always have modified files in my checkout for things I'm
+working on. I also often have a commit or two that haven't been pushed
+because I'm waiting until I get to a good point before pushing. If I
+do 'git pull', I end up with a merge commit each time. That's why I
+want to use --rebase, but for it to work, I have to git stash, then
+rebase then git stash pop.
