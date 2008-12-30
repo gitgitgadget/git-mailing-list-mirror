@@ -1,70 +1,66 @@
-From: Asheesh Laroia <asheesh@asheesh.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
 Subject: Re: why still no empty directory support in git
-Date: Tue, 30 Dec 2008 01:25:41 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.0812300113050.22107@vellum.laroia.net>
-References: <46dff0320812291942y6aeec941k9394586621e9151b@mail.gmail.com> <alpine.DEB.2.00.0812300008060.31590@vellum.laroia.net>
+Date: Tue, 30 Dec 2008 07:58:41 +0100
+Message-ID: <200812300758.41988.robin.rosenberg.lists@dewire.com>
+References: <46dff0320812291942y6aeec941k9394586621e9151b@mail.gmail.com> <alpine.DEB.2.00.0812300008060.31590@vellum.laroia.net> <3ab397d0812292128j65e2e1e1xf403a998f4653aac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 30 07:27:13 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Asheesh Laroia" <asheesh@asheesh.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Jeff Whiteside" <jeff.m.whiteside@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 30 08:27:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHY4M-0000Qt-T2
-	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 07:27:11 +0100
+	id 1LHZ0w-0002zb-Ju
+	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 08:27:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751305AbYL3GZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 01:25:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751187AbYL3GZu
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 01:25:50 -0500
-Received: from rose.makesad.us ([219.105.37.19]:60281 "EHLO rose.makesad.us"
+	id S1751479AbYL3H0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 02:26:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751397AbYL3H0V
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 02:26:21 -0500
+Received: from mail.dewire.com ([83.140.172.130]:27098 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751179AbYL3GZt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 01:25:49 -0500
-Received: from vellum.laroia.net (localhost [127.0.0.1])
-	by rose.makesad.us (Postfix) with ESMTP id 080BAA010F
-	for <git@vger.kernel.org>; Tue, 30 Dec 2008 01:25:48 -0500 (EST)
+	id S1751373AbYL3H0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 02:26:20 -0500
+X-Greylist: delayed 1655 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Dec 2008 02:26:20 EST
 Received: from localhost (localhost [127.0.0.1])
-	by vellum.laroia.net (Postfix) with ESMTPS id C8BA83A62BD
-	for <git@vger.kernel.org>; Mon, 29 Dec 2008 22:25:41 -0800 (PST)
-X-X-Sender: paulproteus@vellum.laroia.net
-In-Reply-To: <alpine.DEB.2.00.0812300008060.31590@vellum.laroia.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-OpenPGP-Key-ID: 0x70096AD1
+	by dewire.com (Postfix) with ESMTP id 765828028B8;
+	Tue, 30 Dec 2008 07:58:43 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vClhrbd-p6EA; Tue, 30 Dec 2008 07:58:43 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id DDACC80280E;
+	Tue, 30 Dec 2008 07:58:42 +0100 (CET)
+User-Agent: KMail/1.10.3 (Linux/2.6.27-11-generic; KDE/4.1.3; i686; ; )
+In-Reply-To: <3ab397d0812292128j65e2e1e1xf403a998f4653aac@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104165>
 
-On Tue, 30 Dec 2008, Asheesh Laroia wrote:
+tisdag 30 december 2008 06:28:58 skrev Jeff Whiteside:
+> funny, i thought it was 1, by design.
+Sure, but designs can be changed.
 
-> On Tue, 30 Dec 2008, Ping Yin wrote:
->
->> 2. unclear logic, for example, whether to remove the directory after the 
->> last file in it is deleted
->
-> This is the thing I dislike most about git: that it sometimes calls rmdir() 
-> for me.  At least, one should be able to turn it off in a per-repository 
-> basis.  I'm going to see how hard a patch that would be to write.
+> 
+> but i forget why a tree object couldn't point to an empty blob.
 
-Well, changing this behavior seems to be "as easy as" changing 
-unlink_entry in unpack_trees.c to not always rmdir(). The most naive thing 
-I can think of is to have unlink_entry in unpack_trees check against the 
-git config. It's probably more sensible for unpack_trees to be passed an 
-argument that determines if it rmdir()s; that argument could be set via 
-argv at "git unpack-tree" time, which could be set out of a configuration 
-value read at "git" time.
+It can, but that's not the same.
 
-Would a change of the "more sensible" kind possibly be accepted by the git 
-maintainer?
+You can have an empty tree, but the index doesn't store them, 
+so they would be lost on checkout/commit. Linus sketched a solution, 
+but nobody took the bait. Seems doable if anyone really wants it, but
+I'm certain it adds a lot of special cases.
 
-I ask about this because I'm using git to track email in Maildir 
-repositories, and in that vein I'm getting bitten by git's removal of 
-empty directories.
+Look for a discussion [RFC PATCH] Re: Empty directories... posted on 2007-07-19.
+It's in the middle of a long thread.
 
--- Asheesh.
-
--- 
-You will gain money by an illegal action.
+-- robin
