@@ -1,69 +1,125 @@
-From: "Joe Casadonte" <jcasadonte@northbound-train.com>
-Subject: Re: git clone - failing on cygwin with git:// but not with ssh://
-Date: Tue, 30 Dec 2008 15:01:50 -0500
-Organization: Llama Fresh Farms, Neare Paraguay
-Message-ID: <ueizpwhxt.fsf@terrapin.northbound-train.com>
-References: <u7i5hy5ti.fsf@terrapin.northbound-train.com>
+From: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
+Subject: [PATCH v2] builtin-shortlog.c: use string_list_append(), and don't strdup unnecessarily
+Date: Tue, 30 Dec 2008 21:25:22 +0100
+Message-ID: <1230668722-26394-1-git-send-email-dato@net.com.org.es>
+References: <alpine.DEB.1.00.0812301319140.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 30 21:03:23 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Dec 30 21:28:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHko9-0002qZ-0l
-	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 21:03:17 +0100
+	id 1LHlCJ-0002gT-QH
+	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 21:28:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752210AbYL3UB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 15:01:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbYL3UB4
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 15:01:56 -0500
-Received: from dsl092-238-209.phl1.dsl.speakeasy.net ([66.92.238.209]:9046
-	"EHLO headlight.northbound-train.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751712AbYL3UBz (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Dec 2008 15:01:55 -0500
-Received: from jcasadon-us (localhost.localdomain [127.0.0.1])
-	by headlight.northbound-train.com (8.13.8/8.13.8) with ESMTP id mBUK1qEF006017
-	for <git@vger.kernel.org>; Tue, 30 Dec 2008 15:01:53 -0500
-In-Reply-To: <u7i5hy5ti.fsf@terrapin.northbound-train.com> (Joe Casadonte's message of "Tue\, 30 Dec 2008 11\:40\:41 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (windows-nt)
+	id S1751738AbYL3UZZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Dec 2008 15:25:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751712AbYL3UZZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 15:25:25 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:1825
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751551AbYL3UZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 15:25:24 -0500
+Received: from chistera.yi.org (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id 02BD6801C078;
+	Tue, 30 Dec 2008 21:25:23 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LHl9W-0006sp-2M; Tue, 30 Dec 2008 21:25:22 +0100
+X-Mailer: git-send-email 1.6.1.307.g07803
+In-Reply-To: <alpine.DEB.1.00.0812301319140.30769@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104202>
 
-On 30 Dec 2008, Joe Casadonte wrote:
+Make cleanup in insert_one_record() use string_list_append(), instead o=
+f
+duplicating its code. Because of this, do not free the "util" member wh=
+en
+clearing the "onelines" string lists: with the new code path it is not
+initialized to any value (was being initialized to NULL previously).
 
-> Looking for a little help, please.  Is this not a legitimate git
-> issue?  Can anyone at least help me diagnose the issue?  Please?
+Also, avoid unnecessary strdup() calls when inserting names in log->lis=
+t.
+This list always has "strdup_strings" activated, hence strdup'ing nameb=
+uf is
+unnecessary. This change also removes a latent memory leak in the old c=
+ode.
 
-My apologies to the group -- I wasn't really cognizant of the fact
-that its only been 3 days since my first email.  That has now been
-made abundantly clear to me :)
+NB: The duplicated code mentioned above predated the appearance of
+string_list_append().
 
-I've been working on getting git working full-bore since the middle of
-last week, of which this issue is just part of it, and I'm quickly
-running out of time (Jan 5 I have to ditch this and go back to my
-normal tasks).  All the days are blurring together.....
+Signed-off-by: Adeodato Sim=C3=B3 <dato@net.com.org.es>
+---
 
-Anyhow, thanks for *your* patience with me, despite the lack of
-manners on my end.  A happy & safe New Years to all!
+> FWIW I like the patch, but would like it even more if the strdup() re=
+moval=20
+> was squashed in (with an explanation in the commit message).
 
---
-Regards,
+Ok, I myself prefer it the other way, but here it is. :-)
 
+ builtin-shortlog.c |   19 +++----------------
+ 1 files changed, 3 insertions(+), 16 deletions(-)
 
-joe
-Joe Casadonte
-jcasadonte@northbound-train.com
-
-------------------------------------------------------------------------------
-         Llama Fresh Farms => http://www.northbound-train.com
-    Ramblings of a Gay Man => http://www.northbound-train.com/ramblings
-               Emacs Stuff => http://www.northbound-train.com/emacs.html
-          Music CD Trading => http://www.northbound-train.com/cdr.html
-------------------------------------------------------------------------------
-                       Live Free, that's the message!
-------------------------------------------------------------------------------
+diff --git a/builtin-shortlog.c b/builtin-shortlog.c
+index d03f14f..90e76ae 100644
+--- a/builtin-shortlog.c
++++ b/builtin-shortlog.c
+@@ -36,7 +36,6 @@ static void insert_one_record(struct shortlog *log,
+ 	const char *dot3 =3D log->common_repo_prefix;
+ 	char *buffer, *p;
+ 	struct string_list_item *item;
+-	struct string_list *onelines;
+ 	char namebuf[1024];
+ 	size_t len;
+ 	const char *eol;
+@@ -68,12 +67,9 @@ static void insert_one_record(struct shortlog *log,
+ 		snprintf(namebuf + len, room, " %.*s", maillen, boemail);
+ 	}
+=20
+-	buffer =3D xstrdup(namebuf);
+-	item =3D string_list_insert(buffer, &log->list);
++	item =3D string_list_insert(namebuf, &log->list);
+ 	if (item->util =3D=3D NULL)
+ 		item->util =3D xcalloc(1, sizeof(struct string_list));
+-	else
+-		free(buffer);
+=20
+ 	/* Skip any leading whitespace, including any blank lines. */
+ 	while (*oneline && isspace(*oneline))
+@@ -104,16 +100,7 @@ static void insert_one_record(struct shortlog *log=
+,
+ 		}
+ 	}
+=20
+-	onelines =3D item->util;
+-	if (onelines->nr >=3D onelines->alloc) {
+-		onelines->alloc =3D alloc_nr(onelines->nr);
+-		onelines->items =3D xrealloc(onelines->items,
+-				onelines->alloc
+-				* sizeof(struct string_list_item));
+-	}
+-
+-	onelines->items[onelines->nr].util =3D NULL;
+-	onelines->items[onelines->nr++].string =3D buffer;
++	string_list_append(buffer, item->util);
+ }
+=20
+ static void read_from_stdin(struct shortlog *log)
+@@ -323,7 +310,7 @@ void shortlog_output(struct shortlog *log)
+ 		}
+=20
+ 		onelines->strdup_strings =3D 1;
+-		string_list_clear(onelines, 1);
++		string_list_clear(onelines, 0);
+ 		free(onelines);
+ 		log->list.items[i].util =3D NULL;
+ 	}
+--=20
+1.6.1.307.g07803
