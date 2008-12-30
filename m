@@ -1,238 +1,117 @@
-From: "Jeff Whiteside" <jeff.m.whiteside@gmail.com>
-Subject: Re: for newbs = little exercise / tutorial / warmup for windows and other non-sophisticated new Git users :-)
-Date: Mon, 29 Dec 2008 21:33:06 -0800
-Message-ID: <3ab397d0812292133r7955e892g6c19ca46629e7103@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: for newbs = little exercise / tutorial / warmup for windows and
+ other non-sophisticated new Git users :-)
+Date: Tue, 30 Dec 2008 05:34:38 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngljcne.n7q.sitaramc@sitaramc.homelinux.net>
 References: <gj68a0$u56$3@ger.gmane.org> <gj6kqq$nvh$4@ger.gmane.org>
-	 <3ab397d0812291505v77824e6fvdecebc80f38a5f89@mail.gmail.com>
-	 <gjc7qa$jdj$4@ger.gmane.org>
+ <3ab397d0812291505v77824e6fvdecebc80f38a5f89@mail.gmail.com>
+ <gjc7qa$jdj$4@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Zorba <cr@altmore.co.uk>
-X-From: git-owner@vger.kernel.org Tue Dec 30 06:34:43 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 30 06:36:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHXFa-0008HQ-Fa
-	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 06:34:43 +0100
+	id 1LHXH5-00004x-Ek
+	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 06:36:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750858AbYL3FdW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Dec 2008 00:33:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750804AbYL3FdV
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 00:33:21 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:39069 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750722AbYL3FdU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Dec 2008 00:33:20 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so4006846qwe.37
-        for <git@vger.kernel.org>; Mon, 29 Dec 2008 21:33:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=kNyx+tNT8Y9wy5uKKzIxwcyoxOJM1HCklKYAi8g6A34=;
-        b=lihynbsSp5N1Q1AD0y0Fl7AdeuPaNvoZ3vaE1QKRrAImn1PQP4XpuJol0/OjSApFdt
-         vF8mOTG8+8+GL6AWbAORORelEHA/UDh/T+afbIskOPBmMMKCikTXCdaAkNgA475q2Crw
-         Dd5uQv7ukJqdXf0WdX8UGRvdpZ7Dekjylmoa0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=jy4V/clZRf59iTLzWedXK5Tbc+T42SECgxbd4aRLr7fkL1iMbP15KaNo9dbP4W0777
-         mCE5G+/iHG6iqdWRcZw0K/aRs4yZvQnZ2nHXrjWNxrMvOc/RO3DqfOdP3lEUJ4Zx55S5
-         P+VcVLT6gQLCKg4JgRq7ha6jBI9wycbsMgJlM=
-Received: by 10.214.147.16 with SMTP id u16mr12012668qad.157.1230615186953;
-        Mon, 29 Dec 2008 21:33:06 -0800 (PST)
-Received: by 10.215.41.3 with HTTP; Mon, 29 Dec 2008 21:33:06 -0800 (PST)
-In-Reply-To: <gjc7qa$jdj$4@ger.gmane.org>
-Content-Disposition: inline
+	id S1750954AbYL3Fez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 00:34:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750929AbYL3Fey
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 00:34:54 -0500
+Received: from main.gmane.org ([80.91.229.2]:44805 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750886AbYL3Fex (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 00:34:53 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LHXFj-0004Vd-9r
+	for git@vger.kernel.org; Tue, 30 Dec 2008 05:34:51 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 30 Dec 2008 05:34:51 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 30 Dec 2008 05:34:51 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104162>
 
-> Thanks for your contrib. I'll pick these up for sure, but right now I=
-'m
-> despo to make some progress getting this confounded real-life project
-> versioned.
+Hi Conor,
 
-np, i do understand totally.
+On 2008-12-30, Zorba <cr@altmore.co.uk> wrote:
+> so when I reset to A, I've still got the ability to get to B or C again
 
-> I've just made a commit I want to retract.
+if this is true...  (call this case 1)
 
-this is the purpose of git reset --soft/mixed/hard
-
-> I have been using $ git reset --hard <version> as an escalator to asc=
-end /
-> descend the versions up and down
-
-you should probably be using git checkout for this
-
-> Surely it doesn't alter the history, as I can commit versionA, versio=
-nB,
-> versionC, and then reset to A, then reset to C, then reset to B.
-
-i does alter the history.  i think this works because git isnt'
-deleting the actual blob objects in the git dir until you use the git
-prune, or gc or whatever (i never use it anyway).  but, you are
-altering history, and just happen to be recovering.
-
-> so when I reset to A, I've still got the ability to get to B or C aga=
-in
-
-with an uneasy conscience ;)
-
-> Now I appreciate that if I commit a new change from versionA (lets ca=
-ll it
+> Now I appreciate that if I commit a new change from versionA (lets call it 
 > B1), then HEAD is now at B1, and B, C etc are lost, correct ?
 
-yes! but this is not true if you had done a git checkout (there are
-measures to recover B and C, provided you haven't done a prune.  i
-think git reflog has some answers here, but i'm still a newbie).
+...then this (call this case 2) is not true.
 
-> Its pertinent to where I am right now, as I've goofed a commit, and w=
-ant to
-> reset, and commit again but I'm worried about leaveing garbage lying =
-around
+In case 1, *how* do you get back to B and C?  However you do
+it, the same action will get you to B and C *after* you
+created B1 as well.
+
+It might help to think of these things loosely using a
+malloc/linked-list analogy.  Imagine a singly-linked list,
+and a variable in your program called "head" pointing to the
+top element.  Each element contains a back-pointer to its
+parent.  You can start from head and walk the list backward,
+but you can't walk forward -- there are no forward pointers.
+
+A "git commit" is analogous to:
+    newblkptr = malloc(...);
+    ... store whatever you want in the new block ...
+    newblkptr.backptr = head;
+    head = newblkptr;
+
+i.e., a classic linked list add.
+
+A "git reset --hard HEAD^" essentially pops the topmost
+element off the list:
+    head = head.backptr
+
+A "git checkout -f HEAD^" is like walking a linked list
+backward in a loop, and stopping at some intermediate block
+to do something -- other the temporary loop-variable,
+nothing else (no global variable perhaps) points to this
+block, so this is like a detached head.
+
+Of course, nothing prevents you from permanently saving this
+temporary loop variable because you suddenly realise *this*
+link in the chain is very important for the rest of your
+program:
+    some_global_var = temp_blk_ptr;
+
+This is like "git checkout -b newbranch" does.
+
+> Its pertinent to where I am right now, as I've goofed a commit, and want to 
+> reset, and commit again but I'm worried about leaveing garbage lying around 
 > (the commits for version B and C in the example above).
 
-you've goofed what commit (a1?, c?, d3?)?  where are you now and what
-do you want to do now? reset to what version?  if you're just worried
-about space used by B and C, i think git prune will purge these (look
-at man page, don't guess at the syntax).
+(1) never worry about leaving garbage around; there are many
+operations that do that; it's part of the design.  Don't
+sweat it.
 
-i half suspect that you want to git branch at some point, but if
-yo'ure just recretaing the other code bases' history form other files,
-you shouldn't be able to break too much by git reset --hard, or git
-prune.
+(2) when in doubt, try "gitk --all".  That's a good GUI.
+I'm normally a CLI freak, but when something needs to be
+understood/learnt, a well-designed GUI really helps.
 
-> BTW: sdf=3DSyntax Definition Formalism?
+Run "gitk --all" on the side and hit F5 on it after each
+operation on the command line -- helped me when I was trying
+to figure out what's happening.
 
-hahahaha, no, i was just typing/copypasting garbage, because my gmail
-woudln't' get out of bold mode and forgot to delete it at the end.
-haha.
-
-On Mon, Dec 29, 2008 at 8:24 PM, Zorba <cr@altmore.co.uk> wrote:
-> Hi Jeff,
->
-> Thanks for your contrib. I'll pick these up for sure, but right now I=
-'m
-> despo to make some progress getting this confounded real-life project
-> versioned.
->
-> But where I'm stuck now touches on your post.
->
-> I've just made a commit I want to retract.
->
-> I have been using $ git reset --hard <version> as an escalator to asc=
-end /
-> descend the versions up and down
-> Surely it doesn't alter the history, as I can commit versionA, versio=
-nB,
-> versionC, and then reset to A, then reset to C, then reset to B.
->
-> so when I reset to A, I've still got the ability to get to B or C aga=
-in
->
-> Now I appreciate that if I commit a new change from versionA (lets ca=
-ll it
-> B1), then HEAD is now at B1, and B, C etc are lost, correct ?
->
-> Its pertinent to where I am right now, as I've goofed a commit, and w=
-ant to
-> reset, and commit again but I'm worried about leaveing garbage lying =
-around
-> (the commits for version B and C in the example above).
->
-> NB if you read my latest posts you will see why I chose the example I=
- did
-> for my "warm-up" as it closely models what I'm trying to do for real.
->
->
-> BTW: sdf=3DSyntax Definition Formalism?
->
-> "Jeff Whiteside" <jeff.m.whiteside@gmail.com> wrote in message
-> news:3ab397d0812291505v77824e6fvdecebc80f38a5f89@mail.gmail.com...
->
-> -"Rollback to each of the versions, starting with version A"
-> this is bad.  you're saying rollback.  to others that have used scms,
-> this will mean, "retrieve an older copy", but in git, this is DELETIN=
-G
-> all the versions after the version that you "rollback" to.  your blog
-> post shouldn't discuss the git-reset --hard command at all, since
-> you're rewriting history, which is dangerous.  afaik, most scms don't
-> allow you to rewrite history.  to "rollback" to an older version you
-> should use checkout the git-checkout command.  maybe the git reset
-> -=96hard HEAD is okay to include... but it won't be immediately obvio=
-us
-> to new users why it does what it does... this nomenclature was likely
-> not the best choice whenever it was made.
->
->
-> gl with your gitting.
->
-> whiteside
->
->
->
->
-> u're talking sdf
->
->
->
->
-> On Sat, Dec 27, 2008 at 5:29 PM, Zorba <cr@altmore.co.uk> wrote:
->>
->> tidied up the formatting, added a few more comments where needed, fi=
-xed
->> errors/lack of clarity
->>
->> "Zorba" <cr@altmore.co.uk> wrote in message
->> news:gj68a0$u56$3@ger.gmane.org...
->> > Here is a little exercise / tutorial / warm-up for someone startin=
-g out
->> > with Git. If you're anyting like me you may find the tutorials etc=
-=2E on
->> > git.or.cz a bit daunting. I recommend you try this after reading t=
-he
->> > user
->> > manual but before tearing your hair out trying to follow all the
->> > examples
->> > in the user manual. After you've followed this simple workflow, th=
-en go
->> > back to the more advanced stuff  in the tutorials and user manuals=
- (like
->> > cloning repositories and creating and merging branches).
->> >
->> > I created this exercise to try and model our workflow and what we =
-wanted
->> > to use git for =3D tracking a project with multiple files where th=
-e
->> > filebase
->> > might change frequently from one version to the next.
->> >
->> > http://siliconmouth.wordpress.com/category/nerdy/
->> >
->> > look for December 27, 2008 or "git warmup"
->> >
->> >
->>
->>
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+PS: although it doesn't mention detached heads,
+http://eagain.net/articles/git-for-computer-scientists/
+helped me a lot...
