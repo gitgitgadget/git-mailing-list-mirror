@@ -1,63 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Joe Casadonte" <jcasadonte@northbound-train.com>
 Subject: Re: git clone - failing on cygwin with git:// but not with ssh://
-Date: Tue, 30 Dec 2008 11:54:29 -0800
-Message-ID: <7v1vvp30cq.fsf@gitster.siamese.dyndns.org>
+Date: Tue, 30 Dec 2008 15:01:50 -0500
+Organization: Llama Fresh Farms, Neare Paraguay
+Message-ID: <ueizpwhxt.fsf@terrapin.northbound-train.com>
 References: <u7i5hy5ti.fsf@terrapin.northbound-train.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Joe Casadonte" <jcasadonte@northbound-train.com>
-X-From: git-owner@vger.kernel.org Tue Dec 30 20:56:01 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 30 21:03:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHkh3-0000ZD-M3
-	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 20:55:58 +0100
+	id 1LHko9-0002qZ-0l
+	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 21:03:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752050AbYL3Tyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 14:54:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752037AbYL3Tyg
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 14:54:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39111 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751981AbYL3Tyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 14:54:36 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B7FC41B65E;
-	Tue, 30 Dec 2008 14:54:34 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9005E1B657; Tue,
- 30 Dec 2008 14:54:31 -0500 (EST)
-In-Reply-To: <u7i5hy5ti.fsf@terrapin.northbound-train.com> (Joe Casadonte's
- message of "Tue, 30 Dec 2008 11:40:41 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: AE900992-D6AB-11DD-AB81-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752210AbYL3UB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 15:01:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbYL3UB4
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 15:01:56 -0500
+Received: from dsl092-238-209.phl1.dsl.speakeasy.net ([66.92.238.209]:9046
+	"EHLO headlight.northbound-train.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751712AbYL3UBz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Dec 2008 15:01:55 -0500
+Received: from jcasadon-us (localhost.localdomain [127.0.0.1])
+	by headlight.northbound-train.com (8.13.8/8.13.8) with ESMTP id mBUK1qEF006017
+	for <git@vger.kernel.org>; Tue, 30 Dec 2008 15:01:53 -0500
+In-Reply-To: <u7i5hy5ti.fsf@terrapin.northbound-train.com> (Joe Casadonte's message of "Tue\, 30 Dec 2008 11\:40\:41 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (windows-nt)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104201>
 
-"Joe Casadonte" <jcasadonte@northbound-train.com> writes:
+On 30 Dec 2008, Joe Casadonte wrote:
 
-> Looking for a little help, please.  Is this not a legitimate git issue?  Can
-> anyone at least help me diagnose the issue?  Please?
+> Looking for a little help, please.  Is this not a legitimate git
+> issue?  Can anyone at least help me diagnose the issue?  Please?
 
-I think "git on Cygwin" is as legitimate as git on anything else, but at
-the same time my guess is that it is a combination of the fact that
-everybody is busy with other things around the end of year , and that
-probably there are not many "git on Cygwin" experts monitoring the list to
-begin with.
+My apologies to the group -- I wasn't really cognizant of the fact
+that its only been 3 days since my first email.  That has now been
+made abundantly clear to me :)
 
-Sorry, I do not work on Cygwin (nor Windows in general).  "fatal: read
-error (Socket operation on non-socket)" sounds like it is coming from
-pkt-line.c::safe_read() on the downloading side (i.e. git-clone).
+I've been working on getting git working full-bore since the middle of
+last week, of which this issue is just part of it, and I'm quickly
+running out of time (Jan 5 I have to ditch this and go back to my
+normal tasks).  All the days are blurring together.....
 
-Googling for that error message seems to indicate that it seems to a
-rather common error message on wide variety of programs running on Cygwin.
+Anyhow, thanks for *your* patience with me, despite the lack of
+manners on my end.  A happy & safe New Years to all!
 
-C.f.
+--
+Regards,
 
-http://www.google.com/search?&q=%22Socket+operation+on+non-socket%22+site%3Acygwin.com
+
+joe
+Joe Casadonte
+jcasadonte@northbound-train.com
+
+------------------------------------------------------------------------------
+         Llama Fresh Farms => http://www.northbound-train.com
+    Ramblings of a Gay Man => http://www.northbound-train.com/ramblings
+               Emacs Stuff => http://www.northbound-train.com/emacs.html
+          Music CD Trading => http://www.northbound-train.com/cdr.html
+------------------------------------------------------------------------------
+                       Live Free, that's the message!
+------------------------------------------------------------------------------
