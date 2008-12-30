@@ -1,165 +1,173 @@
-From: "Zorba" <cr@altmore.co.uk>
-Subject: Re: for newbs = little exercise / tutorial / warmup for windows and other non-sophisticated new Git users :-)
-Date: Tue, 30 Dec 2008 04:24:25 -0000
-Message-ID: <gjc7qa$jdj$4@ger.gmane.org>
-References: <gj68a0$u56$3@ger.gmane.org> <gj6kqq$nvh$4@ger.gmane.org> <3ab397d0812291505v77824e6fvdecebc80f38a5f89@mail.gmail.com>
+From: "Jeff Whiteside" <jeff.m.whiteside@gmail.com>
+Subject: Re: is there an easier way to do this ?
+Date: Mon, 29 Dec 2008 20:26:49 -0800
+Message-ID: <3ab397d0812292026j2feedf50tdbaa0109f89543f7@mail.gmail.com>
+References: <gjc52u$ehc$4@ger.gmane.org> <gjc5t2$g02$4@ger.gmane.org>
+	 <8c9a060812292000k18ccd466g628ea4161bac188b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 30 05:26:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Zorba <cr@altmore.co.uk>
+To: "Jacob Helwig" <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 30 05:28:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHWBP-0004zf-Ni
-	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 05:26:20 +0100
+	id 1LHWDS-0005Kz-LM
+	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 05:28:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751962AbYL3EY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Dec 2008 23:24:58 -0500
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751812AbYL3EY5
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 23:24:57 -0500
-Received: from main.gmane.org ([80.91.229.2]:46040 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751543AbYL3EY4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Dec 2008 23:24:56 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LHW9x-0002UR-Ik
-	for git@vger.kernel.org; Tue, 30 Dec 2008 04:24:49 +0000
-Received: from 81.135.227.136 ([81.135.227.136])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Dec 2008 04:24:49 +0000
-Received: from cr by 81.135.227.136 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Dec 2008 04:24:49 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 81.135.227.136
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5512
-X-RFC2646: Format=Flowed; Original
+	id S1753440AbYL3E1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Dec 2008 23:27:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbYL3E1E
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Dec 2008 23:27:04 -0500
+Received: from qw-out-2122.google.com ([74.125.92.25]:32432 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753242AbYL3E1B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Dec 2008 23:27:01 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so3988744qwe.37
+        for <git@vger.kernel.org>; Mon, 29 Dec 2008 20:26:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=VBv4aBRJhLXz85qa1YbKCtFBQzkq3MgR9uc9ZzZPQOQ=;
+        b=uollUH5qQUsnHA5WazzYz/9HoWhZ0rpK7Qaj7RCwP2m8HVwontOJAmyRQ1u6XgVWXP
+         O9NEGfuTfzJxARfWP1VAf/4VP6qnVvew3dMWMmVMUt2PL9NMQoZcS2oD1eeki4N/XbG1
+         8ZYY9Fmd42QIf3RJxFqAVqJ8/AXszhnAeMpYk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=dkXfxVnPUJuUBcQOM1d/omyeDMjWDL31oFzFn4ldBBRvbTM+CiZzL2rcx2EyrcV4Gj
+         Z3ApGMK0YxxzhWmmeTwAzgwyzyX1iJabsSR2c4CWaFHNOOIRhX2hJdNUtVsbDojdcy3m
+         S7chwcxoMZDjPuZDTODHt6bSykmbsBMtROuts=
+Received: by 10.214.183.19 with SMTP id g19mr11983536qaf.72.1230611209682;
+        Mon, 29 Dec 2008 20:26:49 -0800 (PST)
+Received: by 10.215.41.3 with HTTP; Mon, 29 Dec 2008 20:26:49 -0800 (PST)
+In-Reply-To: <8c9a060812292000k18ccd466g628ea4161bac188b@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104156>
 
-Hi Jeff,
+$ git add .
+$ git commit -a
 
-Thanks for your contrib. I'll pick these up for sure, but right now I'm=
-=20
-despo to make some progress getting this confounded real-life project=20
-versioned.
+no, you don't need git commit -a, just git commit
 
-But where I'm stuck now touches on your post.
+so,
 
-I've just made a commit I want to retract.
+$ git add .
+$ git commit -m "my msg"
 
-I have been using $ git reset --hard <version> as an escalator to ascen=
-d /=20
-descend the versions up and down
-Surely it doesn't alter the history, as I can commit versionA, versionB=
-,=20
-versionC, and then reset to A, then reset to C, then reset to B.
+why?
 
-so when I reset to A, I've still got the ability to get to B or C again
+git add . will add everything to the index, including a notation about
+removing deleted files (i hope you know what the index is, if not,
+google 'index' or 'staging area', this will clear everything up).
 
-Now I appreciate that if I commit a new change from versionA (lets call=
- it=20
-B1), then HEAD is now at B1, and B, C etc are lost, correct ?
+git commit will take everything from the index and commit (not the
+working tree of files) it to the actual repository.
 
-Its pertinent to where I am right now, as I've goofed a commit, and wan=
-t to=20
-reset, and commit again but I'm worried about leaveing garbage lying ar=
-ound=20
-(the commits for version B and C in the example above).
+git commit -a will take every file that is already tracked in git, but
+NOT newly added files, and add/update the content in the index, then
+commit it.
 
-NB if you read my latest posts you will see why I chose the example I d=
-id=20
-for my "warm-up" as it closely models what I'm trying to do for real.
+so, git commit -a is equivalent to
 
-
-BTW: sdf=3DSyntax Definition Formalism?
-
-"Jeff Whiteside" <jeff.m.whiteside@gmail.com> wrote in message=20
-news:3ab397d0812291505v77824e6fvdecebc80f38a5f89@mail.gmail.com...
-
--"Rollback to each of the versions, starting with version A"
-this is bad.  you're saying rollback.  to others that have used scms,
-this will mean, "retrieve an older copy", but in git, this is DELETING
-all the versions after the version that you "rollback" to.  your blog
-post shouldn't discuss the git-reset --hard command at all, since
-you're rewriting history, which is dangerous.  afaik, most scms don't
-allow you to rewrite history.  to "rollback" to an older version you
-should use checkout the git-checkout command.  maybe the git reset
--=96hard HEAD is okay to include... but it won't be immediately obvious
-to new users why it does what it does... this nomenclature was likely
-not the best choice whenever it was made.
-
-
-gl with your gitting.
-
-whiteside
+git add -u
+git commit
 
 
 
-
-u're talking sdf
-
-
-
-
-On Sat, Dec 27, 2008 at 5:29 PM, Zorba <cr@altmore.co.uk> wrote:
+On Mon, Dec 29, 2008 at 8:00 PM, Jacob Helwig <jacob.helwig@gmail.com> wrote:
+> On Mon, Dec 29, 2008 at 19:51, Zorba <cr@altmore.co.uk> wrote:
+>> The manual shows you can SHOW untracked files, but not add them as part of
+>> the commit -a jig
+>>
+>> Seems a bit strange that git-add operates on both exisging and new files
+>> when used standalone, but its behaviour changes when encapsulated in
+>> commit -a...
+>>
+>> So, I thought maybe $ git commit -a, then $ git add .
+>> but then the files tracked have missed the commit boat they were meant to be
+>> on, haven't they,
+>>
+>> hang on -
+>> what about
+>>
+>> $ git add .
+>> $ git commit -a
+>>
+>> I do believe I've cracked it
+>> if so, it seems a bit wasteful, 2x adds (one explicti and one embedded
+>> in -a) ? shame on you linux kernel guys, i'd have expected better :-)
+>>
+>> "Zorba" <cr@altmore.co.uk> wrote in message
+>> news:gjc52u$ehc$4@ger.gmane.org...
+>>> ok, now I'm in this for real, archiving versions of our website project
+>>> (5k files approx)
+>>>
+>>> so here is the workflow:
+>>>
+>>> - copy version 1 files into GIT dir
+>>>
+>>> - open git bash
+>>>
+>>> $ git init
+>>>
+>>> $ git add .
+>>>
+>>> $ git commit -m "version1"
+>>>
+>>> all vanilla ? cool
+>>> next job = store version 2, so delete version 1 files from GIT dir, copy
+>>> in version 2
+>>> version2 has different files from 1 - which ones? Out of 5k files could be
+>>> 1% = 50 new ones, and same amount removed. Why should I care, with such a
+>>> powerful friend as git around, n'est pas?
+>>> THIS TIME we are going to be CLEVER and use "-a" flag on commit to pick up
+>>> any files that have been REMOVED (or "deleted" in git-speak)
+>>>
+>>> $ git commit -a -m "version2"
+>>>
+>>> BUT this does not pick up any new ones that have been added,
+>>>
+>>> and when we run
+>>>
+>>> $ git status > ../git_status.txt
+>>>
+>>> these are referred to as "untracked files"
+>>> only problem there are 50 ish
+>>> is there not another flag on git commit to treat any untracked file as a
+>>> new file ?
+>>> (would save me typing or creating a list out of these untracked ones and
+>>> feeding them into git add)
+>>>
+>>> I know, I realise now I should have looked up git-commit in the manual -
+>>> in case its not there, pls enlighten me !
+>>>
+>>>
+>>>
+>>
+>>
+>>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>>
 >
-> tidied up the formatting, added a few more comments where needed, fix=
-ed
-> errors/lack of clarity
->
-> "Zorba" <cr@altmore.co.uk> wrote in message
-> news:gj68a0$u56$3@ger.gmane.org...
-> > Here is a little exercise / tutorial / warm-up for someone starting=
- out
-> > with Git. If you're anyting like me you may find the tutorials etc.=
- on
-> > git.or.cz a bit daunting. I recommend you try this after reading th=
-e=20
-> > user
-> > manual but before tearing your hair out trying to follow all the=20
-> > examples
-> > in the user manual. After you've followed this simple workflow, the=
-n go
-> > back to the more advanced stuff  in the tutorials and user manuals =
-(like
-> > cloning repositories and creating and merging branches).
-> >
-> > I created this exercise to try and model our workflow and what we w=
-anted
-> > to use git for =3D tracking a project with multiple files where the=
-=20
-> > filebase
-> > might change frequently from one version to the next.
-> >
-> > http://siliconmouth.wordpress.com/category/nerdy/
-> >
-> > look for December 27, 2008 or "git warmup"
-> >
-> >
->
->
->
+> If you do an explicit git add, then you don't need the -a on git
+> commit, since everything you want to commit will already be in the
+> index for git commit to work with.
 > --
 > To unsubscribe from this list: send the line "unsubscribe git" in
 > the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html=20
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
