@@ -1,53 +1,69 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: why still no empty directory support in git
-Date: Tue, 30 Dec 2008 13:09:41 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0812301308530.30769@pacific.mpi-cbg.de>
-References: <46dff0320812291942y6aeec941k9394586621e9151b@mail.gmail.com>
+Subject: Re: [PATCH] builtin-shortlog.c: use string_list_append() instead of
+ duplicating its code
+Date: Tue, 30 Dec 2008 13:20:18 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0812301319140.30769@pacific.mpi-cbg.de>
+References: <1230136476-11081-1-git-send-email-dato@net.com.org.es>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 30 13:10:17 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1790776328-1230639619=:30769"
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: =?ISO-8859-15?Q?Adeodato_Sim=F3?= <dato@net.com.org.es>
+X-From: git-owner@vger.kernel.org Tue Dec 30 13:21:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHdQN-0004ug-Q2
-	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 13:10:16 +0100
+	id 1LHdaf-0008Bz-Ll
+	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 13:20:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751959AbYL3MI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 07:08:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751915AbYL3MIz
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 07:08:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40627 "HELO mail.gmx.net"
+	id S1751677AbYL3MTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 07:19:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbYL3MTe
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 07:19:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52123 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751538AbYL3MIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 07:08:55 -0500
-Received: (qmail invoked by alias); 30 Dec 2008 12:08:53 -0000
+	id S1751394AbYL3MTe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 07:19:34 -0500
+Received: (qmail invoked by alias); 30 Dec 2008 12:19:30 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp052) with SMTP; 30 Dec 2008 13:08:53 +0100
+  by mail.gmx.net (mp059) with SMTP; 30 Dec 2008 13:19:30 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX190PyNM+Gp0o7iSjLFSaqY2PBjKU/itb406Q9Eq/T
-	mefGcdmOYbXRQa
+X-Provags-ID: V01U2FsdGVkX19SpD1zWflSXODDnN8J+kxtJIYUFNG5SgtANRyTqf
+	aINFeYe2NUU/xg
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <46dff0320812291942y6aeec941k9394586621e9151b@mail.gmail.com>
+In-Reply-To: <1230136476-11081-1-git-send-email-dato@net.com.org.es>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.74
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104177>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1790776328-1230639619=:30769
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Tue, 30 Dec 2008, Ping Yin wrote:
+On Wed, 24 Dec 2008, Adeodato Simó wrote:
 
-> Yes, i know this topic has been discussed for many times.
+> Also, when clearing the "onelines" string lists, do not free the "util"
+> member: with string_list_append() is not initialized to any value (and
+> was being initialized to NULL previously anyway).
+> 
+> NB: The duplicated code in builtin-shortlog.c predated the appearance of
+> string_list_append().
+> 
+> Signed-off-by: Adeodato Simó <dato@net.com.org.es>
 
-We have empty directory support in Git.  It works like this: for 
-directories that you do want to keep, you add an empty .gitignore file.
+FWIW I like the patch, but would like it even more if the strdup() removal 
+was squashed in (with an explanation in the commit message).
 
-No problem at all,
+Ciao,
 Dscho
+--8323328-1790776328-1230639619=:30769--
