@@ -1,106 +1,133 @@
-From: Asheesh Laroia <asheesh@asheesh.org>
-Subject: Re: why still no empty directory support in git
-Date: Tue, 30 Dec 2008 03:58:46 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.0812300346040.19911@vellum.laroia.net>
-References: <46dff0320812291942y6aeec941k9394586621e9151b@mail.gmail.com>  <alpine.DEB.2.00.0812300008060.31590@vellum.laroia.net>  <alpine.DEB.2.00.0812300113050.22107@vellum.laroia.net> <9b18b3110812300043l55a42f6sd995f36bf857543e@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Apply -p<value> on git-diffs that create/delete files
+Date: Tue, 30 Dec 2008 01:03:18 -0800
+Message-ID: <7v7i5i3ui1.fsf@gitster.siamese.dyndns.org>
+References: <20081230011545.GA81224@bowser.Belkin>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 30 10:00:18 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andrew Ruder <andy@aeruder.net>
+X-From: git-owner@vger.kernel.org Tue Dec 30 10:05:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHaSX-0004lO-Oc
-	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 10:00:18 +0100
+	id 1LHaWy-0005bq-RT
+	for gcvg-git-2@gmane.org; Tue, 30 Dec 2008 10:04:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751394AbYL3I64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 03:58:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbYL3I6z
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 03:58:55 -0500
-Received: from rose.makesad.us ([219.105.37.19]:48528 "EHLO rose.makesad.us"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751175AbYL3I6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 03:58:55 -0500
-Received: from vellum.laroia.net (localhost [127.0.0.1])
-	by rose.makesad.us (Postfix) with ESMTP id 6FB09A010F
-	for <git@vger.kernel.org>; Tue, 30 Dec 2008 03:58:53 -0500 (EST)
-Received: from localhost (localhost [127.0.0.1])
-	by vellum.laroia.net (Postfix) with ESMTPS id E06C13A62BD
-	for <git@vger.kernel.org>; Tue, 30 Dec 2008 00:58:46 -0800 (PST)
-X-X-Sender: paulproteus@vellum.laroia.net
-In-Reply-To: <9b18b3110812300043l55a42f6sd995f36bf857543e@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-OpenPGP-Key-ID: 0x70096AD1
+	id S1751066AbYL3JDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 04:03:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751054AbYL3JDb
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 04:03:31 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44849 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750964AbYL3JD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 04:03:29 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 07CC48BE0D;
+	Tue, 30 Dec 2008 04:03:28 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AB7D38BE0C; Tue,
+ 30 Dec 2008 04:03:20 -0500 (EST)
+In-Reply-To: <20081230011545.GA81224@bowser.Belkin> (Andrew Ruder's message
+ of "Mon, 29 Dec 2008 18:15:45 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B8FB4AAA-D650-11DD-A3A6-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104171>
 
-On Tue, 30 Dec 2008, demerphq wrote:
+Andrew Ruder <andy@aeruder.net> writes:
 
-> 2008/12/30 Asheesh Laroia <asheesh@asheesh.org>:
+> diff --git a/builtin-apply.c b/builtin-apply.c
+> index 07244b0..584a910 100644
+> --- a/builtin-apply.c
+> +++ b/builtin-apply.c
+> @@ -656,137 +660,57 @@ static const char *stop_at_slash(const char *line, int llen)
+>  }
+>  
+>  /*
+> - * This is to extract the same name that appears on "diff --git"
+> - * line.  We do not find and return anything if it is a rename
+> - * patch, and it is OK because we will find the name elsewhere.
+> + * This is to extract the same name that appears on "diff --git" line.
+> + * The name that is returned also has the root applied to it and the
+> + * p_value applied.  We do not find and return anything if it is a
+> + * rename patch, and it is OK because we will find the name elsewhere.
+>   * We need to reliably find name only when it is mode-change only,
+> - * creation or deletion of an empty file.  In any of these cases,
+> - * both sides are the same name under a/ and b/ respectively.
+> + * creation or deletion of an empty file.  In any of these cases, both
+> + * sides are the same name under a/ and b/ respectively.
+>   */
 
->> I ask about this because I'm using git to track email in Maildir 
->> repositories, and in that vein I'm getting bitten by git's removal of 
->> empty directories.
->
-> Add a .exists to each directory.  There is precedent for such an 
-> approach in other systems.
+This is a very good description of what the fix should do.
 
-Delivering mail into a Maildir is a three-step process.  Let's say 
-we are delivering to a Maildir spool stored in ~/Maildir.
+> +static char *git_header_name(char *line)
+> ...
+> -	/*
+> -	 * Accept a name only if it shows up twice, exactly the same
+> -	 * form.
+> -	 */
+> -	for (len = 0 ; ; len++) {
+> -		switch (name[len]) {
+> -		default:
+> -			continue;
+> -		case '\n':
+> -			return NULL;
+> -		case '\t': case ' ':
+> -			second = name+len;
+> -			for (;;) {
+> -				char c = *second++;
+> -				if (c == '\n')
+> -					return NULL;
+> -				if (c == '/')
+> -					break;
+> -			}
+> -			if (second[len] == '\n' && !memcmp(name, second, len)) {
+> -				return xmemdupz(name, len);
+> -			}
+> -		}
+> -	}
 
-(1)
+You lost the above logic, and instead call find_name() with TERM_SPACE |
+TERM_TAB to find the end of the first name and you expect it uniquely will
+find it.  It unfortunately won't.  Consider this patch:
 
-The message is written out to ~/Maildir/tmp/some_filename.
+        diff --git a/b is file b/b is file
+        index e69de29..ce01362 100644
+        --- a/b is file	
+        +++ b/b is file	
+        @@ -0,0 +1 @@
+        +hello
 
-(2)
+Your version finds "b" as the first name, skips to "is file b/b is file"
+and assume that is the second name, and your new code later mistakenly
+declares it as a rename and returns NULL.
 
-When the message is complete, it is rename()d to 
-~/Maildir/new/some_name.
+> +	/* First we see if they match, if they do, we are done. */
+> +	if (strcmp(first, second)) {
+> +		const char *first_slash, *second_slash;
+> +		/* If they don't, we check that we don't have a a/<match> b/<match>, if we
+> + 		 * do we return one of those so the error messages go through correctly
+> +		 * later on */
+> +		first_slash = stop_at_slash(first, strlen(first));
+> +		second_slash = stop_at_slash(second, strlen(second));
+>  
+> +		/* If this fails, it must be a rename, just return NULL */
+> +		if (!first_slash || !second_slash || strcmp(first_slash, second_slash))
+> +			goto error2;
+>  	}
 
-(3)
+It should of course return "b is file"; the complex backgracking you
+removed is all about handling this case correctly.
 
-When a mail user agent reads the Maildir spool, it checks new/ for new 
-mail. If there is a message there, it renames it to 
-~/Maildir/cur/some_other_filename and announces to the user, "You've got 
-mail!"
+>  builtin-apply.c       |  203 +++++++++++++++----------------------------------
+>  t/t4120-apply-popt.sh |    5 +-
+>  2 files changed, 64 insertions(+), 144 deletions(-)
 
-So, let's say I take your suggestion.
-
-$ touch ~/Maildir/new/.exists
-$ git add ~/Maildir/new/.exists && git commit -m "La di da"
-
-Now a spec-compliant Maildir user agent will attempt to deliver this new 
-"email message" of zero bytes into the mail spool and assign it a message 
-UID.  Doing so will remove it from Maildir/new.
-
-Then I do "git pull" to get the new messages from my mail server's Maildir 
-repository for my email.  This causes git read-tree to eventually be run. 
-If the new tree has no unprocessed email, git runs rmdir() on 
-~/Maildir/new/.
-
-Now if I want to write a new email to ~/Maildir/ (such as due to copying 
-an email from another folder), the Maildir user agent suddenly finds 
-itself in a strange place: new/ does not exist, violating the definition 
-of a Maildir. This breaks mail processing for that ~/Maildir/ folder.
-
-This is because git is removing these directories. There is a strict 
-incompatibility between git rmdir()ing empty directories behind my back 
-and Maildir systems.
-
-I hope that explains the issue I face, both to Junio and to Yves.
-
-Note that for me, there is no issue with how to handle merging of empty 
-directories, or what happens if these empty directories become files, or 
-which empty directories to keep around; if git just never rmdir()s any 
-directories for me, and otherwise acts identically to now, that would 
-solve my problem. I can look into preparing an RFC patch that creates a 
-mode like that.
-
--- Asheesh.
-
--- 
-You will be the last person to buy a Chrysler.
+I really wished that this reduction of lines resulted in a code with less
+bug, though.
