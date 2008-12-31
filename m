@@ -1,97 +1,136 @@
-From: "aaron smith" <beingthexemplarylists@gmail.com>
-Subject: Re: git push over http - curl PUT error?
-Date: Wed, 31 Dec 2008 05:29:53 -0800
-Message-ID: <d7ac1a680812310529p6b7e8d88r69755887304d3436@mail.gmail.com>
-References: <d7ac1a680812310210r25795e66x35601059103892d7@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: for newbs = little exercise / tutorial / warmup for windows and
+ other non-sophisticated new Git users :-) [Scanned]
+Date: Wed, 31 Dec 2008 13:37:49 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrnglmtdd.v54.sitaramc@sitaramc.homelinux.net>
+References: <BB5F02FD3789B54E8964D38D6775E718242D35@ALTMORE-SVR.altmore.local>
+ <alpine.LNX.1.00.0812302143210.19665@iabervon.org>
+ <gjfn28$3k2$4@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 31 14:31:18 2008
+X-From: git-owner@vger.kernel.org Wed Dec 31 14:39:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LI1AK-0003jE-Nm
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 14:31:17 +0100
+	id 1LI1I9-0005yW-CB
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 14:39:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754923AbYLaN3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Dec 2008 08:29:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753501AbYLaN3z
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 08:29:55 -0500
-Received: from wf-out-1314.google.com ([209.85.200.168]:55811 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753003AbYLaN3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Dec 2008 08:29:55 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so5801967wfd.4
-        for <git@vger.kernel.org>; Wed, 31 Dec 2008 05:29:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=C7I+W/lY6Zzbjxp0Y6eLcISn5elNoWIBU8Q39DBX/3E=;
-        b=D358XyBIZzo5L1CXUbNlfdn6IVBXQI9rmKbK6he8FDsjrW61lnG5AaHWDAxzHxTuFD
-         dmYAKtYU0DjzAIuLShse7oiFmYXfCTBmWSGQsGeS60WNepDxKu6xlLDteKQ31Y4FHkd+
-         x/ColGsFk1NU5gUsa30940kWkEKplgW6FWj84=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=a9PO8jVKWg21g1WYQPRER5AEu6yl0wqqdz4kyNJEeMqkvZ0ix1Hp3vjdsKfyY+JQqg
-         exWF5BInLyXxpHXLZB9i8RldkDE+cUMlBITOpuUfGcvcvZXIqUr64NZMBO0uHfrRp6+8
-         5adyMovEMBo33ZZI9OvhEmM/R17b4b8GdGOb4=
-Received: by 10.142.214.11 with SMTP id m11mr6514280wfg.279.1230730193533;
-        Wed, 31 Dec 2008 05:29:53 -0800 (PST)
-Received: by 10.143.115.3 with HTTP; Wed, 31 Dec 2008 05:29:53 -0800 (PST)
-In-Reply-To: <d7ac1a680812310210r25795e66x35601059103892d7@mail.gmail.com>
-Content-Disposition: inline
+	id S1755938AbYLaNiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Dec 2008 08:38:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755158AbYLaNiA
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 08:38:00 -0500
+Received: from main.gmane.org ([80.91.229.2]:45562 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752467AbYLaNh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Dec 2008 08:37:59 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LI1Gm-0001C1-8Q
+	for git@vger.kernel.org; Wed, 31 Dec 2008 13:37:56 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 31 Dec 2008 13:37:56 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 31 Dec 2008 13:37:56 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104271>
 
-ok, duh, i had to use git http-push. What is the difference? Thanks.
+a quick comment: you don't need to use the sha1 to create a
+tag at the current HEAD.  "git tag newtag sha" can be
+shortened to "git tag newtag" if the sha is for the latest
+commit you did.  Like the "." thing, I'd be curious where
+you picked up this habit...
 
-On Wed, Dec 31, 2008 at 2:10 AM, aaron smith
-<beingthexemplarylists@gmail.com> wrote:
-> hey all,
+On 2008-12-31, Zorba <cr@altmore.co.uk> wrote:
+> Why should
 >
-> I have one last issue to figure out with git over HTTP. This one is
-> seriously stumping me.
+> $ git checkout <version> .
 >
-> I have a bare git repository here: http://codeendeavor.com/guttershark.git/
+> screw things up for
 >
-> And I have a local git repo with some files in it, ready to push to
-> this public one.
->
-> Here's what I do to push to it:
->
-> $git push origin master
->
-> I then get this output:
-> ""
-> Fetching remote heads...
->  refs/
->  refs/heads/
->  refs/tags/
-> updating 'refs/heads/master'
->  from a08e614723ff57047522511a2130d53010ebe0ca
->  to   2db4bca0d137f4099973387472cf1666d0290e03
->    sending 3 objects
->    done
-> Updating remote server info
-> PUT error: curl result=22, HTTP code=403
-> """
->
-> I'm not sure how to get around this.
->
-> The git repo permissions are 777, with owner/group apache:apache. I
-> have DAV on, and the DavLockDB directive. which seems to all be ok.
-> And I don't have any http authentication on it.. or access control
-> list for that matter.
->
-> Any ideas? Thanks All!
->
+> $ git checkout <version>
+
+These are quite different operations so yes you could say
+they should have used some other name instead of overloading
+two different functions on the same command.  But to be
+fair, the doc is fairly clear, in the first 2 paras.
+
+And really, if I understand all your angst and what you're
+trying to do, you just have to stop using the "." and -- if
+you want untracked files gone each time you switch to an
+older version -- use git clean.  See below.
+
+I have snipped your log heavily but it should still be
+fairly simple to follow which piece I am referring to below:
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+> $ git rm AC.txt
+> $ git add BC.txt
+> $ git commit -m "version B"
+> $ git tag versionB fad9
+
+> $ cat > AC.txt
+> $ ls
+> ABC.txt  AC.txt  BC.txt  C.txt
+
+> $ git reset --hard versionB
+> HEAD is now at fad9c29 version B
+> $ ls
+> ABC.txt  AC.txt  BC.txt  C.txt
+
+you're wondering why AC.txt is still hanging around when
+resetting to a commit where that file was explicitly
+deleted?
+
+A commit represents a state, not a set of actions.
+
+"versionB" doesn't represent a "delete of AC.txt", plus an
+"add of BC.txt".  It represents a state where ABC.txt and
+BC.txt exist, that's it.
+
+So AC.txt is now just an untracked file at the point you do
+the reset, as you would have seen if you did a "git status".
+
+A reset will not touch untracked files -- hardly any
+operation will touch an untracked file actually.
+
+If you really want that functionality, use git clean after
+the reset, this is the only command I know that deletes
+untracked files:
+        git clean -d -f
+        # or first try with "-n" for a "dry-run"
+
+[later]
+
+> $ git checkout versionA
+> $ ls
+> ABC.txt  AC.txt  comment.txt
+
+> $ git checkout versionB
+> $ ls
+> ABC.txt  BC.txt  comment.txt
+
+And now you're wondering what happened to "AC.txt"?  Well
+this time it's a known and tracked file for the current
+state (versionA), so it is a candidate for removal/change as
+dictated by the new state you're going to.
+
+I should also mention that you have not yet tried the case
+where you have local modifications to some file that is
+known to both the current branch and the branch you're
+switching to.  "git help checkout" and look for the word
+"merge" and read up the two places it is relevant to this
+context (one a description and one an example).
