@@ -1,111 +1,81 @@
-From: "David Aguilar" <davvid@gmail.com>
-Subject: Re: git-difftool
-Date: Wed, 31 Dec 2008 12:11:07 -0800
-Message-ID: <402731c90812311211p548c49d3p100f79ddee7163b0@mail.gmail.com>
-References: <20081226013021.GA15414@gmail.com> <vpqhc4kz5zh.fsf@bauges.imag.fr>
+From: "Caleb Cushing" <xenoterracide@gmail.com>
+Subject: git has modified files after clean checkout
+Date: Wed, 31 Dec 2008 15:23:57 -0500
+Message-ID: <81bfc67a0812311223g2b6e8476y84b23c19977dfd10@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Matthieu Moy" <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Dec 31 21:12:37 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 31 21:25:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LI7Qf-0004qT-2F
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 21:12:33 +0100
+	id 1LI7d7-0007rj-OK
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 21:25:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752632AbYLaULL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Dec 2008 15:11:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752213AbYLaULK
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 15:11:10 -0500
-Received: from wf-out-1314.google.com ([209.85.200.175]:51744 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751784AbYLaULJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Dec 2008 15:11:09 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so5937996wfd.4
-        for <git@vger.kernel.org>; Wed, 31 Dec 2008 12:11:07 -0800 (PST)
+	id S1756276AbYLaUYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Dec 2008 15:24:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757250AbYLaUYD
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 15:24:03 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:42542 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757222AbYLaUYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Dec 2008 15:24:01 -0500
+Received: by bwz14 with SMTP id 14so18811143bwz.13
+        for <git@vger.kernel.org>; Wed, 31 Dec 2008 12:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=4TLJFeP0EPvgifEo6j9HqRIvaNyGSxLnejbhOJq9ito=;
-        b=nkF51DASSkGSolAUCz8sME2HIUxDV3ksTK+K8yA10fP4ZrVLwe8UXnRLAY+ERn+tEz
-         7WVn7F7ffktWUH3moatyOQrQN1CuE43SE1EkkCQS2HC7TPJ7yP9opWkE0pWmi09de4fE
-         j2H4upUt6VxRQVDUxdlbmNK47E9X2SodNVKSU=
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=6PBe/MqS+ypllQYBrQ23lSqvrdwfGRL9+Lg7wN1TSLU=;
+        b=YxtPfamGfSoVu4R5av0ZyvmC/HXbaCTJEfnPaxLjaDW0lXkNs4zpxRgTTOQjOvQAEU
+         NDSN+lkGeyabC/reg/f1dP7iDBcQErvqzK5kAKWnyGEXVl+6dDW8QjEszg4AeQjUmZkT
+         IDpKIr0gLigVWr/GeRRFoMpfzwrQogjXMfw4o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=is5bBCXcB2KZ/+G2Krz7JDLXjBaf1QhflBWKDF6PINEfQTcwUK0I89n+VNdHt5/S+c
-         griXFapnHms+jlDRzWI3hNMucxSEOqiez9NEYNC3tTUE4puUqjVXSd6usrizRgEFfqLg
-         v5wybqxrjWVckqhmQT/tLQJ+LQuL1v+7dxCSg=
-Received: by 10.142.185.21 with SMTP id i21mr6616727wff.220.1230754267185;
-        Wed, 31 Dec 2008 12:11:07 -0800 (PST)
-Received: by 10.142.241.20 with HTTP; Wed, 31 Dec 2008 12:11:07 -0800 (PST)
-In-Reply-To: <vpqhc4kz5zh.fsf@bauges.imag.fr>
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=fJwS3uWaIq+or/SAtuG+iA6VGbLD1x2gOPQv0xka5UC+xBGMmkJ7YVEfZzb0wKJZeU
+         ZhywTrof3JpeE6fY2Ntg04DL19CVZytfRP+23PRsZX059upByeJfYHVyOItCys+8wBra
+         /ib6s5DINa3Fsrf2w0va4+2ozH3htfYcFbXks=
+Received: by 10.223.114.79 with SMTP id d15mr11802417faq.88.1230755038021;
+        Wed, 31 Dec 2008 12:23:58 -0800 (PST)
+Received: by 10.223.107.205 with HTTP; Wed, 31 Dec 2008 12:23:57 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104285>
 
-On Wed, Dec 31, 2008 at 8:04 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> David Aguilar <davvid@gmail.com> writes:
->
->> The usual use case for this script is when you have either
->> staged or unstaged changes and you'd like to see the changes
->> in a side-by-side diff viewer (e.g. xxdiff, tkdiff, etc).
->>
->>       git difftool [<filename>*]
->
-> Is it not a complex way of saying
->
->        GIT_EXTERNAL_DIFF=xxdiff git diff
->
-> ?
->
-> (My 2 cents, and happy new year ;-)
->
-> --
-> Matthieu
->
+here's what I did
 
-Hmm... in theory, yes, but in practice, no.
-xxdiff is too gimp to handle what 'git diff' hands it =)
+rm -r portage
+git clone git@github.com:xenoterracide/portage.git
+cd portage
+git checkout origin/regen2 -b regen2
+git status
 
+# On branch regen2
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#       modified:
+x11-themes/metacity-themes/files/metacity-themes-1.0-gentoo.diff
+#       modified:
+x11-themes/metacity-themes/files/metacity-themes-1.2-gentoo.diff
+#
+no changes added to commit (use "git add" and/or "git commit -a")
 
-For example:
+why are there files claiming to be modified? this is a clean clone.
+I've had this before I usually end up doing a git reset --hard HEAD,
+but I'm thinking it's a bug, since I've seen it vary on the same clone
+and sometimes even disappear.
 
-$ GIT_EXTERNAL_DIFF=echo git diff test
-test /tmp/.diff_1dh4TW 9daeafb9864cf43055ae93beb0afd6c7d144bfa4 100644 test 0000
-
-$ GIT_EXTERNAL_DIFF=xxdiff git diff test
-xxdiff (cmdline.cpp:762):
-You can specify at most 3 filenames.
-Extra arguments: " 100644 test 0000000000000000000000000000000000000000 100644"
-Use 'xxdiff --help' for more information.
-external diff died, stopping at test.
-
-
-I checked the git-diff documentation and could not find a way to
-inhibit the sha1, mode, etc. args that are sent to GIT_EXTERNAL_DIFF
-(nor should there be, I presume).
-
-I'm all for finding the simplest way and GIT_EXTERNAL_DIFF seems like
-the right entry point.  What I should do is change the script so that
-it handles all of the choosing-a-merge-tool-logic and just have git
-call it via GIT_EXTERNAL_DIFF.  That would definitely simplify the
-script since 'git diff' would be handling all of the tmp file and
-option processing logic.  wow, I really like that idea.  Thanks for
-the tip!
-
-
-Happy new year,
-
+git version 1.6.0.6
 -- 
-    David
+Caleb Cushing
+
+http://xenoterracide.blogspot.com
