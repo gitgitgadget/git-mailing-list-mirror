@@ -1,116 +1,112 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: for newbs = little exercise / tutorial / warmup for windows and
- other non-sophisticated new Git users :-) [Scanned]
-Date: Wed, 31 Dec 2008 02:22:32 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrnglllr8.kdq.sitaramc@sitaramc.homelinux.net>
-References: <BB5F02FD3789B54E8964D38D6775E718242D33@ALTMORE-SVR.altmore.local>
+From: "Conor Rafferty" <conor.rafferty@altmore.co.uk>
+Subject: RE: for newbs = little exercise / tutorial / warmup for windows and other non-sophisticated new Git users :-) [Scanned]
+Date: Wed, 31 Dec 2008 02:27:26 -0000
+Message-ID: <BB5F02FD3789B54E8964D38D6775E718242D35@ALTMORE-SVR.altmore.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 31 03:24:13 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	<git@vger.kernel.org>
+To: "Jeff Whiteside" <jeff.m.whiteside@gmail.com>,
+	"Daniel Barkalow" <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Dec 31 03:28:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHqki-0003qC-MN
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 03:24:09 +0100
+	id 1LHqpN-0005M7-AO
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 03:28:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753903AbYLaCWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 21:22:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753899AbYLaCWr
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 21:22:47 -0500
-Received: from main.gmane.org ([80.91.229.2]:51443 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753898AbYLaCWq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 21:22:46 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LHqjK-0004eD-6S
-	for git@vger.kernel.org; Wed, 31 Dec 2008 02:22:42 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Dec 2008 02:22:42 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Dec 2008 02:22:42 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1754055AbYLaC1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 21:27:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754048AbYLaC1f
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 21:27:35 -0500
+Received: from sbs.altmore.co.uk ([217.39.150.193]:32581 "HELO
+	sbs.altmore.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1754047AbYLaC1f convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Dec 2008 21:27:35 -0500
+X-PMWin-Version: 3.0.0.0, Antivirus-Engine: 2.82.1, Antivirus-Data: 4.37E
+Content-Class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4133
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: for newbs = little exercise / tutorial / warmup for windows and other non-sophisticated new Git users :-) [Scanned]
+thread-index: Aclq7piCwkgZURkMTr+Pp/nqGuO/WAAAB1Kg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104239>
 
-On 2008-12-30, Conor Rafferty <conor.rafferty@altmore.co.uk> wrote:
+ 
 
-[re-arranged some of the quotes; it's not in the same order
-as in your original email...]
+-----Original Message-----
+wtf is wrong with
 
-> Even in clearcase this was a cinch.
+git checkout <something>
 
-Hey there's no need to use swear words ;-)
+??
 
-> Is there anyone who can see anyway to do this simply, without a script,
-> without creating a branch ?
+** It doesn't reliably put the files that were in that revision into the
+working directory - a fairly major flaw, for what I'm using SCM for (and
+80% of the market IMHO)
 
-You'll have to unlearn this resistance to creating branches.
-I've never used clearcase, but people tell me it is
-expensive to create branches and/or merge them later --
-almost a project in itself perhaps?
+if you must have
 
-In git, however, creating a branch is as cheap as creating a
-tag, so why not go with the flow until you're a little more
-familiar with it?
+git checkout <something> <paths>
 
-> Personally I suspect "$ git checkout <version> ." is what should be
+then instead use
 
-leave out the "." is all you needed to do.
+git checkout <something> <paths>
+git clean
 
-> doing this (I have confidence in saying this because it seems to want to
-> do this, and does it right at least half the time). But no-one wants to
-> admit to the remotest possibility that it might be off ....
+** hmm, might try this - obviously as per Daniels post there is some
+undefined interaction happenign with the index, to screw up the working
+directory. I presume clean flushes the index?
 
-Because it's not off :-)  You're using an unusual construct
-that is not often used.  (I've done path checkout of one or
-a few files, but not the whole "." ever).  So it took people
-time to analyse what was happening -- such as suggesting you
-use "git ls-files -s" to see what's in the index at each
-stage.
+but you will lose other files that aren't part of the repo but are still
+in the project's dir (i.e. untracked files).
 
-May I ask where you got the idea that "." is needed?  We
-need to fix that source too ;-)
+** don't care, I'll be removing them from working dir anyhow before
+doing a rollback
 
-> In any case, a bunch of smart guys like you should be able to knock this
-> functionality together in hours, if you put your mind to it.
+On Tue, Dec 30, 2008 at 4:15 PM, Daniel Barkalow <barkalow@iabervon.org>
+wrote:
+> On Tue, 30 Dec 2008, Conor Rafferty wrote:
+>
+>> I don't understand, sorry. I thought I'd already removed all files 
+>> from the local tree, in the $ rm *.* move just above the checkout
+>
+> That removes them from the filesystem, but they're still in the index.
 
-> I know you guys have put a lot into this project and for many of you it
-> defines who you are 
-> - but if you want ppl out there in the user world to take this stuff on,
-> its gotta work for them 
+> And "git checkout <something> ." first gets everything that *is* in 
+> "." in <something> into the index, and then gets everything from "." 
+> in the index into the filesystem.
+>
+> I suppose it is questionable as to whether it ought to copy paths that
 
-While I applaud your efforts to try and understand
-everything in one long weekend, you'd have more fun if you
-spaced it out a bit :-)
+> aren't in versionA from the index into the filesystem.
+>
+> To see this in a bit more detail, do:
+>
+> $ rm *.*
+> $ git status
+> (notice that the deletes are in the "won't be committed" section)
+>
+> Now, "git checkout <path>" will discard any changes in the "won't be 
+> committed" section for that path. Maybe "git checkout versionA <path>"
+> should only discard changes that are in the "won't be committed" 
+> section for filenames that match that path and are in versionA (or are
+> *different* in versionA and not removed?), but I think it's an area 
+> where, if you're expecting any particular behavior out of that 
+> command, you're likely to be surprised in some way in some situation.
+>
+>        -Daniel
+> *This .sig left intentionally blank*
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in the 
+> body of a message to majordomo@vger.kernel.org More majordomo info at
 
-I'll also say that "ppl out there in the user world" will
-not experiment the way you have -- they'll follow a basic
-set of commands that work.
-
-They'll even (gasp!) use the GUI.  Believe me the GUIs are
-pretty nice, though it won't let you checkout a tag (you can
-checkout a branch, but not a tag -- because this gets you a
-detached head which is a little too advanced for normal
-folks I guess).
-
-In other words, you're combining newbie and expert too
-fast...
-
-Finally, I heartily recommend reading the following article:
-http://thedailywtf.com/Articles/Happy_Merge_Day!.aspx
-
-If the hints in the article are not enough for you to figure
-out this is about clearcase read the comments :-)
+> http://vger.kernel.org/majordomo-info.html
+>
