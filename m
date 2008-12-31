@@ -1,146 +1,111 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH] Improve the sideband progress scaper to be more
-	accurate
-Date: Wed, 31 Dec 2008 11:04:01 -0800
-Message-ID: <20081231190401.GI29071@spearce.org>
-References: <1230055423-9944-1-git-send-email-spearce@spearce.org> <1230055423-9944-4-git-send-email-spearce@spearce.org> <1230055423-9944-5-git-send-email-spearce@spearce.org> <200812310812.15305.robin.rosenberg@dewire.com> <20081231073505.GA22551@spearce.org>
+From: "David Aguilar" <davvid@gmail.com>
+Subject: Re: git-difftool
+Date: Wed, 31 Dec 2008 12:11:07 -0800
+Message-ID: <402731c90812311211p548c49d3p100f79ddee7163b0@mail.gmail.com>
+References: <20081226013021.GA15414@gmail.com> <vpqhc4kz5zh.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Dec 31 20:06:15 2008
+To: "Matthieu Moy" <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Dec 31 21:12:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LI6Ni-0003ln-Ma
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 20:05:51 +0100
+	id 1LI7Qf-0004qT-2F
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 21:12:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756208AbYLaTEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Dec 2008 14:04:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756065AbYLaTEE
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 14:04:04 -0500
-Received: from george.spearce.org ([209.20.77.23]:55426 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755889AbYLaTEC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Dec 2008 14:04:02 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 4641C38200; Wed, 31 Dec 2008 19:04:01 +0000 (UTC)
+	id S1752632AbYLaULL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Dec 2008 15:11:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752213AbYLaULK
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 15:11:10 -0500
+Received: from wf-out-1314.google.com ([209.85.200.175]:51744 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751784AbYLaULJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Dec 2008 15:11:09 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so5937996wfd.4
+        for <git@vger.kernel.org>; Wed, 31 Dec 2008 12:11:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=4TLJFeP0EPvgifEo6j9HqRIvaNyGSxLnejbhOJq9ito=;
+        b=nkF51DASSkGSolAUCz8sME2HIUxDV3ksTK+K8yA10fP4ZrVLwe8UXnRLAY+ERn+tEz
+         7WVn7F7ffktWUH3moatyOQrQN1CuE43SE1EkkCQS2HC7TPJ7yP9opWkE0pWmi09de4fE
+         j2H4upUt6VxRQVDUxdlbmNK47E9X2SodNVKSU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=is5bBCXcB2KZ/+G2Krz7JDLXjBaf1QhflBWKDF6PINEfQTcwUK0I89n+VNdHt5/S+c
+         griXFapnHms+jlDRzWI3hNMucxSEOqiez9NEYNC3tTUE4puUqjVXSd6usrizRgEFfqLg
+         v5wybqxrjWVckqhmQT/tLQJ+LQuL1v+7dxCSg=
+Received: by 10.142.185.21 with SMTP id i21mr6616727wff.220.1230754267185;
+        Wed, 31 Dec 2008 12:11:07 -0800 (PST)
+Received: by 10.142.241.20 with HTTP; Wed, 31 Dec 2008 12:11:07 -0800 (PST)
+In-Reply-To: <vpqhc4kz5zh.fsf@bauges.imag.fr>
 Content-Disposition: inline
-In-Reply-To: <20081231073505.GA22551@spearce.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104284>
 
-By matching only whole lines we should be able to improve the
-progress scaper so we avoid ugly output like we had been seeing:
+On Wed, Dec 31, 2008 at 8:04 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> David Aguilar <davvid@gmail.com> writes:
+>
+>> The usual use case for this script is when you have either
+>> staged or unstaged changes and you'd like to see the changes
+>> in a side-by-side diff viewer (e.g. xxdiff, tkdiff, etc).
+>>
+>>       git difftool [<filename>*]
+>
+> Is it not a complex way of saying
+>
+>        GIT_EXTERNAL_DIFF=xxdiff git diff
+>
+> ?
+>
+> (My 2 cents, and happy new year ;-)
+>
+> --
+> Matthieu
+>
 
-  EGIT.contrib/jgit clone git://repo.or.cz/libgit2.git LIBGIT2
-  Initialized empty Git repository in /home/me/SW/LIBGIT2/.git
-  Counting objects:       547
-  Compressing objects:    100% (192/192)
-  ts:                     100% (192/192)
-  Compressing objects:    100% (192/192)
-  ng objects:             100% (192/192)
+Hmm... in theory, yes, but in practice, no.
+xxdiff is too gimp to handle what 'git diff' hands it =)
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
- > Would it be hard to get the progress look better?
 
- Maybe this does the trick.  Its hard to reproduce so its hard to
- come up with the condition that was giving us the problem before.
- I suspect its because we were getting line fragments on the sideband
- channel, but I'm not sure that was really the case.
+For example:
 
- .../jgit/transport/SideBandInputStream.java        |   37 +++++++++++++++++--
- 1 files changed, 33 insertions(+), 4 deletions(-)
+$ GIT_EXTERNAL_DIFF=echo git diff test
+test /tmp/.diff_1dh4TW 9daeafb9864cf43055ae93beb0afd6c7d144bfa4 100644 test 0000
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/SideBandInputStream.java b/org.spearce.jgit/src/org/spearce/jgit/transport/SideBandInputStream.java
-index 3ec9bff..f0ba3d3 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/SideBandInputStream.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/SideBandInputStream.java
-@@ -73,10 +73,10 @@
- 	private static final int CH_ERROR = 3;
- 
- 	private static Pattern P_UNBOUNDED = Pattern.compile(
--			".*?([\\w ]+): (\\d+)(, done)?.*", Pattern.DOTALL);
-+			"^([\\w ]+): (\\d+)( |, done)?.*", Pattern.DOTALL);
- 
- 	private static Pattern P_BOUNDED = Pattern.compile(
--			".*?([\\w ]+):.*\\((\\d+)/(\\d+)\\).*", Pattern.DOTALL);
-+			"^([\\w ]+):.*\\((\\d+)/(\\d+)\\).*", Pattern.DOTALL);
- 
- 	private final PacketLineIn pckIn;
- 
-@@ -84,6 +84,8 @@
- 
- 	private final ProgressMonitor monitor;
- 
-+	private String progressBuffer = "";
-+
- 	private String currentTask;
- 
- 	private int lastCnt;
-@@ -160,7 +162,31 @@ private void needDataPacket() throws IOException {
- 		}
- 	}
- 
--	private void progress(final String msg) {
-+	private void progress(String pkt) {
-+		pkt = progressBuffer + pkt;
-+		for (;;) {
-+			final int lf = pkt.indexOf('\n');
-+			final int cr = pkt.indexOf('\r');
-+			final int s;
-+			if (0 <= lf && 0 <= cr)
-+				s = Math.min(lf, cr);
-+			else if (0 <= lf)
-+				s = lf;
-+			else if (0 <= cr)
-+				s = cr;
-+			else
-+				break;
-+
-+			final String msg = pkt.substring(0, s);
-+			if (doProgressLine(msg))
-+				pkt = pkt.substring(s + 1);
-+			else
-+				break;
-+		}
-+		progressBuffer = pkt;
-+	}
-+
-+	private boolean doProgressLine(final String msg) {
- 		Matcher matcher;
- 
- 		matcher = P_BOUNDED.matcher(msg);
-@@ -175,7 +201,7 @@ private void progress(final String msg) {
- 			final int cnt = Integer.parseInt(matcher.group(2));
- 			monitor.update(cnt - lastCnt);
- 			lastCnt = cnt;
--			return;
-+			return true;
- 		}
- 
- 		matcher = P_UNBOUNDED.matcher(msg);
-@@ -189,7 +215,10 @@ private void progress(final String msg) {
- 			final int cnt = Integer.parseInt(matcher.group(2));
- 			monitor.update(cnt - lastCnt);
- 			lastCnt = cnt;
-+			return true;
- 		}
-+
-+		return false;
- 	}
- 
- 	private String readString(final int len) throws IOException {
--- 
-1.6.1.59.g6f6746
+$ GIT_EXTERNAL_DIFF=xxdiff git diff test
+xxdiff (cmdline.cpp:762):
+You can specify at most 3 filenames.
+Extra arguments: " 100644 test 0000000000000000000000000000000000000000 100644"
+Use 'xxdiff --help' for more information.
+external diff died, stopping at test.
 
+
+I checked the git-diff documentation and could not find a way to
+inhibit the sha1, mode, etc. args that are sent to GIT_EXTERNAL_DIFF
+(nor should there be, I presume).
+
+I'm all for finding the simplest way and GIT_EXTERNAL_DIFF seems like
+the right entry point.  What I should do is change the script so that
+it handles all of the choosing-a-merge-tool-logic and just have git
+call it via GIT_EXTERNAL_DIFF.  That would definitely simplify the
+script since 'git diff' would be handling all of the tmp file and
+option processing logic.  wow, I really like that idea.  Thanks for
+the tip!
+
+
+Happy new year,
 
 -- 
-Shawn.
+    David
