@@ -1,113 +1,89 @@
-From: "aaron smith" <beingthexemplarylists@gmail.com>
-Subject: Re: git push question.. error: Unable to lock remote branch refs/heads/master
-Date: Wed, 31 Dec 2008 00:22:31 -0800
-Message-ID: <d7ac1a680812310022j3d57a81fk1fe15c4640fd5d70@mail.gmail.com>
-References: <d7ac1a680812310017o4316b719qae5af166a95d9940@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb $export_ok question
+Date: Wed, 31 Dec 2008 10:00:21 +0100
+Message-ID: <200812311000.25818.jnareb@gmail.com>
+References: <9B3762519053E645820D9CEBD18B3734023A9FBA00@XEDAMAIL2.ex.ad3.ucdavis.edu> <m3sko5b84t.fsf@localhost.localdomain> <6db6bed70812302037w54fe5640of234cd611f5ab45e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 31 09:24:02 2008
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Thomas Amsler" <tpamsler@ucdavis.edu>
+X-From: git-owner@vger.kernel.org Wed Dec 31 10:02:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHwMw-00014p-NS
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 09:23:59 +0100
+	id 1LHwy4-0008M7-HA
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 10:02:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829AbYLaIWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Dec 2008 03:22:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752096AbYLaIWe
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 03:22:34 -0500
-Received: from rv-out-0506.google.com ([209.85.198.233]:51491 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750747AbYLaIWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Dec 2008 03:22:33 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so5191902rvb.1
-        for <git@vger.kernel.org>; Wed, 31 Dec 2008 00:22:32 -0800 (PST)
+	id S1756026AbYLaJAm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Dec 2008 04:00:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756033AbYLaJAj
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 04:00:39 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:51362 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752377AbYLaJAg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Dec 2008 04:00:36 -0500
+Received: by ewy10 with SMTP id 10so5903843ewy.13
+        for <git@vger.kernel.org>; Wed, 31 Dec 2008 01:00:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=O76BjWM+oHu2epBFYQHuXZxJ8poMredL+NO+DyaKozc=;
-        b=nqdKXIDidCGAXZQo6BBQ/OY8suPdnkeavKV1GabVeaIlrbl0VFwCdnTKsvgIKPZG+H
-         PBDa3dU6vOmZWNv9FrsrJeBOI1gDPjX1r1l9eZ4eUDAyeiNOh7eklJmrTFirl9lqPxE4
-         3+RaZdxytUWlLDwUkkiXFu/Fzm08BcB3qohXo=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=DMnMFXamVWUM9r0s1hKny8BQrwsuveTIqHceZJKHb38=;
+        b=ighBZNwOg3fFRErGgpLY8cw8bATYhfGStDxib9EqL+Inqj6RcwxQIcz2r8/8fSBzls
+         U+PYOLDA0Cki7ewL0V9c9fjDeCeXz0XXI6hPBJZyraNqCC6PeENc9e/YUYApf01yfRIw
+         YzD4XtR2BSaA3ozKDibf8LkCVdlvB5hV1Ei4k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=CPI8t/9v3aE9uEqitBp4GeIdDQ0ytE3p0skvHc6I2LSpPSgzflP3nec5y94cIugnD2
-         jq1C+fUqfbSYozc2K7SN7o58WnvjQiSS9FATVHq714mmfw+svU91OdPlXQQWXgGo1eoE
-         DhTlTMjXfkZT5IiKBoeLdJgJ4wmV+6y6g9lW8=
-Received: by 10.143.6.1 with SMTP id j1mr6446321wfi.152.1230711751940;
-        Wed, 31 Dec 2008 00:22:31 -0800 (PST)
-Received: by 10.143.115.3 with HTTP; Wed, 31 Dec 2008 00:22:31 -0800 (PST)
-In-Reply-To: <d7ac1a680812310017o4316b719qae5af166a95d9940@mail.gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=mZjhuh3Zt1xTlsBCye+kR4Pb/WoKTeX50PA+VwaX72+6V69twxwHIU/catODUK5Q3R
+         nfh9jEtr+hhZGOiOFV3cOmpghntU5UaCTexlyoslB3Qtk8tX2Y0a6aOqW5SjUDeF8BtN
+         Fd/L0JJTZa/VKKh/9ut+OGHOXWJzdfaroUZlI=
+Received: by 10.210.109.10 with SMTP id h10mr18397430ebc.39.1230714034739;
+        Wed, 31 Dec 2008 01:00:34 -0800 (PST)
+Received: from ?192.168.1.11? (abwv44.neoplus.adsl.tpnet.pl [83.8.245.44])
+        by mx.google.com with ESMTPS id 10sm25364eyz.19.2008.12.31.01.00.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 31 Dec 2008 01:00:34 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <6db6bed70812302037w54fe5640of234cd611f5ab45e@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104258>
 
-Oh Shit, I just figured it out. I had a friggin .htaccess file in
-root, that was screwing things up. Sorry for any annoyance!
+Thomas Amsler wrote:
 
+> Thank you for your information.
+> 
+> I have just tried that but the repository doesn't show up in gitweb
+> 
+> - added to /etc/gitweb.conf
+> -- $export_ok = "gitweb-export-ok"
+> - touched the "gitweb-export-ok" file in the repository
+> -- touch /path-to-repo/repository/authz.git/gitweb-export-ok
+> 
+> Then gitweb reports:
+> 
+> 404 - No projects found
+> 
+> Does the gitweb-export-ok file need to be part of  the repo so that it is
+> tracked?
 
+No, gitweb-export-ok file has to be in $GIT_DIR (like description file),
+not part of repo.
 
-On Wed, Dec 31, 2008 at 12:17 AM, aaron smith
-<beingthexemplarylists@gmail.com> wrote:
-> Hey All,
->
-> First, i've looked all over for a solution to this, and can't seem to
-> get it figured out. Here's my setup:
->
-> centeos
-> apache 2
-> webdav
-> git 1.6.1
->
-> I went through most of the git config over http text file instructions
-> (http://www.kernel.org/pub/software/scm/git/docs/howto/setup-git-server-over-http.txt),
-> just for the quick and dirty. Here's what I have in my http conf:
->
-> <VirtualHost *:80>
->    ServerName www.codeendeavor.com
->    DocumentRoot /var/www/vhosts/codeendeavor/
->    DavLockDB /var/logs/httpd/webdav/davlock
->    <Location "/guttershark.git/">
->      DAV on
->    </Location>
-> </VirtualHost>
->
-> So, I have a bare git repo here:
-> /var/www/vhosts/codeendeavor/guttershark.git/ (I used: mkdir
-> guttershark.git; cd guttershark.git; git --bare init). And I've turned
-> on webdav for that location.
->
-> I created the DavLockDB directory: mkdir /var/logs/httpd/webdav/davlock
->
-> And I've updated permissions on the git repo, and the webdav lock to
-> apache:apache. And when it still didn't work, I updated the
-> permissions on the git repo to 777, and on the davlock.
->
-> I'm not sure what would be going on. I searched through the servers'
-> empty git, and my local git repo for a lock file. But don't see
-> anything.
->
-> I don't have authentication on it yet so if you want to try and push
-> to it, feel free.
->
-> After all that. here is how I interact with it:
->
-> $git push origin master
-> Unable to lock remote branch refs/heads/master
-> error: failed to push some refs to 'http://codeendeavor.com/guttershark.git/'
->
-> Anyone have any idea?
->
-> Thanks a bunch!
->
+As to "No projects found" error: what is your $projectroot? Is it
+either "/path-to-repo/repository" or "/path-to-repo"? Is repository
+readable and searchable for the web server user (does it have correct
+permissions)?
+-- 
+Jakub Narebski
+Poland
