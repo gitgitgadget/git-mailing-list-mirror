@@ -1,83 +1,112 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: for newbs = little exercise / tutorial / warmup for windows and
- other non-sophisticated new Git users :-)
-Date: Wed, 31 Dec 2008 01:43:42 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrnglljie.kdq.sitaramc@sitaramc.homelinux.net>
-References: <gj68a0$u56$3@ger.gmane.org> <gj6kqq$nvh$4@ger.gmane.org>
- <3ab397d0812291505v77824e6fvdecebc80f38a5f89@mail.gmail.com>
- <gjdh0r$n3c$4@ger.gmane.org> <gjdlcl$5no$4@ger.gmane.org>
- <gjdmm6$9oj$4@ger.gmane.org> <gje3ok$gnc$4@ger.gmane.org>
+From: "Jeff Whiteside" <jeff.m.whiteside@gmail.com>
+Subject: Re: for newbs = little exercise / tutorial / warmup for windows and other non-sophisticated new Git users :-) [Scanned]
+Date: Tue, 30 Dec 2008 18:22:07 -0800
+Message-ID: <3ab397d0812301822p34a021b1w6799a9de9a4ffeb4@mail.gmail.com>
+References: <BB5F02FD3789B54E8964D38D6775E718242D31@ALTMORE-SVR.altmore.local>
+	 <alpine.LNX.1.00.0812301859100.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 31 02:45:41 2008
+Cc: "Conor Rafferty" <conor.rafferty@altmore.co.uk>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org
+To: "Daniel Barkalow" <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Dec 31 03:23:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHq9T-0001vQ-V4
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 02:45:40 +0100
+	id 1LHqk5-0003gC-FK
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 03:23:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752479AbYLaBn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 20:43:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751755AbYLaBn5
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 20:43:57 -0500
-Received: from main.gmane.org ([80.91.229.2]:57922 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751854AbYLaBn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 20:43:56 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LHq7m-0003D2-SE
-	for git@vger.kernel.org; Wed, 31 Dec 2008 01:43:54 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Dec 2008 01:43:54 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Dec 2008 01:43:54 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1753876AbYLaCWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 21:22:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753869AbYLaCWK
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 21:22:10 -0500
+Received: from qw-out-2122.google.com ([74.125.92.27]:59718 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753873AbYLaCWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 21:22:09 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so4430344qwe.37
+        for <git@vger.kernel.org>; Tue, 30 Dec 2008 18:22:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=6HMlyZjbLVa5uTVhidvz8xNhPfxYLtxM/mLxnn4vWG0=;
+        b=pqi4f/8GJGn9zzSU6vTVIIvXL2my3oT/FsmAYs3wZ1vuZ9FCfySNTaweNhtB2xpKaz
+         jyOrol49ULvIfavHdsGsQJGwPtQ0YouT3Rnmf1EX3XG4AVQLtkQwyXADAkpHQCno1/Qd
+         7hj20HS3n5jIvnFFgXHyFV5k9jlRhHsItM1Oc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=E/WoRwCu5XsS/7bp6PC1ed5fq81T4Yi+3THOeMoghdKvWzqKsAhNZG6SIdBHUTXTD6
+         QmZRXqin6xVC2U/NscUFy6MVarQFpt9NNnPhBNeeYvOl+4jxn0Z3kx3BrHdmAw4JNjCf
+         /4Gr80sbV24jVfN41sN34/mCjCWtTVFQb0sZg=
+Received: by 10.214.60.14 with SMTP id i14mr13297945qaa.217.1230690127303;
+        Tue, 30 Dec 2008 18:22:07 -0800 (PST)
+Received: by 10.215.41.3 with HTTP; Tue, 30 Dec 2008 18:22:07 -0800 (PST)
+In-Reply-To: <alpine.LNX.1.00.0812301859100.19665@iabervon.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104237>
 
-On 2008-12-30, Zorba <cr@altmore.co.uk> wrote:
-> ** REPRODUCING Possible bug
+wtf is wrong with
 
-[long script using "git checkout tag ." removed...]
+git checkout <something>
 
-Conor,
+??
 
-As Stephen said, you're using an extra "." which changes the
-meaning completely.
+if you must have
 
-In addition, the weird behaviour you see, where AC.txt
-appears to have sneaked in when you do a "git checkout
-versionB .", even though versionB does not have that file,
-is also correct -- read the second para of the DESCRIPTION
-section in "git help checkout", and note the phrase "update
-the index ... before updating the working tree".
+git checkout <something> <paths>
 
-In other words, the special form of git checkout you used is
-updating not only the working tree but also the index.  So
-when you checked out versionA in this manner, AC.txt got
-into the index (as well as the working tree).
+then instead use
 
-Your subsequent "rm *.*" only deeltes those files from the
-working tree; they're still in the index.  To see this, run
-"git ls-files -s" just after each "rm *.*".
+git checkout <something> <paths>
+git clean
 
-You can also get the results you *want* to get by running a
-"git reset --hard" instead of "rm *.*", since your top
-commit in the current branch (which is what this would
-default to) has no files in it anyway.
+but you will lose other files that aren't part of the repo but are
+still in the project's dir (i.e. untracked files).
 
-Happy New Year from India to Northern Ireland and everyone
-else in the world :-)
+On Tue, Dec 30, 2008 at 4:15 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> On Tue, 30 Dec 2008, Conor Rafferty wrote:
+>
+>> I don't understand, sorry. I thought I'd already removed all files from
+>> the local tree, in the $ rm *.* move just above the checkout
+>
+> That removes them from the filesystem, but they're still in the index. And
+> "git checkout <something> ." first gets everything that *is* in "." in
+> <something> into the index, and then gets everything from "." in the index
+> into the filesystem.
+>
+> I suppose it is questionable as to whether it ought to copy paths that
+> aren't in versionA from the index into the filesystem.
+>
+> To see this in a bit more detail, do:
+>
+> $ rm *.*
+> $ git status
+> (notice that the deletes are in the "won't be committed" section)
+>
+> Now, "git checkout <path>" will discard any changes in the "won't be
+> committed" section for that path. Maybe "git checkout versionA <path>"
+> should only discard changes that are in the "won't be committed" section
+> for filenames that match that path and are in versionA (or are
+> *different* in versionA and not removed?), but I think it's an area where,
+> if you're expecting any particular behavior out of that command, you're
+> likely to be surprised in some way in some situation.
+>
+>        -Daniel
+> *This .sig left intentionally blank*
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
