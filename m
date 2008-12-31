@@ -1,99 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: for newbs = little exercise / tutorial / warmup for windows and
  other non-sophisticated new Git users :-) [Scanned]
-Date: Tue, 30 Dec 2008 20:48:20 -0800
-Message-ID: <7v7i5hymp7.fsf@gitster.siamese.dyndns.org>
-References: <BB5F02FD3789B54E8964D38D6775E718242D36@ALTMORE-SVR.altmore.local>
- <200812302141.02248.bss@iguanasuicide.net>
+Date: Wed, 31 Dec 2008 00:21:42 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0812302356040.19665@iabervon.org>
+References: <BB5F02FD3789B54E8964D38D6775E718242D36@ALTMORE-SVR.altmore.local> <200812302141.02248.bss@iguanasuicide.net> <7v7i5hymp7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Conor Rafferty" <conor.rafferty@altmore.co.uk>,
-	"Jeff Whiteside" <jeff.m.whiteside@gmail.com>,
-	"Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org
-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-X-From: git-owner@vger.kernel.org Wed Dec 31 05:50:00 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	Conor Rafferty <conor.rafferty@altmore.co.uk>,
+	Jeff Whiteside <jeff.m.whiteside@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 31 06:25:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHt1s-0005fZ-1H
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 05:50:00 +0100
+	id 1LHta8-0003il-UN
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 06:25:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752957AbYLaEsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 23:48:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752548AbYLaEsg
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 23:48:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44173 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752542AbYLaEsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 23:48:35 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 90CF81B6D8;
-	Tue, 30 Dec 2008 23:48:34 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5EC5F1B6D6; Tue,
- 30 Dec 2008 23:48:27 -0500 (EST)
-In-Reply-To: <200812302141.02248.bss@iguanasuicide.net> (Boyd Stephen Smith,
- Jr.'s message of "Tue, 30 Dec 2008 21:40:58 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 47CB9F14-D6F6-11DD-8A24-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1750829AbYLaFVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Dec 2008 00:21:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750745AbYLaFVo
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 00:21:44 -0500
+Received: from iabervon.org ([66.92.72.58]:47274 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750716AbYLaFVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Dec 2008 00:21:44 -0500
+Received: (qmail 28538 invoked by uid 1000); 31 Dec 2008 05:21:42 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 31 Dec 2008 05:21:42 -0000
+In-Reply-To: <7v7i5hymp7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104250>
 
-"Boyd Stephen Smith Jr." <bss@iguanasuicide.net> writes:
+On Tue, 30 Dec 2008, Junio C Hamano wrote:
 
-> On Tuesday 2008 December 30 20:30:46 Conor Rafferty wrote:
->> MERCURIAL:
->>
->> Update
->> hg update [-C] [-d DATE] [[-r] REV]
->
-> Which is the role of "git checkout <branch>"
->
-> "git checkout <branch> <paths>" is similar to "hg revert -r <branch> <paths>", 
+> "Boyd Stephen Smith Jr." <bss@iguanasuicide.net> writes:
+> 
+> > On Tuesday 2008 December 30 20:30:46 Conor Rafferty wrote:
+> >> MERCURIAL:
+> >>
+> >> Update
+> >> hg update [-C] [-d DATE] [[-r] REV]
+> >
+> > Which is the role of "git checkout <branch>"
+> >
+> > "git checkout <branch> <paths>" is similar to "hg revert -r <branch> <paths>", 
+> 
+> No it is not.
+> 
+> The form of the command is makes this request:
+> 
+>     Please look into that named <tree-ish>, and check out the named
+>     <paths> out of it to my work tree.  Because the reason I want them in
+>     my work tree is so that I can include them as part of the next commit
+>     I am preparing to create in the index, please update these paths in my
+>     index while at it.
 
-No it is not.
+With that description, there's a bug: in addition to the above, it checks 
+out from the index any path which does match the <paths> but isn't in 
+<tree-ish>. I think the way to fix that would be to update the work tree 
+from read_tree_some() instead of using the "if pathspec_match() ... 
+checkout_entry()" loop over the index.
 
-The form of the command is makes this request:
+With the current code, you can have git check out a file that you've 
+changed/deleted from a tree that doesn't contain it at all (and you get 
+the index version). E.g.:
 
-    Please look into that named <tree-ish>, and check out the named
-    <paths> out of it to my work tree.  Because the reason I want them in
-    my work tree is so that I can include them as part of the next commit
-    I am preparing to create in the index, please update these paths in my
-    index while at it.
+$ rm wt-status.c
+$ git checkout e83c5163316f89bfbde7d9ab23ca2e25604af290 wt-status.c
+$ ls wt-status.c
+wt-status.c
 
-After working for some time on top of the current HEAD to make changes to
-existing files in "lib/" directory, if you notice that none of your
-changes in the directory does not make any sense, you may rather want to
-start over from the version that you began with.  In such a case, you
-would make the above request with <tree-ish> equal to HEAD and <paths>
-equal to "lib", i.e.
+(instead, you should get an error if a <path> doesn't match anything in 
+the <tree-ish> and only get those things that it matches in the 
+<tree-ish>.)
 
-    git checkout HEAD lib
+I think I was too zealous sharing code back in February. I should have a 
+patch by the weekend if nobody beats me to it. (And I still think that, if 
+you hit this case, you must be confused, but git isn't helping by doing 
+what it does.)
 
-and as the end result you may be able to achieve "reverting my crappy
-changes to all of the files in lib/".
-
-HOWEVER.
-
-Read what the above request says carefully again, and think about what
-would happen to a path that exists in the work tree but not in the named
-<tree-ish>.
-
-In other words, what would happen to a new file you added since you
-started working on top of HEAD?
-
-See?
-
-A new file that you added in lib/ directory since you started working will
-not be molested in any way, because they do not even exist in the
-<tree-ish>.
-
-If you think "git checkout <tree-ish> <paths>" has anything to do with
-reverting, you will keep confusing yourself.  The command is "checking out
-the named paths out of the named tree", and absense of a file is not
-something that is checked out by this operation.
+	-Daniel
+*This .sig left intentionally blank*
