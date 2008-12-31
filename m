@@ -1,55 +1,94 @@
-From: jidanni@jidanni.org
-Subject: [PATCH] Documentation/git-ls-files: --abbrev=<n> only useful with --stage
-Date: Wed, 31 Dec 2008 09:38:39 +0800
-Message-ID: <871vvpnmxs.fsf@jidanni.org>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: for newbs = little exercise / tutorial / warmup for windows and other non-sophisticated new Git users :-) [Scanned]
+Date: Tue, 30 Dec 2008 20:56:17 -0600
+Message-ID: <200812302056.21748.bss@iguanasuicide.net>
+References: <BB5F02FD3789B54E8964D38D6775E718242D35@ALTMORE-SVR.altmore.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 31 03:55:40 2008
+Content-Type: multipart/signed;
+  boundary="nextPart1341295.gxpIAS8DQu";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff Whiteside" <jeff.m.whiteside@gmail.com>,
+	"Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org
+To: "Conor Rafferty" <conor.rafferty@altmore.co.uk>
+X-From: git-owner@vger.kernel.org Wed Dec 31 03:57:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHrF1-0004uy-KT
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 03:55:28 +0100
+	id 1LHrGt-0005b7-LJ
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 03:57:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755246AbYLaCyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 21:54:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755243AbYLaCyG
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 21:54:06 -0500
-Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:56816 "EHLO
-	homiemail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1755232AbYLaCyF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Dec 2008 21:54:05 -0500
-Received: from jidanni.org (122-127-43-96.dynamic.hinet.net [122.127.43.96])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a2.g.dreamhost.com (Postfix) with ESMTP id DB6AED272E
-	for <git@vger.kernel.org>; Tue, 30 Dec 2008 18:54:03 -0800 (PST)
+	id S1755300AbYLaC4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 21:56:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755301AbYLaC4E
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 21:56:04 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:33787 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755300AbYLaC4D (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 21:56:03 -0500
+Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.124])
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LHrFY-0005Wd-8K; Wed, 31 Dec 2008 02:56:01 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <BB5F02FD3789B54E8964D38D6775E718242D35@ALTMORE-SVR.altmore.local>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104245>
 
-Else one wonders why one can't see the hex numbers it is talking about.
+--nextPart1341295.gxpIAS8DQu
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Signed-off-by: jidanni <jidanni@jidanni.org>
----
- Documentation/git-ls-files.txt |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+On Tuesday 2008 December 30 20:27:26 Conor Rafferty wrote:
+> -----Original Message-----
+> wtf is wrong with
+>
+> git checkout <something>
+>
+> ??
+>
+> ** It doesn't reliably put the files that were in that revision into the
+> working directory - a fairly major flaw, for what I'm using SCM for (and
+> 80% of the market IMHO)
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 9f85d60..a1e952f 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -128,6 +128,7 @@ OPTIONS
- 	Instead of showing the full 40-byte hexadecimal object
- 	lines, show only handful hexdigits prefix.
- 	Non default number of digits can be specified with --abbrev=<n>.
-+	(Useful only with --stage.)
- 
- \--::
- 	Do not interpret any more arguments as options.
--- 
-1.6.0.6
+And you would be wrong, IMHO.  Many people have untracked files or director=
+ies=20
+in their working directory ('cause they are working there) that they don't=
+=20
+want deleted willy-nilly.  Build files, modifications that should be on a=20
+different branch, etc.  There's another thread active on the list complaini=
+ng=20
+that git removes too much from the working tree.
+
+Most users of SCMs do make active modifications to the files in the SCM.  I=
+t's=20
+not a system only for archiving static projects.
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
+
+--nextPart1341295.gxpIAS8DQu
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkla31UACgkQdNbfk+86fC12iQCgiVjarLXsdntf2/qEIbh+dYXE
+ib4AnA9OP3l3U04QWhUGAeO0VT3TPPpm
+=H0v3
+-----END PGP SIGNATURE-----
+
+--nextPart1341295.gxpIAS8DQu--
