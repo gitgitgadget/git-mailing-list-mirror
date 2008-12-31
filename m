@@ -1,120 +1,98 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: RE: for newbs = little exercise / tutorial / warmup for windows and
- other non-sophisticated new Git users :-) [Scanned]
-Date: Tue, 30 Dec 2008 22:10:45 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0812302143210.19665@iabervon.org>
-References: <BB5F02FD3789B54E8964D38D6775E718242D35@ALTMORE-SVR.altmore.local>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: for newbs = little exercise / tutorial / warmup for windows and other non-sophisticated new Git users :-) [Scanned]
+Date: Tue, 30 Dec 2008 21:40:58 -0600
+Message-ID: <200812302141.02248.bss@iguanasuicide.net>
+References: <BB5F02FD3789B54E8964D38D6775E718242D36@ALTMORE-SVR.altmore.local>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff Whiteside <jeff.m.whiteside@gmail.com>,
-	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git@vger.kernel.org
-To: Conor Rafferty <conor.rafferty@altmore.co.uk>
-X-From: git-owner@vger.kernel.org Wed Dec 31 04:13:20 2008
+Content-Type: multipart/signed;
+  boundary="nextPart14681783.luBj9bTgXa";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff Whiteside" <jeff.m.whiteside@gmail.com>,
+	"Daniel Barkalow" <barkalow@iabervon.org>, git@vger.kernel.org
+To: "Conor Rafferty" <conor.rafferty@altmore.co.uk>
+X-From: git-owner@vger.kernel.org Wed Dec 31 04:42:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHrWJ-0001t7-Uv
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 04:13:20 +0100
+	id 1LHry9-0000h7-AD
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 04:42:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754930AbYLaDKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 22:10:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754729AbYLaDKr
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 22:10:47 -0500
-Received: from iabervon.org ([66.92.72.58]:53555 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754299AbYLaDKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 22:10:46 -0500
-Received: (qmail 26232 invoked by uid 1000); 31 Dec 2008 03:10:45 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 31 Dec 2008 03:10:45 -0000
-In-Reply-To: <BB5F02FD3789B54E8964D38D6775E718242D35@ALTMORE-SVR.altmore.local>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754503AbYLaDkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 22:40:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754299AbYLaDkr
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 22:40:47 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:55981 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752230AbYLaDkq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 22:40:46 -0500
+Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.124])
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LHrwo-0005YH-9a; Wed, 31 Dec 2008 03:40:43 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <BB5F02FD3789B54E8964D38D6775E718242D36@ALTMORE-SVR.altmore.local>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104247>
 
-On Wed, 31 Dec 2008, Conor Rafferty wrote:
+--nextPart14681783.luBj9bTgXa
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> -----Original Message-----
-> wtf is wrong with
-> 
-> git checkout <something>
-> 
-> ??
-> 
-> ** It doesn't reliably put the files that were in that revision into the
-> working directory - a fairly major flaw, for what I'm using SCM for (and
-> 80% of the market IMHO)
+On Tuesday 2008 December 30 20:30:46 Conor Rafferty wrote:
+> MERCURIAL:
+>
+> Update
+> hg update [-C] [-d DATE] [[-r] REV]
 
-It certainly does for me; I rely on it pretty much constantly. Can you 
-give a sequence of commands (ideally the whole sequence from the "git 
-init") that leads to a difference?
+Which is the role of "git checkout <branch>"
 
-The only case I know of where there will be files left over is if you 
-switch from a situation where you have an untracked file (e.g., you create 
-C.txt but don't add it to anything) to another situation where the file 
-still isn't tracked, it won't remove it. But, of course, you wouldn't 
-really want git to remove your uncommitted work in general, since it's 
-generally irreplaceable. It'll only be lacking files if it fails to switch 
-(if, for instance, you had uncommitted changes that conflict with the 
-changes that it would do), and it will give an error message in that case.
+"git checkout <branch> <paths>" is similar to "hg revert -r <branch> <paths=
+>",=20
+but the later seems to handle your use case properly.  I don't know much=20
+about the workings of hg revert -- it might use the history to determine=20
+what's correct, or completely bypass the existing "index" when determining=
+=20
+what to drop.  In any case, it seems to work better for what you are trying=
+=20
+to do.  Why not just use it?
 
-> if you must have
-> 
-> git checkout <something> <paths>
-> 
-> then instead use
-> 
-> git checkout <something> <paths>
-> git clean
-> 
-> ** hmm, might try this - obviously as per Daniels post there is some
-> undefined interaction happenign with the index, to screw up the working
-> directory. I presume clean flushes the index?
+I could do with more hg/bzr/darcs experience myself, but git seems to behav=
+e=20
+the way I like it so it's what I use.  When deciding on the right tool for=
+=20
+the job, it does help to have many.  "To the man with only a hammer, all=20
+problems look like nails."
 
-git clean wouldn't remove those files, because they're supposed to be 
-there at that point.
+That said, I'm pretty sure that if you hasn't specified '.' and just used "=
+git=20
+checkout <branch>" you wouldn't have seen those "artifacts".
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
 
-In the sequence:
+--nextPart14681783.luBj9bTgXa
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-...
-$ git tag versionD
-$ git checkout versionA .
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-This means: "Update the index with the files in versionA, and working 
-directory from the index"
+iEYEABECAAYFAkla6c4ACgkQdNbfk+86fC29kwCaAzbCtK2ma/oxZ+W+Qzzh30ou
+Qj8AnjFtvcAHbcxd54kj+0weQkauKRRF
+=97/Q
+-----END PGP SIGNATURE-----
 
-So now you're working on a commit based versionD (because you didn't 
-switch branches), and your work thus far, which is marked as ready for 
-your next commit, is to recover the removed files ABC.txt and AC.txt (from 
-versionA).
-
-$ rm *.*
-
-This removes those files again, but only in your working directory. Your 
-index still says that your next commit will recover them.
-
-$ git checkout versionB .
-
-This recovers ABC.txt and BC.txt (from versionB). Your index has ABC.txt, 
-BC.txt (from versionB), and AC.txt (from versionA), marked as going into 
-the next commit. It also puts all of these in your working directory (when 
-you might expect it to only put ABC.txt and BC.txt there).
-
-So (a) you're still working on the commit after versionD, rather than 
-navagting history at all; and (b) you've recovered files from two 
-different commits.
-
-Now:
-
-$ git clean
-
-will remove any files that you happen to have around, other than the one 
-you're confused about and trying to get rid of.
-
-	-Daniel
-*This .sig left intentionally blank*
+--nextPart14681783.luBj9bTgXa--
