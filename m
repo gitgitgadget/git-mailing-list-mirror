@@ -1,99 +1,52 @@
-From: "Zorba" <cr@altmore.co.uk>
-Subject: Re: for newbs = little exercise / tutorial / warmup for windows and other non-sophisticated new Git users :-)
-Date: Wed, 31 Dec 2008 00:31:46 -0000
-Message-ID: <gjeei2$e72$4@ger.gmane.org>
-References: <gj68a0$u56$3@ger.gmane.org> <gj6kqq$nvh$4@ger.gmane.org> <3ab397d0812291505v77824e6fvdecebc80f38a5f89@mail.gmail.com> <gjdh0r$n3c$4@ger.gmane.org> <gjdlcl$5no$4@ger.gmane.org> <gjdmm6$9oj$4@ger.gmane.org> <3ab397d0812301035w3dcd872fkae9509629a0ed7de@mail.gmail.com> <gje4ff$ip6$4@ger.gmane.org> <alpine.LNX.1.00.0812301730440.19665@iabervon.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 31 01:33:38 2008
+From: David Brown <git@davidb.org>
+Subject: Re: why still no empty directory support in git
+Date: Tue, 30 Dec 2008 17:06:20 -0800
+Message-ID: <20081231010620.GA26997@linode.davidb.org>
+References: <46dff0320812291942y6aeec941k9394586621e9151b@mail.gmail.com> <alpine.DEB.2.00.0812300008060.31590@vellum.laroia.net> <alpine.DEB.2.00.0812300113050.22107@vellum.laroia.net> <9b18b3110812300043l55a42f6sd995f36bf857543e@mail.gmail.com> <alpine.DEB.2.00.0812300346040.19911@vellum.laroia.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Asheesh Laroia <asheesh@asheesh.org>
+X-From: git-owner@vger.kernel.org Wed Dec 31 02:07:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHp1j-0000Ia-Nq
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 01:33:36 +0100
+	id 1LHpYn-00014n-90
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 02:07:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752110AbYLaAcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Dec 2008 19:32:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751950AbYLaAcO
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 19:32:14 -0500
-Received: from main.gmane.org ([80.91.229.2]:46773 "EHLO ciao.gmane.org"
+	id S1751596AbYLaBGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Dec 2008 20:06:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751530AbYLaBGW
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Dec 2008 20:06:22 -0500
+Received: from linode.davidb.org ([72.14.176.16]:54346 "EHLO mail.davidb.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751854AbYLaAcN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Dec 2008 19:32:13 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LHp0L-0000gM-DY
-	for git@vger.kernel.org; Wed, 31 Dec 2008 00:32:09 +0000
-Received: from 81.135.227.136 ([81.135.227.136])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Dec 2008 00:32:09 +0000
-Received: from cr by 81.135.227.136 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Dec 2008 00:32:09 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 81.135.227.136
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5512
-X-RFC2646: Format=Flowed; Original
+	id S1750964AbYLaBGV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Dec 2008 20:06:21 -0500
+Received: from davidb by mail.davidb.org with local (Exim 4.69 #1 (Debian))
+	id 1LHpXQ-0007Bn-RA; Tue, 30 Dec 2008 17:06:20 -0800
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.00.0812300346040.19911@vellum.laroia.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.2 points;
- *  0.0 RCVD_BY_IP Received by mail server with no name
- *  4.0 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
- *  1.2 PRIORITY_NO_NAME Message has priority, but no X-Mailer/User-Agent
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104235>
 
-> So in order for this to make sense, you're going to need to know a little
-> tiny bit about branches
+On Tue, Dec 30, 2008 at 03:58:46AM -0500, Asheesh Laroia wrote:
 
-** (sigh) At some level I knew I'd have to face up to this... - ok lets do 
-it
+> This is because git is removing these directories. There is a strict 
+> incompatibility between git rmdir()ing empty directories behind my back and 
+> Maildir systems.
 
-(which, fortunately, is trivial compared to
-> branches in most SCMs). In git, a branch is a mutable pointer to a commit,
-> which is the latest commit on the branch (all of the earlier commits on
-> the branch are linked off of the latest one; each commit points to the one
-> before). By default, you have a branch called "master", and that's the
-> branch that your series of commands builds up. Now, at any given time, you
-> can have a "current branch" (a.k.a. HEAD), which is the branch that you'd
-> put a new commit on if you made one. "master" is your current branch while
-> you're building up that history.
+So, would there be a hook that would run at all of the times git might
+remove the directories, and the hook could just put them back if
+missing?
 
-> When you want to navigate the history, however, you want to leave all of
-> the branches alone and take your working directory into the history. This
-> is known as being on "(no branch)" or, as Zippy would say, having a
-> "detached HEAD". This way you leave the "master" branch pointing to
-> versionD, which is, after all, the latest commit, while you get yourself
-> an old version. You can do this with:
+The post-merge hook is certainly one place, but there are likely
+others.  You might also want one in post-checkout, but I'm guessing
+that switching branches is going to be less frequent in a maildir
+directory.
 
-> $ git checkout versionA
->
-> because you've made a tag for it. In order to get back to developing (as
-> opposed to looking at history), you use:
->
-> $ git checkout master
->
-> (because "master" is your branch, while "versionA" is a tag).
->
-> If you're on master, either after checking it out explicitly or before
-> you've used checkout at all, doing:
->
-> $ git checkout versionA .
->
-> with *not* switch you away from the current branch, but will get the
-> contents of "." from versionA into your index and working directory, and
-> it doesn't remove things that you have currently.
-
-** ok, thanks for explaining - one little dot and my HEAD don't get a 
-holiday !
-
-Now, lets say we checkout versionB. I don't just want to be pointing at 
-versionB in the repo, I want an exact copy (no more, no less) of all the 
-files in version B, to be placed in the working tree. Currently this is not 
-happening reliably.
-
-Is that too much to ask ?
+David
