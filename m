@@ -1,89 +1,81 @@
-From: "aaron smith" <beingthexemplarylists@gmail.com>
-Subject: git push over http - curl PUT error?
-Date: Wed, 31 Dec 2008 02:10:04 -0800
-Message-ID: <d7ac1a680812310210r25795e66x35601059103892d7@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [STGIT][PATCH] new: translate non word characters in patch name to '-'
+Date: Wed, 31 Dec 2008 11:38:27 +0100
+Message-ID: <20081231103827.GA29195@diana.vm.bytemark.co.uk>
+References: <49562413.0437560a.287d.5133@mx.google.com> <20081228204938.GA13143@diana.vm.bytemark.co.uk> <154e089b0812291215h72dfe04aod080f665eb7f5592@mail.gmail.com> <20081229212119.GA3015@diana.vm.bytemark.co.uk> <154e089b0812310007j6642af70v4bfd64b784da8b4c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 31 11:11:48 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Hannes Eder <hannes@hanneseder.net>
+X-From: git-owner@vger.kernel.org Wed Dec 31 11:40:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LHy3H-0005lQ-EW
-	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 11:11:47 +0100
+	id 1LHyUl-0004J3-H4
+	for gcvg-git-2@gmane.org; Wed, 31 Dec 2008 11:40:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550AbYLaKKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Dec 2008 05:10:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbYLaKKH
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 05:10:07 -0500
-Received: from rv-out-0506.google.com ([209.85.198.227]:60368 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751452AbYLaKKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Dec 2008 05:10:06 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so5221103rvb.1
-        for <git@vger.kernel.org>; Wed, 31 Dec 2008 02:10:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=OYJgSgyHno6LlM4e4DPWV7YLqzsVHfptO32tizGKGtU=;
-        b=vO0O9dTqlHMP3SNYqfX/GJoRrcQxWOVlPb9ISV5VTFyaN3NJOpcZo0DnXjg0os4f9D
-         E08RXcqHD0+W14FdcpGFMqLXm5u0HbpYpp98dIZDa0i4lf8iVXg1rfNLDjJcyipoyG0P
-         boQFt7RqRfDfKQQ0OTu4gJ97VccO9bZgalEJY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=RMZLqLcROTQxg9sakc6UiBENLRXiMTj+2gaCSpKSqX1qWij2umg+ZwiglwQ4klRyhT
-         LSK2mOwezq1xj5/HG9h5qYdrh8BntmqBx3XESmVMv8F6mpGjcvXbaSfeUFaGoWHYDgQo
-         MBhE9MrpFAmX9LLfuDpcWciWI3wdBkHSbZ9tA=
-Received: by 10.142.174.8 with SMTP id w8mr6485204wfe.76.1230718204417;
-        Wed, 31 Dec 2008 02:10:04 -0800 (PST)
-Received: by 10.143.115.3 with HTTP; Wed, 31 Dec 2008 02:10:04 -0800 (PST)
+	id S1755157AbYLaKiu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Dec 2008 05:38:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754962AbYLaKiu
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 05:38:50 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3185 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753033AbYLaKiu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Dec 2008 05:38:50 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1LHyT5-0007cc-00; Wed, 31 Dec 2008 10:38:27 +0000
 Content-Disposition: inline
+In-Reply-To: <154e089b0812310007j6642af70v4bfd64b784da8b4c@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104263>
 
-hey all,
+On 2008-12-31 09:07:51 +0100, Hannes Eder wrote:
 
-I have one last issue to figure out with git over HTTP. This one is
-seriously stumping me.
+> On Mon, Dec 29, 2008 at 10:21 PM, Karl Hasselstr=F6m <kha@treskal.com=
+> wrote:
+>
+> > There's a small inconsistency: you fail if the name contains "..",
+> > but correct single bad characters.
+>
+> ".." is used to denote patch name ranges [<patch1>..<patch2>] for
+> commands like "stg pop", "stg push", and so forth, therefore I think
+> it is wise to exclude ".." from single patch names [<patch3>].
 
-I have a bare git repository here: http://codeendeavor.com/guttershark.git/
+Yes. But what I meant was that it's a tad inconsistent to fail on some
+illegal patch names, and correct others. You should either always fail
+(my preference), or always correct.
 
-And I have a local git repo with some files in it, ready to push to
-this public one.
+> Maybe we should start defining what a 'valid' patch name has to look
+> like, i.e. define
+>
+> def is_patch_name_valid(patchname)
 
-Here's what I do to push to it:
+Yes, exactly. This function could be called
 
-$git push origin master
+  1. when validating user input in e.g. "stg new";
 
-I then get this output:
-""
-Fetching remote heads...
-  refs/
-  refs/heads/
-  refs/tags/
-updating 'refs/heads/master'
-  from a08e614723ff57047522511a2130d53010ebe0ca
-  to   2db4bca0d137f4099973387472cf1666d0290e03
-    sending 3 objects
-    done
-Updating remote server info
-PUT error: curl result=22, HTTP code=403
-"""
+  2. in an assert at the end of the function that constructs a patch
+     name from the commit message; and
 
-I'm not sure how to get around this.
+  3. in an assert just before we try to actually create a patch with a
+     given name.
 
-The git repo permissions are 777, with owner/group apache:apache. I
-have DAV on, and the DavLockDB directive. which seems to all be ok.
-And I don't have any http authentication on it.. or access control
-list for that matter.
+(2) and (3) aren't really necessary, of course; they're just there to
+catch bugs.
 
-Any ideas? Thanks All!
+If you define such a function, be liberal in forbidding stuff. It's
+easy to relax the rules later, but hard to tighten them since we have
+to deal with existing repositories with illegal patch names. It's
+probably a good idea to look at what git allows in its ref names, and
+additionally forbid "/" and anything else you can think of.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
