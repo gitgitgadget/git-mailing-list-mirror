@@ -1,95 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-merge: at least one <remote> not two
-Date: Thu, 01 Jan 2009 13:25:02 -0800
-Message-ID: <7vk59ehg7l.fsf@gitster.siamese.dyndns.org>
-References: <87d4f6vph7.fsf@jidanni.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Thu Jan 01 22:26:48 2009
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH 3/3] unpack-trees: remove redundant path search in verify_absent
+Date: Thu,  1 Jan 2009 21:54:33 +0100
+Message-ID: <1230843273-11056-4-git-send-email-drizzd@aon.at>
+References: <1230843273-11056-1-git-send-email-drizzd@aon.at>
+ <1230843273-11056-2-git-send-email-drizzd@aon.at>
+ <1230843273-11056-3-git-send-email-drizzd@aon.at>
+Cc: gitster@pobox.com, Clemens Buchacher <drizzd@aon.at>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 01 22:28:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIV3s-0003Ve-Uf
-	for gcvg-git-2@gmane.org; Thu, 01 Jan 2009 22:26:37 +0100
+	id 1LIV5L-0003x8-Mb
+	for gcvg-git-2@gmane.org; Thu, 01 Jan 2009 22:28:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804AbZAAVZK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jan 2009 16:25:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751647AbZAAVZK
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 16:25:10 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33130 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750741AbZAAVZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jan 2009 16:25:09 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 249D61B8BB;
-	Thu,  1 Jan 2009 16:25:07 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DD71A1B8B8; Thu, 
- 1 Jan 2009 16:25:03 -0500 (EST)
-In-Reply-To: <87d4f6vph7.fsf@jidanni.org> (jidanni@jidanni.org's message of
- "Fri, 02 Jan 2009 02:41:08 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A959710C-D84A-11DD-9B07-F83E113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752164AbZAAV0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jan 2009 16:26:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752001AbZAAV0q
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 16:26:46 -0500
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:14659 "EHLO
+	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751859AbZAAV0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jan 2009 16:26:46 -0500
+Received: from darc.dyndns.org ([80.123.242.182]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 1 Jan 2009 22:26:43 +0100
+Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1LIUYr-0002wO-PA; Thu, 01 Jan 2009 21:54:33 +0100
+X-Mailer: git-send-email 1.6.1
+In-Reply-To: <1230843273-11056-3-git-send-email-drizzd@aon.at>
+X-OriginalArrivalTime: 01 Jan 2009 21:26:43.0141 (UTC) FILETIME=[A44FAF50:01C96C57]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104329>
 
-jidanni@jidanni.org writes:
+Since the only caller, verify_absent, relies on the fact that o->pos
+points to the next index entry anyways, there is no need to recompute
+its position.
 
-> Make SYNOPSIS match usage message
->
-> Signed-off-by: jidanni <jidanni@jidanni.org>
-> ---
->  Documentation/git-merge.txt |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-> index f7be584..a3ac828 100644
-> --- a/Documentation/git-merge.txt
-> +++ b/Documentation/git-merge.txt
-> @@ -10,7 +10,7 @@ SYNOPSIS
->  --------
->  [verse]
->  'git merge' [-n] [--stat] [--no-commit] [--squash] [-s <strategy>]...
-> -	[-m <msg>] <remote> <remote>...
-> +	[-m <msg>] <remote>...
->  'git merge' <msg> HEAD <remote>...
+Furthermore, if a nondirectory entry were found, this would return too
+early, because there could still be an untracked directory in the way.
+This is currently not a problem, because verify_absent is only called
+if the index does not have this entry.
+---
+ unpack-trees.c |    8 ++------
+ 1 files changed, 2 insertions(+), 6 deletions(-)
 
-The original uses ellipses for the first-class UI syntax as "zero or
-more", while it means "one or more" in the description for the original
-syntax, which is inconsistent, and you are matching them by making both
-use "one or more" interpretation.
-
-Two issues:
-
- * Are there similar breakages like this in the documentation and the
-   usage text?  It would be a good idea to make the ellipses to mean the
-   same thing everywhere, and a janitorial patch series that would fix
-   the "ellipses" breakage (and nothing else) may be a good thing to
-   have.  But before going that route...
-
- * Is it a good idea to standardize on "one or more" semantics?  I suspect
-   we would rather want to standardize on "zero or more", because it would
-   be more natural to say:
-
-    $ git diff [--] <paths>...
-
-   to mean "You can give paths if you want to but you do not have to".  If
-   ellipses meant "one or more", you have to say this instead:
-
-    $ git diff [--] [<paths>...]
-
-While I prefer "zero or more" because  I think it is more logical, if the
-preparatory study for the first issue reveals that we use "one or more" a
-lot more often, it might be easier to standardize on that interpretation.
-
-Oh, you also need to give ellipses to the usage string for the original
-syntax in builtin-merge.c to match SYNOPSIS and usage string.
-
-Thanks.
+diff --git a/unpack-trees.c b/unpack-trees.c
+index f8e2484..c4dc6dc 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -495,7 +495,7 @@ static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
+ 	 * anything in the existing directory there.
+ 	 */
+ 	int namelen;
+-	int pos, i;
++	int i;
+ 	struct dir_struct d;
+ 	char *pathbuf;
+ 	int cnt = 0;
+@@ -516,11 +516,7 @@ static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
+ 	 * in that directory.
+ 	 */
+ 	namelen = strlen(ce->name);
+-	pos = index_name_pos(o->src_index, ce->name, namelen);
+-	if (0 <= pos)
+-		return 0; /* we have it as nondirectory */
+-	pos = -pos - 1;
+-	for (i = pos; i < o->src_index->cache_nr; i++) {
++	for (i = o->pos; i < o->src_index->cache_nr; i++) {
+ 		struct cache_entry *ce2 = o->src_index->cache[i];
+ 		int len = ce_namelen(ce2);
+ 		if (len < namelen ||
+-- 
+1.6.1
