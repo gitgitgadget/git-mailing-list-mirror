@@ -1,49 +1,66 @@
-From: jidanni@jidanni.org
-Subject: git ls-tree prints wacko file sizes if it can't find the blob
-Date: Fri, 02 Jan 2009 07:18:42 +0800
-Message-ID: <87eizmty25.fsf_-_@jidanni.org>
-References: <20090101192153.GA6536@coredump.intra.peff.net>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH] doc/git-send-email: mention sendemail.cc config variable
+Date: Fri, 2 Jan 2009 00:40:40 +0100
+Message-ID: <200901020040.41399.markus.heidelberg@web.de>
+References: <200812290037.25890.markus.heidelberg@web.de> <200812291400.08924.trast@student.ethz.ch>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 02 00:22:13 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jan 02 00:41:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIWrk-0006P5-80
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 00:22:12 +0100
+	id 1LIXAm-0002YU-6K
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 00:41:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754268AbZAAXSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jan 2009 18:18:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753863AbZAAXSr
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 18:18:47 -0500
-Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:40205 "EHLO
-	homiemail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753000AbZAAXSq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jan 2009 18:18:46 -0500
-Received: from jidanni.org (122-127-33-68.dynamic.hinet.net [122.127.33.68])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a2.g.dreamhost.com (Postfix) with ESMTP id B4E4AD25E0
-	for <git@vger.kernel.org>; Thu,  1 Jan 2009 15:18:44 -0800 (PST)
+	id S1755159AbZAAXka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jan 2009 18:40:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754755AbZAAXka
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 18:40:30 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:40436 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754275AbZAAXk3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jan 2009 18:40:29 -0500
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id F07F9F878172;
+	Fri,  2 Jan 2009 00:40:26 +0100 (CET)
+Received: from [89.59.70.163] (helo=pluto)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #273)
+	id 1LIX9O-0003II-00; Fri, 02 Jan 2009 00:40:26 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <200812291400.08924.trast@student.ethz.ch>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX19uqly9LokCSxTsF4kJK3dziJMpz9OAtNvK8VTJ
+	hertSyjOM4bQVI2PCaX3xFBrUM+RMn5GCSZ5N4AilH8Q3tjGSF
+	8PWUjS9gyaYsr0L6QQHA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104341>
 
-git ls-tree prints wacko file sizes if it can't find the blob:
-$ git ls-tree --abbrev=4 -l 76e4
-error: unable to find ae832f2245892ddde5221357466448b409775142
-100644 blob ae83 3220821896     words
+Thomas Rast, 29.12.2008:
+> Markus Heidelberg wrote:
+> >  	Specify a starting "Cc:" value for each email.
+> > +	Default is the value of 'sendemail.cc'.
+> >  +
+> >  The --cc option must be repeated for each user you want on the cc list.
+> 
+> Judging from the source, this is not a default value that you can
+> override: any recipients listed in sendemail.cc configuration(s) are
+> always added to the Cc list.  The same goes for --bcc and
+> sendemail.bcc however, which uses the exact same formulation.
 
-It is even affected by --abbrev:
-$ for i in 4 5 40 999; do git ls-tree --abbrev=$i -l 76e4; done 2>&-|
-perl -nwale 'print $F[3]'
-3214344536
-3219092952
-3216251688
-3217198088
-$ git version
-git version 1.6.0.6
+I just tested it with --dry-run: the command line options for all three
+header lines (to cc bcc) override the corresponding config settings. So
+the formulation is correct: the settings are only default values.
+
+Markus
