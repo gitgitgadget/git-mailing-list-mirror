@@ -1,86 +1,59 @@
 From: jidanni@jidanni.org
-Subject: [PATCH] Documentation/git-bundle.txt: Dumping contents of any bundle
-Date: Thu, 01 Jan 2009 12:24:59 +0800
-Message-ID: <87prj7mz50.fsf_-_@jidanni.org>
-References: <20081219205100.GA26671@coredump.intra.peff.net>
+Subject: [PATCH] Documentation/gitcli.txt: dashed forms not allowed anymore
+Date: Thu, 01 Jan 2009 12:39:39 +0800
+Message-ID: <87ljtvmygk.fsf@jidanni.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: mdl123@verizon.net, spearce@spearce.org, git@vger.kernel.org
-To: peff@peff.net, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jan 01 05:31:36 2009
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 01 05:41:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIFDc-0000jp-DJ
-	for gcvg-git-2@gmane.org; Thu, 01 Jan 2009 05:31:36 +0100
+	id 1LIFMm-00025Q-SP
+	for gcvg-git-2@gmane.org; Thu, 01 Jan 2009 05:41:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754760AbZAAEZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Dec 2008 23:25:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754439AbZAAEZH
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 23:25:07 -0500
-Received: from mailbigip.dreamhost.com ([208.97.132.5]:49604 "EHLO
+	id S1755238AbZAAEjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Dec 2008 23:39:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755237AbZAAEjn
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 23:39:43 -0500
+Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:45833 "EHLO
 	homiemail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753829AbZAAEZG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 Dec 2008 23:25:06 -0500
+	by vger.kernel.org with ESMTP id S1754919AbZAAEjm (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Dec 2008 23:39:42 -0500
 Received: from jidanni.org (122-127-33-78.dynamic.hinet.net [122.127.33.78])
 	(using TLSv1 with cipher AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by homiemail-a2.g.dreamhost.com (Postfix) with ESMTP id 7FE67D25DF;
-	Wed, 31 Dec 2008 20:25:01 -0800 (PST)
+	by homiemail-a2.g.dreamhost.com (Postfix) with ESMTP id 21BA9D26CC;
+	Wed, 31 Dec 2008 20:39:41 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104290>
 
->>>>> "JK" == Jeff King <peff@peff.net> writes:
-
-JK> AFAIK, there is no tool to try salvaging strings from an incomplete pack
-JK> (and you can't just run "strings" because the deltas are zlib
-JK> compressed). So if I were in the police forensics department, I think I
-JK> would read Documentation/technical/pack-format.txt and start hacking a
-JK> solution as quickly as possible.
-
-Hogwash. Patch follows. Maybe even better methods are available.
+Non dashed command forms now mandatory.
 
 Signed-off-by: jidanni <jidanni@jidanni.org>
 ---
- Documentation/git-bundle.txt |   22 ++++++++++++++++++++++
- 1 files changed, 22 insertions(+), 0 deletions(-)
+ Documentation/gitcli.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 1b66ab7..80248f5 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -164,6 +164,28 @@ $ git pull bundle
- would treat it as if it is talking with a remote side over the
- network.
+diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+index 29e5929..9f582f6 100644
+--- a/Documentation/gitcli.txt
++++ b/Documentation/gitcli.txt
+@@ -45,8 +45,8 @@ disambiguating `\--` at appropriate places.
+ Here are the rules regarding the "flags" that you should follow when you are
+ scripting git:
  
-+DUMPING CONTENTS OF ANY BUNDLE
-+-----------------------
-+
-+Even if we cannot unbundle a bundle,
-+
-+------------
-+$ git init
-+$ git bundle unbundle mybundle.bun
-+error: Repository lacks these prerequisite commits...
-+------------
-+
-+We can still examine all the data contained within,
-+
-+------------
-+$ sed '/^PACK/,$!d' mybundle.bun > mybundle.pack
-+$ git unpack-objects < mybundle.pack
-+$ cd .git/objects
-+$ ls ??/*|tr -d /|git cat-file --batch-check
-+$ ls ??/*|tr -d /|git cat-file --batch
-+------------
-+
-+
- Author
- ------
- Written by Mark Levedahl <mdl123@verizon.net>
+- * it's preferred to use the non dashed form of git commands, which means that
+-   you should prefer `"git foo"` to `"git-foo"`.
++ * it's required to use the non dashed form of git commands, which means that
++   you must use `"git foo"` and not `"git-foo"`. The latter no longer works.
+ 
+  * splitting short options to separate words (prefer `"git foo -a -b"`
+    to `"git foo -ab"`, the latter may not even work).
 -- 
 1.6.0.6
