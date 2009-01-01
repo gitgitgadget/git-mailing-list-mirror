@@ -1,128 +1,63 @@
-From: "David Aguilar" <davvid@gmail.com>
-Subject: Re: git has modified files after clean checkout
-Date: Wed, 31 Dec 2008 15:41:36 -0800
-Message-ID: <402731c90812311541v28ac9617ge52e0e5c0f1298d2@mail.gmail.com>
-References: <81bfc67a0812311223g2b6e8476y84b23c19977dfd10@mail.gmail.com>
+From: jidanni@jidanni.org
+Subject: Re: shallow clone, shallow fetch?
+Date: Thu, 01 Jan 2009 10:54:12 +0800
+Message-ID: <877i5fohwr.fsf@jidanni.org>
+References: <87vdt24zz4.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Caleb Cushing" <xenoterracide@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 01 00:43:15 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 01 03:55:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIAiX-0001dY-TP
-	for gcvg-git-2@gmane.org; Thu, 01 Jan 2009 00:43:14 +0100
+	id 1LIDis-0000O5-6D
+	for gcvg-git-2@gmane.org; Thu, 01 Jan 2009 03:55:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752926AbYLaXlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Dec 2008 18:41:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752275AbYLaXli
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 18:41:38 -0500
-Received: from rv-out-0506.google.com ([209.85.198.231]:47083 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752353AbYLaXlh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Dec 2008 18:41:37 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so5457040rvb.1
-        for <git@vger.kernel.org>; Wed, 31 Dec 2008 15:41:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=S3fayDzk2ntnf+xF22k+mnhoZY/ZL4wkWL1lKUeGrSs=;
-        b=GwrhRWYaH4tpyZVycEN1nYtQtLLaEqm6uus+uHxcHdwSFFmbKHAnhp4xHISkUWTt8B
-         +VHdzhvwFmPgZth1aWNgQ0OuPjudPqGLIErLVptdqI2jFeRRy/aoBF1rRYkuAhW532B1
-         iEZPFTPlu4zgbLDPMWd6t/+N5Ks2VnrIsoeDw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=NSAnX7eDHMANevyXQLyN7gABM104OBJsBDa4nerpFIeJSeK9o8+CKAIzVkSMRDQHw5
-         /yqHQuHewWDwJONc11IbxBzMaJKUdCV4wWkjZ5VggLwMVmVvTjBzbYLWNoXS6Ua6QZve
-         hWlkHJCWMIs3TkXOIY0OxlzYP+Sq/SP/mQK8I=
-Received: by 10.142.207.8 with SMTP id e8mr4396778wfg.88.1230766896045;
-        Wed, 31 Dec 2008 15:41:36 -0800 (PST)
-Received: by 10.142.241.20 with HTTP; Wed, 31 Dec 2008 15:41:36 -0800 (PST)
-In-Reply-To: <81bfc67a0812311223g2b6e8476y84b23c19977dfd10@mail.gmail.com>
-Content-Disposition: inline
+	id S1753620AbZAACyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Dec 2008 21:54:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753395AbZAACyR
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Dec 2008 21:54:17 -0500
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:52266 "EHLO
+	homiemail-a4.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752084AbZAACyQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Dec 2008 21:54:16 -0500
+Received: from jidanni.org (122-127-33-78.dynamic.hinet.net [122.127.33.78])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by homiemail-a4.dreamhost.com (Postfix) with ESMTP id 815E6414EB
+	for <git@vger.kernel.org>; Wed, 31 Dec 2008 18:54:14 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104287>
 
-On Wed, Dec 31, 2008 at 12:23 PM, Caleb Cushing <xenoterracide@gmail.com> wrote:
-> here's what I did
->
-> rm -r portage
-> git clone git@github.com:xenoterracide/portage.git
-
-
-Here's the anonymous clone URL (the one you provided is private)
-    $ git clone git://github.com/xenoterracide/portage.git
-
-Read on below...
-
-> cd portage
-> git checkout origin/regen2 -b regen2
-> git status
->
-> # On branch regen2
-> # Changed but not updated:
-> #   (use "git add <file>..." to update what will be committed)
-> #
-> #       modified:
-> x11-themes/metacity-themes/files/metacity-themes-1.0-gentoo.diff
-> #       modified:
-> x11-themes/metacity-themes/files/metacity-themes-1.2-gentoo.diff
-> #
-> no changes added to commit (use "git add" and/or "git commit -a")
->
-> why are there files claiming to be modified? this is a clean clone.
-> I've had this before I usually end up doing a git reset --hard HEAD,
-> but I'm thinking it's a bug, since I've seen it vary on the same clone
-> and sometimes even disappear.
->
-> git version 1.6.0.6
-> --
-> Caleb Cushing
->
-> http://xenoterracide.blogspot.com
-
-I followed the steps above and did not run into any such issues.
-
-$ git status
-# On branch regen2
-nothing to commit (working directory clean)
-
-$ git version
-git version 1.6.1.28.gc32f76
-(Junio's latest master at the moment)
-
-Here's my quick guess based on what I'm seeing --
-
-The files you mention contain CRLF.  Do you have core.autocrlf set
-globally somewhere, perhaps in your ~/.gitconfig?
-
-It's possible that the autocrlf stuff is messing with those files.
-They seem to be a mix of both unix LF and CRLF (the CRLF stuff doesn't
-start until line 104 of
-x11-themes/metacity-themes/files/metacity-themes-1.0-gentoo.diff, for
-example, which is kinda odd but maybe be intentional?)
-
-Check your autocrlf settings.
-The following commands print out nothing for me:
-
-    $ git config core.autocrlf
-    $ git config --global core.autocrlf
-
-Anyways.. like I said -- I couldn't reproduce your problem so this is
-pure speculation on my part =)
-
-Good luck,
-
--- 
-    David
+Last week I did git-clone --depth 1 This week I wanted to freshen my
+repository, with the same goal: "I don't care about history, just
+fast forward me with the least bytes transfered." But all I can find
+is just plain git pull. Did I achieve my goal?
+$ git pull
+remote: Counting objects: 7007, done.
+remote: Compressing objects: 100% (3057/3057), done.
+remote: Total 7007 (delta 4280), reused 6076 (delta 3625)
+Receiving objects: 100% (7007/7007), 2.96 MiB | 26 KiB/s, done.
+Resolving deltas: 100% (4280/4280), done.
+From git://git.kernel.org/pub/scm/git/git
+   2fa431b..bbbb865  html       -> origin/html
+   a9012e3..936b705  maint      -> origin/maint
+   dfd79c7..794d84e  man        -> origin/man
+   159c88e..c32f76f  master     -> origin/master
+   3b9b952..6f67462  next       -> origin/next
+ + b14a7fb...89bdc19 pu         -> origin/pu  (forced update)
+Merge made by recursive.
+ Documentation/Makefile             |    9 +++++----
+ Documentation/RelNotes-1.6.1.1.txt |   23 +++++++++++++++++++++++
+ Documentation/cat-texi.perl        |    8 ++++++--
+ Documentation/git-reset.txt        |   29 ++++++++++++++++++++++++++++-
+ builtin-pack-objects.c             |    9 ++++++++-
+ builtin-reset.c                    |   26 ++++++++++++++++++--------
+ gitweb/gitweb.perl                 |    5 +++--
+ t/t5302-pack-index.sh              |    1 +
+ 8 files changed, 92 insertions(+), 18 deletions(-)
+ create mode 100644 Documentation/RelNotes-1.6.1.1.txt
