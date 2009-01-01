@@ -1,76 +1,82 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Extracting a single commit or object
-Date: Thu, 1 Jan 2009 17:52:49 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901011747580.30769@pacific.mpi-cbg.de>
-References: <21223948.post@talk.nabble.com>
+Subject: Re: is there an easier way to do this ?
+Date: Thu, 1 Jan 2009 17:55:43 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901011754130.30769@pacific.mpi-cbg.de>
+References: <gjc52u$ehc$4@ger.gmane.org> <m3k59hb6xr.fsf@localhost.localdomain> <gjeacg$3r5$4@ger.gmane.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: yitzhakbg <yitzhakbg@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 01 17:53:48 2009
+To: Zorba <cr@altmore.co.uk>
+X-From: git-owner@vger.kernel.org Thu Jan 01 17:56:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIQnr-0002Ra-F5
-	for gcvg-git-2@gmane.org; Thu, 01 Jan 2009 17:53:47 +0100
+	id 1LIQqf-000378-NS
+	for gcvg-git-2@gmane.org; Thu, 01 Jan 2009 17:56:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756344AbZAAQw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jan 2009 11:52:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756284AbZAAQw0
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 11:52:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44999 "HELO mail.gmx.net"
+	id S1756383AbZAAQzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jan 2009 11:55:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756372AbZAAQzU
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 11:55:20 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54473 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756049AbZAAQwZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jan 2009 11:52:25 -0500
-Received: (qmail invoked by alias); 01 Jan 2009 16:52:22 -0000
+	id S1756343AbZAAQzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jan 2009 11:55:19 -0500
+Received: (qmail invoked by alias); 01 Jan 2009 16:55:16 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp001) with SMTP; 01 Jan 2009 17:52:22 +0100
+  by mail.gmx.net (mp049) with SMTP; 01 Jan 2009 17:55:16 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18sHs5k3Z8sTk1cOD7ensRA051q/sKX5pRby2RfC/
-	RLg/4RScDfWe0P
+X-Provags-ID: V01U2FsdGVkX1+iM2gx4+Kiow4TWDcAr8Dc/lTiSlXxYXIqLj0+v4
+	TyUoa21LL6SgVs
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <21223948.post@talk.nabble.com>
+In-Reply-To: <gjeacg$3r5$4@ger.gmane.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104303>
 
 Hi,
 
-On Tue, 30 Dec 2008, yitzhakbg wrote:
+A: Because it messes up the order in which people normally read text.
+Q: Why is top-posting such a bad thing?
+A: Top-posting.
+Q: What is the most annoying thing on usenet and in e-mail?
 
-> How would I extract a single commit from a repository by it's SHA1 (or 
-> any other treeish)?
+On Tue, 30 Dec 2008, Zorba wrote:
 
-Your question is not precise enough to answer.  Are you looking for
+> > "Zorba" <cr@altmore.co.uk> writes:
+> >
+> >> ok, now I'm in this for real, archiving versions of our website project 
+> >> (5k
+> >> files approx)
+> >>
+> >> so here is the workflow:
+> >>
+> >> - copy version 1 files into GIT dir
+> >>
+> >> - open git bash
+> >>
+> >> $ git init
+> >>
+> >> $ git add .
+> >>
+> >> $ git commit -m "version1"
+> >>
+> >> all vanilla ? cool
+> >> next job = store version 2 [...]
+> >
+> > Check out contrib/fast-import/import-tars.perl
+>
+> thanks Jakub, but I don't mind copying the versions in by hand and 
+> running the git commits on them sequentially.
 
-- the commit message?
-- the patch?
-- all the files referenced by that commit?
-- all the files _and revisions_ referenced by that commit?
+It's not only about how much work you are doing.  It's also about 
+preserving as much metadata as possible.
 
-The answer depends quite a lot on the question...
-
-> For that matter, how is any one single object extracted? Examples please.
-
-The user-friendly way to look at a tree is
-
-	git show HEAD:Documentation/
-
-or some such.  Likewise, you can inspect single blobs like this:
-
-	git show HEAD:README
-
-If you activated bash completion, you can even complete monsters like 
-this:
-
-	git show \
-v1.5.3:v1.5.3:t/t4013/diff.diff-tree_--cc_--patch-with-stat_--summary_master
-
-Hth,
+Ciao,
 Dscho
