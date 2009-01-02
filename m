@@ -1,89 +1,74 @@
-From: Henrik Austad <henrik@austad.us>
-Subject: git checkout does not warn about tags without corresponding commits
-Date: Fri, 2 Jan 2009 13:25:57 +0100
-Message-ID: <200901021325.58049.henrik@austad.us>
+From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
+Subject: Re: [PATCH v3] Add a commit.signoff configuration option to always
+	use --signoff in commit
+Date: Fri, 2 Jan 2009 13:46:50 +0100
+Message-ID: <20090102124650.GA2395@chistera.yi.org>
+References: <20081227120128.GA11322@chistera.yi.org> <1230549405-10000-1-git-send-email-dato@net.com.org.es> <7v4p0l1ik2.fsf@gitster.siamese.dyndns.org> <20090101221817.GA29267@chistera.yi.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 02 13:27:32 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 02 13:48:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIj7f-0004ps-GX
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 13:27:27 +0100
+	id 1LIjRs-0001m3-Fy
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 13:48:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757388AbZABM0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 07:26:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757367AbZABM0I
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 07:26:08 -0500
-Received: from cassarossa.samfundet.no ([129.241.93.19]:34498 "EHLO
-	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757301AbZABM0H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 07:26:07 -0500
-Received: from asterix.samfundet.no
-	([2001:700:300:1800::f] helo=asterix.frsk.net ident=Debian-exim)
-	by cassarossa.samfundet.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <henrik@austad.us>)
-	id 1LIj6K-0002eW-0B
-	for git@vger.kernel.org; Fri, 02 Jan 2009 13:26:04 +0100
-Received: from ti121210a080-9171.bb.online.no ([85.164.99.227] helo=[192.168.1.1])
-	by asterix.frsk.net with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <henrik@austad.us>)
-	id 1LIj6J-00015f-Nk
-	for git@vger.kernel.org; Fri, 02 Jan 2009 13:26:03 +0100
-User-Agent: KMail/1.9.10
+	id S1757559AbZABMq6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jan 2009 07:46:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757500AbZABMq6
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 07:46:58 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:1410
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757452AbZABMq5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 07:46:57 -0500
+Received: from chistera.yi.org (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id D33C9801BF8F;
+	Fri,  2 Jan 2009 13:46:54 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LIjQQ-0000dc-J9; Fri, 02 Jan 2009 13:46:50 +0100
 Content-Disposition: inline
+In-Reply-To: <20090101221817.GA29267@chistera.yi.org>
+X-No-CC: Please respect my Mail-Followup-To header
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104377>
 
-Hi!
+* Adeodato Sim=C3=B3 [Thu, 01 Jan 2009 23:18:17 +0100]:
 
-I recently tried to do a checkout of (what I thought was the first) inux 
-kernel in the linux git repo.
+> * Junio C Hamano [Tue, 30 Dec 2008 13:04:13 -0800]:
 
+> > They actually started making me think
+> > that commmit.signoff might be more trouble than it is worth.
 
-git checkout -b 2.6.11 v2.6.11
+> I am beginning to think the same myself, and I'm okay with letting go=
+=2E
+> If somebody has a sensible plan, I can invest some time on implementi=
+ng
+> it, but I'll reckon it all tastes too messy at the moment.
 
-This tag exists in the linux-tree (direct clone from Linus' tree), along with 
-v2.6.11-tree
+> Thanks for your time.
 
-However, when I inspect the log, I see that I am still stuck in master. So, I 
-did a git tag -v v2.6.11 and got the following:
+Oh, I see you merged the last version into pu. I don't know if that
+means it'd be bad for me to abandon now, but as said, if somebody helps
+me figure out things, I'm open to continue working on it.
 
-object c39ae07f393806ccf406ef966e9a15afc43cc36a
-type tree
-tag v2.6.11-tree
+I just don't want to be pushing for inclusion of something of
+sub-standard (UI) quality.
 
-This is the 2.6.11 tree object.
+Cheers,
 
-NOTE! There's no commit for this, since it happened before I started with git.
-Eventually we'll import some sort of history, and that should tie this tree
-object up to a real commit. In the meantime, this acts as an anchor point for
-doing diffs etc under git.
-gpg: Signature made Thu 05 May 2005 01:50:54 AM CEST using DSA key ID 76E21CBB
-gpg: Good signature from "Linus Torvalds (tag signing key) 
-<torvalds@osdl.org>"
-gpg: WARNING: This key is not certified with a trusted signature!
-gpg:          There is no indication that the signature belongs to the owner.
-Primary key fingerprint: FF6D 4EAC 37AC C1B9 53AE  C7E8 1776 2C46 76E2 1CBB
-
-
-I can see that there's no commit for this, but, when there's a tag. I thought 
-that a tag was just a commit-sha1 with a name attached, along with some tag 
-info and a signature. Can you really create a tag without a commit?
-
-Shouldn't git checkout fail in some way, letting me know that the checkout did 
-not check out what I thought it did? (I got aware of the bug when I found 
-CFS-related code in something I thought was 2.6.11.. :-)
-
-
--- 
- -> henrik
+--=20
+Adeodato Sim=C3=B3                                     dato at net.com.=
+org.es
+Debian Developer                                  adeodato at debian.or=
+g
+=20
+Will you just stand still?
+                -- Luke Danes
