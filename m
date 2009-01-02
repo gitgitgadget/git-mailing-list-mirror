@@ -1,87 +1,100 @@
-From: Asheesh Laroia <asheesh@asheesh.org>
-Subject: Re: why still no empty directory support in git
-Date: Fri, 2 Jan 2009 16:31:28 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.0901021626580.2099@rose.makesad.us>
-References: <46dff0320812291942y6aeec941k9394586621e9151b@mail.gmail.com> <alpine.DEB.2.00.0812300008060.31590@vellum.laroia.net> <alpine.DEB.2.00.0812300113050.22107@vellum.laroia.net> <9b18b3110812300043l55a42f6sd995f36bf857543e@mail.gmail.com>
- <alpine.DEB.2.00.0812300346040.19911@vellum.laroia.net> <20090101200651.GB6536@coredump.intra.peff.net> <alpine.DEB.1.00.0901021954410.30769@pacific.mpi-cbg.de>
+From: david@lang.hm
+Subject: Re: how to track the history of a line in a file
+Date: Fri, 2 Jan 2009 14:43:37 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0901021439080.21567@asgard.lang.hm>
+References: <alpine.DEB.1.10.0901021405460.21567@asgard.lang.hm> <20090102212655.GA24082@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 02 22:33:11 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 02 22:42:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIrdV-00089p-Kc
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 22:32:54 +0100
+	id 1LIrn1-0002jZ-L5
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 22:42:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758630AbZABVbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 16:31:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755528AbZABVbc
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 16:31:32 -0500
-Received: from rose.makesad.us ([219.105.37.19]:56088 "EHLO rose.makesad.us"
+	id S1758517AbZABVlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 16:41:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756943AbZABVlV
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 16:41:21 -0500
+Received: from mail.lang.hm ([64.81.33.126]:42931 "EHLO bifrost.lang.hm"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758573AbZABVbc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 16:31:32 -0500
-Received: from localhost (localhost [127.0.0.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by rose.makesad.us (Postfix) with ESMTP id E8B5FA0151
-	for <git@vger.kernel.org>; Fri,  2 Jan 2009 16:31:28 -0500 (EST)
-X-X-Sender: paulproteus@rose.makesad.us
-In-Reply-To: <alpine.DEB.1.00.0901021954410.30769@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-OpenPGP-Key-ID: 0x70096AD1
+	id S1755528AbZABVlV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 16:41:21 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n02LfF3N022890;
+	Fri, 2 Jan 2009 13:41:15 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <20090102212655.GA24082@coredump.intra.peff.net>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104418>
 
-On Fri, 2 Jan 2009, Johannes Schindelin wrote:
+On Fri, 2 Jan 2009, Jeff King wrote:
 
-> Hi,
-
-Hi
-
-*wipes the egg off his face*
-
-> On Thu, 1 Jan 2009, Jeff King wrote:
+> On Fri, Jan 02, 2009 at 02:13:32PM -0800, david@lang.hm wrote:
 >
->> On Tue, Dec 30, 2008 at 03:58:46AM -0500, Asheesh Laroia wrote:
+>> I have a need to setup a repository where I'm storing config files, and I
+>> need to be able to search the history of a particular line, not just when
+>> the last edit of the line was (which is what I see from git blame)
+>
+> As you figured out, the "manual" way is to just keep reblaming from the
+> parent of each blame. Recent versions of "git gui blame" have a "reblame
+> from parent" option in the context menu which makes this a lot less
+> painful.
+
+unfortunantly I am needing to do this from the command line.
+
+>> 57f8f7b6 (Linus Torvalds 2008-10-23 20:06:52 -0700 3) SUBLEVEL = 28
 >>
->>> So, let's say I take your suggestion.
->>>
->>> $ touch ~/Maildir/new/.exists
->>> $ git add ~/Maildir/new/.exists && git commit -m "La di da"
->>>
->>> Now a spec-compliant Maildir user agent will attempt to deliver this new
->>> "email message" of zero bytes into the mail spool and assign it a message
->>> UID.  Doing so will remove it from Maildir/new.
->>
->> No. The maildir spec says:
->>
->>   A unique name can be anything that doesn't contain a colon (or slash)
->>   and doesn't start with a dot.
+>> what I would want it to show would be a list of the commits that have
+>> changed this line.
+>
+> The tricky thing here is what is "this line"? Using the line number
+> isn't right, since it will change based on other content coming in and
+> out of the file. You can keep drilling down by reblaming parent commits,
+> but remember that each time you do that you are manually looking at the
+> content and saying "Oh, this is the line I am still interested in." So I
+> a script would have to correlate the old version and new version of the
+> line and realize how to follow the "interesting" thing.
+>
+> In your case, I think you want to see any commit in Makefile which
+> changed a line with SUBLEVEL in it. Which is maybe easiest done as:
+>
+>  git log -z -p Makefile |
+>    perl -0ne 'print if /\n[+-]SUBLEVEL/' |
+>    tr '\0' '\n'
+>
+> and is pretty fast. But obviously we're leveraging some content-specific
+> knowledge about what's in the Makefile.
 
-Oops.  I never actually tried this...
+using the line number shouldn't be _that_ hard becouse git knows what 
+lines came and went from the file, so it can calculate the new line number 
+(and does with the -M option)
 
-> For the record, I am using Git to manage my mails, and never had any 
-> problems after installing a hook which marks new empty directories with 
-> .gitignore.
+In my case I would consider 'the same line' to be any lines in the diff 
+that were taken out when this line was put in
 
-I'll give that a shot, and my apologies for the noise on the list with 
-regard to this particular example.
+so in the usual case (for me) of
 
-I do still believe that git shouldn't rmdir() empty directories behind the 
-user's back, but with this particular use case gone I'm no longer as 
-adamant as before.
+-oldline
++newline
 
-My apologies for not having tested this earlier; I will test it shortly, 
-but there's every reason to think that Johannes and Jeff are right!
+it's a 1-1 correspondence
 
--- Asheesh.
+if it's instead
+-oldline1
+-oldline2
++newline1
++newline2
 
--- 
-It's interesting to think that many quite distinguished people have
-bodies similar to yours.
+I can't know for sure which oldline corresponds to the newline, but the 
+odds are very good that they are related, so if I widen the search to 
+cover each of the lines I am probably good.
+
+David Lang
