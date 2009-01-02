@@ -1,64 +1,78 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Documentation/git-bundle.txt: Dumping contents of any
-	bundle
-Date: Thu, 1 Jan 2009 23:15:19 -0800
-Message-ID: <20090102071519.GA14472@spearce.org>
-References: <20090101234815.GA9049@coredump.intra.peff.net> <878wputvnt.fsf@jidanni.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http-push: support full URI in handle_remote_ls_ctx()
+Date: Thu, 01 Jan 2009 23:26:45 -0800
+Message-ID: <7v7i5edv7u.fsf@gitster.siamese.dyndns.org>
+References: <20081229071710.GA19175@glandium.org>
+ <7vmyekag6p.fsf@gitster.siamese.dyndns.org>
+ <1230517935-11299-1-git-send-email-catap@catap.ru>
+ <1230879195-8567-1-git-send-email-catap@catap.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: peff@peff.net, johannes.schindelin@gmx.de, nico@cam.org,
-	gitster@pobox.com, mdl123@verizon.net, git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Fri Jan 02 08:16:46 2009
+Cc: git@vger.kernel.org
+To: "Kirill A. Korinskiy" <catap@catap.ru>
+X-From: git-owner@vger.kernel.org Fri Jan 02 08:28:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIeGy-0008Ff-Of
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 08:16:45 +0100
+	id 1LIeSS-0001NK-B8
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 08:28:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756757AbZABHPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 02:15:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756642AbZABHPW
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 02:15:22 -0500
-Received: from george.spearce.org ([209.20.77.23]:33713 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756291AbZABHPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 02:15:21 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 8AECF38200; Fri,  2 Jan 2009 07:15:19 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <878wputvnt.fsf@jidanni.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757221AbZABH05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 02:26:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751988AbZABH04
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 02:26:56 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64199 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751841AbZABH0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 02:26:55 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 573ED1B954;
+	Fri,  2 Jan 2009 02:26:51 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 398301B953; Fri, 
+ 2 Jan 2009 02:26:47 -0500 (EST)
+In-Reply-To: <1230879195-8567-1-git-send-email-catap@catap.ru> (Kirill A.
+ Korinskiy's message of "Fri, 2 Jan 2009 09:53:15 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B922537A-D89E-11DD-8F20-EB51113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104363>
 
-jidanni@jidanni.org wrote:
-> JK> diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
-> OK, I wish you luck in the fruition of the new --dump-delta option, and
-> can proofread the man pages involved, otherwise this is no area for
-> junior programmer me.
+"Kirill A. Korinskiy" <catap@catap.ru> writes:
 
-This is rather insane.  There's very little data inside of a delta.
-That's sort of the point of that level of compression, it takes
-up very little disk space and yet describes the change made.
-Almost nobody is going to want the delta without the base object
-it applies onto.  No user of git is going to need that.  I'd rather
-not carry dead code around in the tree for something nobody will
-ever use.
+> @@ -1424,9 +1425,19 @@ static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
+>  				ls->userFunc(ls);
+>  			}
+>  		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
+> -			ls->dentry_name = xmalloc(strlen(ctx->cdata) -
+> +			char *path = ctx->cdata;
+> +			if (*ctx->cdata == 'h') {
+> +				path = strstr(path, "://");
+> +				if (path) {
+> +					path = strchr(path+3, '/');
+> +				}
+> +			}
 
-FWIW, most Git deltas are "copy" instructions, they list a position
-and count in the base to copy data *from*.  These take up less
-space then "insert" instructions, where new text is placed into
-the file.  As the delta generator favors a smaller delta, it tends
-to create deltas that use the "copy" instruction more often than the
-"insert" instruction.  So there is *very* little data in the delta,
-just ranges to copy from somewhere else.  Without that other place
-(the delta base) all you can do is guess about those bits.  Which you
-can do just as well with a few flips of a fair coin.  :-)
+Is this "://" (and +3) the only change from the previous one that has
+already been queued?  I didn't have a problem with the old "//" one.
 
--- 
-Shawn.
+The check to see if it begins with 'h' bothers me much much more.
+
+If you want to be defensively tight, you should be checking if it begins
+with either "http://" or "https://", the only two protocols you are
+prepared to handle, and nothing else, so that you won't trigger this
+codepath when the other end gave you "hqrt://..", on the basis that your
+code won't know if hqrt:// protocol works the same way as http and https.
+
+On the other hand, if you want to be optimistically loose, expecting
+whatever people would implement that can be handled with the existing DAV
+code would behave the same way as http and https, you shouldn't be
+limiting yourself to an unknown protocol name that happens to begin with
+an 'h', only accepting "hqrt://" but not "ittp://" URLs.
+
+Your "first byte of the protocol name must be 'h'" does not do either.
