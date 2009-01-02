@@ -1,174 +1,88 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [INTERDIFF v3 2/4] rebase: learn to rebase root commit
-Date: Fri, 2 Jan 2009 23:41:32 +0100
-Message-ID: <200901022341.36562.trast@student.ethz.ch>
-References: <200901022320.14055.trast@student.ethz.ch> <6a754e4198413c4051a6085c5e5baab163835463.1230935095.git.trast@student.ethz.ch> <7c74d8be216b4667f470e34644c4aa26dcfe0cfb.1230935095.git.trast@student.ethz.ch>
+From: david@lang.hm
+Subject: Re: how to track the history of a line in a file
+Date: Fri, 2 Jan 2009 15:48:03 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0901021544580.21567@asgard.lang.hm>
+References: <alpine.DEB.1.10.0901021405460.21567@asgard.lang.hm> <20090102212655.GA24082@coredump.intra.peff.net> <alpine.DEB.1.10.0901021459480.21567@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junio@pobox.com>, bss@iguanasuicide.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 02 23:43:01 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 02 23:47:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIsj8-0003cK-0D
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 23:42:46 +0100
+	id 1LIsnO-0004oq-3k
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 23:47:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756989AbZABWlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 17:41:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751995AbZABWlY
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 17:41:24 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:58751 "EHLO xsmtp1.ethz.ch"
+	id S1758932AbZABWpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 17:45:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758816AbZABWpr
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 17:45:47 -0500
+Received: from mail.lang.hm ([64.81.33.126]:39923 "EHLO bifrost.lang.hm"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751168AbZABWlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 17:41:23 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 2 Jan 2009 23:41:21 +0100
-Received: from [192.168.0.3] ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 2 Jan 2009 23:41:20 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <7c74d8be216b4667f470e34644c4aa26dcfe0cfb.1230935095.git.trast@student.ethz.ch>
-Content-Disposition: inline
-X-OriginalArrivalTime: 02 Jan 2009 22:41:20.0866 (UTC) FILETIME=[3BA80C20:01C96D2B]
+	id S1758727AbZABWpr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 17:45:47 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n02MjfpE024207;
+	Fri, 2 Jan 2009 14:45:41 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <alpine.DEB.1.10.0901021459480.21567@asgard.lang.hm>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104437>
 
-The interdiff to v2.
+On Fri, 2 Jan 2009, david@lang.hm wrote:
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 89de3c4..9437e51 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -354,17 +354,20 @@ if test -z "$rebase_root"; then
- 	shift
- 	upstream=`git rev-parse --verify "${upstream_name}^0"` ||
- 	die "invalid upstream $upstream_name"
-+	unset root_flag
-+else
-+	test -z "$newbase" && die "--root must be used with --onto"
-+	unset upstream_name
-+	unset upstream
-+	root_flag="--root"
- fi
- 
--test ! -z "$rebase_root" -a -z "$newbase" &&
--	die "--root must be used with --onto"
--
- # Make sure the branch to rebase onto is valid.
- onto_name=${newbase-"$upstream_name"}
- onto=$(git rev-parse --verify "${onto_name}^0") || exit
- 
- # If a hook exists, give it a chance to interrupt
--run_pre_rebase_hook ${upstream_name+"$upstream_name"} "$@"
-+run_pre_rebase_hook $root_flag $upstream_name "$@"
- 
- # If the branch to rebase is given, that is the branch we will rebase
- # $branch_name -- branch being rebased, or HEAD (already detached)
-@@ -403,8 +406,8 @@ case "$#" in
- esac
- orig_head=$branch
- 
--# Now we are rebasing commits $upstream..$branch (or simply $branch
--# with --root) on top of $onto
-+# Now we are rebasing commits $upstream..$branch (or with --root,
-+# everything leading up to $branch) on top of $onto
- 
- # Check if we are already based on $onto with linear history,
- # but this should be done only when upstream and onto are the same.
-@@ -441,17 +444,15 @@ then
- fi
- 
- if test ! -z "$rebase_root"; then
--	revisions="$orig_head"
--	fp_flag="--root"
-+	revisions="$onto..$orig_head"
- else
- 	revisions="$upstream..$orig_head"
--	fp_flag="--ignore-if-in-upstream"
- fi
- 
- if test -z "$do_merge"
- then
--	git format-patch -k --stdout --full-index "$fp_flag" \
--		"$revisions" |
-+	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
-+		$root_flag "$revisions" |
- 	git am $git_am_opt --rebasing --resolvemsg="$RESOLVEMSG" &&
- 	move_to_original_branch
- 	ret=$?
-diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
-index 63ec5e6..1978512 100755
---- a/t/t3412-rebase-root.sh
-+++ b/t/t3412-rebase-root.sh
-@@ -15,7 +15,9 @@ test_expect_success 'prepare repository' '
- 	git commit -m 2 &&
- 	git symbolic-ref HEAD refs/heads/other &&
- 	rm .git/index &&
--	rm A &&
-+	echo 1 > A &&
-+	git add A &&
-+	git commit -m 1b &&
- 	echo 3 > B &&
- 	git add B &&
- 	git commit -m 3 &&
-@@ -28,6 +30,14 @@ test_expect_success 'rebase --root expects --onto' '
- 	test_must_fail git rebase --root
- '
- 
-+test_expect_success 'setup pre-rebase hook' '
-+	mkdir -p .git/hooks &&
-+	cat >.git/hooks/pre-rebase <<EOF &&
-+#!$SHELL_PATH
-+echo "\$1,\$2" >.git/PRE-REBASE-INPUT
-+EOF
-+	chmod +x .git/hooks/pre-rebase
-+'
- cat > expect <<EOF
- 4
- 3
-@@ -42,6 +52,10 @@ test_expect_success 'rebase --root --onto <newbase>' '
- 	test_cmp expect rebased
- '
- 
-+test_expect_success 'pre-rebase got correct input (1)' '
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = z--root,
-+'
-+
- test_expect_success 'rebase --root --onto <newbase> <branch>' '
- 	git branch work2 other &&
- 	git rebase --root --onto master work2 &&
-@@ -49,4 +63,24 @@ test_expect_success 'rebase --root --onto <newbase> <branch>' '
- 	test_cmp expect rebased2
- '
- 
-+test_expect_success 'pre-rebase got correct input (2)' '
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = z--root,work2
-+'
-+
-+test_expect_success 'setup pre-rebase hook that fails' '
-+	mkdir -p .git/hooks &&
-+	cat >.git/hooks/pre-rebase <<EOF &&
-+#!$SHELL_PATH
-+false
-+EOF
-+	chmod +x .git/hooks/pre-rebase
-+'
-+
-+test_expect_success 'pre-rebase hook stops rebase' '
-+	git checkout -b stops1 other &&
-+	GIT_EDITOR=: test_must_fail git rebase --root --onto master &&
-+	test "z$(git symbolic-ref HEAD)" = zrefs/heads/stops1
-+	test 0 = $(git rev-list other...stops1 | wc -l)
-+'
-+
- test_done
+> On Fri, 2 Jan 2009, Jeff King wrote:
+>
+>> The tricky thing here is what is "this line"? Using the line number
+>> isn't right, since it will change based on other content coming in and
+>> out of the file. You can keep drilling down by reblaming parent commits,
+>> but remember that each time you do that you are manually looking at the
+>> content and saying "Oh, this is the line I am still interested in." So I
+>> a script would have to correlate the old version and new version of the
+>> line and realize how to follow the "interesting" thing.
+>> 
+>> In your case, I think you want to see any commit in Makefile which
+>> changed a line with SUBLEVEL in it. Which is maybe easiest done as:
+>>
+>>  git log -z -p Makefile |
+>>    perl -0ne 'print if /\n[+-]SUBLEVEL/' |
+>>    tr '\0' '\n'
+>> 
+>> and is pretty fast. But obviously we're leveraging some content-specific
+>> knowledge about what's in the Makefile.
+>
+> Ok, I hacked togeather a quick bash script to try this
+>
+<SNIP>
+> the problem that this has is that line 3 of $COMMIT may not be line 3 of 
+> $COMMIT^, and if they aren't it ends up hunting down the wrong data
+>
+> either that or I am not understanding the output of git blame properly (also 
+> very possible)
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+I was misunderstanding git blame
+
+new script is
+
+#!/bin/bash
+line=`git blame -n -b -l -L /$1/,+1 -M $2`
+echo "-$line"
+foundCOMMIT=`echo "$line" |cut -c -40`
+foundline=`echo "$line" |cut -c 42- |cut -f 1 -d " "`
+while [ "$foundCOMMIT" != "                                        " ] ;do
+#git diff -U0 $foundCOMMIT..$foundCOMMIT^ $2
+line=`git blame -n -b -l -L $foundline,+1 -M $2 $foundCOMMIT^`
+echo "-$line"
+foundCOMMIT=`echo "$line" |cut -c -40`
+foundline=`echo "$line" |cut -c 42- |cut -f 1 -d " "`
+done
+
+this seems to be working for me now.
+
+David Lang
