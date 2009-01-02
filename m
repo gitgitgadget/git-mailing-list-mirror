@@ -1,77 +1,97 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v3 1/4] rebase -i: execute hook only after argument checking
-Date: Fri,  2 Jan 2009 23:28:26 +0100
-Message-ID: <6a754e4198413c4051a6085c5e5baab163835463.1230935095.git.trast@student.ethz.ch>
+Subject: [PATCH v3 4/4] rebase: update documentation for --root
+Date: Fri,  2 Jan 2009 23:28:29 +0100
+Message-ID: <9d771e75cb9b50937d968995ed33a6f483b0567b.1230935095.git.trast@student.ethz.ch>
 References: <200901022320.14055.trast@student.ethz.ch>
+ <6a754e4198413c4051a6085c5e5baab163835463.1230935095.git.trast@student.ethz.ch>
+ <7c74d8be216b4667f470e34644c4aa26dcfe0cfb.1230935095.git.trast@student.ethz.ch>
+ <43e09eaf2b9a9a3805b9262957ece32190ae4c32.1230935095.git.trast@student.ethz.ch>
 Cc: Junio C Hamano <junio@pobox.com>, bss@iguanasuicide.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 02 23:29:53 2009
+X-From: git-owner@vger.kernel.org Fri Jan 02 23:30:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIsWX-0008ET-45
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 23:29:45 +0100
+	id 1LIsWu-0008K5-9N
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 23:30:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757656AbZABW21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 17:28:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757698AbZABW20
+	id S1758174AbZABW23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 17:28:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757938AbZABW20
 	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 17:28:26 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:2229 "EHLO XSMTP0.ethz.ch"
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:57648 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756919AbZABW2Z (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1757656AbZABW2Z (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 2 Jan 2009 17:28:25 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 2 Jan 2009 23:28:22 +0100
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 2 Jan 2009 23:28:23 +0100
 Received: from localhost.localdomain ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 2 Jan 2009 23:28:22 +0100
+	 Fri, 2 Jan 2009 23:28:23 +0100
 X-Mailer: git-send-email 1.6.1.71.gaaa47.dirty
-In-Reply-To: <200901022320.14055.trast@student.ethz.ch>
-X-OriginalArrivalTime: 02 Jan 2009 22:28:22.0564 (UTC) FILETIME=[6BC09640:01C96D29]
+In-Reply-To: <43e09eaf2b9a9a3805b9262957ece32190ae4c32.1230935095.git.trast@student.ethz.ch>
+In-Reply-To: <6a754e4198413c4051a6085c5e5baab163835463.1230935095.git.trast@student.ethz.ch>
+References: <6a754e4198413c4051a6085c5e5baab163835463.1230935095.git.trast@student.ethz.ch>
+X-OriginalArrivalTime: 02 Jan 2009 22:28:23.0064 (UTC) FILETIME=[6C0CE180:01C96D29]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104431>
 
-Previously, the pre-rebase-hook would be launched before we knew if
-the <upstream> [<branch>] arguments were supplied.
+Since the new option depends on --onto and omission of <upstream>, use
+a separate invocation style, and omit most options to save space.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
+ Documentation/git-rebase.txt |   21 ++++++++++++++++-----
+ 1 files changed, 16 insertions(+), 5 deletions(-)
 
-This is a quick fix and not really part of the series.  2/4 textually
-depends on it, however, so I'm sending it along.
-
- git-rebase--interactive.sh |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index c8b0861..2c668cd 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -554,7 +554,6 @@ first and then run 'git rebase --continue' again."
- 		;;
- 	--)
- 		shift
--		run_pre_rebase_hook ${1+"$@"}
- 		test $# -eq 1 -o $# -eq 2 || usage
- 		test -d "$DOTEST" &&
- 			die "Interactive rebase already started"
-@@ -562,11 +561,13 @@ first and then run 'git rebase --continue' again."
- 		git var GIT_COMMITTER_IDENT >/dev/null ||
- 			die "You need to set your committer info first"
- 
-+		UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
-+		run_pre_rebase_hook ${1+"$@"}
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index c8ad86a..3d6d429 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -8,10 +8,11 @@ git-rebase - Forward-port local commits to the updated upstream head
+ SYNOPSIS
+ --------
+ [verse]
+-'git rebase' [-i | --interactive] [-v | --verbose] [-m | --merge]
+-	[-s <strategy> | --strategy=<strategy>] [--no-verify]
+-	[-C<n>] [ --whitespace=<option>] [-p | --preserve-merges]
+-	[--onto <newbase>] <upstream> [<branch>]
++'git rebase' [-i | --interactive] [options] [--onto <newbase>]
++	<upstream> [<branch>]
++'git rebase' [-i | --interactive] [options] --onto <newbase>
++	--root [<branch>]
 +
- 		comment_for_reflog start
+ 'git rebase' --continue | --skip | --abort
  
- 		require_clean_work_tree
+ DESCRIPTION
+@@ -22,7 +23,8 @@ it remains on the current branch.
  
--		UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
- 		test -z "$ONTO" && ONTO=$UPSTREAM
+ All changes made by commits in the current branch but that are not
+ in <upstream> are saved to a temporary area.  This is the same set
+-of commits that would be shown by `git log <upstream>..HEAD`.
++of commits that would be shown by `git log <upstream>..HEAD` (or
++`git log HEAD`, if --root is specified).
  
- 		if test ! -z "$2"
+ The current branch is reset to <upstream>, or <newbase> if the
+ --onto option was supplied.  This has the exact same effect as
+@@ -255,6 +257,15 @@ OPTIONS
+ --preserve-merges::
+ 	Instead of ignoring merges, try to recreate them.
+ 
++--root::
++	Rebase all commits reachable from <branch>, instead of
++	limiting them with an <upstream>.  This allows you to rebase
++	the root commit(s) on a branch.  Must be used with --onto, and
++	will skip changes already contained in <newbase> (instead of
++	<upstream>).  When used together with --preserve-merges, 'all'
++	root commits will be rewritten to have <newbase> as parent
++	instead.
++
+ include::merge-strategies.txt[]
+ 
+ NOTES
 -- 
 1.6.1.71.gaaa47.dirty
