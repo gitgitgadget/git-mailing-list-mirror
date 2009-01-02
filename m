@@ -1,83 +1,39 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
-Date: Fri, 2 Jan 2009 14:50:53 -0500
-Message-ID: <20090102195053.GA10876@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <20090101204652.GA26128@chistera.yi.org> <alpine.LFD.2.00.0901011747010.5086@localhost.localdomain> <20090102105537.GA14691@localhost> <20090102105856.GB14691@localhost> <alpine.LFD.2.00.0901020833000.5086@localhost.localdomain> <alpine.DEB.1.00.0901021918100.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901021050450.5086@localhost.localdomain> <20090102193904.GB9129@coredump.intra.peff.net>
+From: chris@seberino.org
+Subject: "git reset --hard" == "git checkout HEAD" == "git reset --hard
+	HEAD" ???
+Date: Fri, 2 Jan 2009 11:57:24 -0800
+Message-ID: <20090102195724.GA23119@seberino.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Clemens Buchacher <drizzd@aon.at>,
-	Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>,
-	Pierre Habouzit <madcoder@debian.org>, davidel@xmailserver.org,
-	Francis Galiegue <fg@one2team.net>,
-	Git ML <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jan 02 20:52:45 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 02 20:59:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIq4B-0002pz-W0
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 20:52:20 +0100
+	id 1LIqAR-0004xx-Gg
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 20:58:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757500AbZABTu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 14:50:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbZABTu6
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 14:50:58 -0500
-Received: from peff.net ([208.65.91.99]:2797 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751179AbZABTu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 14:50:57 -0500
-Received: (qmail 19335 invoked by uid 111); 2 Jan 2009 19:50:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 02 Jan 2009 14:50:54 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Jan 2009 14:50:53 -0500
+	id S1757056AbZABT51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 14:57:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755711AbZABT50
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 14:57:26 -0500
+Received: from li30-51.members.linode.com ([65.49.60.51]:58081 "EHLO
+	seberino.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755325AbZABT5Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 14:57:25 -0500
+Received: by seberino.org (Postfix, from userid 1000)
+	id 3A7D4184BB; Fri,  2 Jan 2009 11:57:24 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20090102193904.GB9129@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104412>
 
-On Fri, Jan 02, 2009 at 02:39:04PM -0500, Jeff King wrote:
+Does "git reset --hard" == "git checkout HEAD" == "git reset --hard HEAD" ???
 
-> If you just want to see the results on some real-world cases (and don't
-> care about measuring performance), try installing bzr and using their
-> patiencediff test program as a GIT_EXTERNAL_DIFF.
-> 
-> On Debian, it's:
-> 
->   $ sudo apt-get install bzr
->   $ cat >$HOME/patience <<'EOF'
->     #!/bin/sh
->     exec python /usr/share/pyshared/bzrlib/patiencediff.py "$2" "$5"
->     EOF
->   $ chmod 755 patience
->   $ GIT_EXTERNAL_DIFF=$HOME/patience git diff
+It seems we have 2 ways to blow away work we haven't checked in yet then right?
 
-For added fun, try this:
-
--- >8 --
-#!/bin/sh
-
-canonical() {
-  grep '^[ +-]' | egrep -v '^(---|\+\+\+)'
-}
-
-git rev-list --no-merges HEAD | while read rev; do
-  git diff-tree -p $rev^ $rev | canonical >git.out
-  GIT_EXTERNAL_DIFF=$HOME/patience git diff $rev^ $rev | canonical >bzr.out
-  echo "`diff -U0 git.out bzr.out | wc -l` $rev"
-done
--- 8< --
-
-I'm running it on git.git now. It looks like both algorithms return the
-same patch for most cases. Some of the differences are interesting,
-though.
-
-For example, f83b9ba209's commit message indicates that it moves the
-"--format-patch" paragraph. Which is what "git diff" shows. Patience
-diff shows it as moving other text _around_ that paragraph.
-
--Peff
+chris
