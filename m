@@ -1,88 +1,76 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [CLEANUP PATCH] show <tag>: reuse pp_user_info() instead of duplicating
- code
-Date: Fri, 2 Jan 2009 19:08:43 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901021717350.27818@racer>
+Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
+Date: Fri, 2 Jan 2009 19:17:34 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901021914420.30769@pacific.mpi-cbg.de>
+References: <20081104004001.GB29458@artemis.corp> <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de> <20081104083042.GB3788@artemis.corp> <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp>
+ <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <alpine.LFD.2.00.0901011151440.5086@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jan 02 19:10:13 2009
+Cc: Pierre Habouzit <madcoder@debian.org>, davidel@xmailserver.org,
+	Francis Galiegue <fg@one2team.net>,
+	Git ML <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jan 02 19:18:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIoTI-0002tl-3s
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 19:10:08 +0100
+	id 1LIobR-0005Qj-UU
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 19:18:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758088AbZABSIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 13:08:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756951AbZABSIW
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 13:08:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:32947 "HELO mail.gmx.net"
+	id S1757683AbZABSRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 13:17:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757554AbZABSRJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 13:17:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59004 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759285AbZABSIU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 13:08:20 -0500
-Received: (qmail invoked by alias); 02 Jan 2009 18:08:14 -0000
+	id S1753400AbZABSRI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 13:17:08 -0500
+Received: (qmail invoked by alias); 02 Jan 2009 18:17:06 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp063) with SMTP; 02 Jan 2009 19:08:14 +0100
+  by mail.gmx.net (mp039) with SMTP; 02 Jan 2009 19:17:06 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX184ijVNxbE4zjARorXbz0EYcnC24vlg0e8m25n4I4
-	p0mvoGgsG83miS
+X-Provags-ID: V01U2FsdGVkX1+EL+1O6dmE07XT+pPb7Iwi+22/YzT/0D1BqqYsbS
+	ZNQQKSgxdwzPNH
 X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LFD.2.00.0901011151440.5086@localhost.localdomain>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104397>
 
+Hi,
 
-We used to extract the tagger information "by hand" in "git show <tag>",
-but the function pp_user_info() already does that.  Even better:
-it respects the commit_format and date_format specified by the user.
+On Thu, 1 Jan 2009, Linus Torvalds wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+> On Thu, 1 Jan 2009, Linus Torvalds wrote:
+> > 
+> > So could we have some actual real data on it?
+> 
+> .. and some testing. I tried to get some limited data for the kernel 
+> myself, by doing
+> 
+> 	git log --patience -p v2.6.28.. > ~/patience
+> 
+> but I just got a core-dump instead.
+> 
+> Pinpointing it to a specific commit shows a smaller failure case:
+> 
+> 	git show -p --patience 05d564fe00c05bf8ff93948057ca1acb5bc68e10
+> 
+> which might help you debug this.
 
-	Just a little cleanup, as I tripped over that part of Git's source.
+Thanks.  I am on it.  valgrind finds an earlier place in 
+xdl_change_compact() which I think is rather more sensible, but at the 
+same time a bit worrisome, too, as I did not expect any errors _that_ 
+late in the game (I did not touch that code).
 
- builtin-log.c |   21 ++++++---------------
- 1 files changed, 6 insertions(+), 15 deletions(-)
+BTW the "-p" is not necessary with "show", indeed, you cannot even switch 
+it off.
 
-diff --git a/builtin-log.c b/builtin-log.c
-index 99d1137..bc4e1e9 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -249,22 +249,13 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
- 
- static void show_tagger(char *buf, int len, struct rev_info *rev)
- {
--	char *email_end, *p;
--	unsigned long date;
--	int tz;
-+	struct strbuf out = STRBUF_INIT;
- 
--	email_end = memchr(buf, '>', len);
--	if (!email_end)
--		return;
--	p = ++email_end;
--	while (isspace(*p))
--		p++;
--	date = strtoul(p, &p, 10);
--	while (isspace(*p))
--		p++;
--	tz = (int)strtol(p, NULL, 10);
--	printf("Tagger: %.*s\nDate:   %s\n", (int)(email_end - buf), buf,
--	       show_date(date, tz, rev->date_mode));
-+	pp_user_info("Tagger", rev->commit_format, &out, buf, rev->date_mode,
-+		git_log_output_encoding ?
-+		git_log_output_encoding: git_commit_encoding);
-+	printf("%s\n", out.buf);
-+	strbuf_release(&out);
- }
- 
- static int show_object(const unsigned char *sha1, int show_tag_object,
--- 
-1.6.1.rc3.224.g95ac9
+Ciao,
+Dscho
