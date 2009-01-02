@@ -1,88 +1,137 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] gitweb: Handle actions with no project in evaluate_path_info
-Date: Fri, 2 Jan 2009 01:46:36 +0100
-Message-ID: <cb7bb73a0901011646n6a1368caq797a5f2849daec77@mail.gmail.com>
-References: <a899d7ef0812272326j1a407c30k936bf8d8975c9063@mail.gmail.com>
-	 <200901020058.30748.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] builtin-apply: prevent non-explicit permission
+ changes
+Date: Thu, 01 Jan 2009 16:56:11 -0800
+Message-ID: <7v3ag2frv8.fsf@gitster.siamese.dyndns.org>
+References: <20081230235357.GA12747@myhost>
+ <7vfxk3npuc.fsf@gitster.siamese.dyndns.org> <20090101221720.GA5603@myhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Devin Doucette" <devin@doucette.cc>, git@vger.kernel.org,
-	"Petr Baudis" <pasky@suse.cz>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 02 01:48:02 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Alexander Potashev <aspotashev@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 02 01:58:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIYCn-0001Bk-VZ
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 01:48:02 +0100
+	id 1LIYMP-0003V6-2X
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 01:57:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755422AbZABAql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jan 2009 19:46:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751702AbZABAqk
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 19:46:40 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:47650 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755411AbZABAqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jan 2009 19:46:39 -0500
-Received: by ewy10 with SMTP id 10so6566084ewy.13
-        for <git@vger.kernel.org>; Thu, 01 Jan 2009 16:46:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=IGnMoBR/v/b8ognoIT2ldb2xdKiXxLhskmTC18O8Myo=;
-        b=UAkwA4NDx+8jlkzhEPhFOyH0JKl4JxsRJwCne/C805zoW6w854dplrI55tFCn+VMDq
-         eIaj8E33kmugZaZOE31HWg2nRGvMSsM/2lEogxnJuB4zTa2xnmNjpk6upzJxZwta33+8
-         bkYOMWOK4WRHzfybAmnWEOnLMbwbxgXeIyiNw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=aSVrbFFmfStBR8hlJZkCi5e9wQoF5loYghDsc1195LEfAqm3hVR2cig+yesJsg3e+C
-         yMGoYdwVXLNaRmmcWSSikS9rDkxtYrMvRBYDCNfyHrJ0DzLpiOXH306olrjLpDjB2X/d
-         mnGKkHgWOuq8AU4u31IE+Nyg8iYxuR9rZNCks=
-Received: by 10.210.43.11 with SMTP id q11mr7062655ebq.140.1230857196146;
-        Thu, 01 Jan 2009 16:46:36 -0800 (PST)
-Received: by 10.210.72.3 with HTTP; Thu, 1 Jan 2009 16:46:36 -0800 (PST)
-In-Reply-To: <200901020058.30748.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1753558AbZABA40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jan 2009 19:56:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753297AbZABA4Z
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 19:56:25 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44885 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751702AbZABA4Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jan 2009 19:56:24 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DB54D1B8FD;
+	Thu,  1 Jan 2009 19:56:21 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9497C1B8F9; Thu, 
+ 1 Jan 2009 19:56:13 -0500 (EST)
+In-Reply-To: <20090101221720.GA5603@myhost> (Alexander Potashev's message of
+ "Fri, 2 Jan 2009 01:17:20 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2C16746A-D868-11DD-96E7-EB51113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104352>
 
-On Fri, Jan 2, 2009 at 12:58 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Truth to be told we parse action parameter in path_info only since
-> d8c2882 (gitweb: parse project/action/hash_base:filename PATH_INFO)
-> by Giuseppe Bilotta (CC-ed; I think he is correct person to give
-> Ack for this patch). Earlier only "default" actions could be expressed
-> using only path_info, and project-less 'opml' and 'project_index'
-> actions are not default actions for projectless URL, so there was no
-> such problem then.
+Alexander Potashev <aspotashev@gmail.com> writes:
 
-Actually, the early bailout was sort of intentional. The problem is
-the ambiguity: does git.example.com/opml refer to the opml project, or
-does it refer to the opml action?
+> On 05:00 Thu 01 Jan     , Junio C Hamano wrote:
+>> Alexander Potashev <aspotashev@gmail.com> writes:
+> ...
+>> > @@ -2447,6 +2447,7 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
+>> >  	if (st_mode != patch->old_mode)
+>> >  		fprintf(stderr, "warning: %s has type %o, expected %o\n",
+>> >  			old_name, st_mode, patch->old_mode);
+>> > +	patch->new_mode = st_mode;
+>> 
+>> Can you do this unconditionally, overwriting whatever we read from the
+>> patch header metainfo lines?
+>
+> Do you mean overwriting of 'patch->new_mode' right after patch parsing?
 
-HOWEVER, href() *does* create the opml action as git.example.com/opml,
-so gitweb is currently broken in the sense that ti doesn't correctly
-parse its own pathinfo output. So the question is: shall we go with
-this patch, preventing pathinfo from working for projects named like a
-no-project gitweb action, or should we fix href() to not generate
-pathinfo unless project is defined?
+My question was if we should assign st_mode to new_mode _unconditionally_
+here, even when patch->new_mode has already been read from the explicit
+mode change line (i.e. "new mode ", line not "index "line) of the patch
+input.
 
->> -     return unless $project;
->> -     $input_params{'project'} = $project;
->> +     $input_params{'project'} = $project if $project;
+The call-chain of the program looks like this:
 
-Note that if this patch is accepted, we probably need an appropriate
-patch in href() anyway to use query params for projects named like
-no-project actions.
+-> apply_patch()
+   -> parse_chunk()
+      -> find_header()
+         * initialize new_mode and old_mode to 0
+         -> parse_git_header()
+            * set new_mode and old_mode from the patch metainfo, i.e.
+              "new mode", "old mode" and "index" lines.
+      -> parse_single_patch()
+   -> check_patch_list()
+      -> check_patch()
+         -> check_preimage()
+            * make sure there is no local mods
+            * warn if old_mode read from the patch (i.e. the preimage file
+              the patch submitter used to prepare the patch against) does not
+              match what we have
+         * warn about mode inconsistency (e.g. the patch submitter thinks
+           the mode should be 0644 but our tree has 0755).
+         -> apply_data()
+   -> write_out_results()
+      -> write_out_one_result(0)
+         * delete old
+      -> write_out_one_result(1)
+         * create new
 
--- 
-Giuseppe "Oblomov" Bilotta
+Currently the mode 100644 on the "index" line in a patch is handled
+exactly in the same way as having "old mode 100644" and "new mode 100644"
+lines in the metainfo.  The patch submitter claims to have started from
+100644 and he claims that he wants to have 100644 as the result.  That is
+why there is a warning in check_patch().
+
+If we stop reading the new mode from the "index" line (but we still read
+"old_mode" there) without any other change you made in your patch, what
+breaks (i.e. without the patch->new_mode assignment hunk)?  I haven't
+followed the codepath too closely, and I suspect you found some cases
+where new_mode stays 0 as initialized, and that may be the reason you have
+this assignment.
+
+But the assignment being unconditional bothered me a lot.
+
+I tend to agree that the current "The final mode bits I want to have on
+this path is this" semantics we give to the "index" line is much less
+useful and less sane and it is a good idea to redefine it as "FYI, the
+copy I made this patch against had this mode bits.  I do not intend to
+change the mode bits of the path with this patch."
+
+ builtin-apply.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git c/builtin-apply.c w/builtin-apply.c
+index 07244b0..a8f75ed 100644
+--- c/builtin-apply.c
++++ w/builtin-apply.c
+@@ -630,7 +630,7 @@ static int gitdiff_index(const char *line, struct patch *patch)
+ 	memcpy(patch->new_sha1_prefix, line, len);
+ 	patch->new_sha1_prefix[len] = 0;
+ 	if (*ptr == ' ')
+-		patch->new_mode = patch->old_mode = strtoul(ptr+1, NULL, 8);
++		patch->old_mode = strtoul(ptr+1, NULL, 8);
+ 	return 0;
+ }
+ 
+@@ -2447,6 +2447,8 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
+ 	if (st_mode != patch->old_mode)
+ 		fprintf(stderr, "warning: %s has type %o, expected %o\n",
+ 			old_name, st_mode, patch->old_mode);
++	if (!patch->new_mode)
++		patch->new_mode = st_mode;
+ 	return 0;
+ 
+  is_new:
