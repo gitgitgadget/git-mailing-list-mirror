@@ -1,93 +1,89 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH] gitweb: don't use pathinfo for global actions
-Date: Fri,  2 Jan 2009 12:34:40 +0100
-Message-ID: <1230896080-22801-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	Devin Doucette <devin@doucette.cc>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+From: Henrik Austad <henrik@austad.us>
+Subject: git checkout does not warn about tags without corresponding commits
+Date: Fri, 2 Jan 2009 13:25:57 +0100
+Message-ID: <200901021325.58049.henrik@austad.us>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 02 13:11:30 2009
+X-From: git-owner@vger.kernel.org Fri Jan 02 13:27:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIis6-0000HB-TI
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 13:11:23 +0100
+	id 1LIj7f-0004ps-GX
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 13:27:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757436AbZABMJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 07:09:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757428AbZABMJt
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 07:09:49 -0500
-Received: from mu-out-0910.google.com ([209.85.134.186]:45996 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757384AbZABMJs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 07:09:48 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so2480939muf.1
-        for <git@vger.kernel.org>; Fri, 02 Jan 2009 04:09:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=k+lSkc3ihoEiMeq8Oi3GkBe5t2uBnqe8fySYTkJ9jGg=;
-        b=I9McpBJvxkHrXhBgM7xi35QVpt1VOONTdgCs5zXEmu1fviFuwm+p8PwAjHjr1tzBAK
-         NzjUlz/hxDG+oLsDTpBdr6UIjRh7tvSOw5QLxjVm5UxTkWnAmFO/nHZp9+3JoHTyUK+3
-         1EEFaVQfV5Js3gM7ATpLyxz1bC2MvS/Y+VlE8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=qCck9k8MYeesVE/KVZwQy53uirWquBpzYA+o/DOBYgQGVFNZ4Q/0tLThOi1j2dnLTP
-         OXb4/aiFA9D6qMNC/LxR/voSA0dIFWYWkTLyGfSYhdBU32zdgp/ohbDCX1SVECUlJj5s
-         Lc9096qdICVab7SCpxIEnG2ybNG/XXbBUEqPI=
-Received: by 10.103.182.3 with SMTP id j3mr6331170mup.113.1230898185504;
-        Fri, 02 Jan 2009 04:09:45 -0800 (PST)
-Received: from localhost ([78.15.6.169])
-        by mx.google.com with ESMTPS id 7sm26894497mup.10.2009.01.02.04.09.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 02 Jan 2009 04:09:45 -0800 (PST)
-X-Mailer: git-send-email 1.5.6.5
+	id S1757388AbZABM0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 07:26:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757367AbZABM0I
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 07:26:08 -0500
+Received: from cassarossa.samfundet.no ([129.241.93.19]:34498 "EHLO
+	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757301AbZABM0H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 07:26:07 -0500
+Received: from asterix.samfundet.no
+	([2001:700:300:1800::f] helo=asterix.frsk.net ident=Debian-exim)
+	by cassarossa.samfundet.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <henrik@austad.us>)
+	id 1LIj6K-0002eW-0B
+	for git@vger.kernel.org; Fri, 02 Jan 2009 13:26:04 +0100
+Received: from ti121210a080-9171.bb.online.no ([85.164.99.227] helo=[192.168.1.1])
+	by asterix.frsk.net with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <henrik@austad.us>)
+	id 1LIj6J-00015f-Nk
+	for git@vger.kernel.org; Fri, 02 Jan 2009 13:26:03 +0100
+User-Agent: KMail/1.9.10
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104376>
 
-With PATH_INFO urls, actions for the projects list (e.g. opml,
-project_index) were being put in the URL right after the base. The
-resulting URL is not properly parsed by gitweb itself, since it expects
-a project name as first component of the URL.
+Hi!
 
-Accepting global actions in use_pathinfo is not a very robust solution
-due to possible present and future conflicts between project names and
-global actions, therefore we just refuse to create PATH_INFO URLs when
-the project is not defined.
+I recently tried to do a checkout of (what I thought was the first) inux 
+kernel in the linux git repo.
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- gitweb/gitweb.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 99f71b4..fa7d8ad 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -830,7 +830,7 @@ sub href (%) {
- 	}
- 
- 	my $use_pathinfo = gitweb_check_feature('pathinfo');
--	if ($use_pathinfo) {
-+	if ($use_pathinfo and defined $params{'project'}) {
- 		# try to put as many parameters as possible in PATH_INFO:
- 		#   - project name
- 		#   - action
-@@ -845,7 +845,7 @@ sub href (%) {
- 		$href =~ s,/$,,;
- 
- 		# Then add the project name, if present
--		$href .= "/".esc_url($params{'project'}) if defined $params{'project'};
-+		$href .= "/".esc_url($params{'project'});
- 		delete $params{'project'};
- 
- 		# since we destructively absorb parameters, we keep this
+git checkout -b 2.6.11 v2.6.11
+
+This tag exists in the linux-tree (direct clone from Linus' tree), along with 
+v2.6.11-tree
+
+However, when I inspect the log, I see that I am still stuck in master. So, I 
+did a git tag -v v2.6.11 and got the following:
+
+object c39ae07f393806ccf406ef966e9a15afc43cc36a
+type tree
+tag v2.6.11-tree
+
+This is the 2.6.11 tree object.
+
+NOTE! There's no commit for this, since it happened before I started with git.
+Eventually we'll import some sort of history, and that should tie this tree
+object up to a real commit. In the meantime, this acts as an anchor point for
+doing diffs etc under git.
+gpg: Signature made Thu 05 May 2005 01:50:54 AM CEST using DSA key ID 76E21CBB
+gpg: Good signature from "Linus Torvalds (tag signing key) 
+<torvalds@osdl.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: FF6D 4EAC 37AC C1B9 53AE  C7E8 1776 2C46 76E2 1CBB
+
+
+I can see that there's no commit for this, but, when there's a tag. I thought 
+that a tag was just a commit-sha1 with a name attached, along with some tag 
+info and a signature. Can you really create a tag without a commit?
+
+Shouldn't git checkout fail in some way, letting me know that the checkout did 
+not check out what I thought it did? (I got aware of the bug when I found 
+CFS-related code in something I thought was 2.6.11.. :-)
+
+
 -- 
-1.5.6.5
+ -> henrik
