@@ -1,137 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] builtin-apply: prevent non-explicit permission
- changes
-Date: Thu, 01 Jan 2009 16:56:11 -0800
-Message-ID: <7v3ag2frv8.fsf@gitster.siamese.dyndns.org>
-References: <20081230235357.GA12747@myhost>
- <7vfxk3npuc.fsf@gitster.siamese.dyndns.org> <20090101221720.GA5603@myhost>
+From: Jason Riedy <jason@acm.org>
+Subject: Re: [PATCH] Pass --upload-pack and --receive-pack through submodules.
+Date: Thu, 01 Jan 2009 20:44:03 -0500
+Message-ID: <878wpua3do.fsf@sparse.dyndns.org>
+References: <1230605055-30723-1-git-send-email-jason@acm.org>
+	<1230649782-14710-1-git-send-email-jason@acm.org>
+	<7vy6xuhhbx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Alexander Potashev <aspotashev@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 02 01:58:01 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 02 02:45:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIYMP-0003V6-2X
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 01:57:57 +0100
+	id 1LIZ6h-0004wG-8H
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 02:45:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753558AbZABA40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jan 2009 19:56:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753297AbZABA4Z
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 19:56:25 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44885 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751702AbZABA4Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jan 2009 19:56:24 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DB54D1B8FD;
-	Thu,  1 Jan 2009 19:56:21 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9497C1B8F9; Thu, 
- 1 Jan 2009 19:56:13 -0500 (EST)
-In-Reply-To: <20090101221720.GA5603@myhost> (Alexander Potashev's message of
- "Fri, 2 Jan 2009 01:17:20 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2C16746A-D868-11DD-96E7-EB51113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1755449AbZABBoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jan 2009 20:44:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751702AbZABBoZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 20:44:25 -0500
+Received: from a.mail.sonic.net ([64.142.16.245]:54070 "EHLO a.mail.sonic.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750911AbZABBoY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jan 2009 20:44:24 -0500
+Received: from nan.sparse.yi.org (misc-148-78-88-138.pool.starband.net [148.78.88.138])
+	(authenticated bits=0)
+	by a.mail.sonic.net (8.13.8.Beta0-Sonic/8.13.7) with ESMTP id n021iAEw018348;
+	Thu, 1 Jan 2009 17:44:13 -0800
+In-Reply-To: <7vy6xuhhbx.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 01 Jan 2009 13:00:50 -0800")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0.60 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104353>
 
-Alexander Potashev <aspotashev@gmail.com> writes:
+And Junio C. Hamano writes:
+> Do we (and can we) assume that the remote repositories submodules fetch
+> from all reside on the same host and can share the same values for these
+> parameters?  Shouldn't these instead be specified in the configuration
+> files for the submodules, if they need to be nonstandard values?
 
-> On 05:00 Thu 01 Jan     , Junio C Hamano wrote:
->> Alexander Potashev <aspotashev@gmail.com> writes:
-> ...
->> > @@ -2447,6 +2447,7 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
->> >  	if (st_mode != patch->old_mode)
->> >  		fprintf(stderr, "warning: %s has type %o, expected %o\n",
->> >  			old_name, st_mode, patch->old_mode);
->> > +	patch->new_mode = st_mode;
->> 
->> Can you do this unconditionally, overwriting whatever we read from the
->> patch header metainfo lines?
->
-> Do you mean overwriting of 'patch->new_mode' right after patch parsing?
+git does not and (for me) should not make the assumption above.
+I'm fetching different pieces from different administrative
+domains where I also have push access.  While I could clone them
+all into one place, that adds another level of repositories I'd
+have to keep up-to-date.
 
-My question was if we should assign st_mode to new_mode _unconditionally_
-here, even when patch->new_mode has already been read from the explicit
-mode change line (i.e. "new mode ", line not "index "line) of the patch
-input.
+Essentially, I'm collecting experimental libraries and drivers
+into one build tree.  My intent is to record exactly what is
+being built on multiple machines while being able to push local
+build configurations back to my central superproject.  Then I can
+make a version with pull-only remote URLs[1] for others to
+duplicate the setup for my experiments.
 
-The call-chain of the program looks like this:
+I suppose I could clone the submodules by hand and then use git
+submodule add.  But then I'll have to build the structure by hand
+(with my own wrapper) everywhere I use the supermodule.  At that
+point, using git submodule becomes a tad silly.  Or I could set
+up the superproject with pull-only URLs and modify the
+configurations with a separate wrapper.  Seemed like adding the
+two options to git submodule was easier.
 
--> apply_patch()
-   -> parse_chunk()
-      -> find_header()
-         * initialize new_mode and old_mode to 0
-         -> parse_git_header()
-            * set new_mode and old_mode from the patch metainfo, i.e.
-              "new mode", "old mode" and "index" lines.
-      -> parse_single_patch()
-   -> check_patch_list()
-      -> check_patch()
-         -> check_preimage()
-            * make sure there is no local mods
-            * warn if old_mode read from the patch (i.e. the preimage file
-              the patch submitter used to prepare the patch against) does not
-              match what we have
-         * warn about mode inconsistency (e.g. the patch submitter thinks
-           the mode should be 0644 but our tree has 0755).
-         -> apply_data()
-   -> write_out_results()
-      -> write_out_one_result(0)
-         * delete old
-      -> write_out_one_result(1)
-         * create new
+Jason
 
-Currently the mode 100644 on the "index" line in a patch is handled
-exactly in the same way as having "old mode 100644" and "new mode 100644"
-lines in the metainfo.  The patch submitter claims to have started from
-100644 and he claims that he wants to have 100644 as the result.  That is
-why there is a warning in check_patch().
-
-If we stop reading the new mode from the "index" line (but we still read
-"old_mode" there) without any other change you made in your patch, what
-breaks (i.e. without the patch->new_mode assignment hunk)?  I haven't
-followed the codepath too closely, and I suspect you found some cases
-where new_mode stays 0 as initialized, and that may be the reason you have
-this assignment.
-
-But the assignment being unconditional bothered me a lot.
-
-I tend to agree that the current "The final mode bits I want to have on
-this path is this" semantics we give to the "index" line is much less
-useful and less sane and it is a good idea to redefine it as "FYI, the
-copy I made this patch against had this mode bits.  I do not intend to
-change the mode bits of the path with this patch."
-
- builtin-apply.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git c/builtin-apply.c w/builtin-apply.c
-index 07244b0..a8f75ed 100644
---- c/builtin-apply.c
-+++ w/builtin-apply.c
-@@ -630,7 +630,7 @@ static int gitdiff_index(const char *line, struct patch *patch)
- 	memcpy(patch->new_sha1_prefix, line, len);
- 	patch->new_sha1_prefix[len] = 0;
- 	if (*ptr == ' ')
--		patch->new_mode = patch->old_mode = strtoul(ptr+1, NULL, 8);
-+		patch->old_mode = strtoul(ptr+1, NULL, 8);
- 	return 0;
- }
- 
-@@ -2447,6 +2447,8 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
- 	if (st_mode != patch->old_mode)
- 		fprintf(stderr, "warning: %s has type %o, expected %o\n",
- 			old_name, st_mode, patch->old_mode);
-+	if (!patch->new_mode)
-+		patch->new_mode = st_mode;
- 	return 0;
- 
-  is_new:
+Footnotes: 
+[1]  Or ask for separate pull- and push-urls in git remote.  But
+I haven't thought that through.
