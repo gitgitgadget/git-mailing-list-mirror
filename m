@@ -1,92 +1,82 @@
-From: Fabian Emmes <fabian.emmes@rwth-aachen.de>
-Subject: [PATCH] cvsserver: add option to configure commit message
-Date: Fri, 02 Jan 2009 16:40:13 +0100
-Message-ID: <1230910814-32307-1-git-send-email-fabian.emmes@rwth-aachen.de>
-Content-Transfer-Encoding: 7BIT
-Cc: gitster@pobox.com, Fabian Emmes <fabian.emmes@rwth-aachen.de>,
-	Lars Noschinski <lars@public.noschinski.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 02 16:41:57 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: git-difftool
+Date: Fri, 02 Jan 2009 17:10:44 +0100
+Message-ID: <vpq63kxofi3.fsf@bauges.imag.fr>
+References: <20081226013021.GA15414@gmail.com>
+	<402731c90812311211p548c49d3p100f79ddee7163b0@mail.gmail.com>
+	<vpq8wpux61c.fsf@bauges.imag.fr>
+	<200901020113.32082.markus.heidelberg@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "David Aguilar" <davvid@gmail.com>, git@vger.kernel.org
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Fri Jan 02 17:16:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIm9q-0006IM-DO
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 16:41:54 +0100
+	id 1LImgs-0007x4-Vu
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 17:16:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756858AbZABPkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 10:40:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbZABPkW
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 10:40:22 -0500
-Received: from mta-2.ms.rz.RWTH-Aachen.DE ([134.130.7.73]:33575 "EHLO
-	mta-2.ms.rz.rwth-aachen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756833AbZABPkS (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Jan 2009 10:40:18 -0500
-Received: from ironport-out-2.rz.rwth-aachen.de ([134.130.5.41])
- by mta-2.ms.rz.RWTH-Aachen.de
- (Sun Java(tm) System Messaging Server 6.3-7.04 (built Sep 26 2008))
- with ESMTP id <0KCU00LBBOV1H480@mta-2.ms.rz.RWTH-Aachen.de> for
- git@vger.kernel.org; Fri, 02 Jan 2009 16:40:13 +0100 (CET)
-X-IronPort-AV: E=Sophos;i="4.36,318,1228086000";   d="scan'208";a="63471057"
-Received: from smarthost-1.ms.rz.rwth-aachen.de (HELO smarthost.rwth-aachen.de)
- ([134.130.7.89]) by ironport-in-2.rz.rwth-aachen.de with ESMTP; Fri,
- 02 Jan 2009 16:40:13 +0100
-Received: from aprove.informatik.rwth-aachen.de
- (aprove.informatik.RWTH-Aachen.DE [137.226.194.201])
-	by smarthost.rwth-aachen.de (8.13.8+Sun/8.13.8/1)
- with ESMTP id n02FeDKG000869; Fri, 02 Jan 2009 16:40:13 +0100 (CET)
-Received: by aprove.informatik.rwth-aachen.de (Postfix, from userid 1005)
-	id AA16A11B7C4; Fri, 02 Jan 2009 16:40:14 +0100 (CET)
-X-Mailer: git-send-email 1.6.0.2
+	id S1756540AbZABQOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 11:14:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753356AbZABQOk
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 11:14:40 -0500
+Received: from imag.imag.fr ([129.88.30.1]:52606 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751839AbZABQOj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 11:14:39 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n02GAiTS018836
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 2 Jan 2009 17:10:45 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LImbk-0002U3-D1; Fri, 02 Jan 2009 17:10:44 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LImbk-0005Ki-Ah; Fri, 02 Jan 2009 17:10:44 +0100
+In-Reply-To: <200901020113.32082.markus.heidelberg@web.de> (Markus Heidelberg's message of "Fri\, 2 Jan 2009 01\:13\:31 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 02 Jan 2009 17:10:45 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104385>
 
-cvsserver annotates each commit message by "via git-CVS emulator". This is
-made configurable via gitcvs.commitmsgannotation.
+Markus Heidelberg <markus.heidelberg@web.de> writes:
 
-Signed-off-by: Fabian Emmes <fabian.emmes@rwth-aachen.de>
-Signed-off-by: Lars Noschinski <lars@public.noschinski.de>
----
- Documentation/config.txt |    4 ++++
- git-cvsserver.perl       |    8 +++++++-
- 2 files changed, 11 insertions(+), 1 deletions(-)
+> Matthieu Moy, 01.01.2009:
+>> "David Aguilar" <davvid@gmail.com> writes:
+>> 
+>> > Hmm... in theory, yes, but in practice, no.
+>> > xxdiff is too gimp to handle what 'git diff' hands it =)
+>> 
+>> As done with "vimdiff" in another message, simply write a one-liner
+>> wrapper script that calls xxdiff $2 $3, and call this wrapper script.
+>
+> This works with GUI tools, but not with console tools.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 7408bb2..8b14d8a 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -723,6 +723,10 @@ gc.rerereunresolved::
- 	kept for this many days when 'git-rerere gc' is run.
- 	The default is 15 days.  See linkgit:git-rerere[1].
- 
-+gitcvs.commitmsgannotation::
-+	Append this string to each commit message. Set to empty string
-+	to disable this feature. Defaults to "via git-CVS emulator".
-+
- gitcvs.enabled::
- 	Whether the CVS server interface is enabled for this repository.
- 	See linkgit:git-cvsserver[1].
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index b0a805c..cbcaeb4 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -1358,7 +1358,13 @@ sub req_ci
-     # write our commit message out if we have one ...
-     my ( $msg_fh, $msg_filename ) = tempfile( DIR => $TEMP_DIR );
-     print $msg_fh $state->{opt}{m};# if ( exists ( $state->{opt}{m} ) );
--    print $msg_fh "\n\nvia git-CVS emulator\n";
-+    if ( defined ( $cfg->{gitcvs}{commitmsgannotation} ) ) {
-+        if ($cfg->{gitcvs}{commitmsgannotation} !~ /^\s*$/ ) {
-+            print $msg_fh "\n\n".$cfg->{gitcvs}{commitmsgannotation}."\n"
-+        }
-+    } else {
-+        print $msg_fh "\n\nvia git-CVS emulator\n";
-+    }
-     close $msg_fh;
- 
-     my $commithash = `git-commit-tree $treehash -p $parenthash < $msg_filename`;
+Actually, it does if you call git --no-pager.
+
+> GVim works, Vim
+> doesn't.
+> And invoking
+>     git difftool
+> is by far more convenient than
+>     GIT_EXTERNAL_DIFF=vimdiff git diff
+
+Right, but a script "git-difftool" calling the later is a one-liner,
+so 2 one-liners give you the same result as the ~500 lines script
+proposed. And GIT_EXTERNAL_DIFF has the great advantage of being
+maintained together with git, and will most likely handle all cases
+(diff between index, working tree, arbitrary commit, ...) correctly.
+
 -- 
-1.5.6.3
+Matthieu
