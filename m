@@ -1,93 +1,55 @@
-From: david@lang.hm
-Subject: Re: how to track the history of a line in a file
-Date: Fri, 2 Jan 2009 15:56:05 -0800 (PST)
-Message-ID: <alpine.DEB.1.10.0901021554581.21567@asgard.lang.hm>
-References: <alpine.DEB.1.10.0901021405460.21567@asgard.lang.hm> <20090102212655.GA24082@coredump.intra.peff.net> <alpine.DEB.1.10.0901021459480.21567@asgard.lang.hm> <alpine.DEB.1.10.0901021544580.21567@asgard.lang.hm>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 02 23:55:12 2009
+From: Marcel Koeppen <git-dev@marzelpan.de>
+Subject: Re: [PATCH rfc v2] git-sh-setup: Fix scripts whose PWD is a symlink to a work-dir on OS X
+Date: Fri, 2 Jan 2009 23:53:59 +0100
+Message-ID: <AC726FD4-AE7F-4EC0-82E5-62C6D03C4E5A@marzelpan.de>
+References: <CC0158BE-219B-4E09-9B3B-A2D1B66132AC@silverinsanity.com> <1230649824-1893-1-git-send-email-marcel@oak.homeunix.org>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 02 23:55:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIsv9-00070D-0Q
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 23:55:11 +0100
+	id 1LIsvR-00074K-Pj
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 23:55:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758254AbZABWxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 17:53:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758216AbZABWxs
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 17:53:48 -0500
-Received: from mail.lang.hm ([64.81.33.126]:60821 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758088AbZABWxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 17:53:47 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n02MrhXv024236;
-	Fri, 2 Jan 2009 14:53:43 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <alpine.DEB.1.10.0901021544580.21567@asgard.lang.hm>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S932148AbZABWyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 17:54:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758216AbZABWyF
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 17:54:05 -0500
+Received: from smtprelay02.ispgateway.de ([80.67.18.14]:57337 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753307AbZABWyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 17:54:04 -0500
+Received: from [87.161.238.13] (helo=[192.168.1.21])
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <git-dev@marzelpan.de>)
+	id 1LIsu0-00047y-L7; Fri, 02 Jan 2009 23:54:00 +0100
+In-Reply-To: <1230649824-1893-1-git-send-email-marcel@oak.homeunix.org>
+X-Mailer: Apple Mail (2.930.3)
+X-Df-Sender: 012269
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104440>
 
-On Fri, 2 Jan 2009, david@lang.hm wrote:
+Hi,
 
-> On Fri, 2 Jan 2009, david@lang.hm wrote:
->
->> On Fri, 2 Jan 2009, Jeff King wrote:
->> 
->>> The tricky thing here is what is "this line"? Using the line number
->>> isn't right, since it will change based on other content coming in and
->>> out of the file. You can keep drilling down by reblaming parent commits,
->>> but remember that each time you do that you are manually looking at the
->>> content and saying "Oh, this is the line I am still interested in." So I
->>> a script would have to correlate the old version and new version of the
->>> line and realize how to follow the "interesting" thing.
->>> 
->>> In your case, I think you want to see any commit in Makefile which
->>> changed a line with SUBLEVEL in it. Which is maybe easiest done as:
->>>
->>>  git log -z -p Makefile |
->>>    perl -0ne 'print if /\n[+-]SUBLEVEL/' |
->>>    tr '\0' '\n'
->>> 
->>> and is pretty fast. But obviously we're leveraging some content-specific
->>> knowledge about what's in the Makefile.
->> 
->> Ok, I hacked togeather a quick bash script to try this
->> 
-> <SNIP>
->> the problem that this has is that line 3 of $COMMIT may not be line 3 of 
->> $COMMIT^, and if they aren't it ends up hunting down the wrong data
->> 
->> either that or I am not understanding the output of git blame properly 
->> (also very possible)
->
-> I was misunderstanding git blame
->
-> new script is
->
-> #!/bin/bash
-> line=`git blame -n -b -l -L /$1/,+1 -M $2`
-> echo "-$line"
-> foundCOMMIT=`echo "$line" |cut -c -40`
-> foundline=`echo "$line" |cut -c 42- |cut -f 1 -d " "`
-> while [ "$foundCOMMIT" != "                                        " ] ;do
-> #git diff -U0 $foundCOMMIT..$foundCOMMIT^ $2
-> line=`git blame -n -b -l -L $foundline,+1 -M $2 $foundCOMMIT^`
-> echo "-$line"
-> foundCOMMIT=`echo "$line" |cut -c -40`
-> foundline=`echo "$line" |cut -c 42- |cut -f 1 -d " "`
-> done
->
-> this seems to be working for me now.
+Am 30.12.2008 um 16:10 schrieb Marcel M. Cary:
 
-not quite, it works as long as the line doesn't move in the commit where 
-it changes.
+> I sent the first rev of this patch to just Brian.  It didn't have
+> either of the unit test changes.  He said it fixed all but t2300.3,
+> where cd_to_toplevel doesn't actually "cd", so I made the same change
+> to the unit test itself.  Can someone with OS X try running the test
+> suite with v2 of this patch?  I don't have OS X readily available.
 
-David Lang
+the patch fixes t2300-cd-to-toplevel and t5521-pull-symlink for me.
+
+	Marcel
+
+[I don't know why my replies get lost, so I dropped all individual  
+recipients on this third try...]
