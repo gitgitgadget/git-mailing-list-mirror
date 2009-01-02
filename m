@@ -1,258 +1,218 @@
-From: "David Aguilar" <davvid@gmail.com>
-Subject: Re: git-difftool
-Date: Fri, 2 Jan 2009 09:39:34 -0800
-Message-ID: <402731c90901020939k1a8ae795oc4cbfd0ced992aab@mail.gmail.com>
-References: <20081226013021.GA15414@gmail.com>
-	 <402731c90812311211p548c49d3p100f79ddee7163b0@mail.gmail.com>
-	 <vpq8wpux61c.fsf@bauges.imag.fr>
-	 <200901020113.32082.markus.heidelberg@web.de>
-	 <vpq63kxofi3.fsf@bauges.imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH RESEND] Introduce core.keepHardLinks
+Date: Fri, 2 Jan 2009 19:07:46 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901021218000.27818@racer>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_163317_20665710.1230917974615"
-Cc: markus.heidelberg@web.de, git@vger.kernel.org
-To: "Matthieu Moy" <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jan 02 18:41:12 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jan 02 19:08:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIo16-0001w4-Vk
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 18:41:01 +0100
+	id 1LIoS4-0002Vo-Of
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 19:08:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757491AbZABRjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 12:39:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757406AbZABRjh
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 12:39:37 -0500
-Received: from wf-out-1314.google.com ([209.85.200.171]:30518 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754658AbZABRjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 12:39:36 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so6589637wfd.4
-        for <git@vger.kernel.org>; Fri, 02 Jan 2009 09:39:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type:references;
-        bh=ETooEXn/NxrS/3zMfhH1w8sQMbM3+qCr8vp0BCdiOcY=;
-        b=IqI331iQGto8AzLtZg/mSsVbbQtm/3A4RDwdEYIs+33zjig5asGtSOdX/yUoMNWgn8
-         2uS8048E9l0j6qrbnK12YzDW6xuWurR3EfKFM/idB8NQcyNGAhJ1i/4G80zogjn/YP5f
-         WccPidIgSNxvGAs8H9Y3t68p4I+SSUiokmDWU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:references;
-        b=LPaCJWzu2YxeeB6IWNeE/K6e+FvRfDwy6cS3YUKrqc3u+bJ3ka/wNDnxL8mQMXZcrQ
-         w+SVJGIFvaj/fSfBQRN0lQV3wQJyBN7ZRZOwFkKJRWgP9dHtIMhcoqC8YcprWrXT9Ulw
-         lRaOimDz4t3TYeQO/M3hpe3oLZ5Z1RiGYndGw=
-Received: by 10.142.104.9 with SMTP id b9mr7401115wfc.160.1230917974622;
-        Fri, 02 Jan 2009 09:39:34 -0800 (PST)
-Received: by 10.142.241.20 with HTTP; Fri, 2 Jan 2009 09:39:34 -0800 (PST)
-In-Reply-To: <vpq63kxofi3.fsf@bauges.imag.fr>
+	id S1758562AbZABSHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 13:07:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758718AbZABSHX
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 13:07:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47614 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758356AbZABSHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 13:07:21 -0500
+Received: (qmail invoked by alias); 02 Jan 2009 18:07:17 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp004) with SMTP; 02 Jan 2009 19:07:17 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX185usx6eK05MvWsb6FtGwvwQR+0dacXpev74ygxaU
+	9UhBpddgWKPHFA
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104389>
-
-------=_Part_163317_20665710.1230917974615
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-On Fri, Jan 2, 2009 at 8:10 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
->
-> As done with "vimdiff" in another message, simply write a
-> one-liner wrapper script that calls xxdiff $2 $3, and call this
-> wrapper script.
->
-> ...
->
-> Right, but a script "git-difftool" calling the later is a one-liner,
-> so 2 one-liners give you the same result as the ~500 lines script
-> proposed. And GIT_EXTERNAL_DIFF has the great advantage
-> of being maintained together with git, and will most likely handle
-> all cases (diff between index, working tree, arbitrary commit, ...)
-> correctly.
->
-> --
-> Matthieu
->
-
-Thanks for the feedback.  I've done exactly what you suggested.
-
-I now have a git-difftool wrapper script that basically just sets up
-the environment for git-difftool-helper.  git-difftool-helper does all
-of the merge tool configuration stuff ala
-http://www.kernel.org/pub/software/scm/git/docs/git-mergetool.html (it
-uses the same git config variables and thus works with existing custom
-commands).  If you drop them both into the same directory it should
-work as-is (it munges $PATH).
-
-It's not a two-liner (they do all that git config stuff and handle
-more than just vimdiff) but it does use GIT_EXTERNAL_DIFF now, which
-makes the script infinitely more useful.  This is much nicer now since
-you can pass any 'git diff' options to git-difftool and it'll handle
-it correctly.
-
-The usage is simpler now too:
-
-usage: git difftool [--no-prompt] [--tool=tool] ["git diff" options]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104390>
 
 
-Thanks for your help,
+When a tracked file was hard linked, we used to break the hard link
+whenever Git writes to that file.
 
+In some situations, this behavior is less-than-desirable, especially
+given the fact that some popular editors do not do that, such as
+(in alphabetical order) emacs and vi.
+
+So teach Git not to break hard links when the config variable
+core.keepHardLinks is set to true.  For backwards compatibility, this
+variable defaults to false.
+
+>From a safety viewpoint, nothing really changes, as to keep hard links,
+Git will now open the files it updates with O_TRUNC instead of deleting
+them first and then opening them with O_EXCL.
+
+To keep the implementation simple, mode changes will still break the
+hard links.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	Only the commit message was modified since last time, to
+	provide a better justification for the patch.
+
+ Documentation/config.txt |    4 +++
+ cache.h                  |    1 +
+ config.c                 |    4 +++
+ entry.c                  |    7 ++++-
+ environment.c            |    1 +
+ t/t0056-hardlinked.sh    |   58 ++++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 73 insertions(+), 2 deletions(-)
+ create mode 100644 t/t0056-hardlinked.sh
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 7408bb2..086d8a4 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -209,6 +209,10 @@ core.symlinks::
+ 	file. Useful on filesystems like FAT that do not support
+ 	symbolic links. True by default.
+ 
++core.keepHardLinks::
++	If true, do not break hard links by deleting and recreating the
++	files.  Off by default.
++
+ core.gitProxy::
+ 	A "proxy command" to execute (as 'command host port') instead
+ 	of establishing direct connection to the remote server when
+diff --git a/cache.h b/cache.h
+index 231c06d..a9c5812 100644
+--- a/cache.h
++++ b/cache.h
+@@ -538,6 +538,7 @@ enum rebase_setup_type {
+ 
+ extern enum branch_track git_branch_track;
+ extern enum rebase_setup_type autorebase;
++extern int keep_hard_links;
+ 
+ #define GIT_REPO_VERSION 0
+ extern int repository_format_version;
+diff --git a/config.c b/config.c
+index 790405a..8ff2b4b 100644
+--- a/config.c
++++ b/config.c
+@@ -492,6 +492,10 @@ static int git_default_core_config(const char *var, const char *value)
+ 
+ 	if (!strcmp(var, "core.preloadindex")) {
+ 		core_preload_index = git_config_bool(var, value);
++	}
++
++	if (!strcmp(var, "core.keephardlinks")) {
++		keep_hard_links = git_config_bool(var, value);
+ 		return 0;
+ 	}
+ 
+diff --git a/entry.c b/entry.c
+index aa2ee46..dfddf83 100644
+--- a/entry.c
++++ b/entry.c
+@@ -82,7 +82,8 @@ static void remove_subtree(const char *path)
+ static int create_file(const char *path, unsigned int mode)
+ {
+ 	mode = (mode & 0100) ? 0777 : 0666;
+-	return open(path, O_WRONLY | O_CREAT | O_EXCL, mode);
++	return open(path, O_WRONLY | O_CREAT |
++			(keep_hard_links ? O_TRUNC : O_EXCL), mode);
+ }
+ 
+ static void *read_blob_entry(struct cache_entry *ce, const char *path, unsigned long *size)
+@@ -225,7 +226,9 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
+ 			if (!state->force)
+ 				return error("%s is a directory", path);
+ 			remove_subtree(path);
+-		} else if (unlink(path))
++		} else if ((!keep_hard_links || !S_ISREG(st.st_mode) ||
++					st.st_mode != ce->ce_mode) &&
++				unlink(path))
+ 			return error("unable to unlink old '%s' (%s)", path, strerror(errno));
+ 	} else if (state->not_new)
+ 		return 0;
+diff --git a/environment.c b/environment.c
+index e278bce..fc91809 100644
+--- a/environment.c
++++ b/environment.c
+@@ -42,6 +42,7 @@ enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
+ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+ enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
+ enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
++int keep_hard_links = 0;
+ 
+ /* Parallel index stat data preload? */
+ int core_preload_index = 0;
+diff --git a/t/t0056-hardlinked.sh b/t/t0056-hardlinked.sh
+new file mode 100644
+index 0000000..934c2bc
+--- /dev/null
++++ b/t/t0056-hardlinked.sh
+@@ -0,0 +1,58 @@
++#!/bin/sh
++
++test_description='read-tree and checkout respect hardlinked files'
++
++. ./test-lib.sh
++
++cat > file << EOF
++1. Nf3 Nf6 2. c4 g6 3. Nc3 Bg7 4. d4 O-O 5. Bf4 d5 6. Qb3 dxc4 7. Qxc4 c6
++8. e4 Nbd7 9. Rd1 Nb6 10. Qc5 Bg4 11. Bg5 Na4 12. Qa3 Nxc3 13. bxc3 Nxe4
++14. Bxe7 Qb6 15. Bc4 Nxc3 16. Bc5 Rfe8+ 17. Kf1 Be6 18. Bxb6 Bxc4+ 19. Kg1 Ne2+
++20. Kf1 Nxd4+ 21. Kg1 Ne2+ 22. Kf1 Nc3+ 23. Kg1 axb6 24. Qb4 Ra4 25. Qxb6 Nxd1
++26. h3 Rxa2 27. Kh2 Nxf2 28. Re1 Rxe1 29. Qd8+ Bf8 30. Nxe1 Bd5 31. Nf3 Ne4
++32. Qb8 b5 33. h4 h5 34. Ne5 Kg7 35. Kg1 Bc5+ 36. Kf1 Ng3+ 37. Ke1 Bb4+
++38. Kd1 Bb3+ 39. Kc1 Ne2+ 40. Kb1 Nc3+
++EOF
++
++ln file link || {
++	say "Could not hard link; skipping test"
++	test_done
++	exit
++}
++
++test_expect_success setup '
++
++	git config core.keepHardLinks true &&
++	test_cmp file link &&
++	cp file old &&
++	git add file &&
++	test_tick &&
++	git commit -m initial &&
++	echo "41. Kc1 Rc2#" >> file &&
++	git add file &&
++	test_tick &&
++	git commit -m 2nd &&
++	test_cmp file link &&
++	! test_cmp file old
++
++'
++
++test_expect_success 'checking a file out does not break the hard link' '
++
++	git checkout HEAD^ -- file &&
++	test_cmp file link &&
++	test_cmp file old
++
++'
++
++test_expect_success 'read-tree -u -m does not break the hard link' '
++
++	git reset --hard &&
++	test_cmp file link &&
++	git read-tree -u -m HEAD^ &&
++	test_cmp file link &&
++	test_cmp file old
++
++'
++
++test_done
 -- 
-    David
-
-------=_Part_163317_20665710.1230917974615
-Content-Type: application/octet-stream; name=git-difftool
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fph4luum0
-Content-Disposition: attachment; filename=git-difftool
-
-IyEvdXNyL2Jpbi9lbnYgcGVybAojIFRoaXMgaXMgYSB3cmFwcGVyIGFyb3VuZCB0aGUgR0lUX0VY
-VEVSTkFMX0RJRkYgY29tcGF0aWJsZQojIGdpdC1kaWZmdG9vbC1oZWxwZXIgc2NyaXB0LgojCiMg
-Q29weXJpZ2h0IChjKSAyMDA5IERhdmlkIEFndWlsYXIKCnVzZSBzdHJpY3Q7CnVzZSB3YXJuaW5n
-czsKCnVzZSBGaWxlOjpCYXNlbmFtZSBxdyhkaXJuYW1lKTsKCiMgUHJpbnRzIHVzYWdlIGFuZCBl
-eGl0cwpzdWIgdXNhZ2UKewoJcHJpbnQgPDwgJ1VTQUdFJzsKCnVzYWdlOiBnaXQgZGlmZnRvb2wg
-Wy0tbm8tcHJvbXB0XSBbLS10b29sPXRvb2xdIFsiZ2l0IGRpZmYiIG9wdGlvbnNdClVTQUdFCgll
-eGl0IDE7Cn0KCiMgU2V0cyBQQVRILCBHSVRfUEFHRVIsIGFuZCBHSVRfRVhURVJOQUxfRElGRiBz
-byB0aGF0CiMgZ2l0LWRpZmZ0b29sLWhlbHBlciBpcyBpbnZva2VkIGJ5ICdnaXQgZGlmZicuCnN1
-YiBzZXR1cF9lbnZpcm9ubWVudAp7CglteSBAcGF0aHMgPSAoIGRpcm5hbWUoJDApLCBzcGxpdCgn
-OicsICRFTlZ7UEFUSH0pICk7CgkkRU5We1BBVEh9ID0gam9pbignOicsIEBwYXRocyk7CgkkRU5W
-e0dJVF9QQUdFUn0gPSAnJzsKCSRFTlZ7R0lUX0VYVEVSTkFMX0RJRkZ9ID0gJ2dpdC1kaWZmdG9v
-bC1oZWxwZXInOwp9CgojIFNldHMgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgcmVjb2duaXplZCBi
-eSBnaXQtZGlmZnRvb2wtaGVscGVyCiMgdG8gc2lnbmFsIHRoYXQgd2Ugc2hvdWxkbid0IHByb21w
-dCBiZWZvcmUgdmlld2luZyBlYWNoIGZpbGUuCnN1YiBub19wcm9tcHQKewoJJEVOVntHSVRfRElG
-RlRPT0xfTk9fUFJPTVBUfSA9ICd0cnVlJzsKfQoKIyBTZXRzIGEgZGVmYXVsdCB2YWx1ZSBmb3Ig
-dGhlIG1lcmdlIHRvb2wgdXNlZCBieSBnaXQtZGlmZnRvb2wtaGVscGVyLgpzdWIgc2V0dXBfbWVy
-Z2V0b29sCnsKCSRFTlZ7R0lUX01FUkdFX1RPT0x9ID0gc2hpZnQ7Cn0KCiMgUHJvY2Vzc2VzIGNv
-bW1hbmQtbGluZSBmbGFncyBhbmQgZ2VuZXJhdGVzIGEgY29ycmVzcG9uZGluZwojICdnaXQgZGlm
-ZicgY29tbWFuZC4gIEFueSBhcmd1bWVudHMgdGhhdCBhcmUgdW5rbm93biB0byB0aGlzCiMgc2Ny
-aXB0IGFyZSBhc3N1bWVkIHRvIGJlIGFyZ3VtZW50cyBpbnRlbmRlZCBmb3IgJ2dpdCBkaWZmJy4K
-c3ViIGdlbmVyYXRlX2NvbW1hbmQKewoJbXkgQGNvbW1hbmQgPSAoJ2dpdCcsICdkaWZmJyk7Cglt
-eSAkc2tpcF9uZXh0ID0gMDsKCglteSAkaWR4ID0gLTE7Cglmb3IgbXkgJGFyZyAoQEFSR1YpIHsK
-CQkkaWR4Kys7CgoJCWlmICgkc2tpcF9uZXh0KSB7CgkJCSRza2lwX25leHQgPSAwOwoJCQluZXh0
-OwoJCX0KCgkJaWYgKCRhcmcgZXEgJy1oJyBvciAkYXJnIGVxICctLWhlbHAnKSB7CgkJCXVzYWdl
-KCkKCQl9CgoJCWlmICgkYXJnIGVxICctLW5vLXByb21wdCcpIHsKCQkJbm9fcHJvbXB0KCk7CgkJ
-CW5leHQ7CgkJfQoKCQlpZiAoJGFyZyBlcSAnLXQnIG9yICRhcmcgZXEgJy0tdG9vbCcpIHsKCQkJ
-JHNraXBfbmV4dCA9IDE7CgkJCWlmICggc2NhbGFyKEBBUkdWKSA8PSAkaWR4ICsgMSApIHsKCQkJ
-CXVzYWdlKCk7CgkJCX0KCQkJc2V0dXBfbWVyZ2V0b29sKCRBUkdWWyRpZHggKyAxXSk7CgkJCW5l
-eHQ7CgkJfQoKCQlpZiAoJGFyZyA9fiAvXi0tdG9vbD0vKSB7CgkJCSRhcmcgPSBzdWJzdHIoJGFy
-ZywgNyk7CgkJCXNldHVwX21lcmdldG9vbCgkYXJnKTsKCQkJbmV4dDsKCQl9CgkJcHVzaCBAY29t
-bWFuZCwgJGFyZzsKCX0KCXJldHVybiBAY29tbWFuZAp9CgojIFNldHMgdXAgdGhlIGdpdC1kaWZm
-dG9vbCBlbnZpcm9ubWVudCBhbmQgZXhlY3MgJ2dpdCBkaWZmJy4Kc3ViIG1haW4KewoJc2V0dXBf
-ZW52aXJvbm1lbnQoKTsKCWV4ZWMoZ2VuZXJhdGVfY29tbWFuZCgpKTsKfQoKbWFpbigpCg==
-------=_Part_163317_20665710.1230917974615
-Content-Type: application/octet-stream; name=git-difftool-helper
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fph4nvx31
-Content-Disposition: attachment; filename=git-difftool-helper
-
-IyEvYmluL3NoCiMKIyBnaXQtZGlmZnRvb2wtaGVscGVyOgojICAgIGludm9rZWQgdmlhICdnaXQg
-ZGlmZnRvb2wnIHRvIHZpZXcgZGlmZnMgdXNpbmcgZXh0ZXJuYWwgZGlmZiB2aWV3ZXJzLgojCiMg
-Q29weXJpZ2h0IChjKSAyMDA5IERhdmlkIEFndWlsYXIuCiMKIyBZb3UgY2FuIHVzZSB0aGlzIHNj
-cmlwdCBkaXJlY3RseSB3aXRoIHRoZSBmb2xsb3dpbmcgc2V0dGluZ3M6CiMgICBleHBvcnQgR0lU
-X1BBR0VSPScnCiMgICBleHBvcnQgR0lUX0VYVEVSTkFMX0RJRkY9Z2l0LWRpZmZ0b29sLWhlbHBl
-cgojICAgZ2l0IGRpZmYgLi4uCgojIFNob3VsZCB3ZSBwcm9tcHQgYmVmb3JlIHZpZXdpbmcgZWFj
-aCBmaWxlPwpzaG91bGRfcHJvbXB0ICgpIHsKCSEgdGVzdCAtbiAiJEdJVF9ESUZGVE9PTF9OT19Q
-Uk9NUFQiCn0KCiMgU2hvdWxkIHdlIGtlZXAgdGhlIGJhY2t1cCAub3JpZyBmaWxlPwprZWVwX2Jh
-Y2t1cF9tb2RlPSIkKGdpdCBjb25maWcgLS1ib29sIG1lcmdlLmtlZXBCYWNrdXAgfHwgZWNobyB0
-cnVlKSIKa2VlcF9iYWNrdXAgKCkgewoJdGVzdCAiJGtlZXBfYmFja3VwX21vZGUiID0gInRydWUi
-Cn0KCiMgVGhpcyBmdW5jdGlvbiBtYW5hZ2VzIHRoZSBiYWNrdXAgLm9yaWcgZmlsZS4KIyBBIGJh
-Y2t1cCAkTUVSR0VELm9yaWcgZmlsZSBpcyBjcmVhdGVkIGlmIGNoYW5nZXMgYXJlIGRldGVjdGVk
-LgpjbGVhbnVwX3RlbXBfZmlsZXMgKCkgewoJaWYgdGVzdCAtbiAiJE1FUkdFRCI7IHRoZW4KCQlp
-ZiBrZWVwX2JhY2t1cCAmJiB0ZXN0ICIkTUVSR0VEIiAtbnQgIiRCQUNLVVAiOyB0aGVuCgkJCXRl
-c3QgLWYgIiRCQUNLVVAiICYmIG12IC0tICIkQkFDS1VQIiAiJE1FUkdFRC5vcmlnIgoJCWVsc2UK
-CQkJcm0gLWYgLS0gIiRCQUNLVVAiCgkJZmkKCWZpCn0KCiMgVGhpcyBpcyBjYWxsZWQgd2hlbiB1
-c2VycyBDdHJsLUMgb3V0IG9mIGdpdC1kaWZmdG9vbC1oZWxwZXIuCnNpZ2ludF9oYW5kbGVyICgp
-IHsKCWVjaG8KCWNsZWFudXBfdGVtcF9maWxlcwoJZXhpdCAxCn0KCiMgVGhpcyBmdW5jdGlvbiBw
-cmVwYXJlcyB0ZW1wb3JhcnkgZmlsZXMgYW5kIGxhdW5jaGVzIHRoZSBhcHByb3ByaWF0ZQojIG1l
-cmdlIHRvb2wuCmxhdW5jaF9tZXJnZV90b29sICgpIHsKCSMgTWVyZ2VkIGlzIHRoZSBmaWxlbmFt
-ZSBhcyBpdCBhcHBlYXJzIGluIHRoZSB3b3JrIHRyZWUKCSMgTG9jYWwgaXMgdGhlIGNvbnRlbnRz
-IG9mIGEvZmlsZW5hbWUKCSMgUmVtb3RlIGlzIHRoZSBjb250ZW50cyBvZiBiL2ZpbGVuYW1lCgkj
-IEN1c3RvbSBtZXJnZSB0b29sIGNvbW1hbmRzIG1pZ2h0IHVzZSAkQkFTRSBzbyB3ZSBwcm92aWRl
-IGl0CglNRVJHRUQ9IiQxIgoJTE9DQUw9IiQyIgoJUkVNT1RFPSIkMyIKCUJBU0U9IiQxIgoJZXh0
-PSIkJCQoZXhwciAiJE1FUkdFRCIgOiAnLipcKFwuW14vXSpcKSQnKSIKCUJBQ0tVUD0iJE1FUkdF
-RC5CQUNLVVAuJGV4dCIKCgkjIENyZWF0ZSBhbmQgZW5zdXJlIHRoYXQgd2UgY2xlYW4gdXAgJEJB
-Q0tVUAoJdGVzdCAtZiAiJE1FUkdFRCIgJiYgY3AgLS0gIiRNRVJHRUQiICIkQkFDS1VQIgoJdHJh
-cCBzaWdpbnRfaGFuZGxlciBTSUdJTlQKCgkjICRMT0NBTCBhbmQgJFJFTU9URSBhcmUgdGVtcG9y
-YXJ5IGZpbGVzIHNvIHByb21wdAoJIyB0aGUgdXNlciB3aXRoIHRoZSByZWFsICRNRVJHRUQgbmFt
-ZSBiZWZvcmUgbGF1bmNoaW5nICRtZXJnZV90b29sLgoJaWYgc2hvdWxkX3Byb21wdDsgdGhlbgoJ
-CXByaW50ZiAiXG5WaWV3aW5nOiAnJE1FUkdFRCdcbiIKCQlwcmludGYgIkhpdCByZXR1cm4gdG8g
-bGF1bmNoICclcyc6ICIgIiRtZXJnZV90b29sIgoJCXJlYWQgYW5zCglmaQoKCSMgUnVuIHRoZSBh
-cHByb3ByaWF0ZSBtZXJnZSB0b29sIGNvbW1hbmQKCWNhc2UgIiRtZXJnZV90b29sIiBpbgoJa2Rp
-ZmYzKQoJCWJhc2VuYW1lPSQoYmFzZW5hbWUgIiRNRVJHRUQiKQoJCSIkbWVyZ2VfdG9vbF9wYXRo
-IiAtLWF1dG8gXAoJCQktLUwxICIkYmFzZW5hbWUgKEEpIiBcCgkJCS0tTDIgIiRiYXNlbmFtZSAo
-QikiIFwKCQkJLW8gIiRNRVJHRUQiICIkTE9DQUwiICIkUkVNT1RFIiBcCgkJCT4gL2Rldi9udWxs
-IDI+JjEKCQk7OwoKCXRrZGlmZikKCQkiJG1lcmdlX3Rvb2xfcGF0aCIgLW8gIiRNRVJHRUQiICIk
-TE9DQUwiICIkUkVNT1RFIgoJCTs7CgoJbWVsZHx2aW1kaWZmKQoJCSIkbWVyZ2VfdG9vbF9wYXRo
-IiAiJExPQ0FMIiAiJFJFTU9URSIKCQk7OwoKCWd2aW1kaWZmKQoJCSIkbWVyZ2VfdG9vbF9wYXRo
-IiAtZiAiJExPQ0FMIiAiJFJFTU9URSIKCQk7OwoKCXh4ZGlmZikKCQkiJG1lcmdlX3Rvb2xfcGF0
-aCIgXAoJCQktWCBcCgkJCS1SICdBY2NlbC5TYXZlQXNNZXJnZWQ6ICJDdHJsLVMiJyBcCgkJCS1S
-ICdBY2NlbC5TZWFyY2g6ICJDdHJsK0YiJyBcCgkJCS1SICdBY2NlbC5TZWFyY2hGb3J3YXJkOiAi
-Q3RybC1HIicgXAoJCQktLW1lcmdlZC1maWxlICIkTUVSR0VEIiBcCgkJCSIkTE9DQUwiICIkUkVN
-T1RFIgoJCTs7CgoJb3BlbmRpZmYpCgkJIiRtZXJnZV90b29sX3BhdGgiICIkTE9DQUwiICIkUkVN
-T1RFIiBcCgkJCS1tZXJnZSAiJE1FUkdFRCIgfCBjYXQKCQk7OwoKCWVjbWVyZ2UpCgkJIiRtZXJn
-ZV90b29sX3BhdGgiICIkTE9DQUwiICIkUkVNT1RFIiBcCgkJCS0tZGVmYXVsdCAtLW1vZGU9bWVy
-Z2UyIC0tdG89IiRNRVJHRUQiCgkJOzsKCgllbWVyZ2UpCgkJIiRtZXJnZV90b29sX3BhdGgiIC1m
-IGVtZXJnZS1maWxlcy1jb21tYW5kIFwKCQkJIiRMT0NBTCIgIiRSRU1PVEUiICIkKGJhc2VuYW1l
-ICIkTUVSR0VEIikiCgkJOzsKCgkqKQoJCWlmIHRlc3QgLW4gIiRtZXJnZV90b29sX2NtZCI7IHRo
-ZW4KCQkJKCBldmFsICRtZXJnZV90b29sX2NtZCApCgkJZmkKCQk7OwoJZXNhYwoKCWNsZWFudXBf
-dGVtcF9maWxlcwp9CgojIFZlcmlmaWVzIHRoYXQgbWVyZ2V0b29sLjx0b29sPi5jbWQgZXhpc3Rz
-CnZhbGlkX2N1c3RvbV90b29sKCkgewoJbWVyZ2VfdG9vbF9jbWQ9IiQoZ2l0IGNvbmZpZyBtZXJn
-ZXRvb2wuJDEuY21kKSIKCXRlc3QgLW4gIiRtZXJnZV90b29sX2NtZCIKfQoKIyBWZXJpZmllcyB0
-aGF0IHRoZSBjaG9zZW4gbWVyZ2UgdG9vbCBpcyBwcm9wZXJseSBzZXR1cC4KIyBCdWlsdC1pbiBt
-ZXJnZSB0b29scyBhcmUgYWx3YXlzIHZhbGlkLgp2YWxpZF90b29sKCkgewoJY2FzZSAiJDEiIGlu
-CglrZGlmZjMgfCB0a2RpZmYgfCB4eGRpZmYgfCBtZWxkIHwgb3BlbmRpZmYgfCBlbWVyZ2UgfCB2
-aW1kaWZmIHwgZ3ZpbWRpZmYgfCBlY21lcmdlKQoJCTs7ICMgaGFwcHkKCSopCgkJaWYgISB2YWxp
-ZF9jdXN0b21fdG9vbCAiJDEiCgkJdGhlbgoJCQlyZXR1cm4gMQoJCWZpCgkJOzsKCWVzYWMKfQoK
-IyBTZXRzIHVwIHRoZSBtZXJnZV90b29sX3BhdGggdmFyaWFibGUuCiMgVGhpcyBoYW5kbGVzIHRo
-ZSBtZXJnZXRvb2wuPHRvb2w+LnBhdGggY29uZmlndXJhdGlvbi4KaW5pdF9tZXJnZV90b29sX3Bh
-dGgoKSB7CgltZXJnZV90b29sX3BhdGg9JChnaXQgY29uZmlnIG1lcmdldG9vbC4iJDEiLnBhdGgp
-CglpZiB0ZXN0IC16ICIkbWVyZ2VfdG9vbF9wYXRoIjsgdGhlbgoJCWNhc2UgIiQxIiBpbgoJCWVt
-ZXJnZSkKCQkJbWVyZ2VfdG9vbF9wYXRoPWVtYWNzCgkJCTs7CgkJKikKCQkJbWVyZ2VfdG9vbF9w
-YXRoPSIkMSIKCQkJOzsKCQllc2FjCglmaQp9CgojIEFsbG93IHRoZSBHSVRfTUVSR0VfVE9PTCB2
-YXJpYWJsZSB0byBwcm92aWRlIGEgZGVmYXVsdCB2YWx1ZQp0ZXN0IC1uICIkR0lUX01FUkdFX1RP
-T0wiICYmIG1lcmdlX3Rvb2w9IiRHSVRfTUVSR0VfVE9PTCIKCiMgSWYgbm90IG1lcmdlIHRvb2wg
-d2FzIHNwZWNpZmllZCB0aGVuIHVzZSB0aGUgbWVyZ2UudG9vbAojIGNvbmZpZ3VyYXRpb24gdmFy
-aWFibGUuICBJZiB0aGF0J3MgaW52YWxpZCB0aGVuIHJlc2V0IG1lcmdlX3Rvb2wuCmlmIHRlc3Qg
-LXogIiRtZXJnZV90b29sIjsgdGhlbgoJbWVyZ2VfdG9vbD0kKGdpdCBjb25maWcgbWVyZ2UudG9v
-bCkKCWlmIHRlc3QgLW4gIiRtZXJnZV90b29sIiAmJiAhIHZhbGlkX3Rvb2wgIiRtZXJnZV90b29s
-IjsgdGhlbgoJCWVjaG8gPiYyICJnaXQgY29uZmlnIG9wdGlvbiBtZXJnZS50b29sIHNldCB0byB1
-bmtub3duIHRvb2w6ICRtZXJnZV90b29sIgoJCWVjaG8gPiYyICJSZXNldHRpbmcgdG8gZGVmYXVs
-dC4uLiIKCQl1bnNldCBtZXJnZV90b29sCglmaQpmaQoKIyBUcnkgdG8gZ3Vlc3MgYW4gYXBwcm9w
-cmlhdGUgbWVyZ2UgdG9vbCBpZiBubyB0b29sIGhhcyBiZWVuIHNldC4KaWYgdGVzdCAteiAiJG1l
-cmdlX3Rvb2wiOyB0aGVuCgoJIyBXZSBoYXZlIGEgJERJU1BMQVkgc28gdHJ5IHNvbWUgY29tbW9u
-IFVOSVggbWVyZ2UgdG9vbHMKCWlmIHRlc3QgLW4gIiRESVNQTEFZIjsgdGhlbgoJCW1lcmdlX3Rv
-b2xfY2FuZGlkYXRlcz0ia2RpZmYzIHRrZGlmZiB4eGRpZmYgbWVsZCBndmltZGlmZiIKCQkjIElm
-IGdub21lIHRoZW4gcHJlZmVyIG1lbGQKCQlpZiB0ZXN0IC1uICIkR05PTUVfREVTS1RPUF9TRVNT
-SU9OX0lEIjsgdGhlbgoJCQltZXJnZV90b29sX2NhbmRpZGF0ZXM9Im1lbGQgJG1lcmdlX3Rvb2xf
-Y2FuZGlkYXRlcyIKCQlmaQoJCSMgSWYgS0RFIHRoZW4gcHJlZmVyIGtkaWZmMwoJCWlmIHRlc3Qg
-IiRLREVfRlVMTF9TRVNTSU9OIiA9ICJ0cnVlIjsgdGhlbgoJCQltZXJnZV90b29sX2NhbmRpZGF0
-ZXM9ImtkaWZmMyAkbWVyZ2VfdG9vbF9jYW5kaWRhdGVzIgoJCWZpCglmaQoKCSMgJEVESVRPUiBp
-cyBlbWFjcyBzbyBhZGQgZW1lcmdlIGFzIGEgY2FuZGlkYXRlCglpZiBlY2hvICIke1ZJU1VBTDot
-JEVESVRPUn0iIHwgZ3JlcCAnZW1hY3MnID4gL2Rldi9udWxsIDI+JjE7IHRoZW4KCQltZXJnZV90
-b29sX2NhbmRpZGF0ZXM9IiRtZXJnZV90b29sX2NhbmRpZGF0ZXMgZW1lcmdlIgoJZmkKCgkjICRF
-RElUT1IgaXMgdmltIHNvIGFkZCB2aW1kaWZmIGFzIGEgY2FuZGlkYXRlCglpZiBlY2hvICIke1ZJ
-U1VBTDotJEVESVRPUn0iIHwgZ3JlcCAndmltJyA+IC9kZXYvbnVsbCAyPiYxOyB0aGVuCgkJbWVy
-Z2VfdG9vbF9jYW5kaWRhdGVzPSIkbWVyZ2VfdG9vbF9jYW5kaWRhdGVzIHZpbWRpZmYiCglmaQoK
-CW1lcmdlX3Rvb2xfY2FuZGlkYXRlcz0iJG1lcmdlX3Rvb2xfY2FuZGlkYXRlcyBvcGVuZGlmZiBl
-bWVyZ2UgdmltZGlmZiIKCWVjaG8gIm1lcmdlIHRvb2wgY2FuZGlkYXRlczogJG1lcmdlX3Rvb2xf
-Y2FuZGlkYXRlcyIKCgkjIExvb3Agb3ZlciBlYWNoIGNhbmRpZGF0ZSBhbmQgc3RvcCB3aGVuIGEg
-dmFsaWQgbWVyZ2UgdG9vbCBpcyBmb3VuZC4KCWZvciBpIGluICRtZXJnZV90b29sX2NhbmRpZGF0
-ZXMKCWRvCgkJaW5pdF9tZXJnZV90b29sX3BhdGggJGkKCQlpZiB0eXBlICIkbWVyZ2VfdG9vbF9w
-YXRoIiA+IC9kZXYvbnVsbCAyPiYxOyB0aGVuCgkJCW1lcmdlX3Rvb2w9JGkKCQkJYnJlYWsKCQlm
-aQoJZG9uZQoKCWlmIHRlc3QgLXogIiRtZXJnZV90b29sIiA7IHRoZW4KCQllY2hvICJObyBrbm93
-biBtZXJnZSByZXNvbHV0aW9uIHByb2dyYW0gYXZhaWxhYmxlLiIKCQlleGl0IDEKCWZpCgplbHNl
-CgkjIEEgbWVyZ2UgdG9vbCBoYXMgYmVlbiBzZXQsIHNvIHZlcmlmeSB0aGF0IGl0J3MgdmFsaWQu
-CglpZiAhIHZhbGlkX3Rvb2wgIiRtZXJnZV90b29sIjsgdGhlbgoJCWVjaG8gPiYyICJVbmtub3du
-IG1lcmdlIHRvb2wgJG1lcmdlX3Rvb2wiCgkJZXhpdCAxCglmaQoKCWluaXRfbWVyZ2VfdG9vbF9w
-YXRoICIkbWVyZ2VfdG9vbCIKCglpZiB0ZXN0IC16ICIkbWVyZ2VfdG9vbF9jbWQiICYmICEgdHlw
-ZSAiJG1lcmdlX3Rvb2xfcGF0aCIgPiAvZGV2L251bGwgMj4mMTsgdGhlbgoJCWVjaG8gIlRoZSBt
-ZXJnZSB0b29sICRtZXJnZV90b29sIGlzIG5vdCBhdmFpbGFibGUgYXMgJyRtZXJnZV90b29sX3Bh
-dGgnIgoJCWV4aXQgMQoJZmkKZmkKCgojIExhdW5jaCB0aGUgbWVyZ2UgdG9vbCBoZWxwZXIgb24g
-ZWFjaCBwYXRoIHBhc3NlZCB0byB1cyBieSAnZ2l0IGRpZmYnCndoaWxlIHRlc3QgJCMgLWd0IDYK
-ZG8KCWxhdW5jaF9tZXJnZV90b29sICIkMSIgIiQyIiAiJDUiCglzaGlmdCA3CmRvbmUK
-------=_Part_163317_20665710.1230917974615--
+1.6.1.rc3.224.g95ac9
