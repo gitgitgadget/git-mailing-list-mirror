@@ -1,49 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
-Date: Fri, 2 Jan 2009 13:51:38 -0500
-Message-ID: <20090102185137.GA9129@coredump.intra.peff.net>
-References: <20081104004001.GB29458@artemis.corp> <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de> <20081104083042.GB3788@artemis.corp> <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <alpine.LFD.2.00.0901011151440.5086@localhost.localdomain> <alpine.DEB.1.00.0901021914420.30769@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: why still no empty directory support in git
+Date: Fri, 2 Jan 2009 19:55:48 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901021954410.30769@pacific.mpi-cbg.de>
+References: <46dff0320812291942y6aeec941k9394586621e9151b@mail.gmail.com> <alpine.DEB.2.00.0812300008060.31590@vellum.laroia.net> <alpine.DEB.2.00.0812300113050.22107@vellum.laroia.net> <9b18b3110812300043l55a42f6sd995f36bf857543e@mail.gmail.com>
+ <alpine.DEB.2.00.0812300346040.19911@vellum.laroia.net> <20090101200651.GB6536@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 02 19:53:09 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Asheesh Laroia <asheesh@asheesh.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 02 19:56:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIp8o-0008MQ-TI
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 19:53:03 +0100
+	id 1LIpCN-00013K-W7
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 19:56:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758215AbZABSvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 13:51:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758194AbZABSvl
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 13:51:41 -0500
-Received: from peff.net ([208.65.91.99]:3302 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758133AbZABSvl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 13:51:41 -0500
-Received: (qmail 18998 invoked by uid 111); 2 Jan 2009 18:51:39 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 02 Jan 2009 13:51:39 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Jan 2009 13:51:38 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901021914420.30769@pacific.mpi-cbg.de>
+	id S1757281AbZABSzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 13:55:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755325AbZABSzW
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 13:55:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39080 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751741AbZABSzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 13:55:22 -0500
+Received: (qmail invoked by alias); 02 Jan 2009 18:55:19 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp071) with SMTP; 02 Jan 2009 19:55:19 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/A8bYiIhvAuWQLnBF9XItYvDrN49aY4fI+gR+Jpq
+	8jFbJLDHculvcp
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090101200651.GB6536@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104404>
 
-On Fri, Jan 02, 2009 at 07:17:34PM +0100, Johannes Schindelin wrote:
+Hi,
 
-> BTW the "-p" is not necessary with "show", indeed, you cannot even switch 
-> it off.
+On Thu, 1 Jan 2009, Jeff King wrote:
 
-Half true:
+> On Tue, Dec 30, 2008 at 03:58:46AM -0500, Asheesh Laroia wrote:
+> 
+> > So, let's say I take your suggestion.
+> >
+> > $ touch ~/Maildir/new/.exists
+> > $ git add ~/Maildir/new/.exists && git commit -m "La di da"
+> >
+> > Now a spec-compliant Maildir user agent will attempt to deliver this new  
+> > "email message" of zero bytes into the mail spool and assign it a message  
+> > UID.  Doing so will remove it from Maildir/new.
+> 
+> No. The maildir spec says:
+> 
+>   A unique name can be anything that doesn't contain a colon (or slash)
+>   and doesn't start with a dot.
+>      -- http://cr.yp.to/proto/maildir.html
+> 
+> where a "unique name" is the filename used for a message. In practice,
+> every maildir implementation I have seen ignores files starting with a
+> dot. Do you have one that doesn't?
 
-  $ git grep -A1 '"-s"' diff.c
-  diff.c: else if (!strcmp(arg, "-s"))
-  diff.c-         options->output_format |= DIFF_FORMAT_NO_OUTPUT;
+For the record, I am using Git to manage my mails, and never had any 
+problems after installing a hook which marks new empty directories with 
+.gitignore.
 
--Peff
+Ciao,
+Dscho
