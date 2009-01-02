@@ -1,66 +1,71 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: git-difftool
-Date: Fri, 2 Jan 2009 01:13:31 +0100
-Message-ID: <200901020113.32082.markus.heidelberg@web.de>
-References: <20081226013021.GA15414@gmail.com> <402731c90812311211p548c49d3p100f79ddee7163b0@mail.gmail.com> <vpq8wpux61c.fsf@bauges.imag.fr>
-Reply-To: markus.heidelberg@web.de
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [PATCH] Documentation/git-merge: at least one <remote> not two
+Date: Fri, 2 Jan 2009 00:25:34 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrnglqnnu.tht.sitaramc@sitaramc.homelinux.net>
+References: <87d4f6vph7.fsf@jidanni.org>
+ <7vk59ehg7l.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "David Aguilar" <davvid@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jan 02 01:14:43 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 02 01:28:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIXgY-0002Ak-DJ
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 01:14:42 +0100
+	id 1LIXtq-00052v-GO
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 01:28:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755541AbZABANT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jan 2009 19:13:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755483AbZABANT
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 19:13:19 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:50463 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751081AbZABANT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jan 2009 19:13:19 -0500
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 2A83AF87822E;
-	Fri,  2 Jan 2009 01:13:16 +0100 (CET)
-Received: from [89.59.70.163] (helo=pluto)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #273)
-	id 1LIXfB-0008Ue-00; Fri, 02 Jan 2009 01:13:17 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <vpq8wpux61c.fsf@bauges.imag.fr>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX18QRhFdebHdwDiZUyGrvp2lpMoghg6hcQ1uAdN3
-	WQ/e8WFen7iCzGyNhvwnIi+S/UNpPsPuTkCtVAWipP25U3yxoH
-	8aPms1TKkQoAN1k1GdhQ==
+	id S1753297AbZABAZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jan 2009 19:25:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751813AbZABAZ4
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 19:25:56 -0500
+Received: from main.gmane.org ([80.91.229.2]:41027 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751107AbZABAZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jan 2009 19:25:55 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LIXrK-0006nl-4H
+	for git@vger.kernel.org; Fri, 02 Jan 2009 00:25:50 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Jan 2009 00:25:50 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Jan 2009 00:25:50 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104349>
 
-Matthieu Moy, 01.01.2009:
-> "David Aguilar" <davvid@gmail.com> writes:
-> 
-> > Hmm... in theory, yes, but in practice, no.
-> > xxdiff is too gimp to handle what 'git diff' hands it =)
-> 
-> As done with "vimdiff" in another message, simply write a one-liner
-> wrapper script that calls xxdiff $2 $3, and call this wrapper script.
+On 2009-01-01, Junio C Hamano <gitster@pobox.com> wrote:
+>  * Is it a good idea to standardize on "one or more" semantics?  I suspect
+>    we would rather want to standardize on "zero or more", because it would
+>    be more natural to say:
+>
+>     $ git diff [--] <paths>...
+>
+>    to mean "You can give paths if you want to but you do not have to".  If
+>    ellipses meant "one or more", you have to say this instead:
+>
+>     $ git diff [--] [<paths>...]
 
-This works with GUI tools, but not with console tools. GVim works, Vim
-doesn't.
-And invoking
-    git difftool
-is by far more convenient than
-    GIT_EXTERNAL_DIFF=vimdiff git diff
+For what it is worth, I have always understood "..." to mean
+"more of the preceding", meaning "one or more".  That is
+your first example above.
 
-Markus
+Zero or more is your second syntax above, because the whole
+thing is in brackets, and hence completely optional.
+
+In regex terms (to me anyway):
+
+a?      ==  [a]
+a+      ==  a...
+a*      ==  [a...]
