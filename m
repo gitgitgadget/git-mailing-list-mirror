@@ -1,79 +1,97 @@
-From: "David Aguilar" <davvid@gmail.com>
-Subject: Re: git-branch --print-current
-Date: Thu, 1 Jan 2009 20:26:29 -0800
-Message-ID: <402731c90901012026j470f35ffj1eaa189a837054f3@mail.gmail.com>
-References: <quack.20090101T1928.lthzliaqtdf@roar.cs.berkeley.edu>
+From: "Caleb Cushing" <xenoterracide@gmail.com>
+Subject: Re: git has modified files after clean checkout
+Date: Fri, 2 Jan 2009 00:49:40 -0500
+Message-ID: <81bfc67a0901012149u23c8c9avb6f47817a56750c7@mail.gmail.com>
+References: <81bfc67a0812311223g2b6e8476y84b23c19977dfd10@mail.gmail.com>
+	 <402731c90812311541v28ac9617ge52e0e5c0f1298d2@mail.gmail.com>
+	 <81bfc67a0901010048l7a4a8fa1h42f7cd448dfc704@mail.gmail.com>
+	 <200901012048.13630.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Git mailing list" <git@vger.kernel.org>
-To: "Karl Chen" <quarl@cs.berkeley.edu>
-X-From: git-owner@vger.kernel.org Fri Jan 02 05:28:01 2009
+Cc: "David Aguilar" <davvid@gmail.com>, git@vger.kernel.org
+To: "Thomas Rast" <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jan 02 06:51:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIbdg-0000Yn-Er
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 05:28:00 +0100
+	id 1LIcw6-0004yX-Bp
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 06:51:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755541AbZABE0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jan 2009 23:26:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754658AbZABE0c
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 23:26:32 -0500
-Received: from rv-out-0506.google.com ([209.85.198.224]:38049 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750911AbZABE0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jan 2009 23:26:31 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so5784475rvb.1
-        for <git@vger.kernel.org>; Thu, 01 Jan 2009 20:26:29 -0800 (PST)
+	id S1751228AbZABFtp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 00:49:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbZABFto
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 00:49:44 -0500
+Received: from fk-out-0910.google.com ([209.85.128.189]:17624 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751095AbZABFtn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 00:49:43 -0500
+Received: by fk-out-0910.google.com with SMTP id 18so3127409fkq.5
+        for <git@vger.kernel.org>; Thu, 01 Jan 2009 21:49:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=6JJlRGgPg4QafMlpyhL8c52YN4p5ZKD/MsSA27NE2Ls=;
-        b=yEptN1MbdRfq0tLNfrLrIzxqGZMDhXHK56X8yn/neN2QhQMuY4iCOnhd83/DBBpBQ/
-         swuXIhS26cPkEuGcNmdNDepV3PadIJqWmqYG5H1eNX2PrV/dJ5uTDgSr/8P7pL+5U1la
-         og+svS2RvmDwDr5/iMiiA1475ML9waTV0bmWg=
+        bh=BcXpjdv3+JHh2AKTC8joG9m0mikX5mcqDRvR9IYeu94=;
+        b=xJfy2tcJqmnnwmM4Hxbq9OiRDB//9I9vCvvOH/7jPgxpVZiNFooBqKKs/Nx0OGbPpo
+         Ib7jGrWTEBYdDw9KVaYADh1SVTVbWXRA7tj1DbjuEfrm0vtHO8zv4wna/MFU34y8kc4k
+         3/yOiyIhcww8M18AIinWGRTru9TEaF7OzKGjo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=p1NtTOMMGVeEzpbG9nm7bj9ZNjIxdqnlYXBcXUh3crAObHNyw6rouQG9QAbRmzG7nt
-         Nql60SIAm1d8s1No2qh5ZCwWdBzaZdcKW98HuN3UWodokqgSk+I0bRq5O+/4JLYVhBQs
-         81s4qNV/TQOmNsh7ZV47W6+hhXzH8ELQBmHQk=
-Received: by 10.142.125.9 with SMTP id x9mr7181134wfc.85.1230870389459;
-        Thu, 01 Jan 2009 20:26:29 -0800 (PST)
-Received: by 10.142.241.20 with HTTP; Thu, 1 Jan 2009 20:26:29 -0800 (PST)
-In-Reply-To: <quack.20090101T1928.lthzliaqtdf@roar.cs.berkeley.edu>
+        b=f4NRP0p/Q4LpYFw4TPm6Ga41p5DTPOXgQAIelemm7jtwDnQkfyplZSR3KD9KSeYjZT
+         O0ocl1QOH+VdnaPlFBhm0Y9Wx8pqf5k8O/lPIDaO2sG6Uei22VvkvUCBwTzy+sV0Pz8E
+         ezJQLV/h+wE3coYYZlKZ6WsUPxW1lVdEGhQeA=
+Received: by 10.223.113.194 with SMTP id b2mr12573179faq.80.1230875380999;
+        Thu, 01 Jan 2009 21:49:40 -0800 (PST)
+Received: by 10.223.107.205 with HTTP; Thu, 1 Jan 2009 21:49:40 -0800 (PST)
+In-Reply-To: <200901012048.13630.trast@student.ethz.ch>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104359>
 
-On Thu, Jan 1, 2009 at 7:28 PM, Karl Chen <quarl@cs.berkeley.edu> wrote:
+> Do you have any .gitattributes?  A few days ago, ludde on IRC bumped
+>  into the problem that git-checkout applies the .gitattributes that are
+>  present in the tree *before* the checkout.  Naturally this means that
+>  the .gitattributes do not apply at all during the first checkout at
+>  the end of cloning.  In ludde's case, this caused git-blame to think
+>  the file had all line endings changed compared to the index version.
 >
-> How about an option to git-branch that just prints the name of
-> the current branch for scripts' sake?  To replace:
->
->    git branch --no-color 2>/dev/null | perl -ne '/^[*] (.*)/ && print $1'
+no, no .gitattributes to my knowledge (file doesn't exist). but it's
+not just during the first checkout.
 
+# On branch regen2
+# Your branch is ahead of 'funtoo/funtoo.org' by 1 commit.
+#
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#       modified:   app-admin/petrovich/files/petrovich-1.0.0-gentoo.diff
+#       modified:   app-cdr/mode2cdmaker/files/mode2cdmaker-1.5.1-gentoo.patch
+#       modified:   app-crypt/mhash/files/mhash-0.9.9-mutils-align.patch
+#       modified:   app-crypt/rainbowcrack/files/rainbowcrack-1.2+gcc-4.3.patch
+#       modified:   app-crypt/rainbowcrack/files/rainbowcrack-1.2-share.patch
+#       modified:   app-crypt/rainbowcrack/files/rainbowcrack-1.2-types.patch
+#       modified:   app-editors/leo/files/leoConfig.py.patch
+#       modified:
+app-emacs/aspectj4emacs/files/aspectj4emacs-1.1_beta2-browse-url-new-window-gentoo.patch
+#       modified:
+app-emacs/aspectj4emacs/files/aspectj4emacs-1.1_beta2-compile-log-gentoo.patch
+...
+that continues on for a while, all that was done was a git pull funtoo
+funtoo.org
 
-The justification I've heard before is that 'git branch' is a
-porcelain and thus we shouldn't rely on its output for scripting
-purposes.
-
-You might want to use 'git symbolic-ref' instead.
-
-$ git symbolic-ref HEAD
-refs/heads/master
-
-$ git symbolic-ref HEAD | sed -e 's,refs/heads/,,'
-master
+I haven't had time to test 1.6.1 yet
 
 
 -- 
-    David
+Caleb Cushing
+
+http://xenoterracide.blogspot.com
