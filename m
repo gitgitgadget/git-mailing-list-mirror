@@ -1,41 +1,66 @@
-From: jidanni@jidanni.org
-Subject: Re: [PATCH] Documentation/git-bundle.txt: Dumping contents of any bundle
-Date: Fri, 02 Jan 2009 08:10:30 +0800
-Message-ID: <878wputvnt.fsf@jidanni.org>
-References: <20090101234815.GA9049@coredump.intra.peff.net>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: git-difftool
+Date: Fri, 2 Jan 2009 01:13:31 +0100
+Message-ID: <200901020113.32082.markus.heidelberg@web.de>
+References: <20081226013021.GA15414@gmail.com> <402731c90812311211p548c49d3p100f79ddee7163b0@mail.gmail.com> <vpq8wpux61c.fsf@bauges.imag.fr>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: johannes.schindelin@gmx.de, nico@cam.org, gitster@pobox.com,
-	mdl123@verizon.net, spearce@spearce.org, git@vger.kernel.org
-To: peff@peff.net
-X-From: git-owner@vger.kernel.org Fri Jan 02 01:12:01 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "David Aguilar" <davvid@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jan 02 01:14:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIXds-0001eN-KV
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 01:11:57 +0100
+	id 1LIXgY-0002Ak-DJ
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 01:14:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751536AbZABAKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jan 2009 19:10:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751107AbZABAKf
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 19:10:35 -0500
-Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:58745 "EHLO
-	homiemail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750911AbZABAKe (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jan 2009 19:10:34 -0500
-Received: from jidanni.org (122-127-33-68.dynamic.hinet.net [122.127.33.68])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a1.g.dreamhost.com (Postfix) with ESMTP id A8205119DEA;
-	Thu,  1 Jan 2009 16:10:32 -0800 (PST)
+	id S1755541AbZABANT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jan 2009 19:13:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755483AbZABANT
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Jan 2009 19:13:19 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:50463 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751081AbZABANT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jan 2009 19:13:19 -0500
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 2A83AF87822E;
+	Fri,  2 Jan 2009 01:13:16 +0100 (CET)
+Received: from [89.59.70.163] (helo=pluto)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #273)
+	id 1LIXfB-0008Ue-00; Fri, 02 Jan 2009 01:13:17 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <vpq8wpux61c.fsf@bauges.imag.fr>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18QRhFdebHdwDiZUyGrvp2lpMoghg6hcQ1uAdN3
+	WQ/e8WFen7iCzGyNhvwnIi+S/UNpPsPuTkCtVAWipP25U3yxoH
+	8aPms1TKkQoAN1k1GdhQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104348>
 
-JK> diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
-OK, I wish you luck in the fruition of the new --dump-delta option, and
-can proofread the man pages involved, otherwise this is no area for
-junior programmer me.
+Matthieu Moy, 01.01.2009:
+> "David Aguilar" <davvid@gmail.com> writes:
+> 
+> > Hmm... in theory, yes, but in practice, no.
+> > xxdiff is too gimp to handle what 'git diff' hands it =)
+> 
+> As done with "vimdiff" in another message, simply write a one-liner
+> wrapper script that calls xxdiff $2 $3, and call this wrapper script.
+
+This works with GUI tools, but not with console tools. GVim works, Vim
+doesn't.
+And invoking
+    git difftool
+is by far more convenient than
+    GIT_EXTERNAL_DIFF=vimdiff git diff
+
+Markus
