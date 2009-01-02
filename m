@@ -1,82 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git-difftool
-Date: Fri, 02 Jan 2009 17:10:44 +0100
-Message-ID: <vpq63kxofi3.fsf@bauges.imag.fr>
-References: <20081226013021.GA15414@gmail.com>
-	<402731c90812311211p548c49d3p100f79ddee7163b0@mail.gmail.com>
-	<vpq8wpux61c.fsf@bauges.imag.fr>
-	<200901020113.32082.markus.heidelberg@web.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
+Date: Fri, 2 Jan 2009 08:42:04 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0901020833000.5086@localhost.localdomain>
+References: <20081104004001.GB29458@artemis.corp> <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de> <20081104083042.GB3788@artemis.corp> <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp>
+ <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <20090101204652.GA26128@chistera.yi.org> <alpine.LFD.2.00.0901011747010.5086@localhost.localdomain> <20090102105537.GA14691@localhost>
+ <20090102105856.GB14691@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "David Aguilar" <davvid@gmail.com>, git@vger.kernel.org
-To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Fri Jan 02 17:16:05 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?ISO-8859-15?Q?Adeodato_Sim=F3?= <dato@net.com.org.es>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pierre Habouzit <madcoder@debian.org>, davidel@xmailserver.org,
+	Francis Galiegue <fg@one2team.net>,
+	Git ML <git@vger.kernel.org>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Fri Jan 02 17:44:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LImgs-0007x4-Vu
-	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 17:16:03 +0100
+	id 1LIn8G-0007yv-Em
+	for gcvg-git-2@gmane.org; Fri, 02 Jan 2009 17:44:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756540AbZABQOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 11:14:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753356AbZABQOk
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 11:14:40 -0500
-Received: from imag.imag.fr ([129.88.30.1]:52606 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751839AbZABQOj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 11:14:39 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n02GAiTS018836
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 2 Jan 2009 17:10:45 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LImbk-0002U3-D1; Fri, 02 Jan 2009 17:10:44 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LImbk-0005Ki-Ah; Fri, 02 Jan 2009 17:10:44 +0100
-In-Reply-To: <200901020113.32082.markus.heidelberg@web.de> (Markus Heidelberg's message of "Fri\, 2 Jan 2009 01\:13\:31 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 02 Jan 2009 17:10:45 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756989AbZABQm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 11:42:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756811AbZABQm6
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 11:42:58 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:53377 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756667AbZABQm5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Jan 2009 11:42:57 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n02Gg6Sc020218
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 2 Jan 2009 08:42:07 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n02Gg4tc003498;
+	Fri, 2 Jan 2009 08:42:04 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <20090102105856.GB14691@localhost>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.924 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104386>
 
-Markus Heidelberg <markus.heidelberg@web.de> writes:
 
-> Matthieu Moy, 01.01.2009:
->> "David Aguilar" <davvid@gmail.com> writes:
->> 
->> > Hmm... in theory, yes, but in practice, no.
->> > xxdiff is too gimp to handle what 'git diff' hands it =)
->> 
->> As done with "vimdiff" in another message, simply write a one-liner
->> wrapper script that calls xxdiff $2 $3, and call this wrapper script.
+
+On Fri, 2 Jan 2009, Clemens Buchacher wrote:
 >
-> This works with GUI tools, but not with console tools.
+> Only two choices, and I still get it wrong. The diffs should be labeled the
+> other way around, of course.
 
-Actually, it does if you call git --no-pager.
+Yes, this one is a real patience diff change, but it's also the same one 
+that I've seen in the google fanboi findings. What google did _not_ show 
+was any real-life examples, or anybody doing any critical analysis.
 
-> GVim works, Vim
-> doesn't.
-> And invoking
->     git difftool
-> is by far more convenient than
->     GIT_EXTERNAL_DIFF=vimdiff git diff
+So I was hoping for something else than a single "in this case patience 
+diff works really well". I was hoping to see what it does in real life. 
+But when I tried it on the kernel archive, I get a core dump.
 
-Right, but a script "git-difftool" calling the later is a one-liner,
-so 2 one-liners give you the same result as the ~500 lines script
-proposed. And GIT_EXTERNAL_DIFF has the great advantage of being
-maintained together with git, and will most likely handle all cases
-(diff between index, working tree, arbitrary commit, ...) correctly.
+For example, in real life, files are bigger, and unique lines are not 
+necessarily always common (generated files, whatever). Depending on unique 
+line ordering may work fine in 95% of all cases, but do you know that it 
+works fine in general? Does it work when 50% of lines are unique? I 
+believe it does. Does ti work when just 1% of lines are unique? I just 
+don't know.
 
--- 
-Matthieu
+And I haven't seen _any_ real critical analysis of it. Anywhere.
+
+			Linus
