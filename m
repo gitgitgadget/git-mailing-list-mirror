@@ -1,57 +1,57 @@
-From: jidanni@jidanni.org
-Subject: git-fast-export bundle doc
-Date: Sat, 03 Jan 2009 08:52:35 +0800
-Message-ID: <87r63lus6k.fsf@jidanni.org>
+From: david@lang.hm
+Subject: Re: how to track the history of a line in a file
+Date: Fri, 2 Jan 2009 18:05:45 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0901021805100.21567@asgard.lang.hm>
+References: <alpine.DEB.1.10.0901021405460.21567@asgard.lang.hm> <7vvdsxb9oh.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.10.0901021658330.21567@asgard.lang.hm> <200901030107.07228.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 03 01:54:02 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Jan 03 02:06:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIumA-0003ZQ-39
-	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 01:54:02 +0100
+	id 1LIuyP-0006Uk-NT
+	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 02:06:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758287AbZACAwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 19:52:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758247AbZACAwk
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 19:52:40 -0500
-Received: from mailbigip.dreamhost.com ([208.97.132.5]:58295 "EHLO
-	homiemail-a4.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750917AbZACAwj (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Jan 2009 19:52:39 -0500
-Received: from jidanni.org (122-127-35-226.dynamic.hinet.net [122.127.35.226])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a4.dreamhost.com (Postfix) with ESMTP id 3142C414C1
-	for <git@vger.kernel.org>; Fri,  2 Jan 2009 16:52:38 -0800 (PST)
+	id S1758321AbZACBDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 20:03:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758287AbZACBDq
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 20:03:46 -0500
+Received: from mail.lang.hm ([64.81.33.126]:53399 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750917AbZACBDq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 20:03:46 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n0313N6n024599;
+	Fri, 2 Jan 2009 17:03:23 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <200901030107.07228.trast@student.ethz.ch>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104450>
 
-Please improve git-fast-export.txt. It says
+On Sat, 3 Jan 2009, Thomas Rast wrote:
 
-       This program dumps the given revisions in a form suitable to be
-       piped into git-fast-import.
+> david@lang.hm wrote:
+>> On Fri, 2 Jan 2009, Junio C Hamano wrote:
+>>> You may find the --porcelain output format of git-blame useful to make
+>>> your script safer and more robust.
+>>
+>> where is this output defined? I can look at it and understand it, but I
+>> don't know what is guarenteeded to exist, what will be on a specific line,
+>> and what may vanish on me.
+>
+> man git-blame | less -p PORCELAIN\ FORMAT
 
-<revlist> isn't mentioned in the SYNOPSIS.
-And there is no hyperlink to the git-fast-import man page, nor in SEE ALSO.)
+thanks,
 
-       You can use it as a human readable bundle replacement (see
-       git-bundle(1))
+am I missing something else or will git blame with a regex only return 
+info on the first line it matches?
 
-But I tried it and there are apparently a few steps not mentioned that
-are needed after git-fast-import before you can actually see the files
-again on the other side of the sneakernet.
-
-I used --all, which is in EXAMPLES but not OPTIONS.
-
-Else nothing happens and no error is caught:
-$ git fast-export
-$
-
-Also the git-bundle man page should SEE ALSO git-fast-export and maybe
-even git-fast-import, which itself makes no mention of git-fast-export.
+David Lang
