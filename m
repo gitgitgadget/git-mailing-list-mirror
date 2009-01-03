@@ -1,134 +1,81 @@
-From: Henrik Austad <henrik@austad.us>
-Subject: Re: git checkout does not warn about tags without corresponding commits
-Date: Sat, 3 Jan 2009 13:37:00 +0100
-Message-ID: <200901031337.00166.henrik@austad.us>
-References: <200901021325.58049.henrik@austad.us> <200901031200.01883.henrik@austad.us> <7vr63k8vvf.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] unpack-trees: fix path search bug in verify_absent
+Date: Sat, 3 Jan 2009 13:53:50 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901031353090.30769@pacific.mpi-cbg.de>
+References: <1230843273-11056-1-git-send-email-drizzd@aon.at> <1230843273-11056-2-git-send-email-drizzd@aon.at> <1230843273-11056-3-git-send-email-drizzd@aon.at> <alpine.DEB.1.00.0901022248070.27818@racer> <20090103103904.GA4479@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 03 13:38:42 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sat Jan 03 13:54:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJ5m4-0007eU-71
-	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 13:38:40 +0100
+	id 1LJ61g-0002MA-Pv
+	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 13:54:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753218AbZACMhT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Jan 2009 07:37:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757832AbZACMhR
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jan 2009 07:37:17 -0500
-Received: from cassarossa.samfundet.no ([129.241.93.19]:53596 "EHLO
-	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753158AbZACMhP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jan 2009 07:37:15 -0500
-Received: from asterix.samfundet.no
-	([2001:700:300:1800::f] helo=asterix.frsk.net ident=Debian-exim)
-	by cassarossa.samfundet.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <henrik@austad.us>)
-	id 1LJ5kY-0002TB-Dq; Sat, 03 Jan 2009 13:37:06 +0100
-Received: from vpn249.uninett.no ([158.38.64.249])
-	by asterix.frsk.net with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <henrik@austad.us>)
-	id 1LJ5kY-0002k4-2P; Sat, 03 Jan 2009 13:37:06 +0100
-User-Agent: KMail/1.9.10
-In-Reply-To: <7vr63k8vvf.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753158AbZACMxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Jan 2009 07:53:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbZACMxX
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jan 2009 07:53:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41398 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751124AbZACMxW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Jan 2009 07:53:22 -0500
+Received: (qmail invoked by alias); 03 Jan 2009 12:53:19 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp070) with SMTP; 03 Jan 2009 13:53:19 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18GxiEY6h0G0pVzFBJ2Dhv4eWf+Zuqy2xEp3+oN6Y
+	mwpSH9z4Ub7IPu
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090103103904.GA4479@localhost>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104466>
 
-On Saturday 03 January 2009 12:36:04 Junio C Hamano wrote:
-> Henrik Austad <henrik@austad.us> writes:
-> > On Friday 02 January 2009 22:44:50 Junio C Hamano wrote:
-> >> Henrik Austad <henrik@austad.us> writes:
-> >> > I recently tried to do a checkout of (what I thought was the first)
-> >> > inux kernel in the linux git repo.
-> >> >
-> >> > git checkout -b 2.6.11 v2.6.11
-> >>
-> >> This should have barfed, and indeed I think it is a regression around
-> >> v1.5.5.  v1.5.4 and older git definitely fails to check out a tree
-> >> object like that.
-> >
-> > You're right, I bisected it down to commit
-> > 782c2d65c24066a5d83453efb52763bc34c10f81
->
-> I am not surprised.
->
-> That one discarded an implementation of "git checkout" in Bourne shell,
-> with a complete reimplementation in C.
->
-> I haven't looked at the code very closely, but I think this should fix
-> it.  Thorough reviewing (not just running the test suite) is much
-> appreciated.
->
-> -- >8 --
-> Subject: git-checkout: do not allow switching to a tree-ish
->
-> "git checkout -b newbranch $commit^{tree}" mistakenly created a new branch
-> rooted at the current HEAD, because in that case, the two structure fields
-> used to see if the command was invoked without any argument (hence it
-> needs to default to checking out the HEAD), were populated incorrectly.
->
-> Upon seeing a command line argument that we took as a rev, we should store
-> that string in new.name, even if that does not name a commit.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  builtin-checkout.c               |    2 +-
->  t/t2011-checkout-invalid-head.sh |    4 ++++
->  2 files changed, 5 insertions(+), 1 deletions(-)
->
-> diff --git c/builtin-checkout.c w/builtin-checkout.c
-> index c2c0561..b5dd9c0 100644
-> --- c/builtin-checkout.c
-> +++ w/builtin-checkout.c
-> @@ -681,8 +681,8 @@ int cmd_checkout(int argc, const char **argv, const
-> char *prefix) argv++;
->  		argc--;
->
-> +		new.name = arg;
->  		if ((new.commit = lookup_commit_reference_gently(rev, 1))) {
-> -			new.name = arg;
->  			setup_branch_path(&new);
->  			if (resolve_ref(new.path, rev, 1, NULL))
->  				new.commit = lookup_commit_reference(rev);
+Hi,
 
+On Sat, 3 Jan 2009, Clemens Buchacher wrote:
 
-this fixed my problem when i hacked this into master (git apply failed on the 
-patch, so I did a manual patch. Moving that line did the trick
+> On Fri, Jan 02, 2009 at 10:59:47PM +0100, Johannes Schindelin wrote:
+> > This explanation makes sense.  However, this:
+> > 
+> > > @@ -289,7 +289,8 @@ static int unpack_nondirectories(int n, unsigned long mask, unsigned long dirmas
+> > >  	return 0;
+> > >  }
+> > >  
+> > > -static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, struct name_entry *names, struct traverse_info *info)
+> > > +static int unpack_callback(int n, unsigned long mask, unsigned long dirmask,
+> > > +		struct name_entry *names, struct traverse_info *info)
+> > >  {
+> > >  	struct cache_entry *src[5] = { NULL, };
+> > >  	struct unpack_trees_options *o = info->data;
+> > 
+> > ... is distracting during review, and this:
+> > 
+> > > @@ -517,22 +518,22 @@ static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
+> > >  	namelen = strlen(ce->name);
+> > >  	pos = index_name_pos(o->src_index, ce->name, namelen);
+> > >  	if (0 <= pos)
+> > > -		return cnt; /* we have it as nondirectory */
+> > > +		return 0; /* we have it as nondirectory */
+> > >  	pos = -pos - 1;
+> > >  	for (i = pos; i < o->src_index->cache_nr; i++) {
+> > 
+> > ... is not accounted for in the commit message.  Intended or not, that is 
+> > the question.
+> 
+> Those are trivial readability improvements in the context of the patch.
 
-Acked-by/Signed-off-by Henrik Austad <henrik@austad.us>
+They are not trivial enough for me not to be puzzled.  Reason enough to 
+explain in the commit message?
 
-
-> diff --git c/t/t2011-checkout-invalid-head.sh
-> w/t/t2011-checkout-invalid-head.sh index 764bb0a..798790d 100755
-> --- c/t/t2011-checkout-invalid-head.sh
-> +++ w/t/t2011-checkout-invalid-head.sh
-> @@ -15,4 +15,8 @@ test_expect_success 'checkout master from invalid HEAD' '
->  	git checkout master --
->  '
->
-> +test_expect_success 'checkout should not start branch from a tree' '
-> +	test_must_fail git checkout -b newbranch master^{tree}
-> +'
-> +
->  test_done
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-
-
--- 
- -> henrik
+Ciao,
+Dscho
