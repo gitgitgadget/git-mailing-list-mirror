@@ -1,143 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Document that gitweb deals with bare repositories
-Date: Sat, 3 Jan 2009 14:23:28 +0100
-Message-ID: <200901031423.31305.jnareb@gmail.com>
-References: <9B3762519053E645820D9CEBD18B3734023A9FBA00@XEDAMAIL2.ex.ad3.ucdavis.edu> <6db6bed70812311027g3be1cfbei35c014243237fd59@mail.gmail.com> <200901012351.28864.jnareb@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 2/3] unpack-trees: fix path search bug in verify_absent
+Date: Sat, 3 Jan 2009 15:01:38 +0100
+Message-ID: <20090103140138.GX21154@genesis.frugalware.org>
+References: <1230843273-11056-1-git-send-email-drizzd@aon.at> <1230843273-11056-2-git-send-email-drizzd@aon.at> <1230843273-11056-3-git-send-email-drizzd@aon.at> <alpine.DEB.1.00.0812170605300.14632@racer> <20081216232452.GV5691@genesis.frugalware.org> <alpine.DEB.1.00.0901022244240.27818@racer>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Thomas Amsler" <tamsler@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 03 14:25:07 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="/OxAoNYcURhUkoHv"
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jan 03 15:03:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJ6V0-0000ez-AI
-	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 14:25:06 +0100
+	id 1LJ75l-0001is-85
+	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 15:03:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758357AbZACNXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Jan 2009 08:23:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757795AbZACNXn
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jan 2009 08:23:43 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:59183 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752453AbZACNXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jan 2009 08:23:42 -0500
-Received: by ewy10 with SMTP id 10so7127031ewy.13
-        for <git@vger.kernel.org>; Sat, 03 Jan 2009 05:23:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=M5l1IRLe8ALx/p9xwBEoFcXO75A8yJ1FvcLd66N7fns=;
-        b=Gh3K2hCfjq7bmS87zdvitWWG13ELx5kc+6lH0wxDi2Q3IyBsutoHnwOMc/xLYxf2gk
-         AN8RxHxpGIOVMS+jaxoAbjtT+c3yprvI9liG7Vg0GOUDS/5YR9JjOLGFiZOTMlYjfxv8
-         if+YujbyJJr5pCbX9ZgAO/Yc4Bz/tdTXDaJp8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=DRRPVHjU/MuWFjMAqV7U0x8O91bfoF7VpOLDKQiHB+AeCpGdsrlJtZwIJ0IpemJXYX
-         SV4qFA0bpnws3W0DhrioBONxWytCVWAu/RCVNtiFBAtH81oUxgqtRo0k7dP42hEl6NLw
-         BflzKGE/E4DGsR8BndiOdoDFoaMf5S/sv6QkM=
-Received: by 10.210.22.16 with SMTP id 16mr8301531ebv.68.1230989019571;
-        Sat, 03 Jan 2009 05:23:39 -0800 (PST)
-Received: from ?192.168.1.11? (abwk96.neoplus.adsl.tpnet.pl [83.8.234.96])
-        by mx.google.com with ESMTPS id k10sm53439332nfh.56.2009.01.03.05.23.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 03 Jan 2009 05:23:38 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200901012351.28864.jnareb@gmail.com>
+	id S1758865AbZACOBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Jan 2009 09:01:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758280AbZACOBn
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jan 2009 09:01:43 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:49044 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758773AbZACOBm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Jan 2009 09:01:42 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 937A3580D1;
+	Sat,  3 Jan 2009 15:01:41 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 29ADF4465E;
+	Sat,  3 Jan 2009 15:01:38 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 3F6CD11B8630; Sat,  3 Jan 2009 15:01:38 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0901022244240.27818@racer>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104468>
 
-Add reminders to gitweb/README and gitweb/INSTALL that gitweb works
-with bare repositories.  While it might be obvious to us, it is not
-apparently as evident for newcomers.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-On Thu, 1 Jan 2009, Jakub Narebski wrote:
+--/OxAoNYcURhUkoHv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> The longer explanation (which probably should made into gitweb/README
-> or gitweb/INSTALL) is that gitweb is meant to deal with _bare_ 
-> repositories; gitweb doesn't touch and doesn't examine working area
-> of "live" (non-bare) repository. If you host git repositories (like
-> kernel.org, freedesktop.org or repo.or.cz) you usually host them bare
-> (public repositories should be bare); but you might want to have
-> gitweb for your own repository too.
+On Fri, Jan 02, 2009 at 10:59:43PM +0100, Johannes Schindelin <Johannes.Sch=
+indelin@gmx.de> wrote:
+> Just for the record, this patch fixes the testcase Miklos reported=20
+> earlier.
 
-And here it is.
+Indeed, thanks for the notice.
 
-By the way, I was wondering if to mark this patch as an RFC, because
-I am not completely sure about the wording I used...
+--/OxAoNYcURhUkoHv
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
- gitweb/INSTALL |   14 ++++++++++++++
- gitweb/README  |   12 +++++++-----
- 2 files changed, 21 insertions(+), 5 deletions(-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index 18c9ce3..f43e233 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -127,6 +127,20 @@ GITWEB_CONFIG file:
- Gitweb repositories
- -------------------
- 
-+- Gitweb deals with bare repositories, which means that gitweb scans for
-+  (in the case where $projects_list is a directory to search for
-+  repositories) or has to be provided with list of (in the case where
-+  $projects_list is a text file) bare repositories, i.e. $GIT_DIR for
-+  each repository. The consequence of that is the fact that if you use
-+  gitweb to view non-bare repository named 'repo' then gitweb would show
-+  (or would have to be provided with) 'repo/.git'.
-+
-+  If you want to view a buch of non-bare repositories in gitweb but want
-+  them named 'repo.git' as is the standard for bare repositories, you
-+  can as a workaround populare $projectroot / $project_list with
-+  symbolic links to $GIT_DIR of each project you want to publish (have
-+  shown) in gitweb.
-+
- - By default all git repositories under projectroot are visible and
-   available to gitweb. The list of projects is generated by default by
-   scanning the projectroot directory for git repositories (for object
-diff --git a/gitweb/README b/gitweb/README
-index 825162a..6dbfcd5 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -34,10 +34,11 @@ You can specify the following configuration variables when building GIT:
-  * GITWEB_LIST
-    Points to a directory to scan for projects (defaults to project root
-    if not set / if empty) or to a file with explicit listing of projects
--   (together with projects' ownership). See "Generating projects list
--   using gitweb" in INSTALL file for gitweb to find out how to generate
--   such file from scan of a directory. [No default, which means use root
--   directory for projects]
-+   (together with projects' ownership). Note that gitweb deals with bare
-+   repositories; it shows/uses $GIT_DIR for each repository. See also
-+   "Generating projects list using gitweb" in INSTALL file for gitweb to
-+   find out how to generate such file from scan of a directory. 
-+   [No default, which means use root directory for projects]
-  * GITWEB_EXPORT_OK
-    Show repository only if this file exists (in repository).  Only
-    effective if this variable evaluates to true.  [No default / Not set]
-@@ -153,7 +154,8 @@ not include variables usually directly set during build):
-    Absolute filesystem path which will be prepended to project path;
-    the path to repository is $projectroot/$project.  Set to
-    $GITWEB_PROJECTROOT during installation.  This variable have to be
--   set correctly for gitweb to find repositories.
-+   set correctly for gitweb to find repositories.  (Note that gitweb deals
-+   with bare repositories.)
-  * $projects_list
-    Source of projects list, either directory to scan, or text file
-    with list of repositories (in the "<URI-encoded repository path> SP
--- 
-1.6.0.4
+iEYEARECAAYFAklfb8IACgkQe81tAgORUJYZKACgqmPY18Vsx/uTHP1hvkB4rhHN
+nhkAn3K/a1CUIigMvKsLZze8fjx9amNn
+=+CQe
+-----END PGP SIGNATURE-----
+
+--/OxAoNYcURhUkoHv--
