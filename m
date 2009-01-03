@@ -1,65 +1,66 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] fast-export: print usage when no options specified
-Date: Sat,  3 Jan 2009 04:59:12 +0100
-Message-ID: <1230955152-23646-1-git-send-email-vmiklos@frugalware.org>
-References: <87r63lus6k.fsf@jidanni.org>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	jidanni@jidanni.org, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 03 04:59:38 2009
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: "git reset --hard" == "git checkout HEAD" == "git reset --hard
+ HEAD" ???
+Date: Sat, 3 Jan 2009 06:02:21 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngltvrd.63u.sitaramc@sitaramc.homelinux.net>
+References: <20090102195724.GA23119@seberino.org>
+ <7v4p0hcp3w.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 03 07:04:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIxfm-0004JE-2J
-	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 04:59:38 +0100
+	id 1LIzcK-0005t8-C6
+	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 07:04:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752532AbZACD5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 22:57:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbZACD5V
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 22:57:21 -0500
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:39586 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751631AbZACD5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 22:57:21 -0500
-Received: from vmobile.example.net (catv-80-98-230-81.catv.broadband.hu [80.98.230.81])
-	by yugo.frugalware.org (Postfix) with ESMTPA id 4F78D446CE1;
-	Sat,  3 Jan 2009 04:57:17 +0100 (CET)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 37A3C19DB57; Sat,  3 Jan 2009 04:59:13 +0100 (CET)
-X-Mailer: git-send-email 1.6.1
-In-Reply-To: <87r63lus6k.fsf@jidanni.org>
+	id S1751286AbZACGCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Jan 2009 01:02:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750787AbZACGCi
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jan 2009 01:02:38 -0500
+Received: from main.gmane.org ([80.91.229.2]:52050 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750767AbZACGCi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Jan 2009 01:02:38 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LIzai-0006NM-Kj
+	for git@vger.kernel.org; Sat, 03 Jan 2009 06:02:32 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 03 Jan 2009 06:02:32 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 03 Jan 2009 06:02:32 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104454>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+On 2009-01-02, Junio C Hamano <gitster@pobox.com> wrote:
+> chris@seberino.org writes:
+>
+>> Does "git reset --hard" == "git checkout HEAD" == "git reset --hard HEAD" ???
+>
+> No, but "reset --hard" without a commit-ish defaults to HEAD so the first
+> one and the last one are equivalent.
+>
+>> It seems we have 2 ways to blow away work we haven't
+>> checked in yet then right?
+>
+> Wrong.
 
-I found that behaviour surprising as well when I saw it the first time.
-git rev-list outputs some usage info in that case, git log just logs
-HEAD. Given that unconditionally exporting HEAD with no arguments is
-probably not something most users want, here is a patch to make the
-behaviour like what git rev-list already has.
+Strictly as asked, yes, but what if he adds a "-f" to the
+middle command, making it "git checkout -f HEAD"?  Wouldn't
+that be the same as the others then?
 
- builtin-fast-export.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-fast-export.c b/builtin-fast-export.c
-index 8386338..e9ee2c7 100644
---- a/builtin-fast-export.c
-+++ b/builtin-fast-export.c
-@@ -497,6 +497,9 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
-+	if (argc == 1)
-+		usage_with_options (fast_export_usage, options);
-+
- 	/* we handle encodings */
- 	git_config(git_default_config, NULL);
- 
--- 
-1.6.1
+I always thought they were eqvt...
