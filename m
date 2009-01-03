@@ -1,110 +1,120 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git reset --hard" == "git checkout HEAD" == "git reset --hard
- HEAD" ???
-Date: Sat, 03 Jan 2009 02:15:37 -0800
-Message-ID: <7vprj4ae5y.fsf@gitster.siamese.dyndns.org>
-References: <20090102195724.GA23119@seberino.org>
- <7v4p0hcp3w.fsf@gitster.siamese.dyndns.org>
- <slrngltvrd.63u.sitaramc@sitaramc.homelinux.net>
+Subject: Re: What's cooking in git.git (Dec 2008, #04; Mon, 29)
+Date: Sat, 03 Jan 2009 02:31:02 -0800
+Message-ID: <7vhc4gadg9.fsf@gitster.siamese.dyndns.org>
+References: <7vocyt1is2.fsf@gitster.siamese.dyndns.org>
+ <200901030640.36426.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 03 11:17:14 2009
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Jan 03 11:32:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJ3Z9-0004O0-4Z
-	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 11:17:11 +0100
+	id 1LJ3o2-0007Tc-Ql
+	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 11:32:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756540AbZACKPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Jan 2009 05:15:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753013AbZACKPs
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jan 2009 05:15:48 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55071 "EHLO
+	id S1754203AbZACKbN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Jan 2009 05:31:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754005AbZACKbM
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Jan 2009 05:31:12 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55688 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752439AbZACKPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jan 2009 05:15:47 -0500
+	with ESMTP id S1753013AbZACKbL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Jan 2009 05:31:11 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9BF2D1BA95;
-	Sat,  3 Jan 2009 05:15:42 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 447A01BA98;
+	Sat,  3 Jan 2009 05:31:09 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 52A921BA94; Sat, 
- 3 Jan 2009 05:15:38 -0500 (EST)
-In-Reply-To: <slrngltvrd.63u.sitaramc@sitaramc.homelinux.net> (Sitaram
- Chamarty's message of "Sat, 3 Jan 2009 06:02:21 +0000 (UTC)")
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 00BD21BA95; Sat, 
+ 3 Jan 2009 05:31:04 -0500 (EST)
+In-Reply-To: <200901030640.36426.chriscool@tuxfamily.org> (Christian Couder's
+ message of "Sat, 3 Jan 2009 06:40:36 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7A42F402-D97F-11DD-9D44-EB51113D384A-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A295383C-D981-11DD-A328-EB51113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104458>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
->>> It seems we have 2 ways to blow away work we haven't
->>> checked in yet then right?
+> Le mardi 30 d=C3=A9cembre 2008, Junio C Hamano a =C3=A9crit :
 >>
->> Wrong.
+>> * cc/bisect-replace (Mon Nov 24 22:20:30 2008 +0100) 9 commits
+>>  - bisect: add "--no-replace" option to bisect without using replace
+>>    refs
+>>  - rev-list: make it possible to disable replacing using "--no-
+>>    bisect-replace"
+>>  - bisect: use "--bisect-replace" options when checking merge bases
+>>  - merge-base: add "--bisect-replace" option to use fixed up revs
+>>  - commit: add "bisect_replace_all" prototype to "commit.h"
+>>  - rev-list: add "--bisect-replace" to list revisions with fixed up
+>>    history
+>>  - Documentation: add "git bisect replace" documentation
+>>  - bisect: add test cases for "git bisect replace"
+>>  - bisect: add "git bisect replace" subcommand
+>>
+>> I think a mechanism like this should be added to replace grafts,=20
 >
-> Strictly as asked, yes, but what if he adds a "-f" to the
-> middle command, making it "git checkout -f HEAD"?  Wouldn't
-> that be the same as the others then?
+> The problem with replacing grafts is that a graft can specify many pa=
+rents=20
+> for one commit while a ref associates only one object to a name.
 
-Yeah, but comparing reset and checkout misses a whole _dimension_ in the
-revision space continuum.
+Sorry, maybe I misunderstood your implementation.  What I thought we
+discussed during GitTogether was to write out the object name of the
+replacement object in refs/replace/<sha1>.
 
-"git checkout <branch>" is primarily about checking out a different
-branch, aka "switching branches".
+When the caller asks read_sha1_file() for an object whose object name i=
+s
+<sha1>, you see if there is refs/replace/<sha1> in the repository, and
+read the ref to learn the object name of the object that replaces it.  =
+And
+you return that as if it is the original object.
 
-When you switch branches, you generally do not want to lose your pending
-changes, but would want to take them with you.  A typical scenario is that
-you start looking at one issue, you fiddle a few lines here and twiddle a
-few lines there, and as you dig deeper, you realize that whatever the
-final shape of the change you are going to make will be either (1) big
-enough to deserve its own branch created anew, or (2) better done as an
-extension to an existing branch.  You realize that you are in the latter
-situation by noticing that the modification you were making will be helped
-by something you have implemented in the other branch but not yet
-available in the current one (typically the latter is 'master').
+So if your commit cca1704897e7fdb182f68d4c48a437c5d7bc5203 looks like:
 
-In such a case, you will "git checkout <the-appropriate-topic>" to switch
-to the branch, and you would want to take the change you already made to
-your work tree files when you do so.
+    tree 7ccf394b2e80536442703e0013bf0dde86547e08
+    parent 3827210b91a7d363ea67bcf0b9c6ee1c91d2f3c5
+    author Johannes Schindelin <Johannes.Schindelin@gmx.de> 1230919672 =
++0100
+    committer Junio C Hamano <gitster@pobox.com> 1230931180 -0800
 
-On the other hand, "git checkout -f <branch>" blows away your changes, but
-it still _is_ about switching to a different branch.
+    git wrapper: Make while loop more reader-friendly
+    ...
 
-Whether you use -f or not, you are allowed to ask to switch to the current
-branch by (1) naming the branch explicitly, i.e. "git checkout -f master",
-(2) using HEAD to mean the current one instead, or (3) omitting <branch>
-altogether.  But that is there merely for consistency and, even though
-there may not make much sense to do so (because it is largely no-op except
-that you would get the "you are ahead by N" notice), there is no strong
-reason to forbid asking for a no-op.
+and you would want to lie about its author (or add/subtract different
+parent lines, or record a fixed-up tree, or whatever), you first prepar=
+e a
+replacement commit object:
 
-For that reason, "git checkout -f HEAD" is "blow away my changes".  But it
-is merely a degenerated case of "switching to the current branch while
-blowing away my changes."
+    $ R=3D$(git cat-file commit cca17048 |
+      sed -e 's/Johannes /&E /' |
+      git hash-object -t commit --stdin -w)
+    $ git cat-file commit $R
+    tree 7ccf394b2e80536442703e0013bf0dde86547e08
+    parent 3827210b91a7d363ea67bcf0b9c6ee1c91d2f3c5
+    author Johannes E Schindelin <Johannes.Schindelin@gmx.de> 123091967=
+2 +0100
+    committer Junio C Hamano <gitster@pobox.com> 1230931180 -0800
 
-"git reset --hard <commit>" is different.  "reset" is primarily about
-pointing the tip of the current branch to somewhere else.  While "git
-checkout <branch>" never changes what commit sits at the tip of any
-branch, "git reset <commit>" modifies it for the current branch (--hard
-variant matches the work tree files to the contents recorded by the
-resetted-to commit while at it).
+    git wrapper: Make while loop more reader-friendly
+    ...
 
-Again, you are allowed to ask to reset to the current HEAD by saying
-"reset --hard HEAD".  That is a degenerated case of "resetting the tip of
-the current branch, while blowing away my changes".  More general case
-would be "reset --hard <some-commit>" and it won't just blow away your
-changes (relative to the commit you started out with), but also blows away
-the history leading to the commit the branch tip used to point at.
+and then tell git to replace the original object with this one:
 
-"checkout -f" and "reset --hard" work on different dimensions, and what
-they do intersect when (and only when) the <branch>/<commit> argument
-happen to be HEAD.  "checkout -f <another>" and "reset --hard <another>"
-will do quite different things.
+    $ git update-ref refs/replace/$(git rev-parse cca17048) $R
+
+With such a layout, if your arrange the object reachability traverser
+(e.g. fsck, pack-objects, bundle and prune) ignore refs/replace mechani=
+sm,
+while everybody else pay attention to it, you will be able to safely
+transfer the "graft" information via usual clone/fetch/push mechanism,
+while making things like log, bisect and show just work, pretending as =
+if
+the commit cca17048 were made by JES and not by JS.
