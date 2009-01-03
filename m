@@ -1,166 +1,65 @@
-From: david@lang.hm
-Subject: Re: how to track the history of a line in a file
-Date: Fri, 2 Jan 2009 20:25:58 -0800 (PST)
-Message-ID: <alpine.DEB.1.10.0901022020410.21567@asgard.lang.hm>
-References: <alpine.DEB.1.10.0901021405460.21567@asgard.lang.hm> <20090102212655.GA24082@coredump.intra.peff.net> <alpine.DEB.1.10.0901021459480.21567@asgard.lang.hm> <alpine.DEB.1.10.0901021544580.21567@asgard.lang.hm>
- <alpine.DEB.1.10.0901021554581.21567@asgard.lang.hm>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jan 03 04:25:11 2009
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] fast-export: print usage when no options specified
+Date: Sat,  3 Jan 2009 04:59:12 +0100
+Message-ID: <1230955152-23646-1-git-send-email-vmiklos@frugalware.org>
+References: <87r63lus6k.fsf@jidanni.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	jidanni@jidanni.org, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 03 04:59:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LIx8P-00070Z-W9
-	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 04:25:10 +0100
+	id 1LIxfm-0004JE-2J
+	for gcvg-git-2@gmane.org; Sat, 03 Jan 2009 04:59:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758832AbZACDXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jan 2009 22:23:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758773AbZACDXm
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 22:23:42 -0500
-Received: from mail.lang.hm ([64.81.33.126]:56534 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758790AbZACDXl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jan 2009 22:23:41 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n033NaOk025139;
-	Fri, 2 Jan 2009 19:23:36 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <alpine.DEB.1.10.0901021554581.21567@asgard.lang.hm>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1752532AbZACD5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jan 2009 22:57:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbZACD5V
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Jan 2009 22:57:21 -0500
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:39586 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751631AbZACD5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jan 2009 22:57:21 -0500
+Received: from vmobile.example.net (catv-80-98-230-81.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 4F78D446CE1;
+	Sat,  3 Jan 2009 04:57:17 +0100 (CET)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 37A3C19DB57; Sat,  3 Jan 2009 04:59:13 +0100 (CET)
+X-Mailer: git-send-email 1.6.1
+In-Reply-To: <87r63lus6k.fsf@jidanni.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104453>
 
-On Fri, 2 Jan 2009, david@lang.hm wrote:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-> On Fri, 2 Jan 2009, david@lang.hm wrote:
->
->> On Fri, 2 Jan 2009, david@lang.hm wrote:
->> 
->>> On Fri, 2 Jan 2009, Jeff King wrote:
->>> 
->>>> The tricky thing here is what is "this line"? Using the line number
->>>> isn't right, since it will change based on other content coming in and
->>>> out of the file. You can keep drilling down by reblaming parent commits,
->>>> but remember that each time you do that you are manually looking at the
->>>> content and saying "Oh, this is the line I am still interested in." So I
->>>> a script would have to correlate the old version and new version of the
->>>> line and realize how to follow the "interesting" thing.
->>>> 
->>>> In your case, I think you want to see any commit in Makefile which
->>>> changed a line with SUBLEVEL in it. Which is maybe easiest done as:
->>>>
->>>>  git log -z -p Makefile |
->>>>    perl -0ne 'print if /\n[+-]SUBLEVEL/' |
->>>>    tr '\0' '\n'
->>>> 
->>>> and is pretty fast. But obviously we're leveraging some content-specific
->>>> knowledge about what's in the Makefile.
->>> 
->>> Ok, I hacked togeather a quick bash script to try this
->>> 
->> <SNIP>
->>> the problem that this has is that line 3 of $COMMIT may not be line 3 of 
->>> $COMMIT^, and if they aren't it ends up hunting down the wrong data
+I found that behaviour surprising as well when I saw it the first time.
+git rev-list outputs some usage info in that case, git log just logs
+HEAD. Given that unconditionally exporting HEAD with no arguments is
+probably not something most users want, here is a patch to make the
+behaviour like what git rev-list already has.
 
-solving this problem was a bit more work than expected. I ended up 
-invoking git diff to do the step back and find what lines were replaced by 
-the one I care about.
+ builtin-fast-export.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-this still can run into problems if the lines that are examined are not 
-unique (git blame only finds the first match)
-
-
-
-#!/usr/bin/perl
-# program to trace the history of a line through a git repository
-#
-# useage findlines pattern filespec
-#
-# finds all occurances of the pattern in the file and then uses git blame
-#  to find where those lines were introduced. It then takes a step back 
-and
-#  looks at what the line replaced (if anything) and does a git blame on 
-those
-#  lines as well
-#
-# written by David Lang and released under GPLv2
-#
-$target = shift @ARGV;
-$file = shift @ARGV;
-open($infile,"<$file");
-$linecount=0;
-# find all lines in the file that match the target pattern
-# we have been provided. add them to a stack of items to research
-while(<$infile>){
-   $linecount++;
-   if ($_ =~ /$target/) {
-     $items[++$#items]{line} = $linecount;
-     $items[$#items]{tree} = "HEAD";
-     chomp;
-     $items[$#items]{target} = $_;
-   }
-}
-# go through all the items and research them in turn
-#  (note that more items may be added to the list while inside this loop)
-for ($i=0;$i<=$#items;$i++) {
-# do a git blame to find where the lines came from
-   $result = `git blame -b -l -L "$items[$i]{line}",+1 -M  $file 
-$items[$i]{tree}` ;
-   print "in ".$items[$i]{tree}." found:\n$result";
-   $commit=substr($result,0,40);
-   # if this is not the root commit,
-   #  do a diff to find what lines may have been replaced by the line we 
-are looking for
-   if($commit ne "                                        "){
-     $diff=`git diff -U0 $commit^..$commit $file`;
-     @lines=split("\n",$diff);
-     #strip the first four lines from the diff (as they just talk about the 
-file)
-     shift(@lines);
-     shift(@lines);
-     shift(@lines);
-     shift(@lines);
-     $match=0;
-     $hunk='';
-     # find what hunk of the diff introduced the lines we are looking for,
-     #  add the lines that they replaced to the list of items to examine
-     foreach(@lines){
-       if ($_ =~ /^\@\@/ ) {
-         if ($match) {
-           process_hunk();
-         } else {
-           $hunk = '';
-         };
-       } else {
-         $hunk .= $_."\n";
-         if ($_ =~ /$items[$i]{target}/) {
-           $match = 1;
-         }
-       }
-     }
-     if ($match) {
-       process_hunk();
-     }
-   }
-}
-sub process_hunk(){
-   # find lines in the hunk of diff that are being replaced
-   foreach (split("\n",$hunk)){
-     if ($_ =~ /^-/ ){
-       # for now queue the line contents for further processing.
-       #   this really should be the line number becouse otherwise
-       #   git blame will use the first match it finds. since we are
-       # matching the entire line this is less of a problem than it could 
-be.
-       $items[++$#items]{line} = "/".substr($_,1)."/";
-       $items[$#items]{target} = substr($_,1);
-       $items[$#items]{tree} = "$commit^";
-     }
-   }
-}
+diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+index 8386338..e9ee2c7 100644
+--- a/builtin-fast-export.c
++++ b/builtin-fast-export.c
+@@ -497,6 +497,9 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
++	if (argc == 1)
++		usage_with_options (fast_export_usage, options);
++
+ 	/* we handle encodings */
+ 	git_config(git_default_config, NULL);
+ 
+-- 
+1.6.1
