@@ -1,104 +1,93 @@
-From: Lars Noschinski <lars@public.noschinski.de>
-Subject: Re: [PATCH] cvsserver: change generation of CVS author names
-Date: Sun, 4 Jan 2009 12:13:15 +0100
-Message-ID: <20090104111245.GA7732@lars.home.noschinski.de>
-References: <1230910814-32307-1-git-send-email-fabian.emmes@rwth-aachen.de> <1230910814-32307-2-git-send-email-fabian.emmes@rwth-aachen.de> <7vwsdc3ulg.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: What's cooking in git.git (Dec 2008, #04; Mon, 29)
+Date: Sun, 4 Jan 2009 12:18:58 +0100
+Message-ID: <200901041218.59112.chriscool@tuxfamily.org>
+References: <7vocyt1is2.fsf@gitster.siamese.dyndns.org> <200901030640.36426.chriscool@tuxfamily.org> <7vhc4gadg9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Cc: Fabian Emmes <fabian.emmes@rwth-aachen.de>, git@vger.kernel.org,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Martin Langhoff <martin@catalyst.net.nz>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 04 12:14:58 2009
+X-From: git-owner@vger.kernel.org Sun Jan 04 12:19:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJQwb-0007QA-Jb
-	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 12:14:58 +0100
+	id 1LJR0s-0008Mh-Cw
+	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 12:19:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752846AbZADLN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 06:13:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752439AbZADLN1
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 06:13:27 -0500
-Received: from smtprelay10.ispgateway.de ([80.67.29.24]:48716 "EHLO
-	smtprelay10.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751454AbZADLNZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 06:13:25 -0500
-Received: from [87.78.124.200] (helo=vertikal.home.noschinski.de)
-	by smtprelay10.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1LJQuy-0005Ad-De; Sun, 04 Jan 2009 12:13:16 +0100
-Received: from lars by vertikal.home.noschinski.de with local (Exim 4.69)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1LJQux-0002P9-L7; Sun, 04 Jan 2009 12:13:15 +0100
+	id S1751584AbZADLSB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Jan 2009 06:18:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751588AbZADLSB
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 06:18:01 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:60525 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751531AbZADLSA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Jan 2009 06:18:00 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 73B4517B547;
+	Sun,  4 Jan 2009 12:17:57 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 58E3D17B53A;
+	Sun,  4 Jan 2009 12:17:57 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vhc4gadg9.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vwsdc3ulg.fsf@gitster.siamese.dyndns.org>
-User-Agent: mutt-ng/devel-r804 (Linux)
-X-Df-Sender: 336680
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104506>
 
-* Junio C Hamano <gitster@pobox.com> [09-01-03 23:36]:
->Fabian Emmes <fabian.emmes@rwth-aachen.de> writes:
+Le samedi 3 janvier 2009, Junio C Hamano a =C3=A9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > Le mardi 30 d=C3=A9cembre 2008, Junio C Hamano a =C3=A9crit :
+> >> * cc/bisect-replace (Mon Nov 24 22:20:30 2008 +0100) 9 commits
+> >>  - bisect: add "--no-replace" option to bisect without using repla=
+ce
+> >>    refs
+> >>  - rev-list: make it possible to disable replacing using "--no-
+> >>    bisect-replace"
+> >>  - bisect: use "--bisect-replace" options when checking merge base=
+s
+> >>  - merge-base: add "--bisect-replace" option to use fixed up revs
+> >>  - commit: add "bisect_replace_all" prototype to "commit.h"
+> >>  - rev-list: add "--bisect-replace" to list revisions with fixed u=
+p
+> >>    history
+> >>  - Documentation: add "git bisect replace" documentation
+> >>  - bisect: add test cases for "git bisect replace"
+> >>  - bisect: add "git bisect replace" subcommand
+> >>
+> >> I think a mechanism like this should be added to replace grafts,
+> >
+> > The problem with replacing grafts is that a graft can specify many
+> > parents for one commit while a ref associates only one object to a
+> > name.
 >
->> CVS username is generated from local part email address.
->> We take the whole local part but restrict the character set to the
->> Portable Filename Character Set, which is used for Unix login names
->> according to Single Unix Specification v3.
->>
->> Signed-off-by: Fabian Emmes <fabian.emmes@rwth-aachen.de>
->> Signed-off-by: Lars Noschinski <lars@public.noschinski.de>
+> Sorry, maybe I misunderstood your implementation.  What I thought we
+> discussed during GitTogether was to write out the object name of the
+> replacement object in refs/replace/<sha1>.
 >
->Stating "we should have done this from day one" is one thing (even though
->"because some standard says so" is not particularly a good justification
->without "and matches the way people use CVS in the real world in practice"
->appended to it).
+> When the caller asks read_sha1_file() for an object whose object name=
+ is
+> <sha1>, you see if there is refs/replace/<sha1> in the repository, an=
+d
+> read the ref to learn the object name of the object that replaces it.=
+=20
+> And you return that as if it is the original object.
 
-Documentation about valid cvs/rcs usernames is a bit scarce. When we
-wrote the patch, we did not find much more information than "the cvs
-username is supposed to be the login name". In my limited CVS
-experience, I never saw CVS user names which were not (unix) login
-names.
+Ok. When I first implemented "bisect replace" I saw that I could reuse =
+the=20
+graft fix-up mechanism. And as you talked about replacing grafts, I tho=
+ught=20
+that you wanted the implementation to use that mechanism instead of add=
+ing=20
+a different one.
 
-After this mail, I looked to the RCS source code (see checkidentifier()
-in rcslex.c) which tells us that anything (encoded in ISO-8859-1)
-consisting of IDCHAR, LETTER, Letter, DIGIT and PERIOD, containing at
-least one IDCHAR, LETTER or Letter is a valid username (for the
-character classes, see
-http://avalon.hoffentlich.net/~cebewee/rcs-charmap.txt) The most
-important character _not_ allowed in an user name is the @ sign, so we
-cannot use the full mail address.
+But I agree that it may be more powerfull and generic to replace object=
+s the=20
+way you describe it. So I will work on that.
 
-So our patch generates a valid username for any "sane" local part. In a
-few corner cases like "!#$%&'*+-/=?^_`.{|}~@example.com" our patch
-generates a result worse than the original - an empty username. This
-is probably something we should fix.
-
-Obviously, the short names generated are not necessarily unique, which
-can be irritating, but is not a problem from a technical point of view.
-Improving this would probably require to store a map of mail addresses
-to cvs user names.
-
->"We should suddenly change the behaviour" is quite a different thing and
->it depends on what follows that sentence if the change is justifiable.  We
->do not want to hear "...; screw the existing repositories if they have
->nonconforming names.".  It is Ok if it is "...; existing repositories will
->be affected, but the damage is limited to very minor set of operations,
->namely X, Y and Z".
->
->In other words, is there any backward compatibility issue when a
->repository that has served existing CVS users and checkouts with older
->version switches to the patched one?  If there is one, is that grave
->enough that we should care?
-
-Obviously the reported user names change. To the best of my knowledge
-(but I'm just a barely experienced CVS user) those names are not stored
-anywhere on the client and are regenerated by git-cvsserver for every
-request, so even old repositories get the new names for all commits.
-
-   - Lars.
+Thanks,
+Christian.
