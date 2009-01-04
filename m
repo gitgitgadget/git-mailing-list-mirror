@@ -1,107 +1,130 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] strbuf_readlink semantics update.
-Date: Sun, 04 Jan 2009 13:21:08 +0100
-Message-ID: <20090104122108.GC29325@artemis.corp>
-References: <alpine.LFD.2.00.0812171042120.14014@localhost.localdomain> <1230026749-25360-1-git-send-email-madcoder@debian.org> <20081223102127.GA21485@artemis.corp> <alpine.LFD.2.00.0812231009220.3535@localhost.localdomain> <20081224101146.GA10008@artemis.corp> <4952532F.5050704@lsrfire.ath.cx> <7viqp8afap.fsf@gitster.siamese.dyndns.org>
+From: demerphq <demerphq@gmail.com>
+Subject: Re: git-branch --print-current
+Date: Sun, 4 Jan 2009 13:31:50 +0100
+Message-ID: <9b18b3110901040431j5c318007kcec4694446434764@mail.gmail.com>
+References: <quack.20090101T1928.lthzliaqtdf@roar.cs.berkeley.edu>
+	 <1baa801f0901040207r64195594m64359dbc60a5f662@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Md/poaVZ8hnGTzuv";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 04 13:22:41 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git mailing list" <git@vger.kernel.org>
+To: "Alexandre Dulaunoy" <adulau@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 04 13:33:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJS03-00056g-NC
-	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 13:22:36 +0100
+	id 1LJSAL-0007mx-QS
+	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 13:33:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751585AbZADMVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 07:21:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750856AbZADMVO
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 07:21:14 -0500
-Received: from pan.madism.org ([88.191.52.104]:60694 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750696AbZADMVN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 07:21:13 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 2C40A3234D;
-	Sun,  4 Jan 2009 13:21:09 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 5980F9B8F49; Sun,  4 Jan 2009 13:21:08 +0100 (CET)
+	id S1751089AbZADMbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jan 2009 07:31:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750803AbZADMbx
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 07:31:53 -0500
+Received: from qw-out-2122.google.com ([74.125.92.25]:17405 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750795AbZADMbw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2009 07:31:52 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so6014800qwe.37
+        for <git@vger.kernel.org>; Sun, 04 Jan 2009 04:31:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=EDB+VDPA8+UTnZtpWz2tCDUexIAXnOgICTP4UrmybYQ=;
+        b=rI+bPRPi/8rF2GEMgMH6iqSn5GKCZZkaJ1NwOukk0jW2r6uWGKe3ZbNg0nl3d95TUn
+         c42gtSUfxtau+A4b90QsIz3Ne46fvlYWHW0shFpe/LdKSfSYs8kJcva0W7V8To1Wf9mb
+         xDwsjGmCd+46RkFRS4vpb3AD7Caas/pVFwhpU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=HjixJ/joBYAiCDh8Vul1kKOqjEg1dU1FgohVdRapP2N18QjH4CwXv5GGNWhU5092HN
+         fSMi+HyOj3j0fYwI/5RID2E/cdhMPZ7rVsk6Bnf7e9wb1sRfbI1GymdJ1F23dX55CYbm
+         //c3cZVi+kq/+LdvvxCvyFAnKhZPpr1sF9oTo=
+Received: by 10.214.60.1 with SMTP id i1mr15787050qaa.286.1231072310576;
+        Sun, 04 Jan 2009 04:31:50 -0800 (PST)
+Received: by 10.214.241.2 with HTTP; Sun, 4 Jan 2009 04:31:50 -0800 (PST)
+In-Reply-To: <1baa801f0901040207r64195594m64359dbc60a5f662@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7viqp8afap.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104510>
+
+2009/1/4 Alexandre Dulaunoy <adulau@gmail.com>:
+> On Fri, Jan 2, 2009 at 4:28 AM, Karl Chen <quarl@cs.berkeley.edu> wrote:
+>>
+>> How about an option to git-branch that just prints the name of the
+>> current branch for scripts' sake?  To replace:
+>>
+>>    git branch --no-color 2>/dev/null | perl -ne '/^[*] (.*)/ && print $1'
+>
+> I tend to support your request especially that extracting the current
+> branch is something that is done regularly. Looking in my own scripts/aliases
+> and some of my colleagues, there are plenty of variation using Perl,
+> sed, awk, tr
+> and Python to extract the current branch.
+>
+> Using git-symbolic-ref is not obvious, especially that the summary/name
+>  of the man page is :
+>
+> "git-symbolic-ref - Read and modify symbolic refs"
+>
+> But the description is pretty clear :
+>
+> "Given one argument, reads which branch head the given symbolic ref refers to
+> and outputs its path, relative to the .git/ directory. Typically you
+> would give HEAD
+> as the <name> argument to see on which branch your working tree is on."
+>
+> But naturally, as a lazy user, you will pick git-branch especially
+> that's the tools is listed
+> with the most commonly used git commands with a very attractive description :
+
+I dont think it has to do with lazyness. It has to do with the fact
+that parsing git branch gives you a branch name that you can use an an
+argument to many other git commands. Whereas git-symbolic-ref doesnt.
+It requires additional post-processing that unless you are very git
+aware is not at all clear. Like for instance in this thread the
+recommendation is to use sed like this:
+
+  git symbolic-ref HEAD|sed s,refs/heads/,,
+
+however, that makes me think "how do i do that on a windows box? does
+the presence of git on a  windows box mean that they will necessarily
+have sed available? Can i rely on that? Can i rely on the sed rule
+being sufficient? And what happens with this command if im not on a
+branch at all? Well it turns out that git symbolic-ref HEAD *dies*
+with a fatal error on this command.  SO it probably should be:
+
+  git symbolic-ref HEAD 2>/dev/null|sed s,refs/heads/,,
+
+but now its even less portable. Even if sed is available on windows
+/dev/null isnt.
+
+Id very much like a proper way to find the usable form of the branch
+name as it would make a lot of thing easier. In particular requiring
+people use pipes means that there is a portability issue with scripts.
+How does one make this happen on a windows box for instance?
+
+Id also very much like a way to find the "upstream" for a branch. IOW,
+id very much like to know where I will push to if i issue a "git push"
+command, or what i will merge if i do a git pull. There doesnt seem to
+be an easy way to find this out currently. And its very useful
+information.
+
+Im coming from the point of view of someone trying to make the perl
+build process a bit more "git aware". Unfortunately Perl has to build
+out of the box on so many platforms that unix-centric tricks like huge
+command pipes arent very helpful. They immediately fall down when you
+start dealing with oddball platforms like Windows and VMS.
+
+Yves
 
 
---Md/poaVZ8hnGTzuv
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Dec 25, 2008 at 07:23:58AM +0000, Junio C Hamano wrote:
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
-> > Pierre Habouzit schrieb:
-> >> On Tue, Dec 23, 2008 at 06:16:01PM +0000, Linus Torvalds wrote:
-> >>>
-> >>> On Tue, 23 Dec 2008, Pierre Habouzit wrote:
-> >>>> when readlink fails, the strbuf shall not be destroyed. It's not how
-> >>>> read_file_or_gitlink works for example.
-> >>> I disagree.
-> >>>
-> >>> This patch just makes things worse. Just leave the "strbuf_release()"=
- in=20
-> >>> _one_ place.
-> > ...
-> > The "append or do nothing" rule is broken by strbuf_getline(), but I ag=
-ree
-> > to your reasoning.  How about refining this rule a bit to "do your thing
-> > and roll back changes if an error occurs"?  I think it's not worth to u=
-ndo
-> > allocation extensions, but making reverting first time allocations seems
-> > like a good idea.  Something like this?
->=20
-> I think this is much better than Pierre's.
-
-I agree it's a fine semantics.
-
-> Pierre's "if it is called strbuf_*, it should always append" is a good
-> uniformity to have in an API, but making the caller suffer for
-> clean-up is going backwards.  The reason we use strbuf when we can is
-> so that the callers do not have to worry about memory allocation
-> issues too much.
-
-Ack.
-
-Sorry for the delay I was on vacation.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---Md/poaVZ8hnGTzuv
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAklgqbQACgkQvGr7W6HudhxQvQCghWnMhOYTF/ieikNI6lBW7YcF
-tnoAmwdqc2MR+w/Ka7zEMKQI/l3TAUIl
-=5+S3
------END PGP SIGNATURE-----
-
---Md/poaVZ8hnGTzuv--
+-- 
+perl -Mre=debug -e "/just|another|perl|hacker/"
