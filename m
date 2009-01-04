@@ -1,130 +1,107 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: [PATCH] gitweb: merge boolean feature subroutines
-Date: Sun, 4 Jan 2009 12:41:14 +0100
-Message-ID: <9b18b3110901040341n5ff5fa09s878228131d11d2a6@mail.gmail.com>
-References: <1230996692-7182-1-git-send-email-kraai@ftbfs.org>
-	 <9b18b3110901030818i242d81ccl20ef3f264ec64cad@mail.gmail.com>
-	 <7vvdsv3af6.fsf@gitster.siamese.dyndns.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] strbuf_readlink semantics update.
+Date: Sun, 04 Jan 2009 13:21:08 +0100
+Message-ID: <20090104122108.GC29325@artemis.corp>
+References: <alpine.LFD.2.00.0812171042120.14014@localhost.localdomain> <1230026749-25360-1-git-send-email-madcoder@debian.org> <20081223102127.GA21485@artemis.corp> <alpine.LFD.2.00.0812231009220.3535@localhost.localdomain> <20081224101146.GA10008@artemis.corp> <4952532F.5050704@lsrfire.ath.cx> <7viqp8afap.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Matt Kraai" <kraai@ftbfs.org>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 04 12:42:41 2009
+Content-Type: multipart/signed; boundary="Md/poaVZ8hnGTzuv";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 04 13:22:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJRNO-0004ni-6G
-	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 12:42:38 +0100
+	id 1LJS03-00056g-NC
+	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 13:22:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751441AbZADLlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 06:41:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbZADLlR
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 06:41:17 -0500
-Received: from qw-out-2122.google.com ([74.125.92.25]:13171 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751230AbZADLlQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 06:41:16 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so6007227qwe.37
-        for <git@vger.kernel.org>; Sun, 04 Jan 2009 03:41:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=KhneZrOO6HvD37sEsZMo3Hec6is209XJ4PNzueBtNPk=;
-        b=gc2WnmcCzE/wBaOyata3MirKV14onSaHHI/yyr5gfTa1LWUjUs7Hnl0smdZ44czLd1
-         3YzmjlYFR1cH8Yf613zKR5GkbO8U8QMe1cf5fBJ1/C0l8cUu+JZDCEaZ8VzqgAzDFzxJ
-         kTpgzBnvKzaeidp/m6X1iKVqIzgmIw2v4J6To=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=b/1e3kxDEzS3qwK1Cz1ce2b6MaCIVGoF0mZKTMqFeXBjDxm323TB3p2hihZ5j4aDfL
-         nCtkRtdUwjtVdXwUOqL0ZIXurqUsH+cdxfJ7kgETuWA2FKHy9/vzwKnhQgSky8B529YR
-         NKeG1s970hquTMLr0JgzmgXmnhXc9yahGhoU0=
-Received: by 10.214.243.9 with SMTP id q9mr15805191qah.61.1231069274429;
-        Sun, 04 Jan 2009 03:41:14 -0800 (PST)
-Received: by 10.214.241.2 with HTTP; Sun, 4 Jan 2009 03:41:14 -0800 (PST)
-In-Reply-To: <7vvdsv3af6.fsf@gitster.siamese.dyndns.org>
+	id S1751585AbZADMVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jan 2009 07:21:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750856AbZADMVO
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 07:21:14 -0500
+Received: from pan.madism.org ([88.191.52.104]:60694 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750696AbZADMVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2009 07:21:13 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 2C40A3234D;
+	Sun,  4 Jan 2009 13:21:09 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 5980F9B8F49; Sun,  4 Jan 2009 13:21:08 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <7viqp8afap.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104508>
-
-2009/1/4 Junio C Hamano <gitster@pobox.com>:
-> demerphq <demerphq@gmail.com> writes:
->
->> 2009/1/3 Matt Kraai <kraai@ftbfs.org>:
->> [...]
->>> -sub feature_blame {
->>> -       my ($val) = git_get_project_config('blame', '--bool');
->>> +sub feature_bool {
->>> +       my $key = shift;
->>> +       my ($val) = git_get_project_config($key, '--bool');
->>>
->>>        if ($val eq 'true') {
->>>                return 1;
->>
->> Maybe that should be:
->>
->>            return ($val eq 'true');
->>
->> as It is not a good idea to use 0 as a replacement for perls false, as
->> the two have different behaviour.
->
-> I'd rather want to keep our scripts free of deep Perl magic.  Even if
-> there are SVs that are interpreted as false other than 0, that does not
-> necessarily mean you have to fear that 0 can sometimes evaluate to true.
-
-No, thats not the point. The point is that why should the code do more
-work to return a value that a perl programmer might find unexpected.
-Especially when the function has the word "bool" in it. Its like
-writing a function whose name says "int" that returns a double. If the
-routine was not called "bool" then it wouldnt matter at all.
-
-> As long as you refrain from doing something crazy like "0 but true",
-> people who are not (and/or are not inclined to become) familiar with the
-> gory innards of Perl can rely on 0 being false and 1 being true when
-> calling feature_something subs, no?
-
-Why execute more opcodes, and return a slightly surprising false, when
-you dont have to?
-
-Is it really deep perl magic to do:
-
-  return $val eq 'true';
-
-instead of
-
-  return $val eq 'true' ? 1 : 0;
-
-or the actual use:
-
-   if ($val eq 'true') {
-      return 1
-   } else {
-      return 0
-   }
-
-Isn't the former superior just on pure minimalism metrics? Theres less
-code to understand, less code to go wrong, and as a bonus it returns a
-true boolean. Isn't that just a win-win-win? I mean most perl
-programmers I know would instantly convert the latter two to the first
-just on the grounds that the first version is the clearest expression
-of the desired intent.
-
-Anyway, leave it or not, its a minor nit.
-
-cheers,
-Yves
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104509>
 
 
+--Md/poaVZ8hnGTzuv
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Dec 25, 2008 at 07:23:58AM +0000, Junio C Hamano wrote:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+> > Pierre Habouzit schrieb:
+> >> On Tue, Dec 23, 2008 at 06:16:01PM +0000, Linus Torvalds wrote:
+> >>>
+> >>> On Tue, 23 Dec 2008, Pierre Habouzit wrote:
+> >>>> when readlink fails, the strbuf shall not be destroyed. It's not how
+> >>>> read_file_or_gitlink works for example.
+> >>> I disagree.
+> >>>
+> >>> This patch just makes things worse. Just leave the "strbuf_release()"=
+ in=20
+> >>> _one_ place.
+> > ...
+> > The "append or do nothing" rule is broken by strbuf_getline(), but I ag=
+ree
+> > to your reasoning.  How about refining this rule a bit to "do your thing
+> > and roll back changes if an error occurs"?  I think it's not worth to u=
+ndo
+> > allocation extensions, but making reverting first time allocations seems
+> > like a good idea.  Something like this?
+>=20
+> I think this is much better than Pierre's.
 
--- 
-perl -Mre=debug -e "/just|another|perl|hacker/"
+I agree it's a fine semantics.
+
+> Pierre's "if it is called strbuf_*, it should always append" is a good
+> uniformity to have in an API, but making the caller suffer for
+> clean-up is going backwards.  The reason we use strbuf when we can is
+> so that the callers do not have to worry about memory allocation
+> issues too much.
+
+Ack.
+
+Sorry for the delay I was on vacation.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--Md/poaVZ8hnGTzuv
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAklgqbQACgkQvGr7W6HudhxQvQCghWnMhOYTF/ieikNI6lBW7YcF
+tnoAmwdqc2MR+w/Ka7zEMKQI/l3TAUIl
+=5+S3
+-----END PGP SIGNATURE-----
+
+--Md/poaVZ8hnGTzuv--
