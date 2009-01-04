@@ -1,95 +1,104 @@
-From: "Alexandre Dulaunoy" <adulau@gmail.com>
-Subject: Re: git-branch --print-current
-Date: Sun, 4 Jan 2009 11:07:20 +0100
-Message-ID: <1baa801f0901040207r64195594m64359dbc60a5f662@mail.gmail.com>
-References: <quack.20090101T1928.lthzliaqtdf@roar.cs.berkeley.edu>
+From: Lars Noschinski <lars@public.noschinski.de>
+Subject: Re: [PATCH] cvsserver: change generation of CVS author names
+Date: Sun, 4 Jan 2009 12:13:15 +0100
+Message-ID: <20090104111245.GA7732@lars.home.noschinski.de>
+References: <1230910814-32307-1-git-send-email-fabian.emmes@rwth-aachen.de> <1230910814-32307-2-git-send-email-fabian.emmes@rwth-aachen.de> <7vwsdc3ulg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git mailing list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 04 11:08:46 2009
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: Fabian Emmes <fabian.emmes@rwth-aachen.de>, git@vger.kernel.org,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Martin Langhoff <martin@catalyst.net.nz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 04 12:14:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJPuW-0002Vz-Tm
-	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 11:08:45 +0100
+	id 1LJQwb-0007QA-Jb
+	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 12:14:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751141AbZADKHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 05:07:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751181AbZADKHY
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 05:07:24 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:2871 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750980AbZADKHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 05:07:23 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so2468686fgg.17
-        for <git@vger.kernel.org>; Sun, 04 Jan 2009 02:07:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=2/gAdcCpBGq9hkL1UNuY5gChb66+6s91lJN1IH05VWc=;
-        b=Qb3kme+tpKr+lb3A8ggrq4JNRDX8rX+vgHFx6VYotVEy+oEcacR2UBhS9mRIJc9eZV
-         WEbAO/BaNmlnO6vl4BJLeFYpaQUX/7ktO4pczrgbPHPq7L7z+PjoNmxBP5mVict4oJu9
-         yd8+hoVeB3u/qYf9ZO2J2c+yBy3u8y0ByQGnU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Z9veL5TcHzIlZve5298feC3YOTMNr4h8FPswkL/NKqJ0A9RJ/MpuAOsEvSPa1HbrWw
-         N/XEax9/xuFk488QbStBJOnTcSXygUhoQf6uKg7nyBBa5HRzbdD7k0o0TAmjMEXDb1CE
-         wdnblSzteQ/bJPaS0bRwuEZLLiYuttd1xlpoA=
-Received: by 10.86.4.14 with SMTP id 14mr4179437fgd.27.1231063640442;
-        Sun, 04 Jan 2009 02:07:20 -0800 (PST)
-Received: by 10.86.29.10 with HTTP; Sun, 4 Jan 2009 02:07:20 -0800 (PST)
-In-Reply-To: <quack.20090101T1928.lthzliaqtdf@roar.cs.berkeley.edu>
+	id S1752846AbZADLN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jan 2009 06:13:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752439AbZADLN1
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 06:13:27 -0500
+Received: from smtprelay10.ispgateway.de ([80.67.29.24]:48716 "EHLO
+	smtprelay10.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751454AbZADLNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2009 06:13:25 -0500
+Received: from [87.78.124.200] (helo=vertikal.home.noschinski.de)
+	by smtprelay10.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <lars@public.noschinski.de>)
+	id 1LJQuy-0005Ad-De; Sun, 04 Jan 2009 12:13:16 +0100
+Received: from lars by vertikal.home.noschinski.de with local (Exim 4.69)
+	(envelope-from <lars@public.noschinski.de>)
+	id 1LJQux-0002P9-L7; Sun, 04 Jan 2009 12:13:15 +0100
 Content-Disposition: inline
+In-Reply-To: <7vwsdc3ulg.fsf@gitster.siamese.dyndns.org>
+User-Agent: mutt-ng/devel-r804 (Linux)
+X-Df-Sender: 336680
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104505>
 
-On Fri, Jan 2, 2009 at 4:28 AM, Karl Chen <quarl@cs.berkeley.edu> wrote:
+* Junio C Hamano <gitster@pobox.com> [09-01-03 23:36]:
+>Fabian Emmes <fabian.emmes@rwth-aachen.de> writes:
 >
-> How about an option to git-branch that just prints the name of the
-> current branch for scripts' sake?  To replace:
+>> CVS username is generated from local part email address.
+>> We take the whole local part but restrict the character set to the
+>> Portable Filename Character Set, which is used for Unix login names
+>> according to Single Unix Specification v3.
+>>
+>> Signed-off-by: Fabian Emmes <fabian.emmes@rwth-aachen.de>
+>> Signed-off-by: Lars Noschinski <lars@public.noschinski.de>
 >
->    git branch --no-color 2>/dev/null | perl -ne '/^[*] (.*)/ && print $1'
+>Stating "we should have done this from day one" is one thing (even though
+>"because some standard says so" is not particularly a good justification
+>without "and matches the way people use CVS in the real world in practice"
+>appended to it).
 
-I tend to support your request especially that extracting the current
-branch is something that is done regularly. Looking in my own scripts/aliases
-and some of my colleagues, there are plenty of variation using Perl,
-sed, awk, tr
-and Python to extract the current branch.
+Documentation about valid cvs/rcs usernames is a bit scarce. When we
+wrote the patch, we did not find much more information than "the cvs
+username is supposed to be the login name". In my limited CVS
+experience, I never saw CVS user names which were not (unix) login
+names.
 
-Using git-symbolic-ref is not obvious, especially that the summary/name
- of the man page is :
+After this mail, I looked to the RCS source code (see checkidentifier()
+in rcslex.c) which tells us that anything (encoded in ISO-8859-1)
+consisting of IDCHAR, LETTER, Letter, DIGIT and PERIOD, containing at
+least one IDCHAR, LETTER or Letter is a valid username (for the
+character classes, see
+http://avalon.hoffentlich.net/~cebewee/rcs-charmap.txt) The most
+important character _not_ allowed in an user name is the @ sign, so we
+cannot use the full mail address.
 
-"git-symbolic-ref - Read and modify symbolic refs"
+So our patch generates a valid username for any "sane" local part. In a
+few corner cases like "!#$%&'*+-/=?^_`.{|}~@example.com" our patch
+generates a result worse than the original - an empty username. This
+is probably something we should fix.
 
-But the description is pretty clear :
+Obviously, the short names generated are not necessarily unique, which
+can be irritating, but is not a problem from a technical point of view.
+Improving this would probably require to store a map of mail addresses
+to cvs user names.
 
-"Given one argument, reads which branch head the given symbolic ref refers to
-and outputs its path, relative to the .git/ directory. Typically you
-would give HEAD
-as the <name> argument to see on which branch your working tree is on."
+>"We should suddenly change the behaviour" is quite a different thing and
+>it depends on what follows that sentence if the change is justifiable.  We
+>do not want to hear "...; screw the existing repositories if they have
+>nonconforming names.".  It is Ok if it is "...; existing repositories will
+>be affected, but the damage is limited to very minor set of operations,
+>namely X, Y and Z".
+>
+>In other words, is there any backward compatibility issue when a
+>repository that has served existing CVS users and checkouts with older
+>version switches to the patched one?  If there is one, is that grave
+>enough that we should care?
 
-But naturally, as a lazy user, you will pick git-branch especially
-that's the tools is listed
-with the most commonly used git commands with a very attractive description :
+Obviously the reported user names change. To the best of my knowledge
+(but I'm just a barely experienced CVS user) those names are not stored
+anywhere on the client and are regenerated by git-cvsserver for every
+request, so even old repositories get the new names for all commits.
 
-"branch     List, create, or delete branches"
-
-On an user perspective, having the option in git-branch seems more natural.
-
-Just a comment,
-
--- 
---                   Alexandre Dulaunoy (adulau) -- http://www.foo.be/
---                             http://www.foo.be/cgi-bin/wiki.pl/Diary
---         "Knowledge can create problems, it is not through ignorance
---                                that we can solve them" Isaac Asimov
+   - Lars.
