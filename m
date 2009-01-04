@@ -1,87 +1,88 @@
-From: Matt Kraai <kraai@ftbfs.org>
-Subject: Re: [PATCH] gitweb: merge boolean feature subroutines
-Date: Sun, 4 Jan 2009 07:58:58 -0800
-Message-ID: <20090104155858.GC4205@ftbfs.org>
-References: <1230996692-7182-1-git-send-email-kraai@ftbfs.org> <9b18b3110901030818i242d81ccl20ef3f264ec64cad@mail.gmail.com> <7vvdsv3af6.fsf@gitster.siamese.dyndns.org> <9b18b3110901040341n5ff5fa09s878228131d11d2a6@mail.gmail.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH next] git-cherry usage: correct nesting of commit-ish options
+Date: Sun, 4 Jan 2009 17:11:22 +0100
+Message-ID: <200901041711.23026.markus.heidelberg@web.de>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 04 17:00:56 2009
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Jan 04 17:12:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJVPK-00082k-7j
-	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 17:00:54 +0100
+	id 1LJVaN-0002Zj-8I
+	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 17:12:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643AbZADP7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 10:59:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751273AbZADP7b
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 10:59:31 -0500
-Received: from neon.ftbfs.org ([83.168.236.214]:48925 "EHLO neon.ftbfs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751222AbZADP7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 10:59:30 -0500
-Received: from pool-71-119-193-199.lsanca.dsl-w.verizon.net
-	([71.119.193.199] helo=macbookpro.ftbfs.org ident=Debian-exim)
-	by neon.ftbfs.org with esmtpa (Exim 4.63)
-	(envelope-from <kraai@ftbfs.org>)
-	id 1LJVNZ-00030w-GH; Sun, 04 Jan 2009 07:59:13 -0800
-Received: from kraai by macbookpro.ftbfs.org with local (Exim 4.69)
-	(envelope-from <kraai@ftbfs.org>)
-	id 1LJVNS-0000nd-Oi; Sun, 04 Jan 2009 07:58:58 -0800
+	id S1751795AbZADQK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jan 2009 11:10:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbZADQK4
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 11:10:56 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:54166 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751680AbZADQKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2009 11:10:55 -0500
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 25ACDFB63403;
+	Sun,  4 Jan 2009 17:10:53 +0100 (CET)
+Received: from [89.59.126.169] (helo=pluto)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #273)
+	id 1LJVYy-0003oz-00; Sun, 04 Jan 2009 17:10:53 +0100
+User-Agent: KMail/1.9.9
+Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
-In-Reply-To: <9b18b3110901040341n5ff5fa09s878228131d11d2a6@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Score-Int: -40
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX19UzZvVnzFQ+eDOrCWOucW8Qxf/5IIEc7xV12X9
+	4klN0OMPYu4eadtAmQd7mEAw/yfLe1EMF0YXr3mle+nTa7l5Qg
+	EoUYgYaKAtKp4Mv8dmtA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104522>
 
-On Sun, Jan 04, 2009 at 12:41:14PM +0100, demerphq wrote:
-> Why execute more opcodes, and return a slightly surprising false, when
-> you dont have to?
-> 
-> Is it really deep perl magic to do:
-> 
->   return $val eq 'true';
-> 
-> instead of
-> 
->   return $val eq 'true' ? 1 : 0;
-> 
-> or the actual use:
-> 
->    if ($val eq 'true') {
->       return 1
->    } else {
->       return 0
->    }
->
-> Isn't the former superior just on pure minimalism metrics? Theres less
-> code to understand, less code to go wrong, and as a bonus it returns a
-> true boolean. Isn't that just a win-win-win? I mean most perl
-> programmers I know would instantly convert the latter two to the first
-> just on the grounds that the first version is the clearest expression
-> of the desired intent.
 
-I agree that what you suggest is better than the alternatives you
-present.  Unfortunately, none of them match the current behavior.
-Here's the current code:
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
 
-	if ($val eq 'true') {
-		return 1;
-	} elsif ($val eq 'false') {
-		return 0;
-	}
+What is the preferred way to say the patch is against next? In the
+subject like this?
+Another question: should this patch be split up into two, one for
+maint/master and another for next?
 
-	return $_[0];
+ Documentation/git-cherry.txt |    2 +-
+ builtin-log.c                |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Is there a way to use the form you suggest while falling back to the
-default if $val isn't set to 'true' or 'false'?
-
+diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
+index 556ea23..7deefda 100644
+--- a/Documentation/git-cherry.txt
++++ b/Documentation/git-cherry.txt
+@@ -7,7 +7,7 @@ git-cherry - Find commits not merged upstream
+ 
+ SYNOPSIS
+ --------
+-'git cherry' [-v] [<upstream>] [<head>] [<limit>]
++'git cherry' [-v] [<upstream> [<head> [<limit>]]]
+ 
+ DESCRIPTION
+ -----------
+diff --git a/builtin-log.c b/builtin-log.c
+index 243f857..7e9616e 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -1071,7 +1071,7 @@ static int add_pending_commit(const char *arg, struct rev_info *revs, int flags)
+ }
+ 
+ static const char cherry_usage[] =
+-"git cherry [-v] [<upstream>] [<head>] [<limit>]";
++"git cherry [-v] [<upstream> [<head> [<limit>]]]";
+ int cmd_cherry(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
 -- 
-Matt                                                 http://ftbfs.org/
+1.6.1.35.g0c23
