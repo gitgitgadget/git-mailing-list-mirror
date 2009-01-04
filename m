@@ -1,112 +1,95 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: git-branch --print-current
-Date: Sun, 4 Jan 2009 13:49:11 +0100
-Message-ID: <9b18b3110901040449x65c63d6fo3d9fec9ddd5670c@mail.gmail.com>
-References: <quack.20090101T1928.lthzliaqtdf@roar.cs.berkeley.edu>
-	 <1a69a9d80901040021i1dae2c6j7337cf57eed6476a@mail.gmail.com>
-	 <quack.20090104T0440.lthbpun1bxo@roar.cs.berkeley.edu>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: a few Topgit patches
+Date: Sun, 4 Jan 2009 14:05:32 +0100
+Message-ID: <20090104130532.GA1055@pengutronix.de>
+References: <20081223143035.GA24087@cassiopeia.tralala> <20081225145834.GA16852@lapse.rw.madduck.net> <20081226170334.GA18722@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Arnaud Lacombe" <lacombar@gmail.com>,
-	"Git mailing list" <git@vger.kernel.org>
-To: "Karl Chen" <quarl@cs.berkeley.edu>
-X-From: git-owner@vger.kernel.org Sun Jan 04 13:50:37 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
+To: martin f krafft <madduck@debian.org>
+X-From: git-owner@vger.kernel.org Sun Jan 04 14:07:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJSR9-00036F-9i
-	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 13:50:35 +0100
+	id 1LJSh8-0007Jo-4M
+	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 14:07:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750856AbZADMtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 07:49:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750889AbZADMtO
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 07:49:14 -0500
-Received: from qw-out-2122.google.com ([74.125.92.27]:17281 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750855AbZADMtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 07:49:13 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so6017940qwe.37
-        for <git@vger.kernel.org>; Sun, 04 Jan 2009 04:49:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=hA/r9ZZTQEfe8XR5Gt0AB6M5ASfzS6pdx++H+JIxDvo=;
-        b=VlZqlA9gkMH6BeIHL+B/Ejo2eh/zFQOQsKaIRKS5qRT9IY6/cLHdifYcC0tQS9bWgK
-         xnuVZxfxK2RGBFotsfpUID3RtUmTjxFV5JisGJQd3/Qbjcs2/3+swguRm5mspTqfP4Sm
-         /+O2HFq6k02UX9QLVMv42QqFXVsK2q4kdaMJI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Eo3HBQbVT8KNBY6Z82DhHyue0DFQrwVahxpMHudG9Ya/kVUADmAZD/I4RW9vcallsJ
-         xUpQ82MaDAs6iJdJ41J+pc3xGbXhcHUeIXd11R8YQ6Ws5oFTEzXysz+8lquVTe+M86vW
-         YGlz1zTl9ghJSCSZHueZYmYTp0h0oHljwBp10=
-Received: by 10.214.12.19 with SMTP id 19mr15823888qal.102.1231073351611;
-        Sun, 04 Jan 2009 04:49:11 -0800 (PST)
-Received: by 10.214.241.2 with HTTP; Sun, 4 Jan 2009 04:49:11 -0800 (PST)
-In-Reply-To: <quack.20090104T0440.lthbpun1bxo@roar.cs.berkeley.edu>
+	id S1751787AbZADNFh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Jan 2009 08:05:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751765AbZADNFg
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 08:05:36 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:45559 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751748AbZADNFf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2009 08:05:35 -0500
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LJSfd-0008DP-N1; Sun, 04 Jan 2009 14:05:33 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LJSfc-00069X-D3; Sun, 04 Jan 2009 14:05:32 +0100
 Content-Disposition: inline
+In-Reply-To: <20081226170334.GA18722@pengutronix.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104515>
 
-2009/1/4 Karl Chen <quarl@cs.berkeley.edu>:
->>>>>> On 2009-01-04 00:21 PST, Arnaud Lacombe writes:
->
->    Arnaud> FWIW, I had this in a stalled modification in a tree,
->    Arnaud> it just add the '-c' (as "current") option to git
->    Arnaud> branch. Patch is mostly for the record :/
->
-> Thanks, glad someone else wanted this too.  If we modified
-> git-symbolic-ref it would probably be less code since it doesn't
-> have to loop over all branches, though from a UI perspective I
-> still prefer git-branch.  Anyway doesn't look like people like the
-> idea so how about that git-rev-parse --symbolic-abbrev-name idea
-> :)
+Hi martin,
 
-FWIW: I like the idea. Ive always thought that a --current flag to git
-branch was missing. IOW i should be able to do:
+On Fri, Dec 26, 2008 at 06:03:34PM +0100, Uwe Kleine-K=F6nig wrote:
+> On Thu, Dec 25, 2008 at 03:58:34PM +0100, martin f krafft wrote:
+> > also sprach Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [20=
+08.12.23.1530 +0100]:
+> > > I hacked using topgit for some time now, and found the following =
+changes
+> > > to topgit useful:
+> > >=20
+> > > Uwe Kleine-K=F6nig (3):
+> > >       tg export: implement skipping empty patches for collapse dr=
+iver
+> > >       tg export: Implement flattening patch paths for quilt mode
+> > >       tg export (quilt): Implement numbering the patches
+> >=20
+> > They all look good. I am a bit concerned about the use of
+> > single-letter options at this stage. tg-export is bound to grow, an=
+d
+> > using them all up now might mean breaking compatibility later, when
+> > a more common option needs e.g. -f, which has already been taken.
+> I updated my tree to make '-f' '--flatten'.  IMHO -n is nice for gett=
+ing
+> numbered patches, but if you prefer, I will make this --numbered.
+>=20
+> Oh, and I just noticed that documentation is missing.  I will fix thi=
+s
+> when I sent this mail.
+This is done.  Now I even changed '-n' to '--numbered' and changed the
+commit log accordingly.  Are there still concerns about my patches?
+Should I resend the current version?
 
-   branch=`git branch --current`
+The patches are still available in my topgit repo at
 
-and get back a usable branch name. I dont think one should need to
-rely on awk or sed or scripts to find this out, if only for
-portability reasons.
+	git://git.pengutronix.de/git/ukl/topgit.git master
 
->
->    Arnaud> The main trouble I have with pipe stuff is that it
->    Arnaud> forks a process for something that can be done
->    Arnaud> natively. Previously, I was using awk(1) to extract
->    Arnaud> the current branch:
->
->    Arnaud> $ git branch | awk '/^\*/ {print $2}'
->
-> Yet another addition to the list of ways to pipeline it, this one
-> probably the shortest :)
+Best regards
+Uwe
 
-Unfortunately it doesnt work well when you arent on a branch:
-
-  $ git branch | awk '/^\*/ {print $2}'
-  (no
-
-So far two apparently expert git people have given solutions to this
-problem that don't elegantly handle the edge cases.
-
-That seems to me to be a powerful argument that it is actually more
-difficult to do than is being represented here on the list, and
-deserves to be native level git functionality.
-
-Cheers,
-yves
-
-
-
--- 
-perl -Mre=debug -e "/just|another|perl|hacker/"
+--=20
+Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
+       |
+Industrial Linux Solutions                    | http://www.pengutronix.=
+de/  |
+Peiner Strasse 6-8, 31137 Hildesheim, Germany | Phone: +49-5121-206917-=
+0    |
+Amtsgericht Hildesheim, HRA 2686              | Fax:   +49-5121-206917-=
+5555 |
