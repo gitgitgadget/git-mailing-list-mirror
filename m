@@ -1,44 +1,44 @@
 From: "Marcel M. Cary" <marcel@oak.homeunix.org>
-Subject: [PATCH v2 tested] git-sh-setup: Fix scripts whose PWD is a symlink to a work-dir on OS X
-Date: Sun,  4 Jan 2009 13:27:25 -0800
-Message-ID: <1231104445-12531-1-git-send-email-marcel@oak.homeunix.org>
-References: <AC726FD4-AE7F-4EC0-82E5-62C6D03C4E5A@marzelpan.de>
+Subject: [PATCH v2 tested-v2] git-sh-setup: Fix scripts whose PWD is a symlink to a work-dir on OS X
+Date: Sun,  4 Jan 2009 13:47:29 -0800
+Message-ID: <1231105649-12998-1-git-send-email-marcel@oak.homeunix.org>
+References: <8C7E36D0-C037-427D-B6E2-4050CC767CD0@marzelpan.de>
 Cc: git@vger.kernel.org, jnareb@gmail.com, ae@op5.se,
 	j.sixt@viscovery.net, git-dev@marzelpan.de,
 	"Marcel M. Cary" <marcel@oak.homeunix.org>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Jan 04 22:28:57 2009
+X-From: git-owner@vger.kernel.org Sun Jan 04 22:49:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJaWf-00025K-Q1
-	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 22:28:50 +0100
+	id 1LJaq6-0000R9-SW
+	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 22:48:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752226AbZADV13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 16:27:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752134AbZADV13
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 16:27:29 -0500
-Received: from smtp123.sbc.mail.sp1.yahoo.com ([69.147.64.96]:25238 "HELO
-	smtp123.sbc.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751566AbZADV13 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jan 2009 16:27:29 -0500
-Received: (qmail 860 invoked from network); 4 Jan 2009 21:27:27 -0000
+	id S1758331AbZADVrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jan 2009 16:47:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756702AbZADVrf
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 16:47:35 -0500
+Received: from smtp115.sbc.mail.sp1.yahoo.com ([69.147.64.88]:40225 "HELO
+	smtp115.sbc.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1758331AbZADVre (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Jan 2009 16:47:34 -0500
+Received: (qmail 8753 invoked from network); 4 Jan 2009 21:47:30 -0000
 Received: from unknown (HELO ordinateur.home.org) (marcel@76.231.191.38 with plain)
-  by smtp123.sbc.mail.sp1.yahoo.com with SMTP; 4 Jan 2009 21:27:26 -0000
-X-YMail-OSG: BWEYR.YVM1mdfdUhYxXncJus59R8qNiG03vcdPDiEjlk.X34iDy7Gag_B8noxRjGoCt8JM4hMsY5u0GBVP7ZE98niSeX7LyUeV565Hqpa7VNLsJqGxlRaMeIGlvxKUk6O3QG9Rw8Yn_SQppDeFekUYXYZ9V1BaAVlgsDwyVnUw4YdyqIky_2lhswit1VJQ--
+  by smtp115.sbc.mail.sp1.yahoo.com with SMTP; 4 Jan 2009 21:47:29 -0000
+X-YMail-OSG: mHinjIEVM1lKitqP1gP_eN9W47COVRA.ff0zW5LEfCkgoU5m6DL1JFUYQ76HS_SX45eZGpBxCK2Hr6C9tt_b6Wna1LFMUc_grDVz7XbUp3RnfJ52F8HmUPK57I5nPZd8cMGGhLvjmEbs4mSrk7WjTkNj0jL31Ca_ZtJ9d.kZvGbqGynNBgA0Ad3ezgRd_Q--
 X-Yahoo-Newman-Property: ymail-5
 Received: from polliwog.home.org ([192.168.0.18] helo=localhost.localdomain)
 	by ordinateur.home.org with esmtp (Exim 4.63)
 	(envelope-from <marcel@oak.homeunix.org>)
-	id 1LJaVI-0007vj-M1; Sun, 04 Jan 2009 13:27:24 -0800
+	id 1LJaoi-0007yy-Gr; Sun, 04 Jan 2009 13:47:28 -0800
 X-Mailer: git-send-email 1.6.1
-In-Reply-To: <AC726FD4-AE7F-4EC0-82E5-62C6D03C4E5A@marzelpan.de>
+In-Reply-To: <8C7E36D0-C037-427D-B6E2-4050CC767CD0@marzelpan.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104542>
 
 On Mac OS X and possibly BSDs, /bin/pwd reads PWD from the environment
 if available and shows the logical path by default rather than the
@@ -51,25 +51,14 @@ Still use the external /bin/pwd because in my Bash on Linux,
 the builtin pwd prints the same result whether or not PWD is set.
 
 Signed-off-by: Marcel M. Cary <marcel@oak.homeunix.org>
-Tested-by: Marcel Koeppen <git-dev@marzelpan.de>
+Tested-by: Marcel Koeppen <git-dev@marzelpan.de> (on Mac OS X 10.5.6)
 ---
 
-Junio C Hamano wrote:
-> I think I saw a success report on the list.  Care to resend it with
-> Sign-off (by you) and
+> please add
 > 
->         Tested-by: tester <test@er.xz> (on PLATFORM)
-> 
-> lines as you see necessary for application?
+> Tested-by: Marcel Koeppen <git-dev@marzelpan.de> (on Mac OS X 10.5.6)
 
-Same as before but with S-o-b/T-b lines.
-
-Marcel Koeppen wrote:
-> [I don't know why my replies get lost, so I dropped all individual
-> recipients on this third try...]
-
-I noticed that Brian Gernhardt's message also didn't make it to the
-list, even though it was addressed to the list.  I'm not sure why.
+Now with the OS, in detail.
 
 
  git-sh-setup.sh           |    2 +-
