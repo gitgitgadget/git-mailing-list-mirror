@@ -1,82 +1,70 @@
-From: "Arnaud Lacombe" <lacombar@gmail.com>
-Subject: Re: git-branch --print-current
-Date: Sun, 4 Jan 2009 12:55:44 -0500
-Message-ID: <1a69a9d80901040955v51671b1dv6ca6fc644455b6b1@mail.gmail.com>
-References: <quack.20090101T1928.lthzliaqtdf@roar.cs.berkeley.edu>
-	 <1a69a9d80901040021i1dae2c6j7337cf57eed6476a@mail.gmail.com>
-	 <quack.20090104T0440.lthbpun1bxo@roar.cs.berkeley.edu>
-	 <9b18b3110901040449x65c63d6fo3d9fec9ddd5670c@mail.gmail.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH next] git-cherry usage: correct nesting of commit-ish options
+Date: Sun, 4 Jan 2009 19:01:18 +0100
+Message-ID: <200901041901.18801.markus.heidelberg@web.de>
+References: <200901041711.23026.markus.heidelberg@web.de> <20090104173559.GG21154@genesis.frugalware.org>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Karl Chen" <quarl@cs.berkeley.edu>,
-	"Git mailing list" <git@vger.kernel.org>
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 04 18:57:10 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Jan 04 19:02:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJXDp-0005Yq-Fk
-	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 18:57:09 +0100
+	id 1LJXIj-0006rr-R8
+	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 19:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751875AbZADRzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 12:55:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751842AbZADRzr
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 12:55:47 -0500
-Received: from yw-out-2324.google.com ([74.125.46.29]:3478 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751584AbZADRzq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 12:55:46 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so2208234ywe.1
-        for <git@vger.kernel.org>; Sun, 04 Jan 2009 09:55:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=yhKI5d3/Xkn6RB9A6syUfJT0ca0ufRZb3kVLNHtA280=;
-        b=Uv7VBb9udZtP2a7t/ANMdo7cje8gdJ9PkdwIY9leqSWweTgqacL1A/3R3Lqj2ZUOJ4
-         CoUcQ8ytOTDAJvT7LRV5CLWHSZvj+MdCg7fYz6EzkxLyGtyNVEfUj8yCue4C1JrQiG8G
-         UnzVV3TSSn/YzDUbUM3gQKpfoHlJvfniz7BGU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=umXSR5dcvsmtCUBSsifCoEFe1Y7VI2jypdEKAyaRmmJtOUq/thqtV2bCeYww+lHRoh
-         nIP01ME1npFiqKHWwYjX3TdREPpHYGjgQ4u8kcXrh4/2S59XQtz9oZHM9ZYUQCeS5Q+x
-         M6IbcogdPF5OKyhbC2/gOD4DuExVeFFiQY02Q=
-Received: by 10.151.109.11 with SMTP id l11mr37521737ybm.32.1231091744441;
-        Sun, 04 Jan 2009 09:55:44 -0800 (PST)
-Received: by 10.151.48.18 with HTTP; Sun, 4 Jan 2009 09:55:44 -0800 (PST)
-In-Reply-To: <9b18b3110901040449x65c63d6fo3d9fec9ddd5670c@mail.gmail.com>
+	id S1751921AbZADSAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jan 2009 13:00:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbZADSAv
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 13:00:51 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:41108 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751400AbZADSAv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Jan 2009 13:00:51 -0500
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 15B31FB62870;
+	Sun,  4 Jan 2009 19:00:49 +0100 (CET)
+Received: from [89.59.126.169] (helo=pluto)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #273)
+	id 1LJXHM-0005HU-00; Sun, 04 Jan 2009 19:00:48 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090104173559.GG21154@genesis.frugalware.org>
+Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1/Z2ffOp/rkNJSPAip7x6u/+U4L7h6DT96IsOmm
+	FoI0B6vEr17Jb80D926rT+Uz8p+Uy6CN26LnGeOu5K6+mxZYt2
+	+0RWIv1zxNQEMTBi/hDg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104530>
 
-Hi,
+Miklos Vajna, 04.01.2009:
+> On Sun, Jan 04, 2009 at 05:11:22PM +0100, Markus Heidelberg <markus.heidelberg@web.de> wrote:
+> > Another question: should this patch be split up into two, one for
+> > maint/master and another for next?
+> 
+> AFAIK sending patches against next is not preferred at all.
 
-On Sun, Jan 4, 2009 at 7:49 AM, demerphq <demerphq@gmail.com> wrote:
-> 2009/1/4 Karl Chen <quarl@cs.berkeley.edu>:
->> On 2009-01-04 00:21 PST, Arnaud Lacombe writes:
->>    Arnaud> $ git branch | awk '/^\*/ {print $2}'
->>
->> Yet another addition to the list of ways to pipeline it, this one
->> probably the shortest :)
->
-> Unfortunately it doesnt work well when you arent on a branch:
->
->  $ git branch | awk '/^\*/ {print $2}'
->  (no
->
-> So far two apparently expert git people have given solutions to this
-> problem that don't elegantly handle the edge cases.
->
-my bad:
-$ git branch | awk '/^\*/ {print substr($0, 3)}'
+>From Documentation/SubmittingPatches:
 
- - Arnaud
+    If you are preparing a work based on "next" branch,
+    that is fine, but please mark it as such.
+
+I guess the only reason is a required dependency not available in
+'master'.
+
+> You should
+> send your patches against master, or - if you have a strong reason - on
+> top of a given topic branch.
+
+This patch depends on a commit in 'next'. But right, I could have
+mentioned that it's against 'mh/cherry-default' as Junio suggested a few
+days ago.
