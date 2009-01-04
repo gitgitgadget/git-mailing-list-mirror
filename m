@@ -1,83 +1,180 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] git-web--browse: don't add start as candidate on
- Ubuntu
-Date: Sat, 03 Jan 2009 23:53:56 -0800
-Message-ID: <7vljtr33sb.fsf@gitster.siamese.dyndns.org>
-References: <495D3964.6040006@ramsay1.demon.co.uk>
- <200901040833.25849.chriscool@tuxfamily.org>
+From: "Arnaud Lacombe" <lacombar@gmail.com>
+Subject: Re: git-branch --print-current
+Date: Sun, 4 Jan 2009 03:21:47 -0500
+Message-ID: <1a69a9d80901040021i1dae2c6j7337cf57eed6476a@mail.gmail.com>
+References: <quack.20090101T1928.lthzliaqtdf@roar.cs.berkeley.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Jan 04 08:56:23 2009
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_157882_21947524.1231057307127"
+Cc: "Git mailing list" <git@vger.kernel.org>
+To: "Karl Chen" <quarl@cs.berkeley.edu>
+X-From: git-owner@vger.kernel.org Sun Jan 04 09:23:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJNqQ-0005v9-9j
-	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 08:56:22 +0100
+	id 1LJOGb-00012O-TN
+	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 09:23:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750901AbZADHyL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Jan 2009 02:54:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750906AbZADHyL
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 02:54:11 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59583 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750901AbZADHyK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jan 2009 02:54:10 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CBBE61BBD8;
-	Sun,  4 Jan 2009 02:54:06 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DE7BC1BBD7; Sun, 
- 4 Jan 2009 02:54:00 -0500 (EST)
-In-Reply-To: <200901040833.25849.chriscool@tuxfamily.org> (Christian Couder's
- message of "Sun, 4 Jan 2009 08:33:25 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DCC7D47A-DA34-11DD-AFA8-EB51113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751273AbZADIVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jan 2009 03:21:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbZADIVv
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 03:21:51 -0500
+Received: from wa-out-1112.google.com ([209.85.146.180]:24577 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751230AbZADIVu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2009 03:21:50 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so3511881wah.21
+        for <git@vger.kernel.org>; Sun, 04 Jan 2009 00:21:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type:references;
+        bh=YZ2Cs+ZkbNc73jzOZIiVDJbFn8aeLsaH9merLKVfrjU=;
+        b=WcIIcVZkGg5T3nX54zc18oivanSE2aVaVlwkX1Yk45ohvWvbyz0xoZNoeqw153iLKz
+         XvSsSKW9e2yvA4VU+CpLcz5MnO9AuG2anfo6p9csn9pV9EwcSLJmFrK/TV0emlapA1Wt
+         dSUqbIEc9WuEQ5zScQGj+ebUNDEd0thqZ/Ycg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:references;
+        b=tK71VCQ3R1scVzqJOYnb3nMgo1F50I0FuV4Fkh1xfihJmhy7j6q5JAuWEHZTUGoaWP
+         aSoj74af6Ie7nw7L8coina4QVNpGZwig0z5fLLpmTKOrJGuzzCszhS/rvE9lYCzk6/bY
+         aGNU36o2yqIZCwfawtdd+HGj9gSpIO9fE3swM=
+Received: by 10.114.208.20 with SMTP id f20mr12961385wag.225.1231057307133;
+        Sun, 04 Jan 2009 00:21:47 -0800 (PST)
+Received: by 10.114.147.8 with HTTP; Sun, 4 Jan 2009 00:21:47 -0800 (PST)
+In-Reply-To: <quack.20090101T1928.lthzliaqtdf@roar.cs.berkeley.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104498>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+------=_Part_157882_21947524.1231057307127
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> Le jeudi 1 janvier 2009, Ramsay Jones a =C3=A9crit :
-> ...
->> Does anybody else see this issue and can someone test the patch?
+Hi,
+
+On Thu, Jan 1, 2009 at 10:28 PM, Karl Chen <quarl@cs.berkeley.edu> wrote:
 >
-> Petr, as you added support for using /bin/start on MinGW, could you t=
-est?
+> How about an option to git-branch that just prints the name of the
+> current branch for scripts' sake?  To replace:
 >
-> Thanks,
-> Christian.
+>    git branch --no-color 2>/dev/null | perl -ne '/^[*] (.*)/ && print $1'
+FWIW, I had this in a stalled modification in a tree, it just add the
+'-c' (as "current") option to git branch. Patch is mostly for the
+record :/
 
-> diff --git a/git-web--browse.sh b/git-web--browse.sh
-> index 78d236b..7ed0fad 100755
-> --- a/git-web--browse.sh
-> +++ b/git-web--browse.sh
-> @@ -115,7 +115,7 @@ if test -z "$browser" ; then
->  	browser_candidates=3D"open $browser_candidates"
->      fi
->      # /bin/start indicates MinGW
-> -    if test -n /bin/start; then
-> +    if test -x /bin/start; then
->  	browser_candidates=3D"start $browser_candidates"
->      fi
+The main trouble I have with pipe stuff is that it forks a process for
+something that can be done natively. Previously, I was using awk(1) to
+extract the current branch:
 
-In any case, the original test is simply bogus.  'test -n "$foo"' is to
-see if $foo is an empty string, and giving a constant /bin/start always
-yields true.
+$ git branch | awk '/^\*/ {print $2}'
 
-As an old timer, I tend to prefer "test -f" in this context, as anybody
-sane can expect that the directory /bin will contain executables and
-nothing else.  Another reason is purely stylistic.  Historically "-f" h=
-as
-been much more portable than "-x" (which came from SVID), even though i=
-t
-wouldn't make much difference in practice in the real world these days.
+ - Arnaud
+
+------=_Part_157882_21947524.1231057307127
+Content-Type: application/octet-stream; name=show-current-branch.diff
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fpjfotv40
+Content-Disposition: attachment; filename=show-current-branch.diff
+
+ZGlmZiAtLWdpdCBhL2J1aWx0aW4tYnJhbmNoLmMgYi9idWlsdGluLWJyYW5jaC5jCmluZGV4IDQ5
+NGNiYWMuLjI4NDY3NjggMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tYnJhbmNoLmMKKysrIGIvYnVpbHRp
+bi1icmFuY2guYwpAQCAtMTcsNyArMTcsNyBAQAogI2luY2x1ZGUgInJldmlzaW9uLmgiCiAKIHN0
+YXRpYyBjb25zdCBjaGFyICogY29uc3QgYnVpbHRpbl9icmFuY2hfdXNhZ2VbXSA9IHsKLQkiZ2l0
+IGJyYW5jaCBbb3B0aW9uc10gWy1yIHwgLWFdIFstLW1lcmdlZCB8IC0tbm8tbWVyZ2VkXSIsCisJ
+ImdpdCBicmFuY2ggW29wdGlvbnNdIFstciB8IC1hIHwgLWNdIFstLW1lcmdlZCB8IC0tbm8tbWVy
+Z2VkXSIsCiAJImdpdCBicmFuY2ggW29wdGlvbnNdIFstbF0gWy1mXSA8YnJhbmNobmFtZT4gWzxz
+dGFydC1wb2ludD5dIiwKIAkiZ2l0IGJyYW5jaCBbb3B0aW9uc10gWy1yXSAoLWQgfCAtRCkgPGJy
+YW5jaG5hbWU+IiwKIAkiZ2l0IGJyYW5jaCBbb3B0aW9uc10gKC1tIHwgLU0pIFs8b2xkYnJhbmNo
+Pl0gPG5ld2JyYW5jaD4iLApAQCAtMzEyLDkgKzMxMiw2IEBAIHN0YXRpYyB2b2lkIHByaW50X3Jl
+Zl9pdGVtKHN0cnVjdCByZWZfaXRlbSAqaXRlbSwgaW50IG1heHdpZHRoLCBpbnQgdmVyYm9zZSwK
+IAlpbnQgY29sb3I7CiAJc3RydWN0IGNvbW1pdCAqY29tbWl0ID0gaXRlbS0+Y29tbWl0OwogCi0J
+aWYgKCFtYXRjaGVzX21lcmdlX2ZpbHRlcihjb21taXQpKQotCQlyZXR1cm47Ci0KIAlzd2l0Y2gg
+KGl0ZW0tPmtpbmQpIHsKIAljYXNlIFJFRl9MT0NBTF9CUkFOQ0g6CiAJCWNvbG9yID0gQ09MT1Jf
+QlJBTkNIX0xPQ0FMOwpAQCAtMzczLDE4ICszNzAsNTggQEAgc3RhdGljIGludCBjYWxjX21heHdp
+ZHRoKHN0cnVjdCByZWZfbGlzdCAqcmVmcykKIAlyZXR1cm4gdzsKIH0KIAotc3RhdGljIHZvaWQg
+cHJpbnRfcmVmX2xpc3QoaW50IGtpbmRzLCBpbnQgZGV0YWNoZWQsIGludCB2ZXJib3NlLCBpbnQg
+YWJicmV2LCBzdHJ1Y3QgY29tbWl0X2xpc3QgKndpdGhfY29tbWl0KQorc3RhdGljIGlubGluZSBp
+bnQgaXNfY3VycmVudChzdHJ1Y3QgcmVmX2l0ZW0gKml0ZW0sIGludCBkZXRhY2hlZCkKK3sKKwor
+CWlmIChkZXRhY2hlZCB8fAorCSAgICBpdGVtLT5raW5kICE9IFJFRl9MT0NBTF9CUkFOQ0ggfHwK
+KwkgICAgc3RyY21wKGl0ZW0tPm5hbWUsIGhlYWQpICE9IDApCisJCXJldHVybiAwOworCisJcmV0
+dXJuIDE7Cit9CisKK3N0YXRpYyB2b2lkIHByaW50X3JlZl9saXN0KHN0cnVjdCByZWZfbGlzdCAq
+cmVmX2xpc3QsIGludCBraW5kcywgaW50IGRldGFjaGVkLAorICAgIGludCB2ZXJib3NlLCBpbnQg
+YWJicmV2LCBzdHJ1Y3QgY29tbWl0X2xpc3QgKndpdGhfY29tbWl0KQogeworCXN0cnVjdCBjb21t
+aXQgKmhlYWRfY29tbWl0OwogCWludCBpOworCisJaGVhZF9jb21taXQgPSBsb29rdXBfY29tbWl0
+X3JlZmVyZW5jZV9nZW50bHkoaGVhZF9zaGExLCAxKTsKKworCWRldGFjaGVkID0gKGRldGFjaGVk
+ICYmIChraW5kcyAmIFJFRl9MT0NBTF9CUkFOQ0gpKTsKKwlpZiAoZGV0YWNoZWQgJiYgaGVhZF9j
+b21taXQgJiYgaGFzX2NvbW1pdChoZWFkX2NvbW1pdCwgd2l0aF9jb21taXQpKSB7CisJCXN0cnVj
+dCByZWZfaXRlbSBpdGVtOworCQlpdGVtLm5hbWUgPSB4c3RyZHVwKCIobm8gYnJhbmNoKSIpOwor
+CQlpdGVtLmtpbmQgPSBSRUZfTE9DQUxfQlJBTkNIOworCQlpdGVtLmNvbW1pdCA9IGhlYWRfY29t
+bWl0OworCQlpZiAoc3RybGVuKGl0ZW0ubmFtZSkgPiByZWZfbGlzdC0+bWF4d2lkdGgpCisJCQly
+ZWZfbGlzdC0+bWF4d2lkdGggPSBzdHJsZW4oaXRlbS5uYW1lKTsKKwkJcHJpbnRfcmVmX2l0ZW0o
+Jml0ZW0sIHJlZl9saXN0LT5tYXh3aWR0aCwgdmVyYm9zZSwgYWJicmV2LCAxKTsKKwkJZnJlZShp
+dGVtLm5hbWUpOworCX0KKwlmb3IgKGkgPSAwOyBpIDwgcmVmX2xpc3QtPmluZGV4OyBpKyspIHsK
+KwkJaW50IGN1cnJlbnQgPSBpc19jdXJyZW50KCZyZWZfbGlzdC0+bGlzdFtpXSwgZGV0YWNoZWQp
+OworCQlwcmludF9yZWZfaXRlbSgmcmVmX2xpc3QtPmxpc3RbaV0sIHJlZl9saXN0LT5tYXh3aWR0
+aCwgdmVyYm9zZSwKKwkJCSAgICAgICBhYmJyZXYsIGN1cnJlbnQpOworCX0KKworfQorCitzdGF0
+aWMgdm9pZCBwcmludF9icmFuY2goaW50IGtpbmRzLCBpbnQgZGV0YWNoZWQsIGludCB2ZXJib3Nl
+LCBpbnQgYWJicmV2LAorCQkJIGludCBvbmx5X2N1cnJlbnQsIHN0cnVjdCBjb21taXRfbGlzdCAq
+d2l0aF9jb21taXQpCit7CiAJc3RydWN0IHJlZl9saXN0IHJlZl9saXN0OwotCXN0cnVjdCBjb21t
+aXQgKmhlYWRfY29tbWl0ID0gbG9va3VwX2NvbW1pdF9yZWZlcmVuY2VfZ2VudGx5KGhlYWRfc2hh
+MSwgMSk7CisJaW50IGk7CiAKIAltZW1zZXQoJnJlZl9saXN0LCAwLCBzaXplb2YocmVmX2xpc3Qp
+KTsKIAlyZWZfbGlzdC5raW5kcyA9IGtpbmRzOwogCXJlZl9saXN0LndpdGhfY29tbWl0ID0gd2l0
+aF9jb21taXQ7CiAJaWYgKG1lcmdlX2ZpbHRlciAhPSBOT19GSUxURVIpCiAJCWluaXRfcmV2aXNp
+b25zKCZyZWZfbGlzdC5yZXZzLCBOVUxMKTsKKwogCWZvcl9lYWNoX3JlZihhcHBlbmRfcmVmLCAm
+cmVmX2xpc3QpOworCiAJaWYgKG1lcmdlX2ZpbHRlciAhPSBOT19GSUxURVIpIHsKIAkJc3RydWN0
+IGNvbW1pdCAqZmlsdGVyOwogCQlmaWx0ZXIgPSBsb29rdXBfY29tbWl0X3JlZmVyZW5jZV9nZW50
+bHkobWVyZ2VfZmlsdGVyX3JlZiwgMCk7CkBAIC0zOTksMjkgKzQzNiwyNCBAQCBzdGF0aWMgdm9p
+ZCBwcmludF9yZWZfbGlzdChpbnQga2luZHMsIGludCBkZXRhY2hlZCwgaW50IHZlcmJvc2UsIGlu
+dCBhYmJyZXYsIHN0cgogCiAJcXNvcnQocmVmX2xpc3QubGlzdCwgcmVmX2xpc3QuaW5kZXgsIHNp
+emVvZihzdHJ1Y3QgcmVmX2l0ZW0pLCByZWZfY21wKTsKIAotCWRldGFjaGVkID0gKGRldGFjaGVk
+ICYmIChraW5kcyAmIFJFRl9MT0NBTF9CUkFOQ0gpKTsKLQlpZiAoZGV0YWNoZWQgJiYgaGVhZF9j
+b21taXQgJiYgaGFzX2NvbW1pdChoZWFkX2NvbW1pdCwgd2l0aF9jb21taXQpKSB7Ci0JCXN0cnVj
+dCByZWZfaXRlbSBpdGVtOwotCQlpdGVtLm5hbWUgPSB4c3RyZHVwKCIobm8gYnJhbmNoKSIpOwot
+CQlpdGVtLmtpbmQgPSBSRUZfTE9DQUxfQlJBTkNIOwotCQlpdGVtLmNvbW1pdCA9IGhlYWRfY29t
+bWl0OwotCQlpZiAoc3RybGVuKGl0ZW0ubmFtZSkgPiByZWZfbGlzdC5tYXh3aWR0aCkKLQkJCXJl
+Zl9saXN0Lm1heHdpZHRoID0gc3RybGVuKGl0ZW0ubmFtZSk7Ci0JCXByaW50X3JlZl9pdGVtKCZp
+dGVtLCByZWZfbGlzdC5tYXh3aWR0aCwgdmVyYm9zZSwgYWJicmV2LCAxKTsKLQkJZnJlZShpdGVt
+Lm5hbWUpOwotCX0KKwlpZiAob25seV9jdXJyZW50KSB7CisJCWZvciAoaSA9IDA7IGkgPCByZWZf
+bGlzdC5pbmRleDsgaSsrKSB7CisJCQlpZiAoIWlzX2N1cnJlbnQoJnJlZl9saXN0Lmxpc3RbaV0s
+IGRldGFjaGVkKSkKKwkJCQljb250aW51ZTsKKwkJCWlmICghbWF0Y2hlc19tZXJnZV9maWx0ZXIo
+cmVmX2xpc3QubGlzdFtpXS5jb21taXQpKQorCQkJCWNvbnRpbnVlOwogCi0JZm9yIChpID0gMDsg
+aSA8IHJlZl9saXN0LmluZGV4OyBpKyspIHsKLQkJaW50IGN1cnJlbnQgPSAhZGV0YWNoZWQgJiYK
+LQkJCShyZWZfbGlzdC5saXN0W2ldLmtpbmQgPT0gUkVGX0xPQ0FMX0JSQU5DSCkgJiYKLQkJCSFz
+dHJjbXAocmVmX2xpc3QubGlzdFtpXS5uYW1lLCBoZWFkKTsKLQkJcHJpbnRfcmVmX2l0ZW0oJnJl
+Zl9saXN0Lmxpc3RbaV0sIHJlZl9saXN0Lm1heHdpZHRoLCB2ZXJib3NlLAotCQkJICAgICAgIGFi
+YnJldiwgY3VycmVudCk7CisJCQlwcmludGYoIiVzXG4iLCByZWZfbGlzdC5saXN0W2ldLm5hbWUp
+OworCQl9CisJCWdvdG8gZnJlZV9pdDsKIAl9CiAKKwlwcmludF9yZWZfbGlzdCgmcmVmX2xpc3Qs
+IGtpbmRzLCBkZXRhY2hlZCwgdmVyYm9zZSwKKwkgICAgYWJicmV2LCB3aXRoX2NvbW1pdCk7CisK
+K2ZyZWVfaXQ6CiAJZnJlZV9yZWZfbGlzdCgmcmVmX2xpc3QpOwogfQotCiBzdGF0aWMgdm9pZCBy
+ZW5hbWVfYnJhbmNoKGNvbnN0IGNoYXIgKm9sZG5hbWUsIGNvbnN0IGNoYXIgKm5ld25hbWUsIGlu
+dCBmb3JjZSkKIHsKIAlzdHJ1Y3Qgc3RyYnVmIG9sZHJlZiA9IFNUUkJVRl9JTklULCBuZXdyZWYg
+PSBTVFJCVUZfSU5JVCwgbG9nbXNnID0gU1RSQlVGX0lOSVQ7CkBAIC00OTksNyArNTMxLDcgQEAg
+aW50IGNtZF9icmFuY2goaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpw
+cmVmaXgpCiB7CiAJaW50IGRlbGV0ZSA9IDAsIHJlbmFtZSA9IDAsIGZvcmNlX2NyZWF0ZSA9IDA7
+CiAJaW50IHZlcmJvc2UgPSAwLCBhYmJyZXYgPSBERUZBVUxUX0FCQlJFViwgZGV0YWNoZWQgPSAw
+OwotCWludCByZWZsb2cgPSAwOworCWludCBvbmx5X2N1cnJlbnQgPSAwLCByZWZsb2cgPSAwOwog
+CWVudW0gYnJhbmNoX3RyYWNrIHRyYWNrOwogCWludCBraW5kcyA9IFJFRl9MT0NBTF9CUkFOQ0g7
+CiAJc3RydWN0IGNvbW1pdF9saXN0ICp3aXRoX2NvbW1pdCA9IE5VTEw7CkBAIC01MjQsNiArNTU2
+LDcgQEAgaW50IGNtZF9icmFuY2goaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBj
+aGFyICpwcmVmaXgpCiAJCQlQQVJTRV9PUFRfSElEREVOIHwgUEFSU0VfT1BUX0xBU1RBUkdfREVG
+QVVMVCwKIAkJCW9wdF9wYXJzZV93aXRoX2NvbW1pdCwgKGludHB0cl90KSAiSEVBRCIsCiAJCX0s
+CisJCU9QVF9TRVRfSU5UKCdjJywgTlVMTCwgJm9ubHlfY3VycmVudCwgInNob3cgb25seSBjdXJy
+ZW50IGJyYW5jaCIsIDEpLAogCQlPUFRfX0FCQlJFVigmYWJicmV2KSwKIAogCQlPUFRfR1JPVVAo
+IlNwZWNpZmljIGdpdC1icmFuY2ggYWN0aW9uczoiKSwKQEAgLTU3Niw5ICs2MDksMTAgQEAgaW50
+IGNtZF9icmFuY2goaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVm
+aXgpCiAKIAlpZiAoZGVsZXRlKQogCQlyZXR1cm4gZGVsZXRlX2JyYW5jaGVzKGFyZ2MsIGFyZ3Ys
+IGRlbGV0ZSA+IDEsIGtpbmRzKTsKLQllbHNlIGlmIChhcmdjID09IDApCi0JCXByaW50X3JlZl9s
+aXN0KGtpbmRzLCBkZXRhY2hlZCwgdmVyYm9zZSwgYWJicmV2LCB3aXRoX2NvbW1pdCk7Ci0JZWxz
+ZSBpZiAocmVuYW1lICYmIChhcmdjID09IDEpKQorCWVsc2UgaWYgKGFyZ2MgPT0gMCkgeworCQlw
+cmludF9icmFuY2goa2luZHMsIGRldGFjaGVkLCB2ZXJib3NlLCBhYmJyZXYsIG9ubHlfY3VycmVu
+dCwKKwkJICAgIHdpdGhfY29tbWl0KTsKKwl9ZWxzZSBpZiAocmVuYW1lICYmIChhcmdjID09IDEp
+KQogCQlyZW5hbWVfYnJhbmNoKGhlYWQsIGFyZ3ZbMF0sIHJlbmFtZSA+IDEpOwogCWVsc2UgaWYg
+KHJlbmFtZSAmJiAoYXJnYyA9PSAyKSkKIAkJcmVuYW1lX2JyYW5jaChhcmd2WzBdLCBhcmd2WzFd
+LCByZW5hbWUgPiAxKTsK
+------=_Part_157882_21947524.1231057307127--
