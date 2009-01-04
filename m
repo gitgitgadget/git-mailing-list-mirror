@@ -1,88 +1,61 @@
 From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH next] git-cherry usage: correct nesting of commit-ish options
-Date: Sun, 4 Jan 2009 17:11:22 +0100
-Message-ID: <200901041711.23026.markus.heidelberg@web.de>
+Subject: Re: [PATCH next] git-cherry usage: correct nesting of commit-ish options
+Date: Sun, 4 Jan 2009 17:16:00 +0100
+Message-ID: <200901041716.00673.markus.heidelberg@web.de>
+References: <200901041711.23026.markus.heidelberg@web.de>
 Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="us-ascii"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Jan 04 17:12:20 2009
+X-From: git-owner@vger.kernel.org Sun Jan 04 17:16:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJVaN-0002Zj-8I
-	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 17:12:19 +0100
+	id 1LJVeq-0003vb-0x
+	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 17:16:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795AbZADQK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 11:10:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbZADQK4
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 11:10:56 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:54166 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751680AbZADQKz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 11:10:55 -0500
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 25ACDFB63403;
-	Sun,  4 Jan 2009 17:10:53 +0100 (CET)
+	id S1752269AbZADQPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jan 2009 11:15:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbZADQPd
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 11:15:33 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:56981 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752171AbZADQPd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2009 11:15:33 -0500
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 0BC53F634BE1;
+	Sun,  4 Jan 2009 17:15:31 +0100 (CET)
 Received: from [89.59.126.169] (helo=pluto)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
 	(WEB.DE 4.110 #273)
-	id 1LJVYy-0003oz-00; Sun, 04 Jan 2009 17:10:53 +0100
+	id 1LJVdS-0006Al-00; Sun, 04 Jan 2009 17:15:30 +0100
 User-Agent: KMail/1.9.9
+In-Reply-To: <200901041711.23026.markus.heidelberg@web.de>
 Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
 X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19UzZvVnzFQ+eDOrCWOucW8Qxf/5IIEc7xV12X9
-	4klN0OMPYu4eadtAmQd7mEAw/yfLe1EMF0YXr3mle+nTa7l5Qg
-	EoUYgYaKAtKp4Mv8dmtA==
+X-Provags-ID: V01U2FsdGVkX1/R9pQx+yskmXYjgp5MnnZkvs8e8Y0f8CCcWD65
+	UCB7GSS1nij+JSKbfkBXHLShigQ+pvUH1s6RCnU9L7pf/dzyTn
+	52IiyrC1+RC7CQqQCFBQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104523>
 
+Markus Heidelberg, 04.01.2009:
+> 
+> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+> ---
+> 
+> What is the preferred way to say the patch is against next? In the
+> subject like this?
+> Another question: should this patch be split up into two, one for
+> maint/master and another for next?
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
----
-
-What is the preferred way to say the patch is against next? In the
-subject like this?
-Another question: should this patch be split up into two, one for
-maint/master and another for next?
-
- Documentation/git-cherry.txt |    2 +-
- builtin-log.c                |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
-index 556ea23..7deefda 100644
---- a/Documentation/git-cherry.txt
-+++ b/Documentation/git-cherry.txt
-@@ -7,7 +7,7 @@ git-cherry - Find commits not merged upstream
- 
- SYNOPSIS
- --------
--'git cherry' [-v] [<upstream>] [<head>] [<limit>]
-+'git cherry' [-v] [<upstream> [<head> [<limit>]]]
- 
- DESCRIPTION
- -----------
-diff --git a/builtin-log.c b/builtin-log.c
-index 243f857..7e9616e 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -1071,7 +1071,7 @@ static int add_pending_commit(const char *arg, struct rev_info *revs, int flags)
- }
- 
- static const char cherry_usage[] =
--"git cherry [-v] [<upstream>] [<head>] [<limit>]";
-+"git cherry [-v] [<upstream> [<head> [<limit>]]]";
- int cmd_cherry(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info revs;
--- 
-1.6.1.35.g0c23
+For the second patch against next I meant it being based on origin/next
+that already includes the extracted patch for maint/master.
