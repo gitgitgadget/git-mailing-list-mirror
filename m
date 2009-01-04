@@ -1,130 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] unpack-trees: fix path search bug in verify_absent
-Date: Sun, 04 Jan 2009 02:01:14 -0800
-Message-ID: <7vtz8fz8yd.fsf@gitster.siamese.dyndns.org>
-References: <1230843273-11056-1-git-send-email-drizzd@aon.at>
- <1230843273-11056-2-git-send-email-drizzd@aon.at>
- <1230843273-11056-3-git-send-email-drizzd@aon.at>
- <alpine.DEB.1.00.0901022248070.27818@racer> <20090103103904.GA4479@localhost>
- <alpine.DEB.1.00.0901031353090.30769@pacific.mpi-cbg.de>
+Subject: Re: What about allowing multiple hooks?
+Date: Sun, 04 Jan 2009 02:01:33 -0800
+Message-ID: <7vd4f3z8xu.fsf@gitster.siamese.dyndns.org>
+References: <20081121133828.GB5912@gmx.de> <20090103233252.GA12095@myhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jan 04 11:02:59 2009
+Cc: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org,
+	Rogan Dawes <lists@dawes.za.net>,
+	martin f krafft <madduck@madduck.net>
+To: Alexander Potashev <aspotashev@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 04 11:03:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJPok-0001Q3-D8
-	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 11:02:46 +0100
+	id 1LJPpA-0001V7-Ke
+	for gcvg-git-2@gmane.org; Sun, 04 Jan 2009 11:03:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbZADKBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 05:01:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751140AbZADKBZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 05:01:25 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35714 "EHLO
+	id S1751369AbZADKBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jan 2009 05:01:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbZADKBr
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 05:01:47 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64413 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750980AbZADKBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 05:01:24 -0500
+	with ESMTP id S1751315AbZADKBq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2009 05:01:46 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 90D698DDD4;
-	Sun,  4 Jan 2009 05:01:21 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E116C1BBF3;
+	Sun,  4 Jan 2009 05:01:42 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B09228DDD3; Sun,
-  4 Jan 2009 05:01:16 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D07B31BBE6; Sun, 
+ 4 Jan 2009 05:01:35 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A36D1DEA-DA46-11DD-919F-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: B02A093A-DA46-11DD-9C84-EB51113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104501>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Alexander Potashev <aspotashev@gmail.com> writes:
 
-> On Sat, 3 Jan 2009, Clemens Buchacher wrote:
->
->> On Fri, Jan 02, 2009 at 10:59:47PM +0100, Johannes Schindelin wrote:
->> > This explanation makes sense.  However, this:
->> > 
->> > > @@ -289,7 +289,8 @@ static int unpack_nondirectories(int n, unsigned long mask, unsigned long dirmas
->> > >  	return 0;
->> > >  }
->> > >  
->> > > -static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, struct name_entry *names, struct traverse_info *info)
->> > > +static int unpack_callback(int n, unsigned long mask, unsigned long dirmask,
->> > > +		struct name_entry *names, struct traverse_info *info)
->> > >  {
->> > >  	struct cache_entry *src[5] = { NULL, };
->> > >  	struct unpack_trees_options *o = info->data;
->> > 
->> > ... is distracting during review, and this:
->> > 
->> > > @@ -517,22 +518,22 @@ static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
->> > >  	namelen = strlen(ce->name);
->> > >  	pos = index_name_pos(o->src_index, ce->name, namelen);
->> > >  	if (0 <= pos)
->> > > -		return cnt; /* we have it as nondirectory */
->> > > +		return 0; /* we have it as nondirectory */
->> > >  	pos = -pos - 1;
->> > >  	for (i = pos; i < o->src_index->cache_nr; i++) {
->> > 
->> > ... is not accounted for in the commit message.  Intended or not, that is 
->> > the question.
->> 
->> Those are trivial readability improvements in the context of the patch.
->
-> They are not trivial enough for me not to be puzzled.  Reason enough to 
-> explain in the commit message?
+>> Thoughts?
 
-I'd say the first hunk quoted is probably on the borderline.  It is an
-unnecessary churn that won't even be commented on if it were sent alone,
-but as a "while we are at it" hunk in a patch that is not too big, this is
-a kind of thing that often is tolerated, because it is obvious enough not
-to hurt anything from the correctness standpoint [*1*].
+I deliberately omitted support for multiple scripts in core git Porcelains
+to avoid this exact issue.  It is a huge can of worms and it is dubious if
+you can have a coherent and generic enough semantics.
 
-The second one is moderately worse for two reasons.
+In the meantime, you can have a single .git/hooks/pre-commit script that
+defines your own convention.  Maybe it uses .git/hooks/pre-commit.d/
+directory, full of scripts, and implements the semantics you want,
+including:
 
- * I actually had to scratch my head because you need to view the change
-   in a lot wider context that covers the initializing definition of "int
-   cnt" near the beginning of the function down to the area affected by
-   the hunk, in order to see that the new "return 0" is the same as the
-   old "return cnt" and does not break things.  A comment to say that "at
-   this point in the codeflow, cnt which is returned by the old code is
-   always zero", perhaps below the three-dash marker, would have saved me
-   a minute.
+ (1) the execution order and the naming convention of the scripts (e.g.
+     they all live in pre-commit.d/ directory, and executed in ASCII byte
+     value order of their names);
 
- * The function's purpose and logic is to see if the subdirectory is
-   clean, and return how many cache entries need to be skipped if it is
-   (otherwise a negative number as an error indicator).  For that purpose,
-   the return value cnt is initialized to 0 (i.e. "we haven't counted any
-   entry that needs to be skipped yet"), the loop below the patched part
-   counts it up while performing the verification, and then the resulting
-   count is returned from the function.  The logic flow, at least to me,
-   is easier to follow if it returned the value in cnt, not a hardcoded 0,
-   from the place the patch tries to touch.
+ (2) how their exit status combine together.  For example, maybe a failure
+     from one of the scripts prevents none of the later scripts to even
+     run and make the whole hook return a failure; maybe a failure will be
+     remembered, but the other scripts may still want to be run to learn
+     about the fact that the commit was attempted, and the whole hook
+     returns a failure if any of them fail.
 
-The latter point is with "at least to me", because I think an alternate
-position is entirely valid if the author wants to justify the change by
-saying something like:
+     In a hook that is run primarily for its side effects and not for
+     validation, it may even be desireble if the whole hook returns a
+     failure only when all of them fail, iow, for such a hook the status
+     is not ANDed but ORed together.
 
-    The function's purpose is ....  Before entering the loop to count the
-    number of entries to skip, this check to detect if we do not even have
-    to count appears.  When this check triggers, we know we do not want to
-    skip anything, and returning constant 0 is much clearer than returning
-    a variable cnt that was initialized to 0 near the beginning of the
-    function; we haven't even started using it to count yet.
-
-But the point is, if that is the reason the author thinks it is an
-improvement, that probably needs to be stated.
-
-[Footnote]
-
-*1* I am not sure if it is obviously clear that the change improves any
-readability.  Some people argue that splitting the function definition
-header hurts greppability for one thing.  I personally do not find it easy
-to read when the subsequent header lines are indented without aligning
-(compare the way it is indented in the postimage of the patch with the way
-the headers verify_absent() and show_stage_entry() are indented), either.
+Once you have such a framework and get help from others to widely try it
+in the field, it may prove generic enough to include it as the sample hook
+script to be installed everywhere.
