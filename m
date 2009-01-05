@@ -1,65 +1,65 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCH] Sorting commit items by click on the table header in commit dialog.
-Date: Mon, 5 Jan 2009 08:35:19 +0100
-Message-ID: <200901050835.20038.robin.rosenberg.lists@dewire.com>
-References: <gjre95$4cs$1@ger.gmane.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Fix sourcing "test-lib.sh" using dash shell in
+ "t3003-ls-files-narrow-match.sh"
+Date: Mon, 5 Jan 2009 14:30:02 +0100
+Message-ID: <20090105143002.8a369535.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Vasyl' Vavrychuk" <vvavrychuk@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jan 05 08:36:56 2009
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 05 14:31:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJk18-0001Pz-GW
-	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 08:36:54 +0100
+	id 1LJpXl-0000VD-U0
+	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 14:30:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751405AbZAEHf1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Jan 2009 02:35:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751402AbZAEHf1
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 02:35:27 -0500
-Received: from mail.dewire.com ([83.140.172.130]:27202 "EHLO dewire.com"
+	id S1753979AbZAEN3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2009 08:29:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751021AbZAEN3R
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 08:29:17 -0500
+Received: from smtp1-g21.free.fr ([212.27.42.1]:34673 "EHLO smtp1-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751362AbZAEHf0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Jan 2009 02:35:26 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 27834802A88;
-	Mon,  5 Jan 2009 08:35:23 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id J2JCCUnWRiwI; Mon,  5 Jan 2009 08:35:22 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 7914F80069F;
-	Mon,  5 Jan 2009 08:35:22 +0100 (CET)
-User-Agent: KMail/1.10.3 (Linux/2.6.27-11-generic; KDE/4.1.3; i686; ; )
-In-Reply-To: <gjre95$4cs$1@ger.gmane.org>
-Content-Disposition: inline
+	id S1753905AbZAEN3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2009 08:29:16 -0500
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 6FF299400E9;
+	Mon,  5 Jan 2009 14:29:05 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g21.free.fr (Postfix) with SMTP id 5F25C94016E;
+	Mon,  5 Jan 2009 14:29:03 +0100 (CET)
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104569>
 
-s=F6ndag 04 januari 2009 23:46:47 skrev Vasyl' Vavrychuk:
-> In order to implement new feature I have replaced class associated wi=
-th every table row.
-> CommitItem class encapsulate data that commit dialog manipulates with=
-=2E
-> Comparators are written using idiom from http://tobega.blogspot.com/2=
-008/05/beautiful-enums.html.
-> Clicks on a certain column are handled in HeaderSelectionListener cla=
-ss.
+dash barfs, on my old Ubuntu box, when "test-lib.sh" is sourced
+without "./".
 
-Hmm. This one cannot be applied on top of master. There is only only on=
-e commit on Dec 8
-that involves the same file, so If you could rebase that would be nice.=
- Other than that it looks ok.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t3003-ls-files-narrow-match.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Please also Cc me and Shawn on patches to reduce the risk of them getti=
-ng lost.
+	This patch applies to "pu".
 
--- robin
+diff --git a/t/t3003-ls-files-narrow-match.sh b/t/t3003-ls-files-narrow-match.sh
+index 9879525..b576bca 100755
+--- a/t/t3003-ls-files-narrow-match.sh
++++ b/t/t3003-ls-files-narrow-match.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='This test is for narrow spec matching'
+ 
+-. test-lib.sh
++. ./test-lib.sh
+ 
+ D="$(cd ..;pwd)"/t3003
+ 
+-- 
+1.6.1.143.gfd590.dirty
