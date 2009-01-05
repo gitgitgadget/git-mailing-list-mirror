@@ -1,102 +1,70 @@
-From: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
-Subject: [PATCH] get_authors.sh, author.rb: use -s option of git shortlog.
-Date: Mon,  5 Jan 2009 23:52:26 +0100
-Message-ID: <1231195946-20967-1-git-send-email-dato@net.com.org.es>
-References: <20090105185737.GV21154@genesis.frugalware.org>
-Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>,
-	=?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 05 23:53:54 2009
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Permit a wider range of repository names in jgit daemon requests
+Date: Tue, 6 Jan 2009 00:07:43 +0100
+Message-ID: <200901060007.43909.robin.rosenberg.lists@dewire.com>
+References: <1229992043-1053-1-git-send-email-spearce@spearce.org> <200901040048.01520.robin.rosenberg@dewire.com> <20090105024622.GC20973@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jan 06 00:09:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJyKX-0003Yd-21
-	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 23:53:53 +0100
+	id 1LJyZT-00082t-10
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 00:09:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751641AbZAEWwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2009 17:52:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751601AbZAEWwa
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 17:52:30 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:4451
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751271AbZAEWw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2009 17:52:29 -0500
-Received: from chistera.yi.org (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id CA4AC801BF94;
-	Mon,  5 Jan 2009 23:52:26 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LJyJ8-0005Ug-22; Mon, 05 Jan 2009 23:52:26 +0100
-X-Mailer: git-send-email 1.6.1.62.g677ca
-In-Reply-To: <20090105185737.GV21154@genesis.frugalware.org>
+	id S1751893AbZAEXHu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Jan 2009 18:07:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbZAEXHt
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 18:07:49 -0500
+Received: from mail.dewire.com ([83.140.172.130]:3468 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750726AbZAEXHt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Jan 2009 18:07:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id E33CB1484F4B;
+	Tue,  6 Jan 2009 00:07:45 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5FAj-4nCHOtV; Tue,  6 Jan 2009 00:07:45 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 49876803219;
+	Tue,  6 Jan 2009 00:07:45 +0100 (CET)
+User-Agent: KMail/1.10.3 (Linux/2.6.27-11-generic; KDE/4.1.3; i686; ; )
+In-Reply-To: <20090105024622.GC20973@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104603>
 
-Suggested by Miklos Vajna <vmiklos@frugalware.org>.
----
- app/models/author.rb  |   26 ++++++++++++--------------
- script/get_authors.sh |    2 +-
- 2 files changed, 13 insertions(+), 15 deletions(-)
+m=E5ndag 05 januari 2009 03:46:22 skrev Shawn O. Pearce:
+> The earlier restriction was too narrow for some applications, for
+> example repositories named "jgit.dev" and "jgit.test" are perfectly
+> valid Git repositories and should still be able to be served by
+> the daemon.
+>=20
+> By blocking out only uses of ".." as a path component and Windows
+> UNC paths (by blocking "\") we can reasonably prevent the client
+> from escaping the base dirctories configured in the daemon.
+>=20
+> +		if (name.startsWith("../") || name.contains("/../")
+> +				|| name.contains("\\"))
 
-> I suppose fixing up the ruby part after this is not that hard, sadly I
-> don't speak Ruby myself, so I have no idea where and what to touch. ;-)
+//host/share also works as UNC path (even the DOS commands support it, =
+provided
+you quote the paths) and if you block // shuldn't '/', and '[A-Z]:' als=
+o be blocked?=20
+\\ is a UNC-prefix only at the beginning of a path so if / need not be =
+filtered, nor=20
+does //. Inside a path \\ is the same as \ AFAIK (except directly after=
+ the drive letter.
+This should probablybe factored out into a utilty so we can have a simp=
+le unit test for it.
 
-Done.
-
-Btw, I don't think authors.txt should be in the repo at all, since it's
-automatically generated, but it's your choice. :-)
-
-diff --git a/app/models/author.rb b/app/models/author.rb
-index 8fafc15..6bf069a 100644
---- a/app/models/author.rb
-+++ b/app/models/author.rb
-@@ -1,22 +1,20 @@
- class Author
--	
--	def self.all
--		authors =  File.join(RAILS_ROOT, 'config/authors.txt')
-+  def self.all
-+    authors = File.join(RAILS_ROOT, 'config/authors.txt')
-     if File.exists?(authors)
-       authors = File.readlines(authors)
-       @authors = {:main => [], :contrib => []}
-       authors.each do |author|
--        data = author.split(' ')
--        number = data.pop.gsub('(', '').gsub(')', '').chomp
--        name = data.join(' ')
--        if(number.to_i > 50)
--          @authors[:main] << [name, number.to_i]
--        else
--          @authors[:contrib] << [name, number.to_i]
-+        if author =~ /(\d+)\s+(.+)/
-+          name, number = $2, $1.to_i
-+          if number > 50
-+            @authors[:main] << [name, number]
-+          else
-+            @authors[:contrib] << [name, number]
-+          end
-         end
-       end
-+      @authors
-     end
--		@authors
--	end
--	
--end
-\ No newline at end of file
-+  end
-+end
-diff --git a/script/get_authors.sh b/script/get_authors.sh
-index 9aa8c6b..028a354 100755
---- a/script/get_authors.sh
-+++ b/script/get_authors.sh
-@@ -1,3 +1,3 @@
- export GIT_DIR=/Users/schacon/projects/git/.git
- cd /Users/schacon/projects/git
--git log --pretty=short --no-merges | git shortlog -n | grep -v -e '^ ' | grep ':' > ../gitscm/config/authors.txt
-+git shortlog --no-merges -sn > ../gitscm/config/authors.txt
--- 
-1.6.1.62.g677ca
+-- robin
