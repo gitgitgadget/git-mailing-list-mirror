@@ -1,89 +1,68 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH v2] parse-opt: migrate builtin-apply.
-Date: Mon, 05 Jan 2009 20:12:22 +0100
-Message-ID: <20090105191222.GA14793@artemis.corp>
-References: <1230387764-11230-1-git-send-email-vmiklos@frugalware.org> <7vvdt5cmu6.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [ANNOUNCE] Git homepage change
+Date: Mon, 5 Jan 2009 20:40:11 +0100
+Organization: glandium.org
+Message-ID: <20090105194011.GB25104@glandium.org>
+References: <d411cc4a0812151007n1be9ce95h92c8c11592ea5f9d@mail.gmail.com> <20081216114138.GM12856@machine.or.cz> <d411cc4a0901011040h4ab97aag20de54a6e138a4ec@mail.gmail.com> <20090105164001.GA12275@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="u3/rZRmxL6MmkK24";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 05 20:14:09 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Jan 05 20:37:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJutt-0006lM-0C
-	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 20:14:09 +0100
+	id 1LJvGD-0006Ho-8b
+	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 20:37:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798AbZAETM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2009 14:12:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752638AbZAETM2
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 14:12:28 -0500
-Received: from pan.madism.org ([88.191.52.104]:59501 "EHLO hermes.madism.org"
+	id S1754177AbZAETfg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Jan 2009 14:35:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754161AbZAETfg
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 14:35:36 -0500
+Received: from vuizook.err.no ([85.19.221.46]:44072 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752685AbZAETM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2009 14:12:27 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 52BC93BA67;
-	Mon,  5 Jan 2009 20:12:23 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 936969B8F42; Mon,  5 Jan 2009 20:12:22 +0100 (CET)
+	id S1751331AbZAETff (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2009 14:35:35 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1LJvEW-0001E0-7D; Mon, 05 Jan 2009 20:35:30 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1LJvJ5-0006sP-2Q; Mon, 05 Jan 2009 20:40:11 +0100
 Content-Disposition: inline
-In-Reply-To: <7vvdt5cmu6.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <20090105164001.GA12275@machine.or.cz>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104595>
 
-
---u3/rZRmxL6MmkK24
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, Dec 27, 2008 at 09:47:13PM +0000, Junio C Hamano wrote:
-> Miklos Vajna <vmiklos@frugalware.org> writes:
+On Mon, Jan 05, 2009 at 05:40:01PM +0100, Petr Baudis wrote:
+>   Hi,
 >=20
-> > +static int option_parse_inaccurate(const struct option *opt,
-> > +				   const char *arg, int unset)
-> > +{
-> > +	options |=3D INACCURATE_EOF;
-> > +	return 0;
-> > +}
-> > +
-> > +static int option_parse_recount(const struct option *opt,
-> > +				const char *arg, int unset)
-> > +{
-> > +	options |=3D RECOUNT;
-> > +	return 0;
-> > +}
+>   thanks for the changes, Scott!
 >=20
-> I still haven't applied and ran the testsuite myself, but these makes me
-> wonder if there isn't a built-in "bit" type support in parse_options().
+>   Based on the previous feedback of other developers and my last revi=
+ew
+> of git-scm.com, I have changed git.or.cz to redirect to git-scm.com.
+>=20
+>   The wiki is still hosted at the original place for the time being, =
+as
+> well as the man/ gitbot redirect. To reach the original manpage, use
+> http://git.or.cz/index.html.
 
-There is.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+=46WIW, I think the "mascot" or whatever it is supposed to be, on the
+top right end, is "safe", trademark/copyright-wise. It looks too much
+like =E3=81=A9=E3=83=BC=E3=82=82=E3=81=8F=E3=82=93(D=C3=B4mo-kun), the =
+NHK mascot.
+http://images.google.co.jp/images?q=3D%E3%81%A9%E3%83%BC%E3%82%82%E3%81=
+%8F%E3%82%93&ie=3DUTF-8&oe=3DUTF-8&hl=3Den&um=3D1&sa=3DN&tab=3Dwi
 
---u3/rZRmxL6MmkK24
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkliW5UACgkQvGr7W6HudhyvzACfSt0a8zp0ZF1nUdblYH62syuT
-96EAoIw/kYxdiTZZUFUdwcP1bSBpcqTg
-=bAvN
------END PGP SIGNATURE-----
-
---u3/rZRmxL6MmkK24--
+Mike
