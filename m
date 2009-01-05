@@ -1,51 +1,63 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [BUG] unable to checkout branch with a clean worktree
-Date: Mon, 5 Jan 2009 17:05:27 +0100
-Message-ID: <20090105160527.GA7718@localhost>
-References: <35079.bFoQE3daRhY=.1231170168.squirrel@webmail.hotelhot.dk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Anders Melchiorsen <mail@cup.kalibalik.dk>
-X-From: git-owner@vger.kernel.org Mon Jan 05 17:08:00 2009
+From: henrik@austad.us
+Subject: [PATCH 2/2] Be consistent in switch usage for tar
+Date: Mon,  5 Jan 2009 16:25:37 +0100
+Message-ID: <1231169137-32653-3-git-send-email-henrik@austad.us>
+References: <1231169137-32653-1-git-send-email-henrik@austad.us>
+ <1231169137-32653-2-git-send-email-henrik@austad.us>
+Cc: Henrik Austad <henrik@austad.us>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 05 17:20:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJrza-0008Gv-8c
-	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 17:07:50 +0100
+	id 1LJsBE-0003l0-2g
+	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 17:19:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752844AbZAEQGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2009 11:06:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752712AbZAEQGT
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 11:06:19 -0500
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:34639 "EHLO
-	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752556AbZAEQGS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2009 11:06:18 -0500
-Received: from darc.dyndns.org ([80.123.242.182]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 5 Jan 2009 17:06:14 +0100
-Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1LJrxH-00023u-Si; Mon, 05 Jan 2009 17:05:27 +0100
-Content-Disposition: inline
-In-Reply-To: <35079.bFoQE3daRhY=.1231170168.squirrel@webmail.hotelhot.dk>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 05 Jan 2009 16:06:15.0279 (UTC) FILETIME=[8943C7F0:01C96F4F]
+	id S1750845AbZAEQSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2009 11:18:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750830AbZAEQSb
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 11:18:31 -0500
+Received: from mail47.e.nsc.no ([193.213.115.47]:43197 "EHLO mail47.e.nsc.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750778AbZAEQSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2009 11:18:31 -0500
+X-Greylist: delayed 3170 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Jan 2009 11:18:30 EST
+Received: from januz.myftp.org (084202164248.customer.alfanett.no [84.202.164.248])
+	by mail47.nsc.no (8.13.8/8.13.5) with ESMTP id n05FPalD013660;
+	Mon, 5 Jan 2009 16:25:38 +0100 (MET)
+Received: by januz.myftp.org (Postfix, from userid 1000)
+	id 7B385140DA; Mon,  5 Jan 2009 16:25:37 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.rc2
+In-Reply-To: <1231169137-32653-2-git-send-email-henrik@austad.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104583>
 
-On Mon, Jan 05, 2009 at 04:42:48PM +0100, Anders Melchiorsen wrote:
-> Git v1.6.1: The final checkout fails with an error about merge conflicts.
-> However, the worktree is clean, and I am not trying to do a merge.
-> 
-> Is this a known issue? If so, what is the particular issue that we should
-> avoid?
+From: Henrik Austad <henrik@austad.us>
 
-This is fixed by the recent patches for verify_absent. (Actually, just PATCH
-2/3 should be enough to fix this issue.)
+tar handles switches with and witouth preceding '-', but the documentation should be
+consistent nonetheless.
 
-http://article.gmane.org/gmane.comp.version-control.git/104317
+Signed-off-by: Henrik Austad <henrik@austad.us>
+---
+ Documentation/user-manual.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 5242a7e..19f571a 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1009,7 +1009,7 @@ $ git init
+ If you have some initial content (say, a tarball):
+ 
+ -------------------------------------------------
+-$ tar -xzvf project.tar.gz
++$ tar xzvf project.tar.gz
+ $ cd project
+ $ git init
+ $ git add . # include everything below ./ in the first commit:
+-- 
+1.6.1.36.g8430e
