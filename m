@@ -1,55 +1,66 @@
-From: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
-Subject: Re: [EGIT PATCH] Fixed trivial warnings. Mainly parametrized raw
- types,   added serialVersionUID, removed unnecessery throws.
-Date: Mon, 05 Jan 2009 01:26:02 +0200
-Message-ID: <gjrgip$al9$1@ger.gmane.org>
-References: <gjrcni$9q$1@ger.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-branch --print-current
+Date: Sun, 04 Jan 2009 16:41:03 -0800
+Message-ID: <7v1vvitwio.fsf@gitster.siamese.dyndns.org>
+References: <quack.20090101T1928.lthzliaqtdf@roar.cs.berkeley.edu>
+ <402731c90901012026j470f35ffj1eaa189a837054f3@mail.gmail.com>
+ <quack.20090103T1818.lth7i5bg6f7@roar.cs.berkeley.edu>
+ <20090104033839.GD21154@genesis.frugalware.org>
+ <quack.20090103T2026.lth3afzg0hx@roar.cs.berkeley.edu>
+ <7vzli73b1g.fsf@gitster.siamese.dyndns.org>
+ <9b18b3110901040535m1f67cb7er95823d31443ee971@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 05 00:27:55 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Karl Chen" <quarl@cs.berkeley.edu>,
+	"Miklos Vajna" <vmiklos@frugalware.org>,
+	"David Aguilar" <davvid@gmail.com>,
+	"Git mailing list" <git@vger.kernel.org>
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 05 01:42:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJcNr-0002Z5-Mg
-	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 00:27:52 +0100
+	id 1LJdYK-00053x-DK
+	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 01:42:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147AbZADX03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 18:26:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752062AbZADX03
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 18:26:29 -0500
-Received: from main.gmane.org ([80.91.229.2]:42812 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751496AbZADX03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 18:26:29 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LJcMU-0002Mz-B3
-	for git@vger.kernel.org; Sun, 04 Jan 2009 23:26:27 +0000
-Received: from 91.200.115.178 ([91.200.115.178])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Jan 2009 23:26:26 +0000
-Received: from vvavrychuk by 91.200.115.178 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Jan 2009 23:26:26 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 91.200.115.178
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <gjrcni$9q$1@ger.gmane.org>
+	id S1751538AbZAEAlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jan 2009 19:41:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751753AbZAEAlR
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 19:41:17 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60186 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751524AbZAEAlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2009 19:41:16 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 20EA88DDD8;
+	Sun,  4 Jan 2009 19:41:14 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0213E8DDD6; Sun,
+  4 Jan 2009 19:41:06 -0500 (EST)
+In-Reply-To: <9b18b3110901040535m1f67cb7er95823d31443ee971@mail.gmail.com>
+ (demerphq@gmail.com's message of "Sun, 4 Jan 2009 14:35:58 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8E4225F2-DAC1-11DD-9FAA-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104553>
 
-Not sure what is right:
-public abstract class AnyObjectId implements Comparable<ObjectId> {
-or
-public abstract class AnyObjectId implements Comparable<AnyObjectId> {
+demerphq <demerphq@gmail.com> writes:
 
-IMHO second, but class AnyObjectId contains some compareTo(ObjectId).
+> The version im using, from git version 1.6.0.4.724.ga0d3a produces the
+> following error:
+>
+> cut: ./HEAD: No such file or directory
+>
+> when in the .git/refs directory.
 
-Also not sure if this bunch of changes is complete enough. Maybe it's better to make more fixes in this direction and then commit.
+Personally, I think you are nuts to be in .git/refs and want to use that
+information for anything useful, but if it is an easy enough fix, a patch
+would be useful.
+
+Shawn?
