@@ -1,84 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-branch --print-current
-Date: Sun, 04 Jan 2009 19:55:34 -0800
-Message-ID: <7vsknys8y1.fsf@gitster.siamese.dyndns.org>
-References: <quack.20090101T1928.lthzliaqtdf@roar.cs.berkeley.edu>
- <402731c90901012026j470f35ffj1eaa189a837054f3@mail.gmail.com>
- <quack.20090103T1818.lth7i5bg6f7@roar.cs.berkeley.edu>
- <20090104033839.GD21154@genesis.frugalware.org>
- <quack.20090103T2026.lth3afzg0hx@roar.cs.berkeley.edu>
- <7vzli73b1g.fsf@gitster.siamese.dyndns.org>
- <9b18b3110901040535m1f67cb7er95823d31443ee971@mail.gmail.com>
- <7v1vvitwio.fsf@gitster.siamese.dyndns.org>
- <20090105021832.GA20973@spearce.org>
+From: "Caleb Cushing" <xenoterracide@gmail.com>
+Subject: Re: git has modified files after clean checkout
+Date: Mon, 5 Jan 2009 00:11:39 -0500
+Message-ID: <81bfc67a0901042111v67fa1fb7k3a73722c2273ebec@mail.gmail.com>
+References: <81bfc67a0812311223g2b6e8476y84b23c19977dfd10@mail.gmail.com>
+	 <402731c90812311541v28ac9617ge52e0e5c0f1298d2@mail.gmail.com>
+	 <81bfc67a0901010048l7a4a8fa1h42f7cd448dfc704@mail.gmail.com>
+	 <200901012048.13630.trast@student.ethz.ch>
+	 <81bfc67a0901012149u23c8c9avb6f47817a56750c7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: demerphq <demerphq@gmail.com>, Karl Chen <quarl@cs.berkeley.edu>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	David Aguilar <davvid@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jan 05 04:57:15 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "David Aguilar" <davvid@gmail.com>, git@vger.kernel.org
+To: "Thomas Rast" <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jan 05 06:13:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJgaT-00071W-9f
-	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 04:57:09 +0100
+	id 1LJhlw-0002ur-HR
+	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 06:13:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752222AbZAEDzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jan 2009 22:55:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752227AbZAEDzs
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 22:55:48 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35989 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752219AbZAEDzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 22:55:48 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E41351BD12;
-	Sun,  4 Jan 2009 22:55:44 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8F4661BD18; Sun, 
- 4 Jan 2009 22:55:36 -0500 (EST)
-In-Reply-To: <20090105021832.GA20973@spearce.org> (Shawn O. Pearce's message
- of "Sun, 4 Jan 2009 18:18:32 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BA973DAC-DADC-11DD-82DC-EB51113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1750890AbZAEFLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2009 00:11:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750830AbZAEFLn
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 00:11:43 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:32871 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750774AbZAEFLm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2009 00:11:42 -0500
+Received: by bwz14 with SMTP id 14so22143285bwz.13
+        for <git@vger.kernel.org>; Sun, 04 Jan 2009 21:11:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=yxKsPyUIhIuN8TOlWHApN90jjRrF1/M5ip04vdE+soM=;
+        b=Ik1Hv/KGnfJmFfXuMfXIk6JfoGr92ydijw4vnGqBBRNE2aez9j/d8PbrDSI0ZwIocV
+         HNYvp+DQu7GRBh77tOaMDTKX6q06YCir+E+sulaj4L/tmRtL2JpZBYyF72n07uK8iyhy
+         yT30FG2qcoSq1+UikepWa/rLHaaD9UVmIY3nc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=H3+hSa/gnJeSBxwsk7/mVqmJDQZgz11v3uA7P3YijSFxipCzrC8qdJBULJxH4NXJ+y
+         WKYsZCjhDWB8GOkemS/FNyvct/Ma/HXaOHY37afFo/zwcquIl6Y+foPYE7GsOSQH/JGJ
+         VG0qcaNNfIL8McHd7cE8U7Cq9UAtZuG0oe4DY=
+Received: by 10.223.119.5 with SMTP id x5mr14317675faq.40.1231132299722;
+        Sun, 04 Jan 2009 21:11:39 -0800 (PST)
+Received: by 10.223.107.205 with HTTP; Sun, 4 Jan 2009 21:11:39 -0800 (PST)
+In-Reply-To: <81bfc67a0901012149u23c8c9avb6f47817a56750c7@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104561>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+testing 1.6.1 release (not head) and still see the issue. right now
+I'm assuming disabling autocrlf = input would help. regardless is this
+behavior a bug or anticipated?
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->> demerphq <demerphq@gmail.com> writes:
->> 
->> > The version im using, from git version 1.6.0.4.724.ga0d3a produces the
->> > following error:
->> >
->> > cut: ./HEAD: No such file or directory
->> >
->> > when in the .git/refs directory.
->> 
->> Personally, I think you are nuts to be in .git/refs and want to use that
->> information for anything useful, but if it is an easy enough fix, a patch
->> would be useful.
->
-> I agree, its nuts to be there.  But this also does show up in 1.6.1.
-> What's odd is the output of rev-parse --git-dir is wrong:
->
->   $ cd .git/refs
->   $ git rev-parse --git-dir
->   .
->
-> Its *not* ".", its "..", I'm *in* the directory.  This throws off
-> a lot of the other operations we do in __git_ps1, like detecting
-> the repository state by checking MERGE_HEAD or rebase-apply.
->
-> I think we should fix rev-parse --git-dir if we can, not the bash
-> completion code.
+-- 
+Caleb Cushing
 
-Sigh, yeah, that is what I thought would be happening.
+http://xenoterracide.blogspot.com
