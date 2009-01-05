@@ -1,65 +1,169 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] Fix sourcing "test-lib.sh" using dash shell in
- "t3003-ls-files-narrow-match.sh"
-Date: Mon, 5 Jan 2009 14:30:02 +0100
-Message-ID: <20090105143002.8a369535.chriscool@tuxfamily.org>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: [PATCH/RFC 0/4] git checkout: optimise away lots of lstat() calls
+Date: Mon, 05 Jan 2009 14:09:57 +0100
+Message-ID: <1231161001-32599-1-git-send-email-barvik@broadpark.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 05 14:31:05 2009
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Kjetil Barvik <barvik@broadpark.no>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 05 15:11:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJpXl-0000VD-U0
-	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 14:30:58 +0100
+	id 1LJqB3-0003dk-Vs
+	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 15:11:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753979AbZAEN3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2009 08:29:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751021AbZAEN3R
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 08:29:17 -0500
-Received: from smtp1-g21.free.fr ([212.27.42.1]:34673 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753905AbZAEN3Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2009 08:29:16 -0500
-Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 6FF299400E9;
-	Mon,  5 Jan 2009 14:29:05 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g21.free.fr (Postfix) with SMTP id 5F25C94016E;
-	Mon,  5 Jan 2009 14:29:03 +0100 (CET)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
+	id S1754162AbZAEOKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2009 09:10:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754153AbZAEOKK
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 09:10:10 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:55082 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754136AbZAEOKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2009 09:10:09 -0500
+X-Greylist: delayed 3603 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Jan 2009 09:10:08 EST
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KD000DDI1WQOL50@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Mon, 05 Jan 2009 14:10:02 +0100 (CET)
+Received: from localhost.localdomain ([80.202.166.236])
+ by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTPA id <0KD000I6W1WPP470@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Mon, 05 Jan 2009 14:10:02 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.rc1.49.g7f705
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104570>
 
-dash barfs, on my old Ubuntu box, when "test-lib.sh" is sourced
-without "./".
+I have just started to clone some interesting Linux git trees to watch
+the development more closely, and therefore also started to use git. I
+noticed that 'git checkout' takes some time, and especially that the
+'git checkout' command does lots and lots of lstat() calls.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/t3003-ls-files-narrow-match.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+After some more investigation and thinking, I have made 4 patches and
+been able to optimise away over 42% of all lstat() calls in some cases
+for the 'git checkout' command.  I have not tested other git porcelain
+commands for reduced lstat() calls, but I would guess that the more
+effective 'lstat_cache()' compared to 'has_leading_symlink_cache()',
+should also give better numbers in other cases.
 
-	This patch applies to "pu".
+All the 4 patches is against git master, and the git 'make test'
+test suite still passes after each patch.
 
-diff --git a/t/t3003-ls-files-narrow-match.sh b/t/t3003-ls-files-narrow-match.sh
-index 9879525..b576bca 100755
---- a/t/t3003-ls-files-narrow-match.sh
-+++ b/t/t3003-ls-files-narrow-match.sh
-@@ -2,7 +2,7 @@
- 
- test_description='This test is for narrow spec matching'
- 
--. test-lib.sh
-+. ./test-lib.sh
- 
- D="$(cd ..;pwd)"/t3003
- 
--- 
-1.6.1.143.gfd590.dirty
+To document the improvement, below is some numbers, which compares
+before and after all 4 patches. To reproduce the numbers:
+
+- git clone the Linux git tree to be able to get the Linux tags
+  'v2.6.25' and 'v2.6.27'.
+- git checkout -b my-v2.6.27 v2.6.27
+- git checkout -b my-v2.6.25 v2.6.25
+
+Then, when the current branch is 'my-v2.6.25' do:
+
+  strace -o strace_to27 -T git checkout -q my-v2.6.27
+
+And then you pretty print and collect stats from the 'strace_to27'
+file.  If someone wants a copy of the strace_stat.pl script, which I
+made/used to do the pretty printing, then give me a hint.
+
+Below is the stats/numbers from the current git version (before the 4
+patches).  Notice that we do an lstat() call on the "arch" directory
+over 6000 times!
+
+TOTAL      185151 100.000% OK:165544 NOT: 19607  11.136001 sec   60 usec/call
+lstat64    120954  65.327% OK:107013 NOT: 13941   5.388727 sec   45 usec/call
+  strings  120954 tot  30163 uniq   4.010 /uniq   5.388727 sec   45 usec/call
+  files     61491 tot  28712 uniq   2.142 /uniq   2.740520 sec   45 usec/call
+  dirs      45522 tot   1436 uniq  31.701 /uniq   1.994448 sec   44 usec/call
+  errors    13941 tot   5189 uniq   2.687 /uniq   0.653759 sec   47 usec/call
+             6297   5.206% OK:  6297 NOT:     0  "arch"
+             4544   3.757% OK:  4544 NOT:     0  "drivers"
+             1816   1.501% OK:  1816 NOT:     0  "arch/arm"
+             1499   1.239% OK:  1499 NOT:     0  "include"
+              912   0.754% OK:   912 NOT:     0  "arch/powerpc"
+              764   0.632% OK:   764 NOT:     0  "fs"
+              746   0.617% OK:   746 NOT:     0  "drivers/net"
+              662   0.547% OK:   662 NOT:     0  "net"
+              652   0.539% OK:   325 NOT:   327  "arch/sparc/include"
+              636   0.526% OK:   636 NOT:     0  "drivers/media"
+              606   0.501% OK:   606 NOT:     0  "include/linux"
+              533   0.441% OK:   533 NOT:     0  "arch/sh"
+              522   0.432% OK:   260 NOT:   262  "arch/powerpc/include"
+              488   0.403% OK:   243 NOT:   245  "arch/sh/include"
+              413   0.341% OK:   413 NOT:     0  "arch/sparc"
+              390   0.322% OK:   390 NOT:     0  "arch/x86"
+              383   0.317% OK:   383 NOT:     0  "Documentation"
+              370   0.306% OK:   184 NOT:   186  "arch/ia64/include"
+              366   0.303% OK:   366 NOT:     0  "drivers/media/video"
+              348   0.288% OK:   173 NOT:   175  "arch/arm/include"
+
+Here is the stats/numbers after applying the 4 patches.  Notice how
+nice the top 20 entries list now looks!
+
+TOTAL      133655 100.000% OK:121615 NOT: 12040  10.429999 sec   78 usec/call
+lstat64     69603  52.077% OK: 63218 NOT:  6385   3.419920 sec   49 usec/call
+  strings   69603 tot  30163 uniq   2.308 /uniq   3.419920 sec   49 usec/call
+  files     61491 tot  28712 uniq   2.142 /uniq   3.034869 sec   49 usec/call
+  dirs       1727 tot   1164 uniq   1.484 /uniq   0.075681 sec   44 usec/call
+  errors     6385 tot   5189 uniq   1.230 /uniq   0.309370 sec   48 usec/call
+                4   0.006% OK:     4 NOT:     0  ".gitignore"
+                4   0.006% OK:     4 NOT:     0  ".mailmap"
+                4   0.006% OK:     4 NOT:     0  "CREDITS"
+                4   0.006% OK:     4 NOT:     0  "Documentation/00-INDEX"
+                4   0.006% OK:     4 NOT:     0  "Documentation/ABI/testing/sysfs-block"
+                4   0.006% OK:     4 NOT:     0  "Documentation/ABI/testing/sysfs-firmware-acpi"
+                4   0.006% OK:     4 NOT:     0  "Documentation/CodingStyle"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DMA-API.txt"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DMA-mapping.txt"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/Makefile"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/gadget.tmpl"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/kernel-api.tmpl"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/kernel-locking.tmpl"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/procfs-guide.tmpl"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/procfs_example.c"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/rapidio.tmpl"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/s390-drivers.tmpl"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/uio-howto.tmpl"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/videobook.tmpl"
+                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/writing_usb_driver.tmpl"
+
+Note that the overall used system time as recorded from 'strace -T',
+does not drop so much that the reduced lstat() time should indicate
+for _this_ particular test run.  This is because now each unlink()
+call takes much more time, at least for me on an slow ide disk (using
+ext3) on a laptop.
+
+A simple test gives me an overall improvement of 2.937 seconds: real
+time drops from 28.195s (best of 5 runs with 'time git ...'), to
+25.381s (best of 5 runs).
+
+Comments?
+
+Kjetil Barvik (4):
+  Optimised, faster, more effective symlink/directory detection
+  Use 'lstat_cache()' instead of 'has_symlink_leading_path()'
+  create_directories() inside entry.c: only check each directory once!
+  remove the old 'has_symlink_leading_path()' function
+
+ Makefile               |    2 +-
+ builtin-add.c          |    5 ++-
+ builtin-apply.c        |    5 ++-
+ builtin-update-index.c |    5 ++-
+ cache.h                |   17 +++++++-
+ diff-lib.c             |    5 ++-
+ dir.c                  |    4 +-
+ entry.c                |   86 +++++++++++++++++++++++++++++++--------
+ lstat_cache.c          |  105 ++++++++++++++++++++++++++++++++++++++++++++++++
+ symlinks.c             |   64 -----------------------------
+ unpack-trees.c         |   10 ++++-
+ 11 files changed, 217 insertions(+), 91 deletions(-)
+ create mode 100644 lstat_cache.c
+ delete mode 100644 symlinks.c
