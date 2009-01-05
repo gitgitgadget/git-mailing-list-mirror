@@ -1,50 +1,63 @@
 From: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
 Subject: Re: [EGIT PATCH] Fixed trivial warnings. Mainly parametrized raw
  types, added serialVersionUID, removed unnecessery throws.
-Date: Mon, 05 Jan 2009 03:08:30 +0200
-Message-ID: <49615D8E.9020205@gmail.com>
+Date: Mon, 05 Jan 2009 03:13:13 +0200
+Message-ID: <49615EA9.9070706@gmail.com>
 References: <gjrcni$9q$1@ger.gmane.org> <200901050004.41531.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 05 02:10:21 2009
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Jan 05 02:15:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJdz2-0002i0-Fg
-	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 02:10:20 +0100
+	id 1LJe3b-0003Zv-M0
+	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 02:15:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbZAEBI7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Jan 2009 20:08:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbZAEBI7
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 20:08:59 -0500
-Received: from main.gmane.org ([80.91.229.2]:44266 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751029AbZAEBI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jan 2009 20:08:59 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LJdxg-0005rI-CL
-	for git@vger.kernel.org; Mon, 05 Jan 2009 01:08:56 +0000
-Received: from 91.200.115.178 ([91.200.115.178])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 05 Jan 2009 01:08:56 +0000
-Received: from vvavrychuk by 91.200.115.178 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 05 Jan 2009 01:08:56 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 91.200.115.178
+	id S1751935AbZAEBNp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Jan 2009 20:13:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751931AbZAEBNo
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Jan 2009 20:13:44 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:41340 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750772AbZAEBNm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jan 2009 20:13:42 -0500
+Received: by bwz14 with SMTP id 14so22024698bwz.13
+        for <git@vger.kernel.org>; Sun, 04 Jan 2009 17:13:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:newsgroups:to:cc:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=AJZ5W9OfpCJseF0w0PH07nlRyviXinf40nqiWo6eQDk=;
+        b=k8cTWB1C1pKy/1TWeFg5YlOX0dgP+ydvkpwbcdy61E1VwADC4Gx26Ea/WBDKJDFj5V
+         VajTN4lzFRcrk/PX5agl4ZRdW1uaKO7E4DhKe8SHwjGV1Q4l04WL/hYypPUx7kqxtAdf
+         lYocQ6Wh2+SZ/j6msIhvaaLD1M2hSYUXFLnYI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        b=vaA33QMZKV2qHnRZzjorlqzc1dbq1xwTsALK5KVtPw+bAWatSLCSAUnDVHCXlBgQlW
+         SJRqCkebifHWSDydx0x5a8PLa6jlWHEyz/kOLFetasF6iXXaNOQa+JMv/b2hLIm2BiQY
+         OerHqxj4YYorxmgEsD6fy4aBEUjlUPldkYjSQ=
+Received: by 10.181.154.16 with SMTP id g16mr7873540bko.179.1231118019363;
+        Sun, 04 Jan 2009 17:13:39 -0800 (PST)
+Received: from ?192.167.1.125? ([91.200.115.178])
+        by mx.google.com with ESMTPS id h2sm37707472fkh.29.2009.01.04.17.13.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 04 Jan 2009 17:13:38 -0800 (PST)
 User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+Newsgroups: gmane.comp.version-control.git
 In-Reply-To: <200901050004.41531.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104555>
 
 Robin Rosenberg wrote:
 > s=F6ndag 04 januari 2009 23:20:19 skrev Vasyl' Vavrychuk:
