@@ -1,96 +1,83 @@
-From: Alexander Potashev <aspotashev@gmail.com>
-Subject: Re: [PATCH 2/2] Be consistent in switch usage for tar
-Date: Mon, 5 Jan 2009 21:19:50 +0300
-Message-ID: <20090105181950.GA5403@myhost>
-References: <1231169137-32653-1-git-send-email-henrik@austad.us> <1231169137-32653-2-git-send-email-henrik@austad.us> <1231169137-32653-3-git-send-email-henrik@austad.us>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [ANNOUNCE] Git homepage change
+Date: Mon, 5 Jan 2009 19:57:37 +0100
+Message-ID: <20090105185737.GV21154@genesis.frugalware.org>
+References: <d411cc4a0812151007n1be9ce95h92c8c11592ea5f9d@mail.gmail.com> <20081216114138.GM12856@machine.or.cz> <d411cc4a0901011040h4ab97aag20de54a6e138a4ec@mail.gmail.com> <20090105164001.GA12275@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: henrik@austad.us
-X-From: git-owner@vger.kernel.org Mon Jan 05 19:21:22 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="xluWKNDh2/FEVhBx"
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 05 19:59:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LJu4l-0005ug-Nb
-	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 19:21:20 +0100
+	id 1LJufH-0001ay-4m
+	for gcvg-git-2@gmane.org; Mon, 05 Jan 2009 19:59:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751691AbZAEST6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2009 13:19:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751959AbZAEST6
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 13:19:58 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:57663 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751575AbZAEST5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jan 2009 13:19:57 -0500
-Received: by bwz14 with SMTP id 14so22981686bwz.13
-        for <git@vger.kernel.org>; Mon, 05 Jan 2009 10:19:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=1pGBfpJ8lEhthJJmoU8Cdar/apAxL9ceGVz9wVvIt64=;
-        b=ZXDJxY/FpSVWge1w+2zg4TqjNUP92FsXYaC2jAm+9BaRaJ7hQbvUSO338W9CzjBcH8
-         UgwOwW4IAB9bB0+Md0TuxqONQOqOIZfTUkSP88mssqjS6hhXImOZp7RssdXnTOCISFAW
-         YkAfcX23jfpf9c+bLFF13OK+4chNbvO4DxWOA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=vpnLoCLlgWQCymI8ZAtELt8JzAkg4MdMrIELEG4/lYvZsmFERuXagzvxQIC3MMxV6j
-         i8umKyrYLVScYxNfyCPQLJ7OPO78+P7vsZMDK77/8nKoanOFrh6cFLkKI/6q/lEAxycA
-         n+34WQbkm3y3QMFqezYhmH0q7Wu3TuqhM9dzs=
-Received: by 10.223.112.201 with SMTP id x9mr14811517fap.69.1231179594104;
-        Mon, 05 Jan 2009 10:19:54 -0800 (PST)
-Received: from smtp.gmail.com (ppp91-77-14-132.pppoe.mtu-net.ru [91.77.14.132])
-        by mx.google.com with ESMTPS id f31sm38489914fkf.26.2009.01.05.10.19.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 05 Jan 2009 10:19:53 -0800 (PST)
-Received: by smtp.gmail.com (sSMTP sendmail emulation); Mon, 05 Jan 2009 21:19:50 +0300
+	id S1754714AbZAES5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2009 13:57:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754705AbZAES5m
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 13:57:42 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:43911 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754699AbZAES5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2009 13:57:40 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 30EE3580CA;
+	Mon,  5 Jan 2009 19:57:39 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 71B864465E;
+	Mon,  5 Jan 2009 19:57:37 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 78FEF11B8630; Mon,  5 Jan 2009 19:57:37 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <1231169137-32653-3-git-send-email-henrik@austad.us>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <20090105164001.GA12275@machine.or.cz>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104590>
-
-On 16:25 Mon 05 Jan     , henrik@austad.us wrote:
-> From: Henrik Austad <henrik@austad.us>
-> 
-> tar handles switches with and witouth preceding '-', but the documentation should be
-
-s/witouth/without
-
-> consistent nonetheless.
-> 
-> Signed-off-by: Henrik Austad <henrik@austad.us>
-> ---
->  Documentation/user-manual.txt |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-> index 5242a7e..19f571a 100644
-> --- a/Documentation/user-manual.txt
-> +++ b/Documentation/user-manual.txt
-> @@ -1009,7 +1009,7 @@ $ git init
->  If you have some initial content (say, a tarball):
->  
->  -------------------------------------------------
-> -$ tar -xzvf project.tar.gz
-> +$ tar xzvf project.tar.gz
-
-Btw, tar manpage uses dashed options in usage examples:
-
-	tar -xvf foo.tar
-		verbosely extract foo.tar
-	...
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104591>
 
 
->  $ cd project
->  $ git init
->  $ git add . # include everything below ./ in the first commit:
-> -- 
-> 1.6.1.36.g8430e
+--xluWKNDh2/FEVhBx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Mon, Jan 05, 2009 at 05:40:01PM +0100, Petr Baudis <pasky@suse.cz> wrote:
+>   Based on the previous feedback of other developers and my last review
+> of git-scm.com, I have changed git.or.cz to redirect to git-scm.com.
+
+Just wondering, why don't you use the -s option of git shortlog in
+./script/get_authors.sh?
+
+I mean:
+
+diff --git a/script/get_authors.sh b/script/get_authors.sh
+index 9aa8c6b..89948e2 100755
+--- a/script/get_authors.sh
++++ b/script/get_authors.sh
+@@ -1,3 +1,3 @@
+ export GIT_DIR=/Users/schacon/projects/git/.git
+ cd /Users/schacon/projects/git
+-git log --pretty=short --no-merges | git shortlog -n | grep -v -e '^ ' | grep ':' > ../gitscm/config/authors.txt
++git shortlog -s -n > ../gitscm/config/authors.txt
+
+I suppose fixing up the ruby part after this is not that hard, sadly I
+don't speak Ruby myself, so I have no idea where and what to touch. ;-)
+
+--xluWKNDh2/FEVhBx
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkliWCEACgkQe81tAgORUJaVaQCdGvumlnFhb+fq5FM5onEYmjxD
+rVIAoJghp4yRJgRtFNEvWg97J5bIwH+d
+=a6dt
+-----END PGP SIGNATURE-----
+
+--xluWKNDh2/FEVhBx--
