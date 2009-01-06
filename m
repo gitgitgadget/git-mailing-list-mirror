@@ -1,78 +1,65 @@
-From: "Jike Song" <albcamus@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: How make "git checkout <commit> <file>" *not* alter index?
-Date: Tue, 6 Jan 2009 14:17:16 +0800
-Message-ID: <df9815e70901052217m3bdb29e4y8f28a1300169c1ea@mail.gmail.com>
+Date: Mon, 05 Jan 2009 22:26:05 -0800
+Message-ID: <7vk599ne6a.fsf@gitster.siamese.dyndns.org>
 References: <20090106051852.GA3278@seberino.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: chris@seberino.org
-X-From: git-owner@vger.kernel.org Tue Jan 06 07:18:44 2009
+X-From: git-owner@vger.kernel.org Tue Jan 06 07:27:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LK5H1-0001LW-46
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 07:18:43 +0100
+	id 1LK5Pc-0002xP-57
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 07:27:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751384AbZAFGRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 01:17:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751321AbZAFGRU
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 01:17:20 -0500
-Received: from ti-out-0910.google.com ([209.85.142.189]:17566 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751240AbZAFGRT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 01:17:19 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so9706219tic.23
-        for <git@vger.kernel.org>; Mon, 05 Jan 2009 22:17:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=6aGgms/MsIZUx96L2ac4ChEq0WPdoarHxUQOgCA5HWc=;
-        b=tTFeU2rECVAe1FxPLxn9AKHtLQGj6VT/PCpJaE4D0wuy9bcFs5Odr4fembRs+YRezD
-         ICjwU1FllPfPFqgAJLm5L6V76VEhgQ83YyodWKcNlNIPHZ3y3Vau0UP3Uj/dxZ8e+7N2
-         6kZ603JUPuUjd7DDv6hn1GsrVR7nFVDSP29Og=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=aqUGrICkts7KNoBAj8ufCzZiIBP0bn+54q/DeXRTXExxIynsocp78uSm1k3kSxQd3J
-         w9UUbIhUugosOBWXvWrm3nZgJsqSeGC18Ifj1WYZN7fp2ALns7O3etwSreBBUZD9HUrG
-         YPnCsgysNLfWkzoiwzysbfjs98vLYtrMsxD5M=
-Received: by 10.110.53.19 with SMTP id b19mr16720765tia.53.1231222637034;
-        Mon, 05 Jan 2009 22:17:17 -0800 (PST)
-Received: by 10.110.10.20 with HTTP; Mon, 5 Jan 2009 22:17:16 -0800 (PST)
-In-Reply-To: <20090106051852.GA3278@seberino.org>
-Content-Disposition: inline
+	id S1751321AbZAFG0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 01:26:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751137AbZAFG0N
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 01:26:13 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36657 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104AbZAFG0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 01:26:12 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 473271BE63;
+	Tue,  6 Jan 2009 01:26:11 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D96AF1BE7F; Tue, 
+ 6 Jan 2009 01:26:07 -0500 (EST)
+In-Reply-To: <20090106051852.GA3278@seberino.org> (chris@seberino.org's
+ message of "Mon, 5 Jan 2009 21:18:52 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E92370E4-DBBA-11DD-9E6C-EB51113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104638>
 
-On Tue, Jan 6, 2009 at 1:18 PM,  <chris@seberino.org> wrote:
+chris@seberino.org writes:
+
 > I want to pull an old version of a file into my local directory and make it
 > appear like work I haven't added to index yet...
->
->
-> So how modify
->
->
-> git checkout <commit> <file>
->
-> to do this?
 
-I have a stupid way to do this:
+The command to reset the index can be used any time you have unwanted
+changes to it and pretend you started from the latest commit (aka HEAD).
 
- $ git show v2.6.12:Makefile > Makefile
- $ git diff --cached  /* no outputs */
+Typically, you use it to recover from a "git add" you did by mistake,
+e.g.
 
-Ugly but seems work.
+    $ edit frotz.c nitfol.c
+    $ git add frotz.c nitfol.c
+    ... oops, I do not want the changed frotz.c in the next commit.
+    $ git reset frotz.c
+    $ git commit -m 'update nitfol.c for such and such reasons'
 
--- 
-Thanks,
-Jike
+This procedure can be used after you have smudged the index in an unwated
+way, and is not limited to "git add" (or "git add -p").  In this case, you
+can do:
+
+    $ git checkout HEAD~43 Makefile
+    $ git reset Makefile
