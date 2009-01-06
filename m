@@ -1,86 +1,85 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [JGIT PATCH] Improve the sideband progress scaper to be more
- accurate
-Date: Tue, 06 Jan 2009 15:55:23 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0901061546460.26118@xanadu.home>
-References: <1230055423-9944-1-git-send-email-spearce@spearce.org>
- <20081231073505.GA22551@spearce.org> <20081231190401.GI29071@spearce.org>
- <200901032312.53148.robin.rosenberg@dewire.com>
- <alpine.LFD.2.00.0901061343000.26118@xanadu.home>
- <20090106192747.GD24578@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH/RFC v2 2/4] Use 'lstat_cache()' instead of
+ 'has_symlink_leading_path()'
+Date: Tue, 6 Jan 2009 13:08:58 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0901061304280.3057@localhost.localdomain>
+References: <1231274192-30478-1-git-send-email-barvik@broadpark.no> <1231274192-30478-3-git-send-email-barvik@broadpark.no>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jan 06 21:57:05 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Kjetil Barvik <barvik@broadpark.no>
+X-From: git-owner@vger.kernel.org Tue Jan 06 22:10:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKIys-0008Jy-Af
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 21:56:54 +0100
+	id 1LKJC5-0005zY-26
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 22:10:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752029AbZAFUza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 15:55:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbZAFUza
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 15:55:30 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:64138 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751403AbZAFUz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 15:55:29 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KD2003MDI4BAY00@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 06 Jan 2009 15:55:24 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20090106192747.GD24578@spearce.org>
+	id S1751630AbZAFVJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 16:09:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751647AbZAFVJH
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 16:09:07 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:51790 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751586AbZAFVJG (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jan 2009 16:09:06 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n06L8xoX030350
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 6 Jan 2009 13:09:00 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n06L8wBu023822;
+	Tue, 6 Jan 2009 13:08:59 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1231274192-30478-3-git-send-email-barvik@broadpark.no>
 User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.944 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104727>
 
-On Tue, 6 Jan 2009, Shawn O. Pearce wrote:
 
-> Nicolas Pitre <nico@cam.org> wrote:
-> > There may indeed be line fragments sent over the sideband channel, as 
-> > well as the opposite which is multiple lines sent at once in a single 
-> > packet.  If you look at sideband.c you'll find about all those cases.
+
+On Tue, 6 Jan 2009, Kjetil Barvik wrote:
+?
+> Start using the optimised, faster and more effective symlink/directory
+> cache.  The previously used call:
 > 
-> Thanks, that's what I thought...
->  
-> > In general, what you have to do is:
-> > 
-> >  - for each packet:
-> >    - split into multiple chunks on line breaks ('\r' or '\n')
-> >    - for each chunk:
-> >      - if last chunk didn't end with a line break, or if current 
-> >        chunk is empty or only contains a line break, then skip printing 
-> >        the "remote:" prefix.  Otherwise print it.
-> >      - print the current chunk up to any line break
-> >      - if current chunk contains a line break and other characters then
-> >        print a sequence to clear the remaining of the screen line
-> >      - print the line break if any
+>    has_symlink_leading_path(len, name);
 > 
-> Hmm.  I should note that C Git still screws this up sometimes.  I've
-> seen 1.6.1 git fetch mess up the output from repo.or.cz's sideband.
-> I'm sure Pasky isn't running JGit's daemon, its too damn fast. :-)
+> should be identically with the following call to lstat_cache():
 > 
-> I don't have a spew of it handy, but late last week I saw it screw
-> up while doing a clone off repo.or.cz.
+>    lstat_cache(len, name,
+>                LSTAT_SYMLINK|LSTAT_DIR,
+>                LSTAT_SYMLINK);
 
-Next time you see such things please send me a snapshot.
+I think the new interface looks worse.
 
-What is still possible and IMHO not worth the effort to fix is some 
-interaction between local and remote displays which, if intermixed in 
-some unlucky way, do screw up the final appearance.  For example, if the 
-remote has sent a partial line, and before the remaining of it is 
-received/printed you actually have some local process also displaying a 
-line of its own.  If that was to become a real issue, then the fix would 
-involve caching any partial line sent from the remote until the 
-associated line break is received.
+Why don't you just do a new inline function that says
 
+	static inline int has_symlink_leading_path(int len, const char *name)
+	{
+		return lstat_cache(len, name,
+			LSTAT_SYMLINK|LSTAT_DIR,
+			LSTAT_SYMLINK);
+	}
 
-Nicolas
+and now you don't need this big patch, and people who don't care about 
+those magic flags don't need to have them. End result: more readable code.
+
+Then, the new users that want _new_ semantics can use the extended 
+version.
+
+This is how git has done pretty much all "generalized" versions. See the 
+whole ce_modified() vs ie_modified() thing: they're the same function, 
+it's just that 'ce_modified()' is the traditional simpler interface that 
+works on the default index, while ie_modified() is the "full" version that 
+takes all the details that most uses don't even want to know about.
+
+				Linus
