@@ -1,59 +1,93 @@
-From: Stephen Bannasch <stephen.bannasch@deanbrook.org>
-Subject: Re: JGit vs. Git
-Date: Tue, 6 Jan 2009 14:55:39 -0500
-Message-ID: <p06240805c589657fd75a@[192.168.1.114]>
-References: <a55cfe9d0901052249v1461c70cp1d89e184cfc05eb9@mail.gmail.com>
- <a55cfe9d0901052250k2be203dfvb0b437a523f2cecc@mail.gmail.com> <200901061212.07240.robin.rosenberg.lists@dewire.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] fast-export: print usage when no options specified
+Date: Tue, 6 Jan 2009 21:11:26 +0100
+Message-ID: <20090106201126.GJ21154@genesis.frugalware.org>
+References: <1230955152-23646-1-git-send-email-vmiklos@frugalware.org> <alpine.DEB.1.00.0901062023100.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii" ; format="flowed"
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	"Vagmi Mudumbai" <vagmi.mudumbai@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 21:12:29 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ONTEBGf774apj9iN"
+Cc: Junio C Hamano <gitster@pobox.com>, jidanni@jidanni.org,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 06 21:12:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKIHl-0000wI-Kt
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 21:12:22 +0100
+	id 1LKIIF-00016V-NJ
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 21:12:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426AbZAFUK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 15:10:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750980AbZAFUK5
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 15:10:57 -0500
-Received: from deanbrook.org ([72.52.70.192]:46571 "HELO deanbrook.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750709AbZAFUK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 15:10:56 -0500
-X-Greylist: delayed 902 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jan 2009 15:10:56 EST
-Received: from ::ffff:71.161.144.33 ([71.161.144.33]) by deanbrook.org for <git@vger.kernel.org>; Tue, 6 Jan 2009 11:55:51 -0800
-In-Reply-To: <200901061212.07240.robin.rosenberg.lists@dewire.com>
+	id S1751735AbZAFUL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 15:11:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbZAFUL2
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 15:11:28 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:34624 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750980AbZAFUL2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 15:11:28 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id EF230580AC;
+	Tue,  6 Jan 2009 21:11:27 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 1554D4465E;
+	Tue,  6 Jan 2009 21:11:26 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 61B2B11B8630; Tue,  6 Jan 2009 21:11:26 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0901062023100.30769@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104717>
 
-At 12:12 PM +0100 1/6/09, Robin Rosenberg wrote:
->tisdag 06 januari 2009 07:50:11 skrev Vagmi Mudumbai:
->  > I am working on Windows with msysGit behind a HTTP Proxy. (Life cant
->>  get worse, I guess.) . I planned on using grit via JRuby but grit uses
->>  fork which is not available on funny platforms like windows. And JRuby
->>  guys do not have any plan on supporting fork even on platforms on
->>  which for is supported. If JGit is a pure Java based implementation of
->fork isn't really supported on Windows. Cygwin goes to great lengths to
->emulate it. Trying to do that within the context of an arbitrary JVM seems
->like a daunting task. Consider submitting patches to make grit not use fork...
->just kidding.., please help us improve JGit instead :)
 
-Or think about extending the Ruby gem grit to also use JGit.  Which 
-would certainly improve grit and  probably help improve JGit also.
+--ONTEBGf774apj9iN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I've thought about this a bit -- but it hasn't gotten to the top of 
-my list yet ...
+On Tue, Jan 06, 2009 at 08:28:59PM +0100, Johannes Schindelin <Johannes.Sch=
+indelin@gmx.de> wrote:
+> Maybe this should be part of the commit message?
+>=20
+> -- snip --
+> Some people find it surprising that fast-export does not output a usage=
+=20
+> when called without parameters, as rev-list does.
+>=20
+> This assumes that a user usually does not want to export HEAD by default.
+> -- snap --
 
-There are some examples of Ruby Gems which use Java libraries when 
-run in JRuby and native C libraries when used from MRI.
+OK, if this is the only problem, I can resend it with this included. ;-)
 
-   hpricot:   http://github.com/why/hpricot/tree
-   redcloth:  http://github.com/jgarber/redcloth/tree/master
+> However, I have to say that I would find exporting HEAD a rather sensible=
+=20
+> default.
+>=20
+> But I am not _that_ strongly opposed to the patch.  Just would like to=20
+> hear some opinions first.
+
+According to man git, fast-export is not a plumbing, though I think most
+user won't type it manually multiple times, they'll write a script, that
+checks if there is something to convert, then run git fast-export | foo
+fast-import, so it's really like plumbing. That's why I found the
+rev-list-like behaviour more logical.
+
+However, I think defaulting to HEAD is still better than the current
+situation, so if that's the consensus, I'm fine with that as well.
+
+--ONTEBGf774apj9iN
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkljuu4ACgkQe81tAgORUJb7yACeO6erXtBb2Y5WBTLsA8U/aEH2
+QvwAoKX7HWu0Ynak//ivUBXqDvhsiqr3
+=7pjG
+-----END PGP SIGNATURE-----
+
+--ONTEBGf774apj9iN--
