@@ -1,134 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: don't use pathinfo for global actions
-Date: Tue, 6 Jan 2009 18:37:22 +0100
-Message-ID: <200901061837.23637.jnareb@gmail.com>
-References: <1230896080-22801-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: JGit vs. Git
+Date: Tue, 6 Jan 2009 10:45:23 -0800
+Message-ID: <20090106184523.GA24578@spearce.org>
+References: <a55cfe9d0901052249v1461c70cp1d89e184cfc05eb9@mail.gmail.com> <a55cfe9d0901052250k2be203dfvb0b437a523f2cecc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>,
-	Devin Doucette <devin@doucette.cc>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 18:39:11 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Vagmi Mudumbai <vagmi.mudumbai@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 19:47:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKFtO-0000IS-6G
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 18:39:02 +0100
+	id 1LKGx0-0002wO-Dg
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 19:46:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754104AbZAFRhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 12:37:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752114AbZAFRhh
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 12:37:37 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:50466 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754734AbZAFRhg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 12:37:36 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so1554105ugf.37
-        for <git@vger.kernel.org>; Tue, 06 Jan 2009 09:37:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=CFkhV4tPgVfkUMJIKmgHx9JZ9VJq2Fllx/wAMfIBWuE=;
-        b=pbgtnYni1ERCfGuzOoR7SNQr+H9I022BiOtDPK9pVJC3PMSU3Uw9eYAbLbCGsJoNQH
-         MgOionIpZKup8rPJLRx1VPgAErJs3TkFG+nAQ/Ny2lyIZK0AKbh5dGpz0Pw+yRLh4F02
-         1XG0yxQ7fRp1cQKN9otQ6AIUcRgLwSpFxvP20=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=vXuGdr/8KzCE5x4db3khtsbjt92Q9AaBaANFdYrIZ2lFGcvr7punVMuGlzR3kQsOX/
-         A/axcwpreuB6Vx/NZ7maxcJN9AkHQW7UVyPM/T2I2xFo9El4LmmPogz2zv+9ZL9cMahX
-         /OUvzQ+1CqzI04qYdYFJuuhIiO+StibAXC6DM=
-Received: by 10.66.240.12 with SMTP id n12mr4673098ugh.75.1231263454141;
-        Tue, 06 Jan 2009 09:37:34 -0800 (PST)
-Received: from ?192.168.1.11? (abvs145.neoplus.adsl.tpnet.pl [83.8.216.145])
-        by mx.google.com with ESMTPS id k2sm26240964ugf.21.2009.01.06.09.37.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 06 Jan 2009 09:37:32 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1230896080-22801-1-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1754368AbZAFSp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 13:45:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752057AbZAFSp1
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 13:45:27 -0500
+Received: from george.spearce.org ([209.20.77.23]:41073 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754476AbZAFSpY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 13:45:24 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 97D8238210; Tue,  6 Jan 2009 18:45:23 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <a55cfe9d0901052250k2be203dfvb0b437a523f2cecc@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104704>
 
-On Fri, 2 Jan 2009, Giuseppe Bilotta wrote:
+Vagmi Mudumbai <vagmi.mudumbai@gmail.com> wrote:
+> 1) Is JGit a drop in replacement of Git? In sense, if I were to pack
+> in an SCM with my app, Can I pack jgit instead of C Git?
 
-> With PATH_INFO urls, actions for the projects list (e.g. opml,
-> project_index) were being put in the URL right after the base. The
-> resulting URL is not properly parsed by gitweb itself, since it expects
-> a project name as first component of the URL.
+As Robin said, its not a full drop-in replacement.  That said, its
+getting there.  We're now only really missing patch application,
+diff generation, merge support, and submodule support.  Most of
+the JGit core can handle submodules by skipping over them during
+object traversal, but the part that talks to the filesystem to do
+a checkout doesn't recognize them.
 
-Therefore it really needs to be in, as df63fb also by Giuseppe
-(gitweb: use href() when generating URLs in OPML) is already in,
-and I think gitweb would generate broken OPML and TXT links without
-this patch.
+JGit is mostly a library, not a command line replacement.  But it
+does have commands like "jgit init", "jgit clone", "jgit fetch",
+"jgit push", even some server side tools like "jgit daemon",
+"jgit receive-pack" and "jgit upload-pack".
 
-> 
-> Accepting global actions in use_pathinfo is not a very robust solution
-> due to possible present and future conflicts between project names and
-> global actions, therefore we just refuse to create PATH_INFO URLs when
-> the project is not defined.
+To be honest I don't think anyone actually uses the command line
+pgm stuff to work with Git.  Anyone using JGit is actually running
+it embedded in some type of application like an IDE plugin or a
+server like Gerrit.
+ 
+> 2) I noticed that there are no 'add' and 'commit' commands (at least
+> from the source) in the org.spearce.git.pgm project. I am looking at
+> the repo.or.cz/egit.git repo. I had a brief look at the
+> lib/GitIndex.java and lib/Repository.java. GitIndex has the add
+> methods to add files/entries to the index. I am still stumped on how
+> commits can be done with JGit. Any help is hugely appreciated.
 
-I think it is quite robust solution and it makes sense; we use
-shortcuts http://git.example.com for projects_list page, and
-http://git.example.com/path/to/repo.git for overview 'summary'
-action for a project, therefore pathinfo has to look like the
-following: http://git.example.com/repo/action/hash with "action"
-_after_ "project".  And there is also matter of backward compatibility
-of URL (URLs shouldn't break).
+As Robin said, look at the unit tests.  Basically you want to use
+the Commit class to populate out the data fields, then pass it off to
+an ObjectWriter instance to store it into the tree.  Finally you'll
+need to use a RefUpdate (obtained from Repository's updateRef method)
+to store the new ObjectId of that Commit into a ref like HEAD.
 
-Anyway, we have $home_link for default project_list page, which
-is path_info without project, and query without query string...
+Unfortunately we have two commit representations in JGit.  If you
+are trying to read data from a Repository the RevCommit (obtained
+from a RevWalk) is orders of magnitude faster than the Commit class.
 
-> 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> I am working on Windows with msysGit behind a HTTP Proxy. (Life cant
+> get worse, I guess.) . I planned on using grit via JRuby but grit uses
+> fork which is not available on funny platforms like windows. And JRuby
+> guys do not have any plan on supporting fork even on platforms on
+> which for is supported. If JGit is a pure Java based implementation of
+> Git with more or less the same functionality, then my work becomes a
+> lot easier.
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
+I plan on writing patch apply sometime this quarter I think.  I have
+most of what I need to rip a patch apart and inspect it prior to
+application, now I just need to line it up onto the base object
+and issue the output version.
 
-> ---
->  gitweb/gitweb.perl |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 99f71b4..fa7d8ad 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -830,7 +830,7 @@ sub href (%) {
->  	}
->  
->  	my $use_pathinfo = gitweb_check_feature('pathinfo');
-> -	if ($use_pathinfo) {
-> +	if ($use_pathinfo and defined $params{'project'}) {
->  		# try to put as many parameters as possible in PATH_INFO:
->  		#   - project name
->  		#   - action
-> @@ -845,7 +845,7 @@ sub href (%) {
->  		$href =~ s,/$,,;
->  
->  		# Then add the project name, if present
-> -		$href .= "/".esc_url($params{'project'}) if defined $params{'project'};
-> +		$href .= "/".esc_url($params{'project'});
->  		delete $params{'project'};
->  
->  		# since we destructively absorb parameters, we keep this
-
-Nice.
-
-> -- 
-> 1.5.6.5
-> 
-> 
+Diff might also come in the next few months.  Dscho has a nice
+prototype working, but there's still some work to be done on it.
 
 -- 
-Jakub Narebski
-Poland
+Shawn.
