@@ -1,59 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Error: unable to unlink ... when using "git gc"
-Date: Tue, 06 Jan 2009 00:59:21 -0800
-Message-ID: <7vy6xohkt2.fsf@gitster.siamese.dyndns.org>
-References: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com>
+From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
+Subject: Re: [ANNOUNCE] Git homepage change
+Date: Tue, 6 Jan 2009 10:07:19 +0100
+Message-ID: <20090106090719.GA25609@chistera.yi.org>
+References: <d411cc4a0812151007n1be9ce95h92c8c11592ea5f9d@mail.gmail.com> <20081216114138.GM12856@machine.or.cz> <d411cc4a0901011040h4ab97aag20de54a6e138a4ec@mail.gmail.com> <20090105164001.GA12275@machine.or.cz> <20090105194011.GB25104@glandium.org> <20090105212716.GJ6595@eratosthenes.cryptobackpack.org> <d411cc4a0901051749p2ef880bub45bba1c0d41bfc7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Johnny Lee" <johnnylee194@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 10:00:54 2009
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 10:08:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LK7nv-0002Eh-FA
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 10:00:51 +0100
+	id 1LK7vZ-0004ER-FF
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 10:08:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751156AbZAFI73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 03:59:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751137AbZAFI72
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 03:59:28 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44265 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976AbZAFI72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 03:59:28 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 31F3E1BE9D;
-	Tue,  6 Jan 2009 03:59:27 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BA2F81BE07; Tue, 
- 6 Jan 2009 03:59:23 -0500 (EST)
-In-Reply-To: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com>
- (Johnny Lee's message of "Tue, 6 Jan 2009 15:00:52 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 52544114-DBD0-11DD-8721-EB51113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751156AbZAFJHZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jan 2009 04:07:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750906AbZAFJHY
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 04:07:24 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:2542
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750845AbZAFJHW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 04:07:22 -0500
+Received: from chistera.yi.org (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id 5E822801C0E4;
+	Tue,  6 Jan 2009 10:07:20 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LK7uB-00076e-5B; Tue, 06 Jan 2009 10:07:19 +0100
+Content-Disposition: inline
+In-Reply-To: <d411cc4a0901051749p2ef880bub45bba1c0d41bfc7@mail.gmail.com>
+X-No-CC: Please respect my Mail-Followup-To header
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104669>
 
-"Johnny Lee" <johnnylee194@gmail.com> writes:
+* Scott Chacon [Mon, 05 Jan 2009 17:49:01 -0800]:
 
-> While I'm looking at these "unable to unlink" files, it seems they are
-> read only:
-> git@tomato:~/golf$ ls -l .git/objects/16/
-> total 4
-> -r--r--r-- 1 johnny johnny 26 2009-01-05 09:25
-> b14f5da9e2fcd6f3f38cc9e584cef2f3c90ebe
+> Also, Miklos : your patch changes the format of the output and doesn'=
+t
+> speed things up or anything, so I'm just sticking with the current
+> script for now (unless I'm missing something).
 
+-8<-
+git log --pretty=3Dshort --no-merges | git shortlog -n | grep -v -e '^ =
+' | grep ':' > ../gitscm/config/authors.txt
 
-Check "ls -ld .git/objects/16" and see if it is owned by you and writable
-by you.
+    data =3D author.split(' ')
+    number =3D data.pop.gsub('(', '').gsub(')', '').chomp
+    name =3D data.join(' ')
+-8<-
 
-In sane POSIX filesystem semantics, it should not pose with problem with
-respect to removal that a file is unwritable.
+vs
 
-What counts is the writability of the parent directory.
+-8<- v2 -8<-
+git shortlog --no-merges -sn > ../gitscm/config/authors.txt
+
+    if author =3D~ /(\d+)\s+(.+)/
+        name, number =3D $2, $1
+-8<-
+
+HTH.
+
+P.S.: And it is a tad faster, yes (not that that should be the primary
+criteria).
+
+--=20
+Adeodato Sim=C3=B3                                     dato at net.com.=
+org.es
+Debian Developer                                  adeodato at debian.or=
+g
+=20
+The true teacher defends his pupils against his own personal influence.
+                -- Amos Bronson Alcott
