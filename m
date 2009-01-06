@@ -1,77 +1,100 @@
-From: "Tobin Harris" <tobin@tobinharris.com>
-Subject: Fwd: error: Unable to append to logs/refs/heads/master:
-Date: Tue, 6 Jan 2009 09:44:47 +0000
-Message-ID: <9a081f0e0901060144v23883c99x7735f62785ffffa0@mail.gmail.com>
-References: <9a081f0e0901060138g7cd3d92cvc061b7abf6ad6df7@mail.gmail.com>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: Re: [PATCH/RFC 1/4] Optimised, faster,
+ more effective symlink/directory detection
+Date: Tue, 06 Jan 2009 10:56:50 +0100
+Organization: private
+Message-ID: <86bpuklpul.fsf@broadpark.no>
+References: <1231161001-32599-1-git-send-email-barvik@broadpark.no>
+ <1231161001-32599-2-git-send-email-barvik@broadpark.no>
+ <7vprj0j181.fsf@gitster.siamese.dyndns.org>
+ <7v3afwizi7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 06 10:46:13 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 10:58:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LK8Vn-0005bo-P0
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 10:46:12 +0100
+	id 1LK8hR-0000xz-Ly
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 10:58:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559AbZAFJos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 04:44:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751226AbZAFJos
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 04:44:48 -0500
-Received: from rv-out-0506.google.com ([209.85.198.239]:24160 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751126AbZAFJor (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 04:44:47 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so7270874rvb.1
-        for <git@vger.kernel.org>; Tue, 06 Jan 2009 01:44:47 -0800 (PST)
-Received: by 10.141.5.17 with SMTP id h17mr10858988rvi.165.1231235087553;
-        Tue, 06 Jan 2009 01:44:47 -0800 (PST)
-Received: by 10.141.210.7 with HTTP; Tue, 6 Jan 2009 01:44:47 -0800 (PST)
-In-Reply-To: <9a081f0e0901060138g7cd3d92cvc061b7abf6ad6df7@mail.gmail.com>
-Content-Disposition: inline
+	id S1751566AbZAFJ4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 04:56:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752399AbZAFJ4y
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 04:56:54 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:44424 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566AbZAFJ4x (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 04:56:53 -0500
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KD1004Q2NMR1LA0@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Tue, 06 Jan 2009 10:56:51 +0100 (CET)
+Received: from localhost ([80.202.166.60]) by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KD1006LBNMQM850@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Tue, 06 Jan 2009 10:56:51 +0100 (CET)
+In-reply-to: <7v3afwizi7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104674>
 
-Hi folks
+Junio C Hamano <gitster@pobox.com> writes:
+ <snipp>
+> If everything is working correctly, I do not think you will ever have a
+> situation where you check "A/B" here and get ENOTDIR back.  lstat("A/B")
+> would yield ENOTDIR if "A" is not a directory, but:
+>
+>  (1) If you did test "A" in the earlier round in the loop, you would have
+>      already found it is not a directory and would have exited the loop
+>      with LSTAT_ERR.  You cannot test "A/B" in such a case;
 
-I'm experiencing a weird error that I can't seem to get around...
+  No, if the test lstat("A") already returned -1 it would then have set
+  errno to ENOTDIR in this case, I think.  So in this case the cache
+  would have only stored "A".
 
-$ git push
-Counting objects: 67, done.
-Compressing objects: 100% (39/39), done.
-Writing objects: 100% (43/43), 6.20 KiB, done.
-Total 43 (delta 33), reused 0 (delta 0)
-Unpacking objects: 100% (43/43), done.
-error: Unable to append to logs/refs/heads/master: Invalid argument
-To /z/RemoteGit/Zcms.git
- ! [remote rejected] master -> master (failed to write)
-error: failed to push some refs to '/z/RemoteGit/Zcms.git'
+>  (2) If you did not test "A" in the loop, that has to be because you had a
+>      cached information for it, and the caching logic would have returned
+>      early if "A" was a non-directory without entering the loop; in other
+>      words, you would test "A/B" here without testing "A" in the loop only
+>      when the cache says "A" was a directory.  You cannot get ENOTDIR in
+>      such a case.
+>
+> In any case, my main puzzlement still stands.  I think ENOTDIR case should
+> behave differently from ENOENT case.
+>
+> And I think it is an indication of a grave error, either this code is
+> racing with an external process that is actively mucking with the work
+> tree to make your cached information unusable, or somebody forgot to call
+> clear_lstat_cache().
+>
+> Hmm?
 
-This usually works fine, so I'm not sure what's happend.
+  I think that you do not see that the when the lstat() function returns
+  errno =
 
-My config looks like this
+    ENOENT   A component of the path path does not exist, or the path is
+             an empty string.
+    ENOTDIR  A component of the path is not a directory.
 
-[core]
-        repositoryformatversion = 0
-        filemode = false
-        bare = false
-        logallrefupdates = true
-        symlinks = false
-        ignorecase = true
-[remote "origin"]
-        url = /z/RemoteGit/Zcms.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-        remote = origin
-        merge = refs/heads/master
+  the cache logic will/must assume that the component we got an error on
+  will/must always be the _last_ component in the path.
 
-Notes: Using with Cygwin + Windows XP, bare repos is on a network
-drive.
+> I take 1/4 of the above back.
 
-Any help appreciated.
+  Will this means that I do not have to update the patch to version 2?
 
-Tobin
+  Note, one thing what I personally do not like with this patch so far,
+  is that it makes a new file, and then it kinda hides the comments from
+  Linus which talks aboth extending the logic.  It would maybe be better
+  to have reused the same file (symlinks.c), but then the function name
+  ('lstat_cache()') and the filename would not match.
+
+  -- kjetil
