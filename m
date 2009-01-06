@@ -1,73 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] fast-export: print usage when no options specified
-Date: Tue, 6 Jan 2009 20:28:59 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901062023100.30769@pacific.mpi-cbg.de>
-References: <1230955152-23646-1-git-send-email-vmiklos@frugalware.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Quick command to count commits
+Date: Tue, 6 Jan 2009 11:30:14 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0901061120530.3057@localhost.localdomain>
+References: <1231267896595-2118851.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, jidanni@jidanni.org,
-	git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Jan 06 20:29:55 2009
+Cc: git@vger.kernel.org
+To: Henk <henk_westhuis@hotmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 20:32:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKHce-0002if-Du
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 20:29:52 +0100
+	id 1LKHes-0003S2-V0
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 20:32:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751390AbZAFT23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 14:28:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbZAFT23
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 14:28:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55930 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751092AbZAFT22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 14:28:28 -0500
-Received: (qmail invoked by alias); 06 Jan 2009 19:28:23 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp058) with SMTP; 06 Jan 2009 20:28:23 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ZudBJ4hNZmUvIhh/+s7eRVXhfRxUiodvrvjt+7Q
-	ZT/9GyFuhNEdrd
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1230955152-23646-1-git-send-email-vmiklos@frugalware.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1750978AbZAFTas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 14:30:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750906AbZAFTar
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 14:30:47 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:42401 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750836AbZAFTar (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jan 2009 14:30:47 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n06JUEI9022706
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 6 Jan 2009 11:30:15 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n06JUE5Y008575;
+	Tue, 6 Jan 2009 11:30:14 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1231267896595-2118851.post@n2.nabble.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.444 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104711>
 
-Hi,
 
-On Sat, 3 Jan 2009, Miklos Vajna wrote:
 
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
+On Tue, 6 Jan 2009, Henk wrote:
+>
+> For GitExtensions (windows git ui) I need a command to count all commits. I
+> now use this command:
+> git.cmd rev-list --all --abbrev-commit | wc -l
 > 
-> I found that behaviour surprising as well when I saw it the first time.
-> git rev-list outputs some usage info in that case, git log just logs
-> HEAD. Given that unconditionally exporting HEAD with no arguments is
-> probably not something most users want, here is a patch to make the
-> behaviour like what git rev-list already has.
+> This works perfect but its very slow in big repositories. Is there a faster
+> way to count the commits?
 
-Maybe this should be part of the commit message?
+Nope. Possibly drop the --abbrev-commit part, but it's not going to hurt 
+_that_ much, and maybe avoiding piping the data can be a win in some 
+cases.
 
--- snip --
-Some people find it surprising that fast-export does not output a usage 
-when called without parameters, as rev-list does.
+Basically, to get commit counts, you need to traverse the whole history, 
+or at least cache it. So the only way to speed things up is
 
-This assumes that a user usually does not want to export HEAD by default.
--- snap --
+ - make sure your repository is well-packed. That will speed things up by 
+   an absolutely huge amount, if they weren't well-packed before. Just a 
+   single large pack-file, not lots of small packs, and not lots of loose 
+   objects.
 
-However, I have to say that I would find exporting HEAD a rather sensible 
-default.
+ - you can certainly cache it. Just index by the sha1sum of all the heads, 
+   and you have a great cache. Just keep a single entry. So _if_ the 
+   repository seldom changes, and you do this a lot, you'll at least only 
+   pay the price once.
 
-But I am not _that_ strongly opposed to the patch.  Just would like to 
-hear some opinions first.
+IOW, do something like this:
 
-Ciao,
-Dscho
+	#!/bin/sh
+	revs=$(git rev-parse --all)
+	index=$(echo "$revs" | sha1sum | cut -d' ' -f1)
+	cached=$(cat .git/commit_nr_cache)
+	cached_index=$(echo "$cached" | cut -d' ' -f1)
+	if [ "$index" == "$cached_index" ]; then
+		echo "$cached" | cut -d' ' -f2
+		exit
+	fi
+	nr=$(git rev-list $revs | wc -l)
+	echo "$index $nr" > .git/commit_nr_cache
+	echo $nr
+
+and you now have a stupid single-entry cache.
+
+Totally untested. You'll need to do _some_ work yourself ;)
+
+		Linus
