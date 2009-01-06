@@ -1,75 +1,145 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [ANNOUNCE] Git homepage change
-Date: Tue, 6 Jan 2009 21:40:52 +0100
-Message-ID: <20090106204052.GL21154@genesis.frugalware.org>
-References: <d411cc4a0812151007n1be9ce95h92c8c11592ea5f9d@mail.gmail.com> <20081216114138.GM12856@machine.or.cz> <d411cc4a0901011040h4ab97aag20de54a6e138a4ec@mail.gmail.com> <20090105164001.GA12275@machine.or.cz> <20090105194011.GB25104@glandium.org> <20090105212716.GJ6595@eratosthenes.cryptobackpack.org> <d411cc4a0901051749p2ef880bub45bba1c0d41bfc7@mail.gmail.com> <alpine.LNX.2.00.0901052119210.9096@suse104.zenez.com> <20090106085448.GF21154@genesis.frugalware.org> <alpine.LNX.2.00.0901060907350.9096@suse104.zenez.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] strbuf: instate cleanup rule in case of non-memory errors
+Date: Tue, 06 Jan 2009 21:41:14 +0100
+Message-ID: <4963C1EA.504@lsrfire.ath.cx>
+References: <alpine.LFD.2.00.0812171042120.14014@localhost.localdomain> <1230026749-25360-1-git-send-email-madcoder@debian.org> <20081223102127.GA21485@artemis.corp> <alpine.LFD.2.00.0812231009220.3535@localhost.localdomain> <20081224101146.GA10008@artemis.corp> <4952532F.5050704@lsrfire.ath.cx> <7viqp8afap.fsf@gitster.siamese.dyndns.org> <20090104122108.GC29325@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="puacTriGDskFP02p"
-Cc: Scott Chacon <schacon@gmail.com>,
-	David Bryson <david@statichacks.org>,
-	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-To: Boyd Lynn Gerber <gerberb@zenez.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 21:42:31 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 21:42:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKIkn-0002rq-Kn
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 21:42:22 +0100
+	id 1LKIlB-0002zP-Da
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 21:42:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752143AbZAFUk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 15:40:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752213AbZAFUk4
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 15:40:56 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:45967 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752030AbZAFUkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 15:40:55 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 1FEC6580AC;
-	Tue,  6 Jan 2009 21:40:55 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 1EB0D4465E;
-	Tue,  6 Jan 2009 21:40:53 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id E4CBE11B8630; Tue,  6 Jan 2009 21:40:52 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.2.00.0901060907350.9096@suse104.zenez.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752213AbZAFUlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 15:41:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752115AbZAFUlR
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 15:41:17 -0500
+Received: from india601.server4you.de ([85.25.151.105]:41420 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751403AbZAFUlR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 15:41:17 -0500
+Received: from [10.0.1.101] (p57B7BA44.dip.t-dialin.net [87.183.186.68])
+	by india601.server4you.de (Postfix) with ESMTPSA id 33E9E2F8116;
+	Tue,  6 Jan 2009 21:41:15 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <20090104122108.GC29325@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104724>
 
+Make all strbuf functions that can fail free() their memory on error if
+they have allocated it.  They don't shrink buffers that have been grown,
+though.
 
---puacTriGDskFP02p
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This allows for easier error handling, as callers only need to call
+strbuf_release() if A) the command succeeded or B) if they would have had
+to do so anyway because they added something to the strbuf themselves.
 
-On Tue, Jan 06, 2009 at 09:12:30AM -0700, Boyd Lynn Gerber <gerberb@zenez.c=
-om> wrote:
-> archive.  The only problem is I have not figured out how to download all=
-=20
-> 303 articles, quickly/easily.  You would think one of the majordomo=20
-> commands to get articles would work.  They do not.
+Bonus hunk: document strbuf_readlink.
 
-I would use:
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ Documentation/technical/api-strbuf.txt |   11 +++++++++--
+ strbuf.c                               |   17 +++++++++++++----
+ 2 files changed, 22 insertions(+), 6 deletions(-)
 
-http://gmane.org/export.php
-
---puacTriGDskFP02p
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkljwdQACgkQe81tAgORUJYSkACgiJrf8vhTOjecJP5BpeE04wWe
-y1gAoJ4vcOgSFcpXp4cu2oSiEU+CRfRG
-=1pWF
------END PGP SIGNATURE-----
-
---puacTriGDskFP02p--
+diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
+index a8ee2fe..9a4e3ea 100644
+--- a/Documentation/technical/api-strbuf.txt
++++ b/Documentation/technical/api-strbuf.txt
+@@ -133,8 +133,10 @@ Functions
+ 
+ * Adding data to the buffer
+ 
+-NOTE: All of these functions in this section will grow the buffer as
+-      necessary.
++NOTE: All of the functions in this section will grow the buffer as necessary.
++If they fail for some reason other than memory shortage and the buffer hadn't
++been allocated before (i.e. the `struct strbuf` was set to `STRBUF_INIT`),
++then they will free() it.
+ 
+ `strbuf_addch`::
+ 
+@@ -235,6 +237,11 @@ same behaviour as well.
+ 	Read the contents of a file, specified by its path. The third argument
+ 	can be used to give a hint about the file size, to avoid reallocs.
+ 
++`strbuf_readlink`::
++
++	Read the target of a symbolic link, specified by its path.  The third
++	argument can be used to give a hint about the size, to avoid reallocs.
++
+ `strbuf_getline`::
+ 
+ 	Read a line from a FILE* pointer. The second argument specifies the line
+diff --git a/strbuf.c b/strbuf.c
+index bdf4954..6ed0684 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -256,18 +256,21 @@ size_t strbuf_expand_dict_cb(struct strbuf *sb, const char *placeholder,
+ size_t strbuf_fread(struct strbuf *sb, size_t size, FILE *f)
+ {
+ 	size_t res;
++	size_t oldalloc = sb->alloc;
+ 
+ 	strbuf_grow(sb, size);
+ 	res = fread(sb->buf + sb->len, 1, size, f);
+-	if (res > 0) {
++	if (res > 0)
+ 		strbuf_setlen(sb, sb->len + res);
+-	}
++	else if (res < 0 && oldalloc == 0)
++		strbuf_release(sb);
+ 	return res;
+ }
+ 
+ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
+ {
+ 	size_t oldlen = sb->len;
++	size_t oldalloc = sb->alloc;
+ 
+ 	strbuf_grow(sb, hint ? hint : 8192);
+ 	for (;;) {
+@@ -275,7 +278,10 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
+ 
+ 		cnt = xread(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
+ 		if (cnt < 0) {
+-			strbuf_setlen(sb, oldlen);
++			if (oldalloc == 0)
++				strbuf_release(sb);
++			else
++				strbuf_setlen(sb, oldlen);
+ 			return -1;
+ 		}
+ 		if (!cnt)
+@@ -292,6 +298,8 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
+ 
+ int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
+ {
++	size_t oldalloc = sb->alloc;
++
+ 	if (hint < 32)
+ 		hint = 32;
+ 
+@@ -311,7 +319,8 @@ int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
+ 		/* .. the buffer was too small - try again */
+ 		hint *= 2;
+ 	}
+-	strbuf_release(sb);
++	if (oldalloc == 0)
++		strbuf_release(sb);
+ 	return -1;
+ }
+ 
+-- 
+1.6.1
