@@ -1,77 +1,84 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Error: unable to unlink ... when using "git gc"
-Date: Tue, 6 Jan 2009 11:57:07 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngm6hoj.n4a.sitaramc@sitaramc.homelinux.net>
-References: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com>
- <20090106072253.GA9920@coredump.intra.peff.net>
- <488807870901052352w585da727r6d4a1e4ca4238cab@mail.gmail.com>
- <20090106080300.GA10079@coredump.intra.peff.net>
+From: "=?ISO-8859-1?Q?=D8yvind_Harboe?=" <oyvind.harboe@zylin.com>
+Subject: Migration problems from SVN
+Date: Tue, 6 Jan 2009 13:09:31 +0100
+Message-ID: <c09652430901060409p23d2737ck6e41b3f8f1eaf01@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 06 12:58:47 2009
+X-From: git-owner@vger.kernel.org Tue Jan 06 13:10:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKAa5-00018g-K7
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 12:58:46 +0100
+	id 1LKAlt-0004a2-U7
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 13:10:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751558AbZAFL5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 06:57:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751554AbZAFL5R
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 06:57:17 -0500
-Received: from main.gmane.org ([80.91.229.2]:39781 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751535AbZAFL5R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 06:57:17 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LKAYd-0003k8-Sv
-	for git@vger.kernel.org; Tue, 06 Jan 2009 11:57:15 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 06 Jan 2009 11:57:15 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 06 Jan 2009 11:57:15 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1751515AbZAFMJe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jan 2009 07:09:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751436AbZAFMJe
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 07:09:34 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:33920 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751147AbZAFMJd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jan 2009 07:09:33 -0500
+Received: by bwz14 with SMTP id 14so23906958bwz.13
+        for <git@vger.kernel.org>; Tue, 06 Jan 2009 04:09:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition:x-google-sender-auth;
+        bh=PTo+3rBDi3hBLlHfRH/MdD6j6GR28hSYkWTNQLZphwQ=;
+        b=dd0FI/niEOCtJSehIngHuV8YkeCG6gtFoR+hWTGY85X3S9HHroNsKzdysr8kVoYZzM
+         EGxermgry7W9ppbZf9QPjT8E3mLQ4U3HZnKEE3Hk/CORs9tuABOfHk+iLg1tKe1N7053
+         4nbWblTA3/0U/H3ZsXbypjJe6Z5C27TlSQ5Cs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=pwbjC09luhBcWAf/5HvWXhXl3bdLId/ooYl9a9pbjLSji+vAFimEm1EHHrzLPN/kwi
+         WbwQlfa2fUOS09k3DRy0t7m2N81UH1q4mBcolj+E3aw/WGu6w3880t//YOpvqo4L7ZB9
+         NboCF86mhKiQYFVv6xBzYy3uwXXJ2vbAYnRAg=
+Received: by 10.223.104.140 with SMTP id p12mr15402351fao.7.1231243771636;
+        Tue, 06 Jan 2009 04:09:31 -0800 (PST)
+Received: by 10.223.121.142 with HTTP; Tue, 6 Jan 2009 04:09:31 -0800 (PST)
+Content-Disposition: inline
+X-Google-Sender-Auth: 4bbf46999b289130
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104680>
 
-On 2009-01-06, Jeff King <peff@peff.net> wrote:
-> If you are going to have multiple users sharing a repository, generally
-> they should be in the same group and the core.sharedrepository config
-> option should be set (see "git help config", or the "shared" option to
-> git-init).
->
-> I've never used that personally, though. I have always just used POSIX
-> ACLs, with a default ACL on each directory giving access to everyone.
-> E.g. (off the top of my head):
->
->   for user in user1 user2 user3; do
->     setfacl -R -m u:$user:rwX -m d:u:$user:rwX /path/to/repo
->   done
+Hi all,
 
-If you're not worried about the finer-grained access control
-that acl(5) gives you, just do what "git init
---shared=group" does:
+I'm trying to migrate from svn to git, but has run into a snag for whic=
+h
+I haven't found any good solutions on the web:
 
-    git config core.sharedrepository 1 # as mentioned above
-    chmod g+ws .git
+If I early on and accidentally commit a *large* binary object, how do I=
+ get rid
+of it from .git again?
 
-Now set the group to something (I use "gitpushers" ;-)
+svn copes with this reasonably well as the binary object will no longer=
+ be
+downloaded if it is deleted. Also when converting old SVN repositories,
+such objects needs to be pruned.  Somewhat related I also need to enume=
+rate
+the offending large binary objects that I should get rid of.
 
-    chgrp -R gitpushers .git
+It is unpractical to live by the rule that no big objects should ever
+be committed
+accidentally given the number of people involved and the walks of life =
+they come
+from.... So there really needs to be some way to deal with this once th=
+e
+damage has been done.
 
-amd make sure all your users are part of that group.
 
-Works fine for small teams...
+--=20
+=D8yvind Harboe
+http://www.zylin.com/zy1000.html
+ARM7 ARM9 XScale Cortex
+JTAG debugger and flash programmer
