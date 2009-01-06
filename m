@@ -1,85 +1,153 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Migration problems from SVN
-Date: Tue, 6 Jan 2009 13:39:47 +0100
-Message-ID: <200901061339.49843.trast@student.ethz.ch>
-References: <c09652430901060409p23d2737ck6e41b3f8f1eaf01@mail.gmail.com>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: Re: [PATCH/RFC 2/4] Use 'lstat_cache()' instead of
+ 'has_symlink_leading_path()'
+Date: Tue, 06 Jan 2009 13:50:54 +0100
+Organization: private
+Message-ID: <86r63gk381.fsf@broadpark.no>
+References: <1231161001-32599-1-git-send-email-barvik@broadpark.no>
+ <1231161001-32599-3-git-send-email-barvik@broadpark.no>
+ <7vk598j17u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1337752.VhF7tIIfpv";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "=?utf-8?q?=C3=98yvind?= Harboe" <oyvind.harboe@zylin.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 13:41:37 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 13:52:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKBFR-0005Os-O0
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 13:41:30 +0100
+	id 1LKBPw-0008R7-T8
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 13:52:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754153AbZAFMjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 07:39:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754136AbZAFMjh
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 07:39:37 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:3286 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754107AbZAFMjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 07:39:35 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 6 Jan 2009 13:39:34 +0100
-Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 6 Jan 2009 13:39:33 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <c09652430901060409p23d2737ck6e41b3f8f1eaf01@mail.gmail.com>
-X-OriginalArrivalTime: 06 Jan 2009 12:39:33.0802 (UTC) FILETIME=[D3D250A0:01C96FFB]
+	id S1751748AbZAFMu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 07:50:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751727AbZAFMu5
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 07:50:57 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:62239 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751617AbZAFMu4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 07:50:56 -0500
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KD1006WCVOV9Q80@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Tue, 06 Jan 2009 13:50:55 +0100 (CET)
+Received: from localhost ([80.202.166.60]) by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KD10002DVOTIID0@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Tue, 06 Jan 2009 13:50:55 +0100 (CET)
+In-reply-to: <7vk598j17u.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104682>
 
---nextPart1337752.VhF7tIIfpv
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Junio C Hamano <gitster@pobox.com> writes:
 
-=D8yvind Harboe wrote:
-> If I early on and accidentally commit a *large* binary object, how do I g=
-et rid
-> of it from .git again?
+> Kjetil Barvik <barvik@broadpark.no> writes:
+>
+>> Start using the optimised, faster and more effective symlink/directory
+>> cache.  The previously used call:
+>>
+>>    has_symlink_leading_path(len, name);
+>>
+>> should be identically with the following call to lstat_cache():
+>>
+>>    lstat_cache(len, name,
+>>                LSTAT_SYMLINK|LSTAT_DIR,
+>>                LSTAT_SYMLINK);
+>> ...
+>
+> Care to enlighten why some of callers use the above, but not others?
+> Namely, check_removed() in diff-lib.c 
 
-git-filter-branch can do that.  See the top of the EXAMPLES section in
+  I though that first it would be a good thing to introduce as little
+  changes as possible, and then later on do some cleanups.  Regarding
+  the 'check_removed()' function, I though that it could later have been
+  written something like this after cleanups:
 
-  http://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.html
+[....]
+static int check_removed(const struct cache_entry *ce, struct stat *st)
+{
+	unsigned int ret_flags =
+		check_lstat_cache(ce_namelen(ce), ce->name,
+				  LSTAT_SYMLINK|LSTAT_NOTDIR|LSTAT_DIR);
 
-This requires a rewrite of all history affected; make sure you
-understand the implications if you have already published it.  See the
-DISCUSSION in the same manpage.
+	if (ret_flags & (LSTAT_SYMLINK|LSTAT_NOTDIR))
+		return 1;
+	if (ret_flags & LSTAT_LSTATERR)
+		return -1;
 
-Also note that due to the distributed nature, you cannot force such
-changed history upon anyone; i.e., you cannot remove the objects from
-anyone else's repository.  You can only ask them to accept your new
-history and forget that the old one was ever there.
+	if (ret_flags & LSTAT_DIR) {
+		unsigned char sub[20];
+[....]
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+  This would have saved one more lstat() call in some cases.  But after
+  a test, I now see that it does not work.  The reason is that it does
+  not set the 'struct stat *st' parameter and/or that for the moment you
+  can not tell the 'lstat_cache()' function to also always test the last
+  path component.  It could be extended to do this, if someone ask for
+  it and if it would be useful to extend the lstat_cache() for this
+  fact.
 
+  I will remove the '|LSTAT_NOTDIR' part from the call to lstat_cache()
+  in 'check_removed()' in the next version of the patch.
 
+> and callers in unpack-trees.c care about NOTDIR unlike others, even
+> though the original code checked for exactly the same condition.
 
---nextPart1337752.VhF7tIIfpv
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+  Regarding the 'verify_absent()' function in unpack-trees.c, the
+  '|LSTAT_NOTDIR' part of the call to lstat_cache() helps to avoid 16047
+  lstat() calls for the given test case mentioned in the cover-letter.
+  And from the source code:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+  [...]
+	if (lstat_cache(ce_namelen(ce), ce->name,
+			LSTAT_SYMLINK|LSTAT_NOTDIR|LSTAT_DIR,
+			LSTAT_SYMLINK|LSTAT_NOTDIR))
+		return 0;
 
-iEYEABECAAYFAkljURUACgkQqUud07tmzP2jWQCfahMpT68yHN2UsOn4IUEGIn5Q
-QRAAnimaKZiAwYWluQiosvbd+lGuyjQP
-=Ab6t
------END PGP SIGNATURE-----
+	if (!lstat(ce->name, &st)) {
+  [...]
 
---nextPart1337752.VhF7tIIfpv--
+  it should be easy to see that if we from the lstat_cache() could
+  already spot that some path component of ce->name does not exists,
+  then we can avoid the following lstat() call, as it then should known
+  to be failing.
+
+  regarding the 'unlink_entry()' function in unpack-trees.c, the
+  '|LSTAT_NOTDIR' part of the call to lstat_cache() does not for the
+  moment helps to avoid any lstat() calls, as far as I can see.  But,
+  again, from the source code:
+
+  [..]
+	char *name = ce->name;
+
+	if (lstat_cache(ce_namelen(ce), ce->name,
+			LSTAT_SYMLINK|LSTAT_NOTDIR|LSTAT_DIR,
+			LSTAT_SYMLINK|LSTAT_NOTDIR))
+		return;
+	if (unlink(name))
+		return;
+  [...]
+
+  it should be correct, since if we already know that some path
+  component of ce-name does not exist, the call to unlink(name) would
+  always fail (with ENOENT).
+
+> Does this mean that some callers of has_symlink_leading_path() checked
+> only for leading symlinks when they should also have checked for a leading
+> non-directory, and this patch is also a bugfix?
+
+  Yes, as indicated above, has_symlink_leading_path() should have
+  checked for leading non-directories when called from for the
+  'verify_absent()' function to be able to optimise away some more
+  lstat() calls.
+
+  I admit that I do not know the source code good enough to decide if
+  this is an indication of a bug somewhere, or just an optimisation.
+
+  -- kjetil
