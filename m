@@ -1,88 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v2 2/4] Use 'lstat_cache()' instead of
- 'has_symlink_leading_path()'
-Date: Tue, 06 Jan 2009 15:25:47 -0800
-Message-ID: <7vocykf24k.fsf@gitster.siamese.dyndns.org>
-References: <1231274192-30478-1-git-send-email-barvik@broadpark.no>
- <1231274192-30478-3-git-send-email-barvik@broadpark.no>
- <alpine.LFD.2.00.0901061304280.3057@localhost.localdomain>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: Problems getting rid of large files using git-filter-branch
+Date: Wed, 7 Jan 2009 00:17:26 +0100
+Message-ID: <20090106231726.GB13379@cuci.nl>
+References: <c09652430901061359q7a02291fk656ab23e54b19f5e@mail.gmail.com> <alpine.LFD.2.00.0901061709510.26118@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kjetil Barvik <barvik@broadpark.no>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 07 00:27:23 2009
+Cc: ?yvind Harboe <oyvind.harboe@zylin.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Jan 07 00:28:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKLKT-00037m-4l
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 00:27:21 +0100
+	id 1LKLLM-0003NF-96
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 00:28:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754620AbZAFXZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 18:25:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753783AbZAFXZz
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 18:25:55 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63465 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751844AbZAFXZy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 18:25:54 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E378A8E292;
-	Tue,  6 Jan 2009 18:25:52 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DA18F8E288; Tue,
-  6 Jan 2009 18:25:48 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.0901061304280.3057@localhost.localdomain>
- (Linus Torvalds's message of "Tue, 6 Jan 2009 13:08:58 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5C3CC9F2-DC49-11DD-A8BA-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753513AbZAFX0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 18:26:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753371AbZAFX0t
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 18:26:49 -0500
+Received: from aristoteles.cuci.nl ([212.125.128.18]:44980 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752015AbZAFX0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 18:26:48 -0500
+X-Greylist: delayed 560 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jan 2009 18:26:48 EST
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 066085466; Wed,  7 Jan 2009 00:17:27 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0901061709510.26118@xanadu.home>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104738>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Nicolas Pitre wrote:
+>On Tue, 6 Jan 2009, ?yvind Harboe wrote:
+>OK, try this:
 
->> ...  The previously used call:
->> 
->>    has_symlink_leading_path(len, name);
->> 
->> should be identically with the following call to lstat_cache():
->> 
->>    lstat_cache(len, name,
->>                LSTAT_SYMLINK|LSTAT_DIR,
->>                LSTAT_SYMLINK);
->
-> I think the new interface looks worse.
->
-> Why don't you just do a new inline function that says
->
-> 	static inline int has_symlink_leading_path(int len, const char *name)
-> 	{
-> 		return lstat_cache(len, name,
-> 			LSTAT_SYMLINK|LSTAT_DIR,
-> 			LSTAT_SYMLINK);
-> 	}
->
-> and now you don't need this big patch, and people who don't care about 
-> those magic flags don't need to have them. End result: more readable code.
+>	git pull file://$(pwd)/../my_repo.orig
 
-Excellent.
+Alternately, try:
 
-Not that I did not think a backward compatible macro is much easier to
-read; after all, ce/ie you mention is a refactorizaton I did myself.
+rm -rf .git/ORIG_HEAD .git/FETCH_HEAD .git/index .git/logs .git/info/refs \
+  .git/objects/pack/pack-*.keep .git/refs/original .git/refs/patches \
+  .git/patches .git/gitk.cache &&
+ git prune --expire now &&
+ git repack -a -d --window=200 &&
+ git gc
 
-What I didn't think of was that posing the above question is a much better
-way to extract a clear explanation why some of these lstat_cache() calls
-have LSTAT_NOENT and some of them don't from the author.  It is much
-better way than my earlier attempt to do so.
+-- 
+Sincerely,
+           Stephen R. van den Berg.
 
-> This is how git has done pretty much all "generalized" versions. See the 
-> whole ce_modified() vs ie_modified() thing: they're the same function, 
-> it's just that 'ce_modified()' is the traditional simpler interface that 
-> works on the default index, while ie_modified() is the "full" version that 
-> takes all the details that most uses don't even want to know about.
-
-Yup, thanks for a praise ;-)
+"Very funny, Mr. Scott. Now beam down my clothes!"
