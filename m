@@ -1,194 +1,155 @@
 From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH/RFC v2 0/4] git checkout: optimise away lots of lstat() calls
-Date: Tue, 06 Jan 2009 21:36:28 +0100
-Message-ID: <1231274192-30478-1-git-send-email-barvik@broadpark.no>
+Subject: [PATCH/RFC v2 4/4] remove the old 'has_symlink_leading_path()' function
+Date: Tue, 06 Jan 2009 21:36:32 +0100
+Message-ID: <1231274192-30478-5-git-send-email-barvik@broadpark.no>
+References: <1231274192-30478-1-git-send-email-barvik@broadpark.no>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Kjetil Barvik <barvik@broadpark.no>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 06 21:38:11 2009
+X-From: git-owner@vger.kernel.org Tue Jan 06 21:38:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKIgc-0001D1-Qk
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 21:38:03 +0100
+	id 1LKIh6-0001PD-O6
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 21:38:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011AbZAFUgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 15:36:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751421AbZAFUgh
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 15:36:37 -0500
+	id S1752964AbZAFUgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 15:36:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750711AbZAFUgr
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 15:36:47 -0500
 Received: from osl1smout1.broadpark.no ([80.202.4.58]:55282 "EHLO
 	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751355AbZAFUgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 15:36:36 -0500
+	with ESMTP id S1751002AbZAFUgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 15:36:42 -0500
 Received: from osl1sminn1.broadpark.no ([80.202.4.59])
  by osl1smout1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KD200B82H8YGN20@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Tue, 06 Jan 2009 21:36:35 +0100 (CET)
+ with ESMTP id <0KD200B8MH95GN20@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Tue, 06 Jan 2009 21:36:41 +0100 (CET)
 Received: from localhost.localdomain ([80.202.166.60])
  by osl1sminn1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
  with ESMTPA id <0KD200CL4H8WWS00@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Tue, 06 Jan 2009 21:36:34 +0100 (CET)
+ git@vger.kernel.org; Tue, 06 Jan 2009 21:36:41 +0100 (CET)
 X-Mailer: git-send-email 1.6.1.rc1.49.g7f705
+In-reply-to: <1231274192-30478-1-git-send-email-barvik@broadpark.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104722>
 
-I have just started to clone some interesting Linux git trees to watch
-the development more closely, and therefore also started to use git. I
-noticed that 'git checkout' takes some time, and especially that the
-'git checkout' command does lots and lots of lstat() calls.
+It has been replaced by the more cache effective 'lstat_cache()'
+function.  see lstat_cache.c
 
-After some more investigation and thinking, I have made 4 patches and
-been able to optimise away over 42% of all lstat() calls in some cases
-for the 'git checkout' command.  I have not tested other git porcelain
-commands for reduced lstat() calls, but I would guess that the more
-effective 'lstat_cache()' compared to 'has_leading_symlink_cache()',
-should also give better numbers in other cases.
-
-All the 4 patches is against git master, and the git 'make test'
-test suite still passes after each patch.
-
-To document the improvement, below is some numbers, which compares
-before and after all 4 patches. To reproduce the numbers:
-
-- git clone the Linux git tree to be able to get the Linux tags
-  'v2.6.25' and 'v2.6.27'.
-- git checkout -b my-v2.6.27 v2.6.27
-- git checkout -b my-v2.6.25 v2.6.25
-
-Then, when the current branch is 'my-v2.6.25' do:
-
-  strace -o strace_to27 -T git checkout -q my-v2.6.27
-
-And then you pretty print and collect stats from the 'strace_to27'
-file.  If someone wants a copy of the strace_stat.pl script, which I
-made/used to do the pretty printing, then give me a hint.
-
-Below is the stats/numbers from the current git version (before the 4
-patches).  Notice that we do an lstat() call on the "arch" directory
-over 6000 times!
-
-TOTAL      185151 100.000% OK:165544 NOT: 19607  11.136001 sec   60 usec/call
-lstat64    120954  65.327% OK:107013 NOT: 13941   5.388727 sec   45 usec/call
-  strings  120954 tot  30163 uniq   4.010 /uniq   5.388727 sec   45 usec/call
-  files     61491 tot  28712 uniq   2.142 /uniq   2.740520 sec   45 usec/call
-  dirs      45522 tot   1436 uniq  31.701 /uniq   1.994448 sec   44 usec/call
-  errors    13941 tot   5189 uniq   2.687 /uniq   0.653759 sec   47 usec/call
-             6297   5.206% OK:  6297 NOT:     0  "arch"
-             4544   3.757% OK:  4544 NOT:     0  "drivers"
-             1816   1.501% OK:  1816 NOT:     0  "arch/arm"
-             1499   1.239% OK:  1499 NOT:     0  "include"
-              912   0.754% OK:   912 NOT:     0  "arch/powerpc"
-              764   0.632% OK:   764 NOT:     0  "fs"
-              746   0.617% OK:   746 NOT:     0  "drivers/net"
-              662   0.547% OK:   662 NOT:     0  "net"
-              652   0.539% OK:   325 NOT:   327  "arch/sparc/include"
-              636   0.526% OK:   636 NOT:     0  "drivers/media"
-              606   0.501% OK:   606 NOT:     0  "include/linux"
-              533   0.441% OK:   533 NOT:     0  "arch/sh"
-              522   0.432% OK:   260 NOT:   262  "arch/powerpc/include"
-              488   0.403% OK:   243 NOT:   245  "arch/sh/include"
-              413   0.341% OK:   413 NOT:     0  "arch/sparc"
-              390   0.322% OK:   390 NOT:     0  "arch/x86"
-              383   0.317% OK:   383 NOT:     0  "Documentation"
-              370   0.306% OK:   184 NOT:   186  "arch/ia64/include"
-              366   0.303% OK:   366 NOT:     0  "drivers/media/video"
-              348   0.288% OK:   173 NOT:   175  "arch/arm/include"
-
-Here is the stats/numbers after applying the 4 patches.  Notice how
-nice the top 20 entries list now looks!
-
-TOTAL      133655 100.000% OK:121615 NOT: 12040  10.429999 sec   78 usec/call
-lstat64     69603  52.077% OK: 63218 NOT:  6385   3.419920 sec   49 usec/call
-  strings   69603 tot  30163 uniq   2.308 /uniq   3.419920 sec   49 usec/call
-  files     61491 tot  28712 uniq   2.142 /uniq   3.034869 sec   49 usec/call
-  dirs       1727 tot   1164 uniq   1.484 /uniq   0.075681 sec   44 usec/call
-  errors     6385 tot   5189 uniq   1.230 /uniq   0.309370 sec   48 usec/call
-                4   0.006% OK:     4 NOT:     0  ".gitignore"
-                4   0.006% OK:     4 NOT:     0  ".mailmap"
-                4   0.006% OK:     4 NOT:     0  "CREDITS"
-                4   0.006% OK:     4 NOT:     0  "Documentation/00-INDEX"
-                4   0.006% OK:     4 NOT:     0  "Documentation/ABI/testing/sysfs-block"
-                4   0.006% OK:     4 NOT:     0  "Documentation/ABI/testing/sysfs-firmware-acpi"
-                4   0.006% OK:     4 NOT:     0  "Documentation/CodingStyle"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DMA-API.txt"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DMA-mapping.txt"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/Makefile"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/gadget.tmpl"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/kernel-api.tmpl"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/kernel-locking.tmpl"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/procfs-guide.tmpl"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/procfs_example.c"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/rapidio.tmpl"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/s390-drivers.tmpl"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/uio-howto.tmpl"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/videobook.tmpl"
-                4   0.006% OK:     4 NOT:     0  "Documentation/DocBook/writing_usb_driver.tmpl"
-
-Note that the overall used system time as recorded from 'strace -T',
-does not drop so much that the reduced lstat() time should indicate
-for _this_ particular test run.  This is because now each unlink()
-call takes much more time, at least for me on an slow ide disk (using
-ext3) on a laptop.
-
-A simple test gives me an overall improvement of 2.937 seconds: real
-time drops from 28.195s (best of 5 runs with 'time git ...'), to
-25.381s (best of 5 runs).
-
-I have also noticed that inside the unlink_entry() function in file
-unpack-trees.c, one could often end up calling rmdir() lots and lots
-of times on none-empty directories.  Maybe one should schedule each
-directory for removal by an appropriate function, and then at the end
-call a new function to clean all the directories at once?
-
-Comments?
-
-----
-  Changes since v1:
-  = inside patch 1/4
-    - always null terminate the cache_path array
-    - added a paragraph to the commit message for this patch
-    - small cleanup on 2 comments, and a small line indentation change
-      [[Following is updates after comments from Junio C Hamano - Thanks!]]
-    - removed the 'static inline update_path_cache()' function
-    - replaced the else-part of the above inline function with a call
-      to the 'clear_lstat_cache()' function.
-    - deleted the '|| errno == ENOTDIR' part inside the big while-loop
-      inside check_lstat_cache(), and updated the named BIT-fields
-      accordingly
-  = inside patch 2/4
-    - moved a paragraph out from the commit message for this patch and
-      into this cover-letter
-      [[Following is updates after comments from Junio C Hamano - Thanks!]]
-    - Removed the '|LSTAT_NOTDIR' part from the call to lstat_cache()
-      inside function 'check_removed()' inside file diff-lib.c
-
-
-Kjetil Barvik (4):
-  Optimised, faster, more effective symlink/directory detection
-  Use 'lstat_cache()' instead of 'has_symlink_leading_path()'
-  create_directories() inside entry.c: only check each directory once!
-  remove the old 'has_symlink_leading_path()' function
-
- Makefile               |    2 +-
- builtin-add.c          |    5 ++-
- builtin-apply.c        |    5 ++-
- builtin-update-index.c |    5 ++-
- cache.h                |   17 ++++++++-
- diff-lib.c             |    5 ++-
- dir.c                  |    4 +-
- entry.c                |   86 +++++++++++++++++++++++++++++++++---------
- lstat_cache.c          |   99 ++++++++++++++++++++++++++++++++++++++++++++++++
- symlinks.c             |   64 -------------------------------
- unpack-trees.c         |   10 ++++-
- 11 files changed, 211 insertions(+), 91 deletions(-)
- create mode 100644 lstat_cache.c
+Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
+---
+:100644 100644 7449b10... edd4798... M	Makefile
+:100644 100644 4c56f3f... 8b8da85... M	cache.h
+:100644 000000 5a5e781... 0000000... D	symlinks.c
+ Makefile   |    1 -
+ cache.h    |    1 -
+ symlinks.c |   64 ------------------------------------------------------------
+ 3 files changed, 0 insertions(+), 66 deletions(-)
  delete mode 100644 symlinks.c
+
+diff --git a/Makefile b/Makefile
+index 7449b105b03e862d53244d50ed035b4ddabef028..edd4798429ad3828f5b9dcff20f73c6a7269520e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -483,7 +483,6 @@ LIB_OBJS += sha1_name.o
+ LIB_OBJS += shallow.o
+ LIB_OBJS += sideband.o
+ LIB_OBJS += strbuf.o
+-LIB_OBJS += symlinks.o
+ LIB_OBJS += tag.o
+ LIB_OBJS += trace.o
+ LIB_OBJS += transport.o
+diff --git a/cache.h b/cache.h
+index 4c56f3faa0b87398e27346358e40af964a1828bb..8b8da85f32600050dddfcdf6b0c0e6ecb8f27072 100644
+--- a/cache.h
++++ b/cache.h
+@@ -720,7 +720,6 @@ struct checkout {
+ 
+ extern void clear_created_dirs_cache(void);
+ extern int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath);
+-extern int has_symlink_leading_path(int len, const char *name);
+ 
+ #define LSTAT_DIR       (1u << 0)
+ #define LSTAT_NOENT     (1u << 1)
+diff --git a/symlinks.c b/symlinks.c
+deleted file mode 100644
+index 5a5e781a15d7d9cb60797958433eca896b31ec85..0000000000000000000000000000000000000000
+--- a/symlinks.c
++++ /dev/null
+@@ -1,64 +0,0 @@
+-#include "cache.h"
+-
+-struct pathname {
+-	int len;
+-	char path[PATH_MAX];
+-};
+-
+-/* Return matching pathname prefix length, or zero if not matching */
+-static inline int match_pathname(int len, const char *name, struct pathname *match)
+-{
+-	int match_len = match->len;
+-	return (len > match_len &&
+-		name[match_len] == '/' &&
+-		!memcmp(name, match->path, match_len)) ? match_len : 0;
+-}
+-
+-static inline void set_pathname(int len, const char *name, struct pathname *match)
+-{
+-	if (len < PATH_MAX) {
+-		match->len = len;
+-		memcpy(match->path, name, len);
+-		match->path[len] = 0;
+-	}
+-}
+-
+-int has_symlink_leading_path(int len, const char *name)
+-{
+-	static struct pathname link, nonlink;
+-	char path[PATH_MAX];
+-	struct stat st;
+-	char *sp;
+-	int known_dir;
+-
+-	/*
+-	 * See if the last known symlink cache matches.
+-	 */
+-	if (match_pathname(len, name, &link))
+-		return 1;
+-
+-	/*
+-	 * Get rid of the last known directory part
+-	 */
+-	known_dir = match_pathname(len, name, &nonlink);
+-
+-	while ((sp = strchr(name + known_dir + 1, '/')) != NULL) {
+-		int thislen = sp - name ;
+-		memcpy(path, name, thislen);
+-		path[thislen] = 0;
+-
+-		if (lstat(path, &st))
+-			return 0;
+-		if (S_ISDIR(st.st_mode)) {
+-			set_pathname(thislen, path, &nonlink);
+-			known_dir = thislen;
+-			continue;
+-		}
+-		if (S_ISLNK(st.st_mode)) {
+-			set_pathname(thislen, path, &link);
+-			return 1;
+-		}
+-		break;
+-	}
+-	return 0;
+-}
+-- 
+1.6.1.rc1.49.g7f705
