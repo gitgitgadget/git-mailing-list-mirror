@@ -1,85 +1,100 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [ANNOUNCE] Git homepage change
-Date: Tue, 6 Jan 2009 09:54:48 +0100
-Message-ID: <20090106085448.GF21154@genesis.frugalware.org>
-References: <d411cc4a0812151007n1be9ce95h92c8c11592ea5f9d@mail.gmail.com> <20081216114138.GM12856@machine.or.cz> <d411cc4a0901011040h4ab97aag20de54a6e138a4ec@mail.gmail.com> <20090105164001.GA12275@machine.or.cz> <20090105194011.GB25104@glandium.org> <20090105212716.GJ6595@eratosthenes.cryptobackpack.org> <d411cc4a0901051749p2ef880bub45bba1c0d41bfc7@mail.gmail.com> <alpine.LNX.2.00.0901052119210.9096@suse104.zenez.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 1/4] Optimised, faster, more effective
+ symlink/directory detection
+Date: Tue, 06 Jan 2009 00:56:32 -0800
+Message-ID: <7v3afwizi7.fsf@gitster.siamese.dyndns.org>
+References: <1231161001-32599-1-git-send-email-barvik@broadpark.no>
+ <1231161001-32599-2-git-send-email-barvik@broadpark.no>
+ <7vprj0j181.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="DbLwIXqnMNXxdFHq"
-Cc: Scott Chacon <schacon@gmail.com>,
-	David Bryson <david@statichacks.org>,
-	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-To: Boyd Lynn Gerber <gerberb@zenez.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 09:56:22 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Kjetil Barvik <barvik@broadpark.no>
+X-From: git-owner@vger.kernel.org Tue Jan 06 09:58:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LK7jS-0000tF-7Y
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 09:56:14 +0100
+	id 1LK7lE-0001RM-1O
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 09:58:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934AbZAFIyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 03:54:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbZAFIyx
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 03:54:53 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:37059 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750873AbZAFIyv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 03:54:51 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 5C264580B8;
-	Tue,  6 Jan 2009 09:54:50 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 635EE4465E;
-	Tue,  6 Jan 2009 09:54:48 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 1AC9811B8630; Tue,  6 Jan 2009 09:54:48 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.2.00.0901052119210.9096@suse104.zenez.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751137AbZAFI4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 03:56:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750873AbZAFI4k
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 03:56:40 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46107 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750845AbZAFI4j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 03:56:39 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AECF58E122;
+	Tue,  6 Jan 2009 03:56:38 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 656E78E121; Tue,
+  6 Jan 2009 03:56:34 -0500 (EST)
+In-Reply-To: <7vprj0j181.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 06 Jan 2009 00:19:26 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: EDE0E976-DBCF-11DD-981D-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104666>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---DbLwIXqnMNXxdFHq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Let me see if I understand the logic behind this caching....
+> ...
+>> +		last_slash = match_len;
+>> +		cache_path[last_slash] = '\0';
+>> +
+>> +		if (lstat(cache_path, &st)) {
+>> +			ret_flags = LSTAT_LSTATERR;
+>> +			if (errno == ENOENT || errno == ENOTDIR)
+>> +				ret_flags |= LSTAT_NOTDIR;
+>
+> If you tested "A/B" here and got ENOENT back, you know "A/B" does not
+> exist; you cache this knowledge as "A/B is not a directory" (I also think
+> you could use it as a cached knowledge that "A exists and is a directory".
+> I am not sure if you are taking advantage of that).
+>
+> What I do not understand about this code is the ENOTDIR case.  If you
+> tested "A/B" and got ENOTDIR back, what you know is that "A" is not a
+> directory (if the path tested this round were deeper like "X/Y/A/B", you
+> know "X/Y/A" is not a directory, and you know "X" and "X/Y" are true
+> directories; otherwise the loop would have exited before this round when
+> you tested "X" or "X/Y" in the earlier rounds).
+>
+> So as far as I can think of, ENOENT case and ENOTDIR case would give you
+> different information (ENOENT would say "A is a dir, A/B is not"; ENOTDIR
+> would say "A is not a dir").  I am confused how you can cache the same
+> path and same flag between these two cases here.
 
-On Mon, Jan 05, 2009 at 09:24:16PM -0700, Boyd Lynn Gerber <gerberb@zenez.c=
-om> wrote:
-> http://dir.gmane.org/gmane.comp.version-control.git
->=20
-> On this page the following...
->=20
-> Other mailing list archives for this list:
->=20
->     1. The Mail Archive
->=20
-> http://www.mail-archive.com/git@vger.kernel.org/
->=20
-> And this states this link
->=20
-> http://www.mail-archive.com/git@vger.kernel.org/
->=20
-> And the lastest is 2005 and earlier.
+I take 1/4 of the above back.
 
-I don't think you should blame Scott for this, it seem to be a gmane vs
-mail-archive issue, and gmane is mentioned already in MaintNotes.
+If everything is working correctly, I do not think you will ever have a
+situation where you check "A/B" here and get ENOTDIR back.  lstat("A/B")
+would yield ENOTDIR if "A" is not a directory, but:
 
---DbLwIXqnMNXxdFHq
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+ (1) If you did test "A" in the earlier round in the loop, you would have
+     already found it is not a directory and would have exited the loop
+     with LSTAT_ERR.  You cannot test "A/B" in such a case;
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+ (2) If you did not test "A" in the loop, that has to be because you had a
+     cached information for it, and the caching logic would have returned
+     early if "A" was a non-directory without entering the loop; in other
+     words, you would test "A/B" here without testing "A" in the loop only
+     when the cache says "A" was a directory.  You cannot get ENOTDIR in
+     such a case.
 
-iEYEARECAAYFAkljHFgACgkQe81tAgORUJa9CACfeusQS1ujHd2Ch4bQVKvbmlC5
-M0EAnieMKc25Amia5gyoXv0eP2TYVryt
-=vNzJ
------END PGP SIGNATURE-----
+In any case, my main puzzlement still stands.  I think ENOTDIR case should
+behave differently from ENOENT case.
 
---DbLwIXqnMNXxdFHq--
+And I think it is an indication of a grave error, either this code is
+racing with an external process that is actively mucking with the work
+tree to make your cached information unusable, or somebody forgot to call
+clear_lstat_cache().
+
+Hmm?
