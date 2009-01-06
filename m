@@ -1,155 +1,75 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH/RFC v2 4/4] remove the old 'has_symlink_leading_path()' function
-Date: Tue, 06 Jan 2009 21:36:32 +0100
-Message-ID: <1231274192-30478-5-git-send-email-barvik@broadpark.no>
-References: <1231274192-30478-1-git-send-email-barvik@broadpark.no>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [ANNOUNCE] Git homepage change
+Date: Tue, 6 Jan 2009 21:40:52 +0100
+Message-ID: <20090106204052.GL21154@genesis.frugalware.org>
+References: <d411cc4a0812151007n1be9ce95h92c8c11592ea5f9d@mail.gmail.com> <20081216114138.GM12856@machine.or.cz> <d411cc4a0901011040h4ab97aag20de54a6e138a4ec@mail.gmail.com> <20090105164001.GA12275@machine.or.cz> <20090105194011.GB25104@glandium.org> <20090105212716.GJ6595@eratosthenes.cryptobackpack.org> <d411cc4a0901051749p2ef880bub45bba1c0d41bfc7@mail.gmail.com> <alpine.LNX.2.00.0901052119210.9096@suse104.zenez.com> <20090106085448.GF21154@genesis.frugalware.org> <alpine.LNX.2.00.0901060907350.9096@suse104.zenez.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kjetil Barvik <barvik@broadpark.no>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 06 21:38:49 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="puacTriGDskFP02p"
+Cc: Scott Chacon <schacon@gmail.com>,
+	David Bryson <david@statichacks.org>,
+	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Boyd Lynn Gerber <gerberb@zenez.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 21:42:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKIh6-0001PD-O6
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 21:38:33 +0100
+	id 1LKIkn-0002rq-Kn
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 21:42:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752964AbZAFUgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 15:36:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750711AbZAFUgr
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 15:36:47 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:55282 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751002AbZAFUgm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 15:36:42 -0500
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KD200B8MH95GN20@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Tue, 06 Jan 2009 21:36:41 +0100 (CET)
-Received: from localhost.localdomain ([80.202.166.60])
- by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTPA id <0KD200CL4H8WWS00@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Tue, 06 Jan 2009 21:36:41 +0100 (CET)
-X-Mailer: git-send-email 1.6.1.rc1.49.g7f705
-In-reply-to: <1231274192-30478-1-git-send-email-barvik@broadpark.no>
+	id S1752143AbZAFUk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 15:40:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752213AbZAFUk4
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 15:40:56 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:45967 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752030AbZAFUkz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 15:40:55 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 1FEC6580AC;
+	Tue,  6 Jan 2009 21:40:55 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 1EB0D4465E;
+	Tue,  6 Jan 2009 21:40:53 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id E4CBE11B8630; Tue,  6 Jan 2009 21:40:52 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.2.00.0901060907350.9096@suse104.zenez.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104723>
 
-It has been replaced by the more cache effective 'lstat_cache()'
-function.  see lstat_cache.c
 
-Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
----
-:100644 100644 7449b10... edd4798... M	Makefile
-:100644 100644 4c56f3f... 8b8da85... M	cache.h
-:100644 000000 5a5e781... 0000000... D	symlinks.c
- Makefile   |    1 -
- cache.h    |    1 -
- symlinks.c |   64 ------------------------------------------------------------
- 3 files changed, 0 insertions(+), 66 deletions(-)
- delete mode 100644 symlinks.c
+--puacTriGDskFP02p
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Makefile b/Makefile
-index 7449b105b03e862d53244d50ed035b4ddabef028..edd4798429ad3828f5b9dcff20f73c6a7269520e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -483,7 +483,6 @@ LIB_OBJS += sha1_name.o
- LIB_OBJS += shallow.o
- LIB_OBJS += sideband.o
- LIB_OBJS += strbuf.o
--LIB_OBJS += symlinks.o
- LIB_OBJS += tag.o
- LIB_OBJS += trace.o
- LIB_OBJS += transport.o
-diff --git a/cache.h b/cache.h
-index 4c56f3faa0b87398e27346358e40af964a1828bb..8b8da85f32600050dddfcdf6b0c0e6ecb8f27072 100644
---- a/cache.h
-+++ b/cache.h
-@@ -720,7 +720,6 @@ struct checkout {
- 
- extern void clear_created_dirs_cache(void);
- extern int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath);
--extern int has_symlink_leading_path(int len, const char *name);
- 
- #define LSTAT_DIR       (1u << 0)
- #define LSTAT_NOENT     (1u << 1)
-diff --git a/symlinks.c b/symlinks.c
-deleted file mode 100644
-index 5a5e781a15d7d9cb60797958433eca896b31ec85..0000000000000000000000000000000000000000
---- a/symlinks.c
-+++ /dev/null
-@@ -1,64 +0,0 @@
--#include "cache.h"
--
--struct pathname {
--	int len;
--	char path[PATH_MAX];
--};
--
--/* Return matching pathname prefix length, or zero if not matching */
--static inline int match_pathname(int len, const char *name, struct pathname *match)
--{
--	int match_len = match->len;
--	return (len > match_len &&
--		name[match_len] == '/' &&
--		!memcmp(name, match->path, match_len)) ? match_len : 0;
--}
--
--static inline void set_pathname(int len, const char *name, struct pathname *match)
--{
--	if (len < PATH_MAX) {
--		match->len = len;
--		memcpy(match->path, name, len);
--		match->path[len] = 0;
--	}
--}
--
--int has_symlink_leading_path(int len, const char *name)
--{
--	static struct pathname link, nonlink;
--	char path[PATH_MAX];
--	struct stat st;
--	char *sp;
--	int known_dir;
--
--	/*
--	 * See if the last known symlink cache matches.
--	 */
--	if (match_pathname(len, name, &link))
--		return 1;
--
--	/*
--	 * Get rid of the last known directory part
--	 */
--	known_dir = match_pathname(len, name, &nonlink);
--
--	while ((sp = strchr(name + known_dir + 1, '/')) != NULL) {
--		int thislen = sp - name ;
--		memcpy(path, name, thislen);
--		path[thislen] = 0;
--
--		if (lstat(path, &st))
--			return 0;
--		if (S_ISDIR(st.st_mode)) {
--			set_pathname(thislen, path, &nonlink);
--			known_dir = thislen;
--			continue;
--		}
--		if (S_ISLNK(st.st_mode)) {
--			set_pathname(thislen, path, &link);
--			return 1;
--		}
--		break;
--	}
--	return 0;
--}
--- 
-1.6.1.rc1.49.g7f705
+On Tue, Jan 06, 2009 at 09:12:30AM -0700, Boyd Lynn Gerber <gerberb@zenez.c=
+om> wrote:
+> archive.  The only problem is I have not figured out how to download all=
+=20
+> 303 articles, quickly/easily.  You would think one of the majordomo=20
+> commands to get articles would work.  They do not.
+
+I would use:
+
+http://gmane.org/export.php
+
+--puacTriGDskFP02p
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkljwdQACgkQe81tAgORUJYSkACgiJrf8vhTOjecJP5BpeE04wWe
+y1gAoJ4vcOgSFcpXp4cu2oSiEU+CRfRG
+=1pWF
+-----END PGP SIGNATURE-----
+
+--puacTriGDskFP02p--
