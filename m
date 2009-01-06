@@ -1,50 +1,65 @@
-From: Lars Sadau <lars@sadau-online.de>
-Subject: BUG?? INSTALL MAKEFILE
-Date: Tue, 06 Jan 2009 14:26:16 +0100
-Message-ID: <49635BF8.1010700@sadau-online.de>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Error: unable to unlink ... when using "git gc"
+Date: Tue, 06 Jan 2009 14:27:53 +0100
+Message-ID: <vpq3afwd0o6.fsf@bauges.imag.fr>
+References: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com>
+	<7vy6xohkt2.fsf@gitster.siamese.dyndns.org>
+	<488807870901060118y2dbc7430ocea5cf9ce4bca3c7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 06 14:33:22 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Johnny Lee" <johnnylee194@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 14:33:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKC3V-0003fN-0z
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 14:33:13 +0100
+	id 1LKC3l-0003iu-BL
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 14:33:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932AbZAFNbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 08:31:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbZAFNbo
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 08:31:44 -0500
-Received: from meili.mathematik.hu-berlin.de ([141.20.53.120]:55140 "EHLO
-	meili.mathematik.hu-berlin.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751894AbZAFNbo (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jan 2009 08:31:44 -0500
-X-Greylist: delayed 317 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jan 2009 08:31:44 EST
-Received: from localhost (localhost [127.0.0.1])
-	by meili.mathematik.hu-berlin.de (Postfix) with ESMTP id E02CD21E005
-	for <git@vger.kernel.org>; Tue,  6 Jan 2009 14:26:21 +0100 (CET)
-Received: from meili.mathematik.hu-berlin.de ([127.0.0.1])
- by localhost (meili.mathematik.hu-berlin.de [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 13394-08 for <git@vger.kernel.org>;
- Tue,  6 Jan 2009 14:26:17 +0100 (CET)
-Received: from [141.20.54.102] (brocken.mathematik.hu-berlin.de [141.20.54.102])
-	by meili.mathematik.hu-berlin.de (Postfix) with ESMTP id 0CE1B21E004
-	for <git@vger.kernel.org>; Tue,  6 Jan 2009 14:26:17 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (X11/20081112)
-X-Virus-Scanned: amavisd-new at mathematik.hu-berlin.de
+	id S1751944AbZAFNb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 08:31:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751927AbZAFNb6
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 08:31:58 -0500
+Received: from imag.imag.fr ([129.88.30.1]:62217 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751903AbZAFNb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 08:31:58 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n06DRrT7010426
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 6 Jan 2009 14:27:53 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LKByL-0007oa-33; Tue, 06 Jan 2009 14:27:53 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LKByL-0003LQ-0i; Tue, 06 Jan 2009 14:27:53 +0100
+In-Reply-To: <488807870901060118y2dbc7430ocea5cf9ce4bca3c7@mail.gmail.com> (Johnny Lee's message of "Tue\, 6 Jan 2009 17\:18\:21 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 06 Jan 2009 14:27:53 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104686>
 
-Hallo,
+"Johnny Lee" <johnnylee194@gmail.com> writes:
 
-i'm a brand-new git user. Just one minute ago I wanted to install git in
-my home directory. The INSTALL file says type simply "make install", but
-the makefile does a global installation.
+> Thanks for your consideration Junio,
+>
+> Peff has already helped me to figure out the root cause of this error
+> is a possible bad practice on collaboration work.
+>
+> Here I attached the previous mail.
 
-Lars
+See core.sharedRepository in man git-config or
+http://www.kernel.org/pub/software/scm/git/docs/git-config.html
+
+-- 
+Matthieu
