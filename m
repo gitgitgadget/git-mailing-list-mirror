@@ -1,80 +1,77 @@
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: Re: [ANNOUNCE] Git homepage change
-Date: Tue, 6 Jan 2009 09:12:30 -0700
-Message-ID: <alpine.LNX.2.00.0901060907350.9096@suse104.zenez.com>
-References: <d411cc4a0812151007n1be9ce95h92c8c11592ea5f9d@mail.gmail.com> <20081216114138.GM12856@machine.or.cz> <d411cc4a0901011040h4ab97aag20de54a6e138a4ec@mail.gmail.com> <20090105164001.GA12275@machine.or.cz> <20090105194011.GB25104@glandium.org>
- <20090105212716.GJ6595@eratosthenes.cryptobackpack.org> <d411cc4a0901051749p2ef880bub45bba1c0d41bfc7@mail.gmail.com> <alpine.LNX.2.00.0901052119210.9096@suse104.zenez.com> <20090106085448.GF21154@genesis.frugalware.org>
+From: Bernt Hansen <bernt@norang.ca>
+Subject: Re: how to track the history of a line in a file
+Date: Tue, 06 Jan 2009 11:21:50 -0500
+Organization: Norang Consulting Inc
+Message-ID: <878wpo1k2p.fsf@gollum.intra.norang.ca>
+References: <alpine.DEB.1.10.0901021405460.21567@asgard.lang.hm>
+	<87d4f01lmt.fsf@gollum.intra.norang.ca>
+	<20090106160814.GI21154@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Scott Chacon <schacon@gmail.com>,
-	David Bryson <david@statichacks.org>,
-	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: david@lang.hm, git@vger.kernel.org
 To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Jan 06 17:13:56 2009
+X-From: git-owner@vger.kernel.org Tue Jan 06 17:23:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKEYx-0001Kx-Fd
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 17:13:51 +0100
+	id 1LKEiD-0004o6-6L
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 17:23:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbZAFQMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 11:12:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751904AbZAFQMc
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 11:12:32 -0500
-Received: from suse104.zenez.com ([198.60.105.164]:57580 "EHLO
-	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751713AbZAFQMb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 11:12:31 -0500
-Received: by suse104.zenez.com (Postfix, from userid 1000)
-	id 33E77234040; Tue,  6 Jan 2009 09:12:30 -0700 (MST)
-Received: from localhost (localhost [127.0.0.1])
-	by suse104.zenez.com (Postfix) with ESMTP id 25DDFB3003D;
-	Tue,  6 Jan 2009 09:12:30 -0700 (MST)
-In-Reply-To: <20090106085448.GF21154@genesis.frugalware.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1751145AbZAFQV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 11:21:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbZAFQV6
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 11:21:58 -0500
+Received: from mho-02-bos.mailhop.org ([63.208.196.179]:50199 "EHLO
+	mho-02-bos.mailhop.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750860AbZAFQV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 11:21:57 -0500
+Received: from cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com ([99.239.148.180] helo=mail.norang.ca)
+	by mho-02-bos.mailhop.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <bernt@norang.ca>)
+	id 1LKEgl-000Fo5-OM; Tue, 06 Jan 2009 16:21:56 +0000
+Received: from gollum.intra.norang.ca (gollum.intra.norang.ca [192.168.1.5])
+	by mail.norang.ca (8.13.8/8.13.8/Debian-3) with ESMTP id n06GLqUe003947
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 6 Jan 2009 11:21:53 -0500
+Received: from gollum.intra.norang.ca (localhost [127.0.0.1])
+	by gollum.intra.norang.ca (8.14.3/8.14.3/Debian-5) with ESMTP id n06GLqFa011442;
+	Tue, 6 Jan 2009 11:21:52 -0500
+Received: (from bernt@localhost)
+	by gollum.intra.norang.ca (8.14.3/8.14.3/Submit) id n06GLomg011441;
+	Tue, 6 Jan 2009 11:21:50 -0500
+X-Mail-Handler: MailHop Outbound by DynDNS
+X-Originating-IP: 99.239.148.180
+X-Report-Abuse-To: abuse@dyndns.com (see http://www.dyndns.com/services/mailhop/outbound_abuse.html for abuse reporting information)
+X-MHO-User: U2FsdGVkX18Fd1Ljet/9ZNS4/E+8MU5B
+In-Reply-To: <20090106160814.GI21154@genesis.frugalware.org> (Miklos Vajna's message of "Tue\, 6 Jan 2009 17\:08\:14 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+Received-SPF: none (mail.norang.ca: bernt@gollum.intra.norang.ca does not designate permitted sender hosts) receiver=mail.norang.ca; client-ip=192.168.1.5; helo=gollum.intra.norang.ca; envelope-from=bernt@gollum.intra.norang.ca; x-software=spfmilter 0.95 http://www.acme.com/software/spfmilter/ with libspf2;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104698>
 
-On Tue, 6 Jan 2009, Miklos Vajna wrote:
-> On Mon, Jan 05, 2009 at 09:24:16PM -0700, Boyd Lynn Gerber 
-> <gerberb@zenez.com> wrote:
->> http://dir.gmane.org/gmane.comp.version-control.git
->>
->> On this page the following...
->>
->> Other mailing list archives for this list:
->>
->>     1. The Mail Archive
->>
->> http://www.mail-archive.com/git@vger.kernel.org/
->>
->> And this states this link
->>
->> http://www.mail-archive.com/git@vger.kernel.org/
->>
->> And the lastest is 2005 and earlier.
+Miklos Vajna <vmiklos@frugalware.org> writes:
+
+> On Tue, Jan 06, 2009 at 10:48:10AM -0500, Bernt Hansen <bernt@norang.ca> wrote:
+>> Save the following script in ~/bin/git-rblame.sh, make it executable,
+>> and then create a global git alias for it as follows:
+>> 
+>> $ git config --global alias.rblame '!~/bin/git-rblame.sh $*'
 >
-> I don't think you should blame Scott for this, it seem to be a gmane vs
-> mail-archive issue, and gmane is mentioned already in MaintNotes.
+> Given that you have ~/bin in PATH, just name the script ~/bin/git-rblame
+> and you won't even have to define an alias on each machine. ;-)
 
-I was not sure who/what/where to make a not of this.  I think it would be 
-good if we could get a link to the various archives.  During an update of 
-my system, a file was changed that cause email to me to be bounced.  I did 
-not relealize it.  I was trying to find archived.  I thought I would start 
-with our new main page.  I had to do google searches to finally find an 
-archive.  The only problem is I have not figured out how to download all 
-303 articles, quickly/easily.  You would think one of the majordomo 
-commands to get articles would work.  They do not.
+Yes but I don't want to use 'git-rblame' as the command since I've
+broken my habit of using the dashed versions of commands. 'git rblame'
+just feels better to me.
 
-I thought I should remport my finding and see if anyone knew or could make 
-changes to make it easier for us to find the archives.
+Now I probably should have named the script something that won't ever
+clash with possible future git commands (like my-git-rblame.sh or
+something) but since it's in my ~/bin I'll just deal with that if it
+ever happens in the future :)
 
-Thanks,
-
--- 
-Boyd Gerber <gerberb@zenez.com> 801 849-0213
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+-Bernt
