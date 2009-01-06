@@ -1,67 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Problems getting rid of large files using git-filter-branch
-Date: Tue, 6 Jan 2009 23:20:41 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901062319070.30769@pacific.mpi-cbg.de>
+Date: Tue, 06 Jan 2009 17:31:58 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0901061709510.26118@xanadu.home>
 References: <c09652430901061359q7a02291fk656ab23e54b19f5e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-99601540-1231280442=:30769"
+Content-Type: multipart/mixed; boundary="Boundary_(ID_zFZ7w3u3oJjEz6nxVXssDQ)"
 Cc: git@vger.kernel.org
 To: =?ISO-8859-15?Q?=D8yvind_Harboe?= <oyvind.harboe@zylin.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 23:22:08 2009
+X-From: git-owner@vger.kernel.org Tue Jan 06 23:33:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKKJ7-0006aR-LC
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 23:21:54 +0100
+	id 1LKKUR-0002GU-7r
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 23:33:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757966AbZAFWUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 17:20:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757974AbZAFWUI
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 17:20:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38545 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757966AbZAFWUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 17:20:06 -0500
-Received: (qmail invoked by alias); 06 Jan 2009 22:20:04 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp017) with SMTP; 06 Jan 2009 23:20:04 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/LOPRRA1PL3Oi8HDuPEGRgeoynt7+ouaFocFdFtg
-	GjUG8aSwy6tLhP
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <c09652430901061359q7a02291fk656ab23e54b19f5e@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1758820AbZAFWcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 17:32:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760580AbZAFWcI
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 17:32:08 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:32947 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760582AbZAFWcF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 17:32:05 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KD200ANUMLA5540@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 06 Jan 2009 17:31:58 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <c09652430901061359q7a02291fk656ab23e54b19f5e@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+Content-id: <alpine.LFD.2.00.0901061731110.26118@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104731>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-99601540-1231280442=:30769
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
-
-Hi,
+--Boundary_(ID_zFZ7w3u3oJjEz6nxVXssDQ)
+Content-id: <alpine.LFD.2.00.0901061731111.26118@xanadu.home>
+Content-type: TEXT/PLAIN; CHARSET=ISO-8859-15
+Content-transfer-encoding: 8BIT
 
 On Tue, 6 Jan 2009, Øyvind Harboe wrote:
 
 > Q1: How can I figure out what it is in .git that takes so much space?
+> 
+> Q2: Where can I read more about what to do after running git-filter-branch to
+> removing the offending objects?
+> 
+> 
+> 
+> 1. I ran this command to get rid of the offending files and that appears to
+> have worked. I can't find any traces of them anymore...
+> 
+> git filter-branch --tree-filter 'find . -regex ".*toolchain\..*" -exec
+> rm -f {} \;' HEAD
+> 
+> 2. Running "git gc" takes a few seconds. The repository is still
+> huge(it should be
+> perhaps 10-20mByte).
+> 
+> du -skh .git/
+> 187M    .git/
+> 
+> 3. I tried "git reflog expire --all" + lots of other tricks in the
+> link below, but no luck.
 
-If it is a pack that is taking so much space:
+OK, try this:
 
-$ git verify-pack -v $PACK | grep -v "^chain " | sort -n -k 4
+	cd ..
+	mv my_repo my_repo.orig
+	mkdir my_repo
+	cd my_repo
+	git init
+	git pull file://$(pwd)/../my_repo.orig
 
-and then for the last few lines do a
+This is the easiest way to ensure you have only the necessary objects in 
+the new repo, without all the extra stuff tied to reflogs, etc.
 
-$ git rev-list --all --objects | grep $SHA1
+Then, if your repo is still seemingly too big, you can get a bit dirty 
+with the sequence Johannes just posted.
 
-Hth,
-Dscho
 
---8323328-99601540-1231280442=:30769--
+Nicolas
+
+--Boundary_(ID_zFZ7w3u3oJjEz6nxVXssDQ)--
