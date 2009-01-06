@@ -1,74 +1,80 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: BUG?? INSTALL MAKEFILE
-Date: Tue, 6 Jan 2009 15:22:26 +0000
-Message-ID: <e2b179460901060722t32a1cb0o15af1a2084cc72f9@mail.gmail.com>
-References: <49635BF8.1010700@sadau-online.de> <vpqiqosa3fc.fsf@bauges.imag.fr>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Error: unable to unlink ... when using "git gc"
+Date: Tue, 6 Jan 2009 15:33:57 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngm6uf5.vuo.sitaramc@sitaramc.homelinux.net>
+References: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com>
+ <20090106072253.GA9920@coredump.intra.peff.net>
+ <488807870901052352w585da727r6d4a1e4ca4238cab@mail.gmail.com>
+ <20090106080300.GA10079@coredump.intra.peff.net>
+ <slrngm6hoj.n4a.sitaramc@sitaramc.homelinux.net>
+ <488807870901060705m49419ec1he14aace5caaa3d89@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Matthieu Moy" <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: "Lars Sadau" <lars@sadau-online.de>
-X-From: git-owner@vger.kernel.org Tue Jan 06 16:23:56 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 06 16:35:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKDma-0000QV-1k
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 16:23:52 +0100
+	id 1LKDxq-0004P0-VF
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 16:35:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278AbZAFPW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 10:22:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752188AbZAFPW2
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 10:22:28 -0500
-Received: from qw-out-2122.google.com ([74.125.92.26]:34594 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752172AbZAFPW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 10:22:27 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so6921620qwe.37
-        for <git@vger.kernel.org>; Tue, 06 Jan 2009 07:22:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=YsLuRWAgF+v5hwmbwQHMdeCFcFnnJvj7Tq8obnQYl3c=;
-        b=v8VtuxElfn+35NPx59AQOnAxUA/zVDPjqQkp6oIiCenBu0QzjrjiwEyZLVQ0xfkVoQ
-         P1iusp9PPsGkKJDMDok/m5rXJrD4tY4b1B2arSP44eukYCbnrGglIP4QAUOoMyhahhb9
-         5SSYfepCajhWkt6Hl5pTi7FpuZKEUn2uUonBA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=MHUkf2EYC4EsbDgcQ2aa0pV9KtTs59ZRpxDksBHjgWaKaNqDA+s329pckP3B/pBsi1
-         yiNRNsxoF5q10JrHajRJ+oGaYvIPOiRexZ9O3l51U0ywQ5u+TIa/9fwZKSWH6ypx20kb
-         p1oV3AGcC8yOFj1sda7Ijt5YX4x9Fz16HG3E4=
-Received: by 10.214.11.17 with SMTP id 17mr18176516qak.77.1231255346100;
-        Tue, 06 Jan 2009 07:22:26 -0800 (PST)
-Received: by 10.214.26.15 with HTTP; Tue, 6 Jan 2009 07:22:26 -0800 (PST)
-In-Reply-To: <vpqiqosa3fc.fsf@bauges.imag.fr>
-Content-Disposition: inline
+	id S1750988AbZAFPeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 10:34:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750873AbZAFPeL
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 10:34:11 -0500
+Received: from main.gmane.org ([80.91.229.2]:51121 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750836AbZAFPeK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 10:34:10 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LKDwT-0003ls-J8
+	for git@vger.kernel.org; Tue, 06 Jan 2009 15:34:05 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Jan 2009 15:34:05 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Jan 2009 15:34:05 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104694>
 
-2009/1/6 Matthieu Moy <Matthieu.Moy@imag.fr>
-> Lars Sadau <lars@sadau-online.de> writes:
-> > i'm a brand-new git user. Just one minute ago I wanted to install git in
-> > my home directory. The INSTALL file says type simply "make install", but
-> > the makefile does a global installation.
->
-> I was going to write:
->
->  Either run ./configure --prefix=$HOME/wherever/you/want or edit the
->  prefix variable in config.mak.
->
-> but then realized that prefix is set to $(HOME) by default. Are you
-> sure you didn't edit the Makefile or run any sort of ./configure
-> before "make install" ?
+On 2009-01-06, Johnny Lee <johnnylee194@gmail.com> wrote:
 
-Or run 'make' as root, as well as 'make install'?
+> On Tue, Jan 6, 2009 at 7:57 PM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
 
-Mike
+>> If you're not worried about the finer-grained access control
+>> that acl(5) gives you, just do what "git init
+>> --shared=group" does:
+>>
+>>    git config core.sharedrepository 1 # as mentioned above
+>>    chmod g+ws .git
+>>
+>> Now set the group to something (I use "gitpushers" ;-)
+>>
+>>    chgrp -R gitpushers .git
+>>
+>> amd make sure all your users are part of that group.
+
+> We also plan to do it in this way, just a small wondering that it
+> looks a kind of workaround instead of a more graceful solution.
+
+I wouldn't consider it a workaround.  It uses normal Unix
+permissions the way they were designed to, including setgid
+for directories.
+
+Actually, I am yet to come up with a situation where I
+actually needed ACLs, though they are more generalised, and
+fine-grained.
+
+And the maint is all eminently scriptable.
