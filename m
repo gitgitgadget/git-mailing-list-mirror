@@ -1,53 +1,68 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: Error: unable to unlink ... when using "git gc"
-Date: Tue, 6 Jan 2009 02:22:54 -0500
-Message-ID: <20090106072253.GA9920@coredump.intra.peff.net>
-References: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com>
+Date: Tue, 6 Jan 2009 03:03:00 -0500
+Message-ID: <20090106080300.GA10079@coredump.intra.peff.net>
+References: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com> <20090106072253.GA9920@coredump.intra.peff.net> <488807870901052352w585da727r6d4a1e4ca4238cab@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Johnny Lee <johnnylee194@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 08:24:22 2009
+X-From: git-owner@vger.kernel.org Tue Jan 06 09:04:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LK6IX-0004hw-JZ
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 08:24:22 +0100
+	id 1LK6vP-00044q-J9
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 09:04:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559AbZAFHW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 02:22:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751525AbZAFHW4
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 02:22:56 -0500
-Received: from peff.net ([208.65.91.99]:46939 "EHLO peff.net"
+	id S1750848AbZAFIDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 03:03:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750730AbZAFIDG
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 03:03:06 -0500
+Received: from peff.net ([208.65.91.99]:34190 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751466AbZAFHW4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 02:22:56 -0500
-Received: (qmail 32276 invoked by uid 107); 6 Jan 2009 07:23:25 -0000
+	id S1750709AbZAFIDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 03:03:05 -0500
+Received: (qmail 32474 invoked by uid 107); 6 Jan 2009 08:03:31 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 06 Jan 2009 02:23:25 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Jan 2009 02:22:54 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 06 Jan 2009 03:03:31 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Jan 2009 03:03:00 -0500
 Content-Disposition: inline
-In-Reply-To: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com>
+In-Reply-To: <488807870901052352w585da727r6d4a1e4ca4238cab@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104643>
 
-On Tue, Jan 06, 2009 at 03:00:52PM +0800, Johnny Lee wrote:
+[re-adding git@vger; please keep discussion on-list so everyone can
+benefit from the result]
 
-> While I'm looking at these "unable to unlink" files, it seems they are
-> read only:
-> git@tomato:~/golf$ ls -l .git/objects/16/
-> total 4
-> -r--r--r-- 1 johnny johnny 26 2009-01-05 09:25
-> b14f5da9e2fcd6f3f38cc9e584cef2f3c90ebe
+On Tue, Jan 06, 2009 at 03:52:12PM +0800, Johnny Lee wrote:
+
+> Thanks Peff, I've checked the permission of .git/objects/16, it's
+> created by another user and thus I have no permission to remove it.
 > 
-> Is there anything wrong here?
+> In fact, this is coming from a previous bad practice on setting up a
+> collaboration repository on a SSH server, here is what I've done so
+> far:
+> [...]
+> 7. Then the user "git" has changed mode for all the files under .git
+> to writable.
+> 
+> 8. This time, user "johnny" can push successfully.
 
-It is normal for objects to be read-only. However, permission to unlink
-a file comes from its directory permission. Is .git/objects/16 writable
-by you?
+If you are going to have multiple users sharing a repository, generally
+they should be in the same group and the core.sharedrepository config
+option should be set (see "git help config", or the "shared" option to
+git-init).
+
+I've never used that personally, though. I have always just used POSIX
+ACLs, with a default ACL on each directory giving access to everyone.
+E.g. (off the top of my head):
+
+  for user in user1 user2 user3; do
+    setfacl -R -m u:$user:rwX -m d:u:$user:rwX /path/to/repo
+  done
 
 -Peff
