@@ -1,114 +1,134 @@
-From: "=?ISO-8859-1?Q?=D8yvind_Harboe?=" <oyvind.harboe@zylin.com>
-Subject: Re: Problems getting rid of large files using git-filter-branch
-Date: Wed, 7 Jan 2009 11:15:53 +0100
-Message-ID: <c09652430901070215p436db79boae4c56bfa1afbc1a@mail.gmail.com>
-References: <c09652430901061359q7a02291fk656ab23e54b19f5e@mail.gmail.com>
-	 <alpine.DEB.1.00.0901062319070.30769@pacific.mpi-cbg.de>
-	 <c09652430901061436w36c013ep938e9cfba43140c9@mail.gmail.com>
-	 <alpine.DEB.1.00.0901071101480.7496@intel-tinevez-2-302>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [PATCH (topgit) 1/2] Implement setup_pager just like in git
+Date: Tue, 6 Jan 2009 21:32:03 +0100
+Message-ID: <20090106203203.GA11274@lapse.rw.madduck.net>
+References: <cover.1231254832.git.kirr@landau.phys.spbu.ru> <acaae74f79d385014e726b97f8258b2a0caa3dd0.1231254832.git.kirr@landau.phys.spbu.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 07 11:17:36 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Kj7319i9nmIyA2yE"
+Cc: pasky@suse.cz
+To: Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 07 11:31:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKVTb-00036x-FP
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 11:17:27 +0100
+	id 1LKVge-0007Os-N5
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 11:30:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753075AbZAGKP6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jan 2009 05:15:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752809AbZAGKP6
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 05:15:58 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:48416 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757512AbZAGKP4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Jan 2009 05:15:56 -0500
-Received: by bwz14 with SMTP id 14so25250631bwz.13
-        for <git@vger.kernel.org>; Wed, 07 Jan 2009 02:15:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=4rCzmVngO8EUBtwVqp0d8dbnOXFUfeTtMXPEfGpllKE=;
-        b=drQfnsvNZgbv5kb9/V+ZaP1gEy+RB9/dWdQajnih/Se9TAHPUNk5SkEkCB9NImFlGh
-         RxDMqGB3AFGea+ZqXhw3YLGg0yxo0XVEYV0KPxy/5Jyrf1T6N0oglK6YrhrGwoxao+Aw
-         rjXSsitDNEmZ95BGJKQLJVgrK8kI2EseIUJMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=wDdumq0iRQzGvinWfV3PHqc6F6Je0BziZQkViUZ+7A2RWn11aD+PwyX3UQqddrf3Xj
-         pCB0uR19IFOEaQYnYn9CXvyK8tRh8LRPPdyEOSaBcBrSXh+p5Dgt/zq8+x4tz01BUjp/
-         6O8YGhI1s8XGQ3Ptt+863xy6FTORQGT6snSkY=
-Received: by 10.223.120.197 with SMTP id e5mr16259492far.25.1231323353550;
-        Wed, 07 Jan 2009 02:15:53 -0800 (PST)
-Received: by 10.223.121.142 with HTTP; Wed, 7 Jan 2009 02:15:53 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0901071101480.7496@intel-tinevez-2-302>
+	id S1751796AbZAGK3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 05:29:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752654AbZAGK3X
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 05:29:23 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:59712 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751832AbZAGK3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 05:29:22 -0500
+Received: from lapse.rw.madduck.net (lapse.rw.madduck.net [IPv6:2001:41e0:ff3a::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 63A841D40B0;
+	Wed,  7 Jan 2009 11:29:01 +0100 (CET)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 71C7280F9; Tue,  6 Jan 2009 21:32:03 +0100 (CET)
 Content-Disposition: inline
-X-Google-Sender-Auth: d0197d1ecf007698
+In-Reply-To: <acaae74f79d385014e726b97f8258b2a0caa3dd0.1231254832.git.kirr@landau.phys.spbu.ru>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux 5.0 kernel 2.6.27-1-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/8841/Wed Jan  7 06:09:14 2009 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104782>
 
-On Wed, Jan 7, 2009 at 11:07 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Tue, 6 Jan 2009, =D8yvind Harboe wrote:
->
->> On Tue, Jan 6, 2009 at 11:20 PM, Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->>
->> > $ git verify-pack -v $PACK | grep -v "^chain " | sort -n -k 4
->>
->> I have never used the git verify-pack command, but I'm pretty sure t=
-he
->> "Terminated" string isn't the normal output :-)
->>
->> $ git verify-pack -v
->> .git/objects/pack/pack-1e039b82d8ae53ef5ec3614a3021466663cc70a4
->> Terminated
->
-> I did
->
->        $ git grep Terminated
->
-> and came up empty :-)
->
-> Seriously, I guess this could be some OOM thing.  We _should_ handle =
-this
-> more gracefully, but it is possible that some uncatchable condition h=
-its
-> you, such as out-of-stack-space.
->
-> I'd try running the command either with strace or with gdb, and I'd l=
-ook
-> at $? after the command returns, to find out what is actually happeni=
-ng.
 
-After some investigation it turns out that my server has 228mByte of RA=
-M
-available. It is a virtual server running CentOS, hence the strange num=
-ber
-and ridiciulously tiny amount of memory(these days).
+--Kj7319i9nmIyA2yE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Now the strange thing is that I'm not getting this error message this m=
-orning...
+Thanks, Kirill, for the patches. A couple of comments inline. I hope
+Petr has a chance to look too.
 
-How would git behave if it ran out of memory?
+also sprach Kirill Smelkov <kirr@landau.phys.spbu.ru> [2009.01.06.1616 +010=
+0]:
+> +# isatty FD
+> +isatty()
+> +{
+> +	tty -s 0<&$1 || return 1
+> +	return 0
+> +}
 
+You don't need any of the return statements. Functions' return
+values are the return values of the last commands they execute.
+Since we are not using set -e, just "tty -s 0<&$1" in the body will
+have the same effect.
+
+> +	# TG_PAGER =3D GIT_PAGER | PAGER
+> +	# http://unix.derkeiler.com/Newsgroups/comp.unix.shell/2004-03/0792.html
+> +	case ${GIT_PAGER+XXX} in
+> +	'')
+> +		case ${PAGER+XXX} in
+> +		'')
+> +			# both GIT_PAGER & PAGER unset
+
+I find this very confusing. Why not simply
+
+  TG_PAGER=3D"${GIT_PAGER:-}"
+  TG_PAGER=3D"${TG_PAGER:-$PAGER}"
+
+?
+
+> +     [ -z "$TG_PAGER"  -o  "$TG_PAGER" =3D "cat" ]  && return 0
+
+What if I set my pager to /bin/cat? But I suppose then there's just
+a wasted FIFO and process, nothing big.
+
+> +	_pager_fifo=3D"$(mktemp -t tg-pager-fifo.XXXXXX)"
+> +	rm "$_pager_fifo" && mkfifo -m 600 "$_pager_fifo"
+
+There's a race condition here. I can't see a real problem with it,
+though, nor do I know of a better way.
+
+> +	"$TG_PAGER" < "$_pager_fifo" &
+> +	exec > "$_pager_fifo"		# dup2(pager_fifo.in, 1)
+> +
+> +	# this is needed so e.g. `git diff` will still colorize it's output if
+> +	# requested in ~/.gitconfig with color.diff=3Dauto
+> +	export GIT_PAGER_IN_USE=3D1
+> +
+> +	# atexit(close(1); wait pager)
+> +	trap "exec >&-; rm $_pager_fifo; wait" EXIT
+
+Consistency: $_pager_fifo is not passed as a quoted string to rm
+here. In the unlikely event that $TMPDIR contains a space, this
+would fail.
+
+I definitely want Petr's opinion on this before I integrate it.
 
 --=20
-=D8yvind Harboe
-http://www.zylin.com/zy1000.html
-ARM7 ARM9 XScale Cortex
-JTAG debugger and flash programmer
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+if you see an onion ring -- answer it!
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--Kj7319i9nmIyA2yE
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkljv8AACgkQIgvIgzMMSnVBJACgssKSBSuykcPxgfoyJumYuaw4
+ypoAoOYLTFlZ/+HeSyPzoa/typBBr6Dr
+=QKhH
+-----END PGP SIGNATURE-----
+
+--Kj7319i9nmIyA2yE--
