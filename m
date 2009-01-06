@@ -1,60 +1,71 @@
-From: jidanni@jidanni.org
-Subject: [PATCH] Documentation/gittutorial.txt: clarify git branch -d
-Date: Tue,  6 Jan 2009 10:40:55 +0800
-Message-ID: <1231209655-13050-1-git-send-email-jidanni@jidanni.org>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 06 03:42:37 2009
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [ANNOUNCE] Git homepage change
+Date: Tue, 6 Jan 2009 03:43:08 +0100
+Message-ID: <20090106024308.GB21154@genesis.frugalware.org>
+References: <d411cc4a0812151007n1be9ce95h92c8c11592ea5f9d@mail.gmail.com> <20081216114138.GM12856@machine.or.cz> <d411cc4a0901011040h4ab97aag20de54a6e138a4ec@mail.gmail.com> <20090105164001.GA12275@machine.or.cz> <20090105194011.GB25104@glandium.org> <20090105212716.GJ6595@eratosthenes.cryptobackpack.org> <d411cc4a0901051749p2ef880bub45bba1c0d41bfc7@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="sEhs5GQW+P4Mb8ab"
+Cc: David Bryson <david@statichacks.org>,
+	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 03:44:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LK1ti-0002nS-4V
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 03:42:26 +0100
+	id 1LK1vp-0003IO-Ci
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 03:44:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbZAFClB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jan 2009 21:41:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751066AbZAFCk7
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 21:40:59 -0500
-Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:42636 "EHLO
-	homiemail-a3.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751127AbZAFCk7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Jan 2009 21:40:59 -0500
-Received: from jidanni.org (122-127-36-59.dynamic.hinet.net [122.127.36.59])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a3.dreamhost.com (Postfix) with ESMTP id 6309EC5984;
-	Mon,  5 Jan 2009 18:40:57 -0800 (PST)
-X-Mailer: git-send-email 1.6.0.6
+	id S1752999AbZAFCnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jan 2009 21:43:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752895AbZAFCnM
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Jan 2009 21:43:12 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:37732 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752637AbZAFCnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jan 2009 21:43:11 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id C5B3A580BA;
+	Tue,  6 Jan 2009 03:43:10 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 290EA4465E;
+	Tue,  6 Jan 2009 03:43:09 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id D7E8511B8630; Tue,  6 Jan 2009 03:43:08 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <d411cc4a0901051749p2ef880bub45bba1c0d41bfc7@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104621>
 
-Signed-off-by: jidanni <jidanni@jidanni.org>
----
- Documentation/gittutorial.txt |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-index 7892244..4581a5a 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -260,11 +260,11 @@ At this point you could delete the experimental branch with
- $ git branch -d experimental
- ------------------------------------------------
- 
--This command ensures that the changes in the experimental branch are
--already in the current branch.
-+This command makes sure that the changes in the experimental branch are
-+already in the current branch before deleting.
- 
- If you develop on a branch crazy-idea, then regret it, you can always
--delete the branch with
-+force deletion of the branch with
- 
- -------------------------------------
- $ git branch -D crazy-idea
--- 
-1.6.0.6
+--sEhs5GQW+P4Mb8ab
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Mon, Jan 05, 2009 at 05:49:01PM -0800, Scott Chacon <schacon@gmail.com> wrote:
+> Also, Miklos : your patch changes the format of the output and doesn't
+> speed things up or anything, so I'm just sticking with the current
+> script for now (unless I'm missing something).
+
+I think the patch just makes things simpler (why not using -s if you
+then later use grep to drop what -s would hide?), and Adeodato's patch
+updates the ruby part as well. But of course it's up to you. ;-)
+
+--sEhs5GQW+P4Mb8ab
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAklixTwACgkQe81tAgORUJYVagCfRL3AT3FgUe+aW7zbTKLN9MEl
+W2gAnAstG1OZy7iJEn+Tlkh9uqHZQob1
+=syuD
+-----END PGP SIGNATURE-----
+
+--sEhs5GQW+P4Mb8ab--
