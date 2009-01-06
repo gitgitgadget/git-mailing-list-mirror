@@ -1,57 +1,84 @@
-From: "Stephen R. van den Berg" <srb@cuci.nl>
-Subject: Re: Problems getting rid of large files using git-filter-branch
-Date: Wed, 7 Jan 2009 00:17:26 +0100
-Message-ID: <20090106231726.GB13379@cuci.nl>
-References: <c09652430901061359q7a02291fk656ab23e54b19f5e@mail.gmail.com> <alpine.LFD.2.00.0901061709510.26118@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: ?yvind Harboe <oyvind.harboe@zylin.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Jan 07 00:28:16 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [RFC PATCH] diff --no-index: test for pager after option parsing
+Date: Wed,  7 Jan 2009 00:56:03 +0100
+Message-ID: <1231286163-9422-1-git-send-email-trast@student.ethz.ch>
+Cc: Junio C Hamano <junio@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 07 00:57:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKLLM-0003NF-96
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 00:28:16 +0100
+	id 1LKLnV-0004nu-Dg
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 00:57:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753513AbZAFX0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 18:26:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753371AbZAFX0t
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 18:26:49 -0500
-Received: from aristoteles.cuci.nl ([212.125.128.18]:44980 "EHLO
-	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752015AbZAFX0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 18:26:48 -0500
-X-Greylist: delayed 560 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jan 2009 18:26:48 EST
-Received: by aristoteles.cuci.nl (Postfix, from userid 500)
-	id 066085466; Wed,  7 Jan 2009 00:17:27 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0901061709510.26118@xanadu.home>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752443AbZAFXz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 18:55:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752213AbZAFXz5
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 18:55:57 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:55135 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752143AbZAFXz4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 18:55:56 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 7 Jan 2009 00:55:55 +0100
+Received: from localhost.localdomain ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 7 Jan 2009 00:55:55 +0100
+X-Mailer: git-send-email 1.6.1.229.g1af75.dirty
+X-OriginalArrivalTime: 06 Jan 2009 23:55:55.0033 (UTC) FILETIME=[501EC090:01C9705A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104739>
 
-Nicolas Pitre wrote:
->On Tue, 6 Jan 2009, ?yvind Harboe wrote:
->OK, try this:
+We need to parse options before we can see if --exit-code was
+provided.
 
->	git pull file://$(pwd)/../my_repo.orig
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-Alternately, try:
+---
 
-rm -rf .git/ORIG_HEAD .git/FETCH_HEAD .git/index .git/logs .git/info/refs \
-  .git/objects/pack/pack-*.keep .git/refs/original .git/refs/patches \
-  .git/patches .git/gitk.cache &&
- git prune --expire now &&
- git repack -a -d --window=200 &&
- git gc
+I noticed this while working on the earlier patch for diff --no-index.
+It seems like the right thing to do (and passes tests), but I don't
+have a clue about git's normal setup sequences, so I'm flagging it
+RFC.
 
+
+ diff-no-index.c |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/diff-no-index.c b/diff-no-index.c
+index b60d345..f655f64 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -198,13 +198,6 @@ void diff_no_index(struct rev_info *revs,
+ 		die("git diff %s takes two paths",
+ 		    no_index ? "--no-index" : "[--no-index]");
+ 
+-	/*
+-	 * If the user asked for our exit code then don't start a
+-	 * pager or we would end up reporting its exit code instead.
+-	 */
+-	if (!DIFF_OPT_TST(&revs->diffopt, EXIT_WITH_STATUS))
+-		setup_pager();
+-
+ 	diff_setup(&revs->diffopt);
+ 	if (!revs->diffopt.output_format)
+ 		revs->diffopt.output_format = DIFF_FORMAT_PATCH;
+@@ -222,6 +215,13 @@ void diff_no_index(struct rev_info *revs,
+ 		}
+ 	}
+ 
++	/*
++	 * If the user asked for our exit code then don't start a
++	 * pager or we would end up reporting its exit code instead.
++	 */
++	if (!DIFF_OPT_TST(&revs->diffopt, EXIT_WITH_STATUS))
++		setup_pager();
++
+ 	if (prefix) {
+ 		int len = strlen(prefix);
+ 
 -- 
-Sincerely,
-           Stephen R. van den Berg.
-
-"Very funny, Mr. Scott. Now beam down my clothes!"
+tg: (e9b8523..) t/diff-no-index-status (depends on: origin/master)
