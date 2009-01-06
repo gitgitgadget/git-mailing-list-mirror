@@ -1,60 +1,92 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Quick command to count commits
-Date: Tue, 6 Jan 2009 10:55:43 -0800
-Message-ID: <20090106185543.GB24578@spearce.org>
-References: <1231267896595-2118851.post@n2.nabble.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [JGIT PATCH] Improve the sideband progress scaper to be more
+ accurate
+Date: Tue, 06 Jan 2009 14:23:02 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0901061343000.26118@xanadu.home>
+References: <1230055423-9944-1-git-send-email-spearce@spearce.org>
+ <20081231073505.GA22551@spearce.org> <20081231190401.GI29071@spearce.org>
+ <200901032312.53148.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Henk <henk_westhuis@hotmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 06 19:57:22 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Jan 06 20:24:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKH6x-0006y4-04
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 19:57:07 +0100
+	id 1LKHXi-0000uT-44
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 20:24:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751882AbZAFSzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 13:55:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751909AbZAFSzp
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 13:55:45 -0500
-Received: from george.spearce.org ([209.20.77.23]:33829 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752505AbZAFSzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 13:55:44 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id E62C138210; Tue,  6 Jan 2009 18:55:43 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1231267896595-2118851.post@n2.nabble.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751426AbZAFTXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 14:23:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbZAFTXW
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 14:23:22 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:32207 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751373AbZAFTXW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 14:23:22 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KD200KBEDT2AKU0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 06 Jan 2009 14:22:14 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <200901032312.53148.robin.rosenberg@dewire.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104708>
 
-Henk <henk_westhuis@hotmail.com> wrote:
-> For GitExtensions (windows git ui) I need a command to count all commits. I
-> now use this command:
-> git.cmd rev-list --all --abbrev-commit | wc -l
+On Sat, 3 Jan 2009, Robin Rosenberg wrote:
+
+> onsdag 31 december 2008 20:04:01 skrev Shawn O. Pearce:
+> > By matching only whole lines we should be able to improve the
+> > progress scaper so we avoid ugly output like we had been seeing:
+> > 
+> >   EGIT.contrib/jgit clone git://repo.or.cz/libgit2.git LIBGIT2
+> >   Initialized empty Git repository in /home/me/SW/LIBGIT2/.git
+> >   Counting objects:       547
+> >   Compressing objects:    100% (192/192)
+> >   ts:                     100% (192/192)
+> >   Compressing objects:    100% (192/192)
+> >   ng objects:             100% (192/192)
+> > 
+> > Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> > ---
+> >  Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> >  > Would it be hard to get the progress look better?
+> > 
+> >  Maybe this does the trick.  Its hard to reproduce so its hard to
+> >  come up with the condition that was giving us the problem before.
+> >  I suspect its because we were getting line fragments on the sideband
+> >  channel, but I'm not sure that was really the case.
 > 
-> This works perfect but its very slow in big repositories. Is there a faster
-> way to count the commits?
+> Nasty. I couldn't reproduce it myself. I'll hold onto this one for a while and
+> see if I'll get the opportunity to test it live with this problem.
 
-No.  But drop the --abbrev-commit flag, abbreviating the object ids
-would take longer than just dumping the full 40 bytes to stdout.
-It requires a scan of parts of the object database for every commit
-to determine what is a unique abbreviation.
+There may indeed be line fragments sent over the sideband channel, as 
+well as the opposite which is multiple lines sent at once in a single 
+packet.  If you look at sideband.c you'll find about all those cases.
 
-This isn't a very common operation.  Its expensive to do, as you
-can see.  What's the reason for supplying it, and needing it so
-quickly?  Nobody really cares how many commits are in their history,
-unless they are trying to produce stats to describe how big their
-repository is.  In which case the size of the .git/objects/pack
-*.pack and *.idx files is much more relevant, especially the .idx
-files as it gives a really quick estimate on the number of total
-objects in the repository.
+In general, what you have to do is:
 
--- 
-Shawn.
+ - for each packet:
+   - split into multiple chunks on line breaks ('\r' or '\n')
+   - for each chunk:
+     - if last chunk didn't end with a line break, or if current 
+       chunk is empty or only contains a line break, then skip printing 
+       the "remote:" prefix.  Otherwise print it.
+     - print the current chunk up to any line break
+     - if current chunk contains a line break and other characters then
+       print a sequence to clear the remaining of the screen line
+     - print the line break if any
+
+That should cover all cases.  Note that the case where a previous chunk 
+didn't end with a line break is always seen when moving from one packet 
+to another, so that state cannot be local to the inner loop.
+
+
+Nicolas
