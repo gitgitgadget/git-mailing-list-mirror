@@ -1,77 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
-Date: Tue, 6 Jan 2009 20:40:02 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901062037250.30769@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <20081104004001.GB29458@artemis.corp>
- <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de> <20081104083042.GB3788@artemis.corp> <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de>
- <20090106111712.GB30766@artemis.corp>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: BUG?? INSTALL MAKEFILE
+Date: Tue, 06 Jan 2009 14:44:23 -0500
+Message-ID: <4963B497.4000104@tedpavlic.com>
+References: <49635BF8.1010700@sadau-online.de> <vpqiqosa3fc.fsf@bauges.imag.fr> <49638625.3090109@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	davidel@xmailserver.org, Francis Galiegue <fg@one2team.net>,
-	Git ML <git@vger.kernel.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Jan 06 20:41:03 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 06 20:45:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKHnL-0006km-2K
-	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 20:40:55 +0100
+	id 1LKHs7-0008Sf-3R
+	for gcvg-git-2@gmane.org; Tue, 06 Jan 2009 20:45:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751492AbZAFTjc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 14:39:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbZAFTjb
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 14:39:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55152 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751029AbZAFTjb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 14:39:31 -0500
-Received: (qmail invoked by alias); 06 Jan 2009 19:39:28 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp065) with SMTP; 06 Jan 2009 20:39:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/4S/ILD0b4X4ismZsvpa9TrDXQNPRHISsphY/Jqi
-	KE6MWzwS+SjR9Z
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090106111712.GB30766@artemis.corp>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1751645AbZAFTo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 14:44:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751599AbZAFTo2
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 14:44:28 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:34714 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751594AbZAFTo1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jan 2009 14:44:27 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 9CFE580D803F
+	for <git@vger.kernel.org>; Tue,  6 Jan 2009 14:38:54 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qkh4DMb6KSN4 for <git@vger.kernel.org>;
+	Tue,  6 Jan 2009 14:38:54 -0500 (EST)
+Received: from tedbook.mshome.net (tedpc.ece.ohio-state.edu [164.107.166.97])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 88C4B80D803B
+	for <git@vger.kernel.org>; Tue,  6 Jan 2009 14:38:54 -0500 (EST)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
+In-Reply-To: <49638625.3090109@tedpavlic.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104714>
 
-Hi,
+> 	git clean -f
 
-On Tue, 6 Jan 2009, Pierre Habouzit wrote:
+DOH. I meant to do
 
-> On jeu, jan 01, 2009 at 04:38:09 +0000, Johannes Schindelin wrote:
-> > 
-> > Nothing fancy, really, just a straight-forward implementation of the
-> > heavily under-documented and under-analyzed paience diff algorithm.
-> 
-> Btw, what is the status of this series ? I see it neither in pu nor in 
-> next. And I would gladly see it included in git.
+	git clean -fx
 
-AFAICT people wanted to be reasonably sure that it is worth the effort.
+(or just a git ls-files). That config.mak.autogen is certainly not 
+checked into the repo, and a quick test confirms that "make install" 
+certainly does set prefix to the home directory.
 
-Although I would like to see it in once it is fleshed out -- even if it 
-does not meet our usefulness standard -- because people said Git is 
-inferior for not providing a patience diff.  If we have --patience, we can 
-say "but we have it, it's just not useful, check for yourself".
+That being said, I'm sure that in the recent past I had to use configure 
+to install git into home directories.
 
-> On jeu, jan 01, 2009 at 07:45:21 +0000, Linus Torvalds wrote:
-> > 
-> > So could we have some actual real data on it?
-> 
-> For example, look at the following (shamelessly stolen from the real
-> life example http://glandium.org/blog/?p=120).
+--Ted
 
-Due to the lines being much longer than 80 characters, this example was 
-not useful to me.
 
-Ciao,
-Dscho
+-- 
+Ted Pavlic <ted@tedpavlic.com>
