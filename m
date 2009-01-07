@@ -1,58 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] diff --no-index: test for pager after option parsing
-Date: Tue, 06 Jan 2009 23:02:15 -0800
-Message-ID: <7veizfbnuw.fsf@gitster.siamese.dyndns.org>
-References: <1231286163-9422-1-git-send-email-trast@student.ethz.ch>
- <7vfxjwf041.fsf@gitster.siamese.dyndns.org>
- <20090107032013.GO21154@genesis.frugalware.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Fix sourcing "test-lib.sh" using dash shell in "t3003-ls-files-narrow-match.sh"
+Date: Wed, 7 Jan 2009 08:29:16 +0100
+Message-ID: <200901070829.16752.chriscool@tuxfamily.org>
+References: <20090105143002.8a369535.chriscool@tuxfamily.org> <7vzli4kftt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Jan 07 08:03:57 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 07 08:30:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKSSG-0008OK-5B
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 08:03:52 +0100
+	id 1LKSrs-0005JO-VU
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 08:30:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751034AbZAGHCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 02:02:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751002AbZAGHCc
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 02:02:32 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57363 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750738AbZAGHCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 02:02:31 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 51BDA1BE4B;
-	Wed,  7 Jan 2009 02:02:25 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 932B51BE28; Wed, 
- 7 Jan 2009 02:02:17 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2361C0B6-DC89-11DD-A1BF-EB51113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1754088AbZAGH2c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jan 2009 02:28:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754045AbZAGH2c
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 02:28:32 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:38139 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751230AbZAGH2b convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Jan 2009 02:28:31 -0500
+Received: from smtp5-g21.free.fr (localhost [127.0.0.1])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 37564D48101;
+	Wed,  7 Jan 2009 08:28:23 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 0F14FD48129;
+	Wed,  7 Jan 2009 08:28:21 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vzli4kftt.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104767>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
-
-> On Tue, Jan 06, 2009 at 04:09:18PM -0800, Junio C Hamano <gitster@pobox.com> wrote:
->> But I wonder if it still makes a difference in real life.idn't we stop
->> reporting the exit status from the pager some time ago?
+Le mardi 6 janvier 2009, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > dash barfs, on my old Ubuntu box, when "test-lib.sh" is sourced
+> > without "./".
+> >
+> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> > ---
+> >  t/t3003-ls-files-narrow-match.sh |    2 +-
+> >  1 files changed, 1 insertions(+), 1 deletions(-)
+> >
+> > 	This patch applies to "pu".
 >
-> I just wanted to write this, I think that code could be just removed
-> since ea27a18 (spawn pager via run_command interface, 2008-07-22).
+> Thanks; I hope you don't mind squashing this in to 'Introduce "sparse
+> patterns"'.
 
-I think we shouldn't.
+No problem.
 
-People may already have got used to "git diff --exit-code" to disable the
-pager, and doing the same for "git diff --exit-code --no-index" should be
-with less surprises.
-
-I'll queue the "--" fix, "-q" fix and this pager fix.  Thanks.
+Thanks,
+Christian.
