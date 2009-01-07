@@ -1,104 +1,109 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH/RFC] Allow writing loose objects that are corrupted in a
- pack file
-Date: Tue, 06 Jan 2009 21:09:58 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.0901062059230.26118@xanadu.home>
+From: "R. Tyler Ballance" <tyler@slide.com>
+Subject: Re: [PATCH/RFC] Allow writing loose objects that are corrupted in
+ a pack file
+Date: Tue, 06 Jan 2009 18:47:55 -0800
+Organization: Slide, Inc.
+Message-ID: <1231296475.8870.89.camel@starfruit>
 References: <20081209093627.77039a1f@perceptron>
- <1231282320.8870.52.camel@starfruit>
- <alpine.LFD.2.00.0901062005290.26118@xanadu.home>
- <1231292360.8870.61.camel@starfruit>
+	 <1231282320.8870.52.camel@starfruit>
+	 <alpine.LFD.2.00.0901062005290.26118@xanadu.home>
+	 <1231292360.8870.61.camel@starfruit>
+	 <alpine.LFD.2.00.0901062059230.26118@xanadu.home>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_pyyqjBo0kbSv/pCCyI9ypg)"
-Cc: =?ISO-8859-15?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-+pzsm9trJF0BDIyFVs+p"
+Cc: Jan =?ISO-8859-1?Q?Kr=FCger?= <jk@jk.gs>,
 	Git ML <git@vger.kernel.org>
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Wed Jan 07 03:11:28 2009
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Jan 07 03:49:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKNtF-0007Tg-Mb
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 03:11:26 +0100
+	id 1LKOUL-00007s-NA
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 03:49:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759497AbZAGCKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jan 2009 21:10:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759493AbZAGCKF
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 21:10:05 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:20460 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759492AbZAGCKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jan 2009 21:10:04 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KD200K9MWOM51G0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 06 Jan 2009 21:09:58 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <1231292360.8870.61.camel@starfruit>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1759786AbZAGCsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jan 2009 21:48:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759871AbZAGCsD
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Jan 2009 21:48:03 -0500
+Received: from mx0.slide.com ([208.76.68.7]:42569 "EHLO mx0.slide.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755276AbZAGCsB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jan 2009 21:48:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=slide.com; s=slideinc; h=Subject:From:To:Date:Message-Id; bh=W
+	W3dSjsmmYZO0WUD8ABoa+t2MCdinpqqOt/xwpJGHqk=; b=oft2/0nLV2NYi/4nE
+	QiT6WgT4QQcD8cMmcFUuwyE99sF/nM+X4PBbzNhJQ0OJxSBI2FzKmLgO3PDoYpr8
+	Wu7FYYLw2EVavkQh573Bj16VVwH0RvFon2W4vrJXsWhqZpj4P4jVUtMQPBTBRHee
+	WhaMwAeTmOIwBfMXlzIc87MylI=
+Received: from nat3.slide.com ([208.76.69.126]:41301 helo=calculon.corp.slide.com)
+	by mx0.slide.com with esmtp (Exim 4.69 #1)
+	id 1LKOSZ-0005Dx-Rt; Tue, 06 Jan 2009 18:47:55 -0800
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by calculon.corp.slide.com (Postfix) with ESMTP id CD965A6F0002;
+	Tue,  6 Jan 2009 18:47:55 -0800 (PST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.536
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.536 tagged_above=-10 required=6.6
+	tests=[AWL=-0.037, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from calculon.corp.slide.com ([127.0.0.1])
+	by localhost (calculon.corp.slide.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Deo1UG5onNXJ; Tue,  6 Jan 2009 18:47:55 -0800 (PST)
+Received: from [10.12.0.194] (unknown [10.12.0.194])
+	by calculon.corp.slide.com (Postfix) with ESMTP id 7DDD0A6F0001;
+	Tue,  6 Jan 2009 18:47:55 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.0901062059230.26118@xanadu.home>
+X-Mailer: Evolution 2.24.1.1 
+X-Content-Bypass: Bypassed by sending host IP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104746>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---Boundary_(ID_pyyqjBo0kbSv/pCCyI9ypg)
-Content-type: TEXT/PLAIN; charset=UTF-8
-Content-transfer-encoding: 8BIT
-
-On Tue, 6 Jan 2009, R. Tyler Ballance wrote:
-
-> On Tue, 2009-01-06 at 20:25 -0500, Nicolas Pitre wrote:
-> > On Tue, 6 Jan 2009, R. Tyler Ballance wrote:
-> > 
-> > > On Tue, 2008-12-09 at 09:36 +0100, Jan Krüger wrote:
-> > > > For fixing a corrupted repository by using backup copies of individual
-> > > > files, allow write_sha1_file() to write loose files even if the object
-> > > > already exists in a pack file, but only if the existing entry is marked
-> > > > as corrupted.
-> > > 
-> > > I figured I'd reply to this again, since the issue cropped up again.
-> > > 
-> > > We started experiencing *large* numbers of corruptions like the ones
-> > > that started the thread (one developer was receiving them once or twice
-> > > a day) with v1.6.0.4
-> > > 
-> > > We went ahead and upgraded to a custom build of v1.6.1 with Jan's patch
-> > > (below) and the issues /seem/ to have resolved themselves. I'm not
-> > > certain whether Jan's patch was really responsible, or if there was
-> > > another issue that caused this to correct itself in v1.6.1. 
-> 
-> I'll back the patch out and redeploy, it's worth mentioning that a
-> coworker of mine just got the issue as well (on 1.6.1). He was able to
-> `git pull` and the error went away, but I doubt that it "magically fixed
-> itself"
-
-Please describe the "issue", ideally with transcripts of error messages, 
-etc.  Normally a simple pull operation should not provide any "fix" for 
-corruptions.
-
-> I highly doubt this, I've got the issue appearing on at least 7
-> different development boxes (not workstations, 2U quad-core ECC RAM, etc
-> machines), while that doesn't mean that they all don't have issues, the
-> probability of them *all* having disk issues, and it somehow only
-> manifesting itself with Git usage, is low ;)
-
-Agreed.
-
-> I've tarred one of the repositories that had it in a reproducible state
-
-That is wonderful.
-
-> so I can create a build and extract the tar and run against that to
-> verify any patches anybody might have, but unfortunately at 7GB of
-> company code and assets, I can't exactly share ;)
-
-First step is to understand what is going on.  Only then could reliable 
-patches be made.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104747>
 
 
-Nicolas
+--=-+pzsm9trJF0BDIyFVs+p
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
---Boundary_(ID_pyyqjBo0kbSv/pCCyI9ypg)--
+On Tue, 2009-01-06 at 21:09 -0500, Nicolas Pitre wrote:
+> > I've tarred one of the repositories that had it in a reproducible
+> state
+>=20
+> That is wonderful.
+>=20
+> > so I can create a build and extract the tar and run against that to
+> > verify any patches anybody might have, but unfortunately at 7GB of
+> > company code and assets, I can't exactly share ;)
+>=20
+> First step is to understand what is going on.  Only then could reliable=20
+> patches be made.
+
+If you want to point me in the right direction, I have a few hours to
+kill this evening and fscking around with gdb(1) and printf() just might
+be some of my favorite things</sarcasm> ;)
+
+Looking forward to killing this issue
+
+
+Cheers
+
+--=20
+-R. Tyler Ballance
+Slide, Inc.
+
+--=-+pzsm9trJF0BDIyFVs+p
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAklkF9sACgkQFCbH3D9R4W80UQCgtWK7QEbHP5JjxGbsJhKH3L1Y
+PMAAnR/6P4aLkyFbP8Z9P+Eusp7FTbcm
+=Evue
+-----END PGP SIGNATURE-----
+
+--=-+pzsm9trJF0BDIyFVs+p--
