@@ -1,523 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v3 1/3] Implement the patience diff algorithm
-Date: Wed, 7 Jan 2009 18:04:09 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901071802190.7496@intel-tinevez-2-302>
-References: <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <20081104004001.GB29458@artemis.corp> <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de> <20081104083042.GB3788@artemis.corp>
- <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <20090106111712.GB30766@artemis.corp> <alpine.DEB.1.00.0901062037250.30769@pacific.mpi-cbg.de>
- <20090107143926.GB831@artemis.corp> <alpine.DEB.1.00.0901071610290.7496@intel-tinevez-2-302>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] gitweb: support the rel=vcs microformat
+Date: Wed, 7 Jan 2009 19:03:04 +0100
+Message-ID: <cb7bb73a0901071003m77482a99wf6f3988beb5b5e78@mail.gmail.com>
+References: <20090107042518.GB24735@gnu.kitenet.net>
+	 <gk2794$djn$1@ger.gmane.org> <20090107155023.GA16540@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	davidel@xmailserver.org, Francis Galiegue <fg@one2team.net>,
-	Git ML <git@vger.kernel.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Jan 07 18:07:02 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Joey Hess" <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Wed Jan 07 19:04:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKbqd-0003BH-08
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 18:05:56 +0100
+	id 1LKcle-0001X9-8a
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 19:04:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752775AbZAGREP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 12:04:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752497AbZAGREP
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 12:04:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56677 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752244AbZAGREN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 12:04:13 -0500
-Received: (qmail invoked by alias); 07 Jan 2009 17:04:11 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp059) with SMTP; 07 Jan 2009 18:04:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18bFA0uJv4bxEkbngluE5TBuKVLZ4QdonT/I6q4Ei
-	mWobed5rGtpB5C
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <alpine.DEB.1.00.0901071610290.7496@intel-tinevez-2-302>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.43
+	id S1753661AbZAGSDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 13:03:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbZAGSDJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 13:03:09 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:62536 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750713AbZAGSDG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 13:03:06 -0500
+Received: by ewy10 with SMTP id 10so9159675ewy.13
+        for <git@vger.kernel.org>; Wed, 07 Jan 2009 10:03:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=Wo4cyzppiN+gKm47aXQSt/O+LuxCIgEkiivLEy5UW7A=;
+        b=Ia2TQVjJP3XhGPmqwXDaydQWEH/NbDhjKMytBWIgvd1xEybncgVCM5aR9yFKIVVk1b
+         +e2CVRFGPZao0DMxFznRu5cprKPflqLnF0DAapxZOvLtmKUuyINr0juRLvCiey/PrsWY
+         ee6AxFSMNWGrf58XWVYUXZOVgxQZdWXRPHy1g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=RFAs3L2aVAjPjJjb2J0ngi+u4QUVYogbdIvp/e/HWxXntLOa+vk5G/O3rZeCuLkIxt
+         RYeBPD99aKNccuzeg0h92nZxq4mxLsUDnYNJ42a4nm4D1o6PnFMrJNPI3nSsjSG95vSJ
+         nmq3cT/JNGO5RG2tJEuhFgXPoAjWmyXkRT9GY=
+Received: by 10.210.87.19 with SMTP id k19mr1887570ebb.141.1231351384868;
+        Wed, 07 Jan 2009 10:03:04 -0800 (PST)
+Received: by 10.210.57.20 with HTTP; Wed, 7 Jan 2009 10:03:04 -0800 (PST)
+In-Reply-To: <20090107155023.GA16540@gnu.kitenet.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104814>
 
+On Wed, Jan 7, 2009 at 4:50 PM, Joey Hess <joey@kitenet.net> wrote:
+> Giuseppe Bilotta wrote:
+>> In this patch you do NOT add titles to the rel=vcs links, which means that
+>> everything works fine only if there is a single URL for each project. If a
+>> project has different URLs, it's going to appear multiple times as _different_
+>> projects to a spec-compliant reader.
+>>
+>> A possible solution would be to make @git_url_list into a map keyed by the
+>> project name and having the description and repo URL(s) as values.
+>
+> Yes. I considered doing that, but didn't immediatly see a way to get the
+> project description w/o additional overhead (of looking it up a second
+> time).
 
-The patience diff algorithm produces slightly more intuitive output
-than the classic Myers algorithm, as it does not try to minimize the
-number of +/- lines first, but tries to preserve the lines that are
-unique.
+The solution I have in mind would be something like this: in summary
+or projects list view (which are the views in which we put the links,
+and also the views in which we loop up the repo URL and the
+description anyway), you fill up former @git_url_list (now
+%project_metadata) looking up the repo description and URLs. You then
+use this information both in the link tag and in the appropriate
+places for the visible part of the webpage: you don't have a
+significant overhead, because you're just moving the project
+description retrieval early on.
 
-To this end, it first determines lines that are unique in both files,
-then the maximal sequence which preserves the order (relative to both
-files) is extracted.
+You probably want to refactor the code by making a
+git_get_project_metadata() sub that extends the current URL retrieval
+by retrieving description and URLs. The routine can then be used
+either for one or for all the projects, as needed.
 
-Starting from this initial set of common lines, the rest of the lines
-is handled recursively, with Myers' algorithm as a fallback when
-the patience algorithm fails (due to no common unique lines).
+> Thanks for the feedback. There are some changes happening to the
+> microformat that should make gitweb's job slightly easier, I'll respin
+> the patch soon.
 
-This patch includes memory leak fixes by Pierre Habouzit.
+Let me know about this too, I very much like the idea of this microformat.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	This comes close to 'next' quality, IMHO.
-
-	Changes vs v2: Pierre's memory leak fixes, and it now avoids 
-	calling xdl_cleanup_records() and then throwing away the 
-	results for patience diff.
-
-	Pierre, could you do the performance tests again?  I _think_ it 
-	might be somewhat faster now because of the xdl_cleanup_records()
-	avoidance.
-
- xdiff/xdiff.h     |    1 +
- xdiff/xdiffi.c    |    3 +
- xdiff/xdiffi.h    |    2 +
- xdiff/xpatience.c |  381 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- xdiff/xprepare.c  |    3 +-
- 5 files changed, 389 insertions(+), 1 deletions(-)
- create mode 100644 xdiff/xpatience.c
-
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 361f802..4da052a 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -32,6 +32,7 @@ extern "C" {
- #define XDF_IGNORE_WHITESPACE (1 << 2)
- #define XDF_IGNORE_WHITESPACE_CHANGE (1 << 3)
- #define XDF_IGNORE_WHITESPACE_AT_EOL (1 << 4)
-+#define XDF_PATIENCE_DIFF (1 << 5)
- #define XDF_WHITESPACE_FLAGS (XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE | XDF_IGNORE_WHITESPACE_AT_EOL)
- 
- #define XDL_PATCH_NORMAL '-'
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 9d0324a..3e97462 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -329,6 +329,9 @@ int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	xdalgoenv_t xenv;
- 	diffdata_t dd1, dd2;
- 
-+	if (xpp->flags & XDF_PATIENCE_DIFF)
-+		return xdl_do_patience_diff(mf1, mf2, xpp, xe);
-+
- 	if (xdl_prepare_env(mf1, mf2, xpp, xe) < 0) {
- 
- 		return -1;
-diff --git a/xdiff/xdiffi.h b/xdiff/xdiffi.h
-index 3e099dc..ad033a8 100644
---- a/xdiff/xdiffi.h
-+++ b/xdiff/xdiffi.h
-@@ -55,5 +55,7 @@ int xdl_build_script(xdfenv_t *xe, xdchange_t **xscr);
- void xdl_free_script(xdchange_t *xscr);
- int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 		  xdemitconf_t const *xecfg);
-+int xdl_do_patience_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
-+		xdfenv_t *env);
- 
- #endif /* #if !defined(XDIFFI_H) */
-diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
-new file mode 100644
-index 0000000..e42c16a
---- /dev/null
-+++ b/xdiff/xpatience.c
-@@ -0,0 +1,381 @@
-+/*
-+ *  LibXDiff by Davide Libenzi ( File Differential Library )
-+ *  Copyright (C) 2003-2009 Davide Libenzi, Johannes E. Schindelin
-+ *
-+ *  This library is free software; you can redistribute it and/or
-+ *  modify it under the terms of the GNU Lesser General Public
-+ *  License as published by the Free Software Foundation; either
-+ *  version 2.1 of the License, or (at your option) any later version.
-+ *
-+ *  This library is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ *  Lesser General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU Lesser General Public
-+ *  License along with this library; if not, write to the Free Software
-+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-+ *
-+ *  Davide Libenzi <davidel@xmailserver.org>
-+ *
-+ */
-+#include "xinclude.h"
-+#include "xtypes.h"
-+#include "xdiff.h"
-+
-+/*
-+ * The basic idea of patience diff is to find lines that are unique in
-+ * both files.  These are intuitively the ones that we want to see as
-+ * common lines.
-+ *
-+ * The maximal ordered sequence of such line pairs (where ordered means
-+ * that the order in the sequence agrees with the order of the lines in
-+ * both files) naturally defines an initial set of common lines.
-+ *
-+ * Now, the algorithm tries to extend the set of common lines by growing
-+ * the line ranges where the files have identical lines.
-+ *
-+ * Between those common lines, the patience diff algorithm is applied
-+ * recursively, until no unique line pairs can be found; these line ranges
-+ * are handled by the well-known Myers algorithm.
-+ */
-+
-+#define NON_UNIQUE ULONG_MAX
-+
-+/*
-+ * This is a hash mapping from line hash to line numbers in the first and
-+ * second file.
-+ */
-+struct hashmap {
-+	int nr, alloc;
-+	struct entry {
-+		unsigned long hash;
-+		/*
-+		 * 0 = unused entry, 1 = first line, 2 = second, etc.
-+		 * line2 is NON_UNIQUE if the line is not unique
-+		 * in either the first or the second file.
-+		 */
-+		unsigned long line1, line2;
-+		/*
-+		 * "next" & "previous" are used for the longest common
-+		 * sequence;
-+		 * initially, "next" reflects only the order in file1.
-+		 */
-+		struct entry *next, *previous;
-+	} *entries, *first, *last;
-+	/* were common records found? */
-+	unsigned long has_matches;
-+	mmfile_t *file1, *file2;
-+	xdfenv_t *env;
-+	xpparam_t const *xpp;
-+};
-+
-+/* The argument "pass" is 1 for the first file, 2 for the second. */
-+static void insert_record(int line, struct hashmap *map, int pass)
-+{
-+	xrecord_t **records = pass == 1 ?
-+		map->env->xdf1.recs : map->env->xdf2.recs;
-+	xrecord_t *record = records[line - 1], *other;
-+	/*
-+	 * After xdl_prepare_env() (or more precisely, due to
-+	 * xdl_classify_record()), the "ha" member of the records (AKA lines)
-+	 * is _not_ the hash anymore, but a linearized version of it.  In
-+	 * other words, the "ha" member is guaranteed to start with 0 and
-+	 * the second record's ha can only be 0 or 1, etc.
-+	 *
-+	 * So we multiply ha by 2 in the hope that the hashing was
-+	 * "unique enough".
-+	 */
-+	int index = (int)((record->ha << 1) % map->alloc);
-+
-+	while (map->entries[index].line1) {
-+		other = map->env->xdf1.recs[map->entries[index].line1 - 1];
-+		if (map->entries[index].hash != record->ha ||
-+				!xdl_recmatch(record->ptr, record->size,
-+					other->ptr, other->size,
-+					map->xpp->flags)) {
-+			if (++index >= map->alloc)
-+				index = 0;
-+			continue;
-+		}
-+		if (pass == 2)
-+			map->has_matches = 1;
-+		if (pass == 1 || map->entries[index].line2)
-+			map->entries[index].line2 = NON_UNIQUE;
-+		else
-+			map->entries[index].line2 = line;
-+		return;
-+	}
-+	if (pass == 2)
-+		return;
-+	map->entries[index].line1 = line;
-+	map->entries[index].hash = record->ha;
-+	if (!map->first)
-+		map->first = map->entries + index;
-+	if (map->last) {
-+		map->last->next = map->entries + index;
-+		map->entries[index].previous = map->last;
-+	}
-+	map->last = map->entries + index;
-+	map->nr++;
-+}
-+
-+/*
-+ * This function has to be called for each recursion into the inter-hunk
-+ * parts, as previously non-unique lines can become unique when being
-+ * restricted to a smaller part of the files.
-+ *
-+ * It is assumed that env has been prepared using xdl_prepare().
-+ */
-+static int fill_hashmap(mmfile_t *file1, mmfile_t *file2,
-+		xpparam_t const *xpp, xdfenv_t *env,
-+		struct hashmap *result,
-+		int line1, int count1, int line2, int count2)
-+{
-+	result->file1 = file1;
-+	result->file2 = file2;
-+	result->xpp = xpp;
-+	result->env = env;
-+
-+	/* We know exactly how large we want the hash map */
-+	result->alloc = count1 * 2;
-+	result->entries = (struct entry *)
-+		xdl_malloc(result->alloc * sizeof(struct entry));
-+	if (!result->entries)
-+		return -1;
-+	memset(result->entries, 0, result->alloc * sizeof(struct entry));
-+
-+	/* First, fill with entries from the first file */
-+	while (count1--)
-+		insert_record(line1++, result, 1);
-+
-+	/* Then search for matches in the second file */
-+	while (count2--)
-+		insert_record(line2++, result, 2);
-+
-+	return 0;
-+}
-+
-+/*
-+ * Find the longest sequence with a smaller last element (meaning a smaller
-+ * line2, as we construct the sequence with entries ordered by line1).
-+ */
-+static int binary_search(struct entry **sequence, int longest,
-+		struct entry *entry)
-+{
-+	int left = -1, right = longest;
-+
-+	while (left + 1 < right) {
-+		int middle = (left + right) / 2;
-+		/* by construction, no two entries can be equal */
-+		if (sequence[middle]->line2 > entry->line2)
-+			right = middle;
-+		else
-+			left = middle;
-+	}
-+	/* return the index in "sequence", _not_ the sequence length */
-+	return left;
-+}
-+
-+/*
-+ * The idea is to start with the list of common unique lines sorted by
-+ * the order in file1.  For each of these pairs, the longest (partial)
-+ * sequence whose last element's line2 is smaller is determined.
-+ *
-+ * For efficiency, the sequences are kept in a list containing exactly one
-+ * item per sequence length: the sequence with the smallest last
-+ * element (in terms of line2).
-+ */
-+static struct entry *find_longest_common_sequence(struct hashmap *map)
-+{
-+	struct entry **sequence = xdl_malloc(map->nr * sizeof(struct entry *));
-+	int longest = 0, i;
-+	struct entry *entry;
-+
-+	for (entry = map->first; entry; entry = entry->next) {
-+		if (!entry->line2 || entry->line2 == NON_UNIQUE)
-+			continue;
-+		i = binary_search(sequence, longest, entry);
-+		entry->previous = i < 0 ? NULL : sequence[i];
-+		sequence[++i] = entry;
-+		if (i == longest)
-+			longest++;
-+	}
-+
-+	/* No common unique lines were found */
-+	if (!longest) {
-+		xdl_free(sequence);
-+		return NULL;
-+	}
-+
-+	/* Iterate starting at the last element, adjusting the "next" members */
-+	entry = sequence[longest - 1];
-+	entry->next = NULL;
-+	while (entry->previous) {
-+		entry->previous->next = entry;
-+		entry = entry->previous;
-+	}
-+	xdl_free(sequence);
-+	return entry;
-+}
-+
-+static int match(struct hashmap *map, int line1, int line2)
-+{
-+	xrecord_t *record1 = map->env->xdf1.recs[line1 - 1];
-+	xrecord_t *record2 = map->env->xdf2.recs[line2 - 1];
-+	return xdl_recmatch(record1->ptr, record1->size,
-+		record2->ptr, record2->size, map->xpp->flags);
-+}
-+
-+static int patience_diff(mmfile_t *file1, mmfile_t *file2,
-+		xpparam_t const *xpp, xdfenv_t *env,
-+		int line1, int count1, int line2, int count2);
-+
-+static int walk_common_sequence(struct hashmap *map, struct entry *first,
-+		int line1, int count1, int line2, int count2)
-+{
-+	int end1 = line1 + count1, end2 = line2 + count2;
-+	int next1, next2;
-+
-+	for (;;) {
-+		/* Try to grow the line ranges of common lines */
-+		if (first) {
-+			next1 = first->line1;
-+			next2 = first->line2;
-+			while (next1 > line1 && next2 > line2 &&
-+					match(map, next1 - 1, next2 - 1)) {
-+				next1--;
-+				next2--;
-+			}
-+		} else {
-+			next1 = end1;
-+			next2 = end2;
-+		}
-+		while (line1 < next1 && line2 < next2 &&
-+				match(map, line1, line2)) {
-+			line1++;
-+			line2++;
-+		}
-+
-+		/* Recurse */
-+		if (next1 > line1 || next2 > line2) {
-+			struct hashmap submap;
-+
-+			memset(&submap, 0, sizeof(submap));
-+			if (patience_diff(map->file1, map->file2,
-+					map->xpp, map->env,
-+					line1, next1 - line1,
-+					line2, next2 - line2))
-+				return -1;
-+		}
-+
-+		if (!first)
-+			return 0;
-+
-+		while (first->next &&
-+				first->next->line1 == first->line1 + 1 &&
-+				first->next->line2 == first->line2 + 1)
-+			first = first->next;
-+
-+		line1 = first->line1 + 1;
-+		line2 = first->line2 + 1;
-+
-+		first = first->next;
-+	}
-+}
-+
-+static int fall_back_to_classic_diff(struct hashmap *map,
-+		int line1, int count1, int line2, int count2)
-+{
-+	/*
-+	 * This probably does not work outside Git, since
-+	 * we have a very simple mmfile structure.
-+	 *
-+	 * Note: ideally, we would reuse the prepared environment, but
-+	 * the libxdiff interface does not (yet) allow for diffing only
-+	 * ranges of lines instead of the whole files.
-+	 */
-+	mmfile_t subfile1, subfile2;
-+	xpparam_t xpp;
-+	xdfenv_t env;
-+
-+	subfile1.ptr = (char *)map->env->xdf1.recs[line1 - 1]->ptr;
-+	subfile1.size = map->env->xdf1.recs[line1 + count1 - 2]->ptr +
-+		map->env->xdf1.recs[line1 + count1 - 2]->size - subfile1.ptr;
-+	subfile2.ptr = (char *)map->env->xdf2.recs[line2 - 1]->ptr;
-+	subfile2.size = map->env->xdf2.recs[line2 + count2 - 2]->ptr +
-+		map->env->xdf2.recs[line2 + count2 - 2]->size - subfile2.ptr;
-+	xpp.flags = map->xpp->flags & ~XDF_PATIENCE_DIFF;
-+	if (xdl_do_diff(&subfile1, &subfile2, &xpp, &env) < 0)
-+		return -1;
-+
-+	memcpy(map->env->xdf1.rchg + line1 - 1, env.xdf1.rchg, count1);
-+	memcpy(map->env->xdf2.rchg + line2 - 1, env.xdf2.rchg, count2);
-+
-+	xdl_free_env(&env);
-+
-+	return 0;
-+}
-+
-+/*
-+ * Recursively find the longest common sequence of unique lines,
-+ * and if none was found, ask xdl_do_diff() to do the job.
-+ *
-+ * This function assumes that env was prepared with xdl_prepare_env().
-+ */
-+static int patience_diff(mmfile_t *file1, mmfile_t *file2,
-+		xpparam_t const *xpp, xdfenv_t *env,
-+		int line1, int count1, int line2, int count2)
-+{
-+	struct hashmap map;
-+	struct entry *first;
-+	int result = 0;
-+
-+	/* trivial case: one side is empty */
-+	if (!count1) {
-+		while(count2--)
-+			env->xdf2.rchg[line2++ - 1] = 1;
-+		return 0;
-+	} else if (!count2) {
-+		while(count1--)
-+			env->xdf1.rchg[line1++ - 1] = 1;
-+		return 0;
-+	}
-+
-+	memset(&map, 0, sizeof(map));
-+	if (fill_hashmap(file1, file2, xpp, env, &map,
-+			line1, count1, line2, count2))
-+		return -1;
-+
-+	/* are there any matching lines at all? */
-+	if (!map.has_matches) {
-+		while(count1--)
-+			env->xdf1.rchg[line1++ - 1] = 1;
-+		while(count2--)
-+			env->xdf2.rchg[line2++ - 1] = 1;
-+		xdl_free(map.entries);
-+		return 0;
-+	}
-+
-+	first = find_longest_common_sequence(&map);
-+	if (first)
-+		result = walk_common_sequence(&map, first,
-+			line1, count1, line2, count2);
-+	else
-+		result = fall_back_to_classic_diff(&map,
-+			line1, count1, line2, count2);
-+
-+	xdl_free(map.entries);
-+	return result;
-+}
-+
-+int xdl_do_patience_diff(mmfile_t *file1, mmfile_t *file2,
-+		xpparam_t const *xpp, xdfenv_t *env)
-+{
-+	if (xdl_prepare_env(file1, file2, xpp, env) < 0)
-+		return -1;
-+
-+	/* environment is cleaned up in xdl_diff() */
-+	return patience_diff(file1, file2, xpp, env,
-+			1, env->xdf1.nrec, 1, env->xdf2.nrec);
-+}
-diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index a43aa72..1689085 100644
---- a/xdiff/xprepare.c
-+++ b/xdiff/xprepare.c
-@@ -290,7 +290,8 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 
- 	xdl_free_classifier(&cf);
- 
--	if (xdl_optimize_ctxs(&xe->xdf1, &xe->xdf2) < 0) {
-+	if (!(xpp->flags & XDF_PATIENCE_DIFF) &&
-+			xdl_optimize_ctxs(&xe->xdf1, &xe->xdf2) < 0) {
- 
- 		xdl_free_ctx(&xe->xdf2);
- 		xdl_free_ctx(&xe->xdf1);
 -- 
-1.6.0.2.GIT
+Giuseppe "Oblomov" Bilotta
