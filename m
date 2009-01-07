@@ -1,107 +1,80 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: Error: unable to unlink ... when using "git gc"
-Date: Wed, 7 Jan 2009 13:46:32 -0600
-Message-ID: <200901071346.41658.bss@iguanasuicide.net>
-References: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com> <200901070948.34117.bss@iguanasuicide.net> <slrngm9rdm.gcv.sitaramc@sitaramc.homelinux.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3 1/3] Implement the patience diff algorithm
+Date: Wed, 7 Jan 2009 21:00:40 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901072056480.7496@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <20081104004001.GB29458@artemis.corp> <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de> <20081104083042.GB3788@artemis.corp>
+ <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <20090106111712.GB30766@artemis.corp> <alpine.DEB.1.00.0901062037250.30769@pacific.mpi-cbg.de>
+ <20090107143926.GB831@artemis.corp> <alpine.DEB.1.00.0901071610290.7496@intel-tinevez-2-302> <alpine.DEB.1.00.0901071802190.7496@intel-tinevez-2-302> <alpine.DEB.1.10.0901071001360.16651@alien.or.mcafeemobile.com>
+ <alpine.LFD.2.00.0901071056470.3057@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1592285.SNyUQqE6C0";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 07 20:47:54 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Davide Libenzi <davidel@xmailserver.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Francis Galiegue <fg@one2team.net>,
+	Git ML <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 07 21:03:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKeNH-0008E2-KL
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 20:47:32 +0100
+	id 1LKec5-0005a2-Vo
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 21:02:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759571AbZAGTqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 14:46:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758253AbZAGTqL
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 14:46:11 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:51127 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757325AbZAGTqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 14:46:09 -0500
-Received: from [206.104.164.114]
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LKeLw-0006Tg-Os; Wed, 07 Jan 2009 19:46:08 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <slrngm9rdm.gcv.sitaramc@sitaramc.homelinux.net>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1761599AbZAGUAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 15:00:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761593AbZAGUAt
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 15:00:49 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60006 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1761578AbZAGUAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 15:00:48 -0500
+Received: (qmail invoked by alias); 07 Jan 2009 20:00:43 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp071) with SMTP; 07 Jan 2009 21:00:43 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1976tt8Br97FujspwrIoZ9SqYtV714NzJkkRNaG0F
+	JaVzVZhZpS1FXf
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <alpine.LFD.2.00.0901071056470.3057@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104824>
 
---nextPart1592285.SNyUQqE6C0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-On Wednesday 2009 January 07 12:00:22 Sitaram Chamarty wrote:
-> On 2009-01-07, Boyd Stephen Smith Jr. <bss@iguanasuicide.net> wrote:
-> > On Wednesday 2009 January 07 04:55:56 you wrote:
-> >> So when you say "group", you're saying "0660", and when you
-> >> say "0660", you're overriding users umask value.
-> >
-> > it could just have been the version of git I was using (1.4.4.4, IIRC)
-> > -- still using that in at least one place, as it is the current
-> > version in Debian Etch.
->
-> 1.4.4.4 is 2 years and 2 days old today!  [I've heard
-> stories about Debian, but never thought it was this
-> conservative!]
+On Wed, 7 Jan 2009, Linus Torvalds wrote:
 
-Once a stable is released, no new versions of packages come in, only=20
-backported bug and security fixes.  The pre-release freeze also limits new=
-=20
-versions from being considered.  Lenny should be out RSN, so I can move up =
-to=20
-1.5.6.5. :)
+> On Wed, 7 Jan 2009, Davide Libenzi wrote:
+> > 
+> > xdiff allows for diffing ranges, and the most efficent method is 
+> > exactly how you did ;)
+> 
+> No, the performance problem is how it needs to re-hash everything. xdiff 
+> doesn't seem to have any way to use a "subset of the hash", so what the 
+> patience diff does is to use a subset of the mmfile, and then that will 
+> force all the rehashing to take place, which is kind of sad.
+> 
+> It would be nice (for patience diff) if it could partition the _hashes_ 
+> instead of partitioning the _data_. That way it wouldn't need to rehash. 
+> See?
 
-$ apt-cache policy git-core
-git-core:
-  Installed: 1:1.4.4.4-4
-  Candidate: 1:1.4.4.4-4
-  Version table:
-     1:1.6.0.6-1 0
-        300 http://localhost experimental/main Packages
-     1:1.5.6.5-2 0
-        700 http://localhost testing/main Packages
-        500 http://localhost unstable/main Packages
-     1:1.5.6.5-1~bpo40+1 0
-        800 http://localhost etch-backports/main Packages
- *** 1:1.4.4.4-4 0
-        900 http://localhost stable/main Packages
-        100 /var/lib/dpkg/status
-     1:1.4.4.4-2.1+etch1 0
-        900 http://localhost stable/updates/main Packages
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+Actually, for libxdiff (non-patience), this is not possible, as 
+xdl_cleanup_records() rewrites the hashes so that they are in a contiguous 
+interval (0, ..., N-1), where N is the number of distinct lines found.
 
---nextPart1592285.SNyUQqE6C0
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+I am also pretty certain that at least the non-patience part needs the 
+maximum of that "hash" to be as small as possible.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+Having said that, if Linus likes patience diff enough to want it faster, 
+Dscho will improve the speed by avoiding the rehashing for the patience 
+diff part (although the lines for which patience has to fall back to Myers 
+diff will _still_ rehash, but that does not hurt _that_ much in practice).
 
-iEYEABECAAYFAkllBqEACgkQdNbfk+86fC3fHwCbB0JlETnuDVF2FL5erQa8I0NY
-q4wAn0LEh8DIJMRD8F4C8YC1s6oJN0h7
-=UFCt
------END PGP SIGNATURE-----
-
---nextPart1592285.SNyUQqE6C0--
+Ciao,
+Dscho
