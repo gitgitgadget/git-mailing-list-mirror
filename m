@@ -1,8 +1,8 @@
 From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH/RFC v3 1/2] Optimised, faster,
- more effective symlink/directory detection
-Date: Wed, 07 Jan 2009 14:24:48 +0100
-Message-ID: <1231334689-17135-2-git-send-email-barvik@broadpark.no>
+Subject: [PATCH/RFC v3 2/2] create_directories() inside entry.c: only check
+ each directory once!
+Date: Wed, 07 Jan 2009 14:24:49 +0100
+Message-ID: <1231334689-17135-3-git-send-email-barvik@broadpark.no>
 References: <1231334689-17135-1-git-send-email-barvik@broadpark.no>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -10,364 +10,224 @@ Content-Transfer-Encoding: 7BIT
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Kjetil Barvik <barvik@broadpark.no>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 07 14:26:56 2009
+X-From: git-owner@vger.kernel.org Wed Jan 07 14:26:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKYQw-0002rM-P3
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 14:26:55 +0100
+	id 1LKYQx-0002rM-Lc
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 14:26:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757939AbZAGNZD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 08:25:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757901AbZAGNY7
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 08:24:59 -0500
+	id S1757993AbZAGNZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 08:25:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754785AbZAGNZO
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 08:25:14 -0500
 Received: from osl1smout1.broadpark.no ([80.202.4.58]:32924 "EHLO
 	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757882AbZAGNYz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 08:24:55 -0500
+	with ESMTP id S1757896AbZAGNY5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 08:24:57 -0500
 Received: from osl1sminn1.broadpark.no ([80.202.4.59])
  by osl1smout1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KD300KZXRXIMS90@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Wed, 07 Jan 2009 14:24:54 +0100 (CET)
+ with ESMTP id <0KD300K2FRXK78F0@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Wed, 07 Jan 2009 14:24:56 +0100 (CET)
 Received: from localhost.localdomain ([80.202.166.60])
  by osl1sminn1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
  with ESMTPA id <0KD30044ARXDDW40@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Wed, 07 Jan 2009 14:24:54 +0100 (CET)
+ git@vger.kernel.org; Wed, 07 Jan 2009 14:24:56 +0100 (CET)
 X-Mailer: git-send-email 1.6.1.rc1.49.g7f705
 In-reply-to: <1231334689-17135-1-git-send-email-barvik@broadpark.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104795>
 
-Changes includes the following:
+When we do an 'git checkout' after some time we end up in the
+'checkout_entry()' function inside entry.c, and from here we call the
+'create_directories()' function to make sure the all the directories
+exists for the possible new file or entry.
 
-- The cache functionality is more effective.  Previously when A/B/C/D
-  was in the cache and A/B/C/E/file.c was called for, there was no
-  match at all from the cache.  Now we use the fact that the paths
-  "A", "A/B" and "A/B/C" is already tested, and we only need to do an
-  lstat() call on "A/B/C/E".
+The 'create_directories()' function happily started to check that all
+path component exists.  This resulted in tons and tons of calls to
+lstat() or stat() when we checkout files nested deep inside a
+directory.
 
-- We only cache/store the last path regardless of it's type.  Since the
-  cache functionality is always used with alphabetically sorted names
-  (at least it seams so for me), there is no need to store both the
-  last symlink-leading path and the last real-directory path.  Note
-  that if the cache is not called with (mostly) alphabetically sorted
-  names, neither the old, nor this new one, would be very effective.
-
-- We also can cache the fact that a directory does not exist.
-  Previously we could end up doing lots of lstat() calls for a removed
-  directory which previously contained lots of files.  Since we
-  already have simplified the cache functionality and only store the
-  last path (see above), this new functionality was easy to add.
-
-- Previously, when symlink A/B/C/S was cached/stored in the
-  symlink-leading path, and A/B/C/file.c was called for, it was not
-  easy to use the fact that we already known that the paths "A", "A/B"
-  and "A/B/C" is real directories.  Since we now only store one single
-  path (the last one), we also get similar logic for free regarding
-  the new "non-exsisting-directory-cache".
-
-- Avoid copying the first path components of the name 2 zillions times
-  when we tests new path components.  Since we always cache/store the
-  last path, we can copy each component as we test those directly into
-  the cache.  Previously we ended up doing a memcpy() for the full
-  path/name right before each lstat() call, and when updating the
-  cache for each time we have tested an new path component.
-
-- We also use less memory, that is PATH_MAX bytes less memory on the
-  stack and PATH_MAX bytes less memory on the heap.
-
-- Introduce a 3rd argument, 'unsigned int track_flags', to the
-  cache-test function, check_lstat_cache().  This new argument can be
-  used to tell the cache functionality which types of directories
-  should be cached.
-
-- Also introduce a 'void clear_lstat_cache(void)' function, which
-  should be used to clean the cache before usage.  If for instance,
-  you have changed the types of directories which should be cached,
-  the cache could contain a path which was not wanted.
+We try to avoid this by remembering the last checked and possible
+newly created directory.
 
 Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
 ---
-:100644 100644 719de8b... 870961e... M	builtin-add.c
-:100644 100644 a8f75ed... d3d001a... M	builtin-apply.c
-:100644 100644 5604977... 8907219... M	builtin-update-index.c
-:100644 100644 231c06d... 768ba38... M	cache.h
-:100644 100644 ae96c64... c9caa0e... M	diff-lib.c
-:100644 100644 5a5e781... 2f025c8... M	symlinks.c
-:100644 100644 54f301d... 28e2759... M	unpack-trees.c
- builtin-add.c          |    1 +
- builtin-apply.c        |    1 +
- builtin-update-index.c |    1 +
- cache.h                |   22 ++++++++-
- diff-lib.c             |    1 +
- symlinks.c             |  123 +++++++++++++++++++++++++++++++-----------------
- unpack-trees.c         |    5 +-
- 7 files changed, 107 insertions(+), 47 deletions(-)
+:100644 100644 768ba38... ec1297f... M	cache.h
+:100644 100644 aa2ee46... 36d6f98... M	entry.c
+:100644 100644 28e2759... 0a03e65... M	unpack-trees.c
+ cache.h        |    1 +
+ entry.c        |   82 +++++++++++++++++++++++++++++++++++++++++++------------
+ unpack-trees.c |    1 +
+ 3 files changed, 66 insertions(+), 18 deletions(-)
 
-diff --git a/builtin-add.c b/builtin-add.c
-index 719de8b0f2d2d831f326d948aa18700e5c474950..870961e8ca4e3d6f9333020083d0a232bccd542c 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -225,6 +225,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, builtin_add_options,
- 			  builtin_add_usage, 0);
-+	clear_symlink_cache();
- 	if (patch_interactive)
- 		add_interactive = 1;
- 	if (add_interactive)
-diff --git a/builtin-apply.c b/builtin-apply.c
-index a8f75ed3ed411d8cf7a3ec9dfefef7407c50f447..d3d001a96be6e502d6338af4467f7c313370d78e 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -3154,6 +3154,7 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
- 	if (apply_default_whitespace)
- 		parse_whitespace_option(apply_default_whitespace);
- 
-+	clear_symlink_cache();
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
- 		char *end;
-diff --git a/builtin-update-index.c b/builtin-update-index.c
-index 560497750586ec61be4e34de6dedd9c307129817..8907219fb9cb438113e29ee17854edb5dd4baa4d 100644
---- a/builtin-update-index.c
-+++ b/builtin-update-index.c
-@@ -581,6 +581,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 	if (entries < 0)
- 		die("cache corrupted");
- 
-+	clear_symlink_cache();
- 	for (i = 1 ; i < argc; i++) {
- 		const char *path = argv[i];
- 		const char *p;
 diff --git a/cache.h b/cache.h
-index 231c06d7726b575f6e522d5b0c0fe43557e8c651..768ba3825f3015828381490b0c387177a4f71578 100644
+index 768ba3825f3015828381490b0c387177a4f71578..ec1297ff5621cc9eb7fce51cc025f18a030ac9ea 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -719,7 +719,27 @@ struct checkout {
+@@ -718,6 +718,7 @@ struct checkout {
+ 		 refresh_cache:1;
  };
  
++extern void clear_created_dirs_cache(void);
  extern int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath);
--extern int has_symlink_leading_path(int len, const char *name);
-+
-+#define LSTAT_DIR       (1u << 0)
-+#define LSTAT_NOENT     (1u << 1)
-+#define LSTAT_SYMLINK   (1u << 2)
-+#define LSTAT_LSTATERR  (1u << 3)
-+#define LSTAT_ERR       (1u << 4)
-+extern unsigned int check_lstat_cache(int len, const char *name,
-+				      unsigned int track_flags);
-+extern void clear_lstat_cache(void);
-+static inline unsigned int has_symlink_leading_path(int len, const char *name)
-+{
-+	return check_lstat_cache(len, name, LSTAT_SYMLINK|LSTAT_DIR) &
-+		LSTAT_SYMLINK;
-+}
-+#define clear_symlink_cache() clear_lstat_cache()
-+static inline unsigned int has_symlink_or_noent_leading_path(int len, const char *name)
-+{
-+	return check_lstat_cache(len, name, LSTAT_SYMLINK|LSTAT_NOENT|LSTAT_DIR) &
-+		(LSTAT_SYMLINK|LSTAT_NOENT);
-+}
-+#define clear_symlink_or_noent_cache() clear_lstat_cache()
  
- extern struct alternate_object_database {
- 	struct alternate_object_database *next;
-diff --git a/diff-lib.c b/diff-lib.c
-index ae96c64ca209f4df9008198e8a04b160bed618c7..c9caa0e6ef0f4a8ee8b850869ef6d0f52b712385 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -69,6 +69,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 		diff_unmerged_stage = 2;
- 	entries = active_nr;
- 	symcache[0] = '\0';
-+	clear_symlink_cache();
- 	for (i = 0; i < entries; i++) {
- 		struct stat st;
- 		unsigned int oldmode, newmode;
-diff --git a/symlinks.c b/symlinks.c
-index 5a5e781a15d7d9cb60797958433eca896b31ec85..2f025c87b0be0e713af7b1400e71284a22c25e9f 100644
---- a/symlinks.c
-+++ b/symlinks.c
-@@ -1,64 +1,99 @@
+ #define LSTAT_DIR       (1u << 0)
+diff --git a/entry.c b/entry.c
+index aa2ee46a84033585d8e07a585610c5a697af82c2..36d6f98c1f59a86a5e9c117e1181c1169208168f 100644
+--- a/entry.c
++++ b/entry.c
+@@ -1,33 +1,67 @@
  #include "cache.h"
+ #include "blob.h"
  
--struct pathname {
--	int len;
--	char path[PATH_MAX];
--};
-+static char         cache_path[PATH_MAX];
-+static int          cache_len   = 0;
-+static unsigned int cache_flags = 0;
- 
--/* Return matching pathname prefix length, or zero if not matching */
--static inline int match_pathname(int len, const char *name, struct pathname *match)
+-static void create_directories(const char *path, const struct checkout *state)
++static char dirs_path[PATH_MAX];
++static int  dirs_len = 0;
++
 +static inline int
-+greatest_common_path_cache_prefix(int len, const char *name)
++greatest_common_created_dirs_prefix(int len, const char *name)
  {
--	int match_len = match->len;
--	return (len > match_len &&
--		name[match_len] == '/' &&
--		!memcmp(name, match->path, match_len)) ? match_len : 0;
--}
+-	int len = strlen(path);
+-	char *buf = xmalloc(len + 1);
+-	const char *slash = path;
 +	int max_len, match_len = 0, i = 0;
  
--static inline void set_pathname(int len, const char *name, struct pathname *match)
--{
--	if (len < PATH_MAX) {
--		match->len = len;
--		memcpy(match->path, name, len);
--		match->path[len] = 0;
-+	max_len = len < cache_len ? len : cache_len;
-+	while (i < max_len && name[i] == cache_path[i]) {
+-	while ((slash = strchr(slash+1, '/')) != NULL) {
+-		struct stat st;
+-		int stat_status;
++	max_len = len < dirs_len ? len : dirs_len;
++	while (i < max_len && name[i] == dirs_path[i]) {
 +		if (name[i] == '/') match_len = i;
 +		i++;
- 	}
-+	if (i == cache_len && len > cache_len && name[cache_len] == '/')
-+		match_len = cache_len;
++	}
++	if (i == dirs_len && len > dirs_len && name[dirs_len] == '/')
++		match_len = dirs_len;
 +	return match_len;
++}
+ 
+-		len = slash - path;
+-		memcpy(buf, path, len);
+-		buf[len] = 0;
++void clear_created_dirs_cache(void)
++{
++	dirs_path[0] = '\0';
++	dirs_len     = 0;
++}
+ 
+-		if (len <= state->base_dir_len)
++static void
++create_directories(int len, const char *path, const struct checkout *state)
++{
++	int i, max_len, last_slash, stat_status;
++	struct stat st;
++
++	/* Check the cache for previously checked or created
++	 * directories (and components) within this function.  There
++	 * is no need to check or re-create directory components more
++	 * than once!
++	 */
++	max_len = len < PATH_MAX ? len : PATH_MAX;
++	i = last_slash = greatest_common_created_dirs_prefix(max_len, path);
++
++	while (i < max_len) {
++		do {
++			dirs_path[i] = path[i];
++			i++;
++		} while (i < max_len && path[i] != '/');
++		if (i >= max_len)
++			break;
++		last_slash = i;
++		dirs_path[last_slash] = '\0';
++
++		if (last_slash <= state->base_dir_len)
+ 			/*
+ 			 * checkout-index --prefix=<dir>; <dir> is
+ 			 * allowed to be a symlink to an existing
+ 			 * directory.
+ 			 */
+-			stat_status = stat(buf, &st);
++			stat_status = stat(dirs_path, &st);
+ 		else
+ 			/*
+ 			 * if there currently is a symlink, we would
+ 			 * want to replace it with a real directory.
+ 			 */
+-			stat_status = lstat(buf, &st);
++			stat_status = lstat(dirs_path, &st);
+ 
+ 		if (!stat_status && S_ISDIR(st.st_mode))
+ 			continue; /* ok, it is already a directory. */
+@@ -38,14 +72,20 @@ static void create_directories(const char *path, const struct checkout *state)
+ 		 * error codepath; we do not care, as we unlink and
+ 		 * mkdir again in such a case.
+ 		 */
+-		if (mkdir(buf, 0777)) {
++		if (mkdir(dirs_path, 0777)) {
+ 			if (errno == EEXIST && state->force &&
+-			    !unlink(buf) && !mkdir(buf, 0777))
++			    !unlink(dirs_path) && !mkdir(dirs_path, 0777))
+ 				continue;
+-			die("cannot create directory at %s", buf);
++			die("cannot create directory at %s", dirs_path);
+ 		}
+ 	}
+-	free(buf);
++	/* Update the cache of already created/checked directories */
++	if (last_slash > 0 && last_slash < PATH_MAX) {
++		dirs_path[last_slash] = '\0';
++		dirs_len = last_slash;
++	} else {
++		clear_created_dirs_cache();
++	}
  }
  
--int has_symlink_leading_path(int len, const char *name)
-+/*
-+ * Check if name 'name' of length 'len' has a symlink leading
-+ * component, or if the directory exists and is real, or not.
-+ *
-+ * To speed up the check, some information is allowed to be cached.
-+ * This is indicated by the 'track_flags' argument.
-+ */
-+unsigned int
-+check_lstat_cache(int len, const char *name, unsigned int track_flags)
- {
--	static struct pathname link, nonlink;
--	char path[PATH_MAX];
-+	int match_len, last_slash, max_len;
-+	unsigned int match_flags, ret_flags, save_flags;
- 	struct stat st;
--	char *sp;
--	int known_dir;
+ static void remove_subtree(const char *path)
+@@ -55,6 +95,11 @@ static void remove_subtree(const char *path)
+ 	char pathbuf[PATH_MAX];
+ 	char *name;
  
--	/*
--	 * See if the last known symlink cache matches.
-+	/* Check if match from the cache for 2 "excluding" path types.
- 	 */
--	if (match_pathname(len, name, &link))
--		return 1;
-+	match_len = last_slash =
-+		greatest_common_path_cache_prefix(len, name);
-+	match_flags =
-+		cache_flags & track_flags & (LSTAT_NOENT|LSTAT_SYMLINK);
-+	if (match_flags && match_len == cache_len)
-+		return match_flags;
- 
--	/*
--	 * Get rid of the last known directory part
-+	/* Okay, no match from the cache so far, so now we have to
-+	 * check the rest of the path components.
- 	 */
--	known_dir = match_pathname(len, name, &nonlink);
--
--	while ((sp = strchr(name + known_dir + 1, '/')) != NULL) {
--		int thislen = sp - name ;
--		memcpy(path, name, thislen);
--		path[thislen] = 0;
-+	ret_flags = LSTAT_DIR;
-+	max_len = len < PATH_MAX ? len : PATH_MAX;
-+	while (match_len < max_len) {
-+		do {
-+			cache_path[match_len] = name[match_len];
-+			match_len++;
-+		} while (match_len < max_len && name[match_len] != '/');
-+		if (match_len >= max_len)
-+			break;
-+		last_slash = match_len;
-+		cache_path[last_slash] = '\0';
- 
--		if (lstat(path, &st))
--			return 0;
--		if (S_ISDIR(st.st_mode)) {
--			set_pathname(thislen, path, &nonlink);
--			known_dir = thislen;
-+		if (lstat(cache_path, &st)) {
-+			ret_flags = LSTAT_LSTATERR;
-+			if (errno == ENOENT)
-+				ret_flags |= LSTAT_NOENT;
-+		} else if (S_ISDIR(st.st_mode)) {
- 			continue;
--		}
--		if (S_ISLNK(st.st_mode)) {
--			set_pathname(thislen, path, &link);
--			return 1;
-+		} else if (S_ISLNK(st.st_mode)) {
-+			ret_flags = LSTAT_SYMLINK;
-+		} else {
-+			ret_flags = LSTAT_ERR;
- 		}
- 		break;
- 	}
--	return 0;
-+
-+	/* At the end update the cache.  Note that max 3 different
-+	 * path types can be cached for the moment!
++	/* To be utterly safe we invalidate the cache of the
++	 * previously created directories.
 +	 */
-+	save_flags = ret_flags & track_flags &
-+		(LSTAT_NOENT|LSTAT_SYMLINK|LSTAT_DIR);
-+	if (save_flags && last_slash > 0 && last_slash < PATH_MAX) {
-+		cache_path[last_slash] = '\0';
-+		cache_len   = last_slash;
-+		cache_flags = save_flags;
-+	} else {
-+		clear_lstat_cache();
-+	}
-+	return ret_flags;
-+}
++	clear_created_dirs_cache();
 +
-+/*
-+ * Before usage of the check_lstat_cache() function one should call
-+ * clear_lstat_cache() (at an appropriate place) to make sure that the
-+ * cache is clean.
-+ */
-+void clear_lstat_cache(void)
-+{
-+	cache_path[0] = '\0';
-+	cache_len     = 0;
-+	cache_flags   = 0;
+ 	if (!dir)
+ 		die("cannot opendir %s (%s)", path, strerror(errno));
+ 	strcpy(pathbuf, path);
+@@ -201,6 +246,7 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
+ 
+ 	memcpy(path, state->base_dir, len);
+ 	strcpy(path + len, ce->name);
++	len += ce_namelen(ce);
+ 
+ 	if (!lstat(path, &st)) {
+ 		unsigned changed = ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID);
+@@ -229,6 +275,6 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
+ 			return error("unable to unlink old '%s' (%s)", path, strerror(errno));
+ 	} else if (state->not_new)
+ 		return 0;
+-	create_directories(path, state);
++	create_directories(len, path, state);
+ 	return write_entry(ce, path, state, 0);
  }
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 54f301da67be879c80426bc21776427fdd38c02e..28e275981a21b033459ef9c7e420cce4bf7e5513 100644
+index 28e275981a21b033459ef9c7e420cce4bf7e5513..0a03e65f9c9d869ab2d8b3c337f032ff2b8e7b2f 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -61,7 +61,7 @@ static void unlink_entry(struct cache_entry *ce)
- 	char *cp, *prev;
- 	char *name = ce->name;
- 
--	if (has_symlink_leading_path(ce_namelen(ce), ce->name))
-+	if (has_symlink_or_noent_leading_path(ce_namelen(ce), ce->name))
- 		return;
- 	if (unlink(name))
- 		return;
-@@ -105,6 +105,7 @@ static int check_updates(struct unpack_trees_options *o)
- 		cnt = 0;
+@@ -119,6 +119,7 @@ static int check_updates(struct unpack_trees_options *o)
+ 		}
  	}
  
-+	clear_symlink_or_noent_cache();
++	clear_created_dirs_cache();
  	for (i = 0; i < index->cache_nr; i++) {
  		struct cache_entry *ce = index->cache[i];
  
-@@ -584,7 +585,7 @@ static int verify_absent(struct cache_entry *ce, const char *action,
- 	if (o->index_only || o->reset || !o->update)
- 		return 0;
- 
--	if (has_symlink_leading_path(ce_namelen(ce), ce->name))
-+	if (has_symlink_or_noent_leading_path(ce_namelen(ce), ce->name))
- 		return 0;
- 
- 	if (!lstat(ce->name, &st)) {
 -- 
 1.6.1.rc1.49.g7f705
