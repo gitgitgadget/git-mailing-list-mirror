@@ -1,117 +1,79 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git rebase orthodontics
-Date: Wed, 7 Jan 2009 17:31:04 +0100
-Message-ID: <200901071731.20343.trast@student.ethz.ch>
-References: <87sknvxje8.fsf@jidanni.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
+Date: Wed, 7 Jan 2009 18:01:53 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901071610290.7496@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <20081104004001.GB29458@artemis.corp> <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de> <20081104083042.GB3788@artemis.corp>
+ <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <20090106111712.GB30766@artemis.corp> <alpine.DEB.1.00.0901062037250.30769@pacific.mpi-cbg.de>
+ <20090107143926.GB831@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3988730.UvYqhVsf67";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Wed Jan 07 17:32:37 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	davidel@xmailserver.org, Francis Galiegue <fg@one2team.net>,
+	Git ML <git@vger.kernel.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Jan 07 18:03:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKbKc-0006Bp-Jm
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 17:32:35 +0100
+	id 1LKboa-0002hA-Ji
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 18:03:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751777AbZAGQbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 11:31:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752321AbZAGQbI
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 11:31:08 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:58266 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752567AbZAGQbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 11:31:07 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 7 Jan 2009 17:31:04 +0100
-Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 7 Jan 2009 17:31:03 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <87sknvxje8.fsf@jidanni.org>
-X-OriginalArrivalTime: 07 Jan 2009 16:31:03.0589 (UTC) FILETIME=[55315D50:01C970E5]
+	id S1752423AbZAGRCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 12:02:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753807AbZAGRB7
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 12:01:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47870 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752389AbZAGRB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 12:01:57 -0500
+Received: (qmail invoked by alias); 07 Jan 2009 17:01:54 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp006) with SMTP; 07 Jan 2009 18:01:54 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/SBAl8SQHSAG7iJhnKxp5WFhjI772/Sd6Qkr62Cn
+	dXjpMDnZuV4HNL
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090107143926.GB831@artemis.corp>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104812>
 
---nextPart3988730.UvYqhVsf67
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-jidanni@jidanni.org wrote:
-> wherein he discovers there are no guard rails
+On Wed, 7 Jan 2009, Pierre Habouzit wrote:
 
-Good thing you learned this before getting to git-reset.
+> On Tue, Jan 06, 2009 at 07:40:02PM +0000, Johannes Schindelin wrote:
+> 
+> > Although I would like to see it in once it is fleshed out -- even if 
+> > it does not meet our usefulness standard -- because people said Git is 
+> > inferior for not providing a patience diff.  If we have --patience, we 
+> > can say "but we have it, it's just not useful, check for yourself".
+> 
+> Well I believe it's useful, but maybe the standard algorithm could be 
+> tweaked the way Linus proposes to make the "long" lines weight louder or 
+> so.
 
-> $ EDITOR=3Dcat git rebase --interactive master
-> pick 07aef4a This is a commit with No files, wow. bla.
-> # Rebase 3ad166e..07aef4a onto 3ad166e ...
-> Successfully rebased and updated refs/heads/jidanni.
-> (But it didn't. git show shows no change. ls -l shows
-> refs/heads/jidanni was not touched.
-> OK, it seems like all I am doing is changing
->               A jidanni
->              /
-> D---E---F---G master
-> into the same thing, a noop. But shouldn't it warn and quit, instead
-> of rewarding me with the success message?
+I think this "weighting idea" is a bit too much of handwaving to start 
+anything close to a design; as I pointed out, anything that has something 
+different than a 1 for a deleted/added line affects performance 
+negatively.
 
-You asked for an interactive rebase of the range master..jidanni,
-which consists of A, so it gave you an editor offering 'pick A' and
-the chance to change that.
+> WRT the leaks, you want to squash the attached patch on the proper
+> patches of your series (maybe the xdl_free on map.entries could be put
+> in a hasmap_destroy or similar btw, but valgrind reports no more leaks
+> in xdiff now).
 
-Non-interactive rebase indeed checks if you attempt to rebase, but are
-already up to date.  Interactive doesn't; the assumption is that
-interactive rebases aren't used "blindly" to update.  (Rebasing
-changes committer and commit time, so there is a difference between
-not rebasing at all, and merely ending up with the same history.)
+Thanks!
 
-> Let's try it the other way
-> around:
-> $ git checkout master
-> $ git rebase --interactive jidanni #Wherein one sees:
-> noop
-> # Rebase 07aef4a..3ad166e onto 07aef4a
-> Successfully rebased and updated refs/heads/master.
-> OK, now I have achieved
-> D---E---F---G---A master, jidanni
-> Observations:
-> When I tried a noop, it didn't say noop in the editor.
-> When I tried a yesop, it did say noop in the editor.
+I also squashed in a patch that avoids calling xdl_cleanup_records() and 
+then memset()ing the rchg array to 0 (which worked around the segmentation 
+fault).
 
-The 'noop' means that there are no commits in the range you asked to
-rebase, which is jidanni..master.  It's telling you that it is going
-to update the branch pointer, but not carry over any of the commits.
-This can happen even if jidanni..master is nonempty, but all commits
-in it are already contained in jidanni.
-
-> In both cases it gave the same success message.
-
-It successfully did what you told it to do.
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
-
---nextPart3988730.UvYqhVsf67
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklk2NgACgkQqUud07tmzP2k5QCggZkdFqZsWULtpLJ6We09zj7x
-E4kAnj0ua783dAztMgqoFA/PdLEt/KyH
-=/pLD
------END PGP SIGNATURE-----
-
---nextPart3988730.UvYqhVsf67--
+Patch 1/3 v3 follows,
+Dscho
