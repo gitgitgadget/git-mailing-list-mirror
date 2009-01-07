@@ -1,103 +1,95 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: Error: unable to unlink ... when using "git gc"
-Date: Wed, 7 Jan 2009 09:48:33 -0600
-Message-ID: <200901070948.34117.bss@iguanasuicide.net>
-References: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com> <200901070027.21721.bss@iguanasuicide.net> <slrngm92hr.72d.sitaramc@sitaramc.homelinux.net>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: [PATCH] gitweb: support the rel=vcs microformat
+Date: Wed, 7 Jan 2009 10:50:23 -0500
+Message-ID: <20090107155023.GA16540@gnu.kitenet.net>
+References: <20090107042518.GB24735@gnu.kitenet.net> <gk2794$djn$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1610605.0nBRT8nrEQ";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Sitaram Chamarty <sitaramc@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 07 16:49:34 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="d6Gm4EdcadzBjdND"
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 07 16:52:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKaep-00058O-SF
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 16:49:24 +0100
+	id 1LKahI-00065f-6f
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 16:51:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654AbZAGPsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 10:48:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752299AbZAGPr7
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 10:47:59 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:57038 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751832AbZAGPr6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 10:47:58 -0500
-Received: from [206.104.164.114]
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LKadR-0006HF-R0; Wed, 07 Jan 2009 15:47:57 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <slrngm92hr.72d.sitaramc@sitaramc.homelinux.net>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1755982AbZAGPub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 10:50:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755779AbZAGPua
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 10:50:30 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:34520 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755516AbZAGPua (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 10:50:30 -0500
+Received: from gnu.kitenet.net (fttu-67-223-5-142.btes.tv [67.223.5.142])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 03A483142F2;
+	Wed,  7 Jan 2009 10:50:26 -0500 (EST)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id E063DA8A16; Wed,  7 Jan 2009 10:50:23 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <gk2794$djn$1@ger.gmane.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/8842/Wed Jan  7 09:06:50 2009 on wren.kitenet.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104806>
 
---nextPart1610605.0nBRT8nrEQ
-Content-Type: text/plain;
-  charset="iso-8859-1"
+
+--d6Gm4EdcadzBjdND
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+
+Giuseppe Bilotta wrote:
+> In this patch you do NOT add titles to the rel=3Dvcs links, which means t=
+hat
+> everything works fine only if there is a single URL for each project. If a
+> project has different URLs, it's going to appear multiple times as _diffe=
+rent_
+> projects to a spec-compliant reader.
+>=20
+> A possible solution would be to make @git_url_list into a map keyed by the
+> project name and having the description and repo URL(s) as values.
+
+Yes. I considered doing that, but didn't immediatly see a way to get the
+project description w/o additional overhead (of looking it up a second
+time).
+
+> > This changes git_get_project_description() to not check wantarray, and =
+only
+> > return in list context -- the only way it is used AFAICS.
+>=20
+> I assume you mean git_get_project_url_list()?
+
+In fact yes.
+=20
+
+Thanks for the feedback. There are some changes happening to the
+microformat that should make gitweb's job slightly easier, I'll respin
+the patch soon.
+
+--=20
+see shy jo
+
+--d6Gm4EdcadzBjdND
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 Content-Disposition: inline
 
-On Wednesday 2009 January 07 04:55:56 you wrote:
-> On 2009-01-07, Boyd Stephen Smith Jr. <bss@iguanasuicide.net> wrote:
-> > On Tuesday 06 January 2009, Sitaram Chamarty <sitaramc@gmail.com>
-> > wrote=3D20
-> >
-> >>    chmod g+ws .git
-> >>
-> >>Now set the group to something (I use "gitpushers" ;-)
-> >>
-> >>    chgrp -R gitpushers .git
-> >
-> > ISTR this breaking here when someone on the team had a umask like 077
-> > and=3D20 was using file:// or ssh:// to push.  I tended up "fixing" thi=
-ngs
-> > with a=3D20 cronjob, (which is a bit of a hack) IIRC.
->
-> That doesn't sound right.  "git help init" says:
->  - 0xxx: 0xxx is an octal number and each file will have mode 0xxx
->  - 0xxx will override users umask(2) value, and thus, users
->    with a safe umask (0077) can use this option
->  - 0660 is equivalent to group.
->
-> So when you say "group", you're saying "0660", and when you
-> say "0660", you're overriding users umask value.
-
-Very good then.  It is from when I was significantly less experienced in us=
-ing=20
-git and managing repos, so I may have forgotten to use the correct options =
-OR=20
-it could just have been the version of git I was using (1.4.4.4, IIRC) --=20
-still using that in at least one place, as it is the current version in=20
-Debian Etch.
-
-It's good to know it works properly now, if all the right switches are set.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
-
---nextPart1610605.0nBRT8nrEQ
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEABECAAYFAklkztIACgkQdNbfk+86fC3iQgCeKgKlv71lBnNxRSjEMW1yvBJ9
-/KEAn20r8k6KqtNb7H3Mj4CDdyKO6u/V
-=j4tc
+iD8DBQFJZM88d8HHehbQuO8RAg2iAJ98e8EqO5Ere3PeLGDDSrNkvIq/+QCdEgst
+DAaIGQqMdcF3/Ny1nrHvd9s=
+=eSvn
 -----END PGP SIGNATURE-----
 
---nextPart1610605.0nBRT8nrEQ--
+--d6Gm4EdcadzBjdND--
