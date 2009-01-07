@@ -1,56 +1,63 @@
-From: Jeff King <peff@peff.net>
+From: Sitaram Chamarty <sitaramc@gmail.com>
 Subject: Re: Error: unable to unlink ... when using "git gc"
-Date: Wed, 7 Jan 2009 00:59:47 -0500
-Message-ID: <20090107055947.GA22616@coredump.intra.peff.net>
-References: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com> <20090106072253.GA9920@coredump.intra.peff.net> <488807870901052352w585da727r6d4a1e4ca4238cab@mail.gmail.com> <20090106080300.GA10079@coredump.intra.peff.net> <slrngm6hoj.n4a.sitaramc@sitaramc.homelinux.net> <488807870901060705m49419ec1he14aace5caaa3d89@mail.gmail.com> <slrngm6uf5.vuo.sitaramc@sitaramc.homelinux.net>
+Date: Wed, 7 Jan 2009 18:00:22 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngm9rdm.gcv.sitaramc@sitaramc.homelinux.net>
+References: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com>
+ <200901070027.21721.bss@iguanasuicide.net>
+ <slrngm92hr.72d.sitaramc@sitaramc.homelinux.net>
+ <200901070948.34117.bss@iguanasuicide.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 07 07:01:22 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 07 19:02:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKRTd-0004tu-J4
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 07:01:14 +0100
+	id 1LKcj8-0000gL-EI
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 19:01:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751081AbZAGF7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 00:59:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750796AbZAGF7u
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 00:59:50 -0500
-Received: from peff.net ([208.65.91.99]:37861 "EHLO peff.net"
+	id S1755293AbZAGSAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 13:00:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754780AbZAGSAe
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 13:00:34 -0500
+Received: from main.gmane.org ([80.91.229.2]:38902 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750703AbZAGF7t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 00:59:49 -0500
-Received: (qmail 9236 invoked by uid 107); 7 Jan 2009 06:00:19 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 07 Jan 2009 01:00:19 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Jan 2009 00:59:47 -0500
-Content-Disposition: inline
-In-Reply-To: <slrngm6uf5.vuo.sitaramc@sitaramc.homelinux.net>
+	id S1752775AbZAGSAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 13:00:33 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LKchi-0004dB-VJ
+	for git@vger.kernel.org; Wed, 07 Jan 2009 18:00:30 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Jan 2009 18:00:30 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Jan 2009 18:00:30 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 06, 2009 at 03:33:57PM +0000, Sitaram Chamarty wrote:
+On 2009-01-07, Boyd Stephen Smith Jr. <bss@iguanasuicide.net> wrote:
 
-> > We also plan to do it in this way, just a small wondering that it
-> > looks a kind of workaround instead of a more graceful solution.
-> 
-> I wouldn't consider it a workaround.  It uses normal Unix
-> permissions the way they were designed to, including setgid
-> for directories.
+> On Wednesday 2009 January 07 04:55:56 you wrote:
+>> So when you say "group", you're saying "0660", and when you
+>> say "0660", you're overriding users umask value.
 
-Yes, I think core.sharedrepository is the "official" way to do this, so
-it is definitely not a workaround.
+> it could just have been the version of git I was using (1.4.4.4, IIRC) --=20
+> still using that in at least one place, as it is the current version in=20
+> Debian Etch.
 
-> Actually, I am yet to come up with a situation where I
-> actually needed ACLs, though they are more generalised, and
-> fine-grained.
+1.4.4.4 is 2 years and 2 days old today!  [I've heard
+stories about Debian, but never thought it was this
+conservative!]
 
-I like ACLs mainly because you don't have to bug root to change
-permissions (like you do to get them to create or modify a group).
-
--Peff
+and I think this was fixed in 06cbe85, last April.
