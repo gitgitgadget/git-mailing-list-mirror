@@ -1,66 +1,75 @@
-From: Lars Sadau <lars@sadau-online.de>
-Subject: Re: BUG?? INSTALL MAKEFILE
-Date: Wed, 7 Jan 2009 10:44:31 +0000 (UTC)
-Message-ID: <loom.20090107T104303-14@post.gmane.org>
-References: <49635BF8.1010700@sadau-online.de> <vpqiqosa3fc.fsf@bauges.imag.fr> <49638625.3090109@tedpavlic.com> <vpqzli45p6q.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 07 12:01:31 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] diff --no-index -q: fix endless loop
+Date: Wed,  7 Jan 2009 12:15:30 +0100
+Message-ID: <1231326930-7132-1-git-send-email-trast@student.ethz.ch>
+References: <7veizfbnuw.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 07 12:16:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKWAE-0000I6-Gw
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 12:01:30 +0100
+	id 1LKWP2-0004hN-6x
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 12:16:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220AbZAGLAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 06:00:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751521AbZAGLAH
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 06:00:07 -0500
-Received: from main.gmane.org ([80.91.229.2]:60748 "EHLO ciao.gmane.org"
+	id S1752211AbZAGLPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 06:15:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161AbZAGLPY
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 06:15:24 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:25607 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750836AbZAGLAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 06:00:05 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LKW8p-0004Zo-Ah
-	for git@vger.kernel.org; Wed, 07 Jan 2009 11:00:03 +0000
-Received: from brocken.mathematik.hu-berlin.de ([141.20.54.102])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 Jan 2009 11:00:03 +0000
-Received: from lars by brocken.mathematik.hu-berlin.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 Jan 2009 11:00:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 141.20.54.102 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.5) Gecko/2008121300 SUSE/3.0.5-0.1 Firefox/3.0.5)
+	id S1752113AbZAGLPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 06:15:23 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 7 Jan 2009 12:15:22 +0100
+Received: from localhost.localdomain ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 7 Jan 2009 12:15:22 +0100
+X-Mailer: git-send-email 1.6.1.259.g236c
+In-Reply-To: <7veizfbnuw.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 07 Jan 2009 11:15:22.0225 (UTC) FILETIME=[3B429610:01C970B9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104786>
 
-Matthieu Moy <Matthieu.Moy <at> imag.fr> writes:
+We forgot to move to the next argument when parsing -q, getting stuck
+in an endless loop.
 
-> 
-> Ted Pavlic <ted <at> tedpavlic.com> writes:
-> 
-> > According to the INSTALL doc, the default prefix should be ~.
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-I am the same opinion
+---
+
+Junio C Hamano wrote:
+> I'll queue the "--" fix, "-q" fix and this pager fix.  Thanks.
+
+Seems the after-midnight rule indeed has some value.  I pointed out
+the argv[i] bug, which I see you have squashed into the -- fix, but
+failed to notice that the -q parsing is also missing an i++.
+
+I'm still not convinced of the option's value, but this patch at least
+fixes the bug.
 
 
-> I didn't read that in INSTALL. What I read is that if I only run "make
-> install", the prefix is $HOME, which is true. Now, ./configure uses a
-> default value which is not the one of the Makefile, but that's another
-> point.
-> 
+ diff-no-index.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-May be not, confuses newbies.
-
-------
-Lars
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 12ff1f1..60ed174 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -207,8 +207,10 @@ void diff_no_index(struct rev_info *revs,
+ 		int j;
+ 		if (!strcmp(argv[i], "--no-index"))
+ 			i++;
+-		else if (!strcmp(argv[i], "-q"))
++		else if (!strcmp(argv[i], "-q")) {
+ 			options |= DIFF_SILENT_ON_REMOVED;
++			i++;
++		}
+ 		else if (!strcmp(argv[i], "--"))
+ 			i++;
+ 		else {
+-- 
+tg: (3bbe36c..) t/diff-q-endless (depends on: next)
