@@ -1,71 +1,117 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH/RFC] Allow writing loose objects that are corrupted in
- a pack file
-Date: Wed, 7 Jan 2009 08:08:59 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0901070808000.3057@localhost.localdomain>
-References: <20081209093627.77039a1f@perceptron>  <1231282320.8870.52.camel@starfruit>  <alpine.LFD.2.00.0901062005290.26118@xanadu.home>  <1231292360.8870.61.camel@starfruit>  <alpine.LFD.2.00.0901062026500.3057@localhost.localdomain> <1231314099.8870.415.camel@starfruit>
- <alpine.LFD.2.00.0901070743070.3057@localhost.localdomain>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: git rebase orthodontics
+Date: Wed, 7 Jan 2009 17:31:04 +0100
+Message-ID: <200901071731.20343.trast@student.ethz.ch>
+References: <87sknvxje8.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>,
-	=?ISO-8859-15?Q?Jan_Kr=FCger?= <jk@jk.gs>,
-	Git ML <git@vger.kernel.org>
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Wed Jan 07 17:30:16 2009
+Content-Type: multipart/signed;
+  boundary="nextPart3988730.UvYqhVsf67";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Wed Jan 07 17:32:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKbI7-0005A6-2y
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 17:29:59 +0100
+	id 1LKbKc-0006Bp-Jm
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 17:32:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752270AbZAGQ2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 11:28:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbZAGQ2f
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 11:28:35 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:54834 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751599AbZAGQ2e (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Jan 2009 11:28:34 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n07G8xjP007976
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 7 Jan 2009 08:09:00 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n07G8xkN008405;
-	Wed, 7 Jan 2009 08:08:59 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.00.0901070743070.3057@localhost.localdomain>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.948 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751777AbZAGQbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 11:31:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752321AbZAGQbI
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 11:31:08 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:58266 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752567AbZAGQbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 11:31:07 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 7 Jan 2009 17:31:04 +0100
+Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 7 Jan 2009 17:31:03 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <87sknvxje8.fsf@jidanni.org>
+X-OriginalArrivalTime: 07 Jan 2009 16:31:03.0589 (UTC) FILETIME=[55315D50:01C970E5]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104811>
+
+--nextPart3988730.UvYqhVsf67
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+jidanni@jidanni.org wrote:
+> wherein he discovers there are no guard rails
+
+Good thing you learned this before getting to git-reset.
+
+> $ EDITOR=3Dcat git rebase --interactive master
+> pick 07aef4a This is a commit with No files, wow. bla.
+> # Rebase 3ad166e..07aef4a onto 3ad166e ...
+> Successfully rebased and updated refs/heads/jidanni.
+> (But it didn't. git show shows no change. ls -l shows
+> refs/heads/jidanni was not touched.
+> OK, it seems like all I am doing is changing
+>               A jidanni
+>              /
+> D---E---F---G master
+> into the same thing, a noop. But shouldn't it warn and quit, instead
+> of rewarding me with the success message?
+
+You asked for an interactive rebase of the range master..jidanni,
+which consists of A, so it gave you an editor offering 'pick A' and
+the chance to change that.
+
+Non-interactive rebase indeed checks if you attempt to rebase, but are
+already up to date.  Interactive doesn't; the assumption is that
+interactive rebases aren't used "blindly" to update.  (Rebasing
+changes committer and commit time, so there is a difference between
+not rebasing at all, and merely ending up with the same history.)
+
+> Let's try it the other way
+> around:
+> $ git checkout master
+> $ git rebase --interactive jidanni #Wherein one sees:
+> noop
+> # Rebase 07aef4a..3ad166e onto 07aef4a
+> Successfully rebased and updated refs/heads/master.
+> OK, now I have achieved
+> D---E---F---G---A master, jidanni
+> Observations:
+> When I tried a noop, it didn't say noop in the editor.
+> When I tried a yesop, it did say noop in the editor.
+
+The 'noop' means that there are no commits in the range you asked to
+rebase, which is jidanni..master.  It's telling you that it is going
+to update the branch pointer, but not carry over any of the commits.
+This can happen even if jidanni..master is nonempty, but all commits
+in it are already contained in jidanni.
+
+> In both cases it gave the same success message.
+
+It successfully did what you told it to do.
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
 
+--nextPart3988730.UvYqhVsf67
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-On Wed, 7 Jan 2009, Linus Torvalds wrote:
-> 
-> And dobody else saw it than this one person, and it was a total mystery to 
-> everybody until we realized that he used this one feature that nobody else 
-> was using. So as you're on OS X, I assume you don't have CRLF conversion, 
-> but maybe you use some other feature that we support but nobody really 
-> actually uses. Like keyword expansion or something?
-> 
-> Oh - that would also explain why you got all those entries in "git status" 
-> that went away when you did a "git reset --hard": if you had some keyword 
-> expansion (or CRLF) enabled in the original users "~/.gitconfig", that 
-> checkout would have had expansion/CRLF/whatever conversion, but then when 
-> you tarred/untarred it on another setup, the expansion would be seen as a 
-> difference because it wasn't enabled.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-Btw, if you untar it again, and just do a "git diff", that should show any 
-such effects. Rather than showing just that something changed, it should 
-show _how_ it changed.
+iEYEABECAAYFAklk2NgACgkQqUud07tmzP2k5QCggZkdFqZsWULtpLJ6We09zj7x
+E4kAnj0ua783dAztMgqoFA/PdLEt/KyH
+=/pLD
+-----END PGP SIGNATURE-----
 
-		Linus
+--nextPart3988730.UvYqhVsf67--
