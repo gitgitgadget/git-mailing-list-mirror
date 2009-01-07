@@ -1,96 +1,240 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH 1/3] refs: add a "for_each_replace_ref" function
-Date: Wed, 7 Jan 2009 08:43:07 +0100
-Message-ID: <20090107084307.21100bb5.chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 2/3] replace_object: add mechanism to replace objects
+ found in "refs/replace/"
+Date: Wed, 7 Jan 2009 08:43:41 +0100
+Message-ID: <20090107084341.1554d8cd.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 07 08:43:46 2009
+X-From: git-owner@vger.kernel.org Wed Jan 07 08:44:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKT4r-00006x-49
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 08:43:45 +0100
+	id 1LKT5P-0000En-Ru
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 08:44:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751707AbZAGHmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 02:42:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751681AbZAGHmW
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 02:42:22 -0500
-Received: from smtp4-g21.free.fr ([212.27.42.4]:59191 "EHLO smtp4-g21.free.fr"
+	id S1751783AbZAGHm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 02:42:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbZAGHm4
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 02:42:56 -0500
+Received: from smtp6-g21.free.fr ([212.27.42.6]:47322 "EHLO smtp6-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751661AbZAGHmV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 02:42:21 -0500
-Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 04F964C812B;
-	Wed,  7 Jan 2009 08:42:14 +0100 (CET)
+	id S1751767AbZAGHmz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 02:42:55 -0500
+Received: from smtp6-g21.free.fr (localhost [127.0.0.1])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id BFCCCE08114;
+	Wed,  7 Jan 2009 08:42:48 +0100 (CET)
 Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g21.free.fr (Postfix) with SMTP id C4F8D4C8177;
-	Wed,  7 Jan 2009 08:42:11 +0100 (CET)
+	by smtp6-g21.free.fr (Postfix) with SMTP id BA581E08048;
+	Wed,  7 Jan 2009 08:42:45 +0100 (CET)
 X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104771>
 
-This is some preparation work for the following patches that are using
-the "refs/replace/" ref namespace.
+The code of this mechanism has been copied from the commit graft code.
+
+Currently this mechanism is only used from the "parse_commit_buffer"
+function in "commit.c". It should probably be used from "fsck.c" too.
+
+(For information, grafts are looked up only from "parse_commit_buffer"
+function in "commit.c" and from "fsck_commit" in "fsck.c".)
+
+In "parse_commit_buffer", the parent sha1s from the original commit
+or from a commit graft that match a ref name in "refs/replace/" are
+replaced by the commit sha1 that has been read in the ref.
+
+This means that for example "git show <original commit sha1>" will
+display information about the original commit. If the mechanism
+had been called from "read_sha1_file" instead of when parents
+are read, then "git show <original commit sha1>" would display
+information about the commit that replaces the original one.
+This may be seen as a feature or as a bug depending on the point
+of view.
+
+Anyway this implementation makes sure that the mechanism is
+triggered only when commit graft could be triggered, so hopefully the
+object reachability traverser will ignore this mechanism as it
+ignores the graft mechanism.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- refs.c |    5 +++++
- refs.h |    1 +
- 2 files changed, 6 insertions(+), 0 deletions(-)
+ Makefile         |    1 +
+ commit.c         |    7 +++-
+ commit.h         |    2 +
+ replace_object.c |  102 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 110 insertions(+), 2 deletions(-)
+ create mode 100644 replace_object.c
 
-	Junio wrote:
-
-	> What I thought we
-	> discussed during GitTogether was to write out the object name of the
-	> replacement object in refs/replace/<sha1>.
-	>
-	> When the caller asks read_sha1_file() for an object whose object name is
-	> <sha1>, you see if there is refs/replace/<sha1> in the repository, and
-	> read the ref to learn the object name of the object that replaces it. 
-	> And you return that as if it is the original object.
-	
-	Patch 2/3 in this series implements the new mechanism. As you can see I
-	prefered it to be called when reading parent commits than from
-	"read_sha1_file", because it seems to simplify things. I hope you still like
-	it.
-
-	Regards,
-	Christian.
-
-diff --git a/refs.c b/refs.c
-index 33ced65..042106d 100644
---- a/refs.c
-+++ b/refs.c
-@@ -632,6 +632,11 @@ int for_each_remote_ref(each_ref_fn fn, void *cb_data)
- 	return do_for_each_ref("refs/remotes/", fn, 13, cb_data);
- }
+diff --git a/Makefile b/Makefile
+index aabf013..f355e63 100644
+--- a/Makefile
++++ b/Makefile
+@@ -471,6 +471,7 @@ LIB_OBJS += read-cache.o
+ LIB_OBJS += reflog-walk.o
+ LIB_OBJS += refs.o
+ LIB_OBJS += remote.o
++LIB_OBJS += replace_object.o
+ LIB_OBJS += rerere.o
+ LIB_OBJS += revision.o
+ LIB_OBJS += run-command.o
+diff --git a/commit.c b/commit.c
+index c99db16..0014174 100644
+--- a/commit.c
++++ b/commit.c
+@@ -241,6 +241,7 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
+ 	char *tail = buffer;
+ 	char *bufptr = buffer;
+ 	unsigned char parent[20];
++	const unsigned char *parent_sha1;
+ 	struct commit_list **pptr;
+ 	struct commit_graft *graft;
  
-+int for_each_replace_ref(each_ref_fn fn, void *cb_data)
+@@ -268,7 +269,8 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
+ 		bufptr += 48;
+ 		if (graft)
+ 			continue;
+-		new_parent = lookup_commit(parent);
++		parent_sha1 = lookup_replace_object(parent);
++		new_parent = lookup_commit(parent_sha1);
+ 		if (new_parent)
+ 			pptr = &commit_list_insert(new_parent, pptr)->next;
+ 	}
+@@ -276,7 +278,8 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
+ 		int i;
+ 		struct commit *new_parent;
+ 		for (i = 0; i < graft->nr_parent; i++) {
+-			new_parent = lookup_commit(graft->parent[i]);
++			parent_sha1 = lookup_replace_object(graft->parent[i]);
++			new_parent = lookup_commit(parent_sha1);
+ 			if (!new_parent)
+ 				continue;
+ 			pptr = &commit_list_insert(new_parent, pptr)->next;
+diff --git a/commit.h b/commit.h
+index 3a7b06a..37aa763 100644
+--- a/commit.h
++++ b/commit.h
+@@ -122,6 +122,8 @@ struct commit_graft *read_graft_line(char *buf, int len);
+ int register_commit_graft(struct commit_graft *, int);
+ struct commit_graft *lookup_commit_graft(const unsigned char *sha1);
+ 
++const unsigned char *lookup_replace_object(const unsigned char *sha1);
++
+ extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2, int cleanup);
+ extern struct commit_list *get_merge_bases_many(struct commit *one, int n, struct commit **twos, int cleanup);
+ extern struct commit_list *get_octopus_merge_bases(struct commit_list *in);
+diff --git a/replace_object.c b/replace_object.c
+new file mode 100644
+index 0000000..b50890d
+--- /dev/null
++++ b/replace_object.c
+@@ -0,0 +1,102 @@
++#include "cache.h"
++#include "refs.h"
++
++static struct replace_object {
++	unsigned char sha1[2][20];
++} **replace_object;
++
++static int replace_object_alloc, replace_object_nr;
++
++static int replace_object_pos(const unsigned char *sha1)
 +{
-+	return do_for_each_ref("refs/replace/", fn, 13, cb_data);
++	int lo, hi;
++	lo = 0;
++	hi = replace_object_nr;
++	while (lo < hi) {
++		int mi = (lo + hi) / 2;
++		struct replace_object *rep = replace_object[mi];
++		int cmp = hashcmp(sha1, rep->sha1[0]);
++		if (!cmp)
++			return mi;
++		if (cmp < 0)
++			hi = mi;
++		else
++			lo = mi + 1;
++	}
++	return -lo - 1;
 +}
 +
- /*
-  * Make sure "ref" is something reasonable to have under ".git/refs/";
-  * We do not like it if:
-diff --git a/refs.h b/refs.h
-index 06ad260..8d2ee5a 100644
---- a/refs.h
-+++ b/refs.h
-@@ -23,6 +23,7 @@ extern int for_each_ref(each_ref_fn, void *);
- extern int for_each_tag_ref(each_ref_fn, void *);
- extern int for_each_branch_ref(each_ref_fn, void *);
- extern int for_each_remote_ref(each_ref_fn, void *);
-+extern int for_each_replace_ref(each_ref_fn, void *);
- 
- /*
-  * Extra refs will be listed by for_each_ref() before any actual refs
++static int register_replace_object(struct replace_object *replace,
++				   int ignore_dups)
++{
++	int pos = replace_object_pos(replace->sha1[0]);
++
++	if (0 <= pos) {
++		if (ignore_dups)
++			free(replace);
++		else {
++			free(replace_object[pos]);
++			replace_object[pos] = replace;
++		}
++		return 1;
++	}
++	pos = -pos - 1;
++	if (replace_object_alloc <= ++replace_object_nr) {
++		replace_object_alloc = alloc_nr(replace_object_alloc);
++		replace_object = xrealloc(replace_object,
++					  sizeof(*replace_object) *
++					  replace_object_alloc);
++	}
++	if (pos < replace_object_nr)
++		memmove(replace_object + pos + 1,
++			replace_object + pos,
++			(replace_object_nr - pos - 1) *
++			sizeof(*replace_object));
++	replace_object[pos] = replace;
++	return 0;
++}
++
++static int register_replace_ref(const char *refname,
++				const unsigned char *sha1,
++				int flag, void *cb_data)
++{
++	/* Get sha1 from refname */
++	const char *slash = strrchr(refname, '/');
++	const char *hash = slash ? slash + 1 : refname;
++	struct replace_object * repl_obj = xmalloc(sizeof(*repl_obj));
++
++	if (strlen(hash) != 40 || get_sha1_hex(hash, repl_obj->sha1[0])) {
++		free(repl_obj);
++		warning("bad replace ref name: %s", refname);
++	}
++
++	/* Copy sha1 from the read ref */
++	hashcpy(repl_obj->sha1[1], sha1);
++
++	/* Register new object */
++	if (register_replace_object(repl_obj, 1))
++		warning("duplicate replace ref: %s", refname);
++
++	return 0;
++}
++
++static void prepare_replace_object(void)
++{
++	static int replace_object_prepared;
++
++	if (replace_object_prepared)
++		return;
++
++	for_each_replace_ref(register_replace_ref, NULL);
++	replace_object_prepared = 1;
++}
++
++const unsigned char *lookup_replace_object(const unsigned char *sha1)
++{
++	int pos;
++
++	prepare_replace_object();
++	pos = replace_object_pos(sha1);
++
++	return (0 <= pos) ? replace_object[pos]->sha1[1] : sha1;
++}
 -- 
 1.6.1.162.g1cd53
