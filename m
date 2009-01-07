@@ -1,104 +1,138 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: Error: unable to unlink ... when using "git gc"
-Date: Wed, 7 Jan 2009 00:27:17 -0600
-Message-ID: <200901070027.21721.bss@iguanasuicide.net>
-References: <488807870901052300y57f59b90rdc03cc47c790b416@mail.gmail.com> <20090106080300.GA10079@coredump.intra.peff.net> <slrngm6hoj.n4a.sitaramc@sitaramc.homelinux.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Comments on Presentation Notes Request.
+Date: Wed, 7 Jan 2009 01:36:29 -0500
+Message-ID: <20090107063629.GB22616@coredump.intra.peff.net>
+References: <c115fd3c0901061433i78bf3b26v77e5981aada6728e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3770615.AuIvVuBkf7";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Sitaram Chamarty <sitaramc@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 07 07:28:57 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 07 07:37:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKRuS-000118-Bb
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 07:28:56 +0100
+	id 1LKS36-0002tN-Pd
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 07:37:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752223AbZAGG10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 01:27:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751992AbZAGG10
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 01:27:26 -0500
-Received: from eastrmmtao107.cox.net ([68.230.240.59]:40870 "EHLO
-	eastrmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752049AbZAGG1Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 01:27:24 -0500
-Received: from eastrmimpo01.cox.net ([68.1.16.119])
-          by eastrmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090107062722.GNFG23750.eastrmmtao107.cox.net@eastrmimpo01.cox.net>;
-          Wed, 7 Jan 2009 01:27:22 -0500
-Received: from localhost ([72.204.50.125])
-	by eastrmimpo01.cox.net with bizsmtp
-	id 0WTN1b0062i4SyG02WTPXS; Wed, 07 Jan 2009 01:27:23 -0500
-X-Authority-Analysis: v=1.0 c=1 a=XIUFG8x78GMA:10 a=1ZNW-1C8qG0A:10
- a=Fq1VQ0LPAAAA:8 a=H8jIwcHr2qg9GC8OD8YA:9 a=4TeyOto9yEML7lAqsX_hlz2KKrMA:4
- a=MSl-tDqOz04A:10 a=OdWmie4EkE0A:10 a=T3brmoaXcPoA:10 a=LY0hPdMaydYA:10
- a=KxFS3G6h0a6gpthevgkA:9 a=ETjjfQBXTTeoxNCwMLZLm1GIDsYA:4 a=rPt6xJ-oxjAA:10
-X-CM-Score: 0.00
-Received: from bss by localhost with local (Exim 4.69)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LKRsw-000P22-0X; Wed, 07 Jan 2009 00:27:22 -0600
-User-Agent: KMail/1.9.9
-In-Reply-To: <slrngm6hoj.n4a.sitaramc@sitaramc.homelinux.net>
-X-Eric-Conspiracy: There is no conspiracy
+	id S1754603AbZAGGgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 01:36:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754184AbZAGGgc
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 01:36:32 -0500
+Received: from peff.net ([208.65.91.99]:49734 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753520AbZAGGgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 01:36:31 -0500
+Received: (qmail 12912 invoked by uid 107); 7 Jan 2009 06:37:01 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 07 Jan 2009 01:37:01 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Jan 2009 01:36:29 -0500
+Content-Disposition: inline
+In-Reply-To: <c115fd3c0901061433i78bf3b26v77e5981aada6728e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104763>
 
---nextPart3770615.AuIvVuBkf7
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Tue, Jan 06, 2009 at 05:33:02PM -0500, Tim Visher wrote:
 
-On Tuesday 06 January 2009, Sitaram Chamarty <sitaramc@gmail.com> wrote=20
-about 'Re: Error: unable to unlink ... when using "git gc"':
->On 2009-01-06, Jeff King <peff@peff.net> wrote:
->> If you are going to have multiple users sharing a repository, generally
->> they should be in the same group and the core.sharedrepository config
->> option should be set (see "git help config", or the "shared" option to
->> git-init).
->If you're not worried about the finer-grained access control
->that acl(5) gives you, just do what "git init
->--shared=3Dgroup" does:
+> ** Advantages of SCM
+> *** One Source to Rule Them All.
+> *** Unlimited Undo/Redo.
+> *** Safe Concurrent Editing.
+> *** Diff Debugging
+
+I would add to this metadata and "software archeology": finding the
+author of a change or piece of code, the motivation behind it, related
+changes (by position within history, by content, or by commit message),
+etc.
+
+I think people who have not used an SCM before, and people coming from
+SCMs where it is painful to look at history (like CVS) undervalue this
+because it's not part of their workflow.  But having used git for a few
+years now, it is an integral part of how I develop (especially when
+doing maintenance or bugfixes).
+
+You touch on this in "Diff Debugging", but I think bisection is just a
+part of it.
+
+> * SCM Best Practices
 >
->    git config core.sharedrepository 1 # as mentioned above
->    chmod g+ws .git
->
->Now set the group to something (I use "gitpushers" ;-)
->
->    chgrp -R gitpushers .git
->
->amd make sure all your users are part of that group.
->
->Works fine for small teams...
+> ** Commit Early, Commit Often
+> ** Don't Commit Broken Code (To the Public Tree)
 
-ISTR this breaking here when someone on the team had a umask like 077 and=20
-was using file:// or ssh:// to push.  I tended up "fixing" things with a=20
-cronjob, (which is a bit of a hack) IIRC.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+People talk a lot about using their SCM on a plane, but I think these
+two seemingly opposite commands highlight the _real_ useful thing about
+a distributed system for most people: commit and publish are two
+separate actions.
 
---nextPart3770615.AuIvVuBkf7
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+So I think it might be better to say "Commit Early, Commit Often" but
+"Don't _Publish_ Broken Code". Which is what you end up saying in the
+discussion, but I think using that terminology makes clear the important
+distinction between two actions that are convoluted in centralized
+systems.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+> *** Backup Becomes A Separate Process
+> Because there is only a single repository, you need a back-up strategy
+> or else you are exposing yourself to a single point of failure.
+> [...]
+> *** Natural Backup
+> Because every developer has a copy of the repository, every developer
+> you add adds an extra failure point.  The more developers you have,
+> the more backups you have of the repository.
 
-iEYEABECAAYFAklkS0UACgkQ55pqL7G1QFnQbQCdF78OcB26WE/Ir+Zk8A0ZwneG
-miEAnRBR0+40RsAcT49nSUqJxi0HGAPN
-=Glcb
------END PGP SIGNATURE-----
+The "natural backup" thing gets brought out a lot for DVCS. And it is
+sort of true: instead of each developer having a backup of the latest
+version (or some recent version which they checked out), they have a
+backup of the whole history. But they still might not have everything.
+Developers might not clone all branches. They might not be up to date
+with some "master" repository. Useful work might be unpublished in the
+master repo (e.g., I am working on feature X which is 99% complete, but
+not ready for me to merge into master and push).
 
---nextPart3770615.AuIvVuBkf7--
+So yes, you are much more likely to salvage useful (if not all) data
+from developer repositories in the event of a crash. But I still think
+it's crazy not to have a backup strategy for your DVCS repo.
+
+> ** Fast
+> 
+> Git's implementation just happens to be wickedly fast.  It's faster
+> than mercurial, it's faster than bazaar, etc.  Everything, committing,
+> merging, viewing history, branching, and even updating and and pushing
+> are all faster.
+
+A lot of people say "So what? System X is fast enough for me already."
+And I used to be one of them. But one point I have made in similar talks
+is that it isn't just about shaving a few seconds off your task. It's
+about being able to ask fundamentally different questions because they
+can be answered in seconds, not minutes or hours. I haven't benchmarked,
+but I shudder at the thought of pickaxe (git log -S), code movement in
+blame, or bisecting in CVS.
+
+> ** Excellent Merge algorithms
+> 
+> Git has excellent merge algorithms.  This is widely attributed and
+> doesn't require much explanation.  It was one of Git's original design
+> goals, and it has been proven by Git's implementation.  Merging in Git
+> is _much_ less painful than in other systems.
+
+Actually, git has a really _stupid_ merge algorithm that has been around
+forever: the 3-way merge. And by stupid I don't mean bad, but just
+simple and predictable. I think the git philosophy is more about making
+it easy to merge often, and about making sure conflicts are simple to
+understand and fix, than it is about being clever.
+
+Which isn't to say there aren't systems with less clever merge
+algorithms. CVS doesn't even do a 3-way merge, since it doesn't bother
+to remember where the last branch intersection was.
+
+BTW, I think Junio's 2006 OLS talk has some nice pictures of a 3-way
+merge which help to explain it (see slides 23-32):
+
+  http://members.cox.net/junkio/200607-ols.pdf
+
+
+That's just my two cents from skimming over your notes. Hope it helps.
+
+-Peff
