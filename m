@@ -1,408 +1,297 @@
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Re: [PATCH (topgit) 1/2] Implement setup_pager just like in git
-Date: Thu, 8 Jan 2009 01:00:27 +0300
-Organization: St.Petersburg State University
-Message-ID: <20090107220027.GA4946@roro3>
-References: <20090107144432.GC831@artemis.corp> <cover.1231254832.git.kirr@landau.phys.spbu.ru> <acaae74f79d385014e726b97f8258b2a0caa3dd0.1231254832.git.kirr@landau.phys.spbu.ru> <20090106203203.GA11274@lapse.rw.madduck.net> <20090107112754.GA15158@roro3> <36ca99e90901070624p2c102f3ey392ef813db9f9187@mail.gmail.com> <cover.1231254832.git.kirr@landau.phys.spbu.ru> <20090106203203.GA11274@lapse.rw.madduck.net> <20090107112754.GA15158@roro3> <200901071324.57222.trast@student.ethz.ch>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
+Date: Wed, 7 Jan 2009 23:00:07 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901072213570.7496@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <20081104004001.GB29458@artemis.corp>
+ <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de> <20081104083042.GB3788@artemis.corp> <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de>
+ <20090106111712.GB30766@artemis.corp> <alpine.DEB.1.00.0901062037250.30769@pacific.mpi-cbg.de> <1231359317.6011.12.camel@maia.lan> <alpine.DEB.1.00.0901072121260.7496@intel-tinevez-2-302> <7v63kqall2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: martin f krafft <madduck@madduck.net>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>,
-	Bert Wesarg <bert.wesarg@googlemail.com>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Jan 07 23:00:54 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Vilain <sam@vilain.net>, Pierre Habouzit <madcoder@debian.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	davidel@xmailserver.org, Francis Galiegue <fg@one2team.net>,
+	Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 07 23:02:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKgSE-0008AQ-An
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 23:00:47 +0100
+	id 1LKgT5-00006h-34
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 23:01:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755430AbZAGV7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 16:59:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755034AbZAGV7R
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 16:59:17 -0500
-Received: from landau.phys.spbu.ru ([195.19.235.38]:1316 "EHLO
-	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753787AbZAGV7P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 16:59:15 -0500
-Received: by landau.phys.spbu.ru (Postfix, from userid 509)
-	id 1AD0317B65E; Thu,  8 Jan 2009 00:59:12 +0300 (MSK)
-Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
-	(envelope-from <kirr@roro3>)
-	id 1LKgRv-0002Mv-Up; Thu, 08 Jan 2009 01:00:27 +0300
-Content-Disposition: inline
-In-Reply-To: <20090107151000.GR12275@machine.or.cz> <20090107144432.GC831@artemis.corp> <36ca99e90901070624p2c102f3ey392ef813db9f9187@mail.gmail.com> <200901071324.57222.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1761835AbZAGWAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 17:00:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760933AbZAGWAQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 17:00:16 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47912 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758293AbZAGWAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 17:00:11 -0500
+Received: (qmail invoked by alias); 07 Jan 2009 22:00:09 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp032) with SMTP; 07 Jan 2009 23:00:09 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18kYkpNnBEk1iz+wdiug674ty279dimjb+gArsspA
+	armwyXVIK3K5VQ
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <7v63kqall2.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.41
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104838>
 
-On Wed, Jan 07, 2009 at 01:24:44PM +0100, Thomas Rast wrote:
-> Kirill Smelkov wrote:
-> > On Tue, Jan 06, 2009 at 09:32:03PM +0100, martin f krafft wrote:
-> > > I find this very confusing. Why not simply
-> > > 
-> > >   TG_PAGER="${GIT_PAGER:-}"
-> > >   TG_PAGER="${TG_PAGER:-$PAGER}"
-> > > 
-> > > ?
-> > 
-> > I find it confusing too, but this is needed because they usually do
-> > something like this
-> > 
-> >     $ GIT_PAGER='' <some-git-command>
-> > 
-> > to force it to be pagerless.
-> [...]
-> > So I think it would be better to preserve the same semantics for `tg
-> > patch` callers, though it's a pity that it's hard (maybe I'm wrong ?) to
-> > see whether an env var is unset.
+Hi,
+
+On Wed, 7 Jan 2009, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Admittedly I haven't really studied your patch, but the ${} constructs
-> can in fact tell empty from unset:
+> > After compiling and installing, something like this should be fun to 
+> > watch:
+> >
+> > 	$ git rev-list --all --parents | \
+> > 	  grep " .* " | \
+> > 	  while read commit parent1 parent2 otherparents
+> > 	  do
+> > 		test -z "$otherparents" || continue
+> > 		git checkout $parent1 &&
+> > 		git merge $parent2 &&
+> > 		git diff > without-patience.txt &&
+> > ...
+> > 		if ! cmp without-patience.txt with-patience.txt
+> > 		then
+> > 			echo '==============================='
+> > 			echo "differences found in merge $commit"
+> > ...
+> > 			cat with-patience.txt
+> > 		fi ||
+> > 		exit
+> > 	  done | tee patience-merge.out
 > 
->   $ EMPTY=
->   $ unset UNDEFINED
->   $ echo ${UNDEFINED-foo}
->   foo
->   $ echo ${UNDEFINED:-foo}
->   foo
->   $ echo ${EMPTY-foo}
+> An even more interesting test would be possible by dropping "&&" from the
+> two "git merge" invocations.
 > 
->   $ echo ${EMPTY:-foo}
->   foo
+>  - Your sample will exit at the first conflicting merge otherwise.
 > 
-> 'man bash' indeed says
-> 
->   When not performing substring expansion, bash tests for a parameter
->   that is unset or null; omitting the colon results in a test only for
->   a parameter that is unset.
-> 
-> So I suppose you could use
-> 
->   ${GIT_PAGER-${PAGER-less}}
-> 
-> or similar.
+>  - You may find cases where one resolves cleanly while the other leaves
+>    conflicts.
 
-Good eyes, thanks!
+Yeah, that's why I always put "like" into that phrase "something like 
+this"... :-)
 
-I'll rework it.
+Actually, I had to read something and did not want my box to sit idle 
+while I was doing that, so...
 
+The most interesting thing to me was: of the 4072 merges I have in my 
+local git.git clone, only 66 show a difference.
 
-On Wed, Jan 07, 2009 at 03:24:02PM +0100, Bert Wesarg wrote:
-> On Wed, Jan 7, 2009 at 12:27, Kirill Smelkov <kirr@landau.phys.spbu.ru> wrote:
-> > Martin, thanks for your review.
-> > +       # atexit(close(1); wait pager)
-> > +       trap "exec >&-; rm "$_pager_fifo"; rmdir "$_pager_fifo_dir"; wait" EXIT
-> I think you need to escape the double quotes.
+The next interesting thing: none -- I repeat, none! -- resulted in only 
+one of both methods having conflicts.  In all cases, if patience merge had 
+conflicts, so had the classical merge, and vice versa.  I would have 
+expected patience merge to handle some conflicts more gracefully.
 
-Good eyes -- corrected and thanks!
+So let's go on to the next metric: what are the differences in the --cc 
+diffs' line counts?
 
+On average, patience merge produced 1.03225806451613 more lines of --cc 
+diff, and the standard deviation between the line counts is 
+42.9823669772587.
 
-On Wed, Jan 07, 2009 at 04:10:00PM +0100, Petr Baudis wrote:
-> On Wed, Jan 07, 2009 at 02:27:54PM +0300, Kirill Smelkov wrote:
-> > >From 2193b7c703c2d31c8739eec617b8c0e8c1d09b79 Mon Sep 17 00:00:00 2001
-> > From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-> > Date: Tue, 6 Jan 2009 17:56:37 +0300
-> > Subject: [PATCH (topgit) v2] Implement setup_pager just like in git
-> > 
-> > setup_pager() spawns a pager process and redirect the rest of our output
-> > to it.
-> > 
-> > This will be needed to fix `tg patch` output in the next commit.
-> > 
-> > Signed-off-by: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-> 
-> But you never use it...?
+So from the line counts' point of view, the difference is lost in the 
+noise.
 
-What do you mean?
+So let's look at a concrete example.  I take 
+41a3e3aa9bdaede9ab7afed206428c1b071060d2, as it is one of the three merges 
+with minimal --cc diff line counts (they all have 33 lines) and where 
+patience merge makes a difference.
 
-It is used in the next patch as posted in original series:
+This is the --cc diff without patience merge:
 
-http://marc.info/?l=git&m=123125495000600&w=2
+-- snip --
+diff --cc git-am.sh
+index a391254,5a7695e..0000000
+--- a/git-am.sh
++++ b/git-am.sh
+@@@ -327,11 -327,20 +327,28 @@@ d
+  			echo "Patch is empty.  Was it split wrong?"
+  			stop_here $this
+  		}
+++<<<<<<< HEAD:git-am.sh
+ +		SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
+ +		case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
+ +
+ +		(printf '%s\n\n' "$SUBJECT"; cat "$dotest/msg") |
+ +			git stripspace > "$dotest/msg-clean"
+++=======
++ 		if test -f "$dotest/rebasing" &&
++ 			commit=$(sed -e 's/^From \([0-9a-f]*\) .*/\1/' \
++ 				-e q "$dotest/$msgnum") &&
++ 			test "$(git cat-file -t "$commit")" = commit
++ 		then
++ 			git cat-file commit "$commit" |
++ 			sed -e '1,/^$/d' >"$dotest/msg-clean"
++ 		else
++ 			SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
++ 			case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
++ 
++ 			(echo "$SUBJECT" ; echo ; cat "$dotest/msg") |
++ 				git stripspace > "$dotest/msg-clean"
++ 		fi
+++>>>>>>> 5e835cac8622373724235d299f1331ac4cf81ccf:git-am.sh
+  		;;
+  	esac
+  
+-- snap --
 
-For completeness, I'll include both patches in this email.
+Compare this with the --cc diff _with_ patience merge:
 
-> > ---
-> >  tg.sh |   54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> >  1 files changed, 54 insertions(+), 0 deletions(-)
-> > 
-> > diff --git a/tg.sh b/tg.sh
-> > index 8c23d26..bf9cf5c 100644
-> > --- a/tg.sh
-> > +++ b/tg.sh
-> > @@ -243,6 +243,60 @@ do_help()
-> >  	fi
-> >  }
-> >  
-> > +## Pager stuff
-> > +
-> > +# isatty FD
-> > +isatty()
-> > +{
-> > +	tty -s 0<&$1
-> > +}
-> > +
-> > +# setup_pager
-> > +# Spawn pager process and redirect the rest of our output to it
-> > +setup_pager()
-> > +{
-> > +	isatty 1 || return 0
-> > +
-> > +	# TG_PAGER = GIT_PAGER | PAGER
-> > +	# (but differentiate between GIT_PAGER='' and unset variables)
-> > +	# http://unix.derkeiler.com/Newsgroups/comp.unix.shell/2004-03/0792.html
-> > +	case ${GIT_PAGER+XXX} in
-> > +	'')
-> > +		case ${PAGER+XXX} in
-> > +		'')
-> 
-> I'm pretty sure there's been a nice trick for this, but I can't remember
-> it at all now.
+-- snip --
+diff --cc git-am.sh
+index a391254,5a7695e..0000000
+--- a/git-am.sh
++++ b/git-am.sh
+@@@ -327,11 -327,20 +327,25 @@@ d
+  			echo "Patch is empty.  Was it split wrong?"
+  			stop_here $this
+  		}
+- 		SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
+- 		case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
+- 
++ 		if test -f "$dotest/rebasing" &&
++ 			commit=$(sed -e 's/^From \([0-9a-f]*\) .*/\1/' \
++ 				-e q "$dotest/$msgnum") &&
++ 			test "$(git cat-file -t "$commit")" = commit
++ 		then
++ 			git cat-file commit "$commit" |
++ 			sed -e '1,/^$/d' >"$dotest/msg-clean"
++ 		else
++ 			SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
++ 			case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
++ 
+++<<<<<<< HEAD:git-am.sh
+ +		(printf '%s\n\n' "$SUBJECT"; cat "$dotest/msg") |
+ +			git stripspace > "$dotest/msg-clean"
+++=======
++ 			(echo "$SUBJECT" ; echo ; cat "$dotest/msg") |
++ 				git stripspace > "$dotest/msg-clean"
++ 		fi
+++>>>>>>> 5e835cac8622373724235d299f1331ac4cf81ccf:git-am.sh
+  		;;
+  	esac
+  
+-- snap --
 
-Already corrected to ${GIT_PAGER-${PAGER-less}}, thanks to Thomas.
+So, the patience merge resulted in a much smaller _conflict_.
 
-> > +			# both GIT_PAGER & PAGER unset
-> > +			TG_PAGER=''
-> > +			;;
-> > +		*)
-> > +			TG_PAGER="$PAGER"
-> > +			;;
-> > +		esac
-> > +		;;
-> > +	*)
-> > +		TG_PAGER="$GIT_PAGER"
-> > +		;;
-> > +	esac
-> > +
-> > +	[ -z "$TG_PAGER"  -o  "$TG_PAGER" = "cat" ]  && return 0
-> > +
-> > +
-> > +	# now spawn pager
-> > +	export LESS=${LESS:-FRSX}	# as in pager.c:pager_preexec()
-> > +
-> > +	_pager_fifo_dir="$(mktemp -t -d tg-pager-fifo.XXXXXX)"
-> > +	_pager_fifo="$_pager_fifo_dir/0"
-> > +	mkfifo -m 600 "$_pager_fifo"
-> > +
-> > +	"$TG_PAGER" < "$_pager_fifo" &
-> > +	exec > "$_pager_fifo"		# dup2(pager_fifo.in, 1)
-> > +
-> > +	# this is needed so e.g. `git diff` will still colorize it's output if
-> > +	# requested in ~/.gitconfig with color.diff=auto
-> > +	export GIT_PAGER_IN_USE=1
-> > +
-> > +	# atexit(close(1); wait pager)
-> > +	trap "exec >&-; rm "$_pager_fifo"; rmdir "$_pager_fifo_dir"; wait" EXIT
-> > +}
-> 
-> Frankly, I would have been just much happier if something like git
-> pager--helper would be provided for external tools to use. Seeing how it
-> gets reimplemented like this just pains me greatly.
+However, another such merge is 276328ffb87cefdc515bee5f09916aea6e0244ed.  
+This is the --cc diff without patience merge:
 
-After we settle on implementation, would it make sense to include this
-setup_pager into git-sh-setup?
+-- snip --
+diff --cc diff.c
+index 4e4e439,f91f256..0000000
+--- a/diff.c
++++ b/diff.c
+@@@ -1498,19 -1464,13 +1498,28 @@@ static void builtin_diff(const char *na
+  	char *a_one, *b_two;
+  	const char *set = diff_get_color_opt(o, DIFF_METAINFO);
+  	const char *reset = diff_get_color_opt(o, DIFF_RESET);
+ +	const char *a_prefix, *b_prefix;
+ +
+ +	diff_set_mnemonic_prefix(o, "a/", "b/");
+ +	if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
+ +		a_prefix = o->b_prefix;
+ +		b_prefix = o->a_prefix;
+ +	} else {
+ +		a_prefix = o->a_prefix;
+ +		b_prefix = o->b_prefix;
+ +	}
+  
+++<<<<<<< HEAD:diff.c
+ +	a_one = quote_two(a_prefix, name_a + (*name_a == '/'));
+ +	b_two = quote_two(b_prefix, name_b + (*name_b == '/'));
+++=======
++ 	/* Never use a non-valid filename anywhere if at all possible */
++ 	name_a = DIFF_FILE_VALID(one) ? name_a : name_b;
++ 	name_b = DIFF_FILE_VALID(two) ? name_b : name_a;
++ 
++ 	a_one = quote_two(o->a_prefix, name_a + (*name_a == '/'));
++ 	b_two = quote_two(o->b_prefix, name_b + (*name_b == '/'));
+++>>>>>>> e261cf94848d31868c21fb11cade51c30dfcdbe7:diff.c
+  	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
+  	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
+  	fprintf(o->file, "%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
+-- snap --
 
-I propose we include this stuff into tg.sh first, so that topgit would
-work correctly with previous versions of git.
+And this is _with_ patience merge:
 
-> On Wed, Jan 07, 2009 at 03:44:32PM +0100, Pierre Habouzit wrote:
-> > On Wed, Jan 07, 2009 at 11:27:54AM +0000, Kirill Smelkov wrote:
-> > > isatty()
-> > > {
-> > > 	tty -s 0<&$1
-> > > }
-> > 
-> > why not test -t 0 ? I'm not sure it's POSIX though.
-> 
-> It's SUS for many issues already it seems.
+-- snip --
+diff --cc diff.c
+index 4e4e439,f91f256..0000000
+--- a/diff.c
++++ b/diff.c
+@@@ -1498,19 -1464,13 +1498,28 @@@ static void builtin_diff(const char *na
+  	char *a_one, *b_two;
+  	const char *set = diff_get_color_opt(o, DIFF_METAINFO);
+  	const char *reset = diff_get_color_opt(o, DIFF_RESET);
+ +	const char *a_prefix, *b_prefix;
+ +
+++<<<<<<< HEAD:diff.c
+ +	diff_set_mnemonic_prefix(o, "a/", "b/");
+ +	if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
+ +		a_prefix = o->b_prefix;
+ +		b_prefix = o->a_prefix;
+ +	} else {
+ +		a_prefix = o->a_prefix;
+ +		b_prefix = o->b_prefix;
+ +	}
+  
+ +	a_one = quote_two(a_prefix, name_a + (*name_a == '/'));
+ +	b_two = quote_two(b_prefix, name_b + (*name_b == '/'));
+++=======
++ 	/* Never use a non-valid filename anywhere if at all possible */
++ 	name_a = DIFF_FILE_VALID(one) ? name_a : name_b;
++ 	name_b = DIFF_FILE_VALID(two) ? name_b : name_a;
++ 
++ 	a_one = quote_two(o->a_prefix, name_a + (*name_a == '/'));
++ 	b_two = quote_two(o->b_prefix, name_b + (*name_b == '/'));
+++>>>>>>> e261cf94848d31868c21fb11cade51c30dfcdbe7:diff.c
+  	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
+  	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
+  	fprintf(o->file, "%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
+-- snap --
 
-Pierre and Petr - thanks for the info. Yes, `test -t $fd` looks better.
+So again, we have no clear winner.
 
+Therefore I counted the lines between conflict markers (actually, a perl 
+script did).  Of these 66 merges, on average patience merge produced 
+4.46774193548387 _fewer_ lines between conflict markers.
 
-Here is improved patch:
+Take that with a grain of salt, though: the standard deviation of this 
+difference is a hefty 121.163046639509 lines.
 
-Changes since v1:
+The worst case for patience diff was the merge 
+4698ef555a1706fe322a68a02a21fb1087940ac3, where the --cc diff line counts 
+are 1300 (without) vs 1301 (with patience merge), but the lines between 
+conflict markers are 197 vs a ridiculous 826 lines!
 
- o Simplify TG_PAGER setup  (thanks to Thomas Rast)
- o Properly escape "        (thanks to Bert Wesarg)
- o Simpler isatty           (thanks to Pierre Habouzit & Petr Baudis)
+But you should take that also with a grain of salt: this merge is a 
+_subtree_ merge, and my test redid it as a _non-subtree_ merge.
 
+So I restricted the analysis to the non-subtree merges, and now 
+non-patience merge comes out 6.97297297297297 conflict lines fewer than 
+patience merge, with a standard deviation of 58.941106657867 (with a total 
+count of 37 merges).
 
-(interdiff)
+Note that ~7 lines difference with a standard deviation of ~59 lines is 
+pretty close to ~0 lines difference.
 
-diff --git a/tg.sh b/tg.sh
-index bf9cf5c..b64fc3a 100644
---- a/tg.sh
-+++ b/tg.sh
-@@ -248,7 +248,7 @@ do_help()
- # isatty FD
- isatty()
- {
--	tty -s 0<&$1
-+	test -t $1
- }
- 
- # setup_pager
-@@ -257,25 +257,9 @@ setup_pager()
- {
- 	isatty 1 || return 0
- 
--	# TG_PAGER = GIT_PAGER | PAGER
--	# (but differentiate between GIT_PAGER='' and unset variables)
--	# http://unix.derkeiler.com/Newsgroups/comp.unix.shell/2004-03/0792.html
--	case ${GIT_PAGER+XXX} in
--	'')
--		case ${PAGER+XXX} in
--		'')
--			# both GIT_PAGER & PAGER unset
--			TG_PAGER=''
--			;;
--		*)
--			TG_PAGER="$PAGER"
--			;;
--		esac
--		;;
--	*)
--		TG_PAGER="$GIT_PAGER"
--		;;
--	esac
-+	# TG_PAGER = GIT_PAGER | PAGER | less
-+	# NOTE: GIT_PAGER='' is significant
-+	TG_PAGER=${GIT_PAGER-${PAGER-less}}
- 
- 	[ -z "$TG_PAGER"  -o  "$TG_PAGER" = "cat" ]  && return 0
- 
-@@ -295,7 +279,7 @@ setup_pager()
- 	export GIT_PAGER_IN_USE=1
- 
- 	# atexit(close(1); wait pager)
--	trap "exec >&-; rm "$_pager_fifo"; rmdir "$_pager_fifo_dir"; wait" EXIT
-+	trap "exec >&-; rm \"$_pager_fifo\"; rmdir \"$_pager_fifo_dir\"; wait" EXIT
- }
- 
- ## Startup
+In the end, the additional expense of patience merge might just not be 
+worth it.
 
-
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-To: Petr Baudis <pasky@suse.cz>
-Cc: Git Mailing List <git@vger.kernel.org>
-Bcc: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Implement setup_pager just like in git
-
-setup_pager() spawns a pager process and redirect the rest of our output
-to it.
-
-This will be needed to fix `tg patch` output in the next commit.
-
-Signed-off-by: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-
----
- tg.sh |   38 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 38 insertions(+), 0 deletions(-)
-
-diff --git a/tg.sh b/tg.sh
-index 8c23d26..b64fc3a 100644
---- a/tg.sh
-+++ b/tg.sh
-@@ -243,6 +243,44 @@ do_help()
- 	fi
- }
- 
-+## Pager stuff
-+
-+# isatty FD
-+isatty()
-+{
-+	test -t $1
-+}
-+
-+# setup_pager
-+# Spawn pager process and redirect the rest of our output to it
-+setup_pager()
-+{
-+	isatty 1 || return 0
-+
-+	# TG_PAGER = GIT_PAGER | PAGER | less
-+	# NOTE: GIT_PAGER='' is significant
-+	TG_PAGER=${GIT_PAGER-${PAGER-less}}
-+
-+	[ -z "$TG_PAGER"  -o  "$TG_PAGER" = "cat" ]  && return 0
-+
-+
-+	# now spawn pager
-+	export LESS=${LESS:-FRSX}	# as in pager.c:pager_preexec()
-+
-+	_pager_fifo_dir="$(mktemp -t -d tg-pager-fifo.XXXXXX)"
-+	_pager_fifo="$_pager_fifo_dir/0"
-+	mkfifo -m 600 "$_pager_fifo"
-+
-+	"$TG_PAGER" < "$_pager_fifo" &
-+	exec > "$_pager_fifo"		# dup2(pager_fifo.in, 1)
-+
-+	# this is needed so e.g. `git diff` will still colorize it's output if
-+	# requested in ~/.gitconfig with color.diff=auto
-+	export GIT_PAGER_IN_USE=1
-+
-+	# atexit(close(1); wait pager)
-+	trap "exec >&-; rm \"$_pager_fifo\"; rmdir \"$_pager_fifo_dir\"; wait" EXIT
-+}
- 
- ## Startup
- 
--- 
-tg: (8c77c34..) t/setup-pager (depends on: master)
-
-
-Second patch which uses setup_pager:
-
-
->From 1b723ebf740c58bc25ac97eff0a31b07373d8d1e Mon Sep 17 00:00:00 2001
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Date: Tue, 6 Jan 2009 18:03:21 +0300
-Subject: [TopGit PATCH] tg-patch: fix pagination
-
-Previously, when I was invoking `tg patch` the following used to happen:
-
-1. .topmsg content was sent directly to _terminal_
-2. for each file in the patch, its diff was generated with `git diff`
-   and sent to *PAGER*
-3. trailing 'tg: ...' was sent to terminal again
-
-So the problem is that while `tg patch >file` works as expected, plain
-`tg patch` does not -- in pager there is only a part of the whole patch
-(first file diff) and header and trailer are ommitted.
-
-I've finally decided to fix this inconvenience, and the way it works is
-like in git -- we just hook `setup_pager` function in commands which
-need to be paginated.
-
-Signed-off-by: Kirill Smelkov <kirr@landau.phys.spbu.ru>
----
- tg-patch.sh |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/tg-patch.sh b/tg-patch.sh
-index a704375..dc699d2 100644
---- a/tg-patch.sh
-+++ b/tg-patch.sh
-@@ -24,6 +24,9 @@ done
- base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" ||
- 	die "not a TopGit-controlled branch"
- 
-+
-+setup_pager
-+
- git cat-file blob "$name:.topmsg"
- echo
- [ -n "$(git grep '^[-]--' "$name" -- ".topmsg")" ] || echo '---'
--- 
-1.6.1.48.ge9b8
-
-
-Thanks,
-Kirill
+Ciao,
+Dscho
