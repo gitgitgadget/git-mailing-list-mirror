@@ -1,68 +1,92 @@
-From: "Vagmi Mudumbai" <vagmi.mudumbai@gmail.com>
-Subject: Re: JGit vs. Git
-Date: Wed, 7 Jan 2009 10:38:10 +0530
-Message-ID: <a55cfe9d0901062108m7c6a5133o59ee955bba3ab018@mail.gmail.com>
-References: <a55cfe9d0901052249v1461c70cp1d89e184cfc05eb9@mail.gmail.com>
-	 <a55cfe9d0901052250k2be203dfvb0b437a523f2cecc@mail.gmail.com>
-	 <alpine.DEB.1.00.0901062240240.30769@pacific.mpi-cbg.de>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] tutorial.txt renamed
+Date: Wed, 7 Jan 2009 06:28:37 +0100
+Message-ID: <200901070628.38019.chriscool@tuxfamily.org>
+References: <20090107042337.GA24735@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 07 06:09:39 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Wed Jan 07 06:29:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKQfh-0003aT-O3
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 06:09:38 +0100
+	id 1LKQyl-0007A8-99
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 06:29:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751681AbZAGFIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 00:08:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751423AbZAGFIN
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 00:08:13 -0500
-Received: from yw-out-2324.google.com ([74.125.46.29]:46102 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751077AbZAGFIM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 00:08:12 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so2608115ywe.1
-        for <git@vger.kernel.org>; Tue, 06 Jan 2009 21:08:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=m2dcAc1QvkLkXhKjR7uVZ4yAhT3QnauRFy3nWMJYRD8=;
-        b=X4hT6MNW0BRv33l8ff4KbiiH4zgipbWSOB9vZaN2Asuc+D7DU7Ni5mrfsRL9WUdgQL
-         zkXdA2mpxlQTk+hyLkEKmdvspngVc6RsbUSKb2qJn9NF1DvgCstKeayhtZiUewlJaTbf
-         snFi0qiE+QHF5s5oES8Mduu9dPYcmy5pOFkb4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=aBTqEq7r9dwuFW8WaxY09J0g4lS53X2tEBjk3tJml24yL1sWzcm+/1kNdbEfhkhnWK
-         MsKtypn7rlxcnyb2vXgbUda80nxlv7v6A14ODzPEnzxw0AiI0E1luxfSB9vdgxxYrL4Z
-         rDJm+EIfUq7wFqVU+unl+PUEOvX2pQg7vwt+I=
-Received: by 10.65.225.17 with SMTP id c17mr16862579qbr.71.1231304890609;
-        Tue, 06 Jan 2009 21:08:10 -0800 (PST)
-Received: by 10.65.230.8 with HTTP; Tue, 6 Jan 2009 21:08:10 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0901062240240.30769@pacific.mpi-cbg.de>
+	id S1752003AbZAGF1z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jan 2009 00:27:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbZAGF1z
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 00:27:55 -0500
+Received: from smtp2-g21.free.fr ([212.27.42.2]:33845 "EHLO smtp2-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751123AbZAGF1y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Jan 2009 00:27:54 -0500
+Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id 69A6E4B0099;
+	Wed,  7 Jan 2009 06:27:46 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id 50B714B0067;
+	Wed,  7 Jan 2009 06:27:43 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090107042337.GA24735@gnu.kitenet.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104758>
 
-SGksCgpAU3RlcGhlbgo+PiBPciB0aGluayBhYm91dCBleHRlbmRpbmcgdGhlIFJ1YnkgZ2VtIGdy
-aXQgdG8gYWxzbyB1c2UgSkdpdC4gIFdoaWNoIHdvdWxkIGNlcnRhaW5seSBpbXByb3ZlIGdyaXQg
-YW5kICBwcm9iYWJseSBoZWxwIGltcHJvdmUgSkdpdCBhbHNvLgpJIGp1c3Qgc3RhcnRlZCB3b3Jr
-aW5nIG9uIHRoYXQuIEl0IHdpbGwgYmUgY2xvc2UgdG8gR3JpdCBsZXQgbWUgc2VlCmhvdyBmYXIg
-SSBnZXQgd2l0aCBpdC4gSWYgeW91IGhhdmUgYW4gZXhpc3RpbmcgcmVwbyB0aGF0IHlvdSBoYXZl
-CmFscmVhZHkgd29ya2VkIG9uLCBwbGVhc2UgZmVlbCBmcmVlIHRvIHNoYXJlIGl0LgoKVGhlIEpH
-aXQgY29kZSBib3RoIHRlc3RzIGFuZCB0aGUgVUkgaXMgcXVpdGUgcmVhZGFibGUuCgpUaGFua3Mg
-YSB0b24gZm9yIGFsbCB5b3VyIGhlbHAuIDotKQoKUmVnYXJkcywKVmFnbWkKCmh0dHA6Ly9ibG9n
-LnZhZ21pbS5jb20KIlRlYWNoaW5nIGNoaWxkcmVuIHRvIHVzZSBXaW5kb3dzIGlzIGxpa2UgdGVh
-Y2hpbmcgdGhlbSB0byBzbW9rZQp0b2JhY2Nv4oCUaW4gYSB3b3JsZCB3aGVyZSBvbmx5IG9uZSBj
-b21wYW55IHNlbGxzIHRvYmFjY28uIiAtIFJpY2hhcmQKU3RhbGxtYW4K
+Le mercredi 7 janvier 2009, Joey Hess a =E9crit :
+> The tutorial.txt file was renamed to gittutorial.txt some time ago,
+> update README.
+>
+> Signed-off-by: Joey Hess <joey@gnu.kitenet.net>
+> ---
+>  README |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/README b/README
+> index 548142c..5fa41b7 100644
+> --- a/README
+> +++ b/README
+> @@ -24,7 +24,7 @@ It was originally written by Linus Torvalds with he=
+lp
+> of a group of hackers around the net. It is currently maintained by J=
+unio
+> C Hamano.
+>
+>  Please read the file INSTALL for installation instructions.
+> -See Documentation/tutorial.txt to get started, then see
+> +See Documentation/gittutorial.txt to get started,=20
+
+"man gittutorial" and "git help tutorial" should work to display the=20
+tutorial, so perhaps we should advise to use them instead of the source=
+,=20
+since we are advising to use "man git-commandname" below to get help on=
+=20
+each command.
+
+> then see=20
+>  Documentation/everyday.txt for a useful minimum set of commands,
+
+(But the everyday.txt file has not been converted to a man page, so we=20
+cannot advise to use "man giteveryday".)
+
+>  and "man git-commandname" for documentation of each command.
+
+Yeah "man git-commandname" and "git help commandname" should work.
+
+>  CVS users may also want to read Documentation/cvs-migration.txt.
+
+The "cvs-migration.txt" was also renamed "gitcvs-migration.txt". It sho=
+uld=20
+be available with "man gitcvs-migration" and "git help cvs-migration".
+
+Thanks,
+Christian.
+
+> --
+> 1.5.6.5
