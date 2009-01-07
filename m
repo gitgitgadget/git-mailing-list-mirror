@@ -1,94 +1,116 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] gitweb: support the rel=vcs microformat
-Date: Wed, 7 Jan 2009 19:03:04 +0100
-Message-ID: <cb7bb73a0901071003m77482a99wf6f3988beb5b5e78@mail.gmail.com>
-References: <20090107042518.GB24735@gnu.kitenet.net>
-	 <gk2794$djn$1@ger.gmane.org> <20090107155023.GA16540@gnu.kitenet.net>
+From: Davide Libenzi <davidel@xmailserver.org>
+Subject: Re: [PATCH v3 1/3] Implement the patience diff algorithm
+Date: Wed, 7 Jan 2009 10:10:09 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0901071001360.16651@alien.or.mcafeemobile.com>
+References: <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <20081104004001.GB29458@artemis.corp> <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de> <20081104083042.GB3788@artemis.corp>
+ <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <20090106111712.GB30766@artemis.corp> <alpine.DEB.1.00.0901062037250.30769@pacific.mpi-cbg.de>
+ <20090107143926.GB831@artemis.corp> <alpine.DEB.1.00.0901071610290.7496@intel-tinevez-2-302> <alpine.DEB.1.00.0901071802190.7496@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Joey Hess" <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Wed Jan 07 19:04:36 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Francis Galiegue <fg@one2team.net>,
+	Git ML <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 07 19:11:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKcle-0001X9-8a
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 19:04:34 +0100
+	id 1LKcsT-0004XS-Qc
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 19:11:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753661AbZAGSDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 13:03:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbZAGSDJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 13:03:09 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:62536 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750713AbZAGSDG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 13:03:06 -0500
-Received: by ewy10 with SMTP id 10so9159675ewy.13
-        for <git@vger.kernel.org>; Wed, 07 Jan 2009 10:03:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Wo4cyzppiN+gKm47aXQSt/O+LuxCIgEkiivLEy5UW7A=;
-        b=Ia2TQVjJP3XhGPmqwXDaydQWEH/NbDhjKMytBWIgvd1xEybncgVCM5aR9yFKIVVk1b
-         +e2CVRFGPZao0DMxFznRu5cprKPflqLnF0DAapxZOvLtmKUuyINr0juRLvCiey/PrsWY
-         ee6AxFSMNWGrf58XWVYUXZOVgxQZdWXRPHy1g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=RFAs3L2aVAjPjJjb2J0ngi+u4QUVYogbdIvp/e/HWxXntLOa+vk5G/O3rZeCuLkIxt
-         RYeBPD99aKNccuzeg0h92nZxq4mxLsUDnYNJ42a4nm4D1o6PnFMrJNPI3nSsjSG95vSJ
-         nmq3cT/JNGO5RG2tJEuhFgXPoAjWmyXkRT9GY=
-Received: by 10.210.87.19 with SMTP id k19mr1887570ebb.141.1231351384868;
-        Wed, 07 Jan 2009 10:03:04 -0800 (PST)
-Received: by 10.210.57.20 with HTTP; Wed, 7 Jan 2009 10:03:04 -0800 (PST)
-In-Reply-To: <20090107155023.GA16540@gnu.kitenet.net>
-Content-Disposition: inline
+	id S1755447AbZAGSKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 13:10:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755346AbZAGSKO
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 13:10:14 -0500
+Received: from x35.xmailserver.org ([64.71.152.41]:36025 "EHLO
+	x35.xmailserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755248AbZAGSKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 13:10:11 -0500
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by x35.xmailserver.org with [XMail 1.26 ESMTP Server]
+	id <S2C4E36> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Wed, 7 Jan 2009 13:10:10 -0500
+X-X-Sender: davide@alien.or.mcafeemobile.com
+In-Reply-To: <alpine.DEB.1.00.0901071802190.7496@intel-tinevez-2-302>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104815>
 
-On Wed, Jan 7, 2009 at 4:50 PM, Joey Hess <joey@kitenet.net> wrote:
-> Giuseppe Bilotta wrote:
->> In this patch you do NOT add titles to the rel=vcs links, which means that
->> everything works fine only if there is a single URL for each project. If a
->> project has different URLs, it's going to appear multiple times as _different_
->> projects to a spec-compliant reader.
->>
->> A possible solution would be to make @git_url_list into a map keyed by the
->> project name and having the description and repo URL(s) as values.
->
-> Yes. I considered doing that, but didn't immediatly see a way to get the
-> project description w/o additional overhead (of looking it up a second
-> time).
+On Wed, 7 Jan 2009, Johannes Schindelin wrote:
 
-The solution I have in mind would be something like this: in summary
-or projects list view (which are the views in which we put the links,
-and also the views in which we loop up the repo URL and the
-description anyway), you fill up former @git_url_list (now
-%project_metadata) looking up the repo description and URLs. You then
-use this information both in the link tag and in the appropriate
-places for the visible part of the webpage: you don't have a
-significant overhead, because you're just moving the project
-description retrieval early on.
+> 
+> The patience diff algorithm produces slightly more intuitive output
+> than the classic Myers algorithm, as it does not try to minimize the
+> number of +/- lines first, but tries to preserve the lines that are
+> unique.
 
-You probably want to refactor the code by making a
-git_get_project_metadata() sub that extends the current URL retrieval
-by retrieving description and URLs. The routine can then be used
-either for one or for all the projects, as needed.
+Johannes, sorry I had not time to follow this one. A couple of minor 
+comments that arose just at glancing at the patch.
 
-> Thanks for the feedback. There are some changes happening to the
-> microformat that should make gitweb's job slightly easier, I'll respin
-> the patch soon.
 
-Let me know about this too, I very much like the idea of this microformat.
 
--- 
-Giuseppe "Oblomov" Bilotta
+> +/*
+> + *  LibXDiff by Davide Libenzi ( File Differential Library )
+> + *  Copyright (C) 2003-2009 Davide Libenzi, Johannes E. Schindelin
+> + *
+> + *  This library is free software; you can redistribute it and/or
+> + *  modify it under the terms of the GNU Lesser General Public
+> + *  License as published by the Free Software Foundation; either
+> + *  version 2.1 of the License, or (at your option) any later version.
+> + *
+> + *  This library is distributed in the hope that it will be useful,
+> + *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+> + *  Lesser General Public License for more details.
+> + *
+> + *  You should have received a copy of the GNU Lesser General Public
+> + *  License along with this library; if not, write to the Free Software
+> + *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+> + *
+> + *  Davide Libenzi <davidel@xmailserver.org>
+
+You do not need to give me credit for something I don't even know how it 
+works ;)
+
+
+
+> +static int fall_back_to_classic_diff(struct hashmap *map,
+> +		int line1, int count1, int line2, int count2)
+> +{
+> +	/*
+> +	 * This probably does not work outside Git, since
+> +	 * we have a very simple mmfile structure.
+> +	 *
+> +	 * Note: ideally, we would reuse the prepared environment, but
+> +	 * the libxdiff interface does not (yet) allow for diffing only
+> +	 * ranges of lines instead of the whole files.
+> +	 */
+> +	mmfile_t subfile1, subfile2;
+> +	xpparam_t xpp;
+> +	xdfenv_t env;
+> +
+> +	subfile1.ptr = (char *)map->env->xdf1.recs[line1 - 1]->ptr;
+> +	subfile1.size = map->env->xdf1.recs[line1 + count1 - 2]->ptr +
+> +		map->env->xdf1.recs[line1 + count1 - 2]->size - subfile1.ptr;
+> +	subfile2.ptr = (char *)map->env->xdf2.recs[line2 - 1]->ptr;
+> +	subfile2.size = map->env->xdf2.recs[line2 + count2 - 2]->ptr +
+> +		map->env->xdf2.recs[line2 + count2 - 2]->size - subfile2.ptr;
+> +	xpp.flags = map->xpp->flags & ~XDF_PATIENCE_DIFF;
+> +	if (xdl_do_diff(&subfile1, &subfile2, &xpp, &env) < 0)
+> +		return -1;
+
+xdiff allows for diffing ranges, and the most efficent method is exactly 
+how you did ;) Once you know the lines pointers, there's no need to pass 
+it the whole file and have it scan it whole to find the lines range it has 
+to diff. Just pass the limited view like you did.
+
+
+- Davide
