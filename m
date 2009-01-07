@@ -1,132 +1,119 @@
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Re: [BUG PATCH RFC] mailinfo: correctly handle multiline
-	'Subject:' header
-Date: Thu, 8 Jan 2009 01:43:42 +0300
-Organization: St.Petersburg State University
-Message-ID: <20090107224342.GB4946@roro3>
-References: <1230316721-14339-1-git-send-email-kirr@mns.spb.ru>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
+Date: Wed, 07 Jan 2009 23:45:04 +0100
+Message-ID: <20090107224504.GA29537@artemis.corp>
+References: <20081104083042.GB3788@artemis.corp> <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <20090106111712.GB30766@artemis.corp> <alpine.DEB.1.00.0901062037250.30769@pacific.mpi-cbg.de> <1231359317.6011.12.camel@maia.lan> <alpine.DEB.1.00.0901072121260.7496@intel-tinevez-2-302> <7v63kqall2.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901072213570.7496@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 07 23:43:55 2009
+Content-Type: multipart/signed; boundary="azLHFNyN32YCQGCU";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio C Hamano <gitster@pobox.com>, Sam Vilain <sam@vilain.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	davidel@xmailserver.org, Francis Galiegue <fg@one2team.net>,
+	Git ML <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 07 23:46:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKh7x-0000o4-Id
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 23:43:54 +0100
+	id 1LKhAa-0001ji-Cp
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 23:46:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753625AbZAGWm3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jan 2009 17:42:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752475AbZAGWm3
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 17:42:29 -0500
-Received: from landau.phys.spbu.ru ([195.19.235.38]:1173 "EHLO
-	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750988AbZAGWm2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 17:42:28 -0500
-Received: by landau.phys.spbu.ru (Postfix, from userid 509)
-	id C3F3E17B65E; Thu,  8 Jan 2009 01:42:26 +0300 (MSK)
-Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
-	(envelope-from <kirr@roro3>)
-	id 1LKh7m-0003TR-Pz; Thu, 08 Jan 2009 01:43:42 +0300
+	id S1758430AbZAGWpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 17:45:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757332AbZAGWpK
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 17:45:10 -0500
+Received: from pan.madism.org ([88.191.52.104]:47129 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754394AbZAGWpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 17:45:08 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 6C3EA3BF30;
+	Wed,  7 Jan 2009 23:45:05 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 270482B100; Wed,  7 Jan 2009 23:45:04 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <1230316721-14339-1-git-send-email-kirr@mns.spb.ru>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <alpine.DEB.1.00.0901072213570.7496@intel-tinevez-2-302>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104842>
 
-On Fri, Dec 26, 2008 at 09:38:41PM +0300, Kirill Smelkov wrote:
-> When native language (RU) is in use, subject header usually contains =
-several
-> parts, e.g.
+
+--azLHFNyN32YCQGCU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jan 07, 2009 at 10:00:07PM +0000, Johannes Schindelin wrote:
+> Therefore I counted the lines between conflict markers (actually, a perl=
+=20
+> script did).  Of these 66 merges, on average patience merge produced=20
+> 4.46774193548387 _fewer_ lines between conflict markers.
 >=20
-> Subject: [Navy-patches] [PATCH]
-> 	=3D?utf-8?b?0JjQt9C80LXQvdGR0L0g0YHQv9C40YHQvtC6INC/0LA=3D?=3D
-> 	=3D?utf-8?b?0LrQtdGC0L7QsiDQvdC10L7QsdGF0L7QtNC40LzRi9GFINC00LvRjyA=3D=
-?=3D
-> 	=3D?utf-8?b?0YHQsdC+0YDQutC4?=3D
-
-Which btw should be extracted by git-mailinfo to:
-
-    'Subject: =D0=98=D0=B7=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D1=81=D0=BF=D0=
-=B8=D1=81=D0=BE=D0=BA =D0=BF=D0=B0=D0=BA=D0=B5=D1=82=D0=BE=D0=B2 =D0=BD=
-=D0=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D1=8B=D1=85 =D0=B4=D0=BB=
-=D1=8F =D1=81=D0=B1=D0=BE=D1=80=D0=BA=D0=B8'
-
-> This exposes several bugs in builtin-mailinfo.c that I try to fix:
+> Take that with a grain of salt, though: the standard deviation of this=20
+> difference is a hefty 121.163046639509 lines.
 >=20
+> The worst case for patience diff was the merge=20
+> 4698ef555a1706fe322a68a02a21fb1087940ac3, where the --cc diff line counts=
+=20
+> are 1300 (without) vs 1301 (with patience merge), but the lines between=
+=20
+> conflict markers are 197 vs a ridiculous 826 lines!
 >=20
-> 1. decode_b_segment: do not append explicit NUL -- explicit NUL was p=
-reventing
->    correct header construction on parts concatenation via strbuf_addb=
-uf in
->    decode_header_bq. Fixes:
+> But you should take that also with a grain of salt: this merge is a=20
+> _subtree_ merge, and my test redid it as a _non-subtree_ merge.
 >=20
-> -Subject: =D0=98=D0=B7=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D1=81=D0=BF=D0=B8=
-=D1=81=D0=BE=D0=BA =D0=BF=D0=B0=D0=BA=D0=B5=D1=82=D0=BE=D0=B2 =D0=BD=D0=
-=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D1=8B=D1=85 =D0=B4=D0=BB=D1=
-=8F =D1=81=D0=B1=D0=BE=D1=80=D0=BA=D0=B8
-> +Subject: =D0=98=D0=B7=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D1=81=D0=BF=D0=B8=
-=D1=81=D0=BE=D0=BA =D0=BF=D0=B0
+> So I restricted the analysis to the non-subtree merges, and now=20
+> non-patience merge comes out 6.97297297297297 conflict lines fewer than=
+=20
+> patience merge, with a standard deviation of 58.941106657867 (with a tota=
+l=20
+> count of 37 merges).
 >=20
+> Note that ~7 lines difference with a standard deviation of ~59 lines is=
+=20
+> pretty close to ~0 lines difference.
 >=20
-> Then
->=20
-> 2. (hackish) do not emit '\n' after processing of every header segmen=
-t. It
->    seems we should emit previous part as-is only if it does not end w=
-ith
->    '=3D?=3D'. Fixes:
->=20
-> -Subject: =D0=98=D0=B7=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D1=81=D0=BF=D0=B8=
-=D1=81=D0=BE=D0=BA =D0=BF=D0=B0=D0=BA=D0=B5=D1=82=D0=BE=D0=B2 =D0=BD=D0=
-=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D1=8B=D1=85 =D0=B4=D0=BB=D1=
-=8F =D1=81=D0=B1=D0=BE=D1=80=D0=BA=D0=B8
-> +Subject: =D0=98=D0=B7=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D1=81=D0=BF=D0=B8=
-=D1=81=D0=BE=D0=BA =D0=BF=D0=B0 =D0=BA=D0=B5=D1=82=D0=BE=D0=B2 =D0=BD=D0=
-=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D1=8B=D1=85 =D0=B4=D0=BB=D1=
-=8F =D1=81=D0=B1=D0=BE=D1=80=D0=BA=D0=B8
->=20
->=20
-> Sorry for low-quality patch and description. I did what I could and d=
-on't have
-> energy and time dig more into MIME.
->=20
-> Please help.
->=20
-> Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
->=20
-> ---
->  builtin-mailinfo.c  |   18 ++++++++++++++++-
->  t/t5100-mailinfo.sh |    2 +-
->  t/t5100/info0012    |    5 ++++
->  t/t5100/msg0012     |    7 ++++++
->  t/t5100/patch0012   |   30 +++++++++++++++++++++++++++++
->  t/t5100/sample.mbox |   52 +++++++++++++++++++++++++++++++++++++++++=
-++++++++++
->  6 files changed, 112 insertions(+), 2 deletions(-)
+> In the end, the additional expense of patience merge might just not be=20
+> worth it.
 
-Junio, All,
+Depends, if it can help generating nicer merges, it's good to have.
 
-What about this patch?
+We could have an option to git-merge that tries hard to generate the
+smallest conflict possible. _that_ would really really be worth it. I
+mean, I've had really really tricky conflicts to work with where
+git-merge genrated ridiculously big conflicts, and where I hard to
+resort using UI tools to perform the merge (meld IIRC to name it), and
+given how slow and crappy those tools are, I would gladly restart a
+merge with a --generate-smallest-conflicts-as-possible if it can save me
+=66rom those merge tools.
 
-It at least exposes bug in git-mailinfo wrt handling of multiline
-subjects, and in very details documents it and adds a test for it.
+YMMV though.
 
+PS: I never thought the patience diff is a silver bullet, it's just yet
+    another tool in the toolbox.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-Yes, my fixes are of 'low quality', but may I try to attract git
-community attention one more time?
+--azLHFNyN32YCQGCU
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Thanks beforehand,
-Kirill
+iEYEABECAAYFAkllMG4ACgkQvGr7W6HudhwqogCfTLKyvjq56G/EzOIh3A2bB1lH
+WbYAn1pu3rlpjNnyK+UyHirBgAAOMJrX
+=KPg7
+-----END PGP SIGNATURE-----
 
-
-P.S. original post with patch:
-
-http://marc.info/?l=3Dgit&m=3D123031899307286&w=3D2
+--azLHFNyN32YCQGCU--
