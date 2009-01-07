@@ -1,76 +1,132 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: Comments on Presentation Notes Request.
-Date: Wed, 7 Jan 2009 16:40:02 -0600
-Message-ID: <200901071640.06288.bss@iguanasuicide.net>
-References: <c115fd3c0901061433i78bf3b26v77e5981aada6728e@mail.gmail.com> <20090107063629.GB22616@coredump.intra.peff.net> <alpine.LNX.1.00.0901071654530.19665@iabervon.org>
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Subject: Re: [BUG PATCH RFC] mailinfo: correctly handle multiline
+	'Subject:' header
+Date: Thu, 8 Jan 2009 01:43:42 +0300
+Organization: St.Petersburg State University
+Message-ID: <20090107224342.GB4946@roro3>
+References: <1230316721-14339-1-git-send-email-kirr@mns.spb.ru>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart68414817.HkudAFTMeW";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Jan 07 23:40:56 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 07 23:43:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKh54-00085B-1s
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 23:40:54 +0100
+	id 1LKh7x-0000o4-Id
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 23:43:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760735AbZAGWjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 17:39:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932628AbZAGWjc
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 17:39:32 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:45399 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932623AbZAGWjb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 17:39:31 -0500
-Received: from [206.104.164.114]
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LKh3i-0006fJ-Dz; Wed, 07 Jan 2009 22:39:30 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <alpine.LNX.1.00.0901071654530.19665@iabervon.org>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1753625AbZAGWm3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jan 2009 17:42:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752475AbZAGWm3
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 17:42:29 -0500
+Received: from landau.phys.spbu.ru ([195.19.235.38]:1173 "EHLO
+	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750988AbZAGWm2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 17:42:28 -0500
+Received: by landau.phys.spbu.ru (Postfix, from userid 509)
+	id C3F3E17B65E; Thu,  8 Jan 2009 01:42:26 +0300 (MSK)
+Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
+	(envelope-from <kirr@roro3>)
+	id 1LKh7m-0003TR-Pz; Thu, 08 Jan 2009 01:43:42 +0300
+Content-Disposition: inline
+In-Reply-To: <1230316721-14339-1-git-send-email-kirr@mns.spb.ru>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104841>
 
---nextPart68414817.HkudAFTMeW
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Fri, Dec 26, 2008 at 09:38:41PM +0300, Kirill Smelkov wrote:
+> When native language (RU) is in use, subject header usually contains =
+several
+> parts, e.g.
+>=20
+> Subject: [Navy-patches] [PATCH]
+> 	=3D?utf-8?b?0JjQt9C80LXQvdGR0L0g0YHQv9C40YHQvtC6INC/0LA=3D?=3D
+> 	=3D?utf-8?b?0LrQtdGC0L7QsiDQvdC10L7QsdGF0L7QtNC40LzRi9GFINC00LvRjyA=3D=
+?=3D
+> 	=3D?utf-8?b?0YHQsdC+0YDQutC4?=3D
 
-On Wednesday 2009 January 07 16:30:04 Daniel Barkalow wrote:
-> Git is clever about finding [...]
-> the common ancestor of commits that don't have a common ancestor.
+Which btw should be extracted by git-mailinfo to:
 
-*confused*
+    'Subject: =D0=98=D0=B7=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D1=81=D0=BF=D0=
+=B8=D1=81=D0=BE=D0=BA =D0=BF=D0=B0=D0=BA=D0=B5=D1=82=D0=BE=D0=B2 =D0=BD=
+=D0=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D1=8B=D1=85 =D0=B4=D0=BB=
+=D1=8F =D1=81=D0=B1=D0=BE=D1=80=D0=BA=D0=B8'
 
-Please elaborate.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+> This exposes several bugs in builtin-mailinfo.c that I try to fix:
+>=20
+>=20
+> 1. decode_b_segment: do not append explicit NUL -- explicit NUL was p=
+reventing
+>    correct header construction on parts concatenation via strbuf_addb=
+uf in
+>    decode_header_bq. Fixes:
+>=20
+> -Subject: =D0=98=D0=B7=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D1=81=D0=BF=D0=B8=
+=D1=81=D0=BE=D0=BA =D0=BF=D0=B0=D0=BA=D0=B5=D1=82=D0=BE=D0=B2 =D0=BD=D0=
+=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D1=8B=D1=85 =D0=B4=D0=BB=D1=
+=8F =D1=81=D0=B1=D0=BE=D1=80=D0=BA=D0=B8
+> +Subject: =D0=98=D0=B7=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D1=81=D0=BF=D0=B8=
+=D1=81=D0=BE=D0=BA =D0=BF=D0=B0
+>=20
+>=20
+> Then
+>=20
+> 2. (hackish) do not emit '\n' after processing of every header segmen=
+t. It
+>    seems we should emit previous part as-is only if it does not end w=
+ith
+>    '=3D?=3D'. Fixes:
+>=20
+> -Subject: =D0=98=D0=B7=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D1=81=D0=BF=D0=B8=
+=D1=81=D0=BE=D0=BA =D0=BF=D0=B0=D0=BA=D0=B5=D1=82=D0=BE=D0=B2 =D0=BD=D0=
+=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D1=8B=D1=85 =D0=B4=D0=BB=D1=
+=8F =D1=81=D0=B1=D0=BE=D1=80=D0=BA=D0=B8
+> +Subject: =D0=98=D0=B7=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D1=81=D0=BF=D0=B8=
+=D1=81=D0=BE=D0=BA =D0=BF=D0=B0 =D0=BA=D0=B5=D1=82=D0=BE=D0=B2 =D0=BD=D0=
+=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D1=8B=D1=85 =D0=B4=D0=BB=D1=
+=8F =D1=81=D0=B1=D0=BE=D1=80=D0=BA=D0=B8
+>=20
+>=20
+> Sorry for low-quality patch and description. I did what I could and d=
+on't have
+> energy and time dig more into MIME.
+>=20
+> Please help.
+>=20
+> Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
+>=20
+> ---
+>  builtin-mailinfo.c  |   18 ++++++++++++++++-
+>  t/t5100-mailinfo.sh |    2 +-
+>  t/t5100/info0012    |    5 ++++
+>  t/t5100/msg0012     |    7 ++++++
+>  t/t5100/patch0012   |   30 +++++++++++++++++++++++++++++
+>  t/t5100/sample.mbox |   52 +++++++++++++++++++++++++++++++++++++++++=
+++++++++++
+>  6 files changed, 112 insertions(+), 2 deletions(-)
 
---nextPart68414817.HkudAFTMeW
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+Junio, All,
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+What about this patch?
 
-iEYEABECAAYFAkllL0YACgkQdNbfk+86fC29awCfa/ZuCVtCoNHJDe024gcTY0BO
-pzAAnRLw3qgLjndnwYQ54r+NjPyZnqAZ
-=ck2Z
------END PGP SIGNATURE-----
+It at least exposes bug in git-mailinfo wrt handling of multiline
+subjects, and in very details documents it and adds a test for it.
 
---nextPart68414817.HkudAFTMeW--
+
+Yes, my fixes are of 'low quality', but may I try to attract git
+community attention one more time?
+
+
+Thanks beforehand,
+Kirill
+
+
+P.S. original post with patch:
+
+http://marc.info/?l=3Dgit&m=3D123031899307286&w=3D2
