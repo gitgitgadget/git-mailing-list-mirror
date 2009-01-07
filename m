@@ -1,297 +1,142 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
-Date: Wed, 7 Jan 2009 23:00:07 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901072213570.7496@intel-tinevez-2-302>
-References: <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <20081104004001.GB29458@artemis.corp>
- <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de> <20081104083042.GB3788@artemis.corp> <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de>
- <20090106111712.GB30766@artemis.corp> <alpine.DEB.1.00.0901062037250.30769@pacific.mpi-cbg.de> <1231359317.6011.12.camel@maia.lan> <alpine.DEB.1.00.0901072121260.7496@intel-tinevez-2-302> <7v63kqall2.fsf@gitster.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Comments on Presentation Notes Request.
+Date: Wed, 7 Jan 2009 17:30:04 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0901071654530.19665@iabervon.org>
+References: <c115fd3c0901061433i78bf3b26v77e5981aada6728e@mail.gmail.com> <20090107063629.GB22616@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sam Vilain <sam@vilain.net>, Pierre Habouzit <madcoder@debian.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	davidel@xmailserver.org, Francis Galiegue <fg@one2team.net>,
-	Git ML <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 07 23:02:08 2009
+Cc: Tim Visher <tim.visher@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 07 23:32:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKgT5-00006h-34
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 23:01:39 +0100
+	id 1LKgwJ-0004jd-IV
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 23:31:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761835AbZAGWAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 17:00:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760933AbZAGWAQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 17:00:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47912 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758293AbZAGWAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 17:00:11 -0500
-Received: (qmail invoked by alias); 07 Jan 2009 22:00:09 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp032) with SMTP; 07 Jan 2009 23:00:09 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18kYkpNnBEk1iz+wdiug674ty279dimjb+gArsspA
-	armwyXVIK3K5VQ
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7v63kqall2.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.41
+	id S1762258AbZAGWaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 17:30:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932483AbZAGWaM
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 17:30:12 -0500
+Received: from iabervon.org ([66.92.72.58]:52123 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932474AbZAGWaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 17:30:07 -0500
+Received: (qmail 23250 invoked by uid 1000); 7 Jan 2009 22:30:04 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 7 Jan 2009 22:30:04 -0000
+In-Reply-To: <20090107063629.GB22616@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104839>
 
-Hi,
+On Wed, 7 Jan 2009, Jeff King wrote:
 
-On Wed, 7 Jan 2009, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Tue, Jan 06, 2009 at 05:33:02PM -0500, Tim Visher wrote:
 > 
-> > After compiling and installing, something like this should be fun to 
-> > watch:
+> > ** Advantages of SCM
+> > *** One Source to Rule Them All.
+> > *** Unlimited Undo/Redo.
+> > *** Safe Concurrent Editing.
+> > *** Diff Debugging
+> 
+> I would add to this metadata and "software archeology": finding the
+> author of a change or piece of code, the motivation behind it, related
+> changes (by position within history, by content, or by commit message),
+> etc.
+
+If you look at the git source code, the comments in the code are almost 
+never sufficient to really understand the code, because a full 
+line-by-line explanation would make it hard to find the code under the 
+comments. On the other hand, if you take "git blame" in one window and a 
+series of "git show"s in another window, and look at the commit messages 
+for the commits that introduced each of those lines, you get really 
+detailed and in-depth documentation of the subtle changes.
+
+> I think people who have not used an SCM before, and people coming from
+> SCMs where it is painful to look at history (like CVS) undervalue this
+> because it's not part of their workflow.  But having used git for a few
+> years now, it is an integral part of how I develop (especially when
+> doing maintenance or bugfixes).
+> 
+> You touch on this in "Diff Debugging", but I think bisection is just a
+> part of it.
+> 
+> > * SCM Best Practices
 > >
-> > 	$ git rev-list --all --parents | \
-> > 	  grep " .* " | \
-> > 	  while read commit parent1 parent2 otherparents
-> > 	  do
-> > 		test -z "$otherparents" || continue
-> > 		git checkout $parent1 &&
-> > 		git merge $parent2 &&
-> > 		git diff > without-patience.txt &&
-> > ...
-> > 		if ! cmp without-patience.txt with-patience.txt
-> > 		then
-> > 			echo '==============================='
-> > 			echo "differences found in merge $commit"
-> > ...
-> > 			cat with-patience.txt
-> > 		fi ||
-> > 		exit
-> > 	  done | tee patience-merge.out
+> > ** Commit Early, Commit Often
+> > ** Don't Commit Broken Code (To the Public Tree)
 > 
-> An even more interesting test would be possible by dropping "&&" from the
-> two "git merge" invocations.
+> People talk a lot about using their SCM on a plane, but I think these
+> two seemingly opposite commands highlight the _real_ useful thing about
+> a distributed system for most people: commit and publish are two
+> separate actions.
 > 
->  - Your sample will exit at the first conflicting merge otherwise.
+> So I think it might be better to say "Commit Early, Commit Often" but
+> "Don't _Publish_ Broken Code". Which is what you end up saying in the
+> discussion, but I think using that terminology makes clear the important
+> distinction between two actions that are convoluted in centralized
+> systems.
 > 
->  - You may find cases where one resolves cleanly while the other leaves
->    conflicts.
+> > *** Backup Becomes A Separate Process
+> > Because there is only a single repository, you need a back-up strategy
+> > or else you are exposing yourself to a single point of failure.
+> > [...]
+> > *** Natural Backup
+> > Because every developer has a copy of the repository, every developer
+> > you add adds an extra failure point.  The more developers you have,
+> > the more backups you have of the repository.
+> 
+> The "natural backup" thing gets brought out a lot for DVCS. And it is
+> sort of true: instead of each developer having a backup of the latest
+> version (or some recent version which they checked out), they have a
+> backup of the whole history. But they still might not have everything.
+> Developers might not clone all branches. They might not be up to date
+> with some "master" repository. Useful work might be unpublished in the
+> master repo (e.g., I am working on feature X which is 99% complete, but
+> not ready for me to merge into master and push).
 
-Yeah, that's why I always put "like" into that phrase "something like 
-this"... :-)
+It is the case that everything in the central repo (including speculative 
+stuff) will also be on its author's machine, with the metadata needed to 
+identify that it's not in the main history and how everything is supposed 
+to be arranged. This is likely to be particularly helpful for the work 
+that everybody did between the last backup and the crash.
 
-Actually, I had to read something and did not want my box to sit idle 
-while I was doing that, so...
+> So yes, you are much more likely to salvage useful (if not all) data
+> from developer repositories in the event of a crash. But I still think
+> it's crazy not to have a backup strategy for your DVCS repo.
 
-The most interesting thing to me was: of the 4072 merges I have in my 
-local git.git clone, only 66 show a difference.
+I think it's very important to have a backup strategy, but it's nice that 
+the developers can get work done while the server is still down.
 
-The next interesting thing: none -- I repeat, none! -- resulted in only 
-one of both methods having conflicts.  In all cases, if patience merge had 
-conflicts, so had the classical merge, and vice versa.  I would have 
-expected patience merge to handle some conflicts more gracefully.
+> > ** Excellent Merge algorithms
+> > 
+> > Git has excellent merge algorithms.  This is widely attributed and
+> > doesn't require much explanation.  It was one of Git's original design
+> > goals, and it has been proven by Git's implementation.  Merging in Git
+> > is _much_ less painful than in other systems.
+> 
+> Actually, git has a really _stupid_ merge algorithm that has been around
+> forever: the 3-way merge. And by stupid I don't mean bad, but just
+> simple and predictable. I think the git philosophy is more about making
+> it easy to merge often, and about making sure conflicts are simple to
+> understand and fix, than it is about being clever.
 
-So let's go on to the next metric: what are the differences in the --cc 
-diffs' line counts?
+Git is clever about finding the 3 inputs to the 3-way merge, particularly 
+the common ancestor of commits that don't have a common ancestor. I think 
+merge-recursive is novel to git, and may not be available anywhere else.
 
-On average, patience merge produced 1.03225806451613 more lines of --cc 
-diff, and the standard deviation between the line counts is 
-42.9823669772587.
+> Which isn't to say there aren't systems with less clever merge
+> algorithms. CVS doesn't even do a 3-way merge, since it doesn't bother
+> to remember where the last branch intersection was.
 
-So from the line counts' point of view, the difference is lost in the 
-noise.
+CVS did do 3-way merge, but only between your uncommited changes, the 
+latest commit, and the common ancestor (the commit that you started 
+changing). IIRC, arch actually didn't support 3-way merge at all.
 
-So let's look at a concrete example.  I take 
-41a3e3aa9bdaede9ab7afed206428c1b071060d2, as it is one of the three merges 
-with minimal --cc diff line counts (they all have 33 lines) and where 
-patience merge makes a difference.
-
-This is the --cc diff without patience merge:
-
--- snip --
-diff --cc git-am.sh
-index a391254,5a7695e..0000000
---- a/git-am.sh
-+++ b/git-am.sh
-@@@ -327,11 -327,20 +327,28 @@@ d
-  			echo "Patch is empty.  Was it split wrong?"
-  			stop_here $this
-  		}
-++<<<<<<< HEAD:git-am.sh
- +		SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
- +		case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
- +
- +		(printf '%s\n\n' "$SUBJECT"; cat "$dotest/msg") |
- +			git stripspace > "$dotest/msg-clean"
-++=======
-+ 		if test -f "$dotest/rebasing" &&
-+ 			commit=$(sed -e 's/^From \([0-9a-f]*\) .*/\1/' \
-+ 				-e q "$dotest/$msgnum") &&
-+ 			test "$(git cat-file -t "$commit")" = commit
-+ 		then
-+ 			git cat-file commit "$commit" |
-+ 			sed -e '1,/^$/d' >"$dotest/msg-clean"
-+ 		else
-+ 			SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
-+ 			case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
-+ 
-+ 			(echo "$SUBJECT" ; echo ; cat "$dotest/msg") |
-+ 				git stripspace > "$dotest/msg-clean"
-+ 		fi
-++>>>>>>> 5e835cac8622373724235d299f1331ac4cf81ccf:git-am.sh
-  		;;
-  	esac
-  
--- snap --
-
-Compare this with the --cc diff _with_ patience merge:
-
--- snip --
-diff --cc git-am.sh
-index a391254,5a7695e..0000000
---- a/git-am.sh
-+++ b/git-am.sh
-@@@ -327,11 -327,20 +327,25 @@@ d
-  			echo "Patch is empty.  Was it split wrong?"
-  			stop_here $this
-  		}
-- 		SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
-- 		case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
-- 
-+ 		if test -f "$dotest/rebasing" &&
-+ 			commit=$(sed -e 's/^From \([0-9a-f]*\) .*/\1/' \
-+ 				-e q "$dotest/$msgnum") &&
-+ 			test "$(git cat-file -t "$commit")" = commit
-+ 		then
-+ 			git cat-file commit "$commit" |
-+ 			sed -e '1,/^$/d' >"$dotest/msg-clean"
-+ 		else
-+ 			SUBJECT="$(sed -n '/^Subject/ s/Subject: //p' "$dotest/info")"
-+ 			case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
-+ 
-++<<<<<<< HEAD:git-am.sh
- +		(printf '%s\n\n' "$SUBJECT"; cat "$dotest/msg") |
- +			git stripspace > "$dotest/msg-clean"
-++=======
-+ 			(echo "$SUBJECT" ; echo ; cat "$dotest/msg") |
-+ 				git stripspace > "$dotest/msg-clean"
-+ 		fi
-++>>>>>>> 5e835cac8622373724235d299f1331ac4cf81ccf:git-am.sh
-  		;;
-  	esac
-  
--- snap --
-
-So, the patience merge resulted in a much smaller _conflict_.
-
-However, another such merge is 276328ffb87cefdc515bee5f09916aea6e0244ed.  
-This is the --cc diff without patience merge:
-
--- snip --
-diff --cc diff.c
-index 4e4e439,f91f256..0000000
---- a/diff.c
-+++ b/diff.c
-@@@ -1498,19 -1464,13 +1498,28 @@@ static void builtin_diff(const char *na
-  	char *a_one, *b_two;
-  	const char *set = diff_get_color_opt(o, DIFF_METAINFO);
-  	const char *reset = diff_get_color_opt(o, DIFF_RESET);
- +	const char *a_prefix, *b_prefix;
- +
- +	diff_set_mnemonic_prefix(o, "a/", "b/");
- +	if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
- +		a_prefix = o->b_prefix;
- +		b_prefix = o->a_prefix;
- +	} else {
- +		a_prefix = o->a_prefix;
- +		b_prefix = o->b_prefix;
- +	}
-  
-++<<<<<<< HEAD:diff.c
- +	a_one = quote_two(a_prefix, name_a + (*name_a == '/'));
- +	b_two = quote_two(b_prefix, name_b + (*name_b == '/'));
-++=======
-+ 	/* Never use a non-valid filename anywhere if at all possible */
-+ 	name_a = DIFF_FILE_VALID(one) ? name_a : name_b;
-+ 	name_b = DIFF_FILE_VALID(two) ? name_b : name_a;
-+ 
-+ 	a_one = quote_two(o->a_prefix, name_a + (*name_a == '/'));
-+ 	b_two = quote_two(o->b_prefix, name_b + (*name_b == '/'));
-++>>>>>>> e261cf94848d31868c21fb11cade51c30dfcdbe7:diff.c
-  	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
-  	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
-  	fprintf(o->file, "%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
--- snap --
-
-And this is _with_ patience merge:
-
--- snip --
-diff --cc diff.c
-index 4e4e439,f91f256..0000000
---- a/diff.c
-+++ b/diff.c
-@@@ -1498,19 -1464,13 +1498,28 @@@ static void builtin_diff(const char *na
-  	char *a_one, *b_two;
-  	const char *set = diff_get_color_opt(o, DIFF_METAINFO);
-  	const char *reset = diff_get_color_opt(o, DIFF_RESET);
- +	const char *a_prefix, *b_prefix;
- +
-++<<<<<<< HEAD:diff.c
- +	diff_set_mnemonic_prefix(o, "a/", "b/");
- +	if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
- +		a_prefix = o->b_prefix;
- +		b_prefix = o->a_prefix;
- +	} else {
- +		a_prefix = o->a_prefix;
- +		b_prefix = o->b_prefix;
- +	}
-  
- +	a_one = quote_two(a_prefix, name_a + (*name_a == '/'));
- +	b_two = quote_two(b_prefix, name_b + (*name_b == '/'));
-++=======
-+ 	/* Never use a non-valid filename anywhere if at all possible */
-+ 	name_a = DIFF_FILE_VALID(one) ? name_a : name_b;
-+ 	name_b = DIFF_FILE_VALID(two) ? name_b : name_a;
-+ 
-+ 	a_one = quote_two(o->a_prefix, name_a + (*name_a == '/'));
-+ 	b_two = quote_two(o->b_prefix, name_b + (*name_b == '/'));
-++>>>>>>> e261cf94848d31868c21fb11cade51c30dfcdbe7:diff.c
-  	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
-  	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
-  	fprintf(o->file, "%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
--- snap --
-
-So again, we have no clear winner.
-
-Therefore I counted the lines between conflict markers (actually, a perl 
-script did).  Of these 66 merges, on average patience merge produced 
-4.46774193548387 _fewer_ lines between conflict markers.
-
-Take that with a grain of salt, though: the standard deviation of this 
-difference is a hefty 121.163046639509 lines.
-
-The worst case for patience diff was the merge 
-4698ef555a1706fe322a68a02a21fb1087940ac3, where the --cc diff line counts 
-are 1300 (without) vs 1301 (with patience merge), but the lines between 
-conflict markers are 197 vs a ridiculous 826 lines!
-
-But you should take that also with a grain of salt: this merge is a 
-_subtree_ merge, and my test redid it as a _non-subtree_ merge.
-
-So I restricted the analysis to the non-subtree merges, and now 
-non-patience merge comes out 6.97297297297297 conflict lines fewer than 
-patience merge, with a standard deviation of 58.941106657867 (with a total 
-count of 37 merges).
-
-Note that ~7 lines difference with a standard deviation of ~59 lines is 
-pretty close to ~0 lines difference.
-
-In the end, the additional expense of patience merge might just not be 
-worth it.
-
-Ciao,
-Dscho
+	-Daniel
+*This .sig left intentionally blank*
