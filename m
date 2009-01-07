@@ -1,116 +1,61 @@
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: [PATCH v3 1/3] Implement the patience diff algorithm
-Date: Wed, 7 Jan 2009 10:10:09 -0800 (PST)
-Message-ID: <alpine.DEB.1.10.0901071001360.16651@alien.or.mcafeemobile.com>
-References: <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901011134210.5086@localhost.localdomain> <20081104004001.GB29458@artemis.corp> <alpine.DEB.1.00.0811040627020.24407@pacific.mpi-cbg.de> <20081104083042.GB3788@artemis.corp>
- <alpine.DEB.1.00.0811041447170.24407@pacific.mpi-cbg.de> <20081104152351.GA21842@artemis.corp> <alpine.DEB.1.00.0901011730190.30769@pacific.mpi-cbg.de> <20090106111712.GB30766@artemis.corp> <alpine.DEB.1.00.0901062037250.30769@pacific.mpi-cbg.de>
- <20090107143926.GB831@artemis.corp> <alpine.DEB.1.00.0901071610290.7496@intel-tinevez-2-302> <alpine.DEB.1.00.0901071802190.7496@intel-tinevez-2-302>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Problems getting rid of large files using git-filter-branch
+Date: Wed, 7 Jan 2009 18:18:32 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngm9sfo.hl9.sitaramc@sitaramc.homelinux.net>
+References: <c09652430901061359q7a02291fk656ab23e54b19f5e@mail.gmail.com>
+ <alpine.DEB.1.00.0901062319070.30769@pacific.mpi-cbg.de>
+ <c09652430901061436w36c013ep938e9cfba43140c9@mail.gmail.com>
+ <alpine.DEB.1.00.0901071101480.7496@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Francis Galiegue <fg@one2team.net>,
-	Git ML <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 07 19:11:46 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 07 19:20:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKcsT-0004XS-Qc
-	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 19:11:38 +0100
+	id 1LKd0g-0007oD-Ti
+	for gcvg-git-2@gmane.org; Wed, 07 Jan 2009 19:20:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755447AbZAGSKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 13:10:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755346AbZAGSKO
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 13:10:14 -0500
-Received: from x35.xmailserver.org ([64.71.152.41]:36025 "EHLO
-	x35.xmailserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755248AbZAGSKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 13:10:11 -0500
-X-AuthUser: davidel@xmailserver.org
-Received: from alien.or.mcafeemobile.com
-	by x35.xmailserver.org with [XMail 1.26 ESMTP Server]
-	id <S2C4E36> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Wed, 7 Jan 2009 13:10:10 -0500
-X-X-Sender: davide@alien.or.mcafeemobile.com
-In-Reply-To: <alpine.DEB.1.00.0901071802190.7496@intel-tinevez-2-302>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+	id S1754846AbZAGSSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 13:18:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754368AbZAGSSm
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 13:18:42 -0500
+Received: from main.gmane.org ([80.91.229.2]:56127 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752851AbZAGSSl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 13:18:41 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LKczJ-0005Tl-8h
+	for git@vger.kernel.org; Wed, 07 Jan 2009 18:18:41 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Jan 2009 18:18:41 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Jan 2009 18:18:41 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104816>
 
-On Wed, 7 Jan 2009, Johannes Schindelin wrote:
+On 2009-01-07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> $ git verify-pack -v
+>> .git/objects/pack/pack-1e039b82d8ae53ef5ec3614a3021466663cc70a4
+>> Terminated
+>
+> I did
+>
+> 	$ git grep Terminated
+>
+> and came up empty :-)
 
-> 
-> The patience diff algorithm produces slightly more intuitive output
-> than the classic Myers algorithm, as it does not try to minimize the
-> number of +/- lines first, but tries to preserve the lines that are
-> unique.
-
-Johannes, sorry I had not time to follow this one. A couple of minor 
-comments that arose just at glancing at the patch.
-
-
-
-> +/*
-> + *  LibXDiff by Davide Libenzi ( File Differential Library )
-> + *  Copyright (C) 2003-2009 Davide Libenzi, Johannes E. Schindelin
-> + *
-> + *  This library is free software; you can redistribute it and/or
-> + *  modify it under the terms of the GNU Lesser General Public
-> + *  License as published by the Free Software Foundation; either
-> + *  version 2.1 of the License, or (at your option) any later version.
-> + *
-> + *  This library is distributed in the hope that it will be useful,
-> + *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-> + *  Lesser General Public License for more details.
-> + *
-> + *  You should have received a copy of the GNU Lesser General Public
-> + *  License along with this library; if not, write to the Free Software
-> + *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-> + *
-> + *  Davide Libenzi <davidel@xmailserver.org>
-
-You do not need to give me credit for something I don't even know how it 
-works ;)
-
-
-
-> +static int fall_back_to_classic_diff(struct hashmap *map,
-> +		int line1, int count1, int line2, int count2)
-> +{
-> +	/*
-> +	 * This probably does not work outside Git, since
-> +	 * we have a very simple mmfile structure.
-> +	 *
-> +	 * Note: ideally, we would reuse the prepared environment, but
-> +	 * the libxdiff interface does not (yet) allow for diffing only
-> +	 * ranges of lines instead of the whole files.
-> +	 */
-> +	mmfile_t subfile1, subfile2;
-> +	xpparam_t xpp;
-> +	xdfenv_t env;
-> +
-> +	subfile1.ptr = (char *)map->env->xdf1.recs[line1 - 1]->ptr;
-> +	subfile1.size = map->env->xdf1.recs[line1 + count1 - 2]->ptr +
-> +		map->env->xdf1.recs[line1 + count1 - 2]->size - subfile1.ptr;
-> +	subfile2.ptr = (char *)map->env->xdf2.recs[line2 - 1]->ptr;
-> +	subfile2.size = map->env->xdf2.recs[line2 + count2 - 2]->ptr +
-> +		map->env->xdf2.recs[line2 + count2 - 2]->size - subfile2.ptr;
-> +	xpp.flags = map->xpp->flags & ~XDF_PATIENCE_DIFF;
-> +	if (xdl_do_diff(&subfile1, &subfile2, &xpp, &env) < 0)
-> +		return -1;
-
-xdiff allows for diffing ranges, and the most efficent method is exactly 
-how you did ;) Once you know the lines pointers, there's no need to pass 
-it the whole file and have it scan it whole to find the lines range it has 
-to diff. Just pass the limited view like you did.
-
-
-- Davide
+It comes from libc, afaik.
