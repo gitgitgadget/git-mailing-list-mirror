@@ -1,115 +1,121 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: gitweb index performance (Re: [PATCH] gitweb: support the	rel=vcs-*
- microformat)
-Date: Thu, 08 Jan 2009 15:53:16 -0800
-Message-ID: <496691EC.1070805@eaglescrag.net>
-References: <20090107042518.GB24735@gnu.kitenet.net> <gk2794$djn$1@ger.gmane.org> <20090107155023.GA16540@gnu.kitenet.net> <cb7bb73a0901071003m77482a99wf6f3988beb5b5e78@mail.gmail.com> <20090107184515.GB31795@gnu.kitenet.net> <20090107190238.GA3909@gnu.kitenet.net> <20090107232427.GA18958@gnu.kitenet.net> <gk4bk5$9dq$1@ger.gmane.org> <20090108195446.GB18025@gnu.kitenet.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 2/3] replace_object: add mechanism to replace objects
+ found in "refs/replace/"
+Date: Thu, 08 Jan 2009 15:55:32 -0800
+Message-ID: <7v8wpl4akr.fsf@gitster.siamese.dyndns.org>
+References: <20090107084341.1554d8cd.chriscool@tuxfamily.org>
+ <7vmye3a4pt.fsf@gitster.siamese.dyndns.org>
+ <200901081831.22616.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Fri Jan 09 00:54:56 2009
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Jan 09 00:57:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LL4iE-00070o-Vw
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 00:54:55 +0100
+	id 1LL4kJ-0007lI-RX
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 00:57:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754353AbZAHXxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 18:53:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753778AbZAHXxa
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 18:53:30 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:55749 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753677AbZAHXx3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 18:53:29 -0500
-Received: from [172.19.0.11] (c-67-164-30-157.hsd1.ca.comcast.net [67.164.30.157])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id n08NrNMO025236
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 8 Jan 2009 15:53:23 -0800
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <20090108195446.GB18025@gnu.kitenet.net>
-X-Virus-Scanned: ClamAV 0.88.7/8845/Thu Jan  8 08:52:13 2009 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-2.1.12 (shards.monkeyblade.net [198.137.202.13]); Thu, 08 Jan 2009 15:53:24 -0800 (PST)
+	id S1754271AbZAHXzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 18:55:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754187AbZAHXzk
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 18:55:40 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46339 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752525AbZAHXzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 18:55:39 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8B2E11C168;
+	Thu,  8 Jan 2009 18:55:38 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0B9531C167; Thu, 
+ 8 Jan 2009 18:55:33 -0500 (EST)
+In-Reply-To: <200901081831.22616.chriscool@tuxfamily.org> (Christian Couder's
+ message of "Thu, 8 Jan 2009 18:31:22 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D962FDB0-DDDF-11DD-A34E-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104969>
 
-Joey Hess wrote:
-> Giuseppe Bilotta wrote:
->   
->>> There is a small overhead in including the microformat on project list
->>> and forks list pages, but getting the project descriptions for those pages
->>> already incurs a similar overhead, and the ability to get every repo url
->>> in one place seems worthwhile.
->>>       
->> I agree with this, although people with very large project lists may
->> differ ... do we have timings on these?
->>     
->
-> AFAICS, when displaying the project list, gitweb reads each project's
-> description file, falling back to reading its config file if there is no
-> description file.
->
-> If performance was a problem here, the thing to do would be to add
-> project descriptions to the $project_list file, and use those in
-> preference to the description files. If a large site has done that,
-> they've not sent in the patch. :-)
->   
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-No because all the large sites have pain points and issues elsewhere in 
-the app.  Most of the large sites (which I can at least speak for 
-Kernel.org) went and have built in full caching layers into gitweb 
-itself to deal with the problem.  This means that we don't have to worry 
-about nickle and dime performance improvements that are specific to one 
-section, but can do a very broad sweep and get dramatically better 
-performance across all of gitweb.  Those patches have all made it back 
-out onto the mailing list, but for a number of different reasons none 
-have been accepted into the mainline branch.
+> Yeah, but read_sha1_file is called to read all object files, not just 
+> commits. So putting the hook there will:
+>
+> 	1) add a lookup overhead when reading any object,
+> 	2) make it possible to replace any object,
 
-> With my patch, it will read each cloneurl file too. The best way to
-> optimise that for large sites seems to be to add an option that would
-> ignore the cloneurl files and config file and always use
-> @git_base_url_list.
->
-> I checked the only large site I have access to (git.debian.org) and they
-> use a $project_list file, but I see no other performance tuning. That's
-> a 2 ghz machine; it takes gitweb 28 (!) seconds to generate the nearly 1
-> MB index web page for 1671 repositories:
->   
+I actually see (2) as an improvement, and (1) as an associated cost.
 
-Look at either Lea's or my caching engines, it will help dramatically on 
-something of that size.
+> And there is also the following problem:
+>
+> 	3) this function is often called like this:
+>
+> 	buffer = read_sha1_file(sha1, &type, &size);
+> 	if (!buffer)
+> 		die("Cannot read %s", sha1_to_hex(sha1));
+>
+> 	so in case of error, it will give an error message with a bad sha1
+> 	in it because the sha1 of the file that we cannot read is the sha1
+> 	in the replace ref not the one passed to read_sha1_file.
 
-> /srv/git.debian.org/http/cgi-bin/gitweb.cgi  3.04s user 9.24s system 43% cpu 28.515 total
->
-> Notice that most of the time is spent by child processes. For each
-> repository, gitweb runs git-for-each-ref to determine the time of the
-> last commit.
->
-> If that is removed (say if there were a way to get the info w/o
-> forking), performance improves nicely:
->
-> ./gitweb.cgi > /dev/null  1.29s user 1.08s system 69% cpu 3.389 total
->
-> Making it not read description files for each project, as I suggest above,
-> is the next best optimisation:
->
-> ./gitweb.cgi > /dev/null  1.08s user 0.05s system 96% cpu 1.170 total
->
-> So, I think it makes sense to optimise gitweb and offer knobs for performance
-> tuning at the expense of the flexability of description and cloneurl files.
-> But, git-for-each-ref is swamping everything else
-The problem is the knobs are going to be very fine grained, you really 
-are better off looking at one of the caching engines that's available 
-now.  Performance options are hard, because it's difficult to relay to 
-anyone the complex tradeoffs, thus keeping knobs like that to a minimum 
-are really a necessity.
+You have refs/replace/$A that records $B, to tell git that the real object
+$A in the history is replaced by another object $B.  The caller feeds $A
+in the above snippet to read_sha1_file(), and your read_sha1_file()
+notices that it needs to read $B instead, returns the buffer from the
+object $B, and reports its type and size.  If there is no $B available, it
+may return NULL and the caller says "I asked for $A but in this repository
+I cannot get to it".  That sounds consistent to me, but I agree it would
+be more helpful to report "and the reason why I cannot get to it is
+because you have replacement defined as $B which you do not have."
 
-- John 'Warthog9' Hawley
+> To avoid the above problems, maybe we can try to also improve what 
+> read_sha1_file does:
+>
+> 1) allow callers to pass a type in the "type" argument and only lookup in 
+> the replace refs if we say we want a commit, but this makes calling this 
+> function more error prone
+
+This is debatable, but can go either way.
+
+> 2) when we say we want an object with a given type, check if the object we 
+> read has this type (and die if not)
+
+That we already do anyway, don't we?  parse_commit() gets data from
+read_sha1_file() and would complain if it gets a blob, etc.
+
+> 3) die in read_sha1_file when there is an error and we are replacing so that 
+> callers don't need to die themself and so that we can always report an 
+> accurate sha1 in the error message
+
+I expect the use of graft and object replacement (or if you insist,
+"commit replacement") rather rare, and I think it is probably Ok to
+declare it a grave repository misconfiguration if somebody claims that $A
+is replaced by $B without actually having $B:
+
+	void *read_sha1_file(sha1, type, size)
+        {
+		void *data;
+        	unsigned char *replacement = lookup_replace_object(sha1);
+                if (replacement) {
+                	data = read_sha1_file(replacement, type, size);
+                        if (!data)
+                        	die("replacement %s not found for %s",
+                                    get_sha1_hex(replacement),
+                                    get_sha1_hex(sha1));
+		} else {
+			data = read_object(sha1, type, size);
+		}
+                ... existing code ...
+                return data;                
+        }
+
+
+To disable replacement for connectivity walkers, lookup_replace_object()
+can look at a some global defined in environment.c, perhaps.
