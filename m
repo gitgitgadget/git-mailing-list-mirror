@@ -1,76 +1,81 @@
-From: Asheesh Laroia <asheesh@asheesh.org>
-Subject: Re: why still no empty directory support in git
-Date: Wed, 7 Jan 2009 23:12:57 -0800 (PST)
-Message-ID: <alpine.DEB.2.00.0901072251420.9933@vellum.laroia.net>
-References: <46dff0320812291942y6aeec941k9394586621e9151b@mail.gmail.com> <alpine.DEB.2.00.0812300008060.31590@vellum.laroia.net> <alpine.DEB.2.00.0812300113050.22107@vellum.laroia.net> <9b18b3110812300043l55a42f6sd995f36bf857543e@mail.gmail.com>
- <alpine.DEB.2.00.0812300346040.19911@vellum.laroia.net> <20090101200651.GB6536@coredump.intra.peff.net>
+From: "=?ISO-8859-1?Q?=D8yvind_Harboe?=" <oyvind.harboe@zylin.com>
+Subject: Re: Problems with large compressed binaries when converting from svn
+Date: Thu, 8 Jan 2009 08:33:13 +0100
+Message-ID: <c09652430901072333r6a2d849cn5dff8f53e18cd6ba@mail.gmail.com>
+References: <c09652430901060455l5179888ep3c51ff4e3dd5a6ef@mail.gmail.com>
+	 <81b0412b0901071555t62c1da3ar2b2cfd14222b502e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 08 08:14:25 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 08 08:34:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKp61-0002tl-1q
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 08:14:25 +0100
+	id 1LKpPd-0006Pg-Ih
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 08:34:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752753AbZAHHNF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 02:13:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752620AbZAHHND
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 02:13:03 -0500
-Received: from rose.makesad.us ([219.105.37.19]:51958 "EHLO rose.makesad.us"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752542AbZAHHNC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 02:13:02 -0500
-Received: from vellum.laroia.net (localhost [127.0.0.1])
-	by rose.makesad.us (Postfix) with ESMTP id C452EA02BE
-	for <git@vger.kernel.org>; Thu,  8 Jan 2009 02:13:00 -0500 (EST)
-Received: from localhost (localhost [127.0.0.1])
-	by vellum.laroia.net (Postfix) with ESMTPS id 650843A62BC
-	for <git@vger.kernel.org>; Wed,  7 Jan 2009 23:12:57 -0800 (PST)
-X-X-Sender: paulproteus@vellum.laroia.net
-In-Reply-To: <20090101200651.GB6536@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-OpenPGP-Key-ID: 0x70096AD1
+	id S1753199AbZAHHdR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Jan 2009 02:33:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753191AbZAHHdR
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 02:33:17 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:41174 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753055AbZAHHdP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jan 2009 02:33:15 -0500
+Received: by bwz14 with SMTP id 14so26842127bwz.13
+        for <git@vger.kernel.org>; Wed, 07 Jan 2009 23:33:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=LzbNa41mIdK9oXRhh+Xh745qlt5qVAp9CB2xADvk1CY=;
+        b=dTgtAbc8shC1kwnLGwgdvxYfQF7iH/STk+8F/ysglKDCEcGbCdG9plvGbDq25Ezefx
+         VW8s49phmEtrHOX5upq0Ysvr2UuXwCcjpsNnTS2fKWvUnebmQv52SgPiBgY9wnY40gtw
+         Jf+NZeEALZGj7E/k058KT11OGCOGhdclu4+3Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=Qi0iuAqz8It4aDBatG9+LYcDb5LfVW8Z7qkWJa/wJy1SAn5KgtFv3SY119JBnGKOdI
+         ZZINJHo4hpuU/d4OXsbDj7vQMIjDC8N6NidWq8DPio4YStKT/A4BbFgkFEKqpyxYSn3q
+         z3saA0dToU0hlqUfNXknrHbqsbkBZqagrCvNM=
+Received: by 10.223.106.71 with SMTP id w7mr17259867fao.22.1231399993545;
+        Wed, 07 Jan 2009 23:33:13 -0800 (PST)
+Received: by 10.223.121.142 with HTTP; Wed, 7 Jan 2009 23:33:13 -0800 (PST)
+In-Reply-To: <81b0412b0901071555t62c1da3ar2b2cfd14222b502e@mail.gmail.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: 69746230d4261e81
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104895>
 
-On Thu, 1 Jan 2009, Jeff King wrote:
-
-> On Tue, Dec 30, 2008 at 03:58:46AM -0500, Asheesh Laroia wrote:
+>> Does git have some capability to store diffs of compressed files eff=
+iciently?
 >
->> So, let's say I take your suggestion.
->>
->> $ touch ~/Maildir/new/.exists
->> $ git add ~/Maildir/new/.exists && git commit -m "La di da"
->>
->> Now a spec-compliant Maildir user agent will attempt to deliver this new
->> "email message" of zero bytes into the mail spool and assign it a message
->> UID.  Doing so will remove it from Maildir/new.
+> No, but you can unpack the tarballs and include the toolchains as sub=
+modules
+> (aka subprojects) in the projects which need them.
 >
-> No. The maildir spec says:
->
->  A unique name can be anything that doesn't contain a colon (or slash)
->  and doesn't start with a dot.
->     -- http://cr.yp.to/proto/maildir.html
->
-> where a "unique name" is the filename used for a message. In practice,
-> every maildir implementation I have seen ignores files starting with a
-> dot. Do you have one that doesn't?
+> See man page to git submodule, the user-manual.txt on "submodule" and
+> gitmodules.txt (submodule configuration formats and conventions).
 
-My apologies. This works just fine, and I'm a dolt.
+I'll need the submodule stuff for sure, but in this particular case I w=
+as
+trying to see if there was a way to keep the svn abuse patterns from
+svn under git without a lot of retraining.
 
-Happy new year!
 
-(I'm still academically interested in how to avoid the rmdir(), but as I 
-said before, that's a topic for someone else to pick up now.)
 
--- Asheesh.
-
--- 
-English literature's performing flea.
- 		-- Sean O'Casey on P. G. Wodehouse
+--=20
+=D8yvind Harboe
+http://www.zylin.com/zy1000.html
+ARM7 ARM9 XScale Cortex
+JTAG debugger and flash programmer
