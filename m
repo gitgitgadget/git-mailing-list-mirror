@@ -1,78 +1,72 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: collapsing commits with rebase
-Date: Wed, 7 Jan 2009 20:39:07 -0600
-Message-ID: <200901072039.12631.bss@iguanasuicide.net>
-References: <93c3eada0901071608r190a723bma502b68c4ab81a08@mail.gmail.com> <200901072011.37299.bss@iguanasuicide.net> <20090108023224.GU21154@genesis.frugalware.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Public repro case! Re: [PATCH/RFC] Allow writing loose objects
+	that are corrupted in a pack file
+Date: Wed, 7 Jan 2009 18:43:25 -0800
+Message-ID: <20090108024325.GE10790@spearce.org>
+References: <alpine.LFD.2.00.0901062005290.26118@xanadu.home> <1231292360.8870.61.camel@starfruit> <alpine.LFD.2.00.0901062026500.3057@localhost.localdomain> <1231314099.8870.415.camel@starfruit> <alpine.LFD.2.00.0901070743070.3057@localhost.localdomain> <1231368935.8870.584.camel@starfruit> <alpine.LFD.2.00.0901071520330.3057@localhost.localdomain> <1231374514.8870.621.camel@starfruit> <alpine.LFD.2.00.0901071644330.3283@localhost.localdomain> <885649360901071821t2ea481b5k83ab800f6aeb897@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart23253997.HAyAqSh4C7";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: geoffrey.russell@gmail.com, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Jan 08 03:40:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git ML <git@vger.kernel.org>,
+	"R. Tyler Ballance" <tyler@slide.com>,
+	Nicolas Pitre <nico@cam.org>,
+	Jan =?iso-8859-1?Q?Kr=FCger?= <jk@jk.gs>, kb@slide.com,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: James Pickens <jepicken@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 08 03:44:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKkoY-0001bo-Ac
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 03:40:06 +0100
+	id 1LKkt9-0002Xj-3R
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 03:44:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751334AbZAHCin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 21:38:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbZAHCin
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 21:38:43 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:54728 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750738AbZAHCim (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 21:38:42 -0500
-Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.124])
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LKknA-0006wT-Eq; Thu, 08 Jan 2009 02:38:40 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <20090108023224.GU21154@genesis.frugalware.org>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1751281AbZAHCn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 21:43:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbZAHCn1
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 21:43:27 -0500
+Received: from george.spearce.org ([209.20.77.23]:33307 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750817AbZAHCn0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 21:43:26 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id E3D7838210; Thu,  8 Jan 2009 02:43:25 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <885649360901071821t2ea481b5k83ab800f6aeb897@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104877>
 
---nextPart23253997.HAyAqSh4C7
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+James Pickens <jepicken@gmail.com> wrote:
+> On Wed, Jan 7, 2009, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> > Can you cnfirm that your "reproducible" case starts working with that
+> > addition to your ~/.gitconfig? If so, the solution is pretty simple: we
+> > should just lower the default pack windowsize.
+> 
+> Umm... isn't that more of a workaround than a solution?  I.e., if you lower
+> the default pack windowsize, couldn't the corruption still happen under the
+> right conditions?
 
-On Wednesday 2009 January 07 20:32:24 Miklos Vajna wrote:
->On Wed, Jan 07, 2009 at 08:11:32PM -0600, "Boyd Stephen Smith Jr."=20
-<bss@iguanasuicide.net> wrote:
->> git merge -s sha(D)
->
->You probably mean --squash here, -s stands for --strategy - and I *hope*
->you don't have git-sha(D) in your PATH, as a custom merge strategy. ;-)
+Uhm, yea.  So I managed to reproduce it on a Linux system here.
+Different object ids than R. Tyler's case, but I'm going to try
+to debug it and see why we are getting these.
 
-Oops.  Yes.  My mistake.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+For those following along at home, Linus' 2.6 tree:
 
---nextPart23253997.HAyAqSh4C7
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+$ ulimit -v `echo '150 * 1024'|bc -l`
+$ git co 56d18e9932ebf4e8eca42d2ce509450e6c9c1666
+HEAD is now at 56d18e9... Merge branch 'upstream' of git://ftp.linux-mips.org/pub/scm/upstream-linus
+$ git merge 9e42d0cf5020aaf217433cad1a224745241d212a
+Updating 56d18e9..9e42d0c
+error: failed to read delta base object ef135b90084f3c54fccea4e273aeff029db2d873 at offset 48342508 from .git/objects/pack/pack-edb47354be787909e05c15bd1d9eb8b4684d2e4d.pack
+error: failed to read delta base object c4e828b71d96622bb258938d69aab9cec53d5cae at offset 128427683 from .git/objects/pack/pack-edb47354be787909e05c15bd1d9eb8b4684d2e4d.pack
+error: failed to read object 3cd5a6463cfd9306095bf6312a9b7ab09d4f2f5d at offset 128427777 from .git/objects/pack/pack-edb47354be787909e05c15bd1d9eb8b4684d2e4d.pack
+fatal: object 3cd5a6463cfd9306095bf6312a9b7ab09d4f2f5d is corrupted
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+No, the repository is not corrupt.  We f'd up our memory management
+somewhere.
 
-iEYEABECAAYFAkllZ1AACgkQdNbfk+86fC2EcgCeJvHm4r7fogt78cb8dw4L/KM2
-M0sAn39WmrBlZbpn17GYtyP5+7XX1+6u
-=8vHk
------END PGP SIGNATURE-----
-
---nextPart23253997.HAyAqSh4C7--
+-- 
+Shawn.
