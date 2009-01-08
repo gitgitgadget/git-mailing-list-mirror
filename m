@@ -1,79 +1,99 @@
-From: Alexander Potashev <aspotashev@gmail.com>
-Subject: Re: [PATCH RFC] mailinfo: correctly handle multiline 'Subject:'
-	header
-Date: Thu, 8 Jan 2009 13:08:13 +0300
-Message-ID: <20090108100813.GA15640@myhost>
-References: <1230316721-14339-1-git-send-email-kirr@mns.spb.ru>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Problems with large compressed binaries when converting from svn
+Date: Thu, 8 Jan 2009 11:01:52 +0100
+Message-ID: <200901081101.52650.johan@herland.net>
+References: <c09652430901060455l5179888ep3c51ff4e3dd5a6ef@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kirill Smelkov <kirr@mns.spb.ru>
-X-From: git-owner@vger.kernel.org Thu Jan 08 11:09:40 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?iso-8859-1?q?=D8yvind?= Harboe" <oyvind.harboe@zylin.com>
+X-From: git-owner@vger.kernel.org Thu Jan 08 11:47:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKrpY-00059E-A9
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 11:09:36 +0100
+	id 1LKsQa-0000fk-MZ
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 11:47:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752120AbZAHKIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 05:08:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751586AbZAHKIK
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 05:08:10 -0500
-Received: from fk-out-0910.google.com ([209.85.128.185]:48483 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751423AbZAHKIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 05:08:09 -0500
-Received: by fk-out-0910.google.com with SMTP id 18so4421145fkq.5
-        for <git@vger.kernel.org>; Thu, 08 Jan 2009 02:08:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=8vy+gl9c6moYW6RwYZuW29YRrxPhPycebP7UhpiMDVE=;
-        b=cf9n5UB8W+3hbGp7C2qgTrTS81lIuwBRIp6HfCQLqSb9Srcwax9JL8RhVY8fxemHR3
-         M6hvGUf3r/GAzs5iicx0gb8hGgI9oNiyS/8hc7nChZoVtiqbNh+mjPG+0d5UMpCxulEW
-         8kSS1zIvNWIEA00Fqer4+20tLJL/ez3i0oNoM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ICPxiM+/KmGl35qbG2aAL7051SgSod+J6emtTAcBN1HjTkboxm1/pk7oUZGCDvHmZl
-         3qA+rp82pJu8t+N7ilfElCm94cllB2OdwRAPrEdku1Uu1AHTGhzvAzaDRr945aZu1MMC
-         Vw8qgVUS7NOD8pMGWL2DhUc2n5zUa3PxgWvLI=
-Received: by 10.86.84.18 with SMTP id h18mr14050117fgb.22.1231409287291;
-        Thu, 08 Jan 2009 02:08:07 -0800 (PST)
-Received: from smtp.gmail.com (ppp83-237-188-32.pppoe.mtu-net.ru [83.237.188.32])
-        by mx.google.com with ESMTPS id d4sm45368552fga.31.2009.01.08.02.08.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 08 Jan 2009 02:08:06 -0800 (PST)
-Received: by smtp.gmail.com (sSMTP sendmail emulation); Thu, 08 Jan 2009 13:08:13 +0300
+	id S1752491AbZAHKq3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Jan 2009 05:46:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbZAHKq2
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 05:46:28 -0500
+Received: from mail10.copyleft.no ([195.159.105.140]:62290 "EHLO
+	mail10.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751643AbZAHKq1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jan 2009 05:46:27 -0500
+X-Greylist: delayed 2671 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Jan 2009 05:46:27 EST
+Received: from mail.mailgateway.no ([82.117.37.108])
+	by mail10.copyleft.no with esmtp (Exim 4.66 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1LKri5-000KR0-PO; Thu, 08 Jan 2009 11:01:53 +0100
+Received: from cm-84.215.102.95.getinternet.no ([84.215.102.95] helo=alpha.herland)
+	by mail.mailgateway.no with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.60 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1LKri5-000MAe-AS; Thu, 08 Jan 2009 11:01:53 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <c09652430901060455l5179888ep3c51ff4e3dd5a6ef@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <1230316721-14339-1-git-send-email-kirr@mns.spb.ru>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104913>
 
-On 21:38 Fri 26 Dec     , Kirill Smelkov wrote:
-> When native language (RU) is in use, subject header usually contains several
-> parts, e.g.
-> 
-> Subject: [Navy-patches] [PATCH]
-> 	=?utf-8?b?0JjQt9C80LXQvdGR0L0g0YHQv9C40YHQvtC6INC/0LA=?=
-> 	=?utf-8?b?0LrQtdGC0L7QsiDQvdC10L7QsdGF0L7QtNC40LzRi9GFINC00LvRjyA=?=
-> 	=?utf-8?b?0YHQsdC+0YDQutC4?=
-> 
+On Tuesday 06 January 2009, =D8yvind Harboe wrote:
+> I'm converting from svn and I've run into a
+> problem with tar.gz and tar.bz2 compressed files.
+>
+> (This is a separate but only slightly related to previous post).
+>
+> In subversion we committed large tar.bz2/gz files. These files would
+> change relatively rarely, but only very slightly.  The trouble with t=
+he
+> tar.bz2 format is that if the first byte changes, then the rest of th=
+e
+> file will also be different. .zip does not have this problem, but .zi=
+p
+> isn't a very friendly format for our purposes.
+>
+> Later on the tar.bz2/gz files started to change fairly often, but
+> harddrives get bigger much more quickly than the .svn repository grow=
+s so
+> we just kept doing things the same way rather than reeducate and
+> reengineer the procedures.
+>
+> With .git we need to handle this differently somehow.
+>
+> Does git have some capability to store diffs of compressed files
+> efficiently?
+>
+> The only other alternative I can think of is to commit uncompressed
+> .tar files which is a bit of a bump in the road, but I suppose could =
+be
+> made to work.
 
->  t/t5100/info0012    |    5 ++++
->  t/t5100/msg0012     |    7 ++++++
->  t/t5100/patch0012   |   30 +++++++++++++++++++++++++++++
->  t/t5100/sample.mbox |   52 +++++++++++++++++++++++++++++++++++++++++++++++++++
->  6 files changed, 112 insertions(+), 2 deletions(-)
+Git can automate this for you. Take a look at the gitattributes(5) man =
+page,=20
+specifically the "filter" attribute. You should be able to set up filte=
+r=20
+drivers for .tar.gz files that use "clean=3Dgunzip" and "smudge=3Dgzip"=
+ (and a=20
+similar filter driver for .tar.bz2 files).
 
-The testcases are too long, a minimal mbox with encoded "Subject:" would
-be enough to test the mailinfo parser, it's all the you need to test
-here.
+If I've understood this right (I haven't used this myself) your checkou=
+ts=20
+should now have .tar.gz and .tar.bz2 files, even though Git only=20
+stores .tar files internally (thus improving compression across version=
+s=20
+dramatically).
+
+
+Have fun! :)
+
+=2E..Johan
+
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
