@@ -1,51 +1,63 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Can I prevent someone clone my git repository?
-Date: Thu, 08 Jan 2009 09:59:41 +0100
-Message-ID: <4965C07D.705@viscovery.net>
-References: <856bfe0e0901072303i4fcd3bf6u99790ab9f4170937@mail.gmail.com> <7vr63e42ke.fsf@gitster.siamese.dyndns.org>
+From: Michail Anastasopoulos <manast@gmx.de>
+Subject: Git for Product Line Engineering
+Date: Thu, 8 Jan 2009 09:01:46 +0000 (UTC)
+Message-ID: <loom.20090108T085342-994@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Emily Ren <lingyan.ren@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 10:01:22 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 08 10:07:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKqlU-0001h5-66
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 10:01:20 +0100
+	id 1LKqqi-00037Q-0l
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 10:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753951AbZAHI74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 03:59:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753851AbZAHI74
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 03:59:56 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:38843 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753807AbZAHI7z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 03:59:55 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LKqjv-0001oK-Nh; Thu, 08 Jan 2009 09:59:44 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 8A2A9A865; Thu,  8 Jan 2009 09:59:41 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <7vr63e42ke.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: -1.4 (-)
+	id S1754016AbZAHJFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 04:05:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753956AbZAHJFK
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 04:05:10 -0500
+Received: from main.gmane.org ([80.91.229.2]:41552 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753563AbZAHJFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 04:05:03 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LKqp4-0003de-FF
+	for git@vger.kernel.org; Thu, 08 Jan 2009 09:05:02 +0000
+Received: from pax.iese.fraunhofer.de ([153.96.133.33])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Jan 2009 09:05:02 +0000
+Received: from manast by pax.iese.fraunhofer.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Jan 2009 09:05:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 153.96.133.33 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5 (.NET CLR 3.5.30729))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104903>
 
-Junio C Hamano schrieb:
-> The git-daemon transport deliberately omits authentication, and you cannot
-> restrict when they come over the git native transport using a URL like
-> git://your-host/repository.git
+Hello,
+I was wondering if anyone of you has applied git to manage the evolution of a
+product line. In such a context management of software reuse and permanent
+variation becomes necessary.
 
-But you can wrap git daemon by tcpd and configure hosts.allow and
-hosts.deny (with all its caveats), if this suits your needs.
+I think that the distributed character of git as well the easier handling of
+branches could be very beneficial in such a context.
 
--- Hannes
+Yet I was wondering how the relations between reusable and reused things could
+be managed?
+
+If for example I am the maintainer of a library in a product line context I want
+to know who pulls from me and whether my library had to undergo any
+product-specific changes in any of the other repositories that belong to my
+product line.
+
+Regards,
+Michalis
