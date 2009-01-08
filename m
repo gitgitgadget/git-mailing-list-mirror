@@ -1,64 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Comments on Presentation Notes Request.
-Date: Thu, 8 Jan 2009 04:56:03 -0500
-Message-ID: <20090108095603.GA16136@coredump.intra.peff.net>
-References: <c115fd3c0901061433i78bf3b26v77e5981aada6728e@mail.gmail.com> <20090107063629.GB22616@coredump.intra.peff.net> <alpine.LNX.1.00.0901071654530.19665@iabervon.org>
+From: Alexander Potashev <aspotashev@gmail.com>
+Subject: Re: [PATCH RFC] mailinfo: correctly handle multiline 'Subject:'
+	header
+Date: Thu, 8 Jan 2009 13:08:13 +0300
+Message-ID: <20090108100813.GA15640@myhost>
+References: <1230316721-14339-1-git-send-email-kirr@mns.spb.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Tim Visher <tim.visher@gmail.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Jan 08 10:57:30 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kirill Smelkov <kirr@mns.spb.ru>
+X-From: git-owner@vger.kernel.org Thu Jan 08 11:09:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKrdo-0001on-Ka
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 10:57:29 +0100
+	id 1LKrpY-00059E-A9
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 11:09:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754326AbZAHJ4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 04:56:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753693AbZAHJ4I
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 04:56:08 -0500
-Received: from peff.net ([208.65.91.99]:55673 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752569AbZAHJ4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 04:56:06 -0500
-Received: (qmail 6021 invoked by uid 107); 8 Jan 2009 09:56:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 08 Jan 2009 04:56:38 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Jan 2009 04:56:03 -0500
+	id S1752120AbZAHKIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 05:08:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751586AbZAHKIK
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 05:08:10 -0500
+Received: from fk-out-0910.google.com ([209.85.128.185]:48483 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751423AbZAHKIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 05:08:09 -0500
+Received: by fk-out-0910.google.com with SMTP id 18so4421145fkq.5
+        for <git@vger.kernel.org>; Thu, 08 Jan 2009 02:08:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=8vy+gl9c6moYW6RwYZuW29YRrxPhPycebP7UhpiMDVE=;
+        b=cf9n5UB8W+3hbGp7C2qgTrTS81lIuwBRIp6HfCQLqSb9Srcwax9JL8RhVY8fxemHR3
+         M6hvGUf3r/GAzs5iicx0gb8hGgI9oNiyS/8hc7nChZoVtiqbNh+mjPG+0d5UMpCxulEW
+         8kSS1zIvNWIEA00Fqer4+20tLJL/ez3i0oNoM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ICPxiM+/KmGl35qbG2aAL7051SgSod+J6emtTAcBN1HjTkboxm1/pk7oUZGCDvHmZl
+         3qA+rp82pJu8t+N7ilfElCm94cllB2OdwRAPrEdku1Uu1AHTGhzvAzaDRr945aZu1MMC
+         Vw8qgVUS7NOD8pMGWL2DhUc2n5zUa3PxgWvLI=
+Received: by 10.86.84.18 with SMTP id h18mr14050117fgb.22.1231409287291;
+        Thu, 08 Jan 2009 02:08:07 -0800 (PST)
+Received: from smtp.gmail.com (ppp83-237-188-32.pppoe.mtu-net.ru [83.237.188.32])
+        by mx.google.com with ESMTPS id d4sm45368552fga.31.2009.01.08.02.08.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 08 Jan 2009 02:08:06 -0800 (PST)
+Received: by smtp.gmail.com (sSMTP sendmail emulation); Thu, 08 Jan 2009 13:08:13 +0300
 Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.00.0901071654530.19665@iabervon.org>
+In-Reply-To: <1230316721-14339-1-git-send-email-kirr@mns.spb.ru>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104912>
 
-On Wed, Jan 07, 2009 at 05:30:04PM -0500, Daniel Barkalow wrote:
-
-> > So yes, you are much more likely to salvage useful (if not all) data
-> > from developer repositories in the event of a crash. But I still think
-> > it's crazy not to have a backup strategy for your DVCS repo.
+On 21:38 Fri 26 Dec     , Kirill Smelkov wrote:
+> When native language (RU) is in use, subject header usually contains several
+> parts, e.g.
 > 
-> I think it's very important to have a backup strategy, but it's nice that 
-> the developers can get work done while the server is still down.
+> Subject: [Navy-patches] [PATCH]
+> 	=?utf-8?b?0JjQt9C80LXQvdGR0L0g0YHQv9C40YHQvtC6INC/0LA=?=
+> 	=?utf-8?b?0LrQtdGC0L7QsiDQvdC10L7QsdGF0L7QtNC40LzRi9GFINC00LvRjyA=?=
+> 	=?utf-8?b?0YHQsdC+0YDQutC4?=
+> 
 
-I think everything you said in your email was correct, and I agree with
-it, but I just wanted to clarify one thing about what I said.
+>  t/t5100/info0012    |    5 ++++
+>  t/t5100/msg0012     |    7 ++++++
+>  t/t5100/patch0012   |   30 +++++++++++++++++++++++++++++
+>  t/t5100/sample.mbox |   52 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  6 files changed, 112 insertions(+), 2 deletions(-)
 
-I really _do_ think you are better off in a disaster or backup situation
-with a DVCS. Both this past year and 2007, Junio dropped off the face of
-the git planet for a few weeks, and everyone seamlessly switched to
-Shawn as maintainer. So I think of the DVCS model almost more as "high
-availablity": even if you model your workflow around a central server,
-it's easy to route around the failure.
-
-It's just that I don't think these features totally _replace_ backups as
-a concept. And I feel like that notion creeps up now and again in the
-centralized versus distributed holy wars.
-
-So I think we agree; I just wasn't sure if I gave the wrong impression
-from my first email.
-
--Peff
+The testcases are too long, a minimal mbox with encoded "Subject:" would
+be enough to test the mailinfo parser, it's all the you need to test
+here.
