@@ -1,51 +1,74 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Can I prevent someone clone my git repository?
-Date: Thu, 08 Jan 2009 10:41:30 +0100
-Message-ID: <4965CA4A.3070101@viscovery.net>
-References: <856bfe0e0901072303i4fcd3bf6u99790ab9f4170937@mail.gmail.com>	 <7vr63e42ke.fsf@gitster.siamese.dyndns.org>	 <4965C07D.705@viscovery.net> <856bfe0e0901080133q68d0008ao1abf9d235e70279e@mail.gmail.com>
+From: "Geoff Russell" <geoffrey.russell@gmail.com>
+Subject: Re: collapsing commits with rebase
+Date: Thu, 8 Jan 2009 20:19:16 +1030
+Message-ID: <93c3eada0901080149m3c349e6bx33b58d653fd43b48@mail.gmail.com>
+References: <93c3eada0901071608r190a723bma502b68c4ab81a08@mail.gmail.com>
+	 <200901072011.37299.bss@iguanasuicide.net>
+	 <20090108023224.GU21154@genesis.frugalware.org>
+	 <200901072039.12631.bss@iguanasuicide.net>
+Reply-To: geoffrey.russell@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Emily Ren <lingyan.ren@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 10:43:05 2009
+Cc: "Miklos Vajna" <vmiklos@frugalware.org>, git@vger.kernel.org
+To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+X-From: git-owner@vger.kernel.org Thu Jan 08 10:51:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKrPq-00061o-Iu
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 10:43:03 +0100
+	id 1LKrXk-0008SI-53
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 10:51:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752949AbZAHJlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 04:41:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbZAHJlj
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 04:41:39 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:60291 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751738AbZAHJli (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 04:41:38 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LKrOP-0001E2-N8; Thu, 08 Jan 2009 10:41:34 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 64372A865; Thu,  8 Jan 2009 10:41:30 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <856bfe0e0901080133q68d0008ao1abf9d235e70279e@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1758794AbZAHJtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 04:49:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758792AbZAHJtS
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 04:49:18 -0500
+Received: from rv-out-0506.google.com ([209.85.198.224]:5991 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754716AbZAHJtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 04:49:17 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so8318404rvb.1
+        for <git@vger.kernel.org>; Thu, 08 Jan 2009 01:49:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=z9bVLTS/9shCjJm+kc7ymGREq6T5D7lDBZlEaxCPlYg=;
+        b=fYHqPGif411cCHi2WUD2V0FtWJPB1SSpnX4YK89mZBpoWXUMJF4H0sFXNckJO9Mh6X
+         ClxIO3pB6uZiosf00SyJVugItbvq86zXz+HGAC+wod0Y5MbAya0u7uO+T9FxdjdhilgW
+         mNd+mn0M1seCjumlnFTWaxvbURdvLdSZKmwtA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:references;
+        b=sySD36owuzVp3SLzqovW1pe8Hn0Ci8+jJFJpxK4hNy8SKmaGnPcHYC8MoErdkTfObS
+         DCkZ6fww9/WYLBDNDlwAENv9QFRKjMosDM5L2bowRpOJE90uW0HL7XDlvy/BFUOQXPHi
+         E+CYX1aISJhtV7pRUjWxKsDMFrHxuMwD4ToS8=
+Received: by 10.141.197.21 with SMTP id z21mr12021809rvp.267.1231408156440;
+        Thu, 08 Jan 2009 01:49:16 -0800 (PST)
+Received: by 10.140.136.16 with HTTP; Thu, 8 Jan 2009 01:49:16 -0800 (PST)
+In-Reply-To: <200901072039.12631.bss@iguanasuicide.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104910>
 
-Emily Ren schrieb:
-> Could you give me a detailed steps on how to wrap git daemon by tcpd?
+On 1/8/09, Boyd Stephen Smith Jr. <bss@iguanasuicide.net> wrote:
+> On Wednesday 2009 January 07 20:32:24 Miklos Vajna wrote:
+>  >On Wed, Jan 07, 2009 at 08:11:32PM -0600, "Boyd Stephen Smith Jr."
+>  <bss@iguanasuicide.net> wrote:
+>  >> git merge -s sha(D)
+>  >
+>  >You probably mean --squash here, -s stands for --strategy - and I *hope*
+>  >you don't have git-sha(D) in your PATH, as a custom merge strategy. ;-)
+>
 
-Sorry, no, I haven't done that myself. I would look into /etc/xinetd.d/*
-how tcpd is used with other protocols and merge that information with the
-examples in the man page of git daemon.
+Many thanks, now I have plenty of ways to think about!
 
--- Hannes
+Cheers,
+Geoff.
