@@ -1,78 +1,72 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: collapsing commits with rebase
-Date: Wed, 7 Jan 2009 22:23:59 -0600
-Message-ID: <200901072224.04906.bss@iguanasuicide.net>
-References: <93c3eada0901071608r190a723bma502b68c4ab81a08@mail.gmail.com> <200901072011.37299.bss@iguanasuicide.net> <slrngmav3b.20e.sitaramc@sitaramc.homelinux.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Wrap inflateInit to retry allocation after releasing
+ pack memory
+Date: Wed, 07 Jan 2009 21:23:52 -0800
+Message-ID: <7vbpui8j6f.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.2.00.0901062026500.3057@localhost.localdomain>
+ <1231314099.8870.415.camel@starfruit>
+ <alpine.LFD.2.00.0901070743070.3057@localhost.localdomain>
+ <1231368935.8870.584.camel@starfruit>
+ <alpine.LFD.2.00.0901071520330.3057@localhost.localdomain>
+ <1231374514.8870.621.camel@starfruit>
+ <alpine.LFD.2.00.0901071836290.3283@localhost.localdomain>
+ <20090108030115.GF10790@spearce.org>
+ <alpine.LFD.2.00.0901071904380.3283@localhost.localdomain>
+ <20090108031314.GG10790@spearce.org> <20090108031655.GH10790@spearce.org>
+ <alpine.LFD.2.00.0901071941210.3283@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1369095.hDGRpsEVil";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 05:24:59 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"R. Tyler Ballance" <tyler@slide.com>,
+	Nicolas Pitre <nico@cam.org>,
+	Jan =?utf-8?Q?Kr=C3=BC?= =?utf-8?Q?ger?= <jk@jk.gs>,
+	Git ML <git@vger.kernel.org>, kb@slide.com
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jan 08 06:25:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKmS3-0007BA-27
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 05:24:59 +0100
+	id 1LKnOk-0001LO-Lk
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 06:25:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751810AbZAHEXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 23:23:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751620AbZAHEXe
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 23:23:34 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:37556 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751281AbZAHEXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 23:23:33 -0500
-Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.124])
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LKmQf-0000V2-0O; Thu, 08 Jan 2009 04:23:33 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <slrngmav3b.20e.sitaramc@sitaramc.homelinux.net>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1751037AbZAHFYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 00:24:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751213AbZAHFYM
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 00:24:12 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63339 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751018AbZAHFYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 00:24:11 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 859CC1C0DA;
+	Thu,  8 Jan 2009 00:24:06 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0019C1C0A2; Thu, 
+ 8 Jan 2009 00:23:54 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.0901071941210.3283@localhost.localdomain>
+ (Linus Torvalds's message of "Wed, 7 Jan 2009 19:54:47 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 91D4DBDA-DD44-11DD-BBD9-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104889>
 
---nextPart1369095.hDGRpsEVil
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On Wednesday 2009 January 07 22:09:15 Sitaram Chamarty wrote:
->[Haven't tested, but I *think* I understand rebase well
->enough now to say so...]
+> +int git_inflate(z_streamp strm, int flush)
+> +{
+> +...
+> +	/* Z_BUF_ERROR: normal, needs a buffer output buffer */
+> +	case Z_BUF_ERROR:
 
-Probably understand it better than me.  I just haven't needed to use it for=
-=20
-this that much.  This also might not be much better than setting GIT_PAGER =
-to=20
-a script, but it seems less fragile to me.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+Thanks, but "needs a buffer output buffer" made me scratch my head
+somewhat.
 
---nextPart1369095.hDGRpsEVil
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkllf+QACgkQdNbfk+86fC0bxgCfdyFudzllTFWz8WkHpVi9bCI6
-sWoAn0js8VKY+DIAsSn2Ws70so5D4Yxn
-=VNhg
------END PGP SIGNATURE-----
-
---nextPart1369095.hDGRpsEVil--
+  ... Z_BUF_ERROR if no progress is possible or if there was not enough
+  room in the output buffer when Z_FINISH is used. Note that Z_BUF_ERROR
+  is not fatal, and inflate() can be called again with more input and more
+  output space to continue decompressing.
