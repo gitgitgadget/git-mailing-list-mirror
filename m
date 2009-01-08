@@ -1,81 +1,70 @@
-From: "=?ISO-8859-1?Q?=D8yvind_Harboe?=" <oyvind.harboe@zylin.com>
-Subject: Re: Problems with large compressed binaries when converting from svn
-Date: Thu, 8 Jan 2009 08:33:13 +0100
-Message-ID: <c09652430901072333r6a2d849cn5dff8f53e18cd6ba@mail.gmail.com>
-References: <c09652430901060455l5179888ep3c51ff4e3dd5a6ef@mail.gmail.com>
-	 <81b0412b0901071555t62c1da3ar2b2cfd14222b502e@mail.gmail.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Google Summer of Code 2009
+Date: Thu, 08 Jan 2009 20:55:50 +1300
+Message-ID: <1231401350.6067.4.camel@maia.lan>
+References: <20090107183033.GB10790@spearce.org>
+	 <81b0412b0901071512k64a7d5e2u2c602b903f5233d3@mail.gmail.com>
+	 <20090107231431.GC10790@spearce.org>
+	 <alpine.DEB.1.00.0901080024170.7496@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 08:34:43 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 08 08:57:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKpPd-0006Pg-Ih
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 08:34:42 +0100
+	id 1LKpli-0002gD-Vw
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 08:57:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753199AbZAHHdR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Jan 2009 02:33:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753191AbZAHHdR
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 02:33:17 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:41174 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753055AbZAHHdP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Jan 2009 02:33:15 -0500
-Received: by bwz14 with SMTP id 14so26842127bwz.13
-        for <git@vger.kernel.org>; Wed, 07 Jan 2009 23:33:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=LzbNa41mIdK9oXRhh+Xh745qlt5qVAp9CB2xADvk1CY=;
-        b=dTgtAbc8shC1kwnLGwgdvxYfQF7iH/STk+8F/ysglKDCEcGbCdG9plvGbDq25Ezefx
-         VW8s49phmEtrHOX5upq0Ysvr2UuXwCcjpsNnTS2fKWvUnebmQv52SgPiBgY9wnY40gtw
-         Jf+NZeEALZGj7E/k058KT11OGCOGhdclu4+3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=Qi0iuAqz8It4aDBatG9+LYcDb5LfVW8Z7qkWJa/wJy1SAn5KgtFv3SY119JBnGKOdI
-         ZZINJHo4hpuU/d4OXsbDj7vQMIjDC8N6NidWq8DPio4YStKT/A4BbFgkFEKqpyxYSn3q
-         z3saA0dToU0hlqUfNXknrHbqsbkBZqagrCvNM=
-Received: by 10.223.106.71 with SMTP id w7mr17259867fao.22.1231399993545;
-        Wed, 07 Jan 2009 23:33:13 -0800 (PST)
-Received: by 10.223.121.142 with HTTP; Wed, 7 Jan 2009 23:33:13 -0800 (PST)
-In-Reply-To: <81b0412b0901071555t62c1da3ar2b2cfd14222b502e@mail.gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: 69746230d4261e81
+	id S1753339AbZAHH4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 02:56:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753290AbZAHH4F
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 02:56:05 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:50168 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753137AbZAHH4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 02:56:04 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 790C921D5F1; Thu,  8 Jan 2009 20:56:01 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 9765521D1E8;
+	Thu,  8 Jan 2009 20:55:56 +1300 (NZDT)
+In-Reply-To: <alpine.DEB.1.00.0901080024170.7496@intel-tinevez-2-302>
+X-Mailer: Evolution 2.24.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104896>
 
->> Does git have some capability to store diffs of compressed files eff=
-iciently?
->
-> No, but you can unpack the tarballs and include the toolchains as sub=
-modules
-> (aka subprojects) in the projects which need them.
->
-> See man page to git submodule, the user-manual.txt on "submodule" and
-> gitmodules.txt (submodule configuration formats and conventions).
+On Thu, 2009-01-08 at 00:30 +0100, Johannes Schindelin wrote:
+> However, from what Sam said at the GitTogether, it might be a much better 
+> idea to look at the existing code as a fact-finding experiment, scrap it 
+> (excluding the experience), and start modifying git-daemon.
+> 
+> AFAICT Sam has a pretty clear idea how to go about it, and staying with C 
+> should make it much easier for other people to comment.
+> 
+> Note that there has been a flurry of emails on the gittorrent list a few 
+> weeks back, where somebody challenged the approach Sam wants to take, 
+> saying that BitTorrent has some very nice features that are absolutely 
+> necessary, such as its pretty awkward custom encoding.
+> 
+> But AFAICT Sam did a pretty good job at dispelling all of the objections.
 
-I'll need the submodule stuff for sure, but in this particular case I w=
-as
-trying to see if there was a way to keep the svn abuse patterns from
-svn under git without a lot of retraining.
+Yes, this is accurate as I know it.  I've renamed and reworded the
+heading under the SoC2009Ideas page to point to the most current design.
+It's all in a "just add JFDI" point right now I think ;-).
 
-
-
---=20
-=D8yvind Harboe
-http://www.zylin.com/zy1000.html
-ARM7 ARM9 XScale Cortex
-JTAG debugger and flash programmer
+Sam.
