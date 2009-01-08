@@ -1,56 +1,67 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: Plans to put together an Info manual?
-Date: Thu, 08 Jan 2009 19:09:35 +0200
-Message-ID: <87vdspk9m8.fsf@iki.fi>
-References: <c115fd3c0901080747p4dd1233fla2f877f39ffa9806@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Maintaining site-wide clones
+Date: Thu, 8 Jan 2009 17:22:44 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngmcdj4.i8d.sitaramc@sitaramc.homelinux.net>
+References: <alpine.LNX.1.00.0901081129500.19665@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Tim Visher" <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 18:11:13 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 08 18:24:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKyPQ-0006L0-BF
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 18:11:04 +0100
+	id 1LKycM-00038k-Q4
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 18:24:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758727AbZAHRJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 12:09:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758495AbZAHRJj
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 12:09:39 -0500
-Received: from mta-out.inet.fi ([195.156.147.13]:35758 "EHLO kirsi2.inet.fi"
+	id S1751489AbZAHRXB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 12:23:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbZAHRXB
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 12:23:01 -0500
+Received: from main.gmane.org ([80.91.229.2]:60548 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757621AbZAHRJi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 12:09:38 -0500
-Received: from mithlond.arda.local (80.220.180.181) by kirsi2.inet.fi (8.5.014)
-        id 48FC5B890379553C; Thu, 8 Jan 2009 19:09:36 +0200
-Received: from dtw by mithlond.arda.local with local (Exim 4.69)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1LKyNz-0005Bv-D1; Thu, 08 Jan 2009 19:09:35 +0200
-In-Reply-To: <c115fd3c0901080747p4dd1233fla2f877f39ffa9806@mail.gmail.com> (Tim Visher's message of "Thu\, 8 Jan 2009 10\:47\:20 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1750717AbZAHRXA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 12:23:00 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LKyat-0006jB-OH
+	for git@vger.kernel.org; Thu, 08 Jan 2009 17:22:55 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Jan 2009 17:22:55 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Jan 2009 17:22:55 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104944>
 
-Tim Visher (2009-01-08 10:47 -0500) wrote:
+On 2009-01-08, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> Is there a good way of handling a setup where the canonical repository is 
+> in some slow foreign system and you want a lot of git clones? I've been 
+> using a bare repository that I import into and clone, but then I need to 
+> go to the bare repository to update anything, which is vaguely annoying.
 
-> I wast just wondering A) If there is an info manual for Git, B) If
-> there isn't, is one planned?
+Why?  You can push to it too?
 
-There is already something that _can_ be called "info manual for Git".
-It's basically info version of Git User's Manual:
+I don't have your use case but if I did, I'd do this:
+ - everyone clones from the local mirror
+ - one person clones the slow foreign system at whatever
+   interval he thinks appropriate, and pushes to the local
+   mirror
+ - (or the local mirror can do this via cron)
 
-    http://www.kernel.org/pub/software/scm/git/docs/user-manual.html
+This works fine if you can sort of judge the average
+frequency of updates, and not getting some of them
+*immediately* is not earth shattering for local developers.
 
-Regular man pages are also available in info format.
-
-The info manuals are not written in native info format, though. They are
-generated from the asciidoc markup files, through xml format. There are
-some problems with typesetting as some characters simply disappear in
-the "asciidoc -> xml -> texi -> info" conversion. Two dashes (--) turn
-into one (-), for example. But if you are not too demanding the info
-manuals are quite usable. You can compile them with "make info" command.
+If the slow foreign system lets you put in a post-commit
+hook that'll be even easier -- no more guesswork!
