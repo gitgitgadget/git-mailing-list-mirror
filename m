@@ -1,162 +1,230 @@
-From: "R. Tyler Ballance" <tyler@slide.com>
-Subject: Re: [PATCH] Wrap inflateInit to retry allocation after releasing
- pack memory
-Date: Thu, 08 Jan 2009 12:37:33 -0800
-Organization: Slide, Inc.
-Message-ID: <1231447053.8870.665.camel@starfruit>
-References: <alpine.LFD.2.00.0901062026500.3057@localhost.localdomain>
-	 <1231314099.8870.415.camel@starfruit>
-	 <alpine.LFD.2.00.0901070743070.3057@localhost.localdomain>
-	 <1231368935.8870.584.camel@starfruit>
-	 <alpine.LFD.2.00.0901071520330.3057@localhost.localdomain>
-	 <1231374514.8870.621.camel@starfruit>
-	 <alpine.LFD.2.00.0901071836290.3283@localhost.localdomain>
-	 <20090108030115.GF10790@spearce.org>
-	 <alpine.LFD.2.00.0901071904380.3283@localhost.localdomain>
-	 <20090108031314.GG10790@spearce.org> <20090108031655.GH10790@spearce.org>
-	 <alpine.LFD.2.00.0901071941210.3283@localhost.localdomain>
-	 <1231438552.8870.645.camel@starfruit>
-	 <alpine.LFD.2.00.0901081216060.3283@localhost.localdomain>
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Subject: Re: [PATCH (topgit)] tg-patch: add support for generating patches
+	against worktree and index
+Date: Fri, 9 Jan 2009 00:11:49 +0300
+Organization: St.Petersburg State University
+Message-ID: <20090108211149.GA19983@roro3>
+References: <1231438975-13624-1-git-send-email-kirr@landau.phys.spbu.ru> <20090108195356.GA14644@lapse.rw.madduck.net> <20090108201614.GA4185@roro3>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-HjWSDv7BOA8XX22GtVZc"
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@cam.org>,
-	Jan =?ISO-8859-1?Q?Kr=FCger?= <jk@jk.gs>,
-	Git ML <git@vger.kernel.org>, kb@slide.com
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jan 08 21:56:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, Git Mailing List <git@vger.kernel.org>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Thu Jan 08 22:23:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LL1f7-00054b-Fc
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 21:39:29 +0100
+	id 1LL2Ab-0007aG-Iy
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 22:12:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761898AbZAHUhr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 15:37:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761102AbZAHUhr
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 15:37:47 -0500
-Received: from mx0.slide.com ([208.76.68.7]:39513 "EHLO mx0.slide.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754600AbZAHUhq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 15:37:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=slide.com; s=slideinc; h=Subject:From:To:Date:Message-Id; bh=z
-	nuLzLgup9VY1XEhEtV9wHKgsOFZZ5evk1SURVIaGZw=; b=rw79EN0wIKfUmnJ1B
-	UVAf9L+UhwOVf78HfZZtVAcRQHD2CtYSQQH2ok6i6Whl7Wp4IjkLD7OvHw483n5w
-	aqceUodEFntdIgvTMumPKEd9fJmcZWwI13S+OlVjZQkxMCyts64x7COtjjRS8FzO
-	mgLg+Utj9Mg23ohd7pRpCZIJt0=
-Received: from nat3.slide.com ([208.76.69.126]:37034 helo=calculon.corp.slide.com)
-	by mx0.slide.com with esmtp (Exim 4.69 #1)
-	id 1LL1dG-0003KQ-Pr; Thu, 08 Jan 2009 12:37:34 -0800
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by calculon.corp.slide.com (Postfix) with ESMTP id BD15C3898319;
-	Thu,  8 Jan 2009 12:37:34 -0800 (PST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -3.011
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.011 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=-0.008, BAYES_00=-2.599,
-	MIME_QP_LONG_LINE=1.396]
-Received: from calculon.corp.slide.com ([127.0.0.1])
-	by localhost (calculon.corp.slide.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HVMbeIMXezM6; Thu,  8 Jan 2009 12:37:34 -0800 (PST)
-Received: from [10.10.8.190] (dhcp-10-10-8-190.corp.slide.com [10.10.8.190])
-	by calculon.corp.slide.com (Postfix) with ESMTP id 768C938980BE;
-	Thu,  8 Jan 2009 12:37:34 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.0901081216060.3283@localhost.localdomain>
-X-Mailer: Evolution 2.24.1.1 
-X-Content-Bypass: Bypassed by sending host IP
+	id S1757619AbZAHVKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 16:10:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757514AbZAHVKg
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 16:10:36 -0500
+Received: from landau.phys.spbu.ru ([195.19.235.38]:4525 "EHLO
+	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757162AbZAHVKf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 16:10:35 -0500
+Received: by landau.phys.spbu.ru (Postfix, from userid 509)
+	id CE5A317B65E; Fri,  9 Jan 2009 00:10:33 +0300 (MSK)
+Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
+	(envelope-from <kirr@roro3>)
+	id 1LL2AP-0006Mw-Gr; Fri, 09 Jan 2009 00:11:49 +0300
+Content-Disposition: inline
+In-Reply-To: <20090108201614.GA4185@roro3>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104963>
+
+I'm sorry, but I've found a mistake in my code for case:
+
+diff --git a/tg-patch.sh b/tg-patch.sh
+index db1ad09..d701c54 100644
+--- a/tg-patch.sh
++++ b/tg-patch.sh
+@@ -17,8 +17,8 @@ while [ -n "$1" ]; do
+        case "$arg" in
+        -i)
+                topic='(i)'
+-               diff_opts="$diff_opts --cached";;
+-               diff_committed_only=;
++               diff_opts="$diff_opts --cached";
++               diff_committed_only=;;
+        -w)
+                topic='(w)'
+                diff_committed_only=;;
 
 
---=-HjWSDv7BOA8XX22GtVZc
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, 2009-01-08 at 12:22 -0800, Linus Torvalds wrote:
->=20
-> On Thu, 8 Jan 2009, R. Tyler Ballance wrote:
-> > >=20
-> > > Tyler - does this make the corruption errors go away, and be replaced=
- by=20
-> > > hard failures with "out of memory" reporting?
-> >=20
-> > Yeah, looks like it:
->=20
-> Well, I was hoping that you'd have a confirmation from your own huge repo=
-,=20
-> but I do suspect it's all the same thing, so I guess this counts as=20
-> confirmation too.
-
-I never got a real solid "consistent" reproduction case with our
-repository, just a lot of users that experienced the issue. I think the
-Linux repro case is a far better example, and yeah, it's sorta
-confirmation (waiting for operations here to deploy the patched 1.6.1 to
-dev machines).
-
->=20
-> > > This patch is potentially pretty noisy, on purpose. I didn't remove t=
-he=20
-> > > reporting from places that already do so - some of them have stricter=
-=20
-> > > errors than this.
-> >=20
-> > I'm assuming this patch is going to be reworked, if so, I'll back it ou=
-t
-> > of our internal 1.6.1 build and anxiously await The Real Deal(tm)
->=20
-> Oh, it shouldn't be any noisier under _normal_ load - it's more that=20
-> certain real corruption cases will now report the error twice. That said,=
-=20
-> the new errors should actually be more informative than the old ones, so=20
-> even that isn't necessarily all bad.
->=20
-> Junio - I think we should apply this, and likely to the stable branch too=
-.=20
-> Add the re-trying the inflateInit() after shrinking pack windows on top o=
-f=20
-> it.
-
-I really appreciate this guys, this is one of the longer threads I've
-participated (spanning over a month) and I'm glad you guys were finally
-able to track the issue down.
-
-=46rom now moving forward, I'll try to get a reproduction case with the
-kernel tree or something equally big since I know it's frustrating to
-play the game of telephone with a proprietary code base ("try this? what
-does that do? okay, then this?").
-
-Linus, I'll have a chance to look at your comments on my "variable
-packed git window size" patch this weekend, and I'll follow-up in the
-appropriate thread.
+So here is corrected patch:
 
 
-I'm relatively certain that after this witch hunt, I can get Slide to
-cover a round of beers at LinuxWorld or the nearest GitTogether ;)
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+To: Petr Baudis <pasky@suse.cz>
+Cc: martin f krafft <madduck@madduck.net>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH (topgit)] tg-patch: add support for generating patches against worktree and index
+
+This implements `tg patch -i` and `tg patch -w` to see current patch as
+generated against not-yet-committed index and worktree.
 
 
-Cheers
---=20
--R. Tyler Ballance
-Slide, Inc.
+NOTE: unfortunately `git cat-file blob <file>` does not provide an option
+to cat file from worktree (only from an object or from index), so I had to
+unroll my own `cat file topic:file` with special support for '(i)' and
+'(w)' topics.
 
---=-HjWSDv7BOA8XX22GtVZc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+Signed-off-by: Kirill Smelkov <kirr@landau.phys.spbu.ru>
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+---
+ README                     |    5 +++--
+ contrib/tg-completion.bash |    6 ++++++
+ tg-patch.sh                |   31 +++++++++++++++++++++++++------
+ tg.sh                      |   21 +++++++++++++++++++++
+ 4 files changed, 55 insertions(+), 8 deletions(-)
 
-iEYEABECAAYFAklmZA0ACgkQFCbH3D9R4W/PwgCgkgdj3Fj3SbtqaHKqIuF+9fiY
-I9MAn2kv7nUdIilbbL6GWXb+c+GIFOer
-=2eNG
------END PGP SIGNATURE-----
-
---=-HjWSDv7BOA8XX22GtVZc--
+diff --git a/README b/README
+index 1d38365..5796112 100644
+--- a/README
++++ b/README
+@@ -284,8 +284,9 @@ tg patch
+ 	tg patch will be able to automatically send the patches by mail
+ 	or save them to files. (TODO)
+ 
+-	TODO: tg patch -i to base at index instead of branch,
+-		-w for working tree
++	Options:
++	  -i		base patch generation on index instead of branch
++	  -w		base patch generation on working tree instead of branch
+ 
+ tg mail
+ ~~~~~~~
+diff --git a/contrib/tg-completion.bash b/contrib/tg-completion.bash
+index 9641d04..de8a7b5 100755
+--- a/contrib/tg-completion.bash
++++ b/contrib/tg-completion.bash
+@@ -359,6 +359,12 @@ _tg_patch ()
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+ 
+ 	case "$cur" in
++	-*)
++		__tgcomp "
++			-i
++			-w
++		"
++		;;
+ 	*)
+ 		__tgcomp "$(__tg_topics)"
+ 	esac
+diff --git a/tg-patch.sh b/tg-patch.sh
+index dc699d2..d701c54 100644
+--- a/tg-patch.sh
++++ b/tg-patch.sh
+@@ -5,14 +5,25 @@
+ 
+ name=
+ 
++topic=
++diff_opts=
++diff_committed_only=yes	# will be unset for index/worktree
++
+ 
+ ## Parse options
+ 
+ while [ -n "$1" ]; do
+ 	arg="$1"; shift
+ 	case "$arg" in
++	-i)
++		topic='(i)'
++		diff_opts="$diff_opts --cached";
++		diff_committed_only=;;
++	-w)
++		topic='(w)'
++		diff_committed_only=;;
+ 	-*)
+-		echo "Usage: tg [...] patch [NAME]" >&2
++		echo "Usage: tg [...] patch [-i | -w] [NAME]" >&2
+ 		exit 1;;
+ 	*)
+ 		[ -z "$name" ] || die "name already specified ($name)"
+@@ -20,31 +31,39 @@ while [ -n "$1" ]; do
+ 	esac
+ done
+ 
++
++[ -n "$name"  -a  -z "$diff_committed_only" ]  &&
++	die "-i/-w are mutually exclusive with NAME"
++
+ [ -n "$name" ] || name="$(git symbolic-ref HEAD | sed 's#^refs/\(heads\|top-bases\)/##')"
+ base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" ||
+ 	die "not a TopGit-controlled branch"
+ 
++# if not index/worktree, topic is current branch
++[ -z "$topic" ] && topic="$name"
++
++
+ 
+ setup_pager
+ 
+-git cat-file blob "$name:.topmsg"
++cat_file "$topic:.topmsg"
+ echo
+-[ -n "$(git grep '^[-]--' "$name" -- ".topmsg")" ] || echo '---'
++[ -n "$(git grep $diff_opts '^[-]--' ${diff_committed_only:+"$name"} -- ".topmsg")" ] || echo '---'
+ 
+ # Evil obnoxious hack to work around the lack of git diff --exclude
+ git_is_stupid="$(mktemp -t tg-patch-changes.XXXXXX)"
+-git diff-tree --name-only "$base_rev" "$name" |
++git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- |
+ 	fgrep -vx ".topdeps" |
+ 	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
+ if [ -s "$git_is_stupid" ]; then
+-	cat "$git_is_stupid" | xargs git diff --patch-with-stat "$base_rev" "$name" --
++	cat "$git_is_stupid" | xargs git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --
+ else
+ 	echo "No changes."
+ fi
+ rm "$git_is_stupid"
+ 
+ echo '-- '
+-echo "tg: ($base_rev..) $name (depends on: $(git cat-file blob "$name:.topdeps" | paste -s -d' '))"
++echo "tg: ($base_rev..) $name (depends on: $(cat_file "$topic:.topdeps" | paste -s -d' '))"
+ branch_contains "$name" "$base_rev" ||
+ 	echo "tg: The patch is out-of-date wrt. the base! Run \`$tg update\`."
+ 
+diff --git a/tg.sh b/tg.sh
+index b64fc3a..1762f03 100644
+--- a/tg.sh
++++ b/tg.sh
+@@ -17,6 +17,27 @@ die()
+ 	exit 1
+ }
+ 
++# cat_file "topic:file"
++# Like `git cat-file blob $1`, but topics '(i)' and '(w)' means index and worktree
++cat_file()
++{
++	arg="$1"
++	case "$arg" in
++	'(w):'*)
++		arg=$(echo "$arg" | tail --bytes=+5)
++		cat "$arg"
++		return
++		;;
++	'(i):'*)
++		# ':file' means cat from index
++		arg=$(echo "$arg" | tail --bytes=+5)
++		git cat-file blob ":$arg"
++		;;
++	*)
++		git cat-file blob "$arg"
++	esac
++}
++
+ # setup_hook NAME
+ setup_hook()
+ {
+-- 
+tg: (a3a5be1..) t/tg-patch-worktree (depends on: t/tg-patch-setup-pager)
