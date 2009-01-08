@@ -1,69 +1,51 @@
-From: Neil Macneale <mac4-git@theory.org>
-Subject: [PATCH] Support ref logs for refs/*
-Date: Thu, 8 Jan 2009 00:28:27 -0800
-Message-ID: <20090108082827.GA6177@tesla.theory.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Can I prevent someone clone my git repository?
+Date: Thu, 08 Jan 2009 09:59:41 +0100
+Message-ID: <4965C07D.705@viscovery.net>
+References: <856bfe0e0901072303i4fcd3bf6u99790ab9f4170937@mail.gmail.com> <7vr63e42ke.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 08 09:40:28 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Emily Ren <lingyan.ren@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 08 10:01:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKqRH-0004fz-P9
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 09:40:28 +0100
+	id 1LKqlU-0001h5-66
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 10:01:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753481AbZAHIjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 03:39:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbZAHIjD
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 03:39:03 -0500
-Received: from in.theory.org ([64.147.163.250]:51613 "EHLO tesla.theory.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751491AbZAHIjC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 03:39:02 -0500
-X-Greylist: delayed 633 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Jan 2009 03:39:02 EST
-Received: by tesla.theory.org (Postfix, from userid 1014)
-	id 1FB1324BB76; Thu,  8 Jan 2009 00:28:27 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753951AbZAHI74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 03:59:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753851AbZAHI74
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 03:59:56 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:38843 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753807AbZAHI7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 03:59:55 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LKqjv-0001oK-Nh; Thu, 08 Jan 2009 09:59:44 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 8A2A9A865; Thu,  8 Jan 2009 09:59:41 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7vr63e42ke.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104902>
 
-The documentation for git update-ref seems to imply that logging of ref
-updates should be done for anything in refs/, though the code looks like it
-restricts changes to heads and remotes. Any reason not so support arbitrary
-refs?
+Junio C Hamano schrieb:
+> The git-daemon transport deliberately omits authentication, and you cannot
+> restrict when they come over the git native transport using a URL like
+> git://your-host/repository.git
 
-I don't see much point in logging for tags, so the patch ignores refs/tags.
+But you can wrap git daemon by tcpd and configure hosts.allow and
+hosts.deny (with all its caveats), if this suits your needs.
 
-Thanks,
-Neil
-
-Signed-off-by: Neil Macneale <mac4-git@theory.org>
----
- refs.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 33ced65..cfff22b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1154,9 +1154,9 @@ static int log_ref_write(const char *ref_name, const
-unsigned char *old_sha1,
-        git_snpath(log_file, sizeof(log_file), "logs/%s", ref_name);
- 
-        if (log_all_ref_updates &&
--           (!prefixcmp(ref_name, "refs/heads/") ||
--            !prefixcmp(ref_name, "refs/remotes/") ||
--            !strcmp(ref_name, "HEAD"))) {
-+           (!prefixcmp(ref_name, "refs/") ||
-+            !strcmp(ref_name, "HEAD")) &&
-+           prefixcmp(ref_name, "refs/tags/")) {
-                if (safe_create_leading_directories(log_file) < 0)
-                        return error("unable to create directory for %s",
-                                     log_file);
--- 
-1.6.1.141.gfe98e.dirty
+-- Hannes
