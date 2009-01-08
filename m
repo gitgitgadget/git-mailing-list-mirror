@@ -1,82 +1,94 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Wrap inflateInit to retry allocation after releasing
- pack memory
-Date: Thu, 8 Jan 2009 12:22:22 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0901081216060.3283@localhost.localdomain>
-References: <alpine.LFD.2.00.0901062026500.3057@localhost.localdomain>  <1231314099.8870.415.camel@starfruit>  <alpine.LFD.2.00.0901070743070.3057@localhost.localdomain>  <1231368935.8870.584.camel@starfruit>  <alpine.LFD.2.00.0901071520330.3057@localhost.localdomain>
-  <1231374514.8870.621.camel@starfruit>  <alpine.LFD.2.00.0901071836290.3283@localhost.localdomain>  <20090108030115.GF10790@spearce.org>  <alpine.LFD.2.00.0901071904380.3283@localhost.localdomain>  <20090108031314.GG10790@spearce.org> <20090108031655.GH10790@spearce.org>
-  <alpine.LFD.2.00.0901071941210.3283@localhost.localdomain> <1231438552.8870.645.camel@starfruit>
+From: "Peter Harris" <git@peter.is-a-geek.org>
+Subject: Re: Git (svn) merge - but ignore certain commits?
+Date: Thu, 8 Jan 2009 15:00:53 -0500
+Message-ID: <eaa105840901081200i2738dael10e2db35b7cb4750@mail.gmail.com>
+References: <49562749.9060705@sneakemail.com>
+	 <eaa105840812271617n74406517x3335a05d224f5e0@mail.gmail.com>
+	 <49663CA2.90102@sneakemail.com>
+	 <eaa105840901081029h220e06e4m1a1af693e908751e@mail.gmail.com>
+	 <4966513C.1010707@sneakemail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@cam.org>,
-	=?ISO-8859-15?Q?Jan_Kr=FCger?= <jk@jk.gs>,
-	Git ML <git@vger.kernel.org>, kb@slide.com
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 21:31:29 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Peter_Valdemar_M=F8rch_(Lists)?=" 
+	<4ux6as402@sneakemail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 08 21:36:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LL1RH-000194-Tj
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 21:25:12 +0100
+	id 1LL15B-00032j-Fu
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 21:02:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754042AbZAHUXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 15:23:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753205AbZAHUXr
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 15:23:47 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:41739 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751845AbZAHUXr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Jan 2009 15:23:47 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n08KMOmP029321
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 8 Jan 2009 12:22:25 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n08KMMDO003562;
-	Thu, 8 Jan 2009 12:22:22 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <1231438552.8870.645.camel@starfruit>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-5.449 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756018AbZAHUA4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Jan 2009 15:00:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755597AbZAHUA4
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 15:00:56 -0500
+Received: from yw-out-2324.google.com ([74.125.46.29]:58398 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752507AbZAHUAz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jan 2009 15:00:55 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so2903717ywe.1
+        for <git@vger.kernel.org>; Thu, 08 Jan 2009 12:00:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=CuFij646dlbTAg8ORD2USL+0UtKt3NnrSQ7kun5KmTw=;
+        b=AcSKx3br+yeSJ0woH8mSwl1fDY/tJxOBHj7Nc37RUTP46fAcy6hGLNYqKckmCHh2Fm
+         YET7uZssEY1yAZ45qjad6VjXV8b7zY2JB+WbqGC+F1chBmV8TN3p7MAKl9n20+to4xD6
+         Qf62PMMuCVBcBJ30GPMxYYRIgj9Gy+xLmVTmw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=MbOcbK+ece/A4MqavuYy6FnAkTecqJlgMTptrOLTeAUUvSB4Nu0r4Jv6O96B92Bu7L
+         pY3lvzOA0qR2Kh8HyrFeieh7Qo+Sj4pyP/hVid57gri5up0mz3YjN2Ue8u6v43MK3KV3
+         TUEi8ijLv7edeMh5DFdy4uJpV2mw8K4nhR+mg=
+Received: by 10.65.83.1 with SMTP id k1mr2364737qbl.128.1231444853793;
+        Thu, 08 Jan 2009 12:00:53 -0800 (PST)
+Received: by 10.64.210.7 with HTTP; Thu, 8 Jan 2009 12:00:53 -0800 (PST)
+In-Reply-To: <4966513C.1010707@sneakemail.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: 5efb1d3846e59ce4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104959>
 
+On Thu, Jan 8, 2009 at 2:17 PM, "Peter Valdemar M=F8rch (Lists)" wrote:
+>
+> E.g.:
+>
+> ---A---B---C---D--+ "master"
+>    \--E---F---G-/  "branch"
+>
+> Here I want F and G merged back to "master", but *not* E (which is a
+> quick-and-dirty but safe version of B).
 
+Stop and think about that for a second.
 
-On Thu, 8 Jan 2009, R. Tyler Ballance wrote:
-> > 
-> > Tyler - does this make the corruption errors go away, and be replaced by 
-> > hard failures with "out of memory" reporting?
-> 
-> Yeah, looks like it:
+Rephrased, "I want to cherry pick a few commits to master using the
+merge command".
 
-Well, I was hoping that you'd have a confirmation from your own huge repo, 
-but I do suspect it's all the same thing, so I guess this counts as 
-confirmation too.
+That sounds rather silly when I put it that way. What do you really wan=
+t? Hmm.
 
-> > This patch is potentially pretty noisy, on purpose. I didn't remove the 
-> > reporting from places that already do so - some of them have stricter 
-> > errors than this.
-> 
-> I'm assuming this patch is going to be reworked, if so, I'll back it out
-> of our internal 1.6.1 build and anxiously await The Real Deal(tm)
+Maybe you want to cherry pick those commits. Maybe (if this is still
+an unpublished branch), you want to "git rebase --onto B E" your
+branch to get the non-dirty version of E, then merge.
 
-Oh, it shouldn't be any noisier under _normal_ load - it's more that 
-certain real corruption cases will now report the error twice. That said, 
-the new errors should actually be more informative than the old ones, so 
-even that isn't necessarily all bad.
+Or maybe you do want to merge, but you're getting confused by not
+seeing the automatic conflict markers. You could merge --no-commit the
+branch, fix the conflicts (E conflicts logically with B, even if 'git
+merge' doesn't automatically mark it as such -- 'git revert -n E' may
+even do most of the work), and only then commit the merge revision.
+Repeated merges from this state will not keep trying to import E
+(since E is already in the history).
 
-Junio - I think we should apply this, and likely to the stable branch too. 
-Add the re-trying the inflateInit() after shrinking pack windows on top of 
-it.
-
-			Linus
+Peter Harris
