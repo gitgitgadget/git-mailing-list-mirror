@@ -1,118 +1,82 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: gitweb index performance (Re: [PATCH] gitweb: support the
-	rel=vcs-* microformat)
-Date: Thu, 8 Jan 2009 14:54:46 -0500
-Message-ID: <20090108195446.GB18025@gnu.kitenet.net>
-References: <20090107042518.GB24735@gnu.kitenet.net> <gk2794$djn$1@ger.gmane.org> <20090107155023.GA16540@gnu.kitenet.net> <cb7bb73a0901071003m77482a99wf6f3988beb5b5e78@mail.gmail.com> <20090107184515.GB31795@gnu.kitenet.net> <20090107190238.GA3909@gnu.kitenet.net> <20090107232427.GA18958@gnu.kitenet.net> <gk4bk5$9dq$1@ger.gmane.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Wrap inflateInit to retry allocation after releasing
+ pack memory
+Date: Thu, 8 Jan 2009 12:22:22 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0901081216060.3283@localhost.localdomain>
+References: <alpine.LFD.2.00.0901062026500.3057@localhost.localdomain>  <1231314099.8870.415.camel@starfruit>  <alpine.LFD.2.00.0901070743070.3057@localhost.localdomain>  <1231368935.8870.584.camel@starfruit>  <alpine.LFD.2.00.0901071520330.3057@localhost.localdomain>
+  <1231374514.8870.621.camel@starfruit>  <alpine.LFD.2.00.0901071836290.3283@localhost.localdomain>  <20090108030115.GF10790@spearce.org>  <alpine.LFD.2.00.0901071904380.3283@localhost.localdomain>  <20090108031314.GG10790@spearce.org> <20090108031655.GH10790@spearce.org>
+  <alpine.LFD.2.00.0901071941210.3283@localhost.localdomain> <1231438552.8870.645.camel@starfruit>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="5/uDoXvLw7AC5HRs"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 08 21:26:50 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@cam.org>,
+	=?ISO-8859-15?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	Git ML <git@vger.kernel.org>, kb@slide.com
+To: "R. Tyler Ballance" <tyler@slide.com>
+X-From: git-owner@vger.kernel.org Thu Jan 08 21:31:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LL0zI-0001HR-Cy
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 20:56:16 +0100
+	id 1LL1RH-000194-Tj
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 21:25:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755525AbZAHTyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 14:54:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755453AbZAHTyw
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 14:54:52 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:49637 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755371AbZAHTyv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 14:54:51 -0500
-Received: from gnu.kitenet.net (fttu-67-223-5-142.btes.tv [67.223.5.142])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 12CD731429F
-	for <git@vger.kernel.org>; Thu,  8 Jan 2009 14:54:49 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id BB054A8D3F; Thu,  8 Jan 2009 14:54:46 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <gk4bk5$9dq$1@ger.gmane.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/8845/Thu Jan  8 11:52:13 2009 on wren.kitenet.net
-X-Virus-Status: Clean
+	id S1754042AbZAHUXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 15:23:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753205AbZAHUXr
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 15:23:47 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:41739 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751845AbZAHUXr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jan 2009 15:23:47 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n08KMOmP029321
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 8 Jan 2009 12:22:25 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n08KMMDO003562;
+	Thu, 8 Jan 2009 12:22:22 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1231438552.8870.645.camel@starfruit>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-5.449 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104958>
 
 
---5/uDoXvLw7AC5HRs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Giuseppe Bilotta wrote:
-> > There is a small overhead in including the microformat on project list
-> > and forks list pages, but getting the project descriptions for those pa=
-ges
-> > already incurs a similar overhead, and the ability to get every repo url
-> > in one place seems worthwhile.
->=20
-> I agree with this, although people with very large project lists may
-> differ ... do we have timings on these?
+On Thu, 8 Jan 2009, R. Tyler Ballance wrote:
+> > 
+> > Tyler - does this make the corruption errors go away, and be replaced by 
+> > hard failures with "out of memory" reporting?
+> 
+> Yeah, looks like it:
 
-AFAICS, when displaying the project list, gitweb reads each project's
-description file, falling back to reading its config file if there is no
-description file.
+Well, I was hoping that you'd have a confirmation from your own huge repo, 
+but I do suspect it's all the same thing, so I guess this counts as 
+confirmation too.
 
-If performance was a problem here, the thing to do would be to add
-project descriptions to the $project_list file, and use those in
-preference to the description files. If a large site has done that,
-they've not sent in the patch. :-)
+> > This patch is potentially pretty noisy, on purpose. I didn't remove the 
+> > reporting from places that already do so - some of them have stricter 
+> > errors than this.
+> 
+> I'm assuming this patch is going to be reworked, if so, I'll back it out
+> of our internal 1.6.1 build and anxiously await The Real Deal(tm)
 
-With my patch, it will read each cloneurl file too. The best way to
-optimise that for large sites seems to be to add an option that would
-ignore the cloneurl files and config file and always use
-@git_base_url_list.
+Oh, it shouldn't be any noisier under _normal_ load - it's more that 
+certain real corruption cases will now report the error twice. That said, 
+the new errors should actually be more informative than the old ones, so 
+even that isn't necessarily all bad.
 
-I checked the only large site I have access to (git.debian.org) and they
-use a $project_list file, but I see no other performance tuning. That's
-a 2 ghz machine; it takes gitweb 28 (!) seconds to generate the nearly 1
-MB index web page for 1671 repositories:
+Junio - I think we should apply this, and likely to the stable branch too. 
+Add the re-trying the inflateInit() after shrinking pack windows on top of 
+it.
 
-/srv/git.debian.org/http/cgi-bin/gitweb.cgi  3.04s user 9.24s system 43% cp=
-u 28.515 total
-
-Notice that most of the time is spent by child processes. For each
-repository, gitweb runs git-for-each-ref to determine the time of the
-last commit.
-
-If that is removed (say if there were a way to get the info w/o
-forking), performance improves nicely:
-
-=2E/gitweb.cgi > /dev/null  1.29s user 1.08s system 69% cpu 3.389 total
-
-Making it not read description files for each project, as I suggest above,
-is the next best optimisation:
-
-=2E/gitweb.cgi > /dev/null  1.08s user 0.05s system 96% cpu 1.170 total
-
-So, I think it makes sense to optimise gitweb and offer knobs for performan=
-ce
-tuning at the expense of the flexability of description and cloneurl files.
-But, git-for-each-ref is swamping everything else.
-
---=20
-see shy jo
-
---5/uDoXvLw7AC5HRs
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iD8DBQFJZloDd8HHehbQuO8RAkWMAJ9igkWchqmSyF1ITr4kuttvHHlffwCgzTeE
-2sMrIgh2ptryxVE6UQ8TXtU=
-=dpwh
------END PGP SIGNATURE-----
-
---5/uDoXvLw7AC5HRs--
+			Linus
