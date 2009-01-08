@@ -1,77 +1,78 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
 Subject: Re: collapsing commits with rebase
-Date: Thu, 8 Jan 2009 04:09:15 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngmav3b.20e.sitaramc@sitaramc.homelinux.net>
-References: <93c3eada0901071608r190a723bma502b68c4ab81a08@mail.gmail.com>
- <200901072011.37299.bss@iguanasuicide.net>
+Date: Wed, 7 Jan 2009 22:23:59 -0600
+Message-ID: <200901072224.04906.bss@iguanasuicide.net>
+References: <93c3eada0901071608r190a723bma502b68c4ab81a08@mail.gmail.com> <200901072011.37299.bss@iguanasuicide.net> <slrngmav3b.20e.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed;
+  boundary="nextPart1369095.hDGRpsEVil";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 08 05:10:58 2009
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 08 05:24:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKmEO-0003s9-Th
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 05:10:53 +0100
+	id 1LKmS3-0007BA-27
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 05:24:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751743AbZAHEJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 23:09:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751631AbZAHEJ3
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 23:09:29 -0500
-Received: from main.gmane.org ([80.91.229.2]:53194 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750905AbZAHEJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 23:09:28 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LKmCz-000346-Q9
-	for git@vger.kernel.org; Thu, 08 Jan 2009 04:09:25 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 08 Jan 2009 04:09:25 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 08 Jan 2009 04:09:25 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1751810AbZAHEXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 23:23:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751620AbZAHEXe
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 23:23:34 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:37556 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751281AbZAHEXd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 23:23:33 -0500
+Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.124])
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LKmQf-0000V2-0O; Thu, 08 Jan 2009 04:23:33 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <slrngmav3b.20e.sitaramc@sitaramc.homelinux.net>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104888>
 
-On 2009-01-08, Boyd Stephen Smith Jr. <bss@iguanasuicide.net> wrote:
->>    A---B---C---D---E---F
+--nextPart1369095.hDGRpsEVil
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> Assuming you also have a ref (e.g. Foo) that points to F:
-> git checkout sha(B)
-> git merge -s sha(D)
+On Wednesday 2009 January 07 22:09:15 Sitaram Chamarty wrote:
+>[Haven't tested, but I *think* I understand rebase well
+>enough now to say so...]
 
-I think you now need to do a commit (assuming you meant
-"--squash").  Squash will not commit, and your rebase below
-(if it runs at all -- I suspect it will refuse to run) will
-hard reset to B, the current HEAD.  IOW
+Probably understand it better than me.  I just haven't needed to use it for=
+=20
+this that much.  This also might not be much better than setting GIT_PAGER =
+to=20
+a script, but it seems less fragile to me.
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
 
-> After the merge:
-> A -> B -> C -> D -> E -> F [Foo]
->      |
->      +--> [HEAD]
+--nextPart1369095.hDGRpsEVil
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-is not true.  You have C+D in the index, not in the tree.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-> git rebase --onto $(cat .git/HEAD) sha(E) Foo
+iEYEABECAAYFAkllf+QACgkQdNbfk+86fC0bxgCfdyFudzllTFWz8WkHpVi9bCI6
+sWoAn0js8VKY+DIAsSn2Ws70so5D4Yxn
+=VNhg
+-----END PGP SIGNATURE-----
 
-Also I think you have an off-by-one error here; you need
-sha(D) in that rebase command, not sha(E).
-
-As your rebase command stands, you will lose commit E
-completely; neither the merge nor the rebase will pick it
-up.
-
-[Haven't tested, but I *think* I understand rebase well
-enough now to say so...]
+--nextPart1369095.hDGRpsEVil--
