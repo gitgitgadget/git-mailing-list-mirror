@@ -1,57 +1,71 @@
-From: jidanni@jidanni.org
-Subject: fetch branch blacklist
-Date: Thu, 08 Jan 2009 08:07:43 +0800
-Message-ID: <87r63ek6cw.fsf@jidanni.org>
+From: "Geoff Russell" <geoffrey.russell@gmail.com>
+Subject: collapsing commits with rebase
+Date: Thu, 8 Jan 2009 10:38:44 +1030
+Message-ID: <93c3eada0901071608r190a723bma502b68c4ab81a08@mail.gmail.com>
+Reply-To: geoffrey.russell@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 08 01:09:47 2009
+X-From: git-owner@vger.kernel.org Thu Jan 08 01:10:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKiSg-0005Tn-RX
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 01:09:23 +0100
+	id 1LKiTO-0005oR-Pi
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 01:10:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754780AbZAHAHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 19:07:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755662AbZAHAHs
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 19:07:48 -0500
-Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:38421 "EHLO
-	homiemail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756193AbZAHAHr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Jan 2009 19:07:47 -0500
-Received: from jidanni.org (122-127-36-81.dynamic.hinet.net [122.127.36.81])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a5.g.dreamhost.com (Postfix) with ESMTP id B6A729C4E6
-	for <git@vger.kernel.org>; Wed,  7 Jan 2009 16:07:46 -0800 (PST)
+	id S1755844AbZAHAIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 19:08:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756806AbZAHAIr
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 19:08:47 -0500
+Received: from rv-out-0506.google.com ([209.85.198.232]:23939 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756797AbZAHAIp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jan 2009 19:08:45 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so8118058rvb.1
+        for <git@vger.kernel.org>; Wed, 07 Jan 2009 16:08:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :to:subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=/a6m/dY3yRFfscsCpR/UNyXRBf7xAQGRu+ULzc8d/U0=;
+        b=MwTSy2p5lO3/NWm6HmcbuqZUm+dizAjYkMbnqtBnLu1JFzLkAMRpthBOJklGl8S/V8
+         AKj6O0UueHt6LP/OLiw9vIz6ixurSG+BQgC9A/DTk7UaLEO0aP2tGunIPNIRynYrts6G
+         nezMvcuuFSv+mjrEUz6D2iKvBNPFpsO+kdxto=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:reply-to:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=XE3HHg92KIKSMPndcwrL/4R096gIlE22jb1M0szQRh+Dr25y7dtLhvuMZPrvzw4QUt
+         xfPPjgD/SrO+VTuXzL3eNusHUL9srVeAPnk9twjNecir2kDC98cFJOMwcawszOLFiDcO
+         s/sIzObycs7f09Y5s3EAs069A6TJG+iWbUPIM=
+Received: by 10.140.142.11 with SMTP id p11mr11754150rvd.276.1231373324827;
+        Wed, 07 Jan 2009 16:08:44 -0800 (PST)
+Received: by 10.140.136.16 with HTTP; Wed, 7 Jan 2009 16:08:44 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104854>
 
-If one wants to always fetch all except one remote branch, one cannot
-just blacklist it, but must instead whitelist all the rest.
-$ git branch -rd origin/man origin/html
-Deleted remote branch origin/man.
-Deleted remote branch origin/html.
-Plus I edited them out of FETCH_HEAD. Nonetheless, back from the dead:
-$ git pull
-From git://git.kernel.org/pub/scm/git/git
- * [new branch]      html       -> origin/html
- * [new branch]      man        -> origin/man
-The only solution is to change .git/config:
-[remote "origin"]
-	url = git://git.kernel.org/pub/scm/git/git.git
-#	fetch = +refs/heads/*:refs/remotes/origin/*
-	fetch = +refs/heads/maint:refs/remotes/origin/maint
-	fetch = +refs/heads/master:refs/remotes/origin/master
-	fetch = +refs/heads/next:refs/remotes/origin/next
-	fetch = +refs/heads/pu:refs/remotes/origin/pu
-	fetch = +refs/heads/todo:refs/remotes/origin/todo
-(Such explicit whitelisting will also sacrifice automatic addition or
-even notification, if desired, of future new branches too.)
-There is a remote.<name>.skipDefaultUpdate variable, but it probably
-isn't fine grained enough.
+Dear gits,
+
+I have a series of commits:
+
+    A---B---C---D---E---F
+
+I want to collapse B---C---D into one single commit. git rebase -i B  will allow
+me to do this, but I'm looking for a non-interactive incantation.
+
+Cheers,
+Geoff Russell
+
+
+P.S. The context is a program that performs a single high level
+operation on a repository
+as a series of commits but then wants to turn  it back into a single
+commit without
+user intervention so it subsequently looks like a single op in the history.
