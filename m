@@ -1,91 +1,95 @@
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Re: [PATCH (topgit) 1/2] Implement setup_pager just like in git
-Date: Thu, 8 Jan 2009 12:23:04 +0300
-Organization: St.Petersburg State University
-Message-ID: <20090108092304.GA4835@roro3>
-References: <acaae74f79d385014e726b97f8258b2a0caa3dd0.1231254832.git.kirr@landau.phys.spbu.ru> <20090106203203.GA11274@lapse.rw.madduck.net> <20090107112754.GA15158@roro3> <36ca99e90901070624p2c102f3ey392ef813db9f9187@mail.gmail.com> <cover.1231254832.git.kirr@landau.phys.spbu.ru> <20090106203203.GA11274@lapse.rw.madduck.net> <20090107112754.GA15158@roro3> <200901071324.57222.trast@student.ethz.ch> <20090107220027.GA4946@roro3> <20090108020650.GC7345@lapse.rw.madduck.net>
+From: Brian Foster <brian.foster@innova-card.com>
+Subject: Re: [PATCH] tutorial.txt renamed
+Date: Thu, 8 Jan 2009 10:21:46 +0100
+Message-ID: <200901081021.46471.brian.foster@innova-card.com>
+References: <20090107042337.GA24735@gnu.kitenet.net> <DA6E1A83-FFBA-46BC-9BCF-ED8A2D8F12E7@silverinsanity.com> <7vljtnbpha.fsf@gitster.siamese.dyndns.org>
+Reply-To: Brian Foster <brian.foster@innova-card.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Bert Wesarg <bert.wesarg@googlemail.com>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Thu Jan 08 10:23:15 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Joey Hess <joey@kitenet.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 08 10:23:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKr6d-0007bN-9k
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 10:23:11 +0100
+	id 1LKr6w-000082-8A
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 10:23:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752324AbZAHJVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 04:21:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752102AbZAHJVv
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 04:21:51 -0500
-Received: from landau.phys.spbu.ru ([195.19.235.38]:1212 "EHLO
-	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751690AbZAHJVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 04:21:50 -0500
-Received: by landau.phys.spbu.ru (Postfix, from userid 509)
-	id 37B1617B65E; Thu,  8 Jan 2009 12:21:48 +0300 (MSK)
-Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
-	(envelope-from <kirr@roro3>)
-	id 1LKr6W-0004kQ-81; Thu, 08 Jan 2009 12:23:04 +0300
+	id S1752949AbZAHJWH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Jan 2009 04:22:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbZAHJWG
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 04:22:06 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:37595 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752403AbZAHJWC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jan 2009 04:22:02 -0500
+Received: by ewy10 with SMTP id 10so9501739ewy.13
+        for <git@vger.kernel.org>; Thu, 08 Jan 2009 01:22:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:from:reply-to:to
+         :subject:date:user-agent:cc:references:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        bh=ayTEeZ9VwWiqjQ/wKEbw19BU0MI4wsCJyJod7H0pfIw=;
+        b=n5ceDWKQYqSWQw5RFwoESpNixhijnwmviC4i18/DKOR9o9IRsrf02yqQyF5mW7jJly
+         SR4ft4biy310aI4QL4J/oqU/N9VaErSsERfNV/ZFAYu6kkaJ7aaWdK4BbcL+MA+9QRu5
+         IlB2z/J7JdzFWW53yb9C1xvqrP2QlJe2uI/rk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:from:reply-to:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=QbG9ph8TkShegPtU3LXBAJ9SVlS0i8Im5ZXqjUY73ypVsQk9gE+z6ZytBEjiMnfd5h
+         UtzetlcIxjfId+jI9Vp9i4hB+Go5L6uquc3sI8W9mgU16NKtGAFVy5iwn+vAStR3q/0Y
+         Nf9pVpiGxlyBuvfbSqVphT6dgfuHEie2yzDfU=
+Received: by 10.210.38.17 with SMTP id l17mr10784139ebl.134.1231406519869;
+        Thu, 08 Jan 2009 01:21:59 -0800 (PST)
+Received: from innova-card.com (1-61.252-81.static-ip.oleane.fr [81.252.61.1])
+        by mx.google.com with ESMTPS id p10sm38073060gvf.20.2009.01.08.01.21.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 08 Jan 2009 01:21:58 -0800 (PST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <7vljtnbpha.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <20090108020650.GC7345@lapse.rw.madduck.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104906>
 
-On Thu, Jan 08, 2009 at 03:06:50PM +1300, martin f krafft wrote:
-> also sprach Kirill Smelkov <kirr@landau.phys.spbu.ru> [2009.01.08.1100 +1300]:
-> > > So I suppose you could use
-> > > 
-> > >   ${GIT_PAGER-${PAGER-less}}
-> > > 
-> > > or similar.
-> > 
-> > Good eyes, thanks!
-> > 
-> > I'll rework it.
-> 
-> I am not 100% on this, but I think nested {}'s are a bashism.
+On Wednesday 07 January 2009 07:27:13 Junio C Hamano wrote:
+> Brian Gernhardt <benji@silverinsanity.com> writes:
+> > This is the README file for the project, so it should advise lookin=
+g =20
+> > at the Documentation directory as neither the man pages or git comm=
+and =20
+> > are likely installed at this point.
+>=20
+> I think that is a sane suggestion.  It is better to keep the number o=
+f
+> prerequisites to the minimum for the user in order to follow README (=
+and
+> INSTALL, of course).
 
-It seems to be ok:
+ It is indeed a sane suggestion.  However, there is no (obvious?)
+ harm in *also* mentioning that =E2=80=98git help tutorial=E2=80=99 sho=
+uld also
+ display the tutorial.  Something like =E2=80=9CIf git has been correct=
+ly
+ installed, then this tutorial can also be read with the command
+ =E2=80=98git help tutorial=E2=80=99.=E2=80=9D
 
-kirr@roro3:~$ dash 
-$ unset GIT_PAGER
-$ unset PAGER
-$ echo ${GIT_PAGER-${PAGER-less}}
-less
-$ PAGER=more
-$ echo ${GIT_PAGER-${PAGER-less}}
-more
-$ GIT_PAGER=''
-$ echo ${GIT_PAGER-${PAGER-less}}
-
-$ GIT_PAGER=/bin/cat
-$ echo ${GIT_PAGER-${PAGER-less}}
-/bin/cat
-
-
-> > On Wed, Jan 07, 2009 at 03:24:02PM +0100, Bert Wesarg wrote:
-> > > On Wed, Jan 7, 2009 at 12:27, Kirill Smelkov <kirr@landau.phys.spbu.ru> wrote:
-> > > > Martin, thanks for your review.
-> > > > +       # atexit(close(1); wait pager)
-> > > > +       trap "exec >&-; rm "$_pager_fifo"; rmdir "$_pager_fifo_dir"; wait" EXIT
-> > > I think you need to escape the double quotes.
-> > 
-> > Good eyes -- corrected and thanks!
-> 
-> You could also just use single quotes inside the double quotes.
-
-Thanks for the tip - I'll keep it in mind. Or is it the preferred way?
-
-
-Thanks,
-Kirill
+cheers!
+	-blf-
+--=20
+=E2=80=9CHow many surrealists does it take to   | Brian Foster
+ change a lightbulb? Three. One calms   | somewhere in south of France
+ the warthog, and two fill the bathtub  |   Stop E$$o (ExxonMobil)!
+ with brightly-coloured machine tools.=E2=80=9D |      http://www.stope=
+sso.com
