@@ -1,138 +1,104 @@
-From: "R. Tyler Ballance" <tyler@slide.com>
-Subject: Re: Public repro case! Re: [PATCH/RFC] Allow writing loose objects
- that are corrupted in a pack file
-Date: Wed, 07 Jan 2009 16:57:39 -0800
-Organization: Slide, Inc.
-Message-ID: <1231376259.8870.633.camel@starfruit>
-References: <20081209093627.77039a1f@perceptron>
-	 <1231282320.8870.52.camel@starfruit>
-	 <alpine.LFD.2.00.0901062005290.26118@xanadu.home>
-	 <1231292360.8870.61.camel@starfruit>
-	 <alpine.LFD.2.00.0901062026500.3057@localhost.localdomain>
-	 <1231314099.8870.415.camel@starfruit>
-	 <alpine.LFD.2.00.0901070743070.3057@localhost.localdomain>
-	 <1231368935.8870.584.camel@starfruit>
-	 <alpine.LFD.2.00.0901071520330.3057@localhost.localdomain>
-	 <1231374514.8870.621.camel@starfruit>
-	 <alpine.LFD.2.00.0901071644330.3283@localhost.localdomain>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH/RFC] Allow writing loose objects that are corrupted in
+ a pack file
+Date: Wed, 7 Jan 2009 17:01:53 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0901071652490.3283@localhost.localdomain>
+References: <20081209093627.77039a1f@perceptron>  <1231282320.8870.52.camel@starfruit>  <alpine.LFD.2.00.0901062005290.26118@xanadu.home>  <1231292360.8870.61.camel@starfruit>  <alpine.LFD.2.00.0901062026500.3057@localhost.localdomain>  <1231314099.8870.415.camel@starfruit>
+  <alpine.LFD.2.00.0901070743070.3057@localhost.localdomain>  <1231368935.8870.584.camel@starfruit>  <alpine.LFD.2.00.0901071520330.3057@localhost.localdomain>  <alpine.LFD.2.00.0901071621340.3283@localhost.localdomain>
+ <1231375780.8870.629.camel@starfruit>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-EJXiEHVDtfQ3d8mrIUbm"
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Nicolas Pitre <nico@cam.org>,
-	Jan =?ISO-8859-1?Q?Kr=FCger?= <jk@jk.gs>,
-	Git ML <git@vger.kernel.org>, kb@slide.com
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jan 08 01:59:11 2009
+	=?ISO-8859-15?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	Git ML <git@vger.kernel.org>
+To: "R. Tyler Ballance" <tyler@slide.com>
+X-From: git-owner@vger.kernel.org Thu Jan 08 02:04:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKjEq-0002vX-Mp
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 01:59:09 +0100
+	id 1LKjK0-0004TD-Af
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 02:04:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754734AbZAHA5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jan 2009 19:57:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754575AbZAHA5o
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 19:57:44 -0500
-Received: from mx0.slide.com ([208.76.68.7]:55534 "EHLO mx0.slide.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753454AbZAHA5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jan 2009 19:57:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=slide.com; s=slideinc; h=Subject:From:To:Date:Message-Id; bh=y
-	K2feVvNrgBF9VjsRMkQ60prxMWwrZXcO5/VYORISFc=; b=16SuDroxydMNulVRx
-	sasLpaDot6+/yZgc3FpcsWm92/YLuiPQCz55M0Wtrk3z0jMgwfFC49N9Mawyihfk
-	hyFtTB1SJYqbgGlHGGCzmib7W+8CoKkyedZWS1h/kB7WkHIQMj2SSlG/oAtujiF5
-	y1i73lxnq7n+KywDAIpRo9fmz8=
-Received: from nat3.slide.com ([208.76.69.126]:58262 helo=calculon.corp.slide.com)
-	by mx0.slide.com with esmtp (Exim 4.69 #1)
-	id 1LKjDQ-0006A6-7o; Wed, 07 Jan 2009 16:57:40 -0800
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by calculon.corp.slide.com (Postfix) with ESMTP id 37BA73899037;
-	Wed,  7 Jan 2009 16:57:40 -0800 (PST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.877
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.877 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.126, BAYES_00=-2.599,
-	MIME_QP_LONG_LINE=1.396]
-Received: from calculon.corp.slide.com ([127.0.0.1])
-	by localhost (calculon.corp.slide.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oZBN1jC+nUpp; Wed,  7 Jan 2009 16:57:40 -0800 (PST)
-Received: from [10.10.8.190] (dhcp-10-10-8-190.corp.slide.com [10.10.8.190])
-	by calculon.corp.slide.com (Postfix) with ESMTP id 10C373898B8A;
-	Wed,  7 Jan 2009 16:57:40 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.0901071644330.3283@localhost.localdomain>
-X-Mailer: Evolution 2.24.1.1 
-X-Content-Bypass: Bypassed by sending host IP
+	id S1752919AbZAHBDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jan 2009 20:03:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbZAHBDI
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Jan 2009 20:03:08 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:50199 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750905AbZAHBDH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Jan 2009 20:03:07 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0811s7p019306
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 7 Jan 2009 17:01:55 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0811rJ0022556;
+	Wed, 7 Jan 2009 17:01:53 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1231375780.8870.629.camel@starfruit>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.949 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104864>
 
 
---=-EJXiEHVDtfQ3d8mrIUbm
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2009-01-07 at 16:48 -0800, Linus Torvalds wrote:
->=20
-> On Wed, 7 Jan 2009, R. Tyler Ballance wrote:
-> >
-> > My most esteemed colleague (Ken aka kb) who pointed out the memory issu=
-e
-> > was on the right path (I think), and I have a reproduction case you can
-> > try with your very own Linux kernel tree!
-> >=20
-> > WOO!
-> >=20
-> > I set ulimit -v really low (150M), and the operations I made got an
-> > mmap(2) fatal error, but there is a sweet spot that I found, see the
-> > transcript below.
->=20
-> This is indeed the packfile mapping. The sweet spot you found depends on=20
-> how big the biggest two pack-files are, I do believe.
->=20
-> And if you do that
->=20
-> 	[core]
-> 		packedgitwindowsize =3D 64M
->=20
-> I think you'll find that it works. Of course, with a _really_ low ulimit,=
-=20
-> you'd need to make it even smaller, but at some point you start hitting=20
-> other problems than the pack-file limits, ie just the simple fact that gi=
-t=20
-> wants and expects you to have a certain amount of memory available ;)
->=20
-> Can you cnfirm that your "reproducible" case starts working with that=20
-> addition to your ~/.gitconfig? If so, the solution is pretty simple: we=20
-> should just lower the default pack windowsize.
+On Wed, 7 Jan 2009, R. Tyler Ballance wrote:
+> 
+> I was only mentioning OS X with regards to the Samba/NFS red herring,
+> the rest of our operations are on 64-bit Linux machines.
 
-This certainly corrected the issue, is there some magic
-packedgitwindowsize that i should be looking at my own repository (our
-internal one) in order to prevent the issue from occurring?=20
+Ahh, ok. Good. 
 
-Looking into .git/objects/pack, I think the two biggest pack files are
-3.5G and 177MBG respectively :-!
+> > I could easily see that if you have a virtual memory size limit of 1.5GB, 
+> > and the pack window size is 1GB, we might have trouble. Because we could 
+> > only keep one such pack window in memory at a time.
+> 
+> The DEFAULT_PACKED_GIT_WINDOW_SIZE in our local builds is 256M, FWIW
 
+Interesting. So you already had to lower it. However, now that you mention 
+it, and now that I search for your emails about it on the mailing list (I 
+don't normally read the mailing list except very occasionally), I see your 
+patch that does
 
-Cheers
---=20
--R. Tyler Ballance
-Slide, Inc.
+	#define DYNAMIC_WINDOW_SIZE_PERCENTAGE 0.85
+	...
+	packed_git_window_size = (unsigned int)(as->rlim_cur * DYNAMIC_WINDOW_SIZE_PERCENTAGE);
 
---=-EJXiEHVDtfQ3d8mrIUbm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+which is actually very bad.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+It's bad for several reasons:
 
-iEYEABECAAYFAkllT4MACgkQFCbH3D9R4W9bHgCeMQY3FmdxRM6Gq0De1WQgLnzc
-BqsAniXafLbs6UxpCtdQqykmtoYJmaGr
-=uYUE
------END PGP SIGNATURE-----
+ - 85% of the virtual address space is actually pessimal.
 
---=-EJXiEHVDtfQ3d8mrIUbm--
+   You need space for AT LEAST two full-sized windows, so you need less 
+   than 50%.
+
+ - the way that variable is used, it _has_ to be a multiple of the page 
+   size. In fact, it needs to be a multiple of _twice_ the page size. So 
+   just doing a random fraction of the rlimit is not correct.
+
+Setting it in the .gitconfig does it right, though.
+
+> > If so, then adding a
+> > 
+> > 	[core]
+> > 		packedgitwindowsize = 64M
+> > 
+> > might make a difference. It would certainly be very interesting to hear if 
+> > there's any impact.
+> 
+> I can try this still if you'd like, but it doesn't seem like that'd be
+> the issue since we're already lowering the window size system-wide
+
+Please do try, at least if your local git changes still match that patch I 
+found, because that patch generates problems.
+
+		Linus
