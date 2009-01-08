@@ -1,68 +1,72 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Wrap inflateInit to retry allocation after releasing
- pack memory
-Date: Thu, 8 Jan 2009 07:35:55 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0901080734400.3283@localhost.localdomain>
-References: <alpine.LFD.2.00.0901062026500.3057@localhost.localdomain> <1231314099.8870.415.camel@starfruit> <alpine.LFD.2.00.0901070743070.3057@localhost.localdomain> <1231368935.8870.584.camel@starfruit> <alpine.LFD.2.00.0901071520330.3057@localhost.localdomain>
- <1231374514.8870.621.camel@starfruit> <alpine.LFD.2.00.0901071836290.3283@localhost.localdomain> <20090108030115.GF10790@spearce.org> <alpine.LFD.2.00.0901071904380.3283@localhost.localdomain> <20090108031314.GG10790@spearce.org> <20090108031655.GH10790@spearce.org>
- <alpine.LFD.2.00.0901071941210.3283@localhost.localdomain> <7vbpui8j6f.fsf@gitster.siamese.dyndns.org>
+From: "Tim Visher" <tim.visher@gmail.com>
+Subject: Plans to put together an Info manual?
+Date: Thu, 8 Jan 2009 10:47:20 -0500
+Message-ID: <c115fd3c0901080747p4dd1233fla2f877f39ffa9806@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"R. Tyler Ballance" <tyler@slide.com>,
-	Nicolas Pitre <nico@cam.org>,
-	=?ISO-8859-15?Q?Jan_Kr=FCger?= <jk@jk.gs>,
-	Git ML <git@vger.kernel.org>, kb@slide.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 08 16:38:06 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 08 16:49:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LKwxP-0002Il-SC
-	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 16:38:04 +0100
+	id 1LKx7r-0006Bj-4v
+	for gcvg-git-2@gmane.org; Thu, 08 Jan 2009 16:48:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756897AbZAHPgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 10:36:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753791AbZAHPgk
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 10:36:40 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:50678 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752600AbZAHPgk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Jan 2009 10:36:40 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n08FZtC3008793
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 8 Jan 2009 07:35:56 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n08FZtxU026456;
-	Thu, 8 Jan 2009 07:35:55 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vbpui8j6f.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-5.448 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752345AbZAHPrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 10:47:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751265AbZAHPrX
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 10:47:23 -0500
+Received: from rn-out-0910.google.com ([64.233.170.188]:61488 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750780AbZAHPrW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 10:47:22 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so6091176rnd.17
+        for <git@vger.kernel.org>; Thu, 08 Jan 2009 07:47:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=4Dj2Qr7VVktZRSsR7fN2YiWehrSTilwXRnJfFxKJi9I=;
+        b=qE+NN5JzFg5ws35k+2G9jHrh2mtCx5PrcBf3znec5ZqxS5agfIqoHfdCUoiamnQWnK
+         xXofv7UEuxcv29BayyJ5IpP4LcMnLMRR8PhkaAqgb+o9GeT4Wk8GiDwHSn4f5nJySRST
+         zHF704WPq5silswCJLi0LzZbGLPK9q4ug6zbA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=P8BpZimr+q/iBq+uB7bj88HjmXtSkWQVTef6EimuJF2ER3auaCEDKRMeAAnigx5p2O
+         bnAPFYrnHi2fJiIc1yve6bx2B21WLSAqjrTzVT/JXMYc72aFRaB9nq/cSYDuXWJ67g3G
+         gHW0UVRkj3nbIw63uHjdrnC5GnlCsJt4P4CyE=
+Received: by 10.100.197.3 with SMTP id u3mr13207575anf.64.1231429640815;
+        Thu, 08 Jan 2009 07:47:20 -0800 (PST)
+Received: by 10.100.33.9 with HTTP; Thu, 8 Jan 2009 07:47:20 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104928>
 
+I did a _teensy_ bit of googling and nosing around on the home page,
+so forgive me if this has been brought up before or if it in fact
+already exists.
 
+I wast just wondering A) If there is an info manual for Git, B) If
+there isn't, is one planned?
 
-On Wed, 7 Jan 2009, Junio C Hamano wrote:
-> 
-> Thanks, but "needs a buffer output buffer" made me scratch my head
-> somewhat.
+I'm personally a big fan of Info manuals over traditional man pages
+but I have no experience with creating them or anything like that.
+However, this might be another nice place for people who aren't at all
+familiar with C (read: me) to jump in and help out with development.
 
-That was just me editing it.
+-- 
 
-It was originally "needs an output buffer" and then I was supposed to edit 
-it to "needs a buffer" (because it can be either output or input, and in 
-the case of git it's usually actually the input that was partial).
+In Christ,
 
-And then I messed up, and it became that.
+Timmy V.
 
-		Linus
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
