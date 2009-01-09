@@ -1,84 +1,67 @@
-From: "Nathan W. Panike" <nathan.panike@gmail.com>
-Subject: [PATCH] Get format-patch to show first commit after root commit
-Date: Fri,  9 Jan 2009 13:35:25 -0600
-Message-ID: <1231529725-19767-1-git-send-email-nathan.panike@gmail.com>
-Cc: "Nathan W. Panike" <nathan.panike@gmail.com>
+From: <4jxDQ6FQee2H@dyweni.com>
+Subject: Assertion Failed when importing svn into Git
+Date: Fri, 9 Jan 2009 13:32:34 -0600
+Message-ID: <20090109133234.345dacb9@family.dyweni.com>
+Reply-To: 4jxDQ6FQee2H@dyweni.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 09 20:37:02 2009
+X-From: git-owner@vger.kernel.org Fri Jan 09 20:43:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLNAD-00043Y-6X
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 20:37:01 +0100
+	id 1LLNGv-0006iT-TG
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 20:43:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928AbZAITfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 14:35:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbZAITfi
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 14:35:38 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:57873 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751583AbZAITfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 14:35:37 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so56832ugf.37
-        for <git@vger.kernel.org>; Fri, 09 Jan 2009 11:35:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=8nlx4r9xXmbpjxqDjz6EVYWclyc+BTCgwAG0/kIYIOk=;
-        b=tQxVQzWB1cstu0gzWLe4eb3Mzwi5dHPhuJF1YJnPSAek7a1vPzb3lSHIbBQGTkl1JA
-         8jfJQbmQT/W2YwataLHJ1wa7G4RUOliaNqfqzOpvUnbao97Fxf3OdBaFt2o1HNWXqVlr
-         3k4qo7vfWkkpvkXY/okQkwByZNeZQCCg6hTDI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=waM5gJ4FpJK/9t90+bRI4Gidnf1mh/HK5sngUu48pOJ8QPjWpqFUMnbcGM/PHnS0uW
-         Xeo6ZUe+zyDQOauApucEA3Yk0nI6aqt0rj/NE2Djprio7VFI0vAlyFHHaeD/xTRWGvk3
-         dZ5KixpGHlKoBd+Zej02yUdRTwm4sl7Fu7ATU=
-Received: by 10.67.95.1 with SMTP id x1mr15198757ugl.17.1231529735783;
-        Fri, 09 Jan 2009 11:35:35 -0800 (PST)
-Received: from localhost (dyn-108-77.uwnet.wisc.edu [72.33.108.77])
-        by mx.google.com with ESMTPS id b39sm63517247ugf.38.2009.01.09.11.35.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 09 Jan 2009 11:35:35 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.76.gc123b.dirty
+	id S1752136AbZAITmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 14:42:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbZAITme
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 14:42:34 -0500
+Received: from pl1.haspere.com ([208.111.35.220]:35457 "EHLO pl1.haspere.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751583AbZAITme (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 14:42:34 -0500
+X-Greylist: delayed 597 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Jan 2009 14:42:33 EST
+Received: from family.dyweni.com (173-23-155-27.client.mchsi.com [173.23.155.27])
+	by pl1.haspere.com (Postfix) with ESMTPSA id 1DE13C800E;
+	Fri,  9 Jan 2009 13:32:36 -0600 (CST)
+X-Mailer: Claws Mail 3.4.0 (GTK+ 2.12.11; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105034>
 
-Currently, the command
+Hi,
 
-git format-patch -1 e83c5163316f89bfbde
 
-in the git repository creates an empty file.  Instead, one is
-forced to do
+I'm trying to import my SVN repository into GIT and its throwing an
+Assertion Failed error message in text_delta.c  Can someone help me?
 
-git format-patch -1 --root e83c5163316f89bfbde
+The assertion failed error occurs when running 'svn diff -r 288:289'
+which contains only one change - a change made to a binary file. That
+binary file is the Eclipse dataModel file, both revs (288, 289) have
+the file marked as application/octet-stream using the svn:mime-type
+property
 
-This seems arbitrary.  This patch fixes this case, so that
 
-git format-patch -1 e83c5163316f89bfbde
+subversion - 1.5.4
+git        - 1.6.0.6
 
-will produce an actual patch.
----
- builtin-log.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+The SVN repository was started using 1.4.6, if that matters
 
-diff --git a/builtin-log.c b/builtin-log.c
-index 4a02ee9..5e7b61f 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -977,6 +977,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		list[nr - 1] = commit;
- 	}
- 	total = nr;
-+	if (total == 1 && !list[0]->parents)
-+		rev.show_root_diff=1;
- 	if (!keep_subject && auto_number && total > 1)
- 		numbered = 1;
- 	if (numbered)
--- 
-1.6.1.76.gc123b.dirty
+Here's the exact error message:
+
+-------
+$ svn diff -r 288:289
+svn: subversion/libsvn_delta/text_delta.c:609: apply_window: Assertion
+`window->sview_len == 0 || (window->sview_offset >= ab->sbuf_offset &&
+(window->sview_offset + window->sview_len >= ab->sbuf_offset +
+ab->sbuf_len))' failed.
+Aborted
+-------
+
+
+Thanks!
