@@ -1,66 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
 Subject: Re: [RFC PATCH] make diff --color-words customizable
-Date: Fri, 9 Jan 2009 12:18:37 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901091215590.30769@pacific.mpi-cbg.de>
-References: <1231459505-14395-1-git-send-email-trast@student.ethz.ch> <20090109095300.GA4099@coredump.intra.peff.net>
+Date: Fri, 9 Jan 2009 06:22:39 -0500
+Message-ID: <20090109112239.GA11466@coredump.intra.peff.net>
+References: <1231459505-14395-1-git-send-email-trast@student.ethz.ch> <20090109095300.GA4099@coredump.intra.peff.net> <alpine.DEB.1.00.0901091215590.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
 Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 09 12:19:25 2009
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 09 12:24:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLFOa-0003Fa-Rp
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 12:19:21 +0100
+	id 1LLFTJ-0004g6-H6
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 12:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338AbZAILR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 06:17:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbZAILR5
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 06:17:57 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55714 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752101AbZAILR5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 06:17:57 -0500
-Received: (qmail invoked by alias); 09 Jan 2009 11:17:55 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp070) with SMTP; 09 Jan 2009 12:17:55 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19SlMBd3ntScJ0XkvTFsPC/ZNU40yh+dHtV78aLCl
-	z5i5DBMAaaQHLW
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090109095300.GA4099@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1752529AbZAILWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 06:22:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752525AbZAILWm
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 06:22:42 -0500
+Received: from peff.net ([208.65.91.99]:49446 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752534AbZAILWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 06:22:41 -0500
+Received: (qmail 18283 invoked by uid 107); 9 Jan 2009 11:23:14 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 09 Jan 2009 06:23:14 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Jan 2009 06:22:39 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0901091215590.30769@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105007>
 
-Hi,
+On Fri, Jan 09, 2009 at 12:18:37PM +0100, Johannes Schindelin wrote:
 
-On Fri, 9 Jan 2009, Jeff King wrote:
-
-> On Fri, Jan 09, 2009 at 01:05:05AM +0100, Thomas Rast wrote:
+> > It's a per-file thing, so probably in the diff driver that is triggered 
+> > via attributes. See userdiff.[ch]; you'll need to add an entry to the 
+> > userdiff_driver struct. You can look at the funcname pattern stuff as a 
+> > template, as this is very similar.
 > 
-> > Apart from possible bugs, the main issue is: where should I put the 
-> > configuration for this?
+> I am not sure I would want that in the config or the attributes.  For me, 
+> it always has been a question of "oh, that LaTeX diff looks ugly, let's 
+> see what words actually changed".
 > 
-> It's a per-file thing, so probably in the diff driver that is triggered 
-> via attributes. See userdiff.[ch]; you'll need to add an entry to the 
-> userdiff_driver struct. You can look at the funcname pattern stuff as a 
-> template, as this is very similar.
+> Only rarely did I wish for a different word boundary detection algorithm.
+> 
+> So I'd rather have an alias than a config/attribute setting.
 
-I am not sure I would want that in the config or the attributes.  For me, 
-it always has been a question of "oh, that LaTeX diff looks ugly, let's 
-see what words actually changed".
+I am not sure what you are saying.
 
-Only rarely did I wish for a different word boundary detection algorithm.
+If it is "I do not want color-words on by default for LaTeX", then I
+agree. I meant merely that _if_ color-words is enabled, the word
+boundaries would be taken from the diff driver config (just like we do
+for matching the funcname header).
 
-So I'd rather have an alias than a config/attribute setting.
+If it is "I want to specify the color-words boundary on a per-run basis
+rather than a per-file basis", then I want the opposite. However, there
+is no reason that both cannot be supported (with command line or
+environment taking precedence over what's in the config).
 
-Ciao,
-Dscho
+-Peff
