@@ -1,124 +1,135 @@
-From: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
-Subject: [PATCH v2] t7501-commit.sh: explicitly check that -F prevents invoking the editor
-Date: Fri,  9 Jan 2009 18:30:05 +0100
-Message-ID: <1231522205-10510-1-git-send-email-dato@net.com.org.es>
-References: <alpine.DEB.1.00.0812301250210.30769@pacific.mpi-cbg.de>
+From: Morgan Christiansson <git@mog.se>
+Subject: git-svn: File was not found in commit
+Date: Fri, 09 Jan 2009 18:19:01 +0100
+Message-ID: <49678705.4040506@mog.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jan 09 18:31:40 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 09 18:38:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLLCo-0006Ew-Ns
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 18:31:35 +0100
+	id 1LLLJe-0000TZ-5x
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 18:38:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752385AbZAIRaK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Jan 2009 12:30:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752217AbZAIRaJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 12:30:09 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:2438
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752015AbZAIRaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 12:30:08 -0500
-Received: from chistera.yi.org (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id 8ED7D801BF68;
-	Fri,  9 Jan 2009 18:30:06 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LLLBN-0002l0-RQ; Fri, 09 Jan 2009 18:30:05 +0100
-X-Mailer: git-send-email 1.6.1.134.g55c35
-In-Reply-To: <alpine.DEB.1.00.0812301250210.30769@pacific.mpi-cbg.de>
+	id S1752524AbZAIRhP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 12:37:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752336AbZAIRhO
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 12:37:14 -0500
+Received: from mog.vm.bytemark.co.uk ([80.68.94.200]:47552 "EHLO mog.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752183AbZAIRhN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 12:37:13 -0500
+X-Greylist: delayed 1087 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Jan 2009 12:37:12 EST
+Received: from [192.168.1.207] (81-226-238-170-no61.tbcn.telia.com [81.226.238.170])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mog.se (Postfix) with ESMTP id B3EF780CC4
+	for <git@vger.kernel.org>; Fri,  9 Jan 2009 17:19:04 +0000 (GMT)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105021>
 
-The "--signoff" test case in t7500-commit.sh was setting VISUAL while
-using -F -, which indeed tested that the editor is not spawned with -F.
-However, having it there was confusing, since there was no obvious reas=
-on
-to the casual reader for it to be there.
+Hi, i'm trying to "git svn fetch" my repository from a local file:///
+repo and i'm running into this problem:
 
-This commits removes the setting of VISUAL from the --signoff test, and
-adds in t7501-commit.sh a dedicated test case, where the rest of tests =
-for
--F are.
+$ git svn init -t tags -b branches -T trunk file:///path/to/svn/repo
+$ git svn fetch
+branches/rails/rails/vendor/plugins/acts_as_xapian/.git/refs/heads/master
+was not found in commit a643e882c557593f36bb9fd0966490010b9dba61 (r10576)
 
-Signed-off-by: Adeodato Sim=C3=B3 <dato@net.com.org.es>
----
-* Johannes Schindelin [Tue, 30 Dec 2008 13:04:46 +0100]:
 
-> Hmm.  Obviously, I failed to document properly why I tested the edito=
-r,=20
-> but I think it makes sense to assume that -F still triggered an=20
-> interactive editor at some stage in the development of builtin commit=
-=2E
+I found another report that seems to describe the same error:
+http://marc.info/?l=git&m=121537767308135&w=2
+Investigating the the history it's committed in r10577 and it's looking
+for it in r10576, so it seems to be off by one revision number. Exactly
+like the other report.
+I've tried the latest git version of git-svn.perl and the problem is not
+fixed there.
 
-> I do not have anything against separating that issue into another tes=
-t=20
-> case, but I am strongly opposed to simply removing it.
 
-Ok, I've moved it to a separate test case, please review to see if you
-approve of it.
+$ svn log file:///path/to/repo -r10576:10577 -v
+------------------------------------------------------------------------
+r10576 | morgan | 2008-11-28 14:35:53 +0000 (Fri, 28 Nov 2008) | 3 lines
+Changed paths:
+   A /branches/rails/rails/app/controllers/browse_sheetmusic_controller.rb
+   M /branches/rails/rails/app/controllers/scores_controller.rb
+   M /branches/rails/rails/app/models/composer.rb
+   M /branches/rails/rails/app/models/score.rb
+   M /branches/rails/rails/config/routes.rb
+
+Commit message.
+
+------------------------------------------------------------------------
+r10577 | morgan | 2008-11-28 18:31:00 +0000 (Fri, 28 Nov 2008) | 3 lines
+Changed paths:
+   A /branches/rails/rails/vendor/plugins/acts_as_xapian/.git/FETCH_HEAD
+   M /branches/rails/rails/vendor/plugins/acts_as_xapian/.git/config
+   M /branches/rails/rails/vendor/plugins/acts_as_xapian/.git/index
+   M /branches/rails/rails/vendor/plugins/acts_as_xapian/.git/logs/HEAD
+   M
+/branches/rails/rails/vendor/plugins/acts_as_xapian/.git/logs/refs/heads/master 
+
+# <-- THIS FILE
+   M
+/branches/rails/rails/vendor/plugins/acts_as_xapian/.git/logs/refs/remotes/origin/HEAD
+   M
+/branches/rails/rails/vendor/plugins/acts_as_xapian/.git/logs/refs/remotes/origin/master
+   A
+/branches/rails/rails/vendor/plugins/acts_as_xapian/.git/objects/pack/pack-41ebdff27c581340ac7a71850e2e3a7d1cfea138.idx
+   A
+/branches/rails/rails/vendor/plugins/acts_as_xapian/.git/objects/pack/pack-41ebdff27c581340ac7a71850e2e3a7d1cfea138.pack
+   M
+/branches/rails/rails/vendor/plugins/acts_as_xapian/.git/refs/heads/master
+   M
+/branches/rails/rails/vendor/plugins/acts_as_xapian/.git/refs/remotes/origin/master
+   A /branches/rails/rails/vendor/plugins/acts_as_xapian/README.textile
+   M
+/branches/rails/rails/vendor/plugins/acts_as_xapian/lib/acts_as_xapian.rb
+
+Switched repo to git://github.com/Overbryd/acts_as_xapian.git
+
+------------------------------------------------------------------------
+
+
+
+
+I did some digging in the perl script and managed to generate this stack
+trace, it shows that gs_do_update is called with $rev_a=10576 and
+$rev_b=10577, the file is in $rev_b but it complains it's not found in
+$rev_a.
+
+SVN::Git::Fetcher::open_file('SVN::Git::Fetcher=HASH(0x25faf38)',
+'branches/rails/rails/vendor/plugins/acts_as_xapian/.git/refs/heads/master', 
+
+'HASH(0x25fdb00)', 10576, '_p_apr_pool_t=SCALAR(0x24f8978)') called at
+/usr/lib/perl5/SVN/Ra.pm line 623
+SVN::Ra::Reporter::AUTOLOAD('SVN::Ra::Reporter=ARRAY(0x24f8948)',
+'SVN::Pool=REF(0x24f8528)') called at ../git-svn.perl line 4087
+Git::SVN::Ra::gs_do_update('Git::SVN::Ra=HASH(0x24beac8)', 10576, 10577,
+'Git::SVN=HASH(0x24f7d18)', 'SVN::Git::Fetcher=HASH(0x25faf38)') called
+at ../git-svn.perl line 2481
+Git::SVN::do_fetch('Git::SVN=HASH(0x24f7d18)', 'HASH(0x24c01f0)', 10577)
+called at ../git-svn.perl line 4227
+Git::SVN::Ra::gs_fetch_loop_common('Git::SVN::Ra=HASH(0x24beac8)',
+10575, 10724, 'ARRAY(0x1da1c20)', 'ARRAY(0x1da1c50)') called at
+../git-svn.perl line 1506
+Git::SVN::fetch_all('svn', 'HASH(0x21d6440)') called at ../git-svn.perl
+line 387
+main::cmd_fetch at ../git-svn.perl line 268
+eval {...} at ../git-svn.perl line 266
+branches/rails/rails/vendor/plugins/acts_as_xapian/.git/refs/heads/master
+was not found in commit a643e882c557593f36bb9fd0966490010b9dba61
+(r10576) at ../git-svn.perl line 3271.
+
+
+I'm not sure whether this is correct behavior or not and I'm not
+familiar with SVN::Ra::Reporter... so some help would be appreciated.
 
 Thanks,
-
- t/t7500-commit.sh |    5 +----
- t/t7501-commit.sh |   20 ++++++++++++++++++++
- 2 files changed, 21 insertions(+), 4 deletions(-)
-
-diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
-index 6e18a96..5998baf 100755
---- a/t/t7500-commit.sh
-+++ b/t/t7500-commit.sh
-@@ -149,10 +149,7 @@ EOF
-=20
- test_expect_success '--signoff' '
- 	echo "yet another content *narf*" >> foo &&
--	echo "zort" | (
--		test_set_editor "$TEST_DIRECTORY"/t7500/add-content &&
--		git commit -s -F - foo
--	) &&
-+	echo "zort" | git commit -s -F - foo &&
- 	git cat-file commit HEAD | sed "1,/^$/d" > output &&
- 	test_cmp expect output
- '
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index 63bfc6d..b4e2b4d 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -127,6 +127,26 @@ test_expect_success \
- 	"showing committed revisions" \
- 	"git rev-list HEAD >current"
-=20
-+cat >editor <<\EOF
-+#!/bin/sh
-+sed -e "s/good/bad/g" < "$1" > "$1-"
-+mv "$1-" "$1"
-+EOF
-+chmod 755 editor
-+
-+cat >msg <<EOF
-+A good commit message.
-+EOF
-+
-+test_expect_success \
-+	'editor not invoked if -F is given' '
-+	 echo "moo" >file &&
-+	 VISUAL=3D./editor git commit -a -F msg &&
-+	 git show -s --pretty=3Dformat:"%s" | grep -q good &&
-+	 echo "quack" >file &&
-+	 echo "Another good message." | VISUAL=3D./editor git commit -a -F - =
-&&
-+	 git show -s --pretty=3Dformat:"%s" | grep -q good
-+	 '
- # We could just check the head sha1, but checking each commit makes it
- # easier to isolate bugs.
-=20
---=20
-1.6.1.134.g55c35
+Morgan
