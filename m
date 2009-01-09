@@ -1,91 +1,56 @@
-From: "Nathan W. Panike" <nathan.panike@gmail.com>
-Subject: [PATCH] Get format-patch to show first commit after root commit
-Date: Fri,  9 Jan 2009 15:33:07 -0600
-Message-ID: <1231536787-20685-1-git-send-email-nathan.panike@gmail.com>
-Cc: "Nathan W. Panike" <nathan.panike@gmail.com>
+From: =?ISO-8859-1?Q?Ask_Bj=F8rn_Hansen?= <ask@develooper.com>
+Subject: git submodule merge madness
+Date: Fri, 9 Jan 2009 13:50:50 -0800
+Message-ID: <ADC7A3B1-6756-4258-93CD-DB40C7D2793C@develooper.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 09 22:35:01 2009
+X-From: git-owner@vger.kernel.org Fri Jan 09 22:59:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLP0K-0007ZQ-Sq
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 22:34:57 +0100
+	id 1LLPNa-0007Wi-08
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 22:58:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758047AbZAIVdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 16:33:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757653AbZAIVdU
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 16:33:20 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:40347 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757458AbZAIVdT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 16:33:19 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so1200095nfc.21
-        for <git@vger.kernel.org>; Fri, 09 Jan 2009 13:33:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=z0FXxMklz4F9pqbUL/hRMMXqB6AO6WYUNRCXk8eo/P8=;
-        b=ihSxv4AlqRtZCyAIlfAAn1oSAGv+iGRiIsaIH9N0mAHyoE188WXlztu39hrSujsZEq
-         EsEkKnJAs7LitPzJPPCSp+YVFy6FdnoYpoJTk6hBwJzAQVxzQDBEUIbV/KB41/e3+/M7
-         Wd+RJM6eT0BBphlsKZUAxc/Y7Firv5uJ8Mpyg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=dId689T6bL4JHJKMNKjW4JZOp9mN1biDrvHk0JIHnATw+PmC8m9W62vbBvpFXQ+tcc
-         znadLUlGCME8Mnv4kQLEjCZvF3DNQ1UooracVhlZOTdvnwYnz0Y802N/pFfaZYauji2s
-         iNyR/Q53HVfiNu3YXHaRtcElCS0Mxnc19ZPDs=
-Received: by 10.67.29.4 with SMTP id g4mr15227715ugj.73.1231536796851;
-        Fri, 09 Jan 2009 13:33:16 -0800 (PST)
-Received: from localhost (dyn-108-77.uwnet.wisc.edu [72.33.108.77])
-        by mx.google.com with ESMTPS id i30sm30457174ugd.30.2009.01.09.13.33.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 09 Jan 2009 13:33:16 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.76.gc123b.dirty
+	id S1754380AbZAIV5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 16:57:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753959AbZAIV5d
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 16:57:33 -0500
+Received: from x8.develooper.com ([216.52.237.208]:58387 "EHLO
+	x8.develooper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752857AbZAIV5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 16:57:32 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Jan 2009 16:57:32 EST
+Received: (qmail 19450 invoked from network); 9 Jan 2009 21:50:51 -0000
+Received: from dsl081-039-130.lax1.dsl.speakeasy.net (HELO dhcp221.bur.sol) (ask@mail.dev@64.81.39.130)
+  by smtp.develooper.com with (AES128-SHA encrypted) SMTP; 9 Jan 2009 21:50:51 -0000
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105042>
 
-Rework this patch to try to handle the case where one does
+Hi,
 
-git format-patch -n ...
+We've (again) replaced a few directories with submodules.  Man, it's  
+madness!
 
-and n is a number larger than 1.  Currently, the command
+The typical problem is that we get an error trying to merge a "pre- 
+submodule" branch into master:
 
-git format-patch -1 e83c5163316f89bfbde
+	fatal: cannot read object 894c77319a18c4d48119c2985a9275c9f5883584  
+'some/sub/dir': It is a submodule!
+Mark Levedahl wrote an example in July, but I don't think he got any  
+replies:  http://marc.info/?l=git&m=121587851313303
+Any ideas?   Is there something we can do?    I see a strong  
+correlation between adding a new submodule and the number of "git  
+sucks" messages on our internal IRC server.
 
-in the git repository creates an empty file.  Instead, one is
-forced to do
 
-git format-patch -1 --root e83c5163316f89bfbde
+  - ask
 
-This seems arbitrary.  This patch fixes this case, so that
-
-git format-patch -1 e83c5163316f89bfbde
-
-will produce an actual patch.
-
-Signed-off-by: Nathan W. Panike <nathan.panike@gmail.com>
----
- builtin-log.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-log.c b/builtin-log.c
-index 4a02ee9..0eca15f 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -975,6 +975,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		nr++;
- 		list = xrealloc(list, nr * sizeof(list[0]));
- 		list[nr - 1] = commit;
-+		if(!commit->parents){
-+			rev.show_root_diff=1;
-+		}
- 	}
- 	total = nr;
- 	if (!keep_subject && auto_number && total > 1)
 -- 
-1.6.1.76.gc123b.dirty
+http://develooper.com/ - http://askask.com/
