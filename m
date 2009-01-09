@@ -1,91 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Comments on Presentation Notes Request.
-Date: Fri, 09 Jan 2009 05:50:40 -0800 (PST)
-Message-ID: <m31vvc37x0.fsf@localhost.localdomain>
-References: <c115fd3c0901061433i78bf3b26v77e5981aada6728e@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: 1.5.6.5 fails to clone
+	git.kernel.org/[...]/rostedt/linux-2.6-rt
+Date: Fri, 9 Jan 2009 15:08:01 +0100
+Message-ID: <20090109140801.GO21154@genesis.frugalware.org>
+References: <E1LLAn5-0001JM-00@alva.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="oQt9EtFvfmoPRfH8"
 Cc: git@vger.kernel.org
-To: "Tim Visher" <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 09 14:52:12 2009
+To: Tim Shepard <shep@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jan 09 15:09:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLHmT-0005lz-Mm
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 14:52:10 +0100
+	id 1LLI3H-0003eF-Ou
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 15:09:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390AbZAINup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 08:50:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbZAINup
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 08:50:45 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:19307 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752753AbZAINuo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 08:50:44 -0500
-Received: by nf-out-0910.google.com with SMTP id d3so1171610nfc.21
-        for <git@vger.kernel.org>; Fri, 09 Jan 2009 05:50:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=3sPtNZNpJyF2ojMFpJaire4Axcehr9kcrIkBCiPxZpg=;
-        b=C/w/Lnc0L8MFs+NGeh1cJcxNp23yOEmXkRtRbWKAQm3COYI5fCikcrT1zo0LtAiSKF
-         GP+XjAJDpc/LAFlgF0ycKn9oZGWxC/wg4HpKiu69uu3y0lCUm5ThqJ687FLmK+CNXhAu
-         7sVJcwR0iK85S3+ogn5ghCOxf///4SnPU1n+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=lFKJnfr+E10CIhBhgI+OCMd9DblGHVK91xSscFdHQhvD/UOBUwk2jp+ABx/TKKSizk
-         7n3FcegF0M0/HAAHw+qs8zFBDt+nqv03Hz0whA8KWDL1rtn3KO/m5np8XPL+j0/g3TjQ
-         LV0k23wdF36/mVTvKB7/eE5hjX3zGYrpMDAYk=
-Received: by 10.210.43.10 with SMTP id q10mr19309121ebq.179.1231509041518;
-        Fri, 09 Jan 2009 05:50:41 -0800 (PST)
-Received: from localhost.localdomain (abxa216.neoplus.adsl.tpnet.pl [83.8.250.216])
-        by mx.google.com with ESMTPS id 28sm5099124eye.30.2009.01.09.05.50.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 09 Jan 2009 05:50:40 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n09Dob1o024520;
-	Fri, 9 Jan 2009 14:50:38 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n09Doa4E024517;
-	Fri, 9 Jan 2009 14:50:36 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <c115fd3c0901061433i78bf3b26v77e5981aada6728e@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753552AbZAIOIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 09:08:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbZAIOIF
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 09:08:05 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:37575 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752586AbZAIOIE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 09:08:04 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id E2A13580A6;
+	Fri,  9 Jan 2009 15:08:02 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 441A94465E;
+	Fri,  9 Jan 2009 15:08:01 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 3C7BD11B8630; Fri,  9 Jan 2009 15:08:01 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <E1LLAn5-0001JM-00@alva.home>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105013>
 
-"Tim Visher" <tim.visher@gmail.com> writes:
 
-> Hello Everyone,
-> 
-> I'm putting together a little 15 minute presentation for my company
-> regarding SCMSes in an attempt to convince them to at the very least
-> use a Distributed SCMS and at best to use git.  I put together all my
-> notes, although I didn't put together the actual presentation yet.  I
-> figured I'd post them here and maybe get some feedback about it.  Let
-> me know what you think.
-> 
-> Thanks in advance!
+--oQt9EtFvfmoPRfH8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Take a look at the following links:
- * "Understanding Version-Control Systems (DRAFT)" by Eric Raymond
-   http://www.catb.org/esr/writings/version-control/version-control.html
- * "Version Control Habits of Effective Developers" at The Daily Build
-   http://blog.bstpierre.org/version-control-habits
+On Fri, Jan 09, 2009 at 01:24:19AM -0500, Tim Shepard <shep@alum.mit.edu> w=
+rote:
+>=20
+>=20
+> I have git 1.5.6.5 installed from the Debian/lenny package.
+>=20
+> Poking around in http://git.kernel.org/ looking for a git repository
+> that might have the latest -rt development happening, I found
+>=20
+>   http://git.kernel.org/?p=3Dlinux/kernel/git/rostedt/linux-2.6-rt.git
+>=20
+> which looked promising.
+>=20
+> But when I tried cloning it using:
+>=20
+>     git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/rostedt/l=
+inux-2.6-rt.git linux-2.6-rt
 
-Note that the first one is DRAFT; on the other hand it explains
-lock-edit, merge-then-commit, and commit-then-merge workflows quite
-well, and has a host of links.
-   
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+I would use the git:// link from gitweb.
+
+--oQt9EtFvfmoPRfH8
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAklnWkEACgkQe81tAgORUJbrIACfejlvPTgA5zNzi1PgK+W8ajca
+QaAAnimbWmpx51twYq6D9kDhv4htT4Py
+=aUsA
+-----END PGP SIGNATURE-----
+
+--oQt9EtFvfmoPRfH8--
