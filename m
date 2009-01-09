@@ -1,97 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 1.5.6.5 fails to clone git.kernel.org/[...]/rostedt/linux-2.6-rt
-Date: Fri, 09 Jan 2009 00:58:55 -0800
-Message-ID: <7vpriw26uo.fsf@gitster.siamese.dyndns.org>
-References: <E1LLAn5-0001JM-00@alva.home>
+Subject: Re: [PATCH, resend] git-commit: colored status when color.ui is set
+Date: Fri, 09 Jan 2009 01:00:41 -0800
+Message-ID: <7viqoo26rq.fsf@gitster.siamese.dyndns.org>
+References: <200901081953.01418.markus.heidelberg@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Tim Shepard <shep@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jan 09 10:00:34 2009
+Cc: git@vger.kernel.org
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Fri Jan 09 10:02:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLDED-0004ho-Lo
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 10:00:30 +0100
+	id 1LLDGK-0005HA-IZ
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 10:02:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753653AbZAII7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 03:59:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbZAII7E
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 03:59:04 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53691 "EHLO
+	id S1753858AbZAIJAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 04:00:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753823AbZAIJAv
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 04:00:51 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43295 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753092AbZAII7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 03:59:04 -0500
+	with ESMTP id S1753868AbZAIJAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 04:00:50 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 207CC8EAFB;
-	Fri,  9 Jan 2009 03:59:02 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 26EF71C1CB;
+	Fri,  9 Jan 2009 04:00:49 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DF5968EAFA; Fri,
-  9 Jan 2009 03:58:56 -0500 (EST)
-In-Reply-To: <E1LLAn5-0001JM-00@alva.home> (Tim Shepard's message of "Fri, 09
- Jan 2009 01:24:19 -0500")
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 03C861BBC8; Fri, 
+ 9 Jan 2009 04:00:43 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C29FFF96-DE2B-11DD-B43A-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 026A63BE-DE2C-11DD-A5A0-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104990>
 
-Tim Shepard <shep@alum.mit.edu> writes:
+Markus Heidelberg <markus.heidelberg@web.de> writes:
 
-> I have git 1.5.6.5 installed from the Debian/lenny package.
+> When using "git commit" and there was nothing to commit (the editor
+> wasn't launched), the status output wasn't colored, even though color.ui
+> was set. Only when setting color.status it worked.
 >
-> Poking around in http://git.kernel.org/ looking for a git repository
-> that might have the latest -rt development happening, I found
+> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+> ---
+>  builtin-commit.c |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
 >
->   http://git.kernel.org/?p=linux/kernel/git/rostedt/linux-2.6-rt.git
->
-> which looked promising.
->
-> But when I tried cloning it using:
->
->     git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/rostedt/linux-2.6-rt.git linux-2.6-rt
->
-> it pulled several hundred megabytes through my (rather slow) DSL line
-> and then printed out
->
->   error: Trying to write ref refs/tags/v2.6.11 with nonexistant object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c
->   fatal: Cannot update the ref 'refs/tags/v2.6.11'.
->
-> and then removed everything it had just pulled.
->
-> Looking at http://git.kernel.org/?p=linux/kernel/git/rostedt/linux-2.6-rt.git;a=tags
-> I see that apparently v2.6.11 and v.2.6.11-tree both point at a tree
-> object and not a commit.
->
-> Is this a bug in git?
+> diff --git a/builtin-commit.c b/builtin-commit.c
+> index e88b78f..2d90f74 100644
+> --- a/builtin-commit.c
+> +++ b/builtin-commit.c
+> @@ -945,6 +945,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>  
+>  	git_config(git_commit_config, NULL);
+>  
+> +	if (wt_status_use_color == -1)
+> +		wt_status_use_color = git_use_color_default;
+> +
+>  	argc = parse_and_validate_options(argc, argv, builtin_commit_usage, prefix);
+>  
+>  	index_file = prepare_index(argc, argv, prefix);
 
-It is not a problem for the tag pointing to a tree, but linux-2.6-rt.git
-tree uses (like everybody else) objects/alternates to borrow objects from
-the repository of Linus.
+My first reaction was:
 
-I think we lost the alternate object store support when git-fetch was
-rewritten from the original shell script (that did support fetching from
-such a repository over rsync:// transport) to a reimplementation in C,
-with commit b888d61 (Make fetch a builtin, 2007-09-10).  
+	When the editor does get launched, what would the new code do with
+	your patch?  Would we see bunch of escape codes in the editor now?
 
-Later, cd547b4 (fetch/push: readd rsync support, 2007-10-01) attempted to
-resurrect some rsync support (b888d61 lost rsync support completely for
-git-fetch), but introduced these lines in transport.c:
+But we do disable color explicitly when we generate contents to feed the
+editor in that case since bc5d248 (builtin-commit: do not color status
+output shown in the message template, 2007-11-18), so that fear is
+unfounded.
 
-	/* NEEDSWORK: handle one level of alternates */
-	result = run_command(&rsync);
-
-These have not been touched ever since, and then finally commit 8434c2f
-(Build in clone, 2008-04-27) killed support of cloning from a repository
-that uses alternates for rsync transport for git-clone (before that, the
-shell script version had a special case to still allow such operation over
-rsync).
-
-It appears practically nobody uses rsync:// transport anymore these days;
-you are unfortunately the first one who noticed it.
+Thanks for a reminder, will queue.
