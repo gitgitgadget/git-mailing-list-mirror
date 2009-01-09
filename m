@@ -1,106 +1,69 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC PATCH] make diff --color-words customizable
-Date: Fri, 9 Jan 2009 01:50:50 +0100
-Message-ID: <200901090151.10880.trast@student.ethz.ch>
-References: <1231459505-14395-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0901090121432.30769@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Wrap inflateInit to retry allocation after releasing
+ pack memory
+Date: Thu, 08 Jan 2009 17:43:46 -0800
+Message-ID: <7vtz892qzx.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.2.00.0901062026500.3057@localhost.localdomain>
+ <1231314099.8870.415.camel@starfruit>
+ <alpine.LFD.2.00.0901070743070.3057@localhost.localdomain>
+ <1231368935.8870.584.camel@starfruit>
+ <alpine.LFD.2.00.0901071520330.3057@localhost.localdomain>
+ <1231374514.8870.621.camel@starfruit>
+ <alpine.LFD.2.00.0901071836290.3283@localhost.localdomain>
+ <20090108030115.GF10790@spearce.org>
+ <alpine.LFD.2.00.0901071904380.3283@localhost.localdomain>
+ <20090108031314.GG10790@spearce.org> <20090108031655.GH10790@spearce.org>
+ <alpine.LFD.2.00.0901071941210.3283@localhost.localdomain>
+ <1231438552.8870.645.camel@starfruit>
+ <alpine.LFD.2.00.0901081216060.3283@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart7512548.DZpfyDEy7T";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 09 01:52:20 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "R. Tyler Ballance" <tyler@slide.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Jan =?utf-8?Q?Kr?= =?utf-8?Q?=C3=BCger?= <jk@jk.gs>,
+	Git ML <git@vger.kernel.org>, kb@slide.com
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jan 09 02:45:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LL5bn-0006gI-5S
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 01:52:19 +0100
+	id 1LL6RC-00034S-PT
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 02:45:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756147AbZAIAu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 19:50:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756088AbZAIAuz
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 19:50:55 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:16047 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755597AbZAIAuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 19:50:55 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 9 Jan 2009 01:50:54 +0100
-Received: from [192.168.0.3] ([84.75.148.62]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 9 Jan 2009 01:50:53 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0901090121432.30769@pacific.mpi-cbg.de>
-X-OriginalArrivalTime: 09 Jan 2009 00:50:53.0550 (UTC) FILETIME=[530400E0:01C971F4]
+	id S1751964AbZAIBoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 20:44:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbZAIBoB
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 20:44:01 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35631 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751066AbZAIBoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 20:44:00 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3E01D8EC51;
+	Thu,  8 Jan 2009 20:43:59 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3F4318EC50; Thu,
+  8 Jan 2009 20:43:48 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.0901081216060.3283@localhost.localdomain>
+ (Linus Torvalds's message of "Thu, 8 Jan 2009 12:22:22 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FC18B3E0-DDEE-11DD-B06C-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104979>
 
---nextPart7512548.DZpfyDEy7T
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Johannes Schindelin wrote:
-> On Fri, 9 Jan 2009, Thomas Rast wrote:
->=20
-> > Allows for user-configurable word splits when using --color-words. This=
-=20
-> > can make the diff more readable if the regex is configured according to=
-=20
-> > the language of the file.
-> >=20
-> > For now the (POSIX extended) regex must be set via the environment
-> > GIT_DIFF_WORDS_REGEX.  Each (non-overlapping) match of the regex is
-> > considered a word.  Anything characters not matched are considered
-> > whitespace.  For example, for C try
-> >=20
-> >   GIT_DIFF_WORDS_REGEX=3D'[0-9]+|[a-zA-Z_][a-zA-Z0-9_]*|(\+|-|&|\|){1,2=
-}|\S'
-[...]
-> Interesting idea.  However, I think it would be better to do the opposite=
-,=20
-> have _word_ patterns.  And even better to have _one_ pattern.
+> Junio - I think we should apply this, and likely to the stable branch too. 
 
-I'm not sure I understand.  It _is_ a single pattern.  The examples
-just have several cases to distinguish various semantic groups that
-can occur, as a sort of "half tokenizer".  (The C example isn't very
-complete however.)
+Yeah, I didn't lose the patch.
 
-> BTW I think you could do what you intended to do with a _way_ smaller=20
-> and more intuitive patch.
+> Add the re-trying the inflateInit() after shrinking pack windows on top of 
+> it.
 
-How?
-
-I don't think the existing mechanism, which just replaces all
-whitespace with newlines and does a line diff to find out which words
-changed, can "just" be adapted.  We will have to insert extra newlines
-at points where the regex said to split a word, but where there was no
-whitespace in the original content.  If there's a significantly easier
-way to do that than I hacked up, please share.
-
-Or maybe I got your original code all wrong?
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
-
---nextPart7512548.DZpfyDEy7T
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklmn34ACgkQqUud07tmzP0OawCeMrFu76V/OcztzAeaOt97EeTa
-EeQAnjcf5AklLC/fyHEkNoXi4TRgVE76
-=KyoE
------END PGP SIGNATURE-----
-
---nextPart7512548.DZpfyDEy7T--
+That too.
