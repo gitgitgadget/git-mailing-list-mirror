@@ -1,108 +1,70 @@
-From: Alexander Potashev <aspotashev@gmail.com>
-Subject: Re: [PATCH] Get format-patch to show first commit after root commit
-Date: Fri, 9 Jan 2009 23:29:40 +0300
-Message-ID: <20090109202940.GA17501@myhost>
-References: <1231529725-19767-1-git-send-email-nathan.panike@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
+Date: Fri, 09 Jan 2009 12:53:24 -0800
+Message-ID: <7vvdsoyzej.fsf@gitster.siamese.dyndns.org>
+References: <20090108195511.GA8734@chistera.yi.org>
+ <7v7i552clz.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0901091405460.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Nathan W. Panike" <nathan.panike@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 09 21:31:24 2009
+Cc: Adeodato =?utf-8?Q?Sim=C3=B3?= <dato@net.com.org.es>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Clemens Buchacher <drizzd@aon.at>,
+	Pierre Habouzit <madcoder@debian.org>, davidel@xmailserver.org,
+	Francis Galiegue <fg@one2team.net>,
+	Git ML <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 09 21:55:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLO0p-0007Vb-Ej
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 21:31:23 +0100
+	id 1LLOOC-0008KE-FS
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 21:55:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751045AbZAIU3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 15:29:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbZAIU3j
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 15:29:39 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:38513 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750856AbZAIU3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 15:29:38 -0500
-Received: by bwz14 with SMTP id 14so29566852bwz.13
-        for <git@vger.kernel.org>; Fri, 09 Jan 2009 12:29:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=MkFYzV+MHwZj6NFU+Lqmpo7oa7CTarEMB3kwaWRPj/E=;
-        b=d/u8PlKc5JM7E+AO7qzGfj96f5dYhVxKU/r6FrzW8nfOSmSTRh931iHTL4Flftqq4p
-         HtSIsXaZMsEInQpoj90HDzyeAfoYsHwrK46lqQEv5nmIEBfkBOmCrLC49e+V/HWxK2pP
-         n+ZTC9Xy0Mdd0qALpTboljD3RyoIKrCWZiF+A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=IW0B5CoHYjFtQszGQSb1sGkU0bhScEHCpBRBvxvsAtxQ/QrMe9iB1OtpbksOAReGoe
-         h0YhNsNs1r7JxbO/le7igXgqnM9S8YxIfW7N71FZJM+ItTb3QGbvU6uMRqwK6W2gDruF
-         R2AmuoDTE8CojmISVsCLopaWXOHYeH5qeWbDo=
-Received: by 10.103.228.19 with SMTP id f19mr9349682mur.18.1231532975934;
-        Fri, 09 Jan 2009 12:29:35 -0800 (PST)
-Received: from smtp.gmail.com (ppp91-77-12-84.pppoe.mtu-net.ru [91.77.12.84])
-        by mx.google.com with ESMTPS id b9sm8652478mug.26.2009.01.09.12.29.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 09 Jan 2009 12:29:35 -0800 (PST)
-Received: by smtp.gmail.com (sSMTP sendmail emulation); Fri, 09 Jan 2009 23:29:40 +0300
-Content-Disposition: inline
-In-Reply-To: <1231529725-19767-1-git-send-email-nathan.panike@gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754332AbZAIUxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 15:53:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754093AbZAIUxi
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 15:53:38 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40803 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752606AbZAIUxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 15:53:37 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 41FCA8FCCB;
+	Fri,  9 Jan 2009 15:53:36 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7B50E8FCC7; Fri,
+  9 Jan 2009 15:53:26 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9599FD08-DE8F-11DD-BBEA-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105039>
 
-Hello!
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I experienced this problem today while preparing a simple patch for
-reply in "[PATCH 2/2] Use is_pseudo_dir_name everywhere" thread.
-I used a workaround: add a file, commit, remove it, commit, add it once
-again, commit and after all format-patch.
+> On Thu, 8 Jan 2009, Junio C Hamano wrote:
+>
+>> If we find the "common" context lines that have only blank and 
+>> punctuation letters in Dscho output, turn each of them into "-" and "+", 
+>> and rearrange them so that all "-" are together followed by "+", it will 
+>> match Bzr output.
+>
+> So we'd need something like this (I still think we should treat curly 
+> brackets the same as punctuation, and for good measure I just handled 
+> everything that is not alphanumerical the same):
 
-On 13:35 Fri 09 Jan     , Nathan W. Panike wrote:
-> Currently, the command
-> 
-> git format-patch -1 e83c5163316f89bfbde
-> 
-> in the git repository creates an empty file.  Instead, one is
-> forced to do
-> 
-> git format-patch -1 --root e83c5163316f89bfbde
-> 
-> This seems arbitrary.  This patch fixes this case, so that
-> 
-> git format-patch -1 e83c5163316f89bfbde
+I meant by punctuation to include curlies (my wording may have been wrong
+but from the example with " }" line it should have been obvious).
 
-Your patch doesn't solve the problem if there are more than one commit
-(say, 2 commits) and you run 'git format-patch -2'. Even with your patch
-format-patch writes an empty patch file corresponding to the root commit
-(actually, it creates 2 patches, but the first is empty).
-
-Please, correct me if I'm wrong.
-
-> 
-> will produce an actual patch.
-> ---
->  builtin-log.c |    2 ++
->  1 files changed, 2 insertions(+), 0 deletions(-)
-> 
-> diff --git a/builtin-log.c b/builtin-log.c
-> index 4a02ee9..5e7b61f 100644
-> --- a/builtin-log.c
-> +++ b/builtin-log.c
-> @@ -977,6 +977,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->  		list[nr - 1] = commit;
->  	}
->  	total = nr;
-> +	if (total == 1 && !list[0]->parents)
-> +		rev.show_root_diff=1;
->  	if (!keep_subject && auto_number && total > 1)
->  		numbered = 1;
->  	if (numbered)
-> -- 
-> 1.6.1.76.gc123b.dirty
+But I agree with both points Linus raised.  The criteria to pick what to
+pretend unmatching should be "small insignificant lines" (small goes for
+both size and also number of consecutive "insignificant" lines), and the
+coallescing should be done to join a block of consecutive changed lines of
+a significant size (so you do not join two 1 or 2-line "changed line"
+blocks by pretending that a 1-line unchanged insignificant line in between
+them is unmatching).
