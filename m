@@ -1,110 +1,104 @@
-From: <4jxDQ6FQee2H@dyweni.com>
-Subject: Re: Assertion Failed when importing svn into Git
-Date: Fri, 9 Jan 2009 14:05:36 -0600
-Message-ID: <20090109140536.1fa6fd8b@family.dyweni.com>
-References: <20090109133234.345dacb9@family.dyweni.com>
-	<20090109134307.435ed56f@family.dyweni.com>
-Reply-To: 4jxDQ6FQee2H@dyweni.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: fetch branch blacklist
+Date: Fri, 09 Jan 2009 12:23:08 -0800 (PST)
+Message-ID: <m3wsd41b7q.fsf@localhost.localdomain>
+References: <87r63ek6cw.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: 4jxDQ6FQee2H@dyweni.com
-X-From: git-owner@vger.kernel.org Fri Jan 09 21:07:59 2009
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Fri Jan 09 21:24:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLNdp-0007Fy-1s
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 21:07:37 +0100
+	id 1LLNuJ-00056l-O6
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 21:24:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755812AbZAIUFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 15:05:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755890AbZAIUFn
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 15:05:43 -0500
-Received: from pl1.haspere.com ([208.111.35.220]:35476 "EHLO pl1.haspere.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755801AbZAIUFm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 15:05:42 -0500
-Received: from family.dyweni.com (173-23-155-27.client.mchsi.com [173.23.155.27])
-	by pl1.haspere.com (Postfix) with ESMTPSA id 7B966C800E;
-	Fri,  9 Jan 2009 14:05:39 -0600 (CST)
-In-Reply-To: <20090109134307.435ed56f@family.dyweni.com>
-X-Mailer: Claws Mail 3.4.0 (GTK+ 2.12.11; i686-pc-linux-gnu)
+	id S1754796AbZAIUXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 15:23:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754703AbZAIUXN
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 15:23:13 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:35043 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753137AbZAIUXM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 15:23:12 -0500
+Received: by bwz14 with SMTP id 14so29559734bwz.13
+        for <git@vger.kernel.org>; Fri, 09 Jan 2009 12:23:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=sfjQMGNwNgpI8+Zj7wPGFvXzgwvjB4qHkZQidh2ETqo=;
+        b=nB7YcQU4XXxSi2ohMjP7TjC8UMhzPDeFauPcFaC49jfCv4X9WfrABgYyrwejudQ19o
+         rRuBUPiXJcUsLgbS/5dEgU12kkQMtvWvDZE9iy4sNu3+ShivMllDTm+JFnG5LVH8pTy2
+         uS9aEO020xNT2wjd2W9iXYmnOS9zI4m0syz70=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=sO1Yabjb/T8Jo/WYDnk++tEaTiib6S4FkcI4ql8swKzH3vJSkJGtRQAm0aq0UZhzFj
+         1jy8vYK1xyan+/D1jhvdqSdn4SmCyDD6vwtl7VZ8pPRMltceU5LRAOCTcIemv9S+qmeJ
+         LkmEnXhI+6adjPmvhVk2IEAUe1dDz6DNnDCKY=
+Received: by 10.103.192.2 with SMTP id u2mr9335051mup.95.1231532589319;
+        Fri, 09 Jan 2009 12:23:09 -0800 (PST)
+Received: from localhost.localdomain (abwp34.neoplus.adsl.tpnet.pl [83.8.239.34])
+        by mx.google.com with ESMTPS id e9sm53672684muf.51.2009.01.09.12.23.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 09 Jan 2009 12:23:08 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n09KMX6h026869;
+	Fri, 9 Jan 2009 21:22:44 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n09KMHxw026865;
+	Fri, 9 Jan 2009 21:22:17 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <87r63ek6cw.fsf@jidanni.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105037>
 
-Hi,
+jidanni@jidanni.org writes:
 
-I have resolved this issue.
+> If one wants to always fetch all except one remote branch, one cannot
+> just blacklist it, but must instead whitelist all the rest.
+> $ git branch -rd origin/man origin/html
+> Deleted remote branch origin/man.
+> Deleted remote branch origin/html.
+> Plus I edited them out of FETCH_HEAD. Nonetheless, back from the dead:
+> $ git pull
+> From git://git.kernel.org/pub/scm/git/git
+>  * [new branch]      html       -> origin/html
+>  * [new branch]      man        -> origin/man
+> The only solution is to change .git/config:
+> [remote "origin"]
+> 	url = git://git.kernel.org/pub/scm/git/git.git
+> #	fetch = +refs/heads/*:refs/remotes/origin/*
+> 	fetch = +refs/heads/maint:refs/remotes/origin/maint
+> 	fetch = +refs/heads/master:refs/remotes/origin/master
+> 	fetch = +refs/heads/next:refs/remotes/origin/next
+> 	fetch = +refs/heads/pu:refs/remotes/origin/pu
+> 	fetch = +refs/heads/todo:refs/remotes/origin/todo
 
-There was either corruption in the repository or an incompatibility
-between the 1.4.6 and the 1.5.4 formats.
+Well, you can always use hooks for that (see for example
+underdocumented contrib/hooks/update-paranoid)... or you can try to
+scratch that itch yourself.  gitignore supports inverse (negated)
+patterns (!<pattern>), so there is some code dealing with
+"blacklisting".  I would propose using the same '!' character, or
+perhaps one of forbidden characters (see git-check-ref-format(1)),
+i.e.
 
-A dump / reload of the repository has resolved the issue.
+ [remote "origin"]
+ 	url = git://git.kernel.org/pub/scm/git/git.git
+ 	fetch = +refs/heads/*:refs/remotes/origin/*
+        fetch = !refs/heads/html
+        fetch = !refs/heads/man
 
-I can run 'svn diff -r 288:289' successfully on the new repository.
-
-Thanks!
-
-
-
-> Hi,
-> 
-> For more testing, I setup a brand new SVN repository (using v1.5.4).
-> 
-> In the old SVN Repo, I checked out the problematic file
-> (.cache/.dataModel) from rev 288 and rev 289.
-> 
-> 
-> In the new SVN Repo, I added the problematic file (from rev 288) and
-> committed, which became Rev 4.
-> 
-> Then I copied the problematic file (rev rev 289) ontop of that file
-> and commited, which became Rev 5.
-> 
-> I'm successfully able to do a 'svn diff -r 4:5'.
-> 
-> Does this imply that I have corruption in my old SVN Repository?
-> 
-> Or is something being lost when checking out the file from Rev 289
-> that does break SVN in my test?
-> 
-> 
-> 
-> 
-> 
-> > Hi,
-> > 
-> > 
-> > I'm trying to import my SVN repository into GIT and its throwing an
-> > Assertion Failed error message in text_delta.c  Can someone help me?
-> > 
-> > The assertion failed error occurs when running 'svn diff -r 288:289'
-> > which contains only one change - a change made to a binary file.
-> > That binary file is the Eclipse dataModel file, both revs (288,
-> > 289) have the file marked as application/octet-stream using the
-> > svn:mime-type property
-> > 
-> > 
-> > subversion - 1.5.4
-> > git        - 1.6.0.6
-> > 
-> > The SVN repository was started using 1.4.6, if that matters
-> > 
-> > Here's the exact error message:
-> > 
-> > -------
-> > $ svn diff -r 288:289
-> > svn: subversion/libsvn_delta/text_delta.c:609: apply_window:
-> > Assertion `window->sview_len == 0 || (window->sview_offset >=
-> > ab->sbuf_offset && (window->sview_offset + window->sview_len >=
-> > ab->sbuf_offset + ab->sbuf_len))' failed.
-> > Aborted
-> > -------
-> > 
-> > 
-> > Thanks!  
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
