@@ -1,112 +1,72 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: Curious about details of optimization of object database...
-Date: Fri, 9 Jan 2009 13:07:21 -0600
-Message-ID: <200901091307.33483.bss@iguanasuicide.net>
-References: <20090109174623.GC12552@seberino.org>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: [PATCH] filter-branch: add git_commit_non_empty_tree and --prune-empty.
+Date: Fri, 9 Jan 2009 14:29:15 -0500
+Message-ID: <76718490901091129q534ca981iac54e0653d76170d@mail.gmail.com>
+References: <20081030132623.GC24098@artemis.corp>
+	 <1225445204-28000-1-git-send-email-madcoder@debian.org>
+	 <7viqr5wgl7.fsf@gitster.siamese.dyndns.org>
+	 <20081103092729.GE13930@artemis.corp>
+	 <20081103151826.GJ13930@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart4057758.qaVKTBKHfy";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: chris@seberino.org
-X-From: git-owner@vger.kernel.org Fri Jan 09 20:08:30 2009
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	pasky@suse.cz, srabbelier@gmail.com
+To: "Pierre Habouzit" <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri Jan 09 20:30:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLMiX-0001tF-MP
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 20:08:26 +0100
+	id 1LLN44-0001YE-Tx
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 20:30:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753952AbZAITHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 14:07:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753908AbZAITG7
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 14:06:59 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:58987 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753897AbZAITG6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 14:06:58 -0500
-Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.124])
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LLMh7-0002l2-Tp; Fri, 09 Jan 2009 19:06:58 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <20090109174623.GC12552@seberino.org>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1752175AbZAIT3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 14:29:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752092AbZAIT3R
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 14:29:17 -0500
+Received: from rv-out-0506.google.com ([209.85.198.232]:47176 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751583AbZAIT3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 14:29:16 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so9054137rvb.1
+        for <git@vger.kernel.org>; Fri, 09 Jan 2009 11:29:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=wwLOWZ5aT3ncuiI3I7VImZUDNF9w/Q84oe1V4QswAPU=;
+        b=u0tDdKPM4v9U6NCSeUWwfF2KbYuopbl9KtjMGAPOdJK+dmS/wCl3++VgVsPvvShFrY
+         ZA08p8VvuYE5KQ2XZtpR4OX42Nmv1XVNIWP1cuBqZt7KTEhc6kGvdnE2Q1ZT9Y7UJkgF
+         qNR4H4UogQdkXX7lLxL/ycsZ5+8eMMR0oHs5M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=oNYj3vCqWEFUzZip4q+HLJRP3B3qhHuPWRufsMy3Qm+t0NUQAtc2KfsD6FVvU94P5Q
+         54y5FFr7BX0x5gd3Dr00AZM51agyh4xIZSDpRVl951PWTOzCu9HCJPbfqOyhE01RP/w6
+         QeARRKOKo1uVBjf+Mu4mlVwOg3kM3EAyDo0jk=
+Received: by 10.141.172.6 with SMTP id z6mr516620rvo.0.1231529355454;
+        Fri, 09 Jan 2009 11:29:15 -0800 (PST)
+Received: by 10.140.135.1 with HTTP; Fri, 9 Jan 2009 11:29:15 -0800 (PST)
+In-Reply-To: <20081103151826.GJ13930@artemis.corp>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105032>
 
---nextPart4057758.qaVKTBKHfy
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Mon, Nov 3, 2008 at 10:18 AM, Pierre Habouzit <madcoder@debian.org> wrote:
+> On Mon, Nov 03, 2008 at 09:27:29AM +0000, Pierre Habouzit wrote:
+>> On Mon, Nov 03, 2008 at 04:58:44AM +0000, Junio C Hamano wrote:
 
-On Friday 2009 January 09 11:46:23 chris@seberino.org wrote:
->I'm told a commit is *not* a patch (diff), but, rather a copy of the entire
->tree.
+Bump, http://thread.gmane.org/gmane.comp.version-control.git/99440/
 
-It's even more than that.  A commit object contains its message, the SHA of=
-=20
-the tree, and zero or more SHAs for its parents.
+(I'd like to see this included. Having a bunch of empty commits after
+using filter-branch to remove unwanted files from history is, er,
+sub-optimal, so seems like it might even be default behavior?)
 
->Can anyone say, in a few sentences, how git avoids needing to keep multiple
->slightly different copies of entire files without just storing lots of
->patches/diffs?
-
-Loose objects can have large swaths of duplicated data.  However, git also=
-=20
-supports storing objects in a packed format, which uses delta compression t=
-o=20
-reduce the duplication to close to nothing.
-
-Some examples:
-Sizes are from "du -sh .git ."; The .git directory stores all the objects a=
-s=20
-well as the repository configuration, refs, reflogs, etc.  The . directory=
-=20
-has .git and a clean checkout of master.
-
-The LinuxPMI (http://linuxpmi.org/) tree:
-41M     .git
-83M     .
-(So, the storage is actually a bit smaller than the checkout; 984 objects; =
-140=20
-commits)
-
-A small project between me an my flatmates:
-309K    .git
-3.6M    .
-(Here, the storage is significantly smaller than the checkout; 786 objects;=
-=20
-155 commits)
-
-My repository that tracks my dotfiles:
-124K    .git
-176K    .
-(113 objects; 28 commits)
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
-
---nextPart4057758.qaVKTBKHfy
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklnoHUACgkQdNbfk+86fC3FCwCdGoXXdt8FbJG2ZlHmBGPf1BIb
-ijgAnjY4s4/GbJjtgfljH7uNNpiPmiet
-=8YMO
------END PGP SIGNATURE-----
-
---nextPart4057758.qaVKTBKHfy--
+j.
