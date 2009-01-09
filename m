@@ -1,166 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
-Date: Fri, 9 Jan 2009 14:07:28 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901091405460.30769@pacific.mpi-cbg.de>
-References: <20090108195511.GA8734@chistera.yi.org> <7v7i552clz.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Comments on Presentation Notes Request.
+Date: Fri, 09 Jan 2009 05:50:40 -0800 (PST)
+Message-ID: <m31vvc37x0.fsf@localhost.localdomain>
+References: <c115fd3c0901061433i78bf3b26v77e5981aada6728e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?Adeodato_Sim=F3?= <dato@net.com.org.es>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Clemens Buchacher <drizzd@aon.at>,
-	Pierre Habouzit <madcoder@debian.org>, davidel@xmailserver.org,
-	Francis Galiegue <fg@one2team.net>,
-	Git ML <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 09 14:08:29 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Tim Visher" <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 09 14:52:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLH5z-0005rJ-AL
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 14:08:15 +0100
+	id 1LLHmT-0005lz-Mm
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 14:52:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462AbZAINGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 08:06:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbZAINGu
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 08:06:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50620 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752228AbZAINGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 08:06:50 -0500
-Received: (qmail invoked by alias); 09 Jan 2009 13:06:47 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp068) with SMTP; 09 Jan 2009 14:06:47 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+VRFRcMnaV+OJEwymlbZfa5MHNGFiUCIbc2exzaX
-	5jYxRDqzbKAh26
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7v7i552clz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.44
+	id S1753390AbZAINup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 08:50:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbZAINup
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 08:50:45 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:19307 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752753AbZAINuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 08:50:44 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so1171610nfc.21
+        for <git@vger.kernel.org>; Fri, 09 Jan 2009 05:50:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=3sPtNZNpJyF2ojMFpJaire4Axcehr9kcrIkBCiPxZpg=;
+        b=C/w/Lnc0L8MFs+NGeh1cJcxNp23yOEmXkRtRbWKAQm3COYI5fCikcrT1zo0LtAiSKF
+         GP+XjAJDpc/LAFlgF0ycKn9oZGWxC/wg4HpKiu69uu3y0lCUm5ThqJ687FLmK+CNXhAu
+         7sVJcwR0iK85S3+ogn5ghCOxf///4SnPU1n+Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=lFKJnfr+E10CIhBhgI+OCMd9DblGHVK91xSscFdHQhvD/UOBUwk2jp+ABx/TKKSizk
+         7n3FcegF0M0/HAAHw+qs8zFBDt+nqv03Hz0whA8KWDL1rtn3KO/m5np8XPL+j0/g3TjQ
+         LV0k23wdF36/mVTvKB7/eE5hjX3zGYrpMDAYk=
+Received: by 10.210.43.10 with SMTP id q10mr19309121ebq.179.1231509041518;
+        Fri, 09 Jan 2009 05:50:41 -0800 (PST)
+Received: from localhost.localdomain (abxa216.neoplus.adsl.tpnet.pl [83.8.250.216])
+        by mx.google.com with ESMTPS id 28sm5099124eye.30.2009.01.09.05.50.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 09 Jan 2009 05:50:40 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n09Dob1o024520;
+	Fri, 9 Jan 2009 14:50:38 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n09Doa4E024517;
+	Fri, 9 Jan 2009 14:50:36 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <c115fd3c0901061433i78bf3b26v77e5981aada6728e@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105012>
 
-Hi,
+"Tim Visher" <tim.visher@gmail.com> writes:
 
-On Thu, 8 Jan 2009, Junio C Hamano wrote:
+> Hello Everyone,
+> 
+> I'm putting together a little 15 minute presentation for my company
+> regarding SCMSes in an attempt to convince them to at the very least
+> use a Distributed SCMS and at best to use git.  I put together all my
+> notes, although I didn't put together the actual presentation yet.  I
+> figured I'd post them here and maybe get some feedback about it.  Let
+> me know what you think.
+> 
+> Thanks in advance!
 
-> If we find the "common" context lines that have only blank and 
-> punctuation letters in Dscho output, turn each of them into "-" and "+", 
-> and rearrange them so that all "-" are together followed by "+", it will 
-> match Bzr output.
+Take a look at the following links:
+ * "Understanding Version-Control Systems (DRAFT)" by Eric Raymond
+   http://www.catb.org/esr/writings/version-control/version-control.html
+ * "Version Control Habits of Effective Developers" at The Daily Build
+   http://blog.bstpierre.org/version-control-habits
 
-So we'd need something like this (I still think we should treat curly 
-brackets the same as punctuation, and for good measure I just handled 
-everything that is not alphanumerical the same):
-
--- snipsnap --
-[TOY PATCH] Add diff option '--collapse-non-alnums'
-
-With the option --collapse-non-alnums, there will be no interhunks
-consisting solely of non-alphanumerical letters.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- diff.c         |    2 ++
- xdiff/xdiff.h  |    1 +
- xdiff/xdiffi.c |   48 +++++++++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 50 insertions(+), 1 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index c7ddb60..4b387fb 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2503,6 +2503,8 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		options->xdl_opts |= XDF_IGNORE_WHITESPACE_AT_EOL;
- 	else if (!strcmp(arg, "--patience"))
- 		options->xdl_opts |= XDF_PATIENCE_DIFF;
-+	else if (!strcmp(arg, "--collapse-non-alnums"))
-+		options->xdl_opts |= XDF_COLLAPSE_NON_ALNUMS;
- 
- 	/* flags options */
- 	else if (!strcmp(arg, "--binary")) {
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 4da052a..a444f9a 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -33,6 +33,7 @@ extern "C" {
- #define XDF_IGNORE_WHITESPACE_CHANGE (1 << 3)
- #define XDF_IGNORE_WHITESPACE_AT_EOL (1 << 4)
- #define XDF_PATIENCE_DIFF (1 << 5)
-+#define XDF_COLLAPSE_NON_ALNUMS (1 << 6)
- #define XDF_WHITESPACE_FLAGS (XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_CHANGE | XDF_IGNORE_WHITESPACE_AT_EOL)
- 
- #define XDL_PATCH_NORMAL '-'
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 3e97462..b8e7ee8 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -396,6 +396,50 @@ static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1,
- 	return xch;
- }
- 
-+static int xdl_record_contains_alnum(xrecord_t *record)
-+{
-+	long i;
-+	for (i = 0; i < record->size; i++)
-+		if (isalnum(record->ptr[i]))
-+			return 1;
-+	return 0;
-+}
-+
-+static int xdl_collapse_non_alnum(xdfile_t *xdf, xdfile_t *xdfo)
-+{
-+	long ix, ixo, len = 0;
-+
-+	/*
-+	 * Collapse all interhunk parts consisting solely of non-alnum
-+	 * characters into the hunks.
-+	 */
-+	for (ix = 0, ixo = 0; ix < xdf->nrec && ixo < xdfo->nrec; ix++, ixo++) {
-+		if (xdf->rchg[ix] == 1 || xdfo->rchg[ixo] == 1) {
-+			/* collapse non-alnum interhunks */
-+			while (len > 0) {
-+				xdf->rchg[ix - len] = 1;
-+				xdfo->rchg[ixo - len] = 1;
-+				len--;
-+			}
-+
-+			/* look for end of hunk */
-+			while (ix < xdf->nrec && xdf->rchg[ix] == 1)
-+				ix++;
-+			while (ixo < xdfo->nrec && xdfo->rchg[ixo] == 1)
-+				ixo++;
-+			if (ix >= xdf->nrec)
-+				return 0;
-+			len = !xdl_record_contains_alnum(xdf->recs[ix]);
-+		}
-+		else if (len > 0) {
-+			if (xdl_record_contains_alnum(xdf->recs[ix]))
-+				len = 0;
-+			else
-+				len++;
-+		}
-+	}
-+	return 0;
-+}
- 
- int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 	long ix, ixo, ixs, ixref, grpsiz, nrec = xdf->nrec;
-@@ -548,7 +592,9 @@ int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 
- 		return -1;
- 	}
--	if (xdl_change_compact(&xe.xdf1, &xe.xdf2, xpp->flags) < 0 ||
-+	if (((xpp->flags & XDF_COLLAPSE_NON_ALNUMS) &&
-+	     xdl_collapse_non_alnum(&xe.xdf1, &xe.xdf2)) ||
-+	    xdl_change_compact(&xe.xdf1, &xe.xdf2, xpp->flags) < 0 ||
- 	    xdl_change_compact(&xe.xdf2, &xe.xdf1, xpp->flags) < 0 ||
- 	    xdl_build_script(&xe, &xscr) < 0) {
- 
+Note that the first one is DRAFT; on the other hand it explains
+lock-edit, merge-then-commit, and commit-then-merge workflows quite
+well, and has a host of links.
+   
 -- 
-1.6.1.203.gc8be3
+Jakub Narebski
+Poland
+ShadeHawk on #git
