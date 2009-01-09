@@ -1,117 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Funny: git -p submodule summary
-Date: Fri, 9 Jan 2009 03:38:36 -0500
-Message-ID: <20090109083836.GB21389@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 1.5.6.5 fails to clone git.kernel.org/[...]/rostedt/linux-2.6-rt
+Date: Fri, 09 Jan 2009 00:58:55 -0800
+Message-ID: <7vpriw26uo.fsf@gitster.siamese.dyndns.org>
+References: <E1LLAn5-0001JM-00@alva.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 09 09:40:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Tim Shepard <shep@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jan 09 10:00:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLCuz-0008Qp-SJ
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 09:40:38 +0100
+	id 1LLDED-0004ho-Lo
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 10:00:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753555AbZAIIik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 03:38:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753610AbZAIIij
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 03:38:39 -0500
-Received: from peff.net ([208.65.91.99]:58190 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753063AbZAIIii (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 03:38:38 -0500
-Received: (qmail 17355 invoked by uid 107); 9 Jan 2009 08:39:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 09 Jan 2009 03:39:12 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Jan 2009 03:38:36 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de>
+	id S1753653AbZAII7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 03:59:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbZAII7E
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 03:59:04 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53691 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753092AbZAII7E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 03:59:04 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 207CC8EAFB;
+	Fri,  9 Jan 2009 03:59:02 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DF5968EAFA; Fri,
+  9 Jan 2009 03:58:56 -0500 (EST)
+In-Reply-To: <E1LLAn5-0001JM-00@alva.home> (Tim Shepard's message of "Fri, 09
+ Jan 2009 01:24:19 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C29FFF96-DE2B-11DD-B43A-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104989>
 
-On Thu, Jan 08, 2009 at 04:07:08PM +0100, Johannes Schindelin wrote:
+Tim Shepard <shep@alum.mit.edu> writes:
 
-> Just try this with a submodule that has more changes than fit on a screen:
-> 
-> 	$ git -p submodule summary
-> 
-> In my tests, it consistently fscks up my console.  I wonder if this is 
-> related to ea27a18(spawn pager via run_command interface).
-> 
-> *reverts that commit* Yep, that fixes it.
+> I have git 1.5.6.5 installed from the Debian/lenny package.
+>
+> Poking around in http://git.kernel.org/ looking for a git repository
+> that might have the latest -rt development happening, I found
+>
+>   http://git.kernel.org/?p=linux/kernel/git/rostedt/linux-2.6-rt.git
+>
+> which looked promising.
+>
+> But when I tried cloning it using:
+>
+>     git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/rostedt/linux-2.6-rt.git linux-2.6-rt
+>
+> it pulled several hundred megabytes through my (rather slow) DSL line
+> and then printed out
+>
+>   error: Trying to write ref refs/tags/v2.6.11 with nonexistant object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c
+>   fatal: Cannot update the ref 'refs/tags/v2.6.11'.
+>
+> and then removed everything it had just pulled.
+>
+> Looking at http://git.kernel.org/?p=linux/kernel/git/rostedt/linux-2.6-rt.git;a=tags
+> I see that apparently v2.6.11 and v.2.6.11-tree both point at a tree
+> object and not a commit.
+>
+> Is this a bug in git?
 
-Hmm. I can reproduce your problem here, like this:
+It is not a problem for the tag pointing to a tree, but linux-2.6-rt.git
+tree uses (like everybody else) objects/alternates to borrow objects from
+the repository of Linus.
 
-  $ git -p submodule summary
+I think we lost the alternate object store support when git-fetch was
+rewritten from the original shell script (that did support fetching from
+such a repository over rsync:// transport) to a reimplementation in C,
+with commit b888d61 (Make fetch a builtin, 2007-09-10).  
 
-but when I tried to dig deeper using strace, the problem goes away:
+Later, cd547b4 (fetch/push: readd rsync support, 2007-10-01) attempted to
+resurrect some rsync support (b888d61 lost rsync support completely for
+git-fetch), but introduced these lines in transport.c:
 
-  $ strace -f -o foo.out git -p submodule summary
+	/* NEEDSWORK: handle one level of alternates */
+	result = run_command(&rsync);
 
-However, I was able to get some data by stracing _just_ less:
+These have not been touched ever since, and then finally commit 8434c2f
+(Build in clone, 2008-04-27) killed support of cloning from a repository
+that uses alternates for rsync transport for git-clone (before that, the
+shell script version had a special case to still allow such operation over
+rsync).
 
-  $ GIT_PAGER='strace -f -o foo.out less' git -p submodule summary
-
-and that reproduces the problem. And here's the interesting bit:
-
-  open("/dev/tty", O_RDONLY|O_LARGEFILE)  = 3
-  ...
-  read(0, $SOME_SUBMODULE_OUTPUT, ...)
-  write(1, $SOME_SUBMODULE_OUTPUT, ...)
-  read(3, 0xbfd3442f, 1)                  = -1 EIO (Input/output error)
-
-That is, after displaying the actual output, the next thing less does is
-try to get input from the user on /dev/tty. But it returns EIO. At which
-point less just dies, leaving your terminal in a funny state.
-
-Hrm. Here's a theory. The new pager behavior goes something like this
-for a builtin:
-
-  1. fork, child becomes pager
-  2. register atexit handler to wait for pager to finish
-  3. run builtin
-  4. exit, triggering handler
-
-but for an external command (like a shell script), we exec the command,
-and presumably forget about out atexit handler entirely. Which means
-that our shell script writes all of its output and exits before less has
-a chance to prompt and get a response from the tty.
-
-And I'll admit to being very hazy on the details of process groups and
-controlling terminals, but from what I recall, perhaps the EIO is
-related to the process group leader being dead. Which means we could
-paper over it by putting less in its own pgrp.
-
-So here's a little test (in bash):
-
-  $ set +m ;# disable job control, leaving bash as the pgrp leader
-  $ git -p submodule summary
-
-A-ha. That "works" in the sense that less runs fine and show the output.
-So it is a pgrp issue.  _But_ we still have a problem, which is that the
-original process has exited, and bash thinks the command is finished. So
-now annoyingly we have both bash and less trying to read from the
-terminal.
-
-So the _real_ problem is that we are not always triggering the "wait for
-pager to finish" code because we exec and forget about it. Which means
-this strategy of "git runs child pager" will never work properly.
-Instead, we have to use three processes: git and the pager become child
-processes, while the original process waits for both to exit and returns
-the proper exit code from git.
-
-Let me try to work up a patch.
-
--Peff
-
-PS I believe this is related to a similar bug which I have been hunting
-   fruitlessly for a few weeks: if you use ^C to kill git, the pager
-   will sometimes do funny things. I also traced that to an EIO on
-   reading from the terminal, which makes sense: we are killing git
-   before it gets a chance to do wait_for_pager.
+It appears practically nobody uses rsync:// transport anymore these days;
+you are unfortunately the first one who noticed it.
