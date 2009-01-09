@@ -1,81 +1,71 @@
-From: "Jay Soffian" <jaysoffian@gmail.com>
-Subject: Re: git-cache-meta -- simple file meta data caching and applying
-Date: Thu, 8 Jan 2009 19:22:25 -0500
-Message-ID: <76718490901081622q618c43d0t333882cbe44f6b30@mail.gmail.com>
-References: <87hc49jq04.fsf@jidanni.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH] make diff --color-words customizable
+Date: Fri, 9 Jan 2009 01:25:16 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901090121432.30769@pacific.mpi-cbg.de>
+References: <1231459505-14395-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Fri Jan 09 01:23:52 2009
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jan 09 01:26:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LL5AE-0007om-KV
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 01:23:51 +0100
+	id 1LL5CK-0008LO-U3
+	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 01:26:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756590AbZAIAW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jan 2009 19:22:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755813AbZAIAW1
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 19:22:27 -0500
-Received: from rv-out-0506.google.com ([209.85.198.236]:12057 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755648AbZAIAW0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jan 2009 19:22:26 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so8653004rvb.1
-        for <git@vger.kernel.org>; Thu, 08 Jan 2009 16:22:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=iBx2MMWWNcjjk28Sg7conLMTSXGWpJ1iyRfeO/jLTdE=;
-        b=j0yryHZvYVaniT5RHDaMjhpCryWSMP9cZG7BDG9igvsOl6Mlu/ltzPb+++aY2cIFRb
-         X/ka/19nLI4nCc2CIfrcduK4y2dLAAwZh4OfjR2qbPIaHR/+2fIV0O8YOEhKKH7Nw60b
-         oS16KivzoFFN0ngvrmeZCPNBFUomApBJXlf78=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=is0umvhbiN7z7BNv2thDLX0wwKWlAjVmOfOv4e4PBC/L3zdQBgXTMWx+dTpP62McHD
-         3vSKtkmsfJor6ifcnpzqJfC1CeUDrJM7uOpI9XT7NAvAPwoK5ectpGhAxrkuPoL49K2N
-         dmiL6kDsUj+W7k8JRRYWnYhjwHE2FBEmoFJLM=
-Received: by 10.140.136.6 with SMTP id j6mr12404188rvd.126.1231460545532;
-        Thu, 08 Jan 2009 16:22:25 -0800 (PST)
-Received: by 10.140.135.1 with HTTP; Thu, 8 Jan 2009 16:22:25 -0800 (PST)
-In-Reply-To: <87hc49jq04.fsf@jidanni.org>
-Content-Disposition: inline
+	id S1756821AbZAIAYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jan 2009 19:24:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755923AbZAIAYh
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Jan 2009 19:24:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43200 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751877AbZAIAYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jan 2009 19:24:36 -0500
+Received: (qmail invoked by alias); 09 Jan 2009 00:24:34 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp071) with SMTP; 09 Jan 2009 01:24:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19UmttmiftUuuwPzt/a/YDZInRH52Z5r7T2D6yhzh
+	RPVS/YiwfrPcN4
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1231459505-14395-1-git-send-email-trast@student.ethz.ch>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/104975>
 
-On Thu, Jan 8, 2009 at 7:13 PM,  <jidanni@jidanni.org> wrote:
-> Gentlemen, I have whipped up this:
->
-> #!/bin/sh -e
-> #git-cache-meta -- simple file meta data caching and applying.
-> #Simpler than etckeeper, metastore, setgitperms, etc.
-> : ${GIT_CACHE_META_FILE=.git_cache_meta}
-> case $@ in
->    --store|--stdout)
->        case $1 in --store) exec > $GIT_CACHE_META_FILE; esac
->        find $(git ls-files) \
->            \( -user ${USER?} -o -printf 'chowm %u %p\n' \) \
->            \( -group $USER -o -printf 'chgrp %g %p\n' \) \
->            \( \( -type l -o -perm 755 -o -perm 644 \) -o -printf 'chmod %#m %p\n' \);;
->    --apply) sh -e $GIT_CACHE_META_FILE;;
->    *) 1>&2 echo "Usage: $0 --store|--stdout|--apply"; exit 1;;
-> esac
+Hi,
 
-It doesn't handle paths which contain white-space. "chown" is typo'd
-as "chowm". To be useful, the contribution might also include
-instructions on how it should be used with git, and perhaps also
-reasoning for why someone would want to use it in place of etckeeper,
-metastore, setgitperms, etc.
+On Fri, 9 Jan 2009, Thomas Rast wrote:
 
-j.
+> Allows for user-configurable word splits when using --color-words. This 
+> can make the diff more readable if the regex is configured according to 
+> the language of the file.
+> 
+> For now the (POSIX extended) regex must be set via the environment
+> GIT_DIFF_WORDS_REGEX.  Each (non-overlapping) match of the regex is
+> considered a word.  Anything characters not matched are considered
+> whitespace.  For example, for C try
+> 
+>   GIT_DIFF_WORDS_REGEX='[0-9]+|[a-zA-Z_][a-zA-Z0-9_]*|(\+|-|&|\|){1,2}|\S'
+> 
+> and for TeX try
+> 
+>   GIT_DIFF_WORDS_REGEX='\\[a-zA-Z@]+ *|\{|\}|\\.|[^\{} [:space:]]+'
+
+Interesting idea.  However, I think it would be better to do the opposite, 
+have _word_ patterns.  And even better to have _one_ pattern.
+
+Then we could have a --color-words-regex=<regex> option.
+
+BTW I think you could do what you intended to do with a _way_ smaller 
+and more intuitive patch.
+
+Ciao,
+Dscho
