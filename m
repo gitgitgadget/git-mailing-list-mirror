@@ -1,90 +1,109 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] t7700: demonstrate misbehavior of 'repack -a' when local packs exist
-Date: Fri,  9 Jan 2009 16:14:39 -0600
-Message-ID: <rjZ2Q9koCqY3UL6iGB8a-6LSgDb7keG498cZLN5piAaXDVuhlLM0Jhi-Qkjb7AimF_xZvap4QIk@cipher.nrlssc.navy.mil>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 09 23:16:25 2009
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 1/2] grep -w: forward to next possible position after rejected
+ match
+Date: Sat, 10 Jan 2009 00:08:40 +0100
+Message-ID: <4967D8F8.9070508@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jan 10 00:10:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLPeL-0006Ro-OB
-	for gcvg-git-2@gmane.org; Fri, 09 Jan 2009 23:16:18 +0100
+	id 1LLQUZ-0000xM-BZ
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 00:10:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758313AbZAIWOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 17:14:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758125AbZAIWOw
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 17:14:52 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:53144 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758182AbZAIWOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 17:14:51 -0500
-Received: by mail.nrlssc.navy.mil id n09MEnTi004127; Fri, 9 Jan 2009 16:14:49 -0600
-X-OriginalArrivalTime: 09 Jan 2009 22:14:49.0405 (UTC) FILETIME=[AFF69ED0:01C972A7]
+	id S1754281AbZAIXIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 18:08:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753809AbZAIXIu
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 18:08:50 -0500
+Received: from india601.server4you.de ([85.25.151.105]:55250 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751521AbZAIXIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 18:08:49 -0500
+Received: from [10.0.1.101] (p57B7F734.dip.t-dialin.net [87.183.247.52])
+	by india601.server4you.de (Postfix) with ESMTPSA id 524252F8042;
+	Sat, 10 Jan 2009 00:08:45 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105044>
 
-The ability to "...fatten [the] local repository by packing everything that
-is needed by the local ref into a single new pack, including things that are
-borrowed from alternates"[1] is supposed to be provided by the '-a' or '-A'
-options to repack when '-l' is not used, but there is a flaw.  For each
-pack in the local repository without a .keep file, repack supplies a
---unpacked=<pack> argument to pack-objects.
+grep -w accepts matches between non-word characters, only.  If a match
+from regexec() doesn't meet this criteria, grep continues its search
+after the first character of that match.
 
-The --unpacked option to pack-objects, with or without an argument, causes
-pack-objects to ignore any object which is packed in a pack not mentioned
-in an argument to --unpacked=.  So, if there are local packs, and
-'repack -a' is called, then any objects which reside in packs accessible
-through alternates will _not_ be packed.  If there are no local packs, then
-no --unpacked argument will be supplied, and repack will behave as expected.
+We can be a bit smarter here and skip all positions that follow a word
+character first, as they can't match our criteria.  This way we can
+consume characters quite cheaply and don't need to special-case the
+handling of the beginning of a line.
 
-[1] http://mid.gmane.org/7v8wrwidi3.fsf@gitster.siamese.dyndns.org
+Here's a contrived example command on msysgit (best of five runs):
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+	$ time git grep -w ...... v1.6.1 >/dev/null
+
+	real    0m1.611s
+	user    0m0.000s
+	sys     0m0.015s
+
+With the patch it's quite a bit faster:
+
+	$ time git grep -w ...... v1.6.1 >/dev/null
+
+	real    0m1.179s
+	user    0m0.000s
+	sys     0m0.015s
+
+More common search patterns will gain a lot less, but it's a nice clean
+up anyway.
+
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
+ grep.c |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
 
-
-FYI: I won't be looking in to a fix for this immediately. So if someone else
-     has time and the inclination, please be my guest. Also, you can thank a
-     transformer blow, and lots of disk loss for the discovery of this bug.
-
--brandon
-
-
- t/t7700-repack.sh |   19 +++++++++++++++++++
- 1 files changed, 19 insertions(+), 0 deletions(-)
-
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 3f602ea..f5682d6 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -69,5 +69,24 @@ test_expect_success 'packed obs in alt ODB are repacked even when local repo is
- 	done
- '
+diff --git a/grep.c b/grep.c
+index 49e9319..394703b 100644
+--- a/grep.c
++++ b/grep.c
+@@ -294,7 +294,6 @@ static struct {
+ static int match_one_pattern(struct grep_opt *opt, struct grep_pat *p, char *bol, char *eol, enum grep_context ctx)
+ {
+ 	int hit = 0;
+-	int at_true_bol = 1;
+ 	int saved_ch = 0;
+ 	regmatch_t pmatch[10];
  
-+test_expect_failure 'packed obs in alt ODB are repacked when local repo has packs' '
-+	rm -f .git/objects/pack/* &&
-+	echo new_content >> file1 &&
-+	git add file1 &&
-+	git commit -m more_content &&
-+	git repack &&
-+	git repack -a -d &&
-+	myidx=$(ls -1 .git/objects/pack/*.idx) &&
-+	test -f "$myidx" &&
-+	for p in alt_objects/pack/*.idx; do
-+		git verify-pack -v $p | sed -n -e "/^[0-9a-f]\{40\}/p"
-+	done | while read sha1 rest; do
-+		if ! ( git verify-pack -v $myidx | grep "^$sha1" ); then
-+			echo "Missing object in local pack: $sha1"
-+			return 1
-+		fi
-+	done
-+'
-+
- test_done
- 
+@@ -337,7 +336,7 @@ static int match_one_pattern(struct grep_opt *opt, struct grep_pat *p, char *bol
+ 		 * either end of the line, or at word boundary
+ 		 * (i.e. the next char must not be a word char).
+ 		 */
+-		if ( ((pmatch[0].rm_so == 0 && at_true_bol) ||
++		if ( ((pmatch[0].rm_so == 0) ||
+ 		      !word_char(bol[pmatch[0].rm_so-1])) &&
+ 		     ((pmatch[0].rm_eo == (eol-bol)) ||
+ 		      !word_char(bol[pmatch[0].rm_eo])) )
+@@ -349,10 +348,14 @@ static int match_one_pattern(struct grep_opt *opt, struct grep_pat *p, char *bol
+ 			/* There could be more than one match on the
+ 			 * line, and the first match might not be
+ 			 * strict word match.  But later ones could be!
++			 * Forward to the next possible start, i.e. the
++			 * next position following a non-word char.
+ 			 */
+ 			bol = pmatch[0].rm_so + bol + 1;
+-			at_true_bol = 0;
+-			goto again;
++			while (word_char(bol[-1]) && bol < eol)
++				bol++;
++			if (bol < eol)
++				goto again;
+ 		}
+ 	}
+ 	if (p->token == GREP_PATTERN_HEAD && saved_ch)
 -- 
-1.6.1.76.gc123b
+1.6.1
