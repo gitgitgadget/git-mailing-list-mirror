@@ -1,93 +1,78 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: Re: SSH_ASKPASS
-Date: Sat, 10 Jan 2009 21:02:12 +0300
-Organization: HOME
-Message-ID: <200901102102.12821.angavrilov@gmail.com>
-References: <1231584934701-2137400.post@n2.nabble.com>
+From: "Nathan W. Panike" <nathan.panike@gmail.com>
+Subject: Re: [PATCH] format-patch: avoid generation of empty patches
+Date: Sat, 10 Jan 2009 12:07:06 -0600
+Message-ID: <d77df1110901101007o1d17142aub6971b72ba55c89e@mail.gmail.com>
+References: <1231536787-20685-1-git-send-email-nathan.panike@gmail.com>
+	 <7vmye0yohu.fsf@gitster.siamese.dyndns.org>
+	 <20090110113642.GA25723@myhost> <20090110113903.GB25723@myhost>
+	 <d77df1110901100801s463bb43bt701a95df14f167d8@mail.gmail.com>
+	 <20090110161722.GA18859@myhost>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Henk <henk_westhuis@hotmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 19:03:32 2009
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Alexander Potashev" <aspotashev@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 10 19:08:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLiBD-0003Os-Nb
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 19:03:28 +0100
+	id 1LLiGA-0004vv-Jt
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 19:08:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbZAJSCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 13:02:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbZAJSCG
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 13:02:06 -0500
-Received: from fk-out-0910.google.com ([209.85.128.188]:14363 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752543AbZAJSCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 13:02:05 -0500
-Received: by fk-out-0910.google.com with SMTP id 18so5031701fkq.5
-        for <git@vger.kernel.org>; Sat, 10 Jan 2009 10:02:02 -0800 (PST)
+	id S1752803AbZAJSHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 13:07:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752680AbZAJSHJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 13:07:09 -0500
+Received: from rn-out-0910.google.com ([64.233.170.189]:36951 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752235AbZAJSHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 13:07:07 -0500
+Received: by rn-out-0910.google.com with SMTP id j67so8589950rne.21
+        for <git@vger.kernel.org>; Sat, 10 Jan 2009 10:07:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=Z4VNvtScbiB+MCOXXRc3GNX6Vj4K7Ln/bzZRsaonH+o=;
-        b=iTyL8rQXulgnO15MpZfm7ISJhP/D02w6NJ+WugZ9zFt9B9TqrPaNhel1NAbbT6QpWJ
-         WFhWyzbppGEmtpoaewpC7ukN0syXHK7T87II4gFBkHq/VYtIU6YbNz7UKlfiXRwjXoC7
-         5UVknfN0q6LRvhslqM03+F5TncL3uGu6/iLo4=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=8NOt+TzDEoYoIOWY2tOap6bLvU6XHmCdhmfOosva0Q4=;
+        b=T76EbJbS2UCDKp+ttcWePgxjCwqes1SmSagOze7t7dMpba73gYFm828wfqMHbL5v00
+         EHLjBHY8Jck6fgoY9rLuQ5Vxf+AqdTygrfY9JaH3MX66NmWqM3mjtCpcD/fZ6HB98wn9
+         1kckSVf7ADHhnEKEiuDqrpFZUpp41D1Ckph/8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=xRF1BojsgW2u7xW2dhTGj9bF+JAi5Ea/qaTmwYGh4Gqei4C1kLKEcb1OmcvAOKSXAc
-         FvfRUroGlbYK1dthq3s3Ht/B0ohLcdfCm0uxageXatVj4/+DlarfmMOfNyO6mR/M3HD0
-         nbsOVTTI0q2aFMZxzt2b3K92MNdKR/gA3QEzM=
-Received: by 10.181.153.12 with SMTP id f12mr10232872bko.132.1231610522702;
-        Sat, 10 Jan 2009 10:02:02 -0800 (PST)
-Received: from keydesk.localnet ([92.255.85.78])
-        by mx.google.com with ESMTPS id b17sm25396998fka.15.2009.01.10.10.02.00
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 10 Jan 2009 10:02:02 -0800 (PST)
-User-Agent: KMail/1.10.3 (Linux/2.6.27.9-159.fc10.i686; KDE/4.1.3; i686; ; )
-In-Reply-To: <1231584934701-2137400.post@n2.nabble.com>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=PVjwvwmIgM6ttrY+BNN8C9uxuXKvWZeANmd8tXglFD0yVga4+tcWEAam0AH8F4hmYB
+         lNlAhtwBuHSKHpoU3HlAjF1DPIUn0HGcm7jpbKMhaNRkK2dTbSv14LxvdW+yua+Oppf/
+         6AB62WnfU/XCBkRliJZX+qhZTc1z3blwzKlQA=
+Received: by 10.90.53.5 with SMTP id b5mr12789696aga.15.1231610826252;
+        Sat, 10 Jan 2009 10:07:06 -0800 (PST)
+Received: by 10.90.114.9 with HTTP; Sat, 10 Jan 2009 10:07:06 -0800 (PST)
+In-Reply-To: <20090110161722.GA18859@myhost>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105136>
 
-On Saturday 10 January 2009 13:55:34 Henk wrote:
-> I'm trying to get "git push" to use git-gui--askpass to ask me for the
-> password instead of promting me on the command promt. I need this because I
-> start the "git push" command from code and there is no terminal where ssh
-> can ask the user for a password. I tried writing the following tcl script
-> that allmost is what I need:
-> 
-> set env(SSH_ASKPASS) "C:/Program
-> Files/Git/libexec/git-core/git-gui--askpass"
-> exec ssh git@github.com
-> 
-> Ssh will now ask me for the password using git-gui--askpass. But now the
-> standardout is also shown in a dialog, and not on the standardout of the
-> process. Looking at the git-gui scripts didn't help me, because I have
-> absolutely zero experience in tcl.
-> 
-> I also tried not using a tcl script, but setting SSH_ASKPASS as an
-> environment variable in windows. This doesn't seem to work, ssh will still
-> prompt me for a password. 
-> 
-> Anyone can help me write a script that asks for the password using
-> SSH_ASKPASS but still prints the output on standardout? 
+Hi:
 
-OpenSSH won't even try to use SSH_ASKPASS if it has access to a terminal.
-Tcl makes it work precisely because the Tcl interpreter is a GUI application
-that is detached from the console.
+On Sat, Jan 10, 2009 at 10:17 AM, Alexander Potashev
+<aspotashev@gmail.com> wrote:
 
-You should set the SSH_ASKPASS variable, and try running the commands as
-you actually plan to do it from your code.
+...
 
-Alexander
+> AFAIU get_revision stops revision iteration when it appears to stay at
+> the root commit. So, if we will replace 'break' with 'continue', the
+> 'while' loop will finish right after that 'continue'.
+
+> However, I might be wrong... please, correct me then.
+
+I was thinking of the case where there is more than one root.  Maybe
+the code does the right thing then, but I confess I have not looked at
+it deeply enough to know.
+
+Nathan Panike
