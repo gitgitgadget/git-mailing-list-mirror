@@ -1,88 +1,71 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 3/6] Glean libexec path from argv[0] for git-upload-pack and git-receive-pack.
-Date: Sat, 10 Jan 2009 16:55:32 +0100
-Message-ID: <81783342-81AA-415A-8EF3-1CD9F5390483@zib.de>
-References: <1231595452-27698-1-git-send-email-prohaska@zib.de> <1231595452-27698-2-git-send-email-prohaska@zib.de> <1231595452-27698-3-git-send-email-prohaska@zib.de> <alpine.DEB.1.00.0901101532430.30769@pacific.mpi-cbg.de>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Nathan W. Panike" <nathan.panike@gmail.com>
+Subject: Re: [PATCH] format-patch: avoid generation of empty patches
+Date: Sat, 10 Jan 2009 10:01:00 -0600
+Message-ID: <d77df1110901100801s463bb43bt701a95df14f167d8@mail.gmail.com>
+References: <1231536787-20685-1-git-send-email-nathan.panike@gmail.com>
+	 <7vmye0yohu.fsf@gitster.siamese.dyndns.org>
+	 <20090110113642.GA25723@myhost> <20090110113903.GB25723@myhost>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Steve Haslam <shaslam@lastminute.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 16:57:44 2009
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Alexander Potashev" <aspotashev@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 10 17:02:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLgDX-0002nK-U6
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 16:57:44 +0100
+	id 1LLgIB-0004ZA-In
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 17:02:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228AbZAJP4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 10:56:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751853AbZAJP4U
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 10:56:20 -0500
-Received: from mailer.zib.de ([130.73.108.11]:60948 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751599AbZAJP4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 10:56:19 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n0AFtx65008034;
-	Sat, 10 Jan 2009 16:56:04 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db952c9.pool.einsundeins.de [77.185.82.201])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n0AFtvXf013982
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sat, 10 Jan 2009 16:55:58 +0100 (MET)
-In-Reply-To: <alpine.DEB.1.00.0901101532430.30769@pacific.mpi-cbg.de>
-X-Mailer: Apple Mail (2.930.3)
+	id S1752531AbZAJQBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 11:01:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752367AbZAJQBE
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 11:01:04 -0500
+Received: from yx-out-2324.google.com ([74.125.44.30]:56846 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751599AbZAJQBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 11:01:03 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so3175105yxm.1
+        for <git@vger.kernel.org>; Sat, 10 Jan 2009 08:01:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=zcWqzoWbMPoAKPtZZfTqFTJeFqtGPhgouajfIYmR5Ak=;
+        b=E2pNSbLmmgiuxbtc7ukOmtVwFVX+qw8PRTVFZ2JwaWYO2/RAFjFeIza7fjEyEuTZeu
+         ZpzE0Zr/9vJkJlJl4QvGkzc60s1Rjdmxn9EjSAxKF40Oi6jbKdNzHy3Vt95upR4FWFEi
+         zAurIaXid79N6wSvA5laLvKSxSVjVma4/2jA4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=PPI1PbpZHP6O+6ExtFjpVA83dmaUNPT9kLxVlk61Zqpw37VdDjB1MdPjlZg3k3gYCt
+         hjJ/lgXfJ+dQpmQKKS9bLcCXZxWYVOQawVt1+01dB/NMSwt6mNBrYg99Z2PCi0WuigEy
+         O0xeFQZKxcStQf+U3HplKirXySjrS9Vb0y+v4=
+Received: by 10.90.99.5 with SMTP id w5mr12736819agb.16.1231603261054;
+        Sat, 10 Jan 2009 08:01:01 -0800 (PST)
+Received: by 10.90.114.9 with HTTP; Sat, 10 Jan 2009 08:01:00 -0800 (PST)
+In-Reply-To: <20090110113903.GB25723@myhost>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105123>
 
+Hi:
 
-On Jan 10, 2009, at 3:34 PM, Johannes Schindelin wrote:
-
-> On Sat, 10 Jan 2009, Steffen Prohaska wrote:
+On Sat, Jan 10, 2009 at 5:39 AM, Alexander Potashev
+<aspotashev@gmail.com> wrote:
+...
 >
->> From: Steve Haslam <shaslam@lastminute.com>
->>
->> If the user specified the full path to git-upload-pack as the -u  
->> option to
->> "git clone" when cloning a remote repository, and git was not on  
->> the default
->> PATH on the remote machine, git-upload-pack was failing to exec
->> git-pack-objects.
->>
->> By making the argv[0] path (if any) available to setup_path(), this  
->> will
->> allow finding the "git" executable in the same directory as
->> "git-upload-pack". The default built in to exec_cmd.c is to look  
->> for "git"
->> in the ".../libexec/git-core" directory, but it is not installed  
->> there (any
->> longer).
->>
->> Much the same applies to invoking git-receive-pack from a non-PATH  
->> location
->> using the "--exec" argument to "git push".
->>
->> [ spr: split Steve's original commit into two commits. ]
->
-> I think you do not want to have that [ ... ] in the commit message,  
-> but
-> after the "--".
->
-> Further, it would make sense to have these 2 patches independently,
-> provided that a test is added with which we could verify that the  
-> patches
-> are actually necessary for upload-pack/receive-pack.
+> +               if (!commit->parents && !rev.show_root_diff)
+> +                       break;
 
+Do you really want to stop getting commits?  It seems like the break
+statement here should be a continue.
 
-Steve,
-could you comment on this.  You are the original author of the patch.
-
-	Steffen 
+Nathan Panike
