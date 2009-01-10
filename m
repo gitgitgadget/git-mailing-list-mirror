@@ -1,84 +1,78 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] make diff --color-words customizable
-Date: Sat, 10 Jan 2009 12:45:31 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901101239550.30769@pacific.mpi-cbg.de>
-References: <87wsd48wam.fsf@iki.fi> <1231549039-5236-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0901101146230.30769@pacific.mpi-cbg.de> <200901101225.10719.trast@student.ethz.ch>
+Subject: Re: [PATCH v2] t7501-commit.sh: explicitly check that -F prevents
+ invoking the editor
+Date: Sat, 10 Jan 2009 12:48:28 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901101248080.30769@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0812301250210.30769@pacific.mpi-cbg.de> <1231522205-10510-1-git-send-email-dato@net.com.org.es> <alpine.DEB.1.00.0901101117100.30769@pacific.mpi-cbg.de> <20090110103252.GA32151@chistera.yi.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>,
-	Teemu Likonen <tlikonen@iki.fi>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Jan 10 12:46:23 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-336443607-1231588109=:30769"
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: =?ISO-8859-15?Q?Adeodato_Sim=F3?= <dato@net.com.org.es>
+X-From: git-owner@vger.kernel.org Sat Jan 10 12:49:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLcI9-0004R7-G2
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 12:46:13 +0100
+	id 1LLcL1-00055q-Lv
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 12:49:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753051AbZAJLou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 06:44:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752753AbZAJLou
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 06:44:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53332 "HELO mail.gmx.net"
+	id S1754115AbZAJLrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 06:47:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753777AbZAJLrr
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 06:47:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42095 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752200AbZAJLot (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 06:44:49 -0500
-Received: (qmail invoked by alias); 10 Jan 2009 11:44:47 -0000
+	id S1753750AbZAJLrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 06:47:46 -0500
+Received: (qmail invoked by alias); 10 Jan 2009 11:47:44 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp006) with SMTP; 10 Jan 2009 12:44:47 +0100
+  by mail.gmx.net (mp045) with SMTP; 10 Jan 2009 12:47:44 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19bbHovGl9bTEovK9EYk/gFhtpexTcG09P2ptXNWF
-	L7DMb9QA7aqeqQ
+X-Provags-ID: V01U2FsdGVkX19KHzRRP9hKI3fYMF6SMg41LTWjd3ojGCRysQEBjy
+	yJBjruFMisVil0
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200901101225.10719.trast@student.ethz.ch>
+In-Reply-To: <20090110103252.GA32151@chistera.yi.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105098>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-336443607-1231588109=:30769
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Sat, 10 Jan 2009, Thomas Rast wrote:
+On Sat, 10 Jan 2009, Adeodato Simó wrote:
 
-> Johannes Schindelin wrote:
-> > BTW I did not really think about the issue you raised about the newlines, 
-> > as I seemed to remember that the idea was to substitute all non-word 
-> > characters with newlines, so that the offsets in the substituted text are 
-> > the same as in the original text.
+> * Johannes Schindelin [Sat, 10 Jan 2009 11:19:43 +0100]:
 > 
-> Ok, so here's a very simple example: Suppose you have the word regex
-> 'x+|y+' and compare these two lines:
+> > >  test_expect_success '--signoff' '
+> > >  	echo "yet another content *narf*" >> foo &&
+> > > -	echo "zort" | (
+> > > -		test_set_editor "$TEST_DIRECTORY"/t7500/add-content &&
+> > > -		git commit -s -F - foo
+> > > -	) &&
+> > > +	echo "zort" | git commit -s -F - foo &&
+> > >  	git cat-file commit HEAD | sed "1,/^$/d" > output &&
+> > >  	test_cmp expect output
+> > >  '
 > 
-> A: xxyyxy
-> B: xyxyy
-
-Ah, I see.
-
-> > So I still find your patch way too large
+> > AFAICT this still tests if -F - launches an editor, except that it _does_ 
+> > launch the editor, waiting for the user to quit the editor.  Which is bad.
 > 
-> I can't think of a simpler way to do it, and yours unfortunately doesn't 
-> work.
+> The default value of VISUAL for the test suite is ":" AFAICS. Hence,
+> even if it's called, it will return immediately.
 
-Well, the thing I tried to hint at: it is not good to have a monster 
-patch, as nobody will review it.
+Ah.  Okay then.
 
-In your case, I imagine it would be much easier to get reviewers if you 
-had
-
-	patch 1/4 refactor color-words to allow for 0-character word 
-		boundaries
-	patch 2/4 allow regular expressions to define what makes a word
-	patch 3/4 add option to specify word boundary regexps via
-		attributes
-	patch 4/4 test word boundary regexps
-
-And I admit that I documented the code lousily, but that does not mean 
-that you should repeat that mistake.
-
-Ciao,
+Sorry for the noise,
 Dscho
+--8323328-336443607-1231588109=:30769--
