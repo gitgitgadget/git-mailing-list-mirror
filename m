@@ -1,90 +1,97 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Main branch being maintained with 'git am', how do mere mortals
- interact without too much conflicts?
-Date: Sat, 10 Jan 2009 16:29:43 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngmhj7n.4nl.sitaramc@sitaramc.homelinux.net>
-References: <87vdsntnyd.dancerj%dancer@netfort.gr.jp>
- <eaa105840901100647y70b53ae0w495af69b7281cae7@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH 2/3] replace_object: add mechanism to replace objects found in "refs/replace/"
+Date: Sat, 10 Jan 2009 08:30:39 -0800 (PST)
+Message-ID: <m3tz87yvh4.fsf@localhost.localdomain>
+References: <20090107084341.1554d8cd.chriscool@tuxfamily.org>
+	<7vmye3a4pt.fsf@gitster.siamese.dyndns.org>
+	<200901081831.22616.chriscool@tuxfamily.org>
+	<7v8wpl4akr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 10 17:31:21 2009
+Summary: Idea for large binary files in Git using refs/replace/
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Tim Ansell <mithro@mithis.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 10 17:32:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLgk3-0005CJ-01
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 17:31:19 +0100
+	id 1LLgkp-0005VL-9M
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 17:32:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751705AbZAJQ3y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 11:29:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbZAJQ3y
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 11:29:54 -0500
-Received: from main.gmane.org ([80.91.229.2]:41938 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751005AbZAJQ3x (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 11:29:53 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LLgie-0006cG-OI
-	for git@vger.kernel.org; Sat, 10 Jan 2009 16:29:52 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Jan 2009 16:29:52 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Jan 2009 16:29:52 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1752539AbZAJQao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 11:30:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752531AbZAJQan
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 11:30:43 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:22806 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752399AbZAJQam (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 11:30:42 -0500
+Received: by ey-out-2122.google.com with SMTP id 22so1204952eye.37
+        for <git@vger.kernel.org>; Sat, 10 Jan 2009 08:30:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:summary:from
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :date;
+        bh=KCYR7+pLWUa4BMSL2so6cvWYYSRwrWvEYybdIZM0Xsw=;
+        b=CF1FXnTV1C3CjKHRah0SND02+6bLljTHZ04sqQ30kfs0JbICcno4tVrGTNd5DzPThR
+         Xph0LdA32jh5CrOAxv/jpxinrb9JRxK4QRl0g2xZO9Zqq+KcS5QWgpzhZAVr4jYpKuAW
+         q9zaqtAyZBXgLs85cAo32CNuzgUBJBXEVNeuI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:summary:from
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :date;
+        b=tLPf8rDwdsX5ErCOiuj/065ivpBUeWKjXrPRSdHVr/gsE2YgOWlwZh8QHuxwPx21Gi
+         h8rXllNRrFo6cTkd7PEeWM2R94nkmH8TV7zU1PMp+tIpF9ZxeN7e9L24p5PIAfX7cly9
+         SMac76/mjegh3ibKxNe1iHU9HrjdJdr+GrgjQ=
+Received: by 10.210.87.19 with SMTP id k19mr6041348ebb.141.1231605040550;
+        Sat, 10 Jan 2009 08:30:40 -0800 (PST)
+Received: from localhost.localdomain (abve97.neoplus.adsl.tpnet.pl [83.8.202.97])
+        by mx.google.com with ESMTPS id 28sm2752720eyg.4.2009.01.10.08.30.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 10 Jan 2009 08:30:39 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0AGUaKU001805;
+	Sat, 10 Jan 2009 17:30:37 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0AGUVOg001802;
+	Sat, 10 Jan 2009 17:30:31 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7v8wpl4akr.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105128>
 
-On 2009-01-10, Peter Harris <git@peter.is-a-geek.org> wrote:
-> On Sat, Jan 10, 2009 at 6:11 AM, Junichi Uekawa wrote:
->> I am thinking of recommending the users to create a branch
-> ...
->> and throw away their branches when they are included upstream.
->
-> Yes, with a patch based workflow, this is almost required; all of the
-> commits will at least have different committer information.
->
-> There's nothing wrong with this approach.
+Junio C Hamano <gitster@pobox.com> writes:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> 
+> > Yeah, but read_sha1_file is called to read all object files, not just 
+> > commits. So putting the hook there will:
+> >
+> > 	1) add a lookup overhead when reading any object,
+> > 	2) make it possible to replace any object,
+> 
+> I actually see (2) as an improvement, and (1) as an associated cost.
 
-That is almost exactly what a rebase does.  Each patch on
-your local "master" that eventually made it upstream gets
-discarded during the rebase (which is a pretty cool thing!),
-and what remains are commits that did not make it upstream
--- their current "work in progress".
+I just had an idea: we can use this mechanism to better manage large
+binary files in Git, by using replacements for _blobs_.
 
-The difference between "origin/master" and "master", after
-each rebase, is their "private branch".
+We want to be able to have two flavours of repository: one with large
+blobs (media files usually), and one without.  We can use stubs in the
+place of large binary files in 'no-megablobs' flavor, and add contents
+of those files via refs/replace/* for _blobs_ in 'with-megablobs'
+flavour.  We can control which objects we want to have, and which
+objects to transfer.
 
-Except you don't have to confuse them by saying so ;-)
-
->> Something tells me the problem is that I'm probably using a workflow
->> that resembles SVN too much, and users aren't used to branches yet.
->> Has anybody found this to be a problem, or better yet, is there a
->> better workflow?
->
-> If you need the commits to be identical, and you don't mind your email
-> consisting of a binary blob attachment, you can ask your contributors
-> to send you a bundle instead of a series of patches. "git help bundle"
-> for details.
-
-Excellent idea.  But it only works for the first user who
-sends him a bundle.  The next one that he gets, assuming
-that user also started from the same "upstream" commit as
-the starting point, will be a merge, and he has to resolve
-conflicts anyway.
-
-Essentially, two things have to happen to reduce conflict
-resolution overall.  The users must rebase against the
-latest upstream before sending the patch, and the supervisor
-must process and push received patches asap.
+What do you think about this (abuse of) an idea?
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
