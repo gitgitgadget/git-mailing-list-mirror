@@ -1,86 +1,65 @@
-From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
-Subject: Re: [PATCH v2] t7501-commit.sh: explicitly check that -F prevents
-	invoking the editor
-Date: Sat, 10 Jan 2009 11:32:52 +0100
-Message-ID: <20090110103252.GA32151@chistera.yi.org>
-References: <alpine.DEB.1.00.0812301250210.30769@pacific.mpi-cbg.de> <1231522205-10510-1-git-send-email-dato@net.com.org.es> <alpine.DEB.1.00.0901101117100.30769@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Get format-patch to show first commit after root
+ commit
+Date: Sat, 10 Jan 2009 11:35:19 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901101134100.30769@pacific.mpi-cbg.de>
+References: <49679f61.1b068e0a.048f.70e4@mx.google.com> <alpine.DEB.1.00.0901101122570.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 10 11:35:43 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: nathan.panike@gmail.com
+X-From: git-owner@vger.kernel.org Sat Jan 10 11:36:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLbBu-0003gR-K7
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 11:35:43 +0100
+	id 1LLbCf-0003sa-KZ
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 11:36:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753579AbZAJKc7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Jan 2009 05:32:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753442AbZAJKc6
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 05:32:58 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:3939
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753152AbZAJKc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 05:32:58 -0500
-Received: from chistera.yi.org (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id 80267801BF68;
-	Sat, 10 Jan 2009 11:32:55 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LLb9A-0008Np-4w; Sat, 10 Jan 2009 11:32:52 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901101117100.30769@pacific.mpi-cbg.de>
-X-No-CC: Please respect my Mail-Followup-To header
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753897AbZAJKei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 05:34:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753888AbZAJKeh
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 05:34:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47116 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753629AbZAJKeh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 05:34:37 -0500
+Received: (qmail invoked by alias); 10 Jan 2009 10:34:35 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp057) with SMTP; 10 Jan 2009 11:34:35 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+WG00DFo2WN8+c0bXDssGQsnNCcwPcj2jDp2VAxc
+	ulRQRRXMcf9B8p
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.DEB.1.00.0901101122570.30769@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105087>
 
-* Johannes Schindelin [Sat, 10 Jan 2009 11:19:43 +0100]:
+Hi,
 
-> Hi,
+On Sat, 10 Jan 2009, Johannes Schindelin wrote:
 
-Hello,
+> On Fri, 9 Jan 2009, nathan.panike@gmail.com wrote:
+> 
+> > >From 65c4fed27fe9752ffd0e3b7cb6807561a4dd4601 Mon Sep 17 00: 00:00 2001
+> > From: Nathan W. Panike <nathan.panike@gmail.com>
+> > Date: Fri, 9 Jan 2009 11:53:43 -0600
+> > Subject: [PATCH] Get format-patch to show first commit after root commit
+> > 
+> > Currently, the command
+> > 
+> > git format-patch -1 e83c5163316f89bfbde
+> 
+> You do not need -1, and using 19 digits seems a bit arbitrary; the 
+> convention seems to be 7 digits (that is what --abbrev-commit does).
 
-> >  test_expect_success '--signoff' '
-> >  	echo "yet another content *narf*" >> foo &&
-> > -	echo "zort" | (
-> > -		test_set_editor "$TEST_DIRECTORY"/t7500/add-content &&
-> > -		git commit -s -F - foo
-> > -	) &&
-> > +	echo "zort" | git commit -s -F - foo &&
-> >  	git cat-file commit HEAD | sed "1,/^$/d" > output &&
-> >  	test_cmp expect output
-> >  '
+Sorry, the -1 is needed.
 
-> AFAICT this still tests if -F - launches an editor, except that it _d=
-oes_=20
-> launch the editor, waiting for the user to quit the editor.  Which is=
- bad.
-
-The default value of VISUAL for the test suite is ":" AFAICS. Hence,
-even if it's called, it will return immediately.
-
-If it would be called, without my patch the "--signoff" test would fail=
-,
-but there would be no obvious reason as to why. Seeing "editor not
-invoked if -F is given FAILED" is much more clear IMHO.
-
-Also note that there plenty of places in the test suite where -F is
-used, but VISUAL is not set explicitly.
-
-Cheers,
-
---=20
-Adeodato Sim=C3=B3                                     dato at net.com.=
-org.es
-Debian Developer                                  adeodato at debian.or=
-g
-=20
-Excuse me for thinking a banana-eating contest was about eating a banan=
-a!
-                -- Paris Geller
+Ciao,
+Dscho
