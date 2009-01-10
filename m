@@ -1,77 +1,74 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 6/6] Windows: Revert to default paths and convert them by RUNTIME_PREFIX
-Date: Sat, 10 Jan 2009 14:50:52 +0100
-Message-ID: <1231595452-27698-6-git-send-email-prohaska@zib.de>
-References: <1231595452-27698-1-git-send-email-prohaska@zib.de>
- <1231595452-27698-2-git-send-email-prohaska@zib.de>
- <1231595452-27698-3-git-send-email-prohaska@zib.de>
- <1231595452-27698-4-git-send-email-prohaska@zib.de>
- <1231595452-27698-5-git-send-email-prohaska@zib.de>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 14:53:26 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] make diff --color-words customizable
+Date: Sat, 10 Jan 2009 15:08:42 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901101507590.30769@pacific.mpi-cbg.de>
+References: <87wsd48wam.fsf@iki.fi> <gk8usj$slh$1@ger.gmane.org> <alpine.DEB.1.00.0901101237050.30769@pacific.mpi-cbg.de> <200901101436.48149.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Davide Libenzi <davidel@xmailserver.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 10 15:09:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLeH1-0006VW-VG
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 14:53:12 +0100
+	id 1LLeWh-0003GP-2K
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 15:09:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753051AbZAJNvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 08:51:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752893AbZAJNv1
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 08:51:27 -0500
-Received: from mailer.zib.de ([130.73.108.11]:45492 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752701AbZAJNvX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 08:51:23 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n0ADos5M025835;
-	Sat, 10 Jan 2009 14:51:03 +0100 (CET)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n0ADorWQ016764;
-	Sat, 10 Jan 2009 14:50:54 +0100 (MET)
-X-Mailer: git-send-email 1.5.4.4
-In-Reply-To: <1231595452-27698-5-git-send-email-prohaska@zib.de>
+	id S1752324AbZAJOIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 09:08:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbZAJOIB
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 09:08:01 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36756 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751583AbZAJOIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 09:08:00 -0500
+Received: (qmail invoked by alias); 10 Jan 2009 14:07:58 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp047) with SMTP; 10 Jan 2009 15:07:58 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/rW5UNNR3rR4FJbTH1nG7oh9mkWQMAtLjFn1tora
+	bwhgpUwQmlJhB4
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200901101436.48149.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105111>
 
-The RUNTIME_PREFIX mechanism allows us to use the default paths on
-Windows too.  Defining RUNTIME_PREFIX explicitly requests for
-translation of paths relative to the executable at runtime.
+Hi,
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- Makefile |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+On Sat, 10 Jan 2009, Jakub Narebski wrote:
 
-diff --git a/Makefile b/Makefile
-index a7728a3..a5f6cad 100644
---- a/Makefile
-+++ b/Makefile
-@@ -789,6 +789,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	SNPRINTF_RETURNS_BOGUS = YesPlease
- 	NO_SVN_TESTS = YesPlease
- 	NO_PERL_MAKEMAKER = YesPlease
-+	RUNTIME_PREFIX = YesPlease
- 	NO_POSIX_ONLY_PROGRAMS = YesPlease
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
- 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/regex -Icompat/fnmatch
-@@ -797,9 +798,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	COMPAT_OBJS += compat/mingw.o compat/fnmatch/fnmatch.o compat/regex/regex.o compat/winansi.o
- 	EXTLIBS += -lws2_32
- 	X = .exe
--	gitexecdir = ../libexec/git-core
--	template_dir = ../share/git-core/templates/
--	ETC_GITCONFIG = ../etc/gitconfig
- endif
- ifneq (,$(findstring arm,$(uname_M)))
- 	ARM_SHA1 = YesPlease
--- 
-1.6.1.85.g32c5d
+> On Sat, 10 Jan 2009, Johannes Schindelin wrote:
+> > On Sat, 10 Jan 2009, Jakub Narebski wrote:
+> > > Thomas Rast wrote:
+> > > 
+> > > > --color-words works (and always worked) by splitting words onto one
+> > > > line each, and using the normal line-diff machinery to get a word
+> > > > diff. 
+> > > 
+> > > Cannot we generalize diff machinery / use underlying LCS diff engine
+> > > instead of going through line diff?
+> > 
+> > What do you think we're doing?  libxdiff is pretty hardcoded to newlines.  
+> > That's why we're substituting non-word characters with newlines.
+> 
+> Isn't Meyers algorithm used by libxdiff based on LCS, largest common
+> subsequence, and doesn't it generate from the mathematical point of
+> view "diff" between two sequences (two arrays) which just happen to
+> be lines? It is a bit strange that libxdiff doesn't export its low
+> level algorithm...
+
+Umm.
+
+It _is_ Myers' algorithm.  It just so happens that libxdiff hardcodes 
+newline to be the separator.
+
+Ciao,
+Dscho
