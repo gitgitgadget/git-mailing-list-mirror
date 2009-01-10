@@ -1,68 +1,73 @@
-From: <4jxDQ6FQee2H@dyweni.com>
+From: david@lang.hm
 Subject: Re: Git - Pushing to a production website
-Date: Fri, 9 Jan 2009 22:46:18 -0600
-Message-ID: <20090109224618.5d8c461c@family.dyweni.com>
-References: <20090109222344.3539138a@family.dyweni.com>
-	<200901092238.06968.bss@iguanasuicide.net>
-Reply-To: 4jxDQ6FQee2H@dyweni.com
+Date: Fri, 9 Jan 2009 21:58:48 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0901092157110.31038@asgard.lang.hm>
+References: <20090109222344.3539138a@family.dyweni.com> <200901092238.06968.bss@iguanasuicide.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: 4jxDQ6FQee2H@dyweni.com, git@vger.kernel.org
 To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-X-From: git-owner@vger.kernel.org Sat Jan 10 05:49:57 2009
+X-From: git-owner@vger.kernel.org Sat Jan 10 05:57:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLVnG-0007XO-1h
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 05:49:54 +0100
+	id 1LLVuc-0000Jk-VT
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 05:57:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751453AbZAJEqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 23:46:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751441AbZAJEqW
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 23:46:22 -0500
-Received: from pl1.haspere.com ([208.111.35.220]:39954 "EHLO pl1.haspere.com"
+	id S1751664AbZAJE4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 23:56:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751025AbZAJE4G
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 23:56:06 -0500
+Received: from mail.lang.hm ([64.81.33.126]:44798 "EHLO bifrost.lang.hm"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750977AbZAJEqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 23:46:21 -0500
-Received: from family.dyweni.com (173-23-155-27.client.mchsi.com [173.23.155.27])
-	by pl1.haspere.com (Postfix) with ESMTPSA id 90C22C800E;
-	Fri,  9 Jan 2009 22:46:20 -0600 (CST)
+	id S1750942AbZAJE4F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 23:56:05 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n0A4u0sG006580;
+	Fri, 9 Jan 2009 20:56:00 -0800
+X-X-Sender: dlang@asgard.lang.hm
 In-Reply-To: <200901092238.06968.bss@iguanasuicide.net>
-X-Mailer: Claws Mail 3.4.0 (GTK+ 2.12.11; i686-pc-linux-gnu)
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105075>
 
+On Fri, 9 Jan 2009, Boyd Stephen Smith Jr. wrote:
 
-> You could simply commit after running the perl script.  You could
-> even commit to a branch so that it's (a little) less likely those
-> changes get integrated into master.
+> On Friday 2009 January 09 22:23:44 4jxDQ6FQee2H@dyweni.com wrote:
+>> Our company's website is stored in a GIT Repository.
+>
+> Interesting.  I like the thought.
+>
+>> The repository is coded for our test server.  When we push updates to
+>> the production server, have manually run a script to patch several
+>> files to make the code work on the production server (i.e. port
+>> numbers, etc).
+>>
+>> I'd like to write a script to email me whenever someone changes files
+>> on the production server without checking those changes back into git
+>> (i.e. running 'git status | grep "nothing to commit" ...').
+>>
+>> However, this approach get confused by the files patched to work
+>> correctly.
+>>
+>> Is there any way to 'save' those patched files so they don't get
+>> reported by 'git status', yet not mung up the git history every time
+>> we push out an update?
+>
+> You could simply commit after running the perl script.  You could even commit
+> to a branch so that it's (a little) less likely those changes get integrated
+> into master.
 
-How about this, ran by the post-update hook:
+one nice thing about git commit is that if there are no changes it doesn't 
+make a commit.
 
+I have a couple files on my desktop (firefox status files for example) 
+that I have a cron job do a commit on every min so that when firefox 
+crashes in a way that can't be recovered by it's 'restore old pages' 
+option I can go back and save things anyway.
 
-For the first update:
-
- - Do a git pull
- - Then create a new branch 'working' and checkout
- - Apply the patches to 'working' and commit
-
-This leaves 'working' == 'master^'
-
-For subsequent updates:
- - Compare the SHA1 hashes for 'working' and 'master^'.
-   - If they don't match, throw an error and exit
- - Assuming they match, checkout 'master' and delete 'working'
- - Do a git pull
- - Then create a new branch 'working' and checkout
- - Apply the patches to 'working' and commit
-
-
-This would keep the working directory clean and allow future updates to
-occur, if no one commits anything to git 'working'.  If they did, the
-script would exit and prevent the update requiring the developer to
-review the commit logs and cherry-pick where necessary.
+David Lang
