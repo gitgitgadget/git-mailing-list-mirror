@@ -1,154 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2009, #01; Mon, 05)
-Date: Fri, 09 Jan 2009 22:15:59 -0800
-Message-ID: <7vr63by9cw.fsf@gitster.siamese.dyndns.org>
-References: <7vbpulnduj.fsf@gitster.siamese.dyndns.org>
- <2c6b72b30901092015l2405627aqf928e43c12eabc3c@mail.gmail.com>
+From: "Jacob Helwig" <jacob.helwig@gmail.com>
+Subject: Re: Git - Pushing to a production website
+Date: Fri, 9 Jan 2009 22:41:54 -0800
+Message-ID: <8c9a060901092241y23e56cbbr6aa7f322afaa2f6b@mail.gmail.com>
+References: <20090109222344.3539138a@family.dyweni.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Miklos Vajna" <vmiklos@frugalware.org>, git@vger.kernel.org
-To: "Jonas Fonseca" <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 07:17:35 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: 4jxDQ6FQee2H@dyweni.com
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jan 10 07:43:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLXA6-000504-OQ
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 07:17:35 +0100
+	id 1LLXZ2-0000rI-Sn
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 07:43:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071AbZAJGQM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Jan 2009 01:16:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbZAJGQJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 01:16:09 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34541 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751679AbZAJGQI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Jan 2009 01:16:08 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AB22A1C2A9;
-	Sat, 10 Jan 2009 01:16:06 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 058D11BC58; Sat,
- 10 Jan 2009 01:16:01 -0500 (EST)
-In-Reply-To: <2c6b72b30901092015l2405627aqf928e43c12eabc3c@mail.gmail.com>
- (Jonas Fonseca's message of "Fri, 9 Jan 2009 23:15:37 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2A6D1C28-DEDE-11DD-8EFF-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751411AbZAJGl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 01:41:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751005AbZAJGl4
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 01:41:56 -0500
+Received: from qw-out-2122.google.com ([74.125.92.24]:52928 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750718AbZAJGlz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 01:41:55 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so8858063qwe.37
+        for <git@vger.kernel.org>; Fri, 09 Jan 2009 22:41:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=dTsN19oRtMzymOzhYSRv1LL/Fg1To0tZZtqZhH1vjvA=;
+        b=GU3+1rwdhq+xC3ZPHKgBRb+nUjH6eUWM3O5kOkvYhAXCGFVNfEnA+spiRv0bNL98+i
+         UrYtIVdMPuUJe2m86mVENNYqtjR4o1jAOsy74PjIziBIYzLDVwTxt0foQuONs+lSm/Ab
+         c/zrQI2wzqWiwQq/heU1AcaxW1oaCr03GEMEU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=odhu2F9wAeFTLfZmdC18Vk4OJ/cZvjGvs0dN9NL6wyo8X8jE6/1Wku6+PetjH2t46l
+         mPYZrnicLGqf+BIH8SmjpfT1XuU/Km9G+51w3cXExdzRMOyZ0lkrAtDI3EUoNmRnnjQZ
+         lHS+0rBYPyBcNZ1sIP7lXko1o9ZqU089bO08Q=
+Received: by 10.214.116.7 with SMTP id o7mr23685552qac.133.1231569714504;
+        Fri, 09 Jan 2009 22:41:54 -0800 (PST)
+Received: by 10.214.243.1 with HTTP; Fri, 9 Jan 2009 22:41:54 -0800 (PST)
+In-Reply-To: <20090109222344.3539138a@family.dyweni.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105080>
 
-"Jonas Fonseca" <jonas.fonseca@gmail.com> writes:
-
-> On Tue, Jan 6, 2009 at 01:33, Junio C Hamano <gitster@pobox.com> wrot=
-e:
->> ----------------------------------------------------------------
->> * mv/apply-parse-opt (Sun Dec 28 00:03:57 2008 +0100) 1 commit
->>  + parse-opt: migrate builtin-apply.
+On Fri, Jan 9, 2009 at 20:23,  <4jxDQ6FQee2H@dyweni.com> wrote:
+> Hi,
 >
-> This broke apply for me after updating to the current "next" earlier
-> today. When requesting that the patch be read from stdin I get the
-> following error message:
+> Our company's website is stored in a GIT Repository.
 >
->   > git diff | git apply -R -
->   fatal: can't open patch '-': No such file or directory
+> The repository is coded for our test server.  When we push updates to
+> the production server, have manually run a script to patch several
+> files to make the code work on the production server (i.e. port
+> numbers, etc).
+>
 
-Thanks.  I think this patch would fix it.
+Are these all static pages?  If they're Perl/PHP/Ruby/whatever, why
+not add tests for the Live vs. Dev?  Check for an environment
+variable, or a file on disk, etc, etc?  That way any checks described
+below won't get "confused" by the (no longer necessary) patches, and
+you won't have to worry about rebasing commits, and any potential
+conflicts there.
 
-Because the original option parser was incremental and immediate with
-respect to "-", we used to be able to say:
-
-	$ git apply -p - --stat patch2.txt <patch1.txt
-
-and the use of parseopt breaks such usage, even after this fix.
-
-But I think it is a bit too crazy to support such backward compatibilit=
-y.
-
- builtin-apply.c        |   19 +++++--------------
- t/t4106-apply-stdin.sh |   26 ++++++++++++++++++++++++++
- 2 files changed, 31 insertions(+), 14 deletions(-)
-
-diff --git c/builtin-apply.c w/builtin-apply.c
-index cb988a3..2811c0f 100644
---- c/builtin-apply.c
-+++ w/builtin-apply.c
-@@ -3140,16 +3140,6 @@ static int git_apply_config(const char *var, con=
-st char *value, void *cb)
- 	return git_default_config(var, value, cb);
- }
-=20
--static int option_parse_stdin(const struct option *opt,
--			      const char *arg, int unset)
--{
--	int *errs =3D opt->value;
--
--	*errs |=3D apply_patch(0, "<stdin>", options);
--	read_stdin =3D 0;
--	return 0;
--}
--
- static int option_parse_exclude(const struct option *opt,
- 				const char *arg, int unset)
- {
-@@ -3218,9 +3208,6 @@ int cmd_apply(int argc, const char **argv, const =
-char *unused_prefix)
- 	const char *whitespace_option =3D NULL;
-=20
- 	struct option builtin_apply_options[] =3D {
--		{ OPTION_CALLBACK, '-', NULL, &errs, NULL,
--			"read the patch from the standard input",
--			PARSE_OPT_NOARG, option_parse_stdin },
- 		{ OPTION_CALLBACK, 0, "exclude", NULL, "path",
- 			"don=C2=B4t apply changes matching the given path",
- 			0, option_parse_exclude },
-@@ -3302,7 +3289,11 @@ int cmd_apply(int argc, const char **argv, const=
- char *unused_prefix)
- 		const char *arg =3D argv[i];
- 		int fd;
-=20
--		if (0 < prefix_length)
-+		if (!strcmp(arg, "-")) {
-+			errs |=3D apply_patch(0, "<stdin>", options);
-+			read_stdin =3D 0;
-+			continue;
-+		} else if (0 < prefix_length)
- 			arg =3D prefix_filename(prefix, prefix_length, arg);
-=20
- 		fd =3D open(arg, O_RDONLY);
-diff --git c/t/t4106-apply-stdin.sh w/t/t4106-apply-stdin.sh
-new file mode 100755
-index 0000000..72467a1
---- /dev/null
-+++ w/t/t4106-apply-stdin.sh
-@@ -0,0 +1,26 @@
-+#!/bin/sh
-+
-+test_description=3D'git apply --numstat - <patch'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	echo hello >text &&
-+	git add text &&
-+	echo goodbye >text &&
-+	git diff >patch
-+'
-+
-+test_expect_success 'git apply --numstat - < patch' '
-+	echo "1	1	text" >expect &&
-+	git apply --numstat - <patch >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git apply --numstat - < patch patch' '
-+	for i in 1 2; do echo "1	1	text"; done >expect &&
-+	git apply --numstat - < patch patch >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
+> I'd like to write a script to email me whenever someone changes files
+> on the production server without checking those changes back into git
+> (i.e. running 'git status | grep "nothing to commit" ...').
+>
+> However, this approach get confused by the files patched to work
+> correctly.
+>
+> Is there any way to 'save' those patched files so they don't get
+> reported by 'git status', yet not mung up the git history every time
+> we push out an update?
+>
+> Thanks!
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
