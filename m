@@ -1,120 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] format-patch: avoid generation of empty patches
-Date: Sat, 10 Jan 2009 12:41:33 -0800
-Message-ID: <7vy6xivqpu.fsf@gitster.siamese.dyndns.org>
-References: <1231536787-20685-1-git-send-email-nathan.panike@gmail.com>
- <7vmye0yohu.fsf@gitster.siamese.dyndns.org> <20090110113642.GA25723@myhost>
- <20090110113903.GB25723@myhost>
- <d77df1110901100801s463bb43bt701a95df14f167d8@mail.gmail.com>
+From: "Victor Westmann" <victor.westmann@gmail.com>
+Subject: TortoiseGit
+Date: Sat, 10 Jan 2009 19:46:18 -0300
+Message-ID: <4d5bc4bb0901101446j29d147c3pb885824e8d0d484f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Alexander Potashev" <aspotashev@gmail.com>, git@vger.kernel.org
-To: "Nathan W. Panike" <nathan.panike@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 21:43:07 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 10 23:55:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLkfi-0002Df-Rc
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 21:43:07 +0100
+	id 1LLmjU-0002ZU-4H
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 23:55:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752893AbZAJUln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 15:41:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752782AbZAJUll
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 15:41:41 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56752 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751068AbZAJUll (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 15:41:41 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 81B5B1C32F;
-	Sat, 10 Jan 2009 15:41:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B50101C32E; Sat,
- 10 Jan 2009 15:41:35 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1566CDFA-DF57-11DD-B2AA-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1756094AbZAJWxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 17:53:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755410AbZAJWxr
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 17:53:47 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:11349 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755811AbZAJWxq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 17:53:46 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so3223414yxm.1
+        for <git@vger.kernel.org>; Sat, 10 Jan 2009 14:53:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=sL0Pr4j+PPDwscEfNcnNCPeXnGTTalWnN6+ocJJTOQs=;
+        b=SecU5sK72aK9dwk3N1pxOGwkNywGqpYqShPzUKPP18mkaLZG0NpFDQf9jizaLQNnZ2
+         vAkHhW7m9/PWRU4rg7PcheoI8WAPnfHbPbpKNae/4SMSDkGHKq0MuASb6e3ENY2GpYSS
+         sZICB2amCPeAqZYTqXUxQ8y0iXVeYv7Vd72JI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=urISeyLy8xeMEJfpE0MB7XESiEZITvnVM0b7/8JOGd1yl43PUqrIEZ/K4sw++JP+32
+         g3KEGx9l9GOKSYR5xnz+bIr6+oRHQ4oCd9Voi8GXDUvpI8ak43E7R54ANA/pjgGUPH+c
+         ekseRpEOBud+s/5XdPaHDYvriwVYgSaMabGAg=
+Received: by 10.90.53.4 with SMTP id b4mr12869623aga.88.1231627578696;
+        Sat, 10 Jan 2009 14:46:18 -0800 (PST)
+Received: by 10.90.81.3 with HTTP; Sat, 10 Jan 2009 14:46:18 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105146>
 
-"Nathan W. Panike" <nathan.panike@gmail.com> writes:
+Hi everyone.
 
-> On Sat, Jan 10, 2009 at 5:39 AM, Alexander Potashev
-> <aspotashev@gmail.com> wrote:
-> ...
->>
->> +               if (!commit->parents && !rev.show_root_diff)
->> +                       break;
->
-> Do you really want to stop getting commits?  It seems like the break
-> statement here should be a continue.
+How can I help translate this nice piece of software to my native
+language? (pt_BR = Brazilian portuguese).
 
-You can give a commit range that has two independent roots.  The above
-"break" is wrong.
+Cheers.
 
-The variable is called show_root_DIFF, not show_root_COMMIT; even if you
-have "log.showroot = false", "git log -p" output would still give you the
-initial commit, but without the patch text, no?
+-- 
+[]s
 
-But that is not Alexander's fault; it is mine.
 
-I think "log -p" and "format-patch" can and should behave differently in
-this case.  "log -p" is for people who already _have_ the history and
-would want to inspect how it evolved, and it is reasonable if some people
-want to say "the very initial huge import is not interesting to me while
-reviewing the history", and turning it off makes sense for them (in fact,
-the default was initially that way).
-
-On the other hand, "format-patch" is about exporting a part of your
-history so that you can mechanincally replay it elsewhere, and I do not
-think of a reasonable justification not to export a root commit fully if
-the range user asked for happens to contain one.
-
-I agree with Alexander that we should not output just the message without
-the patch text, but I think the right solution is to show both. not to
-skip root.
-
--- >8 --
-format-patch: show patch text for the root commit
-
-Even without --root specified, if the range given on the command line
-happens to include a root commit, we should include its patch text in the
-output.
-
-This fix deliberately ignores log.showroot configuration variable because
-"format-patch" and "log -p" can and should behave differently in this
-case, as the former is about exporting a part of your history in a form
-that is replayable elsewhere and just giving the commit log message
-without the patch text does not make any sense for that purpose.
-
-Noticed and fix originally attempted by Nathan W. Panike; credit goes to
-Alexander Potashev for injecting sanity to my initial (broken) fix that
-used the value from log.showroot configuration, which was misguided.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-log.c |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
-
-diff --git c/builtin-log.c w/builtin-log.c
-index 4a02ee9..91e5412 100644
---- c/builtin-log.c
-+++ w/builtin-log.c
-@@ -935,6 +935,13 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		 * get_revision() to do the usual traversal.
- 		 */
- 	}
-+
-+	/*
-+	 * We cannot move this anywhere earlier because we do want to
-+	 * know if --root was given explicitly from the comand line.
-+	 */
-+	rev.show_root_diff = 1;
-+
- 	if (cover_letter) {
- 		/* remember the range */
- 		int i;
+Victor Westmann
+Joan Crawford  - "I, Joan Crawford, I believe in the dollar.
+Everything I earn, I spend."
