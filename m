@@ -1,81 +1,102 @@
-From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] gitweb: suggest name for OPML view
-Date: Sat, 10 Jan 2009 14:15:48 -0500
-Message-ID: <cb7bb73a0901101115i541f0911o42f08fc47820fb82@mail.gmail.com>
-References: <1230900570-25324-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200901101510.20918.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Google Summer of Code 2009
+Date: Sat, 10 Jan 2009 11:33:04 -0800 (PST)
+Message-ID: <m3privyn20.fsf@localhost.localdomain>
+References: <20090107183033.GB10790@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 20:17:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Jan 10 20:35:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLjKd-0001qO-HL
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 20:17:15 +0100
+	id 1LLjcP-00076U-Aw
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 20:35:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751309AbZAJTPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 14:15:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751086AbZAJTPv
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 14:15:51 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:35984 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751081AbZAJTPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 14:15:50 -0500
-Received: by ewy10 with SMTP id 10so10798375ewy.13
-        for <git@vger.kernel.org>; Sat, 10 Jan 2009 11:15:48 -0800 (PST)
+	id S1751347AbZAJTdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 14:33:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbZAJTdJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 14:33:09 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:53605 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751081AbZAJTdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 14:33:08 -0500
+Received: by nf-out-0910.google.com with SMTP id d3so1243505nfc.21
+        for <git@vger.kernel.org>; Sat, 10 Jan 2009 11:33:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=wsFtJ1pFS2S7KN/RopHYQ3QkAZBIbicI5/vFsQ5DgBw=;
-        b=DciWypaUSZ48d3/ZwlJni4amDLmJUyrJaJJ8A8OHFmKso2apXpg437tRicgVFmV9vg
-         7imF8U7EYTK3eS4N5LRHFoao6b6LnhZtuflCKYzfjuaYvkx3Xvi4qKY8vosFCq69gLes
-         OVpOTWK70TCFhckVvsV+uVcJXMISTo0pDuRRg=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        bh=ikUF+o21HepR6TR8N+tTrvDcVN1YBaK9Ow5pfYUfrtA=;
+        b=DrA6Q9jVUGGIwldCvodjteFLtBGoU6T0w2i1Ad+Diq07U+b7cB2Sc65EAx2WmcOl7U
+         C3ULbHuC99vaVPxF3qFBW5ytTB7rc+0llzYK3nxG4dCZAulssUlzkOXq25/KiIyCGcTC
+         MZmFo7AjnsyPpx93con63myUcHotDzncvtXR0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Vp8/B4yXoVCFEpIeQUD/eMVgFGsMCTInla9T8pr9Wo9hPaFjCut2PjEpBOnrVtZNtH
-         l4NkXdUawiE2x4DCKxC9oL7VpF3DMSyRYMWU5M1O7jL5VI0+XP0iUyy1P4ReQQKPaIkG
-         a0KY82fyxw57IPXlQn8eTPbaAEFrFyMEk1JXM=
-Received: by 10.210.35.17 with SMTP id i17mr8816159ebi.165.1231614948473;
-        Sat, 10 Jan 2009 11:15:48 -0800 (PST)
-Received: by 10.210.57.20 with HTTP; Sat, 10 Jan 2009 11:15:48 -0800 (PST)
-In-Reply-To: <200901101510.20918.jnareb@gmail.com>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
+         :message-id:lines:user-agent:mime-version:content-type:date;
+        b=afCwVVBpgN+RowyD8bqnR+MfaZNbC2lY97dOgzpJzB3K3SozhV0cTDGrmubYgYNCyF
+         2Tuz7K2MXHIANvi+KibThFMN00D4ZZjPiDB1d9LyErft2v0udQpRf7EAiLh5umAHj7mp
+         ksHA43ptUQSi4sU9Ryws8FM8ONGh+6kJFbi/I=
+Received: by 10.210.90.10 with SMTP id n10mr6227111ebb.150.1231615985835;
+        Sat, 10 Jan 2009 11:33:05 -0800 (PST)
+Received: from localhost.localdomain (abve97.neoplus.adsl.tpnet.pl [83.8.202.97])
+        by mx.google.com with ESMTPS id 10sm2162169eyz.49.2009.01.10.11.33.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 10 Jan 2009 11:33:04 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0AJWe4s002940;
+	Sat, 10 Jan 2009 20:32:45 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0AJWNDZ002934;
+	Sat, 10 Jan 2009 20:32:23 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20090107183033.GB10790@spearce.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105139>
 
-On Sat, Jan 10, 2009 at 9:10 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Fri, 2 Jan 2009, Giuseppe Bilotta wrote:
->
->> Suggest opml.xml as name for OPML view by providing the appropriate
->> header, consistently with similar usage in project_index view.
->
-> It is not name for a view, but more of default filename when saving
-> it. While it is good idea to have consistency, I guess that while
-> 'project_index' view and other non-HTML views are meant to be
-> downloaded and saved (snapshots, patches, patchsets), OPML view
-> is meant to be used on-line, just like web feeds in RSS and Atom
-> formats which are non-HTML too but do not have Content-Disposition
-> header set.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-OPML is used for import/export of RSS feed lists between aggregators
-(e.g. moving your reading list from knewsreader to google reader). As
-such, it can also be comfortable to save it to disk for import by some
-tools. IMO, of course. And there's also the consistency thing, and not
-actual reason _not_ to offer the filename, since it comes pretty
-cheap.
+> The application answers really need to be reworked; we need to
+> address our 2008 results in these parts.
+
+By the way, do you know what happened with git-sequencer project? 
+
+If I remember correctly there was agreement on sequences mini-language
+(I think), and there was git-sequencer prototype in shell, using
+git-cherry-pick if I remember correctly, and even git-rebase and
+git-am etc reworked to make use of git-sequencer.  Stephan Beyer wrote
+that he has some preliminary version of builtin git-sequencer (in C),
+and that it makes git-rebase--interactive and like faster than current
+implementation... but builtin sequencer never materialized on git
+mailing list as a patch, if I remember correctly, and of course it was
+not merged into git either.
+ 
+> The ideas box is once again open for suggestions.  Please start
+> proposing student projects, and possible mentors.
+
+Hmm... take a look what features competition has (Darcs, Bazaar-NG,
+Subversion, Mercurial, Monotone)...
+
+> 
+> 
+> Since the program is smaller, there is a chance we won't be accepted
+> this year due to space constraints.  But I think its still worthwhile
+> to prepare everything and hope for the best.  And before you can
+> ask, no, my employee status with OSPO doesn't improve our odds
+> for acceptance.  :-)
+
+Perhaps at least _one_ project.  I think that resumable clone /
+resumable fetch would be a good thing to have...
 
 -- 
-Giuseppe "Oblomov" Bilotta
+Jakub Narebski
+Poland
+ShadeHawk on #git
