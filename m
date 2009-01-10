@@ -1,91 +1,146 @@
-From: "Jacob Helwig" <jacob.helwig@gmail.com>
-Subject: Re: Git - Pushing to a production website
-Date: Fri, 9 Jan 2009 22:41:54 -0800
-Message-ID: <8c9a060901092241y23e56cbbr6aa7f322afaa2f6b@mail.gmail.com>
-References: <20090109222344.3539138a@family.dyweni.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH/RFC v5 1/1] more cache effective symlink/directory detection
+Date: Sat, 10 Jan 2009 11:11:12 +0100
+Message-ID: <49687440.5090506@lsrfire.ath.cx>
+References: <1231527954-868-1-git-send-email-barvik@broadpark.no> <1231527954-868-2-git-send-email-barvik@broadpark.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: 4jxDQ6FQee2H@dyweni.com
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 10 07:43:21 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Pete Harlan <pgit@pcharlan.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Kjetil Barvik <barvik@broadpark.no>
+X-From: git-owner@vger.kernel.org Sat Jan 10 11:12:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLXZ2-0000rI-Sn
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 07:43:21 +0100
+	id 1LLapg-0006ie-1t
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 11:12:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751411AbZAJGl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 01:41:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751005AbZAJGl4
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 01:41:56 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:52928 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750718AbZAJGlz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 01:41:55 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so8858063qwe.37
-        for <git@vger.kernel.org>; Fri, 09 Jan 2009 22:41:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=dTsN19oRtMzymOzhYSRv1LL/Fg1To0tZZtqZhH1vjvA=;
-        b=GU3+1rwdhq+xC3ZPHKgBRb+nUjH6eUWM3O5kOkvYhAXCGFVNfEnA+spiRv0bNL98+i
-         UrYtIVdMPuUJe2m86mVENNYqtjR4o1jAOsy74PjIziBIYzLDVwTxt0foQuONs+lSm/Ab
-         c/zrQI2wzqWiwQq/heU1AcaxW1oaCr03GEMEU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=odhu2F9wAeFTLfZmdC18Vk4OJ/cZvjGvs0dN9NL6wyo8X8jE6/1Wku6+PetjH2t46l
-         mPYZrnicLGqf+BIH8SmjpfT1XuU/Km9G+51w3cXExdzRMOyZ0lkrAtDI3EUoNmRnnjQZ
-         lHS+0rBYPyBcNZ1sIP7lXko1o9ZqU089bO08Q=
-Received: by 10.214.116.7 with SMTP id o7mr23685552qac.133.1231569714504;
-        Fri, 09 Jan 2009 22:41:54 -0800 (PST)
-Received: by 10.214.243.1 with HTTP; Fri, 9 Jan 2009 22:41:54 -0800 (PST)
-In-Reply-To: <20090109222344.3539138a@family.dyweni.com>
-Content-Disposition: inline
+	id S1753426AbZAJKLU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Jan 2009 05:11:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbZAJKLU
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 05:11:20 -0500
+Received: from india601.server4you.de ([85.25.151.105]:46934 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753152AbZAJKLS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 05:11:18 -0500
+Received: from [10.0.1.101] (p57B7E561.dip.t-dialin.net [87.183.229.97])
+	by india601.server4you.de (Postfix) with ESMTPSA id DA1672F8042;
+	Sat, 10 Jan 2009 11:11:16 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <1231527954-868-2-git-send-email-barvik@broadpark.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105081>
 
-On Fri, Jan 9, 2009 at 20:23,  <4jxDQ6FQee2H@dyweni.com> wrote:
-> Hi,
->
-> Our company's website is stored in a GIT Repository.
->
-> The repository is coded for our test server.  When we push updates to
-> the production server, have manually run a script to patch several
-> files to make the code work on the production server (i.e. port
-> numbers, etc).
->
+Kjetil Barvik schrieb:
+> - Also introduce a 'void clear_lstat_cache(void)' function, which
+>   should be used to clean the cache before usage.  If for instance,
+>   you have changed the types of directories which should be cached,
+>   the cache could contain a path which was not wanted.
 
-Are these all static pages?  If they're Perl/PHP/Ruby/whatever, why
-not add tests for the Live vs. Dev?  Check for an environment
-variable, or a file on disk, etc, etc?  That way any checks described
-below won't get "confused" by the (no longer necessary) patches, and
-you won't have to worry about rebasing commits, and any potential
-conflicts there.
+Is it possible to make the cache detect these situations automatically
+by saving track_flags along with the cache contents?  Not having to
+clear the cache manually would be a major feature.
 
-> I'd like to write a script to email me whenever someone changes files
-> on the production server without checking those changes back into git
-> (i.e. running 'git status | grep "nothing to commit" ...').
->
-> However, this approach get confused by the files patched to work
-> correctly.
->
-> Is there any way to 'save' those patched files so they don't get
-> reported by 'git status', yet not mung up the git history every time
-> we push out an update?
->
-> Thanks!
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -719,7 +719,29 @@ struct checkout {
+>  };
+> =20
+>  extern int checkout_entry(struct cache_entry *ce, const struct check=
+out *state, char *topath);
+> -extern int has_symlink_leading_path(int len, const char *name);
+> +
+> +#define LSTAT_REG      (1u << 0)
+> +#define LSTAT_DIR      (1u << 1)
+> +#define LSTAT_NOENT    (1u << 2)
+> +#define LSTAT_SYMLINK  (1u << 3)
+> +#define LSTAT_LSTATERR (1u << 4)
+> +#define LSTAT_ERR      (1u << 5)
+> +#define LSTAT_FULLPATH (1u << 6)
+> +extern unsigned int lstat_cache(int len, const char *name,
+> +				unsigned int track_flags, int prefix_len_stat_func);
+> +extern void clear_lstat_cache(void);
+> +static inline unsigned int has_symlink_leading_path(int len, const c=
+har *name)
+> +{
+> +	return lstat_cache(len, name, LSTAT_SYMLINK|LSTAT_DIR, -1) &
+> +		LSTAT_SYMLINK;
+> +}
+> +#define clear_symlink_cache() clear_lstat_cache()
+> +static inline unsigned int has_symlink_or_noent_leading_path(int len=
+, const char *name)
+> +{
+> +	return lstat_cache(len, name, LSTAT_SYMLINK|LSTAT_NOENT|LSTAT_DIR, =
+-1) &
+> +		(LSTAT_SYMLINK|LSTAT_NOENT);
+> +}
+> +#define clear_symlink_or_noent_cache() clear_lstat_cache()
+
+What's the advantage of inlining the wrappers (expressed in units of
+space and/or time)?  The interface would be much nicer if you exported
+the wrappers, only, and not all those constants along with them.
+
+And why define aliases for clear_lstat_cache()?
+
+> diff --git a/entry.c b/entry.c
+> index aa2ee46a84033585d8e07a585610c5a697af82c2..293400cf5be63fd66b797=
+a68e17bf953c600fe99 100644
+> --- a/entry.c
+> +++ b/entry.c
+> @@ -8,35 +8,28 @@ static void create_directories(const char *path, co=
+nst struct checkout *state)
+>  	const char *slash =3D path;
+> =20
+>  	while ((slash =3D strchr(slash+1, '/')) !=3D NULL) {
+> -		struct stat st;
+> -		int stat_status;
+> -
+>  		len =3D slash - path;
+>  		memcpy(buf, path, len);
+>  		buf[len] =3D 0;
+> =20
+> -		if (len <=3D state->base_dir_len)
+> -			/*
+> -			 * checkout-index --prefix=3D<dir>; <dir> is
+> -			 * allowed to be a symlink to an existing
+> -			 * directory.
+> -			 */
+> -			stat_status =3D stat(buf, &st);
+> -		else
+> -			/*
+> -			 * if there currently is a symlink, we would
+> -			 * want to replace it with a real directory.
+> -			 */
+> -			stat_status =3D lstat(buf, &st);
+> -
+> -		if (!stat_status && S_ISDIR(st.st_mode))
+> +		/* For 'checkout-index --prefix=3D<dir>', <dir> is
+> +		 * allowed to be a symlink to an existing directory,
+> +		 * therefore we must give 'state->base_dir_len' to the
+> +		 * cache, such that we test path components of the
+> +		 * prefix with stat() instead of lstat()
+> +		 *
+> +		 * We must also tell the cache to test the complete
+> +		 * length of the buffer (the '|LSTAT_FULLPATH' part).
+> +		 */
+> +		if (lstat_cache(len, buf, LSTAT_DIR|LSTAT_FULLPATH,
+> +				state->base_dir_len) &
+> +		    LSTAT_DIR)
+>  			continue; /* ok, it is already a directory. */
+
+I'd say this usage is worth another wrapper.
+
+Also, it's probably worth to split this patch up again.  First switchin=
+g
+to your improved implementation of has_symlink_leading_path(), then
+introducing has_symlink_or_noent_leading_path() and finally adding
+LSTAT_FULLPATH and the fourth parameter of lstat_cache() etc. and using
+this feature in entry.c seems like a nice incremental progression.
+
+Ren=E9
