@@ -1,96 +1,79 @@
-From: "Caleb Cushing" <xenoterracide@gmail.com>
-Subject: Re: trouble getting git cvsimport working
-Date: Sat, 10 Jan 2009 09:35:28 -0500
-Message-ID: <81bfc67a0901100635i4d33c294x393a8d2dfc2b0e0d@mail.gmail.com>
-References: <81bfc67a0901100516w10ea77e8n8734713b071d69b9@mail.gmail.com>
-	 <alpine.DEB.1.00.0901101524310.30769@pacific.mpi-cbg.de>
+From: "Peter Harris" <git@peter.is-a-geek.org>
+Subject: Re: Main branch being maintained with 'git am', how do mere mortals interact without too much conflicts?
+Date: Sat, 10 Jan 2009 09:47:17 -0500
+Message-ID: <eaa105840901100647y70b53ae0w495af69b7281cae7@mail.gmail.com>
+References: <87vdsntnyd.dancerj%dancer@netfort.gr.jp>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 10 15:37:12 2009
+To: "Junichi Uekawa" <dancer@netfort.gr.jp>
+X-From: git-owner@vger.kernel.org Sat Jan 10 15:48:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLexV-0002jT-0S
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 15:37:05 +0100
+	id 1LLf8m-0005uK-87
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 15:48:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753409AbZAJOfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 09:35:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753383AbZAJOfb
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 09:35:31 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:53475 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753324AbZAJOfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 09:35:30 -0500
-Received: by bwz14 with SMTP id 14so30221565bwz.13
-        for <git@vger.kernel.org>; Sat, 10 Jan 2009 06:35:28 -0800 (PST)
+	id S1753463AbZAJOrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 09:47:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753383AbZAJOrT
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 09:47:19 -0500
+Received: from rn-out-0910.google.com ([64.233.170.188]:17100 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751583AbZAJOrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 09:47:19 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so6732242rnd.17
+        for <git@vger.kernel.org>; Sat, 10 Jan 2009 06:47:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=STxNTNZpV1I93NdcthjW8I93T5rZC9kGrw5SuWLaLN4=;
-        b=iQwm1416QT6H3oO3+Ys8Zl/1Y2l29kz9HePGSJr7Mmv8Zi2yIJSeOxwhtFilLpfyv4
-         BGjwT4Vc6e0nqKcIBpnHJBTYv/MUAyMbvHHhZ1B/Esv+JXn9ZXXV7hR8qlTgm14eKp/J
-         zLoKtdqo2R8JMW46yVF8F5ZjDCA6msudFPbxk=
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=zMIcQ4jW/DpM9YWoupoxF6sEXl5M0XQE337cZLQHlwo=;
+        b=BZf6ZyaufSfdH8L/+PsNX0mmbwQBrJ7sIU7Qw3XbLFaBhU5HHt/WLVYnIXZ6THL4lc
+         2+vG/V2Z+L6gFz/vnT/BeBvSyfSEwJUwGsTo2Ge1sBnmy1AU0Fkpgp4vv3Dw72j4/ZAu
+         60Ev3aRbAZ0bD27ev4gTg7QCmVtn8jnB8Vplg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=oHuRToO1si6YCqdeP3pT4WpOUE8m/az4Mb67cAYPkxiHgJIdoExLyKg/Dv6osTT6Fk
-         Ui853i0/mkr9eLu6u3wBBsChO8673wCpZJYqgG0Btm5YDy3CltWPKdloyY8KBr2MVG/T
-         djpw0KzbhWzPXgHBx3iSwSUlpOzWvGBwDM1Ko=
-Received: by 10.223.116.10 with SMTP id k10mr19418830faq.101.1231598128490;
-        Sat, 10 Jan 2009 06:35:28 -0800 (PST)
-Received: by 10.223.108.12 with HTTP; Sat, 10 Jan 2009 06:35:28 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0901101524310.30769@pacific.mpi-cbg.de>
+         :references:x-google-sender-auth;
+        b=C2d4LEO/BN4K5CmresHmai7XQFleUXvI9F/RMAJhgsrb7ZMAH5Cf4jm13ODgNgYEPB
+         krk242wxE56TkLKlHYH1i8n46ZOufH4BZc/4WrSeaVAMeCs6FIvANk6JXhjFeyxG6KLL
+         x/yMO3hkNYTvkM+PwM7PHQ1GgaroAaffx+Bsk=
+Received: by 10.65.105.18 with SMTP id h18mr3281472qbm.112.1231598837436;
+        Sat, 10 Jan 2009 06:47:17 -0800 (PST)
+Received: by 10.64.210.7 with HTTP; Sat, 10 Jan 2009 06:47:17 -0800 (PST)
+In-Reply-To: <87vdsntnyd.dancerj%dancer@netfort.gr.jp>
 Content-Disposition: inline
+X-Google-Sender-Auth: 98428ff80a5ca279
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105117>
 
->  > sh: cvs: command not found
->
->
-> What's this?
+On Sat, Jan 10, 2009 at 6:11 AM, Junichi Uekawa wrote:
+> I am thinking of recommending the users to create a branch
+...
+> and throw away their branches when they are included upstream.
 
-does git need more than cvsps to work (I assumed my package manager
-had installed all needed deps)? I installed cvs after you pointed that
-out...
+Yes, with a patch based workflow, this is almost required; all of the
+commits will at least have different committer information.
 
-git cvsimport -a -v -d
-:pserver:anonymous@anoncvs.gentoo.org/var/cvsroot/ gentoo-x86 -C
-portage
-Initialized empty Git repository in /home/portdev/cvs/portage/.git/
-Running cvsps...
-parse error on third token
-WARNING: malformed CVS version str: Server: (unknown)
-WARNING: Your CVS client version:
-[Client: Concurrent Versions System (CVS) 1.12.12 (client)]
-and/or server version:
-[Server: (unknown)]
-are too old to properly support the rlog command.
-This command was introduced in 1.11.1.  Cvsps
-will use log instead, but PatchSet numbering
-may become unstable due to pruned empty
-directories.
+There's nothing wrong with this approach.
 
-cvs log: warning: failed to open /home/portdev/.cvspass for reading:
-No such file or directory
-cvs log: in directory .:
-cvs [log aborted]: there is no version here; run 'cvs checkout' first
-DONE; creating master branch
-fatal: refs/heads/origin: not a valid SHA1
-fatal: master: not a valid SHA1
-fatal: You are on a branch yet to be born
-checkout failed: 32768
--- 
-Caleb Cushing
+> Something tells me the problem is that I'm probably using a workflow
+> that resembles SVN too much, and users aren't used to branches yet.
+> Has anybody found this to be a problem, or better yet, is there a
+> better workflow?
 
-http://xenoterracide.blogspot.com
+If you need the commits to be identical, and you don't mind your email
+consisting of a binary blob attachment, you can ask your contributors
+to send you a bundle instead of a series of patches. "git help bundle"
+for details.
+
+Peter Harris
