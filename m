@@ -1,91 +1,85 @@
-From: "Caleb Cushing" <xenoterracide@gmail.com>
-Subject: trouble getting git cvsimport working
-Date: Sat, 10 Jan 2009 08:16:02 -0500
-Message-ID: <81bfc67a0901100516w10ea77e8n8734713b071d69b9@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2] make diff --color-words customizable
+Date: Sat, 10 Jan 2009 14:36:46 +0100
+Message-ID: <200901101436.48149.jnareb@gmail.com>
+References: <87wsd48wam.fsf@iki.fi> <gk8usj$slh$1@ger.gmane.org> <alpine.DEB.1.00.0901101237050.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 10 14:17:50 2009
+Cc: git@vger.kernel.org, Davide Libenzi <davidel@xmailserver.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jan 10 14:38:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLdiZ-00044K-RR
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 14:17:36 +0100
+	id 1LLe2i-0001c9-Pf
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 14:38:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752342AbZAJNQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 08:16:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbZAJNQK
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 08:16:10 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:46017 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750853AbZAJNQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 08:16:09 -0500
-Received: by bwz14 with SMTP id 14so30170808bwz.13
-        for <git@vger.kernel.org>; Sat, 10 Jan 2009 05:16:05 -0800 (PST)
+	id S1752709AbZAJNhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 08:37:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbZAJNhD
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 08:37:03 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:54597 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751308AbZAJNg7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 08:36:59 -0500
+Received: by ewy10 with SMTP id 10so10697963ewy.13
+        for <git@vger.kernel.org>; Sat, 10 Jan 2009 05:36:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=4JDYLdahgcSOm/JHSi/KHcXc87PT5r3jv4ku8UhB4Vc=;
-        b=DQVJMKBjlAzYihFdDXigWWXmAAFDnxGCjeHYJR/b3JqqZY8JbhykGGpE1tg4R41ORh
-         /qEIPZy4OFGhDXWgdtzJxZ7tZr2GkoSC2dMixcp06ttXIR2rLVe+bPTgXbQtW4jHLCuN
-         9t0O4syPBm3ptniLJnBPda/w9gsA5VAj336B8=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=8Xrce1RZegUvV0IGNV9GIYjtV1q7j4PJ2Frr4dWHgeQ=;
+        b=xuSw4oPcCTeoPhk4RmqsWtS80y/OvE4x6RTwngZHVEcyGdV6YcFcmW5q5RcZifPQ+9
+         fNUEAu7AWQxgvopfHQgKg5O9oRtOr4EluJMEzl9UYRA062vN1tPNZvE4/UMuo0Ok9P9p
+         T9Kcj89mThUAD/MtVmcZHjYyir50sZRNYup5c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=jF+2b9E+nkPXVUEsT/ahXOz2N0iOKD1lZNaGSFXIsixSQMUNvjf6R2RRuRX22ua4j9
-         TiGsh1Xq0lRJqWZ1eT0pSxwa6NiD30IBtsnpY07gEDufd91CdJRJVNTGT4aDeqMwuJOB
-         W92Z/wRYUD5y1is8Mm9H43ivbr+HCgy4z5bC8=
-Received: by 10.223.124.75 with SMTP id t11mr10990159far.73.1231593365043;
-        Sat, 10 Jan 2009 05:16:05 -0800 (PST)
-Received: by 10.223.108.12 with HTTP; Sat, 10 Jan 2009 05:16:02 -0800 (PST)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=UEQkx0kTuKWj+vcCZTUxEVtnn71+hmflTTIpPgRcDDrbgo1NHpD12ez/0bKw1Mkctf
+         swG5n2FXNagf3NFCC/tlvgyIZT+R9aTz4jOkGOijjXsz5TdiwcK8ScFZr7BqxNqblT9A
+         qwBlhA+fy1GfYvC/bjwg9j8znuxtQu9VolT5A=
+Received: by 10.210.54.17 with SMTP id c17mr9899691eba.71.1231594617169;
+        Sat, 10 Jan 2009 05:36:57 -0800 (PST)
+Received: from ?192.168.1.11? (abwp34.neoplus.adsl.tpnet.pl [83.8.239.34])
+        by mx.google.com with ESMTPS id 24sm731458eyx.55.2009.01.10.05.36.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 10 Jan 2009 05:36:56 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.DEB.1.00.0901101237050.30769@pacific.mpi-cbg.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105103>
 
-not sure what I'm doing wrong.
+On Sat, 10 Jan 2009, Johannes Schindelin wrote:
+> On Sat, 10 Jan 2009, Jakub Narebski wrote:
+> > Thomas Rast wrote:
+> > 
+> > > --color-words works (and always worked) by splitting words onto one
+> > > line each, and using the normal line-diff machinery to get a word
+> > > diff. 
+> > 
+> > Cannot we generalize diff machinery / use underlying LCS diff engine
+> > instead of going through line diff?
+> 
+> What do you think we're doing?  libxdiff is pretty hardcoded to newlines.  
+> That's why we're substituting non-word characters with newlines.
 
-actual cvs command
+Isn't Meyers algorithm used by libxdiff based on LCS, largest common
+subsequence, and doesn't it generate from the mathematical point of
+view "diff" between two sequences (two arrays) which just happen to
+be lines? It is a bit strange that libxdiff doesn't export its low
+level algorithm...
 
-cvs -d :pserver:anonymous@anoncvs.gentoo.org:/var/cvsroot co gentoo-x86
-
-what I'm trying
-
-git cvsimport -a -v -d
-:pserver:anonymous@anoncvs.gentoo.org/var/cvsroot/ gentoo-x86 -C
-portage
-
-Initialized empty Git repository in /home/portdev/cvs/portage/.git/
-Running cvsps...
-parse error on third token
-WARNING: malformed CVS version: no data
-WARNING: malformed CVS version str: (UNKNOWN CLIENT)
-WARNING: Your CVS client version:
-[(UNKNOWN CLIENT)]
-and/or server version:
-[(UNKNOWN SERVER)]
-are too old to properly support the rlog command.
-This command was introduced in 1.11.1.  Cvsps
-will use log instead, but PatchSet numbering
-may become unstable due to pruned empty
-directories.
-
-sh: cvs: command not found
-DONE; creating master branch
-fatal: refs/heads/origin: not a valid SHA1
-fatal: master: not a valid SHA1
-fatal: You are on a branch yet to be born
-checkout failed: 32768
-
-help would be appreciated.
 -- 
-Caleb Cushing
-
-http://xenoterracide.blogspot.com
+Jakub Narebski
+Poland
