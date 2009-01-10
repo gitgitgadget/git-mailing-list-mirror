@@ -1,361 +1,656 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: support the rel=vcs-* microformat
-Date: Fri, 09 Jan 2009 16:52:20 -0800 (PST)
-Message-ID: <m3bpug0ypn.fsf@localhost.localdomain>
-References: <20090107042518.GB24735@gnu.kitenet.net>
-	<gk2794$djn$1@ger.gmane.org> <20090107155023.GA16540@gnu.kitenet.net>
-	<cb7bb73a0901071003m77482a99wf6f3988beb5b5e78@mail.gmail.com>
-	<20090107184515.GB31795@gnu.kitenet.net>
-	<20090107190238.GA3909@gnu.kitenet.net>
-	<20090107232427.GA18958@gnu.kitenet.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Sat Jan 10 01:53:56 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v2] make diff --color-words customizable
+Date: Sat, 10 Jan 2009 01:57:19 +0100
+Message-ID: <1231549039-5236-1-git-send-email-trast@student.ethz.ch>
+References: <87wsd48wam.fsf@iki.fi>
+Cc: Junio C Hamano <junio@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Teemu Likonen <tlikonen@iki.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 10 01:58:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLS6s-0005TM-Mv
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 01:53:55 +0100
+	id 1LLSBQ-0006bQ-4J
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 01:58:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753820AbZAJAwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 19:52:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752858AbZAJAwa
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 19:52:30 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:48973 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752857AbZAJAw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 19:52:29 -0500
-Received: by ewy10 with SMTP id 10so10520895ewy.13
-        for <git@vger.kernel.org>; Fri, 09 Jan 2009 16:52:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=CWK65z+K/9pvIWJpUFENZijMPe+eoA9i4x3YcYcy9E4=;
-        b=TD07Wzae2haZR9kPJvDmMHl/91L5PF/Oj36h/FLIxt5hdYtQIdfIb1oLwV95KGL8/m
-         r8EGHQu6fFPmn28V+gr33OCkYI4yN/V+Ynm9jRharRuoTP1/CoOfq+GBe0QUDvloLwtz
-         WDI6OwmalhJvda8y4Rs5s38bYE3sXeSRmVj98=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=rw55AF+JnzW+a+uzOFwlTrOJ9vERT6eAZuwyptvlkN81kF95bBAglHMXGIFBO52fCf
-         HbEvaW5kNpPv8pChkWvvtrB8uODU5wrvuhL7q25FIdDJfkMSJq9VO/nDj1Sf86y2A3E+
-         YNDbdvQh9XB0iy1Ypqn7JGgwjgdYiwDPQijmY=
-Received: by 10.210.57.5 with SMTP id f5mr5443895eba.57.1231548746138;
-        Fri, 09 Jan 2009 16:52:26 -0800 (PST)
-Received: from localhost.localdomain (abwp34.neoplus.adsl.tpnet.pl [83.8.239.34])
-        by mx.google.com with ESMTPS id 5sm4742642eyh.18.2009.01.09.16.52.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 09 Jan 2009 16:52:20 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0A0qL64028554;
-	Sat, 10 Jan 2009 01:52:21 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0A0qKBO028551;
-	Sat, 10 Jan 2009 01:52:20 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090107232427.GA18958@gnu.kitenet.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1756251AbZAJA5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 19:57:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753523AbZAJA5Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 19:57:16 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:7274 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755356AbZAJA5O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 19:57:14 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 10 Jan 2009 01:57:12 +0100
+Received: from localhost.localdomain ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 10 Jan 2009 01:57:11 +0100
+X-Mailer: git-send-email 1.6.1.291.g85d4d2
+In-Reply-To: <87wsd48wam.fsf@iki.fi>
+X-OriginalArrivalTime: 10 Jan 2009 00:57:11.0706 (UTC) FILETIME=[5ED3C7A0:01C972BE]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105052>
 
-Joey Hess <joey@kitenet.net> writes:
+Allows for user-configurable word splits via a regular expression when
+using --color-words.  This can make the diff more readable if the
+regex is configured according to the language of the file.
 
-> The rel=vcs-* microformat allows a web page to indicate the locations of
-> repositories related to it in a machine-parseable manner.
-> (See http://kitenet.net/~joey/rfc/rel-vcs/)
-> 
-> Make gitweb use the microformat if it has been configured with project url
-> information in any of the usual ways. On the project summary page, the
-> repository URL display is simply marked up using the microformat. On the
-> project list page and forks list page, the microformat is embedded in the
-> header, since the URLs do not appear on the page.
+The regex can be specified either through an optional argument
+--color-words=<regex> or through the attributes mechanism, similar to
+the funcname pattern.
 
-I think having LINK elements also for 'summary' page would be a good
-idea. This microformat is I think mainly for machines, and machines
-can I guess read better a few LINK elements in fairly small HEAD of
-page, than scan all of many link (A) elements on the page for those
-matching vcs-* microformat.
+Each non-overlapping match of the regex is a word; everything in
+between is whitespace.  We disallow matching the empty string (because
+it results in an endless loop) or a newline (breaks color escapes and
+interacts badly with the input coming from the usual line diff).  To
+help the user, we set REG_NEWLINE so that [^...] and . do not match
+newlines.
 
-Beside I am not sure if for example hyperlinking SCP-style repository
-URL makes sense at all; I am also not sure if hyperlinking links on
-which you cannot click on makes good sense (unless you use SPAN or
-ABBR instead of A to mark repo links...)
+--color-words works (and always worked) by splitting words onto one
+line each, and using the normal line-diff machinery to get a word
+diff.  Since we cannot reuse the current approach of simply
+overwriting uninteresting characters with '\n', we insert an
+artificial '\n' at the end of each detected word.  Its presence must
+be tracked so that we can distinguish artificial from source newlines.
 
-> 
-> The microformat could be included on other pages too, but I've skipped
-> doing so for now, since it would mean reading another file for every page
-> displayed.
+Insertion of spaces is somewhat subtle.  We echo a "context" space
+twice (once on each side of the diff) if it follows directly after a
+word, by "skipping" it during the translation (instead of generating a
+'\n').  While this loses a tiny bit of accuracy, it runs together long
+sequences of changed words into one removed and one added block,
+making the diff much more readable.  As a side-effect, the splitting
+regex '\S+' currently results in the exact same output as the original
+code.  The existing code still stays in place in case no regex is
+provided, for performance.
 
-Also it is not necessary: if some tool want to get repo links for
-given project, it can get 'summary' page; if some tool want to get
-list of all repos, it can access one of projects list actions.
+We also build in patterns for some of the languages that already had
+funcname regexes.  They are designed to group UTF-8 sequences into a
+single word to make sure they remain readable.
 
-> 
-> There is a small overhead in including the microformat on project list
-> and forks list pages, but getting the project descriptions for those pages
-> already incurs a similar overhead, and the ability to get every repo url
-> in one place seems worthwhile.
+Thanks to Johannes Schindelin for the option handling code.
 
-By the way, do you have any benchmarks for that?
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-> 
-> This changes git_get_project_url_list() to not check wantarray, and only
-> return in list context -- the only way it is used AFAICS. It memoizes
-> both that function and git_get_project_description(), to avoid redundant
-> file reads.
+---
 
-I would also add that, from what I understand, you have made
-git_get_project_url_list() subroutine to be self-sufficient: it now
-considers both per-repository configuration (gitweb.url in config,
-cloneurl file in $GIT_DIR) and global gitweb configuration
-(@git_base_url_list variable).
+Thomas Rast wrote:
+> I'll come up with a fixed patch, and probably make it both
+> funcname-like (Jeff's idea) and command line configurable.
 
-Simplification of code so it always return list and does nto check
-contents is a side issue, orthogonal to issue mentioned above.
+I think this should do.  Getting the spaces right was harder than I
+thought; originally it only tracked _END and _BODY, but then a changed
+sentence will look like a lot of separate word changes, making it
+extremely confusing.
 
-> 
-> Signed-off-by: Joey Hess <joey@gnu.kitenet.net>
-> ---
->  gitweb/gitweb.perl |   78 +++++++++++++++++++++++++++++++++++++++++----------
->  1 files changed, 62 insertions(+), 16 deletions(-)
-> 
-> This incorporates Giuseppe Bilotta's feedback, and uses new features
-> of the microformat. You can see this version running at
-> http://git.ikiwiki.info/
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 99f71b4..c238717 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -2020,9 +2020,14 @@ sub git_get_path_by_hash {
->  ## ......................................................................
->  ## git utility functions, directly accessing git repository
->  
-> +{
-> +my %project_descriptions; # cache
-> +
+Teemu Likonen wrote:
+> I agree with that too. A good thing about the current --color-words is
+> that it automatically works with UTF-8 encoded text. This is _very_
+> important as --color-words is usually the best diff tool for
+> human-language texts.
 
-Won't we get warnings (and perhaps errors) from mod_perl? Shouldn't
-this be "our %project_descriptions;"?
+Thanks for pointing this out.  I put a [\x80-\xff]+ clause in the
+built-in patterns that do not already match high-bit characters, so
+that they will keep them together no matter what.  Unfortunately it's
+rather hard to get the same effect "by hand", as neither shell, nor
+git-config, nor regex.c, seem to expand \xNN or \NNN.  You'll need $''
+in bash (is this POSIX?)  or 'echo -e' or a very large keyboard, or a
+pattern that can be written in terms of a negated class.
 
->  sub git_get_project_description {
->  	my $path = shift;
->  
-> +	return $project_descriptions{$path} if exists $project_descriptions{$path};
-> +
->  	$git_dir = "$projectroot/$path";
->  	open my $fd, "$git_dir/description"
->  		or return git_get_project_config('description');
-> @@ -2031,7 +2036,9 @@ sub git_get_project_description {
->  	if (defined $descr) {
->  		chomp $descr;
->  	}
-> -	return $descr;
-> +	return $project_descriptions{$path}=$descr;
-> +}
-> +
->  }
+(I briefly considered forcing "|[\x80-\xff]+|\S" into the regular
+expression, but the former is very encoding-specific.  Maybe at least
+"|\S" would be a good addition.)
 
-If we use 'title="$project git repository" for 'rel="vcs-git"' links,
-is it still worth it extra complication to avoid double calculation of
-project description in the case of 'summary' view for a project?
-Because IIRC for 'projects_list' view it is already cached in
-@projects list as 'descr' key...
 
->  
->  sub git_get_project_ctags {
-> @@ -2099,18 +2106,30 @@ sub git_show_project_tagcloud {
->  	}
->  }
->  
-> +{
-> +my %project_url_lists; # cache
-> +
 
-Same question: would it work correctly for mod_perl?
+ Documentation/diff-options.txt  |   18 +++-
+ Documentation/gitattributes.txt |   21 ++++
+ diff.c                          |  199 +++++++++++++++++++++++++++++++++++----
+ diff.h                          |    1 +
+ t/t4033-diff-color-words.sh     |   90 ++++++++++++++++++
+ userdiff.c                      |   27 ++++--
+ userdiff.h                      |    1 +
+ 7 files changed, 330 insertions(+), 27 deletions(-)
 
->  sub git_get_project_url_list {
-> +	# use per project git URL list in $projectroot/$path/cloneurl
-> +	# or make project git URL from git base URL and project name
->  	my $path = shift;
->  
-> +	return @{$project_url_lists{$path}} if exists $project_url_lists{$path};
-> +
-> +	my @ret;
->  	$git_dir = "$projectroot/$path";
-> -	open my $fd, "$git_dir/cloneurl"
-> -		or return wantarray ?
-> -		@{ config_to_multi(git_get_project_config('url')) } :
-> -		   config_to_multi(git_get_project_config('url'));
-> -	my @git_project_url_list = map { chomp; $_ } <$fd>;
-> -	close $fd;
-> +	if (open my $fd, "$git_dir/cloneurl") {
-> +		@ret = map { chomp; $_ } <$fd>;
-> +		close $fd;
-> +	} else {
-> +	       @ret = @{ config_to_multi(git_get_project_config('url')) };
-> +	}
-> +	@ret=map { "$_/$project" } @git_base_url_list if ! @ret;
-
-Style: 
-
-+	@ret = map { "$_/$project" } @git_base_url_list if !@ret;
-
-or even
-
-+	@ret = map { "$_/$project" } @git_base_url_list unless @ret;
-
-> +
-> +	$project_url_lists{$path}=\@ret;
-> +	return @ret;
-> +}
->  
-> -	return wantarray ? @git_project_url_list : \@git_project_url_list;
->  }
-
-Again: is it worth caching? It is only for 'summary'; for
-'projects_list' it might be better to extend @projects list instead
-
->  
->  sub git_get_projects_list {
-> @@ -2856,6 +2875,7 @@ sub blob_contenttype {
->  sub git_header_html {
->  	my $status = shift || "200 OK";
->  	my $expires = shift;
-> +	my $extraheader = shift;
->  
->  	my $title = "$site_name";
->  	if (defined $project) {
-> @@ -2953,6 +2973,8 @@ EOF
->  		print qq(<link rel="shortcut icon" href="$favicon" type="image/png" />\n);
->  	}
->  
-> +	print $extraheader if defined $extraheader;
-> +
->  	print "</head>\n" .
->  	      "<body>\n";
->  
-
-Good solution, but shouldn't this be better put into separate commit,
-simply extending git_header_html to allow to add extra data (no need
-to name it $extraheader I think, $extra would be enough) to the HTML
-header (HEAD element contents)?
-
-> @@ -4365,6 +4387,26 @@ sub git_search_grep_body {
->  	print "</table>\n";
->  }
->  
-> +sub git_link_title {
-> +	my $project=shift;
-> +	
-> +	my $description=git_get_project_description($project);
-> +	return $project.(length $description ? " - $description" : "");
-> +}
-
-Style (whitespace around '='), and the fact that IMHO "$project git
-repository" is better than "$project - $description", also because of
-  "Unnamed repository; edit this file to name it for gitweb." 
-default template
-
-> +
-> +# generates header with links to the specified projects
-> +sub git_links_header {
-
-Good abstraction, but I'm not so sure about subroutine name.
-
-> +	my $ret='';
-> +	foreach my $project (@_) {
-
-Style: I'd rather use named variables, like "my @projects = @_";
-also everywhere else we use spaces around '=' usually.
-
-> +		# rel=vcs-* microformat
-> +		my $title=git_link_title($project);
-
-Good abstraction.
-
-> +		foreach my $url git_get_project_url_list($project) {
-> +			$ret.=qq{<link rel="vcs-git" href="$url" title="$title"/>\n}
-
-To be HTML compatibile, it is better to use 
-
-> +			$ret.=qq{<link rel="vcs-git" href="$url" title="$title" />\n}
-
-(note the space before "/>").
-
-> +		}
-> +	}
-> +	return $ret;
-> +}
-> +
->  ## ======================================================================
->  ## ======================================================================
->  ## actions
-> @@ -4380,7 +4422,9 @@ sub git_project_list {
->  		die_error(404, "No projects found");
->  	}
->  
-> -	git_header_html();
-> +	my $extraheader=git_links_header(map { $_->{path} } @list);
-> +
-> +	git_header_html(undef, undef, $extraheader);
->  	if (-f $home_text) {
->  		print "<div class=\"index_include\">\n";
->  		insert_file($home_text);
-> @@ -4405,8 +4449,10 @@ sub git_forks {
->  	if (!@list) {
->  		die_error(404, "No forks found");
->  	}
-> +	
-> +	my $extraheader=git_links_header(map { $_->{path} } @list);
->  
-> -	git_header_html();
-> +	git_header_html(undef, undef, $extraheader);
->  	git_print_page_nav('','');
->  	git_print_header_div('summary', "$project forks");
->  	git_project_list_body(\@list, $order);
-> @@ -4468,14 +4514,14 @@ sub git_summary {
->  		print "<tr id=\"metadata_lchange\"><td>last change</td><td>$cd{'rfc2822'}</td></tr>\n";
->  	}
->  
-> -	# use per project git URL list in $projectroot/$project/cloneurl
-> -	# or make project git URL from git base URL and project name
->  	my $url_tag = "URL";
-> -	my @url_list = git_get_project_url_list($project);
-> -	@url_list = map { "$_/$project" } @git_base_url_list unless @url_list;
-> -	foreach my $git_url (@url_list) {
-> +	my $title=git_link_title($project);
-> +	foreach my $git_url (git_get_project_url_list($project)) {
->  		next unless $git_url;
-> -		print "<tr class=\"metadata_url\"><td>$url_tag</td><td>$git_url</td></tr>\n";
-> +		print "<tr class=\"metadata_url\"><td>$url_tag</td><td>".
-> +		      # rel=vcs-* microformat
-> +		      "<a rel=\"vcs-git\" href=\"$git_url\" title=\"$title\">$git_url</a>".
-> +		      "</td></tr>\n";
->  		$url_tag = "";
->  	}
-
-Non clickable hyperlink... hmmm...
-
->  
-> -- 
-> 1.5.6.5
-> 
-> 
-> 
-> -- 
-> see shy jo
-
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 671f533..d22c06b 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -91,8 +91,22 @@ endif::git-format-patch[]
+ 	Turn off colored diff, even when the configuration file
+ 	gives the default to color output.
+ 
+---color-words::
+-	Show colored word diff, i.e. color words which have changed.
++--color-words[=<regex>]::
++	Show colored word diff, i.e., color words which have changed.
++	By default, a new word only starts at whitespace, so that a
++	'word' is defined as a maximal sequence of non-whitespace
++	characters.  The optional argument <regex> can be used to
++	configure this.  It can also be set via a diff driver, see
++	linkgit:gitattributes[1]; if a <regex> is given explicitly, it
++	overrides any diff driver setting.
+++
++The <regex> must be an (extended) regular expression.  When set, every
++non-overlapping match of the <regex> is considered a word.  (Regular
++expression semantics ensure that quantifiers grab a maximal sequence
++of characters.)  Anything between these matches is considered
++whitespace and ignored for the purposes of finding differences.  You
++may want to append `|\S` to your regular expression to make sure that
++it matches all non-whitespace characters.
+ 
+ --no-renames::
+ 	Turn off rename detection, even when the configuration
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 8af22ec..67f5522 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -334,6 +334,27 @@ patterns are available:
+ - `tex` suitable for source code for LaTeX documents.
+ 
+ 
++Customizing word diff
++^^^^^^^^^^^^^^^^^^^^^
++
++You can customize the rules that `git diff --color-words` uses to
++split words in a line, by specifying an appropriate regular expression
++in the "diff.*.wordregex" configuration variable.  For example, in TeX
++a backslash followed by a sequence of letters forms a command, but
++several such commands can be run together without intervening
++whitespace.  To separate them, use a regular expression such as
++
++------------------------
++[diff "tex"]
++	wordregex = "\\\\[a-zA-Z]+|[{}]|\\\\.|[^\\{} \t]+"
++------------------------
++
++Similar to 'xfuncname', a built in value is provided for the drivers
++`bibtex`, `html`, `java`, `php`, `python` and `tex`.  See the
++documentation of --color-words in linkgit:git-diff[1] for the precise
++semantics.
++
++
+ Performing text diffs of binary files
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+diff --git a/diff.c b/diff.c
+index d235482..620911e 100644
+--- a/diff.c
++++ b/diff.c
+@@ -321,6 +321,7 @@ struct diff_words_buffer {
+ 	long alloc;
+ 	long current; /* output pointer */
+ 	int suppressed_newline;
++	enum diff_word_boundaries *boundaries;
+ };
+ 
+ static void diff_words_append(char *line, unsigned long len,
+@@ -336,23 +337,55 @@ static void diff_words_append(char *line, unsigned long len,
+ 	buffer->text.size += len;
+ }
+ 
++/*
++ * We use these to save the word boundaries.  WORD_BODY and WORD_END
++ * signal a word, meaning that after the WORD_END character an
++ * artificial newline will be inserted.
++ */
++enum diff_word_boundaries {
++	DIFF_WORD_UNDEF,
++	DIFF_WORD_BODY,
++	DIFF_WORD_END,
++	DIFF_WORD_SPACE,
++	DIFF_WORD_SKIP
++};
++
+ struct diff_words_data {
+ 	struct diff_words_buffer minus, plus;
+ 	FILE *file;
++	regex_t *word_regex;
++	enum diff_word_boundaries *minus_boundaries, *plus_boundaries;
+ };
+ 
+-static void print_word(FILE *file, struct diff_words_buffer *buffer, int len, int color,
++static int print_word(FILE *file, struct diff_words_buffer *buffer, int len, int color,
+ 		int suppress_newline)
+ {
+ 	const char *ptr;
+ 	int eol = 0;
+ 
+ 	if (len == 0)
+-		return;
++		return len;
+ 
+ 	ptr  = buffer->text.ptr + buffer->current;
++
++	if (buffer->boundaries
++	    && (buffer->boundaries[buffer->current] == DIFF_WORD_BODY
++		|| buffer->boundaries[buffer->current] == DIFF_WORD_END)) {
++		/* account for the artificial newline */
++		len--;
++		/* we still have len>0 because it is a word */
++	}
++
+ 	buffer->current += len;
+ 
++	if (buffer->boundaries
++	    && buffer->boundaries[buffer->current] == DIFF_WORD_SKIP) {
++		/* we had an artificial newline, but the next whitespace
++		 * character right after was skipped because of it */
++		buffer->current++;
++		len++;
++	}
++
+ 	if (ptr[len - 1] == '\n') {
+ 		eol = 1;
+ 		len--;
+@@ -368,6 +401,10 @@ static void print_word(FILE *file, struct diff_words_buffer *buffer, int len, in
+ 		else
+ 			putc('\n', file);
+ 	}
++
++	/* we need to return how many chars to skip on the other side,
++	 * so account for the (held off) \n */
++	return len+eol;
+ }
+ 
+ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
+@@ -391,13 +428,106 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
+ 				   &diff_words->plus, len, DIFF_FILE_NEW, 0);
+ 			break;
+ 		case ' ':
+-			print_word(diff_words->file,
+-				   &diff_words->plus, len, DIFF_PLAIN, 0);
++			len = print_word(diff_words->file,
++					 &diff_words->plus, len, DIFF_PLAIN, 0);
+ 			diff_words->minus.current += len;
+ 			break;
+ 	}
+ }
+ 
++static void scan_word_boundaries(regex_t *pattern, struct diff_words_buffer *buf,
++				 mmfile_t *mmfile)
++{
++	char *text = buf->text.ptr;
++	int len = buf->text.size;
++	int i = 0;
++	int count = 0;
++	int ret;
++	regmatch_t matches[1];
++	int offset, wordlen;
++	char *strz, *p;
++
++	/* overallocate by 1 so we can safely peek past the end for a SKIP */
++	buf->boundaries = xmalloc((len+1) * sizeof(enum diff_word_boundaries));
++	buf->boundaries[len] = DIFF_WORD_UNDEF;
++
++	if (!text) {
++		mmfile->ptr = NULL;
++		mmfile->size = 0;
++		return;
++	}
++
++	strz = xmalloc(len+1);
++	memcpy(strz, text, len);
++	strz[len] = '\0';
++
++	while (i < len) {
++		ret = regexec(pattern, strz+i, 1, matches, 0);
++		if (ret == REG_NOMATCH) {
++			/* the rest is whitespace */
++			if (i > 0 && i < len) {
++				buf->boundaries[i++] = DIFF_WORD_SKIP;
++				count--;
++			}
++			while (i < len)
++				buf->boundaries[i++] = DIFF_WORD_SPACE;
++			break;
++		}
++
++		offset = matches[0].rm_so;
++		if (offset > 0 && i > 0) {
++			buf->boundaries[i++] = DIFF_WORD_SKIP;
++			count--;
++			offset--;
++		}
++		while (offset-- > 0)
++			buf->boundaries[i++] = DIFF_WORD_SPACE;
++
++		wordlen = matches[0].rm_eo - matches[0].rm_so;
++		while (wordlen > 1) {
++			if (strz[i] == '\n')
++				die("word regex matched a newline near '%s'",
++				    strz+i);
++			buf->boundaries[i++] = DIFF_WORD_BODY;
++			wordlen--;
++		}
++		if (wordlen > 0) {
++			if (strz[i] == '\n')
++				die("word regex matched a newline near '%s'",
++				    strz+i);
++			buf->boundaries[i++] = DIFF_WORD_END;
++			count++;
++		} else {
++			die("word regex matched the empty string at '%s'",
++			    strz+i);
++		}
++	}
++
++	free(strz);
++
++	mmfile->size = len + count;
++	mmfile->ptr = xmalloc(mmfile->size);
++	p = mmfile->ptr;
++	for (i = 0; i < len; i++) {
++		switch (buf->boundaries[i]) {
++		case DIFF_WORD_BODY:
++			*p++ = text[i];
++			break;
++		case DIFF_WORD_END:
++			*p++ = text[i];
++			*p++ = '\n'; /* insert an artificial newline */
++			break;
++		case DIFF_WORD_SPACE:
++			*p++ = '\n';
++			break;
++		case DIFF_WORD_SKIP:
++			/* nothing */
++			break;
++		}
++	}
++}
++
++
+ /* this executes the word diff on the accumulated buffers */
+ static void diff_words_show(struct diff_words_data *diff_words)
+ {
+@@ -409,22 +539,31 @@ static void diff_words_show(struct diff_words_data *diff_words)
+ 
+ 	memset(&xpp, 0, sizeof(xpp));
+ 	memset(&xecfg, 0, sizeof(xecfg));
+-	minus.size = diff_words->minus.text.size;
+-	minus.ptr = xmalloc(minus.size);
+-	memcpy(minus.ptr, diff_words->minus.text.ptr, minus.size);
+-	for (i = 0; i < minus.size; i++)
+-		if (isspace(minus.ptr[i]))
+-			minus.ptr[i] = '\n';
+-	diff_words->minus.current = 0;
+ 
+-	plus.size = diff_words->plus.text.size;
+-	plus.ptr = xmalloc(plus.size);
+-	memcpy(plus.ptr, diff_words->plus.text.ptr, plus.size);
+-	for (i = 0; i < plus.size; i++)
+-		if (isspace(plus.ptr[i]))
+-			plus.ptr[i] = '\n';
++	if (!diff_words->word_regex) {
++		minus.size = diff_words->minus.text.size;
++		minus.ptr = xmalloc(minus.size);
++		memcpy(minus.ptr, diff_words->minus.text.ptr, minus.size);
++		for (i = 0; i < minus.size; i++)
++			if (isspace(minus.ptr[i]))
++				minus.ptr[i] = '\n';
++
++		plus.size = diff_words->plus.text.size;
++		plus.ptr = xmalloc(plus.size);
++		memcpy(plus.ptr, diff_words->plus.text.ptr, plus.size);
++		for (i = 0; i < plus.size; i++)
++			if (isspace(plus.ptr[i]))
++				plus.ptr[i] = '\n';
++	} else {
++		scan_word_boundaries(diff_words->word_regex,
++				     &diff_words->minus, &minus);
++		scan_word_boundaries(diff_words->word_regex,
++				     &diff_words->plus, &plus);
++	}
++	diff_words->minus.current = 0;
+ 	diff_words->plus.current = 0;
+ 
++
+ 	xpp.flags = XDF_NEED_MINIMAL;
+ 	xecfg.ctxlen = diff_words->minus.alloc + diff_words->plus.alloc;
+ 	xdi_diff_outf(&minus, &plus, fn_out_diff_words_aux, diff_words,
+@@ -432,6 +571,8 @@ static void diff_words_show(struct diff_words_data *diff_words)
+ 	free(minus.ptr);
+ 	free(plus.ptr);
+ 	diff_words->minus.text.size = diff_words->plus.text.size = 0;
++	free(diff_words->minus.boundaries);
++	free(diff_words->plus.boundaries);
+ 
+ 	if (diff_words->minus.suppressed_newline) {
+ 		putc('\n', diff_words->file);
+@@ -461,6 +602,7 @@ static void free_diff_words_data(struct emit_callback *ecbdata)
+ 
+ 		free (ecbdata->diff_words->minus.text.ptr);
+ 		free (ecbdata->diff_words->plus.text.ptr);
++		free(ecbdata->diff_words->word_regex);
+ 		free(ecbdata->diff_words);
+ 		ecbdata->diff_words = NULL;
+ 	}
+@@ -1323,6 +1465,12 @@ static const struct userdiff_funcname *diff_funcname_pattern(struct diff_filespe
+ 	return one->driver->funcname.pattern ? &one->driver->funcname : NULL;
+ }
+ 
++static const char *userdiff_word_regex(struct diff_filespec *one)
++{
++	diff_filespec_load_driver(one);
++	return one->driver->word_regex;
++}
++
+ void diff_set_mnemonic_prefix(struct diff_options *options, const char *a, const char *b)
+ {
+ 	if (!options->a_prefix)
+@@ -1483,6 +1631,19 @@ static void builtin_diff(const char *name_a,
+ 			ecbdata.diff_words =
+ 				xcalloc(1, sizeof(struct diff_words_data));
+ 			ecbdata.diff_words->file = o->file;
++			if (!o->word_regex)
++				o->word_regex = userdiff_word_regex(one);
++			if (!o->word_regex)
++				o->word_regex = userdiff_word_regex(two);
++			if (o->word_regex) {
++				ecbdata.diff_words->word_regex = (regex_t *)
++					xmalloc(sizeof(regex_t));
++				if (regcomp(ecbdata.diff_words->word_regex,
++					    o->word_regex,
++					    REG_EXTENDED|REG_NEWLINE))
++					die ("Invalid regular expression: %s",
++					     o->word_regex);
++			}
+ 		}
+ 		xdi_diff_outf(&mf1, &mf2, fn_out_consume, &ecbdata,
+ 			      &xpp, &xecfg, &ecb);
+@@ -2494,6 +2655,10 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		DIFF_OPT_CLR(options, COLOR_DIFF);
+ 	else if (!strcmp(arg, "--color-words"))
+ 		options->flags |= DIFF_OPT_COLOR_DIFF | DIFF_OPT_COLOR_DIFF_WORDS;
++	else if (!prefixcmp(arg, "--color-words=")) {
++		options->flags |= DIFF_OPT_COLOR_DIFF | DIFF_OPT_COLOR_DIFF_WORDS;
++		options->word_regex = arg + 14;
++	}
+ 	else if (!strcmp(arg, "--exit-code"))
+ 		DIFF_OPT_SET(options, EXIT_WITH_STATUS);
+ 	else if (!strcmp(arg, "--quiet"))
+diff --git a/diff.h b/diff.h
+index 4d5a327..23cd90c 100644
+--- a/diff.h
++++ b/diff.h
+@@ -98,6 +98,7 @@ struct diff_options {
+ 
+ 	int stat_width;
+ 	int stat_name_width;
++	const char *word_regex;
+ 
+ 	/* this is set by diffcore for DIFF_FORMAT_PATCH */
+ 	int found_changes;
+diff --git a/t/t4033-diff-color-words.sh b/t/t4033-diff-color-words.sh
+new file mode 100755
+index 0000000..536cdac
+--- /dev/null
++++ b/t/t4033-diff-color-words.sh
+@@ -0,0 +1,90 @@
++#!/bin/sh
++
++
++test_description='diff --color-words'
++. ./test-lib.sh
++
++cat <<EOF > test_a
++foo_bar_baz
++a qu_ux b c
++alpha beta gamma delta
++EOF
++
++cat <<EOF > test_b
++foo_baz_baz
++a qu_new_ux b c
++alpha 4 2 delta
++EOF
++
++# t4026-diff-color.sh tests the color escapes, so we assume they do
++# not change
++
++munge () {
++    tail -n +5 | tr '\033' '!'
++}
++
++cat <<EOF > expect-plain
++![36m@@ -1,3 +1,3 @@![m
++![31mfoo_bar_baz![m![32mfoo_baz_baz![m
++a ![m![31mqu_ux ![m![32mqu_new_ux ![mb ![mc![m
++alpha ![m![31mbeta ![m![31mgamma ![m![32m4 ![m![32m2 ![mdelta![m
++EOF
++
++test_expect_success 'default settings' '
++	git diff --no-index --color-words test_a test_b |
++		munge > actual-plain &&
++	test_cmp expect-plain actual-plain
++'
++
++test_expect_success 'trivial regex yields same as default' '
++	git diff --no-index --color-words="\\S+" test_a test_b |
++		munge > actual-trivial &&
++	test_cmp expect-plain actual-trivial
++'
++
++cat <<EOF > expect-chars
++![36m@@ -1,3 +1,3 @@![m
++f![mo![mo![m_![mb![ma![m![31mr![m![32mz![m_![mb![ma![mz![m
++a ![mq![mu![m_![m![32mn![m![32me![m![32mw![m![32m_![mu![mx ![mb ![mc![m
++a![ml![mp![mh![ma ![m![31mb![m![31me![m![31mt![m![31ma ![m![31mg![m![31ma![m![31mm![m![31mm![m![31ma ![m![32m4 ![m![32m2 ![md![me![ml![mt![ma![m
++EOF
++
++test_expect_success 'character by character regex' '
++	git diff --no-index --color-words="\\S" test_a test_b |
++		munge > actual-chars &&
++	test_cmp expect-chars actual-chars
++'
++
++cat <<EOF > expect-nontrivial
++![36m@@ -1,3 +1,3 @@![m
++foo![m_![m![31mbar![m![32mbaz![m_![mbaz![m
++a ![mqu![m_![m![32mnew![m![32m_![mux ![mb ![mc![m
++alpha ![m![31mbeta ![m![31mgamma ![m![32m4![m![32m ![m![32m2![m![32m ![mdelta![m
++EOF
++
++test_expect_success 'nontrivial regex' '
++	git diff --no-index --color-words="[a-z]+|_" test_a test_b |
++		munge > actual-nontrivial &&
++	test_cmp expect-nontrivial actual-nontrivial
++'
++
++test_expect_success 'set a diff driver' '
++	git config diff.testdriver.wordregex "\\S" &&
++	cat <<EOF > .gitattributes
++test_* diff=testdriver
++EOF
++'
++
++test_expect_success 'use default supplied by driver' '
++	git diff --no-index --color-words test_a test_b |
++		munge > actual-chars-2 &&
++	test_cmp expect-chars actual-chars-2
++'
++
++test_expect_success 'option overrides default' '
++	git diff --no-index --color-words="[a-z]+|_" test_a test_b |
++		munge > actual-nontrivial-2 &&
++	test_cmp expect-nontrivial actual-nontrivial-2
++'
++
++test_done
+diff --git a/userdiff.c b/userdiff.c
+index 3681062..7fd9a07 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -6,13 +6,17 @@ static struct userdiff_driver *drivers;
+ static int ndrivers;
+ static int drivers_alloc;
+ 
+-#define FUNCNAME(name, pattern) \
++#define FUNCNAME(name, pattern)			\
+ 	{ name, NULL, -1, { pattern, REG_EXTENDED } }
++#define PATTERNS(name, pattern, wordregex)			\
++	{ name, NULL, -1, { pattern, REG_EXTENDED }, NULL, wordregex }
+ static struct userdiff_driver builtin_drivers[] = {
+-FUNCNAME("html", "^[ \t]*(<[Hh][1-6][ \t].*>.*)$"),
+-FUNCNAME("java",
++PATTERNS("html", "^[ \t]*(<[Hh][1-6][ \t].*>.*)$",
++	 "[^<>= \t]+|\\S"),
++PATTERNS("java",
+ 	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
+-	 "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$"),
++	 "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$",
++	 "[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[-+*/]=|\\+\\+|--|\\S|[\x80-\xff]+"),
+ FUNCNAME("objc",
+ 	 /* Negate C statements that can look like functions */
+ 	 "!^[ \t]*(do|for|if|else|return|switch|while)\n"
+@@ -27,14 +31,19 @@ FUNCNAME("pascal",
+ 		"implementation|initialization|finalization)[ \t]*.*)$"
+ 	 "\n"
+ 	 "^(.*=[ \t]*(class|record).*)$"),
+-FUNCNAME("php", "^[\t ]*((function|class).*)"),
+-FUNCNAME("python", "^[ \t]*((class|def)[ \t].*)$"),
++PATTERNS("php", "^[\t ]*((function|class).*)",
++	 "\\$?[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[-+*/]=|\\+\\+|--|->|\\S|[\x80-\xff]+"),
++PATTERNS("python", "^[ \t]*((class|def)[ \t].*)$",
++	 "[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[-+*/]=|//|\\S|[\x80-\xff]+"),
+ FUNCNAME("ruby", "^[ \t]*((class|module|def)[ \t].*)$"),
+-FUNCNAME("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$"),
+-FUNCNAME("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$"),
++PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
++	 "[={}\"]|[^={}\" \t]+"),
++PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
++	 "\\\\[a-zA-Z@]+|[{}]|\\\\.|[^\\{} \t]+"),
+ { "default", NULL, -1, { NULL, 0 } },
+ };
+ #undef FUNCNAME
++#undef PATTERNS
+ 
+ static struct userdiff_driver driver_true = {
+ 	"diff=true",
+@@ -134,6 +143,8 @@ int userdiff_config(const char *k, const char *v)
+ 		return parse_string(&drv->external, k, v);
+ 	if ((drv = parse_driver(k, v, "textconv")))
+ 		return parse_string(&drv->textconv, k, v);
++	if ((drv = parse_driver(k, v, "wordregex")))
++		return parse_string(&drv->word_regex, k, v);
+ 
+ 	return 0;
+ }
+diff --git a/userdiff.h b/userdiff.h
+index ba29457..2aab13e 100644
+--- a/userdiff.h
++++ b/userdiff.h
+@@ -12,6 +12,7 @@ struct userdiff_driver {
+ 	int binary;
+ 	struct userdiff_funcname funcname;
+ 	const char *textconv;
++	const char *word_regex;
+ };
+ 
+ int userdiff_config(const char *k, const char *v);
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+tg: (c123b7c..) t/word-diff-regex (depends on: origin/master)
