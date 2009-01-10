@@ -1,64 +1,82 @@
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Re: [BUG PATCH RFC] mailinfo: correctly handle multiline
-	'Subject:' header
-Date: Sat, 10 Jan 2009 13:12:40 +0300
-Organization: St.Petersburg State University
-Message-ID: <20090110101240.GA9048@roro3.zxlink>
-References: <1230316721-14339-1-git-send-email-kirr@mns.spb.ru> <20090108100813.GA15640@myhost> <1230316721-14339-1-git-send-email-kirr@mns.spb.ru> <20090107224342.GB4946@roro3> <7vy6xm5i6h.fsf@gitster.siamese.dyndns.org> <7vy6xm42l3.fsf@gitster.siamese.dyndns.org> <1230316721-14339-1-git-send-email-kirr@mns.spb.ru> <20090107224342.GB4946@roro3> <7vy6xm5i6h.fsf@gitster.siamese.dyndns.org> <20090108231135.GB4185@roro3>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] t7501-commit.sh: explicitly check that -F prevents
+ invoking the editor
+Date: Sat, 10 Jan 2009 11:19:43 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901101117100.30769@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0812301250210.30769@pacific.mpi-cbg.de> <1231522205-10510-1-git-send-email-dato@net.com.org.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Alexander Potashev <aspotashev@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 11:12:59 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-94126333-1231582785=:30769"
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: =?ISO-8859-15?Q?Adeodato_Sim=F3?= <dato@net.com.org.es>
+X-From: git-owner@vger.kernel.org Sat Jan 10 11:20:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLapr-0006kQ-Qt
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 11:12:56 +0100
+	id 1LLax9-00006S-PR
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 11:20:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753498AbZAJKL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 05:11:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753442AbZAJKL2
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 05:11:28 -0500
-Received: from landau.phys.spbu.ru ([195.19.235.38]:4596 "EHLO
-	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753166AbZAJKL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 05:11:27 -0500
-Received: by landau.phys.spbu.ru (Postfix, from userid 509)
-	id 8CC6B17B65D; Sat, 10 Jan 2009 13:11:25 +0300 (MSK)
-Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
-	(envelope-from <kirr@roro3.zxlink>)
-	id 1LLapc-0003en-Pi; Sat, 10 Jan 2009 13:12:40 +0300
-Content-Disposition: inline
-In-Reply-To: <20090108231135.GB4185@roro3>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753426AbZAJKTH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 05:19:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753152AbZAJKTF
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 05:19:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43738 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753138AbZAJKTD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 05:19:03 -0500
+Received: (qmail invoked by alias); 10 Jan 2009 10:19:00 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp036) with SMTP; 10 Jan 2009 11:19:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19akM1OA1Ra7Ksyh/5FKmhg+qgPLWkGcgMx1PFKmZ
+	t7dO08CRWg4Hsf
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1231522205-10510-1-git-send-email-dato@net.com.org.es>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105083>
 
-On Fri, Jan 09, 2009 at 02:11:35AM +0300, Kirill Smelkov wrote:
-> Changes since v1:
-> 
->  o incorporated Junio's description and code about padding
->  o incorporated Junio's description and code about LWS between encoded
->    words
->  o incorporated tests from RFC2047 examples  (one testresult is unclear
->    -- see patch description)
-> 
-> 
-> From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-> Subject: mailinfo: correctly handle multiline 'Subject:' header
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-[...]
+--8323328-94126333-1231582785=:30769
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-Junio, All, just in case this again got spam-detected:
+Hi,
 
-http://marc.info/?l=git&m=123145624611936&w=2
+On Fri, 9 Jan 2009, Adeodato Simó wrote:
 
+> diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+> index 6e18a96..5998baf 100755
+> --- a/t/t7500-commit.sh
+> +++ b/t/t7500-commit.sh
+> @@ -149,10 +149,7 @@ EOF
+>  
+>  test_expect_success '--signoff' '
+>  	echo "yet another content *narf*" >> foo &&
+> -	echo "zort" | (
+> -		test_set_editor "$TEST_DIRECTORY"/t7500/add-content &&
+> -		git commit -s -F - foo
+> -	) &&
+> +	echo "zort" | git commit -s -F - foo &&
+>  	git cat-file commit HEAD | sed "1,/^$/d" > output &&
+>  	test_cmp expect output
+>  '
 
-Thanks,
-Kirill
+AFAICT this still tests if -F - launches an editor, except that it _does_ 
+launch the editor, waiting for the user to quit the editor.  Which is bad.
+
+In the end I think it is not worth all that effort (as the issue was fixed 
+long time ago, probably even before builtin-commit entered 'next'), so I'd 
+just leave the test as-is, documenting why the editor is set to 
+add-content.
+
+Ciao,
+Dscho
+--8323328-94126333-1231582785=:30769--
