@@ -1,40 +1,41 @@
 From: Sitaram Chamarty <sitaramc@gmail.com>
 Subject: Re: Main branch being maintained with 'git am', how do mere mortals
  interact without too much conflicts?
-Date: Sat, 10 Jan 2009 16:18:52 +0000 (UTC)
+Date: Sat, 10 Jan 2009 16:29:43 +0000 (UTC)
 Organization: disorganised!
-Message-ID: <slrngmhijb.3u7.sitaramc@sitaramc.homelinux.net>
+Message-ID: <slrngmhj7n.4nl.sitaramc@sitaramc.homelinux.net>
 References: <87vdsntnyd.dancerj%dancer@netfort.gr.jp>
+ <eaa105840901100647y70b53ae0w495af69b7281cae7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 10 17:20:28 2009
+X-From: git-owner@vger.kernel.org Sat Jan 10 17:31:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLgZU-0001l4-PF
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 17:20:25 +0100
+	id 1LLgk3-0005CJ-01
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 17:31:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752135AbZAJQTF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 11:19:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751976AbZAJQTE
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 11:19:04 -0500
-Received: from main.gmane.org ([80.91.229.2]:39910 "EHLO ciao.gmane.org"
+	id S1751705AbZAJQ3y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 11:29:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbZAJQ3y
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 11:29:54 -0500
+Received: from main.gmane.org ([80.91.229.2]:41938 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751853AbZAJQTD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 11:19:03 -0500
+	id S1751005AbZAJQ3x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 11:29:53 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LLgY8-0006GA-2k
-	for git@vger.kernel.org; Sat, 10 Jan 2009 16:19:00 +0000
+	id 1LLgie-0006cG-OI
+	for git@vger.kernel.org; Sat, 10 Jan 2009 16:29:52 +0000
 Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Jan 2009 16:19:00 +0000
+        for <git@vger.kernel.org>; Sat, 10 Jan 2009 16:29:52 +0000
 Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Jan 2009 16:19:00 +0000
+        for <git@vger.kernel.org>; Sat, 10 Jan 2009 16:29:52 +0000
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@ger.gmane.org
 X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
@@ -43,56 +44,47 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105127>
 
-On 2009-01-10, Junichi Uekawa <dancer@netfort.gr.jp> wrote:
+On 2009-01-10, Peter Harris <git@peter.is-a-geek.org> wrote:
+> On Sat, Jan 10, 2009 at 6:11 AM, Junichi Uekawa wrote:
+>> I am thinking of recommending the users to create a branch
+> ...
+>> and throw away their branches when they are included upstream.
+>
+> Yes, with a patch based workflow, this is almost required; all of the
+> commits will at least have different committer information.
+>
+> There's nothing wrong with this approach.
 
-> I've been maintaining my Git repository (monthlyreport.git) where most
-> people do not have push access, and I'm taking patches through e-mail
-> with 'git am'.
+That is almost exactly what a rebase does.  Each patch on
+your local "master" that eventually made it upstream gets
+discarded during the rebase (which is a pretty cool thing!),
+and what remains are commits that did not make it upstream
+-- their current "work in progress".
 
-In general, if inputs are bunched up and arrive all
-together, there's bound to be conflicts.
+The difference between "origin/master" and "master", after
+each rebase, is their "private branch".
 
-> It often happens that I'm receiving patches which won't apply without
-> a merge ('git am -3') and happen to be conflict-resolving often,
-> because people work off a branch a few days before, and try to send
+Except you don't have to confuse them by saying so ;-)
 
-That's the key phrase, the delay between when they pulled
-and when they committed.  I'm not sure of the nature of the
-data, and how close it is to "source code" but normally this
-is a case for a rebase.
+>> Something tells me the problem is that I'm probably using a workflow
+>> that resembles SVN too much, and users aren't used to branches yet.
+>> Has anybody found this to be a problem, or better yet, is there a
+>> better workflow?
+>
+> If you need the commits to be identical, and you don't mind your email
+> consisting of a binary blob attachment, you can ask your contributors
+> to send you a bundle instead of a series of patches. "git help bundle"
+> for details.
 
-If you don't want them to use branches, you can sort of get
-away with these changes to your current flow:
+Excellent idea.  But it only works for the first user who
+sends him a bundle.  The next one that he gets, assuming
+that user also started from the same "upstream" commit as
+the starting point, will be a merge, and he has to resolve
+conflicts anyway.
 
-> User does 
->   git pull xxxx
-    use "git pull --rebase xxxx" instead of plain pull;
-    resolve conflicts if needed
->   edit ...
-    (I'm assuming there's a long gap between the pull above
-    and the add below)
->   git add 
->   git commit 
-    git fetch       # update from origin
-    git rebase origin/master
-    (they may have to resolve conflicts, but it's easiest
-    when done at this point)
->   git format-patch -o ... HEAD^
-
-> I do bunch of 
->     git am -3 (which usually has a conflict of some way or other)
->     git add XXXX
->     git am -3 --resolve
->     git push
-
-The less the time gap between their "git format-patch" and
-your "git am", the less conflicts you will have.  If you're
-working almost in "real time", the next user gets the latest
-tree when he does his "git rebase origin/master" -- and in
-fact that becomes pretty much the only point at which any
-conflicts even happen.
-
-...and you don't usually have to resolve a single conflict
-;-)
+Essentially, two things have to happen to reduce conflict
+resolution overall.  The users must rebase against the
+latest upstream before sending the patch, and the supervisor
+must process and push received patches asap.
