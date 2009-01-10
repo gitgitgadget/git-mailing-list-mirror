@@ -1,66 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Use is_pseudo_dir_name everywhere
-Date: Fri, 09 Jan 2009 18:48:39 -0800
-Message-ID: <7viqonzxiw.fsf@gitster.siamese.dyndns.org>
-References: <1231457063-29186-1-git-send-email-aspotashev@gmail.com>
- <1231457063-29186-2-git-send-email-aspotashev@gmail.com>
- <1231457063-29186-3-git-send-email-aspotashev@gmail.com>
- <4966F6BB.90408@viscovery.net> <4966FB36.2030409@viscovery.net>
- <7vy6xk280e.fsf@gitster.siamese.dyndns.org> <20090109102407.GA4089@myhost>
+From: "Jonas Fonseca" <jonas.fonseca@gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2009, #01; Mon, 05)
+Date: Fri, 9 Jan 2009 23:15:37 -0500
+Message-ID: <2c6b72b30901092015l2405627aqf928e43c12eabc3c@mail.gmail.com>
+References: <7vbpulnduj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Alexander Potashev <aspotashev@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 03:50:30 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Jan 10 05:17:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLTve-0004nc-4K
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 03:50:26 +0100
+	id 1LLVHT-0001uC-OP
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 05:17:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753919AbZAJCsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 21:48:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753851AbZAJCsr
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 21:48:47 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40137 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751668AbZAJCsq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 21:48:46 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 747F48F828;
-	Fri,  9 Jan 2009 21:48:45 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 830EC8F81B; Fri,
-  9 Jan 2009 21:48:41 -0500 (EST)
-In-Reply-To: <20090109102407.GA4089@myhost> (Alexander Potashev's message of
- "Fri, 9 Jan 2009 13:24:07 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 32E0EEBA-DEC1-11DD-8214-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751282AbZAJEPj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 23:15:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751025AbZAJEPj
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 23:15:39 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:39904 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750942AbZAJEPi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 23:15:38 -0500
+Received: by bwz14 with SMTP id 14so29892421bwz.13
+        for <git@vger.kernel.org>; Fri, 09 Jan 2009 20:15:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=I0QbZES3I9IxuL9QBBlcgdSxHGQAaNHeDbtXSzPUevs=;
+        b=BP8E7dN/L6CV7VdF8m5dZb4t3lamar+OfxQUH3DBmOqXxyUwa0x0vz6jbuaMYZrc9p
+         nSp4kR8a+7HOHkqLpv43rPA5q4Ujn16ssgVIrZsjIb6OwFm/xQeUecEfFRe6zPOZsVI5
+         dJb+4HFgIvJoPTR9UAsmme+qOfJ1kBZqyPY9E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Ek/paQmrRm4kP6HQzDcU+yhDjmdtp+GCTuxw8TzWvTrct3WUtJnx0a0DohNk/lqsT3
+         UnlDC16ALUSc/TB+DvAsGJ7N7iuCth+ggkLAB74G2isyEcqNb5nGm9iOqT3p6SXZl+Hn
+         S/jI4Fc5ZzzCtzZkXh1jiW6yzXXg3KcXfAKuk=
+Received: by 10.181.145.6 with SMTP id x6mr10000579bkn.25.1231560937104;
+        Fri, 09 Jan 2009 20:15:37 -0800 (PST)
+Received: by 10.181.215.20 with HTTP; Fri, 9 Jan 2009 20:15:37 -0800 (PST)
+In-Reply-To: <7vbpulnduj.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105071>
 
-Alexander Potashev <aspotashev@gmail.com> writes:
+On Tue, Jan 6, 2009 at 01:33, Junio C Hamano <gitster@pobox.com> wrote:
+> ----------------------------------------------------------------
+> * mv/apply-parse-opt (Sun Dec 28 00:03:57 2008 +0100) 1 commit
+>  + parse-opt: migrate builtin-apply.
 
-> I didn't think over the support of 'lost+found'.
+This broke apply for me after updating to the current "next" earlier
+today. When requesting that the patch be read from stdin I get the
+following error message:
 
-Yeah, I do not think it is particularly a good idea, but that is what (I
-thought) you implied in your original message.  
+  > git diff | git apply -R -
+  fatal: can't open patch '-': No such file or directory
 
-In any case, you can always do
-
-    $ git clone -n $there it.git
-    $ mv it.git/.git . && rmdir it.git && git checkout -f
-
-or something like that (adjust what you move out of it.git when you are
-doing a bare clone), so in that sense I do not deeply care about the
-motivation of your patch myself.
-
-But I liked the helper function to abstract away the many identical checks
-we do for "is it a dot or a dot dot?", and that was the primary reason why
-I commented on your patches.
+-- 
+Jonas Fonseca
