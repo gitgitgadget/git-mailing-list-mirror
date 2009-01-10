@@ -1,108 +1,59 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: suggest name for OPML view
-Date: Sat, 10 Jan 2009 15:10:20 +0100
-Message-ID: <200901101510.20918.jnareb@gmail.com>
-References: <1230900570-25324-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4] submodule: allow tracking of the newest revision of
+ a branch in a submodule
+Date: Sat, 10 Jan 2009 15:23:48 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901101522560.30769@pacific.mpi-cbg.de>
+References: <1231553410-7541-1-git-send-email-git@fabian-franz.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 15:12:05 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, j.sixt@viscovery.net, hjemli@gmail.com,
+	gitster@pobox.com
+To: Fabian Franz <git@fabian-franz.de>
+X-From: git-owner@vger.kernel.org Sat Jan 10 15:24:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLeZ8-00047c-BX
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 15:11:54 +0100
+	id 1LLelO-0007sj-DU
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 15:24:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753310AbZAJOK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 09:10:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752709AbZAJOK1
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 09:10:27 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:41834 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752592AbZAJOK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 09:10:26 -0500
-Received: by ewy10 with SMTP id 10so10707069ewy.13
-        for <git@vger.kernel.org>; Sat, 10 Jan 2009 06:10:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=mL5mHo9iDxOuDs0+U4xNc4A0QO/4OySGuyyEgSZAGMA=;
-        b=Bh2WBLiVG9c8scT0r8u756Wn+UqSlX+DT+YPq/RiKQpbQuHM4NN/tgyaVo/HMFd96m
-         63TTTkxhw80B1LJaK2oB9KO6nU/VJKSbipEoG7hlfSbNism0PHVHr5Kbwd/so+vKD0WE
-         HH12Cc1+l6ccZ4+KGr6LpuqyxLytWk91t6ibY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=sDGM9LR2E3dGlKNBwev+ubimKd/E1E/lIyQclxEVhkRnkuUirlhBSfICDK4BsSt6u5
-         1ToLqrQowxZsUX5k4bsjq5NajSBmS3OxrejXdX4FwGtx5Q0pEoOke6VFhHtz62tjNkQ8
-         omrSNGyW6FU7eskSztG8BzvXJmrGBtoNwmJQQ=
-Received: by 10.210.78.7 with SMTP id a7mr31570088ebb.13.1231596624302;
-        Sat, 10 Jan 2009 06:10:24 -0800 (PST)
-Received: from ?192.168.1.11? (abve97.neoplus.adsl.tpnet.pl [83.8.202.97])
-        by mx.google.com with ESMTPS id 28sm2741217eyg.4.2009.01.10.06.10.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 10 Jan 2009 06:10:22 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1230900570-25324-1-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+	id S1753310AbZAJOXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 09:23:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752804AbZAJOXI
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 09:23:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59095 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751583AbZAJOXF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 09:23:05 -0500
+Received: (qmail invoked by alias); 10 Jan 2009 14:23:03 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp070) with SMTP; 10 Jan 2009 15:23:03 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19rqEhuEjlrhEdttWKFMMP1rPRBx/0SCFMywtmuw1
+	RuXplALdCxFH3J
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1231553410-7541-1-git-send-email-git@fabian-franz.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105113>
 
-On Fri, 2 Jan 2009, Giuseppe Bilotta wrote:
+Hi,
 
-> Suggest opml.xml as name for OPML view by providing the appropriate
-> header, consistently with similar usage in project_index view.
+On Sat, 10 Jan 2009, Fabian Franz wrote:
 
-It is not name for a view, but more of default filename when saving
-it. While it is good idea to have consistency, I guess that while
-'project_index' view and other non-HTML views are meant to be 
-downloaded and saved (snapshots, patches, patchsets), OPML view
-is meant to be used on-line, just like web feeds in RSS and Atom
-formats which are non-HTML too but do not have Content-Disposition
-header set. 
+> Submodules currently only allow tracking a specific revision and each 
+> update in a submodule leads to a new commit in the master repository. 
+> However some users may want to always track the newest revision of a 
+> specific (named) tag or branch or HEAD. For example the user might want 
+> to track a staging branch in all submodules.
 
-But I do not use OPML. Anyone?
+I wonder how you want to deal with "git bisect".  Or for that matter, with 
+"git checkout HEAD^500".
 
-> 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-> ---
->  gitweb/gitweb.perl |    6 +++++-
->  1 files changed, 5 insertions(+), 1 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index b164001..995bc1a 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -6122,7 +6122,11 @@ sub git_atom {
->  sub git_opml {
->  	my @list = git_get_projects_list();
->  
-> -	print $cgi->header(-type => 'text/xml', -charset => 'utf-8');
-> +	print $cgi->header(
-> +		-type => 'text/xml',
-> +		-charset => 'utf-8',
-> +		-content_disposition => 'inline; filename="opml.xml"');
-> +
->  	print <<XML;
->  <?xml version="1.0" encoding="utf-8"?>
->  <opml version="1.0">
-> -- 
-> 1.5.6.5
-> 
-> 
-
--- 
-Jakub Narebski
-Poland
+Ciao,
+Dscho
