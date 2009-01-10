@@ -1,81 +1,117 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: trouble getting git cvsimport working
-Date: Sat, 10 Jan 2009 15:55:51 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901101553590.30769@pacific.mpi-cbg.de>
-References: <81bfc67a0901100516w10ea77e8n8734713b071d69b9@mail.gmail.com>  <alpine.DEB.1.00.0901101524310.30769@pacific.mpi-cbg.de> <81bfc67a0901100635i4d33c294x393a8d2dfc2b0e0d@mail.gmail.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: Main branch being maintained with 'git am', how do mere mortals interact without too much conflicts?
+Date: Sat, 10 Jan 2009 15:47:48 +0100
+Message-ID: <adf1fd3d0901100647wd66a57bufb42d3d7d415e76d@mail.gmail.com>
+References: <87vdsntnyd.dancerj%dancer@netfort.gr.jp>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Caleb Cushing <xenoterracide@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 15:56:35 2009
+To: "Junichi Uekawa" <dancer@netfort.gr.jp>
+X-From: git-owner@vger.kernel.org Sat Jan 10 15:56:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLfGN-0000EY-6x
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 15:56:35 +0100
+	id 1LLfGe-0000LI-Jk
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 15:56:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753666AbZAJOzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 09:55:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753310AbZAJOzK
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 09:55:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58622 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753197AbZAJOzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 09:55:09 -0500
-Received: (qmail invoked by alias); 10 Jan 2009 14:55:07 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp048) with SMTP; 10 Jan 2009 15:55:07 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19p7ZBUZnlpNT5X1yhAYvzn9ZdDRjy2CZU3RMo8t6
-	Ww130R5zFQpOBL
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <81bfc67a0901100635i4d33c294x393a8d2dfc2b0e0d@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1753886AbZAJOzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 09:55:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753742AbZAJOzQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 09:55:16 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:43250 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753701AbZAJOzP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 09:55:15 -0500
+Received: by bwz14 with SMTP id 14so30234071bwz.13
+        for <git@vger.kernel.org>; Sat, 10 Jan 2009 06:55:13 -0800 (PST)
+Received: by 10.102.247.4 with SMTP id u4mr9606966muh.104.1231598868909;
+        Sat, 10 Jan 2009 06:47:48 -0800 (PST)
+Received: by 10.103.189.7 with HTTP; Sat, 10 Jan 2009 06:47:48 -0800 (PST)
+In-Reply-To: <87vdsntnyd.dancerj%dancer@netfort.gr.jp>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105119>
 
-Hi,
+2009/1/10 Junichi Uekawa <dancer@netfort.gr.jp>:
+> Hi,
+>
+> I've been maintaining my Git repository (monthlyreport.git) where most
+> people do not have push access, and I'm taking patches through e-mail
+> with 'git am'.
+>
+> It often happens that I'm receiving patches which won't apply without
+> a merge ('git am -3') and happen to be conflict-resolving often,
+> because people work off a branch a few days before, and try to send
+> patches nearer the deadline (This is a monthly meeting resume, which
+> people are expected to submit their material, so this is kind of
+> normal).
+>
+>
+> One thing I'm worried is that users apparently have to throw away
+> their own change or do some conflict resolution.
+>
+>
+> User does
+>  git pull xxxx
+>  edit ...
+>  git add
+>  git commit
+>  git format-patch -o ... HEAD^
+>
+>
+> I do bunch of
+>    git am -3 (which usually has a conflict of some way or other)
+>    git add XXXX
+>    git am -3 --resolve
+>    git push
+>
+>
+> User then find that when doing
+>
+>  git pull
+>
+> again, a conflict will occur.
+>
+>
+>
+> I am thinking of recommending the users to create a branch
+>
+>  git checkout -b my-work-for-2009-01 origin
+>  edit ...
+>  git add
+>  git commit
+>  git format-patch -o ... HEAD^
+>  send the email
+>
+> and do
+>
+>  git checkout master
+>  git pull
+>
+> and throw away their branches when they are included upstream.
+>
+>
+>
+> Something tells me the problem is that I'm probably using a workflow
+> that resembles SVN too much, and users aren't used to branches yet.
+> Has anybody found this to be a problem, or better yet, is there a
+> better workflow?
 
-On Sat, 10 Jan 2009, Caleb Cushing wrote:
+I think your workflow is fine. When someone sends a patch s/he has to
+know that their branch is a throw away branch to create the patch.
+Another thing is if you send it as a public repository or as a bundle,
+and even then the maintainer can decide to apply it merging or
+cherry-picking.
 
-> git cvsimport -a -v -d
-> :pserver:anonymous@anoncvs.gentoo.org/var/cvsroot/ gentoo-x86 -C
-> portage
-> Initialized empty Git repository in /home/portdev/cvs/portage/.git/
-> Running cvsps...
-> parse error on third token
-> WARNING: malformed CVS version str: Server: (unknown)
-> WARNING: Your CVS client version:
-> [Client: Concurrent Versions System (CVS) 1.12.12 (client)]
-> and/or server version:
-> [Server: (unknown)]
-> are too old to properly support the rlog command.
-> This command was introduced in 1.11.1.  Cvsps
-> will use log instead, but PatchSet numbering
-> may become unstable due to pruned empty
-> directories.
+There is a doc explaining " An overview of recommended workflows with
+git" in git:
 
-This is the problem.
+http://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html
 
-> cvs log: warning: failed to open /home/portdev/.cvspass for reading:
-> No such file or directory
-> cvs log: in directory .:
-> cvs [log aborted]: there is no version here; run 'cvs checkout' first
-
-And this is the solution: Just try
-
-	$ cvs -d :pserver:anonymous@anoncvs.gentoo.org/var/cvsroot/ \
-		co gentoo-x86
-	$ cd gentoo-x86
-	$ git cvsimport -v
-
-(I assume it is a live repository, so -a is dangerous.)
-
-Hth,
-Dscho
+HTH,
+Santi
