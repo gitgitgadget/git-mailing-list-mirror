@@ -1,58 +1,86 @@
-From: nadim khemir <nadim@khemir.net>
-Subject: Re: collapsing commits with rebase
-Date: Sat, 10 Jan 2009 11:26:43 +0100
-Message-ID: <200901101126.43650.nadim@khemir.net>
-References: <93c3eada0901071608r190a723bma502b68c4ab81a08@mail.gmail.com>
+From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
+Subject: Re: [PATCH v2] t7501-commit.sh: explicitly check that -F prevents
+	invoking the editor
+Date: Sat, 10 Jan 2009 11:32:52 +0100
+Message-ID: <20090110103252.GA32151@chistera.yi.org>
+References: <alpine.DEB.1.00.0812301250210.30769@pacific.mpi-cbg.de> <1231522205-10510-1-git-send-email-dato@net.com.org.es> <alpine.DEB.1.00.0901101117100.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 10 11:28:12 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jan 10 11:35:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLb4d-0001u0-E8
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 11:28:11 +0100
+	id 1LLbBu-0003gR-K7
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 11:35:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753579AbZAJK0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 05:26:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753426AbZAJK0q
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 05:26:46 -0500
-Received: from mail1.perspektivbredband.net ([81.186.254.13]:53068 "EHLO
-	mail1.perspektivbredband.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753442AbZAJK0p (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Jan 2009 05:26:45 -0500
-Received: from khemir.net (h51bafc0a.c46-01-06.sta.perspektivbredband.net [81.186.252.10])
-	by mail1.perspektivbredband.net (Postfix) with ESMTP id 5197E940033
-	for <git@vger.kernel.org>; Sat, 10 Jan 2009 11:26:44 +0100 (CET)
-Received: from naquadim.khemir.lan (naquadim.khemir.lan [192.168.1.143])
-	by khemir.net (Postfix) with ESMTP id C32812F04001
-	for <git@vger.kernel.org>; Sat, 10 Jan 2009 11:26:43 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <93c3eada0901071608r190a723bma502b68c4ab81a08@mail.gmail.com>
+	id S1753579AbZAJKc7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Jan 2009 05:32:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753442AbZAJKc6
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 05:32:58 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:3939
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753152AbZAJKc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 05:32:58 -0500
+Received: from chistera.yi.org (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id 80267801BF68;
+	Sat, 10 Jan 2009 11:32:55 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LLb9A-0008Np-4w; Sat, 10 Jan 2009 11:32:52 +0100
 Content-Disposition: inline
-X-Spam-Status: No, score=-1.4 required=5.0 tests=AWL,BAYES_00,
-	UNPARSEABLE_RELAY autolearn=ham version=3.2.5-gr0
-X-Spam-Checker-Version: SpamAssassin 3.2.5-gr0 (2008-06-10) on firewall
+In-Reply-To: <alpine.DEB.1.00.0901101117100.30769@pacific.mpi-cbg.de>
+X-No-CC: Please respect my Mail-Followup-To header
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105086>
 
-On Thursday 08 January 2009 01.08.44 Geoff Russell wrote:
-> Dear gits,
->
-> I have a series of commits:
->
->     A---B---C---D---E---F
->
-> I want to collapse B---C---D into one single commit. git rebase -i B  will
-> allow me to do this, but I'm looking for a non-interactive incantation.
+* Johannes Schindelin [Sat, 10 Jan 2009 11:19:43 +0100]:
 
-Hi Geoff, Could you please share with use the final (tested) solution? I'd be 
-interrested to see how you did implement plan B if you did.
+> Hi,
 
-Cheers, Nadim.
+Hello,
+
+> >  test_expect_success '--signoff' '
+> >  	echo "yet another content *narf*" >> foo &&
+> > -	echo "zort" | (
+> > -		test_set_editor "$TEST_DIRECTORY"/t7500/add-content &&
+> > -		git commit -s -F - foo
+> > -	) &&
+> > +	echo "zort" | git commit -s -F - foo &&
+> >  	git cat-file commit HEAD | sed "1,/^$/d" > output &&
+> >  	test_cmp expect output
+> >  '
+
+> AFAICT this still tests if -F - launches an editor, except that it _d=
+oes_=20
+> launch the editor, waiting for the user to quit the editor.  Which is=
+ bad.
+
+The default value of VISUAL for the test suite is ":" AFAICS. Hence,
+even if it's called, it will return immediately.
+
+If it would be called, without my patch the "--signoff" test would fail=
+,
+but there would be no obvious reason as to why. Seeing "editor not
+invoked if -F is given FAILED" is much more clear IMHO.
+
+Also note that there plenty of places in the test suite where -F is
+used, but VISUAL is not set explicitly.
+
+Cheers,
+
+--=20
+Adeodato Sim=C3=B3                                     dato at net.com.=
+org.es
+Debian Developer                                  adeodato at debian.or=
+g
+=20
+Excuse me for thinking a banana-eating contest was about eating a banan=
+a!
+                -- Paris Geller
