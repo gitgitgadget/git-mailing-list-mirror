@@ -1,83 +1,137 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: support the rel=vcs microformat
-Date: Fri, 09 Jan 2009 16:03:20 -0800 (PST)
-Message-ID: <m3fxjs10zb.fsf@localhost.localdomain>
-References: <20090107042518.GB24735@gnu.kitenet.net>
-	<gk2794$djn$1@ger.gmane.org> <20090107155023.GA16540@gnu.kitenet.net>
-	<cb7bb73a0901071003m77482a99wf6f3988beb5b5e78@mail.gmail.com>
-	<20090107184515.GB31795@gnu.kitenet.net>
-	<20090107190238.GA3909@gnu.kitenet.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Get format-patch to show first commit after root commit
+Date: Fri, 09 Jan 2009 16:49:01 -0800
+Message-ID: <7vmye0yohu.fsf@gitster.siamese.dyndns.org>
+References: <1231536787-20685-1-git-send-email-nathan.panike@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Sat Jan 10 01:04:48 2009
+Cc: git@vger.kernel.org
+To: "Nathan W. Panike" <nathan.panike@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 10 01:50:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLRLM-0000rF-7n
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 01:04:48 +0100
+	id 1LLS3g-0004dB-Ud
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 01:50:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754290AbZAJADY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jan 2009 19:03:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754020AbZAJADY
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 19:03:24 -0500
-Received: from ey-out-2122.google.com ([74.125.78.25]:4003 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753727AbZAJADX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jan 2009 19:03:23 -0500
-Received: by ey-out-2122.google.com with SMTP id 22so1162182eye.37
-        for <git@vger.kernel.org>; Fri, 09 Jan 2009 16:03:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=VRkUBqA08Ywgu0j4eL9IBR170iUrp1m3l+Kou+nnTqw=;
-        b=enq84AkfYpG9kcnTqwKYOLfKpB5pS321rp/IURN3rSebLbRmO2PSjQLtNVY07g0eSf
-         UKKpxV3FkSMkkMqObpTcX9RK7guIj4692QrfEyrRQ1FC1PQTQVKaXCVbmeEUoPn6IxHx
-         77xOrmnTLOPYx7CByC0TNmYntzxH1Ac4onfHo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=Jpn0lNRSXiOFCLPIFniu0AGb5wcJeulydqAs+axHdybkVJuHODI6C76YnWnzDzwXRI
-         CiwoBVTLFfqnb1an1rrsuCAwDONGa8lZo0i5nRtd/CCUP95P/h2SHcUICqT8+9aMtzze
-         icW4GKDJzHQ34mdfFtfFGNpIj8wdT1YTPhkEk=
-Received: by 10.210.57.5 with SMTP id f5mr5404050eba.14.1231545801056;
-        Fri, 09 Jan 2009 16:03:21 -0800 (PST)
-Received: from localhost.localdomain (abwp34.neoplus.adsl.tpnet.pl [83.8.239.34])
-        by mx.google.com with ESMTPS id 10sm2070856eyz.49.2009.01.09.16.03.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 09 Jan 2009 16:03:20 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0A03L7g028279;
-	Sat, 10 Jan 2009 01:03:21 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0A03KZr028276;
-	Sat, 10 Jan 2009 01:03:20 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090107190238.GA3909@gnu.kitenet.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754945AbZAJAtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jan 2009 19:49:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754623AbZAJAtO
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Jan 2009 19:49:14 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49747 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754457AbZAJAtN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jan 2009 19:49:13 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 966901C260;
+	Fri,  9 Jan 2009 19:49:09 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E19131C25B; Fri, 
+ 9 Jan 2009 19:49:03 -0500 (EST)
+In-Reply-To: <1231536787-20685-1-git-send-email-nathan.panike@gmail.com>
+ (Nathan W. Panike's message of "Fri, 9 Jan 2009 15:33:07 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7DBB8E92-DEB0-11DD-A8F6-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105050>
 
-Joey Hess <joey@kitenet.net> writes:
-> Joey Hess wrote:
+"Nathan W. Panike" <nathan.panike@gmail.com> writes:
 
-> > Another approach would be to just memoize git_get_project_description
-> > and git_get_project_url_list.
-> 
-> Especially since git_get_project_description is already called more than
-> once for some pages.
+> Rework this patch to try to handle the case where one does
+>
+> git format-patch -n ...
+>
+> and n is a number larger than 1.
 
-Hmmm... this is an idea worth checking.
+It is unclear what "this patch" is in the context of this proposed commit
+message.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> git format-patch -1 e83c5163316f89bfbde
+> ...
+
+I do not think the current backward compatibile behaviour to avoid
+surprising the end user by creating a huge initial import diff is
+particularly a good idea.
+
+I do not see anything special you do for "one commit" case in your patch,
+yet the proposed commit message keeps stressing "-1", which puzzles me.
+
+Wouldn't it suffice to simply say something like:
+
+    You need to explicitly ask for --root to obtain a patch for the root
+    commit.  This may have been a good way to make sure that the user
+    realizes that a patch from the root commit won't be applicable to a
+    history with existing data, but we should assume the user knows what
+    he is doing when the user explicitly specifies a range of commits that
+    includes the root commit.
+
+Perhaps there are some other downsides I may not remember why --root is
+not the default, though.
+
+> Signed-off-by: Nathan W. Panike <nathan.panike@gmail.com>
+> ---
+>  builtin-log.c |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
+>
+> diff --git a/builtin-log.c b/builtin-log.c
+> index 4a02ee9..0eca15f 100644
+> --- a/builtin-log.c
+> +++ b/builtin-log.c
+> @@ -975,6 +975,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  		nr++;
+>  		list = xrealloc(list, nr * sizeof(list[0]));
+>  		list[nr - 1] = commit;
+> +		if(!commit->parents){
+> +			rev.show_root_diff=1;
+> +		}
+
+Three issues.
+
+ - The "if(){" violates style by not having one SP before "(" and after ")",
+   and surrounds a single statement with needless { } pair.  You need one SP
+   on each side of the = (assignment) as well.
+
+ - Because rev.show_root_diff is a no-op for non-root commit anyway, I do not
+   think you even want a conditional there.
+
+ - It is a bad style to muck with rev.* while it is actively used for
+   iteration (note that the above part is in a while loop that iterates over
+   &rev).
+
+I think the attached would be a better patch.  We already have a
+configuration to control if we show the patch for a root commit by
+default, and we can use reuse it here.  The configuration defaults to true
+these days.
+
+Because the code before the hunk must check if the user said "--root
+commit" or just "commit" from the command line and behave quite
+differently by looking at rev.show_root_diff, we cannot do this assignment
+before the command line parsing like other commands in the log family.
+
+ builtin-log.c |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+diff --git c/builtin-log.c w/builtin-log.c
+index 4a02ee9..2d2c111 100644
+--- c/builtin-log.c
++++ w/builtin-log.c
+@@ -935,6 +935,14 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		 * get_revision() to do the usual traversal.
+ 		 */
+ 	}
++
++	/*
++	 * We cannot move this anywhere earlier because we do want to
++	 * know if --root was given explicitly from the comand line.
++	 */
++	if (default_show_root)
++		rev.show_root_diff = 1;
++
+ 	if (cover_letter) {
+ 		/* remember the range */
+ 		int i;
