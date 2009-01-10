@@ -1,90 +1,97 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 5/6] Modify setup_path() to only add git_exec_path() to PATH
-Date: Sat, 10 Jan 2009 14:50:51 +0100
-Message-ID: <1231595452-27698-5-git-send-email-prohaska@zib.de>
+Subject: [PATCH 3/6] Glean libexec path from argv[0] for git-upload-pack and git-receive-pack.
+Date: Sat, 10 Jan 2009 14:50:49 +0100
+Message-ID: <1231595452-27698-3-git-send-email-prohaska@zib.de>
 References: <1231595452-27698-1-git-send-email-prohaska@zib.de>
  <1231595452-27698-2-git-send-email-prohaska@zib.de>
- <1231595452-27698-3-git-send-email-prohaska@zib.de>
- <1231595452-27698-4-git-send-email-prohaska@zib.de>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johannes Sixt <johannes.sixt@telecom.at>,
+	Steve Haslam <shaslam@lastminute.com>,
 	Steffen Prohaska <prohaska@zib.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 10 14:53:17 2009
+X-From: git-owner@vger.kernel.org Sat Jan 10 14:53:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLeH3-0006VW-Cb
+	id 1LLeH2-0006VW-Lu
 	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 14:53:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753268AbZAJNvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 08:51:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752701AbZAJNva
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 08:51:30 -0500
-Received: from mailer.zib.de ([130.73.108.11]:45498 "EHLO mailer.zib.de"
+	id S1753248AbZAJNvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 08:51:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753161AbZAJNv2
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 08:51:28 -0500
+Received: from mailer.zib.de ([130.73.108.11]:45494 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753051AbZAJNvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 08:51:25 -0500
+	id S1752726AbZAJNvY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 08:51:24 -0500
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n0ADos8w025836;
-	Sat, 10 Jan 2009 14:51:03 +0100 (CET)
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n0ADosTV025832;
+	Sat, 10 Jan 2009 14:50:59 +0100 (CET)
 Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n0ADorWP016764;
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n0ADorWN016764;
 	Sat, 10 Jan 2009 14:50:54 +0100 (MET)
 X-Mailer: git-send-email 1.5.4.4
-In-Reply-To: <1231595452-27698-4-git-send-email-prohaska@zib.de>
+In-Reply-To: <1231595452-27698-2-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105108>
 
-Searching git programs only in the highest priority location is
-sufficient.  It does not make sense that some of the required
-programs are located at the highest priority location but other
-programs are picked up from a lower priority exec-path.  If
-exec-path is overridden a complete set of commands should be
-provided, otherwise several different versions could get mixed,
-which is likely to cause confusion.
+From: Steve Haslam <shaslam@lastminute.com>
 
-If a user explicitly overrides the default location (by --exec-path
-or GIT_EXEC_PATH), we now expect that all the required programs are
-found there.  Instead of adding the directories "argv_exec_path",
-"getenv(EXEC_PATH_ENVIRONMENT)", and "system_path(GIT_EXEC_PATH)"
-to PATH, we now rely on git_exec_path(), which implements the same
-order, but only returns the highest priority location to search for
-executables.
+If the user specified the full path to git-upload-pack as the -u option to
+"git clone" when cloning a remote repository, and git was not on the default
+PATH on the remote machine, git-upload-pack was failing to exec
+git-pack-objects.
 
-Accessing only the location with highest priority is also required
-for testing executables built with RUNTIME_PREFIX.  The call to
-system_path() should be avoided if RUNTIME_PREFIX is set and the
-executable is not installed at its final destination.  Because we
-test before installing, we want to avoid calling system_path()
-during tests.  The modifications in this commit avoid calling
-system_path(GIT_EXEC_PATH) if a higher-priority location is
-provided, which is the case when running the tests.
+By making the argv[0] path (if any) available to setup_path(), this will
+allow finding the "git" executable in the same directory as
+"git-upload-pack". The default built in to exec_cmd.c is to look for "git"
+in the ".../libexec/git-core" directory, but it is not installed there (any
+longer).
 
+Much the same applies to invoking git-receive-pack from a non-PATH location
+using the "--exec" argument to "git push".
+
+[ spr: split Steve's original commit into two commits. ]
+
+Signed-off-by: Steve Haslam <shaslam@lastminute.com>
 Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
- exec_cmd.c |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+ builtin-receive-pack.c |    3 +++
+ upload-pack.c          |    3 +++
+ 2 files changed, 6 insertions(+), 0 deletions(-)
 
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 576c9ae..ec38b0a 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -117,9 +117,7 @@ void setup_path(void)
- 	const char *old_path = getenv("PATH");
- 	struct strbuf new_path = STRBUF_INIT;
+diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
+index db67c31..bbedcfe 100644
+--- a/builtin-receive-pack.c
++++ b/builtin-receive-pack.c
+@@ -579,6 +579,9 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 	char *dir = NULL;
  
--	add_path(&new_path, argv_exec_path);
--	add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
--	add_path(&new_path, system_path(GIT_EXEC_PATH));
-+	add_path(&new_path, git_exec_path());
- 	add_path(&new_path, argv0_path);
++	if (argv[0] && *argv[0])
++		git_extract_argv0_path(argv[0]);
++
+ 	argv++;
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = *argv++;
+diff --git a/upload-pack.c b/upload-pack.c
+index e5adbc0..c469a60 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -616,6 +616,9 @@ int main(int argc, char **argv)
+ 	int i;
+ 	int strict = 0;
  
- 	if (old_path)
++	if (argv[0] && *argv[0])
++		git_extract_argv0_path(argv[0]);
++
+ 	for (i = 1; i < argc; i++) {
+ 		char *arg = argv[i];
+ 
 -- 
 1.6.1.85.g32c5d
