@@ -1,123 +1,86 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2] make diff --color-words customizable
-Date: Sat, 10 Jan 2009 12:25:06 +0100
-Message-ID: <200901101225.10719.trast@student.ethz.ch>
-References: <87wsd48wam.fsf@iki.fi> <1231549039-5236-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0901101146230.30769@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/3] Teach Git about the patience diff algorithm
+Date: Sat, 10 Jan 2009 12:36:46 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901101232130.30769@pacific.mpi-cbg.de>
+References: <20090108195511.GA8734@chistera.yi.org> <7v7i552clz.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901091405460.30769@pacific.mpi-cbg.de> <7vvdsoyzej.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1491055.UYLxHlXcN7";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>,
-	Teemu Likonen <tlikonen@iki.fi>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 10 12:26:21 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?ISO-8859-15?Q?Adeodato_Sim=F3?= <dato@net.com.org.es>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Clemens Buchacher <drizzd@aon.at>,
+	Pierre Habouzit <madcoder@debian.org>, davidel@xmailserver.org,
+	Francis Galiegue <fg@one2team.net>,
+	Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 10 12:37:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLbyu-00088v-JP
-	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 12:26:21 +0100
+	id 1LLc9m-0002NQ-28
+	for gcvg-git-2@gmane.org; Sat, 10 Jan 2009 12:37:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752748AbZAJLY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jan 2009 06:24:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752479AbZAJLYz
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 06:24:55 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:52393 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751068AbZAJLYz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jan 2009 06:24:55 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 10 Jan 2009 12:24:53 +0100
-Received: from [192.168.0.3] ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 10 Jan 2009 12:24:53 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0901101146230.30769@pacific.mpi-cbg.de>
-X-OriginalArrivalTime: 10 Jan 2009 11:24:53.0513 (UTC) FILETIME=[0F037790:01C97316]
+	id S1752926AbZAJLgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 06:36:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752782AbZAJLgI
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 06:36:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54745 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751068AbZAJLgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 06:36:07 -0500
+Received: (qmail invoked by alias); 10 Jan 2009 11:36:03 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 10 Jan 2009 12:36:03 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/9GucQnhz9Stda7pPICFSzViYzjeh8B7QQu2eSjH
+	bnBgs1f5vV1uzS
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vvdsoyzej.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105093>
 
---nextPart1491055.UYLxHlXcN7
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-Johannes Schindelin wrote:
-> BTW I did not really think about the issue you raised about the newlines,=
-=20
-> as I seemed to remember that the idea was to substitute all non-word=20
-> characters with newlines, so that the offsets in the substituted text are=
-=20
-> the same as in the original text.
+On Fri, 9 Jan 2009, Junio C Hamano wrote:
 
-Ok, so here's a very simple example: Suppose you have the word regex
-'x+|y+' and compare these two lines:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Thu, 8 Jan 2009, Junio C Hamano wrote:
+> >
+> >> If we find the "common" context lines that have only blank and 
+> >> punctuation letters in Dscho output, turn each of them into "-" and "+", 
+> >> and rearrange them so that all "-" are together followed by "+", it will 
+> >> match Bzr output.
+> >
+> > So we'd need something like this (I still think we should treat curly 
+> > brackets the same as punctuation, and for good measure I just handled 
+> > everything that is not alphanumerical the same):
+> 
+> I meant by punctuation to include curlies (my wording may have been wrong
+> but from the example with " }" line it should have been obvious).
+> 
+> But I agree with both points Linus raised.  The criteria to pick what to
+> pretend unmatching should be "small insignificant lines" (small goes for
+> both size and also number of consecutive "insignificant" lines), and the
+> coallescing should be done to join a block of consecutive changed lines of
+> a significant size (so you do not join two 1 or 2-line "changed line"
+> blocks by pretending that a 1-line unchanged insignificant line in between
+> them is unmatching).
 
-A: xxyyxy
-B: xyxyy
+Of course, the number should be configurable as with the inter-hunk 
+context.
 
-There are *no* non-word characters between consecutive words in this
-case, so you *cannot* replace them with newlines.  You cannot replace
-some word character either, as should be obvious from the case of
-one-letter words, as you would lose actual content.  My counterexample
-to your illustration patch exploited a similar border case: suppose
-you decide to overwrite the first (instead of last) character of each
-word, then you won't be able to tell "foo" from "\noo" in the input.
+However, I'll not have much time to work on this feature, and it would 
+definitely need some experimenting to find the best parameters, e.g. 
+maximal number of inter-hunk lines, maybe even an inter-hunk/hunk ratio, 
+alnums, or as Linus suggests the length of the line (of which I am still 
+not convinced).
 
-Unfortunately the space adjustement makes things even worse.  The
-existing method has the side-effect that it only inserts a single
-newline between words separated by exactly one space, which runs them
-together in the resulting line diff, for example
-
-A: foo bar
-B: baz quux
-
-would result in
-
-  -foo
-  -bar
-  +baz
-  +quux
-
-instead of (as my original attempts did) the arguably more correct,
-but less readable
-
-  -foo
-  +bar
-   =20
-  -baz
-  +quux
-
-where the middle line is a context line for the space.  So in addition
-to the word-ending adjustments for the inserted newlines, I also have
-to track the status of the space right after the word.
-
-> So I still find your patch way too large
-
-I can't think of a simpler way to do it, and yours unfortunately
-doesn't work.
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
-
-
---nextPart1491055.UYLxHlXcN7
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklohZYACgkQqUud07tmzP17oACdE+qdWolMcTZcVRGs4S85Fh0d
-aq4AmwWBwcJhPBlpWzJDbeSZnlnnvX5t
-=2Ooe
------END PGP SIGNATURE-----
-
---nextPart1491055.UYLxHlXcN7--
+Ciao,
+Dscho
