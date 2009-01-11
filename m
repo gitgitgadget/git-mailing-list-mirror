@@ -1,79 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/6] Glean libexec path from argv[0] for git-upload-pack
- and git-receive-pack.
-Date: Sun, 11 Jan 2009 02:21:35 -0800
-Message-ID: <7v1vvata6o.fsf@gitster.siamese.dyndns.org>
-References: <1231595452-27698-1-git-send-email-prohaska@zib.de>
- <1231595452-27698-2-git-send-email-prohaska@zib.de>
- <1231595452-27698-3-git-send-email-prohaska@zib.de>
- <alpine.DEB.1.00.0901101532430.30769@pacific.mpi-cbg.de>
- <9CECD102-6D3E-487D-BA1E-C0269D055965@zib.de>
- <7viqomx5iq.fsf@gitster.siamese.dyndns.org>
- <E976B246-AD14-4B03-B204-F6A1014071DF@zib.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Steve Haslam <shaslam@lastminute.com>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Jan 11 11:23:13 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v3 0/4] customizable --color-words
+Date: Sun, 11 Jan 2009 11:27:10 +0100
+Message-ID: <cover.1231669012.git.trast@student.ethz.ch>
+References: <7vr63atykr.fsf@gitster.siamese.dyndns.org>
+Cc: Junio C Hamano <junio@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Teemu Likonen <tlikonen@iki.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 11 11:28:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLxTJ-0001jv-Nt
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 11:23:10 +0100
+	id 1LLxYe-0002rW-HI
+	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 11:28:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751320AbZAKKVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 05:21:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbZAKKVq
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 05:21:46 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64384 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751221AbZAKKVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 05:21:45 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1A1E91C3D7;
-	Sun, 11 Jan 2009 05:21:44 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2323E1C3D6; Sun,
- 11 Jan 2009 05:21:36 -0500 (EST)
-In-Reply-To: <E976B246-AD14-4B03-B204-F6A1014071DF@zib.de> (Steffen
- Prohaska's message of "Sun, 11 Jan 2009 11:04:23 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A5048D54-DFC9-11DD-81EE-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751134AbZAKK1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 05:27:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751014AbZAKK1J
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 05:27:09 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:42017 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750938AbZAKK1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 05:27:08 -0500
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 11 Jan 2009 11:27:04 +0100
+Received: from localhost.localdomain ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 11 Jan 2009 11:27:04 +0100
+X-Mailer: git-send-email 1.6.1.279.g41f0
+In-Reply-To: <7vr63atykr.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 11 Jan 2009 10:27:04.0353 (UTC) FILETIME=[25A56910:01C973D7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105160>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Johannes Schindelin wrote:
+> On Sat, 10 Jan 2009, Thomas Rast wrote:
+> > Johannes Schindelin wrote:
+> > > So I still find your patch way too large
 
->> Hmm, I actually was thinking about applying that (and that one only)
->> early
->> to my tree, to make sure it is regression-free.
->
-> Does "early" mean that you want to wait and see how the discussion
-> about the other patches evolves before you consider applying them,
-> or does "and that one only" mean that you tend to not apply the
-> other patches at all?
+The bad news is... it just got bigger ;-)
 
-My initial impression after reading 1/6 was that no matter how the actual
-runtime prefix detection logic that is implemented in the later parts of
-the series for particular platform will turn out to be, the update to the
-Makefile that is done by 1/6 won't have to change.  If I apply 1/6 first
-without applying anything else, we can make sure that it would not regress
-for Unix people (and catch regressions early if any), while Windows people
-polish the platform specific parts of the implementation in the later
-parts of the series that can be replaced.
+> In your case, I imagine it would be much easier to get reviewers if you 
+> had
+> 
+> 	patch 1/4 refactor color-words to allow for 0-character word 
+> 		boundaries
+> 	patch 2/4 allow regular expressions to define what makes a word
 
-Because changes to Makefile variables tend to have unexpected side effects
-(people have their own definition to override them in their build
-procedures and you can easily break them unless you are careful), I wanted
-to make sure the common part is solid before waiting for the other part.
+So here's a 4-patch series.  I put the first split in a different
+place than you suggested, however.  I couldn't see a good way to
+separate empty boundaries from regex splitting in such a way that the
+first half can be exercised (is not just dead code).  1/4 basically
+just rearranges code a bit and should be a real no-op patch.
 
-But if you think it is better not to apply any one, until other parts
-mature, it is Ok by me, too.
+Junio C Hamano wrote:
+>     diff.c: In function 'scan_word_boundaries':
+>     diff.c:512: warning: enumeration value 'DIFF_WORD_UNDEF' not handled in sw
+
+Thanks, added a case to test for this.
+
+There is one other minor semantic change in 2/4: the error reporting
+in case your regex matched "foo\nbar" now says "before 'bar'" instead
+of "near '\nbar'".  Other than that, there are only a bunch of added
+comments when comparing the result of all four patches with v2.
+
+
+Thomas Rast (4):
+  word diff: comments, preparations for regex customization
+  word diff: customizable word splits
+  word diff: make regex configurable via attributes
+  word diff: test customizable word splits
+
+ Documentation/diff-options.txt  |   18 +++-
+ Documentation/gitattributes.txt |   21 +++
+ diff.c                          |  282 ++++++++++++++++++++++++++++++++++++---
+ diff.h                          |    1 +
+ t/t4033-diff-color-words.sh     |   90 +++++++++++++
+ userdiff.c                      |   27 +++-
+ userdiff.h                      |    1 +
+ 7 files changed, 413 insertions(+), 27 deletions(-)
+ create mode 100755 t/t4033-diff-color-words.sh
