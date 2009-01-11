@@ -1,57 +1,88 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: stopping patches from just floating by
-Date: Sun, 11 Jan 2009 15:37:36 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0901111524110.19665@iabervon.org>
-References: <87y6xhkb2f.fsf@jidanni.org>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: Re: [PATCH] Cleanup of unused symcache variable inside diff-lib.c
+Date: Sun, 11 Jan 2009 21:50:29 +0100
+Organization: private
+Message-ID: <86ab9x8t4a.fsf@broadpark.no>
+References: <1231699002-5316-1-git-send-email-barvik@broadpark.no>
+ <alpine.DEB.1.00.0901111944360.3586@pacific.mpi-cbg.de>
+ <86iqol8wql.fsf@broadpark.no>
+ <alpine.DEB.1.00.0901112044230.3586@pacific.mpi-cbg.de>
+ <86eiz98v0s.fsf@broadpark.no>
+ <alpine.DEB.1.00.0901112112540.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Sun Jan 11 21:39:03 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jan 11 21:52:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LM75K-00074m-2O
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 21:39:02 +0100
+	id 1LM7Hn-0002A0-Ne
+	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 21:51:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbZAKUhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 15:37:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbZAKUhi
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 15:37:38 -0500
-Received: from iabervon.org ([66.92.72.58]:46924 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750825AbZAKUhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 15:37:37 -0500
-Received: (qmail 32506 invoked by uid 1000); 11 Jan 2009 20:37:36 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 11 Jan 2009 20:37:36 -0000
-In-Reply-To: <87y6xhkb2f.fsf@jidanni.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752141AbZAKUuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 15:50:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752071AbZAKUuc
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 15:50:32 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:48703 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751023AbZAKUub (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 15:50:31 -0500
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KDB00L41R86LS10@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Sun, 11 Jan 2009 21:50:30 +0100 (CET)
+Received: from localhost ([80.203.78.153]) by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KDB00G66R85XP80@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Sun, 11 Jan 2009 21:50:30 +0100 (CET)
+In-reply-to: <alpine.DEB.1.00.0901112112540.3586@pacific.mpi-cbg.de>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105223>
 
-On Mon, 12 Jan 2009, jidanni@jidanni.org wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I notice lots of "Merge branch qq/bla". And think, hmmm, Mr. QQ must
-> be using Documentation/everyday.txt's [[Individual Developer
-> (Participant)]] git-push methods, for a more efficient way of getting
-> his patches included by the maintainer.
+<snipp>
+>> --signoff
+>
+> If you had signed off on your commits already, not necessary.  (FWIW I 
+> keep a sign off as a marker that I actually think this is good to be 
+> submitted, or at least close.)
 
-Nope, that would lead to "Merge git://qq.org/git bla". In fact, Junio is 
-getting the patches by email, and then using that workflow in his own tree 
-to manage the maintence process. That is, he creates a branch for each 
-patch series that someone sends that looks ready for more exposure, by 
-starting with some plausible commit and applying the series of patches, 
-and then he can merge than branch into pu, next, master, or maint as 
-needed. This is particularly useful for pu, where he redoes all the merges 
-frequently; if he worked by just applying the patches, every time he 
-wanted to drop a series that he'd applied before some other series, he'd 
-have to pick out the conflict resolutions from the original author's 
-changes.
+  From the Documentation/SubmittingPatches file, for me I think that the
+  '-signoff' is supposed to mean:
 
-	-Daniel
-*This .sig left intentionally blank*
+  [....]
+   - if you want your work included in git.git, add a "Signed-off-by:
+     Your Name <you@example.com>" line to the commit message (or just
+     use the option "-s" when committing) to confirm that you agree to
+     the Developer's Certificate of Origin
+  [....]
+  The sign-off is a simple line at the end of the explanation for the
+  patch, which certifies that you wrote it or otherwise have the right
+  to pass it on as a open-source patch.  The rules are pretty simple: if
+  you can certify the below:
+
+        Developer's Certificate of Origin 1.1
+
+        By making a contribution to this project, I certify that:
+  [....]
+  then you just add a line saying
+
+	Signed-off-by: Random J Developer <random@developer.example.org>
+
+  This line can be automatically added by git if you run the git-commit
+  command with the -s option.
+  [....]
+  
+  And the 'a' and the 'd' in the DCO I do agree with in this particular
+  situation, so I added a '--signoff' to the patches.
+
+  -- kjetil
