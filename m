@@ -1,92 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2009, #02; Sun, 11)
-Date: Sun, 11 Jan 2009 06:33:33 -0800 (PST)
-Message-ID: <m3ljthzzdq.fsf@localhost.localdomain>
-References: <7v63kmtbk6.fsf@gitster.siamese.dyndns.org>
+From: "Sverre Rabbelier" <srabbelier@gmail.com>
+Subject: Re: [PATCH] filter-branch: add git_commit_non_empty_tree and --prune-empty.
+Date: Sun, 11 Jan 2009 15:40:04 +0100
+Message-ID: <bd6139dc0901110640l148b00dctd667572e28908f9f@mail.gmail.com>
+References: <20081030132623.GC24098@artemis.corp>
+	 <1225445204-28000-1-git-send-email-madcoder@debian.org>
+	 <7viqr5wgl7.fsf@gitster.siamese.dyndns.org>
+	 <20081103092729.GE13930@artemis.corp>
+	 <20081103151826.GJ13930@artemis.corp>
+	 <76718490901091129q534ca981iac54e0653d76170d@mail.gmail.com>
+	 <20090111111800.GA8032@artemis.corp>
+	 <alpine.DEB.1.00.0901111433580.3586@pacific.mpi-cbg.de>
+	 <20090111142732.GA18484@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 11 15:35:05 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Jay Soffian" <jaysoffian@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	pasky@suse.cz
+To: "Pierre Habouzit" <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sun Jan 11 15:41:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LM1P2-0004sr-0g
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 15:35:00 +0100
+	id 1LM1VM-0006Zr-9N
+	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 15:41:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751661AbZAKOdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 09:33:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751604AbZAKOdh
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 09:33:37 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:49045 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751602AbZAKOdh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 09:33:37 -0500
-Received: by ewy10 with SMTP id 10so11072524ewy.13
-        for <git@vger.kernel.org>; Sun, 11 Jan 2009 06:33:34 -0800 (PST)
+	id S1751707AbZAKOkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 09:40:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751602AbZAKOkI
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 09:40:08 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:32410 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751221AbZAKOkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 09:40:06 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so3289160yxm.1
+        for <git@vger.kernel.org>; Sun, 11 Jan 2009 06:40:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=l57eYfVKGS2dMEQyTv3+M0Rct2Oap3M6uYuqPm4tU2Q=;
-        b=BkqSZiUKtT1QJ0nelF7VadBDLh8q0cbthQExTK4ZsbSL+n9mOiYha9AXscprZz/GeS
-         1Vvea5MX1WRDU81if2F/pAWchna7vx0uREEi5UTlLM1T/MdQjVkGYrS2Ykm0fF1arNY3
-         fSk0JzekjqPI96iK7TExUVS73f0TNs29D4488=
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=N5t3S4A3IC7c4tjQ83WA2SIMg0GOGZA3/xlcuJdeiik=;
+        b=sl7BRAmkMWRoFMsEti35+Cqffn62axIuM2IeEg1Bmwl2IvusIH1Lg6bJcR2aBeea8d
+         kmwHcMcFaD27LJF27UsMdgr3c76ajoOuMyj843B7LA+CfbiqCppQCtKFnCSGzl1IIC73
+         R48qZmIopI04xROmAi0IulVzMAjovJ2IGZGdE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=qA+e9vE/ODgCPfJ+R5obWeqIEPRBvx2rwcigvfJiO973ROuQJBDTMFkU3D7PCuejm3
-         5HDQQ5uDU4sE11mIB4OMbrfO7CiDkfBouB3MB8jTRWNk0EYlYXNG9OGlPgXbqkZWlcey
-         z1pqQo/ptwMr6+AJTDJE3RvG52nWHa3GLnrkM=
-Received: by 10.210.137.17 with SMTP id k17mr445320ebd.138.1231684414811;
-        Sun, 11 Jan 2009 06:33:34 -0800 (PST)
-Received: from localhost.localdomain (abwj90.neoplus.adsl.tpnet.pl [83.8.233.90])
-        by mx.google.com with ESMTPS id 7sm1230315eyg.42.2009.01.11.06.33.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Jan 2009 06:33:33 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0BEXAqG008822;
-	Sun, 11 Jan 2009 15:33:11 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0BEX656008819;
-	Sun, 11 Jan 2009 15:33:06 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7v63kmtbk6.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=mXJi02oQORlnq1jjM76vwaL31973zAcgriirk79wBzDyY8FCZwClWArAIU/m1qAQi9
+         x5t/woIyDJHQaa3wiF0Mqu1Iq5S/nZ43A6L1fv3Ce5wrsAdVOQ52pyYqMoa3BscsbthG
+         h8MzqMf6WNHa+jRzf7X1tz6WyOfV5cYJlXHC4=
+Received: by 10.150.123.18 with SMTP id v18mr8390263ybc.85.1231684804834;
+        Sun, 11 Jan 2009 06:40:04 -0800 (PST)
+Received: by 10.150.198.12 with HTTP; Sun, 11 Jan 2009 06:40:04 -0800 (PST)
+In-Reply-To: <20090111142732.GA18484@artemis.corp>
+Content-Disposition: inline
+X-Google-Sender-Auth: 485ad41f9247c8d2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105184>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> ----------------------------------------------------------------
-> [Actively cooking]
+On Sun, Jan 11, 2009 at 15:27, Pierre Habouzit <madcoder@debian.org> wrote:
+>> And I suggested to merge the tests with Sverre's patch.  That suggestion
+>> also went unaddressed.
 >
-> * sc/gitweb-category (Fri Dec 12 00:45:12 2008 +0100) 3 commits
->  - gitweb: Optional grouping of projects by category
->  - gitweb: Split git_project_list_body in two functions
->  - gitweb: Modularized git_get_project_description to be more generic
+> I can't find any mails from Sverre in the same thread, but maybe I'm not
+> searching in the proper place...
 
-This I think needs some further cooking.  I guess with addition of one
-more patch to series categories could be sorted together with projects
-they contain, and not always have to be in fixed ordering.
- 
-> * gb/gitweb-patch (Thu Dec 18 08:13:19 2008 +0100) 4 commits
->  - gitweb: link to patch(es) view in commit(diff) and (short)log view
->  - gitweb: add patches view
->  - gitweb: change call pattern for git_commitdiff
->  - gitweb: add patch view
-
-If I remember correctly the only point of discussion is calling
-convention for git_commitdiff, and whether 'patches' view should
-(re)use git_commitdiff or use its own subroutine.
+I think my patch is in a different thread as it was a
+documentation-only patch, no?
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Cheers,
+
+Sverre Rabbelier
