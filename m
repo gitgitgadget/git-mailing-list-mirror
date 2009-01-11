@@ -1,9 +1,10 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/4] word diff: customizable word splits
-Date: Sun, 11 Jan 2009 14:20:07 -0800
-Message-ID: <7vfxjppjs8.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH v3 1/4] word diff: comments, preparations for regex
+ customization
+Date: Sun, 11 Jan 2009 14:19:57 -0800
+Message-ID: <7vljthpjsi.fsf@gitster.siamese.dyndns.org>
 References: <cover.1231669012.git.trast@student.ethz.ch>
- <4aea85caafd38a058145c5769fe8a30ffdbd4d13.1231669012.git.trast@student.ethz.ch> <529cd830908f018f796dbc46d3b055c1f8ba9c1b.1231669012.git.trast@student.ethz.ch>
+ <4aea85caafd38a058145c5769fe8a30ffdbd4d13.1231669012.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org,
@@ -15,99 +16,118 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LM8ge-0003c3-I7
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 23:21:41 +0100
+	id 1LM8gd-0003c3-Sa
+	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 23:21:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441AbZAKWUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 17:20:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752433AbZAKWUS
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 17:20:18 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33337 "EHLO
+	id S1752432AbZAKWUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 17:20:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbZAKWUK
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 17:20:10 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33309 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752410AbZAKWUQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 17:20:16 -0500
+	with ESMTP id S1752130AbZAKWUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 17:20:08 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4C1741C45E;
-	Sun, 11 Jan 2009 17:20:16 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 738A41C45D;
+	Sun, 11 Jan 2009 17:20:07 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 170AC1C45C; Sun,
- 11 Jan 2009 17:20:09 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7166E1C45C; Sun,
+ 11 Jan 2009 17:19:59 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 05E50900-E02E-11DD-A73F-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 00A05CA6-E02E-11DD-B414-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105238>
 
 Thomas Rast <trast@student.ethz.ch> writes:
 
-> Allows for user-configurable word splits when using --color-words.
-> This can make the diff more readable if the regex is configured
-> according to the language of the file.
->
-> Each non-overlapping match of the regex is a word; everything in
-> between is whitespace.
+> +/* unused right now */
+> +enum diff_word_boundaries {
+> +	DIFF_WORD_UNDEF,
+> +	DIFF_WORD_BODY,
+> +	DIFF_WORD_END,
+> +	DIFF_WORD_SPACE,
+> +	DIFF_WORD_SKIP
+> +};
 
-What happens if the input "language" does not have any inter-word spacing
-but its words can still be expressed by regexp patterns?
+Don't do this.  Please introduce them when you start using them.
 
-ImagineALanguageThatAllowsYouToWriteSomethingLikeThis.  Does the mechanism
-help users who want to do word-diff files written in such a language by
-outputting:
+>  struct diff_words_buffer {
+>  	mmfile_t text;
+>  	long alloc;
+>  	long current; /* output pointer */
+>  	int suppressed_newline;
+> +	enum diff_word_boundaries *boundaries;
+>  };
 
-	ImagineALanguage<red>That</red><green>Which</green>AllowsYou...
+Likewise.  Especially because this raises eyebrows "Huh, a pointer to an
+enum, or perhaps he allocates an array of enums?" without allowing the
+reader to figure it out much later when the field is actually used.
 
-when '[A-Z][a-z]*' is given by the word pattern?
+>  static void diff_words_append(char *line, unsigned long len,
+> @@ -339,16 +349,23 @@ static void diff_words_append(char *line, unsigned long len,
+>  struct diff_words_data {
+>  	struct diff_words_buffer minus, plus;
+>  	FILE *file;
+> +	regex_t *word_regex; /* currently unused */
+>  };
 
-> We disallow matching the empty string (because
-> it results in an endless loop) or a newline (breaks color escapes and
-> interacts badly with the input coming from the usual line diff).  To
-> help the user, we set REG_NEWLINE so that [^...] and . do not match
-> newlines.
+I see having this here and keeping it NULL in this patch makes the later
+patch to diff_words_show() more readable, so this probably should stay
+here.
 
-AndImagineALanguageWhoseWordStruc
-tureDoesNotCareAboutLineBreak
+> -static void print_word(FILE *file, struct diff_words_buffer *buffer, int len, int color,
+> +/*
+> + * Print 'len' characters from the "real" diff data in 'buffer'.  Also
+> + * returns how many characters were printed (currently always 'len').
+> + * With 'suppress_newline', we remember a final newline instead of
+> + * printing it.
+> + */
 
-Can you help users with such payload?
+"... Even in such a case, 'len' that is returned counts the suppressed
+newline", or something like that?  If you can concisely describe why the
+caller wants the returned count not match the number of actually printed
+chars (i.e. it includes the suppressed newline), it would help the reader
+understand the logic.  I am _guessing_ it is because this is called to
+print matching words from the preimage buffer, and the return value is
+used to skip over the same part in the postimage buffer, and by definition
+they have to be of the same length (otherwise they won't be matching).
 
-	Side note.  Yes, I am coming from Japanese background.
+> +static int print_word(FILE *file, struct diff_words_buffer *buffer, int len, int color,
+>  		int suppress_newline)
+>  {
+>  	const char *ptr;
+>  	int eol = 0;
+>  
+>  	if (len == 0)
+> -		return;
+> +		return len;
+>  
+>  	ptr  = buffer->text.ptr + buffer->current;
+>  	buffer->current += len;
+> @@ -368,18 +385,30 @@ static void print_word(FILE *file, struct diff_words_buffer *buffer, int len, in
+>  		else
+>  			putc('\n', file);
+>  	}
+> +
+> +	/* we need to return how many chars to skip on the other side,
+> +	 * so account for the (held off) \n */
 
-        Side note 2.  No, I am not saying your code must support both of
-        the above to be acceptable.  I am just gauging the design
-        assumptions and limitations.
+Multi-line comment style?  I won't repeat this but you have many...
 
-> Insertion of spaces is somewhat subtle.  We echo a "context" space
-> twice (once on each side of the diff) if it follows directly after a
-> word.  While this loses a tiny bit of accuracy, it runs together long
-> sequences of changed word into one removed and one added block, making
-> the diff much more readable.
+> +	return len+eol;
+>  }
+>  
+> +/*
+> + * Callback for word diff output
+> + */
 
-I guess this part can be later enhanced to be more precise, so that it
-keeps the original context space more faithfully (i.e. does not lose two
-consecutive spaces in the original occidental script, and does not insert
-any extra space to the oriental script), if we were to support the second
-example I gave above in the future as a follow-up patch.
+Without saying "to do what", the comment adds more noise than signal.
+"Called to parse diff between pre- and post- image files converted into
+one-word-per-line format and concatenate them to into lines by dropping
+some of the end-of-lines but keeping some others", or something like that?
 
-> +--color-words[=<regex>]::
-> +	Show colored word diff, i.e., color words which have changed.
-> +	By default, a new word only starts at whitespace, so that a
-> +	'word' is defined as a maximal sequence of non-whitespace
-> +	characters.  The optional argument <regex> can be used to
-> +	configure this.
-> ++
-> +The <regex> must be an (extended) regular expression.  When set, every
-> +non-overlapping match of the <regex> is considered a word.  (Regular
-> +expression semantics ensure that quantifiers grab a maximal sequence
-> +of characters.)  Anything between these matches is considered
-> +whitespace and ignored for the purposes of finding differences.  You
-> +may want to append `|\S` to your regular expression to make sure that
-> +it matches all non-whitespace characters.
-
-Whose regexp library do we assume here?  Traditionally we limited
-ourselves to POSIX BRE, and I do not think anybody minds using POSIX ERE
-here, but we need to be clear.  In either case \S is a pcre outside
-POSIX.
-
-The rest I only skimmed but did not spot anything glaringly wrong; thanks.
+Thanks.
