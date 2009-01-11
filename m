@@ -1,49 +1,47 @@
-From: Sam Ravnborg <sam@ravnborg.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: current git kernel has strange problems during bisect
-Date: Sun, 11 Jan 2009 23:32:15 +0100
-Message-ID: <20090111223215.GA6296@uranus.ravnborg.org>
-References: <200901111602.53082.borntraeger@de.ibm.com> <200901111607.59054.borntraeger@de.ibm.com> <alpine.DEB.1.00.0901111613250.3586@pacific.mpi-cbg.de> <200901111620.03345.borntraeger@de.ibm.com> <alpine.LFD.2.00.0901111113150.6528@localhost.localdomain> <20090111194258.GA4840@uranus.ravnborg.org> <alpine.LFD.2.00.0901111200330.6528@localhost.localdomain> <f19298770901111417t6762e1e3x79b2f488ee6f1243@mail.gmail.com>
+Date: Sun, 11 Jan 2009 17:34:51 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0901111727510.19665@iabervon.org>
+References: <200901111602.53082.borntraeger@de.ibm.com>  <200901111607.59054.borntraeger@de.ibm.com>  <alpine.DEB.1.00.0901111613250.3586@pacific.mpi-cbg.de>  <200901111620.03345.borntraeger@de.ibm.com>  <alpine.LFD.2.00.0901111113150.6528@localhost.localdomain>
+  <20090111194258.GA4840@uranus.ravnborg.org>  <alpine.LFD.2.00.0901111200330.6528@localhost.localdomain> <f19298770901111417t6762e1e3x79b2f488ee6f1243@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Sam Ravnborg <sam@ravnborg.org>,
 	Christian Borntraeger <borntraeger@de.ibm.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org,
 	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 To: Alexey Zaytsev <alexey.zaytsev@gmail.com>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755094AbZAKWas@vger.kernel.org Sun Jan 11 23:32:16 2009
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755094AbZAKWas@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+X-From: git-owner@vger.kernel.org Sun Jan 11 23:36:17 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LM8qt-0007Ma-4X
-	for glk-linux-kernel-3@gmane.org; Sun, 11 Jan 2009 23:32:15 +0100
+	id 1LM8un-0000Lc-5V
+	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 23:36:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755094AbZAKWas (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 11 Jan 2009 17:30:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751763AbZAKWaf
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sun, 11 Jan 2009 17:30:35 -0500
-Received: from pfepa.post.tele.dk ([195.41.46.235]:53348 "EHLO
-	pfepa.post.tele.dk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751323AbZAKWae (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 11 Jan 2009 17:30:34 -0500
-Received: from ravnborg.org (x1-6-00-1e-2a-84-ae-3e.k225.webspeed.dk [80.163.61.94])
-	by pfepa.post.tele.dk (Postfix) with ESMTP id EE20CA50002;
-	Sun, 11 Jan 2009 23:30:30 +0100 (CET)
-Received: by ravnborg.org (Postfix, from userid 500)
-	id D92DE580D0; Sun, 11 Jan 2009 23:32:15 +0100 (CET)
-Content-Disposition: inline
+	id S1752089AbZAKWey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 17:34:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751695AbZAKWex
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 17:34:53 -0500
+Received: from iabervon.org ([66.92.72.58]:58884 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751384AbZAKWex (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 17:34:53 -0500
+Received: (qmail 4662 invoked by uid 1000); 11 Jan 2009 22:34:51 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 11 Jan 2009 22:34:51 -0000
 In-Reply-To: <f19298770901111417t6762e1e3x79b2f488ee6f1243@mail.gmail.com>
-User-Agent: Mutt/1.4.2.1i
-Sender: linux-kernel-owner@vger.kernel.org
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105242>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105243>
 
-On Mon, Jan 12, 2009 at 01:17:31AM +0300, Alexey Zaytsev wrote:
+On Mon, 12 Jan 2009, Alexey Zaytsev wrote:
+
 > On Sun, Jan 11, 2009 at 23:04, Linus Torvalds
 > <torvalds@linux-foundation.org> wrote:
 > >
@@ -95,6 +93,20 @@ On Mon, Jan 12, 2009 at 01:17:31AM +0300, Alexey Zaytsev wrote:
 > 
 > Am I missing something?
 
-Yep - you miss that people get confused when suddenly they have no kernel source.
+Yes, there are no kernel bugs below the btrfs stuff, because there's no 
+kernel at all below the btrfs stuff. The history is actually like:
 
-	Sam
+A -- B -- C -- D -- G
+              /
+        F -- E
+
+F and E are the btrfs stuff, while A-D and G are commit containing the 
+kernel source (D and G also containing btrfs). Marking E as good cuts off 
+F, but doesn't cut off anything at all on the top line. Of course, if 
+you're actually debugging a problem with btrfs that you somehow know to 
+have worked while btrfs was a separate module at so point, you would want 
+to get into this history (and would build it as a separate module in order 
+to do so).
+
+	-Daniel
+*This .sig left intentionally blank*
