@@ -1,77 +1,127 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 3/6] Glean libexec path from argv[0] for git-upload-pack and git-receive-pack.
-Date: Sun, 11 Jan 2009 13:57:59 +0100
-Message-ID: <C817EA53-5326-4C60-B781-41B90514F3A7@zib.de>
-References: <1231595452-27698-1-git-send-email-prohaska@zib.de> <1231595452-27698-2-git-send-email-prohaska@zib.de> <1231595452-27698-3-git-send-email-prohaska@zib.de> <alpine.DEB.1.00.0901101532430.30769@pacific.mpi-cbg.de> <9CECD102-6D3E-487D-BA1E-C0269D055965@zib.de> <7viqomx5iq.fsf@gitster.siamese.dyndns.org> <E976B246-AD14-4B03-B204-F6A1014071DF@zib.de> <7v1vvata6o.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Steve Haslam <shaslam@lastminute.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 11 14:00:01 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] bash completion: refactor diff options
+Date: Sun, 11 Jan 2009 14:14:23 +0100
+Message-ID: <1231679663-31907-1-git-send-email-trast@student.ethz.ch>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 11 14:16:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLzv3-0005L8-QA
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 13:59:58 +0100
+	id 1LM0AT-0001MM-W8
+	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 14:15:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753463AbZAKM63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 07:58:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753460AbZAKM63
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 07:58:29 -0500
-Received: from mailer.zib.de ([130.73.108.11]:48485 "EHLO mailer.zib.de"
+	id S1752857AbZAKNO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 08:14:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752715AbZAKNO2
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 08:14:28 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:47216 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753447AbZAKM62 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 07:58:28 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n0BCw6fI002577;
-	Sun, 11 Jan 2009 13:58:11 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db930b5.pool.einsundeins.de [77.185.48.181])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n0BCw5pp024735
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 11 Jan 2009 13:58:05 +0100 (MET)
-In-Reply-To: <7v1vvata6o.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.930.3)
+	id S1752587AbZAKNO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 08:14:27 -0500
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 11 Jan 2009 14:14:25 +0100
+Received: from localhost.localdomain ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 11 Jan 2009 14:14:24 +0100
+X-Mailer: git-send-email 1.6.1.279.g41f0
+X-OriginalArrivalTime: 11 Jan 2009 13:14:25.0006 (UTC) FILETIME=[865778E0:01C973EE]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105175>
+
+diff, log and show all take the same diff options.  Refactor them from
+__git_diff and __git_log into a variable, and complete them in
+__git_show too.
+
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+
+---
+
+This conflicts with the --patience series; I can send a version based
+on that if it goes in first.
 
 
-On Jan 11, 2009, at 11:21 AM, Junio C Hamano wrote:
+ contrib/completion/git-completion.bash |   38 ++++++++++++++++++-------------
+ 1 files changed, 22 insertions(+), 16 deletions(-)
 
-> My initial impression after reading 1/6 was that no matter how the  
-> actual
-> runtime prefix detection logic that is implemented in the later  
-> parts of
-> the series for particular platform will turn out to be, the update  
-> to the
-> Makefile that is done by 1/6 won't have to change.  If I apply 1/6  
-> first
-> without applying anything else, we can make sure that it would not  
-> regress
-> for Unix people (and catch regressions early if any), while Windows  
-> people
-> polish the platform specific parts of the implementation in the later
-> parts of the series that can be replaced.
->
-> Because changes to Makefile variables tend to have unexpected side  
-> effects
-> (people have their own definition to override them in their build
-> procedures and you can easily break them unless you are careful), I  
-> wanted
-> to make sure the common part is solid before waiting for the other  
-> part.
->
-> But if you think it is better not to apply any one, until other parts
-> mature, it is Ok by me, too.
-
-I think you should apply it.
-
-	Steffen
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 7b074d7..5017369 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -759,24 +759,29 @@ _git_describe ()
+ 	__gitcomp "$(__git_refs)"
+ }
+ 
+-_git_diff ()
+-{
+-	__git_has_doubledash && return
+-
+-	local cur="${COMP_WORDS[COMP_CWORD]}"
+-	case "$cur" in
+-	--*)
+-		__gitcomp "--cached --stat --numstat --shortstat --summary
++__git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--patch-with-stat --name-only --name-status --color
+ 			--no-color --color-words --no-renames --check
+ 			--full-index --binary --abbrev --diff-filter=
+-			--find-copies-harder --pickaxe-all --pickaxe-regex
++			--find-copies-harder
+ 			--text --ignore-space-at-eol --ignore-space-change
+ 			--ignore-all-space --exit-code --quiet --ext-diff
+ 			--no-ext-diff
+ 			--no-prefix --src-prefix= --dst-prefix=
+-			--base --ours --theirs
+ 			--inter-hunk-context=
++			--raw
++"
++
++_git_diff ()
++{
++	__git_has_doubledash && return
++
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "$cur" in
++	--*)
++		__gitcomp "--cached --pickaxe-all --pickaxe-regex
++			--base --ours --theirs
++			$__git_diff_common_options
+ 			"
+ 		return
+ 		;;
+@@ -959,16 +964,15 @@ _git_log ()
+ 			--relative-date --date=
+ 			--author= --committer= --grep=
+ 			--all-match
+-			--pretty= --name-status --name-only --raw
++			--pretty=
+ 			--not --all
+ 			--left-right --cherry-pick
+ 			--graph
+-			--stat --numstat --shortstat
+-			--decorate --diff-filter=
+-			--color-words --walk-reflogs
++			--decorate
++			--walk-reflogs
+ 			--parents --children --full-history
+ 			--merge
+-			--inter-hunk-context=
++			$__git_diff_common_options
+ 			"
+ 		return
+ 		;;
+@@ -1473,7 +1477,9 @@ _git_show ()
+ 		return
+ 		;;
+ 	--*)
+-		__gitcomp "--pretty="
++		__gitcomp "--pretty=
++			$__git_diff_common_options
++			"
+ 		return
+ 		;;
+ 	esac
+-- 
+tg: (7eb5bbd..) t/bash-complete-show (depends on: origin/master)
