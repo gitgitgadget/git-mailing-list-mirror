@@ -1,151 +1,87 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v3 4/4] word diff: test customizable word splits
-Date: Sun, 11 Jan 2009 11:27:14 +0100
-Message-ID: <0da6ba6dd66a2de84be34f58566d0d6ccbd7e949.1231669012.git.trast@student.ethz.ch>
-References: <cover.1231669012.git.trast@student.ethz.ch>
- <4aea85caafd38a058145c5769fe8a30ffdbd4d13.1231669012.git.trast@student.ethz.ch>
- <529cd830908f018f796dbc46d3b055c1f8ba9c1b.1231669012.git.trast@student.ethz.ch>
- <72242bd75fa8d55c2afc723f8539ef56f2569d3e.1231669012.git.trast@student.ethz.ch>
-Cc: Junio C Hamano <junio@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Teemu Likonen <tlikonen@iki.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 11 11:29:01 2009
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] filter-branch: add git_commit_non_empty_tree and --prune-empty.
+Date: Sun, 11 Jan 2009 12:18:00 +0100
+Message-ID: <20090111111800.GA8032@artemis.corp>
+References: <20081030132623.GC24098@artemis.corp> <1225445204-28000-1-git-send-email-madcoder@debian.org> <7viqr5wgl7.fsf@gitster.siamese.dyndns.org> <20081103092729.GE13930@artemis.corp> <20081103151826.GJ13930@artemis.corp> <76718490901091129q534ca981iac54e0653d76170d@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; boundary="Dxnq1zWXvFF0Q93v";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	pasky@suse.cz, srabbelier@gmail.com
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 11 12:19:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLxYy-0002xC-LA
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 11:29:01 +0100
+	id 1LLyLt-0006lf-3N
+	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 12:19:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751320AbZAKK1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 05:27:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751291AbZAKK1Y
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 05:27:24 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:42017 "EHLO xsmtp1.ethz.ch"
+	id S1751244AbZAKLSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 06:18:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbZAKLSH
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 06:18:07 -0500
+Received: from pan.madism.org ([88.191.52.104]:49455 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751150AbZAKK1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 05:27:21 -0500
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 11 Jan 2009 11:27:06 +0100
-Received: from localhost.localdomain ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 11 Jan 2009 11:27:05 +0100
-X-Mailer: git-send-email 1.6.1.279.g41f0
-In-Reply-To: <72242bd75fa8d55c2afc723f8539ef56f2569d3e.1231669012.git.trast@student.ethz.ch>
-In-Reply-To: <7vr63atykr.fsf@gitster.siamese.dyndns.org>
-References: <7vr63atykr.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 11 Jan 2009 10:27:05.0556 (UTC) FILETIME=[265CF940:01C973D7]
+	id S1751088AbZAKLSG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 06:18:06 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id F25AD14A;
+	Sun, 11 Jan 2009 12:18:01 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id B50252B100; Sun, 11 Jan 2009 12:18:00 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <76718490901091129q534ca981iac54e0653d76170d@mail.gmail.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105165>
 
-Several tests for regex-configured word splits via command line and
-gitattributes.  For good measure we also do a basic test of the
-default --color-words since it was so far not covered at all.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- t/t4033-diff-color-words.sh |   90 +++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 90 insertions(+), 0 deletions(-)
- create mode 100755 t/t4033-diff-color-words.sh
+--Dxnq1zWXvFF0Q93v
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/t4033-diff-color-words.sh b/t/t4033-diff-color-words.sh
-new file mode 100755
-index 0000000..536cdac
---- /dev/null
-+++ b/t/t4033-diff-color-words.sh
-@@ -0,0 +1,90 @@
-+#!/bin/sh
-+
-+
-+test_description='diff --color-words'
-+. ./test-lib.sh
-+
-+cat <<EOF > test_a
-+foo_bar_baz
-+a qu_ux b c
-+alpha beta gamma delta
-+EOF
-+
-+cat <<EOF > test_b
-+foo_baz_baz
-+a qu_new_ux b c
-+alpha 4 2 delta
-+EOF
-+
-+# t4026-diff-color.sh tests the color escapes, so we assume they do
-+# not change
-+
-+munge () {
-+    tail -n +5 | tr '\033' '!'
-+}
-+
-+cat <<EOF > expect-plain
-+![36m@@ -1,3 +1,3 @@![m
-+![31mfoo_bar_baz![m![32mfoo_baz_baz![m
-+a ![m![31mqu_ux ![m![32mqu_new_ux ![mb ![mc![m
-+alpha ![m![31mbeta ![m![31mgamma ![m![32m4 ![m![32m2 ![mdelta![m
-+EOF
-+
-+test_expect_success 'default settings' '
-+	git diff --no-index --color-words test_a test_b |
-+		munge > actual-plain &&
-+	test_cmp expect-plain actual-plain
-+'
-+
-+test_expect_success 'trivial regex yields same as default' '
-+	git diff --no-index --color-words="\\S+" test_a test_b |
-+		munge > actual-trivial &&
-+	test_cmp expect-plain actual-trivial
-+'
-+
-+cat <<EOF > expect-chars
-+![36m@@ -1,3 +1,3 @@![m
-+f![mo![mo![m_![mb![ma![m![31mr![m![32mz![m_![mb![ma![mz![m
-+a ![mq![mu![m_![m![32mn![m![32me![m![32mw![m![32m_![mu![mx ![mb ![mc![m
-+a![ml![mp![mh![ma ![m![31mb![m![31me![m![31mt![m![31ma ![m![31mg![m![31ma![m![31mm![m![31mm![m![31ma ![m![32m4 ![m![32m2 ![md![me![ml![mt![ma![m
-+EOF
-+
-+test_expect_success 'character by character regex' '
-+	git diff --no-index --color-words="\\S" test_a test_b |
-+		munge > actual-chars &&
-+	test_cmp expect-chars actual-chars
-+'
-+
-+cat <<EOF > expect-nontrivial
-+![36m@@ -1,3 +1,3 @@![m
-+foo![m_![m![31mbar![m![32mbaz![m_![mbaz![m
-+a ![mqu![m_![m![32mnew![m![32m_![mux ![mb ![mc![m
-+alpha ![m![31mbeta ![m![31mgamma ![m![32m4![m![32m ![m![32m2![m![32m ![mdelta![m
-+EOF
-+
-+test_expect_success 'nontrivial regex' '
-+	git diff --no-index --color-words="[a-z]+|_" test_a test_b |
-+		munge > actual-nontrivial &&
-+	test_cmp expect-nontrivial actual-nontrivial
-+'
-+
-+test_expect_success 'set a diff driver' '
-+	git config diff.testdriver.wordregex "\\S" &&
-+	cat <<EOF > .gitattributes
-+test_* diff=testdriver
-+EOF
-+'
-+
-+test_expect_success 'use default supplied by driver' '
-+	git diff --no-index --color-words test_a test_b |
-+		munge > actual-chars-2 &&
-+	test_cmp expect-chars actual-chars-2
-+'
-+
-+test_expect_success 'option overrides default' '
-+	git diff --no-index --color-words="[a-z]+|_" test_a test_b |
-+		munge > actual-nontrivial-2 &&
-+	test_cmp expect-nontrivial actual-nontrivial-2
-+'
-+
-+test_done
--- 
-1.6.1.269.g0769
+On Fri, Jan 09, 2009 at 07:29:15PM +0000, Jay Soffian wrote:
+> On Mon, Nov 3, 2008 at 10:18 AM, Pierre Habouzit <madcoder@debian.org> wr=
+ote:
+> > On Mon, Nov 03, 2008 at 09:27:29AM +0000, Pierre Habouzit wrote:
+> >> On Mon, Nov 03, 2008 at 04:58:44AM +0000, Junio C Hamano wrote:
+>=20
+> Bump, http://thread.gmane.org/gmane.comp.version-control.git/99440/
+>=20
+> (I'd like to see this included. Having a bunch of empty commits after
+> using filter-branch to remove unwanted files from history is, er,
+> sub-optimal, so seems like it might even be default behavior?)
+
+Yeah I have that in my own git tree, and I meant to ask if something had
+to be fixed for it to be accepted for some time, but always forget about
+it.
+
+Junio, do you think this could be accepted, or does it need some work ?
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--Dxnq1zWXvFF0Q93v
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAklp1WcACgkQvGr7W6Hudhz28ACfVelUc4dS25gDWU03HhkmWKp7
+eigAmwXg8FWsiJx6ymuqJ/ui97MEnXdN
+=eWyR
+-----END PGP SIGNATURE-----
+
+--Dxnq1zWXvFF0Q93v--
