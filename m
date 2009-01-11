@@ -1,75 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG PATCH RFC] mailinfo: correctly handle multiline 'Subject:'
- header
-Date: Sat, 10 Jan 2009 17:54:14 -0800
-Message-ID: <7veizatxo9.fsf@gitster.siamese.dyndns.org>
-References: <1230316721-14339-1-git-send-email-kirr@mns.spb.ru>
- <20090108100813.GA15640@myhost>
- <1230316721-14339-1-git-send-email-kirr@mns.spb.ru>
- <20090107224342.GB4946@roro3> <7vy6xm5i6h.fsf@gitster.siamese.dyndns.org>
- <7vy6xm42l3.fsf@gitster.siamese.dyndns.org>
- <1230316721-14339-1-git-send-email-kirr@mns.spb.ru>
- <20090107224342.GB4946@roro3> <7vy6xm5i6h.fsf@gitster.siamese.dyndns.org>
- <20090108231135.GB4185@roro3>
+From: "Frank Li" <lznuaa@gmail.com>
+Subject: Re: TortoiseGit
+Date: Sun, 11 Jan 2009 09:57:33 +0800
+Message-ID: <1976ea660901101757n3f18c0e4m2fa275ab7b961a2c@mail.gmail.com>
+References: <4d5bc4bb0901101446j29d147c3pb885824e8d0d484f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alexander Potashev <aspotashev@gmail.com>, git@vger.kernel.org
-To: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-X-From: git-owner@vger.kernel.org Sun Jan 11 02:55:48 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Victor Westmann" <victor.westmann@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 11 02:59:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LLpYI-0004Tp-Nw
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 02:55:47 +0100
+	id 1LLpbN-00059r-Qr
+	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 02:58:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751567AbZAKByX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Jan 2009 20:54:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751527AbZAKByW
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 20:54:22 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43480 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750845AbZAKByW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Jan 2009 20:54:22 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BDDFB8F5E3;
-	Sat, 10 Jan 2009 20:54:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D4E098F5E2; Sat,
- 10 Jan 2009 20:54:16 -0500 (EST)
-In-Reply-To: <20090108231135.GB4185@roro3> (Kirill Smelkov's message of "Fri,
- 9 Jan 2009 02:11:35 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C36138D4-DF82-11DD-9C49-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752353AbZAKB5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jan 2009 20:57:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbZAKB5f
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Jan 2009 20:57:35 -0500
+Received: from yx-out-2324.google.com ([74.125.44.30]:1860 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751527AbZAKB5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jan 2009 20:57:34 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so3243109yxm.1
+        for <git@vger.kernel.org>; Sat, 10 Jan 2009 17:57:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=BlJrDeneTj2VCqz331ZVASh2f8jQ3yhMXSWYX1Xp638=;
+        b=ekhq+dpIn3sn9/HZDcjg9nAnaOFavCE61Ut6hCjVkuhNv1FTVyHHlq3S8M7qlU9yYr
+         0Ma8YDgtl1Dx/It4VOP6cC4+Kwxc2gx7IrWQld0pkRQ6bOdsH+34wgAQ4dqkFZfDO977
+         oxdn9uWIUF/K5O3/hwoM5HkClSOi9NSpd/o24=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=Q6w+1hskLmnwYo2XKmATUk/UOZsjLkkVvuxMrmj9MXNlnta5Ak2fR5mf6420UUf+Nt
+         Jh2/F0nioeZGBWHb1j0/ZCxRL7wYK6sqCsLvV6xMjyIlh7vryXS/fB5s0ntOwfOLrYXi
+         Z/PWd/3wMXz9oj1iK/YDzoV9qUrO44O3qd5P8=
+Received: by 10.151.6.15 with SMTP id j15mr7295453ybi.39.1231639053218;
+        Sat, 10 Jan 2009 17:57:33 -0800 (PST)
+Received: by 10.151.130.7 with HTTP; Sat, 10 Jan 2009 17:57:33 -0800 (PST)
+In-Reply-To: <4d5bc4bb0901101446j29d147c3pb885824e8d0d484f@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105153>
 
-Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
+Great!
+I have not to enabled multi-language support yet.
 
->     [but I'm not sure whether testresult with Nathaniel Borenstein
->      (=D7=9D=D7=95=D7=9C=D7=A9 =D7=9F=D7=91 =D7=99=D7=9C=D7=98=D7=A4=D7=
-=A0) is correct -- see rfc2047-info-0004]
-> ...
-> diff --git a/t/t5100/rfc2047-info-0004 b/t/t5100/rfc2047-info-0004
-> new file mode 100644
-> index 0000000..850f831
-> --- /dev/null
-> +++ b/t/t5100/rfc2047-info-0004
-> @@ -0,0 +1,5 @@
-> +Author: Nathaniel Borenstein =20
-> +     (=D7=9D=D7=95=D7=9C=D7=A9 =D7=9F=D7=91 =D7=99=D7=9C=D7=98=D7=A4=
-=D7=A0)
-> +Email: nsb@thumper.bellcore.com
-> +Subject: Test of new header generator
-> +
+I will enable it soon.
 
-That does look wrong.  If you can fix this, please do so; otherwise ple=
-ase
-mark the test that deals with this entry with test_expect_failure, unti=
-l
-somebody else does.
+When it is ready,  I will tell you.
+
+Thank you very much
