@@ -1,59 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Cleanup of unused symcache variable inside diff-lib.c
-Date: Sun, 11 Jan 2009 14:25:34 -0800
-Message-ID: <7v63klpjj5.fsf@gitster.siamese.dyndns.org>
-References: <1231699002-5316-1-git-send-email-barvik@broadpark.no>
- <alpine.DEB.1.00.0901111944360.3586@pacific.mpi-cbg.de>
- <86iqol8wql.fsf@broadpark.no>
- <alpine.DEB.1.00.0901112044230.3586@pacific.mpi-cbg.de>
- <86eiz98v0s.fsf@broadpark.no>
- <alpine.DEB.1.00.0901112112540.3586@pacific.mpi-cbg.de>
- <86ab9x8t4a.fsf@broadpark.no>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: current git kernel has strange problems during bisect
+Date: Sun, 11 Jan 2009 17:27:01 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0901111646040.19665@iabervon.org>
+References: <200901111602.53082.borntraeger@de.ibm.com> <20090111194258.GA4840@uranus.ravnborg.org> <alpine.LFD.2.00.0901111200330.6528@localhost.localdomain> <200901112239.20306.borntraeger@de.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Kjetil Barvik <barvik@broadpark.no>
-X-From: git-owner@vger.kernel.org Sun Jan 11 23:27:06 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+To: Christian Borntraeger <borntraeger@de.ibm.com>
+X-From: git-owner@vger.kernel.org Sun Jan 11 23:28:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LM8ls-0005bP-Qx
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 23:27:05 +0100
+	id 1LM8nD-00063F-4z
+	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 23:28:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751513AbZAKWZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 17:25:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751384AbZAKWZl
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 17:25:41 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51096 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751323AbZAKWZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 17:25:40 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 575F38F133;
-	Sun, 11 Jan 2009 17:25:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 834048F12F; Sun,
- 11 Jan 2009 17:25:36 -0500 (EST)
-In-Reply-To: <86ab9x8t4a.fsf@broadpark.no> (Kjetil Barvik's message of "Sun,
- 11 Jan 2009 21:50:29 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C70A8222-E02E-11DD-AA87-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751848AbZAKW1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 17:27:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751747AbZAKW1G
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 17:27:06 -0500
+Received: from iabervon.org ([66.92.72.58]:56964 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751384AbZAKW1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 17:27:04 -0500
+Received: (qmail 4293 invoked by uid 1000); 11 Jan 2009 22:27:01 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 11 Jan 2009 22:27:01 -0000
+In-Reply-To: <200901112239.20306.borntraeger@de.ibm.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105241>
 
-Kjetil Barvik <barvik@broadpark.no> writes:
+On Sun, 11 Jan 2009, Christian Borntraeger wrote:
 
->   And the 'a' and the 'd' in the DCO I do agree with in this particular
->   situation, so I added a '--signoff' to the patches.
+> Am Sonntag 11 Januar 2009 schrieb Linus Torvalds:
+> > Well, you don't actually have to mark that semi-random one as good either. 
+> > What you can do is to just mark anything that _only_ contains fs/btrfs as 
+> > good. IOW, you don't have to know the magic number - you just have to be 
+> > told that "oh, if you only have btrfs files, and you're not actively 
+> > bisecting a btrfs bug, just do 'git bisect good' and continue".
+> 
+> That should work.
+> 
+> <rant>
+> Still, I am a bit frustrated. During this weekend I reported 2 regressions 
+> (wlan and ata)  and I still try to find out why suspend/resume stopped 
+> working. In the meantime I have identified 2 patches (one was already known, 
+> I reported the 2nd to the usb maintainers) after 2.6.28 that caused suspend 
+> to ram regressions. In rc1 S2R was broken again. So I tried bisecting the 
+> third patch - which finally brought me to the btrfs bisect problem.
+> 
+> For me, this was the most annoying  merge window ever.
+> 
+> In my opinion we should really avoid subtree merges in the future as a curtesy 
+> to people who do the uncool work of testing, problem tracking and bisecting. 
+> </rant>
 
-I think Dscho's suggestion was to sign-off when you commit, not when you
-format-patch.  It won't make any difference either way to me nor other
-people who reads the list, because nobody can tell which way you used by
-looking at your e-mail, but it is a good habit to get into if you work on
-git or the kernel.
+I think hitting a version without the actual kernel source in it should 
+actually make bisecting easier, not harder; you can say without even 
+building the kernel that that version doesn't have the problem you're 
+trying to find, because it doesn't have anything in it.
+
+The alternative to having that part of the tree empty would be to stick in 
+some kernel version there (probably 2.6.28), and then you'd build and test 
+2.6.28 again, completely wasting a bunch of time.
+
+Probably the bisect documentation or messages need to make it clear what 
+you should do when you land on this sort of commit.
+
+	-Daniel
+*This .sig left intentionally blank*
