@@ -1,85 +1,105 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Removing a commit from a local branch
-Date: Sun, 11 Jan 2009 23:52:20 +0100
-Message-ID: <20090111225220.GB15533@atjola.homenet>
-References: <a038bef50901111441w21959397tc41922656a25027c@mail.gmail.com> <a038bef50901111442y16695664y4fed7cdd9d8af27@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/4] refactor the --color-words to make it more
+ hackable
+Date: Mon, 12 Jan 2009 00:02:00 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901112351050.3586@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0901112057300.3586@pacific.mpi-cbg.de> <200901112253.27165.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 11 23:53:56 2009
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jan 12 00:02:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LM9Bm-0005x8-Fc
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 23:53:50 +0100
+	id 1LM9KK-0000in-D4
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 00:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751744AbZAKWwZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Jan 2009 17:52:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751494AbZAKWwZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 17:52:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33647 "HELO mail.gmx.net"
+	id S1752068AbZAKXBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 18:01:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751858AbZAKXBQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 18:01:16 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43141 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750893AbZAKWwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 17:52:24 -0500
-Received: (qmail invoked by alias); 11 Jan 2009 22:52:21 -0000
-Received: from i577BBA7A.versanet.de (EHLO atjola.local) [87.123.186.122]
-  by mail.gmx.net (mp046) with SMTP; 11 Jan 2009 23:52:21 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+X3ehICEaX6TSTUj5kuPKq7umJpV75cHxvMQ47PE
-	l4yUTEtmArN8iq
-Content-Disposition: inline
-In-Reply-To: <a038bef50901111442y16695664y4fed7cdd9d8af27@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751494AbZAKXBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 18:01:15 -0500
+Received: (qmail invoked by alias); 11 Jan 2009 23:01:13 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp019) with SMTP; 12 Jan 2009 00:01:13 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/jgpBKLG7j7o8fcPzV+5jJEqdaVl5hGHlEkeYy9D
+	XFNaKEHOBP+mL6
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200901112253.27165.trast@student.ethz.ch>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105248>
 
-On 2009.01.12 11:42:24 +1300, Chris Packham wrote:
-> Hi List,
->=20
-> I'm part of a development team using git. We use a maintainer model
-> where developers send patches/pull requests to a maintainer who
-> applies the patches to a local branch, decides if they're good or not
-> and pushes the good patches to the public repository.
->=20
-> What I want to do is script the removal of a bad patch so that the
-> maintainer identifies a patch in his local branch, sends an email to
-> the author telling them why their patch is being rejected then remove=
-s
-> the commit for that patch. Using git log a script can extract the
-> author email address, hash and headline of each commit. Based on that
-> information scripting the email is easy enough. Now I come to using
-> git rebase to remove the bad commit based on its hash which leads me
-> to my question - How do I refer to a commit based on the hash of its
-> parent?
->=20
-> Consider the following example. The maintainer has the following bran=
-ch locally
->=20
->   todeliver: A-B-C-D
->=20
-> He is happy with commits A, C and D but wants to reject B. Ideally I
-> want to be able to say
->   git rebase --onto <parent of B> <child of B> todelvier
+Hi,
 
-You don't want <child of B> there, just B.
+On Sun, 11 Jan 2009, Thomas Rast wrote:
 
-git rebase --onto <onto> <upstream> <branch>
+> Johannes Schindelin wrote:
+> > 
+> > But at least _I_ think it is easy to follow, and it actually makes the code
+> > more readable/hackable.  Correct me if I'm wrong.
+> 
+> It indeed seems a sane approach.
 
-Rebases the commits from the range <upstream>..<branch>, and that
-_excludes_ the commit (referenced by) <upstream>.
+Thanks.
 
-So:
-git rebase --onto B^ B todeliver
+>  However, the final result segfaults and/or prints garbage (on 
+> apparently every commit except very small changes) when using the regex 
+> '\S+', which IMHO should give exactly the same result as not using a 
+> regex at all.
 
-Works on: B..todeliver =3D=3D todeliver --not B
-And that range contains commits C and D.
+No, it should not.  The correct regex is '^\S+'.
 
-Bj=F6rn
+As it happens, your regex matches _anything_ + non-whitespace.  
+Unfortunately, this includes a newline which utterly confuses the diff, 
+and therefore the code that tries to get the true offsets.
+
+Consequently, it crashes.
+
+> Plain --color-words is not affected.
+
+Of course, I did not change anything outside the code path of 
+--color-words.
+
+Ciao,
+Dscho
+
+-- snipsnap --
+[PATCH] color-words: \n must not be a part of the word.
+
+Allowing \n as part of a word is a pilot error, but that is not a 
+reason for the code to crash.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+ diff.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index d6bba72..676eb79 100644
+--- a/diff.c
++++ b/diff.c
+@@ -381,8 +381,10 @@ static int find_word_boundary(mmfile_t *buffer, int i, regex_t *word_regex)
+ 
+ 	if (word_regex) {
+ 		regmatch_t match[1];
+-		if (!regexec(word_regex, buffer->ptr + i, 1, match, 0))
+-			i += match[0].rm_eo;
++		if (!regexec(word_regex, buffer->ptr + i, 1, match, 0)) {
++			char *p = memchr(buffer->ptr + i, '\n', match[0].rm_eo);
++			i = p ? p - buffer->ptr : match[0].rm_eo + i;
++		}
+ 	}
+ 	else
+ 		while (i < buffer->size && !isspace(buffer->ptr[i]))
