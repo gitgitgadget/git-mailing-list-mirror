@@ -1,61 +1,57 @@
-From: Andi Kleen <andi@firstfloor.org>
-Subject: Re: current git kernel has strange problems during bisect
-Date: Sun, 11 Jan 2009 21:29:20 +0100
-Message-ID: <87tz85fuxr.fsf@basil.nowhere.org>
-References: <200901111602.53082.borntraeger@de.ibm.com>
-	<200901111607.59054.borntraeger@de.ibm.com>
-	<alpine.DEB.1.00.0901111613250.3586@pacific.mpi-cbg.de>
-	<200901111620.03345.borntraeger@de.ibm.com>
-	<alpine.LFD.2.00.0901111113150.6528@localhost.localdomain>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: stopping patches from just floating by
+Date: Sun, 11 Jan 2009 15:37:36 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0901111524110.19665@iabervon.org>
+References: <87y6xhkb2f.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Borntraeger <borntraeger@de.ibm.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Jan 11 21:31:18 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Sun Jan 11 21:39:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LM6xl-0004t3-7r
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 21:31:13 +0100
+	id 1LM75K-00074m-2O
+	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 21:39:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752680AbZAKU3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 15:29:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbZAKU3t
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 15:29:49 -0500
-Received: from one.firstfloor.org ([213.235.205.2]:35672 "EHLO
-	one.firstfloor.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750825AbZAKU3s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 15:29:48 -0500
-Received: from basil.firstfloor.org (p5B3C9021.dip0.t-ipconnect.de [91.60.144.33])
-	by one.firstfloor.org (Postfix) with ESMTP id CF5DB1AD0021;
-	Sun, 11 Jan 2009 21:44:12 +0100 (CET)
-Received: by basil.firstfloor.org (Postfix, from userid 1000)
-	id 031A63E6657; Sun, 11 Jan 2009 21:29:20 +0100 (CET)
-In-Reply-To: <alpine.LFD.2.00.0901111113150.6528@localhost.localdomain> (Linus Torvalds's message of "Sun, 11 Jan 2009 11:13:30 -0800 (PST)")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.3 (gnu/linux)
+	id S1751734AbZAKUhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 15:37:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbZAKUhi
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 15:37:38 -0500
+Received: from iabervon.org ([66.92.72.58]:46924 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750825AbZAKUhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 15:37:37 -0500
+Received: (qmail 32506 invoked by uid 1000); 11 Jan 2009 20:37:36 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 11 Jan 2009 20:37:36 -0000
+In-Reply-To: <87y6xhkb2f.fsf@jidanni.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105222>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
->
-> For bisect purposes, if you know you're not chasing down a btrfs issue, 
-> you can do
->
-> 	git bisect good 34353029534a08e41cfb8be647d734b9ce9ebff8
+On Mon, 12 Jan 2009, jidanni@jidanni.org wrote:
 
-Could you perhaps add some standard tag for that commit? That 
-would make it easier than to always find the exact btrfs commit.
+> I notice lots of "Merge branch qq/bla". And think, hmmm, Mr. QQ must
+> be using Documentation/everyday.txt's [[Individual Developer
+> (Participant)]] git-push methods, for a more efficient way of getting
+> his patches included by the maintainer.
 
-Just an idea.
+Nope, that would lead to "Merge git://qq.org/git bla". In fact, Junio is 
+getting the patches by email, and then using that workflow in his own tree 
+to manage the maintence process. That is, he creates a branch for each 
+patch series that someone sends that looks ready for more exposure, by 
+starting with some plausible commit and applying the series of patches, 
+and then he can merge than branch into pu, next, master, or maint as 
+needed. This is particularly useful for pu, where he redoes all the merges 
+frequently; if he worked by just applying the patches, every time he 
+wanted to drop a series that he'd applied before some other series, he'd 
+have to pick out the conflict resolutions from the original author's 
+changes.
 
--Andi
-
--- 
-ak@linux.intel.com
+	-Daniel
+*This .sig left intentionally blank*
