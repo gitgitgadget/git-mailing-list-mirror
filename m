@@ -1,79 +1,100 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Sam Ravnborg <sam@ravnborg.org>
 Subject: Re: current git kernel has strange problems during bisect
-Date: Sun, 11 Jan 2009 17:27:01 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0901111646040.19665@iabervon.org>
-References: <200901111602.53082.borntraeger@de.ibm.com> <20090111194258.GA4840@uranus.ravnborg.org> <alpine.LFD.2.00.0901111200330.6528@localhost.localdomain> <200901112239.20306.borntraeger@de.ibm.com>
+Date: Sun, 11 Jan 2009 23:32:15 +0100
+Message-ID: <20090111223215.GA6296@uranus.ravnborg.org>
+References: <200901111602.53082.borntraeger@de.ibm.com> <200901111607.59054.borntraeger@de.ibm.com> <alpine.DEB.1.00.0901111613250.3586@pacific.mpi-cbg.de> <200901111620.03345.borntraeger@de.ibm.com> <alpine.LFD.2.00.0901111113150.6528@localhost.localdomain> <20090111194258.GA4840@uranus.ravnborg.org> <alpine.LFD.2.00.0901111200330.6528@localhost.localdomain> <f19298770901111417t6762e1e3x79b2f488ee6f1243@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Sam Ravnborg <sam@ravnborg.org>,
+	Christian Borntraeger <borntraeger@de.ibm.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org,
 	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-To: Christian Borntraeger <borntraeger@de.ibm.com>
-X-From: git-owner@vger.kernel.org Sun Jan 11 23:28:32 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+To: Alexey Zaytsev <alexey.zaytsev@gmail.com>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755094AbZAKWas@vger.kernel.org Sun Jan 11 23:32:16 2009
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755094AbZAKWas@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LM8nD-00063F-4z
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 23:28:27 +0100
+	id 1LM8qt-0007Ma-4X
+	for glk-linux-kernel-3@gmane.org; Sun, 11 Jan 2009 23:32:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751848AbZAKW1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 17:27:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751747AbZAKW1G
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 17:27:06 -0500
-Received: from iabervon.org ([66.92.72.58]:56964 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751384AbZAKW1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 17:27:04 -0500
-Received: (qmail 4293 invoked by uid 1000); 11 Jan 2009 22:27:01 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 11 Jan 2009 22:27:01 -0000
-In-Reply-To: <200901112239.20306.borntraeger@de.ibm.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
-Sender: git-owner@vger.kernel.org
+	id S1755094AbZAKWas (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 11 Jan 2009 17:30:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751763AbZAKWaf
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Sun, 11 Jan 2009 17:30:35 -0500
+Received: from pfepa.post.tele.dk ([195.41.46.235]:53348 "EHLO
+	pfepa.post.tele.dk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751323AbZAKWae (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 11 Jan 2009 17:30:34 -0500
+Received: from ravnborg.org (x1-6-00-1e-2a-84-ae-3e.k225.webspeed.dk [80.163.61.94])
+	by pfepa.post.tele.dk (Postfix) with ESMTP id EE20CA50002;
+	Sun, 11 Jan 2009 23:30:30 +0100 (CET)
+Received: by ravnborg.org (Postfix, from userid 500)
+	id D92DE580D0; Sun, 11 Jan 2009 23:32:15 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <f19298770901111417t6762e1e3x79b2f488ee6f1243@mail.gmail.com>
+User-Agent: Mutt/1.4.2.1i
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105241>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105242>
 
-On Sun, 11 Jan 2009, Christian Borntraeger wrote:
-
-> Am Sonntag 11 Januar 2009 schrieb Linus Torvalds:
-> > Well, you don't actually have to mark that semi-random one as good either. 
-> > What you can do is to just mark anything that _only_ contains fs/btrfs as 
-> > good. IOW, you don't have to know the magic number - you just have to be 
-> > told that "oh, if you only have btrfs files, and you're not actively 
+On Mon, Jan 12, 2009 at 01:17:31AM +0300, Alexey Zaytsev wrote:
+> On Sun, Jan 11, 2009 at 23:04, Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+> >
+> >
+> > On Sun, 11 Jan 2009, Sam Ravnborg wrote:
+> >>
+> >> The cost of moving this piece of history from one git tree to another
+> >> git tree is that we make it harder to debug the kernel for the advanced user
+> >> that knows how to do bisect.
+> >>
+> >> It is not like this history would be lost - one just had to look
+> >> somewhere else to find it.
+> >>
+> >> That may be a bad pain/benefit ratio - time will tell.
+> >
+> > Umm. No.
+> >
+> > Time is exactly what makes it useful. It will make all the downsides
+> > shrink, and the advantages stay.
+> >
+> >> There should be a way to avoid such pain when bisecting without
+> >> having to mark a semi-random (for the average person) commit as good.
+> >
+> > Well, you don't actually have to mark that semi-random one as good either.
+> > What you can do is to just mark anything that _only_ contains fs/btrfs as
+> > good. IOW, you don't have to know the magic number - you just have to be
+> > told that "oh, if you only have btrfs files, and you're not actively
 > > bisecting a btrfs bug, just do 'git bisect good' and continue".
+> >
+> > Yeah, you'll hit it a few times, but you don't even have to compile things
+> > or boot anything, so it's not actually going to be all that much slower
+> > than just knowing about the magic point either.
 > 
-> That should work.
+> But would not such bug avoid being bisected if you blindly
+> mark btrfs commits as good?
 > 
-> <rant>
-> Still, I am a bit frustrated. During this weekend I reported 2 regressions 
-> (wlan and ata)  and I still try to find out why suspend/resume stopped 
-> working. In the meantime I have identified 2 patches (one was already known, 
-> I reported the 2nd to the usb maintainers) after 2.6.28 that caused suspend 
-> to ram regressions. In rc1 S2R was broken again. So I tried bisecting the 
-> third patch - which finally brought me to the btrfs bisect problem.
+> v2.6.29 <-- bad
+> ...
+> ...
+> ...
+> btrfs stuff <-- mark as good
+> ...
+> the-real-bug
+> ...
+> v2.6.28 <-- good
 > 
-> For me, this was the most annoying  merge window ever.
+> So you hit the btrfs commit, mark it as good, leaving the real bug below,
+> and the bisection continues, with both sides being actually bad.
 > 
-> In my opinion we should really avoid subtree merges in the future as a curtesy 
-> to people who do the uncool work of testing, problem tracking and bisecting. 
-> </rant>
+> Am I missing something?
 
-I think hitting a version without the actual kernel source in it should 
-actually make bisecting easier, not harder; you can say without even 
-building the kernel that that version doesn't have the problem you're 
-trying to find, because it doesn't have anything in it.
+Yep - you miss that people get confused when suddenly they have no kernel source.
 
-The alternative to having that part of the tree empty would be to stick in 
-some kernel version there (probably 2.6.28), and then you'd build and test 
-2.6.28 again, completely wasting a bunch of time.
-
-Probably the bisect documentation or messages need to make it clear what 
-you should do when you land on this sort of commit.
-
-	-Daniel
-*This .sig left intentionally blank*
+	Sam
