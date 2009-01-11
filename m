@@ -1,93 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
 Subject: Re: Removing a commit from a local branch
-Date: Sun, 11 Jan 2009 14:48:07 -0800 (PST)
-Message-ID: <m3hc45zcgq.fsf@localhost.localdomain>
-References: <a038bef50901111441w21959397tc41922656a25027c@mail.gmail.com>
-	<a038bef50901111442y16695664y4fed7cdd9d8af27@mail.gmail.com>
+Date: Sun, 11 Jan 2009 23:52:20 +0100
+Message-ID: <20090111225220.GB15533@atjola.homenet>
+References: <a038bef50901111441w21959397tc41922656a25027c@mail.gmail.com> <a038bef50901111442y16695664y4fed7cdd9d8af27@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>
-To: "Chris Packham" <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 11 23:49:44 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 11 23:53:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LM97c-0004Mq-Vu
-	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 23:49:33 +0100
+	id 1LM9Bm-0005x8-Fc
+	for gcvg-git-2@gmane.org; Sun, 11 Jan 2009 23:53:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751765AbZAKWsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 17:48:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751695AbZAKWsL
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 17:48:11 -0500
-Received: from mail-ew0-f17.google.com ([209.85.219.17]:54859 "EHLO
-	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243AbZAKWsK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 17:48:10 -0500
-Received: by ewy10 with SMTP id 10so11224638ewy.13
-        for <git@vger.kernel.org>; Sun, 11 Jan 2009 14:48:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        bh=CrVmNmDcH7cCNQ2t3M277/kq18PTaOF695AYPuIg2Gw=;
-        b=ZUuGwg9J8R8yvT/gUugUy+RK7TOl0+NlCjxYyRbdUZc+RoELGAO/pwaYo0/ZVvVWIv
-         fvNGMnnuhpIxJzUF3yZW42bLw60NL6jMYiftKWaM6oqh8WmBrLEuBU6ygdvQuMmaWS3e
-         HArkiKAXJKdRXKEiI+nD6SM6AuYFStRP5+gVA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:in-reply-to
-         :message-id:lines:user-agent:mime-version:content-type:date;
-        b=iq+ZorUTyniXRGgCAnMylbi1briq4EOMCJPwdf9sTg7x5+vv0sxboMaMJLRyToy0+s
-         zdmCAazNQJH8xj7nqG0K9yjdTdAYtdGaq36VGbjSTKhFAbTXpCKVccubRnmyI/HfHwAK
-         cUhEnELb5KccGVcChGxChEiuzU1AtXAu3y6tA=
-Received: by 10.210.22.16 with SMTP id 16mr247309ebv.56.1231714088246;
-        Sun, 11 Jan 2009 14:48:08 -0800 (PST)
-Received: from localhost.localdomain (abwj90.neoplus.adsl.tpnet.pl [83.8.233.90])
-        by mx.google.com with ESMTPS id 23sm2809215eya.3.2009.01.11.14.48.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Jan 2009 14:48:07 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0BMm6v7012349;
-	Sun, 11 Jan 2009 23:48:07 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0BMm6bK012346;
-	Sun, 11 Jan 2009 23:48:06 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+	id S1751744AbZAKWwZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Jan 2009 17:52:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751494AbZAKWwZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 17:52:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33647 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750893AbZAKWwY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 17:52:24 -0500
+Received: (qmail invoked by alias); 11 Jan 2009 22:52:21 -0000
+Received: from i577BBA7A.versanet.de (EHLO atjola.local) [87.123.186.122]
+  by mail.gmx.net (mp046) with SMTP; 11 Jan 2009 23:52:21 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+X3ehICEaX6TSTUj5kuPKq7umJpV75cHxvMQ47PE
+	l4yUTEtmArN8iq
+Content-Disposition: inline
 In-Reply-To: <a038bef50901111442y16695664y4fed7cdd9d8af27@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105247>
 
-"Chris Packham" <judge.packham@gmail.com> writes:
-
-> Consider the following example. The maintainer has the following
-> branch locally
-> 
+On 2009.01.12 11:42:24 +1300, Chris Packham wrote:
+> Hi List,
+>=20
+> I'm part of a development team using git. We use a maintainer model
+> where developers send patches/pull requests to a maintainer who
+> applies the patches to a local branch, decides if they're good or not
+> and pushes the good patches to the public repository.
+>=20
+> What I want to do is script the removal of a bad patch so that the
+> maintainer identifies a patch in his local branch, sends an email to
+> the author telling them why their patch is being rejected then remove=
+s
+> the commit for that patch. Using git log a script can extract the
+> author email address, hash and headline of each commit. Based on that
+> information scripting the email is easy enough. Now I come to using
+> git rebase to remove the bad commit based on its hash which leads me
+> to my question - How do I refer to a commit based on the hash of its
+> parent?
+>=20
+> Consider the following example. The maintainer has the following bran=
+ch locally
+>=20
 >   todeliver: A-B-C-D
-> 
+>=20
 > He is happy with commits A, C and D but wants to reject B. Ideally I
 > want to be able to say
 >   git rebase --onto <parent of B> <child of B> todelvier
-> 
-> and get
->   todeliver: A-C'-D'
-> 
-> I know that <parent of B> can be referred to as B~1 but what about
-> <child of B>? I've read through the man page for git-rev-parse and
-> nothing stands out as child of commit X.
-> 
-> Is there a better what do achieve what I'm after?
 
-Yes, I think it would be easier to either use "git rebase --interactive"
-(with some script taking place of EDITOR, or something), or prod Stephan
-Beyer (CC-ed) to finish git-sequencer...
+You don't want <child of B> there, just B.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+git rebase --onto <onto> <upstream> <branch>
+
+Rebases the commits from the range <upstream>..<branch>, and that
+_excludes_ the commit (referenced by) <upstream>.
+
+So:
+git rebase --onto B^ B todeliver
+
+Works on: B..todeliver =3D=3D todeliver --not B
+And that range contains commits C and D.
+
+Bj=F6rn
