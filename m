@@ -1,92 +1,78 @@
-From: Marco Roeland <marco.roeland@xs4all.nl>
-Subject: Re: Recent annoying problem with Linus's git repository?
-Date: Mon, 12 Jan 2009 08:59:42 +0100
-Message-ID: <20090112075942.GB29673@fiberbit.xs4all.nl>
-References: <alpine.LNX.2.00.0901111615500.4963@x9.ybpnyarg>
+From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
+Subject: Re: Minimum required version of subversion for git-svn?
+Date: Mon, 12 Jan 2009 09:03:48 +0100
+Message-ID: <496AF964.1070208@statsbiblioteket.dk>
+References: <496722CF.1060802@statsbiblioteket.dk> <20090112010354.GB23377@yp-box.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, rmk@arm.linux.org.uk
-To: walt <w41ter@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 09:01:41 2009
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Jan 12 09:06:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMHjw-0001JR-SY
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 09:01:41 +0100
+	id 1LMHnc-00023d-S1
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 09:05:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754733AbZALH7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 02:59:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753962AbZALH7v
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 02:59:51 -0500
-Received: from smtp-vbr6.xs4all.nl ([194.109.24.26]:4403 "EHLO
-	smtp-vbr6.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751861AbZALH7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 02:59:50 -0500
-Received: from fiberbit.xs4all.nl (fiberbit.xs4all.nl [80.101.187.211])
-	by smtp-vbr6.xs4all.nl (8.13.8/8.13.8) with ESMTP id n0C7xgh4053405
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 12 Jan 2009 08:59:42 +0100 (CET)
-	(envelope-from marco.roeland@xs4all.nl)
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.69)
-	(envelope-from <marco.roeland@xs4all.nl>)
-	id 1LMHi2-0000QC-Du; Mon, 12 Jan 2009 08:59:42 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.2.00.0901111615500.4963@x9.ybpnyarg>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1755011AbZALIDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 03:03:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755001AbZALIDy
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 03:03:54 -0500
+Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:13106 "EHLO
+	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754981AbZALIDx (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jan 2009 03:03:53 -0500
+Received: from [130.225.25.159] (130.225.25.159) by
+ sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
+ 8.1.336.0; Mon, 12 Jan 2009 09:03:48 +0100
+User-Agent: Thunderbird 2.0.0.18 (X11/20081124)
+In-Reply-To: <20090112010354.GB23377@yp-box.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105300>
 
-On Sunday January 11th 2009 at 16:42 walt wrote:
-
-> I've been tracking Junio's git.git and Linus's kernel.git for ages,
-> and just in the last two weeks or so I've been having a recurring
-> problem with the file "arch/arm/mach-integrator/clock.h" from Linus.
+Eric Wong wrote:
+> "Tom G. Christensen" <tgc@statsbiblioteket.dk> wrote:
+>> Hello,
+>>
+>> With git 1.6.0.5 I was able to run git-svn with subversion 1.1.4 on
+>> RHEL4/i386 but with 1.6.0.6 and 1.6.1 the testsuite now fails in the new
+>> test t9104.10:
 > 
-> Any time I check out an old kernel version (e.g. during a bisect)
-> and then do a "checkout master" when I'm done fiddling, git thinks
-> my repository is "dirty".
+> ...
 > 
-> This is the reason for my impurity:
+>> With 1.6.1 I also see t9129.10-12 failing with subversion 1.1.4:
+>> * FAIL 10: ISO-8859-1 should match UTF-8 in svn
 > 
-> # git status
-> # On branch master
-> # Changed but not updated:
-> #   (use "git add/rm <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working directory)
-> #
-> #       deleted:    arch/arm/mach-integrator/clock.h
+> ...
 > 
-> It's always that same damned clock.h that remains in my working
-> directory after doing the "checkout master" but it shouldn't be
-> there -- it has indeed been deleted from branch master.
+>> * failed 3 among 12 test(s)
+>> make[2]: Leaving directory `/builddir/build/BUILD/git-1.6.1/t'
+>> make[2]: *** [t9129-git-svn-i18n-commitencoding.sh] Error 1
+>>
+>> I see in git-svn.perl that only SVN::Core 1.1.0 is required. Is it still
+>> the intention that git-svn should work with subversion 1.1.x?
+>>
+>> If you're going to bump the minimum requirement I would ask that you
+>> atleast keep 1.3.x as supported. This is the last release of subversion
+>> where RHEL3 can satisfy the dependencies out of the box and I've
+>> verified that the testsuite will pass with 1.3.2.
 > 
-> When I then do a "git reset --hard" I Am Purified! and no longer
-> considered dirty.  But why should that extra reset step be needed?
+> It's still my intention that SVN 1.1.x is supported; but I haven't had
+> the chance to test those versions in a while.
 > 
-> Only that one file is involved in this recurring annoyance.  Can
-> anyone figure out why, or at least reproduce the problem?
+> Can you rerun the tests that failed with "sh -x t91..." ?
+> 
+I've run the tests from 1.6.1 with -v, sh -x and sh -x + -v and dumped 
+the results at http://jupiterrise.com/tmp
 
-It is because commit d72fbdf01fc77628c0b837d0dd2fd564fa26ede6 "[ARM]
-integrator: convert to clkdev and lookup clocks by device name" didn't
-really _delete_ file arch/arm/mach-integrator/clock.h but only made it
-empty. So the file still exists in the repository, but with size 0.
+You'll find results from one more test (t9106) which I didn't mention 
+and which is also giving me problems but only with rhel4/x86_64 and svn 
+1.1.4. It should be noted that this test has never worked for me with 
+this config.
 
-Cleanup scripts within the kernel build environment however always
-consider empty files leftover products from the build and so delete
-them.
-
-That's why you get this result, after cleaning up.
-
-The file should probably just be really deleted. Adding Russell to the
-Cc. ;-)
-
-At the moment (git describe gives v2.6.29-rc1-1-gae04d14) this is the
-only "empty" file in the kernel repository. We've had these cases
-before.
--- 
-Marco Roeland
+-tgc
