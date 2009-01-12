@@ -1,169 +1,55 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn: File was not found in commit
-Date: Sun, 11 Jan 2009 18:32:11 -0800
-Message-ID: <20090112023211.GA21462@dcvr.yhbt.net>
-References: <49678705.4040506@mog.se> <20090111215526.GA15533@atjola.homenet> <496A890C.8080208@mog.se>
+From: jidanni@jidanni.org
+Subject: grammar patches not best use of talent
+Date: Mon, 12 Jan 2009 10:51:34 +0800
+Message-ID: <87bpudp77t.fsf_-_@jidanni.org>
+References: <7vprito32u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Morgan Christiansson <git@mog.se>
-X-From: git-owner@vger.kernel.org Mon Jan 12 03:33:51 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 12 03:53:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMCcd-0001fm-W2
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 03:33:48 +0100
+	id 1LMCvI-0004u6-OJ
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 03:53:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752188AbZALCcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 21:32:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751645AbZALCcN
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 21:32:13 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:48665 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752006AbZALCcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 21:32:12 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E9121FE52;
-	Mon, 12 Jan 2009 02:32:11 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <496A890C.8080208@mog.se>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752006AbZALCvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 21:51:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751578AbZALCvk
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 21:51:40 -0500
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:55184 "EHLO
+	homiemail-a4.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751308AbZALCvj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Jan 2009 21:51:39 -0500
+Received: from jidanni.org (122-127-36-11.dynamic.hinet.net [122.127.36.11])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by homiemail-a4.dreamhost.com (Postfix) with ESMTP id 530984093C
+	for <git@vger.kernel.org>; Sun, 11 Jan 2009 18:51:38 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105281>
 
-Morgan Christiansson <git@mog.se> wrote:
-> The "Ignoring path" message appears to be coming from git which is  
-> refusing to commit the .git directory. Which leads to git-svn being  
-> unaware of the files being ignored and giving an error when it can't  
-> find them.
+I've decided to back out of my plan to patch grammar.
+$ perl -nwle '/\w+\s+handful.*/i&& print $&' Documentation/*|sort -uf
+a handful commits on top of that,
+A handful documentation fixes.
+A handful documentation updates.
+a handful example hooks are copied in the
+a handful fixes to run it
+a handful of examples:
+A handful of sample hooks are installed when
+a handful pack-objects changes to help you cope better
+a handful small fixes to gitweb.
+a handful the real changes in non-zero
+first handful of characters, show the full
+only handful hexdigits prefix.
+only handful hexdigits prefix.  Non default number of
+only handful hexdigits prefix.  This is
 
-> I'm personally fine with these files being ignored by git, but git-svn  
-> needs to be aware that they are not added to the repository.
-
-Hi Morgan,
-Can you try the following rough patch and see it it fixes things
-for you?  Thanks!
-
->From 559f4b673592f364e9773f2ba65caf09b138521b Mon Sep 17 00:00:00 2001
-From: Eric Wong <normalperson@yhbt.net>
-Date: Sun, 11 Jan 2009 18:23:38 -0800
-Subject: [PATCH/RFC] git-svn: avoid importing nested repos
-
-Some SVN repositories contain .git repositories within them
-(hopefully accidentally checked in).  Since git refuses to
-check in ".git" repositories, this can be a problem when
-fetching updates from SVN.
-
-This seems to repull the entire blob from SVN everytime a user
-changes something inside the ".git" directory on the SVN side,
-but hopefully this will be a rare case and the SVN users will
-correct the error quickly.
-
-The test could probably be expanded to be more thorough...
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl                       |    8 +++++
- t/t9133-git-svn-nested-git-repo.sh |   61 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 69 insertions(+), 0 deletions(-)
- create mode 100755 t/t9133-git-svn-nested-git-repo.sh
-
-diff --git a/git-svn.perl b/git-svn.perl
-index b0e3d7c..d34d967 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3379,6 +3379,13 @@ sub apply_textdelta {
- 	# (but $base does not,) so dup() it for reading in close_file
- 	open my $dup, '<&', $fh or croak $!;
- 	my $base = $::_repository->temp_acquire('git_blob');
-+
-+	# skip any .git directories that may have gone into SVN
-+	# since update-index refuses to add anything under ".git"
-+	if ($fb->{path} =~ m{(?:^|/)\.git(?:/|$)}) {
-+		goto apply;
-+	}
-+
- 	if ($fb->{blob}) {
- 		my ($base_is_link, $size);
- 
-@@ -3412,6 +3419,7 @@ sub apply_textdelta {
- 		}
- 	}
- 	seek $base, 0, 0 or croak $!;
-+apply:
- 	$fb->{fh} = $fh;
- 	$fb->{base} = $base;
- 	[ SVN::TxDelta::apply($base, $dup, undef, $fb->{path}, $fb->{pool}) ];
-diff --git a/t/t9133-git-svn-nested-git-repo.sh b/t/t9133-git-svn-nested-git-repo.sh
-new file mode 100755
-index 0000000..85402f4
---- /dev/null
-+++ b/t/t9133-git-svn-nested-git-repo.sh
-@@ -0,0 +1,61 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2009 Eric Wong
-+#
-+
-+test_description='git svn property tests'
-+. ./lib-git-svn.sh
-+
-+test_expect_success 'setup repo with a git repo inside it' '
-+	svn co "$svnrepo" s &&
-+	(
-+		cd s &&
-+		git init &&
-+		test -f .git/HEAD &&
-+		echo a > a &&
-+		svn add .git a &&
-+		test a = "`sed -ne 1p < a`" &&
-+		svn commit -m "create a nested git repo"
-+	)
-+'
-+
-+test_expect_success 'clone an SVN repo containing a git repo' '
-+	git svn clone "$svnrepo" g
-+'
-+
-+test_expect_success 'SVN-side change outside of .git' '
-+	(
-+		cd s &&
-+		echo b >> a &&
-+		svn commit -m "SVN-side change outside of .git"
-+	)
-+'
-+
-+test_expect_success 'update git svn-cloned repo' '
-+	(
-+		cd g &&
-+		git svn rebase &&
-+		test a = "`sed -ne 1p < a`" &&
-+		test b = "`sed -ne 2p < a`"
-+	)
-+'
-+test_expect_success 'SVN-side change inside of .git' '
-+	(
-+		cd s &&
-+		git add a &&
-+		git commit -m "add a inside an SVN repo" &&
-+		svn add .git &&
-+		svn commit -m "SVN-side change inside of .git"
-+	)
-+'
-+
-+test_expect_success 'update git svn-cloned repo' '
-+	(
-+		cd g &&
-+		git svn rebase &&
-+		grep ^b a &&
-+		git log --raw -r
-+	)
-+'
-+
-+test_done
--- 
-Eric Wong
+At first some of the above lines irritated me, but who am I to say
+that English must be said like my mom says it, and is never allowed to
+evolve further. Nope, I'll stick to correcting 2+2=3 type things.
