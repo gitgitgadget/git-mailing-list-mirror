@@ -1,66 +1,55 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Google Summer of Code 2009
-Date: Mon, 12 Jan 2009 12:16:32 +0100
-Message-ID: <496B2690.2010902@op5.se>
-References: <20090107183033.GB10790@spearce.org>
+From: Asheesh Laroia <asheesh@asheesh.org>
+Subject: Re: Help! My ISP blocks repo.or.cz. How to push changes?
+Date: Mon, 12 Jan 2009 03:25:34 -0800 (PST)
+Message-ID: <alpine.DEB.2.00.0901120324490.18989@vellum.laroia.net>
+References: <200901120246.28364.jnareb@gmail.com> <81b0412b0901120117mf010317m79874a235e29a439@mail.gmail.com> <200901121213.45858.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jan 12 12:25:12 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 12 12:27:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMKun-0006sQ-R1
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 12:25:06 +0100
+	id 1LMKwu-0007WT-Pn
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 12:27:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752385AbZALLXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 06:23:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752408AbZALLXj
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 06:23:39 -0500
-Received: from mail.op5.se ([193.201.96.20]:49108 "EHLO mail.op5.se"
+	id S1752414AbZALLZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 06:25:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752456AbZALLZm
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 06:25:42 -0500
+Received: from rose.makesad.us ([219.105.37.19]:60665 "EHLO rose.makesad.us"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752179AbZALLXi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 06:23:38 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Jan 2009 06:23:38 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 1F7A71B80CA5;
-	Mon, 12 Jan 2009 12:17:28 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7+Lh2gzN6tYB; Mon, 12 Jan 2009 12:17:26 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id F3D361B80C19;
-	Mon, 12 Jan 2009 12:17:25 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <20090107183033.GB10790@spearce.org>
+	id S1751425AbZALLZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 06:25:41 -0500
+Received: from vellum.laroia.net (localhost [127.0.0.1])
+	by rose.makesad.us (Postfix) with ESMTP id E3306A010F;
+	Mon, 12 Jan 2009 06:25:39 -0500 (EST)
+Received: from localhost (localhost [127.0.0.1])
+	by vellum.laroia.net (Postfix) with ESMTPS id B50EB3A62BD;
+	Mon, 12 Jan 2009 03:25:34 -0800 (PST)
+X-X-Sender: paulproteus@vellum.laroia.net
+In-Reply-To: <200901121213.45858.jnareb@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-OpenPGP-Key-ID: 0x70096AD1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105328>
 
-Just chiming in that I can probably help mentoring whoever goes
-with libgit2. I do not have enough spare time for me to promise
-that I can be there as much as I think is necessary and proper,
-but I'll gladly help out.
+On Mon, 12 Jan 2009, Jakub Narebski wrote:
 
-On a side-note, I think all mentors should urge the students in
-the strongest possible terms to deliver their work to git@vger
-as soon as possible. From previous years experience, successful
-projects are those that the list sees code from within a week
-or two after the project's started, while the projects that are
-kept in the dark rarely (if ever?) finish successfully.
+> But I have to run
+>
+> $ ssh -f -N -L 2222:repo.or.cz:22 jnareb@host.example.com
+>
+> first. Is there any way to automate this?
+
+Check out 'gstm' or 'autossh'.
+
+-- Asheesh.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+You will get what you deserve.
