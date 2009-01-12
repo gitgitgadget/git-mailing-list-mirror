@@ -1,72 +1,75 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: Re: [PATCH] Update bash completions to prevent unbound variable errors.
-Date: Mon, 12 Jan 2009 16:51:44 -0500
-Message-ID: <496BBB70.5090803@tedpavlic.com>
-References: <496BA0E4.2040607@tedpavlic.com> <200901121435.35547.bss@iguanasuicide.net> <496BB204.2040109@tedpavlic.com> <496BB442.90107@tedpavlic.com> <20090112213213.GM10179@spearce.org>
+From: mark <markkicks@gmail.com>
+Subject: git log, outputs something weird for colors
+Date: Mon, 12 Jan 2009 13:51:53 -0800
+Message-ID: <82fa9e310901121351y22feaf21rfb880bcd0d6cb1a3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jan 12 22:53:18 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 12 22:53:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMUid-0001aZ-DE
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 22:53:11 +0100
+	id 1LMUio-0001e5-PL
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 22:53:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753397AbZALVvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 16:51:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753377AbZALVvq
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 16:51:46 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:47610 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753272AbZALVvp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jan 2009 16:51:45 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 2259D80D802F;
-	Mon, 12 Jan 2009 16:46:03 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dh4ZtyroDEM7; Mon, 12 Jan 2009 16:46:03 -0500 (EST)
-Received: from tedbook.mshome.net (tedpc.ece.ohio-state.edu [164.107.164.122])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 068FA80D8022;
-	Mon, 12 Jan 2009 16:46:03 -0500 (EST)
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <20090112213213.GM10179@spearce.org>
+	id S1753659AbZALVvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 16:51:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753560AbZALVvy
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 16:51:54 -0500
+Received: from rv-out-0506.google.com ([209.85.198.225]:13214 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753377AbZALVvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 16:51:54 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so10405091rvb.1
+        for <git@vger.kernel.org>; Mon, 12 Jan 2009 13:51:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=1z11Jw7jxMXL4w44LcpfsFuJFNBMaY/72CiifPI4IzM=;
+        b=I7dz2qKze4Ar7myqz767WX+UmoRTnq0mYiCL+RNl8AxOMrVfo3qdbH3SAVBUPvoyN5
+         3rJxOQvVVudtKyMizteUNS0Xge4jKzYkS3mAoAqMHoRiO4mzuToiQu+lg+9CQoyKutDv
+         pmk7bGzuJ9oxkQa/5sm1FboUAkQ9067RllQDw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=uRSI8A0n2CTIpskglCWu8osH2o6pkkidwSvr08lQ9jCh7XvrOwRTPGZxwKZixgek86
+         kqU4q1tPiVoAMGrBkLAk7Dqg2uixSa6F+kXIL4zO59PNkj3sPN0e0ntLYZSYB85W8pCr
+         dmIj3erG68jr0cxBSBr5dffwfmaYzb05SuKAU=
+Received: by 10.114.185.8 with SMTP id i8mr19800736waf.85.1231797113395;
+        Mon, 12 Jan 2009 13:51:53 -0800 (PST)
+Received: by 10.114.59.17 with HTTP; Mon, 12 Jan 2009 13:51:53 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105396>
 
->> It appears like they use
->>
->> 	complete -o bashdefault
->>
->> whereas Git's uses
->>
->> 	complete -o default
->>
->> I think that's the difference.
->
-> If that's all we need to do, that's a simple 1 line change... which
-> I like.
-
-That was a red herring. The problem is more fundamental than that.
-
-The script needs to be more careful about its use. I'll submit a better 
-patch momentarily.
-
---Ted
+hi
+i am using kde konsole, and i am getting weird output for colors, for
+example for git log i get the following output
 
 
--- 
-Ted Pavlic <ted@tedpavlic.com>
+git log
+ESC[33mcommit 8b918256d944221f741e5d7300873810e31466a6ESC[m
 
-   Please visit my ALS association page:
-         http://web.alsa.org/goto/tedpavlic
-   My family appreciates your support in the fight to defeat ALS.
+
+settings in my bash and git.
+
+export | grep -i term
+declare -x TERM="xterm-256color"
+
+
+~/.gitconfig
+[color]
+ branch = auto
+ diff = auto
+ status = auto
+
+do you know what is wrong?
+thanks
