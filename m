@@ -1,119 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Lightweight tag ?
-Date: Mon, 12 Jan 2009 15:54:27 +0100
-Message-ID: <496B59A3.2080507@drmicha.warpmail.net>
-References: <38b2ab8a0901111044x5db21d74i25ff7a26bb702a5d@mail.gmail.com>	 <7v63klsgf5.fsf@gitster.siamese.dyndns.org> <m2bpucnas2.fsf@gmail.com>	 <496B3DA8.1040308@drmicha.warpmail.net> <38b2ab8a0901120556x279f320oe693304dd2452050@mail.gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH 2/2] grep: don't call regexec() for fixed strings
+Date: Mon, 12 Jan 2009 16:32:36 +0100
+Message-ID: <81b0412b0901120732t1bd1978awdc4be47767e02863@mail.gmail.com>
+References: <4967D8F8.9070508@lsrfire.ath.cx> <4967DB4A.2000702@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 15:56:03 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "=?UTF-8?Q?Ren=C3=A9_Scharfe?=" <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Jan 12 16:34:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMOCp-0000vH-9a
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 15:55:55 +0100
+	id 1LMOnj-0006Gr-9k
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 16:34:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804AbZALOyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 09:54:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbZALOyb
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 09:54:31 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54473 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751491AbZALOya (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jan 2009 09:54:30 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 63E31210295;
-	Mon, 12 Jan 2009 09:54:28 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 12 Jan 2009 09:54:28 -0500
-X-Sasl-enc: qVAd/krrCA9uBoWgumZnuxfoKwB47HjxjHHw5q5YQYt7 1231772067
-Received: from [139.174.44.34] (pascal.math.tu-clausthal.de [139.174.44.34])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 7D832354D8;
-	Mon, 12 Jan 2009 09:54:27 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
-In-Reply-To: <38b2ab8a0901120556x279f320oe693304dd2452050@mail.gmail.com>
+	id S1752466AbZALPcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 10:32:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752266AbZALPcj
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 10:32:39 -0500
+Received: from wf-out-1314.google.com ([209.85.200.174]:42962 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752179AbZALPci (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 10:32:38 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so11403571wfd.4
+        for <git@vger.kernel.org>; Mon, 12 Jan 2009 07:32:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=iloffteAWIc/sD90mr6pYAZSMV9UEsJzab+heFDEsDY=;
+        b=irJFzpn55OpJZLX5vtjnpcwAaWTojrFNkCg266AI5g6zrhUiiGLSS0VoU0NNIh4Fuh
+         DHXaQBta3kaRIUqyyn+7HfjIBylHJVW8hXgBpEaJXev63pJcjdCq2zwafV8EdSndvfY1
+         O95cW2lyAoyjHGYDWgUXbKcQGWLiA6vQ7Ot4Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=FXfXReUG/c44fvaNYFi5f4913sF1Hm4v30jUb4Tj6oUprksc9TaRVE799MHfuQgkMD
+         of9gKwPKm9RR/ZHfA1eFHBikqQT2I5VWiX7TqlD0S8Md27pTfPOlU2Ti/zOaMTFV2j6B
+         5oyHpBdjpimyU6U+cwUCs89ianf/jKYlDA5p8=
+Received: by 10.114.234.13 with SMTP id g13mr19333231wah.64.1231774356863;
+        Mon, 12 Jan 2009 07:32:36 -0800 (PST)
+Received: by 10.114.179.4 with HTTP; Mon, 12 Jan 2009 07:32:36 -0800 (PST)
+In-Reply-To: <4967DB4A.2000702@lsrfire.ath.cx>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105348>
 
-Francis Moreau venit, vidit, dixit 01/12/09 14:56:
-> On Mon, Jan 12, 2009 at 1:55 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Your test above confirms that the description is correct and nothing is
->> missing. "git push" pushes explicitly listed refspecs (or : as a
->> default). It pushes tags (light and heavy) when asked to.
->>
-> 
-> So do you mean that the only way I have for pushing annoted tags only is
-> to do:
-> 
->    $ git push origin refs/tags/annoted
-
-You could use the equivalent, more user friendly "git push origin tag
-annoted".
-
-> That's not what Junio said:
-> 
->    Don't use explicit --tags blindly.  It says "no matter what kind of tag,
->    transfer everything under refs/tags".  Otherwise you won't see a
->    difference.
-> 
-> So I interpret this like don't use --tags otherwise lightweight and annoted tags
-> are the same.
-
-I don't see a difference between lightweight tags and tag objects
-regarding the question of automatic tag following, see my parenthetical
-request for correction (below) in case I'm wrong.
-
->> "git pull" pulls tags if they can be reached from heads which are
->> pulled. It pulls all tags only when asked to.
->>
-> 
-> [...]
-> 
->> So, "non-local" tags are the ones which can be reached from heads which
->> you pull, and local ones are the others.
-> 
-> So I can't create a local tag on public heads (the ones I'm pushing
-> out), can I ?
-> 
->> I don't think lightweight tags are more local than tag objects
->> (please correct me if I'm wrong; I think this needs more doc)
-> 
-> Perhaps it needs documents which are more user friendly: I don't know where
-> the 'lightweight' word is coming from (perhaps from the implementation) but
-> I would expect that the _local_ term appears in the git-tag manual.
-
-It's the other way round. "lightweight" is in the first few lines of the
-man, "local" nowhere. In fact I don't see it anywhere in the docs.
-
->> It's just that the latter reside in the object db
->> store whereas the former are simple refs under refs/tags.
-> 
-> That's implementation detail...
-> 
-> I just need to create a local tag where I'm sure it won't be seen by others
-> whatever the git operations I'm doing, normally a simple "git tag" switch
-> should be enough...
-
-Taking "whatever" literally this is impossible, of course.
-
-Taking it /cum grano salis/ it's still impossible within the same repo:
-If others have read access they can "ls-remote" and "fetch" happily what
-they want. The sane and easy way is to use a private repo for your local
-work and all your "local tags", then to push to a public (i.e.
-publically readable) repo those branches and tags which you want to be seen.
-
-Are you a Mercurial user by any chance? "hg tag -l" creates local tags
-which are stored in an unversioned, private file, whereas "hg tag"
-creates (and commits) a tag entry in a versioned file, which is the
-source of some confusion and problems with hg tags ("hg co sometag" does
-not contain sometag etc.). Maybe you want the behaviour of "hg tag -l"?
-
-Cheers,
-Michael
+MjAwOS8xLzEwIFJlbsOpIFNjaGFyZmUgPHJlbmUuc2NoYXJmZUBsc3JmaXJlLmF0aC5jeD46Cj4g
+K3N0YXRpYyBpbnQgaXNyZWdleHNwZWNpYWwoaW50IGMpCj4gK3sKPiArICAgICAgIHJldHVybiBp
+c3NwZWNpYWwoYykgfHwgYyA9PSAnJCcgfHwgYyA9PSAnKCcgfHwgYyA9PSAnKScgfHwgYyA9PSAn
+KycgfHwKPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYyA9PSAnLicgfHwgYyA9PSAn
+XicgfHwgYyA9PSAneycgfHwgYyA9PSAnfCc7Cj4gK30KPiArCj4gK3N0YXRpYyBpbnQgaXNfZml4
+ZWQoY29uc3QgY2hhciAqcykKPiArewo+ICsgICAgICAgd2hpbGUgKCFpc3JlZ2V4c3BlY2lhbCgq
+cykpCj4gKyAgICAgICAgICAgICAgIHMrKzsKPiArICAgICAgIHJldHVybiAhKnM7Cj4gK30KCnN0
+cmNocj8K
