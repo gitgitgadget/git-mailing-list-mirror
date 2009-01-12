@@ -1,68 +1,74 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [RFC PATCH 4/3] Add example git-vcs-p4
-Date: Mon, 12 Jan 2009 12:46:32 +0100
-Message-ID: <81b0412b0901120346x79772846p6e5097028fc9720c@mail.gmail.com>
-References: <alpine.LNX.1.00.0901110336380.19665@iabervon.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Funny: git -p submodule summary
+Date: Mon, 12 Jan 2009 13:00:05 +0100
+Message-ID: <496B30C5.2060207@viscovery.net>
+References: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de> <20090109083836.GB21389@coredump.intra.peff.net> <20090109092250.GA1809@coredump.intra.peff.net> <49672244.80200@viscovery.net> <20090109101335.GA4346@coredump.intra.peff.net> <496728B9.7090200@viscovery.net> <20090111112222.GA29656@coredump.intra.peff.net> <496B2278.9050905@viscovery.net> <20090112112109.GA3825@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Jan 12 12:48:15 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 12 13:02:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMLGw-0005FD-UA
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 12:47:59 +0100
+	id 1LMLUP-0001Jb-EJ
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 13:01:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751158AbZALLqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 06:46:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750826AbZALLqf
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 06:46:35 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:20224 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750770AbZALLqe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 06:46:34 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so5565224wah.21
-        for <git@vger.kernel.org>; Mon, 12 Jan 2009 03:46:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=Z40cueVJ0cn16aVuCuMVOvMtiDH7aaQEDb2O0dcd5RU=;
-        b=cRCPUMwdMX40ayuN4y6C+ZJPsMFew0ojUsJJkhN0sgXyxC22jJOKyj0EcT/I7ZoQZ8
-         gpe8YBvQ/A76kem34c6LE7UAEQouXkFc9OAVCQLD6RvV0p9KoYsJ9PmDCd416LGbYYCR
-         P9TklcBrkkYCIZvde9OZJsvjtDEWCCZdPzhm8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Pr5n734w8XQWsmreGYTA156jobOYhhp7xmOznsFr7MyVJWDIyrHBEaBimsyOWRSZfV
-         Gv954h7+MpjQtiNCIZ3XMBinJm4xdSp1Rxsx/wdUNNU9aTZW3Yp1zzx09ksE4cJVKW2a
-         4Wodv2OJEBP7w5cgODRzf2hgAx96AhuubiB54=
-Received: by 10.114.81.1 with SMTP id e1mr18994183wab.136.1231760793312;
-        Mon, 12 Jan 2009 03:46:33 -0800 (PST)
-Received: by 10.114.179.4 with HTTP; Mon, 12 Jan 2009 03:46:32 -0800 (PST)
-In-Reply-To: <alpine.LNX.1.00.0901110336380.19665@iabervon.org>
-Content-Disposition: inline
+	id S1752136AbZALMAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 07:00:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbZALMAK
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 07:00:10 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:64778 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751687AbZALMAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 07:00:09 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LMLSe-0006Td-Eg; Mon, 12 Jan 2009 13:00:04 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 3A2E769F; Mon, 12 Jan 2009 13:00:04 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <20090112112109.GA3825@coredump.intra.peff.net>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105331>
 
-2009/1/11 Daniel Barkalow <barkalow@iabervon.org>:
-> diff --git a/Makefile b/Makefile
->
-> +LIB_OBJS += p4client.o
-> +LIB_OBJS += vcs-p4.o
-> +
->
-> +extern int cmd_p4(int argc, const char **argv, const char *prefix);
-> +
+Jeff King schrieb:
+> Hrm. How do you properly detect "killed by SIGINT" on Windows?
 
-Why is your foreign VCS importer built-in? The majority wont ever need it,
-yet they have to pay the price for its text being in git executable.
+Good question. The exit code is 0xc000013a if the signal was generated by
+hitting Ctrl-C (tested with 'git --no-pager log'), but it is 3 if the
+signal was "generated" by 'raise(SIGINT)'. The implementation of the
+latter just calls _exit(3) (same for other deadly signals). Wow!
+
+>> -#define SIGKILL 0
+>> -#define SIGCHLD 0
+>> -#define SIGPIPE 0
+>> -#define SIGHUP 0
+>> -#define SIGQUIT 0
+>> -#define SIGALRM 100
+>> +#define SIGHUP 1
+>> +#define SIGQUIT 3
+>> +#define SIGKILL 9
+>> +#define SIGPIPE 13
+>> +#define SIGALRM 14
+>> +#define SIGCHLD 17
+> 
+> Don't these get fed to signal()? Does Windows really not care about
+> getting bogus numbers versus 0 (which is, admittedly, bogus itself)? Or
+> are we just ignoring the return code everywhere?
+
+Windows's signal() does return EINVAL; appearently, we never check the
+return code. :-P
+
+-- Hannes
