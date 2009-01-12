@@ -1,48 +1,57 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC PATCH 1/3] Add "vcs" config option in remotes
-Date: Sun, 11 Jan 2009 20:32:36 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0901112032100.19665@iabervon.org>
-References: <alpine.LNX.1.00.0901110332580.19665@iabervon.org> <46dff0320901111729y3869db2bxcc2b66a7be247d0b@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 3/3] Support fetching from foreign VCSes
+Date: Sun, 11 Jan 2009 17:33:35 -0800
+Message-ID: <7vfxjpmhow.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0901110335520.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 02:34:04 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Jan 12 02:35:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMBgn-00078P-Tt
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 02:34:02 +0100
+	id 1LMBho-0007Je-Er
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 02:35:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751907AbZALBci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 20:32:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751722AbZALBci
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 20:32:38 -0500
-Received: from iabervon.org ([66.92.72.58]:49236 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751308AbZALBch (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 20:32:37 -0500
-Received: (qmail 11930 invoked by uid 1000); 12 Jan 2009 01:32:36 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Jan 2009 01:32:36 -0000
-In-Reply-To: <46dff0320901111729y3869db2bxcc2b66a7be247d0b@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752120AbZALBdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 20:33:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752071AbZALBdl
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 20:33:41 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33427 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752069AbZALBdk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 20:33:40 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6B9088FCEB;
+	Sun, 11 Jan 2009 20:33:39 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AFFEA8FCE9; Sun,
+ 11 Jan 2009 20:33:36 -0500 (EST)
+In-Reply-To: <alpine.LNX.1.00.0901110335520.19665@iabervon.org> (Daniel
+ Barkalow's message of "Sun, 11 Jan 2009 15:12:10 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 09E5AC10-E049-11DD-AF65-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105271>
 
-On Mon, 12 Jan 2009, Ping Yin wrote:
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> On Mon, Jan 12, 2009 at 4:12 AM, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> > This will indicate to programs using the remote that it should be
-> > accessed through a VCS helper. Until programs support it, have them
-> > fail it the option is set.
-> 
-> s/it/if/ ?
+> This supports a useful subset of the usual fetch logic, mostly in the
+> config file.
+>
+> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 
-Yes. It was pretty late last night when I wrote the commit messages.
+I like the direction this series is going.  In the longer term, it would
+be nice if we can have git-svn and git-cvsimport replaced with something
+like this.
 
-	-Daniel
+Is the current foreign vcs interface sufficiently rich to support git as a
+foreign scm by using fast-import and fast-export?
+
+Thanks.
