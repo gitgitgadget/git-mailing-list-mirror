@@ -1,102 +1,168 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2 1/4] Add color_fwrite(), a function coloring each line
- individually
-Date: Mon, 12 Jan 2009 00:49:32 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901120049190.3586@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0901112057300.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901112058570.3586@pacific.mpi-cbg.de> <7vwsd1o44i.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901120048430.3586@pacific.mpi-cbg.de>
+From: Morgan Christiansson <git@mog.se>
+Subject: Re: git-svn: File was not found in commit
+Date: Mon, 12 Jan 2009 01:04:28 +0100
+Message-ID: <496A890C.8080208@mog.se>
+References: <49678705.4040506@mog.se> <20090111215526.GA15533@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 00:51:09 2009
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 12 01:06:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMA4T-0005on-0j
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 00:50:21 +0100
+	id 1LMAJj-0002vb-7N
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 01:06:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975AbZAKXss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 18:48:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751958AbZAKXss
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 18:48:48 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46242 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751795AbZAKXsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 18:48:47 -0500
-Received: (qmail invoked by alias); 11 Jan 2009 23:48:45 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp041) with SMTP; 12 Jan 2009 00:48:45 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+tg74eoL6tZ6uXSgoksaFXrlsWuO0k1/vuUPE0q4
-	a4nkfM7um4IFEg
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0901120048430.3586@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1754077AbZALAEm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Jan 2009 19:04:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754000AbZALAEl
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 19:04:41 -0500
+Received: from mog.vm.bytemark.co.uk ([80.68.94.200]:52847 "EHLO mog.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753696AbZALAEk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 19:04:40 -0500
+Received: from [192.168.1.182] (81-226-238-170-no61.tbcn.telia.com [81.226.238.170])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mog.se (Postfix) with ESMTP id ADDDE80CC5
+	for <git@vger.kernel.org>; Mon, 12 Jan 2009 00:04:38 +0000 (GMT)
+User-Agent: Thunderbird 2.0.0.18 (X11/20081125)
+In-Reply-To: <20090111215526.GA15533@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105257>
+
+Bj=F6rn Steinbrink wrote:
+> On 2009.01.09 18:19:01 +0100, Morgan Christiansson wrote:
+>  =20
+>> --------------------------------------------------------------------=
+----
+>> r10577 | morgan | 2008-11-28 18:31:00 +0000 (Fri, 28 Nov 2008) | 3 l=
+ines
+>> Changed paths:
+>>   A /branches/rails/rails/vendor/plugins/acts_as_xapian/.git/FETCH_H=
+EAD
+>>   M /branches/rails/rails/vendor/plugins/acts_as_xapian/.git/config
+>>   M /branches/rails/rails/vendor/plugins/acts_as_xapian/.git/index
+>>   M /branches/rails/rails/vendor/plugins/acts_as_xapian/.git/logs/HE=
+AD
+>>   M /branches/rails/rails/vendor/plugins/acts_as_xapian/.git/logs/re=
+fs/heads/master=20
+>> # -- THIS FILE --
+>>    =20
+> Unless I totally misread that line, SVN reports that the file was
+> _modified_, not added. For the file to be modified, it seems reasonab=
+le
+> to expect that it existed in the previous commit.
+>
+> Is there anything "special" about how that file came into existence i=
+n
+> that branch? Without further knowledge, that looks like a svn bug, bu=
+t
+> hey, it's svn, it might do funny stuff on purpose ;-)
+>
+> Maybe you could provide a small test case/repo?
+>
+> Bj=F6rn
+>  =20
+Something odd happened when "git svn fetch" was adding r10559 to git:
+
+        A       rails/vendor/plugins/acts_as_xapian/README.txt
+        A       rails/vendor/plugins/acts_as_xapian/.cvsignore
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/refs/heads/maste=
+r
+Ignoring path=20
+rails/vendor/plugins/acts_as_xapian/.git/refs/remotes/origin/HEAD
+Ignoring path=20
+rails/vendor/plugins/acts_as_xapian/.git/refs/remotes/origin/master
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/HEAD
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/description
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/hooks/update
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/hooks/post-recei=
+ve
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/hooks/post-updat=
+e
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/hooks/pre-rebase
+Ignoring path=20
+rails/vendor/plugins/acts_as_xapian/.git/hooks/prepare-commit-msg
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/hooks/applypatch=
+-msg
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/hooks/pre-applyp=
+atch
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/hooks/post-commi=
+t
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/hooks/commit-msg
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/hooks/pre-commit
+Ignoring path=20
+rails/vendor/plugins/acts_as_xapian/.git/logs/refs/heads/master
+Ignoring path=20
+rails/vendor/plugins/acts_as_xapian/.git/logs/refs/remotes/origin/HEAD
+Ignoring path=20
+rails/vendor/plugins/acts_as_xapian/.git/logs/refs/remotes/origin/maste=
+r
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/logs/HEAD
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/config
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/index
+Ignoring path=20
+rails/vendor/plugins/acts_as_xapian/.git/objects/pack/pack-570449ffe8ce=
+399eca81f286cf942e51ace03448.pack
+Ignoring path=20
+rails/vendor/plugins/acts_as_xapian/.git/objects/pack/pack-570449ffe8ce=
+399eca81f286cf942e51ace03448.idx
+Ignoring path rails/vendor/plugins/acts_as_xapian/.git/info/exclude
+W: +empty_dir:=20
+branches/rails/rails/vendor/plugins/acts_as_xapian/.git/branches
+W: +empty_dir:=20
+branches/rails/rails/vendor/plugins/acts_as_xapian/.git/objects/info
+W: +empty_dir:=20
+branches/rails/rails/vendor/plugins/acts_as_xapian/.git/refs/tags
+r10559 =3D 4f33ee36a5d933a62081a76c7788fb46a9e6f0e8 (rails)
 
 
-We have to set the color before every line and reset it before every
-newline.  Add a function color_fwrite() which does that for us.
+The "Ignoring path" message appears to be coming from git which is=20
+refusing to commit the .git directory. Which leads to git-svn being=20
+unaware of the files being ignored and giving an error when it can't=20
+find them.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- color.c |   28 ++++++++++++++++++++++++++++
- color.h |    1 +
- 2 files changed, 29 insertions(+), 0 deletions(-)
 
-diff --git a/color.c b/color.c
-index fc0b72a..b028880 100644
---- a/color.c
-+++ b/color.c
-@@ -191,3 +191,31 @@ int color_fprintf_ln(FILE *fp, const char *color, const char *fmt, ...)
- 	va_end(args);
- 	return r;
- }
-+
-+/*
-+ * This function splits the buffer by newlines and colors the lines individually.
-+ *
-+ * Returns 0 on success.
-+ */
-+int color_fwrite_lines(FILE *fp, const char *color,
-+		size_t count, const char *buf)
-+{
-+	if (!*color)
-+		return fwrite(buf, count, 1, fp) != 1;
-+	while (count) {
-+		char *p = memchr(buf, '\n', count);
-+		if (fputs(color, fp) < 0 ||
-+				fwrite(buf, p ? p - buf : count, 1, fp) != 1 ||
-+				fputs(COLOR_RESET, fp) < 0)
-+			return -1;
-+		if (!p)
-+			return 0;
-+		if (fputc('\n', fp) < 0)
-+			return -1;
-+		count -= p + 1 - buf;
-+		buf = p + 1;
-+	}
-+	return 0;
-+}
-+
-+
-diff --git a/color.h b/color.h
-index 6cf5c88..cd5c985 100644
---- a/color.h
-+++ b/color.h
-@@ -19,5 +19,6 @@ int git_config_colorbool(const char *var, const char *value, int stdout_is_tty);
- void color_parse(const char *var, const char *value, char *dst);
- int color_fprintf(FILE *fp, const char *color, const char *fmt, ...);
- int color_fprintf_ln(FILE *fp, const char *color, const char *fmt, ...);
-+int color_fwrite_lines(FILE *fp, const char *color, size_t count, const char *buf);
- 
- #endif /* COLOR_H */
--- 
-1.6.1.223.g50c8f
+#The following commands will create a repository that has this problem:
+cd ~
+rm -rf gittest*
+svnadmin create gittest-repo
+svn co file:///$HOME/gittest-repo gittest-checkout
+cd gittest-checkout
+mkdir -p .git
+touch .git/file
+svn add .git
+svn commit -m "Create .git/file"
+echo 1 > .git/file
+svn commit -m "Modify .git/file"
+
+# The following will try to import the repository, which fails.
+cd ~
+mkdir gittest
+cd gittest
+git svn init file:///$HOME/gittest-repo
+git svn fetch
+
+# Output:
+$ git svn fetch
+    A    .git/file
+Ignoring path .git/file
+r1 =3D ccc56451d54315bd253b65c514351e996fbe880e (git-svn)
+=2Egit/file was not found in commit=20
+ccc56451d54315bd253b65c514351e996fbe880e (r1)
+
+
+# Cleanup
+rm -rf gittest gittest-repo gittest-checkout
+
+
+
+I'm personally fine with these files being ignored by git, but git-svn=20
+needs to be aware that they are not added to the repository.
