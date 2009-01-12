@@ -1,63 +1,72 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: current git kernel has strange problems during bisect
-Date: Mon, 12 Jan 2009 06:03:03 +0100
-Message-ID: <200901120603.03977.chriscool@tuxfamily.org>
-References: <200901111602.53082.borntraeger@de.ibm.com> <20090111230240.GA27489@artemis.corp> <200901120551.56791.chriscool@tuxfamily.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn: File was not found in commit
+Date: Sun, 11 Jan 2009 21:14:09 -0800
+Message-ID: <20090112051409.GB14992@dcvr.yhbt.net>
+References: <49678705.4040506@mog.se> <20090111215526.GA15533@atjola.homenet> <496A890C.8080208@mog.se> <20090112023211.GA21462@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Alexey Zaytsev <alexey.zaytsev@gmail.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-To: Christian Borntraeger <borntraeger@de.ibm.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 06:03:51 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Morgan Christiansson <git@mog.se>
+X-From: git-owner@vger.kernel.org Mon Jan 12 06:15:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMExq-00029Y-Qr
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 06:03:51 +0100
+	id 1LMF9D-0004OU-Ah
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 06:15:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750949AbZALFC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 00:02:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750791AbZALFC0
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 00:02:26 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:43346 "EHLO smtp3-g21.free.fr"
+	id S1751129AbZALFOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 00:14:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750791AbZALFOL
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 00:14:11 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:60341 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750695AbZALFCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 00:02:25 -0500
-X-Greylist: delayed 665 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Jan 2009 00:02:24 EST
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 79E39818049;
-	Mon, 12 Jan 2009 06:02:13 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 928A281806B;
-	Mon, 12 Jan 2009 06:02:11 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <200901120551.56791.chriscool@tuxfamily.org>
+	id S1750720AbZALFOK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 00:14:10 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id F06871FE52;
+	Mon, 12 Jan 2009 05:14:09 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <20090112023211.GA21462@dcvr.yhbt.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105291>
 
-I wrote:
->
-> Anyway it looks to me that this kind of problem could be avoided if one
-> could "replace" some commits only when bisecting. In this case what could
-> be done is that one could "replace" the commit where btrfs is merged with
-> one commit that cuts off the btrfs history.
+Eric Wong <normalperson@yhbt.net> wrote:
+> Morgan Christiansson <git@mog.se> wrote:
+> > The "Ignoring path" message appears to be coming from git which is  
+> > refusing to commit the .git directory. Which leads to git-svn being  
+> > unaware of the files being ignored and giving an error when it can't  
+> > find them.
+> 
+> > I'm personally fine with these files being ignored by git, but git-svn  
+> > needs to be aware that they are not added to the repository.
+> 
+> Hi Morgan,
+> Can you try the following rough patch and see it it fixes things
+> for you?  Thanks!
 
-By the way, it possible right now to cut off the btrfs history in one's own 
-repository using a graft. One don't need to wait for me to finish the 
-replace stuff I am slowly working on. But on the other hand it will have 
-all the restrictions of the current graft mechanism.
+Actually, I think this patch is broken (my quickly put together test
+case was insufficient)...
 
-Regards,
-Christian.
+> From 559f4b673592f364e9773f2ba65caf09b138521b Mon Sep 17 00:00:00 2001
+> From: Eric Wong <normalperson@yhbt.net>
+> Date: Sun, 11 Jan 2009 18:23:38 -0800
+> Subject: [PATCH/RFC] git-svn: avoid importing nested repos
+> 
+> Some SVN repositories contain .git repositories within them
+> (hopefully accidentally checked in).  Since git refuses to
+> check in ".git" repositories, this can be a problem when
+> fetching updates from SVN.
+> 
+> This seems to repull the entire blob from SVN everytime a user
+> changes something inside the ".git" directory on the SVN side,
+> but hopefully this will be a rare case and the SVN users will
+> correct the error quickly.
+> 
+> The test could probably be expanded to be more thorough...
+> 
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
