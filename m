@@ -1,95 +1,67 @@
-From: mark <markkicks@gmail.com>
-Subject: Re: git log, outputs something weird for colors
-Date: Mon, 12 Jan 2009 14:38:42 -0800
-Message-ID: <82fa9e310901121438t7f525c60nfc91bcdc89c97e26@mail.gmail.com>
-References: <82fa9e310901121351y22feaf21rfb880bcd0d6cb1a3@mail.gmail.com>
-	<8c9a060901121428j37ff6699g7af264f79829b6de@mail.gmail.com>
-	<82fa9e310901121433p67f7bb3ai330439bf3c00df26@mail.gmail.com>
-Reply-To: kde@mail.kde.org
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: rebase-merge/done: No such file or directory
+Date: Mon, 12 Jan 2009 23:47:47 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901122342420.3586@pacific.mpi-cbg.de>
+References: <87ocycjq29.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, kde@mail.kde.org
-To: "Jacob Helwig" <jacob.helwig@gmail.com>
-X-From: kde-bounces-+kde-kde=m.gmane.org@mail.kde.org Mon Jan 12 23:40:51 2009
-Return-path: <kde-bounces-+kde-kde=m.gmane.org@mail.kde.org>
-Envelope-to: kde-kde@gmane.org
-Received: from ktown.kde.org ([131.246.120.250])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1LMVSj-0002wH-4n
-	for kde-kde@gmane.org; Mon, 12 Jan 2009 23:40:49 +0100
-Received: (qmail 14747 invoked by uid 72); 12 Jan 2009 22:39:25 -0000
-Received: (qmail 14724 invoked from network); 12 Jan 2009 22:39:23 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on ktown.kde.org
-Received: from unknown (HELO rv-out-0506.google.com) (209.85.198.231)
-	by ktown.kde.org with SMTP; 12 Jan 2009 22:39:21 -0000
-Received: by rv-out-0506.google.com with SMTP id b25so12389327rvf.43
-	for <kde@mail.kde.org>; Mon, 12 Jan 2009 14:38:42 -0800 (PST)
-Received: by 10.114.155.1 with SMTP id c1mr19793985wae.174.1231799922725;
-	Mon, 12 Jan 2009 14:38:42 -0800 (PST)
-Received: by 10.114.59.17 with HTTP; Mon, 12 Jan 2009 14:38:42 -0800 (PST)
-In-Reply-To: <82fa9e310901121433p67f7bb3ai330439bf3c00df26@mail.gmail.com>
-Content-Disposition: inline
-X-BeenThere: kde@mail.kde.org
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: General KDE discussion <kde.mail.kde.org>
-List-Unsubscribe: <https://mail.kde.org/mailman/listinfo/kde>,
-	<mailto:kde-request@mail.kde.org?subject=unsubscribe>
-List-Post: <mailto:kde@mail.kde.org>
-List-Help: <mailto:kde-request@mail.kde.org?subject=help>
-List-Subscribe: <https://mail.kde.org/mailman/listinfo/kde>,
-	<mailto:kde-request@mail.kde.org?subject=subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105406>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Mon Jan 12 23:48:48 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1LMVaR-0005ew-Ck
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 23:48:47 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1759862AbZALWrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 17:47:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757647AbZALWrE
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 17:47:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54708 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1762299AbZALWrB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 17:47:01 -0500
+Received: (qmail invoked by alias); 12 Jan 2009 22:46:58 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp013) with SMTP; 12 Jan 2009 23:46:58 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX186g+Z7Kc06j3DPULeP6CF2WYsor+LvHL7T0Ic5r8
+	PiCtGRq+G8Y+BR
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <87ocycjq29.fsf@jidanni.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105407>
 
-On Mon, Jan 12, 2009 at 2:33 PM, mark <markkicks@gmail.com> wrote:
-> On Mon, Jan 12, 2009 at 2:28 PM, Jacob Helwig <jacob.helwig@gmail.com> wrote:
->> On Mon, Jan 12, 2009 at 13:51, mark <markkicks@gmail.com> wrote:
->>> hi
->>> i am using kde konsole, and i am getting weird output for colors, for
->>> example for git log i get the following output
->>>
->>>
->>> git log
->>> ESC[33mcommit 8b918256d944221f741e5d7300873810e31466a6ESC[m
->>>
->>>
->>> settings in my bash and git.
->>>
->>> export | grep -i term
->>> declare -x TERM="xterm-256color"
->>>
->>>
->>> ~/.gitconfig
->>> [color]
->>>  branch = auto
->>>  diff = auto
->>>  status = auto
->>>
->>> do you know what is wrong?
->>> thanks
->>> --
->>> To unsubscribe from this list: send the line "unsubscribe git" in
->>> the body of a message to majordomo@vger.kernel.org
->>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->>>
->>
->> I don't have any problems with Konsole and git's coloring, but my TERM
->> is set to "xterm", not "xterm-256color".
->
-> even xterm does not work for me!
-> but git status, and git branch give the correct color. the problem is
-> only with git log!
->
-this helped!
+Hi,
 
-http://git.or.cz/gitwiki/GitFaq#head-678310c22f3e4a233d348bdde55a3e4cb7368ee9
+On Tue, 13 Jan 2009, jidanni@jidanni.org wrote:
 
-i had LESS=-Q set on my .bashrc, commenting that out produces nice
-colors for git log!
-thanks all!
-___________________________________________________
-This message is from the kde mailing list.
-Account management:  https://mail.kde.org/mailman/listinfo/kde.
-Archives: http://lists.kde.org/.
-More info: http://www.kde.org/faq.html.
+> Bug at git-rebase--interactive.sh:107: count=$(grep -c '^[^#]' < "$DONE")
+
+Woohoo.  Buuuug.
+
+> $DONE might not exist. Do test -f $DONE before you grep it.
+
+I cannot reproduce here.  Since all the files in .git/rebase-merge/ are 
+internal files to rebase--interactive, I think we do not have to guard 
+against any possible user action rendering assumptions about internals 
+invalid.
+
+Wasting a minute, I seem to understand why I cannot reproduce.  Just 
+looking all of _two_ lines above the line you mentioned:
+
+	sed -e 1q < "$TODO" >> "$DONE"
+
+Hrmpf.  You're right.  The user could have removed "$DONE"e between the 
+two lines ;-)
+
+Hth,
+Dscho
