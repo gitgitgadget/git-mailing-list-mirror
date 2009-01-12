@@ -1,58 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] http-push: update memory allocation for http headers
-Date: Sun, 18 Jan 2009 15:55:30 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901181554480.3586@pacific.mpi-cbg.de>
-References: <be6fef0d0901180516q19327c18oa1d7ccc36ce3a87@mail.gmail.com>
+From: David Bryson <david@statichacks.org>
+Subject: checking out by date
+Date: Mon, 12 Jan 2009 11:30:39 -0800
+Message-ID: <20090112193039.GO25823@eratosthenes.cryptobackpack.org>
+Reply-To: David Bryson <david@statichacks.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 18 15:57:00 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 12 20:32:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOZ57-00043L-IZ
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 15:56:58 +0100
+	id 1LMSWA-00051U-Dq
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 20:32:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762055AbZAROzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 09:55:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761774AbZAROzd
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 09:55:33 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52358 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756604AbZAROzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 09:55:33 -0500
-Received: (qmail invoked by alias); 18 Jan 2009 14:55:27 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp058) with SMTP; 18 Jan 2009 15:55:27 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+B6dU+ijOBYXqi0rQlRo4RrQxraGPxWU5CK4ktfO
-	L14tSArbFJdOU9
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <be6fef0d0901180516q19327c18oa1d7ccc36ce3a87@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1754429AbZALTan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 14:30:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753615AbZALTam
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 14:30:42 -0500
+Received: from cryptobackpack.org ([64.105.32.74]:53127 "EHLO
+	mail.cryptobackpack.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753472AbZALTam (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 14:30:42 -0500
+Received: by mail.cryptobackpack.org (Postfix, from userid 1000)
+	id 99AD710D0247; Mon, 12 Jan 2009 11:30:41 -0800 (PST)
+X-Spam-Checker-Version: SpamAssassin 3.2.1-gr1 (2007-05-02) on
+	ptolemy.cryptobackpack.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.7 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.1-gr1
+Received: from eratosthenes.statichacks.org (heliosphan.cryptobackpack.org [10.6.6.6])
+	by mail.cryptobackpack.org (Postfix) with ESMTP id 2CFAF10D0128
+	for <git@vger.kernel.org>; Mon, 12 Jan 2009 11:30:40 -0800 (PST)
+Received: by eratosthenes.statichacks.org (Postfix, from userid 1000)
+	id E845D18348C; Mon, 12 Jan 2009 11:30:39 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106205>
 
-Hi,
+Hi All,
 
-On Sun, 18 Jan 2009, Ray Chuan wrote:
+I have a very large repository that imported into git from CVS with
+about 5 years worth of history.
 
-> In 753bc91 (Remove the requirement opaquelocktoken uri scheme), the
-> header strings were with the removal "opaquelocktoken:" (16
-> characters).
-> 
-> Unfortunately, this was without the corresponding change in memory
-> allocation. In this patch we update these allocations.
+Today I decided to checkout some code from the past:
 
-Rather than doing this (which will result in as error-prone code), why 
-don't you replace those things by strbufs?
+$ git checkout master@{"Mon Dec 31  2007"}
+warning: Log for 'master' only goes back to Tue, 2 Dec 2008 16:57:15
+-0800.
 
-Ciao,
-Dscho
+Then proceeds to checkout a code snapshot from 2 Dec.  To work around
+this I checked out a specific commit id, by looking at the log:
+
+commit 3771ec1d6ccf329da378b7633fdef60474eac4b7
+Author: XXXXXXXXXXXXXXX
+Date:   Mon Dec 31 23:25:17 2007 +0000
+
+    BugId: none
+    correct wrong commit
+
+
+$ git checkout 3771ec1d6ccf329da378b7633fdef60474eac4b7
+...
+HEAD is now at 3771ec1... BugId: none correct wrong commit
+
+So what has caused git to be unable to process the date information,
+even though the information is clearly in the history ?  Did I miss
+something ?
+
+Dave
