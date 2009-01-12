@@ -1,93 +1,91 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT] Blame functionality for jgit
-Date: Mon, 12 Jan 2009 13:55:16 -0800
-Message-ID: <20090112215516.GN10179@spearce.org>
-References: <3d045c7e0901111223j43a69402s28a59612212943f3@mail.gmail.com> <20090112174232.GJ10179@spearce.org> <3d045c7e0901121317j4ccd9515vbc7a44abc8ae5356@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Documentation/git-mailsplit.txt: Emphasize -o more
+Date: Mon, 12 Jan 2009 14:06:28 -0800
+Message-ID: <7vhc44gowr.fsf@gitster.siamese.dyndns.org>
+References: <877i50jjs8.fsf@jidanni.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: Manuel Woelker <manuel.woelker@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 22:57:12 2009
+Cc: git@vger.kernel.org
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Mon Jan 12 23:08:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMUm3-0002uh-Kp
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 22:56:44 +0100
+	id 1LMUxQ-0007HG-5a
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 23:08:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754145AbZALVzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 16:55:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756458AbZALVzS
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 16:55:18 -0500
-Received: from george.spearce.org ([209.20.77.23]:40434 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756262AbZALVzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 16:55:17 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6AA9E38210; Mon, 12 Jan 2009 21:55:16 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <3d045c7e0901121317j4ccd9515vbc7a44abc8ae5356@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1756484AbZALWGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 17:06:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757963AbZALWGh
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 17:06:37 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40939 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757322AbZALWGg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 17:06:36 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 129971C57C;
+	Mon, 12 Jan 2009 17:06:34 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C83DD1C57B; Mon,
+ 12 Jan 2009 17:06:30 -0500 (EST)
+In-Reply-To: <877i50jjs8.fsf@jidanni.org> (jidanni@jidanni.org's message of
+ "Tue, 13 Jan 2009 05:28:55 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 46378448-E0F5-11DD-B53C-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105399>
 
-Manuel Woelker <manuel.woelker@gmail.com> wrote:
-> On Mon, Jan 12, 2009 at 6:42 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> 
-> That sounds like a good plan. For now I am not all that concerned
-> about performance myself (premature optimization and all that), but in
-> the long run - and especially with rename/copy detection that will
-> definitely a factor for usability.
+jidanni@jidanni.org writes:
 
-Yea, I know.  Premature optimization is the root of all evil.
-But we've also learned the hard way that Java is slow as snot
-compared to C git.  The only way we can even stay close is to
-optimize the hell out of the tight inner sections, and very often
-that means using byte[] and avoiding upconverting to String to as
-late as we possibly can.
+> The need for -o cannot be overstated. Else the arguments get
+> interpreted differently.
 
-Performance *is* a feature in Git.  Its not a "nice to have",
-its a requirement.  The old history view for example was too damn
-slow using Commit, requiring minutes on one of my systems to render
-egit.git history.  Using RevCommit its subsecond response time.
+I do not think there is any ambiguity with the existing SYNOPSIS.
 
-I just wanted to point out that we care quite a bit about speed, and
-that given our input (raw byte[] from the pack) we need to be able
-to quickly make decisions without upconverting to String, otherwise
-blame performance will be so bad that its completely unusable.
+'git mailsplit' [-b] [-f<nn>] [-d<prec>] -o<directory> [--] [<mbox>|<Maildir>...]
 
-> > I think eventually we'll have a BSD licensed LCS [...]
-> 
-> While trying to look up the Myers diff algorithm I found a diff
-> implementation in Apache wicket (cf.
-> http://wicket.sourceforge.net/apidocs/wicket/util/diff/myers/package-summary.html
-> ). This one is under an Apache license, is that any better? It's truly
-> kind of sad that you need a degree in law these days to get any work
-> done in this license jungle. I just happen to strongly oppose the
-> reinvention of circular transportation-enabling devices...
+> +REQUIRED OPTIONS
+> +-------
+> +-o<directory>::
+> +	Directory in which to place the individual messages.
+> +	-o is required or else arguments may be misinterpreted in a
+> +	backwards compatibility mode.
+> +
 
-Yea, even the ASF has trouble deciding if the Apache License and
-the GPL can get along:
+I think you are being overly alarmist without being helpful.
 
-  "The Apache Software Foundation is still trying to determine if
-  this version of the Apache License is compatible with the GPL."
+You hint that there is a backwards compatible syntax but you do not say
+what it is, and you hint that the backwards compatible syntax is bad in
+some unspecified way by saying "misinterpreted", without substantiating
+the claim in any way.
 
-  http://www.apache.org/licenses/
+The worst part in the new description is "may be", which only injects FUD
+("is my use trigger that pitfall? how do I decide? the manual page does
+not say!") without being helpful at all to the readers.
 
-The Apache License doesn't play nice with GPLv2 apparently, but is
-OK with GPLv2, at least according to the FSF.
+Probably a better alternative would be to describe what the backward
+compatible syntax is and what it does (which I won't do here), and mention
+something like the attached patchlet, without moving where -o<dir> is
+described, _if_ you want to talk about it.
 
-Anyway.  The Apache License is roughly the new style BSD, but with
-patent protection clauses built in.  I think we can consume code
-under the Apache License and redistribute it without any trouble
-for us, our any of our downstream consumers.
-
-> I'll keep you posted on new developments
-
-Looking forward to it.
-
--- 
-Shawn.
+diff --git i/Documentation/git-mailsplit.txt w/Documentation/git-mailsplit.txt
+index 5cc94ec..1b12014 100644
+--- i/Documentation/git-mailsplit.txt
++++ w/Documentation/git-mailsplit.txt
+@@ -28,7 +28,10 @@ OPTIONS
+ 	and new subdirectories.
+ 
+ -o<directory>::
+-	Directory in which to place the individual messages.
++	Directory in which to place the individual messages.  This option
++	is required in a modern usage of the command; when omitted, the
++	arguments are parsed differently and the command works in a
++	backward compatible mode (see below).
+ 
+ -b::
+ 	If any file doesn't begin with a From line, assume it is a
