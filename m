@@ -1,56 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git/webdav is refusing to authenticate properly.
-Date: Tue, 13 Jan 2009 00:04:42 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901130003490.3586@pacific.mpi-cbg.de>
-References: <137c54e10901121354l284f11ag675abb003fc83e93@mail.gmail.com>
+From: Cesar Eduardo Barros <cesarb@cesarb.net>
+Subject: Re: [PATCH] Teach format-patch to handle output directory relative
+ to cwd
+Date: Mon, 12 Jan 2009 21:12:21 -0200
+Message-ID: <496BCE55.8030407@cesarb.net>
+References: <496BBE70.9060405@cesarb.net> <7vab9wgmwe.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Peter Spierenburg <ionlyusethisaddressforlists@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 13 00:06:26 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 13 00:13:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMVqS-0002qR-U8
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 00:05:53 +0100
+	id 1LMVyg-0005jC-L0
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 00:13:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754493AbZALXD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 18:03:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753425AbZALXD4
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 18:03:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39938 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753060AbZALXDz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 18:03:55 -0500
-Received: (qmail invoked by alias); 12 Jan 2009 23:03:53 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp012) with SMTP; 13 Jan 2009 00:03:53 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/BSfEPzP7BATgXOFJkQImdQmwBI3WtNKLh/WuP2y
-	EzecksTFuwbPQh
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <137c54e10901121354l284f11ag675abb003fc83e93@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.74
+	id S1755496AbZALXM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 18:12:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752255AbZALXM0
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 18:12:26 -0500
+Received: from smtp-03.mandic.com.br ([200.225.81.143]:57441 "EHLO
+	smtp-03.mandic.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752382AbZALXMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 18:12:25 -0500
+Received: (qmail 28569 invoked from network); 12 Jan 2009 23:12:22 -0000
+Received: from grumari.nitnet.com.br (HELO [192.168.96.4]) (zcncxNmDysja2tXBpdiToZWJlF6Wp6IuYnI=@[200.157.204.13])
+          (envelope-sender <cesarb@cesarb.net>)
+          by smtp-03.mandic.com.br (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <gitster@pobox.com>; 12 Jan 2009 23:12:22 -0000
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <7vab9wgmwe.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105413>
 
-Hi,
+Junio C Hamano escreveu:
+> Without any explicit -o parameter, we correctly avoided putting the
+> resulting patch output to the toplevel.  We should do the same when
+> the user gave a relative pathname to be consistent with this case and also
+> with how other commands handle relative pathnames.
 
-On Mon, 12 Jan 2009, Peter Spierenburg wrote:
+Works great, only the resulting output to the screen is a bit 
+ugly/confusing:
 
-> I'm trying to push a local git repository to a remote site using WebDAV, 
-> but it is eating my lunch.
+drivers/net/../../../0001-sc92031-more-useful-banner-in-kernel-log.patch
+drivers/net/../../../0002-sc92031-remove-meaningless-version-string.patch
+drivers/net/../../../0003-sc92031-inline-SC92031_DESCRIPTION.patch
+drivers/net/../../../0004-sc92031-use-device-id-directly-instead-of-made-up-n.patch
+drivers/net/../../../0005-sc92031-add-a-link-to-the-datasheet.patch
 
-Please see Documentation/howto/setup-git-server-over-http.txt.
+I would expect:
 
-In short, http-push does not ask for a password interactively, but you 
-have to use .netrc.
+../../../0001-sc92031-more-useful-banner-in-kernel-log.patch
+../../../0002-sc92031-remove-meaningless-version-string.patch
+../../../0003-sc92031-inline-SC92031_DESCRIPTION.patch
+../../../0004-sc92031-use-device-id-directly-instead-of-made-up-n.patch
+../../../0005-sc92031-add-a-link-to-the-datasheet.patch
 
-Hth,
-Dscho
+(after all, I am still inside the drivers/net directory)
+
+-- 
+Cesar Eduardo Barros
+cesarb@cesarb.net
+cesar.barros@gmail.com
