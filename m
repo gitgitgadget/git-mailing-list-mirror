@@ -1,56 +1,125 @@
-From: Marcel Koeppen <lists@marzelpan.de>
-Subject: Re: What's cooking in git.git (Jan 2009, #02; Sun, 11)
-Date: Mon, 12 Jan 2009 02:58:11 +0100
-Message-ID: <A40F4753-A81B-43FD-B1A5-B28B627F8BBD@marzelpan.de>
-References: <7v63kmtbk6.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC PATCH 2/3] Add specification of git-vcs helpers
+Date: Sun, 11 Jan 2009 21:03:45 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0901112033070.19665@iabervon.org>
+References: <alpine.LNX.1.00.0901110334350.19665@iabervon.org> <7vk591mhwj.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 03:04:49 2009
+X-From: git-owner@vger.kernel.org Mon Jan 12 03:05:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMCAb-0004Qe-3D
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 03:04:49 +0100
+	id 1LMCAy-0004XE-Sg
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 03:05:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069AbZALCDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jan 2009 21:03:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751527AbZALCDZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 21:03:25 -0500
-Received: from smtprelay11.ispgateway.de ([80.67.29.28]:36434 "EHLO
-	smtprelay11.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751459AbZALCDY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jan 2009 21:03:24 -0500
-X-Greylist: delayed 307 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Jan 2009 21:03:24 EST
-Received: from [80.145.248.185] (helo=[192.168.1.5])
-	by smtprelay11.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <lists@marzelpan.de>)
-	id 1LMC4C-0006Fd-Eq; Mon, 12 Jan 2009 02:58:12 +0100
-In-Reply-To: <7v63kmtbk6.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.930.3)
-X-Df-Sender: 012269
+	id S1752441AbZALCDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jan 2009 21:03:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752308AbZALCDr
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Jan 2009 21:03:47 -0500
+Received: from iabervon.org ([66.92.72.58]:46381 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752151AbZALCDr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jan 2009 21:03:47 -0500
+Received: (qmail 13503 invoked by uid 1000); 12 Jan 2009 02:03:45 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 12 Jan 2009 02:03:45 -0000
+In-Reply-To: <7vk591mhwj.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105277>
 
-Hi,
+On Sun, 11 Jan 2009, Junio C Hamano wrote:
 
-Am 11.01.2009 um 10:51 schrieb Junio C Hamano:
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > So far, I've actually used list and import; I've also implemented an 
+> > export, but haven't figured out exactly how the user should cause it to be 
+> > used.
+> > ...
+> > +'capabilities'::
+> > +	Prints the capabilities of the helper, one per line. These are:
+> > +	 - import: the basic import command
+> > +	 - marks: import should be done with a saved marks file
+> > +	 - find-new-branches: detect new branches
+> > +	 - export: the general export command
+> > +	 - fork: create a new branch and export to it
+> > +	 - anonymous-fork: make commits on a branch without an inherent name
+> > +	 - merge: merge branches (of whatever type the system supports)
+> > +
+> > +	If the helper doesn't support "merge", the default for pull is
+> > +	to rebase instead of merging.
+> 
+> Have you tried formatting this to both html and man?  I think you need to
+> dedent the second paragraph, and have '+' as the sole character on a line
+> immediately before, without any blank lines.  The formatted output of the
+> description of 'export' is probably more troublesome as it is much longer.
 
-> ----------------------------------------------------------------
-> [Will merge to "master" soon]
+Nope, I've just been referring to it in the original text, so I've been 
+careless with markup.
 
-> * mc/cd-p-pwd (Tue Dec 30 07:10:24 2008 -0800) 1 commit
-> + git-sh-setup: Fix scripts whose PWD is a symlink to a work-dir on
->   OS X
+> This list feels like overengineered yet without enough thinking behind it.
 
-I think this belongs into maint - without it the testsuite fails on OSX.
+Yeah, I haven't really nailed this one down; it's hard to get really right 
+without having a bunch of different helpers which can do different amounts 
+of stuff and need different git-side help.
 
+> Your 'list' allows to list what can become branches on the git end, so as
+> long as you have tracking information on the git side, find-new-branches
+> seems unnecessary, for examle.
 
-	Marcel
+I was unclear about what that one meant, I guess. It's supposed to handle 
+systems where it's possible to create things that work like branches but 
+are hard to find. If a helper doesn't report the capability, then the user 
+may need to say, "I also want some/branch/location", or the helper 
+wouldn't know that's a branch.
+
+For example, in order to find all of the branches in Perforce, you have 
+to figure out both directions of integration, in order to find branches 
+that haven't been integrated back into the location you know about, and 
+that's kind of expensive to determine and a bit tricky to parse.
+
+It's not intended to indicate that the helper will tell you which ones are 
+new or not, just that, if the helper doesn't have it, it will only tell 
+you about branches that it's been told about.
+
+> What does 'merge' mean?  It cannot mean to fetch their changes from
+> foreign vcs and create a merge locally (you only need import from the
+> backend, and merge will be a usual git merge).  Perhaps you meant if you
+> can export a merge back?  Some foreign systems may support importing
+> merges but not octopus, so it may not be just a black-or-white boolean.
+
+If the helper supports "merge", it means that it is able to create a merge 
+in the foreign vcs. You're right about needing to separately list an 
+"octopus" capability, and maybe further refinements.
+
+> Also "the default is to rebase instead of merge" is probably too weak.
+> You would want to error out if the user tried to merge, wouldn't you?
+
+I think users should be able to create merges in git if they want to, but 
+they'd have to linearize the history in order to push it back. Hopefully, 
+at some point, we'll have a tool to help with this (which would be helpful 
+for generating patch series, anyway).
+
+> > +'list'::
+> > +	Takes the remote name, and outputs the names of refs. These
+> > +	may be followed, after a single space, by "changed" or
+> > +	"unchanged", indicating whether the foreign repository has
+> > +	changed from the state in the ref. If the helper doesn't know,
+> > +	it doesn't have to provide a value. (In particular, it
+> > +	shouldn't do expensive operations, such as importing the
+> > +	content, to see whether it matches.)
+> 
+> I am guessing by 'a value' you mean 'changed/unchanged', iow you are not
+> saying if the helper does not know it can omit such refs from the list,
+> but it is unclear.
+
+Yeah, that's what I meant.
+
+	-Daniel
+*This .sig left intentionally blank*
