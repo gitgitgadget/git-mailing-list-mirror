@@ -1,107 +1,65 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH 7/7] mktag: call "check_sha1_signature" with the
- replacement sha1
-Date: Mon, 12 Jan 2009 18:51:26 +0100
-Message-ID: <20090112185126.a3984b7d.chriscool@tuxfamily.org>
+From: "Tim Visher" <tim.visher@gmail.com>
+Subject: Pragmatic Git Book
+Date: Mon, 12 Jan 2009 13:00:22 -0500
+Message-ID: <c115fd3c0901121000w10263847j937fc36cce892670@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 18:52:29 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 12 19:02:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMQxL-0002SF-SG
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 18:52:08 +0100
+	id 1LMR6j-0005zQ-VD
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 19:01:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753460AbZALRuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 12:50:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751517AbZALRuq
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 12:50:46 -0500
-Received: from smtp4-g21.free.fr ([212.27.42.4]:44009 "EHLO smtp4-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753239AbZALRup (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 12:50:45 -0500
-Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id AEE474C8981;
-	Mon, 12 Jan 2009 18:50:37 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g21.free.fr (Postfix) with SMTP id AE23F4C8B71;
-	Mon, 12 Jan 2009 18:50:34 +0100 (CET)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
+	id S1752696AbZALSAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 13:00:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752620AbZALSAZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 13:00:25 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:10163 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752414AbZALSAY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 13:00:24 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so3467128yxm.1
+        for <git@vger.kernel.org>; Mon, 12 Jan 2009 10:00:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=t+BwGhytIhGGYQqc90pENgQA3XLjZxc5U2TuhNMoAzk=;
+        b=Q8kW/sSjeEi9isO9mZ1DpqQwLXsC4GhdB61Vpd2RgWLYcuzfG1WA+9I+bHAC6weWQI
+         wEsQD/6Xq7aSxZ4z4dLkhRziDAPJvjZIFXB6QxNLwOGV1iPxY8r1jTcCivLMz3NbK6fy
+         iOLDSCUwRUU6GqIk0aeoNmO4Fps6bma24BheU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=PLVo8nEpj7fiJAb0xEXFopZF6k0xSNazmoZYwdTi8NLXiEK5m8pY0oJ/xClQPH0/x3
+         MVBb70nT98YvoqBmlhWkDGEVU7gpwJhLbT6P01gsEIhLjna4fTzcnYDNSX4jLpYEljZY
+         ThdtzUiGbCW6f+b3aqhoQmoMLtKZhPZWrjQsI=
+Received: by 10.100.134.16 with SMTP id h16mr15698941and.42.1231783222501;
+        Mon, 12 Jan 2009 10:00:22 -0800 (PST)
+Received: by 10.100.33.9 with HTTP; Mon, 12 Jan 2009 10:00:22 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105370>
 
-Otherwise we get a "sha1 mismatch" error for replaced objects.
+Hello Everyone,
 
-While at it, this patch makes the first argument of "verify_object"
-const.
+Any of you had a chance to look through the Pragmatic book about our
+beloved SCM tool?  Is it any good?
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- mktag.c            |    7 ++++---
- t/t6050-replace.sh |   11 +++++++++++
- 2 files changed, 15 insertions(+), 3 deletions(-)
-
-	Note that I am not sure at all that this is a good change.
-	It may be that we should just refuse to tag a replaced object. But
-	in this case we should probably give a meaningfull error message
-	instead of "sha1 mismatch".
-
-	Otherwise I checked the 2 other calls to "check_sha1_signature" and
-	they look like they don't need any change.
-
-diff --git a/mktag.c b/mktag.c
-index ba3d495..ac812e5 100644
---- a/mktag.c
-+++ b/mktag.c
-@@ -18,16 +18,17 @@
- /*
-  * We refuse to tag something we can't verify. Just because.
-  */
--static int verify_object(unsigned char *sha1, const char *expected_type)
-+static int verify_object(const unsigned char *sha1, const char *expected_type)
- {
- 	int ret = -1;
- 	enum object_type type;
- 	unsigned long size;
--	void *buffer = read_sha1_file(sha1, &type, &size);
-+	const unsigned char *repl;
-+	void *buffer = read_sha1_file_repl(sha1, &type, &size, &repl);
- 
- 	if (buffer) {
- 		if (type == type_from_string(expected_type))
--			ret = check_sha1_signature(sha1, buffer, size, expected_type);
-+			ret = check_sha1_signature(repl, buffer, size, expected_type);
- 		free(buffer);
- 	}
- 	return ret;
-diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index 0a585ec..697e0f6 100755
---- a/t/t6050-replace.sh
-+++ b/t/t6050-replace.sh
-@@ -70,6 +70,17 @@ test_expect_success 'replace the author' '
-      git show $HASH2 | grep "O Thor"
- '
- 
-+cat >tag.sig <<EOF
-+object $HASH2
-+type commit
-+tag mytag
-+tagger T A Gger <> 0 +0000
-+
-+EOF
-+
-+test_expect_success 'tag replaced commit' \
-+    'git mktag <tag.sig >.git/refs/tags/mytag 2>message'
-+
- #
- #
- test_done
 -- 
-1.6.1.83.g16e5
+
+In Christ,
+
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
