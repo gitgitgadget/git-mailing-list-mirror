@@ -1,56 +1,53 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Cleanup of unused symcache variable inside diff-lib.c
-Date: Sun, 11 Jan 2009 21:39:37 -0800
-Message-ID: <7v4p05krqe.fsf@gitster.siamese.dyndns.org>
-References: <1231699002-5316-1-git-send-email-barvik@broadpark.no>
+Subject: Re: [PATCH] git-svn: add --authors-file test
+Date: Sun, 11 Jan 2009 21:40:03 -0800
+Message-ID: <7vwsd1jd58.fsf@gitster.siamese.dyndns.org>
+References: <20090111234406.GA22763@yp-box.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Kjetil Barvik <barvik@broadpark.no>
-X-From: git-owner@vger.kernel.org Mon Jan 12 06:41:12 2009
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Jan 12 06:41:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMFXx-0000pP-0B
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 06:41:09 +0100
+	id 1LMFYO-0000wU-B1
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 06:41:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751247AbZALFjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 00:39:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750720AbZALFjp
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 00:39:45 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34801 "EHLO
+	id S1750799AbZALFkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 00:40:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751316AbZALFkN
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 00:40:13 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62851 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695AbZALFjo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 00:39:44 -0500
+	with ESMTP id S1751265AbZALFkM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 00:40:12 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C7908FD92;
-	Mon, 12 Jan 2009 00:39:42 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7BAF01C4AA;
+	Mon, 12 Jan 2009 00:40:09 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D59F48FD90; Mon,
- 12 Jan 2009 00:39:39 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 414B31C4A7; Mon,
+ 12 Jan 2009 00:40:04 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 69698978-E06B-11DD-924C-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 791A31D8-E06B-11DD-9EBD-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105293>
 
-Kjetil Barvik <barvik@broadpark.no> writes:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> diff --git a/diff-lib.c b/diff-lib.c
-> index ae96c64ca209f4df9008198e8a04b160bed618c7..e6d1d2b34147a13aadb5019e0c8336ef5f56ee39 100644
-> --- a/diff-lib.c
-> +++ b/diff-lib.c
-> ...
-> @@ -344,8 +334,7 @@ static void do_oneway_diff(struct unpack_trees_options *o,
->  	struct cache_entry *idx,
->  	struct cache_entry *tree)
->  {
-> -	struct oneway_unpack_data *cbdata = o->unpack_data;
-> -	struct rev_info *revs = cbdata->revs;
-> +	struct rev_info *revs = o->unpack_data;;
+> I'm not sure how often this functionality is used, but in case
+> it's not, having an extra test here will help catch breakage
+> sooner.
+>
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+>
+>   This was posted over a year ago and forgotten about.  Updated and
+>   cleaned up a bit to work with the new test suite.
 
-Thanks; I'll clean-up the extra semicolon and apply.
+Thanks.
