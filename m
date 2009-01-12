@@ -1,72 +1,56 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn: File was not found in commit
-Date: Sun, 11 Jan 2009 21:14:09 -0800
-Message-ID: <20090112051409.GB14992@dcvr.yhbt.net>
-References: <49678705.4040506@mog.se> <20090111215526.GA15533@atjola.homenet> <496A890C.8080208@mog.se> <20090112023211.GA21462@dcvr.yhbt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Cleanup of unused symcache variable inside diff-lib.c
+Date: Sun, 11 Jan 2009 21:39:37 -0800
+Message-ID: <7v4p05krqe.fsf@gitster.siamese.dyndns.org>
+References: <1231699002-5316-1-git-send-email-barvik@broadpark.no>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Morgan Christiansson <git@mog.se>
-X-From: git-owner@vger.kernel.org Mon Jan 12 06:15:38 2009
+To: Kjetil Barvik <barvik@broadpark.no>
+X-From: git-owner@vger.kernel.org Mon Jan 12 06:41:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMF9D-0004OU-Ah
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 06:15:35 +0100
+	id 1LMFXx-0000pP-0B
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 06:41:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751129AbZALFOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 00:14:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750791AbZALFOL
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 00:14:11 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:60341 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750720AbZALFOK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 00:14:10 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F06871FE52;
-	Mon, 12 Jan 2009 05:14:09 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20090112023211.GA21462@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751247AbZALFjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 00:39:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750720AbZALFjp
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 00:39:45 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34801 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750695AbZALFjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 00:39:44 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C7908FD92;
+	Mon, 12 Jan 2009 00:39:42 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D59F48FD90; Mon,
+ 12 Jan 2009 00:39:39 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 69698978-E06B-11DD-924C-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105292>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Morgan Christiansson <git@mog.se> wrote:
-> > The "Ignoring path" message appears to be coming from git which is  
-> > refusing to commit the .git directory. Which leads to git-svn being  
-> > unaware of the files being ignored and giving an error when it can't  
-> > find them.
-> 
-> > I'm personally fine with these files being ignored by git, but git-svn  
-> > needs to be aware that they are not added to the repository.
-> 
-> Hi Morgan,
-> Can you try the following rough patch and see it it fixes things
-> for you?  Thanks!
+Kjetil Barvik <barvik@broadpark.no> writes:
 
-Actually, I think this patch is broken (my quickly put together test
-case was insufficient)...
+> diff --git a/diff-lib.c b/diff-lib.c
+> index ae96c64ca209f4df9008198e8a04b160bed618c7..e6d1d2b34147a13aadb5019e0c8336ef5f56ee39 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> ...
+> @@ -344,8 +334,7 @@ static void do_oneway_diff(struct unpack_trees_options *o,
+>  	struct cache_entry *idx,
+>  	struct cache_entry *tree)
+>  {
+> -	struct oneway_unpack_data *cbdata = o->unpack_data;
+> -	struct rev_info *revs = cbdata->revs;
+> +	struct rev_info *revs = o->unpack_data;;
 
-> From 559f4b673592f364e9773f2ba65caf09b138521b Mon Sep 17 00:00:00 2001
-> From: Eric Wong <normalperson@yhbt.net>
-> Date: Sun, 11 Jan 2009 18:23:38 -0800
-> Subject: [PATCH/RFC] git-svn: avoid importing nested repos
-> 
-> Some SVN repositories contain .git repositories within them
-> (hopefully accidentally checked in).  Since git refuses to
-> check in ".git" repositories, this can be a problem when
-> fetching updates from SVN.
-> 
-> This seems to repull the entire blob from SVN everytime a user
-> changes something inside the ".git" directory on the SVN side,
-> but hopefully this will be a rare case and the SVN users will
-> correct the error quickly.
-> 
-> The test could probably be expanded to be more thorough...
-> 
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Thanks; I'll clean-up the extra semicolon and apply.
