@@ -1,130 +1,65 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH next] bash completion: refactor diff options
-Date: Mon, 12 Jan 2009 10:16:57 +0100
-Message-ID: <1231751817-17688-1-git-send-email-trast@student.ethz.ch>
-References: <1231679663-31907-1-git-send-email-trast@student.ethz.ch>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 12 10:18:19 2009
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Help! My ISP blocks repo.or.cz. How to push changes?
+Date: Mon, 12 Jan 2009 10:17:07 +0100
+Message-ID: <81b0412b0901120117mf010317m79874a235e29a439@mail.gmail.com>
+References: <200901120246.28364.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 12 10:18:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMIw3-0001SR-AY
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 10:18:15 +0100
+	id 1LMIwN-0001YO-PQ
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 10:18:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751327AbZALJQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 04:16:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750791AbZALJQx
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 04:16:53 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:8184 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750720AbZALJQw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 04:16:52 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 12 Jan 2009 10:16:51 +0100
-Received: from localhost.localdomain ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 12 Jan 2009 10:16:50 +0100
-X-Mailer: git-send-email 1.6.1.310.g1063e
-In-Reply-To: <1231679663-31907-1-git-send-email-trast@student.ethz.ch>
-X-OriginalArrivalTime: 12 Jan 2009 09:16:50.0608 (UTC) FILETIME=[8078B300:01C97496]
+	id S1751343AbZALJRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 04:17:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750948AbZALJRL
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 04:17:11 -0500
+Received: from yw-out-2324.google.com ([74.125.46.29]:36916 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750984AbZALJRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 04:17:09 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so3374415ywe.1
+        for <git@vger.kernel.org>; Mon, 12 Jan 2009 01:17:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=6U2j6QL0J93EMGo/zRrAoAQaSoLvMiwUcZwAU74pHBA=;
+        b=W/BHzLYjWw5X2d1ReeO6iJxc/xHHuYOOQYzgryH9JCzX+zk8BEaBenm+CcdLsusgH5
+         uWX7WB2C9OGCVw6UJD3PrF/jcP+NUzWDsVq2e1W34b8YfTPs8tPqqIRvIRXTmNGI/u60
+         1X14zxMmjXF3citeAY79tFd9KKt5bcRvmXRnA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=p6jSX5L8+0HhZH5hcshHljOgtiH/p782tvEnqowwH9WIe/283CLlsciEFGDTHIthZE
+         tzUByF/r8Z3NlLuKzGmmaZ3N4+GTaclEg2d3CIPCJ59AogbVMJmUc2TV21eLwilrDIpI
+         68cklXY0wIiP16h7s3EB1WSY3LiH3PQAkPw2A=
+Received: by 10.100.163.15 with SMTP id l15mr15011651ane.128.1231751827740;
+        Mon, 12 Jan 2009 01:17:07 -0800 (PST)
+Received: by 10.100.143.19 with HTTP; Mon, 12 Jan 2009 01:17:07 -0800 (PST)
+In-Reply-To: <200901120246.28364.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105309>
 
-diff, log and show all take the same diff options.  Refactor them from
-__git_diff and __git_log into a variable, and complete them in
-__git_show too.
+2009/1/12 Jakub Narebski <jnareb@gmail.com>:
+> Do you have any suggestions to bypass this block for git? I have access
+> to Linux shell account (no root access, though) which doesn't have
+> problems with repo.or.cz, so I think I could set up SSH tunnel: but
+> how? And what to do with access via git:// - move to SSH too?
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-
----
-
-js/patience-diff is now in next, so here's a version on top of that.
-
-
- contrib/completion/git-completion.bash |   38 ++++++++++++++++++-------------
- 1 files changed, 22 insertions(+), 16 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index dee75b5..39ae7a3 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -759,25 +759,30 @@ _git_describe ()
- 	__gitcomp "$(__git_refs)"
- }
- 
--_git_diff ()
--{
--	__git_has_doubledash && return
--
--	local cur="${COMP_WORDS[COMP_CWORD]}"
--	case "$cur" in
--	--*)
--		__gitcomp "--cached --stat --numstat --shortstat --summary
-+__git_diff_common_options="--stat --numstat --shortstat --summary
- 			--patch-with-stat --name-only --name-status --color
- 			--no-color --color-words --no-renames --check
- 			--full-index --binary --abbrev --diff-filter=
--			--find-copies-harder --pickaxe-all --pickaxe-regex
-+			--find-copies-harder
- 			--text --ignore-space-at-eol --ignore-space-change
- 			--ignore-all-space --exit-code --quiet --ext-diff
- 			--no-ext-diff
- 			--no-prefix --src-prefix= --dst-prefix=
--			--base --ours --theirs
- 			--inter-hunk-context=
- 			--patience
-+			--raw
-+"
-+
-+_git_diff ()
-+{
-+	__git_has_doubledash && return
-+
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--*)
-+		__gitcomp "--cached --pickaxe-all --pickaxe-regex
-+			--base --ours --theirs
-+			$__git_diff_common_options
- 			"
- 		return
- 		;;
-@@ -960,17 +965,16 @@ _git_log ()
- 			--relative-date --date=
- 			--author= --committer= --grep=
- 			--all-match
--			--pretty= --name-status --name-only --raw
-+			--pretty=
- 			--not --all
- 			--left-right --cherry-pick
- 			--graph
--			--stat --numstat --shortstat
--			--decorate --diff-filter=
--			--color-words --walk-reflogs
-+			--decorate
-+			--walk-reflogs
- 			--parents --children --full-history
- 			--merge
- 			--inter-hunk-context=
--			--patience
-+			$__git_diff_common_options
- 			"
- 		return
- 		;;
-@@ -1475,7 +1479,9 @@ _git_show ()
- 		return
- 		;;
- 	--*)
--		__gitcomp "--pretty="
-+		__gitcomp "--pretty=
-+			$__git_diff_common_options
-+			"
- 		return
- 		;;
- 	esac
--- 
-tg: (f5cbdbb..) t/bash-complete-show (depends on: origin/next)
+See man ssh, look for -L. It works for arbitrary ports, so you can redirect
+git:// port to anywhere. Same for push over ssh, just give another port when
+connecting.
