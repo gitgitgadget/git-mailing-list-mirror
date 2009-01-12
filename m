@@ -1,184 +1,233 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT] Blame functionality for jgit
-Date: Mon, 12 Jan 2009 09:42:32 -0800
-Message-ID: <20090112174232.GJ10179@spearce.org>
-References: <3d045c7e0901111223j43a69402s28a59612212943f3@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 3/7] replace_object: add mechanism to replace objects
+ found in "refs/replace/"
+Date: Mon, 12 Jan 2009 18:44:03 +0100
+Message-ID: <20090112184403.ebb99b75.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: Manuel Woelker <manuel.woelker@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 18:44:15 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 12 18:44:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMQpR-000889-Sp
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 18:43:58 +0100
+	id 1LMQqE-0008QY-9J
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 18:44:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752523AbZALRmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 12:42:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752426AbZALRmf
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 12:42:35 -0500
-Received: from george.spearce.org ([209.20.77.23]:60913 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751517AbZALRme (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 12:42:34 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 794DD38210; Mon, 12 Jan 2009 17:42:32 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <3d045c7e0901111223j43a69402s28a59612212943f3@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752189AbZALRnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 12:43:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751936AbZALRnX
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 12:43:23 -0500
+Received: from smtp1-g21.free.fr ([212.27.42.1]:53040 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751471AbZALRnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 12:43:22 -0500
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 206499403C8;
+	Mon, 12 Jan 2009 18:43:14 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g21.free.fr (Postfix) with SMTP id 133239407C4;
+	Mon, 12 Jan 2009 18:43:12 +0100 (CET)
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105363>
 
-Manuel Woelker <manuel.woelker@gmail.com> wrote:
-> Over the weekend I have been hacking the jgit sources a little to see
-> if I can add blame/praise/annotate functionality to it. The results
-> can be found at http://github.com/manuel-woelker/egit/tree/blame . All
-> work is in the blame branch in org.spearce.jgit.blame package.
+The code implementing this mechanism has been copied from the commit
+graft code.
 
-Interesting.
+This mechanism is used in "read_sha1_file". sha1 passed to this
+function that match a ref name in "refs/replace/" are replaced by
+the sha1 that has been read in the ref.
+
+We "die" if the replacement recursion depth is too high or if we
+can't read the replacement object.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Makefile         |    1 +
+ commit.h         |    2 +
+ replace_object.c |  116 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ sha1_file.c      |   14 +++++-
+ 4 files changed, 130 insertions(+), 3 deletions(-)
+ create mode 100644 replace_object.c
+
+diff --git a/Makefile b/Makefile
+index dee97c1..7cf5d9a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -471,6 +471,7 @@ LIB_OBJS += read-cache.o
+ LIB_OBJS += reflog-walk.o
+ LIB_OBJS += refs.o
+ LIB_OBJS += remote.o
++LIB_OBJS += replace_object.o
+ LIB_OBJS += rerere.o
+ LIB_OBJS += revision.o
+ LIB_OBJS += run-command.o
+diff --git a/commit.h b/commit.h
+index 3a7b06a..37aa763 100644
+--- a/commit.h
++++ b/commit.h
+@@ -122,6 +122,8 @@ struct commit_graft *read_graft_line(char *buf, int len);
+ int register_commit_graft(struct commit_graft *, int);
+ struct commit_graft *lookup_commit_graft(const unsigned char *sha1);
  
-> I largely ported the cgit blame algorithm described here
-> https://kerneltrap.org/mailarchive/git/2006/10/12/224187 , the
-> relevant file is builtin-blame.c cf.
-> http://repo.or.cz/w/git.git?a=blob;f=builtin-blame.c;hb=HEAD
-
-OK.  Fortunately Junio has largely given his blessing to this code
-being converted to Java under the BSD license.
-
-> The blame algorithm needs to use a diff algorithm to find common parts
-> in files. AFAICT there is no diff implementation in jgit at the
-> moment. I used the incava java-diff library, (see
-> http://www.incava.org/projects/java/java-diff ), but I introduced an
-> interface that should make it possible to swap implementations with a
-> minimum of effort. To compile I just create a new eclipse project with
-> the java-diff sources.
-
-Unfortunately I can't reach incava.org to download java-diff, but
-its entry on sourceforge says it uses an LGPL license.  Within JGit
-we do want to stick to BSD and BSD dependencies, so bringing in
-java-diff as a new dependency isn't something we really want to do.
-
-Fortunately Dscho has been working on a Java diff implementation for
-JGit, and is considering releasing it under a BSD license so we can
-include it.
-
-The interface is still to be decided, but in general we have
-found that running against a byte[] is much faster than running
-against String.  We're probably going to want the diff library to
-take a byte[] and an IntList (as created by RawParseUtils.lineMap)
-and let it work against the byte array ranges directly, without any
-additional allocations, except where it needs to build up its hash
-of records.
++const unsigned char *lookup_replace_object(const unsigned char *sha1);
++
+ extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2, int cleanup);
+ extern struct commit_list *get_merge_bases_many(struct commit *one, int n, struct commit **twos, int cleanup);
+ extern struct commit_list *get_octopus_merge_bases(struct commit_list *in);
+diff --git a/replace_object.c b/replace_object.c
+new file mode 100644
+index 0000000..25b3ef3
+--- /dev/null
++++ b/replace_object.c
+@@ -0,0 +1,116 @@
++#include "cache.h"
++#include "refs.h"
++
++static struct replace_object {
++	unsigned char sha1[2][20];
++} **replace_object;
++
++static int replace_object_alloc, replace_object_nr;
++
++static int replace_object_pos(const unsigned char *sha1)
++{
++	int lo, hi;
++	lo = 0;
++	hi = replace_object_nr;
++	while (lo < hi) {
++		int mi = (lo + hi) / 2;
++		struct replace_object *rep = replace_object[mi];
++		int cmp = hashcmp(sha1, rep->sha1[0]);
++		if (!cmp)
++			return mi;
++		if (cmp < 0)
++			hi = mi;
++		else
++			lo = mi + 1;
++	}
++	return -lo - 1;
++}
++
++static int register_replace_object(struct replace_object *replace,
++				   int ignore_dups)
++{
++	int pos = replace_object_pos(replace->sha1[0]);
++
++	if (0 <= pos) {
++		if (ignore_dups)
++			free(replace);
++		else {
++			free(replace_object[pos]);
++			replace_object[pos] = replace;
++		}
++		return 1;
++	}
++	pos = -pos - 1;
++	if (replace_object_alloc <= ++replace_object_nr) {
++		replace_object_alloc = alloc_nr(replace_object_alloc);
++		replace_object = xrealloc(replace_object,
++					  sizeof(*replace_object) *
++					  replace_object_alloc);
++	}
++	if (pos < replace_object_nr)
++		memmove(replace_object + pos + 1,
++			replace_object + pos,
++			(replace_object_nr - pos - 1) *
++			sizeof(*replace_object));
++	replace_object[pos] = replace;
++	return 0;
++}
++
++static int register_replace_ref(const char *refname,
++				const unsigned char *sha1,
++				int flag, void *cb_data)
++{
++	/* Get sha1 from refname */
++	const char *slash = strrchr(refname, '/');
++	const char *hash = slash ? slash + 1 : refname;
++	struct replace_object * repl_obj = xmalloc(sizeof(*repl_obj));
++
++	if (strlen(hash) != 40 || get_sha1_hex(hash, repl_obj->sha1[0])) {
++		free(repl_obj);
++		warning("bad replace ref name: %s", refname);
++	}
++
++	/* Copy sha1 from the read ref */
++	hashcpy(repl_obj->sha1[1], sha1);
++
++	/* Register new object */
++	if (register_replace_object(repl_obj, 1))
++		warning("duplicate replace ref: %s", refname);
++
++	return 0;
++}
++
++static void prepare_replace_object(void)
++{
++	static int replace_object_prepared;
++
++	if (replace_object_prepared)
++		return;
++
++	for_each_replace_ref(register_replace_ref, NULL);
++	replace_object_prepared = 1;
++}
++
++/* We allow "recursive" replacement. Only within reason, though */
++#define MAXREPLACEDEPTH 5
++
++const unsigned char *lookup_replace_object(const unsigned char *sha1)
++{
++	int pos, depth = MAXREPLACEDEPTH;
++	const unsigned char *cur = sha1;
++
++	prepare_replace_object();
++
++	/* Try to recursively replace the object */
++	do {
++		if (--depth < 0)
++			die("replace depth too high for object %s",
++			    sha1_to_hex(sha1));
++
++		pos = replace_object_pos(cur);
++		if (0 <= pos)
++			cur = replace_object[pos]->sha1[1];
++	} while (0 <= pos);
++
++	return cur;
++}
+diff --git a/sha1_file.c b/sha1_file.c
+index f08493f..4f2fd10 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2163,10 +2163,18 @@ static void *read_object(const unsigned char *sha1, enum object_type *type,
+ void *read_sha1_file(const unsigned char *sha1, enum object_type *type,
+ 		     unsigned long *size)
+ {
+-	void *data = read_object(sha1, type, size);
++	const unsigned char *repl = lookup_replace_object(sha1);
++	void *data = read_object(repl, type, size);
++
++	/* die if we replaced an object with one that does not exist */
++	if (!data && repl != sha1)
++		die("replacement %s not found for %s",
++		    sha1_to_hex(repl), sha1_to_hex(sha1));
++
+ 	/* legacy behavior is to die on corrupted objects */
+-	if (!data && (has_loose_object(sha1) || has_packed_and_bad(sha1)))
+-		die("object %s is corrupted", sha1_to_hex(sha1));
++	if (!data && (has_loose_object(repl) || has_packed_and_bad(repl)))
++		die("object %s is corrupted", sha1_to_hex(repl));
++
+ 	return data;
+ }
  
-> I would like to hear your thoughts on a couple of topics:
->  - Merge/patch/diff/blame functionality needs a diff implementation,
-> what are our options within technical and license constraints?
-
-I'm open to a plugin interface like you have done with the IDiff
-API to hide java-diff, but for that to work we cannot have the
-java-diff code as part of the JGit classpath.  It needs to be
-something added externally by the user, in a different context,
-so the user can easily load their preferred diff implementation.
-
-If that happents to be the LGPL java-diff, that's the user's choice.
-We can provide the shim needed to get it to load, and the adapter,
-but IMHO we shouldn't distribute the LGPL code, and we shouldn't
-make it required in order to make the library compile or work.
-
-Eclipes has its own LCS implementation, we should also be able
-to have the Eclipse plugin provide its own shim to link to the
-Eclipse EPL licensed LCS, so Eclipse can avoid java-diff entirely.
-I'm not sure if NetBeans has an LCS available that the NetBeans
-plugin could easily link to.  It probably does.
-
-I think eventually we'll have a BSD licensed LCS that will come with
-JGit, which would eliminate the need for such a shim.  I'd like
-to see that happen before blame gets added, but if blame is ready
-and the shim is reasonably well done, I'm inclined to bring blame
-in early.
-
->  - What is the roadmap for these features?
-
-There isn't one.  Its whatever gets contributed in a state that is
-ready for inclusion.  :-)
-
-Since you are submitting this work, I'd say its on you to get
-blame added.
-
->  - Can you see this blame effort getting integrated upstream?
-
-Yes.
- 
-> I would love to contribute more effort to egit and the blame
-> functionality in particular. To me, "blame" is one of the killer
-> features of modern SCMs.
-
-I agree, I use git blame fairly often myself...
-
-> Last no least, kudos to the git and egit teams for their hard work on
-> making git such a great piece of software.
-
-Thanks.
-
-Now for some comments about your blame branch.
-
-- Don't use @author tags, we don't use them anywhere else.
-
-- Please include copyright headers on all new files.
-
-- I think the IDiff, IDifference should be in a ".diff" package so
-we can reuse them for other diff applications.  Especially if we
-wind up using a shim to link to different LCS implementations.
-
-- I think the API for BlameEngine should be more like:
-
-  public class BlameEngine {
-    private final RevWalk rw;
-
-    public BlameEngine(final Repository repo) {
-      this(new RevWalk(repo));
-    }
-
-    public BlameEngine(final RevWalk walk) {
-      rw = walk;
-    }
-
-    public RevWalk getRevWalk() {
-      return rw;
-    }
-
-    public List<BlameEntry> blame(RevCommit c, String path);
-  }
-
-  One reason for this style of API is we can have the engine cache
-  blame records.  This can make a GUI navigator much more efficient
-  as it jumps around between commits and asks for blames over the
-  same data.
-
-- Internally you should *always* use RevCommit, not Commit.
-The RevCommit class can be orders of magnitude faster than Commit.
-
-- Internally you should always use RevTree and TreeWalk to locate
-blob IDs.  Its orders of magnitude faster than Tree and TreeEntry.
-
-- Don't use new String(loader.getBytes()) (e.g. in Origin.getData)
-to get the data for a file.  We want to do raw diffs, so that the
-character encoding is considered as part of the blame.  E.g. if
-a file switches character encodings, the blame has to go to the
-commit that introduced the new encoding.  This is a huge reason
-to use byte[] and IntList over an array of String.
-
-- RawParseUtils.lineMap will be faster than a Pattern of "^(.*)$".
-
-
-Otherwise, I'm finding your code to be quite clear, and converted
-rather nicely from C.  I'd love to see this integrated into the
-JGit project.
-
 -- 
-Shawn.
+1.6.1.83.g16e5
