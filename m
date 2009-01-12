@@ -1,81 +1,82 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git submodule merge madness
-Date: Mon, 12 Jan 2009 14:27:16 +0100
-Message-ID: <496B4534.9020809@op5.se>
-References: <ADC7A3B1-6756-4258-93CD-DB40C7D2793C@develooper.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] grep: don't call regexec() for fixed strings
+Date: Mon, 12 Jan 2009 14:33:44 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901121433240.3586@pacific.mpi-cbg.de>
+References: <4967D8F8.9070508@lsrfire.ath.cx> <4967DB4A.2000702@lsrfire.ath.cx> <237967ef0901120425x79b7c1a4p238081a99694ae23@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?Ask_Bj=F8rn_Hansen?= <ask@develooper.com>
-X-From: git-owner@vger.kernel.org Mon Jan 12 14:28:51 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-2057107379-1231767224=:3586"
+Cc: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Mikael Magnusson <mikachu@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 12 14:34:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMMqS-0004Xe-6X
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 14:28:44 +0100
+	id 1LMMvv-0006WJ-DY
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 14:34:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbZALN1V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Jan 2009 08:27:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbZALN1U
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 08:27:20 -0500
-Received: from mail.op5.se ([193.201.96.20]:56966 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751045AbZALN1U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 08:27:20 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 40FD21B800B1;
-	Mon, 12 Jan 2009 14:28:12 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dLCeKWyvTDin; Mon, 12 Jan 2009 14:28:10 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 5B4241B81512;
-	Mon, 12 Jan 2009 14:28:10 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <ADC7A3B1-6756-4258-93CD-DB40C7D2793C@develooper.com>
+	id S1751491AbZALNc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 08:32:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbZALNc6
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 08:32:58 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38416 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751045AbZALNc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 08:32:58 -0500
+Received: (qmail invoked by alias); 12 Jan 2009 13:32:55 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp063) with SMTP; 12 Jan 2009 14:32:55 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+T30JZUimTRyPM/enLBkNNTxugVdlKWq0wADqh4x
+	nhz0sBUgzJoGBd
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <237967ef0901120425x79b7c1a4p238081a99694ae23@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105342>
 
-Ask Bj=F8rn Hansen wrote:
-> Hi,
->=20
-> We've (again) replaced a few directories with submodules.  Man, it's=20
-> madness!
->=20
-> The typical problem is that we get an error trying to merge a=20
-> "pre-submodule" branch into master:
->=20
->     fatal: cannot read object 894c77319a18c4d48119c2985a9275c9f588358=
-4=20
-> 'some/sub/dir': It is a submodule!
-> Mark Levedahl wrote an example in July, but I don't think he got any=20
-> replies:  http://marc.info/?l=3Dgit&m=3D121587851313303
-> Any ideas?   Is there something we can do?    I see a strong correlat=
-ion=20
-> between adding a new submodule and the number of "git sucks" messages=
- on=20
-> our internal IRC server.
->=20
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Well, reworking the repository structure (which is essentially what you=
-'re
-doing) should be a flag day. Merge stuff before that and mark it in som=
-e
-way so that you don't run into the problems you're seeing now.
+--8323328-2057107379-1231767224=:3586
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Hi,
+
+On Mon, 12 Jan 2009, Mikael Magnusson wrote:
+
+> 2009/1/10 René Scharfe <rene.scharfe@lsrfire.ath.cx>:
+> > Add the new flag "fixed" to struct grep_pat and set it if the pattern
+> > is doesn't contain any regex control characters in addition to if the
+> > flag -F/--fixed-strings was specified.
+> >
+> > diff --git a/grep.c b/grep.c
+> > index 394703b..a1092df 100644
+> > --- a/grep.c
+> > +++ b/grep.c
+> > @@ -28,9 +28,31 @@ void append_grep_pattern(struct grep_opt *opt, const char *pat,
+> >        p->next = NULL;
+> >  }
+> >
+> > +static int isregexspecial(int c)
+> > +{
+> > +       return isspecial(c) || c == '$' || c == '(' || c == ')' || c == '+' ||
+> > +                              c == '.' || c == '^' || c == '{' || c == '|';
+> > +}
+> 
+> Shouldn't this include '*' and '\'?
+
+This is covered by isspecial(): see ctype.c.
+
+Hth,
+Dscho
+
+--8323328-2057107379-1231767224=:3586--
