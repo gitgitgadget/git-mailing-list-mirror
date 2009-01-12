@@ -1,75 +1,76 @@
-From: Christian Couder <chriscool@tuxfamily.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Google Summer of Code 2009
-Date: Mon, 12 Jan 2009 14:20:25 +0100
-Message-ID: <200901121420.25420.chriscool@tuxfamily.org>
+Date: Mon, 12 Jan 2009 14:25:04 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901121421530.3586@pacific.mpi-cbg.de>
 References: <20090107183033.GB10790@spearce.org> <496B2690.2010902@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Jan 12 14:21:11 2009
+X-From: git-owner@vger.kernel.org Mon Jan 12 14:25:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMMj6-0001Sq-1t
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 14:21:08 +0100
+	id 1LMMnW-0003Ri-Mk
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 14:25:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804AbZALNTo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Jan 2009 08:19:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbZALNTo
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 08:19:44 -0500
-Received: from smtp1-g21.free.fr ([212.27.42.1]:58768 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751523AbZALNTn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jan 2009 08:19:43 -0500
-Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 7C310940130;
-	Mon, 12 Jan 2009 14:19:35 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 9719B940162;
-	Mon, 12 Jan 2009 14:19:33 +0100 (CET)
-User-Agent: KMail/1.9.9
+	id S1752040AbZALNYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 08:24:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751578AbZALNYT
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 08:24:19 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42267 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750930AbZALNYT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 08:24:19 -0500
+Received: (qmail invoked by alias); 12 Jan 2009 13:24:16 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp023) with SMTP; 12 Jan 2009 14:24:16 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+pQLRIX5apyHq0ySyDb77hdYzp/uNkg9hfplBSoP
+	HQ3tokihBd6VR6
+X-X-Sender: schindelin@pacific.mpi-cbg.de
 In-Reply-To: <496B2690.2010902@op5.se>
-Content-Disposition: inline
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105340>
 
-Le lundi 12 janvier 2009, Andreas Ericsson a =E9crit :
-> Just chiming in that I can probably help mentoring whoever goes
-> with libgit2. I do not have enough spare time for me to promise
-> that I can be there as much as I think is necessary and proper,
-> but I'll gladly help out.
->
-> On a side-note, I think all mentors should urge the students in
-> the strongest possible terms to deliver their work to git@vger
-> as soon as possible.=20
+Hi,
 
-I agree, but I think there is also a merge problem. I mean we should al=
-so=20
-perhaps urge students to get what they have done merged as soon as poss=
-ible=20
-even if it means that they rework 5 or 10 time the code instead of=20
-developing features according to the schedule.
+On Mon, 12 Jan 2009, Andreas Ericsson wrote:
 
-But unfortunately even something merged into next can be removed afterw=
-ards,=20
-so it's really difficult, because big features cannot for obvious reaso=
-ns=20
-be merged into master and the git release cycle doesn't always go along=
-=20
-well with the GSoC schedule.
+> Just chiming in that I can probably help mentoring whoever goes with 
+> libgit2. I do not have enough spare time for me to promise that I can be 
+> there as much as I think is necessary and proper, but I'll gladly help 
+> out.
 
-> From previous years experience, successful=20
-> projects are those that the list sees code from within a week
-> or two after the project's started, while the projects that are
-> kept in the dark rarely (if ever?) finish successfully.
+I don't know if I like co-mentoring; I always had the impression that this 
+does not work all that well.
 
-I don't think things are so simple.
+> On a side-note, I think all mentors should urge the students in the 
+> strongest possible terms to deliver their work to git@vger as soon as 
+> possible. From previous years experience, successful projects are those 
+> that the list sees code from within a week or two after the project's 
+> started, while the projects that are kept in the dark rarely (if ever?) 
+> finish successfully.
 
-Regards,
-Christian.
+Nope, that is just plainly incorrect.
+
+The most successful GSoC project we had was Miklos' builtin-merge, but the 
+code had to grow to a state that both him and me were comfortable with a 
+submission to git@vger.
+
+The _communication_ should be open, and much of it on the mailing list, I 
+agree, but _only_ after the student is familiar enough with the aspects of 
+her project (including some familiarity with the source code).
+
+I will _not_ force a student to ask questions openly that he finds 
+embarassing.
+
+Ciao,
+Dscho
