@@ -1,66 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Funny: git -p submodule summary
-Date: Mon, 12 Jan 2009 06:21:09 -0500
-Message-ID: <20090112112109.GA3825@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de> <20090109083836.GB21389@coredump.intra.peff.net> <20090109092250.GA1809@coredump.intra.peff.net> <49672244.80200@viscovery.net> <20090109101335.GA4346@coredump.intra.peff.net> <496728B9.7090200@viscovery.net> <20090111112222.GA29656@coredump.intra.peff.net> <496B2278.9050905@viscovery.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Google Summer of Code 2009
+Date: Mon, 12 Jan 2009 12:16:32 +0100
+Message-ID: <496B2690.2010902@op5.se>
+References: <20090107183033.GB10790@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jan 12 12:23:23 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jan 12 12:25:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMKsN-0005lU-Px
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 12:22:36 +0100
+	id 1LMKun-0006sQ-R1
+	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 12:25:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752327AbZALLVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 06:21:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751679AbZALLVM
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 06:21:12 -0500
-Received: from peff.net ([208.65.91.99]:39757 "EHLO peff.net"
+	id S1752385AbZALLXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 06:23:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752408AbZALLXj
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 06:23:39 -0500
+Received: from mail.op5.se ([193.201.96.20]:49108 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751572AbZALLVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 06:21:11 -0500
-Received: (qmail 30777 invoked by uid 107); 12 Jan 2009 11:21:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 12 Jan 2009 06:21:11 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Jan 2009 06:21:09 -0500
-Content-Disposition: inline
-In-Reply-To: <496B2278.9050905@viscovery.net>
+	id S1752179AbZALLXi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 06:23:38 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Jan 2009 06:23:38 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 1F7A71B80CA5;
+	Mon, 12 Jan 2009 12:17:28 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7+Lh2gzN6tYB; Mon, 12 Jan 2009 12:17:26 +0100 (CET)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id F3D361B80C19;
+	Mon, 12 Jan 2009 12:17:25 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <20090107183033.GB10790@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105327>
 
-On Mon, Jan 12, 2009 at 11:59:04AM +0100, Johannes Sixt wrote:
+Just chiming in that I can probably help mentoring whoever goes
+with libgit2. I do not have enough spare time for me to promise
+that I can be there as much as I think is necessary and proper,
+but I'll gladly help out.
 
-> But we need to insert the patch below *before* 2/4. The test case needs a
-> change, too,(exit code on Windows is 3, not 130) but I'll keep that in my
-> repository, like with all other Windows related test suite changes.
+On a side-note, I think all mentors should urge the students in
+the strongest possible terms to deliver their work to git@vger
+as soon as possible. From previous years experience, successful
+projects are those that the list sees code from within a week
+or two after the project's started, while the projects that are
+kept in the dark rarely (if ever?) finish successfully.
 
-Hrm. How do you properly detect "killed by SIGINT" on Windows? That is
-the intent of that test.
-
-> -#define SIGKILL 0
-> -#define SIGCHLD 0
-> -#define SIGPIPE 0
-> -#define SIGHUP 0
-> -#define SIGQUIT 0
-> -#define SIGALRM 100
-> +#define SIGHUP 1
-> +#define SIGQUIT 3
-> +#define SIGKILL 9
-> +#define SIGPIPE 13
-> +#define SIGALRM 14
-> +#define SIGCHLD 17
-
-Don't these get fed to signal()? Does Windows really not care about
-getting bogus numbers versus 0 (which is, admittedly, bogus itself)? Or
-are we just ignoring the return code everywhere?
-
--Peff
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
