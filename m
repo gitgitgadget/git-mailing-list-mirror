@@ -1,61 +1,44 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: Re: [PATCH 1/3] Purest update to bash completions to prevent unbounded
- variable errors.
-Date: Tue, 13 Jan 2009 11:40:07 -0500
-Message-ID: <496CC3E7.8060805@tedpavlic.com>
-References: <496CBC98.7090101@tedpavlic.com> <20090113163421.GQ10179@spearce.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: stg coalesce -> squash?
+Date: Tue, 13 Jan 2009 17:41:57 +0100
+Message-ID: <20090113164157.GA20143@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jan 13 17:42:07 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 13 17:43:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMmKk-0002JQ-D0
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 17:41:42 +0100
+	id 1LMmMf-0003FX-FW
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 17:43:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753250AbZAMQkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 11:40:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752935AbZAMQkM
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 11:40:12 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:48411 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751989AbZAMQkK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Jan 2009 11:40:10 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 7934680D8031;
-	Tue, 13 Jan 2009 11:34:26 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QAllrW4EOuD1; Tue, 13 Jan 2009 11:34:26 -0500 (EST)
-Received: from tedbook.mshome.net (tedpc.ece.ohio-state.edu [164.107.164.122])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 4B49B80D801B;
-	Tue, 13 Jan 2009 11:34:26 -0500 (EST)
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <20090113163421.GQ10179@spearce.org>
+	id S1753724AbZAMQmG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Jan 2009 11:42:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753702AbZAMQmE
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 11:42:04 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3430 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752329AbZAMQmD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 11:42:03 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1LMmKz-0005FX-00; Tue, 13 Jan 2009 16:41:57 +0000
+Content-Disposition: inline
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105510>
 
-> Your commit message leaves a lot to be desired.  I would instead
-> have written something like this:
+Would it be a good idea to rename "stg coalesce" to "stg squash"?
+That's the term git uses, and it's shorter, easier to spell, and
+easier to say. coalesce is still not in any released version of StGit,
+so now would be a good time to do it if we wanted to.
 
-I agree completely. Sorry about that. stg fired off vim to edit the 
-commit message, and I just wasn't thinking.
-
-Would you like me to modify the commit message and resubmit?
-
---Ted
-
--- 
-Ted Pavlic <ted@tedpavlic.com>
-
-   Please visit my ALS association page:
-         http://web.alsa.org/goto/tedpavlic
-   My family appreciates your support in the fight to defeat ALS.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
