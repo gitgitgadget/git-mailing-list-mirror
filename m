@@ -1,81 +1,69 @@
-From: "Kyle Moffett" <kyle@moffetthome.net>
-Subject: Re: current git kernel has strange problems during bisect
-Date: Tue, 13 Jan 2009 15:26:09 -0500
-Message-ID: <f73f7ab80901131226s6af7730cucf9c44bc2b4f9545@mail.gmail.com>
-References: <200901111602.53082.borntraeger@de.ibm.com>
-	 <20090111194258.GA4840@uranus.ravnborg.org>
-	 <alpine.LFD.2.00.0901111200330.6528@localhost.localdomain>
-	 <200901112239.20306.borntraeger@de.ibm.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git-svn fails to fetch repository
+Date: Tue, 13 Jan 2009 21:39:22 +0100
+Message-ID: <20090113203922.GD30404@atjola.homenet>
+References: <loom.20090113T145019-951@post.gmane.org> <loom.20090113T150220-345@post.gmane.org> <496CD49D.1070201@drmicha.warpmail.net> <loom.20090113T185918-397@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Sam Ravnborg" <sam@ravnborg.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org,
-	"Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>
-To: "Christian Borntraeger" <borntraeger@de.ibm.com>
-X-From: git-owner@vger.kernel.org Tue Jan 13 21:27:48 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Vladimir Pouzanov <farcaller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 13 21:44:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMprK-0000E0-V4
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 21:27:35 +0100
+	id 1LMq4T-0006S3-CJ
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 21:41:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755202AbZAMU0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 15:26:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754580AbZAMU0M
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 15:26:12 -0500
-Received: from yw-out-2324.google.com ([74.125.46.31]:10923 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754197AbZAMU0K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 15:26:10 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so96738ywe.1
-        for <multiple recipients>; Tue, 13 Jan 2009 12:26:09 -0800 (PST)
-Received: by 10.101.70.15 with SMTP id x15mr16899040ank.112.1231878369362;
-        Tue, 13 Jan 2009 12:26:09 -0800 (PST)
-Received: by 10.100.4.5 with HTTP; Tue, 13 Jan 2009 12:26:09 -0800 (PST)
-In-Reply-To: <200901112239.20306.borntraeger@de.ibm.com>
+	id S1755088AbZAMUjl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Jan 2009 15:39:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754781AbZAMUjl
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 15:39:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44445 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751163AbZAMUjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 15:39:40 -0500
+Received: (qmail invoked by alias); 13 Jan 2009 20:39:36 -0000
+Received: from i577B816A.versanet.de (EHLO atjola.local) [87.123.129.106]
+  by mail.gmx.net (mp070) with SMTP; 13 Jan 2009 21:39:36 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18Q8hhmhzkQql3xEfItSqHj5mTh/PO7y/FkS1qTxL
+	lx4Cai/YIva1Vh
 Content-Disposition: inline
+In-Reply-To: <loom.20090113T185918-397@post.gmane.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105532>
 
-On Sun, Jan 11, 2009 at 4:39 PM, Christian Borntraeger
-<borntraeger@de.ibm.com> wrote:
-> In my opinion we should really avoid subtree merges in the future as a curtesy
-> to people who do the uncool work of testing, problem tracking and bisecting.
-> </rant>
+On 2009.01.13 19:01:28 +0000, Vladimir Pouzanov wrote:
+> Michael J Gruber <git <at> drmicha.warpmail.net> writes:
+> > This is with git 1.6.1rc4 (yeah I should have updated), perl 5.8.8 =
+and
+> > svn 1.4.6 on Linux. Same with git 1.6.0.6, perl 5.10.0 and svn 1.5.=
+4 on
+> > another box. The one git-svn change between 1.6.0.4 and 1.6.0.6 sho=
+uld
+> > not matter because you don't have branches. What's your svn version=
+?
+>=20
+> svn, version 1.5.5 (r34862) on OSX (where perl fails with error) and
+> svn, version 1.5.0 (Release Candidate=20
+> 5) on Linux
+> (where perl segfaults somewhere in apr).
 
-As an alternative, you can relatively easily rewrite the following
-independent histories:
+Is that Linux box using Gentoo? If so, try emerging subversion with -ds=
+o
+in your build flags.
 
-A -- B -- C
-X -- Y -- Z
+Cloning the svn repo you mentioned works fine with
+git-svn version 1.6.1.40.g8ea6a (svn 1.5.1)
 
-To look like this:
+(On debian sid)
 
-A -- B -- C -- X' -- Y' -- Z'
-
-Where X' is (C + sub/dir/X), Y' is (C + sub/dir/Y), etc...
-
-Assuming the following:
-  "master" branch points to commit C
-  "child" branch points to commit Z
-  "${KIDSTART}" is the SHA1 id of commit X
-
-echo "${KIDSTART} $(git rev-parse --verify master)" >>.git/info/grafts
-
-git filter-branch --index-filter 'git read-tree master && git
-read-tree --prefix="sub/dir/" "${GIT_COMMIT}"' -- master..child
-
-The one downside is then somebody actually has to *test* those commits
-when doing a bisect, even though they did not materially change
-anything.  The upside is that there isn't any "what the hell just
-happened?" when you *do* end up in the newly-created branch.
-
-Cheers,
-Kyle Moffett
+Bj=F6rn
