@@ -1,54 +1,64 @@
-From: Vladimir Pouzanov <farcaller@gmail.com>
-Subject: Re: git-svn fails to fetch repository
-Date: Tue, 13 Jan 2009 21:34:38 +0000 (UTC)
-Message-ID: <loom.20090113T213400-985@post.gmane.org>
-References: <loom.20090113T145019-951@post.gmane.org>  <loom.20090113T150220-345@post.gmane.org>  <496CD49D.1070201@drmicha.warpmail.net>  <loom.20090113T185918-397@post.gmane.org>  <20090113203922.GD30404@atjola.homenet>  <loom.20090113T204616-845@post.gmane.org>  <76718490901131312j28f8283bi94f55000e70c532e@mail.gmail.com>  <loom.20090113T211437-12@post.gmane.org> <76718490901131328x5ec30805u3cae29132defd695@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: egit problem with sym linked eclipse project dirs
+Date: Tue, 13 Jan 2009 22:37:11 +0100
+Message-ID: <200901132237.11946.robin.rosenberg.lists@dewire.com>
+References: <p0624081cc5928e2885fd@[192.168.1.114]>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 13 22:36:21 2009
+Cc: git@vger.kernel.org, Scott Cytacki <scytacki@fastmail.fm>
+To: Stephen Bannasch <stephen.bannasch@deanbrook.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jan 13 22:38:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMqvs-0006AC-Hp
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 22:36:20 +0100
+	id 1LMqy9-00075R-DZ
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 22:38:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754023AbZAMVe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 16:34:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753622AbZAMVe4
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 16:34:56 -0500
-Received: from main.gmane.org ([80.91.229.2]:36048 "EHLO ciao.gmane.org"
+	id S1756082AbZAMVhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 16:37:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755864AbZAMVhR
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 16:37:17 -0500
+Received: from mail.dewire.com ([83.140.172.130]:9527 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751578AbZAMVe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 16:34:56 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LMquS-00005R-Ji
-	for git@vger.kernel.org; Tue, 13 Jan 2009 21:34:52 +0000
-Received: from 122-249-112-92.pool.ukrtel.net ([122-249-112-92.pool.ukrtel.net])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Jan 2009 21:34:52 +0000
-Received: from farcaller by 122-249-112-92.pool.ukrtel.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Jan 2009 21:34:52 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 92.112.249.122 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-us) AppleWebKit/525.27.1 (KHTML, like Gecko) Version/3.2.1 Safari/525.27.1)
+	id S1755578AbZAMVhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 16:37:15 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id C7B8A147E5B9;
+	Tue, 13 Jan 2009 22:37:13 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5CItiXNAV-Dt; Tue, 13 Jan 2009 22:37:13 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 46CE9147E5B7;
+	Tue, 13 Jan 2009 22:37:13 +0100 (CET)
+User-Agent: KMail/1.10.92 (Linux/2.6.27-11-generic; KDE/4.1.85; i686; ; )
+In-Reply-To: <p0624081cc5928e2885fd@[192.168.1.114]>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105540>
 
-Jay Soffian <jaysoffian <at> gmail.com> writes:
-> Perhaps this will help in tracking down the problem.
+> To hack around Eclipse's problem with projects in nested directories 
+> I clone a repo and then create a new top-level dir that just has 
+> symbolic links to all the project directories.
+> 
+> However when I Team/Share with git using egit the resources become 
+> untracked when displayed in Eclipse -- they still are tracked however 
+> when I check from the command line.
 
-$ git svn clone http://qsb-mac.googlecode.com/svn/trunk qsb-mac
-Initialized empty Git repository in /Users/farcaller/temp/qsb-mac/.git/
-r1 = 810fe584c48b884460b5403a28bc61d872452b93 (git-svn)
-Temp file with moniker 'svn_delta' already in use at /opt/local/lib/perl5/
-site_perl/5.8.8/Git.pm line 1011.
+I've seen this too, but so far not got myself to actually fix it. I think it has do with
+that we ask eclipse project for it's path end there we gets off track. Thanks
+for providing a good example that help "someone" to fix it. 
+
+Could you add an issue at http://code.google.com/p/egit/issues/list and maybe
+include a tar  ball with a simple project displaying this behaviour? (with a note
+that the symlinks makes this impossible to recreate on Windows).
+
+-- robin
