@@ -1,110 +1,116 @@
-From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <tavestbo@trolltech.com>
-Subject: [PATCH next] git-notes: fix printing of multi-line notes
-Date: Tue, 13 Jan 2009 20:57:16 +0100
-Message-ID: <496CF21C.2050500@trolltech.com>
+From: Stephen Bannasch <stephen.bannasch@deanbrook.org>
+Subject: egit problem with sym linked eclipse project dirs
+Date: Tue, 13 Jan 2009 15:00:34 -0500
+Message-ID: <p0624081cc5928e2885fd@[192.168.1.114]>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes.Schindelin@gmx.de, junio@pobox.com
+Content-Type: text/plain; charset="us-ascii" ; format="flowed"
+Cc: Scott Cytacki <scytacki@fastmail.fm>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 13 20:54:11 2009
+X-From: git-owner@vger.kernel.org Tue Jan 13 21:02:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMpL0-0004gE-3T
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 20:54:10 +0100
+	id 1LMpSj-0007Pp-5X
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 21:02:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753395AbZAMTwq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Jan 2009 14:52:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752544AbZAMTwp
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 14:52:45 -0500
-Received: from hoat.troll.no ([62.70.27.150]:47645 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752127AbZAMTwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 14:52:45 -0500
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 7CFD320F0B;
-	Tue, 13 Jan 2009 20:52:39 +0100 (CET)
-Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id 7521E20F06;
-	Tue, 13 Jan 2009 20:52:39 +0100 (CET)
-Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
-	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n0DJqcAp019073;
-	Tue, 13 Jan 2009 20:52:38 +0100
-Received: from [172.24.90.10] ( [172.24.90.10])
-    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
-    via ESMTP; Tue, 13 Jan 2009 20:52:37 +0100 (CET)
-x-scalix-Hops: 1
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
-Content-Disposition: inline
+	id S1754773AbZAMUAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 15:00:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753446AbZAMUAp
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 15:00:45 -0500
+Received: from deanbrook.org ([72.52.70.192]:49160 "HELO deanbrook.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753254AbZAMUAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 15:00:44 -0500
+Received: from ::ffff:71.161.144.33 ([71.161.144.33]) by deanbrook.org for <git@vger.kernel.org>; Tue, 13 Jan 2009 12:00:40 -0800
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105525>
 
-The line length was read from the same position every time,
-causing mangled output when printing notes with multiple lines.
+To hack around Eclipse's problem with projects in nested directories 
+I clone a repo and then create a new top-level dir that just has 
+symbolic links to all the project directories.
 
-Also, adding new-line manually for each line ensures that we
-get a new-line between commits, matching git-log for commits
-without notes.
+However when I Team/Share with git using egit the resources become 
+untracked when displayed in Eclipse -- they still are tracked however 
+when I check from the command line.
 
-Signed-off-by: Tor Arne Vestb=F8 <tavestbo@trolltech.com>
----
+---- more details ----
 
-This approach uses a msg pointer, but I started out with just using
-msg + msgoffset all over the place, so if that's a preferred way
-to do things I'm happy to provide an alternate patch.
+using v0.4.0.200901041117 of egit
 
-Also, I'm guessing this printing should go into pretty.c at some
-point, so you can reference the notes as part of a custom pretty
-format. If so, this code could be converted to use helpers such
-as get_one_line().
+I've got a large dir structure in a git repo in which there are many 
+eclipse projects at different levels of the tree.
 
-This is my first patch to Git, so sorry if I messed something up :)
+However Eclipse doesn't work with projects at different levels in a 
+nested dir structure (bad Eclipse) -- see: Eclipse bug: 
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=35973
 
-notes.c |   13 +++++++------
- 1 files changed, 7 insertions(+), 6 deletions(-)
+When we work with these projects with svn we checkout each one 
+individually into it's own dir to create the flat hierarchy Eclipse 
+needs.  Updating all these separate projects takes forever -- at 
+least compared to using Git.
 
-diff --git a/notes.c b/notes.c
-index ad43a2e..bd73784 100644
---- a/notes.c
-+++ b/notes.c
-@@ -110,8 +110,8 @@ void get_commit_notes(const struct commit *commit, =
-struct strbuf *sb,
- {
- 	static const char *utf8 =3D "utf-8";
- 	unsigned char *sha1;
--	char *msg;
--	unsigned long msgoffset, msglen;
-+	char *msg, *msg_p;
-+	unsigned long linelen, msglen;
- 	enum object_type type;
-=20
- 	if (!initialized) {
-@@ -148,12 +148,13 @@ void get_commit_notes(const struct commit *commit=
-, struct strbuf *sb,
-=20
- 	strbuf_addstr(sb, "\nNotes:\n");
-=20
--	for (msgoffset =3D 0; msgoffset < msglen;) {
--		int linelen =3D strchrnul(msg, '\n') - msg;
-+	for (msg_p =3D msg; msg_p < msg + msglen; msg_p +=3D linelen + 1) {
-+		linelen =3D strchrnul(msg_p, '\n') - msg_p;
-=20
- 		strbuf_addstr(sb, "    ");
--		strbuf_add(sb, msg + msgoffset, linelen);
--		msgoffset +=3D linelen;
-+		strbuf_add(sb, msg_p, linelen);
-+		strbuf_addch(sb, '\n');
- 	}
-+
- 	free(msg);
- }
---=20
-1.6.0.2.GIT
+I created a Ruby script to create a new dir named 'workspace' at the 
+top level of a checkout with symbolic links to all the enclosed 
+directories that have a .project file inside them.
+
+http://svn.concord.org/svn/projects/trunk/common/flatten_projects.rb
+
+or here in the git mirror:
+
+http://gitorious.org/projects/otrunk-examples/repos/mainline/blobs/raw/5c5ca6ff830f4ad3e4d427df92c1a5dff64831b5/flatten_projects.rb
+
+(warning: repos are public but very big)
+
+The result is a dir: workspace/ that emulates the flat project space 
+that Eclipse needs:
+
+   http://gist.github.com/4658 (a bunch of these are legacy projects)
+
+Then I open Eclipse, switch to a new Workspace, select the 
+newly-created 'workspace' dir and import the projects to work on.
+
+This works fine for Eclipse. The projects build and reference each other.
+
+But when I then turn on the team/sharing/git for each project ...
+
+The operation completes -- the git decorator appears showing [Git @ master] ...
+
+but the files are all untracked.
+
+Screenshots showing the sequence after importing just 7 projects:
+
+   apple-support, framework, frameworkview, otrunk, swing, thirdparty-jars
+
+share projects:
+   http://skitch.com/stepheneb/bbnqf/skitched-20090113-144412
+
+select git:
+   http://img.skitch.com/20090113-peu5y38a1yqm4kfqasf6hh9r9t.png
+
+iterate through each project:
+   http://img.skitch.com/20090113-k6wf8xgs2bc4ehy9siscdyteqr.png
+   http://img.skitch.com/20090113-jughm7eatnuum43gfuedmctrw5.png
+
+showing untracked files on master branch:
+   http://skitch.com/stepheneb/bbnqc/skitched-20090113-144646
+
+However from the command line git shows the appropriate untracked 
+files after an Eclipse build:
+
+$ git status
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	java/core/apple-support/bin/
+#	java/core/framework/lib/
+#	java/core/frameworkview/lib/
+#	java/core/swing/lib/
+#	java/otrunk/otrunk/lib/
+#	java/thirdparty/phet-simulations-java/simulations/cck/cck
+#	rails/portal/portal
+#	workspace/
