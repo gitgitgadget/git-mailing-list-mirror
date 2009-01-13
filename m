@@ -1,78 +1,60 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git-patches list?
-Date: Tue, 13 Jan 2009 09:26:18 +0100
-Message-ID: <496C502A.3070908@op5.se>
-References: <90bb445a0901121543q29d30d49yaa723b4b913a4b31@mail.gmail.com> <7vr638f5ch.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: recognize six digit abbreviated SHA1
+Date: Tue, 13 Jan 2009 00:26:37 -0800
+Message-ID: <7vd4erd32a.fsf@gitster.siamese.dyndns.org>
+References: <87mydw2hrb.fsf@cup.kalibalik.dk>
+ <87mydw2hkb.fsf@cup.kalibalik.dk> <496BF5D7.2090003@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Akira Kitada <akitada@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 13 09:27:59 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>, git@vger.kernel.org,
+	jnareb@gmail.com
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Jan 13 09:28:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMecv-0008MH-Pr
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 09:27:58 +0100
+	id 1LMedB-0008Qu-0a
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 09:28:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755913AbZAMI0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 03:26:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755655AbZAMI0X
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 03:26:23 -0500
-Received: from mail.op5.se ([193.201.96.20]:51355 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753754AbZAMI0W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 03:26:22 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id BB2D11B81863;
-	Tue, 13 Jan 2009 09:27:19 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lLtZBzQDMR9q; Tue, 13 Jan 2009 09:27:17 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id AA5471B81512;
-	Tue, 13 Jan 2009 09:27:17 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <7vr638f5ch.fsf@gitster.siamese.dyndns.org>
+	id S1755378AbZAMI0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 03:26:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754097AbZAMI0r
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 03:26:47 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42249 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752833AbZAMI0r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 03:26:47 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DED578FE5E;
+	Tue, 13 Jan 2009 03:26:44 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C5ECF8FE5D; Tue,
+ 13 Jan 2009 03:26:38 -0500 (EST)
+In-Reply-To: <496BF5D7.2090003@vilain.net> (Sam Vilain's message of "Tue, 13
+ Jan 2009 15:00:55 +1300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E99A26EE-E14B-11DD-BF90-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105473>
 
-Junio C Hamano wrote:
-> Akira Kitada <akitada@gmail.com> writes:
-> 
->> Can I propose having another mailing list for posting patches to avoid
->> daily mail flood to this list?
->>
->> Yes, I can filter out the emails but still...
-> 
-> This list has always been the only place where git development happens.
-> It would make the development very awkward to set up another list only for
-> patches, forbid patches to be sent to anywhere but that new list, but
-> still discuss the patches on this list.
-> 
-> It does not make much sense to me.
-> 
+Sam Vilain <sam@vilain.net> writes:
 
-I agree.
+> I think if you're going to go so short as 6 digits, it's probably worth
+> making sure that the really short SHA1s check commits only. eg, if
+> you've got a commit 'fa023473' and a tree 'fa023421', then 'fa0234'
+> should match the commit and not the tree. But I don't think there's a
+> plumbing way to do a query like that at the moment.
 
-If any new list is to be introduced, it would only make sense to make it
-a read-only "what's new" list, for the various people that want to know
-what might break/be fixed in new versions but really don't care about the
-discussion that lead to that decision.
+When people give an abbreviated object name, 99% of the time they mean
+commits (and "index deadbeef..acebead" in a patch is a good place to pick
+blob object names from, which would be what the 99% of the remaining 1%
+would name), so making sure it is a commit or a blob would be a very
+sensible thing to do.
 
-Is that what you were after, Akira?
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Unfortunately, you fundamentally cannot do this without taking a
+performance hit of actually opening the object.
