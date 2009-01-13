@@ -1,87 +1,137 @@
-From: "Geoff Russell" <geoffrey.russell@gmail.com>
-Subject: Re: the meaning of keephardlinks
-Date: Tue, 13 Jan 2009 14:00:07 +1030
-Message-ID: <93c3eada0901121930n16dd2e83v452c38fd30da5054@mail.gmail.com>
-References: <93c3eada0901121617m43af82a7te946b1607fbf3f77@mail.gmail.com>
-	 <alpine.DEB.1.00.0901130141190.3586@pacific.mpi-cbg.de>
-Reply-To: geoffrey.russell@gmail.com
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: [PATCH] Simple update to bash completions to prevent unbound variable errors.
+Date: Mon, 12 Jan 2009 21:56:59 -0600
+Message-ID: <200901122157.03658.bss@iguanasuicide.net>
+References: <496C0003.7040909@tedpavlic.com> <7vy6xfew2n.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart1268738.2xDI64HvNn";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 13 04:31:41 2009
+Cc: Ted Pavlic <ted@tedpavlic.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 13 04:57:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMa06-0001Br-9e
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 04:31:34 +0100
+	id 1LMaPX-0006fJ-EA
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 04:57:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753518AbZAMDaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 22:30:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbZAMDaJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 22:30:09 -0500
-Received: from rv-out-0506.google.com ([209.85.198.228]:41821 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752593AbZAMDaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 22:30:08 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so10533267rvb.1
-        for <git@vger.kernel.org>; Mon, 12 Jan 2009 19:30:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=SmeGsvFoiTre8Vq9WiEquKhg4ntl69t/PnlrvDBa/vM=;
-        b=DUVKPjtrA5Oke8RYrH/ktq/yqWxZKUL8ytSHm3SkZXge6VboXAW4zDl20Z7U6U9HuN
-         hPcmMfl9nxRTlZBbz11bQwyhLeWbYzx4kR9h84lQUcvXHaotD42VMRN/SwqUPSlb4m/K
-         ecjzlFu7mmOlolARdn/tn8RNgsvjHyYGHEmEo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=PMTuMUvJ0soRemNn25P8IcBu/RdIfkYgPStstmPHEs6fYgkt6Pj0ES5jH1mZax7euk
-         MgVZXCOhLpXdhYO60wB4sTJfTrAYU2FVXdCQc4PxAZXpzYq5wwq9aFK9Yttsi+lhcC92
-         1t+Es6+Gqmow6dHAmIrHo/6hlTXKC4udt2Smg=
-Received: by 10.140.139.6 with SMTP id m6mr15026505rvd.242.1231817407496;
-        Mon, 12 Jan 2009 19:30:07 -0800 (PST)
-Received: by 10.140.136.16 with HTTP; Mon, 12 Jan 2009 19:30:07 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0901130141190.3586@pacific.mpi-cbg.de>
-Content-Disposition: inline
+	id S1754231AbZAMD43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 22:56:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753710AbZAMD42
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 22:56:28 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:57632 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753110AbZAMD42 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 22:56:28 -0500
+Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.124])
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LMaO8-0007zt-Kz; Tue, 13 Jan 2009 03:56:24 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <7vy6xfew2n.fsf@gitster.siamese.dyndns.org>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105450>
 
-On 1/13/09, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
->
->  On Tue, 13 Jan 2009, Geoff Russell wrote:
->
->  > I'm curious about what keephardlinks means.
->  >
->  > If I do: "ln X Y ; git add Y ; git commit" in my origin and then
->  > "git pull" in my cloned repository,
->  > should I get a hard linked file in the clone
->  > when core.keephardlinks is set to true?
->
->
-> Nope.
->
->  It means that if you have a hard link locally, it will stay a hard link
->  (and if it is modified, the other linked files will obviously change,
->  too).
->
->  Note that this feature is not even in 'next'.
->
->  Ciao,
->  Dscho
+--nextPart1268738.2xDI64HvNn
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
+On Monday 2009 January 12 21:14:40 Junio C Hamano wrote:
+>Ted Pavlic <ted@tedpavlic.com> writes:
+>> A vim modeline has also been added for consistency.
+>
+>Yuck.
 
-Fine. Thanks,
+While I dislike emacs and use vim pretty much exclusively, I don't really s=
+ee=20
+the need for a vim modeline.  On top of that, fdm=3Dmarker is a bit silly s=
+ince=20
+there aren't any markers.  ff=3Dunix and ft=3Dsh are redundant, as any vim =
+should=20
+detect these properly, given the filename.
 
-Geoff.
+So, I'm slightly negative on the modeline hunk.
+
+>> @@ -111,7 +115,7 @@ __git_ps1 ()
+>>  			fi
+>>  		fi
+>>
+>> -		if [ -n "$1" ]; then
+>> +		if [ $# -gt 0 ] && [ -n "$1" ]; then
+>
+>I found the previous round's [ -n "${1-}" ] much easier to read, if we were
+> to do this.  If -n "${1-}", then "$1" is definitely set so nothing need to
+> change in the then ... else part.
+
+I found "${1-}" ugly, and this a bit better, but I'll defer to Junio.
+
+>> @@ -131,11 +136,22 @@ __gitcomp_1 ()
+>>  	done
+>>  }
+>>
+>> +# __gitcomp accepts 1, 2, 3, or 4 arguments
+>> +# generates completion reply with compgen
+>>  __gitcomp ()
+>>  {
+>> -	local cur=3D"${COMP_WORDS[COMP_CWORD]}"
+>> -	if [ $# -gt 2 ]; then
+>> -		cur=3D"$3"
+>> +	local one two cur=3D"${COMP_WORDS[COMP_CWORD]}" four
+>> +	if [ $# -gt 0 ]; then
+>> +		one=3D"$1"
+>> +		if [ $# -gt 1 ]; then
+>> +			two=3D"$2"
+>> +			if [ $# -gt 2 ]; then
+>> +				cur=3D"$3"
+>> +				if [ $# -gt 3 ]; then
+>> +					four=3D"$4"
+>> +				fi
+>> +			fi
+>> +		fi
+>>  	fi
+>
+>Yuck.
+
+Definitely agreeing with Junio here.  This is far less ascetic than the old=
+=20
+patch.  Truth be told, this whole thread would probably have been more=20
+productive without me chiming in.  Sorry about that.
+
+>If you are taking advantage of the fact that "local one"=20
+>will bind one to emptiness anyway, can't you do something like:
+>
+>	local one=3D${1-} two=3D${2-} cur=3D${3-} four=3D${4-}
+
+Even better to use variable names that match the usage, if possible.=20
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
+
+--nextPart1268738.2xDI64HvNn
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAklsEQ8ACgkQdNbfk+86fC30PACeNnslN4qrfd9xg7yy0EqJBiEp
+9xsAnivVMYnAYBzpaM9CnzykVepiMFuk
+=iGTO
+-----END PGP SIGNATURE-----
+
+--nextPart1268738.2xDI64HvNn--
