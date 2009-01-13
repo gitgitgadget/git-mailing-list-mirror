@@ -1,57 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Simple update to bash completions to prevent unbound
- variable errors.
-Date: Mon, 12 Jan 2009 21:37:05 -0800
-Message-ID: <7vr637epha.fsf@gitster.siamese.dyndns.org>
-References: <496C0003.7040909@tedpavlic.com>
- <7vy6xfew2n.fsf@gitster.siamese.dyndns.org> <496C18D8.9070707@tedpavlic.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: how to combine 2 commits?
+Date: Tue, 13 Jan 2009 06:35:11 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngmodgv.ple.sitaramc@sitaramc.homelinux.net>
+References: <20090113045422.GA6940@b2j>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Tue Jan 13 06:38:40 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 13 07:36:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMbz3-00086X-2t
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 06:38:37 +0100
+	id 1LMctK-0001w6-9i
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 07:36:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752429AbZAMFhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 00:37:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752077AbZAMFhN
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 00:37:13 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38512 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752012AbZAMFhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 00:37:13 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BECB08F515;
-	Tue, 13 Jan 2009 00:37:11 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CBA7B8F514; Tue,
- 13 Jan 2009 00:37:07 -0500 (EST)
-In-Reply-To: <496C18D8.9070707@tedpavlic.com> (Ted Pavlic's message of "Mon,
- 12 Jan 2009 23:30:16 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 39F1E86A-E134-11DD-857B-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751735AbZAMGfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 01:35:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751163AbZAMGfW
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 01:35:22 -0500
+Received: from main.gmane.org ([80.91.229.2]:55269 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751082AbZAMGfV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 01:35:21 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LMcrv-0004y5-Nh
+	for git@vger.kernel.org; Tue, 13 Jan 2009 06:35:19 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 13 Jan 2009 06:35:19 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 13 Jan 2009 06:35:19 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105460>
 
-Ted Pavlic <ted@tedpavlic.com> writes:
-
->>> +# __gitcomp_1 requires 2 arguments
->>
->> ... and $1 and $2 mean?
+On 2009-01-13, bill lam <cbill.lam@gmail.com> wrote:
+> Sorry I don't know the correct git terminology for it.  I make some
+> changes to scripts but also accidentally changed all scripts to use
+> dos linefeed.  Failed to notice this and commit all changes. Then I
+> tried to correct it by changing all scripts back to unix
+> linefeed and commit again.
 >
-> No clue. Patches are welcome.
+> How to combine these 2 commits so that the changes of linefeed cancel
+> out each other and the history only shows the intended changes of the
+> few scripts.
 
-To be absolutely honest, I think people with "set -u" in their interactive
-environment are sick.  Bourne shells have been substituting unset
-variables to empty string for eons, and this is not _my_ itch to scratch.
+I tend to make lots of small commits on the work tree, and
+having to combine them meaningfully later.
 
-It seems to be yours, though, and I was merely trying to help.
+I like using "git rebase -i HEAD~5" (if I want to rebase the
+last 5 commits).  In the editor that pops up, I reorder the
+ones that I know should be together, and on each set to be
+squashed, I change the "pick" to "s" (for squash) on all but
+the first one.  Save the file and it's all done.
+
+Works like a charm.  For me, moving commits around in an
+editor, deleting them even, is very intuitive.
