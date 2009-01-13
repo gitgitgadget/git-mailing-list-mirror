@@ -1,84 +1,54 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: Removing options from build
-Date: Tue, 13 Jan 2009 16:06:00 -0600
-Message-ID: <200901131606.04634.bss@iguanasuicide.net>
-References: <1231883002.14181.27.camel@starfruit>
+From: Brad King <brad.king@kitware.com>
+Subject: Re: How to pull remote branch with specified commit id?
+Date: Tue, 13 Jan 2009 16:57:57 -0500
+Message-ID: <496D0E65.3000200@kitware.com>
+References: <856bfe0e0901130108q3af1345cy31751dd09e030c96@mail.gmail.com> <496C6234.9040903@viscovery.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3259961.UbejDs2KIt";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Tue Jan 13 23:07:10 2009
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Jan 13 23:08:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMrPM-0000bu-RO
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 23:06:49 +0100
+	id 1LMrQP-00015L-Pe
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 23:07:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754806AbZAMWFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 17:05:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753462AbZAMWFY
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 17:05:24 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:40116 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753284AbZAMWFX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 17:05:23 -0500
-Received: from [206.104.163.94]
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LMrNy-0000iL-0Y; Tue, 13 Jan 2009 22:05:22 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <1231883002.14181.27.camel@starfruit>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1755209AbZAMWG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 17:06:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755175AbZAMWG1
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 17:06:27 -0500
+Received: from public.kitware.com ([66.194.253.19]:44929 "EHLO
+	public.kitware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755079AbZAMWG0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 17:06:26 -0500
+X-Greylist: delayed 482 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Jan 2009 17:06:26 EST
+Received: from hythloth (hythloth.kitwarein.com [192.168.30.5])
+	by public.kitware.com (Postfix) with ESMTP id 48CC24A02;
+	Tue, 13 Jan 2009 16:59:43 -0500 (EST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by hythloth (Postfix) with ESMTP id 9587C89861;
+	Tue, 13 Jan 2009 16:57:57 -0500 (EST)
+User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
+In-Reply-To: <496C6234.9040903@viscovery.net>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105549>
 
---nextPart3259961.UbejDs2KIt
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Johannes Sixt wrote:
+> Consider this: You accidentally push a branch with confidential data to a
+> public repository. You notice it early, and quickly delete the branch
+> using 'git push the-repo :refs/heads/that-branch'. At this time the
+> objects with the confidential data are still lingering in the public
+> repository. But with the current behavior noone can access them even if
+> the SHA1 happens to be known.
 
-On Tuesday 2009 January 13 15:43:22 R. Tyler Ballance wrote:
->One of our developers "discovered" the --force option on `git push` and
->used it without taking the appropriate care and hosed one of the project
->branches we have running around in our central repository.
+Might a repack (perhaps an automatic one) put the object in a pack
+(perhaps in a delta chain) that can be fetched through another ref?
 
-Reflogs should let you recover from this.
-
->Besides a vigorous flogging, we're looking at other ways to prevent this
->sort of thing from happening again;
-
-receive.denyNonFastForwards
-        If set to true, git-receive-pack will deny a ref update which
-        is not a fast forward. Use this to prevent such an update via a
-        push, even if that push is forced. This configuration variable
-        is set when initializing a shared repository.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
-
---nextPart3259961.UbejDs2KIt
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkltEEwACgkQdNbfk+86fC2RNgCbBHOVJq1rSS043XUtaxDbevbE
-sfsAnRdUUKqaK3YvIk3d0aRdzvVZTJod
-=UryB
------END PGP SIGNATURE-----
-
---nextPart3259961.UbejDs2KIt--
+-Brad
