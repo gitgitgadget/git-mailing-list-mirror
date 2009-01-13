@@ -1,58 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] Purest update to bash completions to prevent
- unbounded variable errors.
-Date: Tue, 13 Jan 2009 11:43:53 -0800
-Message-ID: <7vvdsj6lfq.fsf@gitster.siamese.dyndns.org>
-References: <496CBC98.7090101@tedpavlic.com>
- <20090113163421.GQ10179@spearce.org> <496CC3E7.8060805@tedpavlic.com>
+From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <tavestbo@trolltech.com>
+Subject: [PATCH next] git-notes: fix printing of multi-line notes
+Date: Tue, 13 Jan 2009 20:57:16 +0100
+Message-ID: <496CF21C.2050500@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Tue Jan 13 20:45:28 2009
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes.Schindelin@gmx.de, junio@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 13 20:54:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMpCZ-0001Jf-Qv
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 20:45:28 +0100
+	id 1LMpL0-0004gE-3T
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 20:54:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753117AbZAMToG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 14:44:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752980AbZAMToD
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 14:44:03 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37091 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752751AbZAMToB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 14:44:01 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B99DA1C675;
-	Tue, 13 Jan 2009 14:43:59 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E4D4F1C641; Tue,
- 13 Jan 2009 14:43:54 -0500 (EST)
-In-Reply-To: <496CC3E7.8060805@tedpavlic.com> (Ted Pavlic's message of "Tue,
- 13 Jan 2009 11:40:07 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 85DC2436-E1AA-11DD-88E8-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1753395AbZAMTwq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Jan 2009 14:52:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752544AbZAMTwp
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 14:52:45 -0500
+Received: from hoat.troll.no ([62.70.27.150]:47645 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752127AbZAMTwp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 14:52:45 -0500
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 7CFD320F0B;
+	Tue, 13 Jan 2009 20:52:39 +0100 (CET)
+Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 7521E20F06;
+	Tue, 13 Jan 2009 20:52:39 +0100 (CET)
+Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
+	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n0DJqcAp019073;
+	Tue, 13 Jan 2009 20:52:38 +0100
+Received: from [172.24.90.10] ( [172.24.90.10])
+    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
+    via ESMTP; Tue, 13 Jan 2009 20:52:37 +0100 (CET)
+x-scalix-Hops: 1
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105524>
 
-Ted Pavlic <ted@tedpavlic.com> writes:
+The line length was read from the same position every time,
+causing mangled output when printing notes with multiple lines.
 
->> Your commit message leaves a lot to be desired.  I would instead
->> have written something like this:
->
-> I agree completely. Sorry about that. stg fired off vim to edit the
-> commit message, and I just wasn't thinking.
->
-> Would you like me to modify the commit message and resubmit?
+Also, adding new-line manually for each line ensures that we
+get a new-line between commits, matching git-log for commits
+without notes.
 
-Luckily or unluckily, you need to do that anyway, as your patches are
-whitespace damaged.
+Signed-off-by: Tor Arne Vestb=F8 <tavestbo@trolltech.com>
+---
 
-Please don't send "format=flowed".
+This approach uses a msg pointer, but I started out with just using
+msg + msgoffset all over the place, so if that's a preferred way
+to do things I'm happy to provide an alternate patch.
+
+Also, I'm guessing this printing should go into pretty.c at some
+point, so you can reference the notes as part of a custom pretty
+format. If so, this code could be converted to use helpers such
+as get_one_line().
+
+This is my first patch to Git, so sorry if I messed something up :)
+
+notes.c |   13 +++++++------
+ 1 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/notes.c b/notes.c
+index ad43a2e..bd73784 100644
+--- a/notes.c
++++ b/notes.c
+@@ -110,8 +110,8 @@ void get_commit_notes(const struct commit *commit, =
+struct strbuf *sb,
+ {
+ 	static const char *utf8 =3D "utf-8";
+ 	unsigned char *sha1;
+-	char *msg;
+-	unsigned long msgoffset, msglen;
++	char *msg, *msg_p;
++	unsigned long linelen, msglen;
+ 	enum object_type type;
+=20
+ 	if (!initialized) {
+@@ -148,12 +148,13 @@ void get_commit_notes(const struct commit *commit=
+, struct strbuf *sb,
+=20
+ 	strbuf_addstr(sb, "\nNotes:\n");
+=20
+-	for (msgoffset =3D 0; msgoffset < msglen;) {
+-		int linelen =3D strchrnul(msg, '\n') - msg;
++	for (msg_p =3D msg; msg_p < msg + msglen; msg_p +=3D linelen + 1) {
++		linelen =3D strchrnul(msg_p, '\n') - msg_p;
+=20
+ 		strbuf_addstr(sb, "    ");
+-		strbuf_add(sb, msg + msgoffset, linelen);
+-		msgoffset +=3D linelen;
++		strbuf_add(sb, msg_p, linelen);
++		strbuf_addch(sb, '\n');
+ 	}
++
+ 	free(msg);
+ }
+--=20
+1.6.0.2.GIT
