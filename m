@@ -1,78 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-patches list?
-Date: Tue, 13 Jan 2009 12:02:24 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901131158500.3586@pacific.mpi-cbg.de>
-References: <90bb445a0901121543q29d30d49yaa723b4b913a4b31@mail.gmail.com> <7vr638f5ch.fsf@gitster.siamese.dyndns.org> <496C502A.3070908@op5.se>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Akira Kitada <akitada@gmail.com>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Jan 13 12:03:09 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [TopGit PATCH] depend: don't check for tg branch
+Date: Tue, 13 Jan 2009 12:05:16 +0100
+Message-ID: <1231844716-10422-1-git-send-email-trast@student.ethz.ch>
+Cc: "martin f. krafft" <madduck@debian.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 13 12:08:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMh36-0002bg-Du
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 12:03:08 +0100
+	id 1LMh6R-0003hf-O3
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 12:06:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752240AbZAMLBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 06:01:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752103AbZAMLBh
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 06:01:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41659 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752063AbZAMLBg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 06:01:36 -0500
-Received: (qmail invoked by alias); 13 Jan 2009 11:01:34 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp001) with SMTP; 13 Jan 2009 12:01:34 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+gR1UoRdigH8oNJ5MWWAZcUfVIcTg0TwZX//NtUm
-	PBTruLF5YJYEL6
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <496C502A.3070908@op5.se>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1752385AbZAMLFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 06:05:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752061AbZAMLFN
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 06:05:13 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:50018 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751571AbZAMLFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 06:05:12 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 13 Jan 2009 12:05:11 +0100
+Received: from localhost.localdomain ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 13 Jan 2009 12:05:10 +0100
+X-Mailer: git-send-email 1.6.1.310.g1063e
+X-OriginalArrivalTime: 13 Jan 2009 11:05:10.0276 (UTC) FILETIME=[CCFD1440:01C9756E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105484>
 
-Hi,
+Remove the check in 'tg depend add <branch>' that <branch> is
+topgit-tracked, as it seems inconsistent with the use of 'tg create
+<branch> <dependencies>', where the <dependencies> can be arbitrary.
+This is useful to, e.g., promote a git.git topic branch from
+master-based to next-based.
 
-On Tue, 13 Jan 2009, Andreas Ericsson wrote:
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-> Junio C Hamano wrote:
-> > Akira Kitada <akitada@gmail.com> writes:
-> > 
-> > > Can I propose having another mailing list for posting patches to avoid
-> > > daily mail flood to this list?
-> > >
-> > > Yes, I can filter out the emails but still...
-> > 
-> > This list has always been the only place where git development happens.
-> > It would make the development very awkward to set up another list only for
-> > patches, forbid patches to be sent to anywhere but that new list, but
-> > still discuss the patches on this list.
-> > 
-> > It does not make much sense to me.
-> > 
-> 
-> I agree.
-> 
-> If any new list is to be introduced, it would only make sense to make it
-> a read-only "what's new" list, for the various people that want to know
-> what might break/be fixed in new versions but really don't care about the
-> discussion that lead to that decision.
+---
+ tg-depend.sh |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
 
-If that's what you want, I suggest having a look at 
-
-	http://gitrss.q42.co.uk/
-
-I am sure that Julian can be convinced to filter "[PATCH", too.
-
-Ciao,
-Dscho
+diff --git a/tg-depend.sh b/tg-depend.sh
+index ef5f94f..16b7751 100644
+--- a/tg-depend.sh
++++ b/tg-depend.sh
+@@ -37,8 +37,6 @@ done
+ [ -n "$name" ] || die "no branch name specified"
+ branchrev="$(git rev-parse --verify "$name" 2>/dev/null)" ||
+ 	die "invalid branch name: $name"
+-baserev="$(git rev-parse --verify "refs/top-bases/$name" 2>/dev/null)" ||
+-	die "not a TopGit topic branch: $name"
+ 
+ 
+ ## Record new dependency
+-- 
+tg: (3c70506..) t/depend-no-base-check (depends on: master)
