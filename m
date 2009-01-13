@@ -1,64 +1,75 @@
-From: "Emily Ren" <lingyan.ren@gmail.com>
-Subject: How to pull remote branch with specified commit id?
-Date: Tue, 13 Jan 2009 17:08:34 +0800
-Message-ID: <856bfe0e0901130108q3af1345cy31751dd09e030c96@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: How to pull remote branch with specified commit id?
+Date: Tue, 13 Jan 2009 10:16:19 +0100
+Message-ID: <496C5BE3.2040206@op5.se>
+References: <856bfe0e0901130108q3af1345cy31751dd09e030c96@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-To: "Git Mailinglist" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 13 10:10:14 2009
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: Emily Ren <lingyan.ren@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 13 10:17:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMfHb-0002fM-39
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 10:09:59 +0100
+	id 1LMfPB-0004xC-II
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 10:17:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755806AbZAMJIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 04:08:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755083AbZAMJIi
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 04:08:38 -0500
-Received: from mail-gx0-f13.google.com ([209.85.217.13]:50525 "EHLO
-	mail-gx0-f13.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751471AbZAMJIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 04:08:36 -0500
-Received: by gxk6 with SMTP id 6so126787gxk.13
-        for <git@vger.kernel.org>; Tue, 13 Jan 2009 01:08:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=qyulQtlk5Vp77XdHU8VliWF5H9P2YzP333AaKy3G1Bc=;
-        b=IqnEqHmRNh8q6NJVBz4OHm9YjHT1mjhSBYY27/hXsu3uLm2yopPRIe6Nn0tB9Bqg/d
-         f3uITO/l7T6bzFMFDXKXp0l9AWf389xu00tb/Ogllw6X0zwHH19Fe1WNA4xCI1ZaPkUv
-         TCnOJ/eNtPu19DHqK2uGjXrVRqO2WWDgRnUZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=u07c5elpVfatq1FkpaHrXYxrPQls+bvDgfXAP9BnYTTjRVHZ1bLlUjp++b8mHW+EvN
-         GFCA34mEIywQUh27WVKwGiDxAdER+z1yp7sJ9is2O1vSwPfg7BsEkpyOxUwdSOmplfls
-         nf3RYfkzsZfwmPlWLGZhiNrrXSRN1W/Fyagfk=
-Received: by 10.151.6.2 with SMTP id j2mr12129003ybi.50.1231837714696;
-        Tue, 13 Jan 2009 01:08:34 -0800 (PST)
-Received: by 10.151.107.12 with HTTP; Tue, 13 Jan 2009 01:08:34 -0800 (PST)
-Content-Disposition: inline
+	id S1756305AbZAMJQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 04:16:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753831AbZAMJQY
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 04:16:24 -0500
+Received: from mail.op5.se ([193.201.96.20]:43555 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753284AbZAMJQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 04:16:22 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 744F824C1411;
+	Tue, 13 Jan 2009 10:17:20 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id h8OTpSmtKvKc; Tue, 13 Jan 2009 10:17:18 +0100 (CET)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 9EDC224B0B3E;
+	Tue, 13 Jan 2009 10:17:18 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <856bfe0e0901130108q3af1345cy31751dd09e030c96@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105476>
 
-Git experts,
+Emily Ren wrote:
+> Git experts,
+> 
+> I want to pull remote branch with specified commit id, how to do it?
+> 
+> Below command can get remote branch
+> $git pull remote refs/heads/$branch_name
+> 
+> Below command doesn't work
+> $git pull remote objects/$commit_id
+> 
 
-I want to pull remote branch with specified commit id, how to do it?
+You need to fetch it first, and then merge the commit you want. The
+tools operating the fetching protocol only use refs, so if you want
+to fetch (or pull) a specific version that has neither a tag nor a
+branch head pointing to it, you'll have to write a new tool for that.
 
-Below command can get remote branch
-$git pull remote refs/heads/$branch_name
+The end-result of the following command will be, barring side-effects
+in the remote-tracking branches, identical to what you're trying to
+do though:
+git fetch remote && git merge $commit_id
 
-Below command doesn't work
-$git pull remote objects/$commit_id
-
-Thanks,
-Emily
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
