@@ -1,97 +1,57 @@
-From: "Imran M Yousuf" <imyousuf@gmail.com>
-Subject: Re: how to combine 2 commits?
-Date: Tue, 13 Jan 2009 11:32:05 +0600
-Message-ID: <7bfdc29a0901122132l38837b37h188a8f5dd5ccbbd7@mail.gmail.com>
-References: <20090113045422.GA6940@b2j>
-	 <200901122327.21102.bss@iguanasuicide.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Simple update to bash completions to prevent unbound
+ variable errors.
+Date: Mon, 12 Jan 2009 21:37:05 -0800
+Message-ID: <7vr637epha.fsf@gitster.siamese.dyndns.org>
+References: <496C0003.7040909@tedpavlic.com>
+ <7vy6xfew2n.fsf@gitster.siamese.dyndns.org> <496C18D8.9070707@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, "bill lam" <cbill.lam@gmail.com>
-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-X-From: git-owner@vger.kernel.org Tue Jan 13 06:33:48 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Tue Jan 13 06:38:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMbuN-00076K-1L
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 06:33:47 +0100
+	id 1LMbz3-00086X-2t
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 06:38:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752666AbZAMFcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 00:32:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752336AbZAMFcJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 00:32:09 -0500
-Received: from rn-out-0910.google.com ([64.233.170.190]:59879 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752446AbZAMFcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 00:32:08 -0500
-Received: by rn-out-0910.google.com with SMTP id k40so7534388rnd.17
-        for <git@vger.kernel.org>; Mon, 12 Jan 2009 21:32:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=coqvvkPB1w4uqN0W0Ri4FnHc6xndhP9ZbfSnkFx81pY=;
-        b=PvPS8ZRVB+5C7a8ZhAdpzvlJAllJCf8Wd7yZcVIwtcIVe6GN51T5IumwL7ngreG9Gv
-         j+mbnJH+p1NyzF+lGdCS2xzUluDiutoLRTmkx1QbNsmdIFLMebia+Z9Z+Ve86Z5NqL15
-         EYjYGMu1qyl5KloZ7SFNdu6oQQ12COJnvFkrQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=P8E4YKe9RssWKXtpa8bYmcVsXvLaOdluO/3vqifqo46Dyhgz6SHxpaXOPIX/jnKDih
-         LluEV5muImgkfXdbzFqwCJ55oeZ8T63xq0qrA43vmeiLpNjGLEjhv5L4mg+PM1Bcrp1M
-         C/6yoGwAu7Hfq2N+qRvdBGhheBJukLcF6mD78=
-Received: by 10.150.135.2 with SMTP id i2mr1447881ybd.97.1231824725718;
-        Mon, 12 Jan 2009 21:32:05 -0800 (PST)
-Received: by 10.150.219.1 with HTTP; Mon, 12 Jan 2009 21:32:05 -0800 (PST)
-In-Reply-To: <200901122327.21102.bss@iguanasuicide.net>
-Content-Disposition: inline
+	id S1752429AbZAMFhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 00:37:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752077AbZAMFhN
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 00:37:13 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38512 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752012AbZAMFhN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 00:37:13 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BECB08F515;
+	Tue, 13 Jan 2009 00:37:11 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CBA7B8F514; Tue,
+ 13 Jan 2009 00:37:07 -0500 (EST)
+In-Reply-To: <496C18D8.9070707@tedpavlic.com> (Ted Pavlic's message of "Mon,
+ 12 Jan 2009 23:30:16 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 39F1E86A-E134-11DD-857B-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105459>
 
-On Tue, Jan 13, 2009 at 11:27 AM, Boyd Stephen Smith Jr.
-<bss@iguanasuicide.net> wrote:
-> On Monday 12 January 2009, bill lam <cbill.lam@gmail.com> wrote about 'how
-> to combine 2 commits?':
->>How to combine these 2 commits so that the changes of linefeed cancel
->>out each other and the history only shows the intended changes of the
->>few scripts.
+Ted Pavlic <ted@tedpavlic.com> writes:
+
+>>> +# __gitcomp_1 requires 2 arguments
+>>
+>> ... and $1 and $2 mean?
 >
-> Two ways I can think of:
-> git rebase --interactive (read "git help rebase" first)
-> git merge --squash (read "git help merge" first)
->
-> The rebase is probably semantically closer to how you are thinking about
-> things right now.
+> No clue. Patches are welcome.
 
-Another way I can think of is - git format-patch + git apply, i.e.
-first generate 2 patches for the 2 commits and then apply them one on
-top of another.
+To be absolutely honest, I think people with "set -u" in their interactive
+environment are sick.  Bourne shells have been substituting unset
+variables to empty string for eons, and this is not _my_ itch to scratch.
 
-Best regards,
-
-Imran
-
-> --
-> Boyd Stephen Smith Jr.                     ,= ,-_-. =.
-> bss@iguanasuicide.net                     ((_/)o o(\_))
-> ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'
-> http://iguanasuicide.net/                      \_/
->
-
-
-
--- 
-Imran M Yousuf
-Entrepreneur & Software Engineer
-Smart IT Engineering
-Dhaka, Bangladesh
-Email: imran@smartitengineering.com
-Blog: http://imyousuf-tech.blogs.smartitengineering.com/
-Mobile: +880-1711402557
+It seems to be yours, though, and I was merely trying to help.
