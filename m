@@ -1,99 +1,72 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: Removing options from build
-Date: Tue, 13 Jan 2009 16:34:31 -0600
-Message-ID: <200901131634.31389.bss@iguanasuicide.net>
-References: <1231883002.14181.27.camel@starfruit> <200901131606.04634.bss@iguanasuicide.net> <1231885132.14181.38.camel@starfruit>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH next] git-notes: fix printing of multi-line notes
+Date: Tue, 13 Jan 2009 23:40:14 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901132339270.3586@pacific.mpi-cbg.de>
+References: <496CF21C.2050500@trolltech.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart4738031.yv6U1EUt0m";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Tue Jan 13 23:35:30 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1966567884-1231886415=:3586"
+Cc: git@vger.kernel.org, junio@pobox.com
+To: =?ISO-8859-15?Q?Tor_Arne_Vestb=F8?= <tavestbo@trolltech.com>
+X-From: git-owner@vger.kernel.org Tue Jan 13 23:40:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMrr3-0002sN-Ez
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 23:35:25 +0100
+	id 1LMrwJ-0004rB-8J
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 23:40:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754678AbZAMWdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 17:33:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754146AbZAMWdt
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 17:33:49 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:53964 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753677AbZAMWds (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 17:33:48 -0500
-Received: from [206.104.163.94]
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LMrpT-0000jf-Ex; Tue, 13 Jan 2009 22:33:47 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <1231885132.14181.38.camel@starfruit>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1755113AbZAMWj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 17:39:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754745AbZAMWj0
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 17:39:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45594 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753721AbZAMWjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 17:39:25 -0500
+Received: (qmail invoked by alias); 13 Jan 2009 22:39:23 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp046) with SMTP; 13 Jan 2009 23:39:23 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18JxNQK9gYJ9D4OeVCyFLR7RceIQHhPt2tYck6vsL
+	nXAxFPH5pyhEYC
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <496CF21C.2050500@trolltech.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105554>
 
---nextPart4738031.yv6U1EUt0m
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tuesday 2009 January 13 16:18:52 R. Tyler Ballance wrote:
->On Tue, 2009-01-13 at 16:06 -0600, Boyd Stephen Smith Jr. wrote:
->> receive.denyNonFastForwards
->>         If set to true, git-receive-pack will deny a ref update which
->>         is not a fast forward. Use this to prevent such an update via a
->>         push, even if that push is forced.
->
->Looks good, thanks; sorry I missed it, didn't even think to look at the
->git-config(1) page for such an option.
+--8323328-1966567884-1231886415=:3586
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-I didn't really know about it until earlier this week.  I was expecting to =
-be=20
-able to do a non-ff push to one of my repositories and it didn't work becau=
-se=20
-this was set "behind my back".  (I'm not sure when it got added, but I don'=
-t=20
-think the shared repositories I set up with git 1.4.4.4 had it, so I wasn't=
-=20
-expecting it.)
+Hi,
 
->I'm assuming this will actually cover the rebase -i case as well?
+On Tue, 13 Jan 2009, Tor Arne Vestbø wrote:
 
-I don't know exactly what you mean.  It prevents fast-forwards, so once a=20
-commit is "visible" on one of your central branches, it won't ever go away.=
- =20
-(You can, of course, use git revert to undo it's changes.)
+> The line length was read from the same position every time,
+> causing mangled output when printing notes with multiple lines.
+> 
+> Also, adding new-line manually for each line ensures that we
+> get a new-line between commits, matching git-log for commits
+> without notes.
+> 
+> Signed-off-by: Tor Arne Vestbø <tavestbo@trolltech.com>
+> ---
 
-As others mentioned, now would be a good time to look at receive.denyDelete=
-s=20
-and/or a custom hook as well.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+Patch looks good, so 
 
---nextPart4738031.yv6U1EUt0m
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+For extra browny points, you could add a test with multi-line notes.
 
-iEYEABECAAYFAkltFvcACgkQdNbfk+86fC12LQCfRb+TnG7vY9ZcCck6YQqjdi7T
-RoYAn2zk9xzWbijcySNhgzG8yI+Co6xn
-=QgSN
------END PGP SIGNATURE-----
-
---nextPart4738031.yv6U1EUt0m--
+Ciao,
+Dscho
+--8323328-1966567884-1231886415=:3586--
