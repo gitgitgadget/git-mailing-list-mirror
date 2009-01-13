@@ -1,92 +1,130 @@
-From: Akira Kitada <akitada@gmail.com>
-Subject: Re: git-patches list?
-Date: Wed, 14 Jan 2009 00:55:38 +0900
-Message-ID: <90bb445a0901130755t6ea98bcco6b6663d806dcc2e6@mail.gmail.com>
-References: <90bb445a0901121543q29d30d49yaa723b4b913a4b31@mail.gmail.com>
-	 <7vr638f5ch.fsf@gitster.siamese.dyndns.org>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: [PATCH 1/3] Purest update to bash completions to prevent unbounded
+ variable errors.
+Date: Tue, 13 Jan 2009 11:08:56 -0500
+Message-ID: <496CBC98.7090101@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 13 16:57:09 2009
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jan 13 17:10:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMlda-00005J-CK
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 16:57:06 +0100
+	id 1LMlqR-0005fa-Ul
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 17:10:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752222AbZAMPzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 10:55:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752038AbZAMPzm
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 10:55:42 -0500
-Received: from rv-out-0506.google.com ([209.85.198.226]:44102 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751936AbZAMPzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 10:55:41 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so60467rvb.1
-        for <git@vger.kernel.org>; Tue, 13 Jan 2009 07:55:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dcLIrnTeMkhPxVN1mrraIWm9Q/CXo3DIEU2bzeNCDRY=;
-        b=gNTSgQ6jNUtpjRD2QZcY/G4QYuj8coMuGS563QS1ySVm6hHIqNmiiS0LZHHAMx4HWc
-         2XBiIITl08ztf+rG1GinQDt6sW0R/WiXE5IK9Q/jVEPsVdI3I4bqNUFiBWP/t1gjNL4O
-         jEA8m7GV3Mrxzyltw/yLjQaiFclnT8lPNtX54=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lO7fK7tapA6A3pTJ8ZNScJXivpdo3+z+byRp8VSFlz2+aEcVhXRJh2xp1ke+53/Rxo
-         Dne8vSlJZ1JbIRkQ7uMaj3VWb3xM1Ra3veiAeB7ezJlqvcrECl6Org096IHmT5eyosGe
-         hfC9+M4wYyPTZu1koLGx2J8VXCtgn4IDV6nQA=
-Received: by 10.140.177.15 with SMTP id z15mr15367554rve.114.1231862138823; 
-	Tue, 13 Jan 2009 07:55:38 -0800 (PST)
-In-Reply-To: <7vr638f5ch.fsf@gitster.siamese.dyndns.org>
+	id S1752068AbZAMQJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 11:09:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751989AbZAMQI7
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 11:08:59 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:45127 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751721AbZAMQI6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Jan 2009 11:08:58 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 074A580D8038;
+	Tue, 13 Jan 2009 11:03:15 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id G57xhVpLnYuI; Tue, 13 Jan 2009 11:03:14 -0500 (EST)
+Received: from tedbook.mshome.net (tedpc.ece.ohio-state.edu [164.107.164.122])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id E25D680D801B;
+	Tue, 13 Jan 2009 11:03:14 -0500 (EST)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105504>
 
-This list seems to be used as a bug tracker, discussing git development,
-user questions, announcement etc.
-I thought this is so unusual list that something should be wrong here,
-but it turned out that it looks working right in mysteryous way.
-I take that back now.
-Hmm, interesting...
 
-Thanks,
+First in a series of patches that make bash completions more robust to
+different interactive shell configurations and editors.
 
-On Tue, Jan 13, 2009 at 8:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Akira Kitada <akitada@gmail.com> writes:
->
->> Can I propose having another mailing list for posting patches to avoid
->> daily mail flood to this list?
->>
->> Yes, I can filter out the emails but still...
->
-> This list has always been the only place where git development happens.
-> It would make the development very awkward to set up another list only for
-> patches, forbid patches to be sent to anywhere but that new list, but
-> still discuss the patches on this list.
->
-> It does not make much sense to me.
->
-> Consider what you would do when you see a problem somebody is having on
-> this list, and wanted to respond with a quick "this may fix it" patch?
-> Should you be sending that to the patches list, and sending a separate
-> message to this list saying that you have a potential fix in mind you
-> would want to discuss here, but the patches list rule mandated that you
-> had to send the patch to the other list, asking people who are reading
-> this list to look at the other list as well?
->
-> And no, having a separate "user list" won't solve the above problem either
-> and that is not what I am suggesting.
->
-> Not that I am seeing any problem right now; I am saying that the split
-> list as you suggest _will_ create problems.
->
+
+Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
+---
+  contrib/completion/git-completion.bash |   18 +++++++++---------
+  1 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash 
+b/contrib/completion/git-completion.bash
+index 7b074d7..5d1515c 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -52,7 +52,7 @@ esac
+
+  __gitdir ()
+  {
+-	if [ -z "$1" ]; then
++	if [ -z "${1-}" ]; then
+  		if [ -n "$__git_dir" ]; then
+  			echo "$__git_dir"
+  		elif [ -d .git ]; then
+@@ -111,7 +111,7 @@ __git_ps1 ()
+  			fi
+  		fi
+
+-		if [ -n "$1" ]; then
++		if [ -n "${1-}" ]; then
+  			printf "$1" "${b##refs/heads/}$r"
+  		else
+  			printf " (%s)" "${b##refs/heads/}$r"
+@@ -143,8 +143,8 @@ __gitcomp ()
+  		;;
+  	*)
+  		local IFS=$'\n'
+-		COMPREPLY=($(compgen -P "$2" \
+-			-W "$(__gitcomp_1 "$1" "$4")" \
++		COMPREPLY=($(compgen -P "${2-}" \
++			-W "$(__gitcomp_1 "${1-}" "${4-}")" \
+  			-- "$cur"))
+  		;;
+  	esac
+@@ -152,13 +152,13 @@ __gitcomp ()
+
+  __git_heads ()
+  {
+-	local cmd i is_hash=y dir="$(__gitdir "$1")"
++	local cmd i is_hash=y dir="$(__gitdir "${1-}")"
+  	if [ -d "$dir" ]; then
+  		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
+  			refs/heads
+  		return
+  	fi
+-	for i in $(git ls-remote "$1" 2>/dev/null); do
++	for i in $(git ls-remote "${1-}" 2>/dev/null); do
+  		case "$is_hash,$i" in
+  		y,*) is_hash=n ;;
+  		n,*^{}) is_hash=y ;;
+@@ -170,13 +170,13 @@ __git_heads ()
+
+  __git_tags ()
+  {
+-	local cmd i is_hash=y dir="$(__gitdir "$1")"
++	local cmd i is_hash=y dir="$(__gitdir "${1-}")"
+  	if [ -d "$dir" ]; then
+  		git --git-dir="$dir" for-each-ref --format='%(refname:short)' \
+  			refs/tags
+  		return
+  	fi
+-	for i in $(git ls-remote "$1" 2>/dev/null); do
++	for i in $(git ls-remote "${1-}" 2>/dev/null); do
+  		case "$is_hash,$i" in
+  		y,*) is_hash=n ;;
+  		n,*^{}) is_hash=y ;;
+@@ -188,7 +188,7 @@ __git_tags ()
+
+  __git_refs ()
+  {
+-	local i is_hash=y dir="$(__gitdir "$1")"
++	local i is_hash=y dir="$(__gitdir "${1-}")"
+  	local cur="${COMP_WORDS[COMP_CWORD]}" format refs
+  	if [ -d "$dir" ]; then
+  		case "$cur" in
+-- 
+1.6.1.87.g15624
