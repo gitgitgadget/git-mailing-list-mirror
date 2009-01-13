@@ -1,95 +1,69 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: git/webdav is refusing to authenticate properly.
-Date: Mon, 12 Jan 2009 19:53:15 -0600
-Message-ID: <200901121953.16183.bss@iguanasuicide.net>
-References: <137c54e10901121354l284f11ag675abb003fc83e93@mail.gmail.com> <alpine.DEB.1.00.0901130003490.3586@pacific.mpi-cbg.de> <496BE1E0.9010908@gmail.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] gitweb: recognize six digit abbreviated SHA1
+Date: Tue, 13 Jan 2009 15:00:55 +1300
+Message-ID: <496BF5D7.2090003@vilain.net>
+References: <87mydw2hrb.fsf@cup.kalibalik.dk> <87mydw2hkb.fsf@cup.kalibalik.dk>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1544254.3pxXQcpkyP";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Peter Spierenburg <ionlyusethisaddressforlists@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 13 02:54:45 2009
+Cc: git@vger.kernel.org, jnareb@gmail.com, gitster@pobox.com
+To: Anders Melchiorsen <mail@cup.kalibalik.dk>
+X-From: git-owner@vger.kernel.org Tue Jan 13 03:02:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMYUN-0006SR-NT
-	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 02:54:44 +0100
+	id 1LMYbt-000891-Oo
+	for gcvg-git-2@gmane.org; Tue, 13 Jan 2009 03:02:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753913AbZAMBxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 20:53:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753602AbZAMBxT
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 20:53:19 -0500
-Received: from eastrmmtao105.cox.net ([68.230.240.47]:50609 "EHLO
-	eastrmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751033AbZAMBxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 20:53:18 -0500
-Received: from eastrmimpo03.cox.net ([68.1.16.126])
-          by eastrmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090113015317.SBZD4139.eastrmmtao105.cox.net@eastrmimpo03.cox.net>;
-          Mon, 12 Jan 2009 20:53:17 -0500
-Received: from localhost ([72.204.50.125])
-	by eastrmimpo03.cox.net with bizsmtp
-	id 2ptG1b00K2i4SyG02ptHgu; Mon, 12 Jan 2009 20:53:17 -0500
-X-Authority-Analysis: v=1.0 c=1 a=YCmOk6km9xMA:10 a=NEuutZkdHscA:10
- a=Fq1VQ0LPAAAA:8 a=9s7QVCMrmdqOmRW7i1wA:9 a=VYcHS6hOEo6o5gHsQUGs4zM7i_cA:4
- a=oxVw0hCxh30A:10 a=MSl-tDqOz04A:10 a=T3brmoaXcPoA:10 a=LY0hPdMaydYA:10
- a=rGYsbNlBCWO13mK0pXUA:9 a=LAwQRtXjrMG9XvX58ywyxDCkyNQA:4 a=rPt6xJ-oxjAA:10
-X-CM-Score: 0.00
-Received: from bss by localhost with local (Exim 4.69)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LMYSy-000PWs-9q; Mon, 12 Jan 2009 19:53:16 -0600
-User-Agent: KMail/1.9.9
-In-Reply-To: <496BE1E0.9010908@gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
+	id S1753511AbZAMCBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jan 2009 21:01:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751556AbZAMCBF
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 21:01:05 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:34449 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751480AbZAMCBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jan 2009 21:01:04 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 29CD021C779; Tue, 13 Jan 2009 15:01:02 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 8E46D21C55F;
+	Tue, 13 Jan 2009 15:00:56 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <87mydw2hkb.fsf@cup.kalibalik.dk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105440>
 
---nextPart1544254.3pxXQcpkyP
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-On Monday 12 January 2009, Peter Spierenburg=20
-<ionlyusethisaddressforlists@gmail.com> wrote about 'Re: git/webdav is=20
-refusing to authenticate properly.':
->C'mon, leave my password 'in-the-clear', in a text file on a networked
->box? That is the kind of prank a fourth-year student would try to pull
->on a freshman.
+Anders Melchiorsen wrote:
+> Anders Melchiorsen <mail@cup.kalibalik.dk> writes:
 >
->How do I really do it?
+>   
+>> +	if ($line =~ m/([0-9a-fA-F]{7,40})/) {
+>>     
+>
+> I could not make up my mind between the seven digits from "git
+> rev-parse --short" and the six digits currently used by gitk.
+>
+> So I put one option in the patch, and the other one in the subject.
+>   
 
-AFAIK, that's the only way for now.
+I think if you're going to go so short as 6 digits, it's probably worth
+making sure that the really short SHA1s check commits only. eg, if
+you've got a commit 'fa023473' and a tree 'fa023421', then 'fa0234'
+should match the commit and not the tree. But I don't think there's a
+plumbing way to do a query like that at the moment.
 
-Personally, I'd welcome a patch that allowed fetch/push to prompt the user=
-=20
-for a password, but I'm not holding my breath.  If I want to limit access=20
-to a few users, I serve that repository over ssh and depend on ssh for=20
-authentication and filesystem permissions for authorization.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+Even git.git isn't unique over 6 digits, even restricting to commits.
+Not since b0a3de ;-).
 
---nextPart1544254.3pxXQcpkyP
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAklr9AwACgkQ55pqL7G1QFlxOACfbZnVFV55Wea9l2XffpJEjDri
-TQIAnijtczyuK0ei61/9ZpSSOYESWTjR
-=3ZMW
------END PGP SIGNATURE-----
-
---nextPart1544254.3pxXQcpkyP--
+Sam
