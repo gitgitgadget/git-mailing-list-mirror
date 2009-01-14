@@ -1,71 +1,152 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH next v2] git-notes: add test case for multi-line notes
-Date: Wed, 14 Jan 2009 18:14:31 +0100
-Message-ID: <496E1D77.6000307@viscovery.net>
-References: <alpine.DEB.1.00.0901141627440.3586@pacific.mpi-cbg.de> <496E129B.3020502@trolltech.com> <20090114165633.GC15758@coredump.intra.peff.net>
+From: Asheesh Laroia <asheesh@asheesh.org>
+Subject: Re: Help! My ISP blocks repo.or.cz. How to push changes? (a
+ solution)
+Date: Wed, 14 Jan 2009 09:18:19 -0800 (PST)
+Message-ID: <alpine.DEB.2.00.0901140913310.23681@vellum.laroia.net>
+References: <200901120246.28364.jnareb@gmail.com> <20090112122337.GA7262@glandium.org> <200901130043.04772.jnareb@gmail.com> <200901141455.23935.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VG9yIEFybmUgVmVzdGLDuA==?= <tavestbo@trolltech.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 14 18:16:17 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Mike Hommey <mh@glandium.org>, Alex Riesen <raa.lkml@gmail.com>,
+	git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>,
+	Luciano Rocha <luciano@eurotux.com>,
+	"J.H." <warthog19@eaglescrag.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 14 18:20:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN9La-0003bt-SA
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 18:16:07 +0100
+	id 1LN9PB-0005JE-0c
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 18:19:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762571AbZANROm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jan 2009 12:14:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762644AbZANROm
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 12:14:42 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:8523 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762530AbZANROl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2009 12:14:41 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LN9K7-000384-Le; Wed, 14 Jan 2009 18:14:36 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 4DCB3A865; Wed, 14 Jan 2009 18:14:35 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <20090114165633.GC15758@coredump.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+	id S1764936AbZANRS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 12:18:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760215AbZANRS2
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 12:18:28 -0500
+Received: from rose.makesad.us ([219.105.37.19]:50725 "EHLO rose.makesad.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764936AbZANRS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 12:18:27 -0500
+Received: from vellum.laroia.net (localhost [127.0.0.1])
+	by rose.makesad.us (Postfix) with ESMTP id DB1E4A0128;
+	Wed, 14 Jan 2009 12:18:25 -0500 (EST)
+Received: from localhost (localhost [127.0.0.1])
+	by vellum.laroia.net (Postfix) with ESMTPS id 941C63A62B9;
+	Wed, 14 Jan 2009 09:18:19 -0800 (PST)
+X-X-Sender: paulproteus@vellum.laroia.net
+In-Reply-To: <200901141455.23935.jnareb@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-OpenPGP-Key-ID: 0x70096AD1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105667>
 
-Jeff King schrieb:
-> On Wed, Jan 14, 2009 at 05:28:11PM +0100, Tor Arne Vestb=C3=B8 wrote:
->=20
->> +MSG=3D${MSG//%/}
->> +printf "$MSG" > "$1"
->> +printf "$MSG" >& 2
->=20
-> Substitution parameter expansion is a bash-ism, IIRC. How about just
->=20
->   printf %s "$MSG" ?
+On Wed, 14 Jan 2009, Jakub Narebski wrote:
 
-A the point was that $MSG contains \n, which should be turned int LF. I=
-MO,
-the easiest way to achieve this is:
+> Jakub Narebski wrote:
+>
+>> The ISP I use (Telekomunikacja Polska S.A., aka TP) made some
+>> unannounced changes for ADSL service (Neostrada) which made it block
+>> repo.or.cz (and of course its aliases, including git.or.cz where git
+>> wiki resides).
+>
+> Thank you all for your help with arriving at solution. I'll describe it
+> below; perhaps it would help somebody else (now that it is in mailing
+> list archive).
 
-MSG=3D'b3
-c3c3c3c3
-d3d3d3'
+I'll just add some comments that explain what I suggested with a little 
+more clarity. I'm not saying you have to use it or anything, I just want 
+to make sure I was clear!
 
-test_expect_success ' ... ' '
-   ...
-   MSG=3D"$MSG" git notes edit
-'
+And I'm glad you have a solution!
 
-and go back to using echo in the part cited above.
+> First, let me explain what I am working with:
+>
+> I have access to shell account with set up SSH key access; let's name
+> this machine host.example.com. I don't have admin rights there, and
+> quota is quite tight; I have installed netcat (nc) in ~/bin - it is
+> only 22 kB.
 
--- Hannes
+Yes, that is great!
+
+> I don't know where to find SOCKS5 proxy, and I don't have 'tsocks' 
+> installed either on my computer, or on shell account... I think.
+
+tsocks is packaged in Debian, and surely in other distributions as well. 
+You don't run it on the shell account, but on your own workstation (which 
+I call "laptop" below for clarity).
+
+A SOCKS5 proxy can be generated by ssh by running:
+
+ 	[user@laptop] $ ssh -D 1080 shelluser@shellbox
+
+Now:
+ 	[user@laptop] $ telnet localhost 1080
+
+will demonstrate that local port 1080 is listening. Because you created it 
+with -D to ssh, that local port 1080 *is* a SOCKS5 proxy, created by the 
+local SSH client.
+
+> Now, solutions:
+>
+> 1. For reading gitweb at repo.or.cz, and for reading and editing git
+>   wiki at http://git.or.cz/gitwiki/ I use one of free HTTP proxies:
+>   http://www.4proxy.de (first such proxy I have found that has an
+>   option to _not_ obfuscate URLs; it still unnecessary escapes some
+>   things like '/' in the query argument).
+
+Great! (Though note that configuring the web browser to use your 
+SSH-created SOCKS5 proxy would let you avoid this escaping since the whole 
+system would be under your control.)
+
+> 2. For pushing changes to repo.or.cz I use SSH tunnel (I could have
+>   used ProxyCommand solution with netcat instead[1]). I run:
+>
+>   $ autossh -M 2000 -f -N -L 2222:repo.or.cz:22 jnareb@host.example.com
+>
+>   at startup, and I have set the following in ~/.ssh/config:
+>
+>   # TP S.A. blocks repo.or.cz
+>   Host repo.or.cz
+>   	#ssh -f -N -L 2222:repo.or.cz:22 host.example.com
+>   	NoHostAuthenticationForLocalhost yes
+>   	HostName localhost
+>   	Port 2222
+>
+>   [1] Alternate solution:
+>
+>   # TP S.A. blocks repo.or.cz
+>   Host repo.or.cz
+> 	ProxyCommand ssh host.example.com exec /home/jnareb/bin/nc %h %p
+
+Right-o.
+
+> 3. For fetching changes via git:// protocol from repo.or.cz I use the
+>   following setup in git config:
+>
+>   [core]
+>   	gitProxy = ssh-proxy for "repo.or.cz"
+>
+>   Unfortunately example from Documentation/config.txt with "ssh" as
+>   git proxy command doesn't work, and neither putting command with
+>   options (e.g. "ssh host.example.com /home/jnareb/bin/nc") doesn't
+>   work: the command is _not_ split on whitespace. So I had to use
+>   helper script ~/bin/ssh-proxy:
+>
+>   #!/bin/sh
+>
+>   ssh host.example.com /home/jnareb/bin/nc "$1" "$2"
+
+Great!
+
+> I hope that would help somebody... and if somebody notices better 
+> solution, hs/she would provide me with it :-)
+
+(-:
+
+-- Asheesh.
+
+-- 
+A visit to a fresh place will bring strange work.
