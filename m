@@ -1,154 +1,139 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: [StGit PATCH] Check for local changes with "goto"
-Date: Wed, 14 Jan 2009 22:59:45 +0000
-Message-ID: <20090114225945.11098.88671.stgit@localhost.localdomain>
+From: David Birchfield <dbirchfield@asu.edu>
+Subject: RE: jgit merge question
+Date: Wed, 14 Jan 2009 15:03:42 -0700
+Message-ID: <AB447EEF7BAAB7489B29A4F3F788D02C01CDD792@EX07.asurite.ad.asu.edu>
+References: <S1760244AbZANHqN/20090114074613Z+1959@vger.kernel.org> <4EDE3D74-CEA3-473C-ADD1-03B79AAB9EDF@asu.edu> <alpine.DEB.1.00.0901141124460.3586@pacific.mpi-cbg.de> <20090114153034.GZ10179@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org,
-	Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 00:01:53 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 15 00:02:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNEjZ-0006Bo-05
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 00:01:13 +0100
+	id 1LNEkC-0006SK-5a
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 00:01:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758299AbZANW7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 17:59:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760995AbZANW7v
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 17:59:51 -0500
-Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:29994 "EHLO
-	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760925AbZANW7u (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2009 17:59:50 -0500
-Received: from aamtaout01-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout03-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20090114225947.LUTM7670.mtaout03-winn.ispmail.ntl.com@aamtaout01-winn.ispmail.ntl.com>;
-          Wed, 14 Jan 2009 22:59:47 +0000
-Received: from localhost.localdomain ([86.9.203.187])
-          by aamtaout01-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20090114225947.MAAE19264.aamtaout01-winn.ispmail.ntl.com@localhost.localdomain>;
-          Wed, 14 Jan 2009 22:59:47 +0000
-User-Agent: StGit/0.14.3.293.g03d7
-X-Cloudmark-Analysis: v=1.0 c=1 a=ikxhZRSC73EA:10 a=SNtqtAhqVTYA:10 a=J8AwYs8vHxt1yloFQywA:9 a=fmLI8-Me-xRgdbgk79kA:7 a=iqwJFoqA-m55N38YLE4ab_oTJYwA:4 a=XF7b4UCPwd8A:10 a=ZCfqrk5O2kgA:10
+	id S1756492AbZANXAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 18:00:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756295AbZANXAL
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 18:00:11 -0500
+Received: from epo-int2.asu.edu ([129.219.187.21]:28449 "EHLO epo-int2.asu.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754956AbZANXAI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2009 18:00:08 -0500
+X-Greylist: delayed 2917 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Jan 2009 18:00:08 EST
+Received: from exhub2.asurite.ad.asu.edu (exhub2.asurite.ad.asu.edu [129.219.103.60])
+	by epo-int2.asu.edu (Switch-3.1.8/Switch-3.1.7/asu-postoffice-prod) with ESMTP id n0EMA2Fv029021
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Wed, 14 Jan 2009 15:11:18 -0700
+Received: from EX07.asurite.ad.asu.edu (129.219.12.235) by
+ exhub2.asurite.ad.asu.edu (129.219.103.60) with Microsoft SMTP Server id
+ 8.1.336.2; Wed, 14 Jan 2009 15:03:42 -0700
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-Class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: jgit merge question
+Thread-Index: Acl2XQ0h344fGeoqSP6QmTxuNQ7TbAANf/l7
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105725>
 
-This is done by default, unless the --keep option is passed, for
-consistency with the "pop" command.
+Great - thanks so much for this feedback and link.  My merge needs are straightforward, so hopefully this will suit the need!
 
-Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
----
- stgit/commands/common.py  |    7 +++++++
- stgit/commands/goto.py    |    8 +++++++-
- t/t2300-refresh-subdir.sh |    2 +-
- t/t2800-goto-subdir.sh    |    4 ++--
- t/t3000-dirty-merge.sh    |    2 +-
- 5 files changed, 18 insertions(+), 5 deletions(-)
+I have pulled the latest jgit updates and downloaded the four .java files that are referenced in your link.  I have added these to the directory structure for jgit in the following new folder: org.spearce.jgit/src/org/spearce/jgit/merge/
 
-diff --git a/stgit/commands/common.py b/stgit/commands/common.py
-index 6bb3685..8ae43ff 100644
---- a/stgit/commands/common.py
-+++ b/stgit/commands/common.py
-@@ -100,6 +100,13 @@ def check_conflicts():
-                            ' then use "resolve <files>" or revert the'
-                            ' changes with "status --reset".')
- 
-+def check_clean(repository):
-+    """Check whether the index is up to date.
-+    """
-+    if not repository.default_index.is_clean():
-+        raise CmdException('Repository not clean. Use "refresh" or '
-+                           '"status --reset"')
-+
- def print_crt_patch(crt_series, branch = None):
-     if not branch:
-         patch = crt_series.get_current()
-diff --git a/stgit/commands/goto.py b/stgit/commands/goto.py
-index 60a917e..6483011 100644
---- a/stgit/commands/goto.py
-+++ b/stgit/commands/goto.py
-@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- from stgit.commands import common
- from stgit.lib import transaction
- from stgit import argparse
-+from stgit.argparse import opt
- 
- help = 'Push or pop patches to the given one'
- kind = 'stack'
-@@ -27,7 +28,10 @@ Push/pop patches to/from the stack until the one given on the command
- line becomes current."""
- 
- args = [argparse.other_applied_patches, argparse.unapplied_patches]
--options = []
-+options = [
-+    opt('-k', '--keep', action = 'store_true',
-+        short = 'Keep the local changes')
-+]
- 
- directory = common.DirectoryHasRepositoryLib()
- 
-@@ -38,6 +42,8 @@ def func(parser, options, args):
- 
-     stack = directory.repository.current_stack
-     iw = stack.repository.default_iw
-+    if not options.keep:
-+        common.check_clean(directory.repository)
-     trans = transaction.StackTransaction(stack, 'goto')
-     if patch in trans.applied:
-         to_pop = set(trans.applied[trans.applied.index(patch)+1:])
-diff --git a/t/t2300-refresh-subdir.sh b/t/t2300-refresh-subdir.sh
-index d731a11..89c95db 100755
---- a/t/t2300-refresh-subdir.sh
-+++ b/t/t2300-refresh-subdir.sh
-@@ -65,7 +65,7 @@ test_expect_success 'refresh -u -p <subdir>' '
- 
- test_expect_success 'refresh an unapplied patch' '
-     stg refresh -u &&
--    stg goto p0 &&
-+    stg goto --keep p0 &&
-     test "$(stg status)" = "M foo.txt" &&
-     stg refresh -p p1 &&
-     test "$(stg status)" = "" &&
-diff --git a/t/t2800-goto-subdir.sh b/t/t2800-goto-subdir.sh
-index 28b8292..855972b 100755
---- a/t/t2800-goto-subdir.sh
-+++ b/t/t2800-goto-subdir.sh
-@@ -25,7 +25,7 @@ cat > expected2.txt <<EOF
- bar
- EOF
- test_expect_success 'Goto in subdirectory (just pop)' '
--    (cd foo && stg goto p1) &&
-+    (cd foo && stg goto --keep p1) &&
-     cat foo/bar > actual.txt &&
-     test_cmp expected1.txt actual.txt &&
-     ls foo > actual.txt &&
-@@ -48,7 +48,7 @@ cat > expected2.txt <<EOF
- bar
- EOF
- test_expect_success 'Goto in subdirectory (conflicting push)' '
--    (cd foo && stg goto p3) ;
-+    (cd foo && stg goto --keep p3) ;
-     [ $? -eq 3 ] &&
-     cat foo/bar > actual.txt &&
-     test_cmp expected1.txt actual.txt &&
-diff --git a/t/t3000-dirty-merge.sh b/t/t3000-dirty-merge.sh
-index f0f79d5..419d86e 100755
---- a/t/t3000-dirty-merge.sh
-+++ b/t/t3000-dirty-merge.sh
-@@ -26,7 +26,7 @@ test_expect_success 'Push with dirty worktree' '
-     echo 4 > a &&
-     [ "$(echo $(stg series --applied --noprefix))" = "p1" ] &&
-     [ "$(echo $(stg series --unapplied --noprefix))" = "p2" ] &&
--    conflict stg goto p2 &&
-+    conflict stg goto --keep p2 &&
-     [ "$(echo $(stg series --applied --noprefix))" = "p1" ] &&
-     [ "$(echo $(stg series --unapplied --noprefix))" = "p2" ] &&
-     [ "$(echo $(cat a))" = "4" ]
+However, when I try to now make_jgit.sh I am getting a series of errors (pasted below) that appear to stem from not having the same underlying files.  Is it possible that I am not getting the most recent jgit release files?  Or am I misunderstanding how you expect these Merge files to be used?
+
+Thanks again,
+David
+
+<errors>
+Entering org.spearce.jgit ...
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:45: cannot find symbol
+symbol  : class UnmergedPathException
+location: package org.spearce.jgit.errors
+import org.spearce.jgit.errors.UnmergedPathException;
+                               ^
+./org/spearce/jgit/merge/Merger.java:184: cannot find symbol
+symbol  : constructor CanonicalTreeParser(<nulltype>,org.spearce.jgit.lib.Repository,org.spearce.jgit.revwalk.RevTree,org.spearce.jgit.lib.WindowCursor)
+location: class org.spearce.jgit.treewalk.CanonicalTreeParser
+			return new CanonicalTreeParser(null, db, base.getTree(), curs);
+                               ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:98: cannot find symbol
+symbol  : method newInCore()
+location: class org.spearce.jgit.dircache.DirCache
+			cache = DirCache.newInCore();
+                                        ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:123: cannot find symbol
+symbol  : variable STAGE_0
+location: class org.spearce.jgit.dircache.DirCacheEntry
+					add(T_THEIRS, DirCacheEntry.STAGE_0);
+                                                                   ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:125: cannot find symbol
+symbol  : variable STAGE_0
+location: class org.spearce.jgit.dircache.DirCacheEntry
+					add(T_OURS, DirCacheEntry.STAGE_0);
+                                                                 ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:137: cannot find symbol
+symbol  : method writeTree(org.spearce.jgit.lib.ObjectWriter)
+location: class org.spearce.jgit.dircache.DirCache
+				resultTree = cache.writeTree(getObjectWriter());
+                                                  ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:139: cannot find symbol
+symbol  : class UnmergedPathException
+location: class org.spearce.jgit.merge.StrategySimpleTwoWayInCore.InCoreMerger
+			} catch (UnmergedPathException upe) {
+                                 ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:147: cannot find symbol
+symbol  : method getRawPath()
+location: class org.spearce.jgit.treewalk.NameConflictTreeWalk
+				builder.addTree(tw.getRawPath(), db, tw.getObjectId(1));
+                                                  ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:149: cannot find symbol
+symbol  : variable STAGE_0
+location: class org.spearce.jgit.dircache.DirCacheEntry
+				add(T_OURS, DirCacheEntry.STAGE_0);
+                                                         ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:153: cannot find symbol
+symbol  : variable STAGE_1
+location: class org.spearce.jgit.dircache.DirCacheEntry
+			add(T_BASE, DirCacheEntry.STAGE_1);
+                                                 ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:154: cannot find symbol
+symbol  : variable STAGE_2
+location: class org.spearce.jgit.dircache.DirCacheEntry
+			add(T_OURS, DirCacheEntry.STAGE_2);
+                                                 ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:155: cannot find symbol
+symbol  : variable STAGE_3
+location: class org.spearce.jgit.dircache.DirCacheEntry
+			add(T_THEIRS, DirCacheEntry.STAGE_3);
+                                                   ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:163: cannot find symbol
+symbol  : method getRawPath()
+location: class org.spearce.jgit.treewalk.NameConflictTreeWalk
+				e = new DirCacheEntry(tw.getRawPath(), stage);
+                                                        ^
+./org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java:163: internal error; cannot instantiate org.spearce.jgit.dircache.DirCacheEntry.<init> at org.spearce.jgit.dircache.DirCacheEntry to ()
+				e = new DirCacheEntry(tw.getRawPath(), stage);
+                                    ^
+
+</errors
+
+
+
+
+-----Original Message-----
+
+David is probably talking about the 8 patch series I proposed to add a
+crude merge API to JGit.  The patches are available here, based on the
+current JGit master:
+
+  http://android.git.kernel.org/?p=tools/egit.git;a=shortlog;h=refs/heads/for-gerrit2
+  git://android.git.kernel.org/tools/egit.git for-gerrit2
