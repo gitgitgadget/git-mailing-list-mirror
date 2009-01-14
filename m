@@ -1,89 +1,74 @@
-From: "Jeremy Ramer" <jdramer@gmail.com>
-Subject: cygwin git diff crash
-Date: Wed, 14 Jan 2009 15:09:50 -0700
-Message-ID: <b9fd99020901141409w1e0c926fkc762f8709bd1c13f@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH take 3 0/4] color-words improvements
+Date: Wed, 14 Jan 2009 23:11:32 +0100
+Message-ID: <200901142311.37342.trast@student.ethz.ch>
+References: <alpine.DEB.1.00.0901112057300.3586@pacific.mpi-cbg.de> <200901142059.09005.trast@student.ethz.ch> <alpine.DEB.1.00.0901142258250.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart88001939.kMxFpJkXoA";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 14 23:11:32 2009
+Cc: Teemu Likonen <tlikonen@iki.fi>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Santi =?utf-8?q?B=C3=A9jar?= <santi@agolina.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 14 23:13:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNDxD-0002aB-Qe
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 23:11:16 +0100
+	id 1LNDyk-0003EC-IP
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 23:12:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755538AbZANWJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 17:09:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755493AbZANWJx
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 17:09:53 -0500
-Received: from yw-out-2324.google.com ([74.125.46.29]:52240 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755275AbZANWJv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 17:09:51 -0500
-Received: by yw-out-2324.google.com with SMTP id 9so337895ywe.1
-        for <git@vger.kernel.org>; Wed, 14 Jan 2009 14:09:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=MriqyiTUl6DFtwnljJuh0Yee5WUHgNg8QsTxnNqcq0w=;
-        b=ubgmPb4DOahT8tMmzoOGju8LfppE29ktIQL4oA1U1oNXEzOq+8dL7D4rg0d4CpjOpS
-         0xZaQF/TeszyRYQI1RyRVOCY1tgKiiRJ0wMwSQSvLG6PxYVL8mFQwLTJ7K5w/e1jWwYs
-         7JOLldwCvxRphQamnCZ8NahXKpDG7QpVjdTS4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=gnpQA/pU4tqHkH5jB9f9oe+Wvqr7L6WAAUq9d+Zh5fVSY0FnoH9XvJ9rnNHBtAn+Zg
-         P3+YFg3Av2QRRkEmfiJ5g3xlZUp1oX6QShADyNL6NF7fWRud6t99Vl7P+/y/6YuiTyWK
-         ZkqP8icP7Q9nsA5N8WI+AlINwhaJHGyaAUaF8=
-Received: by 10.100.96.10 with SMTP id t10mr646885anb.32.1231970990371;
-        Wed, 14 Jan 2009 14:09:50 -0800 (PST)
-Received: by 10.100.140.4 with HTTP; Wed, 14 Jan 2009 14:09:50 -0800 (PST)
-Content-Disposition: inline
+	id S1755590AbZANWLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 17:11:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755555AbZANWLX
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 17:11:23 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:12982 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754519AbZANWLW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 17:11:22 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 14 Jan 2009 23:11:20 +0100
+Received: from [192.168.0.3] ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 14 Jan 2009 23:11:20 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0901142258250.3586@pacific.mpi-cbg.de>
+X-OriginalArrivalTime: 14 Jan 2009 22:11:20.0540 (UTC) FILETIME=[078919C0:01C97695]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105711>
 
-Ok this is a weird issue and it's probably cygwin's fault, but I
-haven't found any way to fix it so I' thought I would throw it out
-here for comment.
+--nextPart88001939.kMxFpJkXoA
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I am using git 1.6.0.4 on cygwin. I have a repo where if any file has
-changes and git detects as mode 100644 I get this error:
-$git diff
-      3 [main] git 2744 C:\cygwin\bin\git.exe: *** fatal error - could
-not load user32, Win32 error
+Johannes Schindelin wrote:
+> Which reminds me... should we activate REG_EXTENDED by default?
 
-If I change the mode to 100755 git diff will work fine.
-$chmod a+x test.cpp
-$git diff
-diff --git a/test.cpp b/test.cpp
-old mode 100644
-new mode 100755
-index 7c0dfcd..20987a7
---- a/test.cpp
-+++ b/test.cpp
-@@ -6,9 +6,11 @@ int main()
+We (you :-) do, and I think so.  Consider that funcname is not even
+documented any more, in favour of xfuncname.
 
- void func()
- {
-+       int a;^M
- }
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
- void func2()
- {
-+       int b;^M
- }
 
-Anybody have a clue as to why this might occur?  I have seen this in
-many of the repo's I use, but it is not repeatable.  I tried making a
-test repo but could not reproduce.
+--nextPart88001939.kMxFpJkXoA
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-Thanks!
-Jeremy
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkluYxkACgkQqUud07tmzP2AmACfU8AGWyNUcxehCeqwhPFucnQw
+6yUAn1K64SY0LLop7V6H6AQzYyJ+SQB/
+=O8i9
+-----END PGP SIGNATURE-----
+
+--nextPart88001939.kMxFpJkXoA--
