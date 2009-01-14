@@ -1,82 +1,107 @@
-From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
-Subject: Re: [PATCH] Noted that vi is the final choice of editor in git
-	help commit
-Date: Wed, 14 Jan 2009 10:55:12 +0100
-Message-ID: <20090114095512.GA29927@chistera.yi.org>
-References: <1231886016-31675-1-git-send-email-cfratrik@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH] gitweb: Fix nested links problem with ref markers
+Date: Wed, 14 Jan 2009 11:39:41 +0100
+Message-ID: <200901141139.42263.jnareb@gmail.com>
+References: <200901120215.13668.jnareb@gmail.com> <200901140117.38803.jnareb@gmail.com> <cb7bb73a0901131956s7f441c38o3a0b1e5f456a3cd3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Craig Fratrik <cfratrik@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 14 11:30:30 2009
+To: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 14 11:41:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN30w-0003qC-Tm
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 11:30:23 +0100
+	id 1LN3BR-0007kZ-Sy
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 11:41:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754584AbZANK27 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jan 2009 05:28:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754207AbZANK27
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 05:28:59 -0500
-Received: from tarrio.org ([70.85.129.80]:34066 "EHLO maestro.tarrio.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752563AbZANK26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 05:28:58 -0500
-X-Greylist: delayed 2023 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Jan 2009 05:28:58 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by maestro.tarrio.org (Postfix) with ESMTP id F2C08DD604;
-	Wed, 14 Jan 2009 10:55:13 +0100 (CET)
-X-Virus-Scanned: amavisd-new at maestro.tarrio.org
-Received: from maestro.tarrio.org ([127.0.0.1])
-	by localhost (maestro.tarrio.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CB1y2AJ6YLXu; Wed, 14 Jan 2009 10:55:13 +0100 (CET)
-Received: from chistera.yi.org (localhost.localdomain [127.0.0.1])
-	by maestro.tarrio.org (Postfix) with ESMTP id E253FDD603;
-	Wed, 14 Jan 2009 10:55:12 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LN2Su-0007qo-8m; Wed, 14 Jan 2009 10:55:12 +0100
+	id S1752580AbZANKju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 05:39:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752244AbZANKju
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 05:39:50 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:41098 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752179AbZANKjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 05:39:49 -0500
+Received: by ewy10 with SMTP id 10so564771ewy.13
+        for <git@vger.kernel.org>; Wed, 14 Jan 2009 02:39:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=w/UYiZE/ppm1vHRre8oegSaXW8I2DAcuffq8593iCzU=;
+        b=RN/3vGRDuH/DFk81EeCWYYYfbdFegV/FVblmTNDaXVscbOhzHsUyoJldGiFiE5Dxt0
+         d4B+/k687RZJ/46d2HM0vcFz068a+8hoafSAU+jZVhpgSsYHvHbpDLINf5c7FEFNmmqd
+         a8IhDdIz05AZ1U9fh9J96R9j9AfGV7vxKkjXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Mu3GGX0ZHtQRqPRsVumi+2njAWdzP37kXyJNKe4JajQdN9lCAyBXW+e7vuXkyN8Gfq
+         UW5/DSpNODMN7jtXx6vzfp2EUC19unc2UX5uCaPQxwAiLadiXFKlrqKB7vVagcXVb42U
+         QIuQJ+eWVOckGe1ZeF6IxSjaMG1tdcUiwYLck=
+Received: by 10.210.29.11 with SMTP id c11mr3216526ebc.104.1231929587157;
+        Wed, 14 Jan 2009 02:39:47 -0800 (PST)
+Received: from ?192.168.1.11? (abwf55.neoplus.adsl.tpnet.pl [83.8.229.55])
+        by mx.google.com with ESMTPS id 28sm3182944eye.30.2009.01.14.02.39.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 14 Jan 2009 02:39:46 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <cb7bb73a0901131956s7f441c38o3a0b1e5f456a3cd3@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <1231886016-31675-1-git-send-email-cfratrik@gmail.com>
-X-No-CC: Please respect my Mail-Followup-To header
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105612>
 
-* Craig Fratrik [Tue, 13 Jan 2009 14:33:36 -0800]:
+On Wed, 14 Jan 2009, Giuseppe Bilotta wrote:
+> On Tue, Jan 13, 2009 at 7:17 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>> On Tue, 13 Jan 2009, Giuseppe Bilotta wrote:
 
->  The editor used to edit the commit log message will be chosen from t=
-he
->  GIT_EDITOR environment variable, the core.editor configuration varia=
-ble, the
-> -VISUAL environment variable, or the EDITOR environment variable (in =
-that
-> -order).
-> +VISUAL environment variable, the EDITOR environment variable, or fin=
-ally 'vi'
-> +(in that order).
+[...]
+>>> The float thing was the second suggestion I was given on www-style.
+>>
+>> What was the first suggestion? And what is www-style?
+> 
+> The first suggestion was to just leave things as they are. www-style
+> is www-style@w3c.org, the CSS mailing list of the W3C
 
-May I suggest:
+Thanks.
+ 
+>>> Can you provide a patch I can apply to my tree for testing to see how
+>>> it comes up?
+>>
+>> Here it is. Note that CSS could be I think reduced. The size of
+>> gitweb.perl changes is affected by changing calling convention for
+>> git_print_header_html subroutine.
+> 
+> It's funny, I was working on a very similar patch myself a couple of
+> days ago, but couldn't get the horizontal filler after the link to
+> work properly, which is why I asked on www-style.
+> 
+> I'll test your patch and let you know.
 
-   The editor used to edit the commit log message will be chosen from t=
-he
-   GIT_EDITOR environment variable, the core.editor configuration varia=
-ble, the
-   VISUAL environment variable, or the EDITOR environment variable (in =
-that
-  -order).
-  +order). If none of those are set, "vi" will be used.
+I am checking 'log' view of git repository; it should have enough
+ref markers to test this issue.
 
---=20
-Adeodato Sim=C3=B3                                     dato at net.com.=
-org.es
-Debian Developer                                  adeodato at debian.or=
-g
-=20
-A lie can go round the world before the truth has got its boots on.
-                -- Terry Pratchett
+It works also in Konqueror 3.5.3-0.2.fc4...
+ 
+>> There is also strange artifact at least in Mozilla 1.17.2: if I hover
+>> over ref marker, the subject (title) gets darker background. Curious...
+> 
+> Might be some kind of bug with the capturing vs bubbling phase.
+
+...but the same artifact can be seen too.  Also I am not entirely
+pleased with the way things behave on mouseover.  It is a pity that
+you cannot style element using CSS2.1 based on the pseudo-class :hover
+of descendant element, or/and pseudo-class of sibling element, which
+nevertheless overlays given element.
+
+-- 
+Jakub Narebski
+Poland
