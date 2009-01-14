@@ -1,74 +1,73 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH take 3 0/4] color-words improvements
-Date: Wed, 14 Jan 2009 23:11:32 +0100
-Message-ID: <200901142311.37342.trast@student.ethz.ch>
-References: <alpine.DEB.1.00.0901112057300.3586@pacific.mpi-cbg.de> <200901142059.09005.trast@student.ethz.ch> <alpine.DEB.1.00.0901142258250.3586@pacific.mpi-cbg.de>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: git-svn clone -s fails to setup branches in git if the most recent svn commit was not to trunk
+Date: Wed, 14 Jan 2009 16:04:36 -0600
+Message-ID: <200901141604.37208.bss@iguanasuicide.net>
+References: <loom.20090114T211218-628@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: multipart/signed;
-  boundary="nextPart88001939.kMxFpJkXoA";
+  boundary="nextPart3702450.YrfviJrSd3";
   protocol="application/pgp-signature";
   micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Teemu Likonen <tlikonen@iki.fi>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Santi =?utf-8?q?B=C3=A9jar?= <santi@agolina.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 14 23:13:06 2009
+Cc: git@vger.kernel.org
+To: Adam Soltys <adam.soltys@pwgsc.gc.ca>
+X-From: git-owner@vger.kernel.org Wed Jan 14 23:25:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNDyk-0003EC-IP
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 23:12:51 +0100
+	id 1LNEAq-0008AG-0v
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 23:25:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755590AbZANWLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 17:11:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755555AbZANWLX
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 17:11:23 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:12982 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754519AbZANWLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 17:11:22 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 14 Jan 2009 23:11:20 +0100
-Received: from [192.168.0.3] ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 14 Jan 2009 23:11:20 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0901142258250.3586@pacific.mpi-cbg.de>
-X-OriginalArrivalTime: 14 Jan 2009 22:11:20.0540 (UTC) FILETIME=[078919C0:01C97695]
+	id S1752723AbZANWX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 17:23:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752480AbZANWX4
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 17:23:56 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:39157 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752182AbZANWXz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 17:23:55 -0500
+Received: from [63.167.77.128]
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LNE9S-0002EQ-Dt; Wed, 14 Jan 2009 22:23:54 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <loom.20090114T211218-628@post.gmane.org>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105712>
 
---nextPart88001939.kMxFpJkXoA
+--nextPart3702450.YrfviJrSd3
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 Content-Disposition: inline
 
-Johannes Schindelin wrote:
-> Which reminds me... should we activate REG_EXTENDED by default?
+On Wednesday 2009 January 14 15:27:01 Adam Soltys wrote:
+<snip: git-svn weirdness when the last commit is to a branch/tag>
 
-We (you :-) do, and I think so.  Consider that funcname is not even
-documented any more, in favour of xfuncname.
-
+I already knew about this bug, but here is my "+1 please fix" mail.
 =2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
 
-
---nextPart88001939.kMxFpJkXoA
+--nextPart3702450.YrfviJrSd3
 Content-Type: application/pgp-signature; name=signature.asc 
 Content-Description: This is a digitally signed message part.
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.9 (GNU/Linux)
 
-iEYEABECAAYFAkluYxkACgkQqUud07tmzP2AmACfU8AGWyNUcxehCeqwhPFucnQw
-6yUAn1K64SY0LLop7V6H6AQzYyJ+SQB/
-=O8i9
+iEYEABECAAYFAkluYXUACgkQdNbfk+86fC1cHQCfeQ8OMqdUXFCNBAVFSTO8EpNE
+7DQAn3j6Tr8q54UWTWPdh7XaItGeGth5
+=UA2s
 -----END PGP SIGNATURE-----
 
---nextPart88001939.kMxFpJkXoA--
+--nextPart3702450.YrfviJrSd3--
