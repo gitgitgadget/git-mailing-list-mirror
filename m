@@ -1,70 +1,70 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: git Thunderbird Synching
-Date: Wed, 14 Jan 2009 16:01:09 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngms325.s3e.sitaramc@sitaramc.homelinux.net>
-References: <496D99BA.6000208@vt.edu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [BUG] assertion failure in builtin-mv.c with "git mv -k"
+Date: Wed, 14 Jan 2009 17:04:44 +0100
+Message-ID: <496E0D1C.20807@drmicha.warpmail.net>
+References: <vpqwscy81o8.fsf@bauges.imag.fr> <496DFC75.2000904@drmicha.warpmail.net> <alpine.DEB.1.00.0901141653540.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 14 17:04:05 2009
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 14 17:07:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN8Ch-0002YL-1w
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 17:02:51 +0100
+	id 1LN8Ft-0003kX-UD
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 17:06:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763604AbZANQB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 11:01:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758072AbZANQB2
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 11:01:28 -0500
-Received: from main.gmane.org ([80.91.229.2]:43665 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755030AbZANQB1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 11:01:27 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LN8BH-0007KA-Jd
-	for git@vger.kernel.org; Wed, 14 Jan 2009 16:01:23 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jan 2009 16:01:23 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jan 2009 16:01:23 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1755210AbZANQEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 11:04:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755143AbZANQEq
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 11:04:46 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57688 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755139AbZANQEp (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2009 11:04:45 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 4AAB72118C4;
+	Wed, 14 Jan 2009 11:04:44 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 14 Jan 2009 11:04:44 -0500
+X-Sasl-enc: xqZYnSlK7SlsiB62t0b+XvKXEAh31WZnzjRbNFb9SbrW 1231949083
+Received: from [139.174.44.34] (pascal.math.tu-clausthal.de [139.174.44.34])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 98FAF30E60;
+	Wed, 14 Jan 2009 11:04:43 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
+In-Reply-To: <alpine.DEB.1.00.0901141653540.3586@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105650>
 
-On 2009-01-14, Nicholas LaRoche <nlaroche@vt.edu> wrote:
-> I want to do something like this with my main profile, but I'm concerned 
-> that if I send/receive email on either machine independently that there 
-> will be corruption in some of the files when I push back to my main box.
+Johannes Schindelin venit, vidit, dixit 14.01.2009 16:54:
+> Hi,
+> 
+> On Wed, 14 Jan 2009, Michael J Gruber wrote:
+> 
+>> I'll send a patch but I'm not sure if this needs a test case.
+> 
+> Umm, Michael, you have been here long enough to know that the answer is a 
+> "YES!".  If you fix something, you want to provide a test case just to 
+> make sure you do not need to fix it again later.
+> 
+> Ciao,
+> Dscho
+> 
 
-The mbox files making up the actual mail are probably safe
-enough, assuming you do the git operations with TB shut
-down, not running.  In effect, each message is one chunk of
-code, and you're basically deleting or adding them.  Ugly,
-but it would probably work.
+It was a lame attempt at getting around it, it's just one line... I
+didn't know I've been being noticed long enough ;)
+So, should I prepare a series like:
 
-But I expect serious trouble with the MSF files that TB
-maintains, symptoms being quick searches not working or
-showing something in the message list pane and some other
-unrelated message in the preview pane.
+1: test case and mark known fail
+2: the 1 line fix
+3: mark test pass
 
-And that's if you can get git to merge them in the first
-place -- which I very much doubt.  For all practical
-purposes they're binary blobs.
+Or should 2+3 be squashed into one?
 
-So if you don't care about the MSF at all and can rebuild
-them each time, this would work.
-
-Otherwise IMAP is a better option :-)
+Cheers,
+Michael
