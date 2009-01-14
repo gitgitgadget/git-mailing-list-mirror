@@ -1,213 +1,68 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] git-am: add --directory=<dir> option
-Date: Thu, 15 Jan 2009 00:46:02 +0100
-Message-ID: <20090114234602.GD32313@leksak.fem-net>
-References: <7vbpudjanf.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>,
-	Simon 'corecode' Schubert <corecode@fs.ei.tum.de>,
-	Kevin Ballard <kevin@sb.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 00:47:43 2009
+From: =?ISO-8859-1?Q?Ask_Bj=F8rn_Hansen?= <ask@develooper.com>
+Subject: Re: git submodule merge madness
+Date: Wed, 14 Jan 2009 15:49:27 -0800
+Message-ID: <AE1922C4-0543-424B-A635-494445E17E45@develooper.com>
+References: <ADC7A3B1-6756-4258-93CD-DB40C7D2793C@develooper.com> <alpine.DEB.1.00.0901142354120.3586@pacific.mpi-cbg.de>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 15 00:50:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNFSY-0004mD-AM
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 00:47:42 +0100
+	id 1LNFVe-0005ny-3f
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 00:50:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756825AbZANXqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 18:46:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756633AbZANXqS
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 18:46:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50970 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755662AbZANXqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 18:46:17 -0500
-Received: (qmail invoked by alias); 14 Jan 2009 23:46:16 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp033) with SMTP; 15 Jan 2009 00:46:16 +0100
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX19Yx9oqx8dY68jdR1vusAwlLWgfX8gsBmheBIYWno
-	TQOB0Hh+xQVIBC
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1LNFQw-0000kL-Ud; Thu, 15 Jan 2009 00:46:02 +0100
-Content-Disposition: inline
-In-Reply-To: <7vbpudjanf.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.44
+	id S1757557AbZANXtc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 18:49:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757541AbZANXta
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 18:49:30 -0500
+Received: from x8.develooper.com ([216.52.237.208]:51260 "EHLO
+	x8.develooper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757534AbZANXta (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 18:49:30 -0500
+Received: (qmail 13548 invoked from network); 14 Jan 2009 23:49:28 -0000
+Received: from gw.develooper.com (HELO g5.bn.dev) (ask@mail.dev@64.81.84.140)
+  by smtp.develooper.com with (AES128-SHA encrypted) SMTP; 14 Jan 2009 23:49:28 -0000
+In-Reply-To: <alpine.DEB.1.00.0901142354120.3586@pacific.mpi-cbg.de>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105732>
 
-Hi Junio,
 
-Junio C Hamano wrote:
+On Jan 14, 2009, at 2:55 PM, Johannes Schindelin wrote:
+
+>> We've (again) replaced a few directories with submodules.  Man, it's
+>> madness!
+>>
+>> The typical problem is that we get an error trying to merge a "pre- 
+>> submodule"
+>> branch into master:
+>>
+>> 	fatal: cannot read object 894c77319a18c4d48119c2985a9275c9f5883584
+>> 'some/sub/dir': It is a submodule!
+>> Mark Levedahl wrote an example in July, but I don't think he got  
+>> any replies:
+>> http://marc.info/?l=git&m=121587851313303
 >
->  git-am.sh             |   17 +++++++++++++----
->  t/t4252-am-options.sh |    8 ++++++++
->  2 files changed, 21 insertions(+), 4 deletions(-)
+> So.... Which Git version are you are using?  Did you test any Git  
+> version
+> containing the commit d5a84fb(merge-recursive: fail gracefully with
+> directory/submodule conflicts)?
 
-I think this is missing some
+IIRC I tried 1.6.1 and master as of about a week ago.
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index b9c6fac..64c8178 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -66,6 +66,7 @@ default.   You could use `--no-utf8` to override this.
- 
- -C<n>::
- -p<n>::
-+--directory=<root>::
- 	These flags are passed to the 'git-apply' (see linkgit:git-apply[1])
- 	program that applies
- 	the patch.
-
-or even
-
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index b9c6fac..327bc3d 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -59,13 +59,10 @@ default.   You could use `--no-utf8` to override this.
- 	it is supposed to apply to, and we have those blobs
- 	available locally.
- 
----whitespace=<option>::
--	This flag is passed to the 'git-apply' (see linkgit:git-apply[1])
--	program that applies
--	the patch.
--
- -C<n>::
- -p<n>::
-+--directory=<root>::
-+--whitespace=<option>::
- 	These flags are passed to the 'git-apply' (see linkgit:git-apply[1])
- 	program that applies
- 	the patch.
-
-> diff --git c/git-am.sh w/git-am.sh
-> index 4b157fe..7e6329b 100755
-> --- c/git-am.sh
-> +++ w/git-am.sh
-[...]
-> @@ -33,6 +34,14 @@ cd_to_toplevel
->  git var GIT_COMMITTER_IDENT >/dev/null ||
->  	die "You need to set your committer info first"
->  
-> +sq () {
-> +	for sqarg
-> +	do
-> +		printf "%s" "$sqarg" |
-> +		sed -e 's/'\''/'\''\'\'''\''/g' -e 's/.*/ '\''&'\''/'
-                                  ^^^
-
-	$ echo "/fo'ba" | sed -e 's/'\''/'\''\'\'''\''/g' -e 's/.*/ '\''&'\''/'
-	 '/fo'''ba'
+I don't see d5a84fb in my repository (and google doesn't find it  
+referenced anywhere when I search for "directory/submodule conflicts".
 
 
-Do I have a thinko or should it be this:
+  - ask
 
-+		sed -e 's/'\''/'\''\\\'\'''\''/g' -e 's/.*/ '\''&'\''/'
-		                   ^^
-			(added for escaping ' outside single quotes)
-
-leading to:
-
-	$ echo "/fo'ba" | sed -e 's/'\''/'\''\\\'\'''\''/g' -e 's/.*/ '\''&'\''/'
-	 '/fo'\''ba'
-
-
-Well, I was unsure, so I've tested...
-
-
-Without this change:
-
-	$ ./git-am.sh --directory="fo'ba" /tmp/test/*
-	Applying: abcdefg
-	./git-am.sh: eval: line 471: unexpected EOF while looking for matching
-	`''
-	./git-am.sh: eval: line 472: syntax error: unexpected end of file
-	Patch failed at 0001.
-	When you have resolved this problem run "git am --resolved".
-	If you would prefer to skip this patch, instead run "git am --skip".
-	To restore the original branch and stop patching run "git am --abort".
-
-And with this change:
-
-	$ ./git-am.sh --directory="fo'ba" /tmp/test/*
-	Applying: abcdefg
-	Applying: asdgasfh
-
-> diff --git c/t/t4252-am-options.sh w/t/t4252-am-options.sh
-> index 3ab9e8e..e91a6da 100755
-> --- c/t/t4252-am-options.sh
-> +++ w/t/t4252-am-options.sh
-> @@ -50,4 +50,12 @@ test_expect_success 'interrupted am -C1 -p2' '
->  	grep "^Three$" file-2
->  '
->  
-> +test_expect_success 'interrupted am --directory="frotz nitfol"' '
-> +	rm -rf .git/rebase-apply &&
-> +	git reset --hard initial &&
-> +	test_must_fail git am --directory="frotz nitfol" "$tm"/am-test-5-? &&
-
-Have you forgotten to add the files prefixed with "am-test-5-" or is this
-patch based on another one?
-
-$ git ls-files t/t4252
-t/t4252/am-test-1-1
-t/t4252/am-test-1-2
-t/t4252/am-test-2-1
-t/t4252/am-test-2-2
-t/t4252/am-test-3-1
-t/t4252/am-test-3-2
-t/t4252/am-test-4-1
-t/t4252/am-test-4-2
-t/t4252/file-1-0
-t/t4252/file-2-0
-
-
-Thanks and regards,
-  Stephan
-
---------------- proposed interdiff without am-test-5* ---------------
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index b9c6fac..327bc3d 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -59,13 +59,10 @@ default.   You could use `--no-utf8` to override this.
- 	it is supposed to apply to, and we have those blobs
- 	available locally.
- 
----whitespace=<option>::
--	This flag is passed to the 'git-apply' (see linkgit:git-apply[1])
--	program that applies
--	the patch.
--
- -C<n>::
- -p<n>::
-+--directory=<root>::
-+--whitespace=<option>::
- 	These flags are passed to the 'git-apply' (see linkgit:git-apply[1])
- 	program that applies
- 	the patch.
-diff --git a/git-am.sh b/git-am.sh
-index 7e6329b..ca3dbcd 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -38,7 +38,7 @@ sq () {
- 	for sqarg
- 	do
- 		printf "%s" "$sqarg" |
--		sed -e 's/'\''/'\''\'\'''\''/g' -e 's/.*/ '\''&'\''/'
-+		sed -e 's/'\''/'\''\\\'\'''\''/g' -e 's/.*/ '\''&'\''/'
- 	done
- }
- 
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+http://develooper.com/ - http://askask.com/
