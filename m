@@ -1,88 +1,93 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH v2 1/3] add test cases for "git mv -k"
-Date: Wed, 14 Jan 2009 18:03:21 +0100
-Message-ID: <1231952603-32527-2-git-send-email-git@drmicha.warpmail.net>
-References: <alpine.DEB.1.00.0901141653540.3586@pacific.mpi-cbg.de>
- <1231952603-32527-1-git-send-email-git@drmicha.warpmail.net>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 14 18:06:38 2009
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: [PATCH next v2] git-notes: add test case for multi-line notes
+Date: Wed, 14 Jan 2009 11:09:52 -0600
+Message-ID: <200901141109.56580.bss@iguanasuicide.net>
+References: <alpine.DEB.1.00.0901141627440.3586@pacific.mpi-cbg.de> <496E129B.3020502@trolltech.com> <20090114165633.GC15758@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart1820775.4HQUxaLx3h";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Tor Arne =?utf-8?q?Vestb=C3=B8?= <tavestbo@trolltech.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 14 18:11:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN9Be-0006nq-P1
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 18:05:51 +0100
+	id 1LN9H1-0001Xv-HD
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 18:11:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761163AbZANRDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 12:03:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760545AbZANRDx
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 12:03:53 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:56452 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757289AbZANRDw (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2009 12:03:52 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 5E39D210F4E;
-	Wed, 14 Jan 2009 12:03:51 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 14 Jan 2009 12:03:51 -0500
-X-Sasl-enc: cA1VbyNaObMwSXPRxPJlLTzAUlLAMWL4TxBGF0+EuT8W 1231952630
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id C35901C116;
-	Wed, 14 Jan 2009 12:03:50 -0500 (EST)
-X-Mailer: git-send-email 1.6.0.6
-In-Reply-To: <1231952603-32527-1-git-send-email-git@drmicha.warpmail.net>
+	id S1764990AbZANRJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 12:09:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765092AbZANRJS
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 12:09:18 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:51236 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765087AbZANRJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 12:09:16 -0500
+Received: from [63.167.77.128]
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LN9Ev-00020S-60; Wed, 14 Jan 2009 17:09:13 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <20090114165633.GC15758@coredump.intra.peff.net>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105664>
 
-Add test cases for ignoring nonexisting and untracked files using the -k
-option to "git mv". There is one known breakage related to multiple
-untracked files specfied as consecutive arguments.
+--nextPart1820775.4HQUxaLx3h
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- t/t7001-mv.sh |   25 +++++++++++++++++++++++++
- 1 files changed, 25 insertions(+), 0 deletions(-)
+On Wednesday 2009 January 14 10:56:33 Jeff King wrote:
+>On Wed, Jan 14, 2009 at 05:28:11PM +0100, Tor Arne Vestb=C3=B8 wrote:
+>> +MSG=3D${MSG//%/}
+>> +printf "$MSG" > "$1"
+>> +printf "$MSG" >& 2
+>
+>Substitution parameter expansion is a bash-ism, IIRC. How about just
 
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 575ef5b..5c1485d 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -39,6 +39,31 @@ test_expect_success \
-     grep "^R100..*path1/COPYING..*path0/COPYING"'
- 
- test_expect_success \
-+    'checking -k on non-existing file' \
-+    'git mv -k idontexist path0'
-+
-+test_expect_success \
-+    'checking -k on untracked file' \
-+    'touch untracked1 &&
-+     git mv -k untracked1 path0 &&
-+     test -f untracked1 &&
-+     test ! -f path0/untracked1'
-+
-+test_expect_failure \
-+    'checking -k on multiple untracked files' \
-+    'touch untracked2 &&
-+     git mv -k untracked1 untracked2 path0 &&
-+     test -f untracked1 &&
-+     test -f untracked2 &&
-+     test ! -f path0/untracked1
-+     test ! -f path0/untracked2'
-+
-+# clean up the mess in case bad things happen
-+rm -f idontexist untracked1 untracked2 \
-+     path0/idontexist path0/untracked1 path0/untracked2 \
-+     .git/index.lock
-+
-+test_expect_success \
-     'adding another file' \
-     'cp "$TEST_DIRECTORY"/../README path0/README &&
-      git add path0/README &&
--- 
-1.6.0.6
+MSG=3D$(printf '%s\n' "$MSG" | sed -e 's/%/%%/g')
+printf "$MSG" > "$1"
+printf "$MSG" >& 2
+
+Is my best attempt at portable and "safe".  It's a few extra processes thou=
+gh.
+
+>  printf %s "$MSG" ?
+
+On my box
+$ printf '%s\n' '\n'
+\n
+$
+
+He wants '\n' in $MSG to be expanded, and what you gave doesn't do that.
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
+
+--nextPart1820775.4HQUxaLx3h
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkluHGQACgkQdNbfk+86fC3jNwCdE6B5YQ2Z5eLNJ3sbfvaxX+pj
+qR4An38cL01THz4dO0vrDR6rEhgYHsn7
+=GlRp
+-----END PGP SIGNATURE-----
+
+--nextPart1820775.4HQUxaLx3h--
