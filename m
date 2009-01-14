@@ -1,68 +1,61 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Compiler requirements for git?
-Date: Wed, 14 Jan 2009 23:38:32 +0100
-Message-ID: <20090114223832.GC30710@genesis.frugalware.org>
-References: <128172e70901141032p6e830a85i344d72e1b3bb3a89@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/4] color-words: fix quoting in t4034
+Date: Wed, 14 Jan 2009 23:41:59 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901142341420.3586@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0901142104400.3586@pacific.mpi-cbg.de> <3ff3ccf6e3c1cd6a002d200aee5df88a197a7bf6.1231971446.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="wqJr86X7F8PBspU2"
-Cc: git@vger.kernel.org
-To: Corey Stup <coreystup@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 14 23:40:57 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org,
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
+	Junio C Hamano <junio@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Jan 14 23:43:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNEP0-0005yn-B9
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 23:39:58 +0100
+	id 1LNERr-0007bd-39
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 23:42:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758650AbZANWig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 17:38:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755625AbZANWif
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 17:38:35 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:50294 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755596AbZANWie (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 17:38:34 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 44D8258172;
-	Wed, 14 Jan 2009 23:38:34 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id B85564465E;
-	Wed, 14 Jan 2009 23:38:32 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 0A41711B8630; Wed, 14 Jan 2009 23:38:32 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <128172e70901141032p6e830a85i344d72e1b3bb3a89@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1759789AbZANWlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 17:41:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759683AbZANWlK
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 17:41:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44545 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759511AbZANWlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 17:41:09 -0500
+Received: (qmail invoked by alias); 14 Jan 2009 22:41:07 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp038) with SMTP; 14 Jan 2009 23:41:07 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19mRyca/k9m6/QqU6aqUOZu96WGaI5nr/6AeZxSyI
+	/pp5Fnr3iqLNsy
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <3ff3ccf6e3c1cd6a002d200aee5df88a197a7bf6.1231971446.git.trast@student.ethz.ch>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105722>
 
+Hi,
 
---wqJr86X7F8PBspU2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Wed, 14 Jan 2009, Thomas Rast wrote:
 
-On Wed, Jan 14, 2009 at 01:32:56PM -0500, Corey Stup <coreystup@gmail.com> wrote:
-> When trying to compile with a C89 compliant compiler, I'm coming
-> across a couple issues:
-> - "inline" use
+> Since the single quotes match the ones used to quote the test text
+> itself, they'd be dropped.  Use double quotes instead.
 
-AFAIK that can be avoided with -Dinline=.
+See, I suck with quoting.
 
---wqJr86X7F8PBspU2
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> ---
+> 
+> I'd squash this into Dscho's 4/4, so no SoB.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Sure, done.
 
-iEYEARECAAYFAkluaWgACgkQe81tAgORUJaPAgCgj+WLQPjkvWnbTdIx+yQVcOvp
-kCcAoKmaFlIitYWbKgtntedPbhXEee/d
-=JEOa
------END PGP SIGNATURE-----
-
---wqJr86X7F8PBspU2--
+Thanks,
+Dscho
