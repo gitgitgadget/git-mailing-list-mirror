@@ -1,208 +1,91 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: [PATCH/RFC] git-svn: Add --convert-timezone option
-Date: Tue, 13 Jan 2009 16:45:44 -0800
-Message-ID: <496D35B8.70203@pcharlan.com>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: git-svn fails to fetch repository
+Date: Tue, 13 Jan 2009 19:58:09 -0500
+Message-ID: <76718490901131658l108852f2y9a25eb9133d6e96d@mail.gmail.com>
+References: <loom.20090113T145019-951@post.gmane.org>
+	 <loom.20090113T150220-345@post.gmane.org>
+	 <496CD49D.1070201@drmicha.warpmail.net>
+	 <loom.20090113T185918-397@post.gmane.org>
+	 <20090113203922.GD30404@atjola.homenet>
+	 <loom.20090113T204616-845@post.gmane.org>
+	 <76718490901131312j28f8283bi94f55000e70c532e@mail.gmail.com>
+	 <loom.20090113T211437-12@post.gmane.org>
+	 <76718490901131328x5ec30805u3cae29132defd695@mail.gmail.com>
+	 <loom.20090113T213400-985@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: Eric Wong <normalperson@yhbt.net>,
-	Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 14 01:47:28 2009
+Cc: git@vger.kernel.org, "Eric Wong" <normalperson@yhbt.net>
+To: "Vladimir Pouzanov" <farcaller@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 14 01:59:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMtup-0003dO-1D
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 01:47:27 +0100
+	id 1LMu6b-0006eN-Bc
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 01:59:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752720AbZANAqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 19:46:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752292AbZANAqB
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 19:46:01 -0500
-Received: from hapkido.dreamhost.com ([66.33.216.122]:56707 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751796AbZANAqA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 19:46:00 -0500
-Received: from swarthymail-a3.g.dreamhost.com (lax-green-bigip-5.dreamhost.com [208.113.200.5])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id BF0E217D4D7
-	for <git@vger.kernel.org>; Tue, 13 Jan 2009 16:45:58 -0800 (PST)
-Received: from [192.168.0.2] (031.132-78-65.ftth.swbr.surewest.net [65.78.132.31])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by swarthymail-a3.g.dreamhost.com (Postfix) with ESMTP id D87E77F05B;
-	Tue, 13 Jan 2009 16:45:44 -0800 (PST)
-User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
+	id S1753981AbZANA6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 19:58:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753471AbZANA6M
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 19:58:12 -0500
+Received: from rv-out-0506.google.com ([209.85.198.238]:29876 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751796AbZANA6L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 19:58:11 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so264198rvb.1
+        for <git@vger.kernel.org>; Tue, 13 Jan 2009 16:58:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=2Z3caybaEbZ6tZrLGqoiXKI6Mcs1n+bLXe+0xUNqH5o=;
+        b=RyDwxPMA7Iir1f6bYhbld4J567Y7MU/TJntcxGujceovcNeOjUcSJWlwU9wl8kh1e7
+         qjVbSPwwAQcNCC7HyLbN4t5zDSH3b/jfgIz7osp74CFC5iWN+6Btj2bb96XMu/k5qyJU
+         LXsaBUhZKhID2NlHEa53r73bNTJSMpYcOPON0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=OhvQrTceF1APpGkBOFBqn2XcHhy3QOiCc2TIXWUYOrpDNMqR3PN+iLalspiSz167TG
+         4G7VGn2UaqhNsiA9Q9FHkgZ4bqT+goe/4r08InbqwZZZY2LZ79AR299qWPIhyBpiSDfh
+         x9WO9G3CtTjGJcGnH1PNumzdgrN0mE6Ct+tzI=
+Received: by 10.141.40.7 with SMTP id s7mr575098rvj.192.1231894689610;
+        Tue, 13 Jan 2009 16:58:09 -0800 (PST)
+Received: by 10.140.204.11 with HTTP; Tue, 13 Jan 2009 16:58:09 -0800 (PST)
+In-Reply-To: <loom.20090113T213400-985@post.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105569>
 
-By default git svn stores timestamps of fetched commits in
-Subversion's UTC format, to facilitate interoperating with a
-Subversion repository.
+On Tue, Jan 13, 2009 at 4:34 PM, Vladimir Pouzanov <farcaller@gmail.com> wrote:
+> Jay Soffian <jaysoffian <at> gmail.com> writes:
+>> Perhaps this will help in tracking down the problem.
+>
+> $ git svn clone http://qsb-mac.googlecode.com/svn/trunk qsb-mac
+> Initialized empty Git repository in /Users/farcaller/temp/qsb-mac/.git/
+> r1 = 810fe584c48b884460b5403a28bc61d872452b93 (git-svn)
+> Temp file with moniker 'svn_delta' already in use at /opt/local/lib/perl5/
+> site_perl/5.8.8/Git.pm line 1011.
 
-If you're using git svn to convert a repository to Git and aren't
-interested in pushing Git commits back to Subversion, you can use this
-option to store timestamps of fetched commits as though they were made
-in the local timezone of the host on which git svn is run.  This makes
-the times and timezones of a resulting "git log" agree with what "svn
-log" shows for the same repository.
+One more thing to try. Edit your Git.pm and make the top of
+_temp_cache() look like the following:
 
-Signed-off-by: Pete Harlan <pgit@pcharlan.com>
----
+sub _temp_cache {
+	my ($self, $name) = _maybe_self(@_);
+	use Carp qw(longmess);
+	warn longmess() if $name eq "svn_delta";
 
-This is a patch I've had floating around for a while.  I haven't
-submitted it before because I find the solution ungainly.  There has
-to be a better way to convert from one timezone to the other, but I
-didn't run across it and now that I've converted away from Subversion
-I'm sort of done thinking about it.  I'm submitting it now because
-even in its current state it would have saved me some headache.
+So you're adding the "use Carp..." and "warn..." lines.
 
-Also, I'm not sure I'm correct when asserting that converting
-timezones like this will break Subversion interoperability.  Eric, if
-that isn't true then I can remove that claim and resubmit.  If
-converting timezones breaks nothing, then maybe it could even be the
-default.
+Then try the import again. That should at least show why the svn_delta
+temp file is being acquired twice.
 
-One improvement that I didn't bother to make would be to convert to
-different local timezones based on author.  This change uses the
-timezone of the machine running git-svn, which in my case was fine.
-Using per-author timezones would be nice, but since parse_svn_date()
-doesn't already know which author the date is associated with it would
-be a more intrusive change.
+(Yes, this is the printf school of debugging...)
 
-My primary motivation in this was to reduce transition shock among our
-development team.  The fewer ways "git log" looks unhelpfully
-different than the old "svn log" the better; converting all commit
-times into GMT wasn't going to look friendly.
-
-Comments welcome.
-
---Pete
-
- Documentation/git-svn.txt              |    8 ++++
- contrib/completion/git-completion.bash |    2 +-
- git-svn.perl                           |   56 ++++++++++++++++++++++++++++++-
- 3 files changed, 63 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 8d0c421..8811bf0 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -92,6 +92,14 @@ COMMANDS
- 	.git/config file may be specified as an optional command-line
- 	argument.
-
-+--convert-timezones;;
-+	Store Git commit times in the local timezone instead of UTC.  This
-+	makes 'git-log' (even without --date=local) show the same times
-+	that `svn log` would in the local timezone.
-+
-+This breaks interoperability with SVN, but may be cosmetically
-+desirable when converting a repository from SVN to Git.
-+
- 'clone'::
- 	Runs 'init' and 'fetch'.  It will automatically create a
- 	directory based on the basename of the URL passed to it;
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 8ec782d..597ef3d 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1560,7 +1560,7 @@ _git_svn ()
- 			--follow-parent --authors-file= --repack=
- 			--no-metadata --use-svm-props --use-svnsync-props
- 			--log-window-size= --no-checkout --quiet
--			--repack-flags --user-log-author $remote_opts
-+			--repack-flags --user-log-author --convert-timezones $remote_opts
- 			"
- 		local init_opts="
- 			--template= --shared= --trunk= --tags=
-diff --git a/git-svn.perl b/git-svn.perl
-index ad01e18..c2f600d 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -66,7 +66,7 @@ my ($_stdin, $_help, $_edit,
- 	$_version, $_fetch_all, $_no_rebase,
- 	$_merge, $_strategy, $_dry_run, $_local,
- 	$_prefix, $_no_checkout, $_url, $_verbose,
--	$_git_format, $_commit_url, $_tag);
-+	$_git_format, $_commit_url, $_tag, $_convert_timezones);
- $Git::SVN::_follow_parent = 1;
- my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
-                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
-@@ -84,6 +84,7 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
- 		   \$Git::SVN::_repack_flags,
- 		'use-log-author' => \$Git::SVN::_use_log_author,
- 		'add-author-from' => \$Git::SVN::_add_author_from,
-+		'convert-timezones' => \$_convert_timezones,
- 		%remote_opts );
-
- my ($_trunk, $_tags, $_branches, $_stdlayout);
-@@ -2526,12 +2527,63 @@ sub get_untracked {
- 	\@out;
- }
-
-+# parse_svn_date(DATE)
-+# --------------------
-+# Given a date (in UTC) from Subversion, return a string in the format
-+# "<TZ Offset> <local date/time>" that Git will use.
-+#
-+# By default the parsed date will be in UTC for interoperating with
-+# Subversion, but if $_convert_timezones is true we'll convert it to
-+# the local timezone instead.
- sub parse_svn_date {
- 	my $date = shift || return '+0000 1970-01-01 00:00:00';
- 	my ($Y,$m,$d,$H,$M,$S) = ($date =~ /^(\d{4})\-(\d\d)\-(\d\d)T
- 	                                    (\d\d)\:(\d\d)\:(\d\d).\d+Z$/x) or
- 	                                 croak "Unable to parse date: $date\n";
--	"+0000 $Y-$m-$d $H:$M:$S";
-+	my $parsed_date;    # Set next.
-+
-+	if ($_convert_timezones) {
-+		# Translate the Subversion datetime to an epoch time.
-+		# We need to switch ourselves to $date's timezone,
-+		# UTC, for this.
-+		my $oldEnvTZ = $ENV{TZ};
-+		$ENV{TZ} = 'UTC';
-+
-+		my $epochUTC =
-+		    POSIX::strftime ('%s', $S, $M, $H, $d, $m - 1, $Y - 1900);
-+
-+		# Determine our local timezone (including DST) at the
-+		# time of $epochUTC.  $Git::SVN::Log::TZ stored the
-+		# value of TZ, if any, at the time we were run.
-+		if (defined $Git::SVN::Log::TZ) {
-+			$ENV{TZ} = $Git::SVN::Log::TZ;
-+		} else {
-+			delete $ENV{TZ};
-+		}
-+
-+		my $ourTZ =
-+		    POSIX::strftime ('%Z', $S, $M, $H, $d, $m - 1, $Y - 1900);
-+
-+		# This converts $epochUTC into our local timezone.
-+		my ($sec, $min, $hour, $mday, $mon, $year,
-+		    $wday, $yday, $isdst) = localtime ($epochUTC);
-+
-+		$parsed_date = sprintf ('%s %04d-%02d-%02d %02d:%02d:%02d',
-+					$ourTZ, $year + 1900, $mon + 1,
-+					$mday, $hour, $min, $sec);
-+
-+		# Reset us to the timezone in effect when we entered
-+		# this routine.
-+		if (defined $oldEnvTZ) {
-+			$ENV{TZ} = $oldEnvTZ;
-+		} else {
-+			delete $ENV{TZ};
-+		}
-+	} else {
-+		$parsed_date = "+0000 $Y-$m-$d $H:$M:$S";
-+	}
-+
-+	return $parsed_date;
- }
-
- sub check_author {
--- 
-1.6.1.77.g56257
+j.
