@@ -1,87 +1,97 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: [StGit PATCH] Add --file option to pick
-Date: Wed, 14 Jan 2009 22:59:30 +0000
-Message-ID: <20090114225930.11098.2144.stgit@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: 1.5.6.5 fails to clone
+ git.kernel.org/[...]/rostedt/linux-2.6-rt
+Date: Thu, 15 Jan 2009 00:10:47 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901142357360.3586@pacific.mpi-cbg.de>
+References: <E1LLAn5-0001JM-00@alva.home> <7vpriw26uo.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org,
-	Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 00:09:46 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Tim Shepard <shep@alum.mit.edu>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 00:11:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNErp-0000x3-3h
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 00:09:45 +0100
+	id 1LNEtO-0001YC-9G
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 00:11:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755630AbZANXIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 18:08:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755209AbZANXIV
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 18:08:21 -0500
-Received: from queueout04-winn.ispmail.ntl.com ([81.103.221.58]:17667 "EHLO
-	queueout04-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753836AbZANXIV (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2009 18:08:21 -0500
-Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout01-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20090114225932.UDLR2989.mtaout01-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>;
-          Wed, 14 Jan 2009 22:59:32 +0000
-Received: from localhost.localdomain ([86.9.203.187])
-          by aamtaout02-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20090114225932.UZPJ21638.aamtaout02-winn.ispmail.ntl.com@localhost.localdomain>;
-          Wed, 14 Jan 2009 22:59:32 +0000
-User-Agent: StGit/0.14.3.293.g03d7
-X-Cloudmark-Analysis: v=1.0 c=1 a=HTGQP5q2E9wA:10 a=ZHhOoE7WMpxN2uTE-KkA:9 a=4ggffSH-gbpkcH4XEnGMFOjuzLsA:4 a=XF7b4UCPwd8A:10 a=ZCfqrk5O2kgA:10
+	id S1756043AbZANXJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 18:09:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755992AbZANXJ5
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 18:09:57 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51536 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753176AbZANXJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 18:09:56 -0500
+Received: (qmail invoked by alias); 14 Jan 2009 23:09:54 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp063) with SMTP; 15 Jan 2009 00:09:54 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+iB9MmCVmiu2wTevsqdPyGfUCF2zFXMkNxFFAHpz
+	49KMJ6h24g4hva
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vpriw26uo.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105727>
 
-This allows folding of specific files only.
+Hi,
 
-Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
----
- stgit/commands/pick.py |   12 ++++++++++--
- 1 files changed, 10 insertions(+), 2 deletions(-)
+On Fri, 9 Jan 2009, Junio C Hamano wrote:
 
-diff --git a/stgit/commands/pick.py b/stgit/commands/pick.py
-index ee08c01..b0e9114 100644
---- a/stgit/commands/pick.py
-+++ b/stgit/commands/pick.py
-@@ -52,6 +52,8 @@ options = [
-         short = 'Fold the commit object into the current patch'),
-     opt('--update', action = 'store_true',
-         short = 'Like fold but only update the current patch files'),
-+    opt('-f', '--files', action = 'append',
-+        short = 'Only fold the given files'),
-     opt('--unapplied', action = 'store_true',
-         short = 'Keep the patch unapplied')]
- 
-@@ -83,8 +85,11 @@ def __pick_commit(commit_id, patchname, options):
-         out.start('Folding commit %s' % commit_id)
- 
-         # try a direct git apply first
--        if not git.apply_diff(bottom, top):
--            git.merge_recursive(bottom, git.get_head(), top)
-+        if not git.apply_diff(bottom, top, files = options.files):
-+            if options.files:
-+                raise CmdException, 'Patch folding failed'
-+            else:
-+                git.merge_recursive(bottom, git.get_head(), top)
- 
-         out.done()
-     elif options.update:
-@@ -152,6 +157,9 @@ def func(parser, options, args):
-     if not args:
-         parser.error('incorrect number of arguments')
- 
-+    if options.files and not options.fold:
-+        parser.error('--file can only be specified with --fold')
-+
-     if not options.unapplied:
-         check_local_changes()
-         check_conflicts()
+> I think we lost the alternate object store support when git-fetch was 
+> rewritten from the original shell script (that did support fetching from 
+> such a repository over rsync:// transport) to a reimplementation in C, 
+> with commit b888d61 (Make fetch a builtin, 2007-09-10).
+> 
+> Later, cd547b4 (fetch/push: readd rsync support, 2007-10-01) attempted to
+> resurrect some rsync support (b888d61 lost rsync support completely for
+> git-fetch), but introduced these lines in transport.c:
+> 
+> 	/* NEEDSWORK: handle one level of alternates */
+> 	result = run_command(&rsync);
+
+Indeed... And I know who's responsible for those lines.
+
+However, I am swamped with work these days, and my Git time budget was 
+_way_ overspent what with the recent patches.
+
+So whoever would like to give it a go, go wild.
+
+This is actually a very fine opportunity for people to get involved who 
+always wanted to; it is a relatively low-hanging fruit.
+
+It should just be a matter of getting objects/info/alternates (one can 
+easily reuse a large part of the args[] array filled before the quoted 
+code) into a temporary file.
+
+If that does not succeed, return 0, otherwise fetch those objects, too 
+(again reusing most of the args[] array).
+
+It is that easy because objects as well as packs are immutable, so we can 
+just build the union of objects/packs from the remote and its alternate.
+
+Then all which is left to do is to add a test case to t/t5510-fetch.sh, 
+and you're set.
+
+As there are already test cases for rsync:// in it, it should be as simple 
+as putting an empty file into a newly created directory, create an 
+alternate for the "remote" pointing to the directory, fetching, and 
+testing that the empty file was copied.
+
+That's possible because rsync:// is dumb and does not verify the files it 
+copied.
+
+Oh, and don't forget to remove the NEEDSWORK comment :-)
+
+And now I'm curious who's up for it...
+
+Ciao,
+Dscho
