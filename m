@@ -1,130 +1,98 @@
-From: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
-Subject: [StGit] import --mail/--mbox question
-Date: Thu, 15 Jan 2009 00:35:50 +0900
-Message-ID: <496E0656.2090705@ruby.dti.ne.jp>
+From: "Sverre Rabbelier" <srabbelier@gmail.com>
+Subject: Re: [PATCH 3/3] implement pattern matching in ce_path_match
+Date: Wed, 14 Jan 2009 16:55:45 +0100
+Message-ID: <bd6139dc0901140755n7e8cbf6eu7cf91279be463501@mail.gmail.com>
+References: <1231944876-29930-1-git-send-email-drizzd@aon.at>
+	 <1231944876-29930-2-git-send-email-drizzd@aon.at>
+	 <1231944876-29930-3-git-send-email-drizzd@aon.at>
+	 <1231944876-29930-4-git-send-email-drizzd@aon.at>
+	 <alpine.DEB.1.00.0901141641500.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 14 16:57:12 2009
+Cc: "Clemens Buchacher" <drizzd@aon.at>, git@vger.kernel.org,
+	"Junio C Hamano" <gitster@pobox.com>,
+	johannes@familieschneider.info
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 14 16:57:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN867-0007Lm-Sd
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 16:56:04 +0100
+	id 1LN87D-00085Z-E6
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 16:57:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754882AbZANPyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 10:54:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753994AbZANPyc
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 10:54:32 -0500
-Received: from smtp13.dti.ne.jp ([202.216.231.188]:34275 "EHLO
-	smtp13.dti.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754526AbZANPyb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 10:54:31 -0500
-X-Greylist: delayed 1119 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Jan 2009 10:54:30 EST
-Received: from shinya-kuribayashis-macbook.local (PPPa2728.tokyo-ip.dti.ne.jp [61.195.15.228]) by smtp13.dti.ne.jp (3.11s) with ESMTP AUTH id n0EFZoih028642 for <git@vger.kernel.org>; Thu, 15 Jan 2009 00:35:50 +0900 (JST)
-User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
+	id S1763590AbZANPzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 10:55:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763577AbZANPzs
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 10:55:48 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:43033 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753213AbZANPzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 10:55:47 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so247379yxm.1
+        for <git@vger.kernel.org>; Wed, 14 Jan 2009 07:55:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=XHY1bzItnlhQnq8O70gNiWQZbxCMsbHyPFXTq1OHf0E=;
+        b=WOBf95IbuIdW0uYIiP/StLWjtyCVlpKc5OXbLraBI25M/y+xa9jlUixSqzY/BJgRnK
+         23xTXeXT25Coh1xk/CeFPXS3SCmgkBGOIuuPrYA/Kja1qgpaM9+xVP0qbHxNOQYCZQ8P
+         FVF7CsqeHiAXwcQWCeNGBKdcfiey+epbuIyGQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=H7eGJ2L/Z7KNOzHATpXHpL+wOAbps7vDPmMz5pxVWgRE91fsL74YzThayIHIPpK2Gk
+         rli+kjMLWx0Qn38MYgXZ8Z2qtXpgCDLouCGxgzxr2Sx+21oo8O0iVb8dOeTVQUvo+xzb
+         FLxHgziXALTjYQ64W+TFleEYuTSLXd1Jf49VI=
+Received: by 10.150.146.14 with SMTP id t14mr2096938ybd.137.1231948545491;
+        Wed, 14 Jan 2009 07:55:45 -0800 (PST)
+Received: by 10.150.198.12 with HTTP; Wed, 14 Jan 2009 07:55:45 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0901141641500.3586@pacific.mpi-cbg.de>
+Content-Disposition: inline
+X-Google-Sender-Auth: 17d01719bb0a05a5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105648>
 
-Hi,
+On Wed, Jan 14, 2009 at 16:44, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> +static int has_special(const char *p)
+>> +{
+>> +     int x;
+>> +
+>> +     while ((x = *p++) != '\0')
+>> +             if (isspecial(x))
+>> +                     return 1;
+>> +
+>> +     return 0;
+>> +}
+>
+> I would prefer something like this:
+>
+>        static int has_special(const char *p)
+>        {
+>                while (*p)
+>                        if (isspecial(*(p++)))
+>                                return 1;
+>                return 0;
+>        }
+>
+> but that is probably a matter of taste.
 
-I've been wondering this for quite some time, now try to sort out.
+FWIW, I think the above is a lot less readable due to the assignment
+in the while loop's conditional. Whereas in Dscho's version it is
+intuitively obvious what the termination condition of the while loop
+is.
 
----
+-- 
+Cheers,
 
-Question: when importing Mozilla Thunderbird mails (eml or mbox), the
-imported patch always have committer's date in git log, not submitter's
-date.  However, if importing the same mails with git am, we could see
-submitter's date in git log.
-
-Is this intentionally-designed log management of StGit?  I would expect
-the submitter's date & locale is kept when importing patches from
-e-mails.
-
-Reproducible: Always
-
-Steps to Reproduce:
-
-1. Prepare eml or mbox file.
-
-  [Thunderbird eml file]
-   - Select a mail,
-   - File -> Save as -> File, 
-   - Format -> Mail files
-
-  [mbox file]
-   - use add-ons, such as ImportExportTools(MboxImport)
-   - extract directly from profile/ dir
-
-2. Import eml/mbox file with --mail/--mbox option
-
-  $ stg import --mail [eml file]
-  $ stg import --mbox [mbox file]
-
-3. Check git log
-
-Example:
-
-  Mbox header (this mbox contains one patch)
-  ------------------------------------------
-  From - Wed Jan  7 00:41:57 2009
-  X-Account-Key: account3
-  X-UIDL: 6d997fc0c53b4541c56eeeeb45732171
-  X-Mozilla-Status: 0001
-  X-Mozilla-Status2: 00000000
-  X-Mozilla-Keys:                                                                                 X-DTI-Virus-Check: checked
-  X-DTI-Recipient: <skuribay@ruby.dti.ne.jp>
-  Return-Path: <sr@denx.de>
-  Received: from moutng.kundenserver.de (moutng.kundenserver.de [212.227.126.188]) by pop.ruby.dti.ne.jp (3.10p) with ESMTP id n06AZr2v009835 for <skuribay@ruby.dti.ne.jp>; Tue, 6 Jan 2009 19:35:53 +0900 (JST)
-  Received: from localhost.localdomain (p5B2A461A.dip.t-dialin.net [91.42.70.26])
-          by mrelayeu.kundenserver.de (node=mrelayeu1) with ESMTP (Nemesis)
-          id 0MKwpI-1LK9Hn0ym1-0002Ja; Tue, 06 Jan 2009 11:35:51 +0100
-  From: Stefan Roese <sr@denx.de>
-  To: u-boot@lists.denx.de
-  Cc: skuribay@ruby.dti.ne.jp
-  Subject: [PATCH 1/3 v2] MIPS: Add VCT board series support (Part 1/3)
-  Date: Tue,  6 Jan 2009 11:35:46 +0100
-  Message-Id: <1231238146-2813-1-git-send-email-sr@denx.de>
-  X-Mailer: git-send-email 1.6.1
-  X-Provags-ID: V01U2FsdGVkX19dTpfkGdmBDPbfKKBfEQYFLGbts7teQcJyLTZ
-   xUdZWxGujKNfCpOIRv/s7i7nrf13E4zGP6P0nibSP6yFfDLBv3
-   0qZDbTBuPI1ViEQrnIGZCASl9Z6H8em
-
-  This patch adds support for the Micronas VCT board series.
-  Currently the following platforms are supported:
-  :
-  :
-
-  Resulting git log
-  -----------------
-  commit b659910dd0d75220c3cdbd3408a5025340e6a562
-  Author: Stefan Roese <sr@denx.de>
-  Date:   Thu Jan 15 00:06:27 2009 +0900 <-- this is my date & locale(JP)
-
-      MIPS: Add VCT board series support (Part 1/3)
-
-      This patch adds support for the Micronas VCT board series.
-      Currently the following platforms are supported:
-
-        vct_premium
-        vct_premium_small
-        vct_premium_onenan
-  :
-  :
-
-Version:
-
-  Stacked GIT 0.14.3.327.ge4f6.dirty
-  git version 1.5.4.3
-  Python version 2.5.2 (r252:60911, Jul 31 2008, 17:28:52) 
-  [GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)]
-
-
-Thanks in advance,
-
-  Shinya
+Sverre Rabbelier
