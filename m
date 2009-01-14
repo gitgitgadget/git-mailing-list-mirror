@@ -1,88 +1,112 @@
 From: Jan Engelhardt <jengelh@medozas.de>
-Subject: [PATCH 2/3] git-daemon: use getnameinfo to resolve hostname
-Date: Wed, 14 Jan 2009 11:48:38 +0100 (CET)
-Message-ID: <alpine.LSU.2.00.0901141148130.16109@fbirervta.pbzchgretzou.qr>
-References: <alpine.LSU.2.00.0901141147120.16109@fbirervta.pbzchgretzou.qr>
+Subject: [PATCH 3/3] git-daemon: vhost support
+Date: Wed, 14 Jan 2009 11:49:05 +0100 (CET)
+Message-ID: <alpine.LSU.2.00.0901141148390.16109@fbirervta.pbzchgretzou.qr>
+References: <alpine.LSU.2.00.0901141147120.16109@fbirervta.pbzchgretzou.qr> <alpine.LSU.2.00.0901141148130.16109@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 14 11:50:04 2009
+X-From: git-owner@vger.kernel.org Wed Jan 14 11:50:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN3Jz-0001yP-Jq
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 11:50:04 +0100
+	id 1LN3Kp-0002IQ-5e
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 11:50:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758719AbZANKsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 05:48:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758641AbZANKsk
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 05:48:40 -0500
-Received: from sovereign.computergmbh.de ([85.214.69.204]:59906 "EHLO
+	id S1753553AbZANKtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 05:49:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755099AbZANKtI
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 05:49:08 -0500
+Received: from sovereign.computergmbh.de ([85.214.69.204]:59912 "EHLO
 	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758585AbZANKsj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 05:48:39 -0500
+	with ESMTP id S1754183AbZANKtG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 05:49:06 -0500
 Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
-	id 2A54A1812F9E3; Wed, 14 Jan 2009 11:48:38 +0100 (CET)
+	id 190C21812F9E3; Wed, 14 Jan 2009 11:49:05 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by sovereign.computergmbh.de (Postfix) with ESMTP id 297651CBDECE0
-	for <git@vger.kernel.org>; Wed, 14 Jan 2009 11:48:38 +0100 (CET)
-In-Reply-To: <alpine.LSU.2.00.0901141147120.16109@fbirervta.pbzchgretzou.qr>
+	by sovereign.computergmbh.de (Postfix) with ESMTP id 181191CBDECE0
+	for <git@vger.kernel.org>; Wed, 14 Jan 2009 11:49:05 +0100 (CET)
+In-Reply-To: <alpine.LSU.2.00.0901141148130.16109@fbirervta.pbzchgretzou.qr>
 User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105615>
 
 
 parent v1.6.1
 
-git-daemon: use getnameinfo to resolve hostname
+git-daemon: support vhosts
 
-This is much shorter than inet_ntop'ing, and also translated
-unresolvable addresses into a string.
+Since git clients usually send the target hostname in the request
+similar to the "Host:" HTTP header, one can do virtual hosting.
 
 Signed-off-by: Jan Engelhardt <jengelh@medozas.de>
 
 ---
- daemon.c |   26 +++++++-------------------
- 1 file changed, 7 insertions(+), 19 deletions(-)
+ daemon.c |   22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
 Index: git-1.6.1/daemon.c
 ===================================================================
 --- git-1.6.1.orig/daemon.c
 +++ git-1.6.1/daemon.c
-@@ -512,25 +512,13 @@ static int execute(struct sockaddr *addr
- 	int pktlen, len, i;
+@@ -2,6 +2,7 @@
+ #include "pkt-line.h"
+ #include "exec_cmd.h"
  
- 	if (addr) {
--		int port = -1;
--
--		if (addr->sa_family == AF_INET) {
--			struct sockaddr_in *sin_addr = (void *) addr;
--			inet_ntop(addr->sa_family, &sin_addr->sin_addr, addrbuf, sizeof(addrbuf));
--			port = ntohs(sin_addr->sin_port);
--#ifndef NO_IPV6
--		} else if (addr && addr->sa_family == AF_INET6) {
--			struct sockaddr_in6 *sin6_addr = (void *) addr;
--
--			char *buf = addrbuf;
--			*buf++ = '['; *buf = '\0'; /* stpcpy() is cool */
--			inet_ntop(AF_INET6, &sin6_addr->sin6_addr, buf, sizeof(addrbuf) - 1);
--			strcat(buf, "]");
--
--			port = ntohs(sin6_addr->sin6_port);
--#endif
--		}
--		setenv("REMOTE_ADDR", addrbuf, 1);
-+		i = getnameinfo(addr, (addr->sa_family == AF_INET6) ?
-+		    sizeof(struct sockaddr_in6) : sizeof(struct sockaddr_in),
-+		    addrbuf, sizeof(addrbuf), NULL, 0, 0);
-+		if (i == 0)
-+			setenv("REMOTE_ADDR", addrbuf, 1);
-+		else
-+			unsetenv("REMOTE_ADDR");
++#include <stdbool.h>
+ #include <syslog.h>
+ 
+ #ifndef HOST_NAME_MAX
+@@ -21,7 +22,7 @@ static const char daemon_usage[] =
+ "           [--timeout=n] [--init-timeout=n] [--max-connections=n]\n"
+ "           [--strict-paths] [--base-path=path] [--base-path-relaxed]\n"
+ "           [--user-path | --user-path=path]\n"
+-"           [--interpolated-path=path]\n"
++"           [--interpolated-path=path] [--vhost]\n"
+ "           [--reuseaddr] [--detach] [--pid-file=file]\n"
+ "           [--[enable|disable|allow-override|forbid-override]=service]\n"
+ "           [--inetd | [--listen=host_or_ipaddr] [--port=n]\n"
+@@ -36,6 +37,7 @@ static int strict_paths;
+ static int export_all_trees;
+ 
+ /* Take all paths relative to this one if non-NULL */
++static bool enable_vhosting;
+ static char *base_path;
+ static char *interpolated_path;
+ static int base_path_relaxed;
+@@ -309,8 +311,18 @@ static int run_service(char *dir, struct
+ 		return -1;
  	}
- 	else {
- 		unsetenv("REMOTE_ADDR");
+ 
+-	if (!(path = path_ok(dir)))
+-		return -1;
++	if (enable_vhosting) {
++		char vdir[256];
++
++		if (avoid_alias(dir) != 0)
++			return -1;
++		snprintf(vdir, sizeof(vdir), "/%s%s", hostname, dir);
++		if ((path = path_ok(vdir)) == NULL)
++			return -1;
++	} else {
++		if ((path = path_ok(dir)) == NULL)
++			return -1;
++	}
+ 
+ 	/*
+ 	 * Security on the cheap.
+@@ -1046,6 +1058,10 @@ int main(int argc, char **argv)
+ 			make_service_overridable(arg + 18, 0);
+ 			continue;
+ 		}
++		if (strcmp(arg, "--vhost") == 0) {
++			enable_vhosting = true;
++			continue;
++		}
+ 		if (!strcmp(arg, "--")) {
+ 			ok_paths = &argv[i+1];
+ 			break;
