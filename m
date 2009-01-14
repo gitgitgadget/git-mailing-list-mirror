@@ -1,67 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: jgit merge question
-Date: Wed, 14 Jan 2009 11:26:26 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901141124460.3586@pacific.mpi-cbg.de>
-References: <S1760244AbZANHqN/20090114074613Z+1959@vger.kernel.org> <4EDE3D74-CEA3-473C-ADD1-03B79AAB9EDF@asu.edu>
+From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
+Subject: Re: [PATCH] Noted that vi is the final choice of editor in git
+	help commit
+Date: Wed, 14 Jan 2009 10:55:12 +0100
+Message-ID: <20090114095512.GA29927@chistera.yi.org>
+References: <1231886016-31675-1-git-send-email-cfratrik@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: David Birchfield <dbirchfield@asu.edu>
-X-From: git-owner@vger.kernel.org Wed Jan 14 11:27:12 2009
+To: Craig Fratrik <cfratrik@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 14 11:30:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN2xr-0002ro-F3
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 11:27:11 +0100
+	id 1LN30w-0003qC-Tm
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 11:30:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754845AbZANKZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 05:25:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754740AbZANKZh
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 05:25:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54559 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752615AbZANKZg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 05:25:36 -0500
-Received: (qmail invoked by alias); 14 Jan 2009 10:25:34 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp033) with SMTP; 14 Jan 2009 11:25:34 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Br08blUABv8Xzh6sEIfnDN4gLLp9PmcqYQtLDgT
-	MhjZ3xtiPH6RQz
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <4EDE3D74-CEA3-473C-ADD1-03B79AAB9EDF@asu.edu>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1754584AbZANK27 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jan 2009 05:28:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754207AbZANK27
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 05:28:59 -0500
+Received: from tarrio.org ([70.85.129.80]:34066 "EHLO maestro.tarrio.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752563AbZANK26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 05:28:58 -0500
+X-Greylist: delayed 2023 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Jan 2009 05:28:58 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by maestro.tarrio.org (Postfix) with ESMTP id F2C08DD604;
+	Wed, 14 Jan 2009 10:55:13 +0100 (CET)
+X-Virus-Scanned: amavisd-new at maestro.tarrio.org
+Received: from maestro.tarrio.org ([127.0.0.1])
+	by localhost (maestro.tarrio.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CB1y2AJ6YLXu; Wed, 14 Jan 2009 10:55:13 +0100 (CET)
+Received: from chistera.yi.org (localhost.localdomain [127.0.0.1])
+	by maestro.tarrio.org (Postfix) with ESMTP id E253FDD603;
+	Wed, 14 Jan 2009 10:55:12 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LN2Su-0007qo-8m; Wed, 14 Jan 2009 10:55:12 +0100
+Content-Disposition: inline
+In-Reply-To: <1231886016-31675-1-git-send-email-cfratrik@gmail.com>
+X-No-CC: Please respect my Mail-Followup-To header
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105611>
 
-Hi,
+* Craig Fratrik [Tue, 13 Jan 2009 14:33:36 -0800]:
 
-On Wed, 14 Jan 2009, David Birchfield wrote:
+>  The editor used to edit the commit log message will be chosen from t=
+he
+>  GIT_EDITOR environment variable, the core.editor configuration varia=
+ble, the
+> -VISUAL environment variable, or the EDITOR environment variable (in =
+that
+> -order).
+> +VISUAL environment variable, the EDITOR environment variable, or fin=
+ally 'vi'
+> +(in that order).
 
-> I have been working with the JGit library and with the pgm files and 
-> other documentation I have been able to implement most of the basic 
-> functions that I need for my testing application - including fetch.  
-> This is great!  However, I have not been able to successfully implement 
-> the merge function with JGit. There is some reference to this in the 
-> mail archive, but I cannot find any of the merge code that is referenced 
-> in the distribution.
+May I suggest:
 
-You mean
+   The editor used to edit the commit log message will be chosen from t=
+he
+   GIT_EDITOR environment variable, the core.editor configuration varia=
+ble, the
+   VISUAL environment variable, or the EDITOR environment variable (in =
+that
+  -order).
+  +order). If none of those are set, "vi" will be used.
 
-http://thread.gmane.org/gmane.comp.version-control.git/100524/focus=100589
-
-?
-
-Yes, it has not been implemented, basically because it needs a diff 
-implementation, and I constantly run out of time working on it.  I have 
-something that works, but needs lots of improvements to be usable 
-(basically, it has to avoid deep recursion depths).
-
-Ciao,
-Dscho
+--=20
+Adeodato Sim=C3=B3                                     dato at net.com.=
+org.es
+Debian Developer                                  adeodato at debian.or=
+g
+=20
+A lie can go round the world before the truth has got its boots on.
+                -- Terry Pratchett
