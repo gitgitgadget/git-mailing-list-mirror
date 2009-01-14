@@ -1,112 +1,79 @@
-From: Jan Engelhardt <jengelh@medozas.de>
-Subject: [PATCH 3/3] git-daemon: vhost support
-Date: Wed, 14 Jan 2009 11:49:05 +0100 (CET)
-Message-ID: <alpine.LSU.2.00.0901141148390.16109@fbirervta.pbzchgretzou.qr>
-References: <alpine.LSU.2.00.0901141147120.16109@fbirervta.pbzchgretzou.qr> <alpine.LSU.2.00.0901141148130.16109@fbirervta.pbzchgretzou.qr>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] Noted that vi is the final choice of editor in git  
+ help commit
+Date: Wed, 14 Jan 2009 12:14:26 +0100
+Message-ID: <496DC912.1070908@drmicha.warpmail.net>
+References: <1231886016-31675-1-git-send-email-cfratrik@gmail.com> <20090114095512.GA29927@chistera.yi.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 14 11:50:56 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Craig Fratrik <cfratrik@gmail.com>, git@vger.kernel.org
+To: =?UTF-8?B?QWRlb2RhdG8gU2ltw7M=?= <dato@net.com.org.es>
+X-From: git-owner@vger.kernel.org Wed Jan 14 12:16:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN3Kp-0002IQ-5e
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 11:50:55 +0100
+	id 1LN3j1-0002fH-40
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 12:15:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753553AbZANKtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 05:49:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755099AbZANKtI
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 05:49:08 -0500
-Received: from sovereign.computergmbh.de ([85.214.69.204]:59912 "EHLO
-	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754183AbZANKtG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 05:49:06 -0500
-Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
-	id 190C21812F9E3; Wed, 14 Jan 2009 11:49:05 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by sovereign.computergmbh.de (Postfix) with ESMTP id 181191CBDECE0
-	for <git@vger.kernel.org>; Wed, 14 Jan 2009 11:49:05 +0100 (CET)
-In-Reply-To: <alpine.LSU.2.00.0901141148130.16109@fbirervta.pbzchgretzou.qr>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1753621AbZANLOa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jan 2009 06:14:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753364AbZANLOa
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 06:14:30 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43150 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753338AbZANLO3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2009 06:14:29 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 8A5D0211889;
+	Wed, 14 Jan 2009 06:14:28 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 14 Jan 2009 06:14:28 -0500
+X-Sasl-enc: iE8VBDk5faiUo2fqfhulEcwcAYmv5M901ZDCEefRmGmQ 1231931668
+Received: from [139.174.44.34] (pascal.math.tu-clausthal.de [139.174.44.34])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C02522B678;
+	Wed, 14 Jan 2009 06:14:27 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
+In-Reply-To: <20090114095512.GA29927@chistera.yi.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105616>
 
+Adeodato Sim=C3=B3 venit, vidit, dixit 14.01.2009 10:55:
+> * Craig Fratrik [Tue, 13 Jan 2009 14:33:36 -0800]:
+>=20
+>>  The editor used to edit the commit log message will be chosen from =
+the
+>>  GIT_EDITOR environment variable, the core.editor configuration vari=
+able, the
+>> -VISUAL environment variable, or the EDITOR environment variable (in=
+ that
+>> -order).
+>> +VISUAL environment variable, the EDITOR environment variable, or fi=
+nally 'vi'
+>> +(in that order).
+>=20
+> May I suggest:
+>=20
+>    The editor used to edit the commit log message will be chosen from=
+ the
+>    GIT_EDITOR environment variable, the core.editor configuration var=
+iable, the
+>    VISUAL environment variable, or the EDITOR environment variable (i=
+n that
+>   -order).
+>   +order). If none of those are set, "vi" will be used.
+>=20
 
-parent v1.6.1
++order). If none of those are set, "vi" will be used unless TERM is
++unset or set to "dumb".
 
-git-daemon: support vhosts
+There is also some special parsing of the value but I don't think it
+needs to be advertised. The terminal-less case, on the other hand, may
+be relevant for scripters and ssh'ers.
 
-Since git clients usually send the target hostname in the request
-similar to the "Host:" HTTP header, one can do virtual hosting.
-
-Signed-off-by: Jan Engelhardt <jengelh@medozas.de>
-
----
- daemon.c |   22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
-
-Index: git-1.6.1/daemon.c
-===================================================================
---- git-1.6.1.orig/daemon.c
-+++ git-1.6.1/daemon.c
-@@ -2,6 +2,7 @@
- #include "pkt-line.h"
- #include "exec_cmd.h"
- 
-+#include <stdbool.h>
- #include <syslog.h>
- 
- #ifndef HOST_NAME_MAX
-@@ -21,7 +22,7 @@ static const char daemon_usage[] =
- "           [--timeout=n] [--init-timeout=n] [--max-connections=n]\n"
- "           [--strict-paths] [--base-path=path] [--base-path-relaxed]\n"
- "           [--user-path | --user-path=path]\n"
--"           [--interpolated-path=path]\n"
-+"           [--interpolated-path=path] [--vhost]\n"
- "           [--reuseaddr] [--detach] [--pid-file=file]\n"
- "           [--[enable|disable|allow-override|forbid-override]=service]\n"
- "           [--inetd | [--listen=host_or_ipaddr] [--port=n]\n"
-@@ -36,6 +37,7 @@ static int strict_paths;
- static int export_all_trees;
- 
- /* Take all paths relative to this one if non-NULL */
-+static bool enable_vhosting;
- static char *base_path;
- static char *interpolated_path;
- static int base_path_relaxed;
-@@ -309,8 +311,18 @@ static int run_service(char *dir, struct
- 		return -1;
- 	}
- 
--	if (!(path = path_ok(dir)))
--		return -1;
-+	if (enable_vhosting) {
-+		char vdir[256];
-+
-+		if (avoid_alias(dir) != 0)
-+			return -1;
-+		snprintf(vdir, sizeof(vdir), "/%s%s", hostname, dir);
-+		if ((path = path_ok(vdir)) == NULL)
-+			return -1;
-+	} else {
-+		if ((path = path_ok(dir)) == NULL)
-+			return -1;
-+	}
- 
- 	/*
- 	 * Security on the cheap.
-@@ -1046,6 +1058,10 @@ int main(int argc, char **argv)
- 			make_service_overridable(arg + 18, 0);
- 			continue;
- 		}
-+		if (strcmp(arg, "--vhost") == 0) {
-+			enable_vhosting = true;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--")) {
- 			ok_paths = &argv[i+1];
- 			break;
+Cheers,
+Michael
