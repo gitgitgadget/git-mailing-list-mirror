@@ -1,91 +1,102 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: git merge and cherry-pick and duplicated commits?
-Date: Wed, 14 Jan 2009 14:47:03 +0100
-Message-ID: <81b0412b0901140547u2fbd2feh89fc80f64b9bab81@mail.gmail.com>
-References: <2729632a0901131840v5c7ce0c7l3f87c03caabf68de@mail.gmail.com>
-	 <5EA96780-EF4C-4B31-9C60-6ABAF21663FA@silverinsanity.com>
-	 <2729632a0901132221r746144a1y9628615be1c6ad04@mail.gmail.com>
-	 <200901140941.17110.trast@student.ethz.ch>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [RFC/PATCH] gitweb: Fix nested links problem with ref markers
+Date: Wed, 14 Jan 2009 08:52:03 -0500
+Message-ID: <cb7bb73a0901140552k6de6f48udd77205b918f30@mail.gmail.com>
+References: <200901120215.13668.jnareb@gmail.com>
+	 <200901140117.38803.jnareb@gmail.com>
+	 <cb7bb73a0901131956s7f441c38o3a0b1e5f456a3cd3@mail.gmail.com>
+	 <200901141139.42263.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: skillzero@gmail.com, git@vger.kernel.org
-To: "Thomas Rast" <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Jan 14 14:49:22 2009
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 14 14:53:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN66f-0001Qb-4I
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 14:48:29 +0100
+	id 1LN6BY-0003fU-PX
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 14:53:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756267AbZANNrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 08:47:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754891AbZANNrH
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 08:47:07 -0500
-Received: from rv-out-0506.google.com ([209.85.198.232]:37813 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754404AbZANNrD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 08:47:03 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so533978rvb.1
-        for <git@vger.kernel.org>; Wed, 14 Jan 2009 05:47:03 -0800 (PST)
+	id S1756873AbZANNwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 08:52:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755289AbZANNwI
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 08:52:08 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:49771 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754891AbZANNwG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 08:52:06 -0500
+Received: by bwz14 with SMTP id 14so1767022bwz.13
+        for <git@vger.kernel.org>; Wed, 14 Jan 2009 05:52:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
          :subject:cc:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:references;
-        bh=+27iOM+lO5xVAYIMnZJBVydHtJAnb6IEGWsJGjDHTf4=;
-        b=Lt02mDfmFodd0v9whbiUrkA9oj9O5Qp4KERmyadGuxHALAbZe+0MtX4HtJ5YbK2R4W
-         Gb5U21ZVSnAxLYu/DVX9+GKLD5lt+qTbdVhc6xxAQttQx4e09sLUALz6MF1Ot4d2hFA3
-         a/zCZTcWEwYBSAE+sHj1J46XMWlwuD3HjSq4A=
+        bh=OcZa0qsJHwCb3t5t2df0T5le5yuhqWBhTqkrbHzg1aw=;
+        b=A/4/ziAY+VWUPpqoQC0MB4U3nAFXt5oQvMqQ+Ofi5bqRpNeG2wcwEYUwGZhOh99yvQ
+         WJVTZ9Bw+EMXPyByTrg9B2paMxSTC4YkXL2nh+/0RK3T7oBLax2BIssOm6NTJf3qgVdX
+         epneHitrNp2KzYB3feom76pdSAA9e612eUqd0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
          :content-type:content-transfer-encoding:content-disposition
          :references;
-        b=rmgfUMcxLc9zgLA5cPM6n5QyfIsQI41tHiG/j6suldpK9nQVoFteBfEYOfhrMPS04R
-         ehjbRuo6fje0N+E05tHkiS7MuuyA+dOvluz6f1oZANqXO92pdJ0ZPd61lEBxQd8jx/6H
-         +49Ks01qX/0IxP6ckdQ+/pr5hGREREvl8GWP0=
-Received: by 10.114.25.19 with SMTP id 19mr103749way.89.1231940823204;
-        Wed, 14 Jan 2009 05:47:03 -0800 (PST)
-Received: by 10.114.179.4 with HTTP; Wed, 14 Jan 2009 05:47:03 -0800 (PST)
-In-Reply-To: <200901140941.17110.trast@student.ethz.ch>
+        b=YrQ2BGaIXGFAIbqBpmtQ8ThP7HVSJRpr8V6TLWVnl1pTlpRTxL6KT6LtSX998JPpwd
+         cPmZY4xl+8izBVuw4WT0eK5tzLBmd4wqkpj/AATPMGsyzHo6tzWSC+WzpctqswpOVBgi
+         x8Zstf8T0P6pEfGNa2RWgoS1CpOUblFHOpAdc=
+Received: by 10.181.24.14 with SMTP id b14mr32515bkj.104.1231941123315;
+        Wed, 14 Jan 2009 05:52:03 -0800 (PST)
+Received: by 10.181.195.1 with HTTP; Wed, 14 Jan 2009 05:52:03 -0800 (PST)
+In-Reply-To: <200901141139.42263.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105629>
 
-2009/1/14 Thomas Rast <trast@student.ethz.ch>:
-> skillzero@gmail.com wrote:
->> That's what I was somewhat disappointed by. Even though the result of
->> the commit had a different hash, I assumed git would keep some kind of
->> internal per-commit hash so it could tell later that two commits were
->> the same and not re-apply them.
+On Wed, Jan 14, 2009 at 5:39 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Wed, 14 Jan 2009, Giuseppe Bilotta wrote:
+>> On Tue, Jan 13, 2009 at 7:17 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>>> On Tue, 13 Jan 2009, Giuseppe Bilotta wrote:
 >
-> I think there's an important misunderstanding here: merging A into B
-> does *not* have anything to do with commits, or history for that
-> matter, beyond the differences from $(git merge-base A B) to A and
-> B.[*]
+>>>> Can you provide a patch I can apply to my tree for testing to see how
+>>>> it comes up?
+>>>
+>>> Here it is. Note that CSS could be I think reduced. The size of
+>>> gitweb.perl changes is affected by changing calling convention for
+>>> git_print_header_html subroutine.
+>>
+>> It's funny, I was working on a very similar patch myself a couple of
+>> days ago, but couldn't get the horizontal filler after the link to
+>> work properly, which is why I asked on www-style.
+>>
+>> I'll test your patch and let you know.
 >
-> Along the same lines, nothing is ever re-applied during merging.
-> git-merge just figures out that you made the same change on both
-> sides, so it must have been a good change, so it must go into the end
-> result.  *How* you arrived at the same change---say, by
-> cherry-picking, or by getting the same result in that region from
-> otherwise different commits, or even from several commits---does *not*
-> matter in any way.
+> I am checking 'log' view of git repository; it should have enough
+> ref markers to test this issue.
+>
+> It works also in Konqueror 3.5.3-0.2.fc4...
+>
+>>> There is also strange artifact at least in Mozilla 1.17.2: if I hover
+>>> over ref marker, the subject (title) gets darker background. Curious...
+>>
+>> Might be some kind of bug with the capturing vs bubbling phase.
+>
+> ...but the same artifact can be seen too.  Also I am not entirely
+> pleased with the way things behave on mouseover.  It is a pity that
+> you cannot style element using CSS2.1 based on the pseudo-class :hover
+> of descendant element, or/and pseudo-class of sibling element, which
+> nevertheless overlays given element.
 
-Yes, merge only considers what bytes (aka contents of
-trees-directories and blobs-files) do the branches to be merged
-have, compares them (by comparing their hashes) and if there
-are differences tries to mix them together according to the merge
-rules described somewhere in Documentation.
+I know, I've been needing something like this in other occasion. And
+that's precisely what I was talking about for the limits of CSS, and
+why I really wonder if the illegal XHMTL but valid XML shouldn't
+rather be our option ...
 
-So this all is really just about what the branches contain, not
-how they got it. It is the conflict resolution algorithm which uses
-the history to find the best possible source blob or tree which was
-changed by conflicting branches so the "mix" can be prepared as
-close as possible to what would we do if we went looking for the
-pieces manually.
+
+
+-- 
+Giuseppe "Oblomov" Bilotta
