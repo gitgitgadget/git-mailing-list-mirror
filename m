@@ -1,82 +1,213 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: Re: [ANNOUNCE] tig-0.13
-Date: Thu, 15 Jan 2009 07:24:56 +0800
-Message-ID: <20090114232456.GA6937@b2j>
-References: <20090113233643.GA28898@diku.dk>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH] git-am: add --directory=<dir> option
+Date: Thu, 15 Jan 2009 00:46:02 +0100
+Message-ID: <20090114234602.GD32313@leksak.fem-net>
+References: <7vbpudjanf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Thu Jan 15 00:26:45 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>,
+	Simon 'corecode' Schubert <corecode@fs.ei.tum.de>,
+	Kevin Ballard <kevin@sb.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 00:47:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNF81-0006YF-QE
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 00:26:30 +0100
+	id 1LNFSY-0004mD-AM
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 00:47:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757637AbZANXZI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jan 2009 18:25:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757573AbZANXZH
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 18:25:07 -0500
-Received: from ti-out-0910.google.com ([209.85.142.184]:48382 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757200AbZANXZE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 18:25:04 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so401575tic.23
-        for <git@vger.kernel.org>; Wed, 14 Jan 2009 15:25:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mail-followup-to:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=w61hwadEKv7uCthJ8jU3cZRxHUlQzKTRF+vAoJn/khA=;
-        b=hF8wkh4EZeKSGL3/UENJG13xcN2/pF7WtLD/DWFhsIpBDhJNP8H7C2Dj9q1Ta8K1F8
-         UlOssboMtAMZFqtSeF6Lvf5VYFG4WUvKztYhI/Qs1vLCNAI8gyijR2JQwwIAdQghl1RT
-         p6q8k1NJguApkvxEs61HnMv18g/i3YpDxN218=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        b=Ca1hKKsLrUXK4G6ntudESEsZ2Tp88Y9AZtypVud3PBxPFTchITV43znNdqyPq4AV+s
-         fjn5/R8qeKG0Lxl811qiJUkHXneAB3ol2CUHQ4puukNPOq2GzWXUdakcf8aliordofVQ
-         s3QunKzj+Cks9eOQTEMSSGGgr65TYFFPFgwTQ=
-Received: by 10.110.86.3 with SMTP id j3mr794001tib.33.1231975501362;
-        Wed, 14 Jan 2009 15:25:01 -0800 (PST)
-Received: from localhost (pcd406163.netvigator.com [203.218.196.163])
-        by mx.google.com with ESMTPS id u12sm2045473tia.9.2009.01.14.15.24.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 14 Jan 2009 15:24:59 -0800 (PST)
-Mail-Followup-To: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+	id S1756825AbZANXqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 18:46:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756633AbZANXqS
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 18:46:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50970 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755662AbZANXqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 18:46:17 -0500
+Received: (qmail invoked by alias); 14 Jan 2009 23:46:16 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp033) with SMTP; 15 Jan 2009 00:46:16 +0100
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX19Yx9oqx8dY68jdR1vusAwlLWgfX8gsBmheBIYWno
+	TQOB0Hh+xQVIBC
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1LNFQw-0000kL-Ud; Thu, 15 Jan 2009 00:46:02 +0100
 Content-Disposition: inline
-In-Reply-To: <20090113233643.GA28898@diku.dk>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <7vbpudjanf.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105731>
 
-On Wed, 14 Jan 2009, Jonas Fonseca wrote:
-> Tig is an ncurses-based text-mode interface for git. It functions mai=
-nly
+Hi Junio,
 
-The Makefile does not link to the unicode version ncursesw, does it
-still work for wide characters?
+Junio C Hamano wrote:
+>
+>  git-am.sh             |   17 +++++++++++++----
+>  t/t4252-am-options.sh |    8 ++++++++
+>  2 files changed, 21 insertions(+), 4 deletions(-)
 
---=20
-regards,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
-=E5=94=90=E8=A9=A9264 =E7=8E=8B=E6=98=8C=E9=BD=A1  =E8=8A=99=E8=93=89=E6=
-=A8=93=E9=80=81=E8=BE=9B=E6=BC=B8
-    =E5=AF=92=E9=9B=A8=E9=80=A3=E6=B1=9F=E5=A4=9C=E5=85=A5=E5=90=B3  =E5=
-=B9=B3=E6=98=8E=E9=80=81=E5=AE=A2=E6=A5=9A=E5=B1=B1=E5=AD=A4  =E6=B4=9B=
-=E9=99=BD=E8=A6=AA=E5=8F=8B=E5=A6=82=E7=9B=B8=E5=95=8F  =E4=B8=80=E7=89=
-=87=E5=86=B0=E5=BF=83=E5=9C=A8=E7=8E=89=E5=A3=BA
+I think this is missing some
+
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index b9c6fac..64c8178 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -66,6 +66,7 @@ default.   You could use `--no-utf8` to override this.
+ 
+ -C<n>::
+ -p<n>::
++--directory=<root>::
+ 	These flags are passed to the 'git-apply' (see linkgit:git-apply[1])
+ 	program that applies
+ 	the patch.
+
+or even
+
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index b9c6fac..327bc3d 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -59,13 +59,10 @@ default.   You could use `--no-utf8` to override this.
+ 	it is supposed to apply to, and we have those blobs
+ 	available locally.
+ 
+---whitespace=<option>::
+-	This flag is passed to the 'git-apply' (see linkgit:git-apply[1])
+-	program that applies
+-	the patch.
+-
+ -C<n>::
+ -p<n>::
++--directory=<root>::
++--whitespace=<option>::
+ 	These flags are passed to the 'git-apply' (see linkgit:git-apply[1])
+ 	program that applies
+ 	the patch.
+
+> diff --git c/git-am.sh w/git-am.sh
+> index 4b157fe..7e6329b 100755
+> --- c/git-am.sh
+> +++ w/git-am.sh
+[...]
+> @@ -33,6 +34,14 @@ cd_to_toplevel
+>  git var GIT_COMMITTER_IDENT >/dev/null ||
+>  	die "You need to set your committer info first"
+>  
+> +sq () {
+> +	for sqarg
+> +	do
+> +		printf "%s" "$sqarg" |
+> +		sed -e 's/'\''/'\''\'\'''\''/g' -e 's/.*/ '\''&'\''/'
+                                  ^^^
+
+	$ echo "/fo'ba" | sed -e 's/'\''/'\''\'\'''\''/g' -e 's/.*/ '\''&'\''/'
+	 '/fo'''ba'
+
+
+Do I have a thinko or should it be this:
+
++		sed -e 's/'\''/'\''\\\'\'''\''/g' -e 's/.*/ '\''&'\''/'
+		                   ^^
+			(added for escaping ' outside single quotes)
+
+leading to:
+
+	$ echo "/fo'ba" | sed -e 's/'\''/'\''\\\'\'''\''/g' -e 's/.*/ '\''&'\''/'
+	 '/fo'\''ba'
+
+
+Well, I was unsure, so I've tested...
+
+
+Without this change:
+
+	$ ./git-am.sh --directory="fo'ba" /tmp/test/*
+	Applying: abcdefg
+	./git-am.sh: eval: line 471: unexpected EOF while looking for matching
+	`''
+	./git-am.sh: eval: line 472: syntax error: unexpected end of file
+	Patch failed at 0001.
+	When you have resolved this problem run "git am --resolved".
+	If you would prefer to skip this patch, instead run "git am --skip".
+	To restore the original branch and stop patching run "git am --abort".
+
+And with this change:
+
+	$ ./git-am.sh --directory="fo'ba" /tmp/test/*
+	Applying: abcdefg
+	Applying: asdgasfh
+
+> diff --git c/t/t4252-am-options.sh w/t/t4252-am-options.sh
+> index 3ab9e8e..e91a6da 100755
+> --- c/t/t4252-am-options.sh
+> +++ w/t/t4252-am-options.sh
+> @@ -50,4 +50,12 @@ test_expect_success 'interrupted am -C1 -p2' '
+>  	grep "^Three$" file-2
+>  '
+>  
+> +test_expect_success 'interrupted am --directory="frotz nitfol"' '
+> +	rm -rf .git/rebase-apply &&
+> +	git reset --hard initial &&
+> +	test_must_fail git am --directory="frotz nitfol" "$tm"/am-test-5-? &&
+
+Have you forgotten to add the files prefixed with "am-test-5-" or is this
+patch based on another one?
+
+$ git ls-files t/t4252
+t/t4252/am-test-1-1
+t/t4252/am-test-1-2
+t/t4252/am-test-2-1
+t/t4252/am-test-2-2
+t/t4252/am-test-3-1
+t/t4252/am-test-3-2
+t/t4252/am-test-4-1
+t/t4252/am-test-4-2
+t/t4252/file-1-0
+t/t4252/file-2-0
+
+
+Thanks and regards,
+  Stephan
+
+--------------- proposed interdiff without am-test-5* ---------------
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index b9c6fac..327bc3d 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -59,13 +59,10 @@ default.   You could use `--no-utf8` to override this.
+ 	it is supposed to apply to, and we have those blobs
+ 	available locally.
+ 
+---whitespace=<option>::
+-	This flag is passed to the 'git-apply' (see linkgit:git-apply[1])
+-	program that applies
+-	the patch.
+-
+ -C<n>::
+ -p<n>::
++--directory=<root>::
++--whitespace=<option>::
+ 	These flags are passed to the 'git-apply' (see linkgit:git-apply[1])
+ 	program that applies
+ 	the patch.
+diff --git a/git-am.sh b/git-am.sh
+index 7e6329b..ca3dbcd 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -38,7 +38,7 @@ sq () {
+ 	for sqarg
+ 	do
+ 		printf "%s" "$sqarg" |
+-		sed -e 's/'\''/'\''\'\'''\''/g' -e 's/.*/ '\''&'\''/'
++		sed -e 's/'\''/'\''\\\'\'''\''/g' -e 's/.*/ '\''&'\''/'
+ 	done
+ }
+ 
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
