@@ -1,65 +1,57 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: Re: [ANNOUNCE] tig-0.13
-Date: Wed, 14 Jan 2009 11:33:11 -0500
-Message-ID: <496E13C7.6080208@tedpavlic.com>
-References: <20090113233643.GA28898@diku.dk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] assertion failure in builtin-mv.c with "git mv -k"
+Date: Wed, 14 Jan 2009 11:47:43 -0500
+Message-ID: <20090114164742.GA15758@coredump.intra.peff.net>
+References: <vpqwscy81o8.fsf@bauges.imag.fr> <496DFC75.2000904@drmicha.warpmail.net> <alpine.DEB.1.00.0901141653540.3586@pacific.mpi-cbg.de> <496E0D1C.20807@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Wed Jan 14 17:34:53 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jan 14 17:49:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN8hS-00012p-CI
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 17:34:38 +0100
+	id 1LN8vT-00081r-Li
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 17:49:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761289AbZANQdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 11:33:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761156AbZANQdO
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 11:33:14 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:33100 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761008AbZANQdN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2009 11:33:13 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 26FFC80D8080;
-	Wed, 14 Jan 2009 11:27:28 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id B4ZX8okbXfas; Wed, 14 Jan 2009 11:27:28 -0500 (EST)
-Received: from tedbook.mshome.net (tedpc.ece.ohio-state.edu [164.107.164.122])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 11A8180D807E;
-	Wed, 14 Jan 2009 11:27:28 -0500 (EST)
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <20090113233643.GA28898@diku.dk>
+	id S1764529AbZANQrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 11:47:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764514AbZANQrq
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 11:47:46 -0500
+Received: from peff.net ([208.65.91.99]:46937 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764498AbZANQrp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 11:47:45 -0500
+Received: (qmail 1777 invoked by uid 107); 14 Jan 2009 16:47:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 14 Jan 2009 11:47:46 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Jan 2009 11:47:43 -0500
+Content-Disposition: inline
+In-Reply-To: <496E0D1C.20807@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105656>
 
-Thanks for this. It's a nice tool.
+On Wed, Jan 14, 2009 at 05:04:44PM +0100, Michael J Gruber wrote:
 
-> What is tig?
-> ------------
-> Tig is an ncurses-based text-mode interface for git. It functions mainly
-> as a git repository browser, but can also assist in staging changes for
-> commit at chunk level and act as a pager for output from various git
-> commands.
->
->   - Homepage:	http://jonas.nitro.dk/tig/
->   - Manual:	http://jonas.nitro.dk/tig/manual.html
->   - Tarballs:	http://jonas.nitro.dk/tig/releases/
->   - Git URL:	git://repo.or.cz/tig.git
->   - Gitweb:	http://repo.or.cz/w/tig.git
+> It was a lame attempt at getting around it, it's just one line... I
+> didn't know I've been being noticed long enough ;)
+> So, should I prepare a series like:
+> 
+> 1: test case and mark known fail
+> 2: the 1 line fix
+> 3: mark test pass
+> 
+> Or should 2+3 be squashed into one?
 
--- 
-Ted Pavlic <ted@tedpavlic.com>
+Definitely the fix and marking the test as passing should be one patch,
+since then you see that it is the fix which causes the test to pass. But
+really, for a simple fix I usually just squash it all into a single
+patch. Then somebody looking at the patch later says "Oh, this is what
+was broken, and here is how it was fixed."
 
-   Please visit my ALS association page:
-         http://web.alsa.org/goto/tedpavlic
-   My family appreciates your support in the fight to defeat ALS.
+-Peff
