@@ -1,81 +1,68 @@
-From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH] [TOPGIT] make tg remote idempotent
-Date: Wed, 14 Jan 2009 22:27:22 +0100
-Message-ID: <1231968443-13960-1-git-send-email-u.kleine-koenig@pengutronix.de>
+From: Adam Soltys <adam.soltys@pwgsc.gc.ca>
+Subject: git-svn clone -s fails to setup branches in git if the most recent svn commit was not to trunk
+Date: Wed, 14 Jan 2009 21:27:01 +0000 (UTC)
+Message-ID: <loom.20090114T211218-628@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "martin f. krafft" <madduck@debian.org>, Petr Baudis <pasky@ucw.cz>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 14 22:29:58 2009
+X-From: git-owner@vger.kernel.org Wed Jan 14 22:31:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNDIV-0001jy-UN
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 22:29:12 +0100
+	id 1LNDKn-00031c-Qb
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 22:31:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758191AbZANV1b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jan 2009 16:27:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758036AbZANV1a
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 16:27:30 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:57918 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758010AbZANV13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 16:27:29 -0500
-Received: from ukl by metis.ext.pengutronix.de with local (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LNDGm-0001iM-KQ; Wed, 14 Jan 2009 22:27:27 +0100
-X-Mailer: git-send-email 1.5.6.5
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
-	metis.extern.pengutronix.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=4.5 tests=AWL,BAYES_00,NO_RELAYS
-	shortcircuit=no autolearn=ham version=3.2.4
-X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
-X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1755764AbZANVaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 16:30:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755071AbZANVaJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 16:30:09 -0500
+Received: from main.gmane.org ([80.91.229.2]:58989 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754344AbZANVaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 16:30:08 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LNDJK-0004kI-B0
+	for git@vger.kernel.org; Wed, 14 Jan 2009 21:30:03 +0000
+Received: from thompson.library.ubc.ca ([137.82.96.26])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Jan 2009 21:30:02 +0000
+Received: from adam.soltys by thompson.library.ubc.ca with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Jan 2009 21:30:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 137.82.96.26 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5 (.NET CLR 3.5.30729))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105706>
 
-Before this patch each call to tg remote added three config entries
-no matter if they already existed.  After some time my .git/config was
-crowded.
+I ran the following command to clone from an svn repository that followed the
+standard svn folder layout and had two branches:
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
----
- tg-remote.sh |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+svn clone -s svn://path/to/my_repo
 
-diff --git a/tg-remote.sh b/tg-remote.sh
-index c3e8bd3..7f7a1b0 100644
---- a/tg-remote.sh
-+++ b/tg-remote.sh
-@@ -27,9 +27,9 @@ git config "remote.$name.url" >/dev/null || die "unkn=
-own remote '$name'"
-=20
- ## Configure the remote
-=20
--git config --add "remote.$name.fetch" "+refs/top-bases/*:refs/remotes/=
-$name/top-bases/*"
--git config --add "remote.$name.push" "+refs/top-bases/*:refs/top-bases=
-/*"
--git config --add "remote.$name.push" "+refs/heads/*:refs/heads/*"
-+git config --replace-all "remote.$name.fetch" "+refs/top-bases/*:refs/=
-remotes/$name/top-bases/*" "+refs/top-bases/*:refs/remotes/$name/top-ba=
-ses/*"
-+git config --replace-all "remote.$name.push" "+refs/top-bases/*:refs/t=
-op-bases/*" "+refs/top-bases/*:refs/top-bases/*"
-+git config --replace-all "remote.$name.push" "+refs/heads/*:refs/heads=
-/*" "+refs/heads/*:refs/heads/*"
-=20
- info "Remote $name can now follow TopGit topic branches."
- if [ -z "$populate" ]; then
---=20
-1.5.6.5
+I then typed:
+
+git branch -r
+
+Which returned:
+
+origin/HEAD
+origin/master
+
+I was expecting to see the branches and tags from the svn /branches and /tags
+folders but they did not appear.  
+
+I checked out origin/HEAD and origin/master to see what was there and I found
+they contained code from a subversion branch that was originally in the
+/branches folder.  I noticed that this particular branch was the last place
+committed to in the svn repo.  So I checked something into the /trunk of the svn
+repo, nuked the git repo, and ran the git svn clone command again.  This time it
+worked as expected and "git branch -r" showed me all my tags and branches.
