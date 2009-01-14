@@ -1,59 +1,81 @@
-From: Craig Fratrik <cfratrik@gmail.com>
-Subject: [PATCH] Noted that vi is the final choice of editor in git help commit
-Date: Tue, 13 Jan 2009 14:33:36 -0800
-Message-ID: <1231886016-31675-1-git-send-email-cfratrik@gmail.com>
-Cc: Craig Fratrik <cfratrik@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 14 06:02:59 2009
+From: bill lam <cbill.lam@gmail.com>
+Subject: .ft tag in man
+Date: Wed, 14 Jan 2009 13:21:26 +0800
+Message-ID: <20090114052126.GA6849@b2j>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 14 06:22:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMxu5-0008Ab-DA
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 06:02:57 +0100
+	id 1LMyDR-0003kK-FA
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 06:22:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750922AbZANFBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 00:01:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750781AbZANFBA
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 00:01:00 -0500
-Received: from outmail023.snc1.tfbnw.net ([69.63.178.182]:36290 "EHLO
-	fallbackmx-out.facebook.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750707AbZANFBA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2009 00:01:00 -0500
-X-Greylist: delayed 2043 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Jan 2009 00:00:59 EST
-Received: from mx-out.facebook.com ([10.18.255.177])
-	by fallbackmx-out.facebook.com [hpfallback009.snc1.facebook.com] (8.13.1/FB.fallback-1.0.0) with ESMTP id n0DMZvaP016553
-	for <git@vger.kernel.org>; Tue, 13 Jan 2009 14:35:57 -0800
-Received: from facebook.com ([10.18.255.179])
-	by mx-out.facebook.com [email012.ash1.facebook.com] (8.13.7/8.13.6) with ESMTP id n0DMXbOa008834;
-	Tue, 13 Jan 2009 14:33:37 -0800
-Received: by devrs006.snc1.facebook.com (Postfix, from userid 2001)
-	id D7BCD3B006D; Tue, 13 Jan 2009 14:33:36 -0800 (PST)
-X-Mailer: git-send-email 1.6.0.4.608.ga9645.dirty
+	id S1753703AbZANFVd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jan 2009 00:21:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753677AbZANFVd
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 00:21:33 -0500
+Received: from ti-out-0910.google.com ([209.85.142.191]:51942 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753616AbZANFVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 00:21:32 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so177877tic.23
+        for <git@vger.kernel.org>; Tue, 13 Jan 2009 21:21:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mail-followup-to:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=WhKkE18Uq2KXSyVCzxDKQAds3/tjO2B1GSimnMbmz68=;
+        b=J+rkZEa3zZN+p1qUaGlKYX8dEjlGKKIUW3eJUvqVk3aORn2j8DIMhZz0nnsyvFsnBe
+         t1Ul/sQhW+lcZnqIL7K6ZR8HC18HKNvvlV3sxVTGS5dG5IBNEox9Rdg/G/t6sNDlsrj/
+         MKLxLrASs324TYSanP7LSXFIdcxs0ojf1l3cg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mail-followup-to:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :user-agent;
+        b=B+cPeN0+jStx4WpuCfy4viPECUn7v/Lj9GABQoJWLMCWw4bciAhNvTo9VBBRrYnWEE
+         RJq1NZKikgbcoBxpo0M3eeav3blCSavyOhXeJpw6junhHKr7Gqr0YkPW9Y7QA3jB9s+q
+         M0P0coGLKKQO8vDHwNjBRFkCXfobL9v4MqbB4=
+Received: by 10.110.5.18 with SMTP id 18mr1454390tie.54.1231910490918;
+        Tue, 13 Jan 2009 21:21:30 -0800 (PST)
+Received: from localhost (n218103235067.netvigator.com [218.103.235.67])
+        by mx.google.com with ESMTPS id d4sm2783591tib.31.2009.01.13.21.21.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 13 Jan 2009 21:21:29 -0800 (PST)
+Mail-Followup-To: git <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105583>
 
----
- Documentation/git-commit.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+The diagram in man contain some .ft tag, eg inside
+PAGE=3Dless git help rebase
+it contains
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index b5d81be..1b9e7a5 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -318,8 +318,8 @@ ENVIRONMENT AND CONFIGURATION VARIABLES
- ---------------------------------------
- The editor used to edit the commit log message will be chosen from the
- GIT_EDITOR environment variable, the core.editor configuration variable, the
--VISUAL environment variable, or the EDITOR environment variable (in that
--order).
-+VISUAL environment variable, the EDITOR environment variable, or finally 'vi'
-+(in that order).
- 
- HOOKS
- -----
--- 
-1.6.0.4.608.ga9645.dirty
+           .ft C
+                     A---B---C topic
+                    /
+               D---E---F---G master
+           .ft
+
+Is that intended or just an artefact?
+
+--=20
+regards,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+=E5=94=90=E8=A9=A9244 =E6=9F=B3=E5=AE=97=E5=85=83  =E6=B1=9F=E9=9B=AA
+    =E5=8D=83=E5=B1=B1=E9=B3=A5=E9=A3=9B=E7=B5=95  =E8=90=AC=E5=BE=91=E4=
+=BA=BA=E8=B9=A4=E6=BB=85  =E5=AD=A4=E8=88=9F=E7=B0=91=E7=AC=A0=E7=BF=81=
+  =E7=8D=A8=E9=87=A3=E5=AF=92=E6=B1=9F=E9=9B=AA
