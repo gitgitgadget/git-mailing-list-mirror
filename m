@@ -1,88 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] implement pattern matching in ce_path_match
-Date: Wed, 14 Jan 2009 10:39:29 -0800
-Message-ID: <7vljtd20m6.fsf@gitster.siamese.dyndns.org>
-References: <1231944876-29930-1-git-send-email-drizzd@aon.at>
- <1231944876-29930-2-git-send-email-drizzd@aon.at>
- <1231944876-29930-3-git-send-email-drizzd@aon.at>
- <1231944876-29930-4-git-send-email-drizzd@aon.at>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH take 3 0/4] color-words improvements
+Date: Wed, 14 Jan 2009 20:54:24 +0200
+Message-ID: <87ljtdk9b3.fsf@iki.fi>
+References: <alpine.DEB.1.00.0901112057300.3586@pacific.mpi-cbg.de>
+	<alpine.DEB.1.00.0901112059340.3586@pacific.mpi-cbg.de>
+	<200901120947.13566.trast@student.ethz.ch>
+	<7vprisj26i.fsf@gitster.siamese.dyndns.org>
+	<adf1fd3d0901140500j10556a1as6370d40d766f1899@mail.gmail.com>
+	<alpine.DEB.1.00.0901141840100.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, johannes@familieschneider.info
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Wed Jan 14 19:41:17 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 14 19:56:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNAg0-0005zA-Gu
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 19:41:16 +0100
+	id 1LNAuS-0003tE-J3
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 19:56:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753537AbZANSji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 13:39:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752994AbZANSji
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 13:39:38 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33204 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753316AbZANSjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 13:39:37 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4E24090742;
-	Wed, 14 Jan 2009 13:39:35 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 41FB290740; Wed,
- 14 Jan 2009 13:39:31 -0500 (EST)
-In-Reply-To: <1231944876-29930-4-git-send-email-drizzd@aon.at> (Clemens
- Buchacher's message of "Wed, 14 Jan 2009 15:54:36 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B0E34996-E26A-11DD-BABF-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753588AbZANSyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 13:54:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753585AbZANSyq
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 13:54:46 -0500
+Received: from mta-out.inet.fi ([195.156.147.13]:55197 "EHLO jenni2.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753560AbZANSyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 13:54:45 -0500
+Received: from mithlond.arda.local (80.220.180.181) by jenni2.inet.fi (8.5.014)
+        id 48FC5A8803BCA981; Wed, 14 Jan 2009 20:54:27 +0200
+Received: from dtw by mithlond.arda.local with local (Exim 4.69)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1LNAsi-0000gU-Tz; Wed, 14 Jan 2009 20:54:24 +0200
+In-Reply-To: <alpine.DEB.1.00.0901141840100.3586@pacific.mpi-cbg.de> (Johannes Schindelin's message of "Wed\, 14 Jan 2009 18\:49\:31 +0100 \(CET\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105680>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Johannes Schindelin (2009-01-14 18:49 +0100) wrote:
 
-> With this patch ce_path_match uses match_pathspec in order to perform
-> pattern matching.
+> Can anybody think of undesired behavior as a consequence?
+>
+> Johannes Schindelin (4):
+>   Add color_fwrite_lines(), a function coloring each line individually
+>   color-words: refactor word splitting and use ALLOC_GROW()
+>   color-words: change algorithm to allow for 0-character word
+>     boundaries
+>   color-words: take an optional regular expression describing words
 
-We have two conflicting definitions of pattern matching in our system.
-I'd make it more explicit which kind of pattern matching you are talking
-about here.
+There is something I don't understand. Maybe it's a bug or maybe it's my
+limitation. I'd appreciate if you care to explain the reason of the
+following output. Suppose we have two files and the line diff looks like
+this:
 
-The family of operations based on the diff-tree machinery (e.g. path
-limited revision walking "git log A..B -- dir1/dir2") define the pattern
-matching as "leading path match (exact match is just a special case of
-this)".  Other operations that work on paths in the work tree and the
-index (e.g. grep, ls-files) uses "leading path match, but fall back to
-globbing".
+    --- 1/a
+    +++ 2/b
+    @@ -1 +1 @@
+    -aaa (aaa)
+    +aaa (aaa) aaa
 
-In the longer term we really should unify them by teaching the former to
-fall back to globbing without getting undue performance hit, and this
-patch may be a step in the right direction.  There are optimizations that
-assume the "leading path" semantics to trim the input early and avoid
-opening and descending into a tree object if pathspec patterns cannot
-possibly match (see tree-diff.c::tree_entry_interesting() for an example),
-and we need to teach them to notice a glob wildcard in an earlier part of
-a pathspec and to descend into some trees that they would have skipped
-with the old definition of pathspec.
+With --color-diff=a+ it looks like 
 
-> @@ -49,7 +60,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
->  		rev->always_show_header = 0;
->  	if (DIFF_OPT_TST(&rev->diffopt, FOLLOW_RENAMES)) {
->  		rev->always_show_header = 0;
-> -		if (rev->diffopt.nr_paths != 1)
-> +		if (rev->diffopt.nr_paths != 1 || has_special(rev->diffopt.paths[0]))
->  			usage("git logs can only follow renames on one pathname at a time");
->  	}
+    aaa (aaa)aaa) aaa
+         ^^^^~~~~ ~~~
 
-The reason match_pathspec() first tries exact match and then falls back to
-globbing is so that the user can say "I have a file whose name ends with a
-question mark, please match it literally."  This patch defeats it, but it
-probably is a minor point.
+^ = red, ~ = green
 
-1/3 and 2/3 in the series looked good.
-
-Thanks.
+Why show changes in the "aaa)" part when it didn't actually change?
