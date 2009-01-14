@@ -1,111 +1,108 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: ETA for release of gjit 0.4?
-Date: Wed, 14 Jan 2009 04:14:35 +0100
-Message-ID: <20090114031435.GA31274@diku.dk>
-References: <49393BFC.6010606@wellfleetsoftware.com> <493D4CDB.2010100@wellfleetsoftware.com> <4946DFBB.6030300@wellfleetsoftware.com> <200812160517.33975.robin.rosenberg.lists@dewire.com>
+From: "Giuseppe Bilotta" <giuseppe.bilotta@gmail.com>
+Subject: Re: [RFC/PATCH] gitweb: Fix nested links problem with ref markers
+Date: Tue, 13 Jan 2009 22:56:28 -0500
+Message-ID: <cb7bb73a0901131956s7f441c38o3a0b1e5f456a3cd3@mail.gmail.com>
+References: <200901120215.13668.jnareb@gmail.com>
+	 <200901130113.54517.jnareb@gmail.com>
+	 <cb7bb73a0901121659h7277c074ia73786b15d66b804@mail.gmail.com>
+	 <200901140117.38803.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Farrukh Najmi <farrukh@wellfleetsoftware.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Jan 14 04:16:04 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 14 04:57:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMwEe-0003xs-2w
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 04:16:04 +0100
+	id 1LMwt9-00041a-2R
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 04:57:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752595AbZANDOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jan 2009 22:14:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752446AbZANDOk
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 22:14:40 -0500
-Received: from mgw2.diku.dk ([130.225.96.92]:42956 "EHLO mgw2.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752186AbZANDOj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jan 2009 22:14:39 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mgw2.diku.dk (Postfix) with ESMTP id A272619BCD8;
-	Wed, 14 Jan 2009 04:14:37 +0100 (CET)
-Received: from mgw2.diku.dk ([127.0.0.1])
- by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 02925-03; Wed, 14 Jan 2009 04:14:35 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw2.diku.dk (Postfix) with ESMTP id 395F619BBED;
-	Wed, 14 Jan 2009 04:14:35 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id B61C56DF823; Wed, 14 Jan 2009 04:13:26 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 1F28B39A9FF; Wed, 14 Jan 2009 04:14:35 +0100 (CET)
+	id S1753540AbZAND4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jan 2009 22:56:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753511AbZAND4b
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Jan 2009 22:56:31 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:48988 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753311AbZAND4b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jan 2009 22:56:31 -0500
+Received: by ey-out-2122.google.com with SMTP id 22so65946eye.37
+        for <git@vger.kernel.org>; Tue, 13 Jan 2009 19:56:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=+rSBlJ+TcAUPNjD/ZLT0d5Csy4xaMBaNms6qWDIYJVA=;
+        b=pALCnIeRj18erZmGuiePmjxeWUj4GT1EwEQKcR2BbcbKqupszNgJ8hV5HfSxHXoyT7
+         /nNNIk14qogYTvK6HjPVEhovPtyc6TTRaczif95SmEAkjPE0JsaTBl1e8ZiXorZjnW31
+         iNiN5Kq8lRtHbr+Vfn2Gc7/t6mTGeuHqy0CoU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=BSAyn180AbSa3jzOE8OCQdDhhSIEihHmw9J907tweePNORaacMby3upCn56esZzUHI
+         UabdDwcY8d5le32+8dES5wEkPTENJD80dSmqV4KqtzutDWLd53dHn22W77Odmp10Wxk/
+         ltnES3T7ZLrcRdBSZcvTWK2NkjY8oxK0fhzow=
+Received: by 10.210.137.14 with SMTP id k14mr36574090ebd.175.1231905388181;
+        Tue, 13 Jan 2009 19:56:28 -0800 (PST)
+Received: by 10.210.57.20 with HTTP; Tue, 13 Jan 2009 19:56:28 -0800 (PST)
+In-Reply-To: <200901140117.38803.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <200812160517.33975.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105581>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote Tue, Dec 16, 2008:
-> Jonas, could you help us on this:
+On Tue, Jan 13, 2009 at 7:17 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Tue, 13 Jan 2009, Giuseppe Bilotta wrote:
+>> On Mon, Jan 12, 2009 at 7:13 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>>> On Mon, 12 Jan 2009, Giuseppe Bilotta wrote:
+>>>> On Sun, Jan 11, 2009 at 8:15 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>
+> [...]
+>> Notice that nested links are actually valid *XML*. Indeed, I asked on
+>> www-style and they suggested leaving the problem as-is, serving as
+>> html+xml which is what we do.
+>
+> But nested links are neither valid HTML nor valid XHTML.  This
+> restriction (no nested links) is IMVHO quite sensible
 
-Sorry for the long delay. I completely overlooked this. In case it is
-still relevant ...
+Sensible? I think it's idiotic, especially since CSS does not and
+cannot provide enough expression power to obtain the same layout and
+functionality as what can be achieved by nesting links, so that to
+achieve these results one has to resort to horirble trickes,
+effectively destroying the whole purporse of HTML+CSS which is to
+separate layout from semantics.
 
-> [INFO] ------------------------------------------------------------------------                                                          
-> [ERROR] BUILD ERROR                                                                                                                      
-> [INFO] ------------------------------------------------------------------------                                                          
-> [INFO] Error deploying artifact: Failed to transfer file: http://egit.googlecode.com/svn/maven/snapshot-repository//org/spearce/jgit/0.4.0/jgit-0.4.0.jar. Return code is: 401                                                                                                                                            
-> 
-> I added this (nah, naming it release-repository didn't work either)
-> 
->         <repository>
->             <id>jgit-maven-release-repository</id>
->             <name>JGit Maven Release Repository</name>
->             <url>https://egit.googlecode.com/svn/maven/snapshot-repository/</url>
->             <uniqueVersion>true</uniqueVersion>
->         </repository>
+But anyway.
 
-This will end up mixing snapshots and releases ...
- 
-> (tried all combinations of dav/not-dav, http/https). Seems I don't have a dav provider, 
-> but https should work, right?
+>> The float thing was the second suggestion I was given on www-style.
+>
+> What was the first suggestion? And what is www-style?
 
-Well, I don't know, but I would expect the "dav:" to be required. I used
-the Google Maven Repository pom.xml[0] as a template, which should give
-something like:
+The first suggestion was to just leave things as they are. www-style
+is www-style@w3c.org, the CSS mailing list of the W3C
 
-  <repository>
-    <id>jgit-maven-repository</id>
-    <name>JGit Maven Repository</name>
-    <url>dav:https://egit.googlecode.com/svn/maven/repository/</url>
-  </repository>
+>> Can you provide a patch I can apply to my tree for testing to see how
+>> it comes up?
+>
+> Here it is. Note that CSS could be I think reduced. The size of
+> gitweb.perl changes is affected by changing calling convention for
+> git_print_header_html subroutine.
 
- [0] http://google-maven-repository.googlecode.com/svn/snapshot-repository/com/google/google/1-SNAPSHOT/google-1-20080826.150842-5.pom
+It's funny, I was working on a very similar patch myself a couple of
+days ago, but couldn't get the horizontal filler after the link to
+work properly, which is why I asked on www-style.
 
-> and to ~/.m2/settings.xml
-> 
->   <servers>
->     <server>
->       <id>jgit-maven-snapshot-repository</id>
->       <username>tried both my project email and gmail email</username>
->       <password>nah, won't show you</password>
->     </server>
->   </servers>
+I'll test your patch and let you know.
 
-Try:
+> There is also strange artifact at least in Mozilla 1.17.2: if I hover
+> over ref marker, the subject (title) gets darker background. Curious...
 
-  <servers>
-    <server>
-      <id>jgit-maven-repository</id>
-      <username>robin.rosenberg</username>
-      <password>Password from http://code.google.com/hosting/settings</password>
-    </server>
-  </servers>
-
-Hope this helps.
-
+Might be some kind of bug with the capturing vs bubbling phase.
 -- 
-Jonas Fonseca
+Giuseppe "Oblomov" Bilotta
