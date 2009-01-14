@@ -1,74 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git merge and cherry-pick and duplicated commits?
-Date: Wed, 14 Jan 2009 12:16:56 -0800
-Message-ID: <7v4p011w3r.fsf@gitster.siamese.dyndns.org>
-References: <2729632a0901131840v5c7ce0c7l3f87c03caabf68de@mail.gmail.com>
- <5EA96780-EF4C-4B31-9C60-6ABAF21663FA@silverinsanity.com>
- <2729632a0901132221r746144a1y9628615be1c6ad04@mail.gmail.com>
- <496D9572.2090303@viscovery.net>
- <2729632a0901140008r59e429aeq3ce367e1bc7df71@mail.gmail.com>
- <496DA3B2.1070807@viscovery.net>
- <2729632a0901141033p47b4d8dah46f5bac27307d306@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] color-words: make regex configurable via attributes
+Date: Wed, 14 Jan 2009 21:17:59 +0100
+Message-ID: <200901142118.02041.trast@student.ethz.ch>
+References: <alpine.DEB.1.00.0901141840100.3586@pacific.mpi-cbg.de> <1231962401-26974-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0901142104400.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jan 14 21:18:36 2009
+Content-Type: multipart/signed;
+  boundary="nextPart1249391.aRImQasybj";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Santi =?utf-8?q?B=C3=A9jar?= <santi@agolina.net>,
+	Junio C Hamano <junio@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 14 21:19:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNCC5-0004YJ-Ai
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 21:18:29 +0100
+	id 1LNCCm-0004o7-P1
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 21:19:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755407AbZANURI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 15:17:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755015AbZANURH
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 15:17:07 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44564 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754222AbZANURG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 15:17:06 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7CAE51C878;
-	Wed, 14 Jan 2009 15:17:01 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 488EB1C840; Wed,
- 14 Jan 2009 15:16:57 -0500 (EST)
-In-Reply-To: <2729632a0901141033p47b4d8dah46f5bac27307d306@mail.gmail.com>
- (skillzero@gmail.com's message of "Wed, 14 Jan 2009 10:33:02 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4D7D09B0-E278-11DD-9AFF-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1755769AbZANURs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 15:17:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754549AbZANURr
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 15:17:47 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:10985 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755280AbZANURq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 15:17:46 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 14 Jan 2009 21:17:45 +0100
+Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 14 Jan 2009 21:17:45 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0901142104400.3586@pacific.mpi-cbg.de>
+X-OriginalArrivalTime: 14 Jan 2009 20:17:45.0032 (UTC) FILETIME=[292D1C80:01C97685]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105698>
 
-skillzero@gmail.com writes:
+--nextPart1249391.aRImQasybj
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> Related to this, is there a way to easily find the common merge base
-> given a bunch of a branches? When I want to fix a bug, I want to say
-> "Given branches A, B, C, D, and E, where should I fork my bug fix
-> branch from so that I can merge this branch into all those branches
-> without getting duplicate commits?".
+Johannes Schindelin wrote:
+> How about making this an extra paragraph?
 
-You do not necessarily have to fork from, nor merge into, any of them.
+Sure, why not.  Though I'm still in favour of taking some longer
+version, possibly from my old series.
 
-If you fixed a bug, you would hopefully know where the bug was injected at
-into your history.  You may have bisected it down to one commit $BAD.  You
-can fork your fix on top of that $BAD commit:
+> On Wed, 14 Jan 2009, Thomas Rast wrote:
+> > +- `cpp` suitable for source code in the C and C++ languages.
+> > +
+>=20
+> How about "written in C or C++"?
 
-	$ git checkout -b fix-bug-foo $BAD
+I was just trying to be consistent with all other items; all
+programming languages are listed as "Foo language".
 
-All of the branches that share the commit have the bug, so your fix could
-be merged to all of them if you really wanted to, and you should do so if
-these A...E branches are meant to be consumed on their own.
+> > +A built-in pattern is provided for all languages listed in the last
+> > +section.
+>=20
+> Wow.  But how about "previous section"?
 
-But if the branches A...E you are about are for developing independent
-topics, and if their theme won't get affected by the bug, it is much
-better not to merge the fix in.  You will have the merge for the fix in
-your integration branch anyway.  It is preferable not to contaminate an
-independent topic branch whose purpose is to cook its own theme with an
-unrelated bugfix, even if it is brought in as a merge.
+Indeed, thanks.
+
+> > +#define PATTERNS(name, pattern, wordregex)			\
+> > +	{ name, NULL, -1, { pattern, REG_EXTENDED }, NULL, wordregex }
+>=20
+> You could get rid of that NULL if...
+[...]
+> ... you inserted word_regex before textconv.  In a way, I find this more=
+=20
+> logical, since both funcname and word_regex have sensible defaults=20
+> (provided by you), whereas textconv is strictly a user's option.
+
+Ok, I'll do that.
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+
+--nextPart1249391.aRImQasybj
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkluSHoACgkQqUud07tmzP0AsACgoSQWfb7tdkO6looqfACOwAGf
+QhIAniDwWyzNwY8DMRpm9bnEqks+Znbt
+=tVRj
+-----END PGP SIGNATURE-----
+
+--nextPart1249391.aRImQasybj--
