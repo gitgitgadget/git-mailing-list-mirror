@@ -1,48 +1,62 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Boaz Harrosh <bharrosh@panasas.com>
 Subject: Re: git merge and cherry-pick and duplicated commits?
-Date: Wed, 14 Jan 2009 09:34:58 +0100
-Message-ID: <496DA3B2.1070807@viscovery.net>
+Date: Wed, 14 Jan 2009 10:38:40 +0200
+Message-ID: <496DA490.5020708@panasas.com>
 References: <2729632a0901131840v5c7ce0c7l3f87c03caabf68de@mail.gmail.com>	 <5EA96780-EF4C-4B31-9C60-6ABAF21663FA@silverinsanity.com>	 <2729632a0901132221r746144a1y9628615be1c6ad04@mail.gmail.com>	 <496D9572.2090303@viscovery.net> <2729632a0901140008r59e429aeq3ce367e1bc7df71@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jan 14 09:36:30 2009
+X-From: git-owner@vger.kernel.org Wed Jan 14 09:40:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN1Eh-0007Ig-Tw
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 09:36:28 +0100
+	id 1LN1IF-0008CV-Kv
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 09:40:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757461AbZANIfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 03:35:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757431AbZANIfD
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 03:35:03 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:18182 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757339AbZANIfA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 03:35:00 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LN1DG-0003GD-M5; Wed, 14 Jan 2009 09:34:58 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 5C8CFA865; Wed, 14 Jan 2009 09:34:58 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+	id S1760237AbZANIis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 03:38:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760149AbZANIir
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 03:38:47 -0500
+Received: from mail-ew0-f31.google.com ([209.85.219.31]:51098 "EHLO
+	mail-ew0-f31.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759596AbZANIiq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 03:38:46 -0500
+Received: by ewy12 with SMTP id 12so140053ewy.13
+        for <git@vger.kernel.org>; Wed, 14 Jan 2009 00:38:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=5MZ99oEwKZbwSEeRmRuNFArADU3kjjllCz9BSHNGRts=;
+        b=q0QPwnzKOSHu41AUj3+ir2QUHAC4GSRJzZN43bVrpI38YV+xlhEt4apUqJXuYQ4wgN
+         iUEKW38HeQ8imIMT0ziGv1pcMZUPx5if1C2Dcix1Lv/LMQaiqhEzXTK62lHbsnHy761a
+         7LiooYG0e6hh6MKUqE2+UsAipOpLcwq12wl/M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=CdW7FFMvnNMDB+wWoRq/Q5M+SlePJm695Elh8s/mC1Hd7PS83JsUwldrQAX2AKOaDE
+         fbwCqGq2Xtu2g0in+ZZOWZceVB1wwuiG8Jsbj00Bk04mQUK38ohdduvMR0PewGv8OKr7
+         SRjMNIJrRPLqsLMnXayiWHmJNZUOiKrLwsp8w=
+Received: by 10.210.92.8 with SMTP id p8mr36784043ebb.55.1231922324467;
+        Wed, 14 Jan 2009 00:38:44 -0800 (PST)
+Received: from bh-buildlin2.bhalevy.com (DSL212-235-53-3.bb.netvision.net.il [212.235.53.3])
+        by mx.google.com with ESMTPS id 7sm3689231eyb.11.2009.01.14.00.38.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 14 Jan 2009 00:38:43 -0800 (PST)
+User-Agent: Thunderbird/3.0a2 (X11; 2008072418)
 In-Reply-To: <2729632a0901140008r59e429aeq3ce367e1bc7df71@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105604>
 
-[Please reply-to-all on this list, to keep Cc: list]
-
-skillzero@gmail.com schrieb:
+skillzero@gmail.com wrote:
 > On Tue, Jan 13, 2009 at 11:34 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
 > 
 >> Well, the way to do it is "careful planning".
@@ -73,40 +87,15 @@ skillzero@gmail.com schrieb:
 > commit, it will have a different parent when it is merged into Z
 > because Z is no longer at that common merge commit (it's 5 commits
 > beyond it).
+> --
 
-After you created the fixup, you have this situation:
+No, if you use merges it will not duplicate. It will know exactly what
+to do because it is the same commit in all branches.
+Only git-cherry-pick will duplicate the same patch, but as a different
+new commit. Then when merging the merge sees a merge conflict but since
+it is exactly the same change it will accept it. The same happens if
+two different patches have exact same hunk, the merge is smart to accept
+the same change from two sources. What happen with cherry-pick is that all
+the hunks match.
 
-    o--o--o   <- A (feature branch)
-   /
---o--x        <- X (the fix-up branch)
-   \
-    o--o--o   <- Z (probably your master)
-
-You merge the fix-up into the feature branch and continue developing the
-feature:
-
-    o--o--o--M--o--o   <- A
-   /        /
---o--x-----'           <- X
-   \
-    o--o--o            <- Z
-
-Other people need the fix in Z right now, so you merge it into Z as well:
-
-    o--o--o--M--o--o   <- A
-   /        /
---o--x-----<           <- X
-   \        \
-    o--o--o--N         <- Z
-
-You complete your feature and merge it into Z:
-
-    o--o--o--M--o--o     <- A
-   /        /       \
---o--x-----<         \   <- X
-   \        \         \
-    o--o--o--N---------O <- Z
-
-The fix-up commit is only once in your history.
-
--- Hannes
+Boaz
