@@ -1,132 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] color-words: make regex configurable via attributes
-Date: Wed, 14 Jan 2009 21:12:14 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901142104400.3586@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0901141840100.3586@pacific.mpi-cbg.de> <1231962401-26974-1-git-send-email-trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git merge and cherry-pick and duplicated commits?
+Date: Wed, 14 Jan 2009 12:16:56 -0800
+Message-ID: <7v4p011w3r.fsf@gitster.siamese.dyndns.org>
+References: <2729632a0901131840v5c7ce0c7l3f87c03caabf68de@mail.gmail.com>
+ <5EA96780-EF4C-4B31-9C60-6ABAF21663FA@silverinsanity.com>
+ <2729632a0901132221r746144a1y9628615be1c6ad04@mail.gmail.com>
+ <496D9572.2090303@viscovery.net>
+ <2729632a0901140008r59e429aeq3ce367e1bc7df71@mail.gmail.com>
+ <496DA3B2.1070807@viscovery.net>
+ <2729632a0901141033p47b4d8dah46f5bac27307d306@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org,
-	=?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
-	Junio C Hamano <junio@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Jan 14 21:13:17 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Wed Jan 14 21:18:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNC6q-0002LW-Db
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 21:13:04 +0100
+	id 1LNCC5-0004YJ-Ai
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 21:18:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755828AbZANULl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 15:11:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755598AbZANULk
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 15:11:40 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54993 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753987AbZANULk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 15:11:40 -0500
-Received: (qmail invoked by alias); 14 Jan 2009 20:11:32 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp035) with SMTP; 14 Jan 2009 21:11:32 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX187t6wkY4I7M/Wo8vGbFJNni1aAOCOLNpgwe1fxfJ
-	t722HyPGX0qKFu
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1231962401-26974-1-git-send-email-trast@student.ethz.ch>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.47
+	id S1755407AbZANURI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 15:17:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755015AbZANURH
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 15:17:07 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44564 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754222AbZANURG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 15:17:06 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7CAE51C878;
+	Wed, 14 Jan 2009 15:17:01 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 488EB1C840; Wed,
+ 14 Jan 2009 15:16:57 -0500 (EST)
+In-Reply-To: <2729632a0901141033p47b4d8dah46f5bac27307d306@mail.gmail.com>
+ (skillzero@gmail.com's message of "Wed, 14 Jan 2009 10:33:02 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4D7D09B0-E278-11DD-9AFF-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105697>
 
-Hi,
+skillzero@gmail.com writes:
 
-On Wed, 14 Jan 2009, Thomas Rast wrote:
+> Related to this, is there a way to easily find the common merge base
+> given a bunch of a branches? When I want to fix a bug, I want to say
+> "Given branches A, B, C, D, and E, where should I fork my bug fix
+> branch from so that I can merge this branch into all those branches
+> without getting duplicate commits?".
 
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 2c1fa4b..ef0e2f5 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -97,6 +97,9 @@ endif::git-format-patch[]
->  Optionally, you can pass a regular expression that tells Git what the
->  words are that you are looking for; The default is to interpret any
->  stretch of non-whitespace as a word.
-> +The regex can also be set via a diff driver, see
-> +linkgit:gitattributes[1]; giving it explicitly overrides any diff
-> +driver setting.
+You do not necessarily have to fork from, nor merge into, any of them.
 
-How about making this an extra paragraph?
+If you fixed a bug, you would hopefully know where the bug was injected at
+into your history.  You may have bisected it down to one commit $BAD.  You
+can fork your fix on top of that $BAD commit:
 
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> index 8af22ec..17707ba 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -317,6 +317,8 @@ patterns are available:
->  
->  - `bibtex` suitable for files with BibTeX coded references.
->  
-> +- `cpp` suitable for source code in the C and C++ languages.
-> +
+	$ git checkout -b fix-bug-foo $BAD
 
-How about "written in C or C++"?
+All of the branches that share the commit have the bug, so your fix could
+be merged to all of them if you really wanted to, and you should do so if
+these A...E branches are meant to be consumed on their own.
 
-> +A built-in pattern is provided for all languages listed in the last
-> +section.
-
-Wow.  But how about "previous section"?
-
-> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-> index 0ed7e53..d6731d1 100755
-> --- a/t/t4034-diff-words.sh
-> +++ b/t/t4034-diff-words.sh
-
-That was fast!
-
-> +test_expect_success 'use default supplied by driver' '
-> +
-> +	test_must_fail git diff --no-index --color-words \
-> +		pre post > output &&
-> +	decrypt_color < output > output.decrypted &&
-> +	test_cmp expect-by-chars output.decrypted
-> +
-> +'
-
-I am actually just about to post new revisions of the last two patches 
-where this would read
-
-	test_expect_success 'use default supplied by driver' '
-
-		word_diff --color-words
-
-	'
-
-instead...
-
-I don't want to get bitten by stupid mistakes again, though, so I let it 
-run with valgrind while glancing over the code.  Stay tuned.
-
-> +#define PATTERNS(name, pattern, wordregex)			\
-> +	{ name, NULL, -1, { pattern, REG_EXTENDED }, NULL, wordregex }
-
-You could get rid of that NULL if...
-
-> diff --git a/userdiff.h b/userdiff.h
-> index ba29457..2aab13e 100644
-> --- a/userdiff.h
-> +++ b/userdiff.h
-> @@ -12,6 +12,7 @@ struct userdiff_driver {
->  	int binary;
->  	struct userdiff_funcname funcname;
->  	const char *textconv;
-> +	const char *word_regex;
->  };
-
-... you inserted word_regex before textconv.  In a way, I find this more 
-logical, since both funcname and word_regex have sensible defaults 
-(provided by you), whereas textconv is strictly a user's option.
-
-Ciao,
-Dscho
+But if the branches A...E you are about are for developing independent
+topics, and if their theme won't get affected by the bug, it is much
+better not to merge the fix in.  You will have the merge for the fix in
+your integration branch anyway.  It is preferable not to contaminate an
+independent topic branch whose purpose is to cook its own theme with an
+unrelated bugfix, even if it is brought in as a merge.
