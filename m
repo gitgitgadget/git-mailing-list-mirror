@@ -1,97 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: 1.5.6.5 fails to clone
- git.kernel.org/[...]/rostedt/linux-2.6-rt
-Date: Thu, 15 Jan 2009 00:10:47 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901142357360.3586@pacific.mpi-cbg.de>
-References: <E1LLAn5-0001JM-00@alva.home> <7vpriw26uo.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: jgit merge question
+Date: Wed, 14 Jan 2009 15:12:22 -0800
+Message-ID: <20090114231222.GB10179@spearce.org>
+References: <S1760244AbZANHqN/20090114074613Z+1959@vger.kernel.org> <4EDE3D74-CEA3-473C-ADD1-03B79AAB9EDF@asu.edu> <alpine.DEB.1.00.0901141124460.3586@pacific.mpi-cbg.de> <20090114153034.GZ10179@spearce.org> <AB447EEF7BAAB7489B29A4F3F788D02C01CDD792@EX07.asurite.ad.asu.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Tim Shepard <shep@alum.mit.edu>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 00:11:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Birchfield <dbirchfield@asu.edu>
+X-From: git-owner@vger.kernel.org Thu Jan 15 00:13:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNEtO-0001YC-9G
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 00:11:22 +0100
+	id 1LNEvk-0002Ou-2S
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 00:13:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756043AbZANXJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 18:09:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755992AbZANXJ5
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 18:09:57 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51536 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753176AbZANXJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 18:09:56 -0500
-Received: (qmail invoked by alias); 14 Jan 2009 23:09:54 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp063) with SMTP; 15 Jan 2009 00:09:54 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+iB9MmCVmiu2wTevsqdPyGfUCF2zFXMkNxFFAHpz
-	49KMJ6h24g4hva
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vpriw26uo.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1756265AbZANXMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 18:12:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755992AbZANXMY
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 18:12:24 -0500
+Received: from george.spearce.org ([209.20.77.23]:56440 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755204AbZANXMX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 18:12:23 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id BC3DC38210; Wed, 14 Jan 2009 23:12:22 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <AB447EEF7BAAB7489B29A4F3F788D02C01CDD792@EX07.asurite.ad.asu.edu>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105728>
 
-Hi,
-
-On Fri, 9 Jan 2009, Junio C Hamano wrote:
-
-> I think we lost the alternate object store support when git-fetch was 
-> rewritten from the original shell script (that did support fetching from 
-> such a repository over rsync:// transport) to a reimplementation in C, 
-> with commit b888d61 (Make fetch a builtin, 2007-09-10).
+David Birchfield <dbirchfield@asu.edu> wrote:
+> Great - thanks so much for this feedback and link.  My merge
+> needs are straightforward, so hopefully this will suit the need!
 > 
-> Later, cd547b4 (fetch/push: readd rsync support, 2007-10-01) attempted to
-> resurrect some rsync support (b888d61 lost rsync support completely for
-> git-fetch), but introduced these lines in transport.c:
-> 
-> 	/* NEEDSWORK: handle one level of alternates */
-> 	result = run_command(&rsync);
+> I have pulled the latest jgit updates and downloaded the four
+> .java files that are referenced in your link.  I have added these
+> to the directory structure for jgit in the following new folder:
+> org.spearce.jgit/src/org/spearce/jgit/merge/
 
-Indeed... And I know who's responsible for those lines.
+Instead of copying 4 files, why don't you actually fetch the 8
+commits and merge them into your local repository?  You are getting
+build errors because you didn't get an exception type in the errors
+directory, and at least two existing classes had new methods added
+to them in order to support the merge API.
 
-However, I am swamped with work these days, and my Git time budget was 
-_way_ overspent what with the recent patches.
-
-So whoever would like to give it a go, go wild.
-
-This is actually a very fine opportunity for people to get involved who 
-always wanted to; it is a relatively low-hanging fruit.
-
-It should just be a matter of getting objects/info/alternates (one can 
-easily reuse a large part of the args[] array filled before the quoted 
-code) into a temporary file.
-
-If that does not succeed, return 0, otherwise fetch those objects, too 
-(again reusing most of the args[] array).
-
-It is that easy because objects as well as packs are immutable, so we can 
-just build the union of objects/packs from the remote and its alternate.
-
-Then all which is left to do is to add a test case to t/t5510-fetch.sh, 
-and you're set.
-
-As there are already test cases for rsync:// in it, it should be as simple 
-as putting an empty file into a newly created directory, create an 
-alternate for the "remote" pointing to the directory, fetching, and 
-testing that the empty file was copied.
-
-That's possible because rsync:// is dumb and does not verify the files it 
-copied.
-
-Oh, and don't forget to remove the NEEDSWORK comment :-)
-
-And now I'm curious who's up for it...
-
-Ciao,
-Dscho
+-- 
+Shawn.
