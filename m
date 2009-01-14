@@ -1,63 +1,116 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] git-daemon: use getnameinfo to resolve hostname
-Date: Wed, 14 Jan 2009 07:25:36 -0500
-Message-ID: <20090114122536.GA5939@coredump.intra.peff.net>
-References: <alpine.LSU.2.00.0901141147120.16109@fbirervta.pbzchgretzou.qr> <alpine.LSU.2.00.0901141148130.16109@fbirervta.pbzchgretzou.qr>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <santi@agolina.net>
+Subject: Re: [PATCH 0/4] refactor the --color-words to make it more hackable
+Date: Wed, 14 Jan 2009 14:00:57 +0100
+Message-ID: <adf1fd3d0901140500j10556a1as6370d40d766f1899@mail.gmail.com>
+References: <alpine.DEB.1.00.0901112057300.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jan Engelhardt <jengelh@medozas.de>
-X-From: git-owner@vger.kernel.org Wed Jan 14 13:27:10 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Thomas Rast" <trast@student.ethz.ch>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 14 14:02:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LN4ps-0006ql-E8
-	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 13:27:04 +0100
+	id 1LN5OG-0001Js-Nw
+	for gcvg-git-2@gmane.org; Wed, 14 Jan 2009 14:02:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755142AbZANMZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 07:25:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754864AbZANMZl
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 07:25:41 -0500
-Received: from peff.net ([208.65.91.99]:52023 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753129AbZANMZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 07:25:40 -0500
-Received: (qmail 23727 invoked by uid 107); 14 Jan 2009 12:25:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 14 Jan 2009 07:25:40 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Jan 2009 07:25:36 -0500
+	id S1755045AbZANNBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 08:01:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754766AbZANNBA
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 08:01:00 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:59565 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754588AbZANNA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 08:00:59 -0500
+Received: by bwz14 with SMTP id 14so1695990bwz.13
+        for <git@vger.kernel.org>; Wed, 14 Jan 2009 05:00:57 -0800 (PST)
+Received: by 10.103.117.8 with SMTP id u8mr34822mum.123.1231938057069;
+        Wed, 14 Jan 2009 05:00:57 -0800 (PST)
+Received: by 10.103.189.7 with HTTP; Wed, 14 Jan 2009 05:00:57 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0901112057300.3586@pacific.mpi-cbg.de>
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.2.00.0901141148130.16109@fbirervta.pbzchgretzou.qr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105623>
 
-On Wed, Jan 14, 2009 at 11:48:38AM +0100, Jan Engelhardt wrote:
+2009/1/11 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>
 
-> This is much shorter than inet_ntop'ing, and also translated
-> unresolvable addresses into a string.
+[...]
 
-Er, doesn't this totally change the meaning of REMOTE_ADDR from an IP
-address to a hostname? That seems bad because:
+> The basic idea is to decouple the original text from the text that is
+> passed to libxdiff to find the word differences.
+>
+> To that end, the words of the pre and post texts are put into two lists that
+> are fed to libxdiff.  While the words are extracted, an array is created which
+> contains pointers back to the word boundaries in the original text.
+>
 
-  - people already have hooks that compare REMOTE_ADDR against an
-    address, so we are breaking their hooks
+Thanks. With this I will no longer need to add some spurious spaces in
+my latex files :-)
 
-  - we are losing IP information in favor of hostname information; since
-    (I assume) this is primarily intended for IP-based access control,
-    we are adding an extra layer of indirection in the middle of our
-    security model (i.e., I used to have to spoof an IP to fool your
-    hook, but now I can do that _or_ spoof DNS).
+I've tested and it seems to work, but there are some corner cases that
+it does not handle well. If you have this two files:
 
-So at the very least, you should be adding REMOTE_HOST in _addition_ to
-REMOTE_ADDR, not instead of. But that still leaves one final concern,
-which is that some git-daemon admins might not want to pay the cost for
-a reverse lookup for every request. It's extra network traffic, and adds
-extra latency to the process (but I don't personally run git-daemon, and
-I don't know whether big sites like kernel.org actually care about
-this).
+---8<--- pre
+h(4)
 
--Peff
+a = b + c
+---8<--- post
+h(4),hh[44]
+
+a = b + c
+
+aa = a
+
+aeff = aeff * ( aaa )
+---8<---
+
+The "git diff" is okay, but not the "git diff --color-words", the
+addition of "aeff = ..." is not shown.
+
+Additionally with "git diff --no-index --color-words='^[A-Za-z0-9]*'
+the ']' character is not shown as an addition, and instead of the
+"aeff" line you get a ")" in green, as:
+
+h(4),{GREEN}hh[44{ENDGREEN}]
+
+a = b + c
+
+{GREEN}aa = a
+ ){ENDGREEN}
+
+Also if the lost text is at the end the next "diff --git" line is
+printed in read:
+
+--8<---
+#!/bin/bash
+git init
+cat > file <<EOF
+a
+
+aa
+EOF
+cat > gfile <<EOF
+a
+EOF
+git add .
+git commit -m "Initial import"
+git rm file
+cat > gfile <<EOF
+b
+EOF
+git add gfile
+git commit -m "changes"
+git show --color-words
+---8<---
+
+Thanks,
+Santi
+
+P.D.: I've test the version that is in 'pu', it does not have the
+patch to fix the segfault but I've also tested with it.
