@@ -1,76 +1,76 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH 3/3] Adds a #!bash to the top of bash completions so that editors can recognize, it as a bash script. Also adds a few simple comments above commands that, take arguments. The comments are meant to remind editors of potential, problems that can occur when the script is sourced on systems with "set, -u."
-Date: Thu, 15 Jan 2009 23:56:00 +0100
-Message-ID: <200901152356.00997.markus.heidelberg@web.de>
-References: <496CBD17.3000207@tedpavlic.com> <200901131403.16012.bss@iguanasuicide.net> <20090113201024.GA20129@chistera.yi.org>
-Reply-To: markus.heidelberg@web.de
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit
+	state
+Date: Thu, 15 Jan 2009 23:59:12 +0100
+Message-ID: <20090115225912.GL9794@neumann>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk>
+	<7vfxjlxuu5.fsf@gitster.siamese.dyndns.org>
+	<20090115153529.GA13961@neumann>
+	<7vvdsgql17.fsf@gitster.siamese.dyndns.org>
+	<bd6139dc0901151420j4ae62433uc0cc70d86dc45cfa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Ted Pavlic <ted@tedpavlic.com>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Adeodato =?utf-8?q?Sim=C3=B3?= <dato@net.com.org.es>
-X-From: git-owner@vger.kernel.org Thu Jan 15 23:57:03 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
+	Anders Melchiorsen <mail@cup.kalibalik.dk>,
+	git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 16 00:00:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNb93-0007fa-6S
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 23:57:01 +0100
+	id 1LNbCn-0000Xc-Py
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 00:00:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934938AbZAOWze convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 17:55:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765810AbZAOWzc
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 17:55:32 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:59832 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934779AbZAOWz3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2009 17:55:29 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 44F8CF6940AA;
-	Thu, 15 Jan 2009 23:55:26 +0100 (CET)
-Received: from [89.59.96.34] (helo=pluto)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LNb7W-0003c6-00; Thu, 15 Jan 2009 23:55:26 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090113201024.GA20129@chistera.yi.org>
-Jabber-ID: markus.heidelberg@web.de
+	id S934974AbZAOW7W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 17:59:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932788AbZAOW7V
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 17:59:21 -0500
+Received: from moutng.kundenserver.de ([212.227.17.8]:51136 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935648AbZAOW7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 17:59:19 -0500
+Received: from [127.0.1.1] (p5B133987.dip0.t-ipconnect.de [91.19.57.135])
+	by mrelayeu.kundenserver.de (node=mrelayeu6) with ESMTP (Nemesis)
+	id 0ML29c-1LNbBA0AAN-0001sE; Thu, 15 Jan 2009 23:59:13 +0100
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19hRGUh/q7MDBKLisPdWENTVifbflX4UQnqAnKj
-	MUhZhqO3GvmwMq+G/op2INabDKNVBh+V7RtfEDf7spf5YhCqEb
-	yrYQQEZag3EO6o/8D5GA==
+In-Reply-To: <bd6139dc0901151420j4ae62433uc0cc70d86dc45cfa@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Provags-ID: V01U2FsdGVkX1/LVmdIOIfmDrJcYA+bodBnl4sOZBnRG3J2Byk
+ 3qjyhcl7gqekJNpwYrKB4H24iaT/G07v/lV5xNvpSNjlgbruCj
+ AzknI5IfBQqy0KS9yV6Zw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105891>
 
-Adeodato Sim=C3=B3, 13.01.2009:
-> * Boyd Stephen Smith Jr. [Tue, 13 Jan 2009 14:03:11 -0600]:
+On Thu, Jan 15, 2009 at 11:20:08PM +0100, Sverre Rabbelier wrote:
+> On Thu, Jan 15, 2009 at 23:09, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> > I agree that is a true disadvantage that shows "reset --soft HEAD^"=
+ is a
+> > bad idea (you could still say commit -c @{1}, though).
 >=20
-> > On Tuesday 2009 January 13 10:45:18 Shawn O. Pearce wrote:
-> > >See [...] how the subject is a niceshort, one
-> > >line summary of the module impacted and the change?
->=20
-> > My rule for this is absolutely no more than 80 characters.
->=20
-> My rule for *all* of the commit message is "absolutely no more than 7=
-6
-> characters". With more than 76, `git log` wraps in a 80-column termin=
-al.
+> But it's not:
+> "It also makes sure that a pre-filled editor is fired up when doing
+> "git rebase --continue", in case the user just wanted to fix the
+> commit message."
 
-What about the 50 character limit proposed in the documentation
-(git-commit, gittutorial, user-manual)?
+Indeed, but in this case the rebase process will continue after
+finishing the commit message.  OTOH, with the current behaviour, you
+must do a 'git commit --amend && git rebase --continue', which might
+seem more complicated at first sight, but...
 
-At the beginning I tried to fulfil this limit, but often it's not easy.
-So should it be adjusted to a slightly higher value in the documentatio=
-n
-or even split into a recommended limit (e.g. 50) and a recommended
-absolute maximum (e.g. 76)? Hmm, the split wouldn't make sense, I think=
-=2E
+But the current behaviour of the 'edit' rebase command gives you the
+possibility of adding further commits on top of the selected one
+(after you have edited that or left intact, doesn't matter).  To do
+that with this automatic 'reset --soft HEAD^' modification you would
+first need to 'git commit -c @{1}' to keep the selected commit before
+going on with adding further commits, which is not quite nice.
 
-Markus
+
+Regards,
+G=E1bor
