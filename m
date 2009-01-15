@@ -1,91 +1,127 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: Re: [ANNOUNCE] tig-0.13
-Date: Thu, 15 Jan 2009 23:41:08 +0800
-Message-ID: <20090115154108.GB6938@b2j>
-References: <20090113233643.GA28898@diku.dk> <20090114232456.GA6937@b2j> <20090114235607.GA5546@diku.dk> <20090115014617.GC6937@b2j> <20090115130659.GA18081@diku.dk> <20090115145003.GA6938@b2j> <20090115150841.GA23045@diku.dk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] Move run_hook() from builtin-commit.c into run-command.c
+ (libgit)
+Date: Thu, 15 Jan 2009 16:46:59 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901151637590.3586@pacific.mpi-cbg.de>
+References: <1232031618-5243-1-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Thu Jan 15 16:42:57 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Paolo Bonzini <bonzini@gnu.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>, gitster@pobox.com
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Thu Jan 15 16:47:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNUMh-00006f-38
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 16:42:39 +0100
+	id 1LNURP-0002Mo-RW
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 16:47:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754966AbZAOPlQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 10:41:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754817AbZAOPlP
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 10:41:15 -0500
-Received: from ti-out-0910.google.com ([209.85.142.187]:29220 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754405AbZAOPlO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 10:41:14 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so634491tic.23
-        for <git@vger.kernel.org>; Thu, 15 Jan 2009 07:41:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mail-followup-to:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=6agy4jIYL4Gq6d5e7/xGIvNIwEI3A+dIgYylug2bpIg=;
-        b=oGLQNwajPIYwzmI5U3HI5CQUVs7ROig5ywFeU/H3F3edF0A90ICBwnaWQQzmguNgRy
-         W/uLhS5vze9uobsR0/iWEoWurZ8zexCVGgnen6IdyrN80S4uJgA9hmzukiF5p4hR1CgB
-         PKqb2tu28IkZiREvdYZQnH9p5EKea+KpFV1Rk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        b=nYqae/wfNRrJVuVEhXqZugEvFPx4I4usFCvduZEganb8d8vupJfwG+67yZIFTFYTOp
-         MDYlessnbecLAtcns1V051PnKMOioleyQPPsDRVM3hOC1dE+D8DjFJtEi6KLP32ea8cy
-         uUUh+D/eqJh3eoYW33BTCSDWQG2P7Y6cscCac=
-Received: by 10.110.2.2 with SMTP id 2mr1812066tib.4.1232034072316;
-        Thu, 15 Jan 2009 07:41:12 -0800 (PST)
-Received: from localhost (pcd406163.netvigator.com [203.218.196.163])
-        by mx.google.com with ESMTPS id u8sm116538tia.28.2009.01.15.07.41.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 15 Jan 2009 07:41:11 -0800 (PST)
-Mail-Followup-To: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20090115150841.GA23045@diku.dk>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1755116AbZAOPqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 10:46:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755050AbZAOPqK
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 10:46:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57224 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754976AbZAOPqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 10:46:09 -0500
+Received: (qmail invoked by alias); 15 Jan 2009 15:46:06 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp051) with SMTP; 15 Jan 2009 16:46:06 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19KNcg9tX1KaWmVPEtSFbqo4I0J0E+5MQoD76HRok
+	pLLdriNS7vrl4M
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1232031618-5243-1-git-send-email-s-beyer@gmx.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.45
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105839>
 
-On Thu, 15 Jan 2009, Jonas Fonseca wrote:
-> Then I am puzzled why the configure script doesn't find it. Can you s=
-end
-> me your config.log and the output of running configure. Maybe off-lis=
-t.
+Hi,
 
-I just delete everything and do a git reset --hard, ./configure does
-detect ncursesw and link to it.  I'm not sure my previous error was
-resulted from config cache.  I ldd tig and confirm indeed it linked to
-the unicode version. =20
+On Thu, 15 Jan 2009, Stephan Beyer wrote:
 
-Sorry for the noise.  m(__)m
+> 	Stripping out a libified version seemed better to me than
+> 	copy and paste.
 
---=20
-regards,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
-=E5=94=90=E8=A9=A9019 =E5=AD=9F=E6=B5=A9=E7=84=B6  =E5=A4=8F=E6=97=A5=E5=
-=8D=97=E4=BA=AD=E6=87=B7=E8=BE=9B=E5=A4=A7
-    =E5=B1=B1=E5=85=89=E5=BF=BD=E8=A5=BF=E8=90=BD  =E6=B1=A0=E6=9C=88=E6=
-=BC=B8=E6=9D=B1=E4=B8=8A  =E6=95=A3=E9=AB=AE=E4=B9=98=E5=A4=9C=E6=B6=BC=
-  =E9=96=8B=E8=BB=92=E8=87=A5=E9=96=91=E6=95=9E  =E8=8D=B7=E9=A2=A8=E9=80=
-=81=E9=A6=99=E6=B0=A3  =E7=AB=B9=E9=9C=B2=E6=BB=B4=E6=B8=85=E9=9F=BF
-    =E6=AC=B2=E5=8F=96=E9=B3=B4=E7=90=B4=E5=BD=88  =E6=81=A8=E7=84=A1=E7=
-=9F=A5=E9=9F=B3=E8=B3=9E  =E6=84=9F=E6=AD=A4=E6=87=B7=E6=95=85=E4=BA=BA=
-  =E4=B8=AD=E5=AE=B5=E5=8B=9E=E5=A4=A2=E6=83=B3
+Oh, definitely.
+
+> -	ret = start_command(&hook);
+> -	if (ret) {
+> -		warning("Could not spawn %s", argv[0]);
+> -		return ret;
+> -	}
+> -	ret = finish_command(&hook);
+> -	if (ret == -ERR_RUN_COMMAND_WAITPID_SIGNAL)
+> -		warning("%s exited due to uncaught signal", argv[0]);
+
+What are the side effects of replacing this with "ret = 
+run_command(&hook);"?  This has to be discussed and defended in the commit 
+message.
+
+> diff --git a/run-command.c b/run-command.c
+> index c90cdc5..602fe85 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -342,3 +342,38 @@ int finish_async(struct async *async)
+>  #endif
+>  	return ret;
+>  }
+> +
+> +int run_hook(const char *index_file, const char *name, ...)
+> +{
+> +	struct child_process hook;
+> +	const char *argv[10], *env[2];
+> +	char index[PATH_MAX];
+> +	va_list args;
+> +	int i;
+> +
+> +	va_start(args, name);
+> +	argv[0] = git_path("hooks/%s", name);
+> +	i = 0;
+> +	do {
+> +		if (++i >= ARRAY_SIZE(argv))
+> +			die("run_hook(): too many arguments");
+> +		argv[i] = va_arg(args, const char *);
+> +	} while (argv[i]);
+> +	va_end(args);
+> +
+> +	if (access(argv[0], X_OK) < 0)
+> +		return 0;
+> +
+> +	memset(&hook, 0, sizeof(hook));
+> +	hook.argv = argv;
+> +	hook.no_stdin = 1;
+> +	hook.stdout_to_stderr = 1;
+> +	if (index_file) {
+> +		snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
+> +		env[0] = index;
+> +		env[1] = NULL;
+> +		hook.env = env;
+> +	}
+> +
+> +	return run_command(&hook);
+> +}
+
+Lots of improvements possible (I agree; _after_ this patch):
+
+- deuglify the loop,
+
+- use ALLOC_GROW instead of having a fixed size argv,
+
+- use an strbuf for the index file
+
+- checking executability of argv[0] before filling argv,
+
+and possibly others, too.
+
+Ciao,
+Dscho
