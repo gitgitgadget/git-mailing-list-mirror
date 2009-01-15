@@ -1,51 +1,67 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: jgit merge question
-Date: Wed, 14 Jan 2009 20:01:08 -0800
-Message-ID: <20090115040108.GD10179@spearce.org>
-References: <S1760244AbZANHqN/20090114074613Z+1959@vger.kernel.org> <4EDE3D74-CEA3-473C-ADD1-03B79AAB9EDF@asu.edu> <alpine.DEB.1.00.0901141124460.3586@pacific.mpi-cbg.de> <20090114153034.GZ10179@spearce.org> <AB447EEF7BAAB7489B29A4F3F788D02C01CDD792@EX07.asurite.ad.asu.edu> <20090114231222.GB10179@spearce.org> <7F1F22DF-7E4F-4888-A404-2A68F663989A@asu.edu>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
+Date: Thu, 15 Jan 2009 13:10:18 +0900
+Message-ID: <buo8wpdfbv9.fsf@dhapc248.dev.necel.com>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk>
+	<7vfxjlxuu5.fsf@gitster.siamese.dyndns.org>
+	<200901142049.54775.bss@iguanasuicide.net>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Birchfield <dbirchfield@asu.edu>
-X-From: git-owner@vger.kernel.org Thu Jan 15 05:06:11 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Anders Melchiorsen <mail@cup.kalibalik.dk>,
+	git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+X-From: git-owner@vger.kernel.org Thu Jan 15 05:12:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNJUX-0001SJ-JN
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 05:06:02 +0100
+	id 1LNJaY-00032y-Vz
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 05:12:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752759AbZAOEBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 23:01:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbZAOEBK
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 23:01:10 -0500
-Received: from george.spearce.org ([209.20.77.23]:55075 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751620AbZAOEBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 23:01:09 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 78CBB38210; Thu, 15 Jan 2009 04:01:08 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7F1F22DF-7E4F-4888-A404-2A68F663989A@asu.edu>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754466AbZAOEKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 23:10:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754344AbZAOEKv
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 23:10:51 -0500
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:50282 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753717AbZAOEKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 23:10:51 -0500
+Received: from relay11.aps.necel.com ([10.29.19.46])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n0F4AJAR018098;
+	Thu, 15 Jan 2009 13:10:19 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay11.aps.necel.com with ESMTP; Thu, 15 Jan 2009 13:10:19 +0900
+Received: from dhapc248.dev.necel.com ([10.114.113.195] [10.114.113.195]) by relay21.aps.necel.com with ESMTP; Thu, 15 Jan 2009 13:10:18 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id C1671458; Thu, 15 Jan 2009 13:10:18 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <200901142049.54775.bss@iguanasuicide.net> (Boyd Stephen Smith,
+	Jr.'s message of "Wed, 14 Jan 2009 20:49:50 -0600")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105765>
 
-David Birchfield <dbirchfield@asu.edu> wrote:
-> thanks again for your help, and really sorry for the newbie questions.
+"Boyd Stephen Smith Jr." <bss@iguanasuicide.net> writes:
+>>We may need a version bump to 1.7.0 to update the UI for this command,
+>> but please do test rigorously to build a stronger case for a saner UI.
 >
-> how do I grab those 8 commits?
->
-> I did originally use git clone on this uri: git:// 
-> android.git.kernel.org/tools/egit.git - but I don't see the  
-> modifications there.
+> Instead of changing the meaning of edit, how about introducing a "replace" 
+> command?
 
-They are in a side branch:
+That seems like at best an awkward workaround, not a real solution to
+the problem, which is that the term "edit XXXX" suggests you're starting
+with XXXX and modifying it.  The term "replace" by contrast, seems more
+to connote entirely removing XXXX and substituting something else.
 
-  git pull git://android.git.kernel.org/tools/egit.git for-gerrit2
+[I do wonder how on earth the current awkward behavior was accepted in
+the first place...]
+
+-Miles
 
 -- 
-Shawn.
+"Most attacks seem to take place at night, during a rainstorm, uphill,
+ where four map sheets join."   -- Anon. British Officer in WW I
