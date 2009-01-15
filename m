@@ -1,76 +1,70 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit
-	state
-Date: Thu, 15 Jan 2009 23:59:12 +0100
-Message-ID: <20090115225912.GL9794@neumann>
-References: <87ab9th0rh.fsf@cup.kalibalik.dk>
-	<7vfxjlxuu5.fsf@gitster.siamese.dyndns.org>
-	<20090115153529.GA13961@neumann>
-	<7vvdsgql17.fsf@gitster.siamese.dyndns.org>
-	<bd6139dc0901151420j4ae62433uc0cc70d86dc45cfa@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Move run_hook() from builtin-commit.c into
+ run-command.c (libgit)
+Date: Thu, 15 Jan 2009 14:59:39 -0800
+Message-ID: <7v7i4wqioz.fsf@gitster.siamese.dyndns.org>
+References: <1232031618-5243-1-git-send-email-s-beyer@gmx.net>
+ <alpine.DEB.1.00.0901151637590.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
-	Anders Melchiorsen <mail@cup.kalibalik.dk>,
-	git@vger.kernel.org, Johannes.Schindelin@gmx.de
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 16 00:00:59 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 16 00:01:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNbCn-0000Xc-Py
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 00:00:54 +0100
+	id 1LNbDM-0000lG-ES
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 00:01:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934974AbZAOW7W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 17:59:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932788AbZAOW7V
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 17:59:21 -0500
-Received: from moutng.kundenserver.de ([212.227.17.8]:51136 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935648AbZAOW7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 17:59:19 -0500
-Received: from [127.0.1.1] (p5B133987.dip0.t-ipconnect.de [91.19.57.135])
-	by mrelayeu.kundenserver.de (node=mrelayeu6) with ESMTP (Nemesis)
-	id 0ML29c-1LNbBA0AAN-0001sE; Thu, 15 Jan 2009 23:59:13 +0100
-Content-Disposition: inline
-In-Reply-To: <bd6139dc0901151420j4ae62433uc0cc70d86dc45cfa@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Provags-ID: V01U2FsdGVkX1/LVmdIOIfmDrJcYA+bodBnl4sOZBnRG3J2Byk
- 3qjyhcl7gqekJNpwYrKB4H24iaT/G07v/lV5xNvpSNjlgbruCj
- AzknI5IfBQqy0KS9yV6Zw==
+	id S936323AbZAOW77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 17:59:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761075AbZAOW75
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 17:59:57 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50447 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934914AbZAOW7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 17:59:55 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AFB7B1C9FA;
+	Thu, 15 Jan 2009 17:59:54 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F30331C9FB; Thu,
+ 15 Jan 2009 17:59:41 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 393039C4-E358-11DD-91AB-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105892>
 
-On Thu, Jan 15, 2009 at 11:20:08PM +0100, Sverre Rabbelier wrote:
-> On Thu, Jan 15, 2009 at 23:09, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> > I agree that is a true disadvantage that shows "reset --soft HEAD^"=
- is a
-> > bad idea (you could still say commit -c @{1}, though).
->=20
-> But it's not:
-> "It also makes sure that a pre-filled editor is fired up when doing
-> "git rebase --continue", in case the user just wanted to fix the
-> commit message."
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Indeed, but in this case the rebase process will continue after
-finishing the commit message.  OTOH, with the current behaviour, you
-must do a 'git commit --amend && git rebase --continue', which might
-seem more complicated at first sight, but...
+> On Thu, 15 Jan 2009, Stephan Beyer wrote:
+>
+>> 	Stripping out a libified version seemed better to me than
+>> 	copy and paste.
+>
+> Oh, definitely.
+>
+>> -	ret = start_command(&hook);
+>> -	if (ret) {
+>> -		warning("Could not spawn %s", argv[0]);
+>> -		return ret;
+>> -	}
+>> -	ret = finish_command(&hook);
+>> -	if (ret == -ERR_RUN_COMMAND_WAITPID_SIGNAL)
+>> -		warning("%s exited due to uncaught signal", argv[0]);
+>
+> What are the side effects of replacing this with "ret = 
+> run_command(&hook);"?  This has to be discussed and defended in the commit 
+> message.
 
-But the current behaviour of the 'edit' rebase command gives you the
-possibility of adding further commits on top of the selected one
-(after you have edited that or left intact, doesn't matter).  To do
-that with this automatic 'reset --soft HEAD^' modification you would
-first need to 'git commit -c @{1}' to keep the selected commit before
-going on with adding further commits, which is not quite nice.
-
-
-Regards,
-G=E1bor
+I think the answer is "Lost warnings here and there".
