@@ -1,92 +1,87 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH replacement for take 3 4/4] color-words: take an optional regular expression describing words
-Date: Thu, 15 Jan 2009 01:32:11 +0100
-Message-ID: <200901150132.14106.trast@student.ethz.ch>
-References: <alpine.DEB.1.00.0901141840100.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901142142120.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901142145200.3586@pacific.mpi-cbg.de>
+From: "Sverre Rabbelier" <srabbelier@gmail.com>
+Subject: Re: git submodule merge madness
+Date: Thu, 15 Jan 2009 01:32:31 +0100
+Message-ID: <bd6139dc0901141632x6d3a0b6bl3abd489e155dc97d@mail.gmail.com>
+References: <ADC7A3B1-6756-4258-93CD-DB40C7D2793C@develooper.com>
+	 <alpine.DEB.1.00.0901142354120.3586@pacific.mpi-cbg.de>
+	 <AE1922C4-0543-424B-A635-494445E17E45@develooper.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart7043887.G65GsccR0n";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Santi =?utf-8?q?B=C3=A9jar?= <santi@agolina.net>,
-	Junio C Hamano <junio@pobox.com>,
-	Teemu Likonen <tlikonen@iki.fi>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 15 01:33:25 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Ask_Bj=F8rn_Hansen?=" <ask@develooper.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 01:33:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNGAl-0004Wr-MX
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 01:33:24 +0100
+	id 1LNGBJ-0004fa-HF
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 01:33:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760785AbZAOAb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 19:31:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759153AbZAOAb7
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 19:31:59 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:42968 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757294AbZAOAb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 19:31:58 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 15 Jan 2009 01:31:57 +0100
-Received: from [192.168.0.3] ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 15 Jan 2009 01:31:57 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0901142145200.3586@pacific.mpi-cbg.de>
-X-OriginalArrivalTime: 15 Jan 2009 00:31:57.0163 (UTC) FILETIME=[AC279BB0:01C976A8]
+	id S1758247AbZAOAce convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jan 2009 19:32:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758082AbZAOAcd
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 19:32:33 -0500
+Received: from yw-out-2324.google.com ([74.125.46.28]:44743 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757631AbZAOAcc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jan 2009 19:32:32 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so360829ywe.1
+        for <git@vger.kernel.org>; Wed, 14 Jan 2009 16:32:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=9yNhXqyrG6IciK7IgC97yyp/VpTMgsqsI55ienNU+/k=;
+        b=HsfmHuo4wcCI/MNWWAPI/3JbuOfHJd2dCn5clcm12PkTZBwTvbRQ56ciIerojvl+rq
+         SFF0PPSOlLKbKu3e33T1b+/F22QfA+lx9VAZVMmjVneIcKlI1HA25UruKCI/P113rZeY
+         cO6HTj721Jgwhu5JOrWVrPLuZ6N1k7cofkEN4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=TSwldeVYJLyrYliretq2gZ/S1sG6xXF9IBoY5Yuysf5jyXiJW3SWU5bu678bQ8Cg0d
+         9Yfl195BZd+Olyyzug45R93UWqUawSNoQkuFgfAKqoGPMvtNLyDZ2PxDAKgPuEDqa7Ip
+         j2GOXxfHdEGvgVdKdoeMOnuirzxx9tvlMAjpk=
+Received: by 10.151.111.1 with SMTP id o1mr2833659ybm.215.1231979551565;
+        Wed, 14 Jan 2009 16:32:31 -0800 (PST)
+Received: by 10.150.198.12 with HTTP; Wed, 14 Jan 2009 16:32:31 -0800 (PST)
+In-Reply-To: <AE1922C4-0543-424B-A635-494445E17E45@develooper.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: a2b8ef4dda87dfad
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105740>
 
---nextPart7043887.G65GsccR0n
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Thu, Jan 15, 2009 at 00:49, Ask Bj=F8rn Hansen <ask@develooper.com> =
+wrote:
+> On Jan 14, 2009, at 2:55 PM, Johannes Schindelin wrote:
+>> So.... Which Git version are you are using?  Did you test any Git ve=
+rsion
+>> containing the commit d5a84fb(merge-recursive: fail gracefully with
+>> directory/submodule conflicts)?
+>
+> IIRC I tried 1.6.1 and master as of about a week ago.
+>
+> I don't see d5a84fb in my repository (and google doesn't find it refe=
+renced
+> anywhere when I search for "directory/submodule conflicts".
 
-Johannes Schindelin wrote:
-> 	This basically contains the fix I sent earlier.
+I checked current master:
+$ git log --grep=3D"fail gracefully with"
+returns nothing. Searching the archive I don't see any reference to
+"fail gracefully with" either. I don't see it on your gitweb [0]
+either. Did that commit magically dissapear?
 
-Unfortunately I found another case where it breaks.  It even comes
-with a fairly neat test case:
+[0] http://repo.or.cz/w/git/dscho.git
 
-  $ g diff --no-index test_a test_b
-  diff --git 1/test_a 2/test_b
-  index 289cb9d..2d06f37 100644
-  --- 1/test_a
-  +++ 2/test_b
-  @@ -1 +1 @@
-  -(:
-  +(
-  $ g diff --no-index --color-words=3D'.' test_a test_b
-  diff --git 1/test_a 2/test_b
-  index 289cb9d..2d06f37 100644
-  --- 1/test_a
-  +++ 2/test_b
-  @@ -1 +1 @@
-  :(
+--=20
+Cheers,
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
-
-
---nextPart7043887.G65GsccR0n
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkluhA4ACgkQqUud07tmzP0+NACgnXdhCdpd3R4sRF3vxb8Lrtl6
-7zoAnj5Bw2BovtQB8WhfbbTxOblMYSNa
-=8L9P
------END PGP SIGNATURE-----
-
---nextPart7043887.G65GsccR0n--
+Sverre Rabbelier
