@@ -1,50 +1,53 @@
-From: Stephan Beyer <s-beyer@gmx.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: rebase -p confusion in 1.6.1
-Date: Thu, 15 Jan 2009 14:38:08 +0100
-Message-ID: <20090115133808.GA10045@leksak.fem-net>
+Date: Thu, 15 Jan 2009 14:39:37 +0100
+Message-ID: <496F3C99.1040800@drmicha.warpmail.net>
 References: <slrngmu4j5.e1u.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Stephen Haberman <stephen@exigencecorp.com>
 To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 14:39:40 2009
+X-From: git-owner@vger.kernel.org Thu Jan 15 14:41:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNSRf-0002mv-82
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 14:39:39 +0100
+	id 1LNST5-0003MC-5j
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 14:41:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764893AbZAONiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 08:38:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764838AbZAONiO
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 08:38:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56126 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1762367AbZAONiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 08:38:12 -0500
-Received: (qmail invoked by alias); 15 Jan 2009 13:38:10 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp026) with SMTP; 15 Jan 2009 14:38:10 +0100
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18k/0lciTokr6S+HjF+35hDrigZM3R54yPmxucdek
-	BjTNoHRormWdC7
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1LNSQC-0004q4-Ik; Thu, 15 Jan 2009 14:38:08 +0100
-Content-Disposition: inline
+	id S1756295AbZAONjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 08:39:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755969AbZAONjl
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 08:39:41 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:40487 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755046AbZAONjl (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2009 08:39:41 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id DD9D821252A;
+	Thu, 15 Jan 2009 08:39:38 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 15 Jan 2009 08:39:38 -0500
+X-Sasl-enc: hvikEhzF4wKKsmZXWR46Jri/Z35vFxV+YL7TOaYHJIId 1232026778
+Received: from [139.174.44.34] (pascal.math.tu-clausthal.de [139.174.44.34])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2B7DD3723D;
+	Thu, 15 Jan 2009 08:39:38 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
 In-Reply-To: <slrngmu4j5.e1u.sitaramc@sitaramc.homelinux.net>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105801>
 
-Hi Sitaram,
-
-Sitaram Chamarty wrote:
+Sitaram Chamarty venit, vidit, dixit 15.01.2009 11:39:
+> Hello all,
+> 
+> While trying to understand "rebase -p", I came across some
+> very unexpected behaviour that made me throw in the towel
+> and ask for help!
+> 
 > The outputs I got really confused me.  Before the "rebase
 > -p", the tree looked like
 >     
@@ -69,29 +72,12 @@ Sitaram Chamarty wrote:
 >     * ed1e1bc... a1
 > 
 > What did I do wrong/misunderstand?
-
-Hmm, you are rebasing onto master which is merged into the branch you
-want to rebase. So, I think the correct output should be the same like
-git rebase without -p, ie
-
-* 1337bee... (refs/heads/work) b4
-* deadbee... b3
-* badbeef... b2
-* fa1afe1... b1
-* 0153c27... (refs/heads/master) a4
-* 74f4387... a3
-* b37ae36... a2
-* ed1e1bc... a1
-
-This is because master is already merged into work and a preserved
-merge will see that everything is already merged in.
-
-Well, so I think you've discovered a bug.
-
+> 
+> Here's how to recreate.  Note that "testci" is a shell
+> function and "lg" is a git alias.  They are, respectively,
+> (1) testci() { for i; do echo $i > $i; git add $i; git commit -m $i; done; }
 > (2) git config alias.lg log --graph --pretty=oneline --abbrev-commit --decorate
-
-Funny, I have exactly the same alias, but named "logk".
-
+> 
 >     git init
 >     testci a1 a2
 >     git checkout -b work
@@ -104,9 +90,27 @@ Funny, I have exactly the same alias, but named "logk".
 >     git --no-pager lg   # graph before rebase -p
 >     git rebase -p master
 >     git --no-pager lg   # graph after rebase -p
+> 
 
-Thanks and regards,
-  Stephan
+First of all: git 1.6.0.6 gives you the unchanged graph after using
+rebase -i -p (git 1.6.1 adds -i behind you back and sets up a dummy
+editor). In any case, git rebase should not simply eat those commits -
+either leave them alone or rewrite them. git bisect says
 
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+d80d6bc146232d81f1bb4bc58e5d89263fd228d4 is first bad commit
+commit d80d6bc146232d81f1bb4bc58e5d89263fd228d4
+Author: Stephen Haberman <stephen@exigencecorp.com>
+Date:   Wed Oct 15 02:44:39 2008 -0500
+
+    rebase-i-p: do not include non-first-parent commits touching UPSTREAM
+
+so I'll cc the bad guy ;)
+
+Second, what result do you expect? If the merge is to be preserved then
+b1, b2 can't be simply ripped out - or else you get the linear structure
+which rebase without '-p' delivers. The merge base (as returned by git
+merge-base) between work and master is a4, i.e. master, so that the
+expected result with '-p' is the one from 1.6.0.6 (unchanged graph).
+
+Cheers,
+Michael
