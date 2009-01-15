@@ -1,68 +1,73 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: how to apply patch in the middle
-Date: Wed, 14 Jan 2009 17:39:13 -0800
-Message-ID: <20090115013913.GC10179@spearce.org>
-References: <20090115013535.GB6937@b2j>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] color-words: make regex configurable via
+ attributes
+Date: Thu, 15 Jan 2009 02:43:33 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901150241210.3586@pacific.mpi-cbg.de>
+References: <3ff3ccf6e3c1cd6a002d200aee5df88a197a7bf6.1231971446.git.trast@student.ethz.ch> <48504e8a330beca560208ce050d43bc92ac04c90.1231971446.git.trast@student.ethz.ch> <b1290f83267e64856e58477e0c19e920dd416c82.1231971446.git.trast@student.ethz.ch>
+ <b404fdfe0f5af535b35d1f239a68f6a7911ede19.1231971446.git.trast@student.ethz.ch> <alpine.DEB.1.00.0901150233121.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: bill lam <cbill.lam@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 02:40:43 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org,
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
+	Junio C Hamano <junio@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Jan 15 02:44:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNHDp-0005dd-4H
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 02:40:37 +0100
+	id 1LNHHE-0006Xp-N7
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 02:44:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbZAOBjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 20:39:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752407AbZAOBjO
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 20:39:14 -0500
-Received: from george.spearce.org ([209.20.77.23]:34471 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752104AbZAOBjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 20:39:13 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 37C4838210; Thu, 15 Jan 2009 01:39:13 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20090115013535.GB6937@b2j>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752628AbZAOBmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 20:42:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750927AbZAOBmn
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 20:42:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39327 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751262AbZAOBmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 20:42:42 -0500
+Received: (qmail invoked by alias); 15 Jan 2009 01:42:40 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp068) with SMTP; 15 Jan 2009 02:42:40 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+c1ZpLr/GcUV1cwXLQsCQy/z8P8+Cbkz86gxN/++
+	ad7+Ca/MRnfwiQ
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.DEB.1.00.0901150233121.3586@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105756>
 
-bill lam <cbill.lam@gmail.com> wrote:
-> I want to change history to rewrite
-> 
->   - A - B - C - D - E - ..
+Hi,
+
+On Thu, 15 Jan 2009, Johannes Schindelin wrote:
+
+> @@ -136,10 +131,11 @@ cat > expect <<\EOF
+>  aaa (aaa) <GREEN>aaa<RESET>
+>  EOF
 >  
-> as
-> 
->  - A - C' - D - E - ..
+> -test_expect_success "test parsing words for newline" '
+> +test_expect_success 'test parsing words for newline' '
+> +
+> +	word_diff --color-words="a+"
+>  
+> -	word_diff --color-words="a+" &&
+> -	word_diff_check expect
+> +	word_diff --color-words=.
+>  
+>  '
 
-Uh, "git rebase -i A", change "pick" on line "C" to "squash".
-This should have the same impact as what you are trying.
+D'oh.  please remove the last word_diff, this comes from my "fix" for your 
+smiley issue.
 
-> because rebase/squash cannot automatically resolve conflicts, I
-> generate a patch file from A to C
-> 
->   git diff A C >pat
-> 
-> However I don't know how apply this patch and cancel the old B and C.
+Ciao,
+Dscho "off to bed"
 
-One way you can insert this is:
-
-  git rebase -i A^
-  change "pick" on line "A" to "edit"
-  delete lines "B" and "C".
-
-  when it stops for amend, don't amend.
-  git apply --index pat
-  git commit -m "my new B and C"
-  git rebase --continue
-
--- 
-Shawn.
+--
+"The night was so dark that he hardly coulx srr tje keuboarf."
