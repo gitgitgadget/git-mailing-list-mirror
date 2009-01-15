@@ -1,66 +1,79 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
-Date: Thu, 15 Jan 2009 14:54:30 +0100
-Message-ID: <200901151454.30670.johan@herland.net>
-References: <87ab9th0rh.fsf@cup.kalibalik.dk> <200901151101.53441.johan@herland.net> <bd6139dc0901150352t2d2fa388x3eb842bbc8c4baa6@mail.gmail.com>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: rebase -p confusion in 1.6.1
+Date: Thu, 15 Jan 2009 14:55:18 +0100
+Message-ID: <20090115135518.GB10045@leksak.fem-net>
+References: <slrngmu4j5.e1u.sitaramc@sitaramc.homelinux.net> <496F3C99.1040800@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Sverre Rabbelier" <srabbelier@gmail.com>,
-	"Johannes Sixt" <j.sixt@viscovery.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Anders Melchiorsen" <mail@cup.kalibalik.dk>, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 15 14:56:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org,
+	Stephen Haberman <stephen@exigencecorp.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jan 15 14:56:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNShf-0000W0-Cw
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 14:56:11 +0100
+	id 1LNSiH-0000mO-J6
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 14:56:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754907AbZAONyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 08:54:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754730AbZAONyq
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 08:54:46 -0500
-Received: from sam.opera.com ([213.236.208.81]:49527 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753376AbZAONyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 08:54:45 -0500
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n0FDsU90020921
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 15 Jan 2009 13:54:36 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <bd6139dc0901150352t2d2fa388x3eb842bbc8c4baa6@mail.gmail.com>
+	id S1755412AbZAONzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 08:55:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755133AbZAONzX
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 08:55:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33702 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754960AbZAONzW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 08:55:22 -0500
+Received: (qmail invoked by alias); 15 Jan 2009 13:55:21 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp030) with SMTP; 15 Jan 2009 14:55:21 +0100
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+Hba02fDeHKTOdK1sBfyHU6oTvviRNw1HPNk6mbM
+	giVz3cPbPmn+gU
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1LNSgo-000510-TO; Thu, 15 Jan 2009 14:55:18 +0100
 Content-Disposition: inline
+In-Reply-To: <496F3C99.1040800@drmicha.warpmail.net>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105808>
 
-On Thursday 15 January 2009, Sverre Rabbelier wrote:
-> On Thu, Jan 15, 2009 at 11:01, Johan Herland wrote:
-> > "modify" does the "git reset --soft HEAD^" (Anders' suggestion)
-> > "amend" requires a "git commit --amend" (current behaviour)
->
-> Why have amend do the same as edit?
+Hi,
 
-The names I chose are somewhat arbitrary, since we obviously have to 
-keep on bikeshedding until we have something everybody can agree to.
+> First of all: git 1.6.0.6 gives you the unchanged graph after using
+> rebase -i -p.
 
-However, my rationale was that IMO the word "edit" more closely matches 
-Anders' suggestion, and is therefore somewhat misleading as a 
-description of the current behaviour. But we obviously cannot change 
-the meaning of "edit" without upsetting current users. Therefore, 
-introduce "amend" to more accurately describe the current behaviour. As 
-for "modify", it was simply the best synonym for "edit" I could find.
+This is true and it is a far better behavior than now, but I think it's
+not the expected behavior. (I have written about the behavior I'd expect
+in another reply to the original mail.)
 
+Also
 
-...Johan
+	git rebase -i -p master
+
+should do the same as
+
+	git rebase -i -p --onto master master
+
+or am I wrong?
+
+But the latter does
+
+	$ git rebase --onto master -i -p master
+	fatal: Needed a single revision
+	Invalid base
+
+instead of resulting in an unchanged graph.
+(Tested with 1.5.6.5, the only other version I have installed besides
+my master branch)
+
+Regards,
+  Stephan
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
