@@ -1,71 +1,147 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit
- state
-Date: Thu, 15 Jan 2009 01:53:01 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901150149130.3586@pacific.mpi-cbg.de>
-References: <87ab9th0rh.fsf@cup.kalibalik.dk>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Anders Melchiorsen <mail@cup.kalibalik.dk>
-X-From: git-owner@vger.kernel.org Thu Jan 15 01:53:37 2009
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [RFC PATCH] Zooko's merge testcase
+Date: Thu, 15 Jan 2009 01:53:38 +0100
+Message-ID: <1231980818-24812-1-git-send-email-vmiklos@frugalware.org>
+Cc: zooko <zooko@zooko.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 15 01:55:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNGUK-0001gT-OY
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 01:53:37 +0100
+	id 1LNGVf-00028a-2j
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 01:54:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754521AbZAOAwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 19:52:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753973AbZAOAwM
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 19:52:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40370 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753907AbZAOAwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 19:52:10 -0500
-Received: (qmail invoked by alias); 15 Jan 2009 00:52:08 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp002) with SMTP; 15 Jan 2009 01:52:09 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/nDO4crK7nALydTiM0ZAFcGFRdN/j3fuy/mKX6jV
-	NXwg8Ut+9xkrzn
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <87ab9th0rh.fsf@cup.kalibalik.dk>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1754717AbZAOAxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 19:53:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754575AbZAOAxg
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 19:53:36 -0500
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:41129 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754562AbZAOAxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 19:53:35 -0500
+Received: from vmobile.example.net (catv-80-98-230-81.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 10195446CE6;
+	Thu, 15 Jan 2009 01:53:34 +0100 (CET)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id B4AA919DFC4; Thu, 15 Jan 2009 01:53:38 +0100 (CET)
+X-Mailer: git-send-email 1.6.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105748>
 
-Hi,
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-On Thu, 15 Jan 2009, Anders Melchiorsen wrote:
+The original page is here:
 
-> Previously, the interactive rebase edit mode placed the user after the 
-> commit in question. That was awkward because a commit is supposedly 
-> immutable. Thus, she was forced to use "git commit --amend" for her 
-> changes.
+https://zooko.com/badmerge/simple.html
 
-Maybe, maybe not.  I frequently rebase with "edit" when I actually mean 
-"stop" (but "s" was taken from "squash" already).  Then I test things, 
-possibly fixing them.
+IIRC it was Robin who mentioned it on IRC.
 
-So in that case, I do not want a git reset --soft HEAD^.
+I obviously not send this patch for inclusion, but to raise a
+discussion: if I were a naive user I would think the merge will at least
+result in a conflict, however actually it just gaves a wrong result.
 
-In any case, there is a pretty obvious difference between a merge conflict 
-and a stop at "edit": the latter even shows you a pretty verbose 
-explanation what to do next.
+ t/t7608-merge-zooko.sh |   88 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 88 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7608-merge-zooko.sh
 
-I also have to admit that it escapes me why you would want to force a new 
-commit if nothing was changed to begin with.
-
-However, I often would like to have "amend message" or some such, and I 
-remember having seen patches, but I do not remember why they did not make 
-it in.
-
-Ciao,
-Dscho
+diff --git a/t/t7608-merge-zooko.sh b/t/t7608-merge-zooko.sh
+new file mode 100755
+index 0000000..32609c0
+--- /dev/null
++++ b/t/t7608-merge-zooko.sh
+@@ -0,0 +1,88 @@
++#!/bin/sh
++
++test_description='git merge
++
++Testing merge with the examples of Zooko.'
++
++. ./test-lib.sh
++
++#
++# A - D     \
++#   \ B - C - E
++#
++test_expect_success 'setup' '
++	cat <<EOF >file &&
++A
++B
++C
++D
++E
++EOF
++	git add file &&
++	git commit -m A &&
++	git tag A &&
++	cat <<EOF >file &&
++G
++G
++G
++A
++B
++C
++D
++E
++EOF
++	git add file &&
++	git commit -m B &&
++	git tag B &&
++	cat <<EOF >file &&
++A
++B
++C
++D
++E
++G
++G
++G
++A
++B
++C
++D
++E
++EOF
++	git add file &&
++	git commit -m C &&
++	git tag C &&
++	git reset --hard A &&
++	cat <<EOF >file &&
++A
++B
++X
++D
++E
++EOF
++	git add file &&
++	git commit -m D &&
++	git tag D
++'
++
++test_expect_failure 'merge C' '
++	cat <<EOF >expected &&
++A
++B
++C
++D
++E
++G
++G
++G
++A
++B
++X
++D
++E
++EOF
++	git merge C &&
++	test_cmp expected file
++'
++
++test_done
+-- 
+1.6.1
