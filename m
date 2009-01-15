@@ -1,96 +1,82 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: git merge and cherry-pick and duplicated commits?
-Date: Fri, 16 Jan 2009 00:09:10 +0100
-Message-ID: <200901160009.11124.markus.heidelberg@web.de>
-References: <2729632a0901131840v5c7ce0c7l3f87c03caabf68de@mail.gmail.com> <496DA3B2.1070807@viscovery.net> <2729632a0901141033p47b4d8dah46f5bac27307d306@mail.gmail.com>
-Reply-To: markus.heidelberg@web.de
+From: "Kyle Moffett" <kyle@moffetthome.net>
+Subject: Re: current git kernel has strange problems during bisect
+Date: Thu, 15 Jan 2009 18:13:30 -0500
+Message-ID: <f73f7ab80901151513l22b6b017gadb49312ac331391@mail.gmail.com>
+References: <200901111602.53082.borntraeger@de.ibm.com>
+	 <20090111194258.GA4840@uranus.ravnborg.org>
+	 <alpine.LFD.2.00.0901111200330.6528@localhost.localdomain>
+	 <200901112239.20306.borntraeger@de.ibm.com>
+	 <f73f7ab80901131226s6af7730cucf9c44bc2b4f9545@mail.gmail.com>
+	 <20090115165425.GA7517@bombe-desk.opditex>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Fri Jan 16 00:10:09 2009
+To: "Kyle Moffett" <kyle@moffetthome.net>,
+	"Christian Borntraeger" <borntraeger@de.ibm.com>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Sam Ravnborg" <sam@ravnborg.org>,
+	"Johanne
+X-From: git-owner@vger.kernel.org Fri Jan 16 00:14:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNbLg-00048o-O7
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 00:10:05 +0100
+	id 1LNbQO-0005xz-Cy
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 00:14:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753009AbZAOXIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 18:08:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755258AbZAOXIk
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 18:08:40 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:33755 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753761AbZAOXIj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 18:08:39 -0500
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 4B9CEF8E3BCD;
-	Fri, 16 Jan 2009 00:08:36 +0100 (CET)
-Received: from [89.59.96.34] (helo=pluto)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LNbKG-00056H-00; Fri, 16 Jan 2009 00:08:36 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <2729632a0901141033p47b4d8dah46f5bac27307d306@mail.gmail.com>
-Jabber-ID: markus.heidelberg@web.de
+	id S1757720AbZAOXNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 18:13:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755857AbZAOXNd
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 18:13:33 -0500
+Received: from an-out-0708.google.com ([209.85.132.249]:58377 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755535AbZAOXNc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 18:13:32 -0500
+Received: by an-out-0708.google.com with SMTP id d40so621805and.1
+        for <multiple recipients>; Thu, 15 Jan 2009 15:13:31 -0800 (PST)
+Received: by 10.100.32.6 with SMTP id f6mr1550214anf.90.1232061211087;
+        Thu, 15 Jan 2009 15:13:31 -0800 (PST)
+Received: by 10.100.168.7 with HTTP; Thu, 15 Jan 2009 15:13:30 -0800 (PST)
+In-Reply-To: <20090115165425.GA7517@bombe-desk.opditex>
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19T03HhitCAnKvhHtNAFWq3f1BLFPCYM2zijBHi
-	gVvs3lXB+1r7E3fVyoKr+yCNb3UNIoIZfyPcHXQK4C9XERRmPd
-	92eC5LU20lqLyQyItYCw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105895>
 
-skillzero@gmail.com, 14.01.2009:
-> On Wed, Jan 14, 2009 at 12:34 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> 
-> > After you created the fixup, you have this situation:
-> >
-> >    o--o--o   <- A (feature branch)
-> >   /
-> > --o--x        <- X (the fix-up branch)
-> >   \
-> >    o--o--o   <- Z (probably your master)
-> >
-> > You merge the fix-up into the feature branch and continue developing the
-> > feature:
-> >
-> >    o--o--o--M--o--o   <- A
-> >   /        /
-> > --o--x-----'           <- X
-> >   \
-> >    o--o--o            <- Z
-> >
-> > Other people need the fix in Z right now, so you merge it into Z as well:
-> >
-> >    o--o--o--M--o--o   <- A
-> >   /        /
-> > --o--x-----<           <- X
-> >   \        \
-> >    o--o--o--N         <- Z
-> >
-> > You complete your feature and merge it into Z:
-> >
-> >    o--o--o--M--o--o     <- A
-> >   /        /       \
-> > --o--x-----<         \   <- X
-> >   \        \         \
-> >    o--o--o--N---------O <- Z
-> >
-> > The fix-up commit is only once in your history.
-> 
-> Thanks for the info. That's what I was hoping, but I was thinking that
-> I'd get duplicate commits if I did that. I'll have to try it out when
-> I run into this situation again.
+On Thu, Jan 15, 2009 at 11:54 AM, Andreas Bombe <andreas.bombe@mytum.de> wrote:
+> On Tue, Jan 13, 2009 at 03:26:09PM -0500, Kyle Moffett wrote:
+>> On Sun, Jan 11, 2009 at 4:39 PM, Christian Borntraeger
+>> <borntraeger@de.ibm.com> wrote:
+>> > In my opinion we should really avoid subtree merges in the future as a curtesy
+>> > to people who do the uncool work of testing, problem tracking and bisecting.
+>> > </rant>
+>>
+>> As an alternative, you can relatively easily rewrite the following
+>> independent histories:
+>>
+>> A -- B -- C
+>> X -- Y -- Z
+>>
+>> To look like this:
+>>
+>> A -- B -- C -- X' -- Y' -- Z'
+>>
+>> Where X' is (C + sub/dir/X), Y' is (C + sub/dir/Y), etc...
+>
+> Given that the subtree may have been in development for a long time, it
+> is almost a certainty that the older commits may compile on A but not
+> on C.  By basing it all on C you create a lot of uncompilable commits
+> which hurt bisection just as bad.  At least with missing kernel sources
+> it is obvious that an attempt at compilation is futile and a waste of
+> time.
 
-Note, that you'd get 2 merge commits for this fix-up commit into branch Z.
-The first from merging X into Z, the second is created from merging X
-into A and occures in Z when merging A into it.
+No, the older commits will compile just fine as they don't actually
+reference the new code from any of the parent makefiles.  It would
+effectively be "dead code" until the "merge" in the commit *after* Z'
+in which you add lines to "sub/Kconfig" and "sub/Kbuild" which
+reference "sub/dir/*".
 
-Markus
+Cheers,
+Kyle Moffett
