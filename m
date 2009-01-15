@@ -1,72 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] checkout: implement "-" shortcut name for last
- branch
-Date: Thu, 15 Jan 2009 14:15:19 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901151413250.3586@pacific.mpi-cbg.de>
-References: <1231977976-8739-1-git-send-email-trast@student.ethz.ch> <1231978322-21228-1-git-send-email-trast@student.ethz.ch> <496EE559.3060901@viscovery.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Junio C Hamano <junio@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jan 15 14:15:53 2009
+From: Pieter de Bie <pieter@frim.nl>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
+Date: Thu, 15 Jan 2009 12:57:04 +0000
+Message-ID: <8B5B7148-B900-4E01-9B2C-16C251966F7F@frim.nl>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk>  <alpine.DEB.1.00.0901150149130.3586@pacific.mpi-cbg.de>  <496EE74F.6000205@viscovery.net>  <200901151101.53441.johan@herland.net> <bd6139dc0901150352t2d2fa388x3eb842bbc8c4baa6@mail.gmail.com> <alpine.DEB.1.00.0901151325310.3586@pacific.mpi-cbg.de>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Anders Melchiorsen <mail@cup.kalibalik.dk>, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 15 14:20:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNS4e-0002WC-G9
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 14:15:52 +0100
+	id 1LNS99-00046E-49
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 14:20:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754842AbZAONO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 08:14:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754099AbZAONO2
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 08:14:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54569 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754064AbZAONO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 08:14:27 -0500
-Received: (qmail invoked by alias); 15 Jan 2009 13:14:25 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp018) with SMTP; 15 Jan 2009 14:14:25 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX188h61OBM88c2L7+MLX4cF72/Snwko/gU4ryQe7Or
-	o64JVqwlMP2knI
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <496EE559.3060901@viscovery.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1756073AbZAONTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 08:19:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755947AbZAONTJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 08:19:09 -0500
+Received: from frim.nl ([87.230.85.232]:37467 "EHLO
+	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755823AbZAONTI (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2009 08:19:08 -0500
+X-Greylist: delayed 1555 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Jan 2009 08:19:08 EST
+Received: from cnat068.wlan.net.ed.ac.uk ([129.215.5.68] helo=c196001.wlan.net.ed.ac.uk)
+	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <pieter@frim.nl>)
+	id 1LNRma-0008GQ-I3; Thu, 15 Jan 2009 13:57:12 +0100
+In-Reply-To: <alpine.DEB.1.00.0901151325310.3586@pacific.mpi-cbg.de>
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105795>
 
-Hi,
 
-On Thu, 15 Jan 2009, Johannes Sixt wrote:
+On Jan 15, 2009, at 12:36 PM, Johannes Schindelin wrote:
 
-> Thomas Rast schrieb:
-> > Let git-checkout save the old branch as a symref in LAST_HEAD, and
-> > make 'git checkout -' switch back to LAST_HEAD, like 'cd -' does in
-> > the shell.
-> 
-> /me likes this feature.
-> 
-> git rebase (-i or not) calls checkout behind the scenes if the
-> two-argument form is used:
-> 
->    git rebase [-i] master topic
-> 
-> and 'topic' is not the current branch. You may want to add a test that
-> ensures that rebase sets LAST_HEAD in this case.
-> 
-> You must make sure that commits referenced by LAST_HEAD are not
-> garbage-collected. (I don't know if this happens anyway for symrefs in .git.)
+> BTW I was not fully happy with 'edit' back then, either, which is the
+> reason why I showed the usage in the comment _above_ the commit  
+> list.  But
+> nobody could suggest a name that I found convincingly better.
 
-Note: if you used reflogs for that feature, the garbage collection could 
-not have killed the commit.  However, it is quite possible that the 
-branch was deleted.
+(BTW, I reply to this thread because I'm also often confused with the
+rebase. The thing that hits me most is that with resolving conflicts,
+you have to do a 'git commit' and with 'edit', you have to do a 'git
+commit --amend'. This can get confusing if you set up an interactive
+rebase where you have some new picks or squashes, and also an edit.
+If the rebase stops, you first have to carefully read whether you're
+supposed to do a 'git commit' or a 'git commit --amend', and remember
+that until you're finished with the changes).
 
-Ciao,
-Dscho
+- Pieter
