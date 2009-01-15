@@ -1,96 +1,82 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH] git-am: add --directory=<dir> option
-Date: Thu, 15 Jan 2009 02:08:56 +0100
-Message-ID: <20090115010856.GF32313@leksak.fem-net>
-References: <7vbpudjanf.fsf@gitster.siamese.dyndns.org> <20090114234602.GD32313@leksak.fem-net> <7vzlhtxvu5.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH replacement for take 3 4/4] color-words: take an optional
+ regular expression describing words
+Date: Thu, 15 Jan 2009 02:12:59 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901150211120.3586@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0901141840100.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901142142120.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901142145200.3586@pacific.mpi-cbg.de> <200901150132.14106.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>,
-	Simon 'corecode' Schubert <corecode@fs.ei.tum.de>,
-	Kevin Ballard <kevin@sb.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 02:10:34 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org,
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
+	Junio C Hamano <junio@pobox.com>,
+	Teemu Likonen <tlikonen@iki.fi>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Jan 15 02:13:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNGkk-0006fN-3j
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 02:10:34 +0100
+	id 1LNGnb-0007Kj-Nl
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 02:13:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753902AbZAOBJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 20:09:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753888AbZAOBJN
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 20:09:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50013 "HELO mail.gmx.net"
+	id S1754145AbZAOBMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jan 2009 20:12:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754046AbZAOBMK
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 20:12:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53649 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753044AbZAOBJM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 20:09:12 -0500
-Received: (qmail invoked by alias); 15 Jan 2009 01:09:10 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp050) with SMTP; 15 Jan 2009 02:09:10 +0100
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX19hFlhbjUxhdsyAIPV0j/S0hF7DHiAhMFESgTZCId
-	bwZedTccPevhEL
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1LNGjA-0003Rz-RE; Thu, 15 Jan 2009 02:08:56 +0100
-Content-Disposition: inline
-In-Reply-To: <7vzlhtxvu5.fsf@gitster.siamese.dyndns.org>
+	id S1753932AbZAOBMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 20:12:08 -0500
+Received: (qmail invoked by alias); 15 Jan 2009 01:12:06 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp005) with SMTP; 15 Jan 2009 02:12:06 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/TPLdg/QjTzJWzF5u/NQH+sxtwfTE1QO2YWtAkrB
+	zg/PdfYcs0Gv/a
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200901150132.14106.trast@student.ethz.ch>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105751>
 
 Hi,
 
-Junio C Hamano wrote:
-> > Do I have a thinko or should it be this:
-> >
-> > +		sed -e 's/'\''/'\''\\\'\'''\''/g' -e 's/.*/ '\''&'\''/'
-> > 		                   ^^
-> > 			(added for escaping ' outside single quotes)
+On Thu, 15 Jan 2009, Thomas Rast wrote:
+
+> Johannes Schindelin wrote:
+> > 	This basically contains the fix I sent earlier.
 > 
-> Almost.
+> Unfortunately I found another case where it breaks.  It even comes
+> with a fairly neat test case:
 > 
-> Certainly my original was bad; shell unquotes to "s/'/'\''/g", but that
-> backslash is not protected from further interpretation by sed, which
-> happily turns backslash-single quote into a single quote, which I forgot.
-> 
-> You feed "s/'/'\\\''/g" which correctly protects one backslash from sed by
-> doubling it, but it has one unnecessary extra backslash.
+>   $ g diff --no-index test_a test_b
+>   diff --git 1/test_a 2/test_b
+>   index 289cb9d..2d06f37 100644
+>   --- 1/test_a
+>   +++ 2/test_b
+>   @@ -1 +1 @@
+>   -(:
+>   +(
 
-My attempt was to escape one backslash and to escape one single quote.
+The diff of the words would look like this:
 
-> The extra one
-> does not hurt because the backslash + single quote is eaten by sed to
-> produce a single quote, but it is not quite right.
+diff --git a/a1 b/a2
+index 8309acb..2d06f37 100644
+--- a/a1
++++ b/a2
+@@ -2 +1,0 @@
+-:
 
-Well, this explains why my syntax highlighting has "gone mad" in your
-former and in my version.
 
-> We should be feeding sed with "s/'/'\\''/g", so you need to add one
-> backslash to mine.
+Notice the "+1,0"?  I fully expected this to be "+2,0", but apparently I 
+was mistaken...
 
-Ok, works like a charm :-)
+Can anybody explain to me why this is so?
 
-> > Have you forgotten to add the files prefixed with "am-test-5-" or is this
-> > patch based on another one?
-> 
-> The one I actually queued is b47dfe9 (git-am: add --directory=<dir>
-> option, 2009-01-11) and it does include these test vectors.  My bad.
-
-Ohh, I did not even notice that you queued it, because I do not track "next".
-
-And in my git-am.txt snippet I even forgot adding the option to the synopsis.
-Oh, boy. :-)
-
-I think it's fine now. :-)
-
-Regards,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+Ciao,
+Dscho
