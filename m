@@ -1,79 +1,78 @@
-From: "Sverre Rabbelier" <srabbelier@gmail.com>
-Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
-Date: Thu, 15 Jan 2009 18:16:29 +0100
-Message-ID: <bd6139dc0901150916v41959d78r41483617b952ed5f@mail.gmail.com>
-References: <87ab9th0rh.fsf@cup.kalibalik.dk>
-	 <alpine.DEB.1.00.0901150149130.3586@pacific.mpi-cbg.de>
-	 <496EE74F.6000205@viscovery.net>
-	 <200901151101.53441.johan@herland.net>
-	 <bd6139dc0901150352t2d2fa388x3eb842bbc8c4baa6@mail.gmail.com>
-	 <alpine.DEB.1.00.0901151325310.3586@pacific.mpi-cbg.de>
-	 <bd6139dc0901150445l51f3b861n5bbd85bb6d1382b6@mail.gmail.com>
-	 <7vmydsv72u.fsf@gitster.siamese.dyndns.org>
+From: Andreas Bombe <andreas.bombe@mytum.de>
+Subject: Re: current git kernel has strange problems during bisect
+Date: Thu, 15 Jan 2009 17:54:25 +0100
+Message-ID: <20090115165425.GA7517@bombe-desk.opditex>
+References: <200901111602.53082.borntraeger@de.ibm.com> <20090111194258.GA4840@uranus.ravnborg.org> <alpine.LFD.2.00.0901111200330.6528@localhost.localdomain> <200901112239.20306.borntraeger@de.ibm.com> <f73f7ab80901131226s6af7730cucf9c44bc2b4f9545@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Johan Herland" <johan@herland.net>, git@vger.kernel.org,
-	"Johannes Sixt" <j.sixt@viscovery.net>,
-	"Anders Melchiorsen" <mail@cup.kalibalik.dk>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 18:18:01 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Borntraeger <borntraeger@de.ibm.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+To: Kyle Moffett <kyle@moffetthome.net>
+X-From: git-owner@vger.kernel.org Thu Jan 15 18:22:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNVqu-000854-Lm
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 18:17:57 +0100
+	id 1LNVvd-0001q9-C5
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 18:22:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756121AbZAORQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 12:16:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755816AbZAORQb
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 12:16:31 -0500
-Received: from mail-gx0-f21.google.com ([209.85.217.21]:51031 "EHLO
-	mail-gx0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755494AbZAORQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 12:16:30 -0500
-Received: by gxk14 with SMTP id 14so1086973gxk.13
-        for <git@vger.kernel.org>; Thu, 15 Jan 2009 09:16:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references
-         :x-google-sender-auth;
-        bh=eIUenR2g7cOe8U/BOPj1jtGBrJiIUoKXFhcDvqGE6PM=;
-        b=US4307o8BV3ZJQcY85RhwYcJs/Z2W7DMqTIUH1qWfiUR7u/0AP7NTDsjTwwH1OLb58
-         XypuDVFUmsVC/1YAlhiDOQ2wXkE2IPt5UmAjxO9/fkCsnyezuyMc59mQjEwm3yAGid9p
-         G1mA4sBPGmp8HsW0JoyfZy9qk3/ZOWla6TQqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references:x-google-sender-auth;
-        b=taMh6EQwN9m/h5esJKccPdj6H65Y2eOudDql9a61UxGCv0eLMG21jfHj+Igl2ajRF+
-         Tt4+vsN2LCt1sw4p1k/6wHOjBRxn/bSokioWMeRIurM25VAppNgAlrko14Evsn2DdDlX
-         aMJIPHHmw+d3XvqI9Bw44CsNc6Ulunziq2vxc=
-Received: by 10.150.57.5 with SMTP id f5mr1795263yba.220.1232039789108;
-        Thu, 15 Jan 2009 09:16:29 -0800 (PST)
-Received: by 10.150.121.4 with HTTP; Thu, 15 Jan 2009 09:16:29 -0800 (PST)
-In-Reply-To: <7vmydsv72u.fsf@gitster.siamese.dyndns.org>
+	id S1758166AbZAORVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 12:21:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758089AbZAORVY
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 12:21:24 -0500
+Received: from dd13538.kasserver.com ([85.13.135.107]:58169 "EHLO
+	dd13538.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758080AbZAORVX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 12:21:23 -0500
+X-Greylist: delayed 1614 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Jan 2009 12:21:23 EST
+Received: from localhost.localdomain (p5B0D50D8.dip.t-dialin.net [91.13.80.216])
+	by dd13538.kasserver.com (Postfix) with ESMTP id 46FAA18156E8E;
+	Thu, 15 Jan 2009 17:54:30 +0100 (CET)
+Received: from andreas by localhost.localdomain with local (Exim 4.69)
+	(envelope-from <andreas@bombe-desk.opditex>)
+	id 1LNVU9-0003fD-SG; Thu, 15 Jan 2009 17:54:25 +0100
+Mail-Followup-To: Kyle Moffett <kyle@moffetthome.net>,
+	Christian Borntraeger <borntraeger@de.ibm.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Disposition: inline
-X-Google-Sender-Auth: 135f23eb6d3abdb1
+In-Reply-To: <f73f7ab80901131226s6af7730cucf9c44bc2b4f9545@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105859>
 
-On Thu, Jan 15, 2009 at 17:59, Junio C Hamano <gitster@pobox.com> wrote:
-> 'stop' would be closest to what it currently does.  It stops and it is up
-> to you how to screw up the result ;-).
+On Tue, Jan 13, 2009 at 03:26:09PM -0500, Kyle Moffett wrote:
+> On Sun, Jan 11, 2009 at 4:39 PM, Christian Borntraeger
+> <borntraeger@de.ibm.com> wrote:
+> > In my opinion we should really avoid subtree merges in the future as a curtesy
+> > to people who do the uncool work of testing, problem tracking and bisecting.
+> > </rant>
+> 
+> As an alternative, you can relatively easily rewrite the following
+> independent histories:
+> 
+> A -- B -- C
+> X -- Y -- Z
+> 
+> To look like this:
+> 
+> A -- B -- C -- X' -- Y' -- Z'
+> 
+> Where X' is (C + sub/dir/X), Y' is (C + sub/dir/Y), etc...
 
-Hmmm, yes, I think that would be a better alias; but I think I like
-the idea to wait for changes like this till sequencer goes in, mhh?
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Given that the subtree may have been in development for a long time, it
+is almost a certainty that the older commits may compile on A but not
+on C.  By basing it all on C you create a lot of uncompilable commits
+which hurt bisection just as bad.  At least with missing kernel sources
+it is obvious that an attempt at compilation is futile and a waste of
+time.
