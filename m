@@ -1,61 +1,83 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit] import --mail/--mbox question
-Date: Thu, 15 Jan 2009 10:49:12 +0100
-Message-ID: <20090115094912.GC24890@diana.vm.bytemark.co.uk>
-References: <496E0656.2090705@ruby.dti.ne.jp>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit
+ state
+Date: Thu, 15 Jan 2009 11:01:53 +0100
+Message-ID: <200901151101.53441.johan@herland.net>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk>
+ <alpine.DEB.1.00.0901150149130.3586@pacific.mpi-cbg.de>
+ <496EE74F.6000205@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 10:50:52 2009
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Anders Melchiorsen <mail@cup.kalibalik.dk>, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 15 11:03:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNOsE-0006mQ-5u
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 10:50:50 +0100
+	id 1LNP4w-0002K1-7u
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 11:03:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760463AbZAOJtZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 04:49:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760358AbZAOJtX
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 04:49:23 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1261 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760206AbZAOJtU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 04:49:20 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1LNOqe-0006rN-00; Thu, 15 Jan 2009 09:49:12 +0000
-Content-Disposition: inline
-In-Reply-To: <496E0656.2090705@ruby.dti.ne.jp>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1756467AbZAOKCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 05:02:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755923AbZAOKCg
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 05:02:36 -0500
+Received: from smtp.getmail.no ([84.208.20.33]:40738 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755341AbZAOKCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 05:02:35 -0500
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0KDI00L2NBW83D00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 15 Jan 2009 11:02:32 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KDI00953BV52K40@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 15 Jan 2009 11:01:53 +0100 (CET)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KDI002ZEBV5YUL5@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Thu, 15 Jan 2009 11:01:53 +0100 (CET)
+In-reply-to: <496EE74F.6000205@viscovery.net>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105777>
 
-On 2009-01-15 00:35:50 +0900, Shinya Kuribayashi wrote:
-
-> Question: when importing Mozilla Thunderbird mails (eml or mbox),
-> the imported patch always have committer's date in git log, not
-> submitter's date. However, if importing the same mails with git am,
-> we could see submitter's date in git log.
+On Thursday 15 January 2009, Johannes Sixt wrote:
+> Johannes Schindelin schrieb:
+> > On Thu, 15 Jan 2009, Anders Melchiorsen wrote:
+> >> Previously, the interactive rebase edit mode placed the user after the
+> >> commit in question. That was awkward because a commit is supposedly
+> >> immutable. Thus, she was forced to use "git commit --amend" for her
+> >> changes.
+> >
+> > Maybe, maybe not.  I frequently rebase with "edit" when I actually mean
+> > "stop" (but "s" was taken from "squash" already).  Then I test things,
+> > possibly fixing them.
+> >
+> > So in that case, I do not want a git reset --soft HEAD^.
 >
-> Is this intentionally-designed log management of StGit? I would
-> expect the submitter's date & locale is kept when importing patches
-> from e-mails.
+> Absolutely! I use "edit" for this purpose as well quite frequently.
 
-Hmm. I agree with you that the expected behavior when importing
-patches from e-mails is that the author date is set to the date in the
-e-mail, the way git-am does it.
+What about providing both options?
 
-Looking at the code, it looks like the intention is that it should
-work that way, too. So I guess it's simply a bug. Catalin, do you have
-a clue?
+"modify" does the "git reset --soft HEAD^" (Anders' suggestion)
+"amend" requires a "git commit --amend" (current behaviour)
+"edit" == "amend", but is deprecated and goes away in the future
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
