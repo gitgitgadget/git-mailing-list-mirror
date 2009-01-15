@@ -1,73 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/4] color-words: make regex configurable via
- attributes
-Date: Thu, 15 Jan 2009 02:43:33 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901150241210.3586@pacific.mpi-cbg.de>
-References: <3ff3ccf6e3c1cd6a002d200aee5df88a197a7bf6.1231971446.git.trast@student.ethz.ch> <48504e8a330beca560208ce050d43bc92ac04c90.1231971446.git.trast@student.ethz.ch> <b1290f83267e64856e58477e0c19e920dd416c82.1231971446.git.trast@student.ethz.ch>
- <b404fdfe0f5af535b35d1f239a68f6a7911ede19.1231971446.git.trast@student.ethz.ch> <alpine.DEB.1.00.0901150233121.3586@pacific.mpi-cbg.de>
+From: bill lam <cbill.lam@gmail.com>
+Subject: Re: [ANNOUNCE] tig-0.13
+Date: Thu, 15 Jan 2009 09:46:17 +0800
+Message-ID: <20090115014617.GC6937@b2j>
+References: <20090113233643.GA28898@diku.dk> <20090114232456.GA6937@b2j> <20090114235607.GA5546@diku.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org,
-	=?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
-	Junio C Hamano <junio@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jan 15 02:44:11 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Thu Jan 15 02:47:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNHHE-0006Xp-N7
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 02:44:09 +0100
+	id 1LNHKm-0007il-LC
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 02:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752628AbZAOBmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jan 2009 20:42:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750927AbZAOBmn
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 20:42:43 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39327 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751262AbZAOBmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jan 2009 20:42:42 -0500
-Received: (qmail invoked by alias); 15 Jan 2009 01:42:40 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp068) with SMTP; 15 Jan 2009 02:42:40 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+c1ZpLr/GcUV1cwXLQsCQy/z8P8+Cbkz86gxN/++
-	ad7+Ca/MRnfwiQ
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0901150233121.3586@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1752253AbZAOBqY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jan 2009 20:46:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752018AbZAOBqY
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Jan 2009 20:46:24 -0500
+Received: from ti-out-0910.google.com ([209.85.142.190]:63205 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751766AbZAOBqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jan 2009 20:46:23 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so430871tic.23
+        for <git@vger.kernel.org>; Wed, 14 Jan 2009 17:46:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:references:mime-version:content-type
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=t2L491/TOrH78qEjxoCuSDXpI617j+ChLz8hOO0U8qQ=;
+        b=Fn/xuS6SPFfTHBsDylf5Dc3gQeWx6OShLvFG83DUD1JWiIFyGWTnN63YL7GsOankOF
+         LsDi7aD+869XlZOXjFsDNfzpWzGYOyH1WlklBOvXxDB6Rl09z00gzNbRo6Ihl+Ki9Ch/
+         Ph1tm3xZLjCf3qSN+lB0YtEc9GZAwL1/PEkRo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        b=eHVmDWVlBFQCetJPpO3/EPQ63foaVhcyVIWE1bs39yzOfawY3PG7cRR530TmHHITE9
+         fPZH/zQWeHfxH4dFGILcUOaQp0cmbxhX+BcjVN71x7+rPSx372WU8G+5ASdEt7kGJzTy
+         LPPptyAa2c0h64zG5jWIfuVJXLrlNH5taRrc4=
+Received: by 10.110.14.3 with SMTP id 3mr986508tin.29.1231983981656;
+        Wed, 14 Jan 2009 17:46:21 -0800 (PST)
+Received: from localhost (pcd406163.netvigator.com [203.218.196.163])
+        by mx.google.com with ESMTPS id u12sm2345498tia.9.2009.01.14.17.46.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 14 Jan 2009 17:46:20 -0800 (PST)
+Mail-Followup-To: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20090114235607.GA5546@diku.dk>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105757>
 
-Hi,
+On Thu, 15 Jan 2009, Jonas Fonseca wrote:
+> Yes, it works. You can either create a file called config.make with a
+> line saying:
+>=20
+> 	LDLIBS =3D -lncursesw
+>=20
+> or use the configure file. If you are not using the tarball generate =
+it
+> with:
+>=20
+> 	make configure
 
-On Thu, 15 Jan 2009, Johannes Schindelin wrote:
+I use the git source. Even after make configure and  ./configure, it
+still links to the non-unicode ncurses. Should it make ncursesw as=20
+default if detected available albeit this can be changed manually?
 
-> @@ -136,10 +131,11 @@ cat > expect <<\EOF
->  aaa (aaa) <GREEN>aaa<RESET>
->  EOF
->  
-> -test_expect_success "test parsing words for newline" '
-> +test_expect_success 'test parsing words for newline' '
-> +
-> +	word_diff --color-words="a+"
->  
-> -	word_diff --color-words="a+" &&
-> -	word_diff_check expect
-> +	word_diff --color-words=.
->  
->  '
-
-D'oh.  please remove the last word_diff, this comes from my "fix" for your 
-smiley issue.
-
-Ciao,
-Dscho "off to bed"
-
---
-"The night was so dark that he hardly coulx srr tje keuboarf."
+--=20
+regards,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+=E5=94=90=E8=A9=A9319 =E6=9D=8E=E7=99=BD  =E6=B8=85=E5=B9=B3=E8=AA=BF=E4=
+=B8=89=E9=A6=96=E4=B9=8B=E4=B8=89
+    =E5=90=8D=E8=8A=B1=E5=82=BE=E5=9C=8B=E5=85=A9=E7=9B=B8=E6=AD=A1  =E5=
+=B8=B8=E5=BE=97=E5=90=9B=E7=8E=8B=E5=B8=B6=E7=AC=91=E7=9C=8B  =E8=A7=A3=
+=E9=87=8B=E6=98=A5=E9=A2=A8=E7=84=A1=E9=99=90=E6=81=A8  =E6=B2=88=E9=A6=
+=99=E4=BA=AD=E5=8C=97=E5=80=9A=E9=97=8C=E5=B9=B2
