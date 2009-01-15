@@ -1,80 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: rebase -p confusion in 1.6.1
-Date: Thu, 15 Jan 2009 17:53:53 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901151751580.3586@pacific.mpi-cbg.de>
-References: <slrngmu4j5.e1u.sitaramc@sitaramc.homelinux.net> <496F3C99.1040800@drmicha.warpmail.net> <20090115135518.GB10045@leksak.fem-net> <496F44AC.2060607@drmicha.warpmail.net> <alpine.DEB.1.00.0901151518520.3586@pacific.mpi-cbg.de>
- <496F4BF0.6020805@drmicha.warpmail.net> <alpine.DEB.1.00.0901151658060.3586@pacific.mpi-cbg.de> <slrngmuoq8.3u2.sitaramc@sitaramc.homelinux.net>
+Date: Thu, 15 Jan 2009 17:56:35 +0100
+Message-ID: <496F6AC3.7050704@drmicha.warpmail.net>
+References: <slrngmu4j5.e1u.sitaramc@sitaramc.homelinux.net> <496F3C99.1040800@drmicha.warpmail.net> <20090115135518.GB10045@leksak.fem-net> <496F44AC.2060607@drmicha.warpmail.net> <alpine.DEB.1.00.0901151518520.3586@pacific.mpi-cbg.de> <496F4BF0.6020805@drmicha.warpmail.net> <alpine.DEB.1.00.0901151658060.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 17:55:18 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Stephan Beyer <s-beyer@gmx.net>,
+	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org,
+	Stephen Haberman <stephen@exigencecorp.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 15 17:58:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNVUb-0006W9-SQ
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 17:54:54 +0100
+	id 1LNVXd-0007xg-Pf
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 17:58:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754746AbZAOQxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 11:53:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753835AbZAOQxQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 11:53:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43612 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754374AbZAOQxQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 11:53:16 -0500
-Received: (qmail invoked by alias); 15 Jan 2009 16:53:11 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp045) with SMTP; 15 Jan 2009 17:53:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX182bjIsgnc2okvemrjotHX2V0zxIZeHSFJRkSrjId
-	3ea73g6F3eUxr1
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <slrngmuoq8.3u2.sitaramc@sitaramc.homelinux.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1755169AbZAOQ4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 11:56:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755050AbZAOQ4i
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 11:56:38 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35345 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753809AbZAOQ4h (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2009 11:56:37 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id B8FA32158DC;
+	Thu, 15 Jan 2009 11:56:35 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 15 Jan 2009 11:56:35 -0500
+X-Sasl-enc: MemKMwW+ULU+PGWxR3ewpYq8185TF0jgmO/H8bhzVlsW 1232038595
+Received: from [139.174.44.34] (pascal.math.tu-clausthal.de [139.174.44.34])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B4D3114A36;
+	Thu, 15 Jan 2009 11:56:34 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
+In-Reply-To: <alpine.DEB.1.00.0901151658060.3586@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105854>
 
-Hi,
-
-
-
-if you would like me to respond to your questions in the future, it is 
-mandatory to keep me in the Cc: list.
-
-
-
-On Thu, 15 Jan 2009, Sitaram Chamarty wrote:
-
-> On 2009-01-15, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Johannes Schindelin venit, vidit, dixit 15.01.2009 17:04:
+...
+>>> The more I think about it, I think it's possible I broke it with the 
+>>> introduction of the "noop".
+>> It certainly worked after the noop introduction before the r-i-p series, 
+>> but not any more after.
 > 
-> > The intention was this:
-> >
-> > 	$ git rebase -p master
-> >
-> > would need to rewrite _all_ commits that are in "master..".  All of them, 
-> > including the merge commits.
-> 
-> I went hog wild with all sorts of test cases and my head is
-> spinning, but -- even when things happen more predictably,
-> I'm unable to make "rebase -p" carry an evil merge over.
-> The "evil" part stays behind.
-> 
-> I'm not sure if that is intentional or not, or (more likely)
-> my brain has become addled and I missed something somewhere.
+> Umm... which rebase -i -p series do you mean?  "noop" was introduced 
+> pretty recently if my Alzheimered brain does not fool me.
 
-Yes, this is intentional.
+This one introduced noop:
 
-	Instead of ignoring merges, try to recreate them.
+commit ff74126c03a8dfd04e7533573a5c420f2a7112ac
+Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Fri Oct 10 13:42:12 2008 +0200
 
-That means it tries to recreate them.  Not that it is successful.  And not 
-even that it realizes when it failed.
+    rebase -i: do not fail when there is no commit to cherry-pick
 
-Hth,
-Dscho
+This is the bad one from bisect:
+
+commit d80d6bc146232d81f1bb4bc58e5d89263fd228d4
+Author: Stephen Haberman <stephen@exigencecorp.com>
+Date:   Wed Oct 15 02:44:39 2008 -0500
+
+    rebase-i-p: do not include non-first-parent commits touching UPSTREAM
+
+It's the last one in a longer series. And that series is after the noop
+introduction.
+
+Michael
