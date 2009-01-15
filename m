@@ -1,81 +1,71 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
-Date: Thu, 15 Jan 2009 20:27:49 +0100
-Message-ID: <8035E52E-D202-4C42-BDFD-DC7A925580A3@wincent.com>
-References: <87ab9th0rh.fsf@cup.kalibalik.dk> <7vmydsv72u.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901151921040.3586@pacific.mpi-cbg.de> <200901151946.04991.johan@herland.net>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Anders Melchiorsen <mail@cup.kalibalik.dk>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Jan 15 20:29:45 2009
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Subject: Re: What's cooking in git.git (Jan 2009, #03; Wed, 14)
+Date: Thu, 15 Jan 2009 22:49:26 +0300
+Organization: St.Petersburg State University
+Message-ID: <20090115194926.GA6899@roro3.zxlink>
+References: <7vmydu3yy7.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 20:49:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNXuC-0005Ah-5F
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 20:29:28 +0100
+	id 1LNYDf-00051c-Ha
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 20:49:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763547AbZAOT2F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 14:28:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763111AbZAOT2E
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 14:28:04 -0500
-Received: from wincent1.inetu.net ([209.235.192.161]:37436 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762670AbZAOT2B convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2009 14:28:01 -0500
-Received: from cuzco.lan (249.pool85-53-13.dynamic.orange.es [85.53.13.249])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n0FJRoau012176
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 15 Jan 2009 14:27:51 -0500
-In-Reply-To: <200901151946.04991.johan@herland.net>
-X-Mailer: Apple Mail (2.929.2)
+	id S1754397AbZAOTsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 14:48:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754135AbZAOTsL
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 14:48:11 -0500
+Received: from landau.phys.spbu.ru ([195.19.235.38]:1581 "EHLO
+	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753236AbZAOTsK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 14:48:10 -0500
+Received: by landau.phys.spbu.ru (Postfix, from userid 509)
+	id 65F6417B661; Thu, 15 Jan 2009 22:48:08 +0300 (MSK)
+Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
+	(envelope-from <kirr@roro3.zxlink>)
+	id 1LNYDW-0005UF-CT; Thu, 15 Jan 2009 22:49:26 +0300
+Content-Disposition: inline
+In-Reply-To: <7vmydu3yy7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105871>
 
-El 15/1/2009, a las 19:46, Johan Herland escribi=F3:
+On Wed, Jan 14, 2009 at 03:32:32AM -0800, Junio C Hamano wrote:
 
-> On Thursday 15 January 2009, Johannes Schindelin wrote:
->> On Thu, 15 Jan 2009, Junio C Hamano wrote:
->>> 'stop' would be closest to what it currently does.  It stops and it
->>> is up to you how to screw up the result ;-).
->>
->> But it shares the first letter with 'squash'.
->
-> Personally, I'd rather use "pause", but that is taken as well.
->
-> Other suggestions:
->
-> wait
-> yield
-> rest
-> timeout
+[...]
 
-Perhaps stating the obvious, but:
+> [Actively cooking]
+> 
+> * gb/gitweb-opml (Fri Jan 2 13:49:30 2009 +0100) 2 commits
+>  + gitweb: suggest name for OPML view
+>  + gitweb: don't use pathinfo for global actions
+> 
+> * ks/maint-mailinfo-folded (Mon Jan 12 15:22:11 2009 -0800) 2 commits
+>  - mailinfo: 'From:' header should be unfold as well
+>  - mailinfo: correctly handle multiline 'Subject:' header
+> 
+> The author seems to have more updates, but I couldn't extract them from
+> the e-mail.
 
-wait - best suggestion so far, seeing as we can't use "stop"
+Sorry for the inconvenience, and please pull them all from
 
-yield - might sound intuitive to a Ruby programmer; but for others =20
-it's probably not so obvious as "yield" has a number of meanings in =20
-normal English similar to "give up", "give over" etc
+    git://repo.or.cz/git/kirr.git   for-junio
 
-rest - not quite as good as "wait"; machines wait for humans, but the =20
-never need to rest
 
-timeout - sounds like an error condition, so not really appropriate
+Kirill Smelkov (4):
+      mailinfo: 'From:' header should be unfold as well
+      mailinfo: more smarter removal of rfc822 comments from 'From'
+      mailinfo: correctly handle multiline 'Subject:' header
+      mailinfo: add explicit test for mails like '<a.u.thor@example.com> (A U Thor)'
 
-Sorry for participating in the painting. Just thought that "wait" was =20
-good enough to merit some positive feedback.
 
-Cheers,
-Wincent
+Thanks,
+Kirill
