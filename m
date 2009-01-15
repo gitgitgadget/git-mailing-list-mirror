@@ -1,80 +1,72 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [ANNOUNCE] tig-0.13
-Date: Thu, 15 Jan 2009 14:06:59 +0100
-Message-ID: <20090115130659.GA18081@diku.dk>
-References: <20090113233643.GA28898@diku.dk> <20090114232456.GA6937@b2j> <20090114235607.GA5546@diku.dk> <20090115014617.GC6937@b2j>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] checkout: implement "-" shortcut name for last
+ branch
+Date: Thu, 15 Jan 2009 14:15:19 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901151413250.3586@pacific.mpi-cbg.de>
+References: <1231977976-8739-1-git-send-email-trast@student.ethz.ch> <1231978322-21228-1-git-send-email-trast@student.ethz.ch> <496EE559.3060901@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 15 14:08:33 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Junio C Hamano <junio@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jan 15 14:15:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNRxU-0008Lv-WE
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 14:08:29 +0100
+	id 1LNS4e-0002WC-G9
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 14:15:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755364AbZAONHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 08:07:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755272AbZAONHE
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 08:07:04 -0500
-Received: from mgw1.diku.dk ([130.225.96.91]:60481 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755268AbZAONHD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 08:07:03 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 140D952C3A5
-	for <git@vger.kernel.org>; Thu, 15 Jan 2009 14:07:01 +0100 (CET)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zTqPIoCfjKjL for <git@vger.kernel.org>;
-	Thu, 15 Jan 2009 14:06:59 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id AD7DB52C390
-	for <git@vger.kernel.org>; Thu, 15 Jan 2009 14:06:59 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP id 1EA926DFAB0
-	for <git@vger.kernel.org>; Thu, 15 Jan 2009 14:05:49 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 98B3239A9FF; Thu, 15 Jan 2009 14:06:59 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20090115014617.GC6937@b2j>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754842AbZAONO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 08:14:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754099AbZAONO2
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 08:14:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54569 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754064AbZAONO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 08:14:27 -0500
+Received: (qmail invoked by alias); 15 Jan 2009 13:14:25 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp018) with SMTP; 15 Jan 2009 14:14:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX188h61OBM88c2L7+MLX4cF72/Snwko/gU4ryQe7Or
+	o64JVqwlMP2knI
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <496EE559.3060901@viscovery.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105794>
 
-bill lam <cbill.lam@gmail.com> wrote Thu, Jan 15, 2009:
-> On Thu, 15 Jan 2009, Jonas Fonseca wrote:
-> > Yes, it works. You can either create a file called config.make with a
-> > line saying:
-> > 
-> > 	LDLIBS = -lncursesw
-> > 
-> > or use the configure file. If you are not using the tarball generate it
-> > with:
-> > 
-> > 	make configure
+Hi,
+
+On Thu, 15 Jan 2009, Johannes Sixt wrote:
+
+> Thomas Rast schrieb:
+> > Let git-checkout save the old branch as a symref in LAST_HEAD, and
+> > make 'git checkout -' switch back to LAST_HEAD, like 'cd -' does in
+> > the shell.
 > 
-> I use the git source. Even after make configure and  ./configure, it
-> still links to the non-unicode ncurses.
+> /me likes this feature.
+> 
+> git rebase (-i or not) calls checkout behind the scenes if the
+> two-argument form is used:
+> 
+>    git rebase [-i] master topic
+> 
+> and 'topic' is not the current branch. You may want to add a test that
+> ensures that rebase sets LAST_HEAD in this case.
+> 
+> You must make sure that commits referenced by LAST_HEAD are not
+> garbage-collected. (I don't know if this happens anyway for symrefs in .git.)
 
-I haven't tested the configure script on a lot of system, so it might be
-a bit debian/ubuntu/gentoo centered in that use of ncursesw requires the
-presence of a {/usr/incude/}ncursesw/ncurses.h header. Where are the
-unicode ncurses.h files found on your system?
+Note: if you used reflogs for that feature, the garbage collection could 
+not have killed the commit.  However, it is quite possible that the 
+branch was deleted.
 
-> Should it make ncursesw as 
-> default if detected available albeit this can be changed manually?
-
-I would prefer that the "default" (running make without configure) has
-as few dependencies as possible. Since the unicode version of ncurses is
-probably more rare than the non-unicode version it is probably a bad
-idea to use ncursesw by default. However, if you use the configure
-script ncursesw is the default, when it is available.
-
--- 
-Jonas Fonseca
+Ciao,
+Dscho
