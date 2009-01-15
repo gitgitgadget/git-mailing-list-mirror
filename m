@@ -1,96 +1,83 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: rebase -p confusion in 1.6.1
-Date: Thu, 15 Jan 2009 15:45:04 +0100
-Message-ID: <496F4BF0.6020805@drmicha.warpmail.net>
-References: <slrngmu4j5.e1u.sitaramc@sitaramc.homelinux.net> <496F3C99.1040800@drmicha.warpmail.net> <20090115135518.GB10045@leksak.fem-net> <496F44AC.2060607@drmicha.warpmail.net> <alpine.DEB.1.00.0901151518520.3586@pacific.mpi-cbg.de>
+From: bill lam <cbill.lam@gmail.com>
+Subject: Re: [ANNOUNCE] tig-0.13
+Date: Thu, 15 Jan 2009 22:50:03 +0800
+Message-ID: <20090115145003.GA6938@b2j>
+References: <20090113233643.GA28898@diku.dk> <20090114232456.GA6937@b2j> <20090114235607.GA5546@diku.dk> <20090115014617.GC6937@b2j> <20090115130659.GA18081@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Stephan Beyer <s-beyer@gmx.net>,
-	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org,
-	Stephen Haberman <stephen@exigencecorp.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 15 15:47:02 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Thu Jan 15 15:52:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNTUT-0002xG-5S
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 15:46:37 +0100
+	id 1LNTZI-00050f-VI
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 15:51:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756438AbZAOOpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 09:45:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761004AbZAOOpK
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 09:45:10 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:56622 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756438AbZAOOpI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2009 09:45:08 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 0DD37213343;
-	Thu, 15 Jan 2009 09:45:05 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 15 Jan 2009 09:45:05 -0500
-X-Sasl-enc: xXFRRHDaN5DuLvYFl6SziH7zN2I/UWkB857QCJgzYoUV 1232030704
-Received: from [139.174.44.34] (pascal.math.tu-clausthal.de [139.174.44.34])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0924345EE0;
-	Thu, 15 Jan 2009 09:45:03 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
-In-Reply-To: <alpine.DEB.1.00.0901151518520.3586@pacific.mpi-cbg.de>
+	id S1765040AbZAOOuO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 09:50:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764762AbZAOOuO
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 09:50:14 -0500
+Received: from ti-out-0910.google.com ([209.85.142.190]:20351 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761898AbZAOOuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 09:50:11 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so624546tic.23
+        for <git@vger.kernel.org>; Thu, 15 Jan 2009 06:50:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:references:mime-version:content-type
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=nqxh7ee+/ajyYOcnoSIPEq1KpZt4b1RmHHjfqYQtomY=;
+        b=DfXzttOJarP/rT11wE+bJ4ttKRie3nEHxsJMai4Ayl/cQFMp57GrR9uK2aMCKUM0XF
+         DvvCPO+4QJvvaKajHUQ/KeEZc6YJvSsoSsxTJtk5IzjHnyTCgFiJ2wNK81nlNTmSr7/t
+         sIEbnwVxFdklBR/hdnw42GAj0KaMnhdHWEypM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        b=rTjhMq8+2Rt3d3ZUs9oV/27mUSkNMjl9zVNRxocQRJ8B9dlWHCN1i6E0pEDB6dan/+
+         gJM8PEl4QNbkjXzduWtSz+LAB9On6Wj6zMtc5qeiwsoJY6AZ+RxRDkzbAOYyBeX7JxRe
+         Km8jK5aq/Vv5ukVfEph5b7PCrgqkzILJ75nqs=
+Received: by 10.110.3.15 with SMTP id 15mr1729229tic.44.1232031007475;
+        Thu, 15 Jan 2009 06:50:07 -0800 (PST)
+Received: from localhost (pcd406163.netvigator.com [203.218.196.163])
+        by mx.google.com with ESMTPS id w5sm22016tib.14.2009.01.15.06.50.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 15 Jan 2009 06:50:06 -0800 (PST)
+Mail-Followup-To: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20090115130659.GA18081@diku.dk>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105824>
 
-Johannes Schindelin venit, vidit, dixit 15.01.2009 15:25:
-> Hi,
-> 
-> On Thu, 15 Jan 2009, Michael J Gruber wrote:
-> 
->> Stephan Beyer venit, vidit, dixit 15.01.2009 14:55:
->>
->>>> First of all: git 1.6.0.6 gives you the unchanged graph after using
->>>> rebase -i -p.
->>> This is true and it is a far better behavior than now, but I think it's
->>> not the expected behavior. (I have written about the behavior I'd expect
->>> in another reply to the original mail.)
->> Yep, I think -p should preserve only merges in side branches
-> 
-> you mean everything in master..work?
-> 
->> (and therefore produce what you suggest, and what you get without -p). 
->> If it preserves all merges then there is nothing to rewrite here.
-> 
-> The merge _is_ outside of master, so I do not understand what the heck you 
-> are talking about.
+On Thu, 15 Jan 2009, Jonas Fonseca wrote:
+> presence of a {/usr/incude/}ncursesw/ncurses.h header. Where are the
+> unicode ncurses.h files found on your system?
 
-Easy Dscho, easy ;)
-[meaning "take it such..."]
+on ubuntu,
+/usr/incude/ncursesw/curses.h=20
+/usr/incude/ncursesw/ncurses.h  ( just a sym link to curses.h above )=20
 
-I'm not sure what -p is supposed to do:
-
-A) Should it preserve all merge commits which it would need to rewrite?
-That is lot to ask. Previous behaviour (intended or not) seemed to be to
-do nothing in this case where the merge connects master and work.
-
-B) Should it preserve only merges in side branches? I seem to mean by
-that branches where the parents are on work and other branches but not
-on master.
-
-So at least on my side there is confusion about the intention behind
-'-p' (say design goal), and therefore about the expectation.
-
-> The more I think about it, I think it's possible I broke it with the 
-> introduction of the "noop".
-> 
-> However, there could be a _different_ test case where the current -p 
-> handling shows the same error.  Dunno.
-
-It certainly worked after the noop introduction before the r-i-p series,
-but not any more after. "worked" meaning it at least didn't leave out
-commits in this case (but reproduced the existing DAG). I'm getting the
-impression you suggest R.I.P. for r-i-p series ;) Fine with me...
-
-Cheers,
-Michael
+--=20
+regards,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+=E5=94=90=E8=A9=A9286 =E5=BC=B5=E7=A5=9C  =E9=A1=8C=E9=87=91=E9=99=B5=E6=
+=B8=A1
+    =E9=87=91=E9=99=B5=E6=B4=A5=E6=B8=A1=E5=B0=8F=E5=B1=B1=E6=A8=93  =E4=
+=B8=80=E5=AE=BF=E8=A1=8C=E4=BA=BA=E8=87=AA=E5=8F=AF=E6=84=81  =E6=BD=AE=
+=E8=90=BD=E5=A4=9C=E6=B1=9F=E6=96=9C=E6=9C=88=E8=A3=A1  =E5=85=A9=E4=B8=
+=89=E6=98=9F=E7=81=AB=E6=98=AF=E7=93=9C=E5=B7=9E
