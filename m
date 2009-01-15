@@ -1,66 +1,58 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: mistake in Release Notes for 1.6.2
-Date: Thu, 15 Jan 2009 23:13:03 +0100
-Message-ID: <200901152313.03747.markus.heidelberg@web.de>
-Reply-To: markus.heidelberg@web.de
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] assertion failure in builtin-mv.c with "git mv -k"
+Date: Thu, 15 Jan 2009 14:19:40 -0800
+Message-ID: <7vr634qkjn.fsf@gitster.siamese.dyndns.org>
+References: <vpqwscy81o8.fsf@bauges.imag.fr>
+ <496DFC75.2000904@drmicha.warpmail.net>
+ <alpine.DEB.1.00.0901141653540.3586@pacific.mpi-cbg.de>
+ <496E0D1C.20807@drmicha.warpmail.net>
+ <7vbpu91zjf.fsf@gitster.siamese.dyndns.org>
+ <496F15B4.2040104@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 23:14:23 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jan 15 23:21:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNaTl-0007uV-Rs
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 23:14:22 +0100
+	id 1LNaad-0001qh-L3
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 23:21:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935109AbZAOWMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 17:12:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935100AbZAOWMc
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 17:12:32 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:57401 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932899AbZAOWMa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 17:12:30 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 22068FBC27D6;
-	Thu, 15 Jan 2009 23:12:29 +0100 (CET)
-Received: from [89.59.96.34] (helo=pluto)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LNaRw-0002pK-00; Thu, 15 Jan 2009 23:12:29 +0100
-User-Agent: KMail/1.9.9
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+NCbv/cUiu8H83fQieqE6xIgwbPy8BgfN8TrR+
-	D6VggsawpP7CaOYjYHc0rbYYn7hueKjL/v5yfxhrOA3O4AgBQ9
-	aOrOJSI+Yx68xP4A0Tmg==
+	id S935249AbZAOWTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 17:19:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935243AbZAOWTw
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 17:19:52 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45589 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935107AbZAOWTv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 17:19:51 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 36FCB1C987;
+	Thu, 15 Jan 2009 17:19:50 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9080D1C9EF; Thu,
+ 15 Jan 2009 17:19:41 -0500 (EST)
+In-Reply-To: <496F15B4.2040104@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Thu, 15 Jan 2009 11:53:40 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9FFF74C2-E352-11DD-B3FA-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105885>
 
-Hello Junio,
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Documentation/RelNotes-1.6.2.txt:
-> * git-cherry defaults to HEAD when the <upstream> argument is not given.
+> I'm happy to follow any variant ("1+2+3", "1 2+3", "1 2 3", in
+> increasing order of preference) so there's no need to discuss or explain
+> this further, just tell me "do x" ;)
 
-This is not correct, see commit f2968022 (2008-12-29):
+Do nothing ;-) Your 1=3772923 and 2+3=be17262d are already in and we can
+include the fix in the next 1.6.1.X maintenance release.
 
-    git-cherry: make <upstream> parameter optional
-
-    The upstream branch <upstream> now defaults to the first tracked
-    remote branch, which is set by the configuration variables
-    branch.<name>.remote and branch.<name>.merge of the current branch.
-
-    Without such a remote branch, the command "git cherry [-v]" fails with
-    usage output as before and an additional message.
-
-I guess it's a mistake in hurry, not every default value is HEAD :)
-
-Markus
+Thanks.
