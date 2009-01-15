@@ -1,114 +1,87 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] api-run-command.txt: talk about run_hook()
-Date: Thu, 15 Jan 2009 07:49:51 -0800 (PST)
-Message-ID: <m38wpczi09.fsf@localhost.localdomain>
-References: <1232031618-5243-1-git-send-email-s-beyer@gmx.net>
-	<1232031618-5243-2-git-send-email-s-beyer@gmx.net>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit
+	state
+Date: Thu, 15 Jan 2009 16:35:29 +0100
+Message-ID: <20090115153529.GA13961@neumann>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk>
+	<7vfxjlxuu5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paolo Bonzini <bonzini@gnu.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>, gitster@pobox.com
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Jan 15 16:51:32 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 16:52:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNUVA-00047N-42
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 16:51:24 +0100
+	id 1LNUWI-0004ek-69
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 16:52:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757404AbZAOPt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 10:49:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757266AbZAOPt4
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 10:49:56 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:63064 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756349AbZAOPty (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 10:49:54 -0500
-Received: by ey-out-2122.google.com with SMTP id 22so215249eye.37
-        for <git@vger.kernel.org>; Thu, 15 Jan 2009 07:49:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=BEUSDyQoh4Dgsn0XdF+GASewCUUIfwAP/+VcVpzivAY=;
-        b=BJ7MU2IU5pGDneMciSHFoJXC45cT//exmFlFOiHHQUTfQarto3vW7lb5fFl6tP0Vl0
-         2Jchw9AmniUrt0jjpt/Qohy88Al5INItjciD3O8fQKmwGeqJDsKRORug40egz4NSYlT2
-         cTMyZPQHLy3K3dK0rX0MFOh+/GU1aVaG0yAiQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=Rdm4UOe0GWZ4CT1WOp7RlHiQuXtN57GgyYA8RzX6wz2xvw8vUhRkEbJYafZZgild5K
-         VWyA6pcP+lDtCWbwpvgb00DMy/t/cyrK3hUNvROWtpO54nDx6AqrOoOj6+/tyeRyyNnE
-         LDvnn2DX+9AAhlQroYByKo51Wj9rXg2mk/9ns=
-Received: by 10.210.127.10 with SMTP id z10mr1806199ebc.106.1232034592930;
-        Thu, 15 Jan 2009 07:49:52 -0800 (PST)
-Received: from localhost.localdomain (abva168.neoplus.adsl.tpnet.pl [83.8.198.168])
-        by mx.google.com with ESMTPS id 28sm93340eyg.44.2009.01.15.07.49.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 15 Jan 2009 07:49:51 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0FFnmVZ014558;
-	Thu, 15 Jan 2009 16:49:48 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0FFnh3g014554;
-	Thu, 15 Jan 2009 16:49:43 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1232031618-5243-2-git-send-email-s-beyer@gmx.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1756219AbZAOPus convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 10:50:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754723AbZAOPus
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 10:50:48 -0500
+Received: from francis.fzi.de ([141.21.7.5]:43280 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754817AbZAOPur (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 10:50:47 -0500
+X-Greylist: delayed 913 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Jan 2009 10:50:47 EST
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 15 Jan 2009 16:35:28 +0100
+Content-Disposition: inline
+In-Reply-To: <7vfxjlxuu5.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-OriginalArrivalTime: 15 Jan 2009 15:35:28.0943 (UTC) FILETIME=[E4E4C3F0:01C97726]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105842>
 
-Stephan Beyer <s-beyer@gmx.net> writes:
+On Wed, Jan 14, 2009 at 04:43:14PM -0800, Junio C Hamano wrote:
+> I've always had trouble with the instruction we give for splitting on=
+e
+> commit into two using the interactive rebase in the documentation, as=
+ it
+> always had a strong "Huh?" effect on me when it suddenly starts talki=
+ng
+> about doing a "git reset HEAD^"; I suspect your change may improve th=
+is
+> situation quite a bit.
 
-> +`run_hook`::
-> +
-> +	Run a hook.
-> +	The first argument is a string to an index file or NULL
-> +	if the default index file or no index is used at all.
+I think we might want do differentiate editing a commit (modifying
+either the commit message or the patch or both) or splitting a commit.
 
-Errr...
+The first is served well with the current 'edit' rebase command IMHO.
+I don't really see the point of the additional 'git reset --soft
+HEAD^'.
 
-        The first argument is a filename path to an index file,
-        or NULL if hook uses default index file or no index is
-        used at all. 
+ * If you want to edit the commit message only, then you are
+   better off with 'git commit --amend', because it preserves the
+   previous commit message.  But with 'git reset --soft HEAD^' and
+   'git commit' the commit message is "lost"; you have to use 'git
+   commit -c ORIG_HEAD' instead, which is not that straightforward
+   (and we don't have completion support for it).
 
-> +	The second argument is the name of the hook.
+ * If you want to modify the patch, too, then you would have to use
+   'git add' anyway, regardless of whether there was a 'git reset
+   --soft HEAD^', or not.  The only benefit of that 'reset' I'm seeing
+   is that in that case 'git diff --cached' would show all the changes
+   that would be committed; without the 'reset' 'git diff --cached
+   HEAD^' is needed.
 
-O.K.
+   But I'm not sure whether that benefit would offset the confusion of
+   one more rebase command with just slightly different meaning.
 
-> +	The further variable number (up to 9) of arguments correspond
-> +	to the hook arguments.
-> +	The last argument has to be NULL to terminate the variable
-> +	arguments list.
+=46or the second we could introduce a new rebase command like 'split',
+which would do the same as 'edit' but would also perform that 'git
+reset HEAD^' mentioned in the documentation automatically.  Or perhaps
+it could be called 'divide', since the 's' abbreviation for 'split' is
+already taken by 'squash'.  (Or maybe use capital 'S' for 'split'?
+might be confusing...)
 
-Why the limitation of maximum of 9 hook arguments?
 
-> +	If the hook is not executable, the return value is zero.
-
-Or the hook does not exist, I assume.
-
-> +	If it is executable, the hook will be executed and the exit
-> +	status of the hook is returned.
-> +	On execution, .stdout_to_stderr and .no_stdin will be set.
-> +	(See below.)
-> +
->  
->  Data structures
->  ---------------
-> -- 
-> 1.6.1.160.gecdb
-> 
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Regards,
+G=E1bor
