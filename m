@@ -1,127 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] Move run_hook() from builtin-commit.c into run-command.c
- (libgit)
-Date: Thu, 15 Jan 2009 16:46:59 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901151637590.3586@pacific.mpi-cbg.de>
-References: <1232031618-5243-1-git-send-email-s-beyer@gmx.net>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: [PATCH 3/3] bash-completion: Added comments to remind about required
+ arguments
+Date: Thu, 15 Jan 2009 10:47:41 -0500
+Message-ID: <496F5A9D.8040209@tedpavlic.com>
+References: <1231963342-24461-1-git-send-email-ted@tedpavlic.com> <1231963342-24461-2-git-send-email-ted@tedpavlic.com> <1231963342-24461-3-git-send-email-ted@tedpavlic.com> <20090115153543.GF10179@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Paolo Bonzini <bonzini@gnu.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>, gitster@pobox.com
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Jan 15 16:47:41 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, gitster <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jan 15 16:49:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNURP-0002Mo-RW
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 16:47:32 +0100
+	id 1LNUTC-0003Cv-9X
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 16:49:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755116AbZAOPqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 10:46:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755050AbZAOPqK
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 10:46:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57224 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754976AbZAOPqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 10:46:09 -0500
-Received: (qmail invoked by alias); 15 Jan 2009 15:46:06 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp051) with SMTP; 15 Jan 2009 16:46:06 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19KNcg9tX1KaWmVPEtSFbqo4I0J0E+5MQoD76HRok
-	pLLdriNS7vrl4M
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1232031618-5243-1-git-send-email-s-beyer@gmx.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.45
+	id S1757202AbZAOPrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 10:47:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755584AbZAOPrr
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 10:47:47 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:34663 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755545AbZAOPrq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2009 10:47:46 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 2108D80D8121;
+	Thu, 15 Jan 2009 10:41:59 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jaEqQ-cqdA2O; Thu, 15 Jan 2009 10:41:59 -0500 (EST)
+Received: from TedBook.local (tedpc.ece.ohio-state.edu [164.107.164.122])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id A921C80D811F;
+	Thu, 15 Jan 2009 10:41:57 -0500 (EST)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
+In-Reply-To: <20090115153543.GF10179@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105840>
 
-Hi,
+> Yup, this and also 2/3 look fine.  But again, the message, it
+> shouldn't be indented.
 
-On Thu, 15 Jan 2009, Stephan Beyer wrote:
+I will re-submit with no indentation.
 
-> 	Stripping out a libified version seemed better to me than
-> 	copy and paste.
+Sorry for all the fuss. I've learned a great deal.
 
-Oh, definitely.
+Thanks --
+Ted
 
-> -	ret = start_command(&hook);
-> -	if (ret) {
-> -		warning("Could not spawn %s", argv[0]);
-> -		return ret;
-> -	}
-> -	ret = finish_command(&hook);
-> -	if (ret == -ERR_RUN_COMMAND_WAITPID_SIGNAL)
-> -		warning("%s exited due to uncaught signal", argv[0]);
 
-What are the side effects of replacing this with "ret = 
-run_command(&hook);"?  This has to be discussed and defended in the commit 
-message.
+-- 
+Ted Pavlic <ted@tedpavlic.com>
 
-> diff --git a/run-command.c b/run-command.c
-> index c90cdc5..602fe85 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -342,3 +342,38 @@ int finish_async(struct async *async)
->  #endif
->  	return ret;
->  }
-> +
-> +int run_hook(const char *index_file, const char *name, ...)
-> +{
-> +	struct child_process hook;
-> +	const char *argv[10], *env[2];
-> +	char index[PATH_MAX];
-> +	va_list args;
-> +	int i;
-> +
-> +	va_start(args, name);
-> +	argv[0] = git_path("hooks/%s", name);
-> +	i = 0;
-> +	do {
-> +		if (++i >= ARRAY_SIZE(argv))
-> +			die("run_hook(): too many arguments");
-> +		argv[i] = va_arg(args, const char *);
-> +	} while (argv[i]);
-> +	va_end(args);
-> +
-> +	if (access(argv[0], X_OK) < 0)
-> +		return 0;
-> +
-> +	memset(&hook, 0, sizeof(hook));
-> +	hook.argv = argv;
-> +	hook.no_stdin = 1;
-> +	hook.stdout_to_stderr = 1;
-> +	if (index_file) {
-> +		snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
-> +		env[0] = index;
-> +		env[1] = NULL;
-> +		hook.env = env;
-> +	}
-> +
-> +	return run_command(&hook);
-> +}
-
-Lots of improvements possible (I agree; _after_ this patch):
-
-- deuglify the loop,
-
-- use ALLOC_GROW instead of having a fixed size argv,
-
-- use an strbuf for the index file
-
-- checking executability of argv[0] before filling argv,
-
-and possibly others, too.
-
-Ciao,
-Dscho
+   Please visit my ALS association page:
+         http://web.alsa.org/goto/tedpavlic
+   My family appreciates your support in the fight to defeat ALS.
