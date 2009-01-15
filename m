@@ -1,93 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: rebase -p confusion in 1.6.1
-Date: Thu, 15 Jan 2009 17:04:55 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901151658060.3586@pacific.mpi-cbg.de>
-References: <slrngmu4j5.e1u.sitaramc@sitaramc.homelinux.net> <496F3C99.1040800@drmicha.warpmail.net> <20090115135518.GB10045@leksak.fem-net> <496F44AC.2060607@drmicha.warpmail.net> <alpine.DEB.1.00.0901151518520.3586@pacific.mpi-cbg.de>
- <496F4BF0.6020805@drmicha.warpmail.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 2/2] api-run-command.txt: talk about run_hook()
+Date: Thu, 15 Jan 2009 17:12:32 +0100
+Message-ID: <20090115161232.GM30710@genesis.frugalware.org>
+References: <1232031618-5243-1-git-send-email-s-beyer@gmx.net> <1232031618-5243-2-git-send-email-s-beyer@gmx.net> <m38wpczi09.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Stephan Beyer <s-beyer@gmx.net>,
-	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org,
-	Stephen Haberman <stephen@exigencecorp.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Jan 15 17:06:35 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="R9dSeJxMIUBTi9Do"
+Cc: Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org,
+	Paolo Bonzini <bonzini@gnu.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>, gitster@pobox.com
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 17:14:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNUjH-0001O6-SX
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 17:06:00 +0100
+	id 1LNUr1-0005Zi-M1
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 17:14:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758729AbZAOQEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 11:04:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758607AbZAOQEG
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 11:04:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46260 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758161AbZAOQEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 11:04:04 -0500
-Received: (qmail invoked by alias); 15 Jan 2009 16:04:01 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp007) with SMTP; 15 Jan 2009 17:04:01 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19JbXt5xOlJ+Sv6tlPLSxRMYp6f+9gfzaLIfpnwg5
-	EBRMeIWcNu6XH3
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <496F4BF0.6020805@drmicha.warpmail.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1756799AbZAOQMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 11:12:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755691AbZAOQMf
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 11:12:35 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:34491 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753390AbZAOQMe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 11:12:34 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 28FF75818C;
+	Thu, 15 Jan 2009 17:12:35 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 90FD54465E;
+	Thu, 15 Jan 2009 17:12:32 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 9C35411B8630; Thu, 15 Jan 2009 17:12:32 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <m38wpczi09.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105848>
 
-Hi,
 
-On Thu, 15 Jan 2009, Michael J Gruber wrote:
+--R9dSeJxMIUBTi9Do
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I'm not sure what -p is supposed to do:
-> 
-> A) Should it preserve all merge commits which it would need to rewrite?
-> That is lot to ask. Previous behaviour (intended or not) seemed to be to
-> do nothing in this case where the merge connects master and work.
-> 
-> B) Should it preserve only merges in side branches? I seem to mean by
-> that branches where the parents are on work and other branches but not
-> on master.
+On Thu, Jan 15, 2009 at 07:49:51AM -0800, Jakub Narebski <jnareb@gmail.com>=
+ wrote:
+> > +	The further variable number (up to 9) of arguments correspond
+> > +	to the hook arguments.
+> > +	The last argument has to be NULL to terminate the variable
+> > +	arguments list.
+>=20
+> Why the limitation of maximum of 9 hook arguments?
 
-The intention was this:
+That's how it is in builtin-commit at the moment, and I agree with Dscho
+about it could be a separate patch to remove this limitation.
 
-	$ git rebase -p master
+--R9dSeJxMIUBTi9Do
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-would need to rewrite _all_ commits that are in "master..".  All of them, 
-including the merge commits.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-The fact that I implemented it as "-i -p" is only due to technical 
-reasons; I know (ahem, now I should put that into the past tense) the code 
-base pretty well.
+iEYEARECAAYFAklvYHAACgkQe81tAgORUJaIlwCbBv9+LJr/cF6DYRJso4jJF3F4
+HlwAn1aZqF0ixdh7xMJx6v3xeVyROOxn
+=9/b6
+-----END PGP SIGNATURE-----
 
-An additional shortcut was to avoid rewriting commits when they did not 
-need rewriting.  IOW if the commit-to-pick has only parents that were 
-_not_ rewritten, we can avoid cherry-picking or merging, and just reset 
---hard <original commit>.
-
-There was a problem, though; for some reason, the code as I did it fscked 
-up the order of the commits when -p was specified.  Therefore, rewritten 
-commits had the wrong parents.
-
-I thought it should be easy to fix, but then I got a job that I actually 
-like, so my Git time budget was tremendously reduced.
-
-> > The more I think about it, I think it's possible I broke it with the 
-> > introduction of the "noop".
-> 
-> It certainly worked after the noop introduction before the r-i-p series, 
-> but not any more after.
-
-Umm... which rebase -i -p series do you mean?  "noop" was introduced 
-pretty recently if my Alzheimered brain does not fool me.
-
-Ciao,
-Dscho
+--R9dSeJxMIUBTi9Do--
