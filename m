@@ -1,69 +1,56 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 8/8] Define a basic merge API, and a two-way tree
-	merge strategy
-Date: Thu, 15 Jan 2009 13:09:36 -0800
-Message-ID: <20090115210936.GI10179@spearce.org>
-References: <1223932217-4771-1-git-send-email-spearce@spearce.org> <1223932217-4771-9-git-send-email-spearce@spearce.org> <200810232314.29867.robin.rosenberg@dewire.com> <200901152205.00600.robin.rosenberg@dewire.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 22:11:11 2009
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
+Date: Thu, 15 Jan 2009 22:58:09 +0100
+Message-ID: <D115E37C-D1BE-441B-BD7F-66C46D43CE1A@wincent.com>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk> <7vmydsv72u.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901151921040.3586@pacific.mpi-cbg.de> <200901151946.04991.johan@herland.net> <8035E52E-D202-4C42-BDFD-DC7A925580A3@wincent.com> <76718490901151226l704d119bh297db4e91a4da05b@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Johan Herland" <johan@herland.net>, git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Sverre Rabbelier" <srabbelier@gmail.com>,
+	"Johannes Sixt" <j.sixt@viscovery.net>,
+	"Anders Melchiorsen" <mail@cup.kalibalik.dk>
+To: "Jay Soffian" <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 23:00:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNZUY-0005PR-L5
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 22:11:07 +0100
+	id 1LNaFr-0002jo-A2
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 22:59:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764047AbZAOVJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 16:09:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934658AbZAOVJi
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 16:09:38 -0500
-Received: from george.spearce.org ([209.20.77.23]:60887 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934650AbZAOVJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 16:09:36 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 0E87738210; Thu, 15 Jan 2009 21:09:36 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200901152205.00600.robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1759562AbZAOV60 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 16:58:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759284AbZAOV6Z
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 16:58:25 -0500
+Received: from wincent1.inetu.net ([209.235.192.161]:40241 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755039AbZAOV6Y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2009 16:58:24 -0500
+Received: from cuzco.lan (249.pool85-53-13.dynamic.orange.es [85.53.13.249])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n0FLw9aM015792
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 15 Jan 2009 16:58:11 -0500
+In-Reply-To: <76718490901151226l704d119bh297db4e91a4da05b@mail.gmail.com>
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105882>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> I never got a  received reply... on this.
+El 15/1/2009, a las 21:26, Jay Soffian escribi=F3:
 
-Sorry.  Its in my "pending" queue.  I'm still using the code
-in Gerrit but I've been so swamped that I haven't been able to
-look at your test case, or what's wrong with the code and why it
-doesn't pass.
+> On Thu, Jan 15, 2009 at 2:27 PM, Wincent Colaiuta <win@wincent.com> =20
+> wrote:
+>> wait - best suggestion so far, seeing as we can't use "stop"
+>
+> This is a fun game. I like the color "halt".
 
-I honestly hoped to have something by this point, but I got behind
-and I haven't quite had a chance to look at it.
- 
-> torsdag 23 oktober 2008 23:14:29 skrev Robin Rosenberg:
-> > Hi, Shawn
-> > 
-> > Shouldn't testTrivialTwoWay_disjointhistories()  work?
-> > 
-> > The two trees have nothing in common and so should be trivially mergeable.
-> > 
-> > -- robin
-> > 
-> > From cef2695431e368da616a1e9c8de3e5e419854a4c Mon Sep 17 00:00:00 2001
-> > From: Robin Rosenberg <robin.rosenberg@dewire.com>
-> > Date: Thu, 23 Oct 2008 23:09:10 +0200
-> > Subject: [EGIT PATCH] Simple merge test
-> > 
-> > ---
-> >  .../org/spearce/jgit/merge/SimpleMergeTest.java    |   28 ++++++++++++++++++++
-> >  1 files changed, 28 insertions(+), 0 deletions(-)
-> >  create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/merge/SimpleMergeTest.java
+Ooh, yes. An even better color.
 
--- 
-Shawn.
+Wincent
