@@ -1,63 +1,79 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Add --file option to pick
-Date: Thu, 15 Jan 2009 09:26:14 +0100
-Message-ID: <20090115082614.GA24890@diana.vm.bytemark.co.uk>
-References: <20090114225930.11098.2144.stgit@localhost.localdomain>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH replacement for take 3 4/4] color-words: take an optional regular expression describing words
+Date: Thu, 15 Jan 2009 09:30:35 +0100
+Message-ID: <200901150930.38100.trast@student.ethz.ch>
+References: <alpine.DEB.1.00.0901141840100.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901150211120.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901150235122.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 09:27:46 2009
+Content-Type: multipart/signed;
+  boundary="nextPart123204225.GDLkxNI1Ue";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Santi =?utf-8?q?B=C3=A9jar?= <santi@agolina.net>,
+	Junio C Hamano <junio@pobox.com>,
+	Teemu Likonen <tlikonen@iki.fi>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 15 09:31:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNNZq-0005dM-8j
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 09:27:46 +0100
+	id 1LNNdk-0006em-4W
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 09:31:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756203AbZAOI0W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 03:26:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755535AbZAOI0W
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 03:26:22 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1331 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755486AbZAOI0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 03:26:21 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1LNNYM-0006Z4-00; Thu, 15 Jan 2009 08:26:14 +0000
-Content-Disposition: inline
-In-Reply-To: <20090114225930.11098.2144.stgit@localhost.localdomain>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1757114AbZAOIaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 03:30:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756933AbZAOIaW
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 03:30:22 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:25744 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754638AbZAOIaV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 03:30:21 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 15 Jan 2009 09:30:19 +0100
+Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 15 Jan 2009 09:30:19 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0901150235122.3586@pacific.mpi-cbg.de>
+X-OriginalArrivalTime: 15 Jan 2009 08:30:19.0193 (UTC) FILETIME=[7FE5D290:01C976EB]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105773>
 
-On 2009-01-14 22:59:30 +0000, Catalin Marinas wrote:
+--nextPart123204225.GDLkxNI1Ue
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> +    opt('-f', '--files', action =3D 'append',
-> +        short =3D 'Only fold the given files'),
+Johannes Schindelin wrote:
+> If a hunk header '@@ -2 +1,0 @@' is found that logically should be
+> '@@ -2 +2,0 @@', diff_words got confused.
+[...]
+> This might be a libxdiff issue, though.
 
-The long form should probably be "--file", since you only list one
-file for every flag (and since you call it "--file" in the last hunk).
-And the help text could be something like
+Looks like it's just bug-for-bug compatible with diff.  At least my
+GNU diffutils 2.8.7 show the same behaviour.
 
-  Only fold the given file (for multiple files, use -f more than once)
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
-> +                raise CmdException, 'Patch folding failed'
 
-This is not important, but I believe the recommended syntax for
-raising exceptions nowadays is
 
-  CmdException('Patch folding failed')
+--nextPart123204225.GDLkxNI1Ue
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-since that's what'll continue to work in Python 3, or something like
-that. (I see you already use it in the multi-line case in the other
-patch, where this syntax is clearly the better choice.)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+iEYEABECAAYFAklu9C4ACgkQqUud07tmzP36ywCgkIU55RSxxIZHokN/20TD0Xfs
+m3EAn23WYO6Te6uzEewtd/lM4aX06OMd
+=aEBM
+-----END PGP SIGNATURE-----
+
+--nextPart123204225.GDLkxNI1Ue--
