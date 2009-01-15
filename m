@@ -1,106 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH take 3 0/4] color-words improvements
-Date: Thu, 15 Jan 2009 10:15:55 -0800
-Message-ID: <7vmydstoys.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0901112057300.3586@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0901141840100.3586@pacific.mpi-cbg.de>
- <87ljtdk9b3.fsf@iki.fi> <200901142059.09005.trast@student.ethz.ch>
- <alpine.DEB.1.00.0901142258250.3586@pacific.mpi-cbg.de>
- <8763khtbfc.fsf@iki.fi>
- <alpine.DEB.1.00.0901151337080.3586@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: rebase -p confusion in 1.6.1
+Date: Thu, 15 Jan 2009 19:18:43 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901151918320.3586@pacific.mpi-cbg.de>
+References: <slrngmu4j5.e1u.sitaramc@sitaramc.homelinux.net> <496F3C99.1040800@drmicha.warpmail.net> <20090115135518.GB10045@leksak.fem-net> <496F44AC.2060607@drmicha.warpmail.net> <alpine.DEB.1.00.0901151518520.3586@pacific.mpi-cbg.de>
+ <496F4BF0.6020805@drmicha.warpmail.net> <alpine.DEB.1.00.0901151658060.3586@pacific.mpi-cbg.de> <496F6AC3.7050704@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Teemu Likonen <tlikonen@iki.fi>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 15 19:17:57 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Stephan Beyer <s-beyer@gmx.net>,
+	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org,
+	Stephen Haberman <stephen@exigencecorp.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jan 15 19:19:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNWmd-0008Hh-4W
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 19:17:35 +0100
+	id 1LNWoc-0000mA-Tv
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 19:19:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756193AbZAOSQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 13:16:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755017AbZAOSQI
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 13:16:08 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37755 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754712AbZAOSQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 13:16:07 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7E90390A18;
-	Thu, 15 Jan 2009 13:16:03 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 23FA390A15; Thu,
- 15 Jan 2009 13:15:56 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0901151337080.3586@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Thu, 15 Jan 2009 13:41:37 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 91C69268-E330-11DD-9101-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1762612AbZAOSR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 13:17:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765267AbZAOSR5
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 13:17:57 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50941 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1765184AbZAOSRz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 13:17:55 -0500
+Received: (qmail invoked by alias); 15 Jan 2009 18:17:51 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp013) with SMTP; 15 Jan 2009 19:17:51 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19PDX0eOh9PYRJp/IQ57Y/JqJ3yM1vXoZYzRnz76r
+	w5omM38gbTUrLl
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <496F6AC3.7050704@drmicha.warpmail.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105862>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> BTW this gets even worse when you compare the following:
->
-> bbb aaa
-> ccc aaa
->
-> --color-words=a+ will show
->
-> ccc aaa
+On Thu, 15 Jan 2009, Michael J Gruber wrote:
 
-Naive question.  What is the expected output?
+> Johannes Schindelin venit, vidit, dixit 15.01.2009 17:04:
+> ...
+> >>> The more I think about it, I think it's possible I broke it with the 
+> >>> introduction of the "noop".
+> >> It certainly worked after the noop introduction before the r-i-p series, 
+> >> but not any more after.
+> > 
+> > Umm... which rebase -i -p series do you mean?  "noop" was introduced 
+> > pretty recently if my Alzheimered brain does not fool me.
+> 
+> This one introduced noop:
+> 
+> commit ff74126c03a8dfd04e7533573a5c420f2a7112ac
+> Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Date:   Fri Oct 10 13:42:12 2008 +0200
+> 
+>     rebase -i: do not fail when there is no commit to cherry-pick
+> 
+> This is the bad one from bisect:
+> 
+> commit d80d6bc146232d81f1bb4bc58e5d89263fd228d4
+> Author: Stephen Haberman <stephen@exigencecorp.com>
+> Date:   Wed Oct 15 02:44:39 2008 -0500
+> 
+>     rebase-i-p: do not include non-first-parent commits touching UPSTREAM
+> 
+> It's the last one in a longer series. And that series is after the noop
+> introduction.
 
-The user defines that "a", "aa", "aaa",... are words and everything else
-is the background that the words float on, and asks --color-words to color
-code where the words differ.  The way to show them is to have the words in
-red (if it comes from preimage) or in green (if it comes from postimage) on
-top of some background.
+Ohhh....
 
-In this case, there is no difference in words, and the only difference is
-the background.  Should we still see any output?  Shouldn't it behave more
-like "diff -w" that suppresses lines that differ only in whitespace?
-
-I didn't see the semantics of color-words documented in the original
-either, and I think it should be described in a way humans would
-understand (in other words, "here is what we do internally, splitting
-words into lines, running diff between them and coalescing the result in
-this and that way, and whatever happens to be output is what you get" is
-not the semantics that is explained in a way humans would understand).
-
-The above "The way to show them is to have the words in red (if it comes
-from preimage) or in green (if it comes from postimage) on top of some
-background." was my attempt to describe an easier half of the semantics,
-but I am not sure what definition of "some background" the current draft
-code is designed around; I think the original's definition was "we discard
-the background from either preimage or postimage and insert whitespace
-outselves between the words we output; the only exception is the
-end-of-line that appears in the postimage which we try to keep" or
-something like that, but that is not written in the documentation either.
-
-How should the background computed to draw the result on?  If a
-corresponding background portion appear in both the preimage and the
-postimage, we use the one from the postimage?  That justifies why bbb is
-not shown but ccc is, when you compare these two:
-
-  bbb aaa
-  ccc aa
-
-What happens if a portion of background is only in the preimage?
-E.g. when these two are compared:
-
-  bbb aaa bb aa b
-  ccc aaa cc
-
-what should happen?  We would want to say "aa" was removed by showing it
-in red, but on what background should it be displayed?  cc <red>aa</red>
-b?
+Thanks,
+Dscho
