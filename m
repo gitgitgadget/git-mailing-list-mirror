@@ -1,58 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] assertion failure in builtin-mv.c with "git mv -k"
-Date: Thu, 15 Jan 2009 14:19:40 -0800
-Message-ID: <7vr634qkjn.fsf@gitster.siamese.dyndns.org>
-References: <vpqwscy81o8.fsf@bauges.imag.fr>
- <496DFC75.2000904@drmicha.warpmail.net>
- <alpine.DEB.1.00.0901141653540.3586@pacific.mpi-cbg.de>
- <496E0D1C.20807@drmicha.warpmail.net>
- <7vbpu91zjf.fsf@gitster.siamese.dyndns.org>
- <496F15B4.2040104@drmicha.warpmail.net>
+From: "Sverre Rabbelier" <srabbelier@gmail.com>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
+Date: Thu, 15 Jan 2009 23:20:08 +0100
+Message-ID: <bd6139dc0901151420j4ae62433uc0cc70d86dc45cfa@mail.gmail.com>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk>
+	 <7vfxjlxuu5.fsf@gitster.siamese.dyndns.org>
+	 <20090115153529.GA13961@neumann>
+	 <7vvdsgql17.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Jan 15 23:21:30 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "=?ISO-8859-1?Q?SZEDER_G=E1bor?=" <szeder@ira.uka.de>,
+	"Anders Melchiorsen" <mail@cup.kalibalik.dk>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 23:22:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNaad-0001qh-L3
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 23:21:28 +0100
+	id 1LNabQ-0002AV-QA
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 23:22:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935249AbZAOWTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 17:19:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935243AbZAOWTw
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 17:19:52 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45589 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935107AbZAOWTv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 17:19:51 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 36FCB1C987;
-	Thu, 15 Jan 2009 17:19:50 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9080D1C9EF; Thu,
- 15 Jan 2009 17:19:41 -0500 (EST)
-In-Reply-To: <496F15B4.2040104@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Thu, 15 Jan 2009 11:53:40 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9FFF74C2-E352-11DD-B3FA-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S935215AbZAOWUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 17:20:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935292AbZAOWUM
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 17:20:12 -0500
+Received: from yx-out-2324.google.com ([74.125.44.29]:19492 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934871AbZAOWUJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 17:20:09 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so578546yxm.1
+        for <git@vger.kernel.org>; Thu, 15 Jan 2009 14:20:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=XuPX3NDKej/+9kEc+QTogzmJRYVGgKGS0t27inX6FP8=;
+        b=YAasKpyUK/UR3LCDDPw8qmvxhMPVel3rsVQqI1BPHWUQkkIeobqkI3qMSxvvI1qtuk
+         VpoR75xwvBHX9fg5Yti89s3aVMVTbT4d+zNNEJfP68D/vjdYnw3szo+XFSZcTO9oAKQF
+         FB/sUJ5A88qix7UlagnVGyRf5O24TMJQNFZRw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=XI8g4xDa5AUtDV8pZkhz1vMD+mmjnnUx5ragx1GX5HarlktLxLMtKYzhUMzAFm+1T8
+         dTLLcT6+dHVlSfx4FQXh4vQVCWO+hkhndWn5CpaUnW5bsKMhHl3XecLoBqVZNG7xsCsq
+         731+E4qdbmCpr1z5SdvjwqSLQzzjSX9Jd/9nA=
+Received: by 10.151.83.12 with SMTP id k12mr4762471ybl.196.1232058008316;
+        Thu, 15 Jan 2009 14:20:08 -0800 (PST)
+Received: by 10.150.121.4 with HTTP; Thu, 15 Jan 2009 14:20:08 -0800 (PST)
+In-Reply-To: <7vvdsgql17.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: 8117cec1c0becc44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105886>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Thu, Jan 15, 2009 at 23:09, Junio C Hamano <gitster@pobox.com> wrote:
+> I agree that is a true disadvantage that shows "reset --soft HEAD^" is a
+> bad idea (you could still say commit -c @{1}, though).
 
-> I'm happy to follow any variant ("1+2+3", "1 2+3", "1 2 3", in
-> increasing order of preference) so there's no need to discuss or explain
-> this further, just tell me "do x" ;)
+But it's not:
+"It also makes sure that a pre-filled editor is fired up when doing
+"git rebase --continue", in case the user just wanted to fix the
+commit message."
 
-Do nothing ;-) Your 1=3772923 and 2+3=be17262d are already in and we can
-include the fix in the next 1.6.1.X maintenance release.
+-- 
+Cheers,
 
-Thanks.
+Sverre Rabbelier
