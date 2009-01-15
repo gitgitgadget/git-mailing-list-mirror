@@ -1,120 +1,79 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] checkout: implement "-" shortcut name for last branch
-Date: Thu, 15 Jan 2009 18:05:42 +0100
-Message-ID: <200901151805.44747.trast@student.ethz.ch>
-References: <1231977976-8739-1-git-send-email-trast@student.ethz.ch> <200901151501.26394.trast@student.ethz.ch> <alpine.DEB.1.00.0901151510340.3586@pacific.mpi-cbg.de>
+From: "Sverre Rabbelier" <srabbelier@gmail.com>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
+Date: Thu, 15 Jan 2009 18:16:29 +0100
+Message-ID: <bd6139dc0901150916v41959d78r41483617b952ed5f@mail.gmail.com>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk>
+	 <alpine.DEB.1.00.0901150149130.3586@pacific.mpi-cbg.de>
+	 <496EE74F.6000205@viscovery.net>
+	 <200901151101.53441.johan@herland.net>
+	 <bd6139dc0901150352t2d2fa388x3eb842bbc8c4baa6@mail.gmail.com>
+	 <alpine.DEB.1.00.0901151325310.3586@pacific.mpi-cbg.de>
+	 <bd6139dc0901150445l51f3b861n5bbd85bb6d1382b6@mail.gmail.com>
+	 <7vmydsv72u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart6848063.5Ob9e72fmg";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 15 18:07:05 2009
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Johan Herland" <johan@herland.net>, git@vger.kernel.org,
+	"Johannes Sixt" <j.sixt@viscovery.net>,
+	"Anders Melchiorsen" <mail@cup.kalibalik.dk>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 15 18:18:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNVgD-0003A5-6j
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 18:06:53 +0100
+	id 1LNVqu-000854-Lm
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 18:17:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755621AbZAORF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 12:05:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755567AbZAORF2
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 12:05:28 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:21176 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755321AbZAORF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 12:05:28 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 15 Jan 2009 18:05:26 +0100
-Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 15 Jan 2009 18:05:26 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0901151510340.3586@pacific.mpi-cbg.de>
-X-OriginalArrivalTime: 15 Jan 2009 17:05:26.0134 (UTC) FILETIME=[75DEC160:01C97733]
+	id S1756121AbZAORQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 12:16:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755816AbZAORQb
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 12:16:31 -0500
+Received: from mail-gx0-f21.google.com ([209.85.217.21]:51031 "EHLO
+	mail-gx0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755494AbZAORQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 12:16:30 -0500
+Received: by gxk14 with SMTP id 14so1086973gxk.13
+        for <git@vger.kernel.org>; Thu, 15 Jan 2009 09:16:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender
+         :to:subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references
+         :x-google-sender-auth;
+        bh=eIUenR2g7cOe8U/BOPj1jtGBrJiIUoKXFhcDvqGE6PM=;
+        b=US4307o8BV3ZJQcY85RhwYcJs/Z2W7DMqTIUH1qWfiUR7u/0AP7NTDsjTwwH1OLb58
+         XypuDVFUmsVC/1YAlhiDOQ2wXkE2IPt5UmAjxO9/fkCsnyezuyMc59mQjEwm3yAGid9p
+         G1mA4sBPGmp8HsW0JoyfZy9qk3/ZOWla6TQqQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references:x-google-sender-auth;
+        b=taMh6EQwN9m/h5esJKccPdj6H65Y2eOudDql9a61UxGCv0eLMG21jfHj+Igl2ajRF+
+         Tt4+vsN2LCt1sw4p1k/6wHOjBRxn/bSokioWMeRIurM25VAppNgAlrko14Evsn2DdDlX
+         aMJIPHHmw+d3XvqI9Bw44CsNc6Ulunziq2vxc=
+Received: by 10.150.57.5 with SMTP id f5mr1795263yba.220.1232039789108;
+        Thu, 15 Jan 2009 09:16:29 -0800 (PST)
+Received: by 10.150.121.4 with HTTP; Thu, 15 Jan 2009 09:16:29 -0800 (PST)
+In-Reply-To: <7vmydsv72u.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: 135f23eb6d3abdb1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105858>
 
---nextPart6848063.5Ob9e72fmg
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Thu, Jan 15, 2009 at 17:59, Junio C Hamano <gitster@pobox.com> wrote:
+> 'stop' would be closest to what it currently does.  It stops and it is up
+> to you how to screw up the result ;-).
 
-Johannes Schindelin wrote:
-> There are a number of issues why I would like to avoid introducing=20
-> LAST_HEAD:
->=20
-> - it does not work when you are using different Git versions on the same=
-=20
->   repository,
->=20
-> - it does not work when you switched recently,
+Hmmm, yes, I think that would be a better alias; but I think I like
+the idea to wait for changes like this till sequencer goes in, mhh?
 
-If you switch once, you'll be able to use the feature one checkout
-later than if it was reflog-based.
+-- 
+Cheers,
 
-If you switch a lot, the feature won't be in your git half the time
-anyway.
-
-> - you are storing redundant information,
-
-AFAIK it's the first instance of this data in a non-free-form field.
-There's also the precedent of ORIG_HEAD.
-
-> - yes, the field is meant for user consumption, but no, it is not=20
->   free-form,
-
-It's a field of almost arbitrary character data, filled by 70% of the
-update-ref calls I can find in git.git in a "<tool>: <comment>" format
-and by the rest with things such as "initial pull" or
-"refs/remotes/git-svn: updating HEAD".  (The latter is so informative
-that it probably deserves a fix.)  How is that not free-form?
-
-> - AFAICT your version could never be convinced to resurrect deleted=20
->   branches, without resorting to reflogs anyway.
-
-Neither can any other use of git-checkout without the user manually
-recovering some valid revspec referring to the old branch tip from the
-reflog.  I wanted to be able to abbreviate the previous branch's name,
-and it does just that.
-
-> - the reflog method reflects pretty much exactly how people work around=20
->   the lack of "checkout -" currently, so why not just use the same proven=
-=20
->   approach?
-
-So you can make me fight an uphill battle against your idea how it
-should be done.
-
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
-
-
-
-
-
-
-
-
---nextPart6848063.5Ob9e72fmg
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklvbOgACgkQqUud07tmzP0TuACfWl59vRwVBEF2MW9ZN7aKBuoj
-4oMAnRs9YKxpljNzmx3R8Cj/DGUqIJlP
-=F6AQ
------END PGP SIGNATURE-----
-
---nextPart6848063.5Ob9e72fmg--
+Sverre Rabbelier
