@@ -1,71 +1,58 @@
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Re: What's cooking in git.git (Jan 2009, #03; Wed, 14)
-Date: Thu, 15 Jan 2009 22:49:26 +0300
-Organization: St.Petersburg State University
-Message-ID: <20090115194926.GA6899@roro3.zxlink>
-References: <7vmydu3yy7.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] checkout: implement "-" shortcut name for last branch
+Date: Thu, 15 Jan 2009 12:12:02 -0800
+Message-ID: <7vhc40s50t.fsf@gitster.siamese.dyndns.org>
+References: <1231977976-8739-1-git-send-email-trast@student.ethz.ch>
+ <496EE559.3060901@viscovery.net>
+ <alpine.DEB.1.00.0901151413250.3586@pacific.mpi-cbg.de>
+ <200901151500.01876.trast@student.ethz.ch>
+ <alpine.DEB.1.00.0901151508540.3586@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0901151517190.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 20:49:36 2009
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 15 21:13:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNYDf-00051c-Ha
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 20:49:35 +0100
+	id 1LNYau-0006ar-O7
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 21:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754397AbZAOTsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 14:48:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754135AbZAOTsL
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 14:48:11 -0500
-Received: from landau.phys.spbu.ru ([195.19.235.38]:1581 "EHLO
-	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753236AbZAOTsK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 14:48:10 -0500
-Received: by landau.phys.spbu.ru (Postfix, from userid 509)
-	id 65F6417B661; Thu, 15 Jan 2009 22:48:08 +0300 (MSK)
-Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
-	(envelope-from <kirr@roro3.zxlink>)
-	id 1LNYDW-0005UF-CT; Thu, 15 Jan 2009 22:49:26 +0300
-Content-Disposition: inline
-In-Reply-To: <7vmydu3yy7.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S932828AbZAOUMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 15:12:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932789AbZAOUMM
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 15:12:12 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53458 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932749AbZAOUMK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 15:12:10 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AB81D906FD;
+	Thu, 15 Jan 2009 15:12:09 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AE49D906FB; Thu,
+ 15 Jan 2009 15:12:04 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C9F88974-E340-11DD-8F3E-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105872>
 
-On Wed, Jan 14, 2009 at 03:32:32AM -0800, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-[...]
+> On Thu, 15 Jan 2009, Johannes Schindelin wrote:
+>
+>> [PATCH] pack-objects --all: include HEAD, which could be detached
+>
+> In hind sight, it would probably be better to add this to revision.c.
 
-> [Actively cooking]
-> 
-> * gb/gitweb-opml (Fri Jan 2 13:49:30 2009 +0100) 2 commits
->  + gitweb: suggest name for OPML view
->  + gitweb: don't use pathinfo for global actions
-> 
-> * ks/maint-mailinfo-folded (Mon Jan 12 15:22:11 2009 -0800) 2 commits
->  - mailinfo: 'From:' header should be unfold as well
->  - mailinfo: correctly handle multiline 'Subject:' header
-> 
-> The author seems to have more updates, but I couldn't extract them from
-> the e-mail.
-
-Sorry for the inconvenience, and please pull them all from
-
-    git://repo.or.cz/git/kirr.git   for-junio
-
-
-Kirill Smelkov (4):
-      mailinfo: 'From:' header should be unfold as well
-      mailinfo: more smarter removal of rfc822 comments from 'From'
-      mailinfo: correctly handle multiline 'Subject:' header
-      mailinfo: add explicit test for mails like '<a.u.thor@example.com> (A U Thor)'
-
-
-Thanks,
-Kirill
+If you mean that "git log --all" should also include a possibly detached
+HEAD in its traversal, and a patch that implements such a fix would
+automatically fix "repack -a" without the patch you are responding to, I
+think I agree 100%.
