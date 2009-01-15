@@ -1,56 +1,72 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
-Date: Thu, 15 Jan 2009 22:58:09 +0100
-Message-ID: <D115E37C-D1BE-441B-BD7F-66C46D43CE1A@wincent.com>
-References: <87ab9th0rh.fsf@cup.kalibalik.dk> <7vmydsv72u.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901151921040.3586@pacific.mpi-cbg.de> <200901151946.04991.johan@herland.net> <8035E52E-D202-4C42-BDFD-DC7A925580A3@wincent.com> <76718490901151226l704d119bh297db4e91a4da05b@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit
+ state
+Date: Thu, 15 Jan 2009 14:09:08 -0800
+Message-ID: <7vvdsgql17.fsf@gitster.siamese.dyndns.org>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk>
+ <7vfxjlxuu5.fsf@gitster.siamese.dyndns.org> <20090115153529.GA13961@neumann>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Johan Herland" <johan@herland.net>, git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Sverre Rabbelier" <srabbelier@gmail.com>,
-	"Johannes Sixt" <j.sixt@viscovery.net>,
-	"Anders Melchiorsen" <mail@cup.kalibalik.dk>
-To: "Jay Soffian" <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 15 23:00:06 2009
+Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Jan 15 23:10:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNaFr-0002jo-A2
-	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 22:59:59 +0100
+	id 1LNaQJ-0006eI-3m
+	for gcvg-git-2@gmane.org; Thu, 15 Jan 2009 23:10:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759562AbZAOV60 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 16:58:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759284AbZAOV6Z
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 16:58:25 -0500
-Received: from wincent1.inetu.net ([209.235.192.161]:40241 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755039AbZAOV6Y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2009 16:58:24 -0500
-Received: from cuzco.lan (249.pool85-53-13.dynamic.orange.es [85.53.13.249])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n0FLw9aM015792
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 15 Jan 2009 16:58:11 -0500
-In-Reply-To: <76718490901151226l704d119bh297db4e91a4da05b@mail.gmail.com>
-X-Mailer: Apple Mail (2.929.2)
+	id S934851AbZAOWJU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 17:09:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934846AbZAOWJU
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 17:09:20 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43283 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934839AbZAOWJS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Jan 2009 17:09:18 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8D7F41C9ED;
+	Thu, 15 Jan 2009 17:09:17 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 76BDB1C9EC; Thu,
+ 15 Jan 2009 17:09:11 -0500 (EST)
+In-Reply-To: <20090115153529.GA13961@neumann> (SZEDER =?utf-8?Q?G=C3=A1bor?=
+ =?utf-8?Q?'s?= message of "Thu, 15 Jan 2009 16:35:29 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 26E9207A-E351-11DD-8CD4-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105883>
 
-El 15/1/2009, a las 21:26, Jay Soffian escribi=F3:
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-> On Thu, Jan 15, 2009 at 2:27 PM, Wincent Colaiuta <win@wincent.com> =20
-> wrote:
->> wait - best suggestion so far, seeing as we can't use "stop"
+> I think we might want do differentiate editing a commit (modifying
+> either the commit message or the patch or both) or splitting a commit=
+=2E
 >
-> This is a fun game. I like the color "halt".
+> The first is served well with the current 'edit' rebase command IMHO.
+> I don't really see the point of the additional 'git reset --soft
+> HEAD^'.
+>
+>  * If you want to edit the commit message only, then you are
+>    better off with 'git commit --amend', because it preserves the
+>    previous commit message.  But with 'git reset --soft HEAD^' and
+>    'git commit' the commit message is "lost"; you have to use 'git
+>    commit -c ORIG_HEAD' instead, which is not that straightforward
+>    (and we don't have completion support for it).
 
-Ooh, yes. An even better color.
+I agree that is a true disadvantage that shows "reset --soft HEAD^" is =
+a
+bad idea (you could still say commit -c @{1}, though).
 
-Wincent
+> For the second we could introduce a new rebase command like 'split',
+> which would do the same as 'edit' but would also perform that 'git
+> reset HEAD^' mentioned in the documentation automatically.
+
+Perhaps. =20
