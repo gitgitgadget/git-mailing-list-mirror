@@ -1,71 +1,82 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: Re: autoconf: C99 format check
-Date: Fri, 16 Jan 2009 10:41:10 +0100
-Organization: Department of Numerical Simulation, University of Bonn
-Message-ID: <20090116094110.GD25275@ins.uni-bonn.de>
-References: <loom.20090115T123123-915@post.gmane.org>
+From: "Anders Melchiorsen" <mail@cup.kalibalik.dk>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit 
+     state
+Date: Fri, 16 Jan 2009 11:27:46 +0100 (CET)
+Message-ID: <49548.bFoQE3daRhY=.1232101666.squirrel@webmail.hotelhot.dk>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk>
+    <8035E52E-D202-4C42-BDFD-DC7A925580A3@wincent.com>
+    <76718490901151226l704d119bh297db4e91a4da05b@mail.gmail.com>
+    <200901161050.13971.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Julius Naperkowski <j.nap@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 16 11:02:49 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "Jay Soffian" <jaysoffian@gmail.com>,
+	"Wincent Colaiuta" <win@wincent.com>,
+	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Sverre Rabbelier" <srabbelier@gmail.com>,
+	"Johannes Sixt" <j.sixt@viscovery.net>
+To: "Johan Herland" <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Jan 16 11:29:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNlXM-0006tn-Fg
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 11:02:48 +0100
+	id 1LNlxY-0001gE-KQ
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 11:29:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765939AbZAPKA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 05:00:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755250AbZAPKAz
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 05:00:55 -0500
-Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:41964 "EHLO
-	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756483AbZAPKAw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 05:00:52 -0500
-X-Greylist: delayed 1178 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Jan 2009 05:00:52 EST
-Received: from ins.uni-bonn.de (gibraltar [192.168.193.254])
-	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id CE2DC40004774;
-	Fri, 16 Jan 2009 10:41:11 +0100 (CET)
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Julius Naperkowski <j.nap@gmx.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <loom.20090115T123123-915@post.gmane.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1758228AbZAPK22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 05:28:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757462AbZAPK21
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 05:28:27 -0500
+Received: from mail.hotelhot.dk ([77.75.163.100]:42740 "EHLO mail.hotelhot.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756787AbZAPK21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 05:28:27 -0500
+Received: from mail.hotelhot.dk (localhost [127.0.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id D95EC30B1F;
+	Fri, 16 Jan 2009 11:27:46 +0100 (CET)
+Received: from webmail.hotelhot.dk (mail.hotelhot.dk [192.168.0.190])
+	by mail.hotelhot.dk (Postfix) with ESMTP id A416930AFF;
+	Fri, 16 Jan 2009 11:27:46 +0100 (CET)
+X-Squirrel-UserHash: NQYRRTwcNktTVUlTWFZaWRRVWg==
+X-Squirrel-FromHash: bFoQE3daRhY=
+In-Reply-To: <200901161050.13971.johan@herland.net>
+User-Agent: SquirrelMail/1.4.13
+X-Priority: 3 (Normal)
+Importance: Normal
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105935>
 
-Hello Julius,
+Johan Herland wrote:
 
-* Julius Naperkowski wrote on Thu, Jan 15, 2009 at 02:22:54PM CET:
-> I am trying to cross-compile git for mips on a x86 host. But it seems that it is
-> impossible to pass the C99 Format check in the configure script when
-> cross_compile mode is activated because the script quits even before it starts
-> the testprogramm. Is this behavior intentional?
+> 	edit e8902c1 Foo
+>
+> we should consider something like
+>
+> 	pick e8902c1 Foo
+> 	halt
 
-Cross compilation assumes that test programs can be compiled and linked,
-but not executed on the build system, i.e., at configure time.  The
-fourth argument of AC_RUN_IFELSE may be used to set a default test
-result value in the cross compilation case, typically either a
-pessimistic default, or one based on $host or so (using $host requires
-AC_CANONICAL_HOST, and the config.{guess,sub} scripts).
+Of all the suggestions, I like this one the most. Also, when placed like
+this, I am suddenly no longer opposed to the word "halt".
 
-As a workaround, you the user can pass preset results if you know what
-features the host system will have, to configure.  git's configure
-script uses three runtime tests.  You can set them with something like
-  ./configure ac_cv_c_c99_format=yes \
-              ac_cv_fread_reads_directories=no \
-              ac_cv_snprintf_returns_bogus=no --host=... ...
 
-although I'm not quite sure if uclibc's *printf functions indeed do
-support C99 size specifiers (I think they do though).
+> 	amend e8902c1 Foo
+>
+> does a "pick" followed by "commit --amend" (for editing the commit
+> message), followed by "rebase --continue".
 
-I can post a patch to add sane default settings for AC_RUN_IFELSE in
-cross compile setups, this weekend.
+I do not think that "amend" is the best word for editing only the commit
+message. A "commit --amend" can also make a new tree, so reusing the word
+with a different meaning could be bad.
+
+As for alternatives, however, I can only come up with "copyedit", and that
+is so horrible that I will not even propose it :-)
+
 
 Cheers,
-Ralf
+Anders.
