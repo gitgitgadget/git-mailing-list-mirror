@@ -1,78 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] checkout: implement "-" shortcut name for last branch
-Date: Fri, 16 Jan 2009 12:18:48 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901161213370.3586@pacific.mpi-cbg.de>
-References: <1231977976-8739-1-git-send-email-trast@student.ethz.ch> <200901151501.26394.trast@student.ethz.ch> <alpine.DEB.1.00.0901151510340.3586@pacific.mpi-cbg.de> <200901161008.16234.trast@student.ethz.ch>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: how to edit commit message in history
+Date: Fri, 16 Jan 2009 03:18:37 -0800 (PST)
+Message-ID: <m34ozzzegn.fsf@localhost.localdomain>
+References: <20090116035714.GA6984@b2j>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Jan 16 12:19:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: bill lam <cbill.lam@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 16 12:20:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNmjV-00032O-7I
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 12:19:25 +0100
+	id 1LNmkA-0003EP-Fr
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 12:20:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762372AbZAPLR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 06:17:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761795AbZAPLRz
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 06:17:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49398 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757956AbZAPLRy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 06:17:54 -0500
-Received: (qmail invoked by alias); 16 Jan 2009 11:17:52 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp052) with SMTP; 16 Jan 2009 12:17:52 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/V3Kg0P6LVTFpPdBe3ZTGVgd1TJS5TvKzIyf18cf
-	dVIswr4kvzSn3x
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200901161008.16234.trast@student.ethz.ch>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1763196AbZAPLSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 06:18:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762920AbZAPLSl
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 06:18:41 -0500
+Received: from mail-ew0-f17.google.com ([209.85.219.17]:32931 "EHLO
+	mail-ew0-f17.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762706AbZAPLSk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 06:18:40 -0500
+Received: by ewy10 with SMTP id 10so1834814ewy.13
+        for <git@vger.kernel.org>; Fri, 16 Jan 2009 03:18:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=IOThPcQJmWbLHmgAKDRT8ri+QIHzJXSNtWByvKuGwII=;
+        b=JGaCNxYIqEKYhiqHaPW+ZDRsWqdpWYNbMO7ax2etqtFhkDQ/xmT4+wqeLF0qwyfeNZ
+         KnYVP6NH/CsfB0HoHHR/bzWNRRUIjJKnbQ3v0K7YjTsUHDk62fnyGXr9SfoHAhXD8QvR
+         jU5xFxpLiIMz//HbpynM1NauZgDxb71inX7PE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=InHMUvHW4RXpLVm6bJVNHdSiNTurDylwT2XZIpyfaGFTmHXenJt/8w2UxZxacevwaS
+         8/oLeP96xkxZyZ4FHZWqijaUYu01zYGjmZ5QOJOogCpyhmlm6cRYs9c0NX15to7jBwxo
+         GFKfxaNwplbi6vxuLhfJf6w8lzfYEyaRHNCTc=
+Received: by 10.210.127.10 with SMTP id z10mr2984779ebc.125.1232104718256;
+        Fri, 16 Jan 2009 03:18:38 -0800 (PST)
+Received: from localhost.localdomain (abrz200.neoplus.adsl.tpnet.pl [83.8.119.200])
+        by mx.google.com with ESMTPS id 10sm2067739eyz.59.2009.01.16.03.18.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 16 Jan 2009 03:18:37 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0GBIZg8031784;
+	Fri, 16 Jan 2009 12:18:35 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0GBIWaW031781;
+	Fri, 16 Jan 2009 12:18:32 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20090116035714.GA6984@b2j>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105938>
 
-Hi,
+bill lam <cbill.lam@gmail.com> writes:
 
-On Fri, 16 Jan 2009, Thomas Rast wrote:
+> I made some typos in commit messages, how to edit them without
+> affecting everything else?
 
-> search_reflog () {
-> 	next=
-> 	git reflog show HEAD |
-> 	while read sha ref msg; do
-> 		if test -n "$next"; then
-> 			next=
-> 			echo ${sha%...}
-> 		fi
-> 		if echo "$msg" | grep -q "^checkout: moving from $branch "; then
-> 			next=t
-> 		fi
-> 		if echo "$msg" | grep -q "^merge $branch:"; then
-> 			git rev-list --parents -1 ${sha%...} \
-> 				| cut -d' ' -f3
-> 		fi
-> 	done
-> }
+If it is last commit that you want to edit, and if you didn't publish
+this commit to soem public repository, you can simply use
 
-How about this instead:
+  $ git commit --amend
 
-search_reflog () {
-	sed -n 's/\([^ ]*\) .*\tcheckout: moving from $branch .*/\1/p' \
-		< .git/logs/HEAD
-}
+If the commit is deeper in history, use "git rebase --interactive".
+If you published commit, you are out of luck.
 
-Of course, this leaves out the merges...  but I'd make that a command line 
-option anyway: would you like to resurrect a branch that you recently were 
-on, or one that you recently merged, or one that was merged by someone 
-else?
-
-Ciao,
-Dscho
+See http://git.or.cz/gitwiki/GitTips
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
