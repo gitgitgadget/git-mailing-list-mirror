@@ -1,83 +1,57 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
-Date: Fri, 16 Jan 2009 15:28:25 +0100
-Message-ID: <22A54F3C-DC15-4589-B796-D0E7032EC515@wincent.com>
-References: <87ab9th0rh.fsf@cup.kalibalik.dk> <200901161050.13971.johan@herland.net> <49548.bFoQE3daRhY=.1232101666.squirrel@webmail.hotelhot.dk> <200901161158.06828.johan@herland.net> <20090116124239.GA28870@neumann> <alpine.DEB.1.00.0901161357230.3586@pacific.mpi-cbg.de> <20090116132714.GN9794@neumann>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johan Herland <johan@herland.net>,
-	Anders Melchiorsen <mail@cup.kalibalik.dk>,
-	git@vger.kernel.org, Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Jan 16 15:30:18 2009
+From: "=?UTF-8?Q?Jonas_Flod=C3=A9n?=" <jonas@floden.nu>
+Subject: [PATCH/RFC] git-am: Make it easier to see which patch failed
+Date: Fri, 16 Jan 2009 15:34:47 +0100
+Message-ID: <636ecac0901160634r586c72a0r9bb63c6f019f5bff@mail.gmail.com>
+References: <636ecac0901160518o16706bbia9acaf09fdf92946@mail.gmail.com>
+	 <alpine.DEB.1.00.0901161513400.3586@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 16 15:36:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNpiC-0008JU-6r
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 15:30:16 +0100
+	id 1LNpny-0002Pl-2i
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 15:36:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934477AbZAPO2s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jan 2009 09:28:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936125AbZAPO2q
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 09:28:46 -0500
-Received: from wincent1.inetu.net ([209.235.192.161]:44544 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936445AbZAPO2p convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jan 2009 09:28:45 -0500
-Received: from cuzco.lan (249.pool85-53-13.dynamic.orange.es [85.53.13.249])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n0GESPcu007446
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 16 Jan 2009 09:28:27 -0500
-In-Reply-To: <20090116132714.GN9794@neumann>
-X-Mailer: Apple Mail (2.929.2)
+	id S1758222AbZAPOev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 09:34:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757749AbZAPOev
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 09:34:51 -0500
+Received: from qb-out-0506.google.com ([72.14.204.229]:26316 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757710AbZAPOet (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 09:34:49 -0500
+Received: by qb-out-0506.google.com with SMTP id f11so737847qba.17
+        for <git@vger.kernel.org>; Fri, 16 Jan 2009 06:34:48 -0800 (PST)
+Received: by 10.143.2.7 with SMTP id e7mr1062885wfi.246.1232116487290;
+        Fri, 16 Jan 2009 06:34:47 -0800 (PST)
+Received: by 10.142.253.12 with HTTP; Fri, 16 Jan 2009 06:34:47 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0901161513400.3586@pacific.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105964>
 
-El 16/1/2009, a las 14:27, SZEDER G=E1bor escribi=F3:
-
-> On Fri, Jan 16, 2009 at 01:57:57PM +0100, Johannes Schindelin wrote:
->> Hi,
->>
->> On Fri, 16 Jan 2009, SZEDER G=E1bor wrote:
->>
->>> On Fri, Jan 16, 2009 at 11:58:06AM +0100, Johan Herland wrote:
->>>
->>>> "rephrase"?
->>>
->>> This is the first one that I found acceptable.
->>
->> I assume you missed
->> http://article.gmane.org/gmane.comp.version-control.git/105783 in =20
->> all that
->> bikeshedding?
->
-> Yes, I indeed missed that.  And still think that 'rephrase' is best
-> among all the suggestions for this "edit just the commit message"
-> thing.  ('editmsg' conflicts; 'amend', 'modify', and  'correct' are
-> not obvious enough (they don't clearly indicate what will be
-> modified); and I'm not sure about 'redact', but I don't really like i=
-t
-> because I had to look it up in the dictionary first).
-
-Two more colors for consideration:
-
-   - "msg"/"msgedit"/"message" or similar
-   - "reword"
-
-I agree with G=E1bor that options like "modify" aren't clear because =20
-there's nothing in them that suggests that they're intended to operate =
-=20
-on the commit _message_.
-
-Wincent
+V2hlbiBnaXQtYW0gZmFpbHMgaXQncyBub3QgYWx3YXlzIGVhc3kgdG8gc2VlIHdoaWNoIHBhdGNo
+IGZhaWxlZCwKc2luY2UgaXQncyBvZnRlbiBoaWRkZW4gYnkgYSBsb3Qgb2YgZXJyb3IgbWVzc2Fn
+ZXMuCkFkZCBhbiBleHRyYSBsaW5lIHdoaWNoIHByaW50cyB0aGUgbmFtZSBvZiB0aGUgZmFpbGVk
+IHBhdGNoIGp1c3QKYmVmb3JlIHRoZSByZXNvbHZlIG1lc3NhZ2UgdG8gbWFrZSBpdCBlYXNpZXIg
+dG8gZmluZC4KClNpZ25lZC1vZmYtYnk6IEpvbmFzIEZsb2TDqW4gPGpvbmFzQGZsb2Rlbi5udT4K
+LS0tCkpvaGFubmVzIFNjaGluZGVsaW4gd3JvdGU6Cj4gTWF5YmUKPgo+IC0gICAgICAgICAgICAg
+ICBlY2hvIFBhdGNoIGZhaWxlZCBhdCAkbXNnbnVtLgo+ICsgICAgICAgICAgICAgICBlY2hvIFBh
+dGNoIGZhaWxlZCBhdCAkbXNnbnVtKCRGSVJTVExJTkUpLgoKSG93IGFib3V0IHRoaXMgaW5zdGVh
+ZC4gVGhvdWdoIHRoZSBsaW5lIGNvdWxkIGdldCB2ZXJ5IGxvbmcuClRoaXMgbWFrZXMgdGhlIGxp
+bmUgc3RhbmQgb3V0IGEgbGl0dGxlIG1vcmUuCgogZ2l0LWFtLnNoIHwgICAgMiArLQogMSBmaWxl
+cyBjaGFuZ2VkLCAxIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEv
+Z2l0LWFtLnNoIGIvZ2l0LWFtLnNoCmluZGV4IDRiMTU3ZmUuLjA5YzJmOWMgMTAwNzU1Ci0tLSBh
+L2dpdC1hbS5zaAorKysgYi9naXQtYW0uc2gKQEAgLTUwMSw3ICs1MDEsNyBAQCBkbwogCWZpCiAJ
+aWYgdGVzdCAkYXBwbHlfc3RhdHVzICE9IDAKIAl0aGVuCi0JCWVjaG8gUGF0Y2ggZmFpbGVkIGF0
+ICRtc2dudW0uCisJCXByaW50ZiAnXG5QYXRjaCBmYWlsZWQgYXQgJXMgKCVzKVxuJyAiJG1zZ251
+bSIgIiRGSVJTVExJTkUiCiAJCXN0b3BfaGVyZV91c2VyX3Jlc29sdmUgJHRoaXMKIAlmaQoKLS0g
+CjEuNi4xLjI4LmdjMzJmNzYK
