@@ -1,69 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC] git-am: Make it easier to see which patch failed
-Date: Fri, 16 Jan 2009 15:14:18 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901161513400.3586@pacific.mpi-cbg.de>
-References: <636ecac0901160518o16706bbia9acaf09fdf92946@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1268579091-1232115259=:3586"
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?Jonas_Flod=E9n?= <jonas@floden.nu>
-X-From: git-owner@vger.kernel.org Fri Jan 16 15:14:52 2009
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
+Date: Fri, 16 Jan 2009 15:28:25 +0100
+Message-ID: <22A54F3C-DC15-4589-B796-D0E7032EC515@wincent.com>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk> <200901161050.13971.johan@herland.net> <49548.bFoQE3daRhY=.1232101666.squirrel@webmail.hotelhot.dk> <200901161158.06828.johan@herland.net> <20090116124239.GA28870@neumann> <alpine.DEB.1.00.0901161357230.3586@pacific.mpi-cbg.de> <20090116132714.GN9794@neumann>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johan Herland <johan@herland.net>,
+	Anders Melchiorsen <mail@cup.kalibalik.dk>,
+	git@vger.kernel.org, Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Jan 16 15:30:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNpTG-0002sG-QV
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 15:14:51 +0100
+	id 1LNpiC-0008JU-6r
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 15:30:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763207AbZAPONZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 09:13:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760385AbZAPONZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 09:13:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57903 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760059AbZAPONY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 09:13:24 -0500
-Received: (qmail invoked by alias); 16 Jan 2009 14:13:22 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp019) with SMTP; 16 Jan 2009 15:13:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/BKAojSa/BgIohdSEHXsZUC4Jt/cCW78dmNYgD0f
-	kOjbW1ZZQr94tk
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <636ecac0901160518o16706bbia9acaf09fdf92946@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S934477AbZAPO2s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jan 2009 09:28:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936125AbZAPO2q
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 09:28:46 -0500
+Received: from wincent1.inetu.net ([209.235.192.161]:44544 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936445AbZAPO2p convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jan 2009 09:28:45 -0500
+Received: from cuzco.lan (249.pool85-53-13.dynamic.orange.es [85.53.13.249])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n0GESPcu007446
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 16 Jan 2009 09:28:27 -0500
+In-Reply-To: <20090116132714.GN9794@neumann>
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105963>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+El 16/1/2009, a las 14:27, SZEDER G=E1bor escribi=F3:
 
---8323328-1268579091-1232115259=:3586
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+> On Fri, Jan 16, 2009 at 01:57:57PM +0100, Johannes Schindelin wrote:
+>> Hi,
+>>
+>> On Fri, 16 Jan 2009, SZEDER G=E1bor wrote:
+>>
+>>> On Fri, Jan 16, 2009 at 11:58:06AM +0100, Johan Herland wrote:
+>>>
+>>>> "rephrase"?
+>>>
+>>> This is the first one that I found acceptable.
+>>
+>> I assume you missed
+>> http://article.gmane.org/gmane.comp.version-control.git/105783 in =20
+>> all that
+>> bikeshedding?
+>
+> Yes, I indeed missed that.  And still think that 'rephrase' is best
+> among all the suggestions for this "edit just the commit message"
+> thing.  ('editmsg' conflicts; 'amend', 'modify', and  'correct' are
+> not obvious enough (they don't clearly indicate what will be
+> modified); and I'm not sure about 'redact', but I don't really like i=
+t
+> because I had to look it up in the dictionary first).
 
-Hi,
+Two more colors for consideration:
 
-On Fri, 16 Jan 2009, Jonas Flodén wrote:
+   - "msg"/"msgedit"/"message" or similar
+   - "reword"
 
->  	then
->  		echo Patch failed at $msgnum.
-> +		printf '\nFailed to apply: %s\n' "$FIRSTLINE"
->  		stop_here_user_resolve $this
+I agree with G=E1bor that options like "modify" aren't clear because =20
+there's nothing in them that suggests that they're intended to operate =
+=20
+on the commit _message_.
 
-Maybe
-
--  		echo Patch failed at $msgnum.
-+  		echo Patch failed at $msgnum($FIRSTLINE).
-
-Hmm?
-
-Ciao,
-Dscho
-
---8323328-1268579091-1232115259=:3586--
+Wincent
