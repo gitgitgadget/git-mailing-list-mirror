@@ -1,60 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'mail' link on http://repo.or.cz/w/git.git no workee?
-Date: Thu, 15 Jan 2009 17:59:54 -0800
-Message-ID: <7vmydsovs5.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0901151651460.3586@pacific.mpi-cbg.de>
- <20090116015439.GF12275@machine.or.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: fatal: git grep: cannot generate relative filenames containing
+ '..'
+Date: Fri, 16 Jan 2009 03:07:59 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901160307290.3586@pacific.mpi-cbg.de>
+References: <20090115222905.8157.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Jan 16 03:02:34 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: George Spelvin <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Fri Jan 16 03:08:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNe2C-0005Jx-Hm
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 03:02:08 +0100
+	id 1LNe8P-0007Sa-9R
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 03:08:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759685AbZAPCAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 21:00:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759912AbZAPCAI
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 21:00:08 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33868 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935756AbZAPCAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 21:00:05 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2D2471C9C7;
-	Thu, 15 Jan 2009 21:00:03 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D57EE1CA0B; Thu,
- 15 Jan 2009 20:59:56 -0500 (EST)
-In-Reply-To: <20090116015439.GF12275@machine.or.cz> (Petr Baudis's message of
- "Fri, 16 Jan 2009 02:54:39 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 63739B68-E371-11DD-9F5A-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S935951AbZAPCHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 21:07:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933148AbZAPCHH
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 21:07:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51132 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1762077AbZAPCHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 21:07:06 -0500
+Received: (qmail invoked by alias); 16 Jan 2009 02:07:04 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp060) with SMTP; 16 Jan 2009 03:07:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/0qOwyR7z05LfKc6qWvMVP9LGFBSYN6qa3X2QzT7
+	6V55j7ULe5Co98
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090115222905.8157.qmail@science.horizon.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.76
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105907>
 
-Petr Baudis <pasky@suse.cz> writes:
+Hi,
 
->> That is, it links to marc (not gmane?) but finds no matches...
->
->   what mailing list post should it point to?
+On Thu, 15 Jan 2009, George Spelvin wrote:
 
-I think Dscho's point is that you shouldn't be generating these links that
-lead to nowhere ;-).
+> Could someone fix this some day?
 
-It would really be nice if we can maintain an exterenal database that
-links mailing list discussion threads and individual commits, and have
-gitweb and other visualization tools to make use of that information.
+Yes, someone could.
 
-I do not care what storage mechanism that external database uses.  It
-could use notes or it could just be a BDB that can be indexed with commit
-object names.
+Ciao,
+Dscho
