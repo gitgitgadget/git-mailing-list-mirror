@@ -1,160 +1,73 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] revision walker: include a detached HEAD in --all
-Date: Fri, 16 Jan 2009 13:52:53 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901161351460.3586@pacific.mpi-cbg.de>
-References: <1231977976-8739-1-git-send-email-trast@student.ethz.ch> <496EE559.3060901@viscovery.net> <alpine.DEB.1.00.0901151413250.3586@pacific.mpi-cbg.de> <200901151500.01876.trast@student.ethz.ch> <alpine.DEB.1.00.0901151508540.3586@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0901151517190.3586@pacific.mpi-cbg.de> <7vhc40s50t.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit
+ state
+Date: Fri, 16 Jan 2009 13:57:57 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901161357230.3586@pacific.mpi-cbg.de>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk> <200901161050.13971.johan@herland.net> <49548.bFoQE3daRhY=.1232101666.squirrel@webmail.hotelhot.dk> <200901161158.06828.johan@herland.net> <20090116124239.GA28870@neumann>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 16 13:53:41 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-365167999-1232110678=:3586"
+Cc: Johan Herland <johan@herland.net>,
+	Anders Melchiorsen <mail@cup.kalibalik.dk>,
+	git@vger.kernel.org, Jay Soffian <jaysoffian@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Jan 16 13:58:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNoCi-0007sg-AP
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 13:53:40 +0100
+	id 1LNoHN-00012b-DG
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 13:58:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761172AbZAPMwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 07:52:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760707AbZAPMwD
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 07:52:03 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48539 "HELO mail.gmx.net"
+	id S1753390AbZAPM5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 07:57:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753295AbZAPM5G
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 07:57:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55711 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752662AbZAPMwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 07:52:00 -0500
-Received: (qmail invoked by alias); 16 Jan 2009 12:51:58 -0000
+	id S1752748AbZAPM5D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 07:57:03 -0500
+Received: (qmail invoked by alias); 16 Jan 2009 12:57:02 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp039) with SMTP; 16 Jan 2009 13:51:58 +0100
+  by mail.gmx.net (mp027) with SMTP; 16 Jan 2009 13:57:02 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/tgQFuJYLtITHh9ADUXbTd9wDTjPD803DbMXeTjE
-	RJzqgt6DmWUUHo
+X-Provags-ID: V01U2FsdGVkX18949UlFZk9t0wmmQRJrZmI3CEZIDilc9dxLIdqoG
+	KeqcznmkSbLqhq
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vhc40s50t.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <20090116124239.GA28870@neumann>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.45
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105950>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-When HEAD is detached, --all should list it, too, logically, as a
-detached HEAD is by definition a temporary, unnamed branch.
+--8323328-365167999-1232110678=:3586
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
-It is especially necessary to list it when garbage collecting, as
-the detached HEAD would be trashed.
+Hi,
 
-Noticed by Thomas Rast.
+On Fri, 16 Jan 2009, SZEDER Gábor wrote:
 
-Note that this affects creating bundles with --all; I contend that it
-is a good change to add the HEAD, so that cloning from such a bundle
-will give you a current branch.  However, I had to fix t5701 as it
-assumed that --all does not imply HEAD.
+> On Fri, Jan 16, 2009 at 11:58:06AM +0100, Johan Herland wrote:
+> 
+> > "rephrase"?
+> 
+> This is the first one that I found acceptable.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+I assume you missed 
+http://article.gmane.org/gmane.comp.version-control.git/105783 in all that 
+bikeshedding?
 
-	On Thu, 15 Jan 2009, Junio C Hamano wrote:
-
-	> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-	> 
-	> > On Thu, 15 Jan 2009, Johannes Schindelin wrote:
-	> >
-	> >> [PATCH] pack-objects --all: include HEAD, which could be 
-	> >> detached
-	> >
-	> > In hind sight, it would probably be better to add this to 
-	> > revision.c.
-	> 
-	> If you mean that "git log --all" should also include a possibly 
-	> detached HEAD in its traversal, and a patch that implements such a fix 
-	> would automatically fix "repack -a" without the patch you are 
-	> responding to, I think I agree 100%.
-
-	Here it is.  (Sorry for the delay, it was due to some 
-	well-deserved inebriation.)
-
- revision.c              |    1 +
- t/t5701-clone-local.sh  |    4 ++--
- t/t6014-rev-list-all.sh |   38 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 41 insertions(+), 2 deletions(-)
- create mode 100755 t/t6014-rev-list-all.sh
-
-diff --git a/revision.c b/revision.c
-index db60f06..b065184 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1263,6 +1263,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 
- 			if (!strcmp(arg, "--all")) {
- 				handle_refs(revs, flags, for_each_ref);
-+				handle_refs(revs, flags, head_ref);
- 				continue;
- 			}
- 			if (!strcmp(arg, "--branches")) {
-diff --git a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
-index 8dfaaa4..14413f8 100755
---- a/t/t5701-clone-local.sh
-+++ b/t/t5701-clone-local.sh
-@@ -11,8 +11,8 @@ test_expect_success 'preparing origin repository' '
- 	git clone --bare . x &&
- 	test "$(GIT_CONFIG=a.git/config git config --bool core.bare)" = true &&
- 	test "$(GIT_CONFIG=x/config git config --bool core.bare)" = true
--	git bundle create b1.bundle --all HEAD &&
--	git bundle create b2.bundle --all &&
-+	git bundle create b1.bundle master HEAD &&
-+	git bundle create b2.bundle master &&
- 	mkdir dir &&
- 	cp b1.bundle dir/b3
- 	cp b1.bundle b4
-diff --git a/t/t6014-rev-list-all.sh b/t/t6014-rev-list-all.sh
-new file mode 100755
-index 0000000..991ab4a
---- /dev/null
-+++ b/t/t6014-rev-list-all.sh
-@@ -0,0 +1,38 @@
-+#!/bin/sh
-+
-+test_description='--all includes detached HEADs'
-+
-+. ./test-lib.sh
-+
-+
-+commit () {
-+	test_tick &&
-+	echo $1 > foo &&
-+	git add foo &&
-+	git commit -m "$1"
-+}
-+
-+test_expect_success 'setup' '
-+
-+	commit one &&
-+	commit two &&
-+	git checkout HEAD^ &&
-+	commit detached
-+
-+'
-+
-+test_expect_success 'rev-list --all lists detached HEAD' '
-+
-+	test 3 = $(git rev-list --all | wc -l)
-+
-+'
-+
-+test_expect_success 'repack does not lose detached HEAD' '
-+
-+	git gc &&
-+	git prune --expire=now &&
-+	git show HEAD
-+
-+'
-+
-+test_done
--- 
-1.6.1.299.gfdbb
+Ciao,
+Dscho
+--8323328-365167999-1232110678=:3586--
