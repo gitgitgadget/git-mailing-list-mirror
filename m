@@ -1,94 +1,85 @@
 From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: [PATCH 1/2] Move run_hook() from builtin-commit.c into
-	run-command.c (libgit)
-Date: Fri, 16 Jan 2009 18:25:21 +0100
-Message-ID: <20090116172521.GD28177@leksak.fem-net>
-References: <1232031618-5243-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0901151637590.3586@pacific.mpi-cbg.de>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit
+	state
+Date: Fri, 16 Jan 2009 18:26:40 +0100
+Message-ID: <20090116172640.GE28177@leksak.fem-net>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk> <8035E52E-D202-4C42-BDFD-DC7A925580A3@wincent.com> <76718490901151226l704d119bh297db4e91a4da05b@mail.gmail.com> <200901161050.13971.johan@herland.net> <bd6139dc0901160512x284bcd00x5d4c088e1771d86e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paolo Bonzini <bonzini@gnu.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 16 18:26:54 2009
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Anders Melchiorsen <mail@cup.kalibalik.dk>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 16 18:28:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNsT8-00037g-Gg
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 18:26:54 +0100
+	id 1LNsUP-0003b1-O0
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 18:28:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757571AbZAPRZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 12:25:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756839AbZAPRZa
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 12:25:30 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46387 "HELO mail.gmx.net"
+	id S1760956AbZAPR0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 12:26:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752390AbZAPR0r
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 12:26:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60977 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756074AbZAPRZa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 12:25:30 -0500
-Received: (qmail invoked by alias); 16 Jan 2009 17:25:28 -0000
+	id S1758169AbZAPR0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 12:26:46 -0500
+Received: (qmail invoked by alias); 16 Jan 2009 17:26:44 -0000
 Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp001) with SMTP; 16 Jan 2009 18:25:28 +0100
+  by mail.gmx.net (mp002) with SMTP; 16 Jan 2009 18:26:44 +0100
 X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1/f+f0Jh+zfnW1M76mqG6XjlBKUZ0FimWqqU4SNOI
-	9aqQiMzdeDHxIE
+X-Provags-ID: V01U2FsdGVkX18zE+93Q/Izw+GKrUrUeJh4SQlKjxxDTnRuWDURTi
+	kk18jStnp0+DjD
 Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
 	(envelope-from <s-beyer@gmx.net>)
-	id 1LNsRd-00049W-70; Fri, 16 Jan 2009 18:25:21 +0100
+	id 1LNsSu-00049m-Cb; Fri, 16 Jan 2009 18:26:40 +0100
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901151637590.3586@pacific.mpi-cbg.de>
+In-Reply-To: <bd6139dc0901160512x284bcd00x5d4c088e1771d86e@mail.gmail.com>
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105982>
 
 Hi,
 
-> > -	ret = start_command(&hook);
-> > -	if (ret) {
-> > -		warning("Could not spawn %s", argv[0]);
-> > -		return ret;
-> > -	}
-> > -	ret = finish_command(&hook);
-> > -	if (ret == -ERR_RUN_COMMAND_WAITPID_SIGNAL)
-> > -		warning("%s exited due to uncaught signal", argv[0]);
+Sverre Rabbelier wrote:
+> On Fri, Jan 16, 2009 at 10:50, Johan Herland <johan@herland.net> wrote:
+> > we should consider something like
+> >        pick e8902c1 Foo
+> >        halt
 > 
-> What are the side effects of replacing this with "ret = 
-> run_command(&hook);"?  This has to be discussed and defended in the commit 
-> message.
+> I very much like this suggestion, Stephan, is this somewhat similar to
+> how git sequencer will do things?
 
-This is a very good point.
-The consequences are that two warnings are missing, but these are
-warnings that are useful enough to be included for all those hooks,
-imho.
+Yes, it is
 
-Thanks!
+	pick e8902c1 # Foo
+	pause
 
-> Lots of improvements possible (I agree; _after_ this patch):
-[...]
-> - use ALLOC_GROW instead of having a fixed size argv,
+in sequencer currently. Of course, "pause" could be renamed to "halt",
+"stop" or whatever you like. But I think everyone likes something
+different.
 
-Agreed.
+And
 
-> - use an strbuf for the index file
+	edit e8902c1 # Foo
 
-Is that useful in some way?
-Currently it would only adds code to generate strbufs at the caller
-side. And in the case the caller has a strbuf for the index file, it
-can simply use the .buf member.
+is simply a shortcut for the pick-pause above.
+(Or "e e8902c1" instead of edit, which works, too.)
 
-> - checking executability of argv[0] before filling argv,
+I usually prefer typing "cw edit<ESC>" over "o pause<ESC>" into vim
+in such cases.
 
-Agreed.
-
-Patch series v2 will follow.
-
-Thanks,
+Regards,
   Stephan
 
 -- 
