@@ -1,79 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Fix gitdir detection when in subdir of gitdir
-Date: Fri, 16 Jan 2009 10:07:03 -0800
-Message-ID: <7vr63386rc.fsf@gitster.siamese.dyndns.org>
-References: <1232120253-1551-1-git-send-email-szeder@ira.uka.de>
- <alpine.DEB.1.00.0901161729070.3586@pacific.mpi-cbg.de>
- <4970BA2B.7090807@viscovery.net> <4970BAE5.8080006@viscovery.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH take 3 0/4] color-words improvements
+Date: Fri, 16 Jan 2009 20:04:29 +0100
+Message-ID: <200901162004.32557.trast@student.ethz.ch>
+References: <alpine.DEB.1.00.0901112057300.3586@pacific.mpi-cbg.de> <adf1fd3d0901160102y32a08e26q96728495fc0b6fcf@mail.gmail.com> <adf1fd3d0901160401s7a363076x1bcd8e90db4f56a1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed;
+  boundary="nextPart1579019.bPuNfdvNSL";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jan 16 19:08:48 2009
+	Junio C Hamano <gitster@pobox.com>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
+To: Santi =?utf-8?q?B=C3=A9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Fri Jan 16 20:06:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNt7Y-0003TB-O1
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 19:08:41 +0100
+	id 1LNu0z-0002JN-Nt
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 20:05:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761108AbZAPSHV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jan 2009 13:07:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760207AbZAPSHT
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 13:07:19 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56787 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759514AbZAPSHS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jan 2009 13:07:18 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 73561913FF;
-	Fri, 16 Jan 2009 13:07:16 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 46CCF913FD; Fri,
- 16 Jan 2009 13:07:11 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8211FC5E-E3F8-11DD-ACDC-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1761977AbZAPTET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 14:04:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756191AbZAPTES
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 14:04:18 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:20692 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760346AbZAPTER (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 14:04:17 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 16 Jan 2009 20:04:15 +0100
+Received: from [192.168.0.3] ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 16 Jan 2009 20:04:14 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <adf1fd3d0901160401s7a363076x1bcd8e90db4f56a1@mail.gmail.com>
+X-OriginalArrivalTime: 16 Jan 2009 19:04:14.0974 (UTC) FILETIME=[396729E0:01C9780D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105983>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+--nextPart1579019.bPuNfdvNSL
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> Johannes Sixt schrieb:
->> G=C3=A1bor's patch needs a better justification which misbehavior it=
- tries to
->> fix, and the spot that it changes:
->
-> I actually meant: "which use-case the patch tries to help". Because t=
-he
-> current behavior can hardly be classified as bug. ("You have no busin=
-ess
-> cd-ing around in .git." ;)
+Santi B=E9jar wrote:
+> Hi,
+>=20
+>   can you both provide a public repository to be able to test the
+> lastest version without having to search and apply them?
 
-Thanks.
+I set up a clone at
 
-I think (1) the solution (almost) makes sense, (2) the patch needs to b=
-e
-explained a lot better as you mentioned in your two messages, and (3) i=
-f
-it does not affect any other case than when you are in a subdirectory o=
-f
-the .git/ directory, then you are doing something funny anyway and
-performance issue Dscho mentions, if any, is not a concern.
+  git://repo.or.cz/git/trast.git
 
-My "(almost)" in (1) above is because the patch uses this new behaviour
-even when you are inside the .git/ directory itself (or at the root of =
-a
-bare repository), which is a very common case that we do not have to no=
-r
-want to change the behaviour.  It also invalidates the precondition of =
-(3)
-above.
+The respective topics are js/word-diff-p1 and tr/word-diff-p2.  For
+your testing convenience, there are master/next branches that merge
+tr/word-diff-p2 to Junio's master/next.  I *think* I should have
+gathered all squashes from Dscho, too.
 
-Dscho, what performance issues do you have in mind, by the way?
+The tip commit has some tweaks to the builtin regexes that aren't in
+any mailed version yet; I'll resend RSN.
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+
+--nextPart1579019.bPuNfdvNSL
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAklw2kAACgkQqUud07tmzP1PPgCggBcpBCWGbaUxP353I/B+aunR
+mtEAnje/dh921DIVveHlykgouCuF89ix
+=Ii9j
+-----END PGP SIGNATURE-----
+
+--nextPart1579019.bPuNfdvNSL--
