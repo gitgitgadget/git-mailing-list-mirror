@@ -1,126 +1,69 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCH] revision walker: include a detached HEAD in --all
-Date: Fri, 16 Jan 2009 14:46:01 +0100
-Message-ID: <adf1fd3d0901160546o50db0594h7377774fed9fef99@mail.gmail.com>
-References: <1231977976-8739-1-git-send-email-trast@student.ethz.ch>
-	 <496EE559.3060901@viscovery.net>
-	 <alpine.DEB.1.00.0901151413250.3586@pacific.mpi-cbg.de>
-	 <200901151500.01876.trast@student.ethz.ch>
-	 <alpine.DEB.1.00.0901151508540.3586@pacific.mpi-cbg.de>
-	 <alpine.DEB.1.00.0901151517190.3586@pacific.mpi-cbg.de>
-	 <7vhc40s50t.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0901161351460.3586@pacific.mpi-cbg.de>
-	 <adf1fd3d0901160512i2de8f473gd471cc1dcb72afa4@mail.gmail.com>
-	 <alpine.DEB.1.00.0901161415230.3586@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC] git-am: Make it easier to see which patch failed
+Date: Fri, 16 Jan 2009 15:14:18 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901161513400.3586@pacific.mpi-cbg.de>
+References: <636ecac0901160518o16706bbia9acaf09fdf92946@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 16 14:53:32 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1268579091-1232115259=:3586"
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?Jonas_Flod=E9n?= <jonas@floden.nu>
+X-From: git-owner@vger.kernel.org Fri Jan 16 15:14:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNp8b-0003ib-Tk
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 14:53:30 +0100
+	id 1LNpTG-0002sG-QV
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 15:14:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765962AbZAPNvp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jan 2009 08:51:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932274AbZAPNvp
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 08:51:45 -0500
-Received: from mu-out-0910.google.com ([209.85.134.186]:11631 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765886AbZAPNvn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jan 2009 08:51:43 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so1039758mue.7
-        for <git@vger.kernel.org>; Fri, 16 Jan 2009 05:51:41 -0800 (PST)
-Received: by 10.102.234.18 with SMTP id g18mr1199336muh.102.1232113561111; 
-	Fri, 16 Jan 2009 05:46:01 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0901161415230.3586@pacific.mpi-cbg.de>
+	id S1763207AbZAPONZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 09:13:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760385AbZAPONZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 09:13:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57903 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760059AbZAPONY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 09:13:24 -0500
+Received: (qmail invoked by alias); 16 Jan 2009 14:13:22 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp019) with SMTP; 16 Jan 2009 15:13:22 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/BKAojSa/BgIohdSEHXsZUC4Jt/cCW78dmNYgD0f
+	kOjbW1ZZQr94tk
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <636ecac0901160518o16706bbia9acaf09fdf92946@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105962>
 
-2009/1/16 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
->
-> On Fri, 16 Jan 2009, Santi B=E9jar wrote:
->
->> 2009/1/16 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->> >
->> > Note that this affects creating bundles with --all; I contend that=
- it
->> > is a good change to add the HEAD, so that cloning from such a bund=
-le
->> > will give you a current branch.  However, I had to fix t5701 as it
->> > assumed that --all does not imply HEAD.
->>
->> From the description I understand that it only affects when the HEAD=
- is
->> detached, but in t5701 the HEAD is not detached so nothing should be
->> fixed.
->
-> The error in t5701 was that it _wanted_ to test a bundle without a HE=
-AD,
-> but it actually created it with --all.  That was implying that --all =
-does
-> not mean HEAD
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Yes, that is the current behaviour.
+--8323328-1268579091-1232115259=:3586
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> , and I disagree with that.
+Hi,
 
-I know you disagree, but in the commit log you said:
+On Fri, 16 Jan 2009, Jonas Flodén wrote:
 
----
-[PATCH] revision walker: include a detached HEAD in --all
+>  	then
+>  		echo Patch failed at $msgnum.
+> +		printf '\nFailed to apply: %s\n' "$FIRSTLINE"
+>  		stop_here_user_resolve $this
 
-When HEAD is detached, --all should list it, too, logically, as a
-detached HEAD is by definition a temporary, unnamed branch.
----
+Maybe
 
-so nothing talks about changing the behaviour when the HEAD is not deta=
-ched.
+-  		echo Patch failed at $msgnum.
++  		echo Patch failed at $msgnum($FIRSTLINE).
 
-But the problem with t5701 is another thing. If you run this:
+Hmm?
 
-git init
-: >file
-git add .
-git commit -m1
-git bundle create b1.bundle --all HEAD
-git ls-remote b1.bundle
-git rev-parse --all HEAD
+Ciao,
+Dscho
 
-you will see that the same rev-parse parameters in "git bundle"
-produce tree lines while with "git rev-parse" only two are produced.
-
-
->
->> For gc for sure it is a good thing, but I'm not convinced of the oth=
-ers,
->> as a detached HEAD is a very special thing (temporary and unnamed
->> branch).
->
-> So?  What does "--all" mean?  All branches or what? :-)
->
-> Seriously, I think that --all should imply HEAD at all times, as the =
-only
-> time when it makes a difference is when you have that unnamed _branch=
-_
-> that is a detached HEAD.
->
-> Maybe I would be more amenable to your criticism if you could come up=
- with
-> a scenario where implying HEAD with --all is _wrong_.
-
-I don't think it is plainly wrong. I think both makes sense, but I
-think it is not a good idea to change the behaviour now as some
-scripts may rely on it.
-
-Santi
+--8323328-1268579091-1232115259=:3586--
