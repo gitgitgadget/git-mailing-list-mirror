@@ -1,75 +1,103 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: how to edit commit message in history
-Date: Fri, 16 Jan 2009 11:57:14 +0800
-Message-ID: <20090116035714.GA6984@b2j>
+From: "Jike Song" <albcamus@gmail.com>
+Subject: Re: how to edit commit message in history
+Date: Fri, 16 Jan 2009 12:09:27 +0800
+Message-ID: <df9815e70901152009i3bd717d0t6c20c41e9be19552@mail.gmail.com>
+References: <20090116035714.GA6984@b2j>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 16 04:58:48 2009
+X-From: git-owner@vger.kernel.org Fri Jan 16 05:10:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNfr5-0007vW-Q0
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 04:58:48 +0100
+	id 1LNg2n-0001kB-Ou
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 05:10:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753624AbZAPD5Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 22:57:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753535AbZAPD5Y
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 22:57:24 -0500
-Received: from ti-out-0910.google.com ([209.85.142.185]:23205 "EHLO
+	id S1755511AbZAPEJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 23:09:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755378AbZAPEJa
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 23:09:30 -0500
+Received: from ti-out-0910.google.com ([209.85.142.189]:40181 "EHLO
 	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753143AbZAPD5X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 22:57:23 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so780827tic.23
-        for <git@vger.kernel.org>; Thu, 15 Jan 2009 19:57:21 -0800 (PST)
+	with ESMTP id S1754877AbZAPEJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 23:09:29 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so784225tic.23
+        for <git@vger.kernel.org>; Thu, 15 Jan 2009 20:09:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mail-followup-to:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        bh=teECEl/lq8dLcCD0+ouAADxDMeYAHvGUW0/5ILOvkic=;
-        b=EiiMtSBDhbWer3fLiMK3U+LO8uST3/jVdxxKLJ/F7zBMWV8RzaRq2RxmYJs/d2hOXc
-         7zZgmJiNIEOLIkBaEtAca3yxSkpmNa/02aay7oDwFIJagcQ9eOA9yVF3jlkIO070SW31
-         zBq+1rfzSopIDDYayH6AZ5BAfVr2hm7KF3tt0=
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=nLonZv5ljMnHdi5cK2QmwQfyy6B06cY7+s38RX0/bBw=;
+        b=MRSw1zGZ1be7Hq5xDD3vxZsFl6FU7cepBKv7ogpWtRzakZKhg1A21dNF4t7atWLav6
+         G2KpLDZN1BkwZ9w1aCNVeAEghj3lhoVVkraJLzCJWUA/s/4kWBBE3oMf0mQ6zwTws7uE
+         Sq25uGZ56mv4oToA9OutyJnq82y8XmPM4lQ8I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mail-followup-to:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :user-agent;
-        b=U+n1zcitGs9CbKOgrK+JmX0mtS75zI1xf8D+jQ4M9EGabdAr7tskQTp08piMm3fCRW
-         JuZPxeHPrcVODebj9bTbQq3h7ASRtquGstOu/v2zqcxJ4rt+n0ztlfSLoc/QEo/+FAui
-         8UU/WOu45688QuSuBjTyKSfIqUXzYz/DzUSnI=
-Received: by 10.110.103.5 with SMTP id a5mr2591849tic.37.1232078240948;
-        Thu, 15 Jan 2009 19:57:20 -0800 (PST)
-Received: from localhost (pcd436074.netvigator.com [203.218.226.74])
-        by mx.google.com with ESMTPS id 22sm1865797tim.35.2009.01.15.19.57.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 15 Jan 2009 19:57:19 -0800 (PST)
-Mail-Followup-To: git <git@vger.kernel.org>
+        h=message-id:date:from:to:subject:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=HhRNzNxgxkwD9ykAJa6sS2XOk4NdlW9efRog2d2m7LDXJhqwVnE8ifpUQMsKCGtbt/
+         MmJldO8AHMbOcfo+lcRPPphvJBUq/MOb6a3zNhXXVkvpwlcjawtky0XBYyg0eZu/wGkf
+         G5OfnSeyVr79tQjCGNbMMNlBjvMVN5Ujr4eMI=
+Received: by 10.110.43.18 with SMTP id q18mr2652959tiq.14.1232078967483;
+        Thu, 15 Jan 2009 20:09:27 -0800 (PST)
+Received: by 10.110.43.4 with HTTP; Thu, 15 Jan 2009 20:09:27 -0800 (PST)
+In-Reply-To: <20090116035714.GA6984@b2j>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105919>
 
-I made some typos in commit messages, how to edit them without
-affecting everything else?
+On Fri, Jan 16, 2009 at 11:57 AM, bill lam <cbill.lam@gmail.com> wrote:
+> I made some typos in commit messages, how to edit them without
+> affecting everything else?
+>
+> Thanks in advance.
 
-Thanks in advance.
+say, it's commit HEAD~2 to be revised.
 
---=20
-regards,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
-=E5=94=90=E8=A9=A9311 =E7=84=A1=E5=90=8D=E6=B0=8F  =E9=9B=9C=E8=A9=A9
-    =E7=9B=A1=E5=AF=92=E9=A3=9F=E9=9B=A8=E8=8D=89=E8=90=8B=E8=90=8B  =E8=
-=91=97=E9=BA=A5=E8=8B=97=E9=A2=A8=E6=9F=B3=E6=98=A0=E5=A0=A4  =E7=AD=89=
-=E6=98=AF=E6=9C=89=E5=AE=B6=E6=AD=B8=E6=9C=AA=E5=BE=97  =E6=9D=9C=E9=B5=
-=91=E4=BC=91=E5=90=91=E8=80=B3=E9=82=8A=E5=95=BC
+    git rebase -i HEAD~3
+
+In your editor, you all see something like this:
+
+pick db79377 2nd
+pick fa9ced8 3rd
+pick b842e49 4nd
+
+# Rebase 1423d77..b842e49 onto 1423d77
+#
+# Commands:
+#  p, pick = use commit
+#  e, edit = use commit, but stop for amending
+#  s, squash = use commit, but meld into previous commit
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+# However, if you remove everything, the rebase will be aborted.
+#
+
+
+
+Now change "pick" to "edit" with your typo commit, save it and exit.
+You will see something like this:
+
+$ git-rebase -i HEAD~3
+Stopped at db79377... 2nd
+You can amend the commit now, with
+
+        git commit --amend
+
+Once you are satisfied with your changes, run
+
+        git rebase --continue
+
+
+Just follow the instructions.
+
+-- 
+Thanks,
+Jike
