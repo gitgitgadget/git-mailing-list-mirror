@@ -1,103 +1,221 @@
-From: "Jike Song" <albcamus@gmail.com>
-Subject: Re: how to edit commit message in history
-Date: Fri, 16 Jan 2009 12:09:27 +0800
-Message-ID: <df9815e70901152009i3bd717d0t6c20c41e9be19552@mail.gmail.com>
-References: <20090116035714.GA6984@b2j>
+From: "George Spelvin" <linux@horizon.com>
+Subject: Re: fatal: git grep: cannot generate relative filenames containing
+ '..'
+Date: Thu, 15 Jan 2009 23:24:32 -0500
+Message-ID: <20090116042432.11434.qmail@science.horizon.com>
+References: <20090115222905.8157.qmail@science.horizon.com>
+ <alpine.DEB.1.00.0901160307290.3586@pacific.mpi-cbg.de>
+ <7vhc40ov78.fsf@gitster.siamese.dyndns.org>
+ <20090116032708.21156.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 16 05:10:55 2009
+Cc: linux@horizon.com, git@vger.kernel.org
+To: Johannes.Schindelin@gmx.de, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jan 16 05:26:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNg2n-0001kB-Ou
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 05:10:54 +0100
+	id 1LNgHa-0004gA-R3
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 05:26:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755511AbZAPEJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 23:09:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755378AbZAPEJa
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 23:09:30 -0500
-Received: from ti-out-0910.google.com ([209.85.142.189]:40181 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754877AbZAPEJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 23:09:29 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so784225tic.23
-        for <git@vger.kernel.org>; Thu, 15 Jan 2009 20:09:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=nLonZv5ljMnHdi5cK2QmwQfyy6B06cY7+s38RX0/bBw=;
-        b=MRSw1zGZ1be7Hq5xDD3vxZsFl6FU7cepBKv7ogpWtRzakZKhg1A21dNF4t7atWLav6
-         G2KpLDZN1BkwZ9w1aCNVeAEghj3lhoVVkraJLzCJWUA/s/4kWBBE3oMf0mQ6zwTws7uE
-         Sq25uGZ56mv4oToA9OutyJnq82y8XmPM4lQ8I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=HhRNzNxgxkwD9ykAJa6sS2XOk4NdlW9efRog2d2m7LDXJhqwVnE8ifpUQMsKCGtbt/
-         MmJldO8AHMbOcfo+lcRPPphvJBUq/MOb6a3zNhXXVkvpwlcjawtky0XBYyg0eZu/wGkf
-         G5OfnSeyVr79tQjCGNbMMNlBjvMVN5Ujr4eMI=
-Received: by 10.110.43.18 with SMTP id q18mr2652959tiq.14.1232078967483;
-        Thu, 15 Jan 2009 20:09:27 -0800 (PST)
-Received: by 10.110.43.4 with HTTP; Thu, 15 Jan 2009 20:09:27 -0800 (PST)
-In-Reply-To: <20090116035714.GA6984@b2j>
-Content-Disposition: inline
+	id S1754868AbZAPEYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 23:24:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754610AbZAPEYf
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 23:24:35 -0500
+Received: from science.horizon.com ([192.35.100.1]:12880 "HELO
+	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1754124AbZAPEYd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 23:24:33 -0500
+Received: (qmail 11435 invoked by uid 1000); 15 Jan 2009 23:24:32 -0500
+In-Reply-To: <20090116032708.21156.qmail@science.horizon.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105920>
 
-On Fri, Jan 16, 2009 at 11:57 AM, bill lam <cbill.lam@gmail.com> wrote:
-> I made some typos in commit messages, how to edit them without
-> affecting everything else?
->
-> Thanks in advance.
+> I don't mind doing the coding, but can someone who groks the
+> code more fully tell me if I'm missing something major?
 
-say, it's commit HEAD~2 to be revised.
+Here's a first draft, that Works For Me(tm).  Does anyone see anything
+broken about it?
 
-    git rebase -i HEAD~3
+(This code released into the public domain, copyright abandoned.  You may
+do anything you like with it, including evil things, as long as you
+don't bother me asking for additional permissions.)
 
-In your editor, you all see something like this:
-
-pick db79377 2nd
-pick fa9ced8 3rd
-pick b842e49 4nd
-
-# Rebase 1423d77..b842e49 onto 1423d77
-#
-# Commands:
-#  p, pick = use commit
-#  e, edit = use commit, but stop for amending
-#  s, squash = use commit, but meld into previous commit
-#
-# If you remove a line here THAT COMMIT WILL BE LOST.
-# However, if you remove everything, the rebase will be aborted.
-#
-
-
-
-Now change "pick" to "edit" with your typo commit, save it and exit.
-You will see something like this:
-
-$ git-rebase -i HEAD~3
-Stopped at db79377... 2nd
-You can amend the commit now, with
-
-        git commit --amend
-
-Once you are satisfied with your changes, run
-
-        git rebase --continue
-
-
-Just follow the instructions.
-
--- 
-Thanks,
-Jike
+diff --git a/builtin-grep.c b/builtin-grep.c
+index bebf15c..5727a8b 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -90,12 +90,74 @@ static int pathspec_matches(const char **paths, const char *name)
+ 	return 0;
+ }
+ 
++/*
++ * Write a filename like "/usr/src/linux/include/linux/zlib.h" as
++ * a path relative to some prefix like "/usr/src/linux/kernel/"
++ * (The prefix always includes a trailing slash.)
++ * label_len, if non-zero, describes a leading portion on the name
++ * (typically of the form "HEAD^^:") which should not be stripped off.
++ * 
++ * The result is in one of three places:
++ * - It may be a pointer into the supplied name in the simplest case,
++ * - It may be returned in a static buffer if it is of reaonable size, or
++ * - It may be in a malloced buffer if it is large.
++ * A pointer to be passed to free() is returned in *to_free, which
++ * is set to NULL if the return value is not to be freed, or is equal
++ * to the return value if it is.  (It could be simply a boolean, but doing
++ * it this way eliminates a test in the caller.)
++ */
++static const char *make_relative(unsigned label_len, const char *prefix, unsigned prefix_len, const char *name, void **to_free)
++{
++	static char name_buf[PATH_MAX];
++	char *cp;
++	unsigned n, match_len = 0, slashes = 0;
++	unsigned name_len;
++
++	for (n = 0; n < prefix_len; n++) {
++		if (prefix[n] != name[label_len+n]) {
++			for (; n < prefix_len; n++)
++				slashes += (prefix[n] == '/');
++			break;
++		}
++		if (prefix[n] == '/')
++			match_len = n+1;
++	}
++
++	/* Can we return a substring of the input string? */
++	if (!slashes && (!label_len || !match_len)) {
++		*to_free = NULL;
++		return name + match_len;
++	}
++
++	/* Nope, assemble the full response */
++
++	/* Output buffer will be tag + "../"*slashes + name + '\0' */
++	name_len = strlen(name + label_len + match_len) + 1;
++	n = label_len + 3*slashes + name_len + 1;
++	if (n <= ARRAY_SIZE(name_buf)) {
++		cp = name_buf;
++		*to_free = NULL;
++	} else {
++		*to_free = cp = xmalloc(n);
++	}
++
++	/* Now fill in the buffer */
++	memcpy(cp, name, label_len);
++	n = label_len;
++	while (slashes--) {
++		memcpy(cp+n, "../", 3);
++		n += 3;
++	}
++	memcpy(cp+n, name+label_len+match_len, name_len);
++	return cp;
++}
++
+ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1, const char *name, int tree_name_len)
+ {
+ 	unsigned long size;
+ 	char *data;
+ 	enum object_type type;
+-	char *to_free = NULL;
++	void *to_free = NULL;
+ 	int hit;
+ 
+ 	data = read_sha1_file(sha1, &type, &size);
+@@ -103,24 +165,9 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1, const char
+ 		error("'%s': unable to read %s", name, sha1_to_hex(sha1));
+ 		return 0;
+ 	}
+-	if (opt->relative && opt->prefix_length) {
+-		static char name_buf[PATH_MAX];
+-		char *cp;
+-		int name_len = strlen(name) - opt->prefix_length + 1;
+-
+-		if (!tree_name_len)
+-			name += opt->prefix_length;
+-		else {
+-			if (ARRAY_SIZE(name_buf) <= name_len)
+-				cp = to_free = xmalloc(name_len);
+-			else
+-				cp = name_buf;
+-			memcpy(cp, name, tree_name_len);
+-			strcpy(cp + tree_name_len,
+-			       name + tree_name_len + opt->prefix_length);
+-			name = cp;
+-		}
+-	}
++	if (opt->relative)
++		name = make_relative(tree_name_len, opt->prefix,
++		                     opt->prefix_length, name, &to_free);
+ 	hit = grep_buffer(opt, name, data, size);
+ 	free(data);
+ 	free(to_free);
+@@ -132,6 +179,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
+ 	struct stat st;
+ 	int i;
+ 	char *data;
++	void *to_free = NULL;
+ 	size_t sz;
+ 
+ 	if (lstat(filename, &st) < 0) {
+@@ -156,10 +204,12 @@ static int grep_file(struct grep_opt *opt, const char *filename)
+ 		return 0;
+ 	}
+ 	close(i);
+-	if (opt->relative && opt->prefix_length)
+-		filename += opt->prefix_length;
++	if (opt->relative)
++		filename = make_relative(0, opt->prefix, opt->prefix_length,
++		                         filename, &to_free);
+ 	i = grep_buffer(opt, filename, data, sz);
+ 	free(data);
++	free(to_free);
+ 	return i;
+ }
+ 
+@@ -528,7 +578,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 
+ 	memset(&opt, 0, sizeof(opt));
+-	opt.prefix_length = (prefix && *prefix) ? strlen(prefix) : 0;
++	opt.prefix = prefix;
++	opt.prefix_length = prefix ? strlen(prefix) : 0;
+ 	opt.relative = 1;
+ 	opt.pathname = 1;
+ 	opt.pattern_tail = &opt.pattern_list;
+@@ -787,17 +838,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			verify_filename(prefix, argv[j]);
+ 	}
+ 
+-	if (i < argc) {
++	if (i < argc)
+ 		paths = get_pathspec(prefix, argv + i);
+-		if (opt.prefix_length && opt.relative) {
+-			/* Make sure we do not get outside of paths */
+-			for (i = 0; paths[i]; i++)
+-				if (strncmp(prefix, paths[i], opt.prefix_length))
+-					die("git grep: cannot generate relative filenames containing '..'");
+-		}
+-	}
+ 	else if (prefix) {
+-		paths = xcalloc(2, sizeof(const char *));
++		paths = xmalloc(2 * sizeof *paths);
+ 		paths[0] = prefix;
+ 		paths[1] = NULL;
+ 	}
+diff --git a/grep.h b/grep.h
+index 45a222d..a02dccf 100644
+--- a/grep.h
++++ b/grep.h
+@@ -56,6 +56,7 @@ struct grep_opt {
+ 	struct grep_pat *pattern_list;
+ 	struct grep_pat **pattern_tail;
+ 	struct grep_expr *pattern_expression;
++	const char *prefix;
+ 	int prefix_length;
+ 	regex_t regexp;
+ 	unsigned linenum:1;
