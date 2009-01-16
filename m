@@ -1,67 +1,78 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit  state
-Date: Fri, 16 Jan 2009 11:58:06 +0100
-Message-ID: <200901161158.06828.johan@herland.net>
-References: <87ab9th0rh.fsf@cup.kalibalik.dk> <200901161050.13971.johan@herland.net> <49548.bFoQE3daRhY=.1232101666.squirrel@webmail.hotelhot.dk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] checkout: implement "-" shortcut name for last branch
+Date: Fri, 16 Jan 2009 12:18:48 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901161213370.3586@pacific.mpi-cbg.de>
+References: <1231977976-8739-1-git-send-email-trast@student.ethz.ch> <200901151501.26394.trast@student.ethz.ch> <alpine.DEB.1.00.0901151510340.3586@pacific.mpi-cbg.de> <200901161008.16234.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jay Soffian" <jaysoffian@gmail.com>,
-	"Wincent Colaiuta" <win@wincent.com>,
-	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Sverre Rabbelier" <srabbelier@gmail.com>,
-	"Johannes Sixt" <j.sixt@viscovery.net>
-To: "Anders Melchiorsen" <mail@cup.kalibalik.dk>
-X-From: git-owner@vger.kernel.org Fri Jan 16 12:00:01 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jan 16 12:19:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNmQb-0004cK-OA
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 11:59:54 +0100
+	id 1LNmjV-00032O-7I
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 12:19:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756495AbZAPK63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 05:58:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756903AbZAPK62
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 05:58:28 -0500
-Received: from sam.opera.com ([213.236.208.81]:58738 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754314AbZAPK62 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 05:58:28 -0500
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n0GAw74R028859
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 16 Jan 2009 10:58:12 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <49548.bFoQE3daRhY=.1232101666.squirrel@webmail.hotelhot.dk>
-Content-Disposition: inline
+	id S1762372AbZAPLR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 06:17:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761795AbZAPLRz
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 06:17:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49398 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757956AbZAPLRy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 06:17:54 -0500
+Received: (qmail invoked by alias); 16 Jan 2009 11:17:52 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp052) with SMTP; 16 Jan 2009 12:17:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/V3Kg0P6LVTFpPdBe3ZTGVgd1TJS5TvKzIyf18cf
+	dVIswr4kvzSn3x
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200901161008.16234.trast@student.ethz.ch>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105937>
 
-On Friday 16 January 2009, Anders Melchiorsen wrote:
-> Johan Herland wrote:
-> > 	amend e8902c1 Foo
-> >
-> > does a "pick" followed by "commit --amend" (for editing the commit
-> > message), followed by "rebase --continue".
->
-> I do not think that "amend" is the best word for editing only the
-> commit message. A "commit --amend" can also make a new tree, so
-> reusing the word with a different meaning could be bad.
->
-> As for alternatives, however, I can only come up with "copyedit", and
-> that is so horrible that I will not even propose it :-)
+Hi,
 
-"rephrase"?
+On Fri, 16 Jan 2009, Thomas Rast wrote:
 
+> search_reflog () {
+> 	next=
+> 	git reflog show HEAD |
+> 	while read sha ref msg; do
+> 		if test -n "$next"; then
+> 			next=
+> 			echo ${sha%...}
+> 		fi
+> 		if echo "$msg" | grep -q "^checkout: moving from $branch "; then
+> 			next=t
+> 		fi
+> 		if echo "$msg" | grep -q "^merge $branch:"; then
+> 			git rev-list --parents -1 ${sha%...} \
+> 				| cut -d' ' -f3
+> 		fi
+> 	done
+> }
 
-...Johan
+How about this instead:
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+search_reflog () {
+	sed -n 's/\([^ ]*\) .*\tcheckout: moving from $branch .*/\1/p' \
+		< .git/logs/HEAD
+}
+
+Of course, this leaves out the merges...  but I'd make that a command line 
+option anyway: would you like to resurrect a branch that you recently were 
+on, or one that you recently merged, or one that was merged by someone 
+else?
+
+Ciao,
+Dscho
