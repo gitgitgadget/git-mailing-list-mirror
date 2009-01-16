@@ -1,63 +1,149 @@
-From: Jens Seidel <jensseidel@users.sf.net>
-Subject: Re: 'mail' link on http://repo.or.cz/w/git.git no workee?
-Date: Fri, 16 Jan 2009 10:03:03 +0100
-Message-ID: <20090116090301.GA13300@merkur.sol.de>
-References: <alpine.DEB.1.00.0901151651460.3586@pacific.mpi-cbg.de> <20090116015439.GF12275@machine.or.cz>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] checkout: implement "-" shortcut name for last branch
+Date: Fri, 16 Jan 2009 10:08:13 +0100
+Message-ID: <200901161008.16234.trast@student.ethz.ch>
+References: <1231977976-8739-1-git-send-email-trast@student.ethz.ch> <200901151501.26394.trast@student.ethz.ch> <alpine.DEB.1.00.0901151510340.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: schacon@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 16 10:07:20 2009
+Content-Type: multipart/signed;
+  boundary="nextPart26788117.urRsDEe27F";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 16 10:09:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNkfS-00056I-T7
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 10:07:07 +0100
+	id 1LNkhv-0005sw-0a
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 10:09:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762066AbZAPJFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 04:05:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757134AbZAPJFp
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 04:05:45 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:52280 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761530AbZAPJFm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 04:05:42 -0500
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id BDC5BFBC8AAB;
-	Fri, 16 Jan 2009 10:05:40 +0100 (CET)
-Received: from [77.179.125.191] (helo=merkur.sol.de)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LNke4-0000Hq-00; Fri, 16 Jan 2009 10:05:40 +0100
-Received: from jens by merkur.sol.de with local (Exim 4.69)
-	(envelope-from <tux-master@web.de>)
-	id 1LNkbX-0003T6-CF; Fri, 16 Jan 2009 10:03:04 +0100
-Mail-Followup-To: git@vger.kernel.org, schacon@gmail.com
-Content-Disposition: inline
-In-Reply-To: <20090116015439.GF12275@machine.or.cz>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Sender: tux-master@web.de
-X-Provags-ID: V01U2FsdGVkX19Vi4x81MNv6NjGmT4J5BKNrRLG5pnLGjP7GiK/
-	GReqBx7mdFuiaQ/Gt2ava0HAIsdQzZV8nHJvFwp4g/JF1MQ9e1
-	l+sXEmPfU=
+	id S1758444AbZAPJIC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 04:08:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759507AbZAPJIB
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 04:08:01 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:15141 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754277AbZAPJH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 04:07:58 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 16 Jan 2009 10:07:56 +0100
+Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 16 Jan 2009 10:07:56 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0901151510340.3586@pacific.mpi-cbg.de>
+X-OriginalArrivalTime: 16 Jan 2009 09:07:56.0778 (UTC) FILETIME=[EBEFB4A0:01C977B9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105931>
 
-On Fri, Jan 16, 2009 at 02:54:39AM +0100, Petr Baudis wrote:
-> On Thu, Jan 15, 2009 at 04:53:48PM +0100, Johannes Schindelin wrote:
-> > sorry to bother you between two games of Go; Could you have a look at the 
-> > 'mail' link with the commit "Update 1.6.2 draft release notes"?  It is not 
-> > working for me...
-> > 
-> > That is, it links to marc (not gmane?) but finds no matches...
+--nextPart26788117.urRsDEe27F
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Just a side note: The link to the mailing list on http://git-scm.com/ is also
-not optimal as it refers to gmane. I tried to subscribe but found only a link
-to http://dir.gmane.org/gmane.comp.version-control.git and no instructions how
-to subscribe ...
+Johannes Schindelin wrote:
+> - AFAICT your version could never be convinced to resurrect deleted=20
+>   branches, without resorting to reflogs anyway.
 
-Jens
+Speaking of resurrection, there are other possible sources that a
+branch tip could be gleaned from.  How about the script below?  The
+advantage is that it can even be used to recover Junio's topic
+branches by looking at the merges in 'pu'.
+
+(I'll answer the rest later.)
+
+=2D-- 8< ---
+#!/bin/sh
+
+=2E git-sh-setup
+
+USAGE=3D"<branch>"
+
+test "$#" =3D 1 || usage
+
+branch=3D"$1"
+candidates=3D
+
+search_reflog () {
+	next=3D
+	git reflog show HEAD |
+	while read sha ref msg; do
+		if test -n "$next"; then
+			next=3D
+			echo ${sha%...}
+		fi
+		if echo "$msg" | grep -q "^checkout: moving from $branch "; then
+			next=3Dt
+		fi
+		if echo "$msg" | grep -q "^merge $branch:"; then
+			git rev-list --parents -1 ${sha%...} \
+				| cut -d' ' -f3
+		fi
+	done
+}
+
+search_merges () {
+	git rev-list --pretty=3Dtformat:"%h %p:%s" --all |
+	grep "Merge branch.*'$branch'.*into" |
+	while read sha rest; do
+		parents=3D"$(echo "$rest" | cut -d: -f1)"
+		case "$parents" in
+		    *' '*' '*)
+			warn "$branch took part in octopus merge $sha"
+			warn "check manually!"
+			;;
+		    *' '*)
+			echo "$parents" | cut -d' ' -f2
+			;;
+		esac
+	done
+}
+
+search_merge_targets () {
+	git rev-list --pretty=3Dtformat:"%h %s" --all |
+	grep "Merge branch '[^']*' into $branch$" |
+	cut -d' ' -f1
+}
+
+candidates=3D"$(search_reflog | sort -u)"
+if test -z "$candidates"; then
+	echo "** Searching merges... **"
+	candidates=3D"$( (search_merges;search_merge_targets) | sort -u)"
+fi
+
+echo "** Candidates **"
+for cmt in $candidates; do
+	git --no-pager log --pretty=3Doneline --abbrev-commit -1 $cmt
+done
+
+newest=3D$(git rev-list -1 $candidates)
+
+if ! git rev-parse --verify --quiet $branch >/dev/null; then
+	printf "** Restoring $branch to "
+	git --no-pager log -1 --pretty=3Dtformat:"%h %s" $newest
+	git branch $branch $newest
+else
+	printf "Most recent among them: "
+	git --no-pager log -1 --pretty=3Dtformat:"%h %s" $newest
+	echo "** $branch already exists, doing nothing"
+fi
+
+
+--nextPart26788117.urRsDEe27F
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAklwToAACgkQqUud07tmzP1lvQCgh16OUlqj2QBC/CKLdCUi9THC
+KrcAn01h/lecCXEbSySm5Bm6NxTE0J90
+=1sVw
+-----END PGP SIGNATURE-----
+
+--nextPart26788117.urRsDEe27F--
