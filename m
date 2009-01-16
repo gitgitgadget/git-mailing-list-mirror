@@ -1,56 +1,75 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: fatal: git grep: cannot generate relative filenames containing
- '..'
-Date: Thu, 15 Jan 2009 22:27:08 -0500
-Message-ID: <20090116032708.21156.qmail@science.horizon.com>
-References: <20090115222905.8157.qmail@science.horizon.com>
- <alpine.DEB.1.00.0901160307290.3586@pacific.mpi-cbg.de>
- <7vhc40ov78.fsf@gitster.siamese.dyndns.org>
+From: bill lam <cbill.lam@gmail.com>
+Subject: how to edit commit message in history
+Date: Fri, 16 Jan 2009 11:57:14 +0800
+Message-ID: <20090116035714.GA6984@b2j>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: linux@horizon.com, git@vger.kernel.org
-To: Johannes.Schindelin@gmx.de, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jan 16 04:28:41 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 16 04:58:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNfNw-0001Dw-8Z
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 04:28:40 +0100
+	id 1LNfr5-0007vW-Q0
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 04:58:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760191AbZAPD1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 22:27:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755442AbZAPD1L
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 22:27:11 -0500
-Received: from science.horizon.com ([192.35.100.1]:14651 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1760082AbZAPD1K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 22:27:10 -0500
-Received: (qmail 21157 invoked by uid 1000); 15 Jan 2009 22:27:08 -0500
-In-Reply-To: <7vhc40ov78.fsf@gitster.siamese.dyndns.org>
+	id S1753624AbZAPD5Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jan 2009 22:57:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753535AbZAPD5Y
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 22:57:24 -0500
+Received: from ti-out-0910.google.com ([209.85.142.185]:23205 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753143AbZAPD5X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 22:57:23 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so780827tic.23
+        for <git@vger.kernel.org>; Thu, 15 Jan 2009 19:57:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mail-followup-to:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=teECEl/lq8dLcCD0+ouAADxDMeYAHvGUW0/5ILOvkic=;
+        b=EiiMtSBDhbWer3fLiMK3U+LO8uST3/jVdxxKLJ/F7zBMWV8RzaRq2RxmYJs/d2hOXc
+         7zZgmJiNIEOLIkBaEtAca3yxSkpmNa/02aay7oDwFIJagcQ9eOA9yVF3jlkIO070SW31
+         zBq+1rfzSopIDDYayH6AZ5BAfVr2hm7KF3tt0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mail-followup-to:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :user-agent;
+        b=U+n1zcitGs9CbKOgrK+JmX0mtS75zI1xf8D+jQ4M9EGabdAr7tskQTp08piMm3fCRW
+         JuZPxeHPrcVODebj9bTbQq3h7ASRtquGstOu/v2zqcxJ4rt+n0ztlfSLoc/QEo/+FAui
+         8UU/WOu45688QuSuBjTyKSfIqUXzYz/DzUSnI=
+Received: by 10.110.103.5 with SMTP id a5mr2591849tic.37.1232078240948;
+        Thu, 15 Jan 2009 19:57:20 -0800 (PST)
+Received: from localhost (pcd436074.netvigator.com [203.218.226.74])
+        by mx.google.com with ESMTPS id 22sm1865797tim.35.2009.01.15.19.57.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 15 Jan 2009 19:57:19 -0800 (PST)
+Mail-Followup-To: git <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105918>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Or perhaps someone did more than two years ago with --full-name?
+I made some typos in commit messages, how to edit them without
+affecting everything else?
 
-Thank you for pointing that out!  It's a bit of a handful to type,
-but at least it makes what I want to do possible without having to
-write a wrapper script.  And I can reduce the typing with an alias.
+Thanks in advance.
 
-I'm still trying to figure out why the basic form doesn't work,
-though.  Is there something more subtle than that fact that the
-filename simplification in grep_sha1 and grep_file might do the
-wrong thing?  If I comment out the check in cmd_grep(), it seems
-to work, although it prints out some funky filenames.
-
-That seems like a straightforward thing to fix.  Basically, strip
-off the common part of the prefix and name, and for every remaining
-component in the prefix, prepend a ../ to the name.
-
-I don't mind doing the coding, but can someone who groks the
-code more fully tell me if I'm missing something major?
+--=20
+regards,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+=E5=94=90=E8=A9=A9311 =E7=84=A1=E5=90=8D=E6=B0=8F  =E9=9B=9C=E8=A9=A9
+    =E7=9B=A1=E5=AF=92=E9=A3=9F=E9=9B=A8=E8=8D=89=E8=90=8B=E8=90=8B  =E8=
+=91=97=E9=BA=A5=E8=8B=97=E9=A2=A8=E6=9F=B3=E6=98=A0=E5=A0=A4  =E7=AD=89=
+=E6=98=AF=E6=9C=89=E5=AE=B6=E6=AD=B8=E6=9C=AA=E5=BE=97  =E6=9D=9C=E9=B5=
+=91=E4=BC=91=E5=90=91=E8=80=B3=E9=82=8A=E5=95=BC
