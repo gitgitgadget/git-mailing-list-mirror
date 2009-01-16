@@ -1,81 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] implement pattern matching in ce_path_match
-Date: Thu, 15 Jan 2009 18:51:07 -0800
-Message-ID: <7vzlhsneuc.fsf@gitster.siamese.dyndns.org>
-References: <1231944876-29930-1-git-send-email-drizzd@aon.at>
- <1231944876-29930-2-git-send-email-drizzd@aon.at>
- <1231944876-29930-3-git-send-email-drizzd@aon.at>
- <1231944876-29930-4-git-send-email-drizzd@aon.at>
- <7vljtd20m6.fsf@gitster.siamese.dyndns.org>
+From: "George Spelvin" <linux@horizon.com>
+Subject: Re: fatal: git grep: cannot generate relative filenames containing
+ '..'
+Date: Thu, 15 Jan 2009 22:27:08 -0500
+Message-ID: <20090116032708.21156.qmail@science.horizon.com>
+References: <20090115222905.8157.qmail@science.horizon.com>
+ <alpine.DEB.1.00.0901160307290.3586@pacific.mpi-cbg.de>
+ <7vhc40ov78.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, johannes@familieschneider.info
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Fri Jan 16 03:52:46 2009
+Content-Transfer-Encoding: 7bit
+Cc: linux@horizon.com, git@vger.kernel.org
+To: Johannes.Schindelin@gmx.de, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jan 16 04:28:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNep7-0001C2-Pi
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 03:52:42 +0100
+	id 1LNfNw-0001Dw-8Z
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 04:28:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754426AbZAPCvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 21:51:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754269AbZAPCvR
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 21:51:17 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37164 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754162AbZAPCvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 21:51:16 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 90FD11CA26;
-	Thu, 15 Jan 2009 21:51:14 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C33661CA2A; Thu,
- 15 Jan 2009 21:51:09 -0500 (EST)
-In-Reply-To: <7vljtd20m6.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed, 14 Jan 2009 10:39:29 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8A3CF83C-E378-11DD-A4D9-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1760191AbZAPD1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 22:27:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755442AbZAPD1L
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 22:27:11 -0500
+Received: from science.horizon.com ([192.35.100.1]:14651 "HELO
+	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1760082AbZAPD1K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 22:27:10 -0500
+Received: (qmail 21157 invoked by uid 1000); 15 Jan 2009 22:27:08 -0500
+In-Reply-To: <7vhc40ov78.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105917>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Or perhaps someone did more than two years ago with --full-name?
 
-> Clemens Buchacher <drizzd@aon.at> writes:
->
->> With this patch ce_path_match uses match_pathspec in order to perform
->> pattern matching.
->
-> We have two conflicting definitions of pattern matching in our system.
-> I'd make it more explicit which kind of pattern matching you are talking
-> about here.
->
-> The family of operations based on the diff-tree machinery (e.g. path
-> limited revision walking "git log A..B -- dir1/dir2") define the pattern
-> matching as "leading path match (exact match is just a special case of
-> this)".  Other operations that work on paths in the work tree and the
-> index (e.g. grep, ls-files) uses "leading path match, but fall back to
-> globbing".
->
-> In the longer term we really should unify them by teaching the former to
-> fall back to globbing without getting undue performance hit, and this
-> patch may be a step in the right direction.  There are optimizations that
-> assume the "leading path" semantics to trim the input early and avoid
-> opening and descending into a tree object if pathspec patterns cannot
-> possibly match (see tree-diff.c::tree_entry_interesting() for an example),
-> and we need to teach them to notice a glob wildcard in an earlier part of
-> a pathspec and to descend into some trees that they would have skipped
-> with the old definition of pathspec.
+Thank you for pointing that out!  It's a bit of a handful to type,
+but at least it makes what I want to do possible without having to
+write a wrapper script.  And I can reduce the typing with an alias.
 
-Actually there was an earlier attempt that resulted in the pathspec
-matching tree traverser builtin-grep uses.  Even though it has to work
-with trees (when grepping inside a tree-ish) and has optimizations not to
-open unnecessary subtrees similar to the one the diff-tree machinery has,
-it also knows how to handle globs.  If we were to pick one of existing
-implementations for the longer term unification, I think that is probably
-the one we should build on top of.
+I'm still trying to figure out why the basic form doesn't work,
+though.  Is there something more subtle than that fact that the
+filename simplification in grep_sha1 and grep_file might do the
+wrong thing?  If I comment out the check in cmd_grep(), it seems
+to work, although it prints out some funky filenames.
+
+That seems like a straightforward thing to fix.  Basically, strip
+off the common part of the prefix and name, and for every remaining
+component in the prefix, prepend a ../ to the name.
+
+I don't mind doing the coding, but can someone who groks the
+code more fully tell me if I'm missing something major?
