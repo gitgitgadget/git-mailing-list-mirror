@@ -1,149 +1,71 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] checkout: implement "-" shortcut name for last branch
-Date: Fri, 16 Jan 2009 10:08:13 +0100
-Message-ID: <200901161008.16234.trast@student.ethz.ch>
-References: <1231977976-8739-1-git-send-email-trast@student.ethz.ch> <200901151501.26394.trast@student.ethz.ch> <alpine.DEB.1.00.0901151510340.3586@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart26788117.urRsDEe27F";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 16 10:09:41 2009
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: Weird behaviour of git status
+Date: Fri, 16 Jan 2009 10:44:45 +0100
+Message-ID: <2A29AD77-2B8D-4491-92C1-62F5FFFBB00F@wincent.com>
+References: <4970488B.3010608@morey-chaisemartin.com>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: devel@morey-chaisemartin.com
+X-From: git-owner@vger.kernel.org Fri Jan 16 10:46:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNkhv-0005sw-0a
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 10:09:39 +0100
+	id 1LNlHf-0001Np-9T
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 10:46:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758444AbZAPJIC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 04:08:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759507AbZAPJIB
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 04:08:01 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:15141 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754277AbZAPJH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 04:07:58 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 16 Jan 2009 10:07:56 +0100
-Received: from pcjremy.inf.ethz.ch ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 16 Jan 2009 10:07:56 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0901151510340.3586@pacific.mpi-cbg.de>
-X-OriginalArrivalTime: 16 Jan 2009 09:07:56.0778 (UTC) FILETIME=[EBEFB4A0:01C977B9]
+	id S1763060AbZAPJo5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jan 2009 04:44:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762785AbZAPJo4
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 04:44:56 -0500
+Received: from wincent1.inetu.net ([209.235.192.161]:47274 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763017AbZAPJow convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jan 2009 04:44:52 -0500
+Received: from cuzco.lan (249.pool85-53-13.dynamic.orange.es [85.53.13.249])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n0G9ikr3032753
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 16 Jan 2009 04:44:48 -0500
+In-Reply-To: <4970488B.3010608@morey-chaisemartin.com>
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105932>
 
---nextPart26788117.urRsDEe27F
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+El 16/1/2009, a las 9:42, Nicolas Morey-Chaisemartin escribi=F3:
 
-Johannes Schindelin wrote:
-> - AFAICT your version could never be convinced to resurrect deleted=20
->   branches, without resorting to reflogs anyway.
+> Hello everyone,
+>
+> I just noticed a weird behaviour in git status.
+> I have created new files in different directories in my project.
+> I have added all of them in the index with git add.
+> When I run "git status" It shows me that all my 3 files are in the =20
+> index.
+> However if I run git-status specifying a directory, it returns that =20
+> the
+> file in this directory are in the index but the other one isn't.
+>
+> In my opinion, it should
+> - either display all the files as in the index (specifying a director=
+y
+> wouldn't have any effect then)
+> - treat only file in the specified dir. So "external" files wouldn't =
+=20
+> be
+> shown at all.
 
-Speaking of resurrection, there are other possible sources that a
-branch tip could be gleaned from.  How about the script below?  The
-advantage is that it can even be used to recover Junio's topic
-branches by looking at the merges in 'pu'.
+"git status" shows you what would be committed if you ran "git commit" =
+=20
+with the same parameters. So in your example, the output for "git =20
+status ." is exactly as you would expect.
 
-(I'll answer the rest later.)
+This is stated in the man page.
 
-=2D-- 8< ---
-#!/bin/sh
-
-=2E git-sh-setup
-
-USAGE=3D"<branch>"
-
-test "$#" =3D 1 || usage
-
-branch=3D"$1"
-candidates=3D
-
-search_reflog () {
-	next=3D
-	git reflog show HEAD |
-	while read sha ref msg; do
-		if test -n "$next"; then
-			next=3D
-			echo ${sha%...}
-		fi
-		if echo "$msg" | grep -q "^checkout: moving from $branch "; then
-			next=3Dt
-		fi
-		if echo "$msg" | grep -q "^merge $branch:"; then
-			git rev-list --parents -1 ${sha%...} \
-				| cut -d' ' -f3
-		fi
-	done
-}
-
-search_merges () {
-	git rev-list --pretty=3Dtformat:"%h %p:%s" --all |
-	grep "Merge branch.*'$branch'.*into" |
-	while read sha rest; do
-		parents=3D"$(echo "$rest" | cut -d: -f1)"
-		case "$parents" in
-		    *' '*' '*)
-			warn "$branch took part in octopus merge $sha"
-			warn "check manually!"
-			;;
-		    *' '*)
-			echo "$parents" | cut -d' ' -f2
-			;;
-		esac
-	done
-}
-
-search_merge_targets () {
-	git rev-list --pretty=3Dtformat:"%h %s" --all |
-	grep "Merge branch '[^']*' into $branch$" |
-	cut -d' ' -f1
-}
-
-candidates=3D"$(search_reflog | sort -u)"
-if test -z "$candidates"; then
-	echo "** Searching merges... **"
-	candidates=3D"$( (search_merges;search_merge_targets) | sort -u)"
-fi
-
-echo "** Candidates **"
-for cmt in $candidates; do
-	git --no-pager log --pretty=3Doneline --abbrev-commit -1 $cmt
-done
-
-newest=3D$(git rev-list -1 $candidates)
-
-if ! git rev-parse --verify --quiet $branch >/dev/null; then
-	printf "** Restoring $branch to "
-	git --no-pager log -1 --pretty=3Dtformat:"%h %s" $newest
-	git branch $branch $newest
-else
-	printf "Most recent among them: "
-	git --no-pager log -1 --pretty=3Dtformat:"%h %s" $newest
-	echo "** $branch already exists, doing nothing"
-fi
-
-
---nextPart26788117.urRsDEe27F
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAklwToAACgkQqUud07tmzP1lvQCgh16OUlqj2QBC/CKLdCUi9THC
-KrcAn01h/lecCXEbSySm5Bm6NxTE0J90
-=1sVw
------END PGP SIGNATURE-----
-
---nextPart26788117.urRsDEe27F--
+Cheers,
+Wincent
