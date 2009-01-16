@@ -1,58 +1,49 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'mail' link on http://repo.or.cz/w/git.git no workee?
-Date: Thu, 15 Jan 2009 18:43:09 -0800
-Message-ID: <7v8wpcots2.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0901151651460.3586@pacific.mpi-cbg.de>
- <20090116015439.GF12275@machine.or.cz>
- <7vmydsovs5.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0901160315170.3586@pacific.mpi-cbg.de>
- <20090116022408.GG12275@machine.or.cz>
+Subject: Re: How to exclude some files when using git-archive?
+Date: Thu, 15 Jan 2009 18:44:48 -0800
+Message-ID: <7v4p00otpb.fsf@gitster.siamese.dyndns.org>
+References: <46dff0320901151840l18257501x62a3fa1fe9701dc@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Fri Jan 16 03:44:42 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 16 03:46:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNehM-0007j0-KI
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 03:44:41 +0100
+	id 1LNeiv-00085X-Gz
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 03:46:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753541AbZAPCnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 21:43:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753497AbZAPCnQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 21:43:16 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53159 "EHLO
+	id S1753842AbZAPCoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 21:44:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753589AbZAPCoy
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 21:44:54 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53425 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753007AbZAPCnP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 21:43:15 -0500
+	with ESMTP id S1752785AbZAPCox (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 21:44:53 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 48B0390C07;
-	Thu, 15 Jan 2009 21:43:15 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AC82190C38;
+	Thu, 15 Jan 2009 21:44:52 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5595D90C04; Thu,
- 15 Jan 2009 21:43:11 -0500 (EST)
-In-Reply-To: <20090116022408.GG12275@machine.or.cz> (Petr Baudis's message of
- "Fri, 16 Jan 2009 03:24:08 +0100")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E63D890C37; Thu,
+ 15 Jan 2009 21:44:49 -0500 (EST)
+In-Reply-To: <46dff0320901151840l18257501x62a3fa1fe9701dc@mail.gmail.com>
+ (Ping Yin's message of "Fri, 16 Jan 2009 10:40:11 +0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6C8E44CC-E377-11DD-A9E3-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: A69D8F1A-E377-11DD-810B-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105915>
 
-Petr Baudis <pasky@suse.cz> writes:
+Ping Yin <pkufranky@gmail.com> writes:
 
-> I was not actually planning to carry the patch over the next gitweb
-> update since I got no feedback on it (IIRC) since I implemented it.
+> I want to exclude .gitignore from the archive, but hasn't find a easy way
+>
+> Ping Yin
 
-Heh, now you got it.
-
-And I do not think you advertised it since you implemented it, so no
-feedback does not necessarily mean no interest.  FWIW, I think looking for
-a message that has similar words in the mail archive is a nifty feature to
-have.
+"man gitattributes", then look for export-ignore?
