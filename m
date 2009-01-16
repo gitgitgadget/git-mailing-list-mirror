@@ -1,53 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: fatal: git grep: cannot generate relative filenames containing
- '..'
-Date: Thu, 15 Jan 2009 18:12:27 -0800
-Message-ID: <7vhc40ov78.fsf@gitster.siamese.dyndns.org>
-References: <20090115222905.8157.qmail@science.horizon.com>
- <alpine.DEB.1.00.0901160307290.3586@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: 'mail' link on http://repo.or.cz/w/git.git no workee?
+Date: Fri, 16 Jan 2009 03:17:14 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901160315170.3586@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0901151651460.3586@pacific.mpi-cbg.de> <20090116015439.GF12275@machine.or.cz> <7vmydsovs5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: George Spelvin <linux@horizon.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 16 03:14:03 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 16 03:17:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNeDh-0000IL-80
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 03:14:01 +0100
+	id 1LNeHJ-0001AK-IV
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 03:17:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760322AbZAPCMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jan 2009 21:12:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755268AbZAPCMh
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 21:12:37 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34898 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754028AbZAPCMg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jan 2009 21:12:36 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1FBB01C723;
-	Thu, 15 Jan 2009 21:12:35 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8175D1B7D5; Thu,
- 15 Jan 2009 21:12:28 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0901160307290.3586@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Fri, 16 Jan 2009 03:07:59 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 23BAD890-E373-11DD-B786-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1755614AbZAPCQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jan 2009 21:16:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754297AbZAPCQV
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Jan 2009 21:16:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41940 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752222AbZAPCQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jan 2009 21:16:20 -0500
+Received: (qmail invoked by alias); 16 Jan 2009 02:16:19 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp050) with SMTP; 16 Jan 2009 03:16:19 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+MuaZBrtiMdWThAyGXQg+AJAbyO6Lc2OdjDOom0w
+	1DQ7Cssk4szl5v
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vmydsovs5.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105909>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> On Thu, 15 Jan 2009, George Spelvin wrote:
->
->> Could someone fix this some day?
->
-> Yes, someone could.
+On Thu, 15 Jan 2009, Junio C Hamano wrote:
 
-Or perhaps someone did more than two years ago with --full-name?
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> >> That is, it links to marc (not gmane?) but finds no matches...
+> >
+> >   what mailing list post should it point to?
+
+I found gmane to be much nicer to click through than marc.
+
+> I think Dscho's point is that you shouldn't be generating these links 
+> that lead to nowhere ;-).
+
+Almost.
+
+I wondered what the point was, and I would _welcome_ links that pointed to 
+the mails containing the patches (identified either by patch ids or by 
+manual editing; best would be to have both methods at the same time).
+
+Ciao,
+Dscho
