@@ -1,73 +1,154 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit
- state
-Date: Fri, 16 Jan 2009 13:57:57 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901161357230.3586@pacific.mpi-cbg.de>
-References: <87ab9th0rh.fsf@cup.kalibalik.dk> <200901161050.13971.johan@herland.net> <49548.bFoQE3daRhY=.1232101666.squirrel@webmail.hotelhot.dk> <200901161158.06828.johan@herland.net> <20090116124239.GA28870@neumann>
+From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <tavestbo@trolltech.com>
+Subject: [PATCH next v4] git-notes: fix printing of multi-line notes
+Date: Fri, 16 Jan 2009 14:06:12 +0100
+Message-ID: <49708644.7040809@trolltech.com>
+References: <alpine.DEB.1.00.0901141627440.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-365167999-1232110678=:3586"
-Cc: Johan Herland <johan@herland.net>,
-	Anders Melchiorsen <mail@cup.kalibalik.dk>,
-	git@vger.kernel.org, Jay Soffian <jaysoffian@gmail.com>,
-	Wincent Colaiuta <win@wincent.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Jan 16 13:58:31 2009
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 16 14:03:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNoHN-00012b-DG
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 13:58:29 +0100
+	id 1LNoLS-0002UH-9c
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 14:02:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390AbZAPM5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 07:57:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753295AbZAPM5G
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 07:57:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55711 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752748AbZAPM5D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 07:57:03 -0500
-Received: (qmail invoked by alias); 16 Jan 2009 12:57:02 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp027) with SMTP; 16 Jan 2009 13:57:02 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18949UlFZk9t0wmmQRJrZmI3CEZIDilc9dxLIdqoG
-	KeqcznmkSbLqhq
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090116124239.GA28870@neumann>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1759507AbZAPNBS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jan 2009 08:01:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758907AbZAPNBS
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 08:01:18 -0500
+Received: from hoat.troll.no ([62.70.27.150]:55724 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757018AbZAPNBR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 08:01:17 -0500
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 1668D20FE4;
+	Fri, 16 Jan 2009 14:01:11 +0100 (CET)
+Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 00F6F20F6D;
+	Fri, 16 Jan 2009 14:01:11 +0100 (CET)
+Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
+	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n0GD1AAE004765;
+	Fri, 16 Jan 2009 14:01:10 +0100
+Received: from [172.24.90.10] ( [172.24.90.10])
+    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
+    via ESMTP; Fri, 16 Jan 2009 14:01:10 +0100 (CET)
+In-Reply-To: <alpine.DEB.1.00.0901142209570.3586@pacific.mpi-cbg.de>
+References: <496E51A3.8050908@gmail.com>
+References: <alpine.DEB.1.00.0901142209570.3586@pacific.mpi-cbg.de>
+x-scalix-Hops: 1
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105951>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The line length was read from the same position every time,
+causing mangled output when printing notes with multiple lines.
 
---8323328-365167999-1232110678=:3586
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+Also, adding new-line manually for each line ensures that we
+get a new-line between commits, matching git-log for commits
+without notes.
 
-Hi,
+Test case added to t3301-notes.sh.
 
-On Fri, 16 Jan 2009, SZEDER Gábor wrote:
+Signed-off-by: Tor Arne Vestb=F8 <tavestbo@trolltech.com>
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> On Fri, Jan 16, 2009 at 11:58:06AM +0100, Johan Herland wrote:
-> 
-> > "rephrase"?
-> 
-> This is the first one that I found acceptable.
+Sorry about the delay. Here's a squashed patch.
 
-I assume you missed 
-http://article.gmane.org/gmane.comp.version-control.git/105783 in all that 
-bikeshedding?
+ notes.c          |   13 +++++++------
+ t/t3301-notes.sh |   32 +++++++++++++++++++++++++++++++-
+ 2 files changed, 38 insertions(+), 7 deletions(-)
 
-Ciao,
-Dscho
---8323328-365167999-1232110678=:3586--
+diff --git a/notes.c b/notes.c
+index ad43a2e..bd73784 100644
+--- a/notes.c
++++ b/notes.c
+@@ -110,8 +110,8 @@ void get_commit_notes(const struct commit *commit, =
+struct strbuf *sb,
+ {
+ 	static const char *utf8 =3D "utf-8";
+ 	unsigned char *sha1;
+-	char *msg;
+-	unsigned long msgoffset, msglen;
++	char *msg, *msg_p;
++	unsigned long linelen, msglen;
+ 	enum object_type type;
+=20
+ 	if (!initialized) {
+@@ -148,12 +148,13 @@ void get_commit_notes(const struct commit *commit=
+, struct strbuf *sb,
+=20
+ 	strbuf_addstr(sb, "\nNotes:\n");
+=20
+-	for (msgoffset =3D 0; msgoffset < msglen;) {
+-		int linelen =3D strchrnul(msg, '\n') - msg;
++	for (msg_p =3D msg; msg_p < msg + msglen; msg_p +=3D linelen + 1) {
++		linelen =3D strchrnul(msg_p, '\n') - msg_p;
+=20
+ 		strbuf_addstr(sb, "    ");
+-		strbuf_add(sb, msg + msgoffset, linelen);
+-		msgoffset +=3D linelen;
++		strbuf_add(sb, msg_p, linelen);
++		strbuf_addch(sb, '\n');
+ 	}
++
+ 	free(msg);
+ }
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index ba42c45..9393a25 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -59,7 +59,37 @@ EOF
+ test_expect_success 'show notes' '
+ 	! (git cat-file commit HEAD | grep b1) &&
+ 	git log -1 > output &&
+-	git diff expect output
++	test_cmp expect output
++'
++test_expect_success 'create multi-line notes (setup)' '
++	: > a3 &&
++	git add a3 &&
++	test_tick &&
++	git commit -m 3rd &&
++	MSG=3D"b3
++c3c3c3c3
++d3d3d3" git notes edit
++'
++
++cat > expect-multiline << EOF
++commit 1584215f1d29c65e99c6c6848626553fdd07fd75
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:15:13 2005 -0700
++
++    3rd
++
++Notes:
++    b3
++    c3c3c3c3
++    d3d3d3
++EOF
++
++printf "\n" >> expect-multiline
++cat expect >> expect-multiline
++
++test_expect_success 'show multi-line notes' '
++	git log -2 > output &&
++	test_cmp expect-multiline output
+ '
+=20
+ test_done
+--=20
+1.6.0.2.GIT
