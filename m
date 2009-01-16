@@ -1,71 +1,103 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Weird behaviour of git status
-Date: Fri, 16 Jan 2009 10:44:45 +0100
-Message-ID: <2A29AD77-2B8D-4491-92C1-62F5FFFBB00F@wincent.com>
-References: <4970488B.3010608@morey-chaisemartin.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: devel@morey-chaisemartin.com
-X-From: git-owner@vger.kernel.org Fri Jan 16 10:46:49 2009
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit
+ state
+Date: Fri, 16 Jan 2009 10:50:13 +0100
+Message-ID: <200901161050.13971.johan@herland.net>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk>
+ <8035E52E-D202-4C42-BDFD-DC7A925580A3@wincent.com>
+ <76718490901151226l704d119bh297db4e91a4da05b@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Anders Melchiorsen <mail@cup.kalibalik.dk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 16 10:52:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNlHf-0001Np-9T
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 10:46:35 +0100
+	id 1LNlMt-0003Cc-VL
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 10:52:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763060AbZAPJo5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jan 2009 04:44:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762785AbZAPJo4
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 04:44:56 -0500
-Received: from wincent1.inetu.net ([209.235.192.161]:47274 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763017AbZAPJow convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jan 2009 04:44:52 -0500
-Received: from cuzco.lan (249.pool85-53-13.dynamic.orange.es [85.53.13.249])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n0G9ikr3032753
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 16 Jan 2009 04:44:48 -0500
-In-Reply-To: <4970488B.3010608@morey-chaisemartin.com>
-X-Mailer: Apple Mail (2.929.2)
+	id S1752077AbZAPJuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 04:50:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751006AbZAPJui
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 04:50:38 -0500
+Received: from smtp.getmail.no ([84.208.20.33]:64461 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750836AbZAPJuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 04:50:37 -0500
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0KDK00K1160BTW00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 16 Jan 2009 10:50:35 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KDK0013I5ZRTB40@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 16 Jan 2009 10:50:15 +0100 (CET)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KDK0025R5ZQZIU9@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 16 Jan 2009 10:50:15 +0100 (CET)
+In-reply-to: <76718490901151226l704d119bh297db4e91a4da05b@mail.gmail.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105933>
 
-El 16/1/2009, a las 9:42, Nicolas Morey-Chaisemartin escribi=F3:
+On Thursday 15 January 2009, Jay Soffian wrote:
+> On Thu, Jan 15, 2009 at 2:27 PM, Wincent Colaiuta <win@wincent.com> wrote:
+> > wait - best suggestion so far, seeing as we can't use "stop"
+> This is a fun game. I like the color "halt".
 
-> Hello everyone,
->
-> I just noticed a weird behaviour in git status.
-> I have created new files in different directories in my project.
-> I have added all of them in the index with git add.
-> When I run "git status" It shows me that all my 3 files are in the =20
-> index.
-> However if I run git-status specifying a directory, it returns that =20
-> the
-> file in this directory are in the index but the other one isn't.
->
-> In my opinion, it should
-> - either display all the files as in the index (specifying a director=
-y
-> wouldn't have any effect then)
-> - treat only file in the specified dir. So "external" files wouldn't =
-=20
-> be
-> shown at all.
+Nice. I like this one as well.
 
-"git status" shows you what would be committed if you ran "git commit" =
-=20
-with the same parameters. So in your example, the output for "git =20
-status ." is exactly as you would expect.
+After some more thinking (triggered by Junio's recent post in another 
+subthread), it occured to me that the current behaviour (currently known 
+as "edit") is not something that is applied to one of the commits in the 
+rebase list per se, but rather something that affects the rebase machinery 
+*between* commits. So instead of
 
-This is stated in the man page.
+	edit e8902c1 Foo
 
-Cheers,
-Wincent
+we should consider something like
+
+	pick e8902c1 Foo
+	halt
+
+which I think better encapsulates the current behaviour. (IOW, insert "halt" 
+wherever you'd like to muck about with the history; e.g. 
+doing "commit --amend", inserting extra commits, etc.)
+
+We can then make shortcuts for common actions:
+
+	amend e8902c1 Foo
+
+does a "pick" followed by "commit --amend" (for editing the commit message), 
+followed by "rebase --continue". Finally, we implement Anders' suggestion:
+
+	modify e8902c1 Foo
+
+(or whatever synonym for "edit" we converge on) does a "pick" followed by 
+a "reset --soft HEAD^", followed by a "halt".
+
+
+Have fun!
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
