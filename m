@@ -1,66 +1,95 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [RFC PATCH] Fix gitdir detection when in subdir of gitdir
-Date: Fri, 16 Jan 2009 18:23:46 +0100
-Message-ID: <20090116172346.GA15804@neumann>
-References: <1232120253-1551-1-git-send-email-szeder@ira.uka.de>
-	<alpine.DEB.1.00.0901161729070.3586@pacific.mpi-cbg.de>
-	<4970BA2B.7090807@viscovery.net> <4970BAE5.8080006@viscovery.net>
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: Re: [PATCH 1/2] Move run_hook() from builtin-commit.c into
+	run-command.c (libgit)
+Date: Fri, 16 Jan 2009 18:25:21 +0100
+Message-ID: <20090116172521.GD28177@leksak.fem-net>
+References: <1232031618-5243-1-git-send-email-s-beyer@gmx.net> <alpine.DEB.1.00.0901151637590.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jan 16 18:25:27 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Paolo Bonzini <bonzini@gnu.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 16 18:26:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNsRX-0002Pe-Eh
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 18:25:15 +0100
+	id 1LNsT8-00037g-Gg
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 18:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760278AbZAPRXv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jan 2009 12:23:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757422AbZAPRXv
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 12:23:51 -0500
-Received: from francis.fzi.de ([141.21.7.5]:5037 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755570AbZAPRXu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 12:23:50 -0500
-Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 16 Jan 2009 18:23:45 +0100
+	id S1757571AbZAPRZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 12:25:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756839AbZAPRZa
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 12:25:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46387 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756074AbZAPRZa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 12:25:30 -0500
+Received: (qmail invoked by alias); 16 Jan 2009 17:25:28 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp001) with SMTP; 16 Jan 2009 18:25:28 +0100
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1/f+f0Jh+zfnW1M76mqG6XjlBKUZ0FimWqqU4SNOI
+	9aqQiMzdeDHxIE
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1LNsRd-00049W-70; Fri, 16 Jan 2009 18:25:21 +0100
 Content-Disposition: inline
-In-Reply-To: <4970BAE5.8080006@viscovery.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-OriginalArrivalTime: 16 Jan 2009 17:23:45.0866 (UTC) FILETIME=[2FC64AA0:01C977FF]
+In-Reply-To: <alpine.DEB.1.00.0901151637590.3586@pacific.mpi-cbg.de>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/105981>
 
-On Fri, Jan 16, 2009 at 05:50:45PM +0100, Johannes Sixt wrote:
-> Johannes Sixt schrieb:
-> > G=E1bor's patch needs a better justification which misbehavior it t=
-ries to
-> > fix, and the spot that it changes:
->=20
-> I actually meant: "which use-case the patch tries to help". Because t=
-he
-> current behavior can hardly be classified as bug. ("You have no busin=
-ess
-> cd-ing around in .git." ;)
+Hi,
 
-I agree that fiddling around in '.git' is a quite rare use case.
+> > -	ret = start_command(&hook);
+> > -	if (ret) {
+> > -		warning("Could not spawn %s", argv[0]);
+> > -		return ret;
+> > -	}
+> > -	ret = finish_command(&hook);
+> > -	if (ret == -ERR_RUN_COMMAND_WAITPID_SIGNAL)
+> > -		warning("%s exited due to uncaught signal", argv[0]);
+> 
+> What are the side effects of replacing this with "ret = 
+> run_command(&hook);"?  This has to be discussed and defended in the commit 
+> message.
 
-I did it while I was working on bash completion support for the
-upcoming 'git sequencer' to see where it stores its temporary files
-and what is in those files.  And I got errors from the completion
-script after each executed command, which quickly made me upset enough
-to look after it.
+This is a very good point.
+The consequences are that two warnings are missing, but these are
+warnings that are useful enough to be included for all those hooks,
+imho.
 
-I thought it worths fixing, but it's even better if it's not a bug,
-because then I don't have to fix my fix (;
+Thanks!
 
-Regards,
-G=E1bor
+> Lots of improvements possible (I agree; _after_ this patch):
+[...]
+> - use ALLOC_GROW instead of having a fixed size argv,
+
+Agreed.
+
+> - use an strbuf for the index file
+
+Is that useful in some way?
+Currently it would only adds code to generate strbufs at the caller
+side. And in the case the caller has a strbuf for the index file, it
+can simply use the .buf member.
+
+> - checking executability of argv[0] before filling argv,
+
+Agreed.
+
+Patch series v2 will follow.
+
+Thanks,
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
