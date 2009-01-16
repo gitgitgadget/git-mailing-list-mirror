@@ -1,82 +1,63 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH resend] bash completion: add 'rename' subcommand to
-	git-remote
-Date: Fri, 16 Jan 2009 14:12:03 -0800
-Message-ID: <20090116221203.GP10179@spearce.org>
-References: <200901162254.58300.markus.heidelberg@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: I've added Dulwich to the Git Wiki
+Date: Fri, 16 Jan 2009 23:42:38 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901162329340.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 16 23:13:33 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: jelmer@samba.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 16 23:43:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LNwwT-0004Jr-Iv
-	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 23:13:30 +0100
+	id 1LNxPX-0006Kq-FK
+	for gcvg-git-2@gmane.org; Fri, 16 Jan 2009 23:43:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764472AbZAPWMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 17:12:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763857AbZAPWMG
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 17:12:06 -0500
-Received: from george.spearce.org ([209.20.77.23]:57170 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763318AbZAPWMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 17:12:05 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id AE9B638210; Fri, 16 Jan 2009 22:12:03 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200901162254.58300.markus.heidelberg@web.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1765104AbZAPWlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 17:41:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765071AbZAPWlp
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 17:41:45 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59533 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932253AbZAPWln (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 17:41:43 -0500
+Received: (qmail invoked by alias); 16 Jan 2009 22:41:41 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp012) with SMTP; 16 Jan 2009 23:41:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+qMCJsCJ+qhAL4xydfpn/rekDTzP9AGxMik6SVfB
+	GZzsW87+7+RSeK
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106002>
 
-Markus Heidelberg <markus.heidelberg@web.de> wrote:
-> 
-> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+Hi people,
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+just got aware of the Dulwich project, which purports to be a pure Python 
+Git engine.  I added it here:
 
-> 	I've just accidently read in the completion file itself, that
-> 	Shawn is the maintainer, so I give it a third try. The first two
-> 	haven't been sent to him.
+http://git.or.cz/gitwiki/InterfacesFrontendsAndTools#head-762f9c85c62c555dbb88129a127431ddeeb56191
 
-Sorry, I must have missed the other two attempts.  :-)
+Jelmer, is there a chance you can export the Bazaar repository into a 
+public Git repository?  The Bazaar web-frontend does not even allow me to 
+download a snapshot.
 
- 
->  contrib/completion/git-completion.bash |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 049ded0..6623344 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1384,7 +1384,7 @@ _git_config ()
->  
->  _git_remote ()
->  {
-> -	local subcommands="add rm show prune update"
-> +	local subcommands="add rename rm show prune update"
->  	local subcommand="$(__git_find_subcommand "$subcommands")"
->  	if [ -z "$subcommand" ]; then
->  		__gitcomp "$subcommands"
-> @@ -1392,7 +1392,7 @@ _git_remote ()
->  	fi
->  
->  	case "$subcommand" in
-> -	rm|show|prune)
-> +	rename|rm|show|prune)
->  		__gitcomp "$(__git_remotes)"
->  		;;
->  	update)
-> -- 
-> 1.6.1.35.g0c23
-> 
+BTW I find it a bit distressing that more and more projects crop up doing 
+substantial and valuable work around Git, but without even bothering to 
+mention it on this list.  There might have been a good chance, too, to 
+avoid having _three_ Python libraries for exactly the same task.
 
--- 
-Shawn.
+Ciao,
+Dscho
+
+P.S.: In related news, it seems that dotGit -- which _is_ linked on the 
+Git Wiki, at least -- progresses rather nicely, which is pretty awesome, 
+given that we have _two_ failed GSoC projects under our belt which wanted 
+to do the same.  However, dotGit could do with some more visibility on 
+this list, too, methinks.
