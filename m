@@ -1,298 +1,165 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH/RFC v3 1/6] reflog: refactor parsing and checking
-Date: Sat, 17 Jan 2009 04:30:06 +0100
-Message-ID: <1232163011-20088-2-git-send-email-trast@student.ethz.ch>
+Subject: [PATCH/RFC v3 6/6] checkout: implement '@{-N}' and '-' special abbreviations
+Date: Sat, 17 Jan 2009 04:30:11 +0100
+Message-ID: <1232163011-20088-7-git-send-email-trast@student.ethz.ch>
 References: <1232163011-20088-1-git-send-email-trast@student.ethz.ch>
+ <1232163011-20088-2-git-send-email-trast@student.ethz.ch>
+ <1232163011-20088-3-git-send-email-trast@student.ethz.ch>
+ <1232163011-20088-4-git-send-email-trast@student.ethz.ch>
+ <1232163011-20088-5-git-send-email-trast@student.ethz.ch>
+ <1232163011-20088-6-git-send-email-trast@student.ethz.ch>
 Cc: Junio C Hamano <junio@pobox.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Johannes Sixt <johannes.sixt@telecom.at>,
 	Johan Herland <johan@herland.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 17 04:32:07 2009
+X-From: git-owner@vger.kernel.org Sat Jan 17 04:32:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LO1uo-0006IU-HE
+	id 1LO1up-0006IU-Ge
 	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 04:32:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773AbZAQDaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 22:30:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754275AbZAQDaR
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 22:30:17 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:31190 "EHLO xsmtp1.ethz.ch"
+	id S1754444AbZAQDaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 22:30:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753988AbZAQDaT
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 22:30:19 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:5404 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753988AbZAQDaL (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753773AbZAQDaL (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 16 Jan 2009 22:30:11 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 17 Jan 2009 04:30:07 +0100
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 17 Jan 2009 04:30:08 +0100
 Received: from localhost.localdomain ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 17 Jan 2009 04:30:07 +0100
+	 Sat, 17 Jan 2009 04:30:08 +0100
 X-Mailer: git-send-email 1.6.1.315.g92577
-In-Reply-To: <1232163011-20088-1-git-send-email-trast@student.ethz.ch>
+In-Reply-To: <1232163011-20088-6-git-send-email-trast@student.ethz.ch>
 In-Reply-To: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org>
 References: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 17 Jan 2009 03:30:07.0242 (UTC) FILETIME=[E4C3B6A0:01C97853]
+X-OriginalArrivalTime: 17 Jan 2009 03:30:08.0430 (UTC) FILETIME=[E578FCE0:01C97853]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106019>
 
-read_ref_at() and for_each_reflog_ent() both had parsing and error
-checking routines.  Refactor into a separate function that fully
-parses a single entry.  Note that this switches for_each_reflog_ent()
-from silently ignoring errors to die().
+Checks if the branch to be checked out is either '@{-N}' or the
+special shorthand '-' for '@{-1}' (i.e. the last checked out branch).
+If so, we take it to mean the branch name, not the corresponding SHA,
+so that we check out an attached HEAD on that branch.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- refs.c |  197 ++++++++++++++++++++++++++++++++--------------------------------
- 1 files changed, 98 insertions(+), 99 deletions(-)
+ Documentation/git-checkout.txt |    4 +++
+ builtin-checkout.c             |   15 ++++++++++-
+ t/t2012-checkout-last.sh       |   50 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 67 insertions(+), 2 deletions(-)
+ create mode 100755 t/t2012-checkout-last.sh
 
-diff --git a/refs.c b/refs.c
-index 33ced65..4571fac 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1337,24 +1337,68 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
- 	return 0;
- }
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 9cd5151..3bccffa 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -133,6 +133,10 @@ the conflicted merge in the specified paths.
+ +
+ When this parameter names a non-branch (but still a valid commit object),
+ your HEAD becomes 'detached'.
+++
++As a special case, the "`@\{-N\}`" syntax for the N-th last branch
++checks out the branch (instead of detaching).  You may also specify
++"`-`" which is synonymous with "`@\{-1\}`".
  
--static char *ref_msg(const char *line, const char *endp)
-+/*
-+ * Check and parse a single reflog line.  Assumes that there is only
-+ * one newline in the range buf[0]..buf[len-1] (but does check that it
-+ * is at buf[len-1]).
-+ */
-+static void parse_reflog_line(const char *buf, int len,
-+			      unsigned char *osha1, unsigned char *nsha1,
-+			      char **email,
-+			      unsigned long *timestamp, int *tz,
-+			      char **message,
-+			      const char *logname)
+ 
+ Detached HEAD
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index b5dd9c0..b0a101b 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -361,8 +361,16 @@ struct branch_info {
+ static void setup_branch_path(struct branch_info *branch)
  {
--	const char *ep;
--	line += 82;
--	ep = memchr(line, '\n', endp - line);
--	if (!ep)
--		ep = endp;
--	return xmemdupz(line, ep - line);
-+	static char *retbuf = NULL;
-+	static int retbufsz = 0;
-+	char *tzstr, *email_end;
+ 	struct strbuf buf = STRBUF_INIT;
+-	strbuf_addstr(&buf, "refs/heads/");
+-	strbuf_addstr(&buf, branch->name);
++	int ret;
 +
-+	if (len < 83 || buf[len-1] != '\n')
-+		die("Log %s is corrupt (entry too short or unterminated).", logname);
-+
-+	if (get_sha1_hex(buf, osha1) || buf[40] != ' ')
-+		die("Log %s is corrupt (malformed old sha1).", logname);
-+
-+	if (get_sha1_hex(buf + 41, nsha1) || buf[81] != ' ')
-+		die("Log %s is corrupt (malformed new sha1).", logname);
-+
-+	ALLOC_GROW(retbuf, len-82+1, retbufsz);
-+	memcpy(retbuf, buf+82, len-82);
-+	retbuf[len-82] = '\0';
-+
-+	email_end = strchr(retbuf, '>');
-+	if (!email_end || email_end[1] != ' ')
-+		die("Log %s is corrupt (malformed email field).", logname);
-+
-+	*email = retbuf;
-+	email_end[1] = '\0';
-+
-+	*timestamp = strtoul(email_end + 2, &tzstr, 10);
-+	if (!(*timestamp) || !tzstr || tzstr[0] != ' ' ||
-+	    (tzstr[1] != '+' && tzstr[1] != '-') ||
-+	    !isdigit(tzstr[2]) || !isdigit(tzstr[3]) ||
-+	    !isdigit(tzstr[4]) || !isdigit(tzstr[5]))
-+		die("Log %s is corrupt (malformed timezone).", logname);
-+	if (!(tzstr[6] == '\t' || tzstr[6] == '\n'))
-+		die("Log %s is corrupt (bad message field separator).", logname);
-+	*tz = strtoul(tzstr, NULL, 10);
-+
-+	if (tzstr[6] == '\t')
-+		*message = tzstr+7;
-+	else
-+		*message = tzstr+6;
++	if ((ret = interpret_nth_last_branch(branch->name, &buf))
++	    && ret == strlen(branch->name)) {
++		branch->name = xstrdup(buf.buf);
++		strbuf_splice(&buf, 0, 0, "refs/heads/", 11);
++	} else {
++		strbuf_addstr(&buf, "refs/heads/");
++		strbuf_addstr(&buf, branch->name);
++	}
+ 	branch->path = strbuf_detach(&buf, NULL);
  }
  
- int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *sha1, char **msg, unsigned long *cutoff_time, int *cutoff_tz, int *cutoff_cnt)
- {
--	const char *logfile, *logdata, *logend, *rec, *lastgt, *lastrec;
--	char *tz_c;
-+	const char *logfile, *logdata, *logend, *rec, *start;
-+	char *email, *message;
- 	int logfd, tz, reccnt = 0;
- 	struct stat st;
- 	unsigned long date;
--	unsigned char logged_sha1[20];
-+	unsigned char new_sha1[20];
-+	unsigned char old_sha1[20];
-+	unsigned char next_sha1[20];
- 	void *log_mapped;
- 	size_t mapsz;
+@@ -671,6 +679,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		arg = argv[0];
+ 		has_dash_dash = (argc > 1) && !strcmp(argv[1], "--");
  
-@@ -1370,86 +1414,55 @@ int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *
- 	logdata = log_mapped;
- 	close(logfd);
- 
--	lastrec = NULL;
- 	rec = logend = logdata + st.st_size;
-+	if (logdata < rec && *(rec-1) == '\n')
-+		rec--;
- 	while (logdata < rec) {
--		reccnt++;
--		if (logdata < rec && *(rec-1) == '\n')
--			rec--;
--		lastgt = NULL;
--		while (logdata < rec && *(rec-1) != '\n') {
--			rec--;
--			if (*rec == '>')
--				lastgt = rec;
--		}
--		if (!lastgt)
--			die("Log %s is corrupt.", logfile);
--		date = strtoul(lastgt + 1, &tz_c, 10);
-+		start = memrchr(logdata, '\n', rec-logdata);
-+		if (start)
-+			start++;
-+		else
-+			start = logdata;
-+		parse_reflog_line(start, rec-start+1,
-+				  old_sha1, new_sha1,
-+				  &email, &date, &tz, &message,
-+				  logfile);
++		if (!strcmp(arg, "-"))
++			arg = "@{-1}";
 +
-+		if (cutoff_time)
-+			*cutoff_time = date;
-+		if (cutoff_tz)
-+			*cutoff_tz = tz;
-+		if (cutoff_cnt)
-+			*cutoff_cnt = reccnt;
-+		if (msg)
-+			*msg = message;
+ 		if (get_sha1(arg, rev)) {
+ 			if (has_dash_dash)          /* case (1) */
+ 				die("invalid reference: %s", arg);
+diff --git a/t/t2012-checkout-last.sh b/t/t2012-checkout-last.sh
+new file mode 100755
+index 0000000..320f6eb
+--- /dev/null
++++ b/t/t2012-checkout-last.sh
+@@ -0,0 +1,50 @@
++#!/bin/sh
 +
- 		if (date <= at_time || cnt == 0) {
--			tz = strtoul(tz_c, NULL, 10);
--			if (msg)
--				*msg = ref_msg(rec, logend);
--			if (cutoff_time)
--				*cutoff_time = date;
--			if (cutoff_tz)
--				*cutoff_tz = tz;
--			if (cutoff_cnt)
--				*cutoff_cnt = reccnt - 1;
--			if (lastrec) {
--				if (get_sha1_hex(lastrec, logged_sha1))
--					die("Log %s is corrupt.", logfile);
--				if (get_sha1_hex(rec + 41, sha1))
--					die("Log %s is corrupt.", logfile);
--				if (hashcmp(logged_sha1, sha1)) {
--					fprintf(stderr,
--						"warning: Log %s has gap after %s.\n",
--						logfile, show_date(date, tz, DATE_RFC2822));
--				}
--			}
--			else if (date == at_time) {
--				if (get_sha1_hex(rec + 41, sha1))
--					die("Log %s is corrupt.", logfile);
--			}
--			else {
--				if (get_sha1_hex(rec + 41, logged_sha1))
--					die("Log %s is corrupt.", logfile);
--				if (hashcmp(logged_sha1, sha1)) {
--					fprintf(stderr,
--						"warning: Log %s unexpectedly ended on %s.\n",
--						logfile, show_date(date, tz, DATE_RFC2822));
--				}
--			}
-+			if (reccnt && hashcmp(new_sha1, next_sha1))
-+				fprintf(stderr,
-+					"warning: Log %s has gap after %s.\n",
-+					logfile, show_date(date, tz, DATE_RFC2822));
-+			if (!reccnt && date < at_time && hashcmp(new_sha1, next_sha1))
-+				fprintf(stderr,
-+					"warning: Log %s unexpectedly ended on %s.\n",
-+					logfile, show_date(date, tz, DATE_RFC2822));
-+				/* leave caller's sha1 untouched */
-+			else
-+				hashcpy(sha1, new_sha1);
- 			munmap(log_mapped, mapsz);
- 			return 0;
- 		}
--		lastrec = rec;
++test_description='checkout can switch to last branch'
 +
-+		hashcpy(next_sha1, old_sha1);
-+		rec = start-1;
- 		if (cnt > 0)
- 			cnt--;
-+		reccnt++;
- 	}
- 
--	rec = logdata;
--	while (rec < logend && *rec != '>' && *rec != '\n')
--		rec++;
--	if (rec == logend || *rec == '\n')
--		die("Log %s is corrupt.", logfile);
--	date = strtoul(rec + 1, &tz_c, 10);
--	tz = strtoul(tz_c, NULL, 10);
--	if (get_sha1_hex(logdata, sha1))
--		die("Log %s is corrupt.", logfile);
--	if (is_null_sha1(sha1)) {
--		if (get_sha1_hex(logdata + 41, sha1))
--			die("Log %s is corrupt.", logfile);
--	}
--	if (msg)
--		*msg = ref_msg(logdata, logend);
--	munmap(log_mapped, mapsz);
-+	hashcpy(sha1, new_sha1);
- 
--	if (cutoff_time)
--		*cutoff_time = date;
--	if (cutoff_tz)
--		*cutoff_tz = tz;
--	if (cutoff_cnt)
--		*cutoff_cnt = reccnt;
-+	munmap(log_mapped, mapsz);
- 	return 1;
- }
- 
-@@ -1466,30 +1479,16 @@ int for_each_reflog_ent(const char *ref, each_reflog_ent_fn fn, void *cb_data)
- 		return -1;
- 	while (fgets(buf, sizeof(buf), logfp)) {
- 		unsigned char osha1[20], nsha1[20];
--		char *email_end, *message;
-+		char *email, *message;
- 		unsigned long timestamp;
- 		int len, tz;
- 
--		/* old SP new SP name <email> SP time TAB msg LF */
- 		len = strlen(buf);
--		if (len < 83 || buf[len-1] != '\n' ||
--		    get_sha1_hex(buf, osha1) || buf[40] != ' ' ||
--		    get_sha1_hex(buf + 41, nsha1) || buf[81] != ' ' ||
--		    !(email_end = strchr(buf + 82, '>')) ||
--		    email_end[1] != ' ' ||
--		    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
--		    !message || message[0] != ' ' ||
--		    (message[1] != '+' && message[1] != '-') ||
--		    !isdigit(message[2]) || !isdigit(message[3]) ||
--		    !isdigit(message[4]) || !isdigit(message[5]))
--			continue; /* corrupt? */
--		email_end[1] = '\0';
--		tz = strtol(message + 1, NULL, 10);
--		if (message[6] != '\t')
--			message += 6;
--		else
--			message += 7;
--		ret = fn(osha1, nsha1, buf+82, timestamp, tz, message, cb_data);
-+		parse_reflog_line(buf, len,
-+				  osha1, nsha1,
-+				  &email, &timestamp, &tz, &message,
-+				  logfile);
-+		ret = fn(osha1, nsha1, email, timestamp, tz, message, cb_data);
- 		if (ret)
- 			break;
- 	}
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo hello >world &&
++	git add world &&
++	git commit -m initial &&
++	git branch other &&
++	echo "hello again" >>world &&
++	git add world &&
++	git commit -m second
++'
++
++test_expect_success '"checkout -" does not work initially' '
++	test_must_fail git checkout -
++'
++
++test_expect_success 'first branch switch' '
++	git checkout other
++'
++
++test_expect_success '"checkout -" switches back' '
++	git checkout - &&
++	test "z$(git symbolic-ref HEAD)" = "zrefs/heads/master"
++'
++
++test_expect_success '"checkout -" switches forth' '
++	git checkout - &&
++	test "z$(git symbolic-ref HEAD)" = "zrefs/heads/other"
++'
++
++test_expect_success 'detach HEAD' '
++	git checkout $(git rev-parse HEAD)
++'
++
++test_expect_success '"checkout -" attaches again' '
++	git checkout - &&
++	test "z$(git symbolic-ref HEAD)" = "zrefs/heads/other"
++'
++
++test_expect_success '"checkout -" detaches again' '
++	git checkout - &&
++	test "z$(git rev-parse HEAD)" = "z$(git rev-parse other)" &&
++	test_must_fail git symbolic-ref HEAD
++'
++
++test_done
 -- 
 1.6.1.315.g92577
