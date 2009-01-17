@@ -1,73 +1,88 @@
-From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
-Subject: [RFC] Making format-patch output better when blank line is missing?
-Date: Sat, 17 Jan 2009 13:35:45 +0100
-Message-ID: <20090117123545.GA22842@chistera.yi.org>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH 3/3] Adds a #!bash to the top of bash completions so that editors can recognize, it as a bash script. Also adds a few simple comments above commands that, take arguments. The comments are meant to remind editors of potential, problems that
+Date: Sat, 17 Jan 2009 13:37:48 +0100
+Message-ID: <200901171337.49938.markus.heidelberg@web.de>
+References: <2faad3050901160706y297a98d4r35340e4811ca3d2b@mail.gmail.com> <20090117014057.GA15331@coredump.intra.peff.net>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 17 13:37:16 2009
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Baz <brian.ewins@gmail.com>,
+	Adeodato =?utf-8?q?Sim=C3=B3?= <dato@net.com.org.es>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Ted Pavlic <ted@tedpavlic.com>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jan 17 13:38:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOAQK-0002Cq-81
-	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 13:37:12 +0100
+	id 1LOARe-0002X8-U7
+	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 13:38:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756652AbZAQMfs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Jan 2009 07:35:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756127AbZAQMfs
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 07:35:48 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:2296
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756011AbZAQMfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jan 2009 07:35:47 -0500
-Received: from chistera.yi.org (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id 28FE2801BF6C
-	for <git@vger.kernel.org>; Sat, 17 Jan 2009 13:35:46 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LOAOv-00063v-8S
-	  for git@vger.kernel.org; Sat, 17 Jan 2009 13:35:45 +0100
+	id S1756763AbZAQMhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Jan 2009 07:37:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756746AbZAQMhK
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 07:37:10 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:55445 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751740AbZAQMhI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jan 2009 07:37:08 -0500
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id CBB34F6A644B;
+	Sat, 17 Jan 2009 13:37:06 +0100 (CET)
+Received: from [89.59.83.225] (helo=pluto)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LOAQE-0000Ki-00; Sat, 17 Jan 2009 13:37:06 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090117014057.GA15331@coredump.intra.peff.net>
+Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
-X-No-CC: Please respect my Mail-Followup-To header
-User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1+iYdhmrcE9MSVDn5FvkmJY6ekz/HSpqbMvFGev
+	PeoLLNtvHUhO4ZkeDoZy2OFzsDVHuExnmgisiD6hoiKWMzfN8Y
+	kVdkqlb3Pdst+N4Ja3ow==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106047>
 
-Hello,
+Jeff King, 17.01.2009:
+> On Fri, Jan 16, 2009 at 03:06:34PM +0000, Baz wrote:
+> 
+> > > At the beginning I tried to fulfil this limit, but often it's not easy.
+> > > So should it be adjusted to a slightly higher value in the documentation
+> > > or even split into a recommended limit (e.g. 50) and a recommended
+> > > absolute maximum (e.g. 76)? Hmm, the split wouldn't make sense, I think.
+> > 
+> > The 50 character limit is for the first line, try "git log
+> > --pretty=oneline" and it should be obvious why.
+> 
+> I'm not sure it makes sense to make a workflow recommendation that the
+> git project itself does not follow.
 
-I'm using git-format-patch to send commit diff emails, and it was
-recently brought to my atention that if a commit message consists
-entirely in a paragraph with no blank lines (particluarly, no blank lin=
-e
-after the first line, which is not a summary but just the first line of
-the paragraph), git-format-patch will place all the commit message in
-the Subject, which is inconvenient to read.
+I think, it doesn't.
 
-Do you think it would be good to have format-patch do something like
-this in this case?:
+> In practice, is this a problem for people using git.git?
+> 
+> Personally, I find --pretty=oneline unreadable because so much of the
+> screen real estate is wasted on random characters that I don't care
+> about. I find --pretty=tformat:'%h %s' much nicer
 
-    Subject: [PATCH] This commit introduces a new function bla() that [=
-=2E..]
+But it doesn't automatically color the SHA1.
 
-    [...] makes it possible to apply the frobniz operation to objects
-    that don't bla bla bla bla.
+> (yes, --abbrev-commit
+> works, too, but I find the '...' a pointless waste of space).
 
-(I realize that, with this, the applying logic would have to learn abou=
-t
-it. Hm.)
+And they are annoying for selecting with the mouse doubleclick, at least
+Konsole selects the SHA1 including the '...'. Xterm doesn't and I
+haven't looked if Konsole can be configured to do so, but without the
+'...' it would probably work regardless of the terminal emulator and
+its setting.
 
---=20
-Adeodato Sim=C3=B3                                     dato at net.com.=
-org.es
-Debian Developer                                  adeodato at debian.or=
-g
-=20
-- I love you, Shirley, I'm not ashamed to say.
-- If you love me, then you'll want me to be happy. Even if I'm not with=
- you.
-- I don't love you that much.
-                -- Denny Crane and Shirley Schmidt
+Markus
