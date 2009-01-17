@@ -1,165 +1,138 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH/RFC v3 6/6] checkout: implement '@{-N}' and '-' special abbreviations
-Date: Sat, 17 Jan 2009 04:30:11 +0100
-Message-ID: <1232163011-20088-7-git-send-email-trast@student.ethz.ch>
+Subject: [PATCH/RFC v3 2/6] reflog: refactor log open+mmap
+Date: Sat, 17 Jan 2009 04:30:07 +0100
+Message-ID: <1232163011-20088-3-git-send-email-trast@student.ethz.ch>
 References: <1232163011-20088-1-git-send-email-trast@student.ethz.ch>
  <1232163011-20088-2-git-send-email-trast@student.ethz.ch>
- <1232163011-20088-3-git-send-email-trast@student.ethz.ch>
- <1232163011-20088-4-git-send-email-trast@student.ethz.ch>
- <1232163011-20088-5-git-send-email-trast@student.ethz.ch>
- <1232163011-20088-6-git-send-email-trast@student.ethz.ch>
 Cc: Junio C Hamano <junio@pobox.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Johannes Sixt <johannes.sixt@telecom.at>,
 	Johan Herland <johan@herland.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 17 04:32:09 2009
+X-From: git-owner@vger.kernel.org Sat Jan 17 04:32:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LO1up-0006IU-Ge
-	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 04:32:07 +0100
+	id 1LO1uq-0006IU-69
+	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 04:32:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754444AbZAQDaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 22:30:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753988AbZAQDaT
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 22:30:19 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:5404 "EHLO XSMTP0.ethz.ch"
+	id S1754550AbZAQDa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 22:30:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754489AbZAQDaY
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 22:30:24 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:31190 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753773AbZAQDaL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 22:30:11 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 17 Jan 2009 04:30:08 +0100
+	id S1754108AbZAQDaN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 22:30:13 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 17 Jan 2009 04:30:07 +0100
 Received: from localhost.localdomain ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 17 Jan 2009 04:30:08 +0100
+	 Sat, 17 Jan 2009 04:30:07 +0100
 X-Mailer: git-send-email 1.6.1.315.g92577
-In-Reply-To: <1232163011-20088-6-git-send-email-trast@student.ethz.ch>
+In-Reply-To: <1232163011-20088-2-git-send-email-trast@student.ethz.ch>
 In-Reply-To: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org>
 References: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 17 Jan 2009 03:30:08.0430 (UTC) FILETIME=[E578FCE0:01C97853]
+X-OriginalArrivalTime: 17 Jan 2009 03:30:07.0383 (UTC) FILETIME=[E4D93A70:01C97853]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106020>
 
-Checks if the branch to be checked out is either '@{-N}' or the
-special shorthand '-' for '@{-1}' (i.e. the last checked out branch).
-If so, we take it to mean the branch name, not the corresponding SHA,
-so that we check out an attached HEAD on that branch.
+Move the open+mmap code from read_ref_at() to a separate function for
+the next patch.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- Documentation/git-checkout.txt |    4 +++
- builtin-checkout.c             |   15 ++++++++++-
- t/t2012-checkout-last.sh       |   50 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 67 insertions(+), 2 deletions(-)
- create mode 100755 t/t2012-checkout-last.sh
+ refs.c |   54 ++++++++++++++++++++++++++++++++----------------------
+ 1 files changed, 32 insertions(+), 22 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 9cd5151..3bccffa 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -133,6 +133,10 @@ the conflicted merge in the specified paths.
- +
- When this parameter names a non-branch (but still a valid commit object),
- your HEAD becomes 'detached'.
-++
-+As a special case, the "`@\{-N\}`" syntax for the N-th last branch
-+checks out the branch (instead of detaching).  You may also specify
-+"`-`" which is synonymous with "`@\{-1\}`".
- 
- 
- Detached HEAD
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index b5dd9c0..b0a101b 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -361,8 +361,16 @@ struct branch_info {
- static void setup_branch_path(struct branch_info *branch)
- {
- 	struct strbuf buf = STRBUF_INIT;
--	strbuf_addstr(&buf, "refs/heads/");
--	strbuf_addstr(&buf, branch->name);
-+	int ret;
-+
-+	if ((ret = interpret_nth_last_branch(branch->name, &buf))
-+	    && ret == strlen(branch->name)) {
-+		branch->name = xstrdup(buf.buf);
-+		strbuf_splice(&buf, 0, 0, "refs/heads/", 11);
-+	} else {
-+		strbuf_addstr(&buf, "refs/heads/");
-+		strbuf_addstr(&buf, branch->name);
-+	}
- 	branch->path = strbuf_detach(&buf, NULL);
+diff --git a/refs.c b/refs.c
+index 4571fac..0a57896 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1389,12 +1389,31 @@ static void parse_reflog_line(const char *buf, int len,
+ 		*message = tzstr+6;
  }
  
-@@ -671,6 +679,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		arg = argv[0];
- 		has_dash_dash = (argc > 1) && !strcmp(argv[1], "--");
++static char *open_reflog(const char *ref, size_t *mapsz, const char **logfile)
++{
++	struct stat st;
++	int logfd;
++	char *map;
++
++	*logfile = git_path("logs/%s", ref);
++	logfd = open(*logfile, O_RDONLY, 0);
++	if (logfd < 0)
++		return NULL;
++	if (fstat(logfd, &st))
++		return NULL;
++
++	*mapsz = xsize_t(st.st_size);
++	map = xmmap(NULL, *mapsz, PROT_READ, MAP_PRIVATE, logfd, 0);
++	close(logfd);
++	return map;
++}
++
++
+ int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *sha1, char **msg, unsigned long *cutoff_time, int *cutoff_tz, int *cutoff_cnt)
+ {
+-	const char *logfile, *logdata, *logend, *rec, *start;
++	const char *logfile, *logdata, *logend, *rec, *end;
+ 	char *email, *message;
+-	int logfd, tz, reccnt = 0;
+-	struct stat st;
++	int tz, reccnt = 0;
+ 	unsigned long date;
+ 	unsigned char new_sha1[20];
+ 	unsigned char old_sha1[20];
+@@ -1402,28 +1421,20 @@ int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *
+ 	void *log_mapped;
+ 	size_t mapsz;
  
-+		if (!strcmp(arg, "-"))
-+			arg = "@{-1}";
-+
- 		if (get_sha1(arg, rev)) {
- 			if (has_dash_dash)          /* case (1) */
- 				die("invalid reference: %s", arg);
-diff --git a/t/t2012-checkout-last.sh b/t/t2012-checkout-last.sh
-new file mode 100755
-index 0000000..320f6eb
---- /dev/null
-+++ b/t/t2012-checkout-last.sh
-@@ -0,0 +1,50 @@
-+#!/bin/sh
-+
-+test_description='checkout can switch to last branch'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	echo hello >world &&
-+	git add world &&
-+	git commit -m initial &&
-+	git branch other &&
-+	echo "hello again" >>world &&
-+	git add world &&
-+	git commit -m second
-+'
-+
-+test_expect_success '"checkout -" does not work initially' '
-+	test_must_fail git checkout -
-+'
-+
-+test_expect_success 'first branch switch' '
-+	git checkout other
-+'
-+
-+test_expect_success '"checkout -" switches back' '
-+	git checkout - &&
-+	test "z$(git symbolic-ref HEAD)" = "zrefs/heads/master"
-+'
-+
-+test_expect_success '"checkout -" switches forth' '
-+	git checkout - &&
-+	test "z$(git symbolic-ref HEAD)" = "zrefs/heads/other"
-+'
-+
-+test_expect_success 'detach HEAD' '
-+	git checkout $(git rev-parse HEAD)
-+'
-+
-+test_expect_success '"checkout -" attaches again' '
-+	git checkout - &&
-+	test "z$(git symbolic-ref HEAD)" = "zrefs/heads/other"
-+'
-+
-+test_expect_success '"checkout -" detaches again' '
-+	git checkout - &&
-+	test "z$(git rev-parse HEAD)" = "z$(git rev-parse other)" &&
-+	test_must_fail git symbolic-ref HEAD
-+'
-+
-+test_done
+-	logfile = git_path("logs/%s", ref);
+-	logfd = open(logfile, O_RDONLY, 0);
+-	if (logfd < 0)
++	logdata = log_mapped = open_reflog(ref, &mapsz, &logfile);
++	if (!logdata)
+ 		die("Unable to read log %s: %s", logfile, strerror(errno));
+-	fstat(logfd, &st);
+-	if (!st.st_size)
++	if (!mapsz)
+ 		die("Log %s is empty.", logfile);
+-	mapsz = xsize_t(st.st_size);
+-	log_mapped = xmmap(NULL, mapsz, PROT_READ, MAP_PRIVATE, logfd, 0);
+-	logdata = log_mapped;
+-	close(logfd);
+ 
+-	rec = logend = logdata + st.st_size;
+-	if (logdata < rec && *(rec-1) == '\n')
+-		rec--;
++	rec = logend = logdata + mapsz;
+ 	while (logdata < rec) {
+-		start = memrchr(logdata, '\n', rec-logdata);
+-		if (start)
+-			start++;
+-		else
+-			start = logdata;
+-		parse_reflog_line(start, rec-start+1,
++		if (logdata < rec && rec[-1] == '\n')
++			rec--;
++		end = rec;
++		while (logdata < rec && rec[-1] != '\n')
++			rec--;
++		parse_reflog_line(rec, end-rec+1,
+ 				  old_sha1, new_sha1,
+ 				  &email, &date, &tz, &message,
+ 				  logfile);
+@@ -1454,7 +1465,6 @@ int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *
+ 		}
+ 
+ 		hashcpy(next_sha1, old_sha1);
+-		rec = start-1;
+ 		if (cnt > 0)
+ 			cnt--;
+ 		reccnt++;
 -- 
 1.6.1.315.g92577
