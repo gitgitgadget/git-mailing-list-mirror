@@ -1,127 +1,66 @@
-From: "Tomi Pakarinen" <tomi.pakarinen@gmail.com>
-Subject: Re: [JGIT PATCH 8/8] Define a basic merge API, and a two-way tree merge strategy
-Date: Sat, 17 Jan 2009 21:16:21 +0200
-Message-ID: <f299b4f30901171116y216835c9jc11df2d424ee0377@mail.gmail.com>
-References: <1223932217-4771-1-git-send-email-spearce@spearce.org>
-	 <1223932217-4771-9-git-send-email-spearce@spearce.org>
-	 <200810232314.29867.robin.rosenberg@dewire.com>
-	 <200901152205.00600.robin.rosenberg@dewire.com>
-	 <20090115210936.GI10179@spearce.org>
-Reply-To: tomi.pakarinen@iki.fi
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] interpret_nth_last_branch(): avoid traversing the reflogs
+ twice
+Date: Sat, 17 Jan 2009 20:29:40 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901172028470.3586@pacific.mpi-cbg.de>
+References: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org> <1232163011-20088-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0901170646560.3586@pacific.mpi-cbg.de> <200901171438.22504.trast@student.ethz.ch> <alpine.DEB.1.00.0901171602340.3586@pacific.mpi-cbg.de>
+ <7vljt97nld.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Robin Rosenberg" <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Jan 17 20:18:13 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 17 20:34:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOGgL-0005hS-5A
-	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 20:18:09 +0100
+	id 1LOGvj-0002Ij-BO
+	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 20:34:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763632AbZAQTQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Jan 2009 14:16:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757392AbZAQTQZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 14:16:25 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:49171 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763632AbZAQTQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jan 2009 14:16:23 -0500
-Received: by bwz14 with SMTP id 14so6471163bwz.13
-        for <git@vger.kernel.org>; Sat, 17 Jan 2009 11:16:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to
-         :to:subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=7nr3wEYIewyi2Su8SseNEx/tNRu6Xw50uZbCfWyat9o=;
-        b=M4ZjjM0PkqHBYR8074cHMMQbP5/C6Xmjl7v7fGNZqjFq2xkh+i7eLSMDqAhtLk179o
-         xvQ6IlRkWEJDjtwbc9sCwCc0hYuRa7buSgjQXG9S7sMrWDmvtJr4+P2BEUlZ4L+H/LvC
-         1hs/l6DyZ3+0UTdM11NY+ZEC3FRL93+5Rvr6I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:reply-to:to:subject:cc:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:references;
-        b=d1rjnNItQEZMvoAL3n34kp45y+rp3jOrTfKSpjGkwjSDMKDfgLGVKDKYsadMjeEEY+
-         tZW615jpOQD36pYFKhYsXN1//MlMFYnQIAhnxJJOpicwNNxHwID1AcY5azy3QV0gLirj
-         ETt3XxH/zJrBcbuIOV1DZG937ozoI/C2t0Spo=
-Received: by 10.181.149.19 with SMTP id b19mr1356973bko.67.1232219781527;
-        Sat, 17 Jan 2009 11:16:21 -0800 (PST)
-Received: by 10.181.56.2 with HTTP; Sat, 17 Jan 2009 11:16:21 -0800 (PST)
-In-Reply-To: <20090115210936.GI10179@spearce.org>
-Content-Disposition: inline
+	id S1762179AbZAQT3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Jan 2009 14:29:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761364AbZAQT3H
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 14:29:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45218 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759875AbZAQT3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jan 2009 14:29:06 -0500
+Received: (qmail invoked by alias); 17 Jan 2009 19:29:04 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp015) with SMTP; 17 Jan 2009 20:29:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+b5EEbXyebnAAjYaODAhxoPOlGqVuFtVzWOzFI8P
+	l6bMSP7TxKCdwP
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vljt97nld.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106095>
 
-testTrivialTwoWay_disjointhistories() failed because merge strategy
-didn't handle missing base
-version. Am'i right?
+Hi,
 
-  Tomi.
+On Sat, 17 Jan 2009, Junio C Hamano wrote:
 
->From 1ed694b55d307c640d29eeebfcd108e08681297b Mon Sep 17 00:00:00 2001
-From: Tomi Pakarinen <tomi.pakarinen@iki.fi>
-Date: Sat, 17 Jan 2009 20:56:04 +0200
-Subject: [PATCH] If base version missing, we can merge version from
-one of other trees.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Instead of traversing them twice, we just build a list of branch switches,
+> > pick the one we're interested in, and free the list again.
+> 
+> Isn't the code keeping them all in core, or am I reading the patch wrong?
+> 
+> If you know that you are interested in the nth-from-the-last switch, and
+> if you are reading from the beginning, you would need to keep at most n 
+> last switches you have seen in core, wouldn't you?  
 
-Signed-off-by: Tomi Pakarinen <tomi.pakarinen@iki.fi>
----
- .../jgit/merge/StrategySimpleTwoWayInCore.java     |   28 +++++++++++++++-----
- 1 files changed, 21 insertions(+), 7 deletions(-)
+That is correct.  But this is such a highly uncritical code path that I'd 
+like to keep this simple rather than fast.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java
-b/org.spearce.jgit/src/org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java
-index 893add9..eb718ab 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java
-@@ -43,6 +43,7 @@
- import org.spearce.jgit.dircache.DirCacheBuilder;
- import org.spearce.jgit.dircache.DirCacheEntry;
- import org.spearce.jgit.errors.UnmergedPathException;
-+import org.spearce.jgit.lib.FileMode;
- import org.spearce.jgit.lib.ObjectId;
- import org.spearce.jgit.lib.Repository;
- import org.spearce.jgit.treewalk.AbstractTreeIterator;
-@@ -119,13 +120,26 @@ protected boolean mergeImpl() throws IOException {
- 				}
-
- 				final int modeB = tw.getRawMode(T_BASE);
--				if (modeB == modeO && tw.idEqual(T_BASE, T_OURS))
--					add(T_THEIRS, DirCacheEntry.STAGE_0);
--				else if (modeB == modeT && tw.idEqual(T_BASE, T_THEIRS))
--					add(T_OURS, DirCacheEntry.STAGE_0);
--				else {
--					conflict();
--					hasConflict = true;
-+				if (!FileMode.MISSING.equals(modeB)) {
-+					if (modeB == modeO && tw.idEqual(T_BASE, T_OURS))
-+						add(T_THEIRS, DirCacheEntry.STAGE_0);
-+					else if (modeB == modeT && tw.idEqual(T_BASE, T_THEIRS))
-+						add(T_OURS, DirCacheEntry.STAGE_0);
-+					else {
-+						conflict();
-+						hasConflict = true;
-+					}
-+				} else {
-+					if (!FileMode.MISSING.equals(modeO)
-+							&& FileMode.MISSING.equals(modeT))
-+						add(T_OURS, DirCacheEntry.STAGE_0);
-+					else if (FileMode.MISSING.equals(modeO)
-+							&& !FileMode.MISSING.equals(modeT))
-+						add(T_THEIRS, DirCacheEntry.STAGE_0);
-+					else {
-+						conflict();
-+						hasConflict = true;
-+					}
- 				}
- 			}
- 			builder.finish();
--- 
-1.6.0.4
+Ciao,
+Dscho
