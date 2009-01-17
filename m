@@ -1,120 +1,166 @@
 From: "Ray Chuan" <rctay89@gmail.com>
-Subject: Re: [PATCH 1/2] http-push: send opaquelocktoken in If: for PUT requests
-Date: Sat, 17 Jan 2009 20:14:47 +0000
-Message-ID: <be6fef0d0901171214h44b80a5drd2dd11f2bd65cf53@mail.gmail.com>
-References: <be6fef0d0901171210o97a24carf902e82848d48b5d@mail.gmail.com>
+Subject: [PATCH 2/2] http-push: remove MOVE step after PUT when sending objects to server
+Date: Sat, 17 Jan 2009 20:24:47 +0000
+Message-ID: <be6fef0d0901171224y35c3d95cn2d38639ac03c3b8f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 17 21:16:17 2009
+X-From: git-owner@vger.kernel.org Sat Jan 17 21:26:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOHaW-00083C-4W
-	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 21:16:12 +0100
+	id 1LOHkD-0002sZ-Ho
+	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 21:26:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763137AbZAQUOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Jan 2009 15:14:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765936AbZAQUOt
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 15:14:49 -0500
-Received: from wa-out-1112.google.com ([209.85.146.179]:51046 "EHLO
+	id S1756773AbZAQUYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Jan 2009 15:24:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756309AbZAQUYt
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 15:24:49 -0500
+Received: from wa-out-1112.google.com ([209.85.146.176]:49795 "EHLO
 	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763655AbZAQUOs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jan 2009 15:14:48 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1158959wah.21
-        for <git@vger.kernel.org>; Sat, 17 Jan 2009 12:14:47 -0800 (PST)
+	with ESMTP id S1755643AbZAQUYs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jan 2009 15:24:48 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1160133wah.21
+        for <git@vger.kernel.org>; Sat, 17 Jan 2009 12:24:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=t0N7mEXdagj+sReEsjx1FPTm4UD+P5O/BZy0fjgaFT4=;
-        b=uiuzBcFEyTxWjm+ATuxizBjGznNOY42xQTHgUypT1Uh2T+EDu6739RQQgoZXj/5e9e
-         4+/evc6oxipwydJJVIq97wFJdoVsRH+PXPZbATTwvQPfOKmy/ogZqLYTs4/Gs5th1C4V
-         PBwwVHhODIIfKghvn830g69v/ihXfS/dMKUJk=
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=oP/hlxWGtkmCFMrFOCLhY3gWmEDO3Ix/9dyC2gYlzKw=;
+        b=FOptBgsu4MmODMhTzPhNouUnTrWyayUWzVRJMwNkaF9nj7Npq4TuH1k6tLif6Eirk+
+         5mTocjtUhoAH7AlJnk56HgFJYYr/PEy414+9+ZWB1INHjCE5Noon3azH9agxSrQ5N9Jg
+         VQiA7AZSmpKyAGfM2nBuMlZJbaA2hLwFPUbko=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=LJPKpsxesGlfGYwRmW7GPTtU5rjyrLzBdvsZCye/P4QJiCXPhwc47M9WPgI3U5a4fp
-         mCYvA23jQfqT6NsJLJK8UfrIgSQmu8ZDtrgDS0d9FcjSFrdyDZHx7yBncE6Zj8shhJha
-         f5n30XrkZW4n63wdiC6GvLyB4sw74A7xvch9Q=
-Received: by 10.114.145.1 with SMTP id s1mr2781473wad.223.1232223287433;
-        Sat, 17 Jan 2009 12:14:47 -0800 (PST)
-Received: by 10.114.196.2 with HTTP; Sat, 17 Jan 2009 12:14:47 -0800 (PST)
-In-Reply-To: <be6fef0d0901171210o97a24carf902e82848d48b5d@mail.gmail.com>
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=qAnjfBQSiCDgafcH2r5nhV7yzvnpiHCyO82VuGvqEvrYKXXfG2qhdn2NuUi0SgvaL4
+         qh9DS68rvj51jCWqM+/ETZS3n/l+gAe7S85XYeJp6Ach3T3RVC/3xU4M35anTDzb5OEd
+         j733akhSX1LHDwqRQIj3B0MSWO6HwiD5G4pSY=
+Received: by 10.114.92.14 with SMTP id p14mr25926wab.140.1232223887619;
+        Sat, 17 Jan 2009 12:24:47 -0800 (PST)
+Received: by 10.114.196.2 with HTTP; Sat, 17 Jan 2009 12:24:47 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106103>
 
-oops, i incorrectly stated in the commit message that the request URL
-for PUT was modified; i apologize for that error.
+Currently, git PUTs to
 
-On 1/17/09, Ray Chuan <rctay89@gmail.com> wrote:
-> Currently, git PUTs to
->
->   /repo.git/objects/1a/1a2b...9z_opaquelocktoken:1234-....
->
-> On some platforms, ':' isn't allowed in filenames so the PUT fails.
-> This seems to be an (faulty) implementation of the opaquelocktoken URI
-> scheme (http://www.webdav.org/specs/rfc4918.html#RFC2518).
->
-> PUT now sends the object to the url
->
->   /repo.git/objects/1a/1a2b...9z
->
-> , without the trailing '_opaquelocktoken:1234-....', with an
-> additional "If: (<opaquelocktoken:1234-....>)" header.
->
-> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-> ---
->  http-push.c |    7 +++++++
->  1 files changed, 7 insertions(+), 0 deletions(-)
->
-> diff --git a/http-push.c b/http-push.c
-> index c9ba07e..4517cf2 100644
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -480,7 +480,9 @@ static void start_put(struct transfer_request *request)
->  {
->  	char *hex = sha1_to_hex(request->obj->sha1);
->  	struct active_request_slot *slot;
-> +	struct curl_slist *dav_headers = NULL;
->  	char *posn;
-> +	char *if_header;
->  	enum object_type type;
->  	char hdr[50];
->  	void *unpacked;
-> @@ -535,6 +537,10 @@ static void start_put(struct transfer_request *request)
->  	*(posn++) = '_';
->  	strcpy(posn, request->lock->token);
->
-> +	if_header = xmalloc(strlen(request->lock->token) + 25);
-> +	sprintf(if_header, "If: <%s>", request->lock->token);
-> +	dav_headers = curl_slist_append(dav_headers, if_header);
-> +
->  	slot = get_active_slot();
->  	slot->callback_func = process_response;
->  	slot->callback_data = request;
-> @@ -546,6 +552,7 @@ static void start_put(struct transfer_request *request)
->  	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
->  	curl_easy_setopt(slot->curl, CURLOPT_PUT, 1);
->  	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
-> +	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
->  	curl_easy_setopt(slot->curl, CURLOPT_URL, request->url);
->
->  	if (start_active_slot(slot)) {
-> --
-> 1.5.6.3
->
+ /repo.git/objects/1a/1a2b...9z_opaquelocktoken:1234-....
 
+then MOVEs to
 
+ /repo.git/objects/1a/1a2b...9z
+
+This is needless. In fact, the only time MOVE requests are sent is for
+this sole purpose (ie. of renaming an object).
+
+A concern raised was repository corruption in the event of failure
+during PUT. "put && move" won't afford any more protection than using
+simply "put", since info/refs is not updated if a PUT fails, so there
+is no cause for concern.
+
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
+ http-push.c |   45 +--------------------------------------------
+ 1 files changed, 1 insertions(+), 44 deletions(-)
+
+diff --git a/http-push.c b/http-push.c
+index 4517cf2..d21fd3b 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -31,7 +31,6 @@ enum XML_Status {
+ /* DAV methods */
+ #define DAV_LOCK "LOCK"
+ #define DAV_MKCOL "MKCOL"
+-#define DAV_MOVE "MOVE"
+ #define DAV_PROPFIND "PROPFIND"
+ #define DAV_PUT "PUT"
+ #define DAV_UNLOCK "UNLOCK"
+@@ -105,7 +104,6 @@ enum transfer_state {
+ 	NEED_PUSH,
+ 	RUN_MKCOL,
+ 	RUN_PUT,
+-	RUN_MOVE,
+ 	ABORTED,
+ 	COMPLETE,
+ };
+@@ -531,11 +529,6 @@ static void start_put(struct transfer_request *request)
+ 	posn += 2;
+ 	*(posn++) = '/';
+ 	strcpy(posn, hex + 2);
+-	request->dest = xmalloc(strlen(request->url) + 14);
+-	sprintf(request->dest, "Destination: %s", request->url);
+-	posn += 38;
+-	*(posn++) = '_';
+-	strcpy(posn, request->lock->token);
+
+ 	if_header = xmalloc(strlen(request->lock->token) + 25);
+ 	sprintf(if_header, "If: <%s>", request->lock->token);
+@@ -565,32 +558,6 @@ static void start_put(struct transfer_request *request)
+ 	}
+ }
+
+-static void start_move(struct transfer_request *request)
+-{
+-	struct active_request_slot *slot;
+-	struct curl_slist *dav_headers = NULL;
+-
+-	slot = get_active_slot();
+-	slot->callback_func = process_response;
+-	slot->callback_data = request;
+-	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1); /* undo PUT setup */
+-	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_MOVE);
+-	dav_headers = curl_slist_append(dav_headers, request->dest);
+-	dav_headers = curl_slist_append(dav_headers, "Overwrite: T");
+-	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
+-	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
+-	curl_easy_setopt(slot->curl, CURLOPT_URL, request->url);
+-
+-	if (start_active_slot(slot)) {
+-		request->slot = slot;
+-		request->state = RUN_MOVE;
+-	} else {
+-		request->state = ABORTED;
+-		free(request->url);
+-		request->url = NULL;
+-	}
+-}
+-
+ static int refresh_lock(struct remote_lock *lock)
+ {
+ 	struct active_request_slot *slot;
+@@ -713,23 +680,13 @@ static void finish_request(struct
+transfer_request *request)
+ 		}
+ 	} else if (request->state == RUN_PUT) {
+ 		if (request->curl_result == CURLE_OK) {
+-			start_move(request);
+-		} else {
+-			fprintf(stderr,	"PUT %s failed, aborting (%d/%ld)\n",
+-				sha1_to_hex(request->obj->sha1),
+-				request->curl_result, request->http_code);
+-			request->state = ABORTED;
+-			aborted = 1;
+-		}
+-	} else if (request->state == RUN_MOVE) {
+-		if (request->curl_result == CURLE_OK) {
+ 			if (push_verbosely)
+ 				fprintf(stderr, "    sent %s\n",
+ 					sha1_to_hex(request->obj->sha1));
+ 			request->obj->flags |= REMOTE;
+ 			release_request(request);
+ 		} else {
+-			fprintf(stderr, "MOVE %s failed, aborting (%d/%ld)\n",
++			fprintf(stderr,	"PUT %s failed, aborting (%d/%ld)\n",
+ 				sha1_to_hex(request->obj->sha1),
+ 				request->curl_result, request->http_code);
+ 			request->state = ABORTED;
 -- 
-Cheers,
-Ray Chuan
+1.5.6.3
