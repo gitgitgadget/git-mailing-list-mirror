@@ -1,88 +1,141 @@
-From: "Ray Chuan" <rctay89@gmail.com>
-Subject: [PATCH 3/3] http-push: update tests
-Date: Sat, 17 Jan 2009 02:59:29 +0000
-Message-ID: <be6fef0d0901161859qbea135bwe89e48caaa69a77c@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH v2 5/5] run_hook(): allow more than 9 hook arguments
+Date: Sat, 17 Jan 2009 04:02:55 +0100
+Message-ID: <1232161375-24503-1-git-send-email-s-beyer@gmx.net>
+References: <1232133002-21725-4-git-send-email-s-beyer@gmx.net>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>, gitster@pobox.com,
+	Stephan Beyer <s-beyer@gmx.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 17 04:00:57 2009
+X-From: git-owner@vger.kernel.org Sat Jan 17 04:04:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LO1Qe-00087x-FH
-	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 04:00:56 +0100
+	id 1LO1U0-0000MM-1b
+	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 04:04:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753606AbZAQC7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 21:59:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753045AbZAQC7b
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 21:59:31 -0500
-Received: from wa-out-1112.google.com ([209.85.146.179]:35206 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750937AbZAQC7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 21:59:30 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1037076wah.21
-        for <git@vger.kernel.org>; Fri, 16 Jan 2009 18:59:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:mime-version:content-type:content-transfer-encoding
-         :content-disposition;
-        bh=CFeguLgCDljjGHsoI2LF3ne7LbgUfG+bdE3DNok9SCY=;
-        b=i+gXmLbPTiTLrjG5tRWtZcGTGP+Szd1d1CXzfokMBzIkNMIHNFf9fPaCQ0KWW7GjJh
-         yDphPWOenDWemOc20sbSBl7VVNUYnEXLZvghxyL4VU3x+/FrLQzRbkSBeIPME1osgLQS
-         /jw+z/tEcLFY8ZpNDtG3ZNLcPVv9/wU3GGKHc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type
-         :content-transfer-encoding:content-disposition;
-        b=WsN64Zb65v3ujPyGAGZ7xIxW5UdTaioAcyOqFT62+mIZDTjLqUl9rTEjqI9mNJUWOn
-         7rs7II8O48LUpF7HnOpLc0GxYggT6mGuAfuLwc/6SWJdKjjsdBQ9pxjWs54sJxkGFFB9
-         H0nF4L3wfJyF/eE3AFIFXwtp7dXMDriEej8TU=
-Received: by 10.114.53.1 with SMTP id b1mr2245087waa.173.1232161169967;
-        Fri, 16 Jan 2009 18:59:29 -0800 (PST)
-Received: by 10.114.196.2 with HTTP; Fri, 16 Jan 2009 18:59:29 -0800 (PST)
-Content-Disposition: inline
+	id S1753057AbZAQDDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 22:03:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbZAQDC7
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 22:02:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52566 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752128AbZAQDC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 22:02:58 -0500
+Received: (qmail invoked by alias); 17 Jan 2009 03:02:56 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp002) with SMTP; 17 Jan 2009 04:02:56 +0100
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1+cR2sCvz2cFygvZS2OgdMGkHP5aPtS/Y9Id7UGFd
+	W6p8mgjmwtG55v
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1LO1SZ-0006O7-77; Sat, 17 Jan 2009 04:02:55 +0100
+X-Mailer: git-send-email 1.6.1.160.gecdb
+In-Reply-To: <1232133002-21725-4-git-send-email-s-beyer@gmx.net>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.45
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106015>
 
-note: the test needs to chmod the test_repo.git folder so that
-apache/mod_dav can create .DAV folders in it for locking.
+This is done using the ALLOC_GROW macro.
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 ---
- src/git-1.6.1/t/t5540-http-push.sh |    7 +++----
- 1 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/src/git-1.6.1/t/t5540-http-push.sh
-b/src/git-1.6.1/t/t5540-http-push.sh
-index da95886..730b9cb 100755
---- a/src/git-1.6.1/t/t5540-http-push.sh
-+++ b/src/git-1.6.1/t/t5540-http-push.sh
-@@ -51,17 +51,16 @@ test_expect_success 'clone remote repository' '
- 	git clone $HTTPD_URL/test_repo.git test_repo_clone
- '
+	Ok, Dscho :-)
 
--test_expect_failure 'push to remote repository' '
-+test_expect_success 'push to remote repository' '
- 	cd "$ROOT_PATH"/test_repo_clone &&
- 	: >path2 &&
- 	git add path2 &&
- 	test_tick &&
- 	git commit -m path2 &&
--	git push &&
--	[ -f "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/refs/heads/master" ]
-+	git push origin master
- '
+	The interdiff based on [PATCH 5/5] is...
 
--test_expect_failure 'create and delete remote branch' '
-+test_expect_success 'create and delete remote branch' '
- 	cd "$ROOT_PATH"/test_repo_clone &&
- 	git checkout -b dev &&
- 	: >path3 &&
+	--- a/run-command.c
+	+++ b/run-command.c
+	@@ -350,14 +350,14 @@ int run_hook(const char *index_file, const char *name, ...)
+		char index[PATH_MAX];
+		va_list args;
+		int ret;
+	-	size_t i = 1, alloc = 5;
+	+	size_t i = 0, alloc = 0;
+	 
+		if (access(git_path("hooks/%s", name), X_OK) < 0)
+			return 0;
+	 
+		va_start(args, name);
+	-	argv = xmalloc(alloc * sizeof(const char *));
+	-	argv[0] = git_path("hooks/%s", name);
+	+	ALLOC_GROW(argv, i + 1, alloc);
+	+	argv[i++] = git_path("hooks/%s", name);
+		while (argv[i-1]) {
+			ALLOC_GROW(argv, i + 1, alloc);
+			argv[i++] = va_arg(args, const char *);
+
+ Documentation/technical/api-run-command.txt |    2 +-
+ run-command.c                               |   18 +++++++++---------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/Documentation/technical/api-run-command.txt b/Documentation/technical/api-run-command.txt
+index 13e7b63..2efe7a4 100644
+--- a/Documentation/technical/api-run-command.txt
++++ b/Documentation/technical/api-run-command.txt
+@@ -58,7 +58,7 @@ Functions
+ 	The first argument is a pathname to an index file, or NULL
+ 	if the hook uses the default index file or no index is needed.
+ 	The second argument is the name of the hook.
+-	The further arguments (up to 9) correspond to the hook arguments.
++	The further arguments correspond to the hook arguments.
+ 	The last argument has to be NULL to terminate the arguments list.
+ 	If the hook does not exist or is not executable, the return
+ 	value will be zero.
+diff --git a/run-command.c b/run-command.c
+index fc54c07..d2f1262 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -346,23 +346,22 @@ int finish_async(struct async *async)
+ int run_hook(const char *index_file, const char *name, ...)
+ {
+ 	struct child_process hook;
+-	const char *argv[10], *env[2];
++	const char **argv, *env[2];
+ 	char index[PATH_MAX];
+ 	va_list args;
+ 	int ret;
+-	int i;
++	size_t i = 0, alloc = 0;
+ 
+ 	if (access(git_path("hooks/%s", name), X_OK) < 0)
+ 		return 0;
+ 
+ 	va_start(args, name);
+-	argv[0] = git_path("hooks/%s", name);
+-	i = 0;
+-	do {
+-		if (++i >= ARRAY_SIZE(argv))
+-			die("run_hook(): too many arguments");
+-		argv[i] = va_arg(args, const char *);
+-	} while (argv[i]);
++	ALLOC_GROW(argv, i + 1, alloc);
++	argv[i++] = git_path("hooks/%s", name);
++	while (argv[i-1]) {
++		ALLOC_GROW(argv, i + 1, alloc);
++		argv[i++] = va_arg(args, const char *);
++	}
+ 	va_end(args);
+ 
+ 	memset(&hook, 0, sizeof(hook));
+@@ -377,6 +376,7 @@ int run_hook(const char *index_file, const char *name, ...)
+ 	}
+ 
+ 	ret = start_command(&hook);
++	free(argv);
+ 	if (ret) {
+ 		warning("Could not spawn %s", argv[0]);
+ 		return ret;
 -- 
-1.6.0.4
+1.6.1.160.gecdb
