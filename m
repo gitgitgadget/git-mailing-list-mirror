@@ -1,128 +1,129 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] http-push: when sending objects, don't PUT before
- MOVE
-Date: Sat, 17 Jan 2009 07:13:15 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901170706450.3586@pacific.mpi-cbg.de>
-References: <be6fef0d0901161859g4e5d749et78b6b0231eb915ee@mail.gmail.com>
+From: Abhijit Bhopatkar <bain@devslashzero.com>
+Subject: [Announce] teamgit v0.0.9 - visual interactive rebase
+Date: Sat, 17 Jan 2009 13:08:11 +0530
+Message-ID: <1232177891.16881.8.camel@bain-laptop>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 17 07:13:47 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 17 08:45:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LO4RF-0001G4-L4
-	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 07:13:46 +0100
+	id 1LO5sL-0002qL-9C
+	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 08:45:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557AbZAQGMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Jan 2009 01:12:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbZAQGMV
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 01:12:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50876 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751987AbZAQGMT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jan 2009 01:12:19 -0500
-Received: (qmail invoked by alias); 17 Jan 2009 06:12:18 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp010) with SMTP; 17 Jan 2009 07:12:18 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18taK44CZct5EpUHV1SAXyAwgLzfzT3IRlU4T9oxJ
-	SQsZqgWwwdNKhT
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <be6fef0d0901161859g4e5d749et78b6b0231eb915ee@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.43
+	id S1755273AbZAQHif convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Jan 2009 02:38:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755248AbZAQHif
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 02:38:35 -0500
+Received: from ti-out-0910.google.com ([209.85.142.187]:24684 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754737AbZAQHie (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jan 2009 02:38:34 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so1226139tic.23
+        for <git@vger.kernel.org>; Fri, 16 Jan 2009 23:38:32 -0800 (PST)
+Received: by 10.110.41.17 with SMTP id o17mr1965201tio.43.1232177911963;
+        Fri, 16 Jan 2009 23:38:31 -0800 (PST)
+Received: from ?192.168.1.207? ([59.95.2.80])
+        by mx.google.com with ESMTPS id a14sm2856227tia.32.2009.01.16.23.38.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 16 Jan 2009 23:38:30 -0800 (PST)
+X-Mailer: Evolution 2.24.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106032>
 
-Hi,
+Hi people,
 
-On Sat, 17 Jan 2009, Ray Chuan wrote:
+teamGit is a functional git gui written in qt, its ultimate aim is to
+add functionality on top of git targeted at small closely knit teams.
 
-> since 753bc911f489748a837ecb5ea4b5216220b24845, the opaquelocktocken
+I have tagged the repo with v0.0.9!!!
+You can now get the .deb from ubuntu intrepid ppa
+deb http://ppa.launchpad.net/bain-devslashzero/ubuntu intrepid main
+package name is teamgit.
+The main project website is http://www.devslashzero.com/teamgit
 
-It would be nice to use the form <abbrev-sha1>(<oneline>) instead of a 
-non-abbreviated SHA-1 that everybody who is interested has to look up, 
-wasting time.
+The major changes from v0.0.8 include
+1. Added preliminary interactive rebase support, now edit reabse queue
+visually
+2. Advanced menu is now disabled, since its still long way from being
+stable
+3. You can now drag and drop emailed patches straight from evoluion (ma=
+y
+be others as well) or drop patch files/mboxes from nautilus.
 
-> URI isn't used, so it doesn't make sense to PUT then MOVE.
-> 
-> currently, git PUTs to
-> 
-> /repo.git/objects/1a/1a2b..._opaquelocktoken:1234-....
+Shortlog since v0.0.8 appended
+Abhijit
+---
 
-First you say that the opaquelocktoken URI is not used, but here it looks 
-like one?
+Abhijit Bhopatkar (23):
+      guifydialogui: Fixed a groupbox title
+      Added a rebase ui binary
+      gitprocess: make rebase editor a variable and unset it after
+rebase
+      mainwindowui: Added interactive rebase action to tools
+      gitprocess: make rebase take an argument for rebase point
+      mainwindowimpl: don't crash if git binary is not found
+      Added rebase interactive functionality
+      rabse-interactive: Added rebase control file reading
+      Made teamgit a global project for main and rebase projects
+      Added install target for rebase-interactive
+      Added teamgit-rebase and editor for teamgit control file
+      Removed stray merge conflict file
+      Added suporject for main teamgit app
+      Added basic merge command support
+      mainwindowimpl.cpp: Use save/restoreGeometry function for window
+state.
+      White space cleanup
+      Drag and drop patch support
+      mainwindowsimpl.cpp: fix stupid commenting
+      Build advanced menu only if settings is true
+Abhijit Bhopatkar (23):
+      guifydialogui: Fixed a groupbox title
+      Added a rebase ui binary
+      gitprocess: make rebase editor a variable and unset it after
+rebase
+      mainwindowui: Added interactive rebase action to tools
+      gitprocess: make rebase take an argument for rebase point
+      mainwindowimpl: don't crash if git binary is not found
+      Added rebase interactive functionality
+      rabse-interactive: Added rebase control file reading
+      Made teamgit a global project for main and rebase projects
+      Added install target for rebase-interactive
+      Added teamgit-rebase and editor for teamgit control file
+      Removed stray merge conflict file
+      Added suporject for main teamgit app
+      Added basic merge command support
+      mainwindowimpl.cpp: Use save/restoreGeometry function for window
+state.
+      White space cleanup
+      Drag and drop patch support
+      mainwindowsimpl.cpp: fix stupid commenting
+      Build advanced menu only if settings is true
+      settings.ui:Add showAdvanced checkbox
+      Enable advanced menu only on selecting it from options
+      settings.ui: Add a warning label in advanced about unstability
+      v0.0.9 hurra!!!
 
-> on some platforms, ':' isn't allowed in filenames so this fails
-> (assuming the server doesn't recognize it as opaquelocktoken scheme).
-> in fact, i don't think this is the correct implementation of the
-> scheme; 'opaquelocktoken: ' should come in front of the path.
+Markus Br=C3=B6ker (13):
+      src/gitprocess.cpp: unicode aware encoding
+      src/gitprocess.cpp: White space corrections
+      utf8 aware encoding - part 2
+      Check, whether valid data is parseable or not
+      Unicode aware diffing
+      Remove trailing spaces during package build
+      Interactive Rebase
+      Rebase: Sorting Order
+      QtextEdit replaces the moving puzzle
+      Rebase: UTF-8 Writer
+      Rebase: edit and drop buttons added
+      Rebase: Write Access when writing
+      c++ std header
 
-It would be nice to make that a fact-backed commit message.  IOW there has 
-to be some documentation about the subject which you can quote, and which 
-would give you a definitive answer to the question if it should be a 
-prefix or not.
-
-> diff --git a/src/git-1.6.1/http-push.c b/src/git-1.6.1/http-push.c
-> index a646a49..838ff6f 100644
-> --- a/src/git-1.6.1/http-push.c
-> +++ b/src/git-1.6.1/http-push.c
-> @@ -31,7 +31,6 @@ enum XML_Status {
->  /* DAV methods */
->  #define DAV_LOCK "LOCK"
->  #define DAV_MKCOL "MKCOL"
-> -#define DAV_MOVE "MOVE"
->  #define DAV_PROPFIND "PROPFIND"
->  #define DAV_PUT "PUT"
->  #define DAV_UNLOCK "UNLOCK"
-> @@ -104,7 +103,6 @@ enum transfer_state {
->  	NEED_PUSH,
->  	RUN_MKCOL,
->  	RUN_PUT,
-> -	RUN_MOVE,
->  	ABORTED,
->  	COMPLETE,
->  };
-> @@ -528,11 +526,6 @@ static void start_put(struct transfer_request *request)
->  	posn += 2;
->  	*(posn++) = '/';
->  	strcpy(posn, hex + 2);
-> -	request->dest = xmalloc(strlen(request->url) + 14);
-> -	sprintf(request->dest, "Destination: %s", request->url);
-> -	posn += 38;
-> -	*(posn++) = '_';
-> -	strcpy(posn, request->lock->token);
-> 
->  	slot = get_active_slot();
->  	slot->callback_func = process_response;
-
-Color me puzzled again.  Why is this code no longer needed?  Is this the 
-lock you were talking about?
-
-> @@ -705,23 +672,13 @@ static void finish_request(struct
-> transfer_request *request)
->  		}
->  	} else if (request->state == RUN_PUT) {
->  		if (request->curl_result == CURLE_OK) {
-> -			start_move(request);
-> -		} else {
-> -			fprintf(stderr,	"PUT %s failed, aborting (%d/%ld)\n",
-> -				sha1_to_hex(request->obj->sha1),
-> -				request->curl_result, request->http_code);
-> -			request->state = ABORTED;
-> -			aborted = 1;
-> -		}
-
-... and here comes my first doubt that it would be a good idea to avoid 
-"put && move"; what if "put" fails?  Then you end up with a corrupt 
-repository.
-
-Ciao,
-Dscho
+Rajesh Sola (1):
+      gitporcess:Added git rebase interactive
