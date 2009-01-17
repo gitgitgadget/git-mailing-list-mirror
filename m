@@ -1,88 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git add --patch bug with split+edit?
-Date: Fri, 16 Jan 2009 21:33:46 -0500
-Message-ID: <20090117023346.GA15817@coredump.intra.peff.net>
-References: <833afihfvc.fsf@kalahari.s2.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: I've added Dulwich to the Git Wiki
+Date: Fri, 16 Jan 2009 18:37:53 -0800
+Message-ID: <402731c90901161837r1c7187dk590c1a46be49e1e9@mail.gmail.com>
+References: <alpine.DEB.1.00.0901162329340.3586@pacific.mpi-cbg.de>
+	 <1232146991.24098.13.camel@ganieda.vernstok.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Hannu Koivisto <azure@iki.fi>
-X-From: git-owner@vger.kernel.org Sat Jan 17 03:35:29 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jelmer Vernooij <jelmer@samba.org>
+X-From: git-owner@vger.kernel.org Sat Jan 17 03:39:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LO120-0002ct-5J
-	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 03:35:28 +0100
+	id 1LO15j-0003f5-Iq
+	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 03:39:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S938184AbZAQCdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 21:33:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761509AbZAQCdu
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 21:33:50 -0500
-Received: from peff.net ([208.65.91.99]:35942 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S938012AbZAQCdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 21:33:49 -0500
-Received: (qmail 23650 invoked by uid 107); 17 Jan 2009 02:33:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 16 Jan 2009 21:33:51 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Jan 2009 21:33:46 -0500
-Content-Disposition: inline
-In-Reply-To: <833afihfvc.fsf@kalahari.s2.org>
+	id S1756783AbZAQCh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 21:37:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752517AbZAQCh4
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 21:37:56 -0500
+Received: from rv-out-0506.google.com ([209.85.198.235]:36374 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754175AbZAQChy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 21:37:54 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so1844018rvb.1
+        for <git@vger.kernel.org>; Fri, 16 Jan 2009 18:37:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=J3Fx8mJt1wTv2pH1zycSUA7dRFWb6+Iuhb9yCJd0NwA=;
+        b=R2Q2cS7l5B0eUE2bECg/wyderuQ0Y/Z4Q6kRvOaFtJoMMnUt9/b4nSgbG31sX0pwsA
+         jR2cCcpj52/Mu2X69i552A9guIguwPvm093SXA9OKvhCUc+x4PDzE+l0fgk/mHTKS94b
+         MZFFZtXOw8Iu/KIcm2LGHbHX/p1r0sQW50/B4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=CtkU4iZVuoa4ox3ZIx43gAyVYgjPn0xaSbNaWBTRPucqsq+sQXQhhj7othaXGG1+/P
+         DZ0DN2Ie4iqgQ5NCDgeEGy74yZtkwr7tQRcNuiWdTXU/dDfG6mQmqOp8ml1eTqTEeGtF
+         B/HzbGUH7YpyCxOUnzo6KW1ohgTRKBbtIMij8=
+Received: by 10.143.12.11 with SMTP id p11mr1307476wfi.19.1232159874019; Fri, 
+	16 Jan 2009 18:37:54 -0800 (PST)
+In-Reply-To: <1232146991.24098.13.camel@ganieda.vernstok.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106010>
 
-On Sat, Jan 17, 2009 at 03:37:43AM +0200, Hannu Koivisto wrote:
+On Fri, Jan 16, 2009 at 3:03 PM, Jelmer Vernooij <jelmer@samba.org> wrote:
+>>
+>> BTW I find it a bit distressing that more and more projects crop up doing
+>> substantial and valuable work around Git, but without even bothering to
+>> mention it on this list.  There might have been a good chance, too, to
+>> avoid having _three_ Python libraries for exactly the same task.
+> I wasn't aware of PyGit (and its homepage doesn't seem to work), but
+> Python-Git is just a wrapper around the git command line tools, it
+> doesn't parse/write the file formats itself.
+>
+> Cheers,
+>
+> Jelmer
+>
+> --
+> Jelmer Vernooij <jelmer@samba.org> - http://samba.org/~jelmer/
+> Jabber: jelmer@jabber.fsfe.org
+>
 
-> echo "sur\nbaz\nbaz\njee\njee" > baz
-> git add --patch
-> 
-> Now say 's RET y RET e RET' and remove the second "+jee" line using
-> your editor.  The output for me looks like this:
-> [...]
-> error: patch failed: baz:1
-> error: baz: patch does not apply
-> Your edited hunk does not apply. Edit again (saying "no" discards!) [y/n]?
+Hello
 
-Actually, you do not even need to change the patch at all for this to
-fail. The hunk that you edit looks like this:
+This sounds like a great project.
 
-@@ -1,2 +2,4 @@
- baz
- baz
-+jee
-+jee
+I've talked with the authors of GitPython in the past and I believe
+the reason it was never mentioned here was that they were probably too
+shy or intimidated (you guys are pretty hardcore ;-) ).
 
-which doesn't make sense. I think the hunk header should actually be:
+Anyways, as you said, GitPython is purely a wrapper around git
+commands.  BTW, git is bloody fast so it's actually not that bad and
+works pretty well.
 
-  @@ -1,2 +1,4 @@
+GitPython's license is the New BSD license and thus it can't use git
+code nor could it use libgit2.  I think the best route for a useful
+Python module would be to wrap something like libgit2 which aims to be
+a true library for git.  If that's the goals for Dulwich then all the
+better.  If not (and it instead aims to be a pure-Python
+implementation) then that's cool too, but for performance reasons I
+think the community would best be served by pursuing a core git
+library with various language bindings built on top of it.
 
-But I don't think that is the problem, since git-apply should be
-recounting the hunk information (and in a simple test, it doesn't fix
-it).
+In any case, this sounds like a neat development and it does seem like
+the goals are slightly different then the existing GitPython module.
+GitPython was basically a port of the Ruby Grit library, which also
+just wraps git commands.  I'll keep my eye on this and see if there's
+anywhere I can  help.
 
-Hm. OK, I see. The "does this diff apply" check feeds _both_ parts of
-the split patch to git-apply. But of course the second part will never
-correctly apply, because its context overlaps with the first part, but
-doesn't take it into account.
-
-Doing the check with _just_ the edited patch would work. But that
-doesn't take into account that your edited patch will potentially fail
-to apply in the long run, depending on whether or not you accept the
-other half of the split patch. And we can't know that yet, because the
-user may not have told us (they could have skipped the first half, and
-then come back to it later after the edit step).
-
-So in general, I think splitting and editing the same hunk is inherently
-dangerous and is going to lead to these sorts of problems. And because
-editing provides a superset of the functionality, I think you should
-just edit and either allow the first part of the hunk to be applied or
-not depending on your preference.
-
-But maybe there is some better way of resolving the conflict. I don't
-see one, but I'm tired and didn't think too hard on it. :)
-
--Peff
+-- 
+    David
