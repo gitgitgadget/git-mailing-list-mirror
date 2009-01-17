@@ -1,71 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Ray Chuan" <rctay89@gmail.com>
 Subject: Re: [PATCH 3/3] http-push: update tests
-Date: Sat, 17 Jan 2009 20:37:38 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901172035000.3586@pacific.mpi-cbg.de>
-References: <be6fef0d0901161859qbea135bwe89e48caaa69a77c@mail.gmail.com> <alpine.DEB.1.00.0901170621440.3586@pacific.mpi-cbg.de> <be6fef0d0901170040r7e11806et87cc5dc3c6f13a2a@mail.gmail.com> <7vsknh7og5.fsf@gitster.siamese.dyndns.org>
+Date: Sat, 17 Jan 2009 19:55:09 +0000
+Message-ID: <be6fef0d0901171155p26e14aa1t90c0d7b8ec7925f3@mail.gmail.com>
+References: <be6fef0d0901161859qbea135bwe89e48caaa69a77c@mail.gmail.com>
+	 <alpine.DEB.1.00.0901170621440.3586@pacific.mpi-cbg.de>
+	 <be6fef0d0901170040r7e11806et87cc5dc3c6f13a2a@mail.gmail.com>
+	 <7vsknh7og5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 17 20:39:54 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 17 20:56:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOH0k-0004bh-CY
-	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 20:39:14 +0100
+	id 1LOHHg-0001jQ-SH
+	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 20:56:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763501AbZAQThG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Jan 2009 14:37:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762118AbZAQThG
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 14:37:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39732 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761364AbZAQThE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jan 2009 14:37:04 -0500
-Received: (qmail invoked by alias); 17 Jan 2009 19:37:02 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp056) with SMTP; 17 Jan 2009 20:37:02 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19hV6AfVYFhh4rRv68Jn6nUmPQRd1H1ch1d0w8t66
-	NtJwXNtaQfL0Fu
-X-X-Sender: schindelin@pacific.mpi-cbg.de
+	id S1764519AbZAQTzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Jan 2009 14:55:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764340AbZAQTzO
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 14:55:14 -0500
+Received: from rv-out-0506.google.com ([209.85.198.228]:47570 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764336AbZAQTzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jan 2009 14:55:12 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so2056050rvb.1
+        for <git@vger.kernel.org>; Sat, 17 Jan 2009 11:55:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=IuiTt+eEibB51w/zMW6/sr2kgVZn8kJgIcW6aB0G1xs=;
+        b=sUdI//G680zl87/NR8YbE/6Hl6VlmCq82q1EAtvOHw2gNVFtp/hFSFbEo0y43JSP2p
+         Dy5I6OLKPdOpd8iSe+bHWG9hrmml0EK1wLoZUfO8+0Z1JiNUC9GQmLaW2PBTk/+VgSOX
+         nVXl4DsL5coCHnKBEvR6+xvuSRve7qW9XFAe4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=IfKXTH/2N5gCd4kd+EggHbEVSmLsmaax0MeZvIYdMSi+OY+L+9Sf0bET/If2AqwAsr
+         9ieWSZwZdTqOZCkKdyIQu+Kgrq/r5BBor97B/RfCO3Kqx5oANAr/4vT4uZm25kf7AIxS
+         NA59dVpCMniXU9BLWQvyEF/SHNifFUk0GAfkY=
+Received: by 10.114.39.5 with SMTP id m5mr538263wam.41.1232222109684;
+        Sat, 17 Jan 2009 11:55:09 -0800 (PST)
+Received: by 10.114.196.2 with HTTP; Sat, 17 Jan 2009 11:55:09 -0800 (PST)
 In-Reply-To: <7vsknh7og5.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106098>
 
 Hi,
 
-On Sat, 17 Jan 2009, Junio C Hamano wrote:
+On Sat, Jan 17, 2009 at 6:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Ray Chuan" <rctay89@gmail.com> writes:
+>
+>>>> -test_expect_failure 'push to remote repository' '
+>>>> +test_expect_success 'push to remote repository' '
+>>>>       cd "$ROOT_PATH"/test_repo_clone &&
+>>>>       : >path2 &&
+>>>>       git add path2 &&
+>>>>       test_tick &&
+>>>>       git commit -m path2 &&
+>>>> -     git push &&
+>>>> -     [ -f "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/refs/heads/master" ]
 
-> The original seems to want the push to succeed, and also it wants the 
-> file refs/heads/master to be present after the push (presumably because 
-> there should be that ref when the push succeeds).  If you fixed "push" 
-> that used to fail to succeed, that is great, and s/failure/success/ is a 
-> good thing.
-> 
-> But you are removing something else without explanation.  Why do you 
-> need to remove the part of the test that checks if refs/heads/master is 
-> present? Is it looking for a file in a wrong place?
+i modified the push arguments as there was no remote ref/branch
+specified. With a fixed "git push", that line says:
 
-As I mentioned with two other patches, the push does not succeed, and that 
-is the reason for the "failure" in test_expect_failure.
+  No refs in common and none specified; doing nothing.
 
-It does not succeed for two reasons:
+i'd like to take this chance to inquire, what does the -f, plus square
+brackets, really mean? i assumed it was to force push to go ahead even
+if "a remote ref that is not an ancestor of the local ref used to
+overwrite it" check fails.
 
-- due to an off-by-path_len bug, xmalloc() tries to allocate ~4GB of 
-  memory, which is a bit much, so http-push die()s with an OOM.
-
-- even with that fix, the push fails because it cannot find any common 
-  refs.  It cannot find them because it does not download info/refs as it 
-  is supposed to do, but it looks through refs/, missing the fact that the 
-  refs are packed (which it cannot handle).
-
-Ciao,
-Dscho
+-- 
+Cheers,
+Ray Chuan
