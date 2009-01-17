@@ -1,7 +1,7 @@
 From: =?ISO-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 1/4] Add ctype test
-Date: Sat, 17 Jan 2009 16:50:13 +0100
-Message-ID: <1232207413.16172.104.camel@ubuntu.ubuntu-domain>
+Subject: [PATCH 3/4] Change NUL char handling of isspecial()
+Date: Sat, 17 Jan 2009 16:50:34 +0100
+Message-ID: <1232207434.16172.106.camel@ubuntu.ubuntu-domain>
 References: <4967D8F8.9070508@lsrfire.ath.cx>
 	 <4967DB4A.2000702@lsrfire.ath.cx>
 	 <81b0412b0901120732t1bd1978awdc4be47767e02863@mail.gmail.com>
@@ -13,167 +13,154 @@ Content-Transfer-Encoding: 7bit
 Cc: Alex Riesen <raa.lkml@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 17 16:51:56 2009
+X-From: git-owner@vger.kernel.org Sat Jan 17 16:52:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LODSh-0003eK-Tf
-	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 16:51:52 +0100
+	id 1LODT2-0003lH-6T
+	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 16:52:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762402AbZAQPu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Jan 2009 10:50:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762231AbZAQPu0
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 10:50:26 -0500
-Received: from india601.server4you.de ([85.25.151.105]:38798 "EHLO
+	id S1763644AbZAQPui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Jan 2009 10:50:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763137AbZAQPui
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 10:50:38 -0500
+Received: from india601.server4you.de ([85.25.151.105]:38803 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762073AbZAQPuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jan 2009 10:50:25 -0500
+	with ESMTP id S1762849AbZAQPug (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jan 2009 10:50:36 -0500
 Received: from [10.0.1.101] (p57B7D6A5.dip.t-dialin.net [87.183.214.165])
-	by india601.server4you.de (Postfix) with ESMTPSA id 03D9B2F8059;
-	Sat, 17 Jan 2009 16:50:21 +0100 (CET)
+	by india601.server4you.de (Postfix) with ESMTPSA id A295A2F8059;
+	Sat, 17 Jan 2009 16:50:34 +0100 (CET)
 In-Reply-To: <7vy6xfd3oh.fsf@gitster.siamese.dyndns.org>
 X-Mailer: Evolution 2.24.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106069>
 
-Manipulating the character class table in ctype.c by hand is error prone.
-To ensure that typos are found quickly, add a test program and script.
+Replace isspecial() by the new macro is_glob_special(), which is more,
+well, specialized.  The former included the NUL char in its character
+class, while the letter only included characters that are special to
+file name globbing.
 
-test-ctype checks the output of the character class macros isspace() et.
-al. by applying them on all possible char values and consulting a list of
-all characters in the particular class.  It doesn't check tolower() and
-toupper(); this could be added later.
+The new name contains underscores because they enhance readability
+considerably now that it's made up of three words.  Renaming the
+function is necessary to document its changed scope.
 
-The test script t0070-fundamental.sh is created because there is no good
-place for the ctype test, yet -- except for t0000-basic.sh perhaps, but
-it doesn't run well on Windows, yet.
+The call sites of isspecial() are updated to check explicitly for NUL.
 
 Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
- Makefile               |    3 ++
- t/t0070-fundamental.sh |   15 +++++++++++
- test-ctype.c           |   66 ++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 84 insertions(+), 0 deletions(-)
- create mode 100755 t/t0070-fundamental.sh
- create mode 100644 test-ctype.c
+This patch applies to next (plus the previous ones in this series).
 
-diff --git a/Makefile b/Makefile
-index 4b1d488..dca61f5 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1360,6 +1360,7 @@ endif
- ### Testing rules
+ ctype.c           |    4 ++--
+ dir.c             |    4 ++--
+ git-compat-util.h |    4 ++--
+ grep.c            |    5 +++--
+ test-ctype.c      |    6 ++++++
+ 5 files changed, 15 insertions(+), 8 deletions(-)
+
+diff --git a/ctype.c b/ctype.c
+index 6528687..9de187c 100644
+--- a/ctype.c
++++ b/ctype.c
+@@ -9,11 +9,11 @@ enum {
+ 	S = GIT_SPACE,
+ 	A = GIT_ALPHA,
+ 	D = GIT_DIGIT,
+-	G = GIT_SPECIAL,	/* \0, *, ?, [, \\ */
++	G = GIT_GLOB_SPECIAL,	/* *, ?, [, \\ */
+ };
  
- TEST_PROGRAMS += test-chmtime$X
-+TEST_PROGRAMS += test-ctype$X
- TEST_PROGRAMS += test-date$X
- TEST_PROGRAMS += test-delta$X
- TEST_PROGRAMS += test-genrandom$X
-@@ -1379,6 +1380,8 @@ export NO_SVN_TESTS
- test: all
- 	$(MAKE) -C t/ all
+ unsigned char sane_ctype[256] = {
+-	G, 0, 0, 0, 0, 0, 0, 0, 0, S, S, 0, 0, S, 0, 0,		/*   0.. 15 */
++	0, 0, 0, 0, 0, 0, 0, 0, 0, S, S, 0, 0, S, 0, 0,		/*   0.. 15 */
+ 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		/*  16.. 31 */
+ 	S, 0, 0, 0, 0, 0, 0, 0, 0, 0, G, 0, 0, 0, 0, 0,		/*  32.. 47 */
+ 	D, D, D, D, D, D, D, D, D, D, 0, 0, 0, 0, 0, G,		/*  48.. 63 */
+diff --git a/dir.c b/dir.c
+index 7c59829..d55a41a 100644
+--- a/dir.c
++++ b/dir.c
+@@ -75,7 +75,7 @@ static int match_one(const char *match, const char *name, int namelen)
+ 	for (;;) {
+ 		unsigned char c1 = *match;
+ 		unsigned char c2 = *name;
+-		if (isspecial(c1))
++		if (c1 == '\0' || is_glob_special(c1))
+ 			break;
+ 		if (c1 != c2)
+ 			return 0;
+@@ -678,7 +678,7 @@ static int simple_length(const char *match)
+ 	for (;;) {
+ 		unsigned char c = *match++;
+ 		len++;
+-		if (isspecial(c))
++		if (c == '\0' || is_glob_special(c))
+ 			return len;
+ 	}
+ }
+diff --git a/git-compat-util.h b/git-compat-util.h
+index e20b1e8..7c92588 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -327,13 +327,13 @@ extern unsigned char sane_ctype[256];
+ #define GIT_SPACE 0x01
+ #define GIT_DIGIT 0x02
+ #define GIT_ALPHA 0x04
+-#define GIT_SPECIAL 0x08
++#define GIT_GLOB_SPECIAL 0x08
+ #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
+ #define isspace(x) sane_istest(x,GIT_SPACE)
+ #define isdigit(x) sane_istest(x,GIT_DIGIT)
+ #define isalpha(x) sane_istest(x,GIT_ALPHA)
+ #define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
+-#define isspecial(x) sane_istest(x,GIT_SPECIAL)
++#define is_glob_special(x) sane_istest(x,GIT_GLOB_SPECIAL)
+ #define tolower(x) sane_case((unsigned char)(x), 0x20)
+ #define toupper(x) sane_case((unsigned char)(x), 0)
  
-+test-ctype$X: ctype.o
-+
- test-date$X: date.o ctype.o
+diff --git a/grep.c b/grep.c
+index 6485760..f9a4525 100644
+--- a/grep.c
++++ b/grep.c
+@@ -30,8 +30,9 @@ void append_grep_pattern(struct grep_opt *opt, const char *pat,
  
- test-delta$X: diff-delta.o patch-delta.o
-diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
-new file mode 100755
-index 0000000..680d7d6
---- /dev/null
-+++ b/t/t0070-fundamental.sh
-@@ -0,0 +1,15 @@
-+#!/bin/sh
-+
-+test_description='check that the most basic functions work
-+
-+
-+Verify wrappers and compatibility functions.
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'character classes (isspace, isalpha etc.)' '
-+	test-ctype
-+'
-+
-+test_done
+ static int isregexspecial(int c)
+ {
+-	return isspecial(c) || c == '$' || c == '(' || c == ')' || c == '+' ||
+-			       c == '.' || c == '^' || c == '{' || c == '|';
++	return c == '\0' || is_glob_special(c) ||
++		c == '$' || c == '(' || c == ')' || c == '+' ||
++		c == '.' || c == '^' || c == '{' || c == '|';
+ }
+ 
+ static int is_fixed(const char *s)
 diff --git a/test-ctype.c b/test-ctype.c
-new file mode 100644
-index 0000000..723eff4
---- /dev/null
+index 723eff4..d6425d5 100644
+--- a/test-ctype.c
 +++ b/test-ctype.c
-@@ -0,0 +1,66 @@
-+#include "cache.h"
-+
-+
-+static int test_isdigit(int c)
+@@ -21,6 +21,11 @@ static int test_isalnum(int c)
+ 	return isalnum(c);
+ }
+ 
++static int test_is_glob_special(int c)
 +{
-+	return isdigit(c);
++	return is_glob_special(c);
 +}
 +
-+static int test_isspace(int c)
-+{
-+	return isspace(c);
-+}
-+
-+static int test_isalpha(int c)
-+{
-+	return isalpha(c);
-+}
-+
-+static int test_isalnum(int c)
-+{
-+	return isalnum(c);
-+}
-+
-+#define DIGIT "0123456789"
-+#define LOWER "abcdefghijklmnopqrstuvwxyz"
-+#define UPPER "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-+
-+static const struct ctype_class {
-+	const char *name;
-+	int (*test_fn)(int);
-+	const char *members;
-+} classes[] = {
-+	{ "isdigit", test_isdigit, DIGIT },
-+	{ "isspace", test_isspace, " \n\r\t" },
-+	{ "isalpha", test_isalpha, LOWER UPPER },
-+	{ "isalnum", test_isalnum, LOWER UPPER DIGIT },
-+	{ NULL }
-+};
-+
-+static int test_class(const struct ctype_class *test)
-+{
-+	int i, rc = 0;
-+
-+	for (i = 0; i < 256; i++) {
-+		int expected = i ? !!strchr(test->members, i) : 0;
-+		int actual = test->test_fn(i);
-+
-+		if (actual != expected) {
-+			rc = 1;
-+			printf("%s classifies char %d (0x%02x) wrongly\n",
-+			       test->name, i, i);
-+		}
-+	}
-+	return rc;
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	const struct ctype_class *test;
-+	int rc = 0;
-+
-+	for (test = classes; test->name; test++)
-+		rc |= test_class(test);
-+
-+	return rc;
-+}
+ #define DIGIT "0123456789"
+ #define LOWER "abcdefghijklmnopqrstuvwxyz"
+ #define UPPER "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+@@ -34,6 +39,7 @@ static const struct ctype_class {
+ 	{ "isspace", test_isspace, " \n\r\t" },
+ 	{ "isalpha", test_isalpha, LOWER UPPER },
+ 	{ "isalnum", test_isalnum, LOWER UPPER DIGIT },
++	{ "is_glob_special", test_is_glob_special, "*?[\\" },
+ 	{ NULL }
+ };
+ 
 -- 
 1.6.1
