@@ -1,123 +1,91 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: git add --patch bug with split+edit?
-Date: Sat, 17 Jan 2009 03:37:43 +0200
-Organization: NOYB
-Message-ID: <833afihfvc.fsf@kalahari.s2.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] Adds a #!bash to the top of bash completions so
+	that editors can recognize, it as a bash script. Also adds a few
+	simple comments above commands that, take arguments. The comments
+	are meant to remind editors of potential, problems that
+Date: Fri, 16 Jan 2009 20:40:57 -0500
+Message-ID: <20090117014057.GA15331@coredump.intra.peff.net>
+References: <2faad3050901160706y297a98d4r35340e4811ca3d2b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 17 02:39:25 2009
+Content-Type: text/plain; charset=utf-8
+Cc: markus.heidelberg@web.de,
+	Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Ted Pavlic <ted@tedpavlic.com>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Baz <brian.ewins@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 17 02:42:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LO09i-0006h0-4e
-	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 02:39:22 +0100
+	id 1LO0Cf-0007Mn-U5
+	for gcvg-git-2@gmane.org; Sat, 17 Jan 2009 02:42:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755409AbZAQBh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jan 2009 20:37:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755406AbZAQBh5
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 20:37:57 -0500
-Received: from main.gmane.org ([80.91.229.2]:50950 "EHLO ciao.gmane.org"
+	id S1755531AbZAQBlB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jan 2009 20:41:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755510AbZAQBlA
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Jan 2009 20:41:00 -0500
+Received: from peff.net ([208.65.91.99]:56069 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755355AbZAQBh5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jan 2009 20:37:57 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LO08F-0000my-V3
-	for git@vger.kernel.org; Sat, 17 Jan 2009 01:37:51 +0000
-Received: from s2.org ([195.197.64.39])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 17 Jan 2009 01:37:51 +0000
-Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 17 Jan 2009 01:37:51 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: s2.org
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
-Cancel-Lock: sha1:rjv/Zces1sNSHmK5wXFjk4FU960=
+	id S1755102AbZAQBk7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jan 2009 20:40:59 -0500
+Received: (qmail 23475 invoked by uid 107); 17 Jan 2009 01:41:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 16 Jan 2009 20:41:02 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Jan 2009 20:40:57 -0500
+Content-Disposition: inline
+In-Reply-To: <2faad3050901160706y297a98d4r35340e4811ca3d2b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106008>
 
-Greetings,
+On Fri, Jan 16, 2009 at 03:06:34PM +0000, Baz wrote:
 
-If I have a hunk that adds three lines, I can edit the hunk and
-remove the last line but I can't split it in two, stage the first
-part, edit the second part and remove the last line.  An example:
+> > At the beginning I tried to fulfil this limit, but often it's not easy.
+> > So should it be adjusted to a slightly higher value in the documentation
+> > or even split into a recommended limit (e.g. 50) and a recommended
+> > absolute maximum (e.g. 76)? Hmm, the split wouldn't make sense, I think.
+> 
+> The 50 character limit is for the first line, try "git log
+> --pretty=oneline" and it should be obvious why.
 
-mkdir gittest
-cd gittest
-git init
-echo "baz\nbaz" > baz
-git add baz
-git commit -m baz baz
-rm baz
-echo "sur\nbaz\nbaz\njee\njee" > baz
-git add --patch
+I'm not sure it makes sense to make a workflow recommendation that the
+git project itself does not follow. Of 14590 non-merge commits in
+git.git, 6940 (nearly 50%) have subject lines longer than 50
+characters.
 
-Now say 's RET y RET e RET' and remove the second "+jee" line using
-your editor.  The output for me looks like this:
+In practice, is this a problem for people using git.git?
 
---8<-----------------------------------------------------------------
-diff --git a/baz b/baz
-index 1f55335..48a5f83 100644
---- a/baz
-+++ b/baz
-@@ -1,2 +1,5 @@
-+sur
- baz
- baz
-+jee
-+jee
-Stage this hunk [y/n/a/d/s/e/?]? s
-Split into 2 hunks.
-@@ -1,2 +1,3 @@
-+sur
- baz
- baz
-Stage this hunk [y/n/a/d/j/J/e/?]? y
-@@ -1,2 +2,4 @@
- baz
- baz
-+jee
-+jee
-Stage this hunk [y/n/a/d/K/e/?]? e
-Waiting for Emacs...
-error: patch failed: baz:1
-error: baz: patch does not apply
-Your edited hunk does not apply. Edit again (saying "no" discards!) [y/n]?
---8<-----------------------------------------------------------------
+Personally, I find --pretty=oneline unreadable because so much of the
+screen real estate is wasted on random characters that I don't care
+about. I find --pretty=tformat:'%h %s' much nicer (yes, --abbrev-commit
+works, too, but I find the '...' a pointless waste of space).
 
-What I also didn't expect is that if I answer 'n' to that last
-question, I get...
+For reference, here are the percentiles of subject lines in git.git
+longer than X:
 
-@@ -1,2 +1,3 @@
-+sur
- baz
- baz
-Stage this hunk [y/n/a/d/j/J/e/?]?
+ X | %
+50 | 48%
+60 | 24%
+65 | 14%
+70 |  8%
 
-...which is the first part of the splitted hunk that I already
-staged.  If I answer 'd', git status and git diff indicate that
-"+sur" is nevertheless staged.
+So it seems that quite a large chunk are between 50 and 65 characters.
+Which still leaves room for "Subject: " or 8 characters of hash at the
+beginning.
 
-Now, if instead of splitting the hunk and editing it, I edit the
-entire...
+> perl -ne '$lim = (50,0,72)[($.>3?3:$.)-1];
 
-@@ -1,2 +1,5 @@
-+sur
- baz
- baz
-+jee
-+jee
+Ugh. Would a little whitespace have killed you? ;P
 
-...hunk and remove the last "+jee" line, I get no error.
+> (I wish I'd had something like this when one of the devs here pushed a
+> commit with a 346-line message,
+> just listing what files he was changing...doh)
 
-I'm using git 1.6.1 on Linux.
+Well, yes. That's just insane.
 
--- 
-Hannu
+-Peff
