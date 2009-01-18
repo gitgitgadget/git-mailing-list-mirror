@@ -1,102 +1,113 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] Teach read_tree_recursive() how to traverse into 
- submodules
-Date: Sun, 18 Jan 2009 19:33:14 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901181929220.3586@pacific.mpi-cbg.de>
-References: <1232275999-14852-1-git-send-email-hjemli@gmail.com>  <1232275999-14852-2-git-send-email-hjemli@gmail.com>  <1232275999-14852-3-git-send-email-hjemli@gmail.com>  <alpine.DEB.1.00.0901181635290.3586@pacific.mpi-cbg.de>
- <8c5c35580901180945u17a69140vff2736765ee6073@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: John (zzz) Doe <john.doe@xz> (Comment)
+Date: Sun, 18 Jan 2009 10:50:12 -0800
+Message-ID: <7vmydoxxcr.fsf_-_@gitster.siamese.dyndns.org>
+References: <7vmydu3yy7.fsf@gitster.siamese.dyndns.org>
+ <20090115194926.GA6899@roro3.zxlink>
+ <7vd4eos3rp.fsf@gitster.siamese.dyndns.org>
+ <20090116080807.GA10792@landau.phys.spbu.ru>
+ <7vd4enacf2.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0901161253411.3586@pacific.mpi-cbg.de>
+ <20090118145429.GA27522@roro3.zxlink>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 18 19:34:47 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+X-From: git-owner@vger.kernel.org Sun Jan 18 19:51:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOcTu-0005Eu-Hj
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 19:34:46 +0100
+	id 1LOckL-0002hf-Ka
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 19:51:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934270AbZARSdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 13:33:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934208AbZARSdT
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 13:33:19 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45466 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934207AbZARSdS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 13:33:18 -0500
-Received: (qmail invoked by alias); 18 Jan 2009 18:33:14 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp004) with SMTP; 18 Jan 2009 19:33:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+A6ywRUV6A80G0Q0ZNh/zH5DZcxRiUlXan6BDFbb
-	mI+GvLtwxXsn38
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <8c5c35580901180945u17a69140vff2736765ee6073@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1751706AbZARSuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 13:50:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751500AbZARSuU
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 13:50:20 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45842 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751215AbZARSuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 13:50:20 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 81C9B91651;
+	Sun, 18 Jan 2009 13:50:18 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8181391650; Sun,
+ 18 Jan 2009 13:50:14 -0500 (EST)
+In-Reply-To: <20090118145429.GA27522@roro3.zxlink> (Kirill Smelkov's message
+ of "Sun, 18 Jan 2009 17:54:29 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D9EC981E-E590-11DD-88C5-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106257>
 
-Hi,
+Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
 
-On Sun, 18 Jan 2009, Lars Hjemli wrote:
+> On Fri, Jan 16, 2009 at 12:54:28PM +0100, Johannes Schindelin wrote:
+> ...
+>> > 	From: A U Thor (MonikeR) <a.u@thor.xz>
+>> 
+>> It is Philippe Bruhat (BooK), who sometimes forgets the closing 
+>> parenthesis, and who is listed in .mailmap without the moniker.
 
-> On Sun, Jan 18, 2009 at 16:48, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+It was not "forgets", but is an artifact that older mailinfo removed
+parenthesis incorrectly (see below).
+
+> So now I don't understand what to do.
 >
-> > On Sun, 18 Jan 2009, Lars Hjemli wrote:
-> >
-> >> +                  struct tree **subtree)
-> >> +{
-> >> +     unsigned char sha1[20];
-> >> +     int linked_odb = 0;
-> >> +     struct commit *commit;
-> >> +     void *buffer;
-> >> +     enum object_type type;
-> >> +     unsigned long size;
-> >> +
-> >> +     hashcpy(sha1, commit_sha1);
-> >> +     if (!add_gitlink_odb(path)) {
-> >> +             linked_odb = 1;
-> >> +             if (resolve_gitlink_ref(path, "HEAD", sha1))
-> >> +                     die("Unable to lookup HEAD in %s", path);
-> >> +     }
-> >
-> > Why would you want to continue if add_gitlink_odb() did not find a checked
-> > out submodule?
-> >
-> > Seems you want to fall back to look in the superproject's object database.
-> > But I think that is wrong, as I have a superproject with many platform
-> > dependent submodules, only one of which is checked out, and for
-> > convenience, the submodules all live in the superproject's repository.
-> 
-> Actually, I want this to work for bare repositories by specifying the
-> submodule odbs in the alternates file. So if the current submodule odb
-> wasn't found my plan was to check if the commit object was accessible
-> anyways but don't die() if it wasn't.
+> From one hand RFC822 says '(...)' is a comment, and from the other hand,
+> we have a use case where one guy wants this to stay.
+> ...
+> commit 49bebfbe18dac296e5e246884bd98c1f90be9676
+> Author: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+> Date:   Tue Jan 13 01:21:04 2009 +0300
+>
+>     mailinfo: more smarter removal of rfc822 comments from 'From'
+>     
+>     As described in RFC822 (3.4.3 COMMENTS, and  A.1.4.), comments, as e.g.
+>     
+>         John (zzz) Doe <john.doe@xz> (Comment)
+>     
+>     should "NOT [be] included in the destination mailbox"
 
-Please make that an explicit option (cannot think of a good name, though), 
-otherwise I will not be able to use your feature.  Making it the default 
-would be inconsistent with the rest of our submodules framework.
+The above quote from the RFC is irrelevant.  Note that it is only about
+how you extract the e-mail address, discarding everything else.
 
-> >> +     commit = lookup_commit(sha1);
-> >> +     if (!commit)
-> >> +             die("traverse_gitlink(): internal error");
-> >
-> > s/internal error/could not access commit '%s' of submodule '%s'",
-> >                        sha1_to_hex(sha1), path);/
-> 
-> Ok (I belive this codepath is virtually impossible to hit, hence the
-> "internal error", but I could of course be mistaken).
+What mailinfo wants to do is to separate the human-readable name and the
+e-mail address, and we want to use _both_ results from it.
 
-You make it a function that is exported to other parts of Git in cache.h.  
-So you might just as well expect it to be used by other parts at some 
-stage.
+We separate a few example From: lines like this:
 
-Ciao,
-Dscho
+	Kirill Smelkov <kirr@smelkov.xz>
+==>	AUTHOR_EMAIL="kirr@smelkov.xz" AUTHOR_NAME="Kirill Smelkov"
+
+	kirr@smelkov.xz (Kirill Smelkov)
+==>	AUTHOR_EMAIL="kirr@smelkov.xz" AUTHOR_NAME="Kirill Smelkov"
+
+Traditionally, the way people spelled their name on From: line has been
+either one of the above form.  Typically comment form (i.e. the second
+one) adds the name at the end, while "Name <addr>" form has the name at
+the front.  But I do not think RFC requires that, primarily because it is
+all about discarding non-address part to find the e-mail address aka
+"destination mailbox".  It does not specify how humans should interpret
+the human readable name and the comment.
+
+Now, why is the name not AUTHOR_NAME="(Kirill Smelkov)" in the latter
+form?
+
+It is just common sense transformation.  Otherwise it looks simply ugly,
+and it is obvious that the parentheses is not part of the name of the
+person who used "kirr@smelkov.xz (Kirill Smelkov)" on his From: line.
+
+So we can separate "John (zzz) Doe <john.doe@xz> (Comment)" into:
+
+	AUTHOR_EMAIL=john.doe@xz
+        AUTHOR_NAME="John (zzz) Doe (Comment)"
+
+and leave it like so, I think.
