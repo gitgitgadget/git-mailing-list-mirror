@@ -1,66 +1,113 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] git-am: Make it easier to see which patch failed
-Date: Sun, 18 Jan 2009 12:07:11 -0500
-Message-ID: <20090118170711.GA17055@coredump.intra.peff.net>
-References: <636ecac0901160518o16706bbia9acaf09fdf92946@mail.gmail.com> <alpine.DEB.1.00.0901161513400.3586@pacific.mpi-cbg.de> <636ecac0901160634r586c72a0r9bb63c6f019f5bff@mail.gmail.com> <7vhc3x1874.fsf@gitster.siamese.dyndns.org> <20090118094113.GE11992@leksak.fem-net> <20090118153928.GA16664@coredump.intra.peff.net> <alpine.DEB.1.00.0901181711090.3586@pacific.mpi-cbg.de>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 1/2] color: make it easier for non-config to parse color
+   specs
+Date: Sun, 18 Jan 2009 18:10:36 +0100
+Message-ID: <4973628C.8080501@lsrfire.ath.cx>
+References: <20090117152108.GA24899@coredump.intra.peff.net> <20090117153229.GA27071@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stephan Beyer <s-beyer@gmx.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonas =?utf-8?Q?Flod=C3=A9n?= <jonas@floden.nu>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Markus Heidelberg <markus.heidelberg@web.de>,
 	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jan 18 18:08:54 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jan 18 18:12:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOb8k-0002VS-CV
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 18:08:50 +0100
+	id 1LObC4-0003Ze-R2
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 18:12:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751862AbZARRHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 12:07:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759455AbZARRHP
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 12:07:15 -0500
-Received: from peff.net ([208.65.91.99]:53287 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751208AbZARRHN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 12:07:13 -0500
-Received: (qmail 21895 invoked by uid 107); 18 Jan 2009 17:07:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 18 Jan 2009 12:07:17 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Jan 2009 12:07:11 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901181711090.3586@pacific.mpi-cbg.de>
+	id S1759925AbZARRKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 12:10:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759705AbZARRKx
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 12:10:53 -0500
+Received: from india601.server4you.de ([85.25.151.105]:43986 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758277AbZARRKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 12:10:52 -0500
+Received: from [10.0.1.101] (p57B7E094.dip.t-dialin.net [87.183.224.148])
+	by india601.server4you.de (Postfix) with ESMTPSA id 2C11D2F8046;
+	Sun, 18 Jan 2009 18:10:50 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <20090117153229.GA27071@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106244>
 
-On Sun, Jan 18, 2009 at 05:17:43PM +0100, Johannes Schindelin wrote:
-
-> > Yes, I'm surprised Junio doesn't remember the mass conversions we 
-> > already had to do (4b7cc26a and 293623ed). But looking at the date, I 
-> > guess it _has_ been a year and a half. :)
+Jeff King schrieb:
+> We have very featureful color-parsing routines which are
+> used for color.diff.* and other options. Let's make it
+> easier to use those routines from other parts of the code.
 > 
-> Hey, be nice to Junio.  Have you seen the amount of mails on this list 
-> recently?  I think Junio's the only one really reading all of them; even 
-> if you were right, he would be entitled to a nicer reminder.
-
-I didn't mean to be mean. On the contrary, I was surprised because _he_
-usually is the one reminding _me_ about such fixes. I guess Junio is
-human, after all. :)
-
-> But you are wrong.  And Stephan is wrong, too.
+> This patch adds a color_parse_mem() helper function which
+> takes a length-bounded string instead of a NUL-terminated
+> one. While the helper is only a few lines long, it is nice
+> to abstract this out so that:
 > 
-> The name "FIRSTLINE" suggests that it is indeed a first line, and 
-> consequently cannot contain a newline.
+>  - callers don't forget to free() the temporary buffer
+> 
+>  - right now, it is implemented in terms of color_parse().
+>    But it would be more efficient to reverse this and
+>    implement color_parse in terms of color_parse_mem.
 
-It is not "this is a problem because it might contain a newline" but "this
-is a problem because it might contain an escape sequence, _an example_
-of which is a \n newline." So the question is whether you can guarantee
-that $FIRSTLINE does not contain a backslash. Which I don't think is the
-case here.
+Thusly?
 
--Peff
+diff --git a/color.c b/color.c
+index fc0b72a..14eac93 100644
+--- a/color.c
++++ b/color.c
+@@ -41,6 +41,11 @@ static int parse_attr(const char *name, int len)
+ 
+ void color_parse(const char *value, const char *var, char *dst)
+ {
++	color_parse_mem(value, strlen(value), var, dst);
++}
++
++void color_parse_mem(const char *value, int len, const char *var, char *dst)
++{
+ 	const char *ptr = value;
+ 	int attr = -1;
+ 	int fg = -2;
+@@ -52,18 +57,22 @@ void color_parse(const char *value, const char *var, char *dst)
+ 	}
+ 
+ 	/* [fg [bg]] [attr] */
+-	while (*ptr) {
++	while (len > 0) {
+ 		const char *word = ptr;
+-		int val, len = 0;
++		int val, wordlen = 0;
+ 
+-		while (word[len] && !isspace(word[len]))
+-			len++;
++		while (len > 0 && !isspace(word[wordlen])) {
++			wordlen++;
++			len--;
++		}
+ 
+-		ptr = word + len;
+-		while (*ptr && isspace(*ptr))
++		ptr = word + wordlen;
++		while (len > 0 && isspace(*ptr)) {
+ 			ptr++;
++			len--;
++		}
+ 
+-		val = parse_color(word, len);
++		val = parse_color(word, wordlen);
+ 		if (val >= -1) {
+ 			if (fg == -2) {
+ 				fg = val;
+@@ -75,7 +84,7 @@ void color_parse(const char *value, const char *var, char *dst)
+ 			}
+ 			goto bad;
+ 		}
+-		val = parse_attr(word, len);
++		val = parse_attr(word, wordlen);
+ 		if (val < 0 || attr != -1)
+ 			goto bad;
+ 		attr = val;
