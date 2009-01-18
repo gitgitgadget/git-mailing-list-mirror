@@ -1,85 +1,117 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: easy way to make tracking branches?
-Date: Sun, 18 Jan 2009 11:55:30 +0100
-Message-ID: <20090118105530.GG11992@leksak.fem-net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 18 11:57:11 2009
+From: "Kirill A. Korinskiy" <catap@catap.ru>
+Subject: [PATCH] http-push: support full URI in handle_remote_ls_ctx()
+Date: Sun, 18 Jan 2009 14:28:36 +0300
+Message-ID: <1232278116-6631-1-git-send-email-catap@catap.ru>
+Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 18 12:31:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOVKz-0000Qx-R4
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 11:57:06 +0100
+	id 1LOVsV-000068-Of
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 12:31:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763772AbZARKzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 05:55:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763485AbZARKzm
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 05:55:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37150 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1762002AbZARKzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 05:55:42 -0500
-Received: (qmail invoked by alias); 18 Jan 2009 10:55:39 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp037) with SMTP; 18 Jan 2009 11:55:39 +0100
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+vstpnxkavxjPQb3ghEymveXl7PuYe8vimXyJ9mh
-	D/AhbAt6kbcN5r
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1LOVJS-0004GN-NR
-	for git@vger.kernel.org; Sun, 18 Jan 2009 11:55:30 +0100
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1764535AbZARLaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 06:30:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762883AbZARLaT
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 06:30:19 -0500
+Received: from void.catap.ru ([213.248.54.140]:54761 "EHLO void.catap.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764345AbZARLaS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 06:30:18 -0500
+Received: (qmail 31885 invoked from network); 18 Jan 2009 11:30:14 -0000
+Received: from catap.dialup.corbina.ru (HELO mx3.catap.ru) (85.21.143.245)
+  by void.catap.ru with ESMTPS (AES256-SHA encrypted); 18 Jan 2009 11:30:14 -0000
+Received: from localhost
+	([127.0.0.1] helo=satellite.home.catap.ru ident=catap)
+	by mx3.catap.ru with esmtp (Exim 4.63)
+	(envelope-from <catap@catap.ru>)
+	id 1LOVqy-0002DA-9n; Sun, 18 Jan 2009 14:30:08 +0300
+Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
+	(envelope-from <catap@satellite.home.catap.ru>)
+	id 1LOVpU-0001jN-KJ; Sun, 18 Jan 2009 14:28:36 +0300
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106171>
 
-Hi,
+The program calls remote_ls() to get list of files from the server
+over HTTP; handle_remote_ls_ctx() is used to parse its response to
+populate "struct remote_ls_ctx" that is returned from remote_ls().
 
-assume I have a branch "foo" in my local repo, a remote "srv", and
-a branch "bar" on srv (i.e. generated with "git push srv foo:bar").
+The handle_remote_ls_ctx() function assumed that the server returns a
+local path in href field, but RFC 4918 (14.7) demand of support full
+URI (e.g. "http://localhost:8080/repo.git").
 
-Now I want to make "foo" a tracking branch for "bar".
-I do:
+This resulted in push failure (e.g. git-http-push issues a PROPFIND
+request to "/repo.git/alhost:8080/repo.git/refs/" to the server).
 
-	git config branch.foo.remote srv
-	git config branch.foo.merge refs/heads/bar
+Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
+---
+ http-push.c |   24 ++++++++++++++++++------
+ 1 files changed, 18 insertions(+), 6 deletions(-)
 
-And to get a comfortable git-push, I do:
-
-	git config --add remote.srv.push foo:bar
-
-
-Because I do not always remember the sequence, I have to look it
-up or I just do
-
-	git checkout -b foo2 srv/bar
-	git branch -d foo
-	git branch -m foo
-
-which is suboptimal because deleting foo can remove some
-other settings for the branch, e.g. mergeoptions.
-
-
-So I wonder if there is some easier-to-remind way to let my branch
-foo track my remote branch bar, or, if not, could it be useful to
-have something like
-
-	git push --make-tracking srv foo:bar
-	# push foo -> bar and let foo track bar...
-	# if foo already tracks bar, ignore the option
-
-or should I just write a tiny script for me and shut up? :-)
-
-
-Regards,
-  Stephan
-
+diff --git a/http-push.c b/http-push.c
+index 7c6460919bf3eba10c46cede11ffdd9c53fd2dd2..2cb925a9ad857b6d79858d5187f14072167282e7 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -87,6 +87,7 @@ static struct object_list *objects;
+ struct repo
+ {
+ 	char *url;
++	char *path;
+ 	int path_len;
+ 	int has_info_refs;
+ 	int can_update_info_refs;
+@@ -1424,9 +1425,18 @@ static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
+ 				ls->userFunc(ls);
+ 			}
+ 		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
+-			ls->dentry_name = xmalloc(strlen(ctx->cdata) -
++			char *path = ctx->cdata;
++			if (!strcmp(ctx->cdata, "http://")) {
++				path = strchr(path + sizeof("http://") - 1, '/');
++			} else if (!strcmp(ctx->cdata, "https://")) {
++				path = strchr(path + sizeof("https://") - 1, '/');
++			}
++
++			path += remote->path_len;
++
++			ls->dentry_name = xmalloc(strlen(path) -
+ 						  remote->path_len + 1);
+-			strcpy(ls->dentry_name, ctx->cdata + remote->path_len);
++			strcpy(ls->dentry_name, path + remote->path_len);
+ 		} else if (!strcmp(ctx->name, DAV_PROPFIND_COLLECTION)) {
+ 			ls->dentry_flags |= IS_DIR;
+ 		}
+@@ -2206,10 +2216,11 @@ int main(int argc, char **argv)
+ 		if (!remote->url) {
+ 			char *path = strstr(arg, "//");
+ 			remote->url = arg;
++			remote->path_len = strlen(arg);
+ 			if (path) {
+-				path = strchr(path+2, '/');
+-				if (path)
+-					remote->path_len = strlen(path);
++				remote->path = strchr(path+2, '/');
++				if (remote->path)
++					remote->path_len = strlen(remote->path);
+ 			}
+ 			continue;
+ 		}
+@@ -2238,8 +2249,9 @@ int main(int argc, char **argv)
+ 		rewritten_url = xmalloc(strlen(remote->url)+2);
+ 		strcpy(rewritten_url, remote->url);
+ 		strcat(rewritten_url, "/");
++		remote->path = rewritten_url + (remote->path - remote->url);
++		remote->path_len++;
+ 		remote->url = rewritten_url;
+-		++remote->path_len;
+ 	}
+ 
+ 	/* Verify DAV compliance/lock support */
 -- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+1.5.6.5
