@@ -1,145 +1,74 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH 2/2] move the color variables to color.c
-Date: Sun, 18 Jan 2009 21:39:12 +0100
-Message-ID: <200901182139.13995.markus.heidelberg@web.de>
-References: <20090117153846.GB27071@coredump.intra.peff.net> <20090118195342.GA612@coredump.intra.peff.net> <200901182137.16562.markus.heidelberg@web.de>
-Reply-To: markus.heidelberg@web.de
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] interpret_nth_last_branch(): avoid traversing the reflogs
+ twice
+Date: Sun, 18 Jan 2009 21:59:40 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901182152010.3586@pacific.mpi-cbg.de>
+References: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org> <1232163011-20088-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0901170646560.3586@pacific.mpi-cbg.de> <200901171438.22504.trast@student.ethz.ch> <alpine.DEB.1.00.0901171602340.3586@pacific.mpi-cbg.de>
+ <7vljt97nld.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901172028470.3586@pacific.mpi-cbg.de> <7vmydp5tqj.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901180201070.3586@pacific.mpi-cbg.de> <7vprilyt1w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: =?utf-8?q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jan 18 21:39:53 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 18 22:01:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOeQw-0001P0-MR
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 21:39:51 +0100
+	id 1LOeln-0007Zs-N6
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 22:01:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754795AbZARUi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 15:38:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754700AbZARUi1
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 15:38:27 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:53828 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754785AbZARUi0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 15:38:26 -0500
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 2E9B2FBEA112;
-	Sun, 18 Jan 2009 21:38:25 +0100 (CET)
-Received: from [89.59.120.98] (helo=pluto)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LOePZ-0005uA-00; Sun, 18 Jan 2009 21:38:25 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <200901182137.16562.markus.heidelberg@web.de>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX18qNLiaqlIwJQCSiaH7P7AAzoRqiLitUDkUVwLQ
-	qKmYQA7OPG6qC2viWR55GTbfit79W08E6V4UbpvO/0ecZVRKra
-	/AL9HzH19TZQOPqHR54A==
+	id S1756811AbZARU7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 15:59:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756205AbZARU7l
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 15:59:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46454 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754800AbZARU7k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 15:59:40 -0500
+Received: (qmail invoked by alias); 18 Jan 2009 20:59:38 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp026) with SMTP; 18 Jan 2009 21:59:38 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/bMVpX4WDbzUeYTtLRnhpuyKdZrIilS6E0avG7ny
+	SnkIvWNsKk4nJa
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vprilyt1w.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106279>
 
-To be consistent with where the branch color variable is located now,
-move the variables for diff and status color to the same place.
+Hi,
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
----
- color.c     |    4 ++--
- color.h     |    2 ++
- diff.c      |    1 -
- diff.h      |    1 -
- wt-status.c |    1 -
- wt-status.h |    1 -
- 6 files changed, 4 insertions(+), 6 deletions(-)
+On Sat, 17 Jan 2009, Junio C Hamano wrote:
 
-diff --git a/color.c b/color.c
-index 7a8bf6e..b23c39c 100644
---- a/color.c
-+++ b/color.c
-@@ -1,12 +1,12 @@
- #include "cache.h"
- #include "color.h"
--#include "diff.h"
--#include "wt-status.h"
- 
- #define COLOR_RESET "\033[m"
- 
- int git_use_color_default = 0;
- int branch_use_color = -1;
-+int diff_use_color_default = -1;
-+int wt_status_use_color = -1;
- 
- static int parse_color(const char *name, int len)
- {
-diff --git a/color.h b/color.h
-index 6924848..3b47d99 100644
---- a/color.h
-+++ b/color.h
-@@ -10,6 +10,8 @@
- extern int git_use_color_default;
- 
- extern int branch_use_color;
-+extern int diff_use_color_default;
-+extern int wt_status_use_color;
- 
- /*
-  * Use this instead of git_default_config if you need the value of color.ui.
-diff --git a/diff.c b/diff.c
-index d235482..4bd068c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -22,7 +22,6 @@
- static int diff_detect_rename_default;
- static int diff_rename_limit_default = 200;
- static int diff_suppress_blank_empty;
--int diff_use_color_default = -1;
- static const char *external_diff_cmd_cfg;
- int diff_auto_refresh_index = 1;
- static int diff_mnemonic_prefix;
-diff --git a/diff.h b/diff.h
-index 4d5a327..f2c9984 100644
---- a/diff.h
-+++ b/diff.h
-@@ -188,7 +188,6 @@ extern void diff_unmerge(struct diff_options *,
- 
- extern int git_diff_basic_config(const char *var, const char *value, void *cb);
- extern int git_diff_ui_config(const char *var, const char *value, void *cb);
--extern int diff_use_color_default;
- extern void diff_setup(struct diff_options *);
- extern int diff_opt_parse(struct diff_options *, const char **, int);
- extern int diff_setup_done(struct diff_options *);
-diff --git a/wt-status.c b/wt-status.c
-index 96ff2f8..5c3742b 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -12,7 +12,6 @@
- #include "remote.h"
- 
- int wt_status_relative_paths = 1;
--int wt_status_use_color = -1;
- int wt_status_submodule_summary;
- static char wt_status_colors[][COLOR_MAXLEN] = {
- 	"",         /* WT_STATUS_HEADER: normal */
-diff --git a/wt-status.h b/wt-status.h
-index 78add09..6258fd0 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -36,7 +36,6 @@ struct wt_status {
- };
- 
- int git_status_config(const char *var, const char *value, void *cb);
--extern int wt_status_use_color;
- extern int wt_status_relative_paths;
- void wt_status_prepare(struct wt_status *s);
- void wt_status_print(struct wt_status *s);
--- 
-1.6.1.208.g3a5f4
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Note: these are the memory requirements after some really unrealistically 
+> > high activity, and the memory is free()d during parameter parsing.
+> >
+> > A much more realistical expectation would be to switch branches maybe 20 
+> > times a day, which would amount to something like 36 kilobyte.  And again, 
+> > they are free()d before the action really starts.
+> 
+> My HEAD reflog is 7MB long with 39000 entries, and among them, 13100
+> entries have "checkout: moving ".
+> 
+> I know I will never want to switch back to the 10000th from the last 
+> branch.  I am quite sure that I would forget which branch I was on after 
+> switching branches three or four times (hence my original hardcoded 
+> limitation of 10 which "should be plenty").  When I know I only have to 
+> keep track of 10 entries, having to keep track of 13100 entries, even if 
+> it is 36kB (it would actually be 260kB in my case) feels there is 
+> something wrong in the design.
+
+Hrm.  So let's leave it as a two-pass thing?
+
+Ciao,
+Dscho
