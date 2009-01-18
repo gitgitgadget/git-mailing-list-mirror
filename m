@@ -1,100 +1,131 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] bash: offer to show (un)staged changes
-Date: Sun, 18 Jan 2009 01:56:24 +0100
-Message-ID: <1232240184-10906-1-git-send-email-trast@student.ethz.ch>
+Subject: [PATCH next resend] bash completion: refactor diff options
+Date: Sun, 18 Jan 2009 02:03:23 +0100
+Message-ID: <1232240603-11729-1-git-send-email-trast@student.ethz.ch>
+References: <1231679663-31907-1-git-send-email-trast@student.ethz.ch>
 Cc: Junio C Hamano <junio@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 18 01:57:42 2009
+X-From: git-owner@vger.kernel.org Sun Jan 18 02:10:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOLyt-0000kX-7D
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 01:57:39 +0100
+	id 1LOMB9-0003hP-GE
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 02:10:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757501AbZARA4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Jan 2009 19:56:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757354AbZARA4P
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 19:56:15 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:27061 "EHLO xsmtp1.ethz.ch"
+	id S1753071AbZARBDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Jan 2009 20:03:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753290AbZARBDP
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 20:03:15 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:49984 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757271AbZARA4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jan 2009 19:56:14 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 18 Jan 2009 01:56:13 +0100
+	id S1752675AbZARBDO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jan 2009 20:03:14 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 18 Jan 2009 02:03:12 +0100
 Received: from localhost.localdomain ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 18 Jan 2009 01:56:13 +0100
+	 Sun, 18 Jan 2009 02:03:12 +0100
 X-Mailer: git-send-email 1.6.1.315.g92577
-X-OriginalArrivalTime: 18 Jan 2009 00:56:13.0370 (UTC) FILETIME=[8F5C69A0:01C97907]
+In-Reply-To: <1231679663-31907-1-git-send-email-trast@student.ethz.ch>
+X-OriginalArrivalTime: 18 Jan 2009 01:03:12.0141 (UTC) FILETIME=[88F7CBD0:01C97908]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106123>
 
-Add a bit of code to __git_ps1 that lets it append '*' to the branch
-name if there are any uncommitted changes, and '+' if there are any
-staged changes.
-
-Since this is a rather expensive operation and will force a lot of
-data into the cache whenever you first enter a repository, you have to
-enable it manually by setting GIT_PS1_EXPENSIVE to something nonempty.
+diff, log and show all take the same diff options.  Refactor them from
+__git_diff and __git_log into a variable, and complete them in
+__git_show too.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+
 ---
 
-I came up with this after sending two incomplete patches on the same
-night, and really like it.  Perhaps others might find it useful.
-
-Of course it would be brilliant if there were a way to ask the kernel
-if a certain directory is cached, but I couldn't find one, let alone
-one accessible from the shell.
+Any news on this?
 
 
- contrib/completion/git-completion.bash |   21 +++++++++++++++++++--
- 1 files changed, 19 insertions(+), 2 deletions(-)
+ contrib/completion/git-completion.bash |   38 ++++++++++++++++++-------------
+ 1 files changed, 22 insertions(+), 16 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index f8b845a..36ea528 100755
+index 70a6b44..40e3a14 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -34,6 +34,10 @@
- #       are currently in a git repository.  The %s token will be
- #       the name of the current branch.
- #
-+#	In addition, if you set GIT_PS1_EXPENSIVE to a nonempty value,
-+#	unstaged (*) and staged (+) changes will be shown next to the
-+#	branch name.
-+#
- # To submit patches:
- #
- #    *) Read Documentation/SubmittingPatches
-@@ -116,10 +120,23 @@ __git_ps1 ()
- 			fi
- 		fi
- 
-+		local w
-+		local i
-+
-+		if test ! -z "$GIT_PS1_EXPENSIVE"; then
-+			git update-index --refresh >/dev/null 2>&1 || w="*"
-+			if git rev-parse --quiet --verify HEAD >/dev/null; then
-+				git diff-index --cached --quiet \
-+					--ignore-submodules HEAD -- || i="+"
-+			else
-+				i="#"
-+			fi
-+		fi
-+
- 		if [ -n "${1-}" ]; then
--			printf "$1" "${b##refs/heads/}$r"
-+			printf "$1" "${b##refs/heads/}$w$i$r"
- 		else
--			printf " (%s)" "${b##refs/heads/}$r"
-+			printf " (%s)" "${b##refs/heads/}$w$i$r"
- 		fi
- 	fi
+@@ -774,25 +774,30 @@ _git_describe ()
+ 	__gitcomp "$(__git_refs)"
  }
+ 
+-_git_diff ()
+-{
+-	__git_has_doubledash && return
+-
+-	local cur="${COMP_WORDS[COMP_CWORD]}"
+-	case "$cur" in
+-	--*)
+-		__gitcomp "--cached --stat --numstat --shortstat --summary
++__git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--patch-with-stat --name-only --name-status --color
+ 			--no-color --color-words --no-renames --check
+ 			--full-index --binary --abbrev --diff-filter=
+-			--find-copies-harder --pickaxe-all --pickaxe-regex
++			--find-copies-harder
+ 			--text --ignore-space-at-eol --ignore-space-change
+ 			--ignore-all-space --exit-code --quiet --ext-diff
+ 			--no-ext-diff
+ 			--no-prefix --src-prefix= --dst-prefix=
+-			--base --ours --theirs
+ 			--inter-hunk-context=
+ 			--patience
++			--raw
++"
++
++_git_diff ()
++{
++	__git_has_doubledash && return
++
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "$cur" in
++	--*)
++		__gitcomp "--cached --pickaxe-all --pickaxe-regex
++			--base --ours --theirs
++			$__git_diff_common_options
+ 			"
+ 		return
+ 		;;
+@@ -975,17 +980,16 @@ _git_log ()
+ 			--relative-date --date=
+ 			--author= --committer= --grep=
+ 			--all-match
+-			--pretty= --name-status --name-only --raw
++			--pretty=
+ 			--not --all
+ 			--left-right --cherry-pick
+ 			--graph
+-			--stat --numstat --shortstat
+-			--decorate --diff-filter=
+-			--color-words --walk-reflogs
++			--decorate
++			--walk-reflogs
+ 			--parents --children --full-history
+ 			--merge
+ 			--inter-hunk-context=
+-			--patience
++			$__git_diff_common_options
+ 			"
+ 		return
+ 		;;
+@@ -1490,7 +1494,9 @@ _git_show ()
+ 		return
+ 		;;
+ 	--*)
+-		__gitcomp "--pretty="
++		__gitcomp "--pretty=
++			$__git_diff_common_options
++			"
+ 		return
+ 		;;
+ 	esac
 -- 
-tg: (7bbd8d6..) t/ps1-dirty-state (depends on: origin/master)
+tg: (7ff1443..) t/bash-complete-show (depends on: origin/next)
