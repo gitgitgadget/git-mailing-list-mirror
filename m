@@ -1,71 +1,87 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: is gitosis secure?
-Date: Sun, 18 Jan 2009 14:25:04 +0100
-Message-ID: <87skngoifj.fsf@mid.deneb.enyo.de>
-References: <200812090956.48613.thomas@koch.ro>
-	<1228813453.28186.73.camel@maia.lan>
-	<873afgsul8.fsf@mid.deneb.enyo.de>
-	<200901180650.06605.bss@iguanasuicide.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] http-push: remove MOVE step after PUT when sending
+ objects to server
+Date: Sun, 18 Jan 2009 14:32:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901181425420.3586@pacific.mpi-cbg.de>
+References: <be6fef0d0901171224y35c3d95cn2d38639ac03c3b8f@mail.gmail.com>  <7viqod5thi.fsf@gitster.siamese.dyndns.org> <be6fef0d0901171919ub28dda7ref6443abec3627aa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-X-From: git-owner@vger.kernel.org Sun Jan 18 14:26:41 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 18 14:34:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOXfk-0005q0-Ja
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 14:26:41 +0100
+	id 1LOXn5-0007lT-An
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 14:34:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757302AbZARNZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 08:25:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756858AbZARNZI
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 08:25:08 -0500
-Received: from mail.enyo.de ([212.9.189.167]:49495 "EHLO mail.enyo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756830AbZARNZH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 08:25:07 -0500
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1LOXeD-0002Jm-By; Sun, 18 Jan 2009 14:25:05 +0100
-Received: from fw by deneb.enyo.de with local (Exim 4.69)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1LOXeC-0002lj-US; Sun, 18 Jan 2009 14:25:04 +0100
-In-Reply-To: <200901180650.06605.bss@iguanasuicide.net> (Boyd Stephen Smith,
-	Jr.'s message of "Sun, 18 Jan 2009 06:50:06 -0600")
+	id S1756991AbZARNc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 08:32:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756671AbZARNc3
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 08:32:29 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54234 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756114AbZARNc2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 08:32:28 -0500
+Received: (qmail invoked by alias); 18 Jan 2009 13:32:25 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp071) with SMTP; 18 Jan 2009 14:32:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+KRjQrHMmK0ppBjhNDYnCnmFrscaL40cGlIRl6/u
+	Ndm6yQs3Vk9Mk7
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <be6fef0d0901171919ub28dda7ref6443abec3627aa@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106186>
 
-* Boyd Stephen Smith, Jr.:
+Hi,
 
-> On Sunday 18 January 2009, Florian Weimer <fw@deneb.enyo.de> wrote 
-> about 'Re: is gitosis secure?':
->>* Sam Vilain:
->>> Restricted unix shells are a technology which has been proven secure
->>> for decades now.
->>Huh?  Things like scponly and rssh had their share of bugs, so I can
->>see that there is some concern.  (And restricted shells used to be
->>circumvented by things like Netscape's print dialog.)
+On Sun, 18 Jan 2009, Ray Chuan wrote:
+
+> On Sun, Jan 18, 2009 at 12:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> From my understanding, a restricted shell is a difficult thing to escape 
-> from unless a user is able to run binaries that they have written.  FWIW, 
-> I don't remember sftp or scponly having this particular vulnerability.
+> > "Ray Chuan" <rctay89@gmail.com> writes:
+> >
+> >> A concern raised was repository corruption in the event of failure 
+> >> during PUT. "put && move" won't afford any more protection than using 
+> >> simply "put", since info/refs is not updated if a PUT fails, so there 
+> >> is no cause for concern.
+> >
+> > That's a completely bogus reasoning.  Normal operation inside the 
+> > repository that was pushed into won't look at info/refs at all.
+> 
+> i mentioned this "repository corruption" issue as it was raised
+> previously by Johannes (towards the bottom):
+> 
+>   http://article.gmane.org/gmane.comp.version-control.git/106031
 
-scponly issues due to interpretation conflicts:
+,.. and Junio just raised a new concern.  The repository as it is on the 
+server could very well be served by other means, i.e. git:// and rsync://, 
+and there could be cron jobs and interactive Git sessions trying to work 
+with it.
 
-CVE-2002-1469   scponly does not properly verify the path when finding the (1) scp or ...
-CVE-2004-1162   The unison command in scponly before 4.0 does not properly restrict ...
-CVE-2005-4533   Argument injection vulnerability in scponlyc in scponly 4.1 and ...
-CVE-2007-6350   scponly 4.6 and earlier allows remote authenticated users to bypass ...
-CVE-2007-6415   scponly 4.6 and earlier allows remote authenticated users to bypass ...
+The point is: the repository inside the document root of the web server is 
+still a valid repository.
 
-rssh has fewer such issues, only CVE-2004-1161 seems to be intrinsic
-to the program's purpose (but some of the other issues might be used
-as circumvention devices, too).
+And the assumption is that whenever you have a file that looks like a 
+valid object/pack inside a valid repository, that it does not need 
+replacing.
 
-That's why I think it's not totally outlandish to assume that
-restricted shells are usually not very helpful for
-compartmentalization purposes.
+So even when optimizing the uncommon (HTTP push is 2nd class citizen), we 
+have to keep the common workflow intact (1st class citizens _are_ push by 
+file system, ssh or git://).
+
+Which unfortunately means that put && move must stay.
+
+The same reasoning explains why http-push has to ignore the info/refs file 
+when looking for common refs, BTW.
+
+Ciao,
+Dscho
