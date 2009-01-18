@@ -1,70 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] http-push: remove MOVE step after PUT when sending
- objects to server
-Date: Sun, 18 Jan 2009 12:05:21 -0800
-Message-ID: <7vocy4wfb2.fsf@gitster.siamese.dyndns.org>
-References: <be6fef0d0901171224y35c3d95cn2d38639ac03c3b8f@mail.gmail.com>
- <7viqod5thi.fsf@gitster.siamese.dyndns.org>
- <be6fef0d0901171919ub28dda7ref6443abec3627aa@mail.gmail.com>
- <alpine.DEB.1.00.0901181425420.3586@pacific.mpi-cbg.de>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 8/8] Define a basic merge API, and a two-way tree merge strategy
+Date: Sun, 18 Jan 2009 21:21:01 +0100
+Message-ID: <200901182121.01469.robin.rosenberg.lists@dewire.com>
+References: <1223932217-4771-1-git-send-email-spearce@spearce.org> <20090115210936.GI10179@spearce.org> <f299b4f30901171116y216835c9jc11df2d424ee0377@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jan 18 21:06:58 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: tomi.pakarinen@iki.fi
+X-From: git-owner@vger.kernel.org Sun Jan 18 21:22:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOdv6-0000kE-8j
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 21:06:56 +0100
+	id 1LOeAC-0005J2-J4
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 21:22:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754133AbZARUFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 15:05:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754120AbZARUFa
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 15:05:30 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36569 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754119AbZARUFa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 15:05:30 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7E4E01CCD9;
-	Sun, 18 Jan 2009 15:05:28 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0F38C1CCDD; Sun,
- 18 Jan 2009 15:05:23 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0901181425420.3586@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Sun, 18 Jan 2009 14:32:30 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5A15B142-E59B-11DD-BFBF-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1754564AbZARUVJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jan 2009 15:21:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754336AbZARUVH
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 15:21:07 -0500
+Received: from mail.dewire.com ([83.140.172.130]:27029 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754447AbZARUVG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jan 2009 15:21:06 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id C4B50147E6DB;
+	Sun, 18 Jan 2009 21:21:02 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id H+1JM0voUIHR; Sun, 18 Jan 2009 21:21:02 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 258AC147E6D9;
+	Sun, 18 Jan 2009 21:21:01 +0100 (CET)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <f299b4f30901171116y216835c9jc11df2d424ee0377@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106275>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+l=F6rdag 17 januari 2009 20:16:21 skrev Tomi Pakarinen:
+> testTrivialTwoWay_disjointhistories() failed because merge strategy
+> didn't handle missing base
+> version. Am'i right?
+Kyll=E4
 
-> The point is: the repository inside the document root of the web server is 
-> still a valid repository.
->
-> And the assumption is that whenever you have a file that looks like a 
-> valid object/pack inside a valid repository, that it does not need 
-> replacing.
->
-> So even when optimizing the uncommon (HTTP push is 2nd class citizen), we 
-> have to keep the common workflow intact (1st class citizens _are_ push by 
-> file system, ssh or git://).
+Or so it seems. My test cases pass. I'll see if I can come up with some=
+hing nasty.
+If not I'll apply=20
 
-The first class citizens are "local use", not "copying out of the area
-that looks like a repository only to http:// transport users".
-
-> Which unfortunately means that put && move must stay.
-
-I still do not understand why it is unfortunate.
-
-As far as I understand, Ray's issue was that his filesystem did not like
-the temporary file name that is used for the initial "put" phase because
-it contained a character it did not like (colon, perhaps).  Why isn't the
-patch about changing _that_ single issue?
+-- robin
