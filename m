@@ -1,72 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/7 v2] git_extract_argv0_path(): Move check for valid
- argv0 from caller to callee
-Date: Sun, 18 Jan 2009 13:28:09 -0800
-Message-ID: <7vzlhotic6.fsf@gitster.siamese.dyndns.org>
-References: <1232280015-8144-1-git-send-email-prohaska@zib.de>
- <1232280015-8144-4-git-send-email-prohaska@zib.de>
- <200901182016.56395.j6t@kdbg.org> <200901182028.11345.j6t@kdbg.org>
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: Re: [PATCH 2/3] Teach read_tree_recursive() how to traverse into 
+	submodules
+Date: Sun, 18 Jan 2009 22:31:28 +0100
+Message-ID: <8c5c35580901181331v5e54f82fxc6a042962ff1cd06@mail.gmail.com>
+References: <1232275999-14852-1-git-send-email-hjemli@gmail.com>
+	 <1232275999-14852-2-git-send-email-hjemli@gmail.com>
+	 <1232275999-14852-3-git-send-email-hjemli@gmail.com>
+	 <alpine.DEB.1.00.0901181635290.3586@pacific.mpi-cbg.de>
+	 <8c5c35580901180945u17a69140vff2736765ee6073@mail.gmail.com>
+	 <alpine.DEB.1.00.0901181929220.3586@pacific.mpi-cbg.de>
+	 <8c5c35580901181145x2e14fe0fq4ab0e94c13bad38a@mail.gmail.com>
+	 <alpine.DEB.1.00.0901182201140.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Jan 18 22:29:55 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jan 18 22:32:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOfDH-00082V-Dv
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 22:29:47 +0100
+	id 1LOfGI-0000Xl-I4
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 22:32:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755348AbZARV2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 16:28:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754964AbZARV2S
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 16:28:18 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42057 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755428AbZARV2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 16:28:18 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CB64D1CCD9;
-	Sun, 18 Jan 2009 16:28:17 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 129721B56B; Sun,
- 18 Jan 2009 16:28:11 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EC073DC2-E5A6-11DD-B7B3-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1753403AbZARVba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 16:31:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753132AbZARVba
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 16:31:30 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:33614 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753251AbZARVb3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 16:31:29 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1331666wah.21
+        for <git@vger.kernel.org>; Sun, 18 Jan 2009 13:31:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=V2Ph0Zub4TN4ISgx7eN6Y2NZO26JzfPpcoe5lra1/n8=;
+        b=HQfJVyPgzrqS3/oPyci3wTSGzX+7Wcoxnnri200BFbq9h++H5W/C1dqSu6Y6wtX7Ir
+         svc+EwhNNHsomneMJnIRkCP++KRK0nnz26AWt5FOrcOZgGPFOsEA+MjCZEHgmYNFDSy8
+         HPQho/pLp1WB2mYEvCcNKLy8kDFvTAbz1Xb7g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rkF+nWpi4KhPLzsRJpKx74xobkN14RS5B1WErE4llAml9yOiCEkkLH5yWgv5H6vaFY
+         TII2t8Zsccx/yn3FkTI4YcybpEck2vxUirQjuB1RyLO2fK6Hti6Op+MM5gX+QsGuHbEN
+         d0xFL3ehkAp7Mg6S6nlPJhD2+yVKnqwilmUx0=
+Received: by 10.114.196.13 with SMTP id t13mr3549745waf.82.1232314288663; Sun, 
+	18 Jan 2009 13:31:28 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0901182201140.3586@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106288>
 
-Johannes Sixt <j6t@kdbg.org> writes:
-
-> On Sonntag, 18. Januar 2009, Johannes Sixt wrote:
->> On Sonntag, 18. Januar 2009, Steffen Prohaska wrote:
->> > This simplifies the calling code.
->>
->> But it could really be squashed into the previous patch, after fixing...
->>
->> > @@ -23,6 +23,9 @@ const char *system_path(const char *path)
+On Sun, Jan 18, 2009 at 22:02, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Sun, 18 Jan 2009, Lars Hjemli wrote:
+>
+>> On Sun, Jan 18, 2009 at 19:33, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>> > On Sun, 18 Jan 2009, Lars Hjemli wrote:
+>> >> Actually, I want this to work for bare repositories by specifying the
+>> >> submodule odbs in the alternates file. So if the current submodule odb
+>> >> wasn't found my plan was to check if the commit object was accessible
+>> >> anyways but don't die() if it wasn't.
 >> >
->> >  const char *git_extract_argv0_path(const char *argv0)
->> >  {
->> > +	if (!argv0 || !*argv0)
->> > +		return 0;
->> > +
->> >  	const char *slash = argv0 + strlen(argv0);
+>> > Please make that an explicit option (cannot think of a good name, though),
+>> > otherwise I will not be able to use your feature.  Making it the default
+>> > would be inconsistent with the rest of our submodules framework.
 >>
->> ... this declaration after statement.
+>> Would a test on is_bare_repository() suffice for your use-case?
 >
-> And we prefer NULL over 0 for the null pointer.
+> No.  Inconsistent is inconsistent.
 >
-> The series is nicely done, thank you! I am using it (the previous round) 
-> without problems so far. I hope we can get this in RSN.
+>> If this isn't good enough, how do you propose it be solved?
+>
+> As I said, with an extra option that you _have_ to pass when you want
+> that behavior.
 
-Thanks, both.  I take that as your Ack to the whole series.
+My concern is how to discern between wanted and unwanted submodules in
+a bare repository.
 
-I've rebased the series to master, squashed in fixes like the above (there
-were others) so that each step can compile.  Will queue the result.
+With my proposed solution `git archive --submodules HEAD` in a bare
+repository would only include the content of the submodule repos
+listed in objects/info/alternates (since the commit referenced by the
+gitlink would then be reachable).
+
+But you mentioned that you had a repository where all the objects of
+all the submodules where stored in the odb of the superproject. With
+my solution, `git archive --submodules HEAD` in your (bare) repo would
+then always include the content of all the submodules (since all the
+objects would always be reachable), and I believe this is the behavior
+you don't like.
+
+So, would you rather have something like `git archive --submodules=foo
+--submodules=bar HEAD` to explicitly tell which submodule paths to
+include in the archive when executed in a bare repo?
+
+--
+larsh
