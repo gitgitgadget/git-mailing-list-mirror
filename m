@@ -1,74 +1,58 @@
-From: David Bryson <david@statichacks.org>
-Subject: checking out by date
-Date: Mon, 12 Jan 2009 11:30:39 -0800
-Message-ID: <20090112193039.GO25823@eratosthenes.cryptobackpack.org>
-Reply-To: David Bryson <david@statichacks.org>
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Subject: Re: [PATCH (topgit) 0/2] tg-patch: fix pagination
+Date: Sun, 18 Jan 2009 18:04:20 +0300
+Organization: St.Petersburg State University
+Message-ID: <20090118150420.GB27522@roro3.zxlink>
+References: <cover.1231254832.git.kirr@landau.phys.spbu.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Cc: pasky@suse.cz, martin f krafft <madduck@madduck.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 12 20:32:19 2009
+X-From: git-owner@vger.kernel.org Sun Jan 18 16:04:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LMSWA-00051U-Dq
-	for gcvg-git-2@gmane.org; Mon, 12 Jan 2009 20:32:10 +0100
+	id 1LOZCP-0007pm-13
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 16:04:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754429AbZALTan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jan 2009 14:30:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753615AbZALTam
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Jan 2009 14:30:42 -0500
-Received: from cryptobackpack.org ([64.105.32.74]:53127 "EHLO
-	mail.cryptobackpack.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753472AbZALTam (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jan 2009 14:30:42 -0500
-Received: by mail.cryptobackpack.org (Postfix, from userid 1000)
-	id 99AD710D0247; Mon, 12 Jan 2009 11:30:41 -0800 (PST)
-X-Spam-Checker-Version: SpamAssassin 3.2.1-gr1 (2007-05-02) on
-	ptolemy.cryptobackpack.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.1-gr1
-Received: from eratosthenes.statichacks.org (heliosphan.cryptobackpack.org [10.6.6.6])
-	by mail.cryptobackpack.org (Postfix) with ESMTP id 2CFAF10D0128
-	for <git@vger.kernel.org>; Mon, 12 Jan 2009 11:30:40 -0800 (PST)
-Received: by eratosthenes.statichacks.org (Postfix, from userid 1000)
-	id E845D18348C; Mon, 12 Jan 2009 11:30:39 -0800 (PST)
+	id S1758938AbZARPDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 10:03:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756604AbZARPDF
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 10:03:05 -0500
+Received: from landau.phys.spbu.ru ([195.19.235.38]:2803 "EHLO
+	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754491AbZARPDE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 10:03:04 -0500
+Received: by landau.phys.spbu.ru (Postfix, from userid 509)
+	id E0DB917B663; Sun, 18 Jan 2009 18:03:01 +0300 (MSK)
+Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
+	(envelope-from <kirr@roro3.zxlink>)
+	id 1LOZCG-0007Y3-L0; Sun, 18 Jan 2009 18:04:20 +0300
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <cover.1231254832.git.kirr@landau.phys.spbu.ru>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106207>
 
-Hi All,
+On Tue, Jan 06, 2009 at 06:16:37PM +0300, Kirill Smelkov wrote:
+> Kirill Smelkov (2):
+>   Implement setup_pager just like in git
+>   tg-patch: fix pagination
+> 
+>  tg-patch.sh |    3 +++
+>  tg.sh       |   53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 56 insertions(+), 0 deletions(-)
 
-I have a very large repository that imported into git from CVS with
-about 5 years worth of history.
+Petr, Martin,
 
-Today I decided to checkout some code from the past:
+What's the state of this patch series?
 
-$ git checkout master@{"Mon Dec 31  2007"}
-warning: Log for 'master' only goes back to Tue, 2 Dec 2008 16:57:15
--0800.
+It fixes `tg patch`, and it seems we addressed all uglyness in
+setup_pager, so is there any other reason not to merge this?
 
-Then proceeds to checkout a code snapshot from 2 Dec.  To work around
-this I checked out a specific commit id, by looking at the log:
-
-commit 3771ec1d6ccf329da378b7633fdef60474eac4b7
-Author: XXXXXXXXXXXXXXX
-Date:   Mon Dec 31 23:25:17 2007 +0000
-
-    BugId: none
-    correct wrong commit
-
-
-$ git checkout 3771ec1d6ccf329da378b7633fdef60474eac4b7
-...
-HEAD is now at 3771ec1... BugId: none correct wrong commit
-
-So what has caused git to be unable to process the date information,
-even though the information is clearly in the history ?  Did I miss
-something ?
-
-Dave
+Thanks,
+Kirill
