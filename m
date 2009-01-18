@@ -1,57 +1,66 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: fatal: git grep: cannot generate relative filenames containing
- '..'
-Date: Sun, 18 Jan 2009 11:58:23 -0500
-Message-ID: <20090118165823.24501.qmail@science.horizon.com>
-References: <20090115222905.8157.qmail@science.horizon.com>
- <7vr634ow3r.fsf@gitster.siamese.dyndns.org>
- <83vdsefz9j.fsf@kalahari.s2.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] git-am: Make it easier to see which patch failed
+Date: Sun, 18 Jan 2009 12:07:11 -0500
+Message-ID: <20090118170711.GA17055@coredump.intra.peff.net>
+References: <636ecac0901160518o16706bbia9acaf09fdf92946@mail.gmail.com> <alpine.DEB.1.00.0901161513400.3586@pacific.mpi-cbg.de> <636ecac0901160634r586c72a0r9bb63c6f019f5bff@mail.gmail.com> <7vhc3x1874.fsf@gitster.siamese.dyndns.org> <20090118094113.GE11992@leksak.fem-net> <20090118153928.GA16664@coredump.intra.peff.net> <alpine.DEB.1.00.0901181711090.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: linux@horizon.com, git@vger.kernel.org
-To: gitster@pobox.com, azure@iki.fi
-X-From: git-owner@vger.kernel.org Sun Jan 18 17:59:56 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Stephan Beyer <s-beyer@gmx.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonas =?utf-8?Q?Flod=C3=A9n?= <jonas@floden.nu>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jan 18 18:08:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOb02-0008A7-5R
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 17:59:50 +0100
+	id 1LOb8k-0002VS-CV
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 18:08:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757587AbZARQ60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 11:58:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756903AbZARQ6Z
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 11:58:25 -0500
-Received: from science.horizon.com ([192.35.100.1]:16173 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1755417AbZARQ6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 11:58:25 -0500
-Received: (qmail 24502 invoked by uid 1000); 18 Jan 2009 11:58:23 -0500
-In-Reply-To: <83vdsefz9j.fsf@kalahari.s2.org>
+	id S1751862AbZARRHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 12:07:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759455AbZARRHP
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 12:07:15 -0500
+Received: from peff.net ([208.65.91.99]:53287 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751208AbZARRHN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 12:07:13 -0500
+Received: (qmail 21895 invoked by uid 107); 18 Jan 2009 17:07:17 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 18 Jan 2009 12:07:17 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Jan 2009 12:07:11 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0901181711090.3586@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106243>
 
-Hannu Koivisto <azure@iki.fi> wrote:
-> It turns out that this "entire git tree" is practically my only use
-> case when using normal (find and) grep and when I first tried git
-> grep, I actually expected it to do just that with no path specified.
->
-> Why?  Because of the way at least git diff and git log work.  I
-> thought that just like with them, "git grep foo" would search the
-> entire git tree and I would have to say "git grep foo ." to limit to
-> the current directory and its subdirectories.  git-grep(1)'s "Look
-> for specified patterns in the working tree files..." at least
-> didn't seem to disagree with my expectation so I was a bit puzzled.
->
-> So I'd rather see git grep behave in a way consistent with git log
-> and git diff (I realize that would change current behaviour instead
-> of extending it).
+On Sun, Jan 18, 2009 at 05:17:43PM +0100, Johannes Schindelin wrote:
 
-D'oh.  You're completely right.  Space-dot is trivial to type if you
-want the current directory only, and that is more consistent.
+> > Yes, I'm surprised Junio doesn't remember the mass conversions we 
+> > already had to do (4b7cc26a and 293623ed). But looking at the date, I 
+> > guess it _has_ been a year and a half. :)
+> 
+> Hey, be nice to Junio.  Have you seen the amount of mails on this list 
+> recently?  I think Junio's the only one really reading all of them; even 
+> if you were right, he would be entitled to a nicer reminder.
 
-Could that be considered for 1.7?
+I didn't mean to be mean. On the contrary, I was surprised because _he_
+usually is the one reminding _me_ about such fixes. I guess Junio is
+human, after all. :)
+
+> But you are wrong.  And Stephan is wrong, too.
+> 
+> The name "FIRSTLINE" suggests that it is indeed a first line, and 
+> consequently cannot contain a newline.
+
+It is not "this is a problem because it might contain a newline" but "this
+is a problem because it might contain an escape sequence, _an example_
+of which is a \n newline." So the question is whether you can guarantee
+that $FIRSTLINE does not contain a backslash. Which I don't think is the
+case here.
+
+-Peff
