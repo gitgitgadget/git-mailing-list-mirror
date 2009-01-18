@@ -1,58 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] http-push: remove MOVE step after PUT when sending
- objects to server
-Date: Sun, 18 Jan 2009 22:14:44 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901182214180.3586@pacific.mpi-cbg.de>
-References: <be6fef0d0901171224y35c3d95cn2d38639ac03c3b8f@mail.gmail.com> <7viqod5thi.fsf@gitster.siamese.dyndns.org> <be6fef0d0901171919ub28dda7ref6443abec3627aa@mail.gmail.com> <alpine.DEB.1.00.0901181425420.3586@pacific.mpi-cbg.de>
- <7vocy4wfb2.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] Fix gitdir detection when in subdir of gitdir
+Date: Sun, 18 Jan 2009 13:27:44 -0800
+Message-ID: <7vhc3wuwxb.fsf@gitster.siamese.dyndns.org>
+References: <1232120253-1551-1-git-send-email-szeder@ira.uka.de>
+ <alpine.DEB.1.00.0901161729070.3586@pacific.mpi-cbg.de>
+ <4970BA2B.7090807@viscovery.net> <4970BAE5.8080006@viscovery.net>
+ <7vr63386rc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 18 22:16:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Sun Jan 18 22:29:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOf0J-0003v2-VC
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 22:16:24 +0100
+	id 1LOfCv-0007wH-MI
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 22:29:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757368AbZARVOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 16:14:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755915AbZARVOo
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 16:14:44 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43524 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755889AbZARVOo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 16:14:44 -0500
-Received: (qmail invoked by alias); 18 Jan 2009 21:14:41 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp061) with SMTP; 18 Jan 2009 22:14:41 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19gbUh/VANgCa9VqD2DLlZcmGzQBG3IDNqKRFqM0F
-	Xk+nq2Ujcd75p8
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vocy4wfb2.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.74
+	id S1754551AbZARV1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 16:27:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbZARV1y
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 16:27:54 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41979 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754692AbZARV1x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 16:27:53 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3451B1BC52;
+	Sun, 18 Jan 2009 16:27:53 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 689621B56B; Sun,
+ 18 Jan 2009 16:27:46 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DD5A80FE-E5A6-11DD-B7B3-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106284>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Sun, 18 Jan 2009, Junio C Hamano wrote:
+> I think (1) the solution (almost) makes sense, (2) the patch needs to be
+> explained a lot better as you mentioned in your two messages, and (3) if
+> it does not affect any other case than when you are in a subdirectory of
+> the .git/ directory, then you are doing something funny anyway and
+> performance issue Dscho mentions, if any, is not a concern.
+>
+> My "(almost)" in (1) above is because the patch uses this new behaviour
+> even when you are inside the .git/ directory itself (or at the root of a
+> bare repository), which is a very common case that we do not have to nor
+> want to change the behaviour.  It also invalidates the precondition of (3)
+> above.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Which unfortunately means that put && move must stay.
-> 
-> I still do not understand why it is unfortunate.
+And this is a trivial follow-up on top of Szeder's patch.
 
-Because it is slow.
+ setup.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
-Ciao,
-Dscho
+diff --git c/setup.c w/setup.c
+index 4049298..dd7c039 100644
+--- c/setup.c
++++ w/setup.c
+@@ -456,8 +456,11 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 			inside_git_dir = 1;
+ 			if (!work_tree_env)
+ 				inside_work_tree = 0;
+-			cwd[offset] = '\0';
+-			setenv(GIT_DIR_ENVIRONMENT, cwd, 1);
++			if (offset != len) {
++				cwd[offset] = '\0';
++				setenv(GIT_DIR_ENVIRONMENT, cwd, 1);
++			} else
++				setenv(GIT_DIR_ENVIRONMENT, ".", 1);
+ 			check_repository_format_gently(nongit_ok);
+ 			return NULL;
+ 		}
