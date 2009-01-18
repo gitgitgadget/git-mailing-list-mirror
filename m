@@ -1,69 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [WIP Patch 02/12] Some cleanup in get_refs_via_curl()
-Date: Sun, 18 Jan 2009 20:11:07 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901182010380.3586@pacific.mpi-cbg.de>
-References: <20090118074911.GB30228@glandium.org> <1232265877-3649-1-git-send-email-mh@glandium.org> <1232265877-3649-2-git-send-email-mh@glandium.org> <1232265877-3649-3-git-send-email-mh@glandium.org>
- <alpine.DEB.1.00.0901182005230.3586@pacific.mpi-cbg.de>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 3/7 v2] git_extract_argv0_path(): Move check for valid argv0 from caller to callee
+Date: Sun, 18 Jan 2009 20:16:54 +0100
+Message-ID: <200901182016.56395.j6t@kdbg.org>
+References: <1232280015-8144-1-git-send-email-prohaska@zib.de> <1232280015-8144-3-git-send-email-prohaska@zib.de> <1232280015-8144-4-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sun Jan 18 20:13:03 2009
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Jan 18 20:18:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOd4Z-00010U-TQ
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 20:12:40 +0100
+	id 1LOdAB-0002ul-B9
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 20:18:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753234AbZARTLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 14:11:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753092AbZARTLO
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 14:11:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44972 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753053AbZARTLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 14:11:12 -0500
-Received: (qmail invoked by alias); 18 Jan 2009 19:11:09 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp008) with SMTP; 18 Jan 2009 20:11:09 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/k8Nhl0Frk0K9Ghw1nS8phowidKNsxtWFZvuzIea
-	VzE1LtCwa208hu
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0901182005230.3586@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1753076AbZARTRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 14:17:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752666AbZARTRE
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 14:17:04 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:25618 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752700AbZARTRD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 14:17:03 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 351032C4004;
+	Sun, 18 Jan 2009 20:16:57 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 5985457DB4;
+	Sun, 18 Jan 2009 20:16:57 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <1232280015-8144-4-git-send-email-prohaska@zib.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106261>
 
-Hi,
+On Sonntag, 18. Januar 2009, Steffen Prohaska wrote:
+> This simplifies the calling code.
 
-On Sun, 18 Jan 2009, Johannes Schindelin wrote:
+But it could really be squashed into the previous patch, after fixing...
 
-> On Sun, 18 Jan 2009, Mike Hommey wrote:
-> 
-> > diff --git a/transport.c b/transport.c
-> > index 56831c5..6919ff1 100644
-> > --- a/transport.c
-> > +++ b/transport.c
-> > @@ -508,6 +508,8 @@ static struct ref *get_refs_via_curl(struct transport *transport)
-> >  		free(ref);
-> >  	}
-> >  
-> > +	http_cleanup();
-> > +	free(refs_url);
-> >  	return refs;
-> >  }
-> 
-> You cannot http_cleanup() here, as http-push calls that function, but 
-> continues to want to use curl.
+> @@ -23,6 +23,9 @@ const char *system_path(const char *path)
+>
+>  const char *git_extract_argv0_path(const char *argv0)
+>  {
+> +	if (!argv0 || !*argv0)
+> +		return 0;
+> +
+>  	const char *slash = argv0 + strlen(argv0);
 
-Worse, a http clone will hit the same issue.
+... this declaration after statement.
 
-Ciao,
-Dscho
+-- Hannes
