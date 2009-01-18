@@ -1,67 +1,58 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: log-tree.c: date hardwired
-Date: Sun, 18 Jan 2009 00:40:32 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngn4uk0.r31.sitaramc@sitaramc.homelinux.net>
-References: <87r637oq41.fsf@jidanni.org> <87fxjhcy3i.fsf@jidanni.org>
- <81b0412b0901171538l5e9fb66bh862c9b7a125fc98f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] interpret_nth_last_branch(): avoid traversing the
+ reflogs twice
+Date: Sat, 17 Jan 2009 16:43:32 -0800
+Message-ID: <7vmydp5tqj.fsf@gitster.siamese.dyndns.org>
+References: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org>
+ <1232163011-20088-1-git-send-email-trast@student.ethz.ch>
+ <alpine.DEB.1.00.0901170646560.3586@pacific.mpi-cbg.de>
+ <200901171438.22504.trast@student.ethz.ch>
+ <alpine.DEB.1.00.0901171602340.3586@pacific.mpi-cbg.de>
+ <7vljt97nld.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0901172028470.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 18 01:44:35 2009
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Johan Herland <johan@herland.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jan 18 01:45:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOLmC-00067G-Tf
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 01:44:33 +0100
+	id 1LOLmq-0006GW-3N
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 01:45:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755832AbZARAkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Jan 2009 19:40:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755689AbZARAkn
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 19:40:43 -0500
-Received: from main.gmane.org ([80.91.229.2]:36969 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755052AbZARAkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jan 2009 19:40:42 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LOLiS-0000QY-LB
-	for git@vger.kernel.org; Sun, 18 Jan 2009 00:40:40 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 Jan 2009 00:40:40 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 Jan 2009 00:40:40 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1755911AbZARAnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Jan 2009 19:43:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753664AbZARAnm
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 19:43:42 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45289 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753534AbZARAnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jan 2009 19:43:41 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1E5EE9120D;
+	Sat, 17 Jan 2009 19:43:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1B55E9120C; Sat,
+ 17 Jan 2009 19:43:33 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0901172028470.3586@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Sat, 17 Jan 2009 20:29:40 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0CA52552-E4F9-11DD-8A54-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106118>
 
-On 2009-01-17, Alex Riesen <raa.lkml@gmail.com> wrote:
-> 2009/1/18  <jidanni@jidanni.org>:
->> Can I get a go-ahead from somebody for me to begin work
->> on implementing a fix?
->
-> No. Try and guess why
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-OK, I'll bite...
+> That is correct.  But this is such a highly uncritical code path that I'd 
+> like to keep this simple rather than fast.
 
-Because it's only used as the date for the mbox format
-leader line, and not an actual email (RFC 822/2822) header
-line?  And in that format it represents "delivery date",
-which is irrelevant for stuff you're generating to be sent
-out anyway, meaning this line doesn't actually get sent out
-to anyone when you mail your patches, so we don't care what
-it is.
-
-I can't think of anything else, so if it isn't that please
-do tell.  Not that I cared about it before, but once someone
-says "try and guess why" it somehow becomes important :-)
+I actually not worried about "fast" at all; it was more about unbounded
+memory consumption.
