@@ -1,79 +1,49 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 7/7 v2] Windows: Revert to default paths and convert them by RUNTIME_PREFIX
-Date: Sun, 18 Jan 2009 13:00:15 +0100
-Message-ID: <1232280015-8144-8-git-send-email-prohaska@zib.de>
-References: <1232280015-8144-1-git-send-email-prohaska@zib.de>
- <1232280015-8144-2-git-send-email-prohaska@zib.de>
- <1232280015-8144-3-git-send-email-prohaska@zib.de>
- <1232280015-8144-4-git-send-email-prohaska@zib.de>
- <1232280015-8144-5-git-send-email-prohaska@zib.de>
- <1232280015-8144-6-git-send-email-prohaska@zib.de>
- <1232280015-8144-7-git-send-email-prohaska@zib.de>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 18 13:02:57 2009
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: is gitosis secure?
+Date: Sun, 18 Jan 2009 12:48:51 +0100
+Message-ID: <873afgsul8.fsf@mid.deneb.enyo.de>
+References: <200812090956.48613.thomas@koch.ro>
+	<1228813453.28186.73.camel@maia.lan>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 18 13:23:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOWMK-0007Kr-AB
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 13:02:32 +0100
+	id 1LOWgu-0004C9-H7
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 13:23:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932240AbZARMAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 07:00:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765345AbZARMAp
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 07:00:45 -0500
-Received: from mailer.zib.de ([130.73.108.11]:32929 "EHLO mailer.zib.de"
+	id S1756501AbZARMW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 07:22:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754688AbZARMWY
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 07:22:24 -0500
+Received: from mail.enyo.de ([212.9.189.167]:38693 "EHLO mail.enyo.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1765724AbZARMAj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 07:00:39 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n0IC0GEK026435;
-	Sun, 18 Jan 2009 13:00:21 +0100 (CET)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n0IC0FJ8001758;
-	Sun, 18 Jan 2009 13:00:16 +0100 (MET)
-X-Mailer: git-send-email 1.5.4.4
-In-Reply-To: <1232280015-8144-7-git-send-email-prohaska@zib.de>
+	id S1753913AbZARMWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 07:22:24 -0500
+X-Greylist: delayed 2010 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Jan 2009 07:22:24 EST
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
+	by mail.enyo.de with esmtp id 1LOW95-0001cP-LE
+	for git@vger.kernel.org; Sun, 18 Jan 2009 12:48:51 +0100
+Received: from fw by deneb.enyo.de with local (Exim 4.69)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1LOW95-0002Gs-3k
+	for git@vger.kernel.org; Sun, 18 Jan 2009 12:48:51 +0100
+In-Reply-To: <1228813453.28186.73.camel@maia.lan> (Sam Vilain's message of
+	"Tue, 09 Dec 2008 22:04:13 +1300")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106182>
 
-The RUNTIME_PREFIX mechanism allows us to use the default paths on
-Windows too.  Defining RUNTIME_PREFIX explicitly requests for
-translation of paths relative to the executable at runtime.
+* Sam Vilain:
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- Makefile |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+> Restricted unix shells are a technology which has been proven secure for
+> decades now.
 
-diff --git a/Makefile b/Makefile
-index fbe52c9..74ecd77 100644
---- a/Makefile
-+++ b/Makefile
-@@ -789,6 +789,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	SNPRINTF_RETURNS_BOGUS = YesPlease
- 	NO_SVN_TESTS = YesPlease
- 	NO_PERL_MAKEMAKER = YesPlease
-+	RUNTIME_PREFIX = YesPlease
- 	NO_POSIX_ONLY_PROGRAMS = YesPlease
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
- 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/regex -Icompat/fnmatch
-@@ -797,9 +798,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	COMPAT_OBJS += compat/mingw.o compat/fnmatch/fnmatch.o compat/regex/regex.o compat/winansi.o
- 	EXTLIBS += -lws2_32
- 	X = .exe
--	gitexecdir = ../libexec/git-core
--	template_dir = ../share/git-core/templates/
--	ETC_GITCONFIG = ../etc/gitconfig
- endif
- ifneq (,$(findstring arm,$(uname_M)))
- 	ARM_SHA1 = YesPlease
--- 
-1.6.1.87.g15624
+Huh?  Things like scponly and rssh had their share of bugs, so I can
+see that there is some concern.  (And restricted shells used to be
+circumvented by things like Netscape's print dialog.)
