@@ -1,72 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] interpret_nth_last_branch(): avoid traversing the reflogs
- twice
-Date: Sun, 18 Jan 2009 02:12:02 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901180201070.3586@pacific.mpi-cbg.de>
-References: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org> <1232163011-20088-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0901170646560.3586@pacific.mpi-cbg.de> <200901171438.22504.trast@student.ethz.ch> <alpine.DEB.1.00.0901171602340.3586@pacific.mpi-cbg.de>
- <7vljt97nld.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901172028470.3586@pacific.mpi-cbg.de> <7vmydp5tqj.fsf@gitster.siamese.dyndns.org>
+From: Anders Melchiorsen <mail@cup.kalibalik.dk>
+Subject: Re: [RFC PATCH] Make the rebase edit mode really end up in an edit state
+Date: Sun, 18 Jan 2009 02:24:18 +0100
+Message-ID: <877i4tmmnx.fsf@cup.kalibalik.dk>
+References: <87ab9th0rh.fsf@cup.kalibalik.dk>
+	<7vfxjlxuu5.fsf@gitster.siamese.dyndns.org>
+	<20090115153529.GA13961@neumann>
+	<7vvdsgql17.fsf@gitster.siamese.dyndns.org>
+	<bd6139dc0901151420j4ae62433uc0cc70d86dc45cfa@mail.gmail.com>
+	<20090115225912.GL9794@neumann> <20090116001139.GA26357@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 18 02:15:26 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de
+To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jan 18 02:25:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOMG6-0004lA-9M
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 02:15:26 +0100
+	id 1LOMQA-0006yc-Gh
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 02:25:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755034AbZARBLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Jan 2009 20:11:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754480AbZARBLj
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 20:11:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43021 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754713AbZARBLj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jan 2009 20:11:39 -0500
-Received: (qmail invoked by alias); 18 Jan 2009 01:11:37 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp015) with SMTP; 18 Jan 2009 02:11:37 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19uYyQ8/IZuiwMxjb9y7HCKsFWHVq8IobryiWPBrT
-	sl7tDdsuXKbh/2
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vmydp5tqj.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1756415AbZARBYW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Jan 2009 20:24:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756376AbZARBYW
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 20:24:22 -0500
+Received: from mail.hotelhot.dk ([77.75.163.100]:37806 "EHLO mail.hotelhot.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756168AbZARBYV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Jan 2009 20:24:21 -0500
+Received: from mail.hotelhot.dk (localhost [127.0.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 5831730AF8;
+	Sun, 18 Jan 2009 02:23:43 +0100 (CET)
+Received: from dylle (router.kalibalik.dk [192.168.0.1])
+	by mail.hotelhot.dk (Postfix) with ESMTP id E682630013;
+	Sun, 18 Jan 2009 02:23:42 +0100 (CET)
+In-Reply-To: <20090116001139.GA26357@atjola.homenet> (=?utf-8?Q?=22Bj?=
+ =?utf-8?Q?=C3=B6rn?= Steinbrink"'s message of "Fri\, 16 Jan 2009 01\:11\:39
+ +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106125>
 
-Hi,
+Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 
-On Sat, 17 Jan 2009, Junio C Hamano wrote:
+> No, you don't have to do that. As long as you only want to "edit"
+> the commit you marked as "edit", you only need to use "git add" and
+> "git rebase --continue". rebase -i checks whether HEAD still
+> resolves to the same commit and if so, it automatically does the
+> soft reset for you.
+>
+> Maybe we should just advertise that in the message provided by
+> rebase after it stops? I'm afraid I can't come up with a sane
+> wording though, as there are still cases when you need to commit
+> yourself, eg. when you use reset. And getting that into one simple
+> sentence seems a bit hard (for me).
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > That is correct.  But this is such a highly uncritical code path that 
-> > I'd like to keep this simple rather than fast.
-> 
-> I actually not worried about "fast" at all; it was more about unbounded 
-> memory consumption.
+I was happy to learn that trick when looking at the source, so I agree
+that it is a good idea to advertise it. You are right that it is hard
+to describe well in few words, though. Does somebody feel like
+repainting this?
 
-Let's just assume that I make a branch switch per minute, continuously, 
-for 90 days (until the reflogs are expired), and let's say that all my 
-branchnames have 20 characters.  Conservatively, the memory requirement 
-would be 100 * 2000 * 30 = 3 megabyte.
 
-Note: these are the memory requirements after some really unrealistically 
-high activity, and the memory is free()d during parameter parsing.
-
-A much more realistical expectation would be to switch branches maybe 20 
-times a day, which would amount to something like 36 kilobyte.  And again, 
-they are free()d before the action really starts.
-
-Ciao,
-Dscho
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -336,14 +336,13 @@ do_next () {
+ 		make_patch $sha1
+ 		git rev-parse --verify HEAD > "$DOTEST"/amend
+ 		warn "Stopped at $sha1... $rest"
+-		warn "You can amend the commit now, with"
+-		warn
+-		warn "	git commit --amend"
+-		warn
+-		warn "Once you are satisfied with your changes, run"
++		warn "You can amend the commit now, by marking"
++		warn "paths with 'git add <paths>' and running"
+ 		warn
+ 		warn "	git rebase --continue"
+ 		warn
++		warn "If you want to create new commits, run"
++		warn "'git commit' yourself before continuing."
+ 		exit 0
+ 		;;
+ 	squash|s)
