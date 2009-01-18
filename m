@@ -1,93 +1,67 @@
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Re: [PATCH (topgit)] tg-patch: add support for generating patches
-	against worktree and index
-Date: Sun, 18 Jan 2009 18:06:37 +0300
-Organization: St.Petersburg State University
-Message-ID: <20090118150637.GC27522@roro3.zxlink>
-References: <1231438975-13624-1-git-send-email-kirr@landau.phys.spbu.ru> <20090108195356.GA14644@lapse.rw.madduck.net> <20090108201614.GA4185@roro3> <20090108211149.GA19983@roro3>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCH v4 0/7] customizable --color-words
+Date: Sun, 18 Jan 2009 16:05:49 +0100
+Message-ID: <adf1fd3d0901180705s260f0051wb4e3a978601618ec@mail.gmail.com>
+References: <alpine.DEB.1.00.0901162208180.3586@pacific.mpi-cbg.de>
+	 <1232209788-10408-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Git Mailing List <git@vger.kernel.org>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Sun Jan 18 16:07:11 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	Teemu Likonen <tlikonen@iki.fi>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Jan 18 16:07:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOZEa-0000O3-Td
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 16:06:45 +0100
+	id 1LOZF6-0000k6-Lb
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 16:07:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758929AbZARPFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 10:05:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762093AbZARPFV
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 10:05:21 -0500
-Received: from landau.phys.spbu.ru ([195.19.235.38]:2582 "EHLO
-	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761739AbZARPFU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 10:05:20 -0500
-Received: by landau.phys.spbu.ru (Postfix, from userid 509)
-	id C085617B663; Sun, 18 Jan 2009 18:05:18 +0300 (MSK)
-Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
-	(envelope-from <kirr@roro3.zxlink>)
-	id 1LOZET-0007ZT-EH; Sun, 18 Jan 2009 18:06:37 +0300
-Content-Disposition: inline
-In-Reply-To: <20090108211149.GA19983@roro3>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1762441AbZARPFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 10:05:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762417AbZARPFw
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 10:05:52 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:61729 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762093AbZARPFw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 10:05:52 -0500
+Received: by bwz14 with SMTP id 14so7046918bwz.13
+        for <git@vger.kernel.org>; Sun, 18 Jan 2009 07:05:50 -0800 (PST)
+Received: by 10.103.92.10 with SMTP id u10mr332508mul.22.1232291149126; Sun, 
+	18 Jan 2009 07:05:49 -0800 (PST)
+In-Reply-To: <1232209788-10408-1-git-send-email-trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106210>
 
-On Fri, Jan 09, 2009 at 12:11:49AM +0300, Kirill Smelkov wrote:
-> I'm sorry, but I've found a mistake in my code for case:
-> 
-> diff --git a/tg-patch.sh b/tg-patch.sh
-> index db1ad09..d701c54 100644
-> --- a/tg-patch.sh
-> +++ b/tg-patch.sh
-> @@ -17,8 +17,8 @@ while [ -n "$1" ]; do
->         case "$arg" in
->         -i)
->                 topic='(i)'
-> -               diff_opts="$diff_opts --cached";;
-> -               diff_committed_only=;
-> +               diff_opts="$diff_opts --cached";
-> +               diff_committed_only=;;
->         -w)
->                 topic='(w)'
->                 diff_committed_only=;;
-> 
-> 
-> So here is corrected patch:
-> 
-> 
-> From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-> To: Petr Baudis <pasky@suse.cz>
-> Cc: martin f krafft <madduck@madduck.net>
-> Cc: Git Mailing List <git@vger.kernel.org>
-> Subject: [PATCH (topgit)] tg-patch: add support for generating patches against worktree and index
-> 
-> This implements `tg patch -i` and `tg patch -w` to see current patch as
-> generated against not-yet-committed index and worktree.
-> 
-> 
-> NOTE: unfortunately `git cat-file blob <file>` does not provide an option
-> to cat file from worktree (only from an object or from index), so I had to
-> unroll my own `cat file topic:file` with special support for '(i)' and
-> '(w)' topics.
-> 
-> Signed-off-by: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+2009/1/17 Thomas Rast <trast@student.ethz.ch>:
+> Johannes Schindelin wrote:
+>> Thomas, could you pick up the patches from my 'my-next' branch and
+>> maintain an "official" topic branch?
+>
+> I cherry-picked the three commits you had there, and rebuilt on top.
+> I pushed them to
+>
+>  git://repo.or.cz/git/trast.git tr/word-diff-p2
+>
+> again (js/word-diff-p1 again points directly at your half).
 
-[...]
+I've tested tr/word-diff-p2 and I have not found any issues. I've even
+tested that nothing changed from the tradicional word diff to:
 
-Petr, Martin,
+git log -p --color-words="[^[:space:]]+"
 
-What's the state of this patch?
+for the whole git history.
 
-I don't understand why this gets ignored. Maybe I do something wrong?
-...
+At the end I've found that a general regex that works best for me is:
 
+"[[:alpha:]]+|[[:digit:]]+|[^[:alnum:][:space:]]"
 
-Thanks,
-Kirill
+and that is what I tested.
+
+Santi
