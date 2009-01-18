@@ -1,87 +1,94 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] http-push: remove MOVE step after PUT when sending
- objects to server
-Date: Sun, 18 Jan 2009 14:32:30 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901181425420.3586@pacific.mpi-cbg.de>
-References: <be6fef0d0901171224y35c3d95cn2d38639ac03c3b8f@mail.gmail.com>  <7viqod5thi.fsf@gitster.siamese.dyndns.org> <be6fef0d0901171919ub28dda7ref6443abec3627aa@mail.gmail.com>
+Subject: Re: [PATCH] revision walker: include a detached HEAD in --all
+Date: Sun, 18 Jan 2009 14:42:25 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901181440550.3586@pacific.mpi-cbg.de>
+References: <1231977976-8739-1-git-send-email-trast@student.ethz.ch> <496EE559.3060901@viscovery.net> <alpine.DEB.1.00.0901151413250.3586@pacific.mpi-cbg.de> <200901151500.01876.trast@student.ethz.ch> <alpine.DEB.1.00.0901151508540.3586@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0901151517190.3586@pacific.mpi-cbg.de> <7vhc40s50t.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901161351460.3586@pacific.mpi-cbg.de> <7v8wp917c3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 18 14:34:17 2009
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 18 14:43:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOXn5-0007lT-An
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 14:34:15 +0100
+	id 1LOXwL-0002CO-Hq
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 14:43:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756991AbZARNc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 08:32:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756671AbZARNc3
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 08:32:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54234 "HELO mail.gmx.net"
+	id S1761036AbZARNmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 08:42:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760356AbZARNmY
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 08:42:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50542 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756114AbZARNc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 08:32:28 -0500
-Received: (qmail invoked by alias); 18 Jan 2009 13:32:25 -0000
+	id S1758912AbZARNmX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 08:42:23 -0500
+Received: (qmail invoked by alias); 18 Jan 2009 13:42:20 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp071) with SMTP; 18 Jan 2009 14:32:25 +0100
+  by mail.gmx.net (mp036) with SMTP; 18 Jan 2009 14:42:20 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+KRjQrHMmK0ppBjhNDYnCnmFrscaL40cGlIRl6/u
-	Ndm6yQs3Vk9Mk7
+X-Provags-ID: V01U2FsdGVkX1/I+rMpy2HIdl1kFxIllXWCg4rGyJJyF4nyknmjov
+	0xyx8MJBg13OOE
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <be6fef0d0901171919ub28dda7ref6443abec3627aa@mail.gmail.com>
+In-Reply-To: <7v8wp917c3.fsf@gitster.siamese.dyndns.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106187>
 
 Hi,
 
-On Sun, 18 Jan 2009, Ray Chuan wrote:
+On Sat, 17 Jan 2009, Junio C Hamano wrote:
 
-> On Sun, Jan 18, 2009 at 12:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> > "Ray Chuan" <rctay89@gmail.com> writes:
-> >
-> >> A concern raised was repository corruption in the event of failure 
-> >> during PUT. "put && move" won't afford any more protection than using 
-> >> simply "put", since info/refs is not updated if a PUT fails, so there 
-> >> is no cause for concern.
-> >
-> > That's a completely bogus reasoning.  Normal operation inside the 
-> > repository that was pushed into won't look at info/refs at all.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> i mentioned this "repository corruption" issue as it was raised
-> previously by Johannes (towards the bottom):
+> > When HEAD is detached, --all should list it, too, logically, as a
+> > detached HEAD is by definition a temporary, unnamed branch.
+> >
+> > It is especially necessary to list it when garbage collecting, as
+> > the detached HEAD would be trashed.
+> >
+> > Noticed by Thomas Rast.
+> >
+> > Note that this affects creating bundles with --all; I contend that it
+> > is a good change to add the HEAD, so that cloning from such a bundle
+> > will give you a current branch.  However, I had to fix t5701 as it
+> > assumed that --all does not imply HEAD.
 > 
->   http://article.gmane.org/gmane.comp.version-control.git/106031
+> Sorry, but I do not understand.
+> 
+> > diff --git a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
+> > index 8dfaaa4..14413f8 100755
+> > --- a/t/t5701-clone-local.sh
+> > +++ b/t/t5701-clone-local.sh
+> > @@ -11,8 +11,8 @@ test_expect_success 'preparing origin repository' '
+> >  	git clone --bare . x &&
+> >  	test "$(GIT_CONFIG=a.git/config git config --bool core.bare)" = true &&
+> >  	test "$(GIT_CONFIG=x/config git config --bool core.bare)" = true
+> > -	git bundle create b1.bundle --all HEAD &&
+> > -	git bundle create b2.bundle --all &&
+> > +	git bundle create b1.bundle master HEAD &&
+> > +	git bundle create b2.bundle master &&
+> 
+> Because --all did not imply HEAD, "--all HEAD" used to be the way to say
+> "everything and HEAD".  Now --all does imply HEAD, but it should still be
+> a valid way to say "everything, by the way, do not forget HEAD".
+> 
+> Does the first one need to be changed to "master HEAD"?  If "--all HEAD"
+> makes the rest of the test unhappy because HEAD is listed twice, perhaps
+> that is an independent bug that needs to be fixed?
 
-,.. and Junio just raised a new concern.  The repository as it is on the 
-server could very well be served by other means, i.e. git:// and rsync://, 
-and there could be cron jobs and interactive Git sessions trying to work 
-with it.
-
-The point is: the repository inside the document root of the web server is 
-still a valid repository.
-
-And the assumption is that whenever you have a file that looks like a 
-valid object/pack inside a valid repository, that it does not need 
-replacing.
-
-So even when optimizing the uncommon (HTTP push is 2nd class citizen), we 
-have to keep the common workflow intact (1st class citizens _are_ push by 
-file system, ssh or git://).
-
-Which unfortunately means that put && move must stay.
-
-The same reasoning explains why http-push has to ignore the info/refs file 
-when looking for common refs, BTW.
+I changed it away from --all because I am a fan of being explicit.  We 
+want a bundle here that has master and HEAD in it.  This being a test 
+case, being lazy is so wrong here.  You should describe what you actually 
+want, not use a set of parameters that just happens to work (by chance as 
+we saw).
 
 Ciao,
 Dscho
