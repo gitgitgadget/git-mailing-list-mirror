@@ -1,10 +1,9 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Stephan Beyer <s-beyer@gmx.net>
 Subject: Re: [PATCH v2 1/5] checkout: don't crash on file checkout before
- running post-checkout hook
-Date: Sat, 17 Jan 2009 17:56:51 -0800
-Message-ID: <7vd4el2x7g.fsf@gitster.siamese.dyndns.org>
-References: <20090116172521.GD28177@leksak.fem-net>
- <1232133002-21725-1-git-send-email-s-beyer@gmx.net>
+	running post-checkout hook
+Date: Sun, 18 Jan 2009 03:05:31 +0100
+Message-ID: <20090118020531.GC11992@leksak.fem-net>
+References: <20090116172521.GD28177@leksak.fem-net> <1232133002-21725-1-git-send-email-s-beyer@gmx.net> <7vd4el2x7g.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org,
@@ -13,40 +12,56 @@ Cc: git@vger.kernel.org,
 	Miklos Vajna <vmiklos@frugalware.org>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>, gitster@pobox.com
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Sun Jan 18 02:59:28 2009
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 18 03:07:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOMvq-00063K-T0
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 02:58:35 +0100
+	id 1LON4X-00005P-9i
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 03:07:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757343AbZARB5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Jan 2009 20:57:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757265AbZARB5J
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 20:57:09 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49111 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757274AbZARB5I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jan 2009 20:57:08 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 74F281CBED;
-	Sat, 17 Jan 2009 20:57:06 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 242091CBDA; Sat,
- 17 Jan 2009 20:56:52 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4F0974C0-E503-11DD-B4DE-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1757483AbZARCFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Jan 2009 21:05:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757380AbZARCFl
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Jan 2009 21:05:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53396 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757265AbZARCFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jan 2009 21:05:40 -0500
+Received: (qmail invoked by alias); 18 Jan 2009 02:05:38 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp006) with SMTP; 18 Jan 2009 03:05:38 +0100
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX19It5Y1eZZIQxDeDzop68/c4ZoNdTH08cAAmvCsWv
+	xUicDuwc5klsaU
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1LON2Z-0007Ie-Hm; Sun, 18 Jan 2009 03:05:31 +0100
+Content-Disposition: inline
+In-Reply-To: <7vd4el2x7g.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106132>
 
-All looked good to me except one thing; you need to initialize argv to
-NULL as ALLOC_GROW() calls xrealloc on it in the last one.
+Hi,
 
-Will queue with an amend.
+Junio C Hamano wrote:
+> All looked good to me except one thing; you need to initialize argv to
+> NULL as ALLOC_GROW() calls xrealloc on it in the last one.
+
+This is true. Sorry.
+
+> Will queue with an amend.
+
+Thank you.
+
+  Stephan
+
+-- 
+Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
