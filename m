@@ -1,88 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: meaning of --8<--
-Date: Sun, 18 Jan 2009 12:44:44 -0500
-Message-ID: <20090118174444.GB17055@coredump.intra.peff.net>
-References: <200901181656.37813.markus.heidelberg@web.de>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 1/2] color: make it easier for non-config to parse	color
+ specs
+Date: Sun, 18 Jan 2009 18:45:00 +0100
+Message-ID: <49736A9C.1040601@lsrfire.ath.cx>
+References: <20090117152108.GA24899@coredump.intra.peff.net> <20090117153229.GA27071@coredump.intra.peff.net> <4973628C.8080501@lsrfire.ath.cx> <20090118172802.GA17434@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Sun Jan 18 18:46:13 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Markus Heidelberg <markus.heidelberg@web.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jan 18 18:46:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LObis-0007ZD-Jp
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 18:46:11 +0100
+	id 1LObjC-0007f7-Vy
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 18:46:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933012AbZARRos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 12:44:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932907AbZARRoq
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 12:44:46 -0500
-Received: from peff.net ([208.65.91.99]:32790 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932514AbZARRoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 12:44:46 -0500
-Received: (qmail 22214 invoked by uid 107); 18 Jan 2009 17:44:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 18 Jan 2009 12:44:49 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Jan 2009 12:44:44 -0500
-Content-Disposition: inline
-In-Reply-To: <200901181656.37813.markus.heidelberg@web.de>
+	id S933732AbZARRpH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jan 2009 12:45:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933670AbZARRpG
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 12:45:06 -0500
+Received: from india601.server4you.de ([85.25.151.105]:42719 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932907AbZARRpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 12:45:05 -0500
+Received: from [10.0.1.101] (p57B7E094.dip.t-dialin.net [87.183.224.148])
+	by india601.server4you.de (Postfix) with ESMTPSA id B1D182F8046;
+	Sun, 18 Jan 2009 18:45:01 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <20090118172802.GA17434@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106252>
 
-On Sun, Jan 18, 2009 at 04:56:37PM +0100, Markus Heidelberg wrote:
+Jeff King schrieb:
+> On Sun, Jan 18, 2009 at 06:10:36PM +0100, Ren=C3=A9 Scharfe wrote:
+>=20
+>>>  - right now, it is implemented in terms of color_parse().
+>>>    But it would be more efficient to reverse this and
+>>>    implement color_parse in terms of color_parse_mem.
+>> Thusly?
+>=20
+> Yes, except for the bugs you introduced. :)
 
-> I've seen lines like "--8<--" several times on this list, but have no
-> clue what it is about. OK, seems like it's used to insert diffs in the
-> middle of a mail message.
-> But is this a common convention or git specific and handled by git-am?
-> Is it documented anywhere?
+Eeek! :)
 
-As others have explained, it is supposed to be scissors, and it is not
-handled by git-am. But the real point of it is to help the person
-applying (e.g., Junio) manually separate cover letter from the commit
-message. So one way of sending cover material is putting it after the
-"---" and before the diff:
+>> +void color_parse_mem(const char *value, int len, const char *var, c=
+har *dst)
+>> +{
+>>  	const char *ptr =3D value;
+>>  	int attr =3D -1;
+>>  	int fg =3D -2;
+>=20
+> What's missing in the context here (because it wasn't changed) is:
+>=20
+>> 	if (!strcasecmp(value, "reset")) {
+>> 		strcpy(dst, "\033[m");
+>> 		return;
+>> 	}
+>=20
+> which doesn't work, since our string is actually something like
+> "reset)\0" or even "reset)some totally unrelated string". So we would
+> need a "memcasecmp" here.
 
-  Subject: [PATCH] first line of commit message
+	if (!strncasecmp(value, "reset", len)) {
 
-  more commit message
-  ---
-  Here is cover letter material that doesn't go in the commit message.
-  It is stripped automatically by git-am.
+> And then in the error case, we call:
+>=20
+>> die("bad color value '%s' for variable '%s'", value, var);
+>=20
+> which is also bogus.
 
-  diff --git ...
+   die("bad color value '%.*s' for variable '%s', len, value, var);
 
-but that is often unnatural to read, because the cover letter material
-often introduces the commit, especially when you are replying in the
-middle of a thread. So then you end up with:
+> I don't know if this is really even worth it. The timing difference i=
+s
+> pretty minimal:
+>=20
+>   $ time ./git log --pretty=3Dtformat:'%Credfoo%Creset' >/dev/null
+>   real    0m0.673s
+>   user    0m0.652s
+>   sys     0m0.016s
+>   $ time ./git log --pretty=3Dtformat:'%C(red)foo%C(reset)' >/dev/nul=
+l
+>   real    0m0.692s
+>   user    0m0.660s
+>   sys     0m0.032s
+>=20
+> That's about 1 microsecond per commit.
 
-  Subject: Re: whatever thread you're in
+Hmm, not too much overhead, agreed, but it would still be nice to avoid=
+ it.
 
-  Somebody else said:
-  > blah blah blah
-
-  I disagree. You should do it like this instead:
-
-  -- >8 --
-  first line of commit message
-
-  more commit message
-  ---
-
-  diff --git ...
-
-git-am will put everything down to the "---" into the commit message,
-but it is simple enough to amend away everything else.
-
-So in that sense, it doesn't really matter _what_ the separator is, but
-it should be visibly obvious to a human so that they can fix up the
-commit message. The only exception is that it should _not_ be "---",
-because that is treated specially by git-am.
-
--Peff
+Ren=C3=A9
