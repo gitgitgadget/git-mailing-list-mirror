@@ -1,58 +1,53 @@
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Re: [PATCH (topgit) 0/2] tg-patch: fix pagination
-Date: Sun, 18 Jan 2009 18:04:20 +0300
-Organization: St.Petersburg State University
-Message-ID: <20090118150420.GB27522@roro3.zxlink>
-References: <cover.1231254832.git.kirr@landau.phys.spbu.ru>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [WIP Patch 03/12] Two new functions for the http API
+Date: Sun, 18 Jan 2009 16:03:20 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901181602580.3586@pacific.mpi-cbg.de>
+References: <20090118074911.GB30228@glandium.org> <1232265877-3649-1-git-send-email-mh@glandium.org> <1232265877-3649-2-git-send-email-mh@glandium.org> <1232265877-3649-3-git-send-email-mh@glandium.org> <1232265877-3649-4-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pasky@suse.cz, martin f krafft <madduck@madduck.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 18 16:04:29 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sun Jan 18 16:04:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOZCP-0007pm-13
-	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 16:04:29 +0100
+	id 1LOZCi-0007wW-Nk
+	for gcvg-git-2@gmane.org; Sun, 18 Jan 2009 16:04:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758938AbZARPDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jan 2009 10:03:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756604AbZARPDF
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 10:03:05 -0500
-Received: from landau.phys.spbu.ru ([195.19.235.38]:2803 "EHLO
-	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754491AbZARPDE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jan 2009 10:03:04 -0500
-Received: by landau.phys.spbu.ru (Postfix, from userid 509)
-	id E0DB917B663; Sun, 18 Jan 2009 18:03:01 +0300 (MSK)
-Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
-	(envelope-from <kirr@roro3.zxlink>)
-	id 1LOZCG-0007Y3-L0; Sun, 18 Jan 2009 18:04:20 +0300
-Content-Disposition: inline
-In-Reply-To: <cover.1231254832.git.kirr@landau.phys.spbu.ru>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1760924AbZARPDY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jan 2009 10:03:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759099AbZARPDX
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Jan 2009 10:03:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42162 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756604AbZARPDW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jan 2009 10:03:22 -0500
+Received: (qmail invoked by alias); 18 Jan 2009 15:03:18 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp066) with SMTP; 18 Jan 2009 16:03:18 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/XkHp8jWTXyI2Hj1FmuIoTLsXFTME5mWt/myHFct
+	LEYAH7OWCucWTm
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1232265877-3649-4-git-send-email-mh@glandium.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106208>
 
-On Tue, Jan 06, 2009 at 06:16:37PM +0300, Kirill Smelkov wrote:
-> Kirill Smelkov (2):
->   Implement setup_pager just like in git
->   tg-patch: fix pagination
-> 
->  tg-patch.sh |    3 +++
->  tg.sh       |   53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 56 insertions(+), 0 deletions(-)
+Hi,
 
-Petr, Martin,
+On Sun, 18 Jan 2009, Mike Hommey wrote:
 
-What's the state of this patch series?
+> http_get_strbuf and http_get_file allow respectively to retrieve contents of
+> an URL to a strbuf or an opened file handle.
 
-It fixes `tg patch`, and it seems we addressed all uglyness in
-setup_pager, so is there any other reason not to merge this?
+Yesss!  Why have you hidden them that long?
 
-Thanks,
-Kirill
+Ciao,
+Dscho
