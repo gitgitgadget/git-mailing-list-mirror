@@ -1,140 +1,125 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: how to omit rename file when commit
-Date: Mon, 19 Jan 2009 11:41:02 -0600
-Message-ID: <200901191141.07440.bss@iguanasuicide.net>
-References: <1976ea660901190113l5407f108lff8f37d9a8331f58@mail.gmail.com> <7v63kbr6zc.fsf@gitster.siamese.dyndns.org> <1976ea660901190135k71087673p85e995878e539a8f@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 6/7 v2] Compute prefix at runtime if RUNTIME_PREFIX is
+ set
+Date: Mon, 19 Jan 2009 18:41:05 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901191825040.3586@pacific.mpi-cbg.de>
+References: <1232280015-8144-1-git-send-email-prohaska@zib.de> <1232280015-8144-2-git-send-email-prohaska@zib.de> <1232280015-8144-3-git-send-email-prohaska@zib.de> <1232280015-8144-4-git-send-email-prohaska@zib.de> <1232280015-8144-5-git-send-email-prohaska@zib.de>
+ <1232280015-8144-6-git-send-email-prohaska@zib.de> <1232280015-8144-7-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart4897546.9ydPgUGPMc";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Frank Li" <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 19 18:41:50 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Sixt <johannes.sixt@telecom.at>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Jan 19 18:42:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOy8B-0006rn-Il
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 18:41:48 +0100
+	id 1LOy92-0007IM-IS
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 18:42:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751653AbZASRkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 12:40:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbZASRkW
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 12:40:22 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:52794 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751080AbZASRkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 12:40:20 -0500
-Received: from [206.104.167.41]
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LOy6k-00085f-Km; Mon, 19 Jan 2009 17:40:18 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <1976ea660901190135k71087673p85e995878e539a8f@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1751897AbZASRlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 12:41:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbZASRlP
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 12:41:15 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41789 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751753AbZASRlO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2009 12:41:14 -0500
+Received: (qmail invoked by alias); 19 Jan 2009 17:41:08 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp019) with SMTP; 19 Jan 2009 18:41:08 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19qCFFfo7NquExf0ITlMW+nJZm0KVGn7ik1gNMKNM
+	u3xxBGtDtsV/nr
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1232280015-8144-7-git-send-email-prohaska@zib.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106372>
 
---nextPart4897546.9ydPgUGPMc
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-On Monday 2009 January 19 03:35:41 you wrote:
->For example:
->there are 2 file. a.c and e.c
->I modify e.c.
->and git mv a.c b.c
->
->git update-index e.c
->
->I just want to commit e.c and don't commit rename(a.c -> b.c)
+On Sun, 18 Jan 2009, Steffen Prohaska wrote:
 
-Here, it looks like all you need to do is follow the instructions given by =
-git=20
-status--use "git reset HEAD" on each file you want unstaged:
-$ rm -rf test && mkdir test
-$ cd test
-/home/bss/test
-$ git init
-Initialized empty Git repository in /home/bss/test/.git/
-$ echo b > a.c; echo d > e.c
-$ git add a.c b.c e.c
-$ git commit -m 'Setup'
-Created initial commit fc9d26e: Setup
- 2 files changed, 2 insertions(+), 0 deletions(-)
- create mode 100644 a.c
- create mode 100644 e.c
-$ git mv a.c b.c
-$ echo e > e.c
-$ git add e.c
-$ git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       renamed:    a.c -> b.c
-#       modified:   e.c
-#
-$ git reset HEAD -- a.c b.c
-a.c: locally modified
-$ git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       modified:   e.c
-#
-# Changed but not updated:
-#   (use "git add/rm <file>..." to update what will be committed)
-#
-#       deleted:    a.c
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       b.c
-$ git commit -m 'e.c: Fix typo'
-Created commit c23b226: e.c: Fix typo
- 1 files changed, 1 insertions(+), 1 deletions(-)
-$ git status
-# On branch master
-# Changed but not updated:
-#   (use "git add/rm <file>..." to update what will be committed)
-#
-#       deleted:    a.c
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       b.c
-no changes added to commit (use "git add" and/or "git commit -a")
+> +	if (!prefix) {
+> +		const char *strip[] = {
+> +			GIT_EXEC_PATH,
+> +			BINDIR,
+> +			0
+> +		};
+> +		const char **s;
+> +
+> +		for (s = strip; *s; s++) {
+> +			const char *sargv = argv0_path + strlen(argv0_path);
 
-HTH.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+This does not need to be recomputed all the time, right?
 
---nextPart4897546.9ydPgUGPMc
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+> +			const char *ss = *s + strlen(*s);
+> +			while (argv0_path < sargv && *s < ss
+> +				&& (*sargv == *ss ||
+> +				    (is_dir_sep(*sargv) && is_dir_sep(*ss)))) {
+> +				sargv--;
+> +				ss--;
+> +			}
+> +			if (*s == ss) {
+> +				struct strbuf d = STRBUF_INIT;
+> +				/* We also skip the trailing directory separator. */
+> +				assert(sargv - argv0_path - 1 >= 0);
+> +				strbuf_add(&d, argv0_path, sargv - argv0_path - 1);
+> +				prefix = strbuf_detach(&d, NULL);
+> +				break;
+> +			}
+> +		}
+> +	}
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+I have a definite feeling that this code would be easier to read if it 
+resembled this:
 
-iEYEABECAAYFAkl0uzMACgkQdNbfk+86fC0XpgCggK8iHT3x3UawHm3yCfIEvef8
-SgYAn0/pok6TSnWvJDjo6zbJhTEypm+i
-=VJqD
------END PGP SIGNATURE-----
+/* sets prefix if the suffix matches (modulo separator changes) */
+static int strip_path_suffix(const char *path, const char *suffix,
+	char **prefix)
+{
+	int path_len = strlen(path), suffix_len = strlen(suffix);
 
---nextPart4897546.9ydPgUGPMc--
+	while (suffix_len) {
+		if (!path_len)
+			return 1;
+
+		path_len--; suffix_len--;
+		/* strip arbitrary amount of directory separators */
+		if (is_dir_sep(path[path_len]) && 
+				is_dir_sep(suffix[suffix_len])) {
+			while (path_len && is_dir_sep(path[path_len]))
+				path_len--;
+			while (suffix_len && is_dir_sep(suffix[suffix_len]))
+				suffix_len--;
+		}
+		else if (path[path_len] != suffix[suffix_len])
+			return 1;
+	}
+
+	while (path_len && is_dir_sep(path[path_len - 1]))
+		path_len--;
+
+	prefix = xstrndup(path, path_len);
+	return 0;
+}
+
+...
+
+	if (!prefix && strip_path_suffix(argv0_path, GIT_EXEC_PATH) &&
+			strip_path_suffix(argv0_path, BINDIR)) {
+		prefix = PREFIX;
+		...
+
+Note: this function could be exported in path.c, as it also handles the 
+"a//bin" vs "a/bin" case.
+
+Ciao,
+Dscho
