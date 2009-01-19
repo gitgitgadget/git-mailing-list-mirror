@@ -1,90 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib/workdir: create logs/refs and rr-cache in the
- origin repository
-Date: Mon, 19 Jan 2009 11:48:36 -0800
-Message-ID: <7vvdsboz57.fsf@gitster.siamese.dyndns.org>
-References: <1232208943-31756-1-git-send-email-dato@net.com.org.es>
- <7vbpu54cxe.fsf@gitster.siamese.dyndns.org>
- <20090118113830.GA1394@chistera.yi.org>
- <7vskngwfko.fsf@gitster.siamese.dyndns.org>
- <20090119122018.GA25566@chistera.yi.org>
+From: david@lang.hm
+Subject: Re: how to track multiple upstreams in one repository
+Date: Mon, 19 Jan 2009 13:08:35 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0901191308030.2428@asgard.lang.hm>
+References: <alpine.DEB.1.10.0901181855400.20741@asgard.lang.hm> <alpine.LNX.2.00.0901191627480.4115@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: git@vger.kernel.org
-To: Adeodato =?utf-8?Q?Sim=C3=B3?= <dato@net.com.org.es>
-X-From: git-owner@vger.kernel.org Mon Jan 19 20:50:40 2009
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Jan 19 21:06:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LP08s-0008VG-7v
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 20:50:38 +0100
+	id 1LP0OQ-0004JN-Qj
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 21:06:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752680AbZASTsp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jan 2009 14:48:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752022AbZASTso
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 14:48:44 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64282 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751898AbZASTso convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2009 14:48:44 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 856201CD09;
-	Mon, 19 Jan 2009 14:48:41 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 687101CD07; Mon,
- 19 Jan 2009 14:48:38 -0500 (EST)
-In-Reply-To: <20090119122018.GA25566@chistera.yi.org> (Adeodato
- =?utf-8?Q?Sim=C3=B3's?= message of "Mon, 19 Jan 2009 13:20:18 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2C4BDE7C-E662-11DD-A078-2E3B113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1753020AbZASUFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 15:05:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752253AbZASUFU
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 15:05:20 -0500
+Received: from mail.lang.hm ([64.81.33.126]:53763 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751603AbZASUFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2009 15:05:19 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n0JK5Dpk019444;
+	Mon, 19 Jan 2009 12:05:13 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <alpine.LNX.2.00.0901191627480.4115@reaper.quantumfyre.co.uk>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106387>
 
-Adeodato Sim=C3=B3 <dato@net.com.org.es> writes:
+On Mon, 19 Jan 2009, Julian Phillips wrote:
 
-> * Junio C Hamano [Sun, 18 Jan 2009 11:59:35 -0800]:
-> ...
->>     A workdir is a new work area that is not a normal "work tree wit=
-h a
->>     full repository", but borrows from an existing repository.  Any =
-side
->>     effect from the work you do in a workdir will be saved in the or=
-iginal
->>     repository, and removing one would lose only the three kind of
->>     information listed above.  Creating a new workdir has the side e=
-ffect
->>     of enabling reflogs and rerere in the original repository.
+> On Sun, 18 Jan 2009, david@lang.hm wrote:
 >
->> But the last sentence somehow feels dirty.
+>> for linux I want to track both the linus tree and the -stable tree. Ideally 
+>> I want to be able to do a checkout of tags from either tree from the same 
+>> directory (along with diffs between items in both trees, etc)
+>> 
+>> I have found documentation on how to clone from each of them, but I haven't 
+>> found any simple documentation on how to work with both of them.
 >
-> I really don't understand that last sentence. Does "mkdir logs/refs r=
-r-cache"
-> *enable* reflogs and rerere at all? Or, rather, it just gives an empt=
-y
-> space for the workdirs "connecting" to it to save their reflogs and
-> rerere stuff iff they are configured to do so?
+> You could always just use 
+> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6-stable.git ? 
+> It already contains both the linus tree and all the stable trees ...
 
-I thought rerere does not kick in if rr-cache is absent, and it kicks i=
-n
-if rr-cache is present when you do not explicitly disable it.  So creat=
-ion
-of directory is a way to enable it.  Besides, the net effect for a pers=
-on
-who does not want to have the bare repository contaminated with these
-directories is the same.  The original repository aquires them.
+I know it contains the releases, but does it contain the -rc trees?
 
-As I said already, I suspect that it would be more useful in practice t=
-o
-create these directories as your patch did, than making the new workdir
-inherit the lack of rerere and reflog support if the original repositor=
-y
-lacked them.  I just wanted to see some documentation that makes it cle=
-ar
-that the original repository _is_ modified by a creation of a new workd=
-ir.
+David Lang
