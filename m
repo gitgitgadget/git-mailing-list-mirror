@@ -1,106 +1,70 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] parsecvs: produce tagger fields acceptable to newer git versions
-Date: Mon, 19 Jan 2009 13:44:06 +0100
-Message-ID: <87ab9nbh49.fsf@meyering.net>
-References: <20090119120217.GD4390@xi.wantstofly.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Jan 2009, #04; Mon, 19)
+Date: Mon, 19 Jan 2009 14:08:48 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901191407470.3586@pacific.mpi-cbg.de>
+References: <7vbpu3r745.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: keithp@keithp.com, git@vger.kernel.org, jay@gnu.org,
-	kedars@marvell.com
-To: Lennert Buytenhek <buytenh@wantstofly.org>
-X-From: git-owner@vger.kernel.org Mon Jan 19 13:56:20 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 19 14:10:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOtfv-0003sv-N3
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 13:56:20 +0100
+	id 1LOttN-0000w3-0p
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 14:10:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759527AbZASMyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 07:54:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759200AbZASMyz
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 07:54:55 -0500
-Received: from smtpfb1-g21.free.fr ([212.27.42.9]:43352 "EHLO
-	smtpfb1-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758917AbZASMyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 07:54:54 -0500
-X-Greylist: delayed 638 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Jan 2009 07:54:52 EST
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 1D2A778000F
-	for <git@vger.kernel.org>; Mon, 19 Jan 2009 13:45:23 +0100 (CET)
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 0265C818068;
-	Mon, 19 Jan 2009 13:44:09 +0100 (CET)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 1FEB181816C;
-	Mon, 19 Jan 2009 13:44:07 +0100 (CET)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id F21F05010B; Mon, 19 Jan 2009 13:44:06 +0100 (CET)
-In-Reply-To: <20090119120217.GD4390@xi.wantstofly.org> (Lennert Buytenhek's
-	message of "Mon, 19 Jan 2009 13:02:17 +0100")
+	id S1760056AbZASNIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 08:08:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759527AbZASNIr
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 08:08:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34074 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759985AbZASNIq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2009 08:08:46 -0500
+Received: (qmail invoked by alias); 19 Jan 2009 13:08:45 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp020) with SMTP; 19 Jan 2009 14:08:45 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19gydYxoKxg3ZxyvLZBQokrqXifv1EjY48TuhCDVO
+	kHQ+NbCW9JEDRs
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vbpu3r745.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106354>
 
-Lennert Buytenhek <buytenh@wantstofly.org> wrote:
+Hi,
 
-> Signed-off-by: Lennert Buytenhek <buytenh@marvell.com>
->
-> diff --git a/git.c b/git.c
-> index da320d1..8f94d1b 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -371,11 +371,13 @@ git_mktag (rev_commit *commit, char *name)
->  		"object %s\n"
->  		"type commit\n"
->  		"tag %s\n"
-> -		"tagger %s\n"
-> +		"tagger %s <%s> %lu +0000\n"
->  		"\n",
->  		commit->sha1,
->  		name,
-> -		author ? author->full : commit->author);
-> +		author ? author->full : commit->author,
-> +		author ? author->email : commit->author,
-> +		commit->date);
->      if (rv < 1) {
->  	fprintf (stderr, "%s: %s\n", filename, strerror (errno));
->  	fclose (f);
+On Mon, 19 Jan 2009, Junio C Hamano wrote:
 
-Hi Lennert,
+> * js/diff-color-words (Sat Jan 17 17:29:48 2009 +0100) 7 commits
+>  - color-words: make regex configurable via attributes
+>  - color-words: expand docs with precise semantics
+>  - color-words: enable REG_NEWLINE to help user
+>  - color-words: take an optional regular expression describing words
+>  - color-words: change algorithm to allow for 0-character word
+>    boundaries
+>  - color-words: refactor word splitting and use ALLOC_GROW()
+>  - Add color_fwrite_lines(), a function coloring each line
+>    individually
+> 
+> Dscho's series that was done in response to Thomas's original; two agreed
+> to work together on this codebase.
 
-I posted the same patch a while back.
+I am actually pretty comfortable with this series now.
 
-    http://markmail.org/message/cebh7suc7ejpayos
+> * jk/valgrind (Thu Oct 23 04:30:45 2008 +0000) 2 commits
+>  . valgrind: ignore ldso errors
+>  . add valgrind support in test scripts
 
-However, I never heard back.
-You'll also need the patch below, if you're building
-against a newer version of git.
+Could you put this in pu, at least, please?
 
-
->From 93bc277dff113f1133ef25b8bb985af80f1fbe0e Mon Sep 17 00:00:00 2001
-From: Jim Meyering <meyering@redhat.com>
-Date: Thu, 6 Nov 2008 11:35:09 +0100
-Subject: [PATCH 2/2] * tree.c (init_tree): Adapt to new git_config API.
-
----
- tree.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/tree.c b/tree.c
-index a76f27c..e2a041c 100644
---- a/tree.c
-+++ b/tree.c
-@@ -177,7 +177,7 @@ rev_commit *create_tree(rev_commit *leader)
-
- void init_tree(int n)
- {
--	git_config(git_default_config);
-+	git_config(git_default_config, NULL);
- 	strip = n;
- }
-
---
-1.6.1.331.g9c367
+Thanks,
+Dscho
