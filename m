@@ -1,127 +1,73 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2] bash: offer to show (un)staged changes
-Date: Mon, 19 Jan 2009 22:38:09 +0100
-Message-ID: <1232401089-27512-1-git-send-email-trast@student.ethz.ch>
-References: <20090119172939.GA14053@spearce.org>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junio@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 19 22:39:51 2009
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Syncing with CVS
+Date: Mon, 19 Jan 2009 23:05:36 +0100
+Message-ID: <200901192305.36577.robin.rosenberg.lists@dewire.com>
+References: <f31e50960901190139w65b69fd1k752973a23c40f384@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Christian von Kietzell" <cuboci@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 19 23:07:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LP1qU-00052e-OJ
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 22:39:47 +0100
+	id 1LP2Gv-00054e-OJ
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 23:07:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760086AbZASViJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 16:38:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754468AbZASViH
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 16:38:07 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:54955 "EHLO XSMTP0.ethz.ch"
+	id S1754170AbZASWFk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jan 2009 17:05:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbZASWFk
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 17:05:40 -0500
+Received: from mail.dewire.com ([83.140.172.130]:10437 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760083AbZASViF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 16:38:05 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 19 Jan 2009 22:38:03 +0100
-Received: from localhost.localdomain ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 19 Jan 2009 22:38:03 +0100
-X-Mailer: git-send-email 1.6.1.397.gb7e802
-In-Reply-To: <20090119172939.GA14053@spearce.org>
-X-OriginalArrivalTime: 19 Jan 2009 21:38:03.0443 (UTC) FILETIME=[353D0830:01C97A7E]
+	id S1752210AbZASWFj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2009 17:05:39 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id AD53A147E5EF;
+	Mon, 19 Jan 2009 23:05:37 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5o61NOqD5HOv; Mon, 19 Jan 2009 23:05:37 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 1A7D28028B8;
+	Mon, 19 Jan 2009 23:05:37 +0100 (CET)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <f31e50960901190139w65b69fd1k752973a23c40f384@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106394>
 
-Add a bit of code to __git_ps1 that lets it append '*' to the branch
-name if there are any unstaged changes, and '+' if there are any
-staged changes.
+m=C3=A5ndag 19 januari 2009 10:39:53 skrev Christian von Kietzell:
+> Hi,
+>=20
+> I have a project I started in git. After a while I exported that to
+> CVS via git cvsexportcommit which worked quite nicely. Now, a
+> colleague made changes to the project - in CVS. What's the best way t=
+o
+> get those back into my git repository so that I'll be able to sync
+> back and forth between git and CVS? I had a quick look at the wiki bu=
+t
+> couldn't find anything appropriate.
+>=20
+> I know of git cvsimport, of course, but that doesn't work on my
+> original repository. Or does it? I didn't find anything on how to
+> limit what to import. After all, some of the commits are already in m=
+y
+> repository (the ones I exported).
+Just continue with cvsimport, then git rebase origin. That'll drop the
+commits that you made when the same commit have been discovered
+in CVS.
 
-Since this is a rather expensive operation and will force a lot of
-data into the cache whenever you first enter a repository, you have to
-enable it manually by setting bash.showDirtyState to a true value.
+I personally do the cvs import into a separate repo using a cron job. T=
+hat
+extra repo is my origin so I get up-to-date using git fetch and rebase =
+just
+as if the CVS commits would come from a real repo.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-
----
-
-Shawn O. Pearce wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > This makes the feature unavailable for people who care about the stat
-> > dirtiness and explicitly set diff.autorefreshindex to false, doesn't it?
-> 
-> Yup, and I'm one of those people who sets autorefresindex to false
-> in my ~/.gitconfig, usually before I even have user.{name,email} set.
-
-I tried to alleviate the problem with a combination of diff options
-that hopefully does the right thing in all cases.
-
-> I do like the idea of what Thomas is trying to do here, but its
-> so bloody expensive to compute dirty state on every prompt in
-> some repositories that I'd shoot myself.  E.g. WebKit is huge,
-> computing the dirty state inside of the WebKit repository on each
-> prompt would absolutely kill CLI performance to a point of it not
-> being usuable.  But git.git is small enough its OK on pretty much
-> everything except Cygwin.
-> 
-> So as much as I'd like to use this without the update-index --refresh
-> bit, I'm not sure its viable in every project out there.
-
-I mostly work on small-ish repos, and while the initial loading is
-_very_ noticeable, it's ok after that.  But your point about repos
-being different is very good, so I changed the patch to use a
-git-config variable instead of a shell environment variable.  That
-way, you could even configure it to a different setting per-repo.
-
-(Which might end up rather confusing, but at least it's possible.)
-
-
- contrib/completion/git-completion.bash |   22 ++++++++++++++++++++--
- 1 files changed, 20 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index f8b845a..7864ca7 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -34,6 +34,10 @@
- #       are currently in a git repository.  The %s token will be
- #       the name of the current branch.
- #
-+#	In addition, if you set bash.showDirtyState to a true value,
-+#	unstaged (*) and staged (+) changes will be shown next to the
-+#	branch name.
-+#
- # To submit patches:
- #
- #    *) Read Documentation/SubmittingPatches
-@@ -116,10 +120,24 @@ __git_ps1 ()
- 			fi
- 		fi
- 
-+		local w
-+		local i
-+
-+		if test "$(git config --bool bash.showDirtyState)" = "true"; then
-+			git diff --no-ext-diff --ignore-submodules \
-+				--quiet --exit-code || w="*"
-+			if git rev-parse --quiet --verify HEAD >/dev/null; then
-+				git diff-index --cached --quiet \
-+					--ignore-submodules HEAD -- || i="+"
-+			else
-+				i="#"
-+			fi
-+		fi
-+
- 		if [ -n "${1-}" ]; then
--			printf "$1" "${b##refs/heads/}$r"
-+			printf "$1" "${b##refs/heads/}$w$i$r"
- 		else
--			printf " (%s)" "${b##refs/heads/}$r"
-+			printf " (%s)" "${b##refs/heads/}$w$i$r"
- 		fi
- 	fi
- }
--- 
-tg: (7bbd8d6..) t/ps1-dirty-state (depends on: origin/master)
+-- robin
