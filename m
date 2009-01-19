@@ -1,58 +1,64 @@
-From: jidanni@jidanni.org
-Subject: Re: [PATCH,v3] git-checkout(1): mention fate of extraneous files
-Date: Tue, 20 Jan 2009 07:31:46 +0800
-Message-ID: <87hc3uvpnh.fsf_-_@jidanni.org>
-References: <200901191716.59373.bss@iguanasuicide.net>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: [StGit PATCH] Added basic bash completion script for StGit.
+Date: Mon, 19 Jan 2009 18:35:39 -0500
+Message-ID: <49750E4B.3000203@tedpavlic.com>
+References: <1232405879-6188-1-git-send-email-ted@tedpavlic.com> <497509A2.5020101@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org, markus.heidelberg@web.de
-To: bss@iguanasuicide.net
-X-From: git-owner@vger.kernel.org Tue Jan 20 00:33:17 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "catalin.marinas" <catalin.marinas@gmail.com>,
+	git <git@vger.kernel.org>
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Tue Jan 20 00:37:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LP3cL-0003Zi-3n
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 00:33:17 +0100
+	id 1LP3g5-0004LP-49
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 00:37:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754230AbZASXbu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 18:31:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754009AbZASXbu
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 18:31:50 -0500
-Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:51754 "EHLO
-	homiemail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752892AbZASXbt (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2009 18:31:49 -0500
-Received: from jidanni.org (122-127-34-185.dynamic.hinet.net [122.127.34.185])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a1.g.dreamhost.com (Postfix) with ESMTP id E7EE6119DCF;
-	Mon, 19 Jan 2009 15:31:48 -0800 (PST)
+	id S1753666AbZASXfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 18:35:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753414AbZASXfo
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 18:35:44 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:49190 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753394AbZASXfn (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2009 18:35:43 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 8BAEE80D8038;
+	Mon, 19 Jan 2009 18:29:49 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7-qEYKa70Fdl; Mon, 19 Jan 2009 18:29:49 -0500 (EST)
+Received: from TedBook.local (cpe-76-181-62-78.columbus.res.rr.com [76.181.62.78])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 3EA6580D8035;
+	Mon, 19 Jan 2009 18:29:49 -0500 (EST)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
+In-Reply-To: <497509A2.5020101@tedpavlic.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106403>
 
-Signed-off-by: jidanni <jidanni@jidanni.org>
----
-Thanks Boyd.
- Documentation/git-checkout.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+>> +# Use __stg for stg completion and bail out to normal bash completion
+>> +complete -o bashdefault -o default -F __stg stg 2>/dev/null \
+>> +    || complete -o default -F __stg stg
+>
+> Somehow I didn't see the existing
+>
+> 	stgit-completion.bash
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 9cd5151..56e1ec9 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -17,7 +17,8 @@ DESCRIPTION
- When <paths> are not given, this command switches branches by
- updating the index and working tree to reflect the specified
- branch, <branch>, and updating HEAD to be <branch> or, if
--specified, <new_branch>.  Using -b will cause <new_branch> to
-+specified, <new_branch>. (To also delete untracked content
-+use linkgit:git-clean[1].) Using -b will cause <new_branch> to
- be created; in this case you can use the --track or --no-track
- options, which will be passed to `git branch`.
- 
+I didn't see it because it is generated in the build process. :(
+
+Sorry for the bother --
+Ted
+
 -- 
-1.6.0.6
+Ted Pavlic <ted@tedpavlic.com>
+
+   Please visit my ALS association page:
+         http://web.alsa.org/goto/tedpavlic
+   My family appreciates your support in the fight to defeat ALS.
