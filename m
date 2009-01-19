@@ -1,87 +1,100 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH 2/2] difftool: put the cursor on the editable file for Vim
-Date: Sun, 18 Jan 2009 21:27:20 -0800
-Message-ID: <1232342840-27459-2-git-send-email-davvid@gmail.com>
-References: <1232342840-27459-1-git-send-email-davvid@gmail.com>
-Cc: gitster@pobox.com, David Aguilar <davvid@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 19 06:28:06 2009
+Subject: Re: [PATCH] contrib: add 'git difftool' for launching common merge 
+	tools
+Date: Sun, 18 Jan 2009 21:32:17 -0800
+Message-ID: <402731c90901182132i28f62474kae7595f89e2abdae@mail.gmail.com>
+References: <1232092802-30838-1-git-send-email-davvid@gmail.com>
+	 <200901182025.24045.markus.heidelberg@web.de>
+	 <402731c90901181634u32b39c87t6e88d9efef0d3485@mail.gmail.com>
+	 <200901190603.06506.markus.heidelberg@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git mailing list <git@vger.kernel.org>
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Mon Jan 19 06:33:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOmg9-0002s4-Qg
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 06:28:06 +0100
+	id 1LOmla-0003oa-Uy
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 06:33:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755069AbZASF0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 00:26:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754912AbZASF0l
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 00:26:41 -0500
-Received: from rv-out-0506.google.com ([209.85.198.224]:34302 "EHLO
+	id S1755358AbZASFcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 00:32:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755318AbZASFcT
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 00:32:19 -0500
+Received: from rv-out-0506.google.com ([209.85.198.239]:34155 "EHLO
 	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754460AbZASF0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 00:26:39 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so2463014rvb.1
-        for <git@vger.kernel.org>; Sun, 18 Jan 2009 21:26:39 -0800 (PST)
+	with ESMTP id S1753734AbZASFcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2009 00:32:18 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so2464565rvb.1
+        for <git@vger.kernel.org>; Sun, 18 Jan 2009 21:32:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=NfcJOd9qqRQSLBU9N8ClecrcqEdpJemXV2DCu+bKHyo=;
-        b=p7HXGWG3X73F8rhQ2Bgdn2ecYRDgoZ60dGuwLxhA1s3vB15eH1qTyiob8Fa+XWuy7V
-         aFYmHUoFJDaOYZy8JF7WsjQF9ai6rjFdM0zLRClnM05pHfJq6bMoL2z3gojnOhtDL30l
-         YUay35i6e3zFc9od7GKFantWbSCEvV7KCn4yU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8ot3EBWkmvkRDRSu61Cce8I563LpyqKaboFzTQ/Ioqo=;
+        b=IQbKJlYzRggmMou+vgT1NwHf234K4N5dqq80fdKMeZseLiEx65zVOMQ0jdnU+ma9Gr
+         OMmVggCqV01F7O6tqMcJRaZMTrriO3dXxMcuRbjq670o4ixiD6CJPd4sgcAqDurdVrxy
+         u+M36wDptpBm7YvYl80GJ+Sv8vEtbz9vD2EgY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=AXjQdmGyIE2jcmuJjm7W05FT6sf4tXPT3xzS93GJ7QPtb2Z69U21JXryuHt8RCzuso
-         d6HVXWgTrVH2OKHLGMzxBJegC8aAQUj+Bc9j0uNitxF6LXYIuQG8bVwaeUq1SifDt+OL
-         7ZhqnhU+hnmnSV3QJ0xrjT3f71JXUxXe1KEfM=
-Received: by 10.141.62.7 with SMTP id p7mr743112rvk.113.1232342799518;
-        Sun, 18 Jan 2009 21:26:39 -0800 (PST)
-Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id b39sm4054995rvf.0.2009.01.18.21.26.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 18 Jan 2009 21:26:38 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.149.g7bbd8
-In-Reply-To: <1232342840-27459-1-git-send-email-davvid@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bRNQSuTKHF/DLdPI8XKB4lwu8NEuMvJ/doHcRXmU/ma5g2Wd/hYZV38a1mEhz+AcOz
+         W7BCvqRSzzvtmM1QtFEPpcPAKIBniR7lS0syf/QaNmSTdcb/MKu1htIeVqICgHXgdi/U
+         zKDRPj1jchE+oY2iILuQ72tfhKn3AKFHJFHcI=
+Received: by 10.142.199.10 with SMTP id w10mr935083wff.94.1232343137349; Sun, 
+	18 Jan 2009 21:32:17 -0800 (PST)
+In-Reply-To: <200901190603.06506.markus.heidelberg@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106324>
 
-You only need to edit worktree files when comparing against
-the worktree.  Put the cursor automatically into its window for
-vimdiff and gvimdiff to avoid doing <C-w>r every time.
+On Sun, Jan 18, 2009 at 9:03 PM, Markus Heidelberg
+> Well, in "wincmd l" "l" doesn't mean "left", it doesn't mean "put the
+> cursor into the left window", it just moves the cursor into the next
+> right window. So "wincmd r" doesn't mean "put the cursor into the right
+> window", but "rotate the window" (see :help ctrl-w_r).
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- contrib/difftool/git-difftool-helper |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+oops.. i should know better.  sorry... let's ignore 2/2 for now then.
+I'll resend.  duh.. I should have known better.. h left, j down, k up, l right.
 
-diff --git a/contrib/difftool/git-difftool-helper b/contrib/difftool/git-difftool-helper
-index 0b266e3..a6f862f 100755
---- a/contrib/difftool/git-difftool-helper
-+++ b/contrib/difftool/git-difftool-helper
-@@ -78,12 +78,16 @@ launch_merge_tool () {
- 		"$merge_tool_path" -o "$MERGED" "$LOCAL" "$REMOTE"
- 		;;
- 
--	meld|vimdiff)
-+	meld)
- 		"$merge_tool_path" "$LOCAL" "$REMOTE"
- 		;;
- 
-+	vimdiff)
-+		"$merge_tool_path" -c "wincmd r" "$LOCAL" "$REMOTE"
-+		;;
-+
- 	gvimdiff)
--		"$merge_tool_path" -f "$LOCAL" "$REMOTE"
-+		"$merge_tool_path" -c "wincmd r" -f "$LOCAL" "$REMOTE"
- 		;;
- 
- 	xxdiff)
+
+
+>
+> So with "wincmd r" the local file would be moved to the left side and
+> the index file to the right side, still containing the cursor. Not what
+> we want.
+>
+> With "wincmd l" the local file would stay on the right side, the index
+> file on the left side, but the cursor would move from the left to the
+> right side. Now we can edit the local file.
+>
+>> > You have deleted all the '-' chars from git-command, but when using it as the
+>> > name I think it's the preferred method, only when used as command then without
+>> > slash.
+>>
+>> I was wondering about that.  I think I tried to follow the lead from
+>> the git-diff.txt documentation, but "diff" is a builtin and thus
+>> doesn't have an actual git-diff, so I see why they should be
+>> different.
+>
+> Hmm, I don't think it makes a difference, whether it's a builtin or not.
+> git-diff only exists behind the scenes, invoking it as "git-diff"
+> doesn't work anymore with default settings. On the other hand, I can
+> also invoke "git difftool" without the slash, git can find it. The same
+> way I can for example call "git svn", which also isn't a builtin.
+>
+> Markus
+>
+>
+
+
+
 -- 
-1.6.1.149.g7bbd8
+    David
