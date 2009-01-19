@@ -1,161 +1,61 @@
-From: ted@tedpavlic.com
-Subject: [StGit PATCH] Added basic bash completion script for StGit.
-Date: Mon, 19 Jan 2009 17:57:59 -0500
-Message-ID: <1232405879-6188-1-git-send-email-ted@tedpavlic.com>
-Cc: git@vger.kernel.org, Ted Pavlic <ted@tedpavlic.com>
-To: catalin.marinas@gmail.com
-X-From: git-owner@vger.kernel.org Tue Jan 20 00:00:05 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] expand --pretty=format color options
+Date: Mon, 19 Jan 2009 15:10:56 -0800
+Message-ID: <7vljt6q4cf.fsf@gitster.siamese.dyndns.org>
+References: <20090117153846.GB27071@coredump.intra.peff.net>
+ <49736331.8010003@lsrfire.ath.cx>
+ <20090118173753.GB17434@coredump.intra.peff.net>
+ <20090118194328.GA31180@coredump.intra.peff.net>
+ <20090118195342.GA612@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Markus Heidelberg <markus.heidelberg@web.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 20 00:12:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LP35i-00039o-AY
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 23:59:34 +0100
+	id 1LP3IH-0006Uh-Fm
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 00:12:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752127AbZASW6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 17:58:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751175AbZASW6J
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 17:58:09 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:50269 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750745AbZASW6I (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2009 17:58:08 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 528ED80D8037;
-	Mon, 19 Jan 2009 17:52:13 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rgW9No3y-JKb; Mon, 19 Jan 2009 17:52:13 -0500 (EST)
-Received: from localhost.localdomain (cpe-76-181-62-78.columbus.res.rr.com [76.181.62.78])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id D905580D8035;
-	Mon, 19 Jan 2009 17:52:12 -0500 (EST)
-X-Mailer: git-send-email 1.6.1.87.g15624
+	id S1752700AbZASXLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 18:11:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752671AbZASXLK
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 18:11:10 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36062 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752530AbZASXLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2009 18:11:09 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 07FA9917EB;
+	Mon, 19 Jan 2009 18:11:08 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ED304917EA; Mon,
+ 19 Jan 2009 18:11:02 -0500 (EST)
+In-Reply-To: <20090118195342.GA612@coredump.intra.peff.net> (Jeff King's
+ message of "Sun, 18 Jan 2009 14:53:43 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 742A98FC-E67E-11DD-B1EE-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106399>
 
-From: Ted Pavlic <ted@tedpavlic.com>
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
----
- contrib/completion/stg-completion.bash |  106 ++++++++++++++++++++++++++++++++
- 1 files changed, 106 insertions(+), 0 deletions(-)
- create mode 100755 contrib/completion/stg-completion.bash
+> Hrm. OK, it doesn't actually work always. It does for git-log, but not
+> for rev-list, which leaves diff_use_color_default as -1. I don't know if
+> there are any other ways you can get to this code path without having
+> set diff_use_color_default.
 
-diff --git a/contrib/completion/stg-completion.bash b/contrib/completion/stg-completion.bash
-new file mode 100755
-index 0000000..13cc792
---- /dev/null
-+++ b/contrib/completion/stg-completion.bash
-@@ -0,0 +1,106 @@
-+#!bash
-+#
-+# bash completion support for Stacked Git (StGit).
-+#
-+# Copyright (c) 2009 by Theodore P. Pavlic <ted@tedpavlic.com>
-+# Distributed under the GNU General Public License, version 2.0.
-+#
-+# Design is highly influenced by completion scripts for Mercurial and
-+# git.
-+#
-+# To use these routines:
-+#
-+#    1) Copy this file to somewhere (e.g. ~/.stg-completion.sh).
-+#    2) Added the following line to your .bashrc or .bash_profile:
-+#        source ~/.stg-completion.sh
-+#
-+# To submit patches:
-+#
-+#    *) Read Documentation/SubmittingPatches
-+#    *) Send all patches to the Git mailing list
-+#
-+#           git@vger.kernel.org
-+#
-+#       and CC the message to the StGit maintainer
-+#
-+#           catalin.marinas@gmail.com
-+#
-+#       Prefix the subject with something like "[StGit PATCH]",
-+#       "[StGit PATCH i/n]", "[StGit PATCH RFC]", or similar. Patches
-+#       should be "Signed-off-by:" you as described in
-+#       Documentation/SubmittingPatches.
-+#
-+#       It is recommended that editors submit patches using utilities
-+#       like
-+#
-+#           stg mail
-+#           git send-email
-+#           git format-patch
-+#
-+#       In the latter case, make sure e-amils submitted to the list do
-+#       not have "format=flowed" and do not "word wrap" your patch.
-+#
-+
-+# This 'extglob' bash option allows for
-+#       if [[ $param == @(-h|--help) ]]
-+# type statements. That is, the pattern is true if $param matches -h OR
-+# --help
-+shopt -s extglob
-+
-+__stg_commands()
-+{
-+    local commands
-+    commands="$("$stg" help|grep '^ '|cut -f3 -d' ' 2>/dev/null)" || commands=""
-+    COMPREPLY=(${COMPREPLY[@]:-} $(compgen -W '$commands' -- "$cur"))
-+}
-+
-+__stg()
-+{
-+    local cur prev cmd
-+    local stg="$1"
-+
-+    COMPREPLY=()
-+    cur="$2"
-+    prev="$3"
-+
-+    if [ $COMP_CWORD -gt 1 ]; then
-+        # Try to complete the argument to an already complete stg command
-+        # (e.g., "stg command partial<tab>")
-+        cmd=${COMP_WORDS[${COMP_CWORD}-1]}
-+        __stg_specific_command
-+    else
-+        # Try to complete an incomplete stg command (possibly blank)
-+        # (e.g., "stg partial<tab>")
-+        __stg_commands
-+    fi
-+
-+}
-+
-+# Handle "stg command <tab>" completion
-+__stg_specific_command()
-+{
-+    # Here, try to find (possibly user-defined) functions that match the
-+    # command
-+    if [ "$(type -t "__stg_cmd_$cmd")" = function ]; then
-+        "__stg_cmd_$cmd"
-+        return 0
-+    fi
-+
-+    # Special handling of particular stg commands can be placed here
-+    case "$cmd" in
-+        help)
-+            # Complete help with all possible help commands
-+            __stg_commands
-+            ;;
-+        *)
-+            # Bail out to normal bash completion
-+            return 1
-+            ;;
-+   esac
-+
-+   return 0
-+}
-+
-+# Use __stg for stg completion and bail out to normal bash completion
-+complete -o bashdefault -o default -F __stg stg 2>/dev/null \
-+    || complete -o default -F __stg stg
--- 
-1.6.1.87.g15624
+Yuck, no matter what you do please don't contaminate plumbing with the UI
+color options.
+
+> Maybe it is time to do a cleanup on the color handling, which has
+> provided no end of these bugs. I will have to leave that for another
+> day, though.
