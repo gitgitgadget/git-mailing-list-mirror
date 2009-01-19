@@ -1,75 +1,73 @@
-From: "Dilip M" <dilipm79@gmail.com>
-Subject: Re: gitk doesn't work w/o sudo.
-Date: Mon, 19 Jan 2009 21:05:02 +0530
-Message-ID: <c94f8e120901190735j572f4fc6la30c820257603a98@mail.gmail.com>
-References: <c94f8e120901190216x246589ebwc4a44dd85bb655d2@mail.gmail.com>
-	 <20090119144836.GD5625@jabba.hq.digizenstudio.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: how to track multiple upstreams in one repository
+Date: Mon, 19 Jan 2009 16:29:09 +0000 (GMT)
+Message-ID: <alpine.LNX.2.00.0901191627480.4115@reaper.quantumfyre.co.uk>
+References: <alpine.DEB.1.10.0901181855400.20741@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git list" <git@vger.kernel.org>
-To: "Jing Xue" <jingxue@digizenstudio.com>
-X-From: git-owner@vger.kernel.org Mon Jan 19 16:44:28 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Mon Jan 19 17:51:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOwIK-0002M8-Kh
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 16:44:09 +0100
+	id 1LOxLb-0004EJ-3E
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 17:51:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752359AbZASPmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 10:42:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752128AbZASPmn
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 10:42:43 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:25590 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752056AbZASPmn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 10:42:43 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so1258197yxm.1
-        for <git@vger.kernel.org>; Mon, 19 Jan 2009 07:42:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=rhga3dXRbKS7dqtj0wZ31Lj0x+RgcvXIv5i0hY1cJeM=;
-        b=trs73BAypdliuYmVCCb8H/YicAEYJE+aGQUWgp0dC0oGK2ohxUCdvg6tlE9aQM8NNa
-         0n6jAuJeHuxVRimZbHpvGNmUyV9GD7F1CJVNrisDulg7UybjQ6IErJv/oiY2Ux//FZPF
-         I4c7Gu23odaWy5RyAJn7mHQkWmi7RZkSrpIsc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=Fwy5rlqP4yRjUK4darZtbetvhlJ6bRZVwts7vjB6WieFddqc3/CSioHLp24d6/3w5X
-         o11vN+awHm/XjcruI5rPbAEbDUKUg9kBIEF0KUY0FZggQ7ikslz5oMNfH239aIWP+0W6
-         ByFvldCvPkoUDhJqGW9ZP0JmCEwyGz5oSzl8Q=
-Received: by 10.100.32.6 with SMTP id f6mr3979072anf.90.1232379302662;
-        Mon, 19 Jan 2009 07:35:02 -0800 (PST)
-Received: by 10.100.128.10 with HTTP; Mon, 19 Jan 2009 07:35:02 -0800 (PST)
-In-Reply-To: <20090119144836.GD5625@jabba.hq.digizenstudio.com>
-Content-Disposition: inline
+	id S1752636AbZASQuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 11:50:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752549AbZASQuK
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 11:50:10 -0500
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:44788 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752364AbZASQuJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2009 11:50:09 -0500
+X-Greylist: delayed 1247 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Jan 2009 11:50:09 EST
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 637E523E0AC
+	for <git@vger.kernel.org>; Mon, 19 Jan 2009 16:29:20 +0000 (GMT)
+Received: (qmail 13133 invoked by uid 103); 19 Jan 2009 16:29:09 +0000
+Received: from 212.159.54.234 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.94.1/8875. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.029391 secs); 19 Jan 2009 16:29:09 -0000
+Received: from darkphoton.datavampyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 19 Jan 2009 16:29:09 +0000
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <alpine.DEB.1.10.0901181855400.20741@asgard.lang.hm>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106366>
 
-On Mon, Jan 19, 2009 at 8:18 PM, Jing Xue <jingxue@digizenstudio.com> wrote:
-> On Mon, Jan 19, 2009 at 03:46:41PM +0530, Dilip M wrote:
->> Hi,
->>
->> ..I recently install GIT on Ubuntu (hardy) box....I am able to use
->> 'gitk' only If I do 'sudo'. Without 'sudo' it complains 'repository
->> not found'
+On Sun, 18 Jan 2009, david@lang.hm wrote:
+
+> for linux I want to track both the linus tree and the -stable tree. Ideally I 
+> want to be able to do a checkout of tags from either tree from the same 
+> directory (along with diffs between items in both trees, etc)
 >
-> Do you have a 0027 umask?
+> I have found documentation on how to clone from each of them, but I haven't 
+> found any simple documentation on how to work with both of them.
+
+You could always just use 
+git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6-stable.git 
+?  It already contains both the linus tree and all the stable trees ...
+
 >
-> http://www.digizenstudio.com/blog/2008/11/09/weird-git-gui-startup-problem/
+> David Lang
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
 
-Mine is dm-laptop:~> umask
-22
+-- 
+Julian
 
-So, that's not a issue.
-
--- DM
+  ---
+Flattery is like cologne -- to be smelled, but not swallowed.
+ 		-- Josh Billings
