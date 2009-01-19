@@ -1,85 +1,126 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2 1/2] bash completion: move pickaxe options to log
-Date: Mon, 19 Jan 2009 22:17:59 +0100
-Message-ID: <1232399880-22036-1-git-send-email-trast@student.ethz.ch>
+Subject: [PATCH v2 2/2] bash completion: refactor diff options
+Date: Mon, 19 Jan 2009 22:18:00 +0100
+Message-ID: <1232399880-22036-2-git-send-email-trast@student.ethz.ch>
 References: <20090119173153.GB14053@spearce.org>
+ <1232399880-22036-1-git-send-email-trast@student.ethz.ch>
 Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	Junio C Hamano <junio@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 19 22:19:27 2009
+X-From: git-owner@vger.kernel.org Mon Jan 19 22:23:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LP1Wm-00074x-Jw
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 22:19:25 +0100
+	id 1LP1aL-0008BU-Ai
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 22:23:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754323AbZASVR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 16:17:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754170AbZASVR6
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 16:17:58 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:2942 "EHLO xsmtp1.ethz.ch"
+	id S1754323AbZASVVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 16:21:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754247AbZASVR7
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 16:17:59 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:52795 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753483AbZASVR5 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754080AbZASVR5 (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 19 Jan 2009 16:17:57 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
 	 Mon, 19 Jan 2009 22:17:55 +0100
 Received: from localhost.localdomain ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
 	 Mon, 19 Jan 2009 22:17:55 +0100
 X-Mailer: git-send-email 1.6.1.389.g45b4ee
-In-Reply-To: <20090119173153.GB14053@spearce.org>
-X-OriginalArrivalTime: 19 Jan 2009 21:17:55.0193 (UTC) FILETIME=[6510B690:01C97A7B]
+In-Reply-To: <1232399880-22036-1-git-send-email-trast@student.ethz.ch>
+X-OriginalArrivalTime: 19 Jan 2009 21:17:55.0224 (UTC) FILETIME=[65157180:01C97A7B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106392>
 
-Move the options --pickaxe-all and --pickaxe-regex to git-log, where
-they make more sense than with git-diff.
+diff, log and show all take the same diff options.  Refactor them from
+__git_diff and __git_log into a variable, and complete them in
+__git_show too.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
 ---
-
-Shawn O. Pearce wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > The changes around pickaxe made me "Huh?".  For log pickaxe makes very
-> > good sense but for a single diff it doesn't, yet the original seems to
-> > have had them only on "git diff" and not on "git log", which feels wrong.
-> 
-> I agree completely.  The pickaxe stuff in current completion is
-> just plain wrong.  I'd like to see it fixed with this cleanup.
-> Maybe do it in two parts; fix the pickaxe options to be on log
-> and not diff, and then do the cleanup for the common options.
-
-Good point.  Sorry for not noticing in the first place; I was too
-focused on just getting git-show completion working ;-)
-
-
- contrib/completion/git-completion.bash |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ contrib/completion/git-completion.bash |   36 ++++++++++++++++++-------------
+ 1 files changed, 21 insertions(+), 15 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 60497a4..b5d3bbb 100755
+index 096603b..bfae953 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -784,7 +784,7 @@ _git_diff ()
+@@ -773,14 +773,7 @@ _git_describe ()
+ 	__gitcomp "$(__git_refs)"
+ }
+ 
+-_git_diff ()
+-{
+-	__git_has_doubledash && return
+-
+-	local cur="${COMP_WORDS[COMP_CWORD]}"
+-	case "$cur" in
+-	--*)
+-		__gitcomp "--cached --stat --numstat --shortstat --summary
++__git_diff_common_options="--stat --numstat --shortstat --summary
  			--patch-with-stat --name-only --name-status --color
  			--no-color --color-words --no-renames --check
  			--full-index --binary --abbrev --diff-filter=
--			--find-copies-harder --pickaxe-all --pickaxe-regex
-+			--find-copies-harder
- 			--text --ignore-space-at-eol --ignore-space-change
+@@ -789,9 +782,21 @@ _git_diff ()
  			--ignore-all-space --exit-code --quiet --ext-diff
  			--no-ext-diff
-@@ -986,6 +986,7 @@ _git_log ()
- 			--parents --children --full-history
- 			--merge
+ 			--no-prefix --src-prefix= --dst-prefix=
+-			--base --ours --theirs
  			--inter-hunk-context=
-+			--pickaxe-all --pickaxe-regex
+ 			--patience
++			--raw
++"
++
++_git_diff ()
++{
++	__git_has_doubledash && return
++
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "$cur" in
++	--*)
++		__gitcomp "--cached --pickaxe-all --pickaxe-regex
++			--base --ours --theirs
++			$__git_diff_common_options
  			"
  		return
  		;;
+@@ -977,17 +982,16 @@ _git_log ()
+ 			--relative-date --date=
+ 			--author= --committer= --grep=
+ 			--all-match
+-			--pretty= --name-status --name-only --raw
++			--pretty=
+ 			--not --all
+ 			--left-right --cherry-pick
+ 			--graph
+-			--stat --numstat --shortstat
+-			--decorate --diff-filter=
+-			--color-words --walk-reflogs
++			--decorate
++			--walk-reflogs
+ 			--parents --children --full-history
+ 			--merge
+ 			--inter-hunk-context=
+-			--patience
++			$__git_diff_common_options
+ 			--pickaxe-all --pickaxe-regex
+ 			"
+ 		return
+@@ -1492,7 +1496,9 @@ _git_show ()
+ 		return
+ 		;;
+ 	--*)
+-		__gitcomp "--pretty="
++		__gitcomp "--pretty=
++			$__git_diff_common_options
++			"
+ 		return
+ 		;;
+ 	esac
 -- 
-tg: (28da86a..) t/bash-complete-pickaxe (depends on: origin/master)
+tg: (3f8c856..) t/bash-complete-show (depends on: origin/next t/bash-complete-pickaxe t/bash-complete-pickaxe)
