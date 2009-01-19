@@ -1,73 +1,57 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Syncing with CVS
-Date: Mon, 19 Jan 2009 23:05:36 +0100
-Message-ID: <200901192305.36577.robin.rosenberg.lists@dewire.com>
-References: <f31e50960901190139w65b69fd1k752973a23c40f384@mail.gmail.com>
+From: jidanni@jidanni.org
+Subject: [PATCH,v2] git-checkout(1): mention fate of extraneous files
+Date: Tue, 20 Jan 2009 06:45:12 +0800
+Message-ID: <87priivrt3.fsf_-_@jidanni.org>
+References: <877i4teq78.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Christian von Kietzell" <cuboci@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 19 23:07:43 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, markus.heidelberg@web.de
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jan 19 23:46:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LP2Gv-00054e-OJ
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 23:07:06 +0100
+	id 1LP2tH-0007uB-Aa
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 23:46:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754170AbZASWFk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jan 2009 17:05:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbZASWFk
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 17:05:40 -0500
-Received: from mail.dewire.com ([83.140.172.130]:10437 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752210AbZASWFj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2009 17:05:39 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id AD53A147E5EF;
-	Mon, 19 Jan 2009 23:05:37 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5o61NOqD5HOv; Mon, 19 Jan 2009 23:05:37 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 1A7D28028B8;
-	Mon, 19 Jan 2009 23:05:37 +0100 (CET)
-User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
-In-Reply-To: <f31e50960901190139w65b69fd1k752973a23c40f384@mail.gmail.com>
-Content-Disposition: inline
+	id S1753247AbZASWpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 17:45:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbZASWpQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 17:45:16 -0500
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:55856 "EHLO
+	homiemail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752680AbZASWpP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2009 17:45:15 -0500
+Received: from jidanni.org (122-127-34-185.dynamic.hinet.net [122.127.34.185])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by homiemail-a2.g.dreamhost.com (Postfix) with ESMTP id 4D04BD26FE;
+	Mon, 19 Jan 2009 14:45:14 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106395>
 
-m=C3=A5ndag 19 januari 2009 10:39:53 skrev Christian von Kietzell:
-> Hi,
->=20
-> I have a project I started in git. After a while I exported that to
-> CVS via git cvsexportcommit which worked quite nicely. Now, a
-> colleague made changes to the project - in CVS. What's the best way t=
-o
-> get those back into my git repository so that I'll be able to sync
-> back and forth between git and CVS? I had a quick look at the wiki bu=
-t
-> couldn't find anything appropriate.
->=20
-> I know of git cvsimport, of course, but that doesn't work on my
-> original repository. Or does it? I didn't find anything on how to
-> limit what to import. After all, some of the commits are already in m=
-y
-> repository (the ones I exported).
-Just continue with cvsimport, then git rebase origin. That'll drop the
-commits that you made when the same commit have been discovered
-in CVS.
+Signed-off-by: jidanni <jidanni@jidanni.org>
+---
+ Documentation/git-checkout.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-I personally do the cvs import into a separate repo using a cron job. T=
-hat
-extra repo is my origin so I get up-to-date using git fetch and rebase =
-just
-as if the CVS commits would come from a real repo.
-
--- robin
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 9cd5151..58abdc6 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -17,7 +17,8 @@ DESCRIPTION
+ When <paths> are not given, this command switches branches by
+ updating the index and working tree to reflect the specified
+ branch, <branch>, and updating HEAD to be <branch> or, if
+-specified, <new_branch>.  Using -b will cause <new_branch> to
++specified, <new_branch>. (No files are deleted, use linkgit:git-clean[1]
++for a pristine checkout.) Using -b will cause <new_branch> to
+ be created; in this case you can use the --track or --no-track
+ options, which will be passed to `git branch`.
+ 
+-- 
+1.6.0.6
