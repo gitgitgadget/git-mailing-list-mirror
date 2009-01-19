@@ -1,51 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] shell: Document that 'cvs server' is a valid command
-Date: Mon, 19 Jan 2009 18:49:23 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901191848590.3586@pacific.mpi-cbg.de>
-References: <1232384803-29373-1-git-send-email-lars@public.noschinski.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH 8/8] Define a basic merge API, and a two-way tree
+	merge strategy
+Date: Mon, 19 Jan 2009 09:51:54 -0800
+Message-ID: <20090119175154.GD14053@spearce.org>
+References: <1223932217-4771-1-git-send-email-spearce@spearce.org> <1223932217-4771-9-git-send-email-spearce@spearce.org> <200810232314.29867.robin.rosenberg@dewire.com> <200901152205.00600.robin.rosenberg@dewire.com> <20090115210936.GI10179@spearce.org> <f299b4f30901171116y216835c9jc11df2d424ee0377@mail.gmail.com> <20090119174254.GC14053@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Lars Noschinski <lars@public.noschinski.de>
-X-From: git-owner@vger.kernel.org Mon Jan 19 18:51:05 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: tomi.pakarinen@iki.fi
+X-From: git-owner@vger.kernel.org Mon Jan 19 18:53:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOyH3-0001h5-2t
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 18:50:57 +0100
+	id 1LOyJN-0002kc-0a
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 18:53:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018AbZASRta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 12:49:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbZASRta
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 12:49:30 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40099 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750747AbZASRt3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 12:49:29 -0500
-Received: (qmail invoked by alias); 19 Jan 2009 17:49:23 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp061) with SMTP; 19 Jan 2009 18:49:23 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Kq3JGnpWKK1Lr+yZmgUaiJdZeXOity7ToKE0Cu1
-	XzFDKIq+8py4QP
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1232384803-29373-1-git-send-email-lars@public.noschinski.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1752185AbZASRv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 12:51:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148AbZASRv4
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 12:51:56 -0500
+Received: from george.spearce.org ([209.20.77.23]:51341 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751843AbZASRvz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2009 12:51:55 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id F19B738210; Mon, 19 Jan 2009 17:51:54 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20090119174254.GC14053@spearce.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106375>
 
-Hi,
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> Tomi Pakarinen <tomi.pakarinen@gmail.com> wrote:
+> > testTrivialTwoWay_disjointhistories() failed because merge strategy
+> > didn't handle missing base
+> > version. Am'i right?
+> 
+> If that isn't coming out right then perhaps tw.idEqual() is busted
 
-On Mon, 19 Jan 2009, Lars Noschinski wrote:
+Yup, that's what it is, idEqual is busted.
 
-> git-shell's man page explicitly lists all allowed commands, but 'cvs
-> server' was missing. Add it.
+The definition of TreeWalk.idEqual is:
 
-Oops (has been there since Oct 7 _2007_).  Thank you,
-Dscho
+	public boolean idEqual(final int nthA, final int nthB) {
+		final AbstractTreeIterator ch = currentHead;
+		final AbstractTreeIterator a = trees[nthA];
+		final AbstractTreeIterator b = trees[nthB];
+		return a.matches == ch && b.matches == ch && a.idEqual(b);
+	}
+
+The problem is this method always returns false if the name isn't
+defined in either path.  I think this is the definition we want
+instead:
+
+		if (a.matches == ch && b.matches == ch)
+			return a.idEqual(b);
+		if (a.matches != ch && b.matches != ch) {
+			// If neither tree matches the current path node then neither
+			// tree has this entry. In such case the ObjectId is zero(),
+			// and zero() is always equal to zero().
+			//
+			return true;
+		}
+		return false;
+
+Patch to follow.
+
+-- 
+Shawn.
