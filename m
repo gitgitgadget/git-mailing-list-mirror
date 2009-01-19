@@ -1,67 +1,85 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: Re: [StGit PATCH] Added basic bash completion script for StGit.
-Date: Mon, 19 Jan 2009 18:15:46 -0500
-Message-ID: <497509A2.5020101@tedpavlic.com>
-References: <1232405879-6188-1-git-send-email-ted@tedpavlic.com>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: [PATCH,v2] git-checkout(1): mention fate of extraneous files
+Date: Mon, 19 Jan 2009 17:16:54 -0600
+Message-ID: <200901191716.59373.bss@iguanasuicide.net>
+References: <877i4teq78.fsf@jidanni.org> <87priivrt3.fsf_-_@jidanni.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: multipart/signed;
+  boundary="nextPart3039672.IWXgNcAGmA";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: "catalin.marinas" <catalin.marinas@gmail.com>,
-	git <git@vger.kernel.org>
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 00:17:20 2009
+Cc: gitster@pobox.com, git@vger.kernel.org, markus.heidelberg@web.de
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Tue Jan 20 00:17:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LP3Mp-0007ho-UQ
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 00:17:16 +0100
+	id 1LP3ND-0007nL-Cc
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 00:17:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883AbZASXPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 18:15:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752671AbZASXPu
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 18:15:50 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:51411 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752530AbZASXPu (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2009 18:15:50 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 4CB9D80D8035;
-	Mon, 19 Jan 2009 18:09:56 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id v5TERftngs0m; Mon, 19 Jan 2009 18:09:56 -0500 (EST)
-Received: from TedBook.local (cpe-76-181-62-78.columbus.res.rr.com [76.181.62.78])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 719DC80D8037;
-	Mon, 19 Jan 2009 18:09:55 -0500 (EST)
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <1232405879-6188-1-git-send-email-ted@tedpavlic.com>
+	id S1753083AbZASXQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 18:16:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752996AbZASXQN
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 18:16:13 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:52773 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752892AbZASXQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2009 18:16:13 -0500
+Received: from [206.104.167.41]
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LP3Ll-0000cq-PY; Mon, 19 Jan 2009 23:16:09 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <87priivrt3.fsf_-_@jidanni.org>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106401>
 
-> +# Use __stg for stg completion and bail out to normal bash completion
-> +complete -o bashdefault -o default -F __stg stg 2>/dev/null \
-> +    || complete -o default -F __stg stg
+--nextPart3039672.IWXgNcAGmA
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Somehow I didn't see the existing
+>-specified, <new_branch>.  Using -b will cause <new_branch> to
+>+specified, <new_branch>. (No files are deleted, use linkgit:git-clean[1]
+>+for a pristine checkout.) Using -b will cause <new_branch> to
 
-	stgit-completion.bash
+The parenthetical remark is not true, here:
+$ git status
+# On branch anagrams
+nothing to commit (working directory clean)
+$ ls
+anagram  fsdupfind
+$ git checkout master
+Switched to branch "master"
+$ ls
+fsdupfind
 
-in stgit.git. I was looking in stgit.git/contrib, which is where Git 
-(and Mercurial) puts its completion script.
+I think you mean "No untracked content is removed,...".
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
 
-So it looks like there's no need for this patch.
+--nextPart3039672.IWXgNcAGmA
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-Thanks --
-Ted
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
--- 
-Ted Pavlic <ted@tedpavlic.com>
+iEYEABECAAYFAkl1CesACgkQdNbfk+86fC2C4ACfcIlaln7Yb254UWz2cfnj1oOp
+uzAAn3J7p02OjD+1o8AmWc+06UIGN9o5
+=LKxP
+-----END PGP SIGNATURE-----
 
-   Please visit my ALS association page:
-         http://web.alsa.org/goto/tedpavlic
-   My family appreciates your support in the fight to defeat ALS.
+--nextPart3039672.IWXgNcAGmA--
