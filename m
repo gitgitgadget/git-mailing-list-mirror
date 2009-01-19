@@ -1,77 +1,87 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: [PATCH] bash: offer to show (un)staged changes
-Date: Mon, 19 Jan 2009 13:01:44 -0600
-Message-ID: <200901191301.49312.bss@iguanasuicide.net>
-References: <1232240184-10906-1-git-send-email-trast@student.ethz.ch> <7vwsct2xd1.fsf@gitster.siamese.dyndns.org> <20090119172939.GA14053@spearce.org>
+Date: Mon, 19 Jan 2009 13:42:28 -0500
+Message-ID: <46a038f90901191042o6e47c9f7p188542f78f138317@mail.gmail.com>
+References: <1232240184-10906-1-git-send-email-trast@student.ethz.ch>
+	 <7vwsct2xd1.fsf@gitster.siamese.dyndns.org>
+	 <20090119172939.GA14053@spearce.org>
+	 <46a038f90901191000i250326e7k2184c149b70fcc8d@mail.gmail.com>
+	 <20090119181158.GH14053@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2777326.hAEcIxU07T";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Thomas Rast" <trast@student.ethz.ch>, git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jan 19 20:21:19 2009
+X-From: git-owner@vger.kernel.org Mon Jan 19 20:24:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOzOD-0002Sg-RO
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 20:02:26 +0100
+	id 1LOz6J-0007NG-31
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 19:43:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752942AbZASTBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 14:01:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752574AbZASTBD
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 14:01:03 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:45287 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752530AbZASTBB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 14:01:01 -0500
-Received: from [206.104.167.41]
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LOzMq-00006D-KD; Mon, 19 Jan 2009 19:01:00 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <20090119172939.GA14053@spearce.org>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1752404AbZASSma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 13:42:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752252AbZASSma
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 13:42:30 -0500
+Received: from yx-out-2324.google.com ([74.125.44.29]:50538 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752404AbZASSm3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2009 13:42:29 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so1310752yxm.1
+        for <git@vger.kernel.org>; Mon, 19 Jan 2009 10:42:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=4Z8zEVzNH4mybtIYdZddJBAxaZTt6RuBrHSDkY9uYJE=;
+        b=gi+AMpMTh/GmNPxPn1EW8U49WdAFdXB0/+/g/QQV8GSigZEpNGPr/xCWGkmUU/06ZY
+         lY4PTkcm1XzpxNi6VuWAxhOhk94Ta9/x5NiF8HiR+ipILJCexERYE6q861WgLDmOFHHj
+         f3t1AGX3RAjpOOPwa2vLEttwsiOSZwuRhCzVU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=v4jjQLU/9MGEndPOwnVMMcpY/DLb9dUDcpt9i/Nn4+bzvZ496APUD+AH4UHKgX/PfE
+         tVcQSULoQqkeWeJftGrbqAstOjk44KlgWexN5ozOcjfnbYwXEupNYElVJ5HyXheIKxxR
+         mpWRWEximgb1uQ8lNZuyvQ5bcR6SX4I6KSZlM=
+Received: by 10.100.214.15 with SMTP id m15mr4148433ang.81.1232390548594;
+        Mon, 19 Jan 2009 10:42:28 -0800 (PST)
+Received: by 10.100.8.5 with HTTP; Mon, 19 Jan 2009 10:42:28 -0800 (PST)
+In-Reply-To: <20090119181158.GH14053@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106383>
 
---nextPart2777326.hAEcIxU07T
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Mon, Jan 19, 2009 at 1:11 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> *sigh*
+>
+> I was hoping it would work well for the really huge repository case,
+> like WebKit, where the stats against the work tree just kill the
+> user space application.
 
-On Monday 2009 January 19 11:29:39 Shawn O. Pearce wrote:
->E.g. WebKit is huge,
->computing the dirty state inside of the WebKit repository on each
->prompt would absolutely kill CLI performance to a point of it not
->being usuable.
+Even hot-cache? My perception is that in hot-cache conditions the perf is good.
 
-Is the performance any better on other VCSes for this operation?  If not,=20
-maybe its just a feature that's infeasible for large trees.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+If it is cold-cache, what in the end you are hoping for is "pegging"
+some stuff in the cache. Perhaps there's a way to tell the kernel to
+skew the cache eviction scheme. Still, if the kernel's algorythms are
+good, the kernel knows more about your fs usage patterns than you
+do...
 
---nextPart2777326.hAEcIxU07T
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+cheers,
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
 
-iEYEABECAAYFAkl0zh0ACgkQdNbfk+86fC1GtwCcD9DZGoVQ++KJekfgf7iPWXz8
-ohgAn3UnVDFylHun6boezgjIo14FZUVE
-=c8Xp
------END PGP SIGNATURE-----
 
---nextPart2777326.hAEcIxU07T--
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
