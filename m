@@ -1,97 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 0/7] customizable --color-words
-Date: Tue, 20 Jan 2009 00:35:59 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901200031350.3586@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0901162208180.3586@pacific.mpi-cbg.de>  <1232209788-10408-1-git-send-email-trast@student.ethz.ch> <adf1fd3d0901191447n7fc39dect9cf5afd88a02015b@mail.gmail.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH] contrib/difftool: change trap condition from SIGINT to INT
+Date: Tue, 20 Jan 2009 00:38:16 +0100
+Message-ID: <200901200038.17548.markus.heidelberg@web.de>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1106748398-1232408160=:3586"
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Junio C Hamano <junio@pobox.com>,
-	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	Teemu Likonen <tlikonen@iki.fi>
-To: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Tue Jan 20 00:37:31 2009
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 20 00:39:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LP3gL-0004Pc-GH
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 00:37:25 +0100
+	id 1LP3ic-0004sb-SY
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 00:39:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754170AbZASXgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 18:36:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753976AbZASXf7
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 18:35:59 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58968 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753830AbZASXf6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 18:35:58 -0500
-Received: (qmail invoked by alias); 19 Jan 2009 23:35:55 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp040) with SMTP; 20 Jan 2009 00:35:55 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/BX5xpNiLBD5k3u5Cvdr3xZ9AiCT3Q2czBMe32e7
-	qibxxsO1cb5Czv
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <adf1fd3d0901191447n7fc39dect9cf5afd88a02015b@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1754734AbZASXiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 18:38:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbZASXiT
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 18:38:19 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:53750 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752433AbZASXiS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2009 18:38:18 -0500
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 8CE18F6C39DB;
+	Tue, 20 Jan 2009 00:38:17 +0100 (CET)
+Received: from [89.59.93.106] (helo=pluto)
+	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LP3hB-0004qS-00; Tue, 20 Jan 2009 00:38:17 +0100
+User-Agent: KMail/1.9.9
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18hT4nbuopD2CxdXs+wJr68/JMQutbirHjYtfjb
+	aiICLRzZJlI263dYnFswR9b39jYOJINslKXtc9g3zrvKB6agPg
+	K4xFJpUPfuJIFxmsYlYA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106405>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+git-difftool worked for me on an up-to-date Gentoo Linux at home, but
+didn't work on a somewhat older Ubuntu Linux 7.10 at work and failed
+with the following error, where 'Makefile' was locally modified:
 
---8323328-1106748398-1232408160=:3586
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+    trap: 244: SIGINT: bad trap
+    external diff died, stopping at Makefile.
 
-Hi,
+In 'man 1p trap' there is written:
 
-On Mon, 19 Jan 2009, Santi Béjar wrote:
+    "The condition can be EXIT, 0 (equivalent to EXIT), or a signal
+    specified using a symbolic name, without the SIG prefix, [...]"
 
-> 2009/1/17 Thomas Rast <trast@student.ethz.ch>:
-> > Johannes Schindelin (4):
-> >  Add color_fwrite_lines(), a function coloring each line individually
-> >  color-words: refactor word splitting and use ALLOC_GROW()
-> >  color-words: change algorithm to allow for 0-character word
-> >    boundaries
-> >  color-words: take an optional regular expression describing words
-> >
-> > Thomas Rast (3):
-> >  color-words: enable REG_NEWLINE to help user
-> >  color-words: expand docs with precise semantics
-> >  color-words: make regex configurable via attributes
-> >
-> 
-> Also, having a config (diff.color-words?) to set the default regexp
-> would be great. Thanks.
+    "Implementations may permit names with the SIG prefix or ignore case
+    in signal names as an extension."
 
->From "git log --author==Santi --stat" it seems that you are quite capable 
-of providing that patch.
+So now we do it the POSIX compliant way instead of using an extension.
 
-A few pointers:
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
+ contrib/difftool/git-difftool-helper |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-- Add a global variable to diff.c, maybe "char *diff_word_regex".  
-  (Maybe it should be static instead, as it will be used in diff.c only.)
-
-- Add code to set it in diff.c, function git_diff_ui_config().
-
-- In diff.c, where "--color-words" is handled (without "="), add
-
-	if (diff_words_regex)
-		options->word_regex = diff_word_regex;
-
-- Add a test to t4034 that tests that the config sets a default, and that 
-  the command line can override it.
-
-- Send to this list :-)
-
-Ciao,
-Dscho
-
---8323328-1106748398-1232408160=:3586--
+diff --git a/contrib/difftool/git-difftool-helper b/contrib/difftool/git-difftool-helper
+index f013726..a2eb59b 100755
+--- a/contrib/difftool/git-difftool-helper
++++ b/contrib/difftool/git-difftool-helper
+@@ -53,7 +53,7 @@ launch_merge_tool () {
+ 
+ 	# Create and ensure that we clean up $BACKUP
+ 	test -f "$MERGED" && cp -- "$MERGED" "$BACKUP"
+-	trap sigint_handler SIGINT
++	trap sigint_handler INT
+ 
+ 	# $LOCAL and $REMOTE are temporary files so prompt
+ 	# the user with the real $MERGED name before launching $merge_tool.
+-- 
+1.6.1.216.g3acd
