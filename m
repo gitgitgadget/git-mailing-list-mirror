@@ -1,57 +1,80 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: Re: after first git clone of linux kernel repository there are changed files in working dir
-Date: Mon, 19 Jan 2009 15:36:04 +0200
-Message-ID: <83ocy3fmez.fsf@kalahari.s2.org>
-References: <d304880b0812101019ufe85095h46ff0fe00d32bbd0@mail.gmail.com>
-	<d304880b0812101022u2abe5d68ub3bda68ed39f830b@mail.gmail.com>
+From: Lennert Buytenhek <buytenh@wantstofly.org>
+Subject: Re: [PATCH] parsecvs: produce tagger fields acceptable to newer git versions
+Date: Mon, 19 Jan 2009 14:39:07 +0100
+Message-ID: <20090119133907.GF4390@xi.wantstofly.org>
+References: <20090119120217.GD4390@xi.wantstofly.org> <87ab9nbh49.fsf@meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: rdkrsr <rdkrsr@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 19 14:37:30 2009
+Cc: keithp@keithp.com, git@vger.kernel.org, jay@gnu.org,
+	kedars@marvell.com
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon Jan 19 14:40:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOuJl-0001rX-Pi
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 14:37:30 +0100
+	id 1LOuMv-0002o1-R3
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 14:40:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752248AbZASNgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 08:36:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751413AbZASNgH
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 08:36:07 -0500
-Received: from s2.org ([195.197.64.39]:38476 "EHLO kalahari.s2.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751169AbZASNgG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 08:36:06 -0500
-Received: from azure by kalahari.s2.org with local (Exim 4.69)
-	(envelope-from <azure@iki.fi>)
-	id 1LOuIO-0003cA-Et; Mon, 19 Jan 2009 15:36:04 +0200
-In-Reply-To: <d304880b0812101022u2abe5d68ub3bda68ed39f830b@mail.gmail.com>
-	(rdkrsr@googlemail.com's message of "Wed, 10 Dec 2008 19:22:46 +0100")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: azure@iki.fi
-X-SA-Exim-Scanned: No (on kalahari.s2.org); SAEximRunCond expanded to false
+	id S1754791AbZASNjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 08:39:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759725AbZASNjL
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 08:39:11 -0500
+Received: from xi.wantstofly.org ([80.101.37.227]:33787 "EHLO
+	xi.wantstofly.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759422AbZASNjK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2009 08:39:10 -0500
+Received: by xi.wantstofly.org (Postfix, from userid 500)
+	id 6C1CE7FABA; Mon, 19 Jan 2009 14:39:08 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <87ab9nbh49.fsf@meyering.net>
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106357>
 
-rdkrsr <rdkrsr@googlemail.com> writes:
+On Mon, Jan 19, 2009 at 01:44:06PM +0100, Jim Meyering wrote:
 
-> I just fetched the sources without changing anything, but git diff
-> shows, that there are changes that are not yet updated (changed but not
-> updated: use git add to ...). Why is it like that?
->
-> I use msysgit on windows, maybe that is one reason?
+> > Signed-off-by: Lennert Buytenhek <buytenh@marvell.com>
+> >
+> > diff --git a/git.c b/git.c
+> > index da320d1..8f94d1b 100644
+> > --- a/git.c
+> > +++ b/git.c
+> > @@ -371,11 +371,13 @@ git_mktag (rev_commit *commit, char *name)
+> >  		"object %s\n"
+> >  		"type commit\n"
+> >  		"tag %s\n"
+> > -		"tagger %s\n"
+> > +		"tagger %s <%s> %lu +0000\n"
+> >  		"\n",
+> >  		commit->sha1,
+> >  		name,
+> > -		author ? author->full : commit->author);
+> > +		author ? author->full : commit->author,
+> > +		author ? author->email : commit->author,
+> > +		commit->date);
+> >      if (rv < 1) {
+> >  	fprintf (stderr, "%s: %s\n", filename, strerror (errno));
+> >  	fclose (f);
+> 
+> Hi Lennert,
 
-Kernel source contains pairs of files whose names differ only by
-case.  Windows cannot store such pairs (at least by default) and
-apparently there is no support for such a situation in git so
-you'll only get one file from each pair to your workspace and the
-other file is shown as modified.
+Hey Jim,
 
--- 
-Hannu
+
+> I posted the same patch a while back.
+> 
+>     http://markmail.org/message/cebh7suc7ejpayos
+> 
+> However, I never heard back.
+> You'll also need the patch below, if you're building
+> against a newer version of git.
+
+Can you make your parsecvs repository available somewhere?
+
+
+thanks,
+Lennert
