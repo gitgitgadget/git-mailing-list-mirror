@@ -1,93 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] interpret_nth_last_branch(): avoid traversing the
- reflogs twice
-Date: Mon, 19 Jan 2009 00:19:09 -0800
-Message-ID: <7vljt7r9mq.fsf@gitster.siamese.dyndns.org>
-References: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org>
- <1232163011-20088-1-git-send-email-trast@student.ethz.ch>
- <alpine.DEB.1.00.0901170646560.3586@pacific.mpi-cbg.de>
- <200901171438.22504.trast@student.ethz.ch>
- <alpine.DEB.1.00.0901171602340.3586@pacific.mpi-cbg.de>
- <7vljt97nld.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0901172028470.3586@pacific.mpi-cbg.de>
- <7vmydp5tqj.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0901180201070.3586@pacific.mpi-cbg.de>
- <7vprilyt1w.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0901182152010.3586@pacific.mpi-cbg.de>
- <7vprijra52.fsf@gitster.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: parent-filter loses my merged branch -- what am I doing wrong?
+Date: Mon, 19 Jan 2009 09:41:27 +0100
+Message-ID: <49743CB7.4030300@viscovery.net>
+References: <7578B9A6-BF81-4096-B0FD-F433AD62A41E@develooper.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Johan Herland <johan@herland.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 19 09:20:46 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Ask_Bj=F8rn_Hansen?= <ask@develooper.com>
+X-From: git-owner@vger.kernel.org Mon Jan 19 09:43:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LOpNE-0002P7-5D
-	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 09:20:44 +0100
+	id 1LOpj5-00005g-1T
+	for gcvg-git-2@gmane.org; Mon, 19 Jan 2009 09:43:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753009AbZASITU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 03:19:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752968AbZASITU
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 03:19:20 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57583 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752630AbZASITT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 03:19:19 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 60741917F1;
-	Mon, 19 Jan 2009 03:19:17 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 28B46917EA; Mon,
- 19 Jan 2009 03:19:11 -0500 (EST)
-In-Reply-To: <7vprijra52.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 19 Jan 2009 00:08:09 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DD57555E-E601-11DD-AA1A-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1754640AbZASIlf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jan 2009 03:41:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754700AbZASIlf
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 03:41:35 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:23524 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754054AbZASIle convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2009 03:41:34 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LOphL-0005Fq-Qz; Mon, 19 Jan 2009 09:41:32 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 91F3A6D9; Mon, 19 Jan 2009 09:41:31 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7578B9A6-BF81-4096-B0FD-F433AD62A41E@develooper.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106334>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ask Bj=F8rn Hansen schrieb:
+> On Sam Villain's recommendation I'm spending a bit of time cleaning u=
+p
+> the branches and merges with git filter-branch, but I don't think I'm
+> quite understanding how it's supposed to work.
 
-> Well, I would rather be in favor of something like this.
->
-> -- >8 --
-> Subject: interpret_nth_last_branch(): avoid traversing the reflog twice
->
-> You can have quite a many reflog entries, but you typically won't recall
-> which branch you were on after switching branches for more than several
-> times.
->
-> Instead of reading the reflog twice, this reads the branch switching event
-> and keeps the latest 16 (which is an arbitrary limitation that should be
-> plenty) such entry, to switch back to the branch we were recently on.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  sha1_name.c              |   48 +++++++++++++++++++++------------------------
->  t/t2012-checkout-last.sh |   44 ++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 66 insertions(+), 26 deletions(-)
->
-> diff --git a/sha1_name.c b/sha1_name.c
-> index 9e1538e..d6622f2 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -750,19 +746,19 @@ int interpret_nth_last_branch(const char *name, struct strbuf *buf)
->  	nth = strtol(name+3, &num_end, 10);
->  	if (num_end != brace)
->  		return -1;
-> ...
-> -	if (cb.nth < nth)
-> -		return 0;
-> ...
-> +	if (cb.cnt < nth)
-> +		return -1;
+Don't use --parent-filter for this; use grafts. You can see the history=
+ in
+gitk right away. Later run filter-branch without a filter (except perha=
+ps
+the tag-name-filter).
 
-This should (obviously) be "return 0".
+-- Hannes
