@@ -1,82 +1,57 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [TOY PATCH] git-resurrect: find traces of a branch name and resurrect it
-Date: Tue, 20 Jan 2009 10:01:50 +0100
-Message-ID: <200901201001.54979.trast@student.ethz.ch>
-References: <alpine.DEB.1.00.0901161213370.3586@pacific.mpi-cbg.de> <1232242703-19086-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0901181718370.3586@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add tests for diff.color-words configuration option.
+Date: Tue, 20 Jan 2009 10:58:37 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901201057080.3586@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0901162208180.3586@pacific.mpi-cbg.de> <adf1fd3d0901191447n7fc39dect9cf5afd88a02015b@mail.gmail.com> <alpine.DEB.1.00.0901200031350.3586@pacific.mpi-cbg.de> <200901192017.54163.bss@iguanasuicide.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2749071.qK2Zm3eBVP";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>,
-	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 20 10:03:11 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Junio C Hamano <junio@pobox.com>,
+	Teemu Likonen <tlikonen@iki.fi>
+To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+X-From: git-owner@vger.kernel.org Tue Jan 20 11:00:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPCVj-0005Li-7M
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 10:03:03 +0100
+	id 1LPDPK-0000vt-FP
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 11:00:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754672AbZATJBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 04:01:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754575AbZATJBj
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 04:01:39 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:25602 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754440AbZATJBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 04:01:39 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 20 Jan 2009 10:01:38 +0100
-Received: from thomas.localnet ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 20 Jan 2009 10:01:37 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.25.18-0.2-default; KDE/4.1.96; x86_64; ; )
-In-Reply-To: <alpine.DEB.1.00.0901181718370.3586@pacific.mpi-cbg.de>
-X-OriginalArrivalTime: 20 Jan 2009 09:01:37.0331 (UTC) FILETIME=[B36BB030:01C97ADD]
+	id S1759564AbZATJ6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 04:58:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754919AbZATJ6f
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 04:58:35 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36989 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754985AbZATJ6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 04:58:34 -0500
+Received: (qmail invoked by alias); 20 Jan 2009 09:58:32 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp069) with SMTP; 20 Jan 2009 10:58:32 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18LWLRZx1oLPCK+6Jk3wsfZpXJ/urkl/rGUNu60rf
+	3X6ivFyKXKEwhg
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200901192017.54163.bss@iguanasuicide.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106460>
 
---nextPart2749071.qK2Zm3eBVP
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-[Sorry for missing this message, it seems KMail4 does have some rather
-annoying filtering bugs...]
+On Mon, 19 Jan 2009, Boyd Stephen Smith Jr. wrote:
 
-Johannes Schindelin wrote:
-> On Sun, 18 Jan 2009, Thomas Rast wrote:
->=20
-> >  Makefile         |    1 +
-> >  git-resurrect.sh |  109 ++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
->=20
-> Maybe have it in contrib/ instead?
+> I'm not sure why the diff is crazy long.
 
-It was really intended as a toy patch, but if people find it useful
-(Boyd?) I can add the rest of the options so that all searches can be
-chosen independently, and shape it as a "real" contrib patch.
+Because you changed things that need no changing, such as "cat > expect" 
+-> "cat > expect.blabla", and because you inserted your test instead of 
+adding it at the end.
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart2749071.qK2Zm3eBVP
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkl1kwIACgkQqUud07tmzP23BACeK41TyVFvAa+711xrNeDq+Yah
-G5sAnRsZZr8A3Zpaq1YRV5OmUZdngn57
-=O8iM
------END PGP SIGNATURE-----
-
---nextPart2749071.qK2Zm3eBVP--
+Ciao,
+Dscho
