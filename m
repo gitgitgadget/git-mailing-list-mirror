@@ -1,65 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git rebase -i failing on cygwin -- git checkout-index says File
- Exists
-Date: Wed, 21 Jan 2009 00:23:14 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901210022290.15160@racer>
-References: <4285cd450901201209i792195dfmdec1fb14d627b25e@mail.gmail.com>  <alpine.DEB.1.00.0901202212470.3586@pacific.mpi-cbg.de>  <4285cd450901201420l8929dci25688dc9723c917a@mail.gmail.com> <4285cd450901201444g711626afm296bf372a100b999@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: valgrind patches, was Re: What's cooking in git.git (Jan 2009,
+	#04; Mon, 19)
+Date: Tue, 20 Jan 2009 18:24:39 -0500
+Message-ID: <20090120232439.GA17746@coredump.intra.peff.net>
+References: <7vbpu3r745.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901191407470.3586@pacific.mpi-cbg.de> <20090120044447.GF30714@sigill.intra.peff.net> <alpine.DEB.1.00.0901201447290.5159@intel-tinevez-2-302> <20090120141932.GB10688@sigill.intra.peff.net> <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Ludvig Strigeus <strigeus@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 21 00:25:01 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 21 00:26:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPPxk-0001Fm-P3
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 00:24:53 +0100
+	id 1LPPyv-0001Zx-6r
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 00:26:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762288AbZATXXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 18:23:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756581AbZATXXG
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 18:23:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33137 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755521AbZATXXE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 18:23:04 -0500
-Received: (qmail invoked by alias); 20 Jan 2009 23:23:01 -0000
-Received: from pD9EB302D.dip0.t-ipconnect.de (EHLO noname) [217.235.48.45]
-  by mail.gmx.net (mp011) with SMTP; 21 Jan 2009 00:23:01 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/hK8gWeDbhV6QG/DThBiRRK+RrEBZjq8wa3Y9IYt
-	UrDmT2v4oSE43V
-X-X-Sender: gene099@racer
-In-Reply-To: <4285cd450901201444g711626afm296bf372a100b999@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S932108AbZATXYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 18:24:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932096AbZATXYm
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 18:24:42 -0500
+Received: from peff.net ([208.65.91.99]:38399 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932087AbZATXYl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 18:24:41 -0500
+Received: (qmail 5196 invoked by uid 107); 20 Jan 2009 23:24:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 20 Jan 2009 18:24:46 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Jan 2009 18:24:39 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106538>
 
-Hi,
+On Tue, Jan 20, 2009 at 03:50:28PM +0100, Johannes Schindelin wrote:
 
-On Tue, 20 Jan 2009, Ludvig Strigeus wrote:
-
-> On Tue, Jan 20, 2009 at 11:20 PM, Ludvig Strigeus <strigeus@gmail.com> wrote:
-> >
-> > Maybe this command log is useful. I got this while aborting the 
-> > rebase. Looks like some file creation race condition? Windows doesn't 
-> > allow files to be deleted while they're open.
+> > How will you deal with race conditions between two simultaneously 
+> > running scripts? I.e., where are you going to put it?
 > 
-> I believe I found the source of my problems with git rebase. I had an 
-> editor open that wanted to reload the files when changed, and this 
-> seemed to conflict with git's file manipulations. After closing the 
-> editor, I don't get the mysterious errors anymore.
+> There are no race conditions, as for every git executable, a symbolic link 
+> is created, pointing to the valgrind.sh script [*1*].
 
-Yep, that's a Windows issue.  Once you keep a file open in an editor, it 
-cannot be overwritten/deleted.
+Hmm. I suppose that would work, since every test run is trying to create
+the same state.
 
-Live with it, or upgrade to a real operating system :-)
+> Besides, what with valgrind being a memory hog, you'd be nuts to call 
+> valgrinded scripts simultaneously.
 
-Ciao,
-Dscho
+I have to disagree there. I think there are two obvious usage patterns:
+
+  - run script $X specifically under valgrind to track down a bug
+
+  - run the whole test suite under valgrind occasionally to find
+    latent bugs that wouldn't otherwise show up
+
+In the latter, you want a pretty beefy box.  When I did the original
+patches, I ran through the whole test suite under valgrind. It took
+several hours on a 6GB quad-core box, using "-j4". I would hate for it
+to have taken an entire day. :)
+
+-Peff
