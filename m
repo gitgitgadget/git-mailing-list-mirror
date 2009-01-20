@@ -1,91 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: gitk doesn't work w/o sudo.
-Date: Tue, 20 Jan 2009 22:10:17 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901202209450.3586@pacific.mpi-cbg.de>
-References: <c94f8e120901190216x246589ebwc4a44dd85bb655d2@mail.gmail.com>  <3f4fd2640901190359w39ded50ds246903808e94246c@mail.gmail.com>  <c94f8e120901190637i294d379dke3a07a90da5076f8@mail.gmail.com>  <200901200912.14432.brian.foster@innova-card.com> 
- <c94f8e120901200851n21c6d67r3c43e3efd435e3db@mail.gmail.com>  <alpine.DEB.1.00.0901201815010.5159@intel-tinevez-2-302> <c94f8e120901201020g32fad692p214fdf1640a4796f@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: An idea: maybe Git should use a lock/unlock file mode for
+ problematic files? [Was: Re: after first git clone of linux kernel repository
+ there are changed files in working dir]
+Date: Tue, 20 Jan 2009 17:08:21 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0901201651050.19665@iabervon.org>
+References: <d304880b0812101019ufe85095h46ff0fe00d32bbd0@mail.gmail.com>  <d304880b0812101022u2abe5d68ub3bda68ed39f830b@mail.gmail.com>  <83ocy3fmez.fsf@kalahari.s2.org>  <20090120105228.xbo3gyc0odwcgcsc@webmail.fussycoder.id.au>  <alpine.LNX.1.00.0901201441480.19665@iabervon.org>
+ <1232486929.4179.7.camel@therock.nsw.bigpond.net.au>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brian Foster <brian.foster@innova-card.com>,
-	Reece Dunn <msclrhd@googlemail.com>,
-	git list <git@vger.kernel.org>
-To: Dilip M <dilipm79@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 22:11:50 2009
+Cc: Hannu Koivisto <azure@iki.fi>, rdkrsr <rdkrsr@googlemail.com>,
+	git@vger.kernel.org
+To: John Chapman <thestar@fussycoder.id.au>
+X-From: git-owner@vger.kernel.org Tue Jan 20 23:10:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPNsq-0002MA-DB
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 22:11:40 +0100
+	id 1LPOnL-0002pC-IX
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 23:10:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758358AbZATVKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 16:10:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758146AbZATVKP
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 16:10:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59688 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757688AbZATVKO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 16:10:14 -0500
-Received: (qmail invoked by alias); 20 Jan 2009 21:10:11 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp022) with SMTP; 20 Jan 2009 22:10:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19U/W4ZbjtUDVRC71LeQvlk3pSPclo/q7HvBl+cMY
-	Fo7tN0KXt2GX5t
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <c94f8e120901201020g32fad692p214fdf1640a4796f@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+	id S1757399AbZATWIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 17:08:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756826AbZATWIY
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 17:08:24 -0500
+Received: from iabervon.org ([66.92.72.58]:50837 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756072AbZATWIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 17:08:22 -0500
+Received: (qmail 15365 invoked by uid 1000); 20 Jan 2009 22:08:21 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 20 Jan 2009 22:08:21 -0000
+In-Reply-To: <1232486929.4179.7.camel@therock.nsw.bigpond.net.au>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106527>
 
-Hi,
+On Wed, 21 Jan 2009, John Chapman wrote:
 
-On Tue, 20 Jan 2009, Dilip M wrote:
-
-> On Tue, Jan 20, 2009 at 10:46 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > 'd try running it with strace, and then search the output for stat()
-> > calls involving <something>/.git.
+> On Tue, 2009-01-20 at 15:11 -0500, Daniel Barkalow wrote:
+> <snip>
+> > 
+> > The hard part is actually identifying what the user's filesystem has done. 
+> > There's pretty good internal support for git knowing that, for a 
+> > particular entry, the filesystem should not be consulted for information. 
+> > I don't think anyone's come up with a suitably cross-platform and 
+> > automatic way to figure out what's happened when git tries to write to a 
+> > particular filename and the system decides it is the same as some other 
+> > filename or it decides to use a different filename instead.
 > 
-> Seems like we are almost there....here is the log..
-> 
-> dm-laptop:~/repos/atria> grep gitk /tmp/gitk_1.log
-> execve("/usr/bin/gitk", ["/usr/bin/gitk"], [/* 37 vars */]) = 0
-> open("/usr/bin/gitk", O_RDONLY)         = 3
-> execve("/usr/bin/wish8.4", ["/usr/bin/wish8.4", "/usr/bin/gitk",
-> "--"], [/* 37 vars */]) = 0
-> stat("/usr/bin/gitk", {st_mode=S_IFREG|0755, st_size=237778, ...}) = 0
-> open("/usr/bin/gitk", O_RDONLY)         = 6
-> lstat("/usr/share/gitk", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-> lstat("/usr/share/gitk/lib", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-> lstat("/usr/share/gitk/lib/msgs", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-> access("/usr/share/gitk/lib/msgs/en_in.msg", F_OK) = -1 ENOENT (No
-> such file or directory)  <======
-> lstat("/usr/share/gitk", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-> lstat("/usr/share/gitk/lib", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-> lstat("/usr/share/gitk/lib/msgs", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-> access("/usr/share/gitk/lib/msgs/en.msg", F_OK) = -1 ENOENT (No such
-> file or directory)       <======
-> stat("/home/dm/.gitk", {st_mode=S_IFREG|0644, st_size=683, ...}) = 0
-> open("/home/dm/.gitk", O_RDONLY)        = 6
-> writev(5, [{"\22\0\7\0\16\0@\3\'\0\0\0\37\0\0\0\10NG\0\4\0\0\0gitk\20"...,
-> 48}], 1) = 48
-> writev(5, [{"\22\0\7\0\16\0@\3(\1\0\0\37\1\0\0\10AME\4\0\0\0gitk\22"...,
-> 112}], 1) = 112
-> 
-> dm-laptop:~/repos/atria> ls -l /usr/share/gitk/lib/msgs/en_in.msg
-> ls: cannot access /usr/share/gitk/lib/msgs/en_in.msg: No such file or directory
-> 
-> But how is it working when  I do 'sudo'..
+> This would only need to interact with the git status command, wouldn't
+> it?
 
-Let's find out.  You can run the strace with sudo, too.
+The information is needed in a bunch of commands (diff and add, for 
+example), but I believe that's already taken care on. The problem is 
+getting it set automatically instead of having git not notice that the 
+filesystem isn't doing what it expects.
 
-I bet it uses another git.
+> > Of course, it is reasonably likely that a project whose files can't all be 
+> > checked out can't be dealt with anyway on that platform (IIRC, the Linux 
+> > kernel build system assumes that it can create both .S and .s files, so it 
+> > won't build on FAT). So nobody's been sufficiently motivated to try to 
+> > implement a fix.
+> 
+> I doubt the kernel builds on windows, but this would allow a windows
+> user to modify such files, perhaps in preparation for a patch that does
+> allow the kernel to be built on windows?
+> (Of course, we're using the kernel here as an example, right?  Nobody
+> would be insane as to want to use windows for that!)
+> 
+> See, a very annoying thing about windows is that it is quite simple for
+> a team to commit two files that differ by case alone to a git
+> repository.
 
-Ciao,
-Dscho
+My impression was that this didn't happen in practice, because teams
+would tend to not have two people create the same file at the same time, 
+but with different cases, and people interacting with the same file at 
+different times would use whatever case it was introduced with.
+
+I think I'd only heard about problems for people who were using 
+filesystems with different properties than what the rest of the developers 
+on the project were using.
+
+But I've only ever worked on projects that expect case-sensitivity, and 
+mostly on projects that have a standard style that prevents duplication.
+
+	-Daniel
+*This .sig left intentionally blank*
