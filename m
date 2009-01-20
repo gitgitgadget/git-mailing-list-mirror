@@ -1,55 +1,70 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] interpret_nth_last_branch(): plug small memleak
-Date: Tue, 20 Jan 2009 11:15:30 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901201115160.3586@pacific.mpi-cbg.de>
-References: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org> <1232163011-20088-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0901170646560.3586@pacific.mpi-cbg.de> <200901171438.22504.trast@student.ethz.ch> <alpine.DEB.1.00.0901171602340.3586@pacific.mpi-cbg.de>
- <7vljt97nld.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901172028470.3586@pacific.mpi-cbg.de> <7vmydp5tqj.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901180201070.3586@pacific.mpi-cbg.de> <7vprilyt1w.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0901182152010.3586@pacific.mpi-cbg.de> <7vprijra52.fsf@gitster.siamese.dyndns.org> <7vljt7r9mq.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901191331590.3586@pacific.mpi-cbg.de> <7vvdsamrai.fsf_-_@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH 2/2] expand --pretty=format color options
+Date: Tue, 20 Jan 2009 11:27:48 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901201126500.3586@pacific.mpi-cbg.de>
+References: <20090117153846.GB27071@coredump.intra.peff.net> <49736331.8010003@lsrfire.ath.cx> <20090118173753.GB17434@coredump.intra.peff.net> <20090118194328.GA31180@coredump.intra.peff.net> <20090118195342.GA612@coredump.intra.peff.net>
+ <7vljt6q4cf.fsf@gitster.siamese.dyndns.org> <20090120040617.GB30714@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 11:17:28 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Markus Heidelberg <markus.heidelberg@web.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 20 11:29:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPDfL-0005Gj-8G
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 11:17:03 +0100
+	id 1LPDr6-0007xW-Ch
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 11:29:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760236AbZATKPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 05:15:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760115AbZATKP3
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 05:15:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39386 "HELO mail.gmx.net"
+	id S1755594AbZATK1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 05:27:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754919AbZATK1r
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 05:27:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53827 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759866AbZATKP1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 05:15:27 -0500
-Received: (qmail invoked by alias); 20 Jan 2009 10:15:25 -0000
+	id S1754783AbZATK1q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 05:27:46 -0500
+Received: (qmail invoked by alias); 20 Jan 2009 10:27:43 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp014) with SMTP; 20 Jan 2009 11:15:25 +0100
+  by mail.gmx.net (mp008) with SMTP; 20 Jan 2009 11:27:43 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+XDfo0ABOXrWj/eyUz9SI+jm3RurF73TDhuI45Mj
-	DENSVHcdugVhZK
+X-Provags-ID: V01U2FsdGVkX18REN0PyhQRGMOcdfdUuEYVjuBS4LTUKeuLe5WkEJ
+	dp8lZw0GQXYX4t
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vvdsamrai.fsf_-_@gitster.siamese.dyndns.org>
+In-Reply-To: <20090120040617.GB30714@sigill.intra.peff.net>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.77
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106466>
 
 Hi,
 
-On Mon, 19 Jan 2009, Junio C Hamano wrote:
+On Mon, 19 Jan 2009, Jeff King wrote:
 
-> The error return path leaked both cb.buf[] strbuf array itself, and the 
-> strings contained in its elements.
+> On Mon, Jan 19, 2009 at 03:10:56PM -0800, Junio C Hamano wrote:
+> 
+> > > Hrm. OK, it doesn't actually work always. It does for git-log, but 
+> > > not for rev-list, which leaves diff_use_color_default as -1. I don't 
+> > > know if there are any other ways you can get to this code path 
+> > > without having set diff_use_color_default.
+> > 
+> > Yuck, no matter what you do please don't contaminate plumbing with the 
+> > UI color options.
+> 
+> Of course. But the problem is that rev-list is _already_ contaminated by 
+> --pretty=format:%Cred. Or do you mean, you really want rev-list to 
+> unconditionally output color in such a case?
 
-Oops.  Thanks,
+No, rev-list is not contaminated with UI color options.  %Cred _always_ 
+outputs the color, even when the user turned off color explicitely, using 
+--no-color.
+
+Ciao,
 Dscho
