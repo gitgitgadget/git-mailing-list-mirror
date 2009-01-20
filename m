@@ -1,83 +1,65 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: Re: [PATCH] Provide pessimistic defaults for cross compilation
-	tests.
-Date: Tue, 20 Jan 2009 07:59:39 +0100
-Organization: Department of Numerical Simulation, University of Bonn
-Message-ID: <20090120065939.GC5561@ins.uni-bonn.de>
-References: <loom.20090115T123123-915@post.gmane.org> <20090116094110.GD25275@ins.uni-bonn.de> <20090119203400.GA3539@ins.uni-bonn.de> <alpine.DEB.1.00.0901200037510.3586@pacific.mpi-cbg.de> <7vab9mpu8w.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: Support diff.color-words config option
+Date: Mon, 19 Jan 2009 22:59:37 -0800
+Message-ID: <7v1vuympie.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0901162208180.3586@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0901200031350.3586@pacific.mpi-cbg.de>
+ <200901192017.54163.bss@iguanasuicide.net>
+ <200901192145.21115.bss@iguanasuicide.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Julius Naperkowski <j.nap@gmx.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 08:01:08 2009
+	Santi =?utf-8?Q?B?= =?utf-8?Q?=C3=A9jar?= <santi@agolina.net>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Teemu Likonen <tlikonen@iki.fi>
+To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+X-From: git-owner@vger.kernel.org Tue Jan 20 08:01:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPAbj-0006Zz-LB
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 08:01:08 +0100
+	id 1LPAbv-0006cn-QM
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 08:01:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752648AbZATG7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 01:59:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752589AbZATG7n
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 01:59:43 -0500
-Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:43327 "EHLO
-	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752397AbZATG7m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 01:59:42 -0500
-Received: from localhost.localdomain (xdsl-87-78-160-12.netcologne.de [87.78.160.12])
-	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id CC573400031D5;
-	Tue, 20 Jan 2009 07:59:40 +0100 (CET)
-Received: from ralf by localhost.localdomain with local (Exim 4.69)
-	(envelope-from <Ralf.Wildenhues@gmx.de>)
-	id 1LPAaJ-0001db-Tx; Tue, 20 Jan 2009 07:59:39 +0100
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Julius Naperkowski <j.nap@gmx.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vab9mpu8w.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753392AbZATG7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 01:59:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752890AbZATG7t
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 01:59:49 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36837 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752835AbZATG7s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 01:59:48 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C7D46916EB;
+	Tue, 20 Jan 2009 01:59:46 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 86D5D916E4; Tue,
+ 20 Jan 2009 01:59:39 -0500 (EST)
+In-Reply-To: <200901192145.21115.bss@iguanasuicide.net> (Boyd Stephen Smith,
+ Jr.'s message of "Mon, 19 Jan 2009 21:45:20 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: EC44E810-E6BF-11DD-B1B6-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106446>
 
-* Junio C Hamano wrote on Tue, Jan 20, 2009 at 03:49:03AM CET:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > How do you deal with the hardcoded limitation that uname_S is defined to 
-> > be the output of "uname -s" on the _build_ system, and that quite a large 
-> > part of the Makefile sets variables dependent on this?
+"Boyd Stephen Smith Jr." <bss@iguanasuicide.net> writes:
 
-Oh, up to now I have blissfully ignored cross-compilation issues in git
-outside of configure.ac.  :-)
+> When diff is invoked with --color-words (w/o =regex), use the regular
+> expression the user has configured as diff.color-words.
+>
+> diff drivers configured via attributes take precedence over the
+> diff.color-words setting.  If the user wants to change them, they have
+> their own configuration variables.
 
-> > IOW are you certain that configure (with your patch) will override _all_ 
-> > uname_S dependent settings?
+This needs an entry in Documentation/config.txt
 
-No, I am certain they won't override them at all.
+None of the existing configuration variables defined use hyphens in
+multi-word variable names.
 
-Fixing Makefile will be more (but independent) work.  All I did was get
-configure.ac in shape to not error out in the face of cross compilation.
+Other than that, I think this is a welcome addition to the suite.
 
-> It may be a valid question but it is not limited to cross compilation, is
-> it?  The matter is if values the Makefile wants to default to can be
-> overriden by whatever is placed in config.mak, and as long as that is Ok
-> we won't have a problem with or without use of configure (which is a
-> second class citizen).
-
-Yeah, I figured that.  I assume it makes little sense to suggest adding
-AC_CANONICAL_HOST to configure.ac, letting config.{guess,sub} do their
-job, and the user to use "./configure --host=some-value" to specify a
-host alias, and then using the computed host triple to decide features,
-without the need to modify Makefile or other input files.
-
-See, in a way I come from the GNU world here, and that's what I know
-best.  Since git does its own setup here, I trust you will invent some
-way to solve this.
-
-Thanks,
-Ralf
+Thanks.
