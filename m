@@ -1,65 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: valgrind patches, was Re: What's cooking in git.git (Jan 2009,
-	#04; Mon, 19)
-Date: Tue, 20 Jan 2009 18:24:39 -0500
-Message-ID: <20090120232439.GA17746@coredump.intra.peff.net>
-References: <7vbpu3r745.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901191407470.3586@pacific.mpi-cbg.de> <20090120044447.GF30714@sigill.intra.peff.net> <alpine.DEB.1.00.0901201447290.5159@intel-tinevez-2-302> <20090120141932.GB10688@sigill.intra.peff.net> <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: An idea: maybe Git should use a lock/unlock file mode for problematic files? [Was: Re: after first git clone of linux kernel repository there are changed files in working dir]
+Date: Wed, 21 Jan 2009 00:25:16 +0100
+Message-ID: <81b0412b0901201525w22513418p57acc19457908a3@mail.gmail.com>
+References: <d304880b0812101019ufe85095h46ff0fe00d32bbd0@mail.gmail.com>
+	 <d304880b0812101022u2abe5d68ub3bda68ed39f830b@mail.gmail.com>
+	 <83ocy3fmez.fsf@kalahari.s2.org>
+	 <20090120105228.xbo3gyc0odwcgcsc@webmail.fussycoder.id.au>
+	 <alpine.LNX.1.00.0901201441480.19665@iabervon.org>
+	 <1232486929.4179.7.camel@therock.nsw.bigpond.net.au>
+	 <alpine.LNX.1.00.0901201651050.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 21 00:26:13 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "John Chapman" <thestar@fussycoder.id.au>,
+	"Hannu Koivisto" <azure@iki.fi>, rdkrsr <rdkrsr@googlemail.com>,
+	git@vger.kernel.org
+To: "Daniel Barkalow" <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Jan 21 00:27:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPPyv-0001Zx-6r
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 00:26:05 +0100
+	id 1LPPzq-0001rD-BE
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 00:27:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932108AbZATXYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 18:24:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932096AbZATXYm
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 18:24:42 -0500
-Received: from peff.net ([208.65.91.99]:38399 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932087AbZATXYl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 18:24:41 -0500
-Received: (qmail 5196 invoked by uid 107); 20 Jan 2009 23:24:46 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 20 Jan 2009 18:24:46 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Jan 2009 18:24:39 -0500
+	id S1757202AbZATXZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 18:25:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762500AbZATXZW
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 18:25:22 -0500
+Received: from wa-out-1112.google.com ([209.85.146.181]:26432 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762501AbZATXZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 18:25:18 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1920787wah.21
+        for <git@vger.kernel.org>; Tue, 20 Jan 2009 15:25:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=HYpuv5+y9Z8QBtEy81vGteEIQhB+QoDThfiw6V+VM58=;
+        b=piUXQ+ZdW8tRLm9sBC7ciDIDSysmrI4nBtLUHqDignVA/HIyikIlbKxyrBRMZjklaj
+         LWmxKshICRjZddP7/BXFi+8tIj7OhtAz4IOKpoZO8pyzRs/j0DCq2TULPEjeKtSH7Oqs
+         +odtxAL2X1Ju6FY4Fjm4YajNErjUOlYLL345Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=OCrnjtDc0L6sEFjLI78Xq+KmNGhfjnMdUNQy2JJhEk/BAvAXODrQPYzbN4hZCt1yHz
+         0uOTz/PDDswW91DUPVD3SqUrj2KXlJtmE0ZKVAJdptItZrwFwD2zyz2hmI5C6Dlj2TQc
+         WjEyb6Ym7tK07H7sxBa/GzzW+51qqhpfziLjE=
+Received: by 10.114.161.11 with SMTP id j11mr2282034wae.24.1232493916360;
+        Tue, 20 Jan 2009 15:25:16 -0800 (PST)
+Received: by 10.114.179.4 with HTTP; Tue, 20 Jan 2009 15:25:16 -0800 (PST)
+In-Reply-To: <alpine.LNX.1.00.0901201651050.19665@iabervon.org>
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106539>
 
-On Tue, Jan 20, 2009 at 03:50:28PM +0100, Johannes Schindelin wrote:
+2009/1/20 Daniel Barkalow <barkalow@iabervon.org>:
+> My impression was that this didn't happen in practice, because teams
+> would tend to not have two people create the same file at the same time,
+> but with different cases, and people interacting with the same file at
+> different times would use whatever case it was introduced with.
 
-> > How will you deal with race conditions between two simultaneously 
-> > running scripts? I.e., where are you going to put it?
-> 
-> There are no race conditions, as for every git executable, a symbolic link 
-> is created, pointing to the valgrind.sh script [*1*].
+It will and does happen in practice (annoingly too often even). Not with Git
+yet (with Perforce), where people do "branching" by simply copying things
+in another directory (perforce world does not know real branches),
+renaming files randomly, and putting the new directory back in the
+system (or maybe it is the strange tools here which do that - often
+it is the first character of a directory or file which gets down- or up-cased).
+As Perforce itself is case sensitive (like Git), using of such branches
+is a nightmare: the files get overwritten in checkout order which is
+not always sorted in predictable order. Combined with case-stupidity
+of the file system the working directories sometimes cause "interesting
+time" for unlucky users.
+Luckily (sadly) it is all-opening-in-a-wall shop, so the problem with "fanthom"
+files is rare (it is hard to notice) for most. Which actually makes it more
+frustrating when the real shit happens.
 
-Hmm. I suppose that would work, since every test run is trying to create
-the same state.
-
-> Besides, what with valgrind being a memory hog, you'd be nuts to call 
-> valgrinded scripts simultaneously.
-
-I have to disagree there. I think there are two obvious usage patterns:
-
-  - run script $X specifically under valgrind to track down a bug
-
-  - run the whole test suite under valgrind occasionally to find
-    latent bugs that wouldn't otherwise show up
-
-In the latter, you want a pretty beefy box.  When I did the original
-patches, I ran through the whole test suite under valgrind. It took
-several hours on a 6GB quad-core box, using "-j4". I would hate for it
-to have taken an entire day. :)
-
--Peff
+And it will happen to Git as well, especially if development go crossplatform.
+It is not that hard to accidentally rename a file on case-sensitive file system,
+"git add *" it and commit without thinking (that's how most of software
+development happens, come to think of it).
