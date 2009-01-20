@@ -1,121 +1,149 @@
-From: "Dilip M" <dilipm79@gmail.com>
-Subject: Re: gitk doesn't work w/o sudo.
-Date: Tue, 20 Jan 2009 22:21:09 +0530
-Message-ID: <c94f8e120901200851n21c6d67r3c43e3efd435e3db@mail.gmail.com>
-References: <c94f8e120901190216x246589ebwc4a44dd85bb655d2@mail.gmail.com>
-	 <3f4fd2640901190359w39ded50ds246903808e94246c@mail.gmail.com>
-	 <c94f8e120901190637i294d379dke3a07a90da5076f8@mail.gmail.com>
-	 <200901200912.14432.brian.foster@innova-card.com>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: [PATCH] diff: Support diff.color-words config option
+Date: Tue, 20 Jan 2009 10:52:58 -0600
+Message-ID: <200901201053.03256.bss@iguanasuicide.net>
+References: <alpine.DEB.1.00.0901162208180.3586@pacific.mpi-cbg.de> <200901192145.21115.bss@iguanasuicide.net> <alpine.DEB.1.00.0901201058520.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Reece Dunn" <msclrhd@googlemail.com>,
-	"git list" <git@vger.kernel.org>
-To: "Brian Foster" <brian.foster@innova-card.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 17:52:36 2009
+Content-Type: multipart/signed;
+  boundary="nextPart3071477.e10qX140RC";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 20 17:54:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPJq7-0007j6-Gl
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 17:52:35 +0100
+	id 1LPJrR-00082f-8r
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 17:53:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761488AbZATQvO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2009 11:51:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761467AbZATQvM
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 11:51:12 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:48120 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758053AbZATQvK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jan 2009 11:51:10 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so1537295yxm.1
-        for <git@vger.kernel.org>; Tue, 20 Jan 2009 08:51:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to
-         :subject:cc:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:references;
-        bh=KbGBkZpishk0wa97UmG5vPcj8vKKRxC+PXs4USpKKvI=;
-        b=vJPYDLBaURDlptSmREvxOPHGmeAnadptEaNdHWPcFdjGwK9ezYlo7o0leNi9uDGOQT
-         ydQz9yD8G80kjE6NDJoEjCA2oa4foE3pYuiQPcYGghx8X4jaGoa5SHgpB4l5Fc5R8VOs
-         p6MoYzd5VWUN0Yy10AYnPvPCGl0cZqj1Jq/zs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :references;
-        b=iMD79IUlNXQ5O5yZ3m8Nipjah5Qih12KFPl5TBnfFH9h34giY2AF8bVaoS3aFCvOu9
-         byKu/qlWu3UxLwj1m/bdP76V5Xyk6v8HLUXZrLlLOLN3zn0WUNJvSQgPMNGPiAFN8RYk
-         hVqNgdKbuR1CdgPEF0wXlSHBN8Als8IrZx9RU=
-Received: by 10.100.136.15 with SMTP id j15mr2248482and.11.1232470269362;
-        Tue, 20 Jan 2009 08:51:09 -0800 (PST)
-Received: by 10.100.128.10 with HTTP; Tue, 20 Jan 2009 08:51:09 -0800 (PST)
-In-Reply-To: <200901200912.14432.brian.foster@innova-card.com>
-Content-Disposition: inline
+	id S1758170AbZATQwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 11:52:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758102AbZATQwR
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 11:52:17 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:35900 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755612AbZATQwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 11:52:16 -0500
+Received: from [63.167.79.115]
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LPJpn-0001uU-BY; Tue, 20 Jan 2009 16:52:15 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <alpine.DEB.1.00.0901201058520.3586@pacific.mpi-cbg.de>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106492>
 
-On Tue, Jan 20, 2009 at 1:42 PM, Brian Foster
-<brian.foster@innova-card.com> wrote:
-> On Monday 19 January 2009 15:37:06 Dilip M wrote:
->> On Mon, Jan 19, 2009 at 5:29 PM, Reece Dunn <msclrhd@googlemail.com>=
- wrote:
->> > 2009/1/19 Dilip M <dilipm79@gmail.com>:
->> >> ..I recently install GIT on Ubuntu (hardy) box....I am able to us=
-e
->> >> 'gitk' only If I do 'sudo'. Without 'sudo' it complains 'reposito=
-ry
->> >> not found'
->> >
->> > Who is the owner of the repository directory (and the .git directo=
-ry)
->> > and what are the permissions on the directory?  [ ... ]
->>
->> dm-laptop:~/repos/atria> id -a
->> uid=3D1000(dm) gid=3D1000(dm)  [ ... ]
->> dm-laptop:~/repos/atria> ls -lh .git/
->>[... all looks Ok ...]
+--nextPart3071477.e10qX140RC
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+On Tuesday 2009 January 20 04:02:00 you wrote:
+>On Mon, 19 Jan 2009, Boyd Stephen Smith Jr. wrote:
+>> diff --git a/diff.c b/diff.c
+>> index 9fcde96..c53e1d1 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -23,6 +23,7 @@ static int diff_detect_rename_default;
+>>  static int diff_rename_limit_default =3D 200;
+>>  static int diff_suppress_blank_empty;
+>>  int diff_use_color_default =3D -1;
+>> +static const char *diff_color_words_cfg =3D NULL;
+>>  static const char *external_diff_cmd_cfg;
 >
->  repeating Reece's question, what is the permissions/owner
->  _of_the_directory_which_contains_ the '.git/' directory?
->  I can reproduce this behaviour (git 1.6.0.4) simply by
->  denying myself search (n=E9e execute) permission on that
->  directory, for entirely obvious reasons.
+>Guess why external_diff_cmd_cfg is not set to NULL?  All variables
+>defined outside a function are set to all-zero anyway.
 
-It's the same issue....Any ENV variable I can set to debug this...?
+I suppose I just initialize variables by reflex, having been bitten with to=
+o=20
+many sometimes-crashes due to variables that were usually-zero.  Assuming C=
+=20
+does guarantee that it is zeroed, I'll drop the " =3D NULL" line noise in t=
+he=20
+next version.
 
-dm-laptop:~/repos/atria> id -a
-uid=3D1000(dm) gid=3D1000(dm)
-groups=3D4(adm),20(dialout),24(cdrom),25(floppy),29(audio),30(dip),44(v=
-ideo),46(plugdev),107(fuse),109(lpadmin),115(admin),1000(dm)
+>> @@ -92,6 +93,8 @@ int git_diff_ui_config(const char *var, const char
+>> *value, void *cb) }
+>>  	if (!strcmp(var, "diff.external"))
+>>  		return git_config_string(&external_diff_cmd_cfg, var, value);
+>> +	if (!strcmp(var, "diff.color-words"))
+>
+>I'd call it diff.wordregex, because that's what it is.
 
-dm-laptop:~/repos/atria> ls -ld .git
-drwxr-xr-x 8 dm dm 4096 2009-01-19 22:34 .git
+I don't like runtogetherwords because they are hard to read for me; I tend =
+to=20
+choose the wrong word breaks if it is ambiguous.  There are other=20
+configuration values that use camelCaseWords so I will convert over to usin=
+g=20
+that.
 
-dm-laptop:~/repos/atria> ls -la .git
-total 68
-drwxr-xr-x 8 dm dm 4096 2009-01-19 22:34 .
-drwxr-xr-x 6 dm dm 4096 2009-01-18 23:28 ..
-drwxr-xr-x 2 dm dm 4096 2009-01-18 23:24 branches
--rw-r--r-- 1 dm dm   20 2009-01-19 22:28 COMMIT_EDITMSG
--rw-r--r-- 1 dm dm  256 2009-01-18 23:28 config
--rw-r--r-- 1 dm dm   58 2009-01-18 23:24 description
--rw-r--r-- 1 dm dm   89 2009-01-19 20:15 FETCH_HEAD
--rw-r--r-- 1 dm dm   23 2009-01-19 21:49 HEAD
-drwxr-xr-x 2 dm dm 4096 2009-01-18 23:24 hooks
--rw-r--r-- 1 dm dm 5280 2009-01-19 22:28 index
-drwxr-xr-x 2 dm dm 4096 2009-01-19 22:34 info
-drwxr-xr-x 3 dm dm 4096 2009-01-19 22:34 logs
-drwxr-xr-x 4 dm dm 4096 2009-01-19 22:34 objects
--rw-r--r-- 1 dm dm   41 2009-01-19 20:15 ORIG_HEAD
--rw-r--r-- 1 dm dm  153 2009-01-19 22:34 packed-refs
-drwxr-xr-x 5 dm dm 4096 2009-01-18 23:28 refs
+I thought "word regex" made more sense, but I wanted to match the command-l=
+ine=20
+option.  Will change.
 
-dm-laptop:~/repos/atria> umask
-22
+>> @@ -1550,6 +1553,8 @@ static void builtin_diff(const char *name_a,
+>>  				o->word_regex =3D userdiff_word_regex(one);
+>>  			if (!o->word_regex)
+>>  				o->word_regex =3D userdiff_word_regex(two);
+>> +			if (!o->word_regex)
+>> +				o->word_regex =3D diff_color_words_cfg;
+>
+>IMHO this is the wrong order.  config should not override attributes,
+>which are by definition more specific.
 
+You are up too late Dscho.  This ordering makes the config not override=20
+attributes.  If one of the files has a diff driver, o->word_regex will be s=
+et=20
+to it (and become non-NULL).  That will prevent execution of the body of th=
+e=20
+added "if (!o->word_regex)" -- preventing the configuration option from bei=
+ng=20
+used.
 
--- DM
+>> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+>> index 6ebce9d..a207d9e 100755
+>> --- a/t/t4034-diff-words.sh
+>> +++ b/t/t4034-diff-words.sh
+>> @@ -105,7 +105,7 @@ a =3D b + c<RESET>
+>>  EOF
+>>  cp expect.non-whitespace-is-word expect
+>>
+>> -test_expect_failure 'use default supplied by config' '
+>> +test_expect_success 'use default supplied by config' '
+>
+>Let's squash the two, okay?
+
+Will do.  I expected the code changes to be larger than the test, and when =
+I=20
+finished it was completely the other way.  My next patch will be all-in-one.
+
+Thanks for your feedback.
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
+
+--nextPart3071477.e10qX140RC
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEUEABECAAYFAkl2AW8ACgkQdNbfk+86fC0nWQCXcyuKoE83CT65gTWYSO4biLdG
+/ACdGWKCR6m/2rFoLebp6SMQIRRQCGg=
+=JGjB
+-----END PGP SIGNATURE-----
+
+--nextPart3071477.e10qX140RC--
