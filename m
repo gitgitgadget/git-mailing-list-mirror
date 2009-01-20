@@ -1,150 +1,91 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] diff: Support diff.color-words config option
-Date: Tue, 20 Jan 2009 22:08:33 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901202202370.3586@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0901162208180.3586@pacific.mpi-cbg.de> <200901192145.21115.bss@iguanasuicide.net> <7v1vuympie.fsf@gitster.siamese.dyndns.org> <200901201842.24000.markus.heidelberg@web.de>
+Subject: Re: gitk doesn't work w/o sudo.
+Date: Tue, 20 Jan 2009 22:10:17 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901202209450.3586@pacific.mpi-cbg.de>
+References: <c94f8e120901190216x246589ebwc4a44dd85bb655d2@mail.gmail.com>  <3f4fd2640901190359w39ded50ds246903808e94246c@mail.gmail.com>  <c94f8e120901190637i294d379dke3a07a90da5076f8@mail.gmail.com>  <200901200912.14432.brian.foster@innova-card.com> 
+ <c94f8e120901200851n21c6d67r3c43e3efd435e3db@mail.gmail.com>  <alpine.DEB.1.00.0901201815010.5159@intel-tinevez-2-302> <c94f8e120901201020g32fad692p214fdf1640a4796f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	=?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Teemu Likonen <tlikonen@iki.fi>
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Tue Jan 20 22:10:11 2009
+Cc: Brian Foster <brian.foster@innova-card.com>,
+	Reece Dunn <msclrhd@googlemail.com>,
+	git list <git@vger.kernel.org>
+To: Dilip M <dilipm79@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 20 22:11:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPNrG-0001pB-Mq
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 22:10:03 +0100
+	id 1LPNsq-0002MA-DB
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 22:11:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761369AbZATVIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 16:08:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761126AbZATVIf
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 16:08:35 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43568 "HELO mail.gmx.net"
+	id S1758358AbZATVKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 16:10:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758146AbZATVKP
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 16:10:15 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59688 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758847AbZATVIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 16:08:34 -0500
-Received: (qmail invoked by alias); 20 Jan 2009 21:08:28 -0000
+	id S1757688AbZATVKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 16:10:14 -0500
+Received: (qmail invoked by alias); 20 Jan 2009 21:10:11 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp071) with SMTP; 20 Jan 2009 22:08:28 +0100
+  by mail.gmx.net (mp022) with SMTP; 20 Jan 2009 22:10:11 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+9StEsm069Wqr13+myGH16zsfb3otmwFWM/pDIZG
-	im7KofAXFh4oI3
+X-Provags-ID: V01U2FsdGVkX19U/W4ZbjtUDVRC71LeQvlk3pSPclo/q7HvBl+cMY
+	Fo7tN0KXt2GX5t
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200901201842.24000.markus.heidelberg@web.de>
+In-Reply-To: <c94f8e120901201020g32fad692p214fdf1640a4796f@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.44
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106526>
 
 Hi,
 
-On Tue, 20 Jan 2009, Markus Heidelberg wrote:
+On Tue, 20 Jan 2009, Dilip M wrote:
 
-> Junio C Hamano, 20.01.2009:
-> > "Boyd Stephen Smith Jr." <bss@iguanasuicide.net> writes:
-> > 
-> > > When diff is invoked with --color-words (w/o =regex), use the regular
-> > > expression the user has configured as diff.color-words.
-> > >
-> > > diff drivers configured via attributes take precedence over the
-> > > diff.color-words setting.  If the user wants to change them, they have
-> > > their own configuration variables.
-> > 
-> > This needs an entry in Documentation/config.txt
-> > 
-> > None of the existing configuration variables defined use hyphens in
-> > multi-word variable names.
+> On Tue, Jan 20, 2009 at 10:46 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > 'd try running it with strace, and then search the output for stat()
+> > calls involving <something>/.git.
 > 
-> Except for diff.suppress-blank-empty
-> Should it be converted or is it intention to reflect GNU diff's option?
+> Seems like we are almost there....here is the log..
+> 
+> dm-laptop:~/repos/atria> grep gitk /tmp/gitk_1.log
+> execve("/usr/bin/gitk", ["/usr/bin/gitk"], [/* 37 vars */]) = 0
+> open("/usr/bin/gitk", O_RDONLY)         = 3
+> execve("/usr/bin/wish8.4", ["/usr/bin/wish8.4", "/usr/bin/gitk",
+> "--"], [/* 37 vars */]) = 0
+> stat("/usr/bin/gitk", {st_mode=S_IFREG|0755, st_size=237778, ...}) = 0
+> open("/usr/bin/gitk", O_RDONLY)         = 6
+> lstat("/usr/share/gitk", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+> lstat("/usr/share/gitk/lib", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+> lstat("/usr/share/gitk/lib/msgs", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+> access("/usr/share/gitk/lib/msgs/en_in.msg", F_OK) = -1 ENOENT (No
+> such file or directory)  <======
+> lstat("/usr/share/gitk", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+> lstat("/usr/share/gitk/lib", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+> lstat("/usr/share/gitk/lib/msgs", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+> access("/usr/share/gitk/lib/msgs/en.msg", F_OK) = -1 ENOENT (No such
+> file or directory)       <======
+> stat("/home/dm/.gitk", {st_mode=S_IFREG|0644, st_size=683, ...}) = 0
+> open("/home/dm/.gitk", O_RDONLY)        = 6
+> writev(5, [{"\22\0\7\0\16\0@\3\'\0\0\0\37\0\0\0\10NG\0\4\0\0\0gitk\20"...,
+> 48}], 1) = 48
+> writev(5, [{"\22\0\7\0\16\0@\3(\1\0\0\37\1\0\0\10AME\4\0\0\0gitk\22"...,
+> 112}], 1) = 112
+> 
+> dm-laptop:~/repos/atria> ls -l /usr/share/gitk/lib/msgs/en_in.msg
+> ls: cannot access /usr/share/gitk/lib/msgs/en_in.msg: No such file or directory
+> 
+> But how is it working when  I do 'sudo'..
 
-Grumble.  It's in v1.6.1-rc1~348, so we cannot just go ahead and fix it.
+Let's find out.  You can run the strace with sudo, too.
 
-My preference would be to convert it _except_ that the old name should 
-still work.  But it should not be advertized.
+I bet it uses another git.
 
 Ciao,
-Dscho "who loves consistency, and knows new users appreciate it, too"
-
--- snipsnap --
-[PATCH] Rename diff.suppress-blank-empty to diff.suppressBlankEmpty
-
-All the other config variables use CamelCase.  This config variable should
-not be an exception.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/config.txt       |    2 +-
- diff.c                         |    4 +++-
- t/t4029-diff-trailing-space.sh |    8 ++++----
- 3 files changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index c92e7e6..4f0a0b1 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -652,7 +652,7 @@ diff.renames::
- 	will enable basic rename detection.  If set to "copies" or
- 	"copy", it will detect copies, as well.
- 
--diff.suppress-blank-empty::
-+diff.suppressBlankEmpty::
- 	A boolean to inhibit the standard behavior of printing a space
- 	before each empty output line. Defaults to false.
- 
-diff --git a/diff.c b/diff.c
-index c6a992d..0100b59 100644
---- a/diff.c
-+++ b/diff.c
-@@ -118,7 +118,9 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
- 	}
- 
- 	/* like GNU diff's --suppress-blank-empty option  */
--	if (!strcmp(var, "diff.suppress-blank-empty")) {
-+	if (!strcmp(var, "diff.suppressblankempty") ||
-+			/* for backwards compatibility */
-+			!strcmp(var, "diff.suppress-blank-empty")) {
- 		diff_suppress_blank_empty = git_config_bool(var, value);
- 		return 0;
- 	}
-diff --git a/t/t4029-diff-trailing-space.sh b/t/t4029-diff-trailing-space.sh
-index 4ca65e0..9ddbbcd 100755
---- a/t/t4029-diff-trailing-space.sh
-+++ b/t/t4029-diff-trailing-space.sh
-@@ -2,7 +2,7 @@
- #
- # Copyright (c) Jim Meyering
- #
--test_description='diff honors config option, diff.suppress-blank-empty'
-+test_description='diff honors config option, diff.suppressBlankEmpty'
- 
- . ./test-lib.sh
- 
-@@ -24,14 +24,14 @@ test_expect_success \
-      git add f &&
-      git commit -q -m. f &&
-      printf "\ny\n" > f &&
--     git config --bool diff.suppress-blank-empty true &&
-+     git config --bool diff.suppressBlankEmpty true &&
-      git diff f > actual &&
-      test_cmp exp actual &&
-      perl -i.bak -p -e "s/^\$/ /" exp &&
--     git config --bool diff.suppress-blank-empty false &&
-+     git config --bool diff.suppressBlankEmpty false &&
-      git diff f > actual &&
-      test_cmp exp actual &&
--     git config --bool --unset diff.suppress-blank-empty &&
-+     git config --bool --unset diff.suppressBlankEmpty &&
-      git diff f > actual &&
-      test_cmp exp actual
-      '
--- 
-1.6.1.439.g22f77c
+Dscho
