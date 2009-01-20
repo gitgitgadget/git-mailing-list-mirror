@@ -1,110 +1,73 @@
-From: Reece Dunn <msclrhd@googlemail.com>
-Subject: Re: Newbie Query
-Date: Tue, 20 Jan 2009 20:17:11 +0000
-Message-ID: <3f4fd2640901201217x22262655w115cc2a25e32865e@mail.gmail.com>
-References: <20090120191952.GA25322@uts.thewillards.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: Support diff.color-words config option
+Date: Tue, 20 Jan 2009 12:27:06 -0800
+Message-ID: <7vk58pk9k5.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0901162208180.3586@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0901200031350.3586@pacific.mpi-cbg.de>
+ <200901192017.54163.bss@iguanasuicide.net>
+ <200901192145.21115.bss@iguanasuicide.net>
+ <alpine.DEB.1.00.0901201058520.3586@pacific.mpi-cbg.de>
+ <7vskndkip9.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0901201819490.5159@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Chris Willard <chris@thewillards.co.uk>
-X-From: git-owner@vger.kernel.org Tue Jan 20 21:18:39 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	Santi =?utf-8?Q?B?= =?utf-8?Q?=C3=A9jar?= <santi@agolina.net>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Teemu Likonen <tlikonen@iki.fi>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 20 21:28:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPN3W-0002Wz-QB
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 21:18:39 +0100
+	id 1LPNDL-0005es-Bg
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 21:28:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756937AbZATURO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 15:17:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756147AbZATURN
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 15:17:13 -0500
-Received: from wf-out-1314.google.com ([209.85.200.170]:61666 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753464AbZATURN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 15:17:13 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so3954246wfd.4
-        for <git@vger.kernel.org>; Tue, 20 Jan 2009 12:17:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sRuD0yuk6SSd1bpXVPzz8dpN5KkgK+s+EzYhCIj9mOw=;
-        b=p5A8MQtItFFWFfkyZ5Nut3RITUaOUzqG/q9N4wmlPUptdmZwkz2AyBMf1tI4Fr23AK
-         43EJy/9I52+1YzMBrfFWG7i+W8OP5BACexhihfQLs6CwolmbWISqlUdXmrKMHP3SO4+7
-         CVtJeo12lBvBTvLS4o/WLda2E1sWBRn4ocKIU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=aOsyQDNj2NVgcHZZp7pXwmWtdwCOhUR0DOhuU7kL1UEmQnCZviI3any5z43w4IQE54
-         lxnNdDNN0s4TwmobqInf6LxceDlM5b6dz5Hqjs6uuwkiFigeNRk6+NCvpLnTAr0zpULn
-         o7iDfXptGMMlqMz82+xbpfb+faX750P5vekDU=
-Received: by 10.142.170.6 with SMTP id s6mr3003355wfe.58.1232482631991; Tue, 
-	20 Jan 2009 12:17:11 -0800 (PST)
-In-Reply-To: <20090120191952.GA25322@uts.thewillards.local>
+	id S1755540AbZATU1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 15:27:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754650AbZATU1W
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 15:27:22 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62947 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752767AbZATU1W (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 15:27:22 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D49CE92B51;
+	Tue, 20 Jan 2009 15:27:18 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D949192B4F; Tue,
+ 20 Jan 2009 15:27:10 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0901201819490.5159@intel-tinevez-2-302>
+ (Johannes Schindelin's message of "Tue, 20 Jan 2009 18:28:14 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: BBF16276-E730-11DD-ACF0-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106519>
 
-2009/1/20 Chris Willard <chris@thewillards.co.uk>:
-> Hello All,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+>> By the way, wouldn't it make sense to optimize the precontext of that 
+>> hunk by doing _something_ like:
+>> 
+>> 	if (!o->word_regex && strcmp(one->path, two->path))
+>>         	o->word_regex = userdiff_word_regex(two);
+>> 
+>> "Something like" comes from special cases like /dev/null for new/deleted
+>> files, etc.
 >
-> I then modified the files, added them, commited the changes and then
-> used git push to put them on the PC - still no problems.
->
-> Both systems show the commits but the PC does not have the latest
-> version of the files. Git status on the PC shows the file as changed
-> but commiting give an error when pushing from the laptop.
->
-> I assume that I need to run a command on the PC to get both systems
-> the same. Is it a reset or something else?
+> You mean to avoid the cost of initializing the regex in case one and the 
+> same file is diffed against itself?
 
-So IIUC running 'git log' on the machine you pushed the changes to,
-you can see the checkin you made on the machine you made the change
-on? You need to run 'git checkout' on the machine you pushed to, to
-tell git that you want these files. This is a safety feature, since
-someone may be working on the files on that machine locally, and so
-doesn't want them being overwritten by your push.
+No.
 
-You may find the documentation (http://git-scm.com/documentation)
-useful, especially
-http://www.kernel.org/pub/software/scm/git/docs/everyday.html which
-has your scenario under "Push into another repository. ".
+What I meant is much simpler than that.
 
-If you want someone to take some changes you made, it is recommended
-to let them know so that they can run 'git pull' or 'git fetch' to get
-your changes (performing a merge or rebase as desired). This means
-that they control when they get the updates and what they want to do
-with them.
-
-If you are committing the files to a shared public repository (e.g. a
-central repository, or build server repository), a pussible approach
-is to create that as a "bare" repository (one with just the contents
-of the .git folder - i.e. it does not have any files checked out). You
-can do this by running:
-    git clone --bare source/git/path/project project.git
-you can then clone from this:
-    git clone my/shared/project.git
-and push any changes to it as normal.
-
-The build server can then do a 'git pull' to get the new changes from
-that repository.
-
-You can keep it setup like you currently have (assuming that where you
-are pushing to is a shared repository), and do:
-    git checkout HEAD
-before you run a build (assuming this is the repository that you are
-using for your builds). The advantage of a bare repository is that it
-will take up less space, and using a different (cloned) repository for
-performing builds keeps the main repository clean.
-
-One of the great things about git is that you can customise it to fit
-different workflows.
-
-HTH,
-- Reece
+If one and two are the same filename, and earlier gitattributes lookup for
+the path already failed to produce any when you checked one, isn't it very
+likely that the gitattributes lookup for two would fail the same way to
+produce any result?
