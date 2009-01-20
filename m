@@ -1,65 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: valgrind patches, was Re: What's cooking in git.git (Jan 2009,
-	#04; Mon, 19)
-Date: Tue, 20 Jan 2009 19:15:51 -0500
-Message-ID: <20090121001551.GB18169@coredump.intra.peff.net>
-References: <7vbpu3r745.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901191407470.3586@pacific.mpi-cbg.de> <20090120044447.GF30714@sigill.intra.peff.net> <alpine.DEB.1.00.0901201447290.5159@intel-tinevez-2-302> <20090120141932.GB10688@sigill.intra.peff.net> <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302> <20090120232439.GA17746@coredump.intra.peff.net> <alpine.DEB.1.00.0901210105470.19014@racer>
+From: =?ISO-8859-1?Q?Knut_Olav_B=F8hmer?= <knut-olav.bohmer@telenor.com>
+Subject: how to keeping track of cherry-pick?
+Date: Wed, 21 Jan 2009 00:53:08 +0100
+Message-ID: <497663E4.4000302@telenor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 21 01:18:23 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 21 01:18:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPQmV-0006lN-3D
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 01:17:19 +0100
+	id 1LPQmp-0006rh-AM
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 01:17:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756900AbZAUAPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 19:15:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756875AbZAUAPy
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 19:15:54 -0500
-Received: from peff.net ([208.65.91.99]:51835 "EHLO peff.net"
+	id S1757202AbZAUAQP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2009 19:16:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757148AbZAUAQO
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 19:16:14 -0500
+Received: from mail48.e.nsc.no ([193.213.115.48]:44090 "EHLO mail48.e.nsc.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756371AbZAUAPx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 19:15:53 -0500
-Received: (qmail 5592 invoked by uid 107); 21 Jan 2009 00:15:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 20 Jan 2009 19:15:58 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Jan 2009 19:15:51 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901210105470.19014@racer>
+	id S1756953AbZAUAQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 19:16:13 -0500
+X-Greylist: delayed 1381 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Jan 2009 19:16:13 EST
+Received: from [10.0.0.1] (ti100710a080-2364.bb.online.no [85.165.9.64])
+	(authenticated bits=0)
+	by mail48.nsc.no (8.13.8/8.13.5) with ESMTP id n0KNr8eL005441
+	for <git@vger.kernel.org>; Wed, 21 Jan 2009 00:53:08 +0100 (MET)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106547>
 
-On Wed, Jan 21, 2009 at 01:10:22AM +0100, Johannes Schindelin wrote:
+Hi,
 
-> > Hmm. I suppose that would work, since every test run is trying to create 
-> > the same state.
-> 
-> Yep, that's what I meant with "no race".
+We are changing from subversion to git. We used to merge revisions from
+development branch to stable with svnmerge.py.
 
-Right, but it is still possible to screw it up, if your creation process
-does a delete-create. But it looks like you did it correctly in your
-patch (try to create, and if you fail because it's there, assume it's
-right).
+svnmerge.py can give us a list of revisions available for merging. The
+result is similar to "git log --chery-pick master..dev" The difference
+is that svnmerge.py operates on revision-numbers, and --chery-pick look=
+s
+at the diffs. The result of that is that when we get a conflict when a
+patch is cherry-picked, it will still show up as "available" when I run
+"git log --cherry-pick master..dev"
 
-> Heh.  Okay.  I was convinced that your valgrind patch predated my -j<n> 
-> patch...
+svnmerge.py can also mark revisions as blocked, and will not show up in
+the list of available revisions.
 
-I think I did an early version that did predate it, but then another
-round afterwards.
+How can I keep track of cherry-picked patches, and mark patches as
+"blocked", in the same (or similar) way as I did in subversion with
+svnmerge.py?
 
-> In any case, I already found a bug in the nth_last series, thanks to your 
-> work, which I'll send in a minute.
-
-Yay! It's nice when infrastructure work like this actually pays off.
-
-Thanks for picking up this topic...I can drop the size of my
-ever-growing git todo list by one. :)
-
--Peff
+--=20
+Knut Olav B=F8hmer
