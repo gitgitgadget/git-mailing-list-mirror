@@ -1,114 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] diff: Support diff.color-words config option
-Date: Tue, 20 Jan 2009 18:28:14 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901201819490.5159@intel-tinevez-2-302>
-References: <alpine.DEB.1.00.0901162208180.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901200031350.3586@pacific.mpi-cbg.de> <200901192017.54163.bss@iguanasuicide.net> <200901192145.21115.bss@iguanasuicide.net> <alpine.DEB.1.00.0901201058520.3586@pacific.mpi-cbg.de>
- <7vskndkip9.fsf@gitster.siamese.dyndns.org>
+From: "Dilip M" <dilipm79@gmail.com>
+Subject: Re: gitk doesn't work w/o sudo.
+Date: Tue, 20 Jan 2009 23:05:44 +0530
+Message-ID: <c94f8e120901200935t75dba11fw3ce14b4ba965c878@mail.gmail.com>
+References: <c94f8e120901190216x246589ebwc4a44dd85bb655d2@mail.gmail.com>
+	 <3f4fd2640901190359w39ded50ds246903808e94246c@mail.gmail.com>
+	 <c94f8e120901190637i294d379dke3a07a90da5076f8@mail.gmail.com>
+	 <200901200912.14432.brian.foster@innova-card.com>
+	 <c94f8e120901200851n21c6d67r3c43e3efd435e3db@mail.gmail.com>
+	 <vpq4oztgaz8.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	=?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Teemu Likonen <tlikonen@iki.fi>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 18:29:57 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Brian Foster" <brian.foster@innova-card.com>,
+	"Reece Dunn" <msclrhd@googlemail.com>,
+	"git list" <git@vger.kernel.org>
+To: "Matthieu Moy" <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Jan 20 18:37:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPKQF-0001nM-Ty
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 18:29:56 +0100
+	id 1LPKXm-0004FW-GA
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 18:37:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758190AbZATR2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 12:28:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757069AbZATR2b
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 12:28:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44876 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756151AbZATR2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 12:28:30 -0500
-Received: (qmail invoked by alias); 20 Jan 2009 17:28:28 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp038) with SMTP; 20 Jan 2009 18:28:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19rZxAayxlrB0Nw/TGk0pGFIWrke1R4lmvlWZwY+y
-	fdOIAOIbBR2M0y
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7vskndkip9.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1762312AbZATRfu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2009 12:35:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758918AbZATRft
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 12:35:49 -0500
+Received: from yw-out-2324.google.com ([74.125.46.29]:59852 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762289AbZATRfq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jan 2009 12:35:46 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so1546417ywe.1
+        for <git@vger.kernel.org>; Tue, 20 Jan 2009 09:35:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=WZoClDkhdw3R1TqkYPoFmMNIjTrPif6xH6MhHCVIdMA=;
+        b=NGQsPd37xnbzx9pB2u9Pn7RZ2S14DPjvjXeQRoRspIFK+cIY1TgW4WCdOrgxjU8oMc
+         jwZsngKw1AWqk0i4e8FecWB17JSv4YoiqdKIO4pZz/TZhLL/2aZ9lrcXtezgNKac/IJy
+         d6D15A79fRpMppTwJeER5RtDxoiROz1DCDbm0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=E+sm7OZX8hBp5f+JOhiWPp3GKurQ2aXLO8+BOgZE42wVr+lycqRiPVw9+tej5MQqFB
+         fUI+THw2BkHj4ZMLqYvMhyIBCtZwhwdU1nMj0FhRHxqq9jUA6a/WKiRPuntDkMvCvCz5
+         A3swd7ikfm4AWFJ45w2gDjSL/jwm3+v7xz4vQ=
+Received: by 10.101.70.14 with SMTP id x14mr1405424ank.153.1232472945007;
+        Tue, 20 Jan 2009 09:35:45 -0800 (PST)
+Received: by 10.100.128.10 with HTTP; Tue, 20 Jan 2009 09:35:44 -0800 (PST)
+In-Reply-To: <vpq4oztgaz8.fsf@bauges.imag.fr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106501>
 
-Hi,
+On Tue, Jan 20, 2009 at 10:40 PM, Matthieu Moy <Matthieu.Moy@imag.fr> w=
+rote:
+> "Dilip M" <dilipm79@gmail.com> writes:
+>
+>>>  repeating Reece's question, what is the permissions/owner
+>>>  _of_the_directory_which_contains_ the '.git/' directory?
+>>>  I can reproduce this behaviour (git 1.6.0.4) simply by
+>>>  denying myself search (n=E9e execute) permission on that
+>>>  directory, for entirely obvious reasons.
+>>
+>> It's the same issue....
+>
+> You didn't answer the question.
 
-On Tue, 20 Jan 2009, Junio C Hamano wrote:
+Sorry..I read it for .git directory...
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> @@ -92,6 +93,8 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
-> >>  	}
-> >>  	if (!strcmp(var, "diff.external"))
-> >>  		return git_config_string(&external_diff_cmd_cfg, var, value);
-> >> +	if (!strcmp(var, "diff.color-words"))
-> >
-> > I'd call it diff.wordregex, because that's what it is.
-> 
-> If we want to add a new word-oriented option to diff that is not about 
-> coloring the word differences, is it safe and sane to reuse the same 
-> definition?  That is, "git diff --color-words" would be affected when 
-> diff.wordregex is set to some value, so does any new word-oriented 
-> operation we will add, and the single regex configured would be used as 
-> the default value to define how a word would look like.
-> 
-> I think it makes sense; I do not think of a case offhand where you would 
-> want to define what a word is for the purpose of coloring diffs in one 
-> way, and would want to use a different definition for another 
-> word-oriented operation.
+=2Egit's parent directory is owned by user who us issuing gitk command
+and permisssion bit of 755 is set.
 
-Why not cross that bridge when we're there?  Should we ever feel the need 
-for different word regexes, we would just introduce color.wordregex.
+dm-laptop:~/repos/atria> ls -ld .
+drwxr-xr-x 6 dm dm 4096 2009-01-18 23:28 .
 
-> >> @@ -1550,6 +1553,8 @@ static void builtin_diff(const char *name_a,
-> >>  				o->word_regex = userdiff_word_regex(one);
-> >>  			if (!o->word_regex)
-> >>  				o->word_regex = userdiff_word_regex(two);
-> >> +			if (!o->word_regex)
-> >> +				o->word_regex = diff_color_words_cfg;
-> >
-> > IMHO this is the wrong order.  config should not override attributes, 
-> > which are by definition more specific.
-> 
-> Isn't it merely giving a fallback value when attributes does not give one?
+dm-laptop:~/repos/atria> ls -ld .git/
+drwxr-xr-x 8 dm dm 4096 2009-01-20 22:22 .git/
 
-Yep.  Boyd (or Stephen, as he wants to be called, making it hard to guess 
-from his email address, but that's all part of the fun, in't it?) already 
-realized that I was up too late and got the order wrong myself.
+>> Any ENV variable I can set to debug this...?
+>
+> GIT_TRACE can help.
 
-> By the way, wouldn't it make sense to optimize the precontext of that 
-> hunk by doing _something_ like:
-> 
-> 	if (!o->word_regex && strcmp(one->path, two->path))
->         	o->word_regex = userdiff_word_regex(two);
-> 
-> "Something like" comes from special cases like /dev/null for new/deleted
-> files, etc.
+I tried with that but it didn't help for gitk. But sure, it helps with
+git command(s).
 
-You mean to avoid the cost of initializing the regex in case one and the 
-same file is diffed against itself?  But that would be better handled 
-before calling builtin_diff(), don't you think?
-
-I do not know off-hand if diffcore_std() handles that already, so that the 
-diff_flush() ... builtin_diff() cascade is not even called.
-
-But you raise a valid concern: the regular expression is initialized every 
-time we look at a file.  We probably should have a member 
-word_regex_compiled in diff_options, then, and only initialize it the 
-first time.
-
-Ciao,
-Dscho "who does not have the time to work on Git right now"
+-- DM
