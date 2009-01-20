@@ -1,95 +1,83 @@
-From: "Kelly F. Hickel" <kfh@mqsoftware.com>
-Subject: git fast-import problem converting from CVS with git 1.6.1 and cvs2svn 2.2.0
-Date: Tue, 20 Jan 2009 09:46:52 -0600
-Message-ID: <63BEA5E623E09F4D92233FB12A9F794302BC6851@emailmn.mqsoftware.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Few Questions
+Date: Tue, 20 Jan 2009 08:04:10 -0800
+Message-ID: <20090120160410.GI14053@spearce.org>
+References: <726600.29783.qm@web35708.mail.mud.yahoo.com> <m3r62yx9qi.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 20 17:04:29 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: m.arya@yahoo.com, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 20 17:06:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPJ4d-0002Q9-5n
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 17:03:31 +0100
+	id 1LPJ6z-0002vY-SR
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 17:05:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756562AbZATQCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 11:02:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756088AbZATQCF
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 11:02:05 -0500
-Received: from mail.de.mqsoftware.com ([66.192.70.108]:20319 "EHLO
-	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755702AbZATQCE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jan 2009 11:02:04 -0500
-X-Greylist: delayed 911 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Jan 2009 11:02:04 EST
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git fast-import problem converting from CVS with git 1.6.1 and cvs2svn 2.2.0
-Thread-Index: Acl7FlA+C4XwNB8tTcebTogzddVJxA==
+	id S1754967AbZATQEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 11:04:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756088AbZATQEM
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 11:04:12 -0500
+Received: from george.spearce.org ([209.20.77.23]:43880 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756061AbZATQEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 11:04:11 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 4457B38210; Tue, 20 Jan 2009 16:04:10 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <m3r62yx9qi.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106485>
 
-Hello all,
+Jakub Narebski <jnareb@gmail.com> wrote:
+> "Arya, Manish Kumar" <m.arya@yahoo.com> writes:
+> > 
+> > I want to have following with Git
+> > 
+> > - LDAP and ssh authentication.
+> > 
+> 
+> Instead of inventing (and failing) its own protocol and its own
+> authentication git uses established solutions for authentication: SSH
+> for "smart" server, and WebDAV for push via (currently only "dumb")
+> HTTPS protocol.
+> 
+> There exist solutions that help with setting up SSH for git:
+> git-shell, ssh_acl, and I think most commonly used Gitosis (see
+> seminal reference about Gitosis on http://git.or.cz/gitwiki/BlogPosts).
+ 
+Yup.  Gitosis is very popular for this.
 
-Back in June I had done a test convert of our CVS repo using git 1.5.5.1
-and cvs2svn 2.2.0 that went reasonably well (although it takes nearly a
-week to finish!).  Recently I wanted to try again with the latest
-versions of git and cvs2svn.
+At my last job I rolled my own Gitosis-lite, but in Perl, because
+they are a Perl based shop.  It also uses the update-paranoid hook
+for access controls, as its more flexible (and easier to confuse
+the heck out of yourself) than Gitosis.  But if you can get along
+with Gitosis, its a good choice.  Unfortunately its authentication
+is limited to public keys registered in the authorized keys file
+of the "git" user.
 
-When I get to the final stage (running git fast-import to build the
-converted repo), I get the following output:
-cat ../cvs2svn-tmp/git-blob.dat ../cvs2svn-tmp/git-dump.dat | git
-fast-import
-fatal: Unsupported command: '.
-fast-import: dumping crash report to .git/fast_import_crash_19097
+<plug type="not-quite-ready-but-will-be-soon">
 
-The crash is 18MB and I'd rather not post it, but the only bits that
-seem somewhat interesting are:
-fast-import crash report:
-    fast-import process: 19097
-    parent process     : 19095
-    at Mon Jan 19 11:44:42 2009
+Gerrit2 is also likely to enter this "market" soon.  I'm trying to
+get it production ready and live for one major project before the
+end of this month.  It embeds its own SSH daemon on a non-standard
+port, completely disconnected from the OS authentication.  This may
+make it slightly more palatable in some enviroments then Gitosis,
+as you don't need a huge authorized_keys file, and you don't have
+to worry quite so much about attack vectors.
 
-fatal: Unsupported command: '.
+Unlike with Gitosis, public key management is placed on end-users
+by using web authentication to identify the user, and letting the
+user manage their own "authorized key list".  It also has a full
+blown web based code review system built in.  Which right now a
+project must use if it is hosted by Gerrit2.  :-)
 
-Most Recent Commands Before Crash
----------------------------------
-(...)
-  reset refs/tags/T_9772
-  from :1000007127
-  reset refs/heads/TAG.FIXUP
-  
-  commit refs/heads/TAG.FIXUP
-  mark :1000007128
-  committer cvs2svn <cvs2svn> 1002043747 +0000
-  data 88
-* '.
+</plug>
 
-
-Has anyone got any ideas how to resolve this?
-
-Thanks,
-
-
-
-
-
---
-
-Kelly F. Hickel
-Senior Product Architect
-MQSoftware, Inc.
-952-345-8677 Office
-952-345-8721 Fax
-kfh@mqsoftware.com
-www.mqsoftware.com
-Certified IBM SOA Specialty
-Your Full Service Provider for IBM WebSphere Learn more at
-www.mqsoftware.com 
+-- 
+Shawn.
