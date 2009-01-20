@@ -1,86 +1,80 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: Newbie Query
-Date: Tue, 20 Jan 2009 15:34:12 -0600
-Message-ID: <200901201534.16571.bss@iguanasuicide.net>
-References: <20090120191952.GA25322@uts.thewillards.local> <3f4fd2640901201217x22262655w115cc2a25e32865e@mail.gmail.com> <49763D2B.1000607@morey-chaisemartin.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git rebase -i failing on cygwin -- git checkout-index says File
+ Exists
+Date: Tue, 20 Jan 2009 22:16:28 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901202212470.3586@pacific.mpi-cbg.de>
+References: <4285cd450901201209i792195dfmdec1fb14d627b25e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart5685295.xBojrSSfGg";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: devel@morey-chaisemartin.com
-X-From: git-owner@vger.kernel.org Tue Jan 20 23:15:49 2009
+To: Ludvig Strigeus <strigeus@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 20 23:17:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPOsg-0004Z5-NN
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 23:15:35 +0100
+	id 1LPOuq-0005H3-3v
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 23:17:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756072AbZATWOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 17:14:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755153AbZATWOJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 17:14:09 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:51517 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753180AbZATWOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 17:14:08 -0500
-Received: from [63.167.79.115]
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LPODu-0002In-Op; Tue, 20 Jan 2009 21:33:27 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <49763D2B.1000607@morey-chaisemartin.com>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1760968AbZATWQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 17:16:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753814AbZATWQ0
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 17:16:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34133 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756076AbZATWQZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 17:16:25 -0500
+Received: (qmail invoked by alias); 20 Jan 2009 21:16:22 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp021) with SMTP; 20 Jan 2009 22:16:22 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+Mk6U/vbWMQ04M1LUEDD0Kdm+ayieaCYu5gE3+l2
+	R60tRQbyha5POk
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4285cd450901201209i792195dfmdec1fb14d627b25e@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106531>
 
---nextPart5685295.xBojrSSfGg
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-On Tuesday 2009 January 20 15:07:55 Nicolas Morey-Chaisemartin wrote:
->I did the rookie mistkae on the central server to create the main
->reposity in non-bare mode. So i need to checkout the HEAD revision each
->time I push.
->Is there a cleaner way to convert a non-bare git repo into a bare repo
->than cloning it?
->My repo have a lot of remote branch registered, and cloning them to a
->new bare repo mean I'll have to add all those remote branches again
->(except if there is another trick here I don't know about).
+On Tue, 20 Jan 2009, Ludvig Strigeus wrote:
 
-Well, if you can make sure no one is pushing into the repo for a bit: clone=
- it=20
-and replace the original with a symlink to new, bare one.  Your clients wil=
-l=20
-be able to use the same URL, so they should be happy.  (I haven't tried thi=
-s,=20
-but it should work.)
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+> I'm having some weird problem with Git on Cygwin on Windows XP. I start 
+> with a totally clean repo, and then run interactive rebase to edit a 
+> historical commit. I exit the editor without doing anything (I get 
+> similar issues if I modify stuff inside the editor).
+> 
+> $ git st
+> # On branch master
+> nothing to commit (working directory clean)
+> 
+> $ git rebase -i 4a1552c81b622f85b0e9170c6fd7a22b4a3e633c
+> error: git checkout-index: unable to create file util/stringfuncs.cpp
+> (File exists)
 
---nextPart5685295.xBojrSSfGg
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+This is the error that should stop the whole thing.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+> fatal: Could not reset index file to revision '4965936'.
+> error: Entry 'util/boink-py.cc' not uptodate. Cannot merge.
+> fatal: merging of trees 0c27b10e163f00655486976896d096302b0f5c21 and
+> 7c7dfd93d678cfc564649738d45260e0b5d9f5a7 failed
+> Could not apply d9c7ac9... Various reorganizations.
 
-iEYEABECAAYFAkl2Q1gACgkQdNbfk+86fC0ZtQCeMODu1njv0JgE6Q8n3QnxMC4A
-VJoAn0LEC3TOPBSGS4KCFYyKHhs6NF9Y
-=feEF
------END PGP SIGNATURE-----
+But here, it should not have continued.
 
---nextPart5685295.xBojrSSfGg--
+Having said that, I often had that case with interactive rebase, because 
+I had an untracked file lying around (in your case util/stringfuncs.cpp) 
+that was tracked in the version I was trying to rebase onto, but it 
+stopped right there, even on msysGit.
+
+Hopefully you can investigate the scenario more, by "git rebase --abort", 
+and then running the rebase -i again, but with GIT_TRACE=1.
+
+Ciao,
+Dscho
