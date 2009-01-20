@@ -1,71 +1,68 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: how to track multiple upstreams in one repository
-Date: Tue, 20 Jan 2009 13:03:19 +0100
-Message-ID: <20090120120319.GR30710@genesis.frugalware.org>
-References: <alpine.DEB.1.10.0901181855400.20741@asgard.lang.hm> <20090119021426.GA21999@shion.is.fushizen.net> <alpine.DEB.1.10.0901181957070.20741@asgard.lang.hm> <8e04b5820901182352n29b3885cj850e6ddae6ca237f@mail.gmail.com> <20090120033402.GC8754@kroah.com> <8e04b5820901192329pf44431coce4423e6a8d43198@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: valgrind patches, was Re: What's cooking in git.git (Jan 2009, #04;
+ Mon, 19)
+Date: Tue, 20 Jan 2009 14:51:49 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901201447290.5159@intel-tinevez-2-302>
+References: <7vbpu3r745.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901191407470.3586@pacific.mpi-cbg.de> <20090120044447.GF30714@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="4OdJeIrdWB8gmUCp"
-Cc: Greg KH <greg@kroah.com>, david@lang.hm,
-	Bryan Donlan <bdonlan@fushizen.net>, git@vger.kernel.org
-To: "Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 13:10:10 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 20 14:53:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPFLf-0005JX-BF
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 13:04:51 +0100
+	id 1LPH2o-0008EC-2R
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 14:53:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754189AbZATMD0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 07:03:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753238AbZATMDZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 07:03:25 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:50738 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752522AbZATMDY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 07:03:24 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 6468F58099;
-	Tue, 20 Jan 2009 13:03:24 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 9B9344465E;
-	Tue, 20 Jan 2009 13:03:19 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id CCE0411B87A9; Tue, 20 Jan 2009 13:03:19 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <8e04b5820901192329pf44431coce4423e6a8d43198@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755833AbZATNwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 08:52:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756283AbZATNwD
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 08:52:03 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54063 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755594AbZATNwB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 08:52:01 -0500
+Received: (qmail invoked by alias); 20 Jan 2009 13:51:56 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp051) with SMTP; 20 Jan 2009 14:51:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19C8l8ZCzhCGvTZSbqVqAbuMxrMY8FS2GeHOfget/
+	k4B3SGEVV5JSVj
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090120044447.GF30714@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106473>
 
+Hi,
 
---4OdJeIrdWB8gmUCp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Mon, 19 Jan 2009, Jeff King wrote:
 
-On Tue, Jan 20, 2009 at 09:29:13AM +0200, "Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com> wrote:
->     :) This is something that escaped me... Could you give me the
-> exact git url for this repository? (on kernel.org I'm not able to find
-> it, just the current one...)
+> One of the things I didn't like about it was that the valgrind wrapper 
+> directory was created in the Makefile.
 
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6-stable.git
+I agree.
 
-Have you tried this one?
+> I think creating it inside the trash directory for each test run that 
+> wants to use valgrind makes more sense (probably as .git/valgrind, which 
+> is unlikely to hurt anything but will stay out of the way of most of the 
+> tests).
 
---4OdJeIrdWB8gmUCp
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Here I disagree.  But I think that test-lib.sh should create it on-demand, 
+and it should traverse all executables in all paths listed in $PATH, 
+replacing the ones that start with "git-" ("git" itself should be the 
+first one) that are no scripts by symlinks to the valgrind script (which 
+should therefore live in t/), and those that _are_ scripts by symlinks to 
+$GIT_ROOT/$NAME.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+I'll work on it.
 
-iEYEARECAAYFAkl1vYcACgkQe81tAgORUJYkLACgjj3QqDj2tf2WwYL0dUNLfLx0
-kxoAn1QFAm3wYNswyvEanJyxJN8ubr2U
-=O1wH
------END PGP SIGNATURE-----
-
---4OdJeIrdWB8gmUCp--
+Ciao,
+Dscho
