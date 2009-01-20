@@ -1,75 +1,150 @@
-From: Nicolas Morey-Chaisemartin <devel@morey-chaisemartin.com>
-Subject: Re: Newbie Query
-Date: Tue, 20 Jan 2009 22:07:55 +0100
-Message-ID: <49763D2B.1000607@morey-chaisemartin.com>
-References: <20090120191952.GA25322@uts.thewillards.local> <3f4fd2640901201217x22262655w115cc2a25e32865e@mail.gmail.com>
-Reply-To: devel@morey-chaisemartin.com
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] diff: Support diff.color-words config option
+Date: Tue, 20 Jan 2009 22:08:33 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901202202370.3586@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0901162208180.3586@pacific.mpi-cbg.de> <200901192145.21115.bss@iguanasuicide.net> <7v1vuympie.fsf@gitster.siamese.dyndns.org> <200901201842.24000.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 22:10:02 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Teemu Likonen <tlikonen@iki.fi>
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 20 22:10:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPNr4-0001kw-Ps
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 22:09:51 +0100
+	id 1LPNrG-0001pB-Mq
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 22:10:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757596AbZATVI0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2009 16:08:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757217AbZATVI0
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 16:08:26 -0500
-Received: from 42.mail-out.ovh.net ([213.251.189.42]:57496 "HELO
-	42.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1756151AbZATVIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 16:08:25 -0500
-Received: (qmail 25057 invoked by uid 503); 20 Jan 2009 21:08:14 -0000
-Received: from gw2.ovh.net (HELO mail242.ha.ovh.net) (213.251.189.202)
-  by 42.mail-out.ovh.net with SMTP; 20 Jan 2009 21:08:14 -0000
-Received: from b0.ovh.net (HELO queue-out) (213.186.33.50)
-	by b0.ovh.net with SMTP; 20 Jan 2009 21:07:58 -0000
-Received: from agrenoble-152-1-95-122.w86-200.abo.wanadoo.fr (HELO ?192.168.10.200?) (devel@morey-chaisemartin.com@86.200.202.122)
-  by ns0.ovh.net with SMTP; 20 Jan 2009 21:07:56 -0000
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <3f4fd2640901201217x22262655w115cc2a25e32865e@mail.gmail.com>
-X-Enigmail-Version: 0.95.7
-X-Ovh-Tracer-Id: 4407898136830660251
-X-Ovh-Remote: 86.200.202.122 (agrenoble-152-1-95-122.w86-200.abo.wanadoo.fr)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-Spam-Check: DONE|H 0.5/N
+	id S1761369AbZATVIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 16:08:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761126AbZATVIf
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 16:08:35 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43568 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758847AbZATVIe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 16:08:34 -0500
+Received: (qmail invoked by alias); 20 Jan 2009 21:08:28 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp071) with SMTP; 20 Jan 2009 22:08:28 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+9StEsm069Wqr13+myGH16zsfb3otmwFWM/pDIZG
+	im7KofAXFh4oI3
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200901201842.24000.markus.heidelberg@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106525>
 
-Reece Dunn a =E9crit :
->
-> If you are committing the files to a shared public repository (e.g. a
-> central repository, or build server repository), a pussible approach
-> is to create that as a "bare" repository (one with just the contents
-> of the .git folder - i.e. it does not have any files checked out). Yo=
-u
-> can do this by running:
->     git clone --bare source/git/path/project project.git
-> you can then clone from this:
->     git clone my/shared/project.git
-> and push any changes to it as normal.
->
->  =20
 Hi,
 
-I did the rookie mistkae on the central server to create the main
-reposity in non-bare mode. So i need to checkout the HEAD revision each
-time I push.
-Is there a cleaner way to convert a non-bare git repo into a bare repo
-than cloning it?
-My repo have a lot of remote branch registered, and cloning them to a
-new bare repo mean I'll have to add all those remote branches again
-(except if there is another trick here I don't know about).
+On Tue, 20 Jan 2009, Markus Heidelberg wrote:
 
-Regards
+> Junio C Hamano, 20.01.2009:
+> > "Boyd Stephen Smith Jr." <bss@iguanasuicide.net> writes:
+> > 
+> > > When diff is invoked with --color-words (w/o =regex), use the regular
+> > > expression the user has configured as diff.color-words.
+> > >
+> > > diff drivers configured via attributes take precedence over the
+> > > diff.color-words setting.  If the user wants to change them, they have
+> > > their own configuration variables.
+> > 
+> > This needs an entry in Documentation/config.txt
+> > 
+> > None of the existing configuration variables defined use hyphens in
+> > multi-word variable names.
+> 
+> Except for diff.suppress-blank-empty
+> Should it be converted or is it intention to reflect GNU diff's option?
 
-Nicolas
+Grumble.  It's in v1.6.1-rc1~348, so we cannot just go ahead and fix it.
+
+My preference would be to convert it _except_ that the old name should 
+still work.  But it should not be advertized.
+
+Ciao,
+Dscho "who loves consistency, and knows new users appreciate it, too"
+
+-- snipsnap --
+[PATCH] Rename diff.suppress-blank-empty to diff.suppressBlankEmpty
+
+All the other config variables use CamelCase.  This config variable should
+not be an exception.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/config.txt       |    2 +-
+ diff.c                         |    4 +++-
+ t/t4029-diff-trailing-space.sh |    8 ++++----
+ 3 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index c92e7e6..4f0a0b1 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -652,7 +652,7 @@ diff.renames::
+ 	will enable basic rename detection.  If set to "copies" or
+ 	"copy", it will detect copies, as well.
+ 
+-diff.suppress-blank-empty::
++diff.suppressBlankEmpty::
+ 	A boolean to inhibit the standard behavior of printing a space
+ 	before each empty output line. Defaults to false.
+ 
+diff --git a/diff.c b/diff.c
+index c6a992d..0100b59 100644
+--- a/diff.c
++++ b/diff.c
+@@ -118,7 +118,9 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 	}
+ 
+ 	/* like GNU diff's --suppress-blank-empty option  */
+-	if (!strcmp(var, "diff.suppress-blank-empty")) {
++	if (!strcmp(var, "diff.suppressblankempty") ||
++			/* for backwards compatibility */
++			!strcmp(var, "diff.suppress-blank-empty")) {
+ 		diff_suppress_blank_empty = git_config_bool(var, value);
+ 		return 0;
+ 	}
+diff --git a/t/t4029-diff-trailing-space.sh b/t/t4029-diff-trailing-space.sh
+index 4ca65e0..9ddbbcd 100755
+--- a/t/t4029-diff-trailing-space.sh
++++ b/t/t4029-diff-trailing-space.sh
+@@ -2,7 +2,7 @@
+ #
+ # Copyright (c) Jim Meyering
+ #
+-test_description='diff honors config option, diff.suppress-blank-empty'
++test_description='diff honors config option, diff.suppressBlankEmpty'
+ 
+ . ./test-lib.sh
+ 
+@@ -24,14 +24,14 @@ test_expect_success \
+      git add f &&
+      git commit -q -m. f &&
+      printf "\ny\n" > f &&
+-     git config --bool diff.suppress-blank-empty true &&
++     git config --bool diff.suppressBlankEmpty true &&
+      git diff f > actual &&
+      test_cmp exp actual &&
+      perl -i.bak -p -e "s/^\$/ /" exp &&
+-     git config --bool diff.suppress-blank-empty false &&
++     git config --bool diff.suppressBlankEmpty false &&
+      git diff f > actual &&
+      test_cmp exp actual &&
+-     git config --bool --unset diff.suppress-blank-empty &&
++     git config --bool --unset diff.suppressBlankEmpty &&
+      git diff f > actual &&
+      test_cmp exp actual
+      '
+-- 
+1.6.1.439.g22f77c
