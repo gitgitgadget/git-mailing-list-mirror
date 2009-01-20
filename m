@@ -1,78 +1,69 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: [TOY PATCH] git-resurrect: find traces of a branch name and resurrect it
-Date: Tue, 20 Jan 2009 10:57:17 -0600
-Message-ID: <200901201057.18127.bss@iguanasuicide.net>
-References: <alpine.DEB.1.00.0901161213370.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901181718370.3586@pacific.mpi-cbg.de> <200901201001.54979.trast@student.ethz.ch>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: CR codes from git commands
+Date: Tue, 20 Jan 2009 18:08:22 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901201757520.5159@intel-tinevez-2-302>
+References: <18805.64312.289059.660023@hungover.brentg.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1934380.s9kW0qGn30";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jan 20 17:58:10 2009
+To: Brent Goodrick <bgoodr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 20 18:11:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPJvH-0000bm-3Q
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 17:57:55 +0100
+	id 1LPK6u-00047S-ML
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 18:09:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757127AbZATQ4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 11:56:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756685AbZATQ4a
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 11:56:30 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:52972 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756569AbZATQ4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 11:56:30 -0500
-Received: from [63.167.79.115]
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LPJtt-0001uw-49; Tue, 20 Jan 2009 16:56:29 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <200901201001.54979.trast@student.ethz.ch>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1757550AbZATRIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 12:08:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757524AbZATRIc
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 12:08:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58523 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757069AbZATRIc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 12:08:32 -0500
+Received: (qmail invoked by alias); 20 Jan 2009 17:08:29 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp063) with SMTP; 20 Jan 2009 18:08:29 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+EHoIdEEaEOpUJD2nUdrEXNVK3ZACRSmyHBOhUT2
+	goBm6Wd43X+m+G
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <18805.64312.289059.660023@hungover.brentg.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106495>
 
---nextPart1934380.s9kW0qGn30
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-On Tuesday 2009 January 20 03:01:50 Thomas Rast wrote:
->It was really intended as a toy patch, but if people find it useful
->(Boyd?) I can add the rest of the options so that all searches can be
->chosen independently, and shape it as a "real" contrib patch.
+On Tue, 20 Jan 2009, Brent Goodrick wrote:
 
-I'll test it out later today and get back to you.
+> I am considering converting from CVS over to using git. I'm currently
+> using git version 1.5.6.5 on Debian Linux "testing".
 
-[OT]
-I actually prefer Stephen; My father is Boyd.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+First of all, 1.5.6.5 is from last August, so chances are that the 
+behavior you complain about was fixed in the meantime.  We're at 1.6.1 at 
+the moment.
 
---nextPart1934380.s9kW0qGn30
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+> One of the first things I ran into was having to set PAGER to "cat" to 
+> avoid the problems when running git from anything other than a terminal.  
+> The second thing is that "git pull" (and possibly other commands) are 
+> emitting ^M (octal 013) codes on output, possibly caused by the same 
+> assumption as causes the problem that is fixed by setting PAGER to 
+> "cat".
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+The only place I can think about where a CR is output is when showing the 
+progress of downloading. 
 
-iEYEABECAAYFAkl2Am4ACgkQdNbfk+86fC3tggCfZme8nnd86dg2H+2hkm66zMnr
-nZQAn0rZtLktuKBc4uBbz1BkA0lVKF3F
-=aG6M
------END PGP SIGNATURE-----
+Usually, our code checks if stdout is a tty, and does not show progress.
 
---nextPart1934380.s9kW0qGn30--
+As a work-around, piping into cat should work, though.
+
+Ciao,
+Dscho
