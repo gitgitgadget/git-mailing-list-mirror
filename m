@@ -1,67 +1,71 @@
-From: thestar@fussycoder.id.au
-Subject: An idea: maybe Git should use a lock/unlock file mode for
-	problematic files? [Was: Re: after first git clone of linux kernel
-	repository there are changed files in working dir]
-Date: Tue, 20 Jan 2009 10:52:28 +1100
-Message-ID: <20090120105228.xbo3gyc0odwcgcsc@webmail.fussycoder.id.au>
-References: <d304880b0812101019ufe85095h46ff0fe00d32bbd0@mail.gmail.com>
-	<d304880b0812101022u2abe5d68ub3bda68ed39f830b@mail.gmail.com>
-	<83ocy3fmez.fsf@kalahari.s2.org>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCH] commit: more compact summary and without extra quotes
+Date: Tue, 20 Jan 2009 01:00:30 +0100
+Message-ID: <adf1fd3d0901191600k6fd7a364h3e55f9600960df03@mail.gmail.com>
+References: <1232405116-2359-1-git-send-email-santi@agolina.net>
+	 <alpine.DEB.1.00.0901200043400.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	DelSp=Yes	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: rdkrsr <rdkrsr@googlemail.com>, git@vger.kernel.org
-To: Hannu Koivisto <azure@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Jan 20 00:54:34 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 20 01:02:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LP3wt-0007yk-DG
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 00:54:31 +0100
+	id 1LP44I-0001In-Re
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 01:02:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756763AbZASXwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 18:52:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755315AbZASXwk
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 18:52:40 -0500
-Received: from cherry.cbr.hosting-server.com.au ([203.88.118.153]:57729 "EHLO
-	cherry.cbr.hosting-server.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760718AbZASXwh convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 18:52:37 -0500
-Received: (qmail 30738 invoked by uid 48); 20 Jan 2009 10:52:28 +1100
-Received: from  ( [unknown]) by webmail.fussycoder.id.au (Horde MIME
-	library) with HTTP; Tue, 20 Jan 2009 10:52:28 +1100
-In-Reply-To: <83ocy3fmez.fsf@kalahari.s2.org>
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.5)
+	id S1761475AbZATAAi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jan 2009 19:00:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762554AbZATAAf
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 19:00:35 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:49686 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762544AbZATAAe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jan 2009 19:00:34 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so1384368yxm.1
+        for <git@vger.kernel.org>; Mon, 19 Jan 2009 16:00:31 -0800 (PST)
+Received: by 10.100.142.15 with SMTP id p15mr572093and.33.1232409630919; Mon, 
+	19 Jan 2009 16:00:30 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0901200043400.3586@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106413>
 
-Quoting Hannu Koivisto <azure@iki.fi>:
-<snip>
-> Kernel source contains pairs of files whose names differ only by
-> case.  Windows cannot store such pairs (at least by default) and
-> apparently there is no support for such a situation in git so
-> you'll only get one file from each pair to your workspace and the
-> other file is shown as modified.
+2009/1/20 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi,
+>
+> On Mon, 19 Jan 2009, Santi B=E9jar wrote:
+>
+>> Original:
+>> [master]: created d9a5491: "foo:bar"
+>>
+>> While with the patch it becomes:
+>> [master d9a5491] foo:bar
+>
+> Maybe you want to mention that it saves screen estate.  After all, th=
+e
+> commit message is _the_ place to relate your motivation to the gentle
+> reader.
 
-Could git be modified to allow such repositories to be used on windows  
-by locking files that are problematic, for example, a given repository  
-could have files 'AAA' and 'aAa'.
+I thought it was enough with the "more compact" in the title line.
 
-The one that correctly represents the on-disk file would be 'open for  
-edit', while the other file would be locked.  To edit the other file,  
-the existing file would need to be locked, and then the other file  
-would then need to be open for edit.
+>
+>> As discussed in the git mailing list:
+>>
+>> http://marc.info/?l=3Dgit&m=3D122765031208922&w=3D2
+>>
+>> Signed-off-by: Santi B=E9jar <santi@agolina.net>
+>> ---
+>
+> You really want to move the link after the ---.  I often read commit
+> messages off-line, and let me tell you: I am not really happy reading
+> links then.  Not at all.
 
-This could even be extended to allow one to "open file AAA for edit as  
-aAa.v2', giving the file an alternate name.
+OK, less work for me :-)
 
-Such a workflow would only need to be used for such files, and could  
-also be used when there are incompatible file names for that given  
-partition type.
+Santi
