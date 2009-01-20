@@ -1,32 +1,32 @@
 From: Brandon Casey <casey@nrlssc.navy.mil>
 Subject: [PATCH] Makefile: use shell for-loop rather than Make's foreach loop during install
-Date: Mon, 19 Jan 2009 19:44:03 -0600
-Message-ID: <Uv24ZMhFKiA3m2EbqK1HTIXDifezvG8IBTYsEb_OWDUMnDkrzIOUKxq1EaDifYcOfSLwghdle38@cipher.nrlssc.navy.mil>
-Cc: git@vger.kernel.org
+Date: Mon, 19 Jan 2009 19:41:40 -0600
+Message-ID: <IabvnnitcJMS2DjNwgzy1-XPpTZ5XUD1yCbZhuv3bgnTXi4eLY33JtDkQKLr5q3lh1kyMtC3WfU@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, Brandon Casey <casey@nrlssc.navy.mil>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jan 20 02:45:56 2009
+X-From: git-owner@vger.kernel.org Tue Jan 20 03:02:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LP5gf-0005DV-MT
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 02:45:54 +0100
+	id 1LP5wq-0000K2-Iv
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 03:02:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754506AbZATBo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jan 2009 20:44:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751812AbZATBo2
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 20:44:28 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55411 "EHLO
+	id S1758660AbZATCBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jan 2009 21:01:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756348AbZATCBL
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Jan 2009 21:01:11 -0500
+Received: from mail2.nrlssc.navy.mil ([128.160.25.4]:43374 "EHLO
 	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751080AbZATBo1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jan 2009 20:44:27 -0500
-Received: by mail.nrlssc.navy.mil id n0K1iOHA019129; Mon, 19 Jan 2009 19:44:24 -0600
-X-OriginalArrivalTime: 20 Jan 2009 01:44:12.0723 (UTC) FILETIME=[986A5030:01C97AA0]
+	with ESMTP id S1755204AbZATCBK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jan 2009 21:01:10 -0500
+X-Greylist: delayed 1126 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Jan 2009 21:01:10 EST
+Received: by mail.nrlssc.navy.mil id n0K1gMOf025860; Mon, 19 Jan 2009 19:42:22 -0600
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106425>
 
 The install target uses a foreach loop to generate a single long shell
 command line to handle installation of the built-in git commands.  The
