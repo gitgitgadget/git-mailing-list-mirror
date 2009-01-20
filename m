@@ -1,83 +1,50 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Few Questions
-Date: Tue, 20 Jan 2009 08:04:10 -0800
-Message-ID: <20090120160410.GI14053@spearce.org>
-References: <726600.29783.qm@web35708.mail.mud.yahoo.com> <m3r62yx9qi.fsf@localhost.localdomain>
+From: "Kelly F. Hickel" <kfh@mqsoftware.com>
+Subject: RE: git fast-import problem converting from CVS with git 1.6.1 and cvs2svn 2.2.0
+Date: Tue, 20 Jan 2009 10:04:59 -0600
+Message-ID: <63BEA5E623E09F4D92233FB12A9F794302BC6855@emailmn.mqsoftware.com>
+References: <63BEA5E623E09F4D92233FB12A9F794302BC6851@emailmn.mqsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: m.arya@yahoo.com, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 17:06:24 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "Kelly F. Hickel" <kfh@mqsoftware.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 20 17:07:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPJ6z-0002vY-SR
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 17:05:58 +0100
+	id 1LPJ7V-00039y-AF
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 17:06:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754967AbZATQEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 11:04:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756088AbZATQEM
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 11:04:12 -0500
-Received: from george.spearce.org ([209.20.77.23]:43880 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756061AbZATQEL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 11:04:11 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 4457B38210; Tue, 20 Jan 2009 16:04:10 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <m3r62yx9qi.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757118AbZATQFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 11:05:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756088AbZATQFD
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 11:05:03 -0500
+Received: from mail.de.mqsoftware.com ([66.192.70.108]:20514 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755194AbZATQFC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jan 2009 11:05:02 -0500
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+x-cr-hashedpuzzle: Nbk= DmqL DsjB D01D ExZK Ezch FCkx Fop9 GdAT GlBF GwOi HpaP IVpD If6R JF1p Jzp5;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{F9E01341-39D5-44BF-8164-6F73CD862FFA};awBmAGgAQABtAHEAcwBvAGYAdAB3AGEAcgBlAC4AYwBvAG0A;Tue, 20 Jan 2009 16:04:59 GMT;UgBFADoAIABnAGkAdAAgAGYAYQBzAHQALQBpAG0AcABvAHIAdAAgAHAAcgBvAGIAbABlAG0AIABjAG8AbgB2AGUAcgB0AGkAbgBnACAAZgByAG8AbQAgAEMAVgBTACAAdwBpAHQAaAAgAGcAaQB0ACAAMQAuADYALgAxACAAYQBuAGQAIABjAHYAcwAyAHMAdgBuACAAMgAuADIALgAwAA==
+Content-class: urn:content-classes:message
+x-cr-puzzleid: {F9E01341-39D5-44BF-8164-6F73CD862FFA}
+In-Reply-To: <63BEA5E623E09F4D92233FB12A9F794302BC6851@emailmn.mqsoftware.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git fast-import problem converting from CVS with git 1.6.1 and cvs2svn 2.2.0
+Thread-Index: Acl7FlA+C4XwNB8tTcebTogzddVJxAAAldoQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106485>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> "Arya, Manish Kumar" <m.arya@yahoo.com> writes:
-> > 
-> > I want to have following with Git
-> > 
-> > - LDAP and ssh authentication.
-> > 
-> 
-> Instead of inventing (and failing) its own protocol and its own
-> authentication git uses established solutions for authentication: SSH
-> for "smart" server, and WebDAV for push via (currently only "dumb")
-> HTTPS protocol.
-> 
-> There exist solutions that help with setting up SSH for git:
-> git-shell, ssh_acl, and I think most commonly used Gitosis (see
-> seminal reference about Gitosis on http://git.or.cz/gitwiki/BlogPosts).
- 
-Yup.  Gitosis is very popular for this.
+> Back in June I had done a test convert of our CVS repo using git
+> 1.5.5.1
+> and cvs2svn 2.2.0 that went reasonably well 
 
-At my last job I rolled my own Gitosis-lite, but in Perl, because
-they are a Perl based shop.  It also uses the update-paranoid hook
-for access controls, as its more flexible (and easier to confuse
-the heck out of yourself) than Gitosis.  But if you can get along
-with Gitosis, its a good choice.  Unfortunately its authentication
-is limited to public keys registered in the authorized keys file
-of the "git" user.
+That's a typo.  The June conversion used git 1.5.5.1 and cvs2svn 2.1.1
+(not 2.2.0 as previously stated).
 
-<plug type="not-quite-ready-but-will-be-soon">
+Sorry for the confusion.
 
-Gerrit2 is also likely to enter this "market" soon.  I'm trying to
-get it production ready and live for one major project before the
-end of this month.  It embeds its own SSH daemon on a non-standard
-port, completely disconnected from the OS authentication.  This may
-make it slightly more palatable in some enviroments then Gitosis,
-as you don't need a huge authorized_keys file, and you don't have
-to worry quite so much about attack vectors.
-
-Unlike with Gitosis, public key management is placed on end-users
-by using web authentication to identify the user, and letting the
-user manage their own "authorized key list".  It also has a full
-blown web based code review system built in.  Which right now a
-project must use if it is hosted by Gerrit2.  :-)
-
-</plug>
-
--- 
-Shawn.
+-Kelly
