@@ -1,80 +1,171 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git rebase -i failing on cygwin -- git checkout-index says File
- Exists
-Date: Tue, 20 Jan 2009 22:16:28 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901202212470.3586@pacific.mpi-cbg.de>
+From: "Ludvig Strigeus" <strigeus@gmail.com>
+Subject: Re: Git rebase -i failing on cygwin -- git checkout-index says File Exists
+Date: Tue, 20 Jan 2009 23:20:15 +0100
+Message-ID: <4285cd450901201420l8929dci25688dc9723c917a@mail.gmail.com>
 References: <4285cd450901201209i792195dfmdec1fb14d627b25e@mail.gmail.com>
+	 <alpine.DEB.1.00.0901202212470.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Ludvig Strigeus <strigeus@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 23:17:48 2009
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 20 23:21:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPOuq-0005H3-3v
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 23:17:48 +0100
+	id 1LPOyb-0006TE-Ic
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 23:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760968AbZATWQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 17:16:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753814AbZATWQ0
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 17:16:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34133 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756076AbZATWQZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 17:16:25 -0500
-Received: (qmail invoked by alias); 20 Jan 2009 21:16:22 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp021) with SMTP; 20 Jan 2009 22:16:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Mk6U/vbWMQ04M1LUEDD0Kdm+ayieaCYu5gE3+l2
-	R60tRQbyha5POk
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <4285cd450901201209i792195dfmdec1fb14d627b25e@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1756072AbZATWUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 17:20:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755516AbZATWUS
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 17:20:18 -0500
+Received: from yw-out-2324.google.com ([74.125.46.30]:33982 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754480AbZATWUR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 17:20:17 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so1604239ywe.1
+        for <git@vger.kernel.org>; Tue, 20 Jan 2009 14:20:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:cc:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:references;
+        bh=+e/YFXyJc6FPeYCZfdcW+aAcTgw8bxaUwNT5VGK12yc=;
+        b=RteNazz8mtAZjIEzRSF4BDxtevI0yipZPEtk/brvVFUT/VjytWSOLaRoM0sID69reF
+         Ryq1Hu8RMuiyKw9VaJLwjuF18lPrBYq3PJvgV9WGpZaiqLrnOQC8/SZOFVMX/fGC9m5X
+         uCIhiLI7v7GSmAgdLkdMW0R0oMCq8YnYMWr28=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :references;
+        b=DTuN/1uBqPIm31TrLhnN7m7VSgWjUfVC13u/N8V1YLscr4opTP+9l8NYER6WUEdV8d
+         qC7HylkYiATmaV+9z5I/yJITuYwqeh6Ao2uFBClEVAqqbYKMuwwjBYEEW0921YPe0oHu
+         DzP7VnBxsvPFPMg193mO/2pqmymGALWupxdMM=
+Received: by 10.143.39.16 with SMTP id r16mr45319wfj.172.1232490015339;
+        Tue, 20 Jan 2009 14:20:15 -0800 (PST)
+Received: by 10.143.109.1 with HTTP; Tue, 20 Jan 2009 14:20:15 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0901202212470.3586@pacific.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106532>
 
-Hi,
+Hi!
 
-On Tue, 20 Jan 2009, Ludvig Strigeus wrote:
+On Tue, Jan 20, 2009 at 10:16 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Having said that, I often had that case with interactive rebase, because
+> I had an untracked file lying around (in your case util/stringfuncs.cpp)
+> that was tracked in the version I was trying to rebase onto, but it
+> stopped right there, even on msysGit.
 
-> I'm having some weird problem with Git on Cygwin on Windows XP. I start 
-> with a totally clean repo, and then run interactive rebase to edit a 
-> historical commit. I exit the editor without doing anything (I get 
-> similar issues if I modify stuff inside the editor).
-> 
-> $ git st
-> # On branch master
-> nothing to commit (working directory clean)
-> 
-> $ git rebase -i 4a1552c81b622f85b0e9170c6fd7a22b4a3e633c
-> error: git checkout-index: unable to create file util/stringfuncs.cpp
-> (File exists)
+util/stringfuncs.cpp is not an untracked file, though. It's a part of
+my repo. Also 'git status' shows that no files are modified. If it was
+an untracked file, 'git status' would have said so.
 
-This is the error that should stop the whole thing.
+>
+> Hopefully you can investigate the scenario more, by "git rebase --abort",
+> and then running the rebase -i again, but with GIT_TRACE=1.
+>
 
-> fatal: Could not reset index file to revision '4965936'.
-> error: Entry 'util/boink-py.cc' not uptodate. Cannot merge.
-> fatal: merging of trees 0c27b10e163f00655486976896d096302b0f5c21 and
-> 7c7dfd93d678cfc564649738d45260e0b5d9f5a7 failed
-> Could not apply d9c7ac9... Various reorganizations.
+Here is the trace output. Notice how it prints errors about two files this time.
 
-But here, it should not have continued.
+$ GIT_TRACE=1 git rebase -i 4a1552c81b622f85b0e9170c6fd7a22b4a3e633c
+trace: exec: 'git-rebase' '-i' '4a1552c81b622f85b0e9170c6fd7a22b4a3e633c'
+trace: built-in: git 'rev-parse' '--git-dir'
+trace: built-in: git 'rev-parse' '--is-inside-work-tree'
+trace: built-in: git 'rev-parse' '--show-cdup'
+trace: built-in: git 'rev-parse' '--parseopt' '--' '-i'
+'4a1552c81b622f85b0e9170c6fd7a22b4a3e633c'
+trace: built-in: git 'rev-parse' '--git-dir'
+trace: built-in: git 'rev-parse' '--show-cdup'
+trace: built-in: git 'rev-parse' '--is-inside-work-tree'
+trace: exec: 'git-var' 'GIT_COMMITTER_IDENT'
+trace: built-in: git 'rev-parse' '--verify' 'HEAD'
+trace: built-in: git 'update-index' '--ignore-submodules' '--refresh'
+trace: built-in: git 'diff-files' '--quiet' '--ignore-submodules'
+trace: built-in: git 'diff-index' '--cached' '--quiet' 'HEAD'
+'--ignore-submodules' '--'
+trace: built-in: git 'rev-parse' '--verify'
+'4a1552c81b622f85b0e9170c6fd7a22b4a3e633c'
+trace: built-in: git 'rev-parse' '--verify' 'HEAD'
+trace: built-in: git 'rev-parse' '--short'
+'4a1552c81b622f85b0e9170c6fd7a22b4a3e633c'
+trace: built-in: git 'rev-parse' '--short'
+'7a70781d089d98f0de606515d1041230cef9b184'
+trace: built-in: git 'rev-parse' '--short'
+'4a1552c81b622f85b0e9170c6fd7a22b4a3e633c'
+trace: built-in: git 'rev-list' '--no-merges' '--cherry-pick'
+'--pretty=oneline' '--abbrev-commit' '--abbrev=7' '--rever
+se' '--left-right' '--topo-order'
+'4a1552c81b622f85b0e9170c6fd7a22b4a3e633c...7a70781d089d98f0de606515d1041230cef9b184'
+trace: built-in: git 'update-ref' 'ORIG_HEAD'
+'7a70781d089d98f0de606515d1041230cef9b184'
+trace: built-in: git 'rev-parse' '--verify' '4965936^'
+trace: built-in: git 'rev-parse' '--verify' 'HEAD'
+trace: built-in: git 'reset' '--hard' '4965936'
+trace: run_command: 'read-tree' '-v' '-u' '--reset'
+'49659367ed932a691749fb4c6b93e38b2a85e9e1'
+trace: exec: 'git' 'read-tree' '-v' '-u' '--reset'
+'49659367ed932a691749fb4c6b93e38b2a85e9e1'
+trace: built-in: git 'read-tree' '-v' '-u' '--reset'
+'49659367ed932a691749fb4c6b93e38b2a85e9e1'
+error: git checkout-index: unable to create file
+util/boink_unittest.cpp (File exists)
+error: git checkout-index: unable to create file util/stringfuncs.cpp
+(File exists)
+fatal: Could not reset index file to revision '4965936'.
+trace: built-in: git 'rev-parse' '--short' '4965936'
+trace: built-in: git 'rev-parse' '--verify' 'd9c7ac9^'
+trace: built-in: git 'rev-parse' '--verify' 'HEAD'
+trace: built-in: git 'cherry-pick' 'd9c7ac9'
+error: Entry 'util/boink-py.cc' not uptodate. Cannot merge.
+fatal: merging of trees 0c27b10e163f00655486976896d096302b0f5c21 and
+7c7dfd93d678cfc564649738d45260e0b5d9f5a7 failed
+trace: built-in: git 'rev-list' '--parents' '-1' 'd9c7ac9'
+trace: built-in: git 'diff-tree' '-p' 'd9c7ac9^'\!''
+trace: built-in: git 'cat-file' 'commit' 'd9c7ac9'
+trace: built-in: git 'config' 'i18n.commitencoding'
+trace: built-in: git 'show' '-s' '--pretty=raw' '--encoding=UTF-8'
+'d9c7ac9' '--'
+trace: built-in: git 'rerere'
+Could not apply d9c7ac9... Various reorganizations.
 
-Having said that, I often had that case with interactive rebase, because 
-I had an untracked file lying around (in your case util/stringfuncs.cpp) 
-that was tracked in the version I was trying to rebase onto, but it 
-stopped right there, even on msysGit.
+It doesn't really tell me much.
 
-Hopefully you can investigate the scenario more, by "git rebase --abort", 
-and then running the rebase -i again, but with GIT_TRACE=1.
+Maybe this command log is useful. I got this while aborting the
+rebase. Looks like some file creation race condition? Windows doesn't
+allow files to be deleted while they're open.
 
-Ciao,
-Dscho
+$ git rebase --abort
+error: git checkout-index: unable to create file
+util/boink_unittest.cpp (File exists)
+fatal: Could not reset index file to revision
+'7a70781d089d98f0de606515d1041230cef9b184'.
+
+$ git rebase --abort
+error: git checkout-index: unable to create file util/stringfuncs.h
+(File exists)
+fatal: Could not reset index file to revision
+'7a70781d089d98f0de606515d1041230cef9b184'.
+
+$ git rebase --abort
+error: git checkout-index: unable to create file
+util/boink_unittest.cpp (File exists)
+error: git checkout-index: unable to create file util/common.h
+(Permission denied)
+fatal: Could not reset index file to revision
+'7a70781d089d98f0de606515d1041230cef9b184'.
+
+$ git rebase --abort
+
+(this time it worked)
+
+Thanks,
+Ludde
