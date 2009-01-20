@@ -1,69 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: CR codes from git commands
-Date: Tue, 20 Jan 2009 18:08:22 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901201757520.5159@intel-tinevez-2-302>
-References: <18805.64312.289059.660023@hungover.brentg.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: Support diff.color-words config option
+Date: Tue, 20 Jan 2009 09:09:38 -0800
+Message-ID: <7vskndkip9.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0901162208180.3586@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0901200031350.3586@pacific.mpi-cbg.de>
+ <200901192017.54163.bss@iguanasuicide.net>
+ <200901192145.21115.bss@iguanasuicide.net>
+ <alpine.DEB.1.00.0901201058520.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Brent Goodrick <bgoodr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 20 18:11:18 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	Santi =?utf-8?Q?B?= =?utf-8?Q?=C3=A9jar?= <santi@agolina.net>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Teemu Likonen <tlikonen@iki.fi>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 20 18:12:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPK6u-00047S-ML
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 18:09:57 +0100
+	id 1LPK8F-0004ck-QS
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 18:11:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757550AbZATRIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 12:08:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757524AbZATRIc
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 12:08:32 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58523 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757069AbZATRIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 12:08:32 -0500
-Received: (qmail invoked by alias); 20 Jan 2009 17:08:29 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp063) with SMTP; 20 Jan 2009 18:08:29 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+EHoIdEEaEOpUJD2nUdrEXNVK3ZACRSmyHBOhUT2
-	goBm6Wd43X+m+G
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <18805.64312.289059.660023@hungover.brentg.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1757774AbZATRJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 12:09:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757706AbZATRJz
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 12:09:55 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40451 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755612AbZATRJy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 12:09:54 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E542E92AF9;
+	Tue, 20 Jan 2009 12:09:50 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 30D0B92AF6; Tue,
+ 20 Jan 2009 12:09:42 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0901201058520.3586@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Tue, 20 Jan 2009 11:02:00 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 26055AC6-E715-11DD-A0DA-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106496>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, 20 Jan 2009, Brent Goodrick wrote:
+>> @@ -92,6 +93,8 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+>>  	}
+>>  	if (!strcmp(var, "diff.external"))
+>>  		return git_config_string(&external_diff_cmd_cfg, var, value);
+>> +	if (!strcmp(var, "diff.color-words"))
+>
+> I'd call it diff.wordregex, because that's what it is.
 
-> I am considering converting from CVS over to using git. I'm currently
-> using git version 1.5.6.5 on Debian Linux "testing".
+If we want to add a new word-oriented option to diff that is not about
+coloring the word differences, is it safe and sane to reuse the same
+definition?  That is, "git diff --color-words" would be affected when
+diff.wordregex is set to some value, so does any new word-oriented
+operation we will add, and the single regex configured would be used as
+the default value to define how a word would look like.
 
-First of all, 1.5.6.5 is from last August, so chances are that the 
-behavior you complain about was fixed in the meantime.  We're at 1.6.1 at 
-the moment.
+I think it makes sense; I do not think of a case offhand where you would
+want to define what a word is for the purpose of coloring diffs in one
+way, and would want to use a different definition for another
+word-oriented operation.
 
-> One of the first things I ran into was having to set PAGER to "cat" to 
-> avoid the problems when running git from anything other than a terminal.  
-> The second thing is that "git pull" (and possibly other commands) are 
-> emitting ^M (octal 013) codes on output, possibly caused by the same 
-> assumption as causes the problem that is fixed by setting PAGER to 
-> "cat".
+>> @@ -1550,6 +1553,8 @@ static void builtin_diff(const char *name_a,
+>>  				o->word_regex = userdiff_word_regex(one);
+>>  			if (!o->word_regex)
+>>  				o->word_regex = userdiff_word_regex(two);
+>> +			if (!o->word_regex)
+>> +				o->word_regex = diff_color_words_cfg;
+>
+> IMHO this is the wrong order.  config should not override attributes, 
+> which are by definition more specific.
 
-The only place I can think about where a CR is output is when showing the 
-progress of downloading. 
+Isn't it merely giving a fallback value when attributes does not give one?
 
-Usually, our code checks if stdout is a tty, and does not show progress.
+By the way, wouldn't it make sense to optimize the precontext of that hunk
+by doing _something_ like:
 
-As a work-around, piping into cat should work, though.
+	if (!o->word_regex && strcmp(one->path, two->path))
+        	o->word_regex = userdiff_word_regex(two);
 
-Ciao,
-Dscho
+"Something like" comes from special cases like /dev/null for new/deleted
+files, etc.
