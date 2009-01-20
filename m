@@ -1,77 +1,64 @@
-From: Chris Willard <chris@thewillards.co.uk>
-Subject: Newbie Query
-Date: Tue, 20 Jan 2009 19:19:52 +0000
-Message-ID: <20090120191952.GA25322@uts.thewillards.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 20 20:47:55 2009
+From: =?ISO-8859-1?Q?Ask_Bj=F8rn_Hansen?= <ask@develooper.com>
+Subject: Re: parent-filter loses my merged branch -- what am I doing wrong?
+Date: Tue, 20 Jan 2009 12:05:30 -0800
+Message-ID: <EA6D5B1E-DA22-4E57-86B6-A192090FCE53@develooper.com>
+References: <7578B9A6-BF81-4096-B0FD-F433AD62A41E@develooper.com> <49743CB7.4030300@viscovery.net>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Jan 20 21:07:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPMYr-0008RO-0L
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 20:46:57 +0100
+	id 1LPMsD-0006Zr-Sx
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 21:06:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755904AbZATTpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 14:45:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755678AbZATTpY
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 14:45:24 -0500
-Received: from customermail2.easily.co.uk ([212.53.64.53]:47170 "EHLO
-	customermail2.easily.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755659AbZATTpX (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jan 2009 14:45:23 -0500
-X-Greylist: delayed 1514 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Jan 2009 14:45:23 EST
-Received: from thewillards.plus.com ([84.92.199.66] helo=mail-gw.thewillards.co.uk)
-	by customermail2.easily.co.uk with esmtpa (Exim 4.67)
-	(envelope-from <chris@thewillards.co.uk>)
-	id 1LPM8s-0007qD-S0
-	for git@vger.kernel.org; Tue, 20 Jan 2009 19:20:06 +0000
-Received: from uts.thewillards.local (unknown [192.168.99.254])
-	by mail-gw.thewillards.co.uk (Postfix) with ESMTP id CF533286F9
-	for <git@vger.kernel.org>; Tue, 20 Jan 2009 19:15:58 +0000 (GMT)
-Received: by uts.thewillards.local (Postfix, from userid 1000)
-	id 26BAAFAE10D; Tue, 20 Jan 2009 19:19:52 +0000 (GMT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-THEWILLARDS-MailScanner-ESVA-Information: Please contact  for more information
-X-THEWILLARDS-MailScanner-ESVA-ID: CF533286F9.99E25
-X-THEWILLARDS-MailScanner-ESVA: Found to be clean
-X-THEWILLARDS-MailScanner-ESVA-From: chris@thewillards.co.uk
-X-Spam-Status: No
+	id S1755923AbZATUFe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2009 15:05:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755446AbZATUFd
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 15:05:33 -0500
+Received: from x8.develooper.com ([216.52.237.208]:55677 "EHLO
+	x8.develooper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755194AbZATUFd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jan 2009 15:05:33 -0500
+Received: (qmail 397 invoked from network); 20 Jan 2009 20:05:31 -0000
+Received: from dsl081-039-130.lax1.dsl.speakeasy.net (HELO dhcp221.bur.sol) (ask@mail.dev@64.81.39.130)
+  by smtp.develooper.com with (AES128-SHA encrypted) SMTP; 20 Jan 2009 20:05:31 -0000
+In-Reply-To: <49743CB7.4030300@viscovery.net>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106512>
-
-Hello All,
-
-I am having a go at using git and need a bit of help.
-
-I have git installed on my laptop and on my pc. I created some files
-on the pc then used git close via ssh to put them on my laptop - all
-OK so far!
-
-I then modified the files, added them, commited the changes and then
-used git push to put them on the PC - still no problems.
-
-Both systems show the commits but the PC does not have the latest
-version of the files. Git status on the PC shows the file as changed
-but commiting give an error when pushing from the laptop. 
-
-I assume that I need to run a command on the PC to get both systems
-the same. Is it a reset or something else? 
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106513>
 
 
-Regards,
+On Jan 19, 2009, at 0:41, Johannes Sixt wrote:
+
+> Ask Bj=F8rn Hansen schrieb:
+>> On Sam Villain's recommendation I'm spending a bit of time cleaning =
+=20
+>> up
+>> the branches and merges with git filter-branch, but I don't think I'=
+m
+>> quite understanding how it's supposed to work.
+>
+> Don't use --parent-filter for this; use grafts. You can see the =20
+> history in
+> gitk right away. Later run filter-branch without a filter (except =20
+> perhaps
+> the tag-name-filter).
+
+Aha - excellent.  I didn't understand clearly from the documentation =20
+that they'd be "written in stone" by filter-branch.  Building the =20
+grafts with .git/info/grafts was much much easier.
 
 
+   - ask
 
-Chris
-
--- 
-... "Even the gods did not spring into being overnight." Spock
-
---
-This message was scanned by ESVA and is believed to be clean.
+--=20
+http://develooper.com/ - http://askask.com/
