@@ -1,92 +1,95 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: [PATCH] Add tests for diff.color-words configuration option.
-Date: Tue, 20 Jan 2009 10:34:18 -0600
-Message-ID: <200901201034.22478.bss@iguanasuicide.net>
-References: <alpine.DEB.1.00.0901162208180.3586@pacific.mpi-cbg.de> <200901192017.54163.bss@iguanasuicide.net> <alpine.DEB.1.00.0901201057080.3586@pacific.mpi-cbg.de>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: feature request mergetool, skip, abort
+Date: Tue, 20 Jan 2009 11:39:59 -0500
+Message-ID: <81bfc67a0901200839q361923f1xb25ddadfdac37981@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2989818.NDM0LTI4rF";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 20 17:35:00 2009
+Content-Type: multipart/mixed; boundary=001636c5ab80a7b61e0460ecb0b2
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 20 17:42:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPJZ5-00033S-Oi
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 17:35:00 +0100
+	id 1LPJfx-00051S-4Y
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 17:42:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756569AbZATQdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 11:33:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756263AbZATQdf
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 11:33:35 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:52481 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756151AbZATQdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 11:33:35 -0500
-Received: from [63.167.79.115]
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LPJXh-0001tZ-Lt; Tue, 20 Jan 2009 16:33:33 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <alpine.DEB.1.00.0901201057080.3586@pacific.mpi-cbg.de>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1757127AbZATQkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 11:40:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756843AbZATQkj
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 11:40:39 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:36105 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756088AbZATQkj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 11:40:39 -0500
+Received: by bwz14 with SMTP id 14so11114515bwz.13
+        for <git@vger.kernel.org>; Tue, 20 Jan 2009 08:40:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=+dlZWU4O2woqiJYZOx25BQoe+/4Bm1AqYeuMJM939HQ=;
+        b=Q+7hmIWg++cNSrhska2Y2g1/LMOikiKlA+0bedgG6z//+lgOW7+dEURJKLgFspRHwR
+         /Kd3rgBTlzkwUm9wLD/Fx3LyKlxQ9pMB4sEGq9DSBNHVcYkUWW9zWqARlzE5j2IKjQT+
+         6JmlKVUgTZpuJVjhHPQK61KIP+RgeHlNedE7M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=XTle3YevA8vKYI8xuE71h6+Pf0HgcLj2fNBtMNqfAmGp2kNq/sXmIII3hozvhjxUMu
+         GGieH75jm+5Mf1Y0FxCAO2KzPsL41lliboXe8OUSMejRc1DIt8gKfIOxqAOtdqXEqtqw
+         hCKp3HA80NK08RIB+J3vRVrmxrrZBIzA+q1Gk=
+Received: by 10.223.110.10 with SMTP id l10mr2673674fap.51.1232469599171; Tue, 
+	20 Jan 2009 08:39:59 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106489>
 
---nextPart2989818.NDM0LTI4rF
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+--001636c5ab80a7b61e0460ecb0b2
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-On Tuesday 2009 January 20 03:58:37 Johannes Schindelin wrote:
->On Mon, 19 Jan 2009, Boyd Stephen Smith Jr. wrote:
->> I'm not sure why the diff is crazy long.
->
->Because you changed things that need no changing, such as "cat > expect"
->-> "cat > expect.blabla",
+firstly my patch sucks, and I know it. but hopefully it'll give some
+idea of what I'm trying to do and someone can implement it properly.
 
-I suppose I could have gotten away with doing this differently, but I did n=
-eed=20
-to save off some of those results to different files because I wanted to=20
-resuse the results.
+basically there are some files, that I can't merge with git, but I
+need to merge other files before I can fix those and I like to use
+mergetool, so I want a way to skip the files I'm not going to be able
+to merge.
 
->and because you inserted your test instead of=20
->adding it at the end.
+-- 
+Caleb Cushing
 
-I put the tests in that order explicitly to test that .gitattributes overri=
-des=20
-the configuration option.
+http://xenoterracide.blogspot.com
 
-I'm going to be reworking both patches anyway, so I should be able to=20
-rearrange things less, in this file.
+--001636c5ab80a7b61e0460ecb0b2
+Content-Type: application/octet-stream; 
+	name="0001-preliminary-merge-skip-abort-patch.patch"
+Content-Disposition: attachment; 
+	filename="0001-preliminary-merge-skip-abort-patch.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fq6se4gq
 
-Thanks for the feedback.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
-
---nextPart2989818.NDM0LTI4rF
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkl1/Q4ACgkQdNbfk+86fC33YACeNzClB3zd1VybuRi8bPysIPXk
-+18An2T5ALTillpeGz1k0e8gc4uQ92u0
-=3+7r
------END PGP SIGNATURE-----
-
---nextPart2989818.NDM0LTI4rF--
+RnJvbSBiNDM2MDNiY2Q0MDhjY2NlYTdiYTU1MDQxYTgzNTZkMGNhNTM2OTg5IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBDYWxlYiBDdXNoaW5nIDx4ZW5vdGVycmFjaWRlQGdtYWlsLmNv
+bT4KRGF0ZTogVHVlLCAyMCBKYW4gMjAwOSAxMTozMzozMCAtMDUwMApTdWJqZWN0OiBbUEFUQ0hd
+IHByZWxpbWluYXJ5IG1lcmdlL3NraXAvYWJvcnQgcGF0Y2gKCi0tLQogZ2l0LW1lcmdldG9vbC5z
+aCB8ICAgMjIgKysrKysrKysrKysrKysrKysrLS0tLQogMSBmaWxlcyBjaGFuZ2VkLCAxOCBpbnNl
+cnRpb25zKCspLCA0IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2dpdC1tZXJnZXRvb2wuc2gg
+Yi9naXQtbWVyZ2V0b29sLnNoCmluZGV4IDAwZTEzMzcuLmMwYjI3ZWQgMTAwNzU1Ci0tLSBhL2dp
+dC1tZXJnZXRvb2wuc2gKKysrIGIvZ2l0LW1lcmdldG9vbC5zaApAQCAtMTc3LDExICsxNzcsMjUg
+QEAgbWVyZ2VfZmlsZSAoKSB7CiAgICAgZGVzY3JpYmVfZmlsZSAiJGxvY2FsX21vZGUiICJsb2Nh
+bCIgIiRMT0NBTCIKICAgICBkZXNjcmliZV9maWxlICIkcmVtb3RlX21vZGUiICJyZW1vdGUiICIk
+UkVNT1RFIgogICAgIGlmICIkcHJvbXB0IiA9IHRydWU7IHRoZW4KLQlwcmludGYgIkhpdCByZXR1
+cm4gdG8gc3RhcnQgbWVyZ2UgcmVzb2x1dGlvbiB0b29sICglcyk6ICIgIiRtZXJnZV90b29sIgot
+CXJlYWQgYW5zCi0gICAgZmkKKwkJd2hpbGUgdHJ1ZTsgZG8KKwkJcHJpbnRmICJVc2UgKG0pZXJn
+ZSBmaWxlIG9yIChzKXNraXAgZmlsZSwgb3IgKGEpYm9ydD8gKCVzKTogIiBcCisJCSIkbWVyZ2Vf
+dG9vbCIKKwkJcmVhZCBhbnMKKwkJY2FzZSAiJGFucyIgaW4KKwkJCVttTV0qKQorCQkJYnJlYWsK
+KwkJCTs7CisJCQlbc1NdKikKKwkJCXJldHVybiAwICNnbyB0byB0aGUgbmV4dCBmaWxlLCBuZWVk
+cyB0byBjbGVhbiB1cAorCQkJOzsKKwkJCVthQV0qKQorCQkJcmV0dXJuIDEgI3Nob3VsZCBleGl0
+IGltbWVkaWF0ZWx5LCBkb2Vzbid0CisJCQk7OworCQllc2FjCisJCWRvbmUKKwlmaQogCi0gICAg
+Y2FzZSAiJG1lcmdlX3Rvb2wiIGluCisJY2FzZSAiJG1lcmdlX3Rvb2wiIGluCiAJa2RpZmYzKQog
+CSAgICBpZiBiYXNlX3ByZXNlbnQgOyB0aGVuCiAJCSgiJG1lcmdlX3Rvb2xfcGF0aCIgLS1hdXRv
+IC0tTDEgIiRNRVJHRUQgKEJhc2UpIiAtLUwyICIkTUVSR0VEIChMb2NhbCkiIC0tTDMgIiRNRVJH
+RUQgKFJlbW90ZSkiIFwKLS0gCjEuNi4xCgo=
+--001636c5ab80a7b61e0460ecb0b2--
