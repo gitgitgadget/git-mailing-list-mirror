@@ -1,64 +1,76 @@
-From: =?ISO-8859-1?Q?Ask_Bj=F8rn_Hansen?= <ask@develooper.com>
-Subject: Re: parent-filter loses my merged branch -- what am I doing wrong?
-Date: Tue, 20 Jan 2009 12:05:30 -0800
-Message-ID: <EA6D5B1E-DA22-4E57-86B6-A192090FCE53@develooper.com>
-References: <7578B9A6-BF81-4096-B0FD-F433AD62A41E@develooper.com> <49743CB7.4030300@viscovery.net>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Jan 20 21:07:48 2009
+From: "Ludvig Strigeus" <strigeus@gmail.com>
+Subject: Git rebase -i failing on cygwin -- git checkout-index says File Exists
+Date: Tue, 20 Jan 2009 21:09:23 +0100
+Message-ID: <4285cd450901201209i792195dfmdec1fb14d627b25e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 20 21:11:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPMsD-0006Zr-Sx
-	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 21:06:58 +0100
+	id 1LPMvz-0008Iy-PQ
+	for gcvg-git-2@gmane.org; Tue, 20 Jan 2009 21:10:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755923AbZATUFe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2009 15:05:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755446AbZATUFd
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 15:05:33 -0500
-Received: from x8.develooper.com ([216.52.237.208]:55677 "EHLO
-	x8.develooper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755194AbZATUFd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jan 2009 15:05:33 -0500
-Received: (qmail 397 invoked from network); 20 Jan 2009 20:05:31 -0000
-Received: from dsl081-039-130.lax1.dsl.speakeasy.net (HELO dhcp221.bur.sol) (ask@mail.dev@64.81.39.130)
-  by smtp.develooper.com with (AES128-SHA encrypted) SMTP; 20 Jan 2009 20:05:31 -0000
-In-Reply-To: <49743CB7.4030300@viscovery.net>
-X-Mailer: Apple Mail (2.930.3)
+	id S1762890AbZATUJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 15:09:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756937AbZATUJ0
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 15:09:26 -0500
+Received: from yw-out-2324.google.com ([74.125.46.29]:47503 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762881AbZATUJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 15:09:25 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so1579797ywe.1
+        for <git@vger.kernel.org>; Tue, 20 Jan 2009 12:09:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to
+         :subject:mime-version:content-type:content-transfer-encoding
+         :content-disposition;
+        bh=JU0FLZylLW/5L69lJJMwhHPg1nSlW6kCfb1n/XFUtsA=;
+        b=ToHysHlcQKkqIvZQxOQ0ZuBU0Xq16u24tPyE1uImv3UG79XCigDD0uIUvBZz0Oa8ru
+         +6cb+lHvJhQABNGfbKStFVCYgJ5xTwf4V7Fn3tIYn8ponEqjMDXO/mRYoEtLNwJ+ymrI
+         sdblcSpuKUKQxg+QLSZNT0UW2ZKdy9JbcVygQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type
+         :content-transfer-encoding:content-disposition;
+        b=ohru4D1B4o8YQIXv6DppTnS0t+icPglRNjb8OEa53bRwEQ1+C4DURcKbLUtVCB+p7n
+         6HnGDlCnJTVatEprpwCm7qMwtYFtmDqvrxGTVgKIlv6PhO2B+p5OIpggeM83XpRe6pPY
+         NC3Xw60H1uhXDeT5di0Sco7O6uEj0VQdQx2TQ=
+Received: by 10.143.160.17 with SMTP id m17mr1102643wfo.298.1232482164005;
+        Tue, 20 Jan 2009 12:09:24 -0800 (PST)
+Received: by 10.143.109.1 with HTTP; Tue, 20 Jan 2009 12:09:23 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106514>
 
+Hi,
 
-On Jan 19, 2009, at 0:41, Johannes Sixt wrote:
+I'm having some weird problem with Git on Cygwin on Windows XP. I
+start with a totally clean repo, and then run interactive rebase to
+edit a historical commit. I exit the editor without doing anything (I
+get similar issues if I modify stuff inside the editor).
 
-> Ask Bj=F8rn Hansen schrieb:
->> On Sam Villain's recommendation I'm spending a bit of time cleaning =
-=20
->> up
->> the branches and merges with git filter-branch, but I don't think I'=
-m
->> quite understanding how it's supposed to work.
->
-> Don't use --parent-filter for this; use grafts. You can see the =20
-> history in
-> gitk right away. Later run filter-branch without a filter (except =20
-> perhaps
-> the tag-name-filter).
+$ git st
+# On branch master
+nothing to commit (working directory clean)
 
-Aha - excellent.  I didn't understand clearly from the documentation =20
-that they'd be "written in stone" by filter-branch.  Building the =20
-grafts with .git/info/grafts was much much easier.
+$ git rebase -i 4a1552c81b622f85b0e9170c6fd7a22b4a3e633c
+error: git checkout-index: unable to create file util/stringfuncs.cpp
+(File exists)
+fatal: Could not reset index file to revision '4965936'.
+error: Entry 'util/boink-py.cc' not uptodate. Cannot merge.
+fatal: merging of trees 0c27b10e163f00655486976896d096302b0f5c21 and
+7c7dfd93d678cfc564649738d45260e0b5d9f5a7 failed
+Could not apply d9c7ac9... Various reorganizations.
 
+Any clues?
 
-   - ask
-
---=20
-http://develooper.com/ - http://askask.com/
+Thanks,
+Ludde
