@@ -1,101 +1,56 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: Planet Git
-Date: Wed, 21 Jan 2009 15:23:24 -0600
-Message-ID: <200901211523.29076.bss@iguanasuicide.net>
-References: <a2ce9d792bc2f586e2a1408e573db433.squirrel@webmail.planetgit.org> <alpine.DEB.1.00.0901212156510.3586@pacific.mpi-cbg.de>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Superproject branch tracking?
+Date: Wed, 21 Jan 2009 15:22:40 -0600
+Message-ID: <49779220.5000900@freescale.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart58699583.DxjXmLsk0X";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: webmaster@planetgit.org, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 21 22:24:10 2009
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 21 22:24:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPkYT-0002zx-PP
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:24:10 +0100
+	id 1LPkYl-000352-Sq
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:24:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752736AbZAUVWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 16:22:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752628AbZAUVWn
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:22:43 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:36350 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751228AbZAUVWn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 16:22:43 -0500
-Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.124])
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LPkX2-0006PH-MO; Wed, 21 Jan 2009 21:22:40 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <alpine.DEB.1.00.0901212156510.3586@pacific.mpi-cbg.de>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1752767AbZAUVWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 16:22:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752739AbZAUVWu
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:22:50 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:60037 "EHLO
+	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752628AbZAUVWt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 16:22:49 -0500
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw02.freescale.net (8.14.3/az33egw02) with ESMTP id n0LLMlpm023177
+	for <git@vger.kernel.org>; Wed, 21 Jan 2009 14:22:47 -0700 (MST)
+Received: from [127.0.0.1] (mvp-10-214-72-156.am.freescale.net [10.214.72.156])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id n0LLMhu7003464
+	for <git@vger.kernel.org>; Wed, 21 Jan 2009 15:22:47 -0600 (CST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106677>
 
---nextPart58699583.DxjXmLsk0X
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Guys,
 
-On Wednesday 2009 January 21 14:59:23 Johannes Schindelin wrote:
->But then I read this:
->
->	If you want to have your journal/weblog aggregated here, please
->	send an email to the webmaster with your name, full git-related
->	feed and hackergotchi URL.
->
->Up until the "send an email to the webmaster with your name", I was game.
->
->After that: I am probably too stupid, because I do not understand what is
->meant, but even then, I am sure that I no longer want to be part of it.
+Can someone tell me what the current best practice
+to have a Git supermodule maintain a branch that is
+actively tracking a similarly named branch in all of
+the submodules?
 
-Generally "planets" just aggregate existing feeds, they don't provide servi=
-ces=20
-to create the feeds.  A feed URL is really just a URL to a RSS-formatted=20
-resource.  (Most content management systems, e.g. Drupal or Joomla provide =
-a=20
-number of feed URL for [subsets of] the content; there are also free "weblo=
-g"=20
-services that also give you a feed URL.)  Hackergotchi is stupid slang for =
-a=20
-small image that can be placed beside your feed items, I'm not entirely sur=
-e=20
-what the etymology of it is.
+That is, I want have a scenario where I would like
+the master branch of a super-project to always (or on
+demand) reflect the current HEAD of the master branch
+in each of the submodules.
 
-If we wanted to, I suppose we could provide weblog services to developers. =
-=20
-Maybe on git-scm.com or something.  I'm just thinking out loud here, though=
-=2E =20
-I don't even know if there's real interest in something like that.  And=20
-personally, I'd rather be writing patches than maintaining a Drupal=20
-installation on devblog.git-scm.com or whatever.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+Does anyone have a script up their sleeve that I can
+use as a hook in the super to notice updates to a submodule
+and cause it to scurry around the sub-modules and create
+a new (updated) commit in the super?
 
---nextPart58699583.DxjXmLsk0X
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkl3klEACgkQdNbfk+86fC1c6gCfSjTy5HywZMhbhUur/9lt2V1+
-df8AnjDvKiLKlidn/Aj3Eud2TPD/xLsP
-=ArtE
------END PGP SIGNATURE-----
-
---nextPart58699583.DxjXmLsk0X--
+Thanks,
+jdl
