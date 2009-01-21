@@ -1,108 +1,92 @@
-From: Caleb Cushing <xenoterracide@gmail.com>
-Subject: Re: [PATCH] mergetool merge/skip/abort
-Date: Wed, 21 Jan 2009 11:17:52 -0500
-Message-ID: <81bfc67a0901210817r49971c09kea9dc8ee5ae21572@mail.gmail.com>
-References: <81bfc67a0901210637j52fa7a55q51b599e9ff16f6dc@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Deleting remote branch pointed by remote HEAD
+Date: Wed, 21 Jan 2009 11:19:40 -0500
+Message-ID: <20090121161940.GA20702@coredump.intra.peff.net>
+References: <e29894ca0901210502n1ed1187bm46669a402ab4fe48@mail.gmail.com> <49773240.7090605@drmicha.warpmail.net> <e29894ca0901210638t636de791sf27d28893a7a0b65@mail.gmail.com> <49773E48.90302@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 21 17:19:42 2009
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jan 21 17:21:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPfnT-0002k5-Fp
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 17:19:19 +0100
+	id 1LPfpD-0003Ug-RW
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 17:21:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752056AbZAUQRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 11:17:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751702AbZAUQRz
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 11:17:55 -0500
-Received: from fk-out-0910.google.com ([209.85.128.188]:40813 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751308AbZAUQRy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 11:17:54 -0500
-Received: by fk-out-0910.google.com with SMTP id f33so262715fkf.5
-        for <git@vger.kernel.org>; Wed, 21 Jan 2009 08:17:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=qyMxcNkIjThSAp5SUE3vvDmvn29vRBwxPNN7CpWd1Us=;
-        b=W6/PyLZsh5EC2u+g4oPkgAociRqnGdUh2BzkPgTC7dhOUwr5tx5R1X7bPnXG+rLkV/
-         skrJyEB+n2srkMvUsVeFAOMUNPm4VCV0A21Es5xteRfoKVLJzKgZxh90OZmJ+HC9YBCl
-         dMPhJudccHLV7eRvtSuZGNH3L8M2O/e1vYlQA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=hLevsCrc95UGHmF2ARWztz95H/pdML5c4KmruhwHav0uNTmj7H0cywUhUGMX0rAPAh
-         OIgg1KfAvhsoKGaQlHOO2KXJLsx7pnbAG9F8caf8E9o3NjkAZQJ8cAccTtesF04EKPDB
-         VXoyPZcoR4TVznHG7/mTImbtDTmwlc86d6/i8=
-Received: by 10.223.109.198 with SMTP id k6mr1823413fap.46.1232554672706; Wed, 
-	21 Jan 2009 08:17:52 -0800 (PST)
-In-Reply-To: <81bfc67a0901210637j52fa7a55q51b599e9ff16f6dc@mail.gmail.com>
+	id S1751518AbZAUQTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 11:19:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751433AbZAUQTn
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 11:19:43 -0500
+Received: from peff.net ([208.65.91.99]:42275 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750921AbZAUQTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 11:19:42 -0500
+Received: (qmail 15751 invoked by uid 107); 21 Jan 2009 16:19:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 21 Jan 2009 11:19:48 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jan 2009 11:19:40 -0500
+Content-Disposition: inline
+In-Reply-To: <49773E48.90302@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106625>
 
-just a typo fix in the patch
+On Wed, Jan 21, 2009 at 04:24:56PM +0100, Michael J Gruber wrote:
 
->From 29c2873861a3aec8304529735307385e9e5c248a Mon Sep 17 00:00:00 2001
-From: Caleb Cushing <xenoterracide@gmail.com>
-Date: Tue, 20 Jan 2009 11:33:30 -0500
-Subject: [PATCH] mergetool merge/skip/abort
- add functionality to skip merging a file or abort from the merge
+> So, you get these errors on the local repo when dealing with the remote
+> repo, right? I guess this means two things:
+> 
+> 1) You are deleting a remote branch
 
----
- git-mergetool.sh |   24 ++++++++++++++++++++----
- 1 files changed, 20 insertions(+), 4 deletions(-)
+Actually, he doesn't have to delete the remote branch; somebody else
+can. The problem is that the HEAD pointer for his remote tracking
+branches points to a branch that doesn't exist. This can happen because
+we sometimes update the tracking branches (including deletion) without
+impacting the HEAD pointer.
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 00e1337..ae94300 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -177,11 +177,27 @@ merge_file () {
-     describe_file "$local_mode" "local" "$LOCAL"
-     describe_file "$remote_mode" "remote" "$REMOTE"
-     if "$prompt" = true; then
--       printf "Hit return to start merge resolution tool (%s): " "$merge_tool"
--       read ans
--    fi
-+               while true; do
-+               printf "Use (m)erge file or (s)kip file, or (a)bort? (%s): " \
-+               "$merge_tool"
-+               read ans
-+               case "$ans" in
-+                       [mM]*)
-+                       break
-+                       ;;
-+                       [sS]*)
-+                       cleanup_temp_files
-+                       return 0
-+                       ;;
-+                       [aA]*)
-+                       cleanup_temp_files
-+                       exit 0
-+                       ;;
-+               esac
-+               done
-+       fi
+There are two ways that I can think of (and there may be more) to
+provoke this:
 
--    case "$merge_tool" in
-+       case "$merge_tool" in
-        kdiff3)
-            if base_present ; then
-                ("$merge_tool_path" --auto --L1 "$MERGED (Base)" --L2
-"$MERGED (Local)" --L3 "$MERGED (Remote)" \
---
-1.6.1
+  1. delete a remote branch via push. The local side will helpfully
+     delete your local tracking branch to match what happened on the
+     remote. If it was the remote's HEAD, then you get a broken state
+     (and while we discourage pushing to the remote HEAD on a non-bare
+     repo, it is perfectly OK for a bare one).
 
--- 
-Caleb Cushing
+  2. somebody else deletes the remote branch that is the HEAD, and you
+     update your tracking branches via "git remote prune", which deletes
+     your tracking branches corresponding to any deleted remote branches.
 
-http://xenoterracide.blogspot.com
+And actually there is a slight variant on both of the above. The deleted
+branch does not actually have to be the current HEAD on the remote. It
+just has to match your _idea_ of the current HEAD on the remote, which
+may be out of date.
+
+Situation (1) happens entirely locally. So it can be fixed fairly easily
+by checking whether the remote tracking HEAD points to a branch we are
+deleting, and deleting the HEAD in that case (the code should be in
+builtin-send-pack.c:update_tracking_ref). Of course you have probably
+also created a broken situation on the remote, so perhaps receive-pack
+should handle that.
+
+Situation (2) could do something similar: when we see that we are about
+to delete the ref pointed to by the remote tracking HEAD, we could
+delete the HEAD.
+
+But both situations are a little hack-ish to me. You are deleting the
+HEAD because you don't know what the right value is from the remote end.
+A better fix would be to actually pull the HEAD information down during
+fetch. And I seem to recall a patch about that at some point (it
+required a new protocol extension), but I don't know what become of it.
+
+However, even if we kept the tracking HEAD totally in sync with the
+remote's HEAD, it still may be possible that the remote HEAD is broken.
+In which case it might be nice to detect that when pulling it down and
+just leave the tracking HEAD unset.
+
+-Peff
