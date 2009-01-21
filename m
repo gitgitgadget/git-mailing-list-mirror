@@ -1,160 +1,77 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: Re: [PATCH] Added giteditor script to show diff while editing commit
- message.
-Date: Wed, 21 Jan 2009 17:33:45 -0500
-Message-ID: <4977A2C9.1070502@tedpavlic.com>
-References: <1232570841-25641-1-git-send-email-ted@tedpavlic.com> <alpine.DEB.1.00.0901212216310.3586@pacific.mpi-cbg.de>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH 1/2] handle color.ui at a central place
+Date: Wed, 21 Jan 2009 23:35:24 +0100
+Message-ID: <200901212335.24727.markus.heidelberg@web.de>
+References: <20090117153846.GB27071@coredump.intra.peff.net> <200901182137.16562.markus.heidelberg@web.de> <20090120040448.GA30714@sigill.intra.peff.net>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: gitster <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 21 23:35:17 2009
+Cc: =?utf-8?q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 21 23:36:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPlfI-0002fi-91
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 23:35:16 +0100
+	id 1LPlgg-00039W-8u
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 23:36:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753298AbZAUWdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 17:33:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753283AbZAUWdu
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 17:33:50 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:54302 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753277AbZAUWdu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 17:33:50 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 63EE980D8054;
-	Wed, 21 Jan 2009 17:27:52 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id p-JtlPdUJZd5; Wed, 21 Jan 2009 17:27:52 -0500 (EST)
-Received: from tedbook.mshome.net (tedpc.ece.ohio-state.edu [164.107.164.122])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 4358680D8051;
-	Wed, 21 Jan 2009 17:27:52 -0500 (EST)
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <alpine.DEB.1.00.0901212216310.3586@pacific.mpi-cbg.de>
+	id S1753392AbZAUWfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 17:35:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753346AbZAUWfR
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 17:35:17 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:56318 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753333AbZAUWfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 17:35:16 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 53B69F6DC0E4;
+	Wed, 21 Jan 2009 23:35:14 +0100 (CET)
+Received: from [89.59.73.85] (helo=pluto)
+	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LPlfG-0007Sc-00; Wed, 21 Jan 2009 23:35:14 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090120040448.GA30714@sigill.intra.peff.net>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX185jWO1YT6+LqMitox4kGNhXJ9WguiGRW09sMP0
+	EBG8GbldHcXEWRG3WDZlNhDhh5mVDfeJOTP5NzMYxiBpJDb3PR
+	g0thynsEJeQ4I8D6rmzw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106691>
 
-Thanks for your comments. I've responded below. I just want to 
-top-respond to your comment that the fundamental problem is that the 
-diff is in a separate file. In fact, this is the point of the script. I 
-want to be able to scroll through the diff output independent of the 
-commit message.
+Jeff King, 20.01.2009:
+> On Sun, Jan 18, 2009 at 09:37:15PM +0100, Markus Heidelberg wrote:
+> 
+> > Not sure, if you it has something to do with the following, but I had
+> > this in my tree for some days now, waiting for the 2 commits mentioned
+> > in the log message to graduate to master, which happend just an hour or
+> > so ago.
+> 
+> I think this is probably an improvement, but I had in mind something a
+> little more drastic. Right now we keep munging one variable that is our
+> current idea of "should we do color" based on multiple config values.
+> Then you end up with (best case) this "finalize color config", which is
+> a bit ugly, or (worst case) bugs where the value hasn't always been
 
-(alternatively, I realize I could do "git commit -v" and then use my 
-editor's "split window" support, but that wouldn't help me with "stg edit")
+Yes, I didn't find it to be that great either.
 
-> the subject could use some work.  For example, I would prefix it with
-...
->> From: Ted Pavlic<ted@tedpavlic.com>
+> properly initialized (or finalized).
+> 
+> So I think it makes more sense to record each config value, and then
+> check a _function_ that does the right thing. I.e., you end up with
+> something like:
 >
-> As this is exactly what your email said in its header, it is redundant
-> information.  Worse, it is information that made me look back to know why
-> it needs to be there.  Distracting.
+> [example code snipped]
 
-I add --from to my gitsend alias to prevent git send-email from 
-prompting me for a "From". Is there a way to have git send-email simply 
-not prompt me for "From"?
+That would probably be better.
 
-> What information does the README add that is not in the script itself?
-> If there is none, please refrain from adding the README to begin with.
-
-OK. I noticed plenty of other not-very-useful READMEs in contrib/, and 
-so I figured it was a pro forma file.
-
->> +# Find git
->> +[ -z "${GIT}" ]&&  GIT="git"
-> Yes, I know it is contrib/, but you may want to adopt Git's coding style
-> early.
-
-Ok. Switching to test.
-
-> Besides, I find it funny that you want to override git with $GIT.
-
-Isn't it possible that someone has git somewhere else?
-
->> +# If we recognize a popular editor, add necessary flags
->> +case "${EDITOR}" in
->> +    emacs)
->> +        EDITOR="${EDITOR} -nw"
->
-> Mhm.  Should this not be the user's choice?  Some like emacs to start up
-> in a window.
-
-I don't use emacs, but it was my impression that the "no window" flag 
-was added to make sure that emacs doesn't fork. That's why "-f" is used 
-in the vim line.
-
->> +# End GITTMP in ".git" so that "*.git/" syntax highlighting recognition
->> +# doesn't break
->> +GITTMP="${TMPDIR-/tmp}/giteditor.$RANDOM.$RANDOM.$RANDOM.$$.git"
->> +(umask 077&&  mkdir "${GITTMP}") || {
->> +    echo "Could not create temporary directory! Exiting." 1>&2
->> +    exit 1
->> +}
->
-> Umm.  Why?  Why do you need a temporary .git directory?
-
-The script generates a new "diff" file that I would rather drop 
-elsewhere (e.g., in a /tmp directory) rather than here in the current 
-directory.
-
-However, maybe you're right. After all, stg drops ".stgit-edit.txt" in 
-the working directory. I suppose I could use gitdir, but I wasn't sure 
-if it was safe to pollute gitdir.
-
-In the next version, I'll get rid of the temp directory and put the file 
-here.
-
->> +    # Diff is non-empty, so edit msg and diff
->> +    ${EDITOR} "${GITTMP}/${COMMITMSG}" "${GITTMP}/diff" || exit $?
->
-> vi users will hate you, as you do not give them a chance to edit the
-> message after having seen the diff.
-
-I don't see what you mean. I am a vi user (exclusively), and this script 
-works very well for me.
-
-The "-f -o" flags above ensure that gvim will not fork. I'll add "vi" to 
-the search string that automatically add "-f -o". Will that satisfy you?
-
-At the moment, giteditor works exactly like EDITOR (or VISUAL) for me, 
-but it opens up a second buffer (split in the bottom window in my case) 
-with the diff in it. I'm given the opportunity to save.
-
-> git commit will abort anyway if the commit message has not changed.  Plus,
-> it does a better job, as it checks only the non-commented-out text.
-
-Okay. Using $1 exclusively.
-
-> BTW why on earth do you put every single variable name in curly brackets?
-
-I always thought that was good practice. It prevents ambiguity, and *I* 
-don't think it's an eyesore.
-
-> Besides all that criticism, there is also a fundamental issue.  The diff
-> is in a separate file.
-
-That's the point. If I wanted to put the diff in the commit buffer, I 
-would have used "git commit -v". I think many would like to be able to 
-scroll through the diff without having to scroll through the commit.
-
-Is there no value in having the diff in a separate file?
-
-Thanks --
-Ted
-
--- 
-Ted Pavlic <ted@tedpavlic.com>
-
-   Please visit my ALS association page:
-         http://web.alsa.org/goto/tedpavlic
-   My family appreciates your support in the fight to defeat ALS.
+Markus
