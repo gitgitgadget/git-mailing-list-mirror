@@ -1,72 +1,62 @@
-From: chadrik <chadrik@gmail.com>
-Subject: read-only working copy using symlinks to blobs
-Date: Wed, 21 Jan 2009 00:15:11 -0800 (PST)
-Message-ID: <21578696.post@talk.nabble.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add --contains flag to git tag
+Date: Wed, 21 Jan 2009 09:21:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901210919030.7929@racer>
+References: <25058429.247441232510076471.JavaMail.root@scalix.vivisimo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 21 09:16:39 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Jake Goulding <goulding@vivisimo.com>
+X-From: git-owner@vger.kernel.org Wed Jan 21 09:22:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPYGL-0002a4-H5
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 09:16:37 +0100
+	id 1LPYMK-0003j1-4M
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 09:22:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755663AbZAUIPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 03:15:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754774AbZAUIPN
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 03:15:13 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:32930 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755318AbZAUIPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 03:15:11 -0500
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1LPYEx-0000pv-1J
-	for git@vger.kernel.org; Wed, 21 Jan 2009 00:15:11 -0800
-X-Nabble-From: chadrik@gmail.com
+	id S1756703AbZAUIVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 03:21:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755318AbZAUIVW
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 03:21:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56566 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1749667AbZAUIVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 03:21:22 -0500
+Received: (qmail invoked by alias); 21 Jan 2009 08:21:20 -0000
+Received: from pD9EB3014.dip0.t-ipconnect.de (EHLO noname) [217.235.48.20]
+  by mail.gmx.net (mp058) with SMTP; 21 Jan 2009 09:21:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/gZ10F3/7gz/RWvXFxupRTusefSeAMKc3CbQDtT2
+	YjE45+slId7GLG
+X-X-Sender: gene099@racer
+In-Reply-To: <25058429.247441232510076471.JavaMail.root@scalix.vivisimo.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106575>
 
+Hi,
 
-hi all,
-i'm looking into using git to manage a lot of very large binary data.  git
-seems particularly suited to this task because it has features for saving
-disk space such as clone--shared, and it's fast due to simple compression by
-default (instead of deltas).
+On Tue, 20 Jan 2009, Jake Goulding wrote:
 
-in my mind, there's still one major feature for working with large binaries
-that has not been addressed:  the ability to check out symbolic/hard links
-to blobs into the working copy instead of creating duplicates of the files.
+> I actually have 1 commit for the code change, one for documentation, and 
+> one for the test case. Should I squash all these together?
 
-imagine a scenario where one user is putting large binary files into a git
-repo.  100 other users need read-only access to this repo.  they clone the
-repo shared, which saves disk space for the object files, but each of these
-100 working copies also creates copies of all the binary files at the HEAD
-revision. it would be 100x as efficient if, in place of these files,
-symbolic or hard links were made to the blob files in .git/objects.  
+In general, if the patches are not very large and logically belong 
+together, it is a matter of taste if you squash together documentation and 
+code changes.  Tests, however, belong with the code.
 
-the crux of the issue is that the blob objects would have to be stored as
-exact copies of the original files.  i did some googling and it would seem
-there are two things that currently prevent this from happening.  1) blobs
-are stored with compression and 2) they include a small header.  compression
-can be disabled by setting core.loosecompression to 0, so that seems like
-less of an issue.  as for the header, wouldn't it be possible to store it as
-a separate file per blob object and thus keep the original data completely
-pristine? 
+> Also, my test case is in a separate file (t7704-tag-contains.sh) as that 
+> is how I read t/README. Was this incorrect?
 
-what are the caveats to a system like this?  any thoughts on the
-feasibility?
+Again, the size matters.  If it is a single test case, it is not worth a 
+whole new file, especially when something like t7004-tag.sh already 
+exists, whose name just asks for your test case to go in there.
 
--chad
-
-
--- 
-View this message in context: http://www.nabble.com/read-only-working-copy-using-symlinks-to-blobs-tp21578696p21578696.html
-Sent from the git mailing list archive at Nabble.com.
+Ciao,
+Dscho
