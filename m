@@ -1,41 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Rename detection: Avoid repeated filespec population
-Date: Wed, 21 Jan 2009 02:27:48 -0800
-Message-ID: <7vprihdkd7.fsf@gitster.siamese.dyndns.org>
-References: <20090120155957.GA23237@atjola.homenet>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@strlen.de>
+Subject: Re: [PATCH] [TOPGIT] make tg remote idempotent
+Date: Wed, 21 Jan 2009 12:06:28 +0100
+Message-ID: <20090121110628.GA9415@strlen.de>
+References: <1231968443-13960-1-git-send-email-u.kleine-koenig@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 21 11:29:31 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "martin f. krafft" <madduck@debian.org>, Petr Baudis <pasky@ucw.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 21 12:07:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPaKv-0001GC-8Q
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 11:29:29 +0100
+	id 1LPaw3-0002h2-Vu
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 12:07:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763059AbZAUK14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 05:27:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762255AbZAUK1z
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 05:27:55 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47821 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761056AbZAUK1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 05:27:54 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 29DFA923F8;
-	Wed, 21 Jan 2009 05:27:54 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DCA87923F4; Wed,
- 21 Jan 2009 05:27:49 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 29B96432-E7A6-11DD-9BF3-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1763986AbZAULGa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2009 06:06:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756506AbZAULGa
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 06:06:30 -0500
+Received: from Chamillionaire.breakpoint.cc ([85.10.199.196]:33903 "EHLO
+	Chamillionaire.breakpoint.cc" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755877AbZAULG3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 06:06:29 -0500
+Received: id: ukleinek by Chamillionaire.breakpoint.cc with local
+	(easymta 1.00 BETA 1)
+	id 1LPaui-0002Si-5E; Wed, 21 Jan 2009 12:06:28 +0100
+Content-Disposition: inline
+In-Reply-To: <1231968443-13960-1-git-send-email-u.kleine-koenig@pengutronix.de>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106594>
 
-Thanks.
+Hello,
+
+On Wed, Jan 14, 2009 at 10:27:22PM +0100, Uwe Kleine-K=F6nig wrote:
+> -git config --add "remote.$name.fetch" "+refs/top-bases/*:refs/remote=
+s/$name/top-bases/*"
+> -git config --add "remote.$name.push" "+refs/top-bases/*:refs/top-bas=
+es/*"
+> -git config --add "remote.$name.push" "+refs/heads/*:refs/heads/*"
+> +git config --replace-all "remote.$name.fetch" "+refs/top-bases/*:ref=
+s/remotes/$name/top-bases/*" "+refs/top-bases/*:refs/remotes/$name/top-=
+bases/*"
+> +git config --replace-all "remote.$name.push" "+refs/top-bases/*:refs=
+/top-bases/*" "+refs/top-bases/*:refs/top-bases/*"
+> +git config --replace-all "remote.$name.push" "+refs/heads/*:refs/hea=
+ds/*" "+refs/heads/*:refs/heads/*"
+It seems I sent an old version of this patch.  Actually in the last
+argument '+' and '*' have to be quoted to work.
+
+I fixed this in my repo.  Should I resend the fixed patch?
+
+Best regards
+Uwe
