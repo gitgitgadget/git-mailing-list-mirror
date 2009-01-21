@@ -1,80 +1,122 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: GUI and detatched HEAD (was Re: Deleting remote branch pointed by
- remote HEAD)
-Date: Wed, 21 Jan 2009 17:56:43 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0901211705280.19665@iabervon.org>
-References: <e29894ca0901210502n1ed1187bm46669a402ab4fe48@mail.gmail.com> <slrngnedkm.apk.sitaramc@sitaramc.homelinux.net>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-2068634625-1232578603=:19665"
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 21 23:58:19 2009
+From: Charles Bailey <charles@hashpling.org>
+Subject: [PATCH] mergetool: respect autocrlf by using checkout-index
+Date: Wed, 21 Jan 2009 22:57:48 +0000
+Message-ID: <1232578668-2203-1-git-send-email-charles@hashpling.org>
+References: <20090121210348.GD9088@mit.edu>
+Cc: Hannu Koivisto <azure@iki.fi>, Theodore Tso <tytso@mit.edu>,
+	Charles Bailey <charles@hashpling.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 21 23:59:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPm1R-0002YC-Sk
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 23:58:10 +0100
+	id 1LPm2e-0002xq-Rd
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 23:59:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753465AbZAUW4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 17:56:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753588AbZAUW4p
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 17:56:45 -0500
-Received: from iabervon.org ([66.92.72.58]:49699 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752543AbZAUW4o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 17:56:44 -0500
-Received: (qmail 4565 invoked by uid 1000); 21 Jan 2009 22:56:43 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 21 Jan 2009 22:56:43 -0000
-In-Reply-To: <slrngnedkm.apk.sitaramc@sitaramc.homelinux.net>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754089AbZAUW55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 17:57:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754054AbZAUW55
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 17:57:57 -0500
+Received: from relay.pcl-ipout02.plus.net ([212.159.7.100]:1353 "EHLO
+	relay.pcl-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753940AbZAUW54 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 17:57:56 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEAJbhdknUnw4U/2dsb2JhbADNcIVz
+Received: from pih-relay08.plus.net ([212.159.14.20])
+  by relay.pcl-ipout02.plus.net with ESMTP; 21 Jan 2009 22:57:54 +0000
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay08.plus.net with esmtp (Exim) id 1LPm1C-0007gk-Ad; Wed, 21 Jan 2009 22:57:54 +0000
+Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n0LMvmxi002231
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 21 Jan 2009 22:57:48 GMT
+Received: (from charles@localhost)
+	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n0LMvmHX002230;
+	Wed, 21 Jan 2009 22:57:48 GMT
+X-Mailer: git-send-email 1.6.1.235.gc9d403
+In-Reply-To: <20090121210348.GD9088@mit.edu>
+X-Plusnet-Relay: 26e6080e14d90f4bb8593fa23cd4e153
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106697>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Previously, git mergetool used cat-file which does not perform git to
+worktree conversion. This changes mergetool to use git checkout-index
+instead which means that the temporary files used for mergetool use the
+correct line endings for the platform.
 
---1547844168-2068634625-1232578603=:19665
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Charles Bailey <charles@hashpling.org>
+---
+ git-mergetool.sh     |   14 +++++++++++---
+ t/t7610-mergetool.sh |   15 +++++++++++++--
+ 2 files changed, 24 insertions(+), 5 deletions(-)
 
-On Wed, 21 Jan 2009, Sitaram Chamarty wrote:
-
-> On 2009-01-21, Marc-André Lureau <marcandre.lureau@gmail.com> wrote:
-> 
-> > I deleted a remote branch which was pointed by HEAD, this way: "git
-> > push origin :master"
-> >
-> > Then for almost every git command, I get this error: "error:
-> > refs/remotes/origin/HEAD points nowhere!".
-> >
-> > I found this situation non-friendly. Fortunately, I could understand
-> > what's going on. But a new user might be confused.
-> 
-> That's a pretty advanced command for a beginner.  I have
-> people who're only using the GUI (in the presumption that it
-> will be less confusing or less powerful or whatever) and
-> have managed to right click on a remote branch, choose
-> "checkout this branch" and have made commits on it without
-> knowing they're not on any branch!
-
-I wonder if the GUI could handle this in a way that users would 
-understand. This is qualitively like following a link to a spreadsheet in 
-your web browser, having the browser launch your office suite and load the 
-spreadsheet off the web; now you're interacting with a spreadsheet where 
-you obviously can't save to the original location (which is some web site) 
-and haven't provided a local filename to save as.
-
-I think the right thing would be to show it as "(Untitled)" and have a 
-prominant button to make a real saved branch out of it. There's nothing 
-all that strange about having a current "document" that has no filename 
-yet; the strange thing is that a version control system has this 
-capability.
-
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-2068634625-1232578603=:19665--
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 00e1337..a4855d9 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -127,6 +127,14 @@ check_unchanged () {
+     fi
+ }
+ 
++checkout_staged_file () {
++    tmpfile=$(expr "$(git checkout-index --temp --stage="$1" "$2")" : '\([^	]*\)	')
++
++    if test $? -eq 0 -a -n "$tmpfile" ; then
++	mv -- "$tmpfile" "$3"
++    fi
++}
++
+ merge_file () {
+     MERGED="$1"
+ 
+@@ -153,9 +161,9 @@ merge_file () {
+     local_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}'`
+     remote_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $1;}'`
+ 
+-    base_present   && git cat-file blob ":1:$prefix$MERGED" >"$BASE" 2>/dev/null
+-    local_present  && git cat-file blob ":2:$prefix$MERGED" >"$LOCAL" 2>/dev/null
+-    remote_present && git cat-file blob ":3:$prefix$MERGED" >"$REMOTE" 2>/dev/null
++    base_present   && checkout_staged_file 1 "$prefix$MERGED" "$BASE"
++    local_present  && checkout_staged_file 2 "$prefix$MERGED" "$LOCAL"
++    remote_present && checkout_staged_file 3 "$prefix$MERGED" "$REMOTE"
+ 
+     if test -z "$local_mode" -o -z "$remote_mode"; then
+ 	echo "Deleted merge conflict for '$MERGED':"
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index 09fa5f1..edb6a57 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -34,13 +34,24 @@ test_expect_success 'custom mergetool' '
+     git config merge.tool mytool &&
+     git config mergetool.mytool.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
+     git config mergetool.mytool.trustExitCode true &&
+-	git checkout branch1 &&
++    git checkout branch1 &&
+     test_must_fail git merge master >/dev/null 2>&1 &&
+     ( yes "" | git mergetool file1>/dev/null 2>&1 ) &&
+     ( yes "" | git mergetool file2>/dev/null 2>&1 ) &&
+     test "$(cat file1)" = "master updated" &&
+     test "$(cat file2)" = "master new" &&
+-	git commit -m "branch1 resolved with mergetool"
++    git commit -m "branch1 resolved with mergetool"
++'
++
++test_expect_success 'mergetool crlf' '
++    git config core.autocrlf true &&
++    git reset --hard HEAD^
++    test_must_fail git merge master >/dev/null 2>&1 &&
++    ( yes "" | git mergetool file1>/dev/null 2>&1 ) &&
++    ( yes "" | git mergetool file2>/dev/null 2>&1 ) &&
++    test "$(printf x | cat file1 -)" = "$(printf "master updated\r\nx")" &&
++    test "$(printf x | cat file2 -)" = "$(printf "master new\r\nx")" &&
++    git commit -m "branch1 resolved with mergetool - autocrlf"
+ '
+ 
+ test_done
+-- 
+1.6.1.235.gc9d403
