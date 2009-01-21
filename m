@@ -1,103 +1,101 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/2] user-manual: Simplify the user configuration.
-Date: Wed, 21 Jan 2009 23:19:11 +0200
-Message-ID: <94a0d4530901211319t8126611wc1437848631fe988@mail.gmail.com>
-References: <1232561365-5919-1-git-send-email-felipe.contreras@gmail.com>
-	 <7v8wp4e5wn.fsf@gitster.siamese.dyndns.org>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: Planet Git
+Date: Wed, 21 Jan 2009 15:23:24 -0600
+Message-ID: <200901211523.29076.bss@iguanasuicide.net>
+References: <a2ce9d792bc2f586e2a1408e573db433.squirrel@webmail.planetgit.org> <alpine.DEB.1.00.0901212156510.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed;
+  boundary="nextPart58699583.DxjXmLsk0X";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 21 22:20:42 2009
+Cc: webmaster@planetgit.org, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 21 22:24:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPkV6-0001mZ-6l
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:20:40 +0100
+	id 1LPkYT-0002zx-PP
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:24:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543AbZAUVTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 16:19:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbZAUVTO
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:19:14 -0500
-Received: from mail-ew0-f20.google.com ([209.85.219.20]:61786 "EHLO
-	mail-ew0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751388AbZAUVTO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 16:19:14 -0500
-Received: by ewy13 with SMTP id 13so1913198ewy.13
-        for <git@vger.kernel.org>; Wed, 21 Jan 2009 13:19:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=LqDDhXnVRD5cUDvA7xvy6AEyq6zqM3/thGqGD9EmodI=;
-        b=ZnTT8hmyo47pkoZwJHqxVruZ/Bk++b+9xcr8ggkFNRCBA9uybmD/fYYbnsoUgFAu4S
-         UQnLNy66wvI9I1DZn58sDty1RlTkwMgyTA7eZQr6iLxS+gWd11lvUrRGf7r8T9b9TX0v
-         MlYto3n6f9CIyGCptT0NlmcRUFea1fjucF/d8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=poIePVWxSdxDSuPhIbaK1SEEFbC9jkyX4LLaNBxSiW2MaXRfe9ZQs4iUcnEDzSNiOc
-         mTYA+80+7KAfIupSQMZqOOX0Pa1hvu9Qrn1LJSf1gbZp0wVA8zdqlsBXh5oWV3g87eMp
-         dWJanLTS6lMXNk5lmTBeELyp3OVULu1v3ReRU=
-Received: by 10.86.65.9 with SMTP id n9mr351943fga.61.1232572751432; Wed, 21 
-	Jan 2009 13:19:11 -0800 (PST)
-In-Reply-To: <7v8wp4e5wn.fsf@gitster.siamese.dyndns.org>
+	id S1752736AbZAUVWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 16:22:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752628AbZAUVWn
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:22:43 -0500
+Received: from rei.iguanasuicide.net ([209.20.91.252]:36350 "EHLO
+	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751228AbZAUVWn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 16:22:43 -0500
+Received: from ip72-204-50-125.fv.ks.cox.net ([72.204.50.125] helo=[10.0.0.124])
+	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LPkX2-0006PH-MO; Wed, 21 Jan 2009 21:22:40 +0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <alpine.DEB.1.00.0901212156510.3586@pacific.mpi-cbg.de>
+X-Eric-Conspiracy: There is no conspiracy.
+X-Virus-Scanned: clamav@iguanasuicide.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106676>
 
-On Wed, Jan 21, 2009 at 10:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+--nextPart58699583.DxjXmLsk0X
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+On Wednesday 2009 January 21 14:59:23 Johannes Schindelin wrote:
+>But then I read this:
 >
->> This is shorter, avoids the burder to think about the format of the
->> configuration file, and git config is already used in other places in
->> the manual.
+>	If you want to have your journal/weblog aggregated here, please
+>	send an email to the webmaster with your name, full git-related
+>	feed and hackergotchi URL.
 >
-> I am moderately against changing this part to use "git config".
+>Up until the "send an email to the webmaster with your name", I was game.
 >
-> We traditionally introduced how to set configuration variables first by
-> editing it in an editor, and this was quite deliberate, in order to show
-> how the configuration file looks like, to demonstrate that there is no
-> deep magic in the file format, and to explain that it is perfectly Ok to
-> edit it without using "git config" command.
->
-> I actually wish this section appeared a lot earlier in the document, but
-> that is a separate issue.
+>After that: I am probably too stupid, because I do not understand what is
+>meant, but even then, I am sure that I no longer want to be part of it.
 
-I agree that it's good that people get familiar with the config
-format, and that it should appear earlier in the document, perhaps as
-a separate section. However, for new users that just want to get
-started any extra burden weighs in the misconception that git is not
-user friendly.
+Generally "planets" just aggregate existing feeds, they don't provide servi=
+ces=20
+to create the feeds.  A feed URL is really just a URL to a RSS-formatted=20
+resource.  (Most content management systems, e.g. Drupal or Joomla provide =
+a=20
+number of feed URL for [subsets of] the content; there are also free "weblo=
+g"=20
+services that also give you a feed URL.)  Hackergotchi is stupid slang for =
+a=20
+small image that can be placed beside your feed items, I'm not entirely sur=
+e=20
+what the etymology of it is.
 
-I read the comments in both threads Jeff pointed out and I have
-comments regarding the argument that it's easy to edit a text file.
+If we wanted to, I suppose we could provide weblog services to developers. =
+=20
+Maybe on git-scm.com or something.  I'm just thinking out loud here, though=
+=2E =20
+I don't even know if there's real interest in something like that.  And=20
+personally, I'd rather be writing patches than maintaining a Drupal=20
+installation on devblog.git-scm.com or whatever.
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
 
-It's easy to *change* a text file, not so much to write something by
-hand. Although the user would probably just copy-paste the text from
-the online manual (changing spaces by a tag in the process) there's a
-possibility that the manual is printed.
+--nextPart58699583.DxjXmLsk0X
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-This brings back my previous question: where is the home directory in
-a Windows system?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-An idea would be to add an --edit option to git config, so the users
-don't need to care about the location of the text file and just do
-"git config --global --edit" which would bring the editor. Although
-I'm not sure how that would work on Windows since the editor is
-probably not properly configured at that point.
+iEYEABECAAYFAkl3klEACgkQdNbfk+86fC1c6gCfSjTy5HywZMhbhUur/9lt2V1+
+df8AnjDvKiLKlidn/Aj3Eud2TPD/xLsP
+=ArtE
+-----END PGP SIGNATURE-----
 
-Now, *nobody* has replied back the comments of providing both the git
-config command and .gitconfig snip. It was mentioned in both threads
-and ignored.
-
-Anyone against that?
-
--- 
-Felipe Contreras
+--nextPart58699583.DxjXmLsk0X--
