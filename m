@@ -1,62 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Rename detection: Avoid repeated filespec population
-Date: Wed, 21 Jan 2009 08:32:11 -0500
-Message-ID: <20090121133211.GA20360@coredump.intra.peff.net>
-References: <20090120155957.GA23237@atjola.homenet> <20090120212723.GA10967@coredump.intra.peff.net> <20090121125619.GA523@atjola.homenet>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: Re: feature request mergetool, skip, abort
+Date: Wed, 21 Jan 2009 09:26:18 -0500
+Message-ID: <81bfc67a0901210626i7cd75d1dh77c9cfae8b23b5c5@mail.gmail.com>
+References: <81bfc67a0901200839q361923f1xb25ddadfdac37981@mail.gmail.com>
+	 <20090121112236.GC18488@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 21 14:33:41 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Wed Jan 21 15:28:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPdDA-0008JU-2f
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 14:33:40 +0100
+	id 1LPe3k-0000x7-3D
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 15:28:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757341AbZAUNcP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2009 08:32:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756299AbZAUNcO
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 08:32:14 -0500
-Received: from peff.net ([208.65.91.99]:34990 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753724AbZAUNcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 08:32:14 -0500
-Received: (qmail 14438 invoked by uid 107); 21 Jan 2009 13:32:19 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 21 Jan 2009 08:32:19 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jan 2009 08:32:11 -0500
-Content-Disposition: inline
-In-Reply-To: <20090121125619.GA523@atjola.homenet>
+	id S1753743AbZAUO0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 09:26:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754367AbZAUO0W
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 09:26:22 -0500
+Received: from mail-bw0-f21.google.com ([209.85.218.21]:53956 "EHLO
+	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754145AbZAUO0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 09:26:21 -0500
+Received: by bwz14 with SMTP id 14so12849226bwz.13
+        for <git@vger.kernel.org>; Wed, 21 Jan 2009 06:26:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=N2r0GOMl8pZGl0YBo2/oLH9OAyYTTp7ejX+7xdIlcX4=;
+        b=UtNRw40sy/oxIZvVLjizeXTBFnh89PEnHhsRsgbGlPAUDVt+E4/UnSatU5nOcC1hE7
+         HGx/Nt5xvEpuqtnkwlr3azd6aZFm/XnWaVevi09lWwiISBiHKskqGaWpogY9w+o4FuT5
+         4GD+kdeCrL9dtATeysQvZ0sTYIrNLuMNNzZJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=PJC7w4Bdud/j03ow00pGmMNhpz1R+SiLf843scIhloGw4WnjZL7g+PgIy63e7m6CvL
+         8+cL0XvSr2GpvAwstrGCpJC91FOq3LTjwsWY42mXv1YtmSLn58wZbUyOLC0A1I3bedXH
+         iroPF+jt39g3r/t7A03F5dJSZebtczwvLF1LM=
+Received: by 10.223.104.140 with SMTP id p12mr1472758fao.7.1232547978879; Wed, 
+	21 Jan 2009 06:26:18 -0800 (PST)
+In-Reply-To: <20090121112236.GC18488@hashpling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106605>
 
-On Wed, Jan 21, 2009 at 01:56:19PM +0100, Bj=C3=B6rn Steinbrink wrote:
+patch was an attachement.
 
-> Another possible solution would be to free the blob data only after t=
-he
-> loop in diffcore_rename has finished, but that's obviously quite bad =
-WRT
-> memory consumption.  :-)
+after looking through the list and seeing the conventions I've a fully
+working one now, so I'm going to start a new thread with it.
+-- 
+Caleb Cushing
 
-Yeah, and it doesn't have the (admittedly smaller, but still there)
-optimization of not loading the blob data at all if we will never need
-to.
-
-> Anyway, too late, yesterday's attempts 6 to 10 at writing a better
-> commit message didn't work out either, and Junio has applied the patc=
-h
-> by now.
-
-I think that's fine. My message was more about convincing myself that
-your change was the right thing (and hopefully helped convince others,
-too).
-
--Peff
+http://xenoterracide.blogspot.com
