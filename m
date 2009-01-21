@@ -1,115 +1,103 @@
-From: Caleb Cushing <xenoterracide@gmail.com>
-Subject: [PATCH] mergetool merge/skip/abort
-Date: Wed, 21 Jan 2009 09:37:20 -0500
-Message-ID: <81bfc67a0901210637j52fa7a55q51b599e9ff16f6dc@mail.gmail.com>
+From: =?ISO-8859-1?Q?Marc=2DAndr=E9_Lureau?= <marcandre.lureau@gmail.com>
+Subject: Re: Deleting remote branch pointed by remote HEAD
+Date: Wed, 21 Jan 2009 16:38:06 +0200
+Message-ID: <e29894ca0901210638t636de791sf27d28893a7a0b65@mail.gmail.com>
+References: <e29894ca0901210502n1ed1187bm46669a402ab4fe48@mail.gmail.com>
+	 <49773240.7090605@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 21 15:38:54 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jan 21 15:39:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPeEG-0004do-Li
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 15:38:53 +0100
+	id 1LPeEy-0004pt-A8
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 15:39:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754122AbZAUOh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 09:37:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753842AbZAUOh1
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 09:37:27 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:65114 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753648AbZAUOh0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 09:37:26 -0500
-Received: by bwz14 with SMTP id 14so12877206bwz.13
-        for <git@vger.kernel.org>; Wed, 21 Jan 2009 06:37:23 -0800 (PST)
+	id S1754525AbZAUOiL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2009 09:38:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754490AbZAUOiK
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 09:38:10 -0500
+Received: from fg-out-1718.google.com ([72.14.220.158]:22757 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754301AbZAUOiJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 09:38:09 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so1804285fgg.17
+        for <git@vger.kernel.org>; Wed, 21 Jan 2009 06:38:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=ABiSamp4cSnDdV+IfO7JKIbmlDXcGjCcHVM85srL4bY=;
-        b=LY8y8fR0M2DVhZNqlo8CBTo83EbzPYcf80rjmlrUZCZexF/dewRYoqZQeSqMR696Po
-         gfiYQYxyL0ifku28wSBWODwGmBWAS6UhoN6xq/KlxK7EfDaAeN0kCyLc0U+KeJeBG30l
-         q0QIKXefUXKkMn7vasTNBncxZXJ5CfcslPauM=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=jXhZva1dlZZKnuL/u3p6ac9esD05Z+mTdkYg57a9K0M=;
+        b=k+5kRjlipnGQQIhog1lGsZGPVsY4KfNzqFF8rQkjNOnFsczJd18anx7PhgIwjaVisI
+         98TmVQ2P8lITrymgZXjoso1tX/csgqxwx+FuTChHFVIAfKgqOHbdLGGvURFco7fH8qW+
+         9mH1QaJfExr++HI5TnGLTBCn5RwoGSKFQaIM4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=YMFhWtjZIg9GKEhTr4DYZZ2FOoo08HKF/Hl48Ub6zRAFgjedhmjP2Qjh5j2PH80HhM
-         t/U9G8zegFppCWivtEVALADmrM6xjkvf5GszInvbqhe1iEvnl4NXb5q9he0cbdInyqig
-         5e51A795PG8iHNxigdyHMM/DILSRY43dassc4=
-Received: by 10.223.109.200 with SMTP id k8mr699496fap.44.1232548640475; Wed, 
-	21 Jan 2009 06:37:20 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=lOQj5UYxJBbXRSm6rcJoyZA03PFLh0OYLIpZaXE1+NLa5KmkRNo7jS7/xwxOiJnAmV
+         fp9JOQJTc8r0eWWQVti3Xw90eRnHtA/e+YxiWzx7a3Uc59mysAWdUf8p1fEtue51txsv
+         4N6PcDw9TfHs01GVy9kSzxeIdHWfdadMi+oJ8=
+Received: by 10.86.89.20 with SMTP id m20mr1940926fgb.71.1232548686944; Wed, 
+	21 Jan 2009 06:38:06 -0800 (PST)
+In-Reply-To: <49773240.7090605@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106611>
 
-There are some files that I can't merge with git, and sometimes you
-just want to finish merging later or move on to the next file and come
-back later. My patch allows you to quit mergetool without ctrl-c, or
-move on to the next file or merge the this one. pretty simple and I
-think will be useful for a lot of people.
+On Wed, Jan 21, 2009 at 4:33 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Marc-Andr=E9 Lureau venit, vidit, dixit 21.01.2009 14:02:
+>> Hi
+>>
+>> I deleted a remote branch which was pointed by HEAD, this way: "git
+>> push origin :master"
+>>
+>> Then for almost every git command, I get this error: "error:
+>> refs/remotes/origin/HEAD points nowhere!".
+>
+> You're talking about about the remote git repo, aren't you?
+>
 
+Sure. But the error is on the local repo.
 
->From b647762ad179cdaaf9f844671fdf26074563b366 Mon Sep 17 00:00:00 2001
-From: Caleb Cushing <xenoterracide@gmail.com>
-Date: Tue, 20 Jan 2009 11:33:30 -0500
-Subject: [PATCH] mergetool merge/skip/abort
- add functionality to skip merging a file or abort from the merge
+>> I found this situation non-friendly. Fortunately, I could understand
+>> what's going on. But a new user might be confused.
+>>
+>> Shouldn't the remote HEAD branch be updated or "protected" in some
+>> ways? Or should the "error" be considered as a "warning" (silently?)
+>>
+>> What do you think?
+>
+> I think that git said
+> "warning: updating the currently checked out branch; this may cause
+> confusion,
+> as the index and working tree do not reflect changes that are now in =
+HEAD."
 
----
- git-mergetool.sh |   24 ++++++++++++++++++++----
- 1 files changed, 20 insertions(+), 4 deletions(-)
+IIRC, it only says so if your local repo is on a branch tracking this
+remote. At least, in some conditions, I didn't get this warning. When
+I did second simple testing with git.git version, I also had this
+warning.
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 00e1337..43d2a9e 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -177,11 +177,27 @@ merge_file () {
-     describe_file "$local_mode" "local" "$LOCAL"
-     describe_file "$remote_mode" "remote" "$REMOTE"
-     if "$prompt" = true; then
--       printf "Hit return to start merge resolution tool (%s): " "$merge_tool"
--       read ans
--    fi
-+               while true; do
-+               printf "Use (m)erge file or (s)skip file, or (a)bort? (%s): " \
-+               "$merge_tool"
-+               read ans
-+               case "$ans" in
-+                       [mM]*)
-+                       break
-+                       ;;
-+                       [sS]*)
-+                       cleanup_temp_files
-+                       return 0
-+                       ;;
-+                       [aA]*)
-+                       cleanup_temp_files
-+                       exit 0
-+                       ;;
-+               esac
-+               done
-+       fi
+> after your push and that this may have rung some bells. I also think
+> that pushing to a non-bare remote repo (one with a worktree checked o=
+ut)
+> is strongly advised against in multiple places, unless you know what
+> you're doing - which you seem to do since you were able to restore yo=
+ur
+> HEAD ;)
 
--    case "$merge_tool" in
-+       case "$merge_tool" in
-        kdiff3)
-            if base_present ; then
-                ("$merge_tool_path" --auto --L1 "$MERGED (Base)" --L2
-"$MERGED (Local)" --L3 "$MERGED (Remote)" \
---
-1.6.1
+Isn't HEAD also on non-bare repo, to indicate what is the default branc=
+h?
 
-
-
-
-
-
--- 
-Caleb Cushing
-
-http://xenoterracide.blogspot.com
+thanks,
+--=20
+Marc-Andr=E9 Lureau
