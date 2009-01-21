@@ -1,89 +1,59 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: Superproject branch tracking?
-Date: Wed, 21 Jan 2009 15:25:03 -0800
-Message-ID: <402731c90901211525i2db339a6t94a4478268dfcf1a@mail.gmail.com>
-References: <49779220.5000900@freescale.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: Planet Git
+Date: Thu, 22 Jan 2009 08:33:12 +0900
+Message-ID: <20090122083312.6117@nanako3.lavabit.com>
+References: <gl80g5$evp$1@ger.gmane.org>
+ <a2ce9d792bc2f586e2a1408e573db433.squirrel@webmail.planetgit.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Loeliger <jdl@freescale.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 00:26:35 2009
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: Johannes Gilger <heipei@hackvalue.de>
+X-From: git-owner@vger.kernel.org Thu Jan 22 00:35:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPmSr-0003P8-MJ
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 00:26:30 +0100
+	id 1LPmbR-0006EV-EQ
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 00:35:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753046AbZAUXZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 18:25:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752017AbZAUXZG
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 18:25:06 -0500
-Received: from wf-out-1314.google.com ([209.85.200.174]:4032 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751636AbZAUXZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 18:25:05 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so4601003wfd.4
-        for <git@vger.kernel.org>; Wed, 21 Jan 2009 15:25:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UUXoe0wXmyxGF5BzDpUor9ihDEiPSE3A2t/aOteUHoI=;
-        b=Sm5PMk8xcX5rpjdAYg6J1GNQ9yMorjc/eAh4vDiWKfjf6N7EttDKt4sjGB8IX/7US2
-         8bBMvIA3T1cEYFzHc6OqsTjR8MKIw9rgs2C2HDAG+c8Dv3heifjtQLwejisV6yLoDHUC
-         CB1+TIgieXNuhRgQmR8FJ1spGSa39io+X2YGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=MR0q6IpVvXMn4JZx0YJUBEivhf/zAQsTuy47uenOfSqazqj5iM/+gPWdhIqnJ79NPu
-         FMgw/H37OeCnNRV9YXxYfqcboix/6WM3Zy6yleDW3huH4J7/FdAsrm9kTlApg2ZZTtHi
-         NUitYXrzp4bb/wAS+VfCs7WE2otWXlaT5GpA0=
-Received: by 10.142.80.7 with SMTP id d7mr509316wfb.29.1232580303600; Wed, 21 
-	Jan 2009 15:25:03 -0800 (PST)
-In-Reply-To: <49779220.5000900@freescale.com>
+	id S1752631AbZAUXd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 18:33:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752584AbZAUXd4
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 18:33:56 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:51347 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752314AbZAUXdz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 18:33:55 -0500
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id 01B00C86AA;
+	Wed, 21 Jan 2009 17:33:55 -0600 (CST)
+Received: from 6910.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id 85O7A4O2WWB4; Wed, 21 Jan 2009 17:33:54 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=KrPSQnAydZWmxoPJ9ZjU58viBgLCiDSbk3D9j1ueofjqDCHCOWVI29psEzMjy7dJa3KhHEPpcm0Sp4Pd2jkR1doUlFBC9S82FY24B9TBN6jBtfGbVT0eM11NZUaqOduZ6cC2Vs3RqEIC3Oj6DzddmuVBwWvqOvHizBCIXba/SJY=;
+  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <gl80g5$evp$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106701>
 
-On Wed, Jan 21, 2009 at 1:22 PM, Jon Loeliger <jdl@freescale.com> wrote:
-> Guys,
+Quoting Johannes Gilger <heipei@hackvalue.de> writes:
+
+> On 2009-01-21, webmaster@planetgit.org <webmaster@planetgit.org> wrote:
+>> Just wanted to let everyone know that I've started a Planet for Git
+>> users/developers who write about it on their journals/weblogs.
 >
-> Can someone tell me what the current best practice
-> to have a Git supermodule maintain a branch that is
-> actively tracking a similarly named branch in all of
-> the submodules?
+> Funny, I just visited it today and didn't know how long this website has 
+> been idle like that (with only 4 blogs or so). So I was about to write 
+> you to post it right here, but you did that already.
 >
-> That is, I want have a scenario where I would like
-> the master branch of a super-project to always (or on
-> demand) reflect the current HEAD of the master branch
-> in each of the submodules.
->
-> Does anyone have a script up their sleeve that I can
-> use as a hook in the super to notice updates to a submodule
-> and cause it to scurry around the sub-modules and create
-> a new (updated) commit in the super?
->
-> Thanks,
-> jdl
->
+> Although right now I can't see any subscriptions at all :(
 
-Hello
-
-Have you seen Shawn's repo tool?
-
-    http://kerneltrap.org/mailarchive/git/2008/10/22/3763214
-
-It might not do *exactly* what you're looking for, but it is magical.
-
-There's also a repo-discuss google group where repo-specific questions
-can be addressed.
-
+There was somebody who used to post a weekly summary of git-related writings from people's blogs to this list.  What happened to it?  There was not enough interest?
 
 -- 
-    David
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
