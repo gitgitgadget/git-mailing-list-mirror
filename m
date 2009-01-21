@@ -1,100 +1,85 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+From: bill lam <cbill.lam@gmail.com>
 Subject: Re: what are plumbing and porcelain
-Date: Tue, 20 Jan 2009 23:50:10 -0600
-Message-ID: <200901202350.15011.bss@iguanasuicide.net>
-References: <20090121052741.GC6970@b2j>
+Date: Wed, 21 Jan 2009 14:07:26 +0800
+Message-ID: <20090121060726.GE6970@b2j>
+References: <20090121052741.GC6970@b2j> <200901202350.15011.bss@iguanasuicide.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1793682.bI79vLnqc6";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git <git@vger.kernel.org>
-To: bill lam <cbill.lam@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 21 06:51:42 2009
+To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+X-From: git-owner@vger.kernel.org Wed Jan 21 07:09:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPW05-0001to-PT
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 06:51:42 +0100
+	id 1LPWGo-0004ju-N5
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 07:08:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751124AbZAUFuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 00:50:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750805AbZAUFuS
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 00:50:18 -0500
-Received: from eastrmmtao104.cox.net ([68.230.240.46]:36589 "EHLO
-	eastrmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750736AbZAUFuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 00:50:17 -0500
-Received: from eastrmimpo01.cox.net ([68.1.16.119])
-          by eastrmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090121055016.BXQU3752.eastrmmtao104.cox.net@eastrmimpo01.cox.net>;
-          Wed, 21 Jan 2009 00:50:16 -0500
-Received: from localhost ([72.204.50.125])
-	by eastrmimpo01.cox.net with bizsmtp
-	id 65qF1b00D2i4SyG025qGvp; Wed, 21 Jan 2009 00:50:16 -0500
-X-Authority-Analysis: v=1.0 c=1 a=Fq1VQ0LPAAAA:8 a=FyOGl_SDYmV4vN6j36EA:9
- a=n433RZGqMaRmGntTYjw68aRjXtUA:4 a=MSl-tDqOz04A:10 a=T3brmoaXcPoA:10
- a=LY0hPdMaydYA:10 a=TIF4ISnt0FzQ79_Xg6MA:9 a=VLsAlUIrTIwvk216ZegujJKo3aIA:4
- a=rPt6xJ-oxjAA:10
-X-CM-Score: 0.00
-Received: from bss by localhost with local (Exim 4.69)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LPVyh-000Lj5-4I; Tue, 20 Jan 2009 23:50:15 -0600
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090121052741.GC6970@b2j>
-X-Eric-Conspiracy: There is no conspiracy
+	id S1751196AbZAUGHe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2009 01:07:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbZAUGHe
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 01:07:34 -0500
+Received: from ti-out-0910.google.com ([209.85.142.185]:60094 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750879AbZAUGHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 01:07:33 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so2756652tic.23
+        for <git@vger.kernel.org>; Tue, 20 Jan 2009 22:07:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:references:mime-version:content-type
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=MB4eXVt2ANfMcIMcafUZE+ZaWe+zUdI0wFbup178IZc=;
+        b=OfZqrcy7MCInK0Do+OMYOjSe0UU8z2l84fPq7OoUTdinT/bKpfc3R4Cqm2F2uRDhiD
+         43tN93fnEhDIE1hDHi5sBHqf3zfmW7GLv5bPhdtI3wnKwySZPV1cEUz6eJSmgboVz9Ur
+         ulf6/+Aq58zAQFdm4elyw3PSMHL1+TQyzE960=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        b=wa0yeFRlv83NwgEaTAY6tV03IwWEzXaLZDEZ4jhLGS757z0PBjotx0szgRvFXEeuDW
+         SpTyJ7DaYhY7QYPfIPxL52O98X9QeHr1qh4kobHb2tKuL2TMQijbmGZ6vMOHeJJLi3El
+         dBN8QSQHXf+c4RVCZi6uAZ+POhB/CeiJLQkaY=
+Received: by 10.110.109.19 with SMTP id h19mr146286tic.45.1232518052213;
+        Tue, 20 Jan 2009 22:07:32 -0800 (PST)
+Received: from localhost (pcd589144.netvigator.com [218.102.121.144])
+        by mx.google.com with ESMTPS id d7sm108259tib.37.2009.01.20.22.07.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 20 Jan 2009 22:07:30 -0800 (PST)
+Mail-Followup-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <200901202350.15011.bss@iguanasuicide.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106570>
 
---nextPart1793682.bI79vLnqc6
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-On Tuesday 20 January 2009, bill lam <cbill.lam@gmail.com> wrote=20
-about 'what are plumbing and porcelain':
->Sorry for this idiot question, but I really don't know what they are
->and why it is necessary to distinguish between them.
-
-"plumbing" are the commands that do low-level operations.  Generally,=20
-end-users won't have to use them much, if at all, but they=20
-are "fundamental" operations, upon which git is built.  It's a term also=20
-used in other project some, with a similar meaning.
-
-"porcelain" is a cute name for the end-user operations.  They "cover" the=20
-plumbing to make it look and act "pretty".  While some may be less useful=20
-to some users, they all are high-level operations that depend on the=20
-plumbing.
-
-It's important to distinguish between them because we don't want the=20
-plumbing to get needlessly complex.  They should be single-purpose=20
-commands and their options should be utilitarian in nature.  Also,=20
-porcelain is meant to be used interactively, not in scripts, so the output=
+On Tue, 20 Jan 2009, Boyd Stephen Smith Jr. wrote:
+> "plumbing" are the commands that do low-level operations.  Generally,=
 =20
-or behavior might change a bit--but that is still kept to a minimum.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
+> end-users won't have to use them much, if at all, but they=20
 
---nextPart1793682.bI79vLnqc6
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+I can see now gitk should probably be porcelain. But how about
+commands such as git add or git rebase used with either the -i switch
+on or off?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkl2t5IACgkQ55pqL7G1QFl80QCcCM+CUQuVtSYdpc9HKiVtB9j4
-gAMAniPWvrRtvmjvKRd1wU3Rtg+RKKEB
-=HR32
------END PGP SIGNATURE-----
-
---nextPart1793682.bI79vLnqc6--
+--=20
+regards,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+=E5=94=90=E8=A9=A9299 =E6=9D=8E=E5=95=86=E9=9A=B1  =E5=AF=84=E4=BB=A4=E7=
+=8B=90=E9=83=8E=E4=B8=AD
+    =E5=B5=A9=E9=9B=B2=E7=A7=A6=E6=A8=B9=E4=B9=85=E9=9B=A2=E5=B1=85  =E9=
+=9B=99=E9=AF=89=E8=BF=A2=E8=BF=A2=E4=B8=80=E7=B4=99=E7=AD=86  =E4=BC=91=
+=E5=95=8F=E6=A2=81=E5=9C=92=E8=88=8A=E8=B3=93=E5=AE=A2  =E8=8C=82=E9=99=
+=B5=E7=A7=8B=E9=9B=A8=E7=97=85=E7=9B=B8=E5=A6=82
