@@ -1,95 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What about allowing multiple hooks?
-Date: Wed, 21 Jan 2009 22:50:54 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901212247510.3586@pacific.mpi-cbg.de>
-References: <20081121133828.GB5912@gmx.de> <20090103233252.GA12095@myhost> <7vd4f3z8xu.fsf@gitster.siamese.dyndns.org> <4977872E.70901@0x63.nu> <alpine.DEB.1.00.0901212206430.3586@pacific.mpi-cbg.de> <497793E5.7090107@0x63.nu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2 v2] Add valgrind support in test scripts
+Date: Wed, 21 Jan 2009 16:53:18 -0500
+Message-ID: <20090121215318.GA9107@sigill.intra.peff.net>
+References: <alpine.DEB.1.00.0901191407470.3586@pacific.mpi-cbg.de> <20090120044447.GF30714@sigill.intra.peff.net> <alpine.DEB.1.00.0901201447290.5159@intel-tinevez-2-302> <20090120141932.GB10688@sigill.intra.peff.net> <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302> <alpine.DEB.1.00.0901201602410.5159@intel-tinevez-2-302> <20090121001219.GA18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210209580.19014@racer> <20090121190201.GA21686@coredump.intra.peff.net> <alpine.DEB.1.00.0901212137130.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Alexander Potashev <aspotashev@gmail.com>,
-	Marc Weber <marco-oweber@gmx.de>,
-	Rogan Dawes <lists@dawes.za.net>,
-	martin f krafft <madduck@madduck.net>
-To: Anders Waldenborg <anders@0x63.nu>
-X-From: git-owner@vger.kernel.org Wed Jan 21 22:52:29 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 21 22:55:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPkzb-0003pW-MV
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:52:12 +0100
+	id 1LPl26-0004ph-QB
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:54:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752750AbZAUVuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 16:50:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752767AbZAUVuu
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:50:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38998 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752077AbZAUVut (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 16:50:49 -0500
-Received: (qmail invoked by alias); 21 Jan 2009 21:50:47 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp059) with SMTP; 21 Jan 2009 22:50:47 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18UVtZPQoUUfvUEhhns4Oui4ed1DcdvW7tE8189bH
-	l6AxfzMRtVvdd4
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <497793E5.7090107@0x63.nu>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1754485AbZAUVxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 16:53:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754478AbZAUVxV
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:53:21 -0500
+Received: from peff.net ([208.65.91.99]:59983 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754452AbZAUVxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 16:53:21 -0500
+Received: (qmail 21886 invoked by uid 107); 21 Jan 2009 21:53:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 21 Jan 2009 16:53:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jan 2009 16:53:18 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0901212137130.3586@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106685>
 
-Hi,
+On Wed, Jan 21, 2009 at 09:49:14PM +0100, Johannes Schindelin wrote:
 
-On Wed, 21 Jan 2009, Anders Waldenborg wrote:
-
-> Johannes Schindelin wrote:
-> > > I currently use configvalues to specify which hooks to run. For example
-> > > this is how my post-receive looks:
-> > >
-> > > data=$(cat)
-> > > git config --get-all hooks.post-receive.hook | while read hook; do
-> > >         $hook <<__EOF__
-> > > "$data"
-> > > __EOF__
-> > > done
-> > 
-> > I wonder why you don't do the obvious thing:
+> >   A: execvp("git-foo")
+> >   B: oops, "git-foo" is out of date
+> >   B: rm $GIT_VALGRIND/git-foo
+> >   A: look for $GIT_VALGRIND/git-foo; not there
+> >   A: look for $PATH[1]/git-foo; ok, there it is
+> >   B: ln -s ../../git-valgrind $GIT_VALGRIND/git-foo
 > 
+> Except that A had to check the link first, and it was out-of-date already 
+> -- except if you changed a script into a builtin _and_ run make while a 
+> valgrinded test is called _and_ you're unlucky.
+
+Hrm, true. I consider running "make" in the middle of tests and
+expecting them to work properly to be a bit crazy, so I guess this is
+not a problem in practice.
+
+I'll stop bugging you about race conditions for now, then. :)
+
+> > readlink is not portable; it's part of GNU coreutils. Right now valgrind
+> > basically only runs on Linux, which I think generally means that
+> > readlink will be available (though I have no idea if there are
+> > distributions that vary in this). However, there is an experimental
+> > valgrind port to FreeBSD and NetBSD, which are unlikely to have
+> > readlink.
 > 
-> Because I wanted to be able to do things like this:
-> 
-> git config -add hooks.post-receive.hook \
->  "sh hooks/buildbot 192.168.99.9:9989"
+> As I mentioned earlier: let's bridge this bridge when we face it 
+> (probably it involves making a test-readlink).
 
-You are missing a "-".
+Actually, I am wrong. There is a stripped-down readlink that has
+shipped with FreeBSD (since 4.10) and NetBSD (since 1.6). So while
+readlink isn't portable, I think it should generally work on platforms
+supported by valgrind.
 
-> So, the thing I initially wanted to solve was "multiple instances" of 
-> the same hook.
+> Or are you insisting that the patch should be reworked _now_ so that 
+> GIT_EXEC_PATH _always_ points somewhere else?
 
-And why not use a shell function for that?
+No, I'm not insisting. It was merely a suggestion that the patch be
+split into two parts so non-valgrind invocations can benefit from this
+type of bug checking (and by this type I mean general PATH issues -- I
+think we had some problems in the past with invoking dashed forms of
+commands which were supposed to be available only via exec-path).
 
--- snip --
-buildbot () {
-	echo "Who is so evil and puts a bot into a post-receive hook?" >&2
-	echo "This function would connect to $* if it were building a bot."
-}
+> I hope not, because then you break Windows.
 
-buildbot www.google.com
-buildbot www.kernel.org
--- snap --
+Only if you use the same symlink technique.
 
-> Then when I found this thread I saw that the richer meta information 
-> needed to implement multiple hooks with sane semantics could be done 
-> with the config values.
-
-I think this is technically called an "XY" problem.  You ask for a 
-specific technical solution, while your real problem would be better 
-solved by other means.
-
-Ciao,
-Dscho
+-Peff
