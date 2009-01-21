@@ -1,58 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: valgrind patches, was Re: What's cooking in git.git (Jan 2009,
-	#04; Mon, 19)
-Date: Wed, 21 Jan 2009 18:57:57 -0500
-Message-ID: <20090121235757.GA9668@sigill.intra.peff.net>
-References: <20090120141932.GB10688@sigill.intra.peff.net> <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302> <20090120232439.GA17746@coredump.intra.peff.net> <alpine.DEB.1.00.0901210105470.19014@racer> <20090121001551.GB18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210119510.19014@racer> <20090121003739.GA18373@coredump.intra.peff.net> <alpine.DEB.1.00.0901210216440.19014@racer> <20090121190757.GB21686@coredump.intra.peff.net> <alpine.DEB.1.00.0901212259420.3586@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] contrib: A script to show diff in new window while
+ editing commit message.
+Date: Wed, 21 Jan 2009 15:59:13 -0800
+Message-ID: <7vy6x4b48e.fsf@gitster.siamese.dyndns.org>
+References: <4977A2C9.1070502@tedpavlic.com>
+ <1232577906-868-1-git-send-email-ted@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 22 00:59:34 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 01:00:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPmyj-0004im-VN
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 00:59:26 +0100
+	id 1LPn0A-00054v-8O
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 01:00:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754255AbZAUX6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 18:58:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754089AbZAUX6B
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 18:58:01 -0500
-Received: from peff.net ([208.65.91.99]:37294 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753016AbZAUX6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 18:58:01 -0500
-Received: (qmail 22603 invoked by uid 107); 21 Jan 2009 23:58:06 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 21 Jan 2009 18:58:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jan 2009 18:57:57 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901212259420.3586@pacific.mpi-cbg.de>
+	id S1755730AbZAUX7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 18:59:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756160AbZAUX7U
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 18:59:20 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43089 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755307AbZAUX7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 18:59:19 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0B83192BF1;
+	Wed, 21 Jan 2009 18:59:18 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ED52A92BDF; Wed,
+ 21 Jan 2009 18:59:14 -0500 (EST)
+In-Reply-To: <1232577906-868-1-git-send-email-ted@tedpavlic.com> (Ted
+ Pavlic's message of "Wed, 21 Jan 2009 17:45:06 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 839354B0-E817-11DD-82E1-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106705>
 
-On Wed, Jan 21, 2009 at 11:17:35PM +0100, Johannes Schindelin wrote:
+Ted Pavlic <ted@tedpavlic.com> writes:
 
-> Phew.  A lot of time, a lot of braincycles, and a lot of keystrokes wasted 
-> on that subject, don't you think?
+> It could be improved by supporting a command-line flag that would mimic
+> the "git commit -v"-type behavior of opening the diff in the same window
+> as the commit message. This would extend existing commands like "stg
+> edit" that do not already have a "-v"-type option.
 
-Yes, especially considering my other email that said I had dropped the
-subject. ;P
+If a single-buffer operation is an improvement, then I do not see the
+point of this script.
 
-But thank you for discussing it. There is still some part of me that
-says "if you have no races, you don't have to worry about analyzing
-them." But I think your analysis is correct, and I am willing to let it
-go in the name of practicality.
+ * Some people would like two-buffer operation and they may use this
+   script as their core.editor.
 
-As for braincycles, I don't think they were necessarily wasted. The
-point of review is to double-check, and the discussion is how we resolve
-(even if we resolve that it is OK as-is). Of course there is such a
-thing as useless, annoying pedantry, but I hope this didn't count... :)
+ * Other people (including me) would find it very natural to use "\C-x 2"
+   if they need to look at two places of the same buffer, because that is
+   what they are used to do when editing a long file every day.  They just
+   use "commit -v" without bothering with this script.
 
--Peff
+ * Yet other people (like Dscho) would find it too late to have a chance
+   for final review when writing a commit log message anyway, and won't
+   use either.
+
+And I think choice is good.
+
+Having said that, if the lack of "final chance to review the diff" in some
+StGIT subcommand is the real problem you are trying to solve, I think it
+is better solved by fixing StGIT.  If this script can be used as a
+substitute for the real solution, that may be a welcome unintended side
+effect, but I do not think you should make it the main selling point of
+the script.  After all people may not want to use this script when they
+are working directly with git, but still would want StGIT fixed.
