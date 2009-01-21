@@ -1,173 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: John (zzz) Doe <john.doe@xz> (Comment)
-Date: Tue, 20 Jan 2009 19:12:54 -0800
-Message-ID: <7vzlhlic7d.fsf@gitster.siamese.dyndns.org>
-References: <7vmydu3yy7.fsf@gitster.siamese.dyndns.org>
- <20090115194926.GA6899@roro3.zxlink>
- <7vd4eos3rp.fsf@gitster.siamese.dyndns.org>
- <20090116080807.GA10792@landau.phys.spbu.ru>
- <7vd4enacf2.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0901161253411.3586@pacific.mpi-cbg.de>
- <20090118145429.GA27522@roro3.zxlink>
- <7vmydoxxcr.fsf_-_@gitster.siamese.dyndns.org>
- <20090120191446.GB5721@roro3.zxlink>
+From: martin f krafft <madduck@debian.org>
+Subject: Re: [PATCH] [TOPGIT] make creating a commit from a topgit branch a
+	function
+Date: Wed, 21 Jan 2009 14:19:13 +1100
+Organization: The Debian project
+Message-ID: <20090121031913.GA7422@lapse.rw.madduck.net>
+References: <1231968443-13960-1-git-send-email-u.kleine-koenig@pengutronix.de> <1231968443-13960-2-git-send-email-u.kleine-koenig@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-X-From: git-owner@vger.kernel.org Wed Jan 21 04:14:29 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org,
+	Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed Jan 21 04:21:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPTXv-0000Vq-MY
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 04:14:28 +0100
+	id 1LPTeo-0001vH-UF
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 04:21:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755062AbZAUDNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jan 2009 22:13:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754191AbZAUDNE
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 22:13:04 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52161 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754108AbZAUDNC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 22:13:02 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 46D7E92CF2;
-	Tue, 20 Jan 2009 22:13:01 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E5F1992CF1; Tue,
- 20 Jan 2009 22:12:56 -0500 (EST)
-In-Reply-To: <20090120191446.GB5721@roro3.zxlink> (Kirill Smelkov's message
- of "Tue, 20 Jan 2009 22:14:46 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6927B0FC-E769-11DD-BA01-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1755306AbZAUDUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 22:20:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754191AbZAUDUK
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 22:20:10 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:54342 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754108AbZAUDUJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 22:20:09 -0500
+Received: from lapse.rw.madduck.net (unknown [IPv6:2001:388:a001:1:214:a4ff:fe04:eadc])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 25BD01D40B1;
+	Wed, 21 Jan 2009 04:19:55 +0100 (CET)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 688C380CD; Wed, 21 Jan 2009 16:19:13 +1300 (NZDT)
+Content-Disposition: inline
+In-Reply-To: <1231968443-13960-2-git-send-email-u.kleine-koenig@pengutronix.de>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux 5.0 kernel 2.6.27-1-686 i686
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/8881/Tue Jan 20 15:48:51 2009 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106562>
 
-Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
 
-> On Sun, Jan 18, 2009 at 10:50:12AM -0800, Junio C Hamano wrote:
->> So we can separate "John (zzz) Doe <john.doe@xz> (Comment)" into:
->> 
->> 	AUTHOR_EMAIL=john.doe@xz
->>         AUTHOR_NAME="John (zzz) Doe (Comment)"
->> 
->> and leave it like so, I think.
->
-> Ok, here you are:
->
-> Subject: [PATCH 1/3] mailinfo: cleanup extra spaces for complex 'From'
->
-> As described in RFC822 (3.4.3 COMMENTS, and  A.1.4.), comments, as e.g.
->
->     John (zzz) Doe <john.doe@xz> (Comment)
->
-> should "NOT [be] included in the destination mailbox"
->
-> On the other hand, quoting Junio:
->
->> The above quote from the RFC is irrelevant.  Note that it is only about
->> how you extract the e-mail address, discarding everything else.
->>
->> What mailinfo wants to do is to separate the human-readable name and the
->> e-mail address, and we want to use _both_ results from it.
->>
->> We separate a few example From: lines like this:
->>
->> 	Kirill Smelkov <kirr@smelkov.xz>
->> ==>	AUTHOR_EMAIL="kirr@smelkov.xz" AUTHOR_NAME="Kirill Smelkov"
->>
->> 	kirr@smelkov.xz (Kirill Smelkov)
->> ==>	AUTHOR_EMAIL="kirr@smelkov.xz" AUTHOR_NAME="Kirill Smelkov"
->>
->> Traditionally, the way people spelled their name on From: line has been
->> either one of the above form.  Typically comment form (i.e. the second
->> one) adds the name at the end, while "Name <addr>" form has the name at
->> the front.  But I do not think RFC requires that, primarily because it is
->> all about discarding non-address part to find the e-mail address aka
->> "destination mailbox".  It does not specify how humans should interpret
->> the human readable name and the comment.
->>
->> Now, why is the name not AUTHOR_NAME="(Kirill Smelkov)" in the latter
->> form?
->>
->> It is just common sense transformation.  Otherwise it looks simply ugly,
->> and it is obvious that the parentheses is not part of the name of the
->> person who used "kirr@smelkov.xz (Kirill Smelkov)" on his From: line.
->>
->> So we can separate "John (zzz) Doe <john.doe@xz> (Comment)" into:
->>
->> 	AUTHOR_EMAIL=john.doe@xz
->>         AUTHOR_NAME="John (zzz) Doe (Comment)"
->>
->> and leave it like so, I think.
->
-> So let's just correctly remove extra spaces which could be left inside
-> name.
->
-> We need this functionality to pass all RFC2047 based tests in the next commit.
->
-> Signed-off-by: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-> ---
-> ...
-> Is it ok?
+--ZPt4rx8FFjLCG7dd
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think the patch text looks good, but what you have as the proposed
-commit log message does not look anything like log message we usually use.
+also sprach Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [2009.01.15=
+=2E0827 +1100]:
+> This helps avoiding code duplication for the next commit.
 
- - If you agree with my comment that "should NOT be included" from the RFC
-   you quoted is irrelevant, then I do not think you would even want to
-   have anything before "On the other hand,...".
+What's the "next commit"?
 
- - If you disagree, then why are you bending the patch text to match what
-   I say? ;-)
+--=20
+ .''`.   martin f. krafft <madduck@d.o>      Related projects:
+: :'  :  proud Debian developer               http://debiansystem.info
+`. `'`   http://people.debian.org/~madduck    http://vcs-pkg.org
+  `-  Debian - when you have better things to do than fixing systems
+=20
+i'd rather be riding a high speed tractor
+with a beer on my lap,
+and a six pack of girls next to me.
 
-Also I am not sure "passing RFC2047 based tests" is a valid purpose nor
-justification for adding this patch (because you could argue that the
-tests and the results the tests expect are faulty).
+--ZPt4rx8FFjLCG7dd
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
 
-The way we (and your patches) do thinks is to have the desired outcome
-designed first, and then have tests to make sure that the implementation
-matches the desired outcome.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Given that, what I would probably suggest would be...
+iEYEARECAAYFAkl2lDAACgkQIgvIgzMMSnVFjwCgqERGvGR4YFlYv4/Sn0etKNaD
+L/sAnRHf1aVyu2reaq1yYFN16HGJD4oh
+=ZZyr
+-----END PGP SIGNATURE-----
 
--- 8< -- cut from here -- 8< --
-
-mailinfo: handle comment fields in From: line sanely
-
-Most commonly, people have their human readable name and their e-mail
-address on their From: line in one of two formats:
-
-    Kirill Smelkov <kirr@smelkov.xz>
-    kirr@smelkov.xz (Kirill Smelkov)
-
-In addition, you can have "Comments" in parentheses at random places, like
-this:
-
-    John (zzz) Doe <john.doe@xz> (Comment)
-
-RFC822 defines rules to extract the "destination mailbox" out of such
-input (and we correctly extract "kirr@smelkov.xz" and "john.doe@xz" from
-these examples).  It however does not specify how to pick up the human
-readable name from the remainder, and the existing code randomly dropped
-pieces of information in <<<this and that way --- explain the breakage you
-wanted to fix with your patch, perhaps "and left a newline in the result"
-may be one of the breakages>>>.
-
-This patch changes the rule so that <<<explain what it does here.  I think
-what the code does is (1) remove the e-mail (and angle brackets around
-it), (2) sanitize LF into a single SP to keep the result a single line,
-and (3) as a special case, if the result is enclosed by () pair, remove
-them---this rule is to format the second common case listed above
-sanely>>>.
-
-A subsequent patch using From: lines taken from the example section of
-RFC2047 will test this feature.
-
--- >8 --
+--ZPt4rx8FFjLCG7dd--
