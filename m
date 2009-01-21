@@ -1,104 +1,126 @@
-From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
-Subject: Re: Deleting remote branch pointed by remote HEAD
-Date: Wed, 21 Jan 2009 15:41:42 +0100
-Message-ID: <20090121144142.GA18093@chistera.yi.org>
-References: <e29894ca0901210502n1ed1187bm46669a402ab4fe48@mail.gmail.com> <49773240.7090605@drmicha.warpmail.net>
+From: Brent Goodrick <bgoodr@gmail.com>
+Subject: Re: CR codes from git commands
+Date: Wed, 21 Jan 2009 06:42:43 -0800
+Message-ID: <18807.13411.984420.252378@hungover.brentg.com>
+References: <18805.64312.289059.660023@hungover.brentg.com>
+	<alpine.DEB.1.00.0901201757520.5159@intel-tinevez-2-302>
+	<18806.44057.477379.215492@hungover.brentg.com>
+	<alpine.DEB.1.00.0901210930370.7929@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jan 21 15:43:28 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 21 15:44:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPeIV-00060a-VZ
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 15:43:16 +0100
+	id 1LPeJd-0006Lw-Nn
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 15:44:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754764AbZAUOlu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2009 09:41:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754203AbZAUOlt
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 09:41:49 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:1986
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754031AbZAUOlt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 09:41:49 -0500
-Received: from chistera.yi.org (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id 724618027909;
-	Wed, 21 Jan 2009 15:41:46 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LPeH0-0004mw-54; Wed, 21 Jan 2009 15:41:42 +0100
-Content-Disposition: inline
-In-Reply-To: <49773240.7090605@drmicha.warpmail.net>
-X-No-CC: Please respect my Mail-Followup-To header
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1755004AbZAUOmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 09:42:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754203AbZAUOmw
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 09:42:52 -0500
+Received: from rv-out-0506.google.com ([209.85.198.230]:34533 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754755AbZAUOmu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 09:42:50 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so3642178rvb.1
+        for <git@vger.kernel.org>; Wed, 21 Jan 2009 06:42:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:mime-version
+         :content-type:content-transfer-encoding:message-id:date:to:cc
+         :subject:in-reply-to:references:x-mailer;
+        bh=njdl9dYK3EcsUdbC2kPgTiFrHQ9Xm9Ljkp2D10fpBHs=;
+        b=oCw7t+pnm/Pz7rTOkfdV4/9XwxF6xFM2fjUuhpvGISbXPt+0VWTbf9TXbzHBREQADi
+         uCtbfDUUvxE5JVQcAfVzetKXzUVzcTT/lO6R9ryXpHkTYbNF9GOU124/M7Yb0P6nbJBi
+         VAqDRTVeFk+qgEydPiSTLKCzytI0UYIB9Cx9s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:mime-version:content-type:content-transfer-encoding:message-id
+         :date:to:cc:subject:in-reply-to:references:x-mailer;
+        b=rsM1Onoyu02TN8XtmejP2GsibEi7ku0qQoTvF03/NnC6fRyFAbN3CGw8QxJCjaldDf
+         XLrOTbRoHLlvVo2IzaP6uWAimM/DLdetI1oH95vJodXBUP/mu6q84GPhjKkIwz8PHbF+
+         wl+mAtqhH9hz2PlUeRa8z7399wKxrjosFbCEM=
+Received: by 10.141.52.3 with SMTP id e3mr390332rvk.157.1232548969469;
+        Wed, 21 Jan 2009 06:42:49 -0800 (PST)
+Received: from hungover.brentg.com.thisisbogus.com ([76.14.208.3])
+        by mx.google.com with ESMTPS id l31sm15504863rvb.2.2009.01.21.06.42.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 21 Jan 2009 06:42:48 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0901210930370.7929@racer>
+X-Mailer: VM viewmail-606 under 23.0.60.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106613>
 
-* Michael J Gruber [Wed, 21 Jan 2009 15:33:36 +0100]:
 
-> Marc-Andr=C3=A9 Lureau venit, vidit, dixit 21.01.2009 14:02:
-> > Hi
+Johannes Schindelin writes:
+ > Hi,
+ > 
+ > is there a special reason you un-Cc:ed the list?
 
-> > I deleted a remote branch which was pointed by HEAD, this way: "git
-> > push origin :master"
+No, my mistake.  CCing the mailing list now. I was foiled into
+thinking that the reply operation in my email client meant reply-all,
+but instead it was set to reply-to-sender-only. Now fixed.
 
-> > Then for almost every git command, I get this error: "error:
-> > refs/remotes/origin/HEAD points nowhere!".
+ > 
+ > On Tue, 20 Jan 2009, Brent Goodrick wrote:
+ > 
+ > > Johannes Schindelin writes:
+ > > 
+ > >  > On Tue, 20 Jan 2009, Brent Goodrick wrote:
+ > >  > 
+ > >  > > I am considering converting from CVS over to using git. I'm 
+ > >  > > currently using git version 1.5.6.5 on Debian Linux "testing".
+ > >  > 
+ > >  > First of all, 1.5.6.5 is from last August, so chances are that the 
+ > >  > behavior you complain about was fixed in the meantime.  We're at 
+ > >  > 1.6.1 at the moment.
+ > > 
+ > > Yes, I thought that was a good point, so I rebuilt from the source 
+ > > tarball git version 1.6.1 and retried my script and got the same 
+ > > behavior.
+ > > 
+ > >  > The only place I can think about where a CR is output is when showing 
+ > >  > the progress of downloading.
+ > >  > 
+ > >  > Usually, our code checks if stdout is a tty, and does not show 
+ > >  > progress.
+ > >  >
+ > >  > As a work-around, piping into cat should work, though.
+ > > 
+ > > Actually only redirecting stderr and then piping to cat seems to work, 
+ > > e.g.,:
+ > > 
+ > >   get pull 2>&1 | cat
+ > > 
+ > > 
+ > > I don't mind seeing the progress lines, I just don't want git to emit 
+ > > any CR codes at all.
+ > > 
+ > > How about a config option to just turn off any tty-detecting logic 
+ > > entirely, so that I don't have to wrap git with a lot of silly scripts 
+ > > that set environment variables and redirect stdout and stderr and piped 
+ > > into "cat"?
+ > 
+ > Nope, the config option is not needed.  This is just a Plain Old Bug which 
+ > needs fixing, that's all.
+ > 
+ > Let's see what I can do today.
 
-> You're talking about about the remote git repo, aren't you?
+Thanks.  The fix should be to arrange it so that I can set something
+so that a bare call such as (but just "git pull"):
 
-> > I found this situation non-friendly. Fortunately, I could understan=
-d
-> > what's going on. But a new user might be confused.
+  git pull
 
-> > Shouldn't the remote HEAD branch be updated or "protected" in some
-> > ways? Or should the "error" be considered as a "warning" (silently?=
-)
+will emit no CR codes at all, ever, regardless of if there is a tty.
+Even if it is an env var, but a config setting would be ok too.
 
-> > What do you think?
-
-> I think that git said
-> "warning: updating the currently checked out branch; this may cause
-> confusion,
-> as the index and working tree do not reflect changes that are now in =
-HEAD."
-> after your push and that this may have rung some bells. I also think
-> that pushing to a non-bare remote repo (one with a worktree checked o=
-ut)
-> is strongly advised against in multiple places, unless you know what
-> you're doing - which you seem to do since you were able to restore yo=
-ur
-> HEAD ;)
-
-I don't think Marc-Andr=C3=A9 was pushing to a non-bare repo, but it do=
-esn't
-really matter, because his issue also shows up with bare repos: if you
-delete the branch to which HEAD points in a remote repo, you get no
-warning, and then cloning that bare repo does not fully work, because
-its HEAD points to a non-existent ref.
-
-    % g clone ssh://.../foo.git
-    % cd foo
-    % g push origin :master
-    % cd ..
-    % g clone ssh://.../foo.git foo2
-    ...
-    warning: remote HEAD refers to nonexistent ref, unable to checkout.
-
-What would git usefully do in this situation, I don't know. But I
-thought I'd clear up the above confusion.
-
---=20
-Adeodato Sim=C3=B3                                     dato at net.com.=
-org.es
-Debian Developer                                  adeodato at debian.or=
-g
-=20
-Truth is the most valuable thing we have, so let's economize it.
-                -- Mark Twain
+Thanks,
+Brent
