@@ -1,66 +1,63 @@
 From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Re: [PATCH (topgit)] tg-patch: add support for generating patches
-	against worktree and index
-Date: Wed, 21 Jan 2009 23:26:13 +0300
+Subject: Re: John (zzz) Doe <john.doe@xz> (Comment)
+Date: Wed, 21 Jan 2009 23:30:48 +0300
 Organization: St.Petersburg State University
-Message-ID: <20090121202613.GA5400@roro3.zxlink>
-References: <1231438975-13624-1-git-send-email-kirr@landau.phys.spbu.ru> <20090108195356.GA14644@lapse.rw.madduck.net> <20090108201614.GA4185@roro3> <20090108211149.GA19983@roro3> <20090118150637.GC27522@roro3.zxlink> <20090120002103.GA12549@lapse.rw.madduck.net> <20090120175635.GA5721@roro3.zxlink> <20090121032052.GB7422@lapse.rw.madduck.net>
+Message-ID: <20090121203048.GB5400@roro3.zxlink>
+References: <7vmydu3yy7.fsf@gitster.siamese.dyndns.org> <20090115194926.GA6899@roro3.zxlink> <7vd4eos3rp.fsf@gitster.siamese.dyndns.org> <20090116080807.GA10792@landau.phys.spbu.ru> <7vd4enacf2.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901161253411.3586@pacific.mpi-cbg.de> <20090118145429.GA27522@roro3.zxlink> <7vmydoxxcr.fsf_-_@gitster.siamese.dyndns.org> <20090120191446.GB5721@roro3.zxlink> <7vzlhlic7d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Git Mailing List <git@vger.kernel.org>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Wed Jan 21 21:26:31 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 21 21:31:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPjeV-0007DR-VS
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 21:26:20 +0100
+	id 1LPjjf-0000al-2O
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 21:31:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809AbZAUUYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 15:24:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751663AbZAUUYz
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 15:24:55 -0500
-Received: from landau.phys.spbu.ru ([195.19.235.38]:4450 "EHLO
+	id S1753944AbZAUU3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 15:29:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752331AbZAUU3a
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 15:29:30 -0500
+Received: from landau.phys.spbu.ru ([195.19.235.38]:3374 "EHLO
 	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751518AbZAUUYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 15:24:54 -0500
+	with ESMTP id S1752395AbZAUU33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 15:29:29 -0500
 Received: by landau.phys.spbu.ru (Postfix, from userid 509)
-	id 308D017B66E; Wed, 21 Jan 2009 23:24:53 +0300 (MSK)
+	id 977C917B66E; Wed, 21 Jan 2009 23:29:27 +0300 (MSK)
 Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
 	(envelope-from <kirr@roro3.zxlink>)
-	id 1LPjeP-00021w-62; Wed, 21 Jan 2009 23:26:13 +0300
+	id 1LPjiq-00024v-1P; Wed, 21 Jan 2009 23:30:48 +0300
 Content-Disposition: inline
-In-Reply-To: <20090121032052.GB7422@lapse.rw.madduck.net>
+In-Reply-To: <7vzlhlic7d.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106660>
 
-On Wed, Jan 21, 2009 at 02:20:52PM +1100, martin f krafft wrote:
-> also sprach Kirill Smelkov <kirr@landau.phys.spbu.ru> [2009.01.21.0456 +1100]:
-> > No problem and take your time.
-> > 
-> > It was just me having no idea about what's going on.
+On Tue, Jan 20, 2009 at 07:12:54PM -0800, Junio C Hamano wrote:
+> Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
+> > Is it ok?
 > 
-> I am a little confused about the patches, and git-am does not seem
-> to be able to apply two patches from the same email. I use Maildir,
-> so I am passing the single message with multiple patches to git-am,
-> and it applies all changes into one single commit.
+> I think the patch text looks good, but what you have as the proposed
+> commit log message does not look anything like log message we usually use.
+> 
+>  - If you agree with my comment that "should NOT be included" from the RFC
+>    you quoted is irrelevant, then I do not think you would even want to
+>    have anything before "On the other hand,...".
+> 
+>  - If you disagree, then why are you bending the patch text to match what
+>    I say? ;-)
 
-I see.
+I agree, really :)
 
-It seems I need to study how to prepare patches with patchy comments, or
-get my hands dirty with `git am` :)
+It's only me usually tired in the end of the day, like today too.
 
-> Anyway, do you have a repo which I can cherry-pick from?
-
-Sure
-
-    git://repo.or.cz/topgit/kirr.git  for-upstream
-
+I'll try to have a rest and will reply with updated patch.
 
 Thanks,
 Kirill
