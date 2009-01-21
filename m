@@ -1,64 +1,108 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: how to track multiple upstreams in one repository
-Date: Wed, 21 Jan 2009 08:11:31 -0800
-Message-ID: <20090121161131.GA22615@kroah.com>
-References: <alpine.DEB.1.10.0901181855400.20741@asgard.lang.hm> <20090119021426.GA21999@shion.is.fushizen.net> <alpine.DEB.1.10.0901181957070.20741@asgard.lang.hm> <8e04b5820901182352n29b3885cj850e6ddae6ca237f@mail.gmail.com> <20090120033402.GC8754@kroah.com> <8e04b5820901192329pf44431coce4423e6a8d43198@mail.gmail.com> <20090120120319.GR30710@genesis.frugalware.org> <8e04b5820901210802y1102cfd0q4a3f8812f357c398@mail.gmail.com>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: Re: [PATCH] mergetool merge/skip/abort
+Date: Wed, 21 Jan 2009 11:17:52 -0500
+Message-ID: <81bfc67a0901210817r49971c09kea9dc8ee5ae21572@mail.gmail.com>
+References: <81bfc67a0901210637j52fa7a55q51b599e9ff16f6dc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>, david@lang.hm,
-	Bryan Donlan <bdonlan@fushizen.net>, git@vger.kernel.org
-To: "Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 21 17:14:25 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 21 17:19:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPfia-0000pv-HY
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 17:14:16 +0100
+	id 1LPfnT-0002k5-Fp
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 17:19:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752436AbZAUQMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 11:12:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751648AbZAUQMw
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 11:12:52 -0500
-Received: from kroah.org ([198.145.64.141]:60876 "EHLO coco.kroah.org"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751006AbZAUQMv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 11:12:51 -0500
-Received: from localhost (c-76-105-230-205.hsd1.or.comcast.net [76.105.230.205])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by coco.kroah.org (Postfix) with ESMTPSA id 13B5047C58;
-	Wed, 21 Jan 2009 08:12:51 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <8e04b5820901210802y1102cfd0q4a3f8812f357c398@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752056AbZAUQRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 11:17:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751702AbZAUQRz
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 11:17:55 -0500
+Received: from fk-out-0910.google.com ([209.85.128.188]:40813 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751308AbZAUQRy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 11:17:54 -0500
+Received: by fk-out-0910.google.com with SMTP id f33so262715fkf.5
+        for <git@vger.kernel.org>; Wed, 21 Jan 2009 08:17:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=qyMxcNkIjThSAp5SUE3vvDmvn29vRBwxPNN7CpWd1Us=;
+        b=W6/PyLZsh5EC2u+g4oPkgAociRqnGdUh2BzkPgTC7dhOUwr5tx5R1X7bPnXG+rLkV/
+         skrJyEB+n2srkMvUsVeFAOMUNPm4VCV0A21Es5xteRfoKVLJzKgZxh90OZmJ+HC9YBCl
+         dMPhJudccHLV7eRvtSuZGNH3L8M2O/e1vYlQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=hLevsCrc95UGHmF2ARWztz95H/pdML5c4KmruhwHav0uNTmj7H0cywUhUGMX0rAPAh
+         OIgg1KfAvhsoKGaQlHOO2KXJLsx7pnbAG9F8caf8E9o3NjkAZQJ8cAccTtesF04EKPDB
+         VXoyPZcoR4TVznHG7/mTImbtDTmwlc86d6/i8=
+Received: by 10.223.109.198 with SMTP id k6mr1823413fap.46.1232554672706; Wed, 
+	21 Jan 2009 08:17:52 -0800 (PST)
+In-Reply-To: <81bfc67a0901210637j52fa7a55q51b599e9ff16f6dc@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106624>
 
-On Wed, Jan 21, 2009 at 06:02:51PM +0200, Ciprian Dorin, Craciun wrote:
-> On Tue, Jan 20, 2009 at 2:03 PM, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> > On Tue, Jan 20, 2009 at 09:29:13AM +0200, "Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com> wrote:
-> >>     :) This is something that escaped me... Could you give me the
-> >> exact git url for this repository? (on kernel.org I'm not able to find
-> >> it, just the current one...)
-> >
-> > git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6-stable.git
-> >
-> > Have you tried this one?
-> 
->     Ok... I'm ashamed... :) :) This is exactly what (we all) were
-> looking for... Sorry.
-> 
->     Just one curiosity: is this older (I mean if it was created) than
-> when 2.6.18 or 19 was released? Because at that time I've searched for
-> such a repository, didn't found it and hacked the config as I've said
-> previously...
+just a typo fix in the patch
 
-Probably not, but I really don't remember when it was created, sorry.
+>From 29c2873861a3aec8304529735307385e9e5c248a Mon Sep 17 00:00:00 2001
+From: Caleb Cushing <xenoterracide@gmail.com>
+Date: Tue, 20 Jan 2009 11:33:30 -0500
+Subject: [PATCH] mergetool merge/skip/abort
+ add functionality to skip merging a file or abort from the merge
 
-thanks,
+---
+ git-mergetool.sh |   24 ++++++++++++++++++++----
+ 1 files changed, 20 insertions(+), 4 deletions(-)
 
-greg k-h
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 00e1337..ae94300 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -177,11 +177,27 @@ merge_file () {
+     describe_file "$local_mode" "local" "$LOCAL"
+     describe_file "$remote_mode" "remote" "$REMOTE"
+     if "$prompt" = true; then
+-       printf "Hit return to start merge resolution tool (%s): " "$merge_tool"
+-       read ans
+-    fi
++               while true; do
++               printf "Use (m)erge file or (s)kip file, or (a)bort? (%s): " \
++               "$merge_tool"
++               read ans
++               case "$ans" in
++                       [mM]*)
++                       break
++                       ;;
++                       [sS]*)
++                       cleanup_temp_files
++                       return 0
++                       ;;
++                       [aA]*)
++                       cleanup_temp_files
++                       exit 0
++                       ;;
++               esac
++               done
++       fi
+
+-    case "$merge_tool" in
++       case "$merge_tool" in
+        kdiff3)
+            if base_present ; then
+                ("$merge_tool_path" --auto --L1 "$MERGED (Base)" --L2
+"$MERGED (Local)" --L3 "$MERGED (Remote)" \
+--
+1.6.1
+
+-- 
+Caleb Cushing
+
+http://xenoterracide.blogspot.com
