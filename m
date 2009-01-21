@@ -1,144 +1,229 @@
-From: Nathan Yergler <nathan@creativecommons.org>
-Subject: Re: Short "git commit $file" syntax fails in the face of a resolved 
-	conflict
-Date: Wed, 21 Jan 2009 13:46:02 -0800
-Message-ID: <c1a864630901211346j4b702fb3tcc5a098ed7e1541d@mail.gmail.com>
-References: <alpine.DEB.2.00.0901211549070.15860@vellum.laroia.net>
-	 <49779521.9040208@drmicha.warpmail.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Added giteditor script to show diff while editing commit
+ message.
+Date: Wed, 21 Jan 2009 22:46:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901212216310.3586@pacific.mpi-cbg.de>
+References: <1232570841-25641-1-git-send-email-ted@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Asheesh Laroia <asheesh@asheesh.org>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jan 21 22:47:42 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Wed Jan 21 22:47:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPkv7-0002PY-SU
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:47:34 +0100
+	id 1LPkvQ-0002VL-10
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:47:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543AbZAUVqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 16:46:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752077AbZAUVqI
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:46:08 -0500
-Received: from rv-out-0506.google.com ([209.85.198.231]:3786 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752476AbZAUVqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 16:46:05 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so3795175rvb.1
-        for <git@vger.kernel.org>; Wed, 21 Jan 2009 13:46:02 -0800 (PST)
-Received: by 10.140.158.4 with SMTP id g4mr4169992rve.160.1232574362186; Wed, 
-	21 Jan 2009 13:46:02 -0800 (PST)
-In-Reply-To: <49779521.9040208@drmicha.warpmail.net>
+	id S1752628AbZAUVq0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 16:46:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752575AbZAUVq0
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:46:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47133 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752077AbZAUVqZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 16:46:25 -0500
+Received: (qmail invoked by alias); 21 Jan 2009 21:46:23 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp023) with SMTP; 21 Jan 2009 22:46:23 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19pmNcHmupp/FxKivjDNmmYP/Sl5RVT8G/WNiuZt2
+	2n5+EFr7ZwHVxf
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1232570841-25641-1-git-send-email-ted@tedpavlic.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.42
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106683>
 
-Can you elaborate on why doing -i automatically is a bad idea in this
-case?  [It may really be, I don't pretend to have enough knowledge
-about git's internals to make a reasoned argument.]  This was
-unexpected behavior for me as I'd always experienced "git add path &&
-git commit" and "git commit path" as being equivalent and so I assumed
-they would work equivalently in this situation.
+Hi,
 
-Nathan
+the subject could use some work.  For example, I would prefix it with 
+"contrib:", and -- imitating other commit messages -- use the imperative 
+form "Add" instead of the frowned-upon past tense.
 
-On Wed, Jan 21, 2009 at 1:35 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Asheesh Laroia venit, vidit, dixit 01/21/09 22:00:
->> I have found what seems to be a bug in the short "git commit $file" mode
->> of interaction with git. To reproduce it, you can:
->>
->> 1. Create a repository with some content.
->>
->>       $ (mkdir a ; cd a ; git init ; echo hi > file ; git add file ; git commit -m 'initial commit')
->>       Initialized empty Git repository in /tmp/playground.2009-01-21.w15613/a/.git/
->>       Created initial commit 276d6eb: initial commit
->>        1 files changed, 1 insertions(+), 0 deletions(-)
->>        create mode 100644 file
->>
->> 2. Clone that repository.
->>
->>       $ git clone a b
->>       Initialized empty Git repository in /tmp/playground.2009-01-21.w15613/b/.git/
->>
->> 3. Create changes in "a" that are not yet cloned into "b".
->>
->>       $ (cd a ; echo ho > file ; git add file ; git commit -m update)
->>       Created commit 91deff9: update
->>        1 files changed, 1 insertions(+), 1 deletions(-)
->>
->> 4. Make changes in "b", the clone.
->>
->>       $ echo lol > file
->>       $ git add file ; git commit -m 'Some changes'
->>       Created commit 5d74b5b: Some changes
->>        1 files changed, 1 insertions(+), 1 deletions(-)
->>
->> 5. Fetch and merge (AKA pull) from the first repo.
->>
->>       $ git pull
->>       remote: Counting objects: 5, done.
->>       remote: Total 3 (delta 0), reused 0 (delta 0)
->>       Unpacking objects: 100% (3/3), done.
->>       From /tmp/playground.2009-01-21.w15613/a/
->>          276d6eb..91deff9  master     -> origin/master
->>       Auto-merged file
->>       CONFLICT (content): Merge conflict in file
->>       Automatic merge failed; fix conflicts and then commit the result.
->>
->> 6. Resolve the conflict (in our case, by discarding the changes in the "b"
->> clone).
->>
->>       $ echo ho > file
->>
->> 7. Commit the resolved conflict.
->>
->> NOTE: The normal way to do step 6 is to "git add file ; git commit -m
->> yay". But I will now try to use the "git commit file" shorthand:
->>
->>       $ git commit file -m 'Resolved conflict'
->>       fatal: cannot do a partial commit during a merge.
->>
->> 8. Declare a bug.
->>
->> I believe that the "git commit file" command issued in step 6 should have
->> worked as well as the "git add file ; git commit" that us old-time git
->> users do.
->>
->> 9. Discuss on the git list.
->>
->> Do y'all agree that the git behavior is strange and unnecessarily
->> user-impeding here?
->>
->> Cheers!
->>
->> -- Asheesh.
->>
->> P.S. I'm not the one who ran into the bad behavior here; Nathan (CC:d) is
->> the one who did. You don't have to keep him CC:d, though.
->>
->
-> You want git commit -i:
->
->       -i, --include
->           Before making a commit out of staged contents so far, stage
-> the contents of paths given on the command line as well.
->           This is usually not what you want unless you are concluding a
-> conflicted merge.
->
-> Without -i, git commit path ignores the index, which would be bad in the
-> middle of a merge, which is why git refuses to do so. You may argue for
-> git commit to use -i automatically here, but I don't think it's a good idea.
->
-> So, out of
-> 1) git add path && git commit
-> 2) git commit path
-> 3) git commit -i path
-> only 1) and 3) are always equivalent.
->
-> Michael
->
+On Wed, 21 Jan 2009, ted@tedpavlic.com wrote:
+
+> From: Ted Pavlic <ted@tedpavlic.com>
+
+As this is exactly what your email said in its header, it is redundant 
+information.  Worse, it is information that made me look back to know why 
+it needs to be there.  Distracting.
+
+> diff --git a/contrib/giteditor/README b/contrib/giteditor/README
+> new file mode 100644
+> index 0000000..b769c3e
+> --- /dev/null
+> +++ b/contrib/giteditor/README
+> @@ -0,0 +1,9 @@
+> +A GIT_EDITOR to show diff alongside commit message. User can review diff
+> +within commit edit window. Works with StGit ("stg edit") as well.
+> +
+> +To use this script, set it as the value of GIT_EDITOR (or core.editor).
+> +
+> +
+> +Copyright (c) 2009 by Theodore P. Pavlic <ted@tedpavlic.com>
+> +Highly influenced by hgeditor script distributed with Mercurial SCM.
+> +Distributed under the GNU General Public License, version 2.0.
+
+What information does the README add that is not in the script itself?
+
+If there is none, please refrain from adding the README to begin with.
+
+> diff --git a/contrib/giteditor/giteditor b/contrib/giteditor/giteditor
+> new file mode 100755
+> index 0000000..13ca5f6
+> --- /dev/null
+> +++ b/contrib/giteditor/giteditor
+> @@ -0,0 +1,111 @@
+> +#!/bin/sh
+> +#
+> +# A GIT_EDITOR to show diff alongside commit message.
+
+Maybe "Set GIT_EDITOR to giteditor if you want to see a diff of what will 
+be committed in the editor"?
+
+> +# Find git
+> +[ -z "${GIT}" ] && GIT="git"
+
+Yes, I know it is contrib/, but you may want to adopt Git's coding style 
+early.
+
+Besides, I find it funny that you want to override git with $GIT.
+
+> +# Use an editor. To prevent loops, avoid GIT_EDITOR and core.editor.
+> +EDITOR=${GIT_EDITOR_EDITOR} || \
+> +    EDITOR=${VISUAL} || \
+> +    EDITOR=${EDITOR} || \
+> +    EDITOR="vi";
+> +
+> +# If we recognize a popular editor, add necessary flags
+> +case "${EDITOR}" in
+> +    emacs)
+> +        EDITOR="${EDITOR} -nw"
+
+Mhm.  Should this not be the user's choice?  Some like emacs to start up 
+in a window.
+
+> +# Remove temporary files even if we get interrupted
+> +GITTMP=""
+
+GITTMP= would be completely sufficient.  Not to mention the consistency 
+with Git's shell code.
+
+> +# End GITTMP in ".git" so that "*.git/" syntax highlighting recognition
+> +# doesn't break
+> +GITTMP="${TMPDIR-/tmp}/giteditor.$RANDOM.$RANDOM.$RANDOM.$$.git"
+> +(umask 077 && mkdir "${GITTMP}") || {
+> +    echo "Could not create temporary directory! Exiting." 1>&2
+> +    exit 1
+> +}
+
+Umm.  Why?  Why do you need a temporary .git directory?
+
+> +if [ -f "$1" ]; then
+> +    # We were passed an existing commit message
+> +
+> +    "${DIFFCMD}" ${DIFFARGS} >> "${GITTMP}/diff"
+> +## Uncomment if you only want to see diff of what changed
+> +## (note that it only works if DIFFCMD is git)
+> +#    (
+> +#        grep '^#.*modified:' "$1" | cut -b 15- | while read changed; do
+> +#            "${DIFFCMD}" ${DIFFARGS} "${changed}" >> "${GITTMP}/diff"
+> +#        done
+> +#    )
+
+--diff-filter=M
+
+> +
+> +     cat "$1" > "${GITTMP}/${COMMITMSG}"
+> +
+> +else
+> +
+> +    # Give us a blank COMMITMSG to edit
+> +    touch "${GITTMP}/${COMMITMSG}"
+
+Why not just touch it, instead of testing if the file exists first?
+
+> +
+> +    # Generate the diff
+> +    "${DIFFCMD}" ${DIFFARGS} >> "${GITTMP}/diff"
+> +    #touch "${GITTMP}/diff"
+
+Commented out code in a submitted patch?
+
+> +
+> +fi
+> +
+> +# Use MD5 to see if commit message changed (necessary?)
+> +MD5=$(which md5sum 2>/dev/null) || \
+> +    MD5=$(which md5 2>/dev/null)
+> +
+> +[ -x "${MD5}" ] && CHECKSUM=$( ${MD5} "${GITTMP}/${COMMITMSG}" )
+> +if [ -s "${GITTMP}/diff" ]; then
+> +    # Diff is non-empty, so edit msg and diff
+> +    ${EDITOR} "${GITTMP}/${COMMITMSG}" "${GITTMP}/diff" || exit $?
+
+vi users will hate you, as you do not give them a chance to edit the 
+message after having seen the diff.
+
+> +else
+> +    # Empty diff. Only edit msg
+> +    ${EDITOR} "${GITTMP}/${COMMITMSG}" || exit $?
+> +fi
+> +[ -x "${MD5}" ] && (echo "${CHECKSUM}" | ${MD5} -c >/dev/null 2>&1 && exit 13)
+
+git commit will abort anyway if the commit message has not changed.  Plus, 
+it does a better job, as it checks only the non-commented-out text.
+
+BTW why on earth do you put every single variable name in curly brackets?
+
+> +
+> +# Commit message changed, so dump it on original message from Git
+> +mv "${GITTMP}/${COMMITMSG}" "$1"
+
+And why did you not use "$1" all the time?
+
+> +
+> +# (recall that GITTMP directory gets cleaned up by trap above)
+> +exit $?
+
+Just writing "exit" is the same in effect, but preferred in Git shell 
+coding.
+
+Besides all that criticism, there is also a fundamental issue.  The diff 
+is in a separate file.
+
+Instead, I suggest having something like this:
+
+-- snip --
+#!/bin/sh
+
+# set GIT_EDITOR or core.editor to this script if you want to see a diff
+# instead of the output of "git status".
+
+# filter out the "git status" output (keeping the "On branch" line)
+mv "$1" "$1".tmp
+grep -v "^# [^O]" < "$1".tmp > "$1"
+rm "$1".tmp
+
+# append the diff
+case "$1" in
+*.stgit-edit.txt)
+	stg show
+;;
+*)
+	git diff --cached
+;;
+esac | sed -e 's/^/# /' >> "$1"
+
+exec ${VISUAL:-${EDITOR:-vi}} "$1"
+-- snap --
+
+Hth,
+Dscho
