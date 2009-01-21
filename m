@@ -1,93 +1,95 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: how to git a read only directory
-Date: Wed, 21 Jan 2009 10:57:41 +0100
-Message-ID: <4976F195.9030908@drmicha.warpmail.net>
-References: <20090121083354.GG6970@b2j>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [VALGRIND PATCH for nth_last patch series] Fix invalid memory
+ access
+Date: Wed, 21 Jan 2009 02:13:03 -0800
+Message-ID: <7vr62xezm8.fsf@gitster.siamese.dyndns.org>
+References: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0901210113500.19014@racer>
+ <7vwscpgi7t.fsf@gitster.siamese.dyndns.org>
+ <200901211019.01493.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>, cbill.lam@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jan 21 10:59:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>,
+	Johan Herland <johan@herland.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Jan 21 11:15:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPZrb-0001E9-TB
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 10:59:12 +0100
+	id 1LPa70-0005iz-1d
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 11:15:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754971AbZAUJ5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 04:57:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754825AbZAUJ5r
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 04:57:47 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48611 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752931AbZAUJ5q (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 04:57:46 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 5962822F6CE;
-	Wed, 21 Jan 2009 04:57:44 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 21 Jan 2009 04:57:44 -0500
-X-Sasl-enc: K25FcnYdo9jMO9accCS+pfZXer4MbpPUAWwbPi+vyuxK 1232531864
-Received: from [139.174.44.12] (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id C583FE8DC;
-	Wed, 21 Jan 2009 04:57:43 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
-In-Reply-To: <20090121083354.GG6970@b2j>
+	id S1764102AbZAUKNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 05:13:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764098AbZAUKNP
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 05:13:15 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64200 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764232AbZAUKNN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 05:13:13 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id F157E1CECC;
+	Wed, 21 Jan 2009 05:13:11 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 71B811CEE4; Wed,
+ 21 Jan 2009 05:13:05 -0500 (EST)
+In-Reply-To: <200901211019.01493.trast@student.ethz.ch> (Thomas Rast's
+ message of "Wed, 21 Jan 2009 10:18:57 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1BE6FD94-E7A4-11DD-82BE-BE78113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106587>
 
-bill lam venit, vidit, dixit 21.01.2009 09:33:
-> I want to use git to keep track of files inside /etc but do not want
-> to do it as a super user. Is that possible to put GIT_DIR under my
-> home directory and add public-read files inside /etc? Or that it could
-> be done in some other ways.
-> 
-> Thanks.
-> 
+Thomas Rast <trast@student.ethz.ch> writes:
 
-You can use the core.worktree config variable in order to specify a
-worktree (/etc) which is not directly above .git. For your git commands
-to find the .git dir you would need to set GIT_DIR or use the --git-dir
-parameter.
+> Actually the point of that exercise was to ignore branch (non)switches
+> of the form
+>
+>   checkout: moving from A to A
 
-I have found, though, that several git commands require you to be within
-the worktree or else they become confused. I use a shell function for
-that, doing something like "gg ~/path/project log" which requires
-~/path/project.git to have its core.worktree set. Also, having a git
-alias like "git view" set up for gitk helps calling gitk in that way.
-git-gui makes unfounded assumptions and is completely unhappy in a
-situation like that.
+Ahhh, Ok, that is what I missed.
 
-I think the situation around GIT_DIR and and worktree is a bit in the
-flux at the moment (panta rhei..) but it works for me.
+> I originally thought that this would be desirable behaviour, but now
+> that it causes so much trouble, I'm not that sure any more.  I still
+> think it would be more intuitive to not count them as switches (after
+> all git-checkout says 'Already on "$branch"'), but OTOH 'cd .; cd -'
+> also stays in the same directory.
 
-Cheers,
-Michael
+An entry of the form "from A to A" is made only when you explicitly ask to
+checkout the current branch by name (i.e. "git checkout" without any
+parameter won't add such an entry to the reflog), so I tend to agree with
+"cd" that the users may find it more natural if we counted them.
 
-Here's the "git go" bash function. I'm not proud of it, it makes several
-assumptions and does no error checking. Use it like "gg path/project
-command parameters" if the git-dir is "path/project.git" or "gg
-path/project/" if the git-dir is "path/project/.git". Have your
-core.worktree set in the former case, and also in the latter if the
-worktree is not "path/project".
+Having said all that, I think Dscho's one had an off-by-one (but it is
+getting late and it may be I who has one).
 
-I'm sure it can be done much better using helper functions from git's
-bash-completion, e.g.
+When parsing "checkout: moving from master to side\n", match points at
+"master to...", target points at "side\n", and len is 6 (length of
+"master").  We want to see if target is "master\n" and ignore such an
+entry, so we should be checking if target is one longer than len.
 
-gg ()
-{
-    local _gg="$1";
-    shift;
-    local _ggwt=`git --git-dir="${_gg}.git" config --get core.worktree`;
-    if [ -z "${_ggwt}" ]; then
-        _ggwt=$(cd ${_gg} 2> /dev/null && pwd -P);
-    fi;
-    local _gggd=$(cd ${_gg}.git 2> /dev/null && pwd -P);
-    pushd ${_ggwt} > /dev/null;
-    git --git-dir=${_gggd} "$@";
-    popd > /dev/null
-}
+ sha1_name.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git c/sha1_name.c w/sha1_name.c
+index 38c9f1b..9aed8ae 100644
+--- c/sha1_name.c
++++ w/sha1_name.c
+@@ -731,7 +731,10 @@ static int grab_nth_branch_switch(unsigned char *osha1, unsigned char *nsha1,
+ 		return 0;
+ 
+ 	len = target - match - 4;
+-	if (target[len] == '\n' && !strncmp(match, target, len))
++	if (len + 1 == strlen(target) &&
++	    target[len] == '\n' &&
++	    !memcmp(target, match, len))
++		/* switching same branch "from A to A\n" */
+ 		return 0;
+ 
+ 	nth = cb->cnt++ % cb->alloc;
