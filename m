@@ -1,77 +1,94 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH 1/2] handle color.ui at a central place
-Date: Wed, 21 Jan 2009 23:35:24 +0100
-Message-ID: <200901212335.24727.markus.heidelberg@web.de>
-References: <20090117153846.GB27071@coredump.intra.peff.net> <200901182137.16562.markus.heidelberg@web.de> <20090120040448.GA30714@sigill.intra.peff.net>
-Reply-To: markus.heidelberg@web.de
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2 v2] Add valgrind support in test scripts
+Date: Wed, 21 Jan 2009 23:38:13 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901212332030.3586@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0901191407470.3586@pacific.mpi-cbg.de> <20090120044447.GF30714@sigill.intra.peff.net> <alpine.DEB.1.00.0901201447290.5159@intel-tinevez-2-302> <20090120141932.GB10688@sigill.intra.peff.net> <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302>
+ <alpine.DEB.1.00.0901201602410.5159@intel-tinevez-2-302> <20090121001219.GA18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210209580.19014@racer> <20090121190201.GA21686@coredump.intra.peff.net> <alpine.DEB.1.00.0901212137130.3586@pacific.mpi-cbg.de>
+ <20090121215318.GA9107@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: =?utf-8?q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 21 23:36:54 2009
+X-From: git-owner@vger.kernel.org Wed Jan 21 23:39:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPlgg-00039W-8u
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 23:36:42 +0100
+	id 1LPljU-00046f-Ih
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 23:39:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753392AbZAUWfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 17:35:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753346AbZAUWfR
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 17:35:17 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:56318 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753333AbZAUWfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 17:35:16 -0500
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 53B69F6DC0E4;
-	Wed, 21 Jan 2009 23:35:14 +0100 (CET)
-Received: from [89.59.73.85] (helo=pluto)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LPlfG-0007Sc-00; Wed, 21 Jan 2009 23:35:14 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090120040448.GA30714@sigill.intra.peff.net>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX185jWO1YT6+LqMitox4kGNhXJ9WguiGRW09sMP0
-	EBG8GbldHcXEWRG3WDZlNhDhh5mVDfeJOTP5NzMYxiBpJDb3PR
-	g0thynsEJeQ4I8D6rmzw==
+	id S1753467AbZAUWiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 17:38:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753436AbZAUWiK
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 17:38:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56036 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753277AbZAUWiJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 17:38:09 -0500
+Received: (qmail invoked by alias); 21 Jan 2009 22:38:04 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp021) with SMTP; 21 Jan 2009 23:38:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+AOxZ6G8eAb4DcXmDnwYURUaTa+yVxxyTQzVotPm
+	Ien/vbEvyyGCm6
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090121215318.GA9107@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.48
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106692>
 
-Jeff King, 20.01.2009:
-> On Sun, Jan 18, 2009 at 09:37:15PM +0100, Markus Heidelberg wrote:
-> 
-> > Not sure, if you it has something to do with the following, but I had
-> > this in my tree for some days now, waiting for the 2 commits mentioned
-> > in the log message to graduate to master, which happend just an hour or
-> > so ago.
-> 
-> I think this is probably an improvement, but I had in mind something a
-> little more drastic. Right now we keep munging one variable that is our
-> current idea of "should we do color" based on multiple config values.
-> Then you end up with (best case) this "finalize color config", which is
-> a bit ugly, or (worst case) bugs where the value hasn't always been
+Hi,
 
-Yes, I didn't find it to be that great either.
+On Wed, 21 Jan 2009, Jeff King wrote:
 
-> properly initialized (or finalized).
-> 
-> So I think it makes more sense to record each config value, and then
-> check a _function_ that does the right thing. I.e., you end up with
-> something like:
->
-> [example code snipped]
+> Actually, I am wrong. There is a stripped-down readlink that has shipped 
+> with FreeBSD (since 4.10) and NetBSD (since 1.6). So while readlink 
+> isn't portable, I think it should generally work on platforms supported 
+> by valgrind.
 
-That would probably be better.
+A pity.  I was already working on this patch:
 
-Markus
+-- snipsnap --
+[PATCH] valgrind tests: provide a "readlink" function for systems which lack it
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/test-lib.sh |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 07e657e..c2199e7 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -487,7 +487,24 @@ then
+ 	PATH=$TEST_DIRECTORY/..:$PATH
+ 	GIT_EXEC_PATH=$TEST_DIRECTORY/..
+ else
++	readlink -h 2> /dev/null
++	if test $? = 127
++	then
++		readlink () {
++			ls -l "$1" |
++			sed -e "s/-> \(.*\)$/\1/g"
++			# cannot use s/.* -> //, because of
++			# ln -s "a -> b" "c -> d"
++		}
++	fi
++
+ 	make_symlink () {
++		case "$1" in
++		*" -> "*)
++			die "You must be kidding me ($1)."
++		;;
++		esac
++
+ 		test -h "$2" &&
+ 		test "$1" = "$(readlink "$2")" || {
+ 			# be super paranoid
+-- 
+1.6.1.442.g112f5
