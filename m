@@ -1,92 +1,73 @@
-From: =?ISO-8859-1?Q?Marc=2DAndr=E9_Lureau?= <marcandre.lureau@gmail.com>
+From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
 Subject: Re: Deleting remote branch pointed by remote HEAD
-Date: Wed, 21 Jan 2009 16:38:06 +0200
-Message-ID: <e29894ca0901210638t636de791sf27d28893a7a0b65@mail.gmail.com>
-References: <e29894ca0901210502n1ed1187bm46669a402ab4fe48@mail.gmail.com>
-	 <49773240.7090605@drmicha.warpmail.net>
+Date: Wed, 21 Jan 2009 15:41:42 +0100
+Message-ID: <20090121144142.GA18093@chistera.yi.org>
+References: <e29894ca0901210502n1ed1187bm46669a402ab4fe48@mail.gmail.com> <49773240.7090605@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
+	git@vger.kernel.org
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jan 21 15:39:42 2009
+X-From: git-owner@vger.kernel.org Wed Jan 21 15:43:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPeEy-0004pt-A8
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 15:39:36 +0100
+	id 1LPeIV-00060a-VZ
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 15:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754525AbZAUOiL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2009 09:38:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754490AbZAUOiK
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 09:38:10 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:22757 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754301AbZAUOiJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 09:38:09 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so1804285fgg.17
-        for <git@vger.kernel.org>; Wed, 21 Jan 2009 06:38:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=jXhZva1dlZZKnuL/u3p6ac9esD05Z+mTdkYg57a9K0M=;
-        b=k+5kRjlipnGQQIhog1lGsZGPVsY4KfNzqFF8rQkjNOnFsczJd18anx7PhgIwjaVisI
-         98TmVQ2P8lITrymgZXjoso1tX/csgqxwx+FuTChHFVIAfKgqOHbdLGGvURFco7fH8qW+
-         9mH1QaJfExr++HI5TnGLTBCn5RwoGSKFQaIM4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lOQj5UYxJBbXRSm6rcJoyZA03PFLh0OYLIpZaXE1+NLa5KmkRNo7jS7/xwxOiJnAmV
-         fp9JOQJTc8r0eWWQVti3Xw90eRnHtA/e+YxiWzx7a3Uc59mysAWdUf8p1fEtue51txsv
-         4N6PcDw9TfHs01GVy9kSzxeIdHWfdadMi+oJ8=
-Received: by 10.86.89.20 with SMTP id m20mr1940926fgb.71.1232548686944; Wed, 
-	21 Jan 2009 06:38:06 -0800 (PST)
+	id S1754764AbZAUOlu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2009 09:41:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754203AbZAUOlt
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 09:41:49 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:1986
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754031AbZAUOlt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 09:41:49 -0500
+Received: from chistera.yi.org (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id 724618027909;
+	Wed, 21 Jan 2009 15:41:46 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LPeH0-0004mw-54; Wed, 21 Jan 2009 15:41:42 +0100
+Content-Disposition: inline
 In-Reply-To: <49773240.7090605@drmicha.warpmail.net>
+X-No-CC: Please respect my Mail-Followup-To header
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106612>
 
-On Wed, Jan 21, 2009 at 4:33 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Marc-Andr=E9 Lureau venit, vidit, dixit 21.01.2009 14:02:
->> Hi
->>
->> I deleted a remote branch which was pointed by HEAD, this way: "git
->> push origin :master"
->>
->> Then for almost every git command, I get this error: "error:
->> refs/remotes/origin/HEAD points nowhere!".
->
+* Michael J Gruber [Wed, 21 Jan 2009 15:33:36 +0100]:
+
+> Marc-Andr=C3=A9 Lureau venit, vidit, dixit 21.01.2009 14:02:
+> > Hi
+
+> > I deleted a remote branch which was pointed by HEAD, this way: "git
+> > push origin :master"
+
+> > Then for almost every git command, I get this error: "error:
+> > refs/remotes/origin/HEAD points nowhere!".
+
 > You're talking about about the remote git repo, aren't you?
->
 
-Sure. But the error is on the local repo.
+> > I found this situation non-friendly. Fortunately, I could understan=
+d
+> > what's going on. But a new user might be confused.
 
->> I found this situation non-friendly. Fortunately, I could understand
->> what's going on. But a new user might be confused.
->>
->> Shouldn't the remote HEAD branch be updated or "protected" in some
->> ways? Or should the "error" be considered as a "warning" (silently?)
->>
->> What do you think?
->
+> > Shouldn't the remote HEAD branch be updated or "protected" in some
+> > ways? Or should the "error" be considered as a "warning" (silently?=
+)
+
+> > What do you think?
+
 > I think that git said
 > "warning: updating the currently checked out branch; this may cause
 > confusion,
 > as the index and working tree do not reflect changes that are now in =
 HEAD."
-
-IIRC, it only says so if your local repo is on a branch tracking this
-remote. At least, in some conditions, I didn't get this warning. When
-I did second simple testing with git.git version, I also had this
-warning.
-
 > after your push and that this may have rung some bells. I also think
 > that pushing to a non-bare remote repo (one with a worktree checked o=
 ut)
@@ -95,9 +76,29 @@ ut)
 ur
 > HEAD ;)
 
-Isn't HEAD also on non-bare repo, to indicate what is the default branc=
-h?
+I don't think Marc-Andr=C3=A9 was pushing to a non-bare repo, but it do=
+esn't
+really matter, because his issue also shows up with bare repos: if you
+delete the branch to which HEAD points in a remote repo, you get no
+warning, and then cloning that bare repo does not fully work, because
+its HEAD points to a non-existent ref.
 
-thanks,
+    % g clone ssh://.../foo.git
+    % cd foo
+    % g push origin :master
+    % cd ..
+    % g clone ssh://.../foo.git foo2
+    ...
+    warning: remote HEAD refers to nonexistent ref, unable to checkout.
+
+What would git usefully do in this situation, I don't know. But I
+thought I'd clear up the above confusion.
+
 --=20
-Marc-Andr=E9 Lureau
+Adeodato Sim=C3=B3                                     dato at net.com.=
+org.es
+Debian Developer                                  adeodato at debian.or=
+g
+=20
+Truth is the most valuable thing we have, so let's economize it.
+                -- Mark Twain
