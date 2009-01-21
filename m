@@ -1,74 +1,137 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Planet Git
-Date: Wed, 21 Jan 2009 23:32:11 +0200
-Message-ID: <94a0d4530901211332n7285e068t6de615fab0cd455c@mail.gmail.com>
-References: <a2ce9d792bc2f586e2a1408e573db433.squirrel@webmail.planetgit.org>
-	 <alpine.DEB.1.00.0901212156510.3586@pacific.mpi-cbg.de>
-	 <gl83pe$7o6$1@ger.gmane.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Short "git commit $file" syntax fails in the face of a resolved
+   conflict
+Date: Wed, 21 Jan 2009 22:35:29 +0100
+Message-ID: <49779521.9040208@drmicha.warpmail.net>
+References: <alpine.DEB.2.00.0901211549070.15860@vellum.laroia.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Gilger <heipei@hackvalue.de>
-X-From: git-owner@vger.kernel.org Wed Jan 21 22:33:54 2009
+Cc: git@vger.kernel.org, nathan@creativecommons.org
+To: Asheesh Laroia <asheesh@asheesh.org>
+X-From: git-owner@vger.kernel.org Wed Jan 21 22:37:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPkhg-0006M6-91
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:33:40 +0100
+	id 1LPkla-0007hC-9E
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:37:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752366AbZAUVcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 16:32:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbZAUVcQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:32:16 -0500
-Received: from ey-out-2122.google.com ([74.125.78.25]:56521 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752077AbZAUVcP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 16:32:15 -0500
-Received: by ey-out-2122.google.com with SMTP id 22so728840eye.37
-        for <git@vger.kernel.org>; Wed, 21 Jan 2009 13:32:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PBJBXqawXiV5IEdgaDXpneuv56AQkvkWvtldNycsI6c=;
-        b=ElN1YX1ppDeiHcwfRSCksveW+XhPqWmgHHAgUrwXGwzNqK6/coVb4y5DA+4kmiks+L
-         QQiQg4hX2vQcXkd2vEGug9nM/p378pX81+sMpK0aGiGqNxaDA6kR8fMc+Y/ok/OjY1Fs
-         l6mm8Dno8QhvSDjVqr6PgJXn+61EvhmaDghQU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jAo67r/gVwGn6BtxIWtIcErSQ6BWvK0yGjc+79TMJR51gjjajXu03+WCku0WtKui9P
-         GJ/7Hn7DsR2hM/2XHDN6C/mhzpH8We5nk3FlzcaQTG0Mj6O/yp6afZQkwte/eQd3o5ZA
-         oKew2kxspzwJcUXlEedRYoHLJsD4x2bn1PF7M=
-Received: by 10.86.65.9 with SMTP id n9mr357114fga.61.1232573531674; Wed, 21 
-	Jan 2009 13:32:11 -0800 (PST)
-In-Reply-To: <gl83pe$7o6$1@ger.gmane.org>
+	id S1753461AbZAUVf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 16:35:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753219AbZAUVfz
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:35:55 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53576 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751924AbZAUVfy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 16:35:54 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id AFD9A24A198;
+	Wed, 21 Jan 2009 16:35:52 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 21 Jan 2009 16:35:52 -0500
+X-Sasl-enc: QakvfRKc6nVA48dwkH87S7NrLuHnPPm+UFvT+lNxSVIk 1232573750
+Received: from [139.174.44.34] (pascal.math.tu-clausthal.de [139.174.44.34])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2866A30718;
+	Wed, 21 Jan 2009 16:35:37 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
+In-Reply-To: <alpine.DEB.2.00.0901211549070.15860@vellum.laroia.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106681>
 
-On Wed, Jan 21, 2009 at 11:23 PM, Johannes Gilger <heipei@hackvalue.de> wrote:
-> On 2009-01-21, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> Up until the "send an email to the webmaster with your name", I was game.
->
-> Hi Dscho,
->
-> not sure what you're talking about, but it's common on planets for
-> people to be listed with their name (instead of the strange titles some
-> blogs have). Just have a look at two different planets I regularly
-> visit:
-> http://planet.larrythecow.org/
-> http://planet.rwth.org/
->
-> Besides, I'm sure that if you use your synonym it's fine too ;)
+Asheesh Laroia venit, vidit, dixit 01/21/09 22:00:
+> I have found what seems to be a bug in the short "git commit $file" mode 
+> of interaction with git. To reproduce it, you can:
+> 
+> 1. Create a repository with some content.
+> 
+>  	$ (mkdir a ; cd a ; git init ; echo hi > file ; git add file ; git commit -m 'initial commit')
+>  	Initialized empty Git repository in /tmp/playground.2009-01-21.w15613/a/.git/
+>  	Created initial commit 276d6eb: initial commit
+>  	 1 files changed, 1 insertions(+), 0 deletions(-)
+>  	 create mode 100644 file
+> 
+> 2. Clone that repository.
+> 
+>  	$ git clone a b
+>  	Initialized empty Git repository in /tmp/playground.2009-01-21.w15613/b/.git/
+> 
+> 3. Create changes in "a" that are not yet cloned into "b".
+> 
+>  	$ (cd a ; echo ho > file ; git add file ; git commit -m update)
+>  	Created commit 91deff9: update
+>  	 1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> 4. Make changes in "b", the clone.
+> 
+>  	$ echo lol > file
+>  	$ git add file ; git commit -m 'Some changes'
+>  	Created commit 5d74b5b: Some changes
+>  	 1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> 5. Fetch and merge (AKA pull) from the first repo.
+> 
+>  	$ git pull
+>  	remote: Counting objects: 5, done.
+>  	remote: Total 3 (delta 0), reused 0 (delta 0)
+>  	Unpacking objects: 100% (3/3), done.
+>  	From /tmp/playground.2009-01-21.w15613/a/
+>  	   276d6eb..91deff9  master     -> origin/master
+>  	Auto-merged file
+>  	CONFLICT (content): Merge conflict in file
+>  	Automatic merge failed; fix conflicts and then commit the result.
+> 
+> 6. Resolve the conflict (in our case, by discarding the changes in the "b" 
+> clone).
+> 
+>  	$ echo ho > file
+> 
+> 7. Commit the resolved conflict.
+> 
+> NOTE: The normal way to do step 6 is to "git add file ; git commit -m 
+> yay". But I will now try to use the "git commit file" shorthand:
+> 
+>  	$ git commit file -m 'Resolved conflict'
+>  	fatal: cannot do a partial commit during a merge.
+> 
+> 8. Declare a bug.
+> 
+> I believe that the "git commit file" command issued in step 6 should have 
+> worked as well as the "git add file ; git commit" that us old-time git 
+> users do.
+> 
+> 9. Discuss on the git list.
+> 
+> Do y'all agree that the git behavior is strange and unnecessarily 
+> user-impeding here?
+> 
+> Cheers!
+> 
+> -- Asheesh.
+> 
+> P.S. I'm not the one who ran into the bad behavior here; Nathan (CC:d) is 
+> the one who did. You don't have to keep him CC:d, though.
+> 
 
-And that it's probably the default theme and content on the "planet" software.
+You want git commit -i:
 
--- 
-Felipe Contreras
+       -i, --include
+           Before making a commit out of staged contents so far, stage
+the contents of paths given on the command line as well.
+           This is usually not what you want unless you are concluding a
+conflicted merge.
+
+Without -i, git commit path ignores the index, which would be bad in the
+middle of a merge, which is why git refuses to do so. You may argue for
+git commit to use -i automatically here, but I don't think it's a good idea.
+
+So, out of
+1) git add path && git commit
+2) git commit path
+3) git commit -i path
+only 1) and 3) are always equivalent.
+
+Michael
