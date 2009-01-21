@@ -1,85 +1,74 @@
-From: Anders Waldenborg <anders@0x63.nu>
-Subject: Re: What about allowing multiple hooks?
-Date: Wed, 21 Jan 2009 22:30:13 +0100
-Message-ID: <497793E5.7090107@0x63.nu>
-References: <20081121133828.GB5912@gmx.de> <20090103233252.GA12095@myhost> <7vd4f3z8xu.fsf@gitster.siamese.dyndns.org> <4977872E.70901@0x63.nu> <alpine.DEB.1.00.0901212206430.3586@pacific.mpi-cbg.de>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Planet Git
+Date: Wed, 21 Jan 2009 23:32:11 +0200
+Message-ID: <94a0d4530901211332n7285e068t6de615fab0cd455c@mail.gmail.com>
+References: <a2ce9d792bc2f586e2a1408e573db433.squirrel@webmail.planetgit.org>
+	 <alpine.DEB.1.00.0901212156510.3586@pacific.mpi-cbg.de>
+	 <gl83pe$7o6$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Alexander Potashev <aspotashev@gmail.com>,
-	Marc Weber <marco-oweber@gmx.de>,
-	Rogan Dawes <lists@dawes.za.net>,
-	martin f krafft <madduck@madduck.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 21 22:32:22 2009
+Cc: git@vger.kernel.org
+To: Johannes Gilger <heipei@hackvalue.de>
+X-From: git-owner@vger.kernel.org Wed Jan 21 22:33:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPkgI-0005nG-Ij
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:32:15 +0100
+	id 1LPkhg-0006M6-91
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:33:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751924AbZAUVav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 16:30:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbZAUVau
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:30:50 -0500
-Received: from phlox.netintact.se ([217.73.97.18]:60966 "EHLO
-	phlox.netintact.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751228AbZAUVat (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 16:30:49 -0500
-Received: by phlox.netintact.se (Postfix, from userid 56643)
-	id 8D008DE063A; Wed, 21 Jan 2009 22:30:47 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on phlox
-X-Spam-Level: 
-X-Spam-Status: No, hits=0.0 required=5.0 tests=none autolearn=failed 
-	version=3.1.7-deb
-Received: from hoth.proceranetworks.com (hoth.proceranetworks.com [194.153.91.41])
-	by phlox.netintact.se (Postfix) with ESMTP id 2E304DE0660;
-	Wed, 21 Jan 2009 22:30:44 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by hoth.proceranetworks.com (Postfix) with ESMTP id 1068845F0005;
-	Wed, 21 Jan 2009 22:30:44 +0100 (CET)
-X-Virus-Scanned: amavisd-new at hoth.proceranetworks.com
-Received: from hoth.proceranetworks.com ([127.0.0.1])
-	by localhost (hoth.proceranetworks.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id o2kzrahNqbdH; Wed, 21 Jan 2009 22:30:43 +0100 (CET)
-Received: from [10.13.37.146] (81-233-4-40-no34.tbcn.telia.com [81.233.4.40])
-	by hoth.proceranetworks.com (Postfix) with ESMTP id 6A3DD45F0003;
-	Wed, 21 Jan 2009 22:30:43 +0100 (CET)
-User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
-In-Reply-To: <alpine.DEB.1.00.0901212206430.3586@pacific.mpi-cbg.de>
+	id S1752366AbZAUVcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 16:32:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbZAUVcQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:32:16 -0500
+Received: from ey-out-2122.google.com ([74.125.78.25]:56521 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752077AbZAUVcP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 16:32:15 -0500
+Received: by ey-out-2122.google.com with SMTP id 22so728840eye.37
+        for <git@vger.kernel.org>; Wed, 21 Jan 2009 13:32:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PBJBXqawXiV5IEdgaDXpneuv56AQkvkWvtldNycsI6c=;
+        b=ElN1YX1ppDeiHcwfRSCksveW+XhPqWmgHHAgUrwXGwzNqK6/coVb4y5DA+4kmiks+L
+         QQiQg4hX2vQcXkd2vEGug9nM/p378pX81+sMpK0aGiGqNxaDA6kR8fMc+Y/ok/OjY1Fs
+         l6mm8Dno8QhvSDjVqr6PgJXn+61EvhmaDghQU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jAo67r/gVwGn6BtxIWtIcErSQ6BWvK0yGjc+79TMJR51gjjajXu03+WCku0WtKui9P
+         GJ/7Hn7DsR2hM/2XHDN6C/mhzpH8We5nk3FlzcaQTG0Mj6O/yp6afZQkwte/eQd3o5ZA
+         oKew2kxspzwJcUXlEedRYoHLJsD4x2bn1PF7M=
+Received: by 10.86.65.9 with SMTP id n9mr357114fga.61.1232573531674; Wed, 21 
+	Jan 2009 13:32:11 -0800 (PST)
+In-Reply-To: <gl83pe$7o6$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106680>
 
-Johannes Schindelin wrote:
->> I currently use configvalues to specify which hooks to run. For example 
->> this is how my post-receive looks:
->>
->> data=$(cat)
->> git config --get-all hooks.post-receive.hook | while read hook; do
->>         $hook <<__EOF__
->> "$data"
->> __EOF__
->> done
-> 
-> I wonder why you don't do the obvious thing:
+On Wed, Jan 21, 2009 at 11:23 PM, Johannes Gilger <heipei@hackvalue.de> wrote:
+> On 2009-01-21, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> Up until the "send an email to the webmaster with your name", I was game.
+>
+> Hi Dscho,
+>
+> not sure what you're talking about, but it's common on planets for
+> people to be listed with their name (instead of the strange titles some
+> blogs have). Just have a look at two different planets I regularly
+> visit:
+> http://planet.larrythecow.org/
+> http://planet.rwth.org/
+>
+> Besides, I'm sure that if you use your synonym it's fine too ;)
 
+And that it's probably the default theme and content on the "planet" software.
 
-Because I wanted to be able to do things like this:
-
-git config -add hooks.post-receive.hook \
-  "sh hooks/buildbot 192.168.99.9:9989"
-git config -add hooks.post-receive.hook \
-  "sh hooks/buildbot 192.168.99.9:9988"
-
-So, the thing I initially wanted to solve was "multiple instances" of 
-the same hook.
-
-Then when I found this thread I saw that the richer meta information 
-needed to implement multiple hooks with sane semantics could be done 
-with the config values.
-
-  anders
+-- 
+Felipe Contreras
