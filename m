@@ -1,77 +1,73 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH] [TOPGIT] make creating a commit from a topgit branch a function
-Date: Wed, 21 Jan 2009 11:16:44 +0100
-Message-ID: <20090121101644.GA19052@pengutronix.de>
-References: <1231968443-13960-1-git-send-email-u.kleine-koenig@pengutronix.de> <1231968443-13960-2-git-send-email-u.kleine-koenig@pengutronix.de> <20090121031913.GA7422@lapse.rw.madduck.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH resend] bash completion: add 'rename' subcommand to
+ git-remote
+Date: Wed, 21 Jan 2009 02:26:32 -0800
+Message-ID: <7veiyxeyzr.fsf@gitster.siamese.dyndns.org>
+References: <200901162254.58300.markus.heidelberg@web.de>
+ <20090116221203.GP10179@spearce.org>
+ <7vd4em8ilx.fsf@gitster.siamese.dyndns.org>
+ <200901201921.10223.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
-To: martin f krafft <madduck@debian.org>
-X-From: git-owner@vger.kernel.org Wed Jan 21 11:18:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Wed Jan 21 11:28:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPaAB-0006mf-3p
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 11:18:23 +0100
+	id 1LPaJc-0000qw-1M
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 11:28:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763770AbZAUKQx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2009 05:16:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764003AbZAUKQv
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 05:16:51 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:43663 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761107AbZAUKQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 05:16:49 -0500
-Received: from ukl by metis.ext.pengutronix.de with local (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LPa8a-0000LE-3q; Wed, 21 Jan 2009 11:16:47 +0100
-Content-Disposition: inline
-In-Reply-To: <20090121031913.GA7422@lapse.rw.madduck.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
-	metis.extern.pengutronix.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=4.5 tests=AWL,BAYES_00,NO_RELAYS
-	shortcircuit=no autolearn=ham version=3.2.4
-X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
-X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1755092AbZAUK0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 05:26:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755010AbZAUK0m
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 05:26:42 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64648 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754398AbZAUK0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 05:26:41 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 56C0C1CED5;
+	Wed, 21 Jan 2009 05:26:39 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6F1531CE92; Wed,
+ 21 Jan 2009 05:26:34 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FD216514-E7A5-11DD-AC3C-BE78113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106589>
 
-On Wed, Jan 21, 2009 at 02:19:13PM +1100, martin f krafft wrote:
-> also sprach Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [2009=
-=2E01.15.0827 +1100]:
-> > This helps avoiding code duplication for the next commit.
->=20
-> What's the "next commit"?
-oh, sorry.  I intended to post my patch that implements `tg export
---linearize`, but then found a bug and so didn't send it.
+Markus Heidelberg <markus.heidelberg@web.de> writes:
 
-You can find it in my pu branch at
+> Junio C Hamano, 17.01.2009:
+>> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>> 
+>> > Markus Heidelberg <markus.heidelberg@web.de> wrote:
+>> >> 
+>> >> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+>> >
+>> > Acked-by: Shawn O. Pearce <spearce@spearce.org>
+>> >
+>> >> 	I've just accidently read in the completion file itself, that
+>> >> 	Shawn is the maintainer, so I give it a third try. The first two
+>> >> 	haven't been sent to him.
+>> >
+>> > Sorry, I must have missed the other two attempts.  :-)
+>> 
+>> And I seem to have missed all three.
+>
+> I really don't like to bother you again, but compared to the inclusion
+> of the other patches, I guess you have forgotten the third try of this
+> patch.
+>
+> Thus this fourth try :)
 
-	git://git.pengutronix.de/git/ukl/topgit.git pu
-
-=2E  It's not yet ready for general use, but I look forward to any
-constructive feedback.
-
-Best regards and thanks for the reminder,
-Uwe
-
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
-Peiner Strasse 6-8, 31137 Hildesheim, Germany | Phone: +49-5121-206917-=
-0    |
-Amtsgericht Hildesheim, HRA 2686              | Fax:   +49-5121-206917-=
-5555 |
+I did not mean that I forgot by the above "I seem to have missed".
+Literally none of your three attempts seem to have reached me.  I can
+guess what you wrote from the _included_ text in Shawn's response, but
+that is not a good/right place for me to pick up a patch from, is it?
