@@ -1,59 +1,80 @@
-From: =?ISO-8859-1?Q?Knut_Olav_B=F8hmer?= <knut-olav.bohmer@telenor.com>
-Subject: how to keeping track of cherry-pick?
-Date: Wed, 21 Jan 2009 00:53:08 +0100
-Message-ID: <497663E4.4000302@telenor.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [VALGRIND PATCH for nth_last patch series] Fix invalid memory
+ access
+Date: Wed, 21 Jan 2009 01:16:37 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901210113500.19014@racer>
+References: <7v8wpcs38c.fsf@gitster.siamese.dyndns.org> <1232163011-20088-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0901170646560.3586@pacific.mpi-cbg.de> <200901171438.22504.trast@student.ethz.ch> <alpine.DEB.1.00.0901171602340.3586@pacific.mpi-cbg.de>
+ <7vljt97nld.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901172028470.3586@pacific.mpi-cbg.de> <7vmydp5tqj.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901180201070.3586@pacific.mpi-cbg.de> <7vprilyt1w.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0901182152010.3586@pacific.mpi-cbg.de> <7vprijra52.fsf@gitster.siamese.dyndns.org> <7vljt7r9mq.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901191331590.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 21 01:18:37 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 21 01:18:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPQmp-0006rh-AM
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 01:17:39 +0100
+	id 1LPQn3-0006xo-D5
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 01:17:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757202AbZAUAQP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jan 2009 19:16:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757148AbZAUAQO
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 19:16:14 -0500
-Received: from mail48.e.nsc.no ([193.213.115.48]:44090 "EHLO mail48.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756953AbZAUAQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jan 2009 19:16:13 -0500
-X-Greylist: delayed 1381 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Jan 2009 19:16:13 EST
-Received: from [10.0.0.1] (ti100710a080-2364.bb.online.no [85.165.9.64])
-	(authenticated bits=0)
-	by mail48.nsc.no (8.13.8/8.13.5) with ESMTP id n0KNr8eL005441
-	for <git@vger.kernel.org>; Wed, 21 Jan 2009 00:53:08 +0100 (MET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-X-Enigmail-Version: 0.95.0
+	id S1758107AbZAUAQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jan 2009 19:16:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757923AbZAUAQ1
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Jan 2009 19:16:27 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33430 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757470AbZAUAQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jan 2009 19:16:26 -0500
+Received: (qmail invoked by alias); 21 Jan 2009 00:16:24 -0000
+Received: from pD9EB302D.dip0.t-ipconnect.de (EHLO noname) [217.235.48.45]
+  by mail.gmx.net (mp029) with SMTP; 21 Jan 2009 01:16:24 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18R8TlZF0MR/VCIRHSlNTNmRz0HijcE1EppuO/+4l
+	2shH1Y6bqculhA
+X-X-Sender: gene099@racer
+In-Reply-To: <alpine.DEB.1.00.0901191331590.3586@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106548>
 
-Hi,
 
-We are changing from subversion to git. We used to merge revisions from
-development branch to stable with svnmerge.py.
+Please squash in.
+---
 
-svnmerge.py can give us a list of revisions available for merging. The
-result is similar to "git log --chery-pick master..dev" The difference
-is that svnmerge.py operates on revision-numbers, and --chery-pick look=
-s
-at the diffs. The result of that is that when we get a conflict when a
-patch is cherry-picked, it will still show up as "available" when I run
-"git log --cherry-pick master..dev"
+	On Mon, 19 Jan 2009, Johannes Schindelin wrote:
 
-svnmerge.py can also mark revisions as blocked, and will not show up in
-the list of available revisions.
+	> @@ -720,7 +718,7 @@ static int grab_nth_branch_switch(unsigned char *osha1, unsigned char *nsha1,
+	>  	if (target[len] == '\n' && !strncmp(match, target, len))
+	>  		return 0;
 
-How can I keep track of cherry-picked patches, and mark patches as
-"blocked", in the same (or similar) way as I did in subversion with
-svnmerge.py?
+	This code is still not valid, as target[len] can be well after the 
+	NUL marker.
 
---=20
-Knut Olav B=F8hmer
+	Found by valgrind.
+
+ sha1_name.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/sha1_name.c b/sha1_name.c
+index 4d10705..803f9d2 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -735,7 +735,7 @@ static int grab_nth_branch_switch(unsigned char *osha1, unsigned char *nsha1,
+ 	if ((target = strstr(match, " to ")) != NULL) {
+ 		len = target - match;
+ 		target += 4;
+-		if (target[len] == '\n' && !strncmp(match, target, len))
++		if (len == strlen(target) && !strncmp(match, target, len))
+ 			return 0;
+ 	}
+ 	else
+-- 
+1.6.1.243.g6c8bb35
