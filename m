@@ -1,122 +1,110 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: [PATCH] mergetool: respect autocrlf by using checkout-index
-Date: Wed, 21 Jan 2009 22:57:48 +0000
-Message-ID: <1232578668-2203-1-git-send-email-charles@hashpling.org>
-References: <20090121210348.GD9088@mit.edu>
-Cc: Hannu Koivisto <azure@iki.fi>, Theodore Tso <tytso@mit.edu>,
-	Charles Bailey <charles@hashpling.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 21 23:59:34 2009
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH resend] bash completion: add 'rename' subcommand to git-remote
+Date: Wed, 21 Jan 2009 23:59:22 +0100
+Message-ID: <200901212359.23241.markus.heidelberg@web.de>
+References: <200901162254.58300.markus.heidelberg@web.de> <200901201921.10223.markus.heidelberg@web.de> <7veiyxeyzr.fsf@gitster.siamese.dyndns.org>
+Reply-To: markus.heidelberg@web.de
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 00:01:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPm2e-0002xq-Rd
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 23:59:25 +0100
+	id 1LPm3t-0003Or-74
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 00:00:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754089AbZAUW55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 17:57:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754054AbZAUW55
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 17:57:57 -0500
-Received: from relay.pcl-ipout02.plus.net ([212.159.7.100]:1353 "EHLO
-	relay.pcl-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753940AbZAUW54 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 17:57:56 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEAJbhdknUnw4U/2dsb2JhbADNcIVz
-Received: from pih-relay08.plus.net ([212.159.14.20])
-  by relay.pcl-ipout02.plus.net with ESMTP; 21 Jan 2009 22:57:54 +0000
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay08.plus.net with esmtp (Exim) id 1LPm1C-0007gk-Ad; Wed, 21 Jan 2009 22:57:54 +0000
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n0LMvmxi002231
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 21 Jan 2009 22:57:48 GMT
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n0LMvmHX002230;
-	Wed, 21 Jan 2009 22:57:48 GMT
-X-Mailer: git-send-email 1.6.1.235.gc9d403
-In-Reply-To: <20090121210348.GD9088@mit.edu>
-X-Plusnet-Relay: 26e6080e14d90f4bb8593fa23cd4e153
+	id S1754112AbZAUW7P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jan 2009 17:59:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754017AbZAUW7P
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 17:59:15 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:54039 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753355AbZAUW7O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 17:59:14 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 08029FC0FE76;
+	Wed, 21 Jan 2009 23:59:13 +0100 (CET)
+Received: from [89.59.73.85] (helo=pluto)
+	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LPm2S-0003d3-00; Wed, 21 Jan 2009 23:59:12 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <7veiyxeyzr.fsf@gitster.siamese.dyndns.org>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18RgiKllGpsfCfCevjG0YBIi9Z3kyg4/EdBR+HS
+	ZmPtgxs70fUjD4l0MYt1j7MrBk2X6NjTaVfsL1XeQo30xus23B
+	F8Y+9IwIgypQmM9qhzew==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106698>
 
-Previously, git mergetool used cat-file which does not perform git to
-worktree conversion. This changes mergetool to use git checkout-index
-instead which means that the temporary files used for mergetool use the
-correct line endings for the platform.
 
-Signed-off-by: Charles Bailey <charles@hashpling.org>
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- git-mergetool.sh     |   14 +++++++++++---
- t/t7610-mergetool.sh |   15 +++++++++++++--
- 2 files changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 00e1337..a4855d9 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -127,6 +127,14 @@ check_unchanged () {
-     fi
- }
- 
-+checkout_staged_file () {
-+    tmpfile=$(expr "$(git checkout-index --temp --stage="$1" "$2")" : '\([^	]*\)	')
-+
-+    if test $? -eq 0 -a -n "$tmpfile" ; then
-+	mv -- "$tmpfile" "$3"
-+    fi
-+}
-+
- merge_file () {
-     MERGED="$1"
- 
-@@ -153,9 +161,9 @@ merge_file () {
-     local_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}'`
-     remote_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $1;}'`
- 
--    base_present   && git cat-file blob ":1:$prefix$MERGED" >"$BASE" 2>/dev/null
--    local_present  && git cat-file blob ":2:$prefix$MERGED" >"$LOCAL" 2>/dev/null
--    remote_present && git cat-file blob ":3:$prefix$MERGED" >"$REMOTE" 2>/dev/null
-+    base_present   && checkout_staged_file 1 "$prefix$MERGED" "$BASE"
-+    local_present  && checkout_staged_file 2 "$prefix$MERGED" "$LOCAL"
-+    remote_present && checkout_staged_file 3 "$prefix$MERGED" "$REMOTE"
- 
-     if test -z "$local_mode" -o -z "$remote_mode"; then
- 	echo "Deleted merge conflict for '$MERGED':"
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 09fa5f1..edb6a57 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -34,13 +34,24 @@ test_expect_success 'custom mergetool' '
-     git config merge.tool mytool &&
-     git config mergetool.mytool.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
-     git config mergetool.mytool.trustExitCode true &&
--	git checkout branch1 &&
-+    git checkout branch1 &&
-     test_must_fail git merge master >/dev/null 2>&1 &&
-     ( yes "" | git mergetool file1>/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool file2>/dev/null 2>&1 ) &&
-     test "$(cat file1)" = "master updated" &&
-     test "$(cat file2)" = "master new" &&
--	git commit -m "branch1 resolved with mergetool"
-+    git commit -m "branch1 resolved with mergetool"
-+'
-+
-+test_expect_success 'mergetool crlf' '
-+    git config core.autocrlf true &&
-+    git reset --hard HEAD^
-+    test_must_fail git merge master >/dev/null 2>&1 &&
-+    ( yes "" | git mergetool file1>/dev/null 2>&1 ) &&
-+    ( yes "" | git mergetool file2>/dev/null 2>&1 ) &&
-+    test "$(printf x | cat file1 -)" = "$(printf "master updated\r\nx")" &&
-+    test "$(printf x | cat file2 -)" = "$(printf "master new\r\nx")" &&
-+    git commit -m "branch1 resolved with mergetool - autocrlf"
- '
- 
- test_done
--- 
-1.6.1.235.gc9d403
+> > I really don't like to bother you again, but compared to the inclus=
+ion
+> > of the other patches, I guess you have forgotten the third try of t=
+his
+> > patch.
+> >
+> > Thus this fourth try :)
+>=20
+> I did not mean that I forgot by the above "I seem to have missed".
+> Literally none of your three attempts seem to have reached me.
+
+Ah, OK. With "missed" I thought you have just overlooked them.
+
+>=A0I can
+> guess what you wrote from the _included_ text in Shawn's response, bu=
+t
+> that is not a good/right place for me to pick up a patch from, is it?
+
+No, it isn't.
+
+
+next mail:
+I just don't get it. The previous mail, I sent three a half hours ago,
+didn't reach the list either. Am I doing anything wrong?  I looked at
+the archives: the first two got to the list, the 3rd (with the Acked-by
+from Shawn) and 4th didn't. Now this is the 5th. I can't remember any
+such problems with mail delivery.
+
+
+ contrib/completion/git-completion.bash |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 3ce6de2..f2d6cad 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1391,7 +1391,7 @@ _git_config ()
+=20
+ _git_remote ()
+ {
+-	local subcommands=3D"add rm show prune update"
++	local subcommands=3D"add rename rm show prune update"
+ 	local subcommand=3D"$(__git_find_subcommand "$subcommands")"
+ 	if [ -z "$subcommand" ]; then
+ 		__gitcomp "$subcommands"
+@@ -1399,7 +1399,7 @@ _git_remote ()
+ 	fi
+=20
+ 	case "$subcommand" in
+-	rm|show|prune)
++	rename|rm|show|prune)
+ 		__gitcomp "$(__git_remotes)"
+ 		;;
+ 	update)
+--=20
+1.6.1.227.gad9c0
