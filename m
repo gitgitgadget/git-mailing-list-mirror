@@ -1,229 +1,95 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Added giteditor script to show diff while editing commit
- message.
-Date: Wed, 21 Jan 2009 22:46:30 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901212216310.3586@pacific.mpi-cbg.de>
-References: <1232570841-25641-1-git-send-email-ted@tedpavlic.com>
+Subject: Re: What about allowing multiple hooks?
+Date: Wed, 21 Jan 2009 22:50:54 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901212247510.3586@pacific.mpi-cbg.de>
+References: <20081121133828.GB5912@gmx.de> <20090103233252.GA12095@myhost> <7vd4f3z8xu.fsf@gitster.siamese.dyndns.org> <4977872E.70901@0x63.nu> <alpine.DEB.1.00.0901212206430.3586@pacific.mpi-cbg.de> <497793E5.7090107@0x63.nu>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Wed Jan 21 22:47:57 2009
+Cc: git@vger.kernel.org, Alexander Potashev <aspotashev@gmail.com>,
+	Marc Weber <marco-oweber@gmx.de>,
+	Rogan Dawes <lists@dawes.za.net>,
+	martin f krafft <madduck@madduck.net>
+To: Anders Waldenborg <anders@0x63.nu>
+X-From: git-owner@vger.kernel.org Wed Jan 21 22:52:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPkvQ-0002VL-10
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:47:52 +0100
+	id 1LPkzb-0003pW-MV
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 22:52:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752628AbZAUVq0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 16:46:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752575AbZAUVq0
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:46:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47133 "HELO mail.gmx.net"
+	id S1752750AbZAUVuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 16:50:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752767AbZAUVuu
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 16:50:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38998 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752077AbZAUVqZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 16:46:25 -0500
-Received: (qmail invoked by alias); 21 Jan 2009 21:46:23 -0000
+	id S1752077AbZAUVut (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 16:50:49 -0500
+Received: (qmail invoked by alias); 21 Jan 2009 21:50:47 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp023) with SMTP; 21 Jan 2009 22:46:23 +0100
+  by mail.gmx.net (mp059) with SMTP; 21 Jan 2009 22:50:47 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19pmNcHmupp/FxKivjDNmmYP/Sl5RVT8G/WNiuZt2
-	2n5+EFr7ZwHVxf
+X-Provags-ID: V01U2FsdGVkX18UVtZPQoUUfvUEhhns4Oui4ed1DcdvW7tE8189bH
+	l6AxfzMRtVvdd4
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1232570841-25641-1-git-send-email-ted@tedpavlic.com>
+In-Reply-To: <497793E5.7090107@0x63.nu>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.42
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106684>
 
 Hi,
 
-the subject could use some work.  For example, I would prefix it with 
-"contrib:", and -- imitating other commit messages -- use the imperative 
-form "Add" instead of the frowned-upon past tense.
+On Wed, 21 Jan 2009, Anders Waldenborg wrote:
 
-On Wed, 21 Jan 2009, ted@tedpavlic.com wrote:
+> Johannes Schindelin wrote:
+> > > I currently use configvalues to specify which hooks to run. For example
+> > > this is how my post-receive looks:
+> > >
+> > > data=$(cat)
+> > > git config --get-all hooks.post-receive.hook | while read hook; do
+> > >         $hook <<__EOF__
+> > > "$data"
+> > > __EOF__
+> > > done
+> > 
+> > I wonder why you don't do the obvious thing:
+> 
+> 
+> Because I wanted to be able to do things like this:
+> 
+> git config -add hooks.post-receive.hook \
+>  "sh hooks/buildbot 192.168.99.9:9989"
 
-> From: Ted Pavlic <ted@tedpavlic.com>
+You are missing a "-".
 
-As this is exactly what your email said in its header, it is redundant 
-information.  Worse, it is information that made me look back to know why 
-it needs to be there.  Distracting.
+> So, the thing I initially wanted to solve was "multiple instances" of 
+> the same hook.
 
-> diff --git a/contrib/giteditor/README b/contrib/giteditor/README
-> new file mode 100644
-> index 0000000..b769c3e
-> --- /dev/null
-> +++ b/contrib/giteditor/README
-> @@ -0,0 +1,9 @@
-> +A GIT_EDITOR to show diff alongside commit message. User can review diff
-> +within commit edit window. Works with StGit ("stg edit") as well.
-> +
-> +To use this script, set it as the value of GIT_EDITOR (or core.editor).
-> +
-> +
-> +Copyright (c) 2009 by Theodore P. Pavlic <ted@tedpavlic.com>
-> +Highly influenced by hgeditor script distributed with Mercurial SCM.
-> +Distributed under the GNU General Public License, version 2.0.
-
-What information does the README add that is not in the script itself?
-
-If there is none, please refrain from adding the README to begin with.
-
-> diff --git a/contrib/giteditor/giteditor b/contrib/giteditor/giteditor
-> new file mode 100755
-> index 0000000..13ca5f6
-> --- /dev/null
-> +++ b/contrib/giteditor/giteditor
-> @@ -0,0 +1,111 @@
-> +#!/bin/sh
-> +#
-> +# A GIT_EDITOR to show diff alongside commit message.
-
-Maybe "Set GIT_EDITOR to giteditor if you want to see a diff of what will 
-be committed in the editor"?
-
-> +# Find git
-> +[ -z "${GIT}" ] && GIT="git"
-
-Yes, I know it is contrib/, but you may want to adopt Git's coding style 
-early.
-
-Besides, I find it funny that you want to override git with $GIT.
-
-> +# Use an editor. To prevent loops, avoid GIT_EDITOR and core.editor.
-> +EDITOR=${GIT_EDITOR_EDITOR} || \
-> +    EDITOR=${VISUAL} || \
-> +    EDITOR=${EDITOR} || \
-> +    EDITOR="vi";
-> +
-> +# If we recognize a popular editor, add necessary flags
-> +case "${EDITOR}" in
-> +    emacs)
-> +        EDITOR="${EDITOR} -nw"
-
-Mhm.  Should this not be the user's choice?  Some like emacs to start up 
-in a window.
-
-> +# Remove temporary files even if we get interrupted
-> +GITTMP=""
-
-GITTMP= would be completely sufficient.  Not to mention the consistency 
-with Git's shell code.
-
-> +# End GITTMP in ".git" so that "*.git/" syntax highlighting recognition
-> +# doesn't break
-> +GITTMP="${TMPDIR-/tmp}/giteditor.$RANDOM.$RANDOM.$RANDOM.$$.git"
-> +(umask 077 && mkdir "${GITTMP}") || {
-> +    echo "Could not create temporary directory! Exiting." 1>&2
-> +    exit 1
-> +}
-
-Umm.  Why?  Why do you need a temporary .git directory?
-
-> +if [ -f "$1" ]; then
-> +    # We were passed an existing commit message
-> +
-> +    "${DIFFCMD}" ${DIFFARGS} >> "${GITTMP}/diff"
-> +## Uncomment if you only want to see diff of what changed
-> +## (note that it only works if DIFFCMD is git)
-> +#    (
-> +#        grep '^#.*modified:' "$1" | cut -b 15- | while read changed; do
-> +#            "${DIFFCMD}" ${DIFFARGS} "${changed}" >> "${GITTMP}/diff"
-> +#        done
-> +#    )
-
---diff-filter=M
-
-> +
-> +     cat "$1" > "${GITTMP}/${COMMITMSG}"
-> +
-> +else
-> +
-> +    # Give us a blank COMMITMSG to edit
-> +    touch "${GITTMP}/${COMMITMSG}"
-
-Why not just touch it, instead of testing if the file exists first?
-
-> +
-> +    # Generate the diff
-> +    "${DIFFCMD}" ${DIFFARGS} >> "${GITTMP}/diff"
-> +    #touch "${GITTMP}/diff"
-
-Commented out code in a submitted patch?
-
-> +
-> +fi
-> +
-> +# Use MD5 to see if commit message changed (necessary?)
-> +MD5=$(which md5sum 2>/dev/null) || \
-> +    MD5=$(which md5 2>/dev/null)
-> +
-> +[ -x "${MD5}" ] && CHECKSUM=$( ${MD5} "${GITTMP}/${COMMITMSG}" )
-> +if [ -s "${GITTMP}/diff" ]; then
-> +    # Diff is non-empty, so edit msg and diff
-> +    ${EDITOR} "${GITTMP}/${COMMITMSG}" "${GITTMP}/diff" || exit $?
-
-vi users will hate you, as you do not give them a chance to edit the 
-message after having seen the diff.
-
-> +else
-> +    # Empty diff. Only edit msg
-> +    ${EDITOR} "${GITTMP}/${COMMITMSG}" || exit $?
-> +fi
-> +[ -x "${MD5}" ] && (echo "${CHECKSUM}" | ${MD5} -c >/dev/null 2>&1 && exit 13)
-
-git commit will abort anyway if the commit message has not changed.  Plus, 
-it does a better job, as it checks only the non-commented-out text.
-
-BTW why on earth do you put every single variable name in curly brackets?
-
-> +
-> +# Commit message changed, so dump it on original message from Git
-> +mv "${GITTMP}/${COMMITMSG}" "$1"
-
-And why did you not use "$1" all the time?
-
-> +
-> +# (recall that GITTMP directory gets cleaned up by trap above)
-> +exit $?
-
-Just writing "exit" is the same in effect, but preferred in Git shell 
-coding.
-
-Besides all that criticism, there is also a fundamental issue.  The diff 
-is in a separate file.
-
-Instead, I suggest having something like this:
+And why not use a shell function for that?
 
 -- snip --
-#!/bin/sh
+buildbot () {
+	echo "Who is so evil and puts a bot into a post-receive hook?" >&2
+	echo "This function would connect to $* if it were building a bot."
+}
 
-# set GIT_EDITOR or core.editor to this script if you want to see a diff
-# instead of the output of "git status".
-
-# filter out the "git status" output (keeping the "On branch" line)
-mv "$1" "$1".tmp
-grep -v "^# [^O]" < "$1".tmp > "$1"
-rm "$1".tmp
-
-# append the diff
-case "$1" in
-*.stgit-edit.txt)
-	stg show
-;;
-*)
-	git diff --cached
-;;
-esac | sed -e 's/^/# /' >> "$1"
-
-exec ${VISUAL:-${EDITOR:-vi}} "$1"
+buildbot www.google.com
+buildbot www.kernel.org
 -- snap --
 
-Hth,
+> Then when I found this thread I saw that the richer meta information 
+> needed to implement multiple hooks with sane semantics could be done 
+> with the config values.
+
+I think this is technically called an "XY" problem.  You ask for a 
+specific technical solution, while your real problem would be better 
+solved by other means.
+
+Ciao,
 Dscho
