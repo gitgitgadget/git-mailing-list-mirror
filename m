@@ -1,49 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2 v2] valgrind: ignore ldso errors
-Date: Wed, 21 Jan 2009 14:09:21 -0500
-Message-ID: <20090121190921.GC21686@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0901201447290.5159@intel-tinevez-2-302> <20090120141932.GB10688@sigill.intra.peff.net> <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302> <20090120232439.GA17746@coredump.intra.peff.net> <alpine.DEB.1.00.0901210105470.19014@racer> <20090121001551.GB18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210119510.19014@racer> <20090121003739.GA18373@coredump.intra.peff.net> <alpine.DEB.1.00.0901210216440.19014@racer> <alpine.DEB.1.00.0901210236320.19014@racer>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: Deleting remote branch pointed by remote HEAD
+Date: Wed, 21 Jan 2009 13:09:09 -0600
+Message-ID: <200901211309.10120.bss@iguanasuicide.net>
+References: <e29894ca0901210502n1ed1187bm46669a402ab4fe48@mail.gmail.com> <20090121161940.GA20702@coredump.intra.peff.net> <alpine.LNX.1.00.0901211237530.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 21 20:11:30 2009
+Content-Type: multipart/signed;
+  boundary="nextPart4819539.17cpyvhGVe";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	=?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+	git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Jan 21 20:12:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPiTR-0002cY-QG
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 20:10:50 +0100
+	id 1LPiTG-0002VZ-Uj
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 20:10:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753102AbZAUTJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 14:09:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753085AbZAUTJY
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 14:09:24 -0500
-Received: from peff.net ([208.65.91.99]:56145 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752926AbZAUTJX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 14:09:23 -0500
-Received: (qmail 16907 invoked by uid 107); 21 Jan 2009 19:09:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 21 Jan 2009 14:09:29 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jan 2009 14:09:21 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901210236320.19014@racer>
+	id S1752889AbZAUTJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 14:09:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752736AbZAUTJO
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 14:09:14 -0500
+Received: from eastrmmtao107.cox.net ([68.230.240.59]:34875 "EHLO
+	eastrmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751808AbZAUTJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 14:09:12 -0500
+Received: from eastrmimpo03.cox.net ([68.1.16.126])
+          by eastrmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090121190911.BISJ23750.eastrmmtao107.cox.net@eastrmimpo03.cox.net>;
+          Wed, 21 Jan 2009 14:09:11 -0500
+Received: from localhost ([72.204.50.125])
+	by eastrmimpo03.cox.net with bizsmtp
+	id 6K9A1b00L2i4SyG02K9BcJ; Wed, 21 Jan 2009 14:09:11 -0500
+X-Authority-Analysis: v=1.0 c=1 a=zbplyEFExIwA:10 a=O3HRrzEFWLEA:10
+ a=Fq1VQ0LPAAAA:8 a=3Nsdo6Ma0JHttvobUhkA:9 a=RBN8HvAViI3U2evUb72LNRY6YBQA:4
+ a=JM1vJQTMoX0A:10 a=T3brmoaXcPoA:10 a=LY0hPdMaydYA:10
+ a=8g4YZJK_KT3MRTnCvVkA:9 a=dugI42Q9AMjjDSVZoE97PjEEYRAA:4 a=rPt6xJ-oxjAA:10
+X-CM-Score: 0.00
+Received: from bss by localhost with local (Exim 4.69)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LPiRq-000PyW-7V; Wed, 21 Jan 2009 13:09:10 -0600
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.LNX.1.00.0901211237530.19665@iabervon.org>
+X-Eric-Conspiracy: There is no conspiracy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106646>
 
-On Wed, Jan 21, 2009 at 02:36:40AM +0100, Johannes Schindelin wrote:
+--nextPart4819539.17cpyvhGVe
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> 	Only change vs v1: adds Addr4 suppression, so that ld.so "errors"
-> 	are ignored on 32-bit, too.
+On Wednesday 21 January 2009, Daniel Barkalow <barkalow@iabervon.org> wrote=
+=20
+about 'Re: Deleting remote branch pointed by remote HEAD':
+>I think it might be more appropriate to just care less about a broken
+>symref, explain what's wrong if the user actually tries to use it, and
+>otherwise mostly ignore it.
 
-I don't think it is wrong to add the extra suppression, but out of
-curiosity, did you actually trigger it? I tested the original on both
-32- and 64-bit platforms, and that was what made me create the original
-(i.e., for some reason my 32-bit platform did not need the same ld.so
-suppression).
+That sounds reasonable.  It's not like "find" complains about every broken=
+=20
+symlink it sees.  Simple traversal or the repository should probably not=20
+complain about every broken symref.
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
 
--Peff
+--nextPart4819539.17cpyvhGVe
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkl3ctYACgkQ55pqL7G1QFnnmgCeKEexcTow28EyMFzwVupuRHFF
+oYMAn3J3wrhiFReFQagrgSlYSwYLW0HB
+=r8al
+-----END PGP SIGNATURE-----
+
+--nextPart4819539.17cpyvhGVe--
