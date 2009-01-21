@@ -1,62 +1,71 @@
-From: Caleb Cushing <xenoterracide@gmail.com>
-Subject: Re: feature request mergetool, skip, abort
-Date: Wed, 21 Jan 2009 09:26:18 -0500
-Message-ID: <81bfc67a0901210626i7cd75d1dh77c9cfae8b23b5c5@mail.gmail.com>
-References: <81bfc67a0901200839q361923f1xb25ddadfdac37981@mail.gmail.com>
-	 <20090121112236.GC18488@hashpling.org>
+From: Chris Willard <chris@thewillards.co.uk>
+Subject: Re: Newbie Query
+Date: Wed, 21 Jan 2009 14:31:13 +0000
+Message-ID: <20090121143113.GA14004@uts.thewillards.local>
+References: <20090120191952.GA25322@uts.thewillards.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Wed Jan 21 15:28:09 2009
+Content-Type: text/plain; charset=us-ascii
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 21 15:33:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPe3k-0000x7-3D
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 15:28:00 +0100
+	id 1LPe8a-0002UQ-2G
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 15:33:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753743AbZAUO0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 09:26:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754367AbZAUO0W
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 09:26:22 -0500
-Received: from mail-bw0-f21.google.com ([209.85.218.21]:53956 "EHLO
-	mail-bw0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754145AbZAUO0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 09:26:21 -0500
-Received: by bwz14 with SMTP id 14so12849226bwz.13
-        for <git@vger.kernel.org>; Wed, 21 Jan 2009 06:26:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=N2r0GOMl8pZGl0YBo2/oLH9OAyYTTp7ejX+7xdIlcX4=;
-        b=UtNRw40sy/oxIZvVLjizeXTBFnh89PEnHhsRsgbGlPAUDVt+E4/UnSatU5nOcC1hE7
-         HGx/Nt5xvEpuqtnkwlr3azd6aZFm/XnWaVevi09lWwiISBiHKskqGaWpogY9w+o4FuT5
-         4GD+kdeCrL9dtATeysQvZ0sTYIrNLuMNNzZJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PJC7w4Bdud/j03ow00pGmMNhpz1R+SiLf843scIhloGw4WnjZL7g+PgIy63e7m6CvL
-         8+cL0XvSr2GpvAwstrGCpJC91FOq3LTjwsWY42mXv1YtmSLn58wZbUyOLC0A1I3bedXH
-         iroPF+jt39g3r/t7A03F5dJSZebtczwvLF1LM=
-Received: by 10.223.104.140 with SMTP id p12mr1472758fao.7.1232547978879; Wed, 
-	21 Jan 2009 06:26:18 -0800 (PST)
-In-Reply-To: <20090121112236.GC18488@hashpling.org>
+	id S1754500AbZAUOb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 09:31:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754418AbZAUOb1
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 09:31:27 -0500
+Received: from customermail2.easily.co.uk ([212.53.64.53]:54674 "EHLO
+	customermail2.easily.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753760AbZAUOb0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 09:31:26 -0500
+Received: from thewillards.plus.com ([84.92.199.66] helo=mail-gw.thewillards.co.uk)
+	by customermail2.easily.co.uk with esmtpa (Exim 4.67)
+	(envelope-from <chris@thewillards.co.uk>)
+	id 1LPe72-0001DJ-GV
+	for git@vger.kernel.org; Wed, 21 Jan 2009 14:31:24 +0000
+Received: from uts.thewillards.local (unknown [192.168.99.254])
+	by mail-gw.thewillards.co.uk (Postfix) with ESMTP id 400CA282CA
+	for <git@vger.kernel.org>; Wed, 21 Jan 2009 14:28:05 +0000 (GMT)
+Received: by uts.thewillards.local (Postfix, from userid 1000)
+	id A075CFAE10D; Wed, 21 Jan 2009 14:31:13 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <20090120191952.GA25322@uts.thewillards.local>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-THEWILLARDS-MailScanner-ESVA-Information: Please contact  for more information
+X-THEWILLARDS-MailScanner-ESVA-ID: 400CA282CA.83228
+X-THEWILLARDS-MailScanner-ESVA: Found to be clean
+X-THEWILLARDS-MailScanner-ESVA-From: chris@thewillards.co.uk
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106606>
 
-patch was an attachement.
+On Tue, 20 Jan 2009, Chris Willard wrote:
 
-after looking through the list and seeing the conventions I've a fully
-working one now, so I'm going to start a new thread with it.
+> Hello All,
+> 
+> I am having a go at using git and need a bit of help.
+[snip]
+
+Thanks for all the tips - I used "git-reset --hard" to solve my
+problem.
+
+Regards,
+
+Chris
+
+
 -- 
-Caleb Cushing
+-----------(  "The Batman play seemed important to Crow." --  )------------
+-----------(                   Mike Nelson                    )------------
+Chris -----(                                                  )---- Willard
+                             Htag.pl 0.0.23
 
-http://xenoterracide.blogspot.com
+--
+This message was scanned by ESVA and is believed to be clean.
