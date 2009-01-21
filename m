@@ -1,74 +1,52 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Deleting remote branch pointed by remote HEAD
-Date: Wed, 21 Jan 2009 14:50:40 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0901211443140.19665@iabervon.org>
-References: <e29894ca0901210502n1ed1187bm46669a402ab4fe48@mail.gmail.com> <49773240.7090605@drmicha.warpmail.net> <e29894ca0901210638t636de791sf27d28893a7a0b65@mail.gmail.com> <49773E48.90302@drmicha.warpmail.net> <20090121161940.GA20702@coredump.intra.peff.net>
- <alpine.LNX.1.00.0901211237530.19665@iabervon.org> <20090121191219.GD21686@coredump.intra.peff.net> <20090121191408.GA22958@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] user-manual: Simplify the user configuration.
+Date: Wed, 21 Jan 2009 14:51:56 -0500
+Message-ID: <20090121195156.GA3589@sigill.intra.peff.net>
+References: <200901211955.47362.markus.heidelberg@web.de> <1232564650-3701-1-git-send-email-felipe.contreras@gmail.com> <20090121191808.GF21686@coredump.intra.peff.net> <94a0d4530901211139x6296a48m14aa7ce1d8e65145@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	=?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 21 20:52:22 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 21 20:53:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPj7O-0003AL-33
-	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 20:52:06 +0100
+	id 1LPj8e-0003jl-D4
+	for gcvg-git-2@gmane.org; Wed, 21 Jan 2009 20:53:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbZAUTun (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 14:50:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbZAUTum
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 14:50:42 -0500
-Received: from iabervon.org ([66.92.72.58]:55021 "EHLO iabervon.org"
+	id S1751505AbZAUTwB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 14:52:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751498AbZAUTwA
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 14:52:00 -0500
+Received: from peff.net ([208.65.91.99]:36409 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751414AbZAUTum (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 14:50:42 -0500
-Received: (qmail 27273 invoked by uid 1000); 21 Jan 2009 19:50:40 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 21 Jan 2009 19:50:40 -0000
-In-Reply-To: <20090121191408.GA22958@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751486AbZAUTv7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 14:51:59 -0500
+Received: (qmail 17415 invoked by uid 107); 21 Jan 2009 19:52:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 21 Jan 2009 14:52:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jan 2009 14:51:56 -0500
+Content-Disposition: inline
+In-Reply-To: <94a0d4530901211139x6296a48m14aa7ce1d8e65145@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106657>
 
-On Wed, 21 Jan 2009, Jeff King wrote:
+On Wed, Jan 21, 2009 at 09:39:27PM +0200, Felipe Contreras wrote:
 
-> On Wed, Jan 21, 2009 at 02:12:19PM -0500, Jeff King wrote:
-> 
-> > > I think it might be more appropriate to just care less about a broken 
-> > > symref, explain what's wrong if the user actually tries to use it, and 
-> > > otherwise mostly ignore it.
-> > 
-> > I thought about that, but I still wonder if deleting it when the
-> > pointed-to ref is deleted might be more convenient. Remember that
-> > "refs/remotes/$foo/HEAD" can be accessed by a shorthand "$foo". So that
-> > means it can impact ref ambiguity lookup. I guess the chance of that
-> > happening is fairly unlikely, though.
-> 
-> Not to mention that even without others refs with matching names, it is
-> probably nicer to the user who does try to access it via "$foo" to
-> simply say "there is no $foo" rather than a confusing error message
-> about a deleted branch that they have to manually fix. And that is
-> easily accomplished by deleting such a bogus symref.
+> That's over complicating the user with what should probably be one of
+> the first things to do. Besides, do Windows users know which is their
+> home directory?
 
-I think the ideal thing is to keep the symref as a reminder and just give 
-a non-confusing error message instead of a confusing one. E.g.:
+Like I said, I don't care one way or the other, personally. But you
+should at least address points brought up in the previous iterations:
 
-"""
-$foo is set to mean the tracking branch $foo/bar, which does not exist. 
-Use:
+  http://thread.gmane.org/gmane.comp.version-control.git/37921/focus=38007
 
-  git remote set-default $foo <name>
+  http://thread.gmane.org/gmane.comp.version-control.git/46903
 
-to set a new default branch for $foo.
-"""
-
-(And, of course, add that subcommand to remote)
-	-Daniel
-*This .sig left intentionally blank*
+-Peff
