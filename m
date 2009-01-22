@@ -1,85 +1,120 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: valgrind patches, was Re: What's cooking in git.git (Jan 2009,
-	#04; Mon, 19)
-Date: Wed, 21 Jan 2009 19:59:01 -0500
-Message-ID: <20090122005901.GA10826@sigill.intra.peff.net>
-References: <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302> <20090120232439.GA17746@coredump.intra.peff.net> <alpine.DEB.1.00.0901210105470.19014@racer> <20090121001551.GB18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210119510.19014@racer> <20090121003739.GA18373@coredump.intra.peff.net> <alpine.DEB.1.00.0901210216440.19014@racer> <20090121190757.GB21686@coredump.intra.peff.net> <alpine.DEB.1.00.0901212259420.3586@pacific.mpi-cbg.de> <7vr62wb28h.fsf@gitster.siamese.dyndns.org>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: [PATCH] Added giteditor script to show diff while editing commit
+ message.
+Date: Wed, 21 Jan 2009 20:46:07 -0500
+Message-ID: <4977CFDF.4040200@tedpavlic.com>
+References: <1232570841-25641-1-git-send-email-ted@tedpavlic.com> <alpine.DEB.1.00.0901212216310.3586@pacific.mpi-cbg.de> <4977A2C9.1070502@tedpavlic.com> <alpine.DEB.1.00.0901212343100.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 02:00:36 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: gitster <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 22 02:47:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPnvs-0004Ug-0s
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 02:00:32 +0100
+	id 1LPofS-0007i1-OV
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 02:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754743AbZAVA7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 19:59:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754645AbZAVA7G
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 19:59:06 -0500
-Received: from peff.net ([208.65.91.99]:48265 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754644AbZAVA7G (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 19:59:06 -0500
-Received: (qmail 22931 invoked by uid 107); 22 Jan 2009 00:59:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 21 Jan 2009 19:59:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jan 2009 19:59:01 -0500
-Content-Disposition: inline
-In-Reply-To: <7vr62wb28h.fsf@gitster.siamese.dyndns.org>
+	id S1754913AbZAVBqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 20:46:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754904AbZAVBqN
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 20:46:13 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:57931 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754259AbZAVBqM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 20:46:12 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 79D4B380D4E0;
+	Wed, 21 Jan 2009 20:40:14 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8NVFtWMnasWw; Wed, 21 Jan 2009 20:40:14 -0500 (EST)
+Received: from TedBook.local (cpe-76-181-62-78.columbus.res.rr.com [76.181.62.78])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 119EB380D4B2;
+	Wed, 21 Jan 2009 20:40:14 -0500 (EST)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
+In-Reply-To: <alpine.DEB.1.00.0901212343100.3586@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106712>
 
-On Wed, Jan 21, 2009 at 04:42:22PM -0800, Junio C Hamano wrote:
+>> Thanks for your comments. I've responded below. I just want to
+>> top-respond to your comment that the fundamental problem is that the
+>> diff is in a separate file. In fact, this is the point of the script. I
+>> want to be able to scroll through the diff output independent of the
+>> commit message.
+> Once again, note that e.g. vi will not cope with the way you try to
+> achieve that.
 
-> > Fact is: every test script will check $GIT_VALGRIND/bin/ for 
-> > up-to-dateness first.  Before running any Git command.
-> 
-> Hmm, is that a good thing in general?  Can't makefile rules be arranged in
-> such a way that one "valgrind-prep" target runs before all the potentially
-> parallel executions of actual tests begin?
+It does for me just fine. In vi, I hit ^W^W and move from commit message 
+to diff and back. What's the problem with that? In gvim I'm able to 
+click back and forth.
 
-You have to choose either "everybody does this setup, whether they want
---valgrind or not" which is what my original patch did, or doing it
-inside test-lib.sh. Because we don't know we want --valgrind until we
-get into the individual scripts.
+I have been using this method for a long time with hg, and now I've been 
+using it with git. This isn't theory --- it's been working in practice 
+for me. Am I missing something?
 
-I suppose one could try parsing GIT_TEST_OPTS in the Makefile, but that
-seems a bit hack-ish.
+> Why not .git/?  That would be the _natural_ place to put it.
 
-But I like putting it into test-lib.sh; yes, it is a little more CPU
-time for each script, but it is negligible compared to running the
-actual tests (especially since you only pay when running with
---valgrind, which makes the actual tests very expensive). But it is much
-easier to be sure it is _correct_ when you run the test, especially if
-you tend to run the test script directly.
+Why doesn't stg do that? I figured stg would be a well-established 
+program to pattern behavior off of.
 
-> Independent from the above, I suspect that some of the existing tests
-> cannot run in parallel; I haven't really looked at any of them, but a
-> server-ish tests to open a local port and test interaction with client
-> obviously need to either use different ports or serialize.  Perhaps we
-> need a way to mark some tests that cannot be run in parallel even under
-> "make -j"?
+I'll rev-parse the git dir and place the file there.
 
-I think the only culprits are http-push and a few SVN tests. The
-http-push test starts a server on a specific port, but because it is the
-only script which uses that port, it is fine. It looks like a few
-different SVN tests start an httpd server (9115, 9118, and 9120), which
-could potentially interact badly. I've never had a problem running with
-"-j4", but I don't have svn installed, so I always end up skipping those
-tests.
+>>> vi users will hate you, as you do not give them a chance to edit the
+>>> message after having seen the diff.
+>> I don't see what you mean. I am a vi user (exclusively), and this script
+>> works very well for me.
+> I cannot go back to the commit message when I said ":n" to get to the
+> diff.
 
-It looks like both the http-push and svn tests are set up to take an
-arbitrary port as input. Perhaps the simplest thing would be for each of
-the svn tests to pick a different port so that they can be run
-simultaneously.
+vi opens for me and I see two windows. The top window shows the commit 
+message and the bottom window shows the diff.
 
--Peff
+I hit ^W^W (or ^W<Down>) and I find myself scrolling around in the diff. 
+I hit ^W^W again (or ^W<Up>) and I find myself scrolling around in the 
+commit.
+
+Similarly, gvim lets me mouse around both --- clicking from window to 
+window.
+
+If you must use ":n", I don't know why you can't use ":prev" to go back. <?>
+
+>> Is there no value in having the diff in a separate file?
+> In my case, no, for 2 reasons:
+> - I can always open a new shell (in ssh connections, I use screen) to get
+>    the diff, and even better: I can restrict it to certain files, and I can
+>    use the nice bookmarks "less" provides; dunno if vi would have them.
+
+vi does.
+
+> - My preference is definitely to look at the diff before committing, to be
+>    certain that I did not fsck up.  And nothing would annoy me more than to
+>    be in the middle of editing a commit message while I am looking at the
+>    diff and telling myself "that is a stupid mistake, let's fix it" knowing
+>    that the commit will not pick up the fix.
+
+When giving a detailed message bulletting out everything that goes into 
+a commit, sometimes it's nice to have a very nearby look at the diff.
+
+>    So seeing the diff while composing the commit message is definitely too
+>    late for me.
+
+Nevertheless, the secondary purpose of the contributed script is to show 
+how GIT_EDITOR can be used to wrap around other editors. (that's the 
+purpose of Mercurial's distributed "hgeditor" script as well)
+
+--Ted
+
+
+-- 
+Ted Pavlic <ted@tedpavlic.com>
+
+   Please visit my ALS association page:
+         http://web.alsa.org/goto/tedpavlic
+   My family appreciates your support in the fight to defeat ALS.
