@@ -1,72 +1,96 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH 1/2] handle color.ui at a central place
-Date: Thu, 22 Jan 2009 01:13:32 +0100
-Message-ID: <200901220113.32711.markus.heidelberg@web.de>
-References: <20090117153846.GB27071@coredump.intra.peff.net> <200901212335.24727.markus.heidelberg@web.de> <20090122000026.GB9668@sigill.intra.peff.net>
-Reply-To: markus.heidelberg@web.de
+From: martin f krafft <madduck@debian.org>
+Subject: Re: [PATCH] [TOPGIT] make creating a commit from a topgit branch a
+	function
+Date: Thu, 22 Jan 2009 11:13:54 +1100
+Organization: The Debian project
+Message-ID: <20090122001354.GA29835@lapse.rw.madduck.net>
+References: <1231968443-13960-1-git-send-email-u.kleine-koenig@pengutronix.de> <1231968443-13960-2-git-send-email-u.kleine-koenig@pengutronix.de> <20090121031913.GA7422@lapse.rw.madduck.net> <20090121101644.GA19052@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: =?utf-8?q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 22 01:15:12 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SUOF0GtieIMvvwua"
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Thu Jan 22 01:16:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPnDt-0000Wg-JW
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 01:15:06 +0100
+	id 1LPnEv-0000j6-4G
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 01:16:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754308AbZAVANY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 19:13:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753913AbZAVANY
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 19:13:24 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:60627 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753120AbZAVANX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 19:13:23 -0500
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 39D6FFC1191A;
-	Thu, 22 Jan 2009 01:13:22 +0100 (CET)
-Received: from [89.59.73.85] (helo=pluto)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LPnCE-0000N5-00; Thu, 22 Jan 2009 01:13:22 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090122000026.GB9668@sigill.intra.peff.net>
-Jabber-ID: markus.heidelberg@web.de
+	id S1754565AbZAVAOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 19:14:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754515AbZAVAOm
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 19:14:42 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:33417 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754380AbZAVAOl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 19:14:41 -0500
+Received: from lapse.rw.madduck.net (unknown [IPv6:2001:388:a001:1:214:a4ff:fe04:eadc])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 9454A1D40B1;
+	Thu, 22 Jan 2009 01:14:25 +0100 (CET)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 50F3E80CC; Thu, 22 Jan 2009 13:13:54 +1300 (NZDT)
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1/3zG+jfIwnu0QjgZ1qOlAij+3HzhOQKpEJ1wdH
-	kVUNy1WB3fY8G8n7+jPQP9REdjglWfdk28QU6P+cToznVcd7RG
-	+prEFEIB021GKgVr3N5Q==
+In-Reply-To: <20090121101644.GA19052@pengutronix.de>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux 5.0 kernel 2.6.27-1-686 i686
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/8886/Wed Jan 21 23:46:06 2009 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106708>
 
-Jeff King, 22.01.2009:
-> On Wed, Jan 21, 2009 at 11:35:24PM +0100, Markus Heidelberg wrote:
-> 
-> > > properly initialized (or finalized).
-> > > 
-> > > So I think it makes more sense to record each config value, and then
-> > > check a _function_ that does the right thing. I.e., you end up with
-> > > something like:
-> > >
-> > > [example code snipped]
-> > 
-> > That would probably be better.
-> 
-> Do you want to work on it, or should it go into the "yeah, right, one
-> day" section of my todo list?
 
-Yes, feel free to enlarge your todo list :)
-There are some other things that I want to work on before, so better
-don't count on me for this. But maybe I'll come up to it, before your
-todo list pointer reaches this item, who knows.
+--SUOF0GtieIMvvwua
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Markus
+also sprach Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [2009.01.21=
+=2E2116 +1100]:
+> > What's the "next commit"?
+> oh, sorry.  I intended to post my patch that implements `tg export
+> --linearize`, but then found a bug and so didn't send it.
+>=20
+> You can find it in my pu branch at
+>=20
+> 	git://git.pengutronix.de/git/ukl/topgit.git pu
+>=20
+> .  It's not yet ready for general use, but I look forward to any
+> constructive feedback.
+
+It'll be a while until I can look into this. Until I do, I will only
+pull in f4fa614, and we'll pull ae3fe45 when your linearizing patch
+is ready.
+
+--=20
+ .''`.   martin f. krafft <madduck@d.o>      Related projects:
+: :'  :  proud Debian developer               http://debiansystem.info
+`. `'`   http://people.debian.org/~madduck    http://vcs-pkg.org
+  `-  Debian - when you have better things to do than fixing systems
+=20
+"you grabbed my hand and we fell into it,
+ like a daydream - or a fever."
+                                        -- godspeed you black emperor!
+
+--SUOF0GtieIMvvwua
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkl3ujMACgkQIgvIgzMMSnWYMQCg5DBcV5vlJj0aB8kKZ+8qG/ID
+Qk4An3NQ2S9xZ0FMCXOyx2Myq2OjL6l2
+=hzB8
+-----END PGP SIGNATURE-----
+
+--SUOF0GtieIMvvwua--
