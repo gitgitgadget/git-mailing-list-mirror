@@ -1,166 +1,278 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: [PATCH] contrib: A script to show diff in new window while editing commit message.
-Date: Wed, 21 Jan 2009 22:50:08 -0500
-Message-ID: <1232596208-7384-1-git-send-email-ted@tedpavlic.com>
-References: <7vy6x4b48e.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org, Ted Pavlic <ted@tedpavlic.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jan 22 04:51:48 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (Jan 2009, #05; Wed, 21)
+Date: Wed, 21 Jan 2009 19:55:36 -0800
+Message-ID: <7vab9kataf.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 04:57:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPqba-0006CQ-Ac
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 04:51:46 +0100
+	id 1LPqgl-000888-Kh
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 04:57:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756404AbZAVDuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 22:50:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756358AbZAVDuT
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 22:50:19 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:54139 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753018AbZAVDuS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jan 2009 22:50:18 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 6235980D8029;
-	Wed, 21 Jan 2009 22:44:20 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8K3rgLpOBmC7; Wed, 21 Jan 2009 22:44:20 -0500 (EST)
-Received: from localhost.localdomain (cpe-76-181-62-78.columbus.res.rr.com [76.181.62.78])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id CCC0C80D8021;
-	Wed, 21 Jan 2009 22:44:19 -0500 (EST)
-X-Mailer: git-send-email 1.6.1.213.g28da8
-In-Reply-To: <7vy6x4b48e.fsf@gitster.siamese.dyndns.org>
+	id S1756456AbZAVDzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 22:55:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756431AbZAVDzm
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 22:55:42 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59490 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753018AbZAVDzl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 22:55:41 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 67D871CFBC;
+	Wed, 21 Jan 2009 22:55:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3B9931CFB9; Wed,
+ 21 Jan 2009 22:55:38 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 88EE8FE4-E838-11DD-937F-BE78113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106715>
 
-This new script (contrib/giteditor/giteditor) is an example GIT_EDITOR
-that causes the editor to open the commit message as well as a "git diff
---cached" in a separate window. This behavior differs from "git commit
--v" in that the diff can be browsed independently of the commit message
-without having to invoke a split window view in an editor.
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
+marked with '.' do not appear in any of the branches, but I am still
+holding onto them.
 
-This script also detects when "stg edit" is being called and uses "stg
-show" instead. Hence, it implements a kind of "stg edit -v".
+The topics list the commits in reverse chronological order.  The topics
+meant to be merged to the maintenance series have "maint-" in their names.
 
-This script is highly influenced by the "hgeditor" script distributed
-with the Mercurial SCM.
+----------------------------------------------------------------
+[New Topics]
 
-Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
----
+* js/valgrind (Wed Jan 21 02:36:40 2009 +0100) 2 commits
+ - valgrind: ignore ldso errors
+ - Add valgrind support in test scripts
 
-This new commit responds to some of the issues brought up by Junio C
-Hemano (and Johannes Schindelin). In particular, it removes the
-paragraph from the commit message discussing how it could be "improved." 
+Dscho seems to have some updates out of discussion with Peff.
 
-Also, this new version uses a "DIFFPIPE" to strip the old commit message
-from the top of the "stg show" output so that the "stg edit" behavior
-matches the "git commit" behavior. 
+----------------------------------------------------------------
+[Stalled and may need help and prodding to go forward]
 
-Finally, this version adds a comment giving an idea for personalizing by
-adding the temporary directory creation back in (as a way to prevent
-editor backup files from piling up inside .git).
+* jc/blame (Wed Jun 4 22:58:40 2008 -0700) 2 commits
+ + blame: show "previous" information in --porcelain/--incremental
+   format
+ + git-blame: refactor code to emit "porcelain format" output
 
- contrib/giteditor/giteditor |   86 +++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 86 insertions(+), 0 deletions(-)
- create mode 100755 contrib/giteditor/giteditor
+This gives Porcelains (like gitweb) the information on the commit _before_
+the one that the final blame is laid on, which should save them one
+rev-parse to dig further.  The line number in the "previous" information
+may need refining, and sanity checking code for reference counting may
+need to be resurrected before this can move forward.
 
-diff --git a/contrib/giteditor/giteditor b/contrib/giteditor/giteditor
-new file mode 100755
-index 0000000..5369732
---- /dev/null
-+++ b/contrib/giteditor/giteditor
-@@ -0,0 +1,86 @@
-+#!/bin/sh
-+#
-+# Set GIT_EDITOR (or core.editor) to this script to see a diff alongside
-+# commit message. This script differs from "git commit -v" in that the
-+# diff shows up in a separate buffer. Additionally, this script works
-+# with "stg edit" as well.
-+#
-+# Copyright (c) 2009 by Theodore P. Pavlic <ted@tedpavlic.com>
-+# Highly influenced by hgeditor script distributed with Mercurial SCM.
-+# Distributed under the GNU General Public License, version 2.0.
-+#
-+# Possible personalizations:
-+#
-+# * If your GIT_DIR gets polluted with backup files created by your
-+#   editor when COMMIT_EDITMSG is saved, then have this script copy
-+#   COMMIT_EDITMSG (i.e., $1) to a temporary directory and then back to
-+#   COMMIT_EDITMSG when done. When the script cleans up after itself, it
-+#   can delete the temporary directory and any leftover backup files.
-+#   Note that the vim setting 'nobackup' disables saving backup files,
-+#   and this setting can be set automatically on gitcommit-type files
-+#   and files matching .stgit-*.txt with an appropriate ftdetect entry.
-+
-+# Find git
-+test -z "${GIT}" && GIT="git"
-+
-+# Find stg
-+test -z "${STG}" && STG="stg"
-+
-+# Find the nearest git-dir
-+GITDIR=$(git rev-parse --git-dir) || exit
-+
-+# Use an editor. To prevent loops, avoid GIT_EDITOR and core.editor.
-+EDITOR="${GIT_EDITOR_EDITOR-${VISUAL-${EDITOR-vi}}}"
-+
-+# If we recognize a popular editor, add necessary flags (e.g., to
-+# prevent forking)
-+case "${EDITOR}" in
-+    emacs)
-+        EDITOR="${EDITOR} -nw"
-+        ;;
-+    mvim|gvim|vim|vi)
-+        EDITOR="${EDITOR} -f -o"
-+        ;;
-+esac
-+
-+# Remove temporary files even if we get interrupted
-+DIFFOUTPUT="${GITDIR}/giteditor.${RANDOM}.${RANDOM}.${RANDOM}.$$.diff"
-+cleanup_exit() { 
-+    rm -f "${DIFFOUTPUT}" 
-+}
-+trap "cleanup_exit" 0       # normal exit
-+trap "exit 255" 1 2 3 6 15  # HUP INT QUIT ABRT TERM
-+
-+# For git, COMMITMSG=COMMIT_EDITMSG
-+# For stg, COMMITMSG=.stgit-edit.txt
-+# etc.
-+COMMITMSG=$(basename "$1")
-+DIFFPIPE="cat"
-+case "${COMMITMSG}" in
-+    .stgit-edit.txt)        # From "stg edit" 
-+        DIFFCMD="${STG}"
-+        DIFFARGS="show"
-+        DIFFPIPE="tail +$(wc -l "$1"|awk '{print $1+3}')"
-+        ;;
-+    *)                      # Fall through to "git commit" case
-+        DIFFCMD="${GIT}"
-+        DIFFARGS="diff --cached"
-+        # To focus on files that changed, use:
-+        #DIFFARGS="diff --cached --diff-filter=M"
-+        ;;
-+esac
-+
-+# Do the diff and save the result in DIFFOUTPUT
-+"${DIFFCMD}" ${DIFFARGS} | ${DIFFPIPE} > ${DIFFOUTPUT}
-+
-+# If DIFFOUTPUT is nonempty, open it alongside commit message
-+if test -s "${DIFFOUTPUT}"; then
-+    # Diff is non-empty, so edit msg and diff
-+    ${EDITOR} "$1" "${DIFFOUTPUT}" || exit
-+else
-+    # Empty diff. Only edit msg
-+    ${EDITOR} "$1" || exit
-+fi
-+
-+# (recall that DIFFOUTPUT file gets cleaned up by trap above)
-+exit
--- 
-1.6.1.213.g28da8
+* db/foreign-scm (Sun Jan 11 15:12:10 2009 -0500) 3 commits
+ - Support fetching from foreign VCSes
+ - Add specification of git-vcs helpers
+ - Add "vcs" config option in remotes
+
+The "spec" did not seem quite well cooked yet, but in the longer term I
+think something like this to allow interoperating with other SCMs as if
+the other end is a native git repository is a very worthy goal.
+
+----------------------------------------------------------------
+[Actively cooking]
+
+* sp/runtime-prefix (Sun Jan 18 13:00:15 2009 +0100) 7 commits
+ - Windows: Revert to default paths and convert them by
+   RUNTIME_PREFIX
+ - Compute prefix at runtime if RUNTIME_PREFIX is set
+ - Modify setup_path() to only add git_exec_path() to PATH
+ - Add calls to git_extract_argv0_path() in programs that call
+   git_config_*
+ - git_extract_argv0_path(): Move check for valid argv0 from caller
+   to callee
+ - Refactor git_set_argv0_path() to git_extract_argv0_path()
+ - Move computation of absolute paths from Makefile to runtime (in
+   preparation for RUNTIME_PREFIX)
+
+We should move this to 'next' soon with J6t's blessing.
+
+* lh/submodule-tree-traversal (Mon Jan 12 00:45:55 2009 +0100) 3 commits
+ + builtin-ls-tree: enable traversal of submodules
+ + archive.c: enable traversal of submodules
+ + tree.c: add support for traversal of submodules
+
+I think choosing the submodules to descend into by seeing if the commit
+happens to be available is a horribly broken semantics; it needs to be
+fixed before this can move to 'master'.
+
+* jk/signal-cleanup (Sun Jan 11 06:36:49 2009 -0500) 3 commits
+ - pager: do wait_for_pager on signal death
+ - refactor signal handling for cleanup functions
+ - chain kill signals for cleanup functions
+
+I think this can move to 'next', as Peff and J6t agreed on how to fix
+things up as needed for Windows.
+
+* ks/maint-mailinfo-folded (Tue Jan 13 01:21:04 2009 +0300) 5 commits
+ - mailinfo: tests for RFC2047 examples
+ - mailinfo: add explicit test for mails like '<a.u.thor@example.com>
+   (A U Thor)'
+ - mailinfo: more smarter removal of rfc822 comments from 'From'
+ + mailinfo: 'From:' header should be unfold as well
+ + mailinfo: correctly handle multiline 'Subject:' header
+
+As far as I can see, the only remaining thing is a minor fix-up in the
+"comment removal" one before we can move this fully to 'next'.
+
+* js/notes (Tue Jan 13 20:57:16 2009 +0100) 6 commits
+ + git-notes: fix printing of multi-line notes
+ + notes: fix core.notesRef documentation
+ + Add an expensive test for git-notes
+ + Speed up git notes lookup
+ + Add a script to edit/inspect notes
+ + Introduce commit notes
+
+It would be nice to hear a real world success story using the notes
+mechanism before casting this design in stone.
+
+* sc/gitweb-category (Fri Dec 12 00:45:12 2008 +0100) 3 commits
+ - gitweb: Optional grouping of projects by category
+ - gitweb: Split git_project_list_body in two functions
+ - gitweb: Modularized git_get_project_description to be more generic
+
+Design discussion between Jakub and Sebastien continues.
+
+----------------------------------------------------------------
+[Graduated to "master"]
+
+* jk/color-parse (Sat Jan 17 10:38:46 2009 -0500) 2 commits
+ + expand --pretty=format color options
+ + color: make it easier for non-config to parse color specs
+
+* sb/hook-cleanup (Sat Jan 17 04:02:55 2009 +0100) 5 commits
+ + run_hook(): allow more than 9 hook arguments
+ + run_hook(): check the executability of the hook before filling
+   argv
+ + api-run-command.txt: talk about run_hook()
+ + Move run_hook() from builtin-commit.c into run-command.c (libgit)
+ + checkout: don't crash on file checkout before running post-
+   checkout hook
+
+* rs/ctype (Sat Jan 17 16:50:37 2009 +0100) 4 commits
+ + Add is_regex_special()
+ + Change NUL char handling of isspecial()
+ + Reformat ctype.c
+ + Add ctype test
+
+* jf/am-failure-report (Sun Jan 18 19:34:31 2009 -0800) 2 commits
+ + git-am: re-fix the diag message printing
+ + git-am: Make it easier to see which patch failed
+
+* sg/maint-gitdir-in-subdir (Fri Jan 16 16:37:33 2009 +0100) 1 commit
+ + Fix gitdir detection when in subdir of gitdir
+
+This has my "don't do the fullpath if you are directly inside .git"
+squashed in, so it should be much safer.
+
+* am/maint-push-doc (Sun Jan 18 15:36:58 2009 +0100) 4 commits
+ + Documentation: avoid using undefined parameters
+ + Documentation: mention branches rather than heads
+ + Documentation: remove a redundant elaboration
+ + Documentation: git push repository can also be a remote
+
+* lt/maint-wrap-zlib (Wed Jan 7 19:54:47 2009 -0800) 1 commit
+ + Wrap inflate and other zlib routines for better error reporting
+
+Needs the "free our memory upon seeing Z_MEM_ERROR and try again" bits
+extracted from Shawn's patch on top of this one.
+
+* kb/am-directory (Wed Jan 14 16:29:59 2009 -0800) 2 commits
+ + git-am: fix shell quoting
+ + git-am: add --directory=<dir> option
+
+This is "third-time-lucky, perhaps?" resurrection.  I do not think I'd be
+using this very often, but it originated from a real user request.
+
+* jc/maint-format-patch-o-relative (Mon Jan 12 15:18:02 2009 -0800) 1 commit
+ + Teach format-patch to handle output directory relative to cwd
+
+----------------------------------------------------------------
+[Will merge to "master" soon]
+
+* kb/lstat-cache (Sun Jan 18 16:14:54 2009 +0100) 5 commits
+ + lstat_cache(): introduce clear_lstat_cache() function
+ + lstat_cache(): introduce invalidate_lstat_cache() function
+ + lstat_cache(): introduce has_dirs_only_path() function
+ + lstat_cache(): introduce has_symlink_or_noent_leading_path()
+   function
+ + lstat_cache(): more cache effective symlink/directory detection
+
+* tr/previous-branch (Wed Jan 21 00:37:38 2009 -0800) 10 commits
+ + Simplify parsing branch switching events in reflog
+ + Introduce for_each_recent_reflog_ent().
+ + interpret_nth_last_branch(): plug small memleak
+ + Fix reflog parsing for a malformed branch switching entry
+ + Fix parsing of @{-1}@{1}
+ + interpret_nth_last_branch(): avoid traversing the reflog twice
+ + checkout: implement "-" abbreviation, add docs and tests
+ + sha1_name: support @{-N} syntax in get_sha1()
+ + sha1_name: tweak @{-N} lookup
+ + checkout: implement "@{-N}" shortcut name for N-th last branch
+
+* js/maint-all-implies-HEAD (Sat Jan 17 22:27:08 2009 -0800) 2 commits
+ + bundle: allow the same ref to be given more than once
+ + revision walker: include a detached HEAD in --all
+
+* mh/unify-color (Sun Jan 18 21:39:12 2009 +0100) 2 commits
+ + move the color variables to color.c
+ + handle color.ui at a central place
+
+* cb/add-pathspec (Wed Jan 14 15:54:35 2009 +0100) 2 commits
+ + remove pathspec_match, use match_pathspec instead
+ + clean up pathspec matching
+
+* js/diff-color-words (Tue Jan 20 21:46:57 2009 -0600) 8 commits
+ + color-words: Support diff.wordregex config option
+ + color-words: make regex configurable via attributes
+ + color-words: expand docs with precise semantics
+ + color-words: enable REG_NEWLINE to help user
+ + color-words: take an optional regular expression describing words
+ + color-words: change algorithm to allow for 0-character word
+   boundaries
+ + color-words: refactor word splitting and use ALLOC_GROW()
+ + Add color_fwrite_lines(), a function coloring each line
+   individually
+
+* js/patience-diff (Thu Jan 1 17:39:37 2009 +0100) 3 commits
+ + bash completions: Add the --patience option
+ + Introduce the diff option '--patience'
+ + Implement the patience diff algorithm
+
+----------------------------------------------------------------
+[On Hold]
+
+* jk/renamelimit (Sat May 3 13:58:42 2008 -0700) 1 commit
+ . diff: enable "too large a rename" warning when -M/-C is explicitly
+   asked for
+
+* jc/stripspace (Sun Mar 9 00:30:35 2008 -0800) 6 commits
+ . git-am --forge: add Signed-off-by: line for the author
+ . git-am: clean-up Signed-off-by: lines
+ . stripspace: add --log-clean option to clean up signed-off-by:
+   lines
+ . stripspace: use parse_options()
+ . Add "git am -s" test
+ . git-am: refactor code to add signed-off-by line for the committer
+
+* jc/post-simplify (Fri Aug 15 01:34:51 2008 -0700) 2 commits
+ . revision --simplify-merges: incremental simplification
+ . revision --simplify-merges: prepare for incremental simplification
+
+* wp/add-patch-find (Thu Nov 27 04:08:03 2008 +0000) 3 commits
+ . In add --patch, Handle K,k,J,j slightly more gracefully.
+ . Add / command in add --patch
+ . git-add -i/-p: Change prompt separater from slash to comma
+
+* jc/grafts (Wed Jul 2 17:14:12 2008 -0700) 1 commit
+ . [BROKEN wrt shallow clones] Ignore graft during object transfer
+
+* jc/replace (Fri Oct 31 09:21:39 2008 -0700) 1 commit
+ . WIP
