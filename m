@@ -1,53 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] cygwin: Convert paths for html help from posix to
- windows
-Date: Thu, 22 Jan 2009 09:25:33 -0800
-Message-ID: <7veiyv6ynm.fsf@gitster.siamese.dyndns.org>
-References: <20090122171605.GA16684@atjola.homenet>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] user-manual: Simplify the user configuration.
+Date: Thu, 22 Jan 2009 18:28:12 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901221827370.3586@pacific.mpi-cbg.de>
+References: <1232561365-5919-1-git-send-email-felipe.contreras@gmail.com> <7v8wp4e5wn.fsf@gitster.siamese.dyndns.org> <94a0d4530901211319t8126611wc1437848631fe988@mail.gmail.com> <831vuvfh7t.fsf@kalahari.s2.org> <94a0d4530901220857q1027c05bs137dcc0244a1cc5a@mail.gmail.com>
+ <7v1vuv8dqy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jaeckel@stzedn.de, git@vger.kernel.org
-To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 22 18:27:16 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Hannu Koivisto <azure@iki.fi>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 18:29:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ3Kc-0004qB-2C
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 18:27:06 +0100
+	id 1LQ3N1-0005gK-5x
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 18:29:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754248AbZAVRZl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jan 2009 12:25:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754020AbZAVRZl
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 12:25:41 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43458 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753863AbZAVRZl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2009 12:25:41 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D207C92C27;
-	Thu, 22 Jan 2009 12:25:39 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7D16692C26; Thu,
- 22 Jan 2009 12:25:35 -0500 (EST)
-In-Reply-To: <20090122171605.GA16684@atjola.homenet> (=?utf-8?Q?Bj=C3=B6rn?=
- Steinbrink's message of "Thu, 22 Jan 2009 18:16:05 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B073A844-E8A9-11DD-B085-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1755097AbZAVR2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 12:28:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754724AbZAVR2J
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 12:28:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49740 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754296AbZAVR2I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 12:28:08 -0500
+Received: (qmail invoked by alias); 22 Jan 2009 17:28:04 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp029) with SMTP; 22 Jan 2009 18:28:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18y9Dd906cyhK9Esif6rpMZL86OMHUwf38pGdERAX
+	fGnv7LgxDoUkHF
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7v1vuv8dqy.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106776>
 
-Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
+Hi,
 
-> OK, I don't really know if this is the right way to do it. Maybe when
-> the browser was built for cygwin this breaks? I have no clue,...
+On Thu, 22 Jan 2009, Junio C Hamano wrote:
 
-It might be simple enough to check if all it takes is to install a
-prepackaged browser from Cygwin suite and try to run it.  Doesn't Cygwi=
-n
-have small ones such as lynx (or links)?
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > On Thu, Jan 22, 2009 at 6:17 PM, Hannu Koivisto <azure@iki.fi> wrote:
+> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >>
+> >>> This brings back my previous question: where is the home directory in
+> >>> a Windows system?
+> >>
+> >> It's where %HOMEDRIVE%%HOMEPATH% points to.
+> >
+> > I thought it was something like that. Do we want something like that
+> > in the manual, or should we assume Windows users know that?
+> 
+> Funny; while I was test driving Msysgit (I wrote the report in my blog
+> pages some time ago), I got curious about this exact issue.  I thought the
+> choice of $HOME at that path was quite natural even for me who does not
+> usually use Windows.
+
+That's what they said when they convinced me that /home/<user>/ was not a 
+natural place on Windows.
+
+Ciao,
+Dscho
