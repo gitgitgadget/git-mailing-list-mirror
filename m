@@ -1,73 +1,89 @@
-From: Christian MICHON <christian.michon@gmail.com>
-Subject: how to force a commit date matching info from a mbox ?
-Date: Thu, 22 Jan 2009 23:41:12 +0100
-Message-ID: <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 22 23:43:17 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 00/10] Merge API v2
+Date: Thu, 22 Jan 2009 15:28:00 -0800
+Message-ID: <1232666890-23488-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 00:29:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ8G2-00026J-Ak
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 23:42:42 +0100
+	id 1LQ8zV-0007uv-29
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 00:29:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753351AbZAVWlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 17:41:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752750AbZAVWlQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 17:41:16 -0500
-Received: from mail-ew0-f20.google.com ([209.85.219.20]:55545 "EHLO
-	mail-ew0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752571AbZAVWlP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 17:41:15 -0500
-Received: by ewy13 with SMTP id 13so3139141ewy.13
-        for <git@vger.kernel.org>; Thu, 22 Jan 2009 14:41:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=Tv2kBu6x1ewFcdLAaV5g7EEHKEJZN3rhVa6nf8+ojqA=;
-        b=pkwnW3ihRE8YfzpGjjfGQRsbW69Fvt1In/yRUdapYXoRCSFh3JFqmOhKalP/5pUMbh
-         +xEtw3FhS0UxFbOL+G2JoRGNTOjR7HjMJmfWo6DXZp0X4Om5DhhKqkz3SiGRtLnwKGIw
-         L7MlVVkfPqmvXObHo37kBs5EayHQT++RdxW/U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=DE7l2McMPatORMY2jfG5QVMqXSNEc4I1eInyZhQYfAmW3TtKmfsX1CN/Ws8p3GwGCM
-         f0XcCJ/E9DqQ5m9gPPKMP/9xc6fVH2leRjD5LZjcoek7/G3b9BZ16vEaHOhMkvrgZzMW
-         KRSwMfsRIsske85jpJIpoqbSvoP5V503pr95s=
-Received: by 10.102.234.18 with SMTP id g18mr2915057muh.102.1232664073345; 
-	Thu, 22 Jan 2009 14:41:13 -0800 (PST)
+	id S1755233AbZAVX2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 18:28:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753747AbZAVX2N
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 18:28:13 -0500
+Received: from george.spearce.org ([209.20.77.23]:55214 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753351AbZAVX2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 18:28:13 -0500
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 325E538215; Thu, 22 Jan 2009 23:28:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 6EF763816F;
+	Thu, 22 Jan 2009 23:28:11 +0000 (UTC)
+X-Mailer: git-send-email 1.6.1.399.g0d272
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106791>
 
-Hi list,
+2nd attempt at the merge API.  Changes from my prior posting last fall:
 
-I've a big set of patches in a mbox file: there's sufficient info
-inside for git-am to work.
+ - Fixed the bug Robin identified (the first patch in the series)
+ - Rebased against current master
+ - Basic smoke tests provided by Robin
 
-Yet, each time I do import these, my sha1sums are changing because of
-different commit dates.
+Shawn O. Pearce (10):
+  Fix TreeWalk.idEqual when both trees are missing the path
+  Expose the raw path for the current entry of a TreeWalk
+  Expose DirCacheEntry.getFileMode as a utility function
+  Add writeTree support to DirCache
+  Allow a DirCache to be created with no backing store file
+  Allow CanonicalTreeParsers to be created with a UTF-8 path prefix
+  Recursively load an entire tree into a DirCacheBuilder
+  Allow DirCacheEntry instances to be created with stage > 0
+  Define a basic merge API, and a two-way tree merge strategy
+  Add a few simple merge test cases
 
-I'd like to force the commit date to match the info/date from the time
-I received the email (and therefore always get back the right
-sha1sums).
-
-is this possible ?
-
-There's hundreds of these patches: I'm looking for the right switch or
-1 liner trick instead of a long shell script which will import 1 by 1
-the patches and force the commit date by environment.
-
-TIA
-
--- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+ .../spearce/jgit/test/resources/create-second-pack |   13 +-
+ ...ck-3280af9c07ee18a87705ef50b0cc4cd20266cf12.idx |  Bin 0 -> 1296 bytes
+ ...k-3280af9c07ee18a87705ef50b0cc4cd20266cf12.pack |  Bin 0 -> 562 bytes
+ ...ck-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.idx |  Bin 1088 -> 1100 bytes
+ ...ck-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.idx |  Bin 2696 -> 2976 bytes
+ ...k-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.pack |  Bin 5956 -> 5901 bytes
+ .../org/spearce/jgit/test/resources/packed-refs    |    4 +-
+ .../org/spearce/jgit/lib/RepositoryTestCase.java   |    3 +-
+ .../org/spearce/jgit/merge/SimpleMergeTest.java    |   86 ++++++++
+ .../org/spearce/jgit/transport/TransportTest.java  |    2 +-
+ .../src/org/spearce/jgit/dircache/DirCache.java    |   37 ++++
+ .../org/spearce/jgit/dircache/DirCacheBuilder.java |   65 ++++++
+ .../org/spearce/jgit/dircache/DirCacheEntry.java   |   61 +++++-
+ .../org/spearce/jgit/dircache/DirCacheTree.java    |  115 +++++++++++
+ .../spearce/jgit/errors/UnmergedPathException.java |   67 ++++++
+ .../src/org/spearce/jgit/lib/FileMode.java         |    7 +
+ .../src/org/spearce/jgit/lib/ObjectWriter.java     |   12 +-
+ .../src/org/spearce/jgit/merge/MergeStrategy.java  |  134 ++++++++++++
+ .../src/org/spearce/jgit/merge/Merger.java         |  213 ++++++++++++++++++++
+ .../org/spearce/jgit/merge/StrategyOneSided.java   |   98 +++++++++
+ .../jgit/merge/StrategySimpleTwoWayInCore.java     |  179 ++++++++++++++++
+ .../jgit/treewalk/AbstractTreeIterator.java        |   31 +++
+ .../spearce/jgit/treewalk/CanonicalTreeParser.java |   30 +++
+ .../src/org/spearce/jgit/treewalk/TreeWalk.java    |   28 +++-
+ 24 files changed, 1170 insertions(+), 15 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-3280af9c07ee18a87705ef50b0cc4cd20266cf12.idx
+ create mode 100644 org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/test/resources/pack-3280af9c07ee18a87705ef50b0cc4cd20266cf12.pack
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/merge/SimpleMergeTest.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/errors/UnmergedPathException.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/merge/MergeStrategy.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/merge/Merger.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/merge/StrategyOneSided.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/merge/StrategySimpleTwoWayInCore.java
