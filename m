@@ -1,63 +1,75 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Added basic bash completion script for StGit.
-Date: Thu, 22 Jan 2009 17:18:23 +0100
-Message-ID: <20090122161823.GB15074@diana.vm.bytemark.co.uk>
-References: <1232405879-6188-1-git-send-email-ted@tedpavlic.com> <497509A2.5020101@tedpavlic.com> <49750E4B.3000203@tedpavlic.com> <20090122160350.GA15074@diana.vm.bytemark.co.uk> <49789A1F.8010203@tedpavlic.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: RE: git fast-import problem converting from CVS with git 1.6.1 and
+ cvs2svn 2.2.0
+Date: Thu, 22 Jan 2009 17:31:20 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901221729130.3586@pacific.mpi-cbg.de>
+References: <63BEA5E623E09F4D92233FB12A9F794302BC6851@emailmn.mqsoftware.com> <63BEA5E623E09F4D92233FB12A9F794302BC6855@emailmn.mqsoftware.com> <63BEA5E623E09F4D92233FB12A9F794302BC6921@emailmn.mqsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "catalin.marinas" <catalin.marinas@gmail.com>,
-	git <git@vger.kernel.org>
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 17:20:02 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Kelly F. Hickel" <kfh@mqsoftware.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 17:32:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ2HZ-0004Vl-AS
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 17:19:53 +0100
+	id 1LQ2Tw-0000qy-GA
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 17:32:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752926AbZAVQS3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jan 2009 11:18:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752333AbZAVQS2
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 11:18:28 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1334 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751808AbZAVQS2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 11:18:28 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1LQ2G7-0004Eg-00; Thu, 22 Jan 2009 16:18:23 +0000
-Content-Disposition: inline
-In-Reply-To: <49789A1F.8010203@tedpavlic.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753380AbZAVQbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 11:31:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbZAVQbO
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 11:31:14 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43089 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751161AbZAVQbN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 11:31:13 -0500
+Received: (qmail invoked by alias); 22 Jan 2009 16:31:11 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp055) with SMTP; 22 Jan 2009 17:31:11 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/dowBwus7dd/KQr8F+UuJ40ISFWtJBcalxoBhMx6
+	QFDNPumtZ9ojof
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <63BEA5E623E09F4D92233FB12A9F794302BC6921@emailmn.mqsoftware.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106760>
 
-On 2009-01-22 11:09:03 -0500, Ted Pavlic wrote:
+Hi,
 
-> The only downside is that it's a little harder to keep track of when
-> the completion script changes (e.g., when you have made your own
-> local changes).
+On Thu, 22 Jan 2009, Kelly F. Hickel wrote:
 
-It's a generated file -- you're not supposed to edit it! Wouldn't it
-be a better idea to edit the program that generates it instead?
+> I found the section in question, it is:
+> -- snip --
+> commit refs/heads/TAG.FIXUP
+> mark :1000007128
+> committer cvs2svn <cvs2svn> 1002043747 +0000
+> data 88
+> This commit was manufactured by cvs2svn to create tag
+> 'T_BU_Problem_9xxx_Merge_3-21-2000'.
+> merge :1000007126
+> M 100755 :180810 mfcdev/Domedit/DlgAddAlias.h
+> -- snap --
+> 
+> By my count, 88 is the ending single quote character, leaving the '.' to
+> be interpreted as a command.
 
-> However, the method you use provides very *fast* completion (as
-> opposed to git and hg completion, which generate their keywords on
-> the fly and thus run relatively slowly).
+Great!
 
-Yes, I was always irritated by how slow the StGit completion was
-compared to git's. Python sucks in this respect.
+> Looks like I should go post this on the cvs2svn list.....
 
-> HOWEVER, please see the threads (which modify the Python that
-> generates the script):
+Indeed.  I think that Michael will find the culprit very soon, with this 
+detailed report.
 
-Yes, I'll take a look.
+BTW for future reference, please Cc: the people you are responding to.  
+The Git mailing list is a high volume list, and people will miss you 
+answers otherwise.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Thanks,
+Dscho
