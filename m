@@ -1,51 +1,63 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: Re: [PATCH 1/2] user-manual: Simplify the user configuration.
-Date: Thu, 22 Jan 2009 18:17:26 +0200
-Message-ID: <831vuvfh7t.fsf@kalahari.s2.org>
-References: <1232561365-5919-1-git-send-email-felipe.contreras@gmail.com>
-	<7v8wp4e5wn.fsf@gitster.siamese.dyndns.org>
-	<94a0d4530901211319t8126611wc1437848631fe988@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH] Added basic bash completion script for StGit.
+Date: Thu, 22 Jan 2009 17:18:23 +0100
+Message-ID: <20090122161823.GB15074@diana.vm.bytemark.co.uk>
+References: <1232405879-6188-1-git-send-email-ted@tedpavlic.com> <497509A2.5020101@tedpavlic.com> <49750E4B.3000203@tedpavlic.com> <20090122160350.GA15074@diana.vm.bytemark.co.uk> <49789A1F.8010203@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 17:19:04 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "catalin.marinas" <catalin.marinas@gmail.com>,
+	git <git@vger.kernel.org>
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 17:20:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ2Ge-0004H4-JS
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 17:18:57 +0100
+	id 1LQ2HZ-0004Vl-AS
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 17:19:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752571AbZAVQRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 11:17:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751897AbZAVQRc
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 11:17:32 -0500
-Received: from s2.org ([195.197.64.39]:58173 "EHLO kalahari.s2.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751862AbZAVQRb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 11:17:31 -0500
-Received: from azure by kalahari.s2.org with local (Exim 4.69)
-	(envelope-from <azure@iki.fi>)
-	id 1LQ2FC-0007tI-N1; Thu, 22 Jan 2009 18:17:26 +0200
-In-Reply-To: <94a0d4530901211319t8126611wc1437848631fe988@mail.gmail.com>
-	(Felipe Contreras's message of "Wed, 21 Jan 2009 23:19:11 +0200")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: azure@iki.fi
-X-SA-Exim-Scanned: No (on kalahari.s2.org); SAEximRunCond expanded to false
+	id S1752926AbZAVQS3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jan 2009 11:18:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752333AbZAVQS2
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 11:18:28 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1334 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751808AbZAVQS2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 11:18:28 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1LQ2G7-0004Eg-00; Thu, 22 Jan 2009 16:18:23 +0000
+Content-Disposition: inline
+In-Reply-To: <49789A1F.8010203@tedpavlic.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106759>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On 2009-01-22 11:09:03 -0500, Ted Pavlic wrote:
 
-> This brings back my previous question: where is the home directory in
-> a Windows system?
+> The only downside is that it's a little harder to keep track of when
+> the completion script changes (e.g., when you have made your own
+> local changes).
 
-It's where %HOMEDRIVE%%HOMEPATH% points to.
+It's a generated file -- you're not supposed to edit it! Wouldn't it
+be a better idea to edit the program that generates it instead?
 
--- 
-Hannu
+> However, the method you use provides very *fast* completion (as
+> opposed to git and hg completion, which generate their keywords on
+> the fly and thus run relatively slowly).
+
+Yes, I was always irritated by how slow the StGit completion was
+compared to git's. Python sucks in this respect.
+
+> HOWEVER, please see the threads (which modify the Python that
+> generates the script):
+
+Yes, I'll take a look.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
