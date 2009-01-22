@@ -1,159 +1,91 @@
-From: "Richard W.M. Jones" <rjones@redhat.com>
-Subject: Short rant about git usability - make 'git clone' work on an empty
-	remote repository
-Date: Thu, 22 Jan 2009 10:02:30 +0000
-Message-ID: <20090122100230.GA9653@amd.home.annexia.org>
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: CR codes from git commands
+Date: Thu, 22 Jan 2009 10:04:16 +0000
+Message-ID: <e2b179460901220204x7b6a43b5hddfee623d2425429@mail.gmail.com>
+References: <18805.64312.289059.660023@hungover.brentg.com>
+	 <alpine.LNX.1.00.0901212319310.19665@iabervon.org>
+	 <e38bce640901212334v1e672d48t81d5c81fecd929eb@mail.gmail.com>
+	 <alpine.LNX.1.00.0901220238380.19665@iabervon.org>
+	 <7vbptzahra.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 22 11:04:03 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Brent Goodrick <bgoodr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 11:06:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPwPp-0005Sv-FH
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 11:04:01 +0100
+	id 1LPwRT-0005pc-PH
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 11:05:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755780AbZAVKCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 05:02:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755164AbZAVKCg
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 05:02:36 -0500
-Received: from mx2.redhat.com ([66.187.237.31]:33370 "EHLO mx2.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754534AbZAVKCf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 05:02:35 -0500
-Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
-	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n0MA2W1Z008287
-	for <git@vger.kernel.org>; Thu, 22 Jan 2009 05:02:32 -0500
-Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
-	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n0MA2XpT005325
-	for <git@vger.kernel.org>; Thu, 22 Jan 2009 05:02:33 -0500
-Received: from localhost (vpn-6-47.fab.redhat.com [10.33.6.47])
-	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n0MA2WQY012493
-	for <git@vger.kernel.org>; Thu, 22 Jan 2009 05:02:33 -0500
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
+	id S1755164AbZAVKET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 05:04:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754977AbZAVKES
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 05:04:18 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:35331 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754659AbZAVKER (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 05:04:17 -0500
+Received: by qyk4 with SMTP id 4so4484618qyk.13
+        for <git@vger.kernel.org>; Thu, 22 Jan 2009 02:04:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=B+YEjD4F6cFMqfOTrry5Frg+CzXY8r8GUAMUYtkVXC4=;
+        b=AsgY0jZVWqOnxK08/SBYHNm+DRimS+3k2+5U/VJYJ0tRoD26d0r6Z8cfTkk6P+qFfH
+         BzGpHIzW1LtSzH8ro1MaxnxtGlszJKD1AW0zp7nhvjZANyKM/UqKrqZg2KYBd/FZu5Sl
+         9+ZMMvaFNN81UXFbBmn3/QB4cLxXVdptjPi6o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=RKpV7wzKvrfwVtKzLKLSyAj4ROpq+LHq6lpsW+MxT3LDBU03Cfq5F/ELBVDbX235mq
+         EoA5zpiLyyPmICVUC8IuR8bzWB0mJfI3aSFriE+lchfE4eKdgHMQllukI2UGmUCe23V6
+         kNx9yqkPnl9c/YiaMw/ZeY732/QpXjPdemcd4=
+Received: by 10.214.184.3 with SMTP id h3mr1976805qaf.179.1232618656441; Thu, 
+	22 Jan 2009 02:04:16 -0800 (PST)
+In-Reply-To: <7vbptzahra.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106740>
 
-This is a rant, those offended by rants should stop reading now.
+>2009/1/22 Brent Goodrick <bgoodr@gmail.com>:
+> The environment I'm running git under is the Shell mode inside GNU
+> Emacs. I can't tell you what type of terminal it is, because I believe
+> that is defined deep in the guts of Emacs. Having read your reply
+> above, I'm now wondering whether this is an Emacs issue versus a git
+> issue. If it is an Emacs issue, then I am truly embarrassed for having
+> wasted everyones time with it.
 
-When I want to check out a remote repository, I do:
+2009/1/22 Junio C Hamano <gitster@pobox.com>:
+> I think we pay attention to "dumb" when deciding if pager is useful and if
+> we can do color, but I do not think we check anything beyond "is it a tty"
+> when deciding to show progress or not.  The only thing we do differently
+> for "dumb" terminal is if we use ANSI clear-to-eol escape sequence or fill
+> with a run of SPs to overwrite trailing part of a line, and we assume even
+> dumb terminals know how to do a carriage-return.
 
-  git clone URL...
+I think this earlier discussion is probably relevant... I'm guessing
+though, $EDITOR is set correctly here 8-)
 
-Except when the repository is empty, when for no explicable reason
-this familiar command doesn't work.
+2008/12/17 Junio C Hamano <gitster@pobox.com>:
+> Any semi-good emacs users (let alone hackers) export PAGER=cat to be used
+> in compilation mode (and possibly shell mode), so this is not a problem in
+> practice.
+>
+> I have something like this in my .emacs:
+>
+>    (setenv "PAGER" "cat")
+>
+> I suspect (I am just a user not a hacker) this will have bad interaction
+> with emacs terminal emulation mode, but I do not use the mode, so it is
+> enough for me.
 
-  $ git clone git+ssh://rwmj@git.ocamlcore.org/gitroot/ocaml-autoconf/ocaml-autoconf.git
-  Initialized empty Git repository in /home/rjones/d/ocaml-autoconf/.git/
-  fatal: no matching remote head
-
-  $ git init ocaml-autoconf
-  usage: git init [-q | --quiet] [--bare] [--template=<template-directory>] [--shared[=<permissions>]]
-  $ mkdir ocaml-autoconf
-  $ cd ocaml-autoconf
-  $ git init
-  Initialized empty Git repository in /home/rjones/d/ocaml-autoconf/.git/
-  $ ls
-  $ ls -a
-  .  ..  .git
-
-Following advice on a website ...
-
-  $ git-remote origin git+ssh://rwmj@git.ocamlcore.org/gitroot/ocaml-autoconf/ocaml-autoconf.git
-  error: Unknown subcommand: origin
-  usage: git remote
-     or: git remote add <name> <url>
-     or: git remote rm <name>
-     or: git remote show <name>
-     or: git remote prune <name>
-     or: git remote update [group]
-
-      -v, --verbose         be verbose
-
-  $ git remote add origin git+ssh://rwmj@git.ocamlcore.org/gitroot/ocaml-autoconf/ocaml-autoconf.git
-
-  $ git status
-  # On branch master
-  #
-  # Initial commit
-  #
-  nothing to commit (create/copy files and use "git add" to track)
-  $ git branch
-  $ git checkout
-  fatal: You are on a branch yet to be born
-  $ git status
-  # On branch master
-  #
-  # Initial commit
-  #
-  nothing to commit (create/copy files and use "git add" to track)
-  $ echo test > README
-  $ git commit -a
-  # On branch master
-  #
-  # Initial commit
-  #
-  # Untracked files:
-  #   (use "git add <file>..." to include in what will be committed)
-  #
-  #	README
-  nothing added to commit but untracked files present (use "git add" to track)
-  $ git add README
-  $ git commit -a
-  Created initial commit 2c9a63a: Create repository.
-   1 files changed, 1 insertions(+), 0 deletions(-)
-   create mode 100644 README
-
-  $ git push
-  No refs in common and none specified; doing nothing.
-  Perhaps you should specify a branch such as 'master'.
-  fatal: The remote end hung up unexpectedly
-  error: failed to push some refs to 'git+ssh://rwmj@git.ocamlcore.org/gitroot/ocaml-autoconf/ocaml-autoconf.git'
-  $ git push master
-  fatal: 'master': unable to chdir or not a git archive
-  fatal: The remote end hung up unexpectedly
-  $ git branch master
-  fatal: A branch named 'master' already exists.
-  $ git status
-  # On branch master
-  nothing to commit (working directory clean)
-  $ git push
-  No refs in common and none specified; doing nothing.
-  Perhaps you should specify a branch such as 'master'.
-  fatal: The remote end hung up unexpectedly
-  error: failed to push some refs to 'git+ssh://rwmj@git.ocamlcore.org/gitroot/ocaml-autoconf/ocaml-autoconf.git'
-  $ man git-push
-  $ git pull
-  You asked me to pull without telling me which branch you
-  want to merge with, and 'branch.master.merge' in
-  your configuration file does not tell me either.  Please
-  name which branch you want to merge on the command line and
-  try again (e.g. 'git pull <repository> <refspec>').
-  See git-pull(1) for details on the refspec.
-  
-  If you often merge with the same branch, you may want to
-  configure the following variables in your configuration
-  file:
-  
-      branch.master.remote = <nickname>
-      branch.master.merge = <remote-ref>
-      remote.<nickname>.url = <url>
-      remote.<nickname>.fetch = <refspec>
-  
-  See git-config(1) for details.
-
-Arrggghhhh, just MAKE GIT CLONE WORK!!!
-
-Rich.
-
--- 
-Richard Jones, Emerging Technologies, Red Hat  http://et.redhat.com/~rjones
-virt-df lists disk usage of guests without needing to install any
-software inside the virtual machine.  Supports Linux and Windows.
-http://et.redhat.com/~rjones/virt-df/
+Mike
