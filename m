@@ -1,84 +1,116 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
 Subject: Re: What's cooking in git.git (Jan 2009, #05; Wed, 21)
-Date: Thu, 22 Jan 2009 06:13:01 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901220606040.3586@pacific.mpi-cbg.de>
+Date: Wed, 21 Jan 2009 23:21:34 -0600
+Message-ID: <200901212321.50526.bss@iguanasuicide.net>
 References: <7vab9kataf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: multipart/signed;
+  boundary="nextPart1532220.HefNgn8h9j";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 06:14:29 2009
+X-From: git-owner@vger.kernel.org Thu Jan 22 06:23:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPrtR-00059q-VV
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 06:14:18 +0100
+	id 1LPs2A-0006uO-B9
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 06:23:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751336AbZAVFMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 00:12:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbZAVFMy
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 00:12:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35945 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751182AbZAVFMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 00:12:53 -0500
-Received: (qmail invoked by alias); 22 Jan 2009 05:12:52 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp034) with SMTP; 22 Jan 2009 06:12:52 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18eup1SQxMe4grsq/XxksMEY2lqbvI9RNY8v49GRe
-	FpTpMGriq6NK0M
-X-X-Sender: schindelin@pacific.mpi-cbg.de
+	id S1751551AbZAVFVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 00:21:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbZAVFVy
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 00:21:54 -0500
+Received: from eastrmmtao102.cox.net ([68.230.240.8]:52821 "EHLO
+	eastrmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751357AbZAVFVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 00:21:53 -0500
+Received: from eastrmimpo03.cox.net ([68.1.16.126])
+          by eastrmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090122052152.OJSF8735.eastrmmtao102.cox.net@eastrmimpo03.cox.net>;
+          Thu, 22 Jan 2009 00:21:52 -0500
+Received: from localhost ([72.204.50.125])
+	by eastrmimpo03.cox.net with bizsmtp
+	id 6VMr1b0022i4SyG02VMrJW; Thu, 22 Jan 2009 00:21:52 -0500
+X-Authority-Analysis: v=1.0 c=1 a=AHVSlz3QljUA:10 a=UjP9HbbQeAAA:10
+ a=TSbVqHtbAAAA:8 a=Fq1VQ0LPAAAA:8 a=HTOx4SU2OsK2dj_ZXI8A:9
+ a=8gWeymyVAXDw00JA0NBpSiFmnd0A:4 a=qIVjreYYsbEA:10 a=T3brmoaXcPoA:10
+ a=LY0hPdMaydYA:10 a=Ew1hAbtXbDukJVQT7e4A:9 a=lKVmjQaYUBNifxPOY2pTg8LRT1kA:4
+ a=rPt6xJ-oxjAA:10
+X-CM-Score: 0.00
+Received: from bss by localhost with local (Exim 4.69)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LPs0k-000KMD-LG; Wed, 21 Jan 2009 23:21:50 -0600
+User-Agent: KMail/1.9.9
 In-Reply-To: <7vab9kataf.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+X-Eric-Conspiracy: There is no conspiracy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106722>
 
-Hi,
+--nextPart1532220.HefNgn8h9j
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-On Wed, 21 Jan 2009, Junio C Hamano wrote:
+On Wednesday 21 January 2009, Junio C Hamano <gitster@pobox.com> wrote=20
+about 'What's cooking in git.git (Jan 2009, #05; Wed, 21)':
+>* js/notes (Tue Jan 13 20:57:16 2009 +0100) 6 commits
+> + git-notes: fix printing of multi-line notes
+> + notes: fix core.notesRef documentation
+> + Add an expensive test for git-notes
+> + Speed up git notes lookup
+> + Add a script to edit/inspect notes
+> + Introduce commit notes
+>
+>It would be nice to hear a real world success story using the notes
+>mechanism before casting this design in stone.
 
-> * js/notes (Tue Jan 13 20:57:16 2009 +0100) 6 commits
->  + git-notes: fix printing of multi-line notes
->  + notes: fix core.notesRef documentation
->  + Add an expensive test for git-notes
->  + Speed up git notes lookup
->  + Add a script to edit/inspect notes
->  + Introduce commit notes
-> 
-> It would be nice to hear a real world success story using the notes
-> mechanism before casting this design in stone.
+I'll see if I can't try to put this through some paces over the week. =20
+Also, I'd like to see some support for notes in push/fetch, but it could=20
+certainly be added afterwards.
 
-I'd like to have some profiling done before that.  For example, I am still 
-a bit unsure how the things would perform with a 50-deep delta chain for 
-a notes tree having 50,000+ notes in it (which I think will not be all 
-that unreasonable for a medium-sized project that stores bug-tracking 
-information in the notes).
+>* js/diff-color-words (Tue Jan 20 21:46:57 2009 -0600) 8 commits
+> + color-words: Support diff.wordregex config option
+> + color-words: make regex configurable via attributes
+> + color-words: expand docs with precise semantics
+> + color-words: enable REG_NEWLINE to help user
+> + color-words: take an optional regular expression describing words
+> + color-words: change algorithm to allow for 0-character word
+>   boundaries
+> + color-words: refactor word splitting and use ALLOC_GROW()
+> + Add color_fwrite_lines(), a function coloring each line
+>   individually
 
-I have a gut feeling that the performance dip I saw is a direct result of 
-doing away with the fan-out "subdirectories": remember, originally, I had 
-a tree structure much like the loose objects in .git/objects/??/, while 
-Peff convinced me that a flat tree object should be enough.
+I think my patch in=20
+http://thread.gmane.org/gmane.comp.version-control.git/106567 should be=20
+applied to the top of this.  It respells "wordregex" to match existing=20
+uses throughout the repo.  Dscho had issues with one hunk, but I think I=20
+addressed them in my follow-up.  It looks like 98a4d87b (color-words:=20
+Support diff.wordregex config option) still has the internally-consistent=20
+runtogether spelling that doesn't match other configuration variables etc.
+=2D-=20
+Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
+bss@iguanasuicide.net                     ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
+http://iguanasuicide.net/                      \_/    =20
 
-I could be wrong on that, though.
+--nextPart1532220.HefNgn8h9j
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-> * js/patience-diff (Thu Jan 1 17:39:37 2009 +0100) 3 commits
->  + bash completions: Add the --patience option
->  + Introduce the diff option '--patience'
->  + Implement the patience diff algorithm
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-There is this one issue that my patience's output differs from bzr's.  
-Since the patience diff algorithm is so lousily documented, I do not know 
-if it is due to my misunderstanding the algorithm, or due to bzr doing 
-something clever in addition.
+iEYEABECAAYFAkl4Al4ACgkQ55pqL7G1QFnjBwCfRdT++ugPjg9h/JTtHv03JlCh
+P6UAn2JSwI+excNJPRio4dgSy+DZOSEx
+=5v8I
+-----END PGP SIGNATURE-----
 
-I'd be thankful if somebody could clarify that issue.
-
-Ciao,
-Dscho
+--nextPart1532220.HefNgn8h9j--
