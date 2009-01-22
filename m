@@ -1,75 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: RE: git fast-import problem converting from CVS with git 1.6.1 and
- cvs2svn 2.2.0
-Date: Thu, 22 Jan 2009 17:31:20 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901221729130.3586@pacific.mpi-cbg.de>
-References: <63BEA5E623E09F4D92233FB12A9F794302BC6851@emailmn.mqsoftware.com> <63BEA5E623E09F4D92233FB12A9F794302BC6855@emailmn.mqsoftware.com> <63BEA5E623E09F4D92233FB12A9F794302BC6921@emailmn.mqsoftware.com>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: [StGit PATCH 2/2] Make bash completion fail to bashdefault before
+ default completion.
+Date: Thu, 22 Jan 2009 11:38:09 -0500
+Message-ID: <4978A0F1.9080703@tedpavlic.com>
+References: <1232412373-10836-1-git-send-email-ted@tedpavlic.com> <1232412373-10836-2-git-send-email-ted@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Kelly F. Hickel" <kfh@mqsoftware.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 17:32:45 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "catalin.marinas" <catalin.marinas@gmail.com>,
+	git <git@vger.kernel.org>
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 17:39:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ2Tw-0000qy-GA
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 17:32:40 +0100
+	id 1LQ2af-0003Oh-T2
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 17:39:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753380AbZAVQbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 11:31:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbZAVQbO
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 11:31:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43089 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751161AbZAVQbN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 11:31:13 -0500
-Received: (qmail invoked by alias); 22 Jan 2009 16:31:11 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp055) with SMTP; 22 Jan 2009 17:31:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/dowBwus7dd/KQr8F+UuJ40ISFWtJBcalxoBhMx6
-	QFDNPumtZ9ojof
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <63BEA5E623E09F4D92233FB12A9F794302BC6921@emailmn.mqsoftware.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1753389AbZAVQiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 11:38:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752571AbZAVQiN
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 11:38:13 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:57134 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751161AbZAVQiN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2009 11:38:13 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 991F680D8045;
+	Thu, 22 Jan 2009 11:32:14 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id p7KWGdw6KnTj; Thu, 22 Jan 2009 11:32:14 -0500 (EST)
+Received: from tedbook.mshome.net (tedpc.ece.ohio-state.edu [164.107.164.122])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 80A3A80D8030;
+	Thu, 22 Jan 2009 11:32:14 -0500 (EST)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
+In-Reply-To: <1232412373-10836-2-git-send-email-ted@tedpavlic.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106761>
 
-Hi,
+>   def install():
+> -    return ['complete -o default -F _stg stg']
+> +    return ['complete -o bashdefault -o default -F _stg stg 2>/dev/null \\', [
+> +            'complete -o default -F _stg stg' ] ]
 
-On Thu, 22 Jan 2009, Kelly F. Hickel wrote:
+Oops -- that second "complete" should have two pipes in front of it...
 
-> I found the section in question, it is:
-> -- snip --
-> commit refs/heads/TAG.FIXUP
-> mark :1000007128
-> committer cvs2svn <cvs2svn> 1002043747 +0000
-> data 88
-> This commit was manufactured by cvs2svn to create tag
-> 'T_BU_Problem_9xxx_Merge_3-21-2000'.
-> merge :1000007126
-> M 100755 :180810 mfcdev/Domedit/DlgAddAlias.h
-> -- snap --
-> 
-> By my count, 88 is the ending single quote character, leaving the '.' to
-> be interpreted as a command.
 
-Great!
+-- 
+Ted Pavlic <ted@tedpavlic.com>
 
-> Looks like I should go post this on the cvs2svn list.....
-
-Indeed.  I think that Michael will find the culprit very soon, with this 
-detailed report.
-
-BTW for future reference, please Cc: the people you are responding to.  
-The Git mailing list is a high volume list, and people will miss you 
-answers otherwise.
-
-Thanks,
-Dscho
+   Please visit my ALS association page:
+         http://web.alsa.org/goto/tedpavlic
+   My family appreciates your support in the fight to defeat ALS.
