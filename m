@@ -1,75 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib: A script to show diff in new window while
- editing commit message.
-Date: Wed, 21 Jan 2009 15:59:13 -0800
-Message-ID: <7vy6x4b48e.fsf@gitster.siamese.dyndns.org>
-References: <4977A2C9.1070502@tedpavlic.com>
- <1232577906-868-1-git-send-email-ted@tedpavlic.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] handle color.ui at a central place
+Date: Wed, 21 Jan 2009 19:00:26 -0500
+Message-ID: <20090122000026.GB9668@sigill.intra.peff.net>
+References: <20090117153846.GB27071@coredump.intra.peff.net> <200901182137.16562.markus.heidelberg@web.de> <20090120040448.GA30714@sigill.intra.peff.net> <200901212335.24727.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 01:00:54 2009
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Thu Jan 22 01:02:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPn0A-00054v-8O
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 01:00:54 +0100
+	id 1LPn1a-0005YX-I8
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 01:02:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755730AbZAUX7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jan 2009 18:59:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756160AbZAUX7U
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 18:59:20 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43089 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755307AbZAUX7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jan 2009 18:59:19 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0B83192BF1;
-	Wed, 21 Jan 2009 18:59:18 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ED52A92BDF; Wed,
- 21 Jan 2009 18:59:14 -0500 (EST)
-In-Reply-To: <1232577906-868-1-git-send-email-ted@tedpavlic.com> (Ted
- Pavlic's message of "Wed, 21 Jan 2009 17:45:06 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 839354B0-E817-11DD-82E1-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1754534AbZAVAAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jan 2009 19:00:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754491AbZAVAAa
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Jan 2009 19:00:30 -0500
+Received: from peff.net ([208.65.91.99]:37298 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754179AbZAVAA3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jan 2009 19:00:29 -0500
+Received: (qmail 22642 invoked by uid 107); 22 Jan 2009 00:00:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 21 Jan 2009 19:00:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jan 2009 19:00:26 -0500
+Content-Disposition: inline
+In-Reply-To: <200901212335.24727.markus.heidelberg@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106706>
 
-Ted Pavlic <ted@tedpavlic.com> writes:
+On Wed, Jan 21, 2009 at 11:35:24PM +0100, Markus Heidelberg wrote:
 
-> It could be improved by supporting a command-line flag that would mimic
-> the "git commit -v"-type behavior of opening the diff in the same window
-> as the commit message. This would extend existing commands like "stg
-> edit" that do not already have a "-v"-type option.
+> > properly initialized (or finalized).
+> > 
+> > So I think it makes more sense to record each config value, and then
+> > check a _function_ that does the right thing. I.e., you end up with
+> > something like:
+> >
+> > [example code snipped]
+> 
+> That would probably be better.
 
-If a single-buffer operation is an improvement, then I do not see the
-point of this script.
+Do you want to work on it, or should it go into the "yeah, right, one
+day" section of my todo list?
 
- * Some people would like two-buffer operation and they may use this
-   script as their core.editor.
-
- * Other people (including me) would find it very natural to use "\C-x 2"
-   if they need to look at two places of the same buffer, because that is
-   what they are used to do when editing a long file every day.  They just
-   use "commit -v" without bothering with this script.
-
- * Yet other people (like Dscho) would find it too late to have a chance
-   for final review when writing a commit log message anyway, and won't
-   use either.
-
-And I think choice is good.
-
-Having said that, if the lack of "final chance to review the diff" in some
-StGIT subcommand is the real problem you are trying to solve, I think it
-is better solved by fixing StGIT.  If this script can be used as a
-substitute for the real solution, that may be a welcome unintended side
-effect, but I do not think you should make it the main selling point of
-the script.  After all people may not want to use this script when they
-are working directly with git, but still would want StGIT fixed.
+-Peff
