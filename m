@@ -1,138 +1,83 @@
-From: Mikael Magnusson <mikachu@gmail.com>
-Subject: Re: Short rant about git usability - make 'git clone' work on an 
-	empty remote repository
-Date: Thu, 22 Jan 2009 12:01:12 +0100
-Message-ID: <237967ef0901220301p47dab7d7hdbf2dccd04a99f16@mail.gmail.com>
-References: <20090122100230.GA9653@amd.home.annexia.org>
+From: Martin Pirker <Martin.Pirker@iaik.tugraz.at>
+Subject: git-describe hash length
+Date: Thu, 22 Jan 2009 12:26:06 +0100
+Message-ID: <497857CE.3060101@iaik.tugraz.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Richard W.M. Jones" <rjones@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 12:02:39 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 13:27:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPxKZ-000695-DC
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 12:02:39 +0100
+	id 1LPyem-0004Nl-6y
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 13:27:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753728AbZAVLBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 06:01:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753333AbZAVLBP
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 06:01:15 -0500
-Received: from ey-out-2122.google.com ([74.125.78.27]:65119 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751889AbZAVLBO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 06:01:14 -0500
-Received: by ey-out-2122.google.com with SMTP id 22so787834eye.37
-        for <git@vger.kernel.org>; Thu, 22 Jan 2009 03:01:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=38eLJvviJywjLe4/EVYqp3j8LpAN5Be/MNj0Fwi8fLw=;
-        b=aB+9cWZwysJELLp90nHZ47lrOEtkwdqJF9vn9+Vn3OsAOwpv9MOEwdaHMQgiBLJ5Ls
-         tNeaEhR3SYol9KfpiETAfMAANhnvOBm3q3QNJHRZ65CpZLYKtnaE43XtwE0qMD6glOLZ
-         n5Yk1gpGTNAx5XGGfxMSjKv7E0DUB/rpfsgsg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=O9nk2nf5qReyk+V29J0MTu2dDG+HUZSOE/dUwCf1otFGM22Xw6V/dhObJVnzXbwOMW
-         0P+RfnwWgeXaZlzs1i8UAhXDgnBkt30ZAldrA9DuAyXuPPG6RRo+XBfKtIGAvsT+8TAs
-         BFGo4UTcn6gS3ioU8z6oBnM1l4vIolgAef2AY=
-Received: by 10.210.28.4 with SMTP id b4mr616048ebb.120.1232622072572; Thu, 22 
-	Jan 2009 03:01:12 -0800 (PST)
-In-Reply-To: <20090122100230.GA9653@amd.home.annexia.org>
+	id S1754574AbZAVM0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 07:26:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754244AbZAVM0J
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 07:26:09 -0500
+Received: from mailrelay.tu-graz.ac.at ([129.27.2.202]:3147 "EHLO
+	mailrelay.tugraz.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753027AbZAVM0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 07:26:08 -0500
+X-Greylist: delayed 3538 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Jan 2009 07:26:08 EST
+Received: from thor.iaik.tugraz.at (mail1.iaik.tugraz.at [129.27.152.30])
+	by mailrelay2.tugraz.at (8.14.3/8.14.3) with ESMTP id n0MBR3Zk005229
+	for <git@vger.kernel.org>; Thu, 22 Jan 2009 12:27:03 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.7.2 mailrelay2.tugraz.at n0MBR3Zk005229
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tugraz.at;
+	s=mailrelay; t=1232623624; bh=Yhq80oNCeQk02QIBiJy3drC0IbLMOlQWaKcTB
+	J3wx7k=; h=Message-ID:Date:From:MIME-Version:To:Subject:
+	 Content-Type:Content-Transfer-Encoding; b=maSr3oiR1JwCqRKn0bxbCzTl
+	CfMqtrDgAvYut0UOxKAWDZknX459D4cpHby5QF5pjdM5S1w8i6FEQQFa29UTBHhlrw8
+	qdrBpSRTYAGw5xKC0B35pZnTsuL38IBnS59X1e2bbFkWG4pJxj99E61/OQEmz+ENZEI
+	y7VEQkunT2D+4=
+Received: from localhost (localhost [127.0.0.1])
+	by thor.iaik.tugraz.at (Postfix) with ESMTP id 9040E1067B3C7
+	for <git@vger.kernel.org>; Thu, 22 Jan 2009 12:27:03 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at iaik.tugraz.at
+Received: from thor.iaik.tugraz.at ([127.0.0.1])
+	by localhost (thor.iaik.tugraz.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id pv16KEZdw2Qt for <git@vger.kernel.org>;
+	Thu, 22 Jan 2009 12:27:03 +0100 (CET)
+Received: from [129.27.152.74] (mannus.iaik.tugraz.at [129.27.152.74])
+	by thor.iaik.tugraz.at (Postfix) with ESMTP
+	for <git@vger.kernel.org>; Thu, 22 Jan 2009 12:27:03 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+X-TUG-Backscatter-control: hn0LrPnJ+/fhju8CMzmpjQ
+X-Spam-Scanner: SpamAssassin 3.002005 
+X-Spam-Score-relay: 0.0
+X-Scanned-By: MIMEDefang 2.65 on 129.27.10.19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106745>
 
-2009/1/22 Richard W.M. Jones <rjones@redhat.com>:
-> This is a rant, those offended by rants should stop reading now.
->
-> When I want to check out a remote repository, I do:
->
->  git clone URL...
->
-> Except when the repository is empty, when for no explicable reason
-> this familiar command doesn't work.
->
->  $ git clone git+ssh://rwmj@git.ocamlcore.org/gitroot/ocaml-autoconf/ocaml-autoconf.git
->  Initialized empty Git repository in /home/rjones/d/ocaml-autoconf/.git/
->  fatal: no matching remote head
->
->  $ git init ocaml-autoconf
->  usage: git init [-q | --quiet] [--bare] [--template=<template-directory>] [--shared[=<permissions>]]
->  $ mkdir ocaml-autoconf
->  $ cd ocaml-autoconf
->  $ git init
->  Initialized empty Git repository in /home/rjones/d/ocaml-autoconf/.git/
->  $ ls
->  $ ls -a
->  .  ..  .git
->
-> Following advice on a website ...
->
->  $ git-remote origin git+ssh://rwmj@git.ocamlcore.org/gitroot/ocaml-autoconf/ocaml-autoconf.git
->  error: Unknown subcommand: origin
->  usage: git remote
->     or: git remote add <name> <url>
->     or: git remote rm <name>
->     or: git remote show <name>
->     or: git remote prune <name>
->     or: git remote update [group]
->
->      -v, --verbose         be verbose
->
->  $ git remote add origin git+ssh://rwmj@git.ocamlcore.org/gitroot/ocaml-autoconf/ocaml-autoconf.git
->
->  $ git status
->  # On branch master
->  #
->  # Initial commit
->  #
->  nothing to commit (create/copy files and use "git add" to track)
->  $ git branch
->  $ git checkout
->  fatal: You are on a branch yet to be born
->  $ git status
->  # On branch master
->  #
->  # Initial commit
->  #
->  nothing to commit (create/copy files and use "git add" to track)
->  $ echo test > README
->  $ git commit -a
->  # On branch master
->  #
->  # Initial commit
->  #
->  # Untracked files:
->  #   (use "git add <file>..." to include in what will be committed)
->  #
->  #     README
->  nothing added to commit but untracked files present (use "git add" to track)
->  $ git add README
->  $ git commit -a
->  Created initial commit 2c9a63a: Create repository.
->   1 files changed, 1 insertions(+), 0 deletions(-)
->   create mode 100644 README
->
->  $ git push
->  No refs in common and none specified; doing nothing.
->  Perhaps you should specify a branch such as 'master'.
->  fatal: The remote end hung up unexpectedly
->  error: failed to push some refs to 'git+ssh://rwmj@git.ocamlcore.org/gitroot/ocaml-autoconf/ocaml-autoconf.git'
->  $ git push master
->  fatal: 'master': unable to chdir or not a git archive
->  fatal: The remote end hung up unexpectedly
->  $ git branch master
->  fatal: A branch named 'master' already exists.
+Hi!
 
-$ man git-push
-$ git push origin master
+
+john@doe:/workspace$ git version
+git version 1.6.1
+john@doe:/workspace$ git describe
+fatal: cannot describe '7aee61cc635a923e70b74091486742481ee0928b'
+john@doe:/workspace$ git describe --always
+7aee61c
+john@doe:/workspace$ git describe --always --abbrev=8
+7aee61cc
+
+
+man git-describe:
+
+  --abbrev=<n>
+      Instead of using the default 8 hexadecimal digits as the
+      abbreviated object name, use <n> digits.
+
+
+
+There is one character missing from default or what am I missing?
+
+Thanks,
+Martin
