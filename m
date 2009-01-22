@@ -1,71 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] cygwin: Convert paths for html help from posix to
- windows
-Date: Thu, 22 Jan 2009 18:30:07 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901221829180.3586@pacific.mpi-cbg.de>
-References: <20090122171605.GA16684@atjola.homenet> <7veiyv6ynm.fsf@gitster.siamese.dyndns.org>
+From: =?utf-8?Q?S=C3=A9bastien?= Mazy <melyadon@gmail.com>
+Subject: How to prefix existing svn remotes?
+Date: Thu, 22 Jan 2009 18:32:11 +0100
+Message-ID: <20090122173211.GB21798@locahost>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1107129788-1232645410=:3586"
-Cc: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	jaeckel@stzedn.de, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 18:31:38 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 18:33:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ3Os-0006Q3-V1
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 18:31:31 +0100
+	id 1LQ3R1-0007GX-Vx
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 18:33:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754952AbZAVRaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 12:30:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754440AbZAVRaH
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 12:30:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48756 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753863AbZAVRaF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 12:30:05 -0500
-Received: (qmail invoked by alias); 22 Jan 2009 17:29:59 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp060) with SMTP; 22 Jan 2009 18:29:59 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+uIIQ+Im2uPDhR2B3sjDYc/Aa1FoDVG5RVqara8R
-	qXCkjWpMW8R6el
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7veiyv6ynm.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1755202AbZAVRcU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jan 2009 12:32:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754499AbZAVRcU
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 12:32:20 -0500
+Received: from mail-ew0-f20.google.com ([209.85.219.20]:64132 "EHLO
+	mail-ew0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755094AbZAVRcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 12:32:18 -0500
+Received: by ewy13 with SMTP id 13so2793782ewy.13
+        for <git@vger.kernel.org>; Thu, 22 Jan 2009 09:32:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=CLWUypwZUGEh6q6vWY35HBEjTuzEtqwiBokgrowcdLc=;
+        b=DQwVvhsTyPsHN4233QxAHeykTdkR654vRuUOHKofgOn9nOVsXr4DFd7yA/Yg498ACp
+         elFxACtMnMH5rD14DN2jJGaheq+7lwzZtYD9s8Afd/G6p0u0eHvRTWTJkrZDovwnfcTf
+         GrEaTlpoSKwPZ0OPNnF2qNGeh8nfCL+JjtAFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=cX5vEAeqaVyWnOka6eXAuZgXQWcDuDrtQ6HIx5UF9B8Abl/lCmjojSTlN+BudtSKo0
+         Kk+K8m2JVH1ctUMGJ0OHyQBwLHCkG1QammYhzmO0OloMBTVS5AlyWNH0hDu9Asx+XNGO
+         3DXJiXUwoXMxLaMAUWWL4QLuSTa+eZ5BwHJnY=
+Received: by 10.86.95.8 with SMTP id s8mr313832fgb.28.1232645535858;
+        Thu, 22 Jan 2009 09:32:15 -0800 (PST)
+Received: from localhost (vpn-cl-166-68.rz.uni-karlsruhe.de [141.3.166.68])
+        by mx.google.com with ESMTPS id e20sm2059382fga.53.2009.01.22.09.32.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 22 Jan 2009 09:32:15 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106779>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi all,
 
---8323328-1107129788-1232645410=:3586
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
 
-Hi,
+I created a few months ago a git-svn repository using:
+git svn clone -s https://my_svn_repo .
 
-On Thu, 22 Jan 2009, Junio C Hamano wrote:
+wich also created the following remotes:
+git branch -r
+  branch0
+  tags/tag0
+  trunk
 
-> Björn Steinbrink <B.Steinbrink@gmx.de> writes:
-> 
-> > OK, I don't really know if this is the right way to do it. Maybe when
-> > the browser was built for cygwin this breaks? I have no clue,...
-> 
-> It might be simple enough to check if all it takes is to install a
-> prepackaged browser from Cygwin suite and try to run it.  Doesn't Cygwin
-> have small ones such as lynx (or links)?
+I would like to prefix theses remotes, so that it shows:
+git branch -r
+  prefix/branch0
+  prefix/tags/tag0
+  prefix/trunk
 
-Was it not the case that Cygwin programs could grok Windows paths, too?  
-IIRC w3m is available, dunno about lynx.
+Of course I should have used the -prefix back when creating the repo bu=
+t
+it's too late. 'git help svn' doesn't explain how to achieve that and
+simply editing .git/config to add the missing prefix will cause the nex=
+t
+'git svn fetch' to download again the whole history (which in my case i=
+s
+huge).
 
-Ciao,
-Dscho
 
---8323328-1107129788-1232645410=:3586--
+Is it possible? Did I miss something obvious?
+
+
+Cheers,
+
+--=20
+S=C3=A9bastien Mazy
