@@ -1,71 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] user-manual: Simplify the user configuration.
-Date: Thu, 22 Jan 2009 18:28:12 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901221827370.3586@pacific.mpi-cbg.de>
-References: <1232561365-5919-1-git-send-email-felipe.contreras@gmail.com> <7v8wp4e5wn.fsf@gitster.siamese.dyndns.org> <94a0d4530901211319t8126611wc1437848631fe988@mail.gmail.com> <831vuvfh7t.fsf@kalahari.s2.org> <94a0d4530901220857q1027c05bs137dcc0244a1cc5a@mail.gmail.com>
- <7v1vuv8dqy.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git-log: Follow file copies with 'git log --follow
+ -C -C'
+Date: Thu, 22 Jan 2009 09:28:59 -0800
+Message-ID: <7v8wp36yhw.fsf@gitster.siamese.dyndns.org>
+References: <1232642245-94405-1-git-send-email-arjen@yaph.org>
+ <1232642245-94405-2-git-send-email-arjen@yaph.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Hannu Koivisto <azure@iki.fi>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 18:29:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Arjen Laarhoven <arjen@yaph.org>
+X-From: git-owner@vger.kernel.org Thu Jan 22 18:30:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ3N1-0005gK-5x
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 18:29:35 +0100
+	id 1LQ3Nu-00064C-G5
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 18:30:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755097AbZAVR2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 12:28:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754724AbZAVR2J
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 12:28:09 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49740 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754296AbZAVR2I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 12:28:08 -0500
-Received: (qmail invoked by alias); 22 Jan 2009 17:28:04 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp029) with SMTP; 22 Jan 2009 18:28:04 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18y9Dd906cyhK9Esif6rpMZL86OMHUwf38pGdERAX
-	fGnv7LgxDoUkHF
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7v1vuv8dqy.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1755112AbZAVR3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 12:29:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754440AbZAVR3H
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 12:29:07 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44149 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754233AbZAVR3E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 12:29:04 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4E2DD92C6E;
+	Thu, 22 Jan 2009 12:29:04 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 424F592C6D; Thu,
+ 22 Jan 2009 12:29:00 -0500 (EST)
+In-Reply-To: <1232642245-94405-2-git-send-email-arjen@yaph.org> (Arjen
+ Laarhoven's message of "Thu, 22 Jan 2009 17:37:25 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2A51F288-E8AA-11DD-B4A0-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106777>
 
-Hi,
+Arjen Laarhoven <arjen@yaph.org> writes:
 
-On Thu, 22 Jan 2009, Junio C Hamano wrote:
+> When the '--follow' option is used with '--find-copies-harder' ('-C -C')
+> logs on individual files will work across file copies as well as
+> renames.
 
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > On Thu, Jan 22, 2009 at 6:17 PM, Hannu Koivisto <azure@iki.fi> wrote:
-> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> >>
-> >>> This brings back my previous question: where is the home directory in
-> >>> a Windows system?
-> >>
-> >> It's where %HOMEDRIVE%%HOMEPATH% points to.
-> >
-> > I thought it was something like that. Do we want something like that
-> > in the manual, or should we assume Windows users know that?
-> 
-> Funny; while I was test driving Msysgit (I wrote the report in my blog
-> pages some time ago), I got curious about this exact issue.  I thought the
-> choice of $HOME at that path was quite natural even for me who does not
-> usually use Windows.
+Is there a reason to limit this to "harder" case?
 
-That's what they said when they convinced me that /home/<user>/ was not a 
-natural place on Windows.
+> diff --git a/tree-diff.c b/tree-diff.c
+> index 9f67af6..73652b2 100644
+> --- a/tree-diff.c
+> +++ b/tree-diff.c
+> @@ -333,6 +333,8 @@ static void try_to_follow_renames(struct tree_desc *t1, struct tree_desc *t2, co
+>  
+>  	diff_setup(&diff_opts);
+>  	DIFF_OPT_SET(&diff_opts, RECURSIVE);
+> +	if (DIFF_OPT_TST(opt, FIND_COPIES_HARDER))
+> +		DIFF_OPT_SET(&diff_opts, FIND_COPIES_HARDER);
+>  	diff_opts.detect_rename = DIFF_DETECT_RENAME;
 
-Ciao,
-Dscho
+Hmm, why isn't this DIFF_DETECT_COPY?
+
+>  	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+>  	diff_opts.single_follow = opt->paths[0];
+> -- 
+> 1.6.1.354.gd9e51
