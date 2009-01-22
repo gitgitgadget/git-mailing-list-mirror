@@ -1,101 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 5/5] pager: do wait_for_pager on signal death
-Date: Thu, 22 Jan 2009 01:03:28 -0500
-Message-ID: <20090122060328.GE30133@coredump.intra.peff.net>
-References: <20090122042643.GB31427@coredump.intra.peff.net>
+From: David Bryson <david@statichacks.org>
+Subject: git on the reg
+Date: Wed, 21 Jan 2009 23:17:46 -0800
+Message-ID: <20090122071746.GG9224@eratosthenes.cryptobackpack.org>
+Reply-To: David Bryson <david@statichacks.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 22 07:04:56 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="qMm9M+Fa2AknHoGS"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 22 08:19:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LPsgS-0006qG-77
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 07:04:56 +0100
+	id 1LPtqS-0004kA-CE
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 08:19:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754842AbZAVGDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 01:03:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754777AbZAVGDb
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 01:03:31 -0500
-Received: from peff.net ([208.65.91.99]:46680 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753898AbZAVGDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 01:03:30 -0500
-Received: (qmail 24493 invoked by uid 107); 22 Jan 2009 06:03:36 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 22 Jan 2009 01:03:36 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Jan 2009 01:03:28 -0500
+	id S1754136AbZAVHRt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 02:17:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753990AbZAVHRt
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 02:17:49 -0500
+Received: from cryptobackpack.org ([64.105.32.74]:40974 "EHLO
+	mail.cryptobackpack.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753929AbZAVHRs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 02:17:48 -0500
+Received: by mail.cryptobackpack.org (Postfix, from userid 1000)
+	id BED5A10D00B9; Wed, 21 Jan 2009 23:17:47 -0800 (PST)
+X-Spam-Checker-Version: SpamAssassin 3.2.1-gr1 (2007-05-02) on
+	ptolemy.cryptobackpack.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.1-gr1
+Received: from eratosthenes.statichacks.org (heliosphan.cryptobackpack.org [10.6.6.6])
+	by mail.cryptobackpack.org (Postfix) with ESMTP id 29C2610D0045
+	for <git@vger.kernel.org>; Wed, 21 Jan 2009 23:17:47 -0800 (PST)
+Received: by eratosthenes.statichacks.org (Postfix, from userid 1000)
+	id EF46D153E0D; Wed, 21 Jan 2009 23:17:46 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20090122042643.GB31427@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106729>
 
-Since ea27a18 (spawn pager via run_command interface), the
-original git process actually does git work, and the pager
-is a child process (actually, on Windows it has always been
-that way, since Windows lacks fork). After spawning the
-pager, we register an atexit() handler that waits for the
-pager to finish.
 
-Unfortunately, that handler does not always run. In
-particular, if git is killed by a signal, then we exit
-immediately. The calling shell then thinks that git is done;
-however, the pager is still trying to run and impact the
-terminal. The result can be seen by running a long git
-process with a pager (e.g., "git log -p") and hitting ^C.
-Depending on your config, you should see the shell prompt,
-but pressing a key causes the pager to do any terminal
-de-initialization sequence.
+--qMm9M+Fa2AknHoGS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-This patch just intercepts any death-dealing signals and
-waits for the pager before dying. Under typical less
-configuration, that means hitting ^C will cause git to stop
-generating output, but the pager will keep running.
+Hi all,
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Same as before.
+The regsiter has an article on the guerilla git movement inside
+companies.  I recall at the GitTogether folks from big pharma, Google,
+and Facebook were 'unofficially' using git(not to mention myself).
 
- pager.c |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
+http://www.theregister.co.uk/2009/01/21/git_gaining_ground/
 
-diff --git a/pager.c b/pager.c
-index f19ddbc..4921843 100644
---- a/pager.c
-+++ b/pager.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "run-command.h"
-+#include "sigchain.h"
- 
- /*
-  * This is split up from the rest of git so that we can do
-@@ -38,6 +39,13 @@ static void wait_for_pager(void)
- 	finish_command(&pager_process);
- }
- 
-+static void wait_for_pager_signal(int signo)
-+{
-+	wait_for_pager();
-+	sigchain_pop(signo);
-+	raise(signo);
-+}
-+
- void setup_pager(void)
- {
- 	const char *pager = getenv("GIT_PAGER");
-@@ -75,6 +83,7 @@ void setup_pager(void)
- 	close(pager_process.in);
- 
- 	/* this makes sure that the parent terminates after the pager */
-+	sigchain_push_common(wait_for_pager_signal);
- 	atexit(wait_for_pager);
- }
- 
--- 
-1.6.1.403.g6c435
+It is very cool to see this bottom up movement gaining some notariety.
+Oh an the Linus jokes are fairly amusing as well ;-).
+
+Dave
+
+
+--qMm9M+Fa2AknHoGS
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkl4HZoACgkQLfsM4nS2FiAIQwCgqsvL3HkMkeZijyvry18Y3smq
+EPEAn1kANiyHO9yPnsqlUP3PJecwZs1b
+=6Fo4
+-----END PGP SIGNATURE-----
+
+--qMm9M+Fa2AknHoGS--
