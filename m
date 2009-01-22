@@ -1,105 +1,59 @@
-From: Arjen Laarhoven <arjen@yaph.org>
-Subject: [PATCH 2/2] git-log: Follow file copies with 'git log --follow -C -C'
-Date: Thu, 22 Jan 2009 17:37:25 +0100
-Message-ID: <1232642245-94405-2-git-send-email-arjen@yaph.org>
-References: <1232642245-94405-1-git-send-email-arjen@yaph.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 22 17:47:28 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: CR codes from git commands
+Date: Thu, 22 Jan 2009 17:50:49 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901221749030.3586@pacific.mpi-cbg.de>
+References: <18805.64312.289059.660023@hungover.brentg.com>  <alpine.LNX.1.00.0901212319310.19665@iabervon.org>  <e38bce640901212334v1e672d48t81d5c81fecd929eb@mail.gmail.com>  <alpine.LNX.1.00.0901220238380.19665@iabervon.org>  <7vbptzahra.fsf@gitster.siamese.dyndns.org>
+  <e2b179460901220204x7b6a43b5hddfee623d2425429@mail.gmail.com>  <18808.39712.351656.138702@hungover.brentg.com> <e2b179460901220841h17c9eda2h38e8baff2964dac3@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brent Goodrick <bgoodr@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Mike Ralphson <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 22 17:52:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ2i0-00061K-8B
-	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 17:47:12 +0100
+	id 1LQ2my-0008Bn-AM
+	for gcvg-git-2@gmane.org; Thu, 22 Jan 2009 17:52:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756919AbZAVQog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 11:44:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756863AbZAVQof
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 11:44:35 -0500
-Received: from smtp-vbr17.xs4all.nl ([194.109.24.37]:4071 "EHLO
-	smtp-vbr17.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756787AbZAVQod (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 11:44:33 -0500
-X-Greylist: delayed 425 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Jan 2009 11:44:33 EST
-Received: from localhost.localdomain ([194.109.31.155])
-	by smtp-vbr17.xs4all.nl (8.13.8/8.13.8) with ESMTP id n0MGbPXq090230
-	for <git@vger.kernel.org>; Thu, 22 Jan 2009 17:37:25 +0100 (CET)
-	(envelope-from arjen@yaph.org)
-X-Mailer: git-send-email 1.6.1.354.gd9e51
-In-Reply-To: <1232642245-94405-1-git-send-email-arjen@yaph.org>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1753886AbZAVQu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 11:50:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753849AbZAVQuz
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 11:50:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37998 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753412AbZAVQuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 11:50:55 -0500
+Received: (qmail invoked by alias); 22 Jan 2009 16:50:49 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp004) with SMTP; 22 Jan 2009 17:50:49 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX190jkEYnCd0upgqBGUjm087zcc+O4TJQBlpIPFt3/
+	6aHM+cNHs1ZPQW
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <e2b179460901220841h17c9eda2h38e8baff2964dac3@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106768>
 
-When the '--follow' option is used with '--find-copies-harder' ('-C -C')
-logs on individual files will work across file copies as well as
-renames.
+Hi,
 
-Intermediate copies will not be shown as a result of the workings of the
-'--find-copies-harder' option.
+On Thu, 22 Jan 2009, Mike Ralphson wrote:
 
-Signed-off-by: Arjen Laarhoven <arjen@yaph.org>
----
- Documentation/git-log.txt |    6 +++++-
- t/t4202-log.sh            |   12 ++++++++++++
- tree-diff.c               |    2 ++
- 3 files changed, 19 insertions(+), 1 deletions(-)
+> My $EDITOR is set to vim, as god intended. 8-)
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 34cf4e5..2d42101 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -52,7 +52,11 @@ include::diff-options.txt[]
- 	commits, and doesn't limit diff for those commits.
- 
- --follow::
--	Continue listing the history of a file beyond renames.
-+	Continue listing the history of a file beyond renames.  When
-+	combined with `--find-copies-harder` (`-C -C`) git will also
-+	list the file history beyond copies.  Intermediate copies
-+	will be skipped, e.g. a copy of file A to B to C will not
-+	show B when showing the log on file C.
- 
- --log-size::
- 	Before the log message print out its size in bytes. Intended
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 7b976ee..a8dd690 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -109,6 +109,18 @@ test_expect_success 'git log --follow' '
- 
- '
- 
-+test_expect_success 'git log --follow --find-copies-harder' '
-+
-+	actual=$(git log --follow -C -C --pretty="format:%s" ein) &&
-+	expect=$(echo fourth; echo third ; echo second ; echo initial) &&
-+	test "$actual" = "$expect" || {
-+		echo Oops
-+		echo "Actual: $actual"
-+		false
-+	}
-+
-+'
-+
- test_expect_success 'setup case sensitivity tests' '
- 	echo case >one &&
- 	test_tick &&
-diff --git a/tree-diff.c b/tree-diff.c
-index 9f67af6..73652b2 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -333,6 +333,8 @@ static void try_to_follow_renames(struct tree_desc *t1, struct tree_desc *t2, co
- 
- 	diff_setup(&diff_opts);
- 	DIFF_OPT_SET(&diff_opts, RECURSIVE);
-+	if (DIFF_OPT_TST(opt, FIND_COPIES_HARDER))
-+		DIFF_OPT_SET(&diff_opts, FIND_COPIES_HARDER);
- 	diff_opts.detect_rename = DIFF_DETECT_RENAME;
- 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
- 	diff_opts.single_follow = opt->paths[0];
--- 
-1.6.1.354.gd9e51
+Sorry, that is not true: from
+
+http://www.biblegateway.com/passage/?book_id=50&chapter=1&verse=1&version=31&context=verse
+
+we know that in the beginning was the Word.
+
+Ciao,
+Dscho
