@@ -1,222 +1,71 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] contrib git-resurrect: find traces of a branch name and resurrect it
-Date: Fri, 23 Jan 2009 21:03:05 +0100
-Message-ID: <1232740985-4551-1-git-send-email-trast@student.ethz.ch>
-References: <200901201450.53450.bss@iguanasuicide.net>
-Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	Junio C Hamano <junio@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 23 21:05:00 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Allow cloning an empty repository
+Date: Fri, 23 Jan 2009 21:05:57 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901232100020.21467@intel-tinevez-2-302>
+References: <1232669252-21881-1-git-send-email-srabbelier@gmail.com> <7vwscm4xx0.fsf@gitster.siamese.dyndns.org> <bd6139dc0901221746h258f548etf857ab37399133da@mail.gmail.com> <alpine.DEB.1.00.0901230333060.3586@pacific.mpi-cbg.de>
+ <bd6139dc0901221847u6b8aeadcl580a091751de3d26@mail.gmail.com> <alpine.DEB.1.00.0901230419080.3586@pacific.mpi-cbg.de> <20090123165549.GI21473@genesis.frugalware.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Jan 23 21:08:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQSGb-0006CQ-1e
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 21:04:37 +0100
+	id 1LQSJS-0007FK-1N
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 21:07:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754611AbZAWUDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 15:03:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753563AbZAWUDJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 15:03:09 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:25830 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753916AbZAWUDH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 15:03:07 -0500
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 23 Jan 2009 21:03:04 +0100
-Received: from localhost.localdomain ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 23 Jan 2009 21:03:04 +0100
-X-Mailer: git-send-email 1.6.1.447.gbdf1d
-In-Reply-To: <200901201450.53450.bss@iguanasuicide.net>
-X-OriginalArrivalTime: 23 Jan 2009 20:03:04.0495 (UTC) FILETIME=[9A0D93F0:01C97D95]
+	id S1754011AbZAWUGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 15:06:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750772AbZAWUGK
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 15:06:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60458 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752276AbZAWUGJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 15:06:09 -0500
+Received: (qmail invoked by alias); 23 Jan 2009 20:06:08 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp033) with SMTP; 23 Jan 2009 21:06:08 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+m/pFtz0imeuPQc5jgrZhJ3XL1lklNagrtbquL9E
+	zltjGD4NMpulda
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090123165549.GI21473@genesis.frugalware.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106909>
 
-Add a tool 'git-resurrect.sh <branch>' that tries to find traces of
-the <branch> in the HEAD reflog and, optionally, all merge commits in
-the repository.  It can then resurrect the branch, pointing it at the
-most recent of all candidate commits found.
+Hi,
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+On Fri, 23 Jan 2009, Miklos Vajna wrote:
 
-Boyd Stephen Smith Jr. wrote:
-> I think it could be quite nice; "undelete"-type commands are generally 
-> well-received by users and when run against reflogs alone, that's what the 
-> command is.
+> On Fri, Jan 23, 2009 at 04:20:34AM +0100, Johannes Schindelin 
+> <Johannes.Schindelin@gmx.de> wrote:
+>
+> > But then, scripts have no business cloning repositories (fetching, 
+> > yes.  But cloning?)
 > 
-> It's useful enough to me that I'd love to see it mainlined.
+> I think portals like repo.or.cz may do it.
 
-So here's a version for contrib with more options and some other
-tweaks.
+"git grep git.clone" in repo.git suggests that only clonecheck.sh uses it, 
+which is not called anywhere.
 
-I removed the ability to "batch resurrect" with several <name>
-arguments since that would have conflicted with -b <newname>, but
-otherwise the features are the same.
+But more generally, the same should apply to such scripts as to human 
+users: HTTP _is_ 2nd class, and the fetch _could_ succeed later.
 
-> In my particular case, it wasn't useful without the -m option, but I 
-> understand why it is not the default.
+> Isn't setting errno (or similar variable) in the HTTP code an option? 
+> Then we could see why the transport failed and make a difference between 
+> "network error" and "no refs found".
 
-Aside from the obvious speed reasons, I don't really want to teach
-people that commits "know" the branch they were on.  It is a pure
-coincidence if you can resurrect a topic branch from merge messages;
-an equivalent merge could have gone through as a fast-forward, and
-you'd never know.
+I'd rather see the HTTP code path taken by transport.c _fail_ (i.e. die()) 
+when there is some sort of connection error.
 
-
-
- contrib/git-resurrect.sh |  140 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 140 insertions(+), 0 deletions(-)
- create mode 100755 contrib/git-resurrect.sh
-
-diff --git a/contrib/git-resurrect.sh b/contrib/git-resurrect.sh
-new file mode 100755
-index 0000000..29bf723
---- /dev/null
-+++ b/contrib/git-resurrect.sh
-@@ -0,0 +1,140 @@
-+#!/bin/sh
-+
-+USAGE="[-h] [-r] [-m] [-t] [-n] [-b <newname>] <name>"
-+LONG_USAGE="git-resurrect attempts to find traces of a branch tip
-+called <name>, and tries to resurrect it.  Currently, the reflog is
-+searched for checkout messages, and with -r also merge messages.  With
-+-m and -t, the history of all refs is scanned for Merge <name> into
-+other/Merge <other> into <name> (respectively) commit subjects, which
-+is rather slow but allows you to resurrect other people's topic
-+branches."
-+
-+OPTIONS_SPEC="\
-+git resurrect [-h] [-r] [-m] [-t] [-n] [-b <newname>] <name>
-+--
-+b,branch=            save branch as <newname> instead of <name>
-+H,try-hard           same as -r -m -t
-+r,reflog-merges      scan for merges recorded in reflog
-+m,merges             scan for merges into other branches (slow)
-+t,merge-targets      scan for merges of other branches into <name>
-+n,dry-run            don't recreate the branch"
-+
-+. git-sh-setup
-+cd_to_toplevel
-+
-+search_reflog () {
-+        sed -n 's~^\([^ ]*\) .*\tcheckout: moving from '"$1"' .*~\1~p' \
-+                < .git/logs/HEAD
-+}
-+
-+search_reflog_merges () {
-+        sed -n 's~^[^ ]* \([^ ]*\) .*\tmerge '"$1"':~\1~p' \
-+                < .git/logs/HEAD
-+}
-+
-+search_merges () {
-+	git rev-list --pretty=tformat:"%h %p:%s" --all |
-+	grep "Merge branch.*'$branch'.*into" |
-+	while read sha rest; do
-+		parents="$(echo "$rest" | cut -d: -f1)"
-+		case "$parents" in
-+		    *' '*' '*)
-+			warn "$branch took part in octopus merge $sha"
-+			warn "check manually!"
-+			;;
-+		    *' '*)
-+			echo "$parents" | cut -d' ' -f2
-+			;;
-+		esac
-+	done
-+}
-+
-+search_merge_targets () {
-+	git rev-list --pretty=tformat:"%h %s" --all |
-+	grep "Merge branch '[^']*' into $branch$" |
-+	cut -d' ' -f1
-+}
-+
-+dry_run=
-+scan_reflog_merges=
-+scan_merges=
-+scan_merge_targets=
-+new_name=
-+
-+while test "$#" != 0; do
-+	case "$1" in
-+	    -b|--branch)
-+		shift
-+		new_name="$1"
-+		;;
-+	    -n|--dry-run)
-+		dry_run=t
-+		;;
-+	    -m|--merges)
-+		scan_merges=t
-+		;;
-+	    -r|--reflog_merges)
-+		scan_reflog_merges=t
-+		;;
-+	    -t|--merge-targets)
-+		scan_merge_targets=t
-+		;;
-+	    -H|--try-hard)
-+		scan_reflog_merges=t
-+		scan_merges=t
-+		scan_merge_targets=t
-+		;;
-+	    --)
-+		shift
-+		break
-+		;;
-+	    *)
-+		usage
-+		;;
-+	esac
-+	shift
-+done
-+
-+test "$#" = 1 || usage
-+
-+branch="$1"
-+test -z "$new_name" && new_name="$branch"q
-+
-+candidates="$(search_reflog $1)"
-+if test ! -z "$scan_reflog_merges"; then
-+	candidates="$candidates $(search_reflog_merges $1)"
-+fi
-+if test ! -z "$scan_merges"; then
-+	candidates="$candidates $(search_merges $1)"
-+fi
-+if test ! -z "$scan_merge_targets"; then
-+	candidates="$candidates $(search_merge_targets $1)"
-+fi
-+
-+candidates="$(git rev-parse $candidates | sort -u)"
-+
-+if test -z "$candidates"; then
-+	hint=
-+	test "z$scan_merges$scan_reflog_merges$scan_merge_targets" != "zttt" \
-+		&& hint="(maybe try again with -H)"
-+	die "no candidates for $branch found" $hint
-+fi
-+
-+echo "** Candidates for $branch **"
-+for cmt in $candidates; do
-+	git --no-pager log --pretty=oneline --abbrev-commit -1 $cmt
-+done
-+
-+newest="$(git rev-list -1 $candidates)"
-+if test ! -z "$dry_run"; then
-+	printf "Most recent: "
-+	git --no-pager log -1 --pretty=tformat:"%h %s" $newest
-+elif ! git rev-parse --verify --quiet $new_name >/dev/null; then
-+	printf "** Restoring $new_name to "
-+	git --no-pager log -1 --pretty=tformat:"%h %s" $newest
-+	git branch $new_name $newest
-+else
-+	printf "Most recent: "
-+	git --no-pager log -1 --pretty=tformat:"%h %s" $newest
-+	echo "** $new_name already exists, doing nothing"
-+fi
--- 
-1.6.1.447.gbdf1d
+Ciao,
+Dscho
