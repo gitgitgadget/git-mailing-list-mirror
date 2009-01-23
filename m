@@ -1,68 +1,48 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow cloning an empty repository
-Date: Thu, 22 Jan 2009 17:24:27 -0800
-Message-ID: <7vwscm4xx0.fsf@gitster.siamese.dyndns.org>
-References: <1232669252-21881-1-git-send-email-srabbelier@gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [kha/safe PATCH] completion bugfix: Place double pipes in front of alternate command.
+Date: Fri, 23 Jan 2009 02:35:04 +0100
+Message-ID: <20090123013504.GA24829@diana.vm.bytemark.co.uk>
+References: <20090122232928.GA23456@diana.vm.bytemark.co.uk> <1232670372-20000-1-git-send-email-ted@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 02:26:14 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, catalin.marinas@gmail.com
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 02:36:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQAoE-0005a5-QC
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 02:26:11 +0100
+	id 1LQAyQ-00082L-VL
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 02:36:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761273AbZAWBYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 20:24:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760603AbZAWBYj
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 20:24:39 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50463 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761981AbZAWBYe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 20:24:34 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F243A93B7F;
-	Thu, 22 Jan 2009 20:24:32 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C5B7193B7C; Thu,
- 22 Jan 2009 20:24:29 -0500 (EST)
-In-Reply-To: <1232669252-21881-1-git-send-email-srabbelier@gmail.com> (Sverre
- Rabbelier's message of "Fri, 23 Jan 2009 01:07:32 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 96BBBB7E-E8EC-11DD-9CB5-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1756098AbZAWBfS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jan 2009 20:35:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756082AbZAWBfR
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 20:35:17 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4823 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756072AbZAWBfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 20:35:16 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1LQAwq-0006fm-00; Fri, 23 Jan 2009 01:35:04 +0000
+Content-Disposition: inline
+In-Reply-To: <1232670372-20000-1-git-send-email-ted@tedpavlic.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106820>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+On 2009-01-22 19:26:12 -0500, Ted Pavlic wrote:
 
-> diff --git a/builtin-clone.c b/builtin-clone.c
-> index f7e5a7b..d5bba0e 100644
-> --- a/builtin-clone.c
-> +++ b/builtin-clone.c
-> @@ -522,14 +522,23 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  					     option_upload_pack);
->  
->  		refs = transport_get_remote_refs(transport);
-> -		transport_fetch_refs(transport, refs);
-> +		if(refs)
-> +			transport_fetch_refs(transport, refs);
+> -            'complete -o default -F _stg stg' ] ]
+> +            '|| complete -o default -F _stg stg' ] ]
 
-Thanks.
+Thanks, I've edited the patch and pushed it out again.
 
-I think the basic idea is Ok, but is it a reliable check at this point to
-see if (refs == NULL) to tell if the target repository is an empty one?
-
-I am mostly worried about a failure case (connected but couldn't get the
-refs, or perhaps connection failed to start).  If you get a NULL in such a
-case you may end up saying "oh you cloned a void" when you should say
-"nah, such a remote repository does not exist".
-
-If transport_get_remote_refs() dies without returning NULL, that would be
-sufficient, but I didn't check.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
