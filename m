@@ -1,101 +1,69 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: how to force a commit date matching info from a mbox ?
-Date: Fri, 23 Jan 2009 18:52:09 +0900
-Message-ID: <20090123185209.6117@nanako3.lavabit.com>
-References: <7vtz7qxsxc.fsf@gitster.siamese.dyndns.org>
- <7vwscm1nic.fsf@gitster.siamese.dyndns.org>
- <7vljt26fp9.fsf@gitster.siamese.dyndns.org>
- <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com>
- <20090123094529.6117@nanako3.lavabit.com>
- <20090123172646.6117@nanako3.lavabit.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Merging adjacent deleted lines?
+Date: Fri, 23 Jan 2009 11:32:36 +0100
+Message-ID: <200901231132.36543.robin.rosenberg.lists@dewire.com>
+References: <57518fd10901211120n62f8d0e9ya8595fc9baa6476c@mail.gmail.com> <200901222113.31082.robin.rosenberg.lists@dewire.com> <76718490901222318l7c3559ecje4a627fe2ff2ad12@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git list <git@vger.kernel.org>,
-	Christian MICHON <christian.michon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 10:54:02 2009
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan del Strother <maillist@steelskies.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 11:34:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQIjg-00044q-WC
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 10:54:01 +0100
+	id 1LQJMU-0008Al-AU
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 11:34:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759049AbZAWJwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 04:52:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758968AbZAWJwd
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 04:52:33 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:53829 "EHLO karen.lavabit.com"
+	id S1754717AbZAWKcl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 05:32:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754614AbZAWKcl
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 05:32:41 -0500
+Received: from mail.dewire.com ([83.140.172.130]:18709 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758945AbZAWJwc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 04:52:32 -0500
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 6C3C1C7B31;
-	Fri, 23 Jan 2009 03:52:31 -0600 (CST)
-Received: from 9469.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id K3JUSX3SM68O; Fri, 23 Jan 2009 03:52:31 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=WwfglQ6g4q9LFF1RSDsrcBmnZKUSZ8bPPkjcWu6Ixp4J352jMfJhaoJ0v4ltcPykvGLN5xDSrABCgQtz6RCa7e5p1TgCfGOX9RmPTkO1uVRZwpTB72y+6bxr0hdCVbaADRQRgj6kajtQCl+2xgG9xdyRBJEy/AKWLxrBc4/ir+I=;
-  h=From:To:Cc:Subject:Date:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+	id S1753862AbZAWKck (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 05:32:40 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id C82908026CA;
+	Fri, 23 Jan 2009 11:32:37 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7I-xHRI4BSke; Fri, 23 Jan 2009 11:32:37 +0100 (CET)
+Received: from sleipner.localnet (sleipner.dewire.com [10.1.2.197])
+	by dewire.com (Postfix) with ESMTP id 48D6880027F;
+	Fri, 23 Jan 2009 11:32:37 +0100 (CET)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <76718490901222318l7c3559ecje4a627fe2ff2ad12@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106871>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+fredag 23 januari 2009 08:18:15 skrev Jay Soffian:
+> On Thu, Jan 22, 2009 at 3:13 PM, Robin Rosenberg
+> <robin.rosenberg.lists@dewire.com> wrote:
+[...]
+> > Try a three-way merge tool instead like, e.g. xxdiff.
+> 
+> opendiff (aka FileMerge) *is* a three-way merge tool. If the
+> screenshot above is not clear, I'm not sure what would be. The left
+> pane shows your copy of the file with only line1, line3, and line4.
+> The right pane shows the other copy, with only line1, line2, and
+> line4.
 
->> --->8---
->> Subject: [PATCH] git-am: Add --ignore-date option
->
-> Good.
->
-> Leaving "Subject: " in saves me typing, because I do not have to insert it
-> manually when editing the submitted patch in my MUA to chop off everything
-> before the scissors.
+Where's the ancestor? I'm used to having four panes for doing three-way 
+merges, but your screenshot showed only three.
 
-I am sorry to ask you a stupid question, but do you mean you want to have
-"Subject: " there, or do you mean you want me to leave that word out?
+> 
+> Shrug.
 
-> I think it would work equally well if you somehow manage to pass this
-> through "git-rebase", but this won't work with "git-rebase --interactive".
+You have the option to ignore me....
 
-I can try to change git-rebase if you want, but I do not think I can
-modify git-rebase --interactive.  The script looked very scary last time I
-looked at it (^_^;;;).
-
->> +test_expect_success 'am --ignore-date' '
->> +	git checkout first &&
->> +	test_tick &&
->> +	git am --ignore-date patch1 &&
->> +	git cat-file commit HEAD | sed -e "/^$/q" >head1 &&
->> +	at=$(sed -ne "/^author /s/.*> //p" head1) &&
->> +	echo "$at" | grep "+0000"
->> +'
->
-> This is a convoluted logic.
->
-> The committer and author dates are set to -0700 timezone by test_tick,
-> while TZ is set to UTC (+0000) by test-lib.sh, and you are taking
-> advantage of them to see which one is being used.
->
-> But I do not think of a better way to do this offhand, so I'll let it
-> pass.
->
-> Regarding the "date -R" thing, I think we can take advantage of the fact
-> that an empty GIT_AUTHOR_DATE (and GIT_COMMITTER_DATE) means "do not use
-> this environment variable, but use the current date instead".  Something
-> like this patch on top of yours, whose first hunk reverts your change to
-> use "date -R", and sets GIT_AUTHOR_DATE to empty when --ignore-date is
-> asked for.
->
-> No, I didn't test it.
-
-I did, and it works.
-
-Thank you very much.
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+-- robin
