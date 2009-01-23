@@ -1,89 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Change octal literals to be XEmacs friendly
-Date: Fri, 23 Jan 2009 12:13:26 -0800
-Message-ID: <7vvds5u6ft.fsf@gitster.siamese.dyndns.org>
-References: <871vuwbnio.fsf@linmac.oyster.ru>
- <7vbpty1m1r.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0901232158290.2186@linmac.oyster.ru>
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: Re: [RFC/PATCH v3 3/3] archive.c: add basic support for submodules
+Date: Fri, 23 Jan 2009 21:15:16 +0100
+Message-ID: <8c5c35580901231215q2be36abbla443975cdbb031f0@mail.gmail.com>
+References: <1232659071-14401-1-git-send-email-hjemli@gmail.com>
+	 <1232659071-14401-2-git-send-email-hjemli@gmail.com>
+	 <1232659071-14401-3-git-send-email-hjemli@gmail.com>
+	 <1232659071-14401-4-git-send-email-hjemli@gmail.com>
+	 <alpine.DEB.1.00.0901230044300.3586@pacific.mpi-cbg.de>
+	 <8c5c35580901231040i380c6458x1a6103cd6f55c479@mail.gmail.com>
+	 <7vzlhhu8qo.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>
-To: malc <av1474@comtv.ru>
-X-From: git-owner@vger.kernel.org Fri Jan 23 21:15:01 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 21:16:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQSQd-0001kC-IT
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 21:15:00 +0100
+	id 1LQSSM-0002I5-EG
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 21:16:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752797AbZAWUNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 15:13:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752611AbZAWUNe
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 15:13:34 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61399 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752457AbZAWUNd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 15:13:33 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9AF3C1D218;
-	Fri, 23 Jan 2009 15:13:31 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B4BBE1D1F4; Fri,
- 23 Jan 2009 15:13:27 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0901232158290.2186@linmac.oyster.ru>
- (av1474@comtv.ru's message of "Fri, 23 Jan 2009 22:53:31 +0300 (MSK)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4E1C43FE-E98A-11DD-8283-BE78113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1753881AbZAWUPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 15:15:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752611AbZAWUPT
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 15:15:19 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:11336 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751402AbZAWUPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 15:15:17 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so36380wah.21
+        for <git@vger.kernel.org>; Fri, 23 Jan 2009 12:15:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bv3hZTzti21WGtSVO6fGBwWnnvQGjrKbAQBX3SiqtRI=;
+        b=xZ9QDg7NQWRbdMJs9Fi75oQsvi4wKDmROqdq/i841Xf+pKa/NZRx08g/vp2ag9nxOZ
+         AuYyiweSllhnON8HGiqVFVpYinut2oRwkXbthfZMec1qB6oH2U2r2fcHjsiY17f3u3dk
+         SKeEAuY1DSm7+uoc0QdQAlSBLyQsktD6dDBiY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tRQbQA3dZftp8N3aszHFp/Boyx1RFDXKUv2bBLfTgZNZ+Hd9eIxJtw/Qjoby7LDUf/
+         L+uPzVGGp4HVyXleM9sH1A+XCbFkUtoObJzR2bebjp0ppW6EFYfAe+X5pBzuOc/gyHxg
+         78kuq5AHtFtZ+qZiic1+2zTfhCMlXBZuKOq/U=
+Received: by 10.114.130.15 with SMTP id c15mr4567026wad.59.1232741716696; Fri, 
+	23 Jan 2009 12:15:16 -0800 (PST)
+In-Reply-To: <7vzlhhu8qo.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106911>
 
-malc <av1474@comtv.ru> writes:
-
-> On Fri, 23 Jan 2009, Junio C Hamano wrote:
+On Fri, Jan 23, 2009 at 20:23, Junio C Hamano <gitster@pobox.com> wrote:
+> Lars Hjemli <hjemli@gmail.com> writes:
 >
->> malc@pulsesoft.com writes:
->>
->>> case uses eql and (eql ?\001 1) evaluates to nil under XEmacs
->>> (probably because some internal type of ?\001 is char)
->>
->> And I presume the new way to spell is compatible with non XEmacs emacs?
->> It may be obvious to you, but please spell it out.  Parenthesized
->> "probably" does not help building the confidence in the patch either.
+>>>> The plan is to fix these limitations by extending --submodules to allow
+>>>> certain flags/options:
+>>>> a|c|r     include any|checked out|registered submodules
+>>>> H         resolve submodule HEAD to decide which tree to include
 >
-> Fair enough.
+> What do you mean by "decide"?  If HEAD exists (iow, the submodule is
+> checked out), the tree of the commit recorded in the superproject's
+> gitlink entry is included in the result?
+
+No, when H is specified the tree of the currently checked out
+submodule commit would be included (this obviously shouldn't be the
+default mode of operation, hence a flag to trigger it if that is what
+the user wants).
+
 >
-> XEmacs:
-> (type-of ?\1) yields character
+> As I already said before, I doubt it makes much sense in the context of
+> the current git-archive to base the choise on checkout status.
 >
-> FSF Emacs:
-> (type-of ?\1) yields integer
-
-No use explaining that to me _here_.  Please use that knowledge to write a
-better description in an updated commit log message when sending your v2
-patch.
-
->>> Signed-off-by: Vassili Karpov <av1474@comtv.ru>
->>
->> How are the (nameless) author of the patch malc@pulsesoft.com and Vassili
->> Karpov, the person who signed off, related?
+> Unless you are extending git-archive and giving it an ability to write out
+> the superproject index or the work tree as an archive, that is.
 >
-> Both are my e-mail address used in ~/.gitconfig and ~/.emacs (and used
-> by GNUS which was used to post the message via gmane's nntp interface)
-> respectively.
+> Just like git-grep lets you grep in the work tree files (limited to paths
+> that appear in the index), or grep in the contents registered to the index
+> when run with --cached, git-archive could make an archive out of your work
+> tree files or your index contents.  Such an extension to git-archive may
+> be quite useful with or without submodules.
 
-Assuming that you would want to be known as Vassili, please have that name
-on From: line of the message -- the patch acceptance tool takes the author
-name from there.
+Absolutely.
 
-If you can't for whatever reason use the name on From: line of the e-mail
-message, you can begin the body of the message with
+>
+> In such mode of operation, because you are dealing with the work tree when
+> run without --cached, it would make sense to say "Ah, the superproject
+> index wants v1.0 of the submodule, but the work tree has v2.0 of it
+> checked out, and we are writing out the work tree, so let's include v2.0
+> instead", and as a side effect of deciding which commit's tree to include
+> from each submodule, it naturally makes sense to exclude submodules that
+> are not checked out.
+>
+> But otherwise I am not so sure what the point of H option would be.
 
-	From: Vassili Karpov <av1474@comtv.ru>
+I would find the H flag practical for my own usage of submodules. I
+almost never modify the content of the currently checked out submodule
+but I often check out a different HEAD than what is registered in the
+gitlink in the superproject (typically due to testing the superproject
+against different versions of the submodule). And for such a use case,
+being able to create a tarball of my currently checked out state seems
+useful to me.
 
-(without indentation) and a blank line.  This trick can also be used when
-you are forwarding a patch somebody else wrote.
+Anyways, if we get as far as adding a --submodules option to git
+archive, I believe its default mode should be to archive the
+superproject HEAD state together with the gitlink'd state of each
+submodule registered in .git/config instead of --submodules=c which is
+what this patch implements. But I wanted to get some feedback on this
+plan before trying to implement it.
+
+--
+larsh
