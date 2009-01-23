@@ -1,53 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gittutorial: remove misleading note
-Date: Fri, 23 Jan 2009 11:00:18 -0800
-Message-ID: <7vk58lvoe5.fsf@gitster.siamese.dyndns.org>
-References: <1232733749-6120-1-git-send-email-vmiklos@frugalware.org>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: git blame: two "-C"s versus just a single -C
+Date: Fri, 23 Jan 2009 19:12:02 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngnk5k2.49k.sitaramc@sitaramc.homelinux.net>
+References: <slrngnjafr.iaa.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Jan 23 20:02:25 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 23 20:13:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQRHp-0007He-Lj
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 20:01:50 +0100
+	id 1LQRTR-0003NM-0c
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 20:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437AbZAWTAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 14:00:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753397AbZAWTAZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 14:00:25 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53613 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753035AbZAWTAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 14:00:24 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0CECC1D218;
-	Fri, 23 Jan 2009 14:00:23 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3142F1D217; Fri,
- 23 Jan 2009 14:00:20 -0500 (EST)
-In-Reply-To: <1232733749-6120-1-git-send-email-vmiklos@frugalware.org>
- (Miklos Vajna's message of "Fri, 23 Jan 2009 19:02:29 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 164FDA4E-E980-11DD-9704-BE78113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1753562AbZAWTMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 14:12:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753490AbZAWTMW
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 14:12:22 -0500
+Received: from main.gmane.org ([80.91.229.2]:51201 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753279AbZAWTMV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 14:12:21 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LQRRx-0001Mo-9J
+	for git@vger.kernel.org; Fri, 23 Jan 2009 19:12:17 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Jan 2009 19:12:17 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Jan 2009 19:12:17 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106904>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
-
-> In the tutorial Alice initializes the repository, and Bob clones it. So
-> Bob can just do a 'git pull', but Alice will need 'git pull <url>
-> <branch>'.
+On 2009-01-23, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+> I seem to recall (and the docs indicate) that when you
+> *copy* (not move, just copy) a function from file1.c to
+> file2.c, commit, and then do a "git blame -C -C file2.c", it
+> should tell you that those lines came from file1.c
 >
-> The note suggested that the branch parameter is not necessary, which is
-> no longer true these days.
+> Is this not true?  Git 1.6.1, I tried this on a dummy branch
+> where I just copied a good sized function (about 45 lines)
+> from one C program and dumped it at the bottom of a second
+> one, and neither the gui blame nor the CLI blame show me
+> that the lines came from elsewhere.
+>
+> What am I doing wrong?
 
-So we have a usability regression here.  Perhaps we need to fix that
-instead?
+(replying to myself...)
+
+It works when I give it three "-C" arguments.  I thought it
+was supposed to be 2 though.
