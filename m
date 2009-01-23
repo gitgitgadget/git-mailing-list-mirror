@@ -1,59 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH v3 3/3] archive.c: add basic support for submodules
-Date: Fri, 23 Jan 2009 00:44:54 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901230044300.3586@pacific.mpi-cbg.de>
-References: <1232659071-14401-1-git-send-email-hjemli@gmail.com> <1232659071-14401-2-git-send-email-hjemli@gmail.com> <1232659071-14401-3-git-send-email-hjemli@gmail.com> <1232659071-14401-4-git-send-email-hjemli@gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 00:46:14 2009
+From: Wincent Colaiuta <win@wincent.com>
+Subject: RFC: git diff colorization idea
+Date: Fri, 23 Jan 2009 01:00:27 +0100
+Message-ID: <53497057-1ADE-4300-9F35-B218959606FE@wincent.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 23 01:02:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ9FU-0004IJ-EJ
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 00:46:12 +0100
+	id 1LQ9Ui-0000dB-FI
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 01:01:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755266AbZAVXor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 18:44:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755031AbZAVXoq
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 18:44:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46442 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754255AbZAVXoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 18:44:46 -0500
-Received: (qmail invoked by alias); 22 Jan 2009 23:44:44 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp061) with SMTP; 23 Jan 2009 00:44:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19tNPMou/Jt4AEjQ/47bH7a+qXr9s1Ghjqu0fNb/m
-	WSysAuD+LQ4JDh
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1232659071-14401-4-git-send-email-hjemli@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1755640AbZAWAAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 19:00:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755526AbZAWAAc
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 19:00:32 -0500
+Received: from wincent1.inetu.net ([209.235.192.161]:40961 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755266AbZAWAAb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 19:00:31 -0500
+Received: from cuzco.lan (139.pool85-53-3.dynamic.orange.es [85.53.3.139])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n0N00SWf010711
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Thu, 22 Jan 2009 19:00:29 -0500
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106805>
 
 Hi,
 
-On Thu, 22 Jan 2009, Lars Hjemli wrote:
+Lately I've been wishing that Git's diff output were colorized in a  
+way that combines the standard line-by-line colorizing with the word- 
+by-word colorizing you get with --color-words.
 
-> The new --submodules option is used to trigger inclusion of checked out 
-> submodules in the archive.
-> 
-> The implementation currently does not verify that the submodule has been 
-> registered as 'interesting' in .git/config, neither does it resolve the 
-> currently checked out submodule HEAD but instead uses the commit SHA1 
-> recorded in the gitlink entry to identify the submodule root tree.
+Pictures speak louder than words, so here are some to show what I mean:
 
-Please understand that I skipped the rest of the patch.
+http://www.flickr.com/photos/wincent-colaiuta/sets/72157612877491482/
 
-Ciao,
-Dscho
+There you'll find:
+
+1. A couple of sample hunks colorized in the current, standard way
+
+2. The same hunks colorized with "--color-words"
+
+3. The same hunks as they would be colorized if you could take the  
+standard colorization (1) and augment it with per-word highlighting  
+from (2)
+
+(that last hunk would probably look better with a different regex  
+defining what a "word" is; in reality all that happened was that  
+"rename|" got added to the line, so there's no need to highlight more  
+than that).
+
+This is not a new idea; it's something that I find myself wanting due  
+to experience with colorization available in a number of different  
+diff viewers. Here are some more sample shots showing how different  
+viewers do it, with varying degrees of prettiness/ugliness:
+
+- Meld: http://meld.sourceforge.net/meld_file1.png
+
+- kdiff: http://kdiff3.sourceforge.net/doc/letter_by_letter.png
+
+- Apple FileMerge: http://homepage.mac.com/kelleherk/iblog/C711669388/E464913847/Media/compare_db_filemerge.jpg
+
+No doubt there are others, but you get the idea.
+
+Would people be interested in seeing this feature go in? I've already  
+started snooping around diff.c seeing what would need to be done. From  
+what I can tell it would require a new command-line switch (seeing as  
+"--color" plus "--color-words" already means something), and probably  
+two new customizable color slots (such as color.diff.new.word,  
+color.diff.old.word).
+
+The approach I was thinking of taking was just grabbing the diff_words  
+info produced when --color-words is passed and using it to augment  
+specialized versions of emit_line() and emit_add_line().
+
+I'm also thinking that perhaps a per-character approach might be  
+useful here instead of a per-word one (it would make that last hunk  
+look better in the mock-up screenshot that I posted); if I go the per- 
+character route then that suggests that "--color-chars" might be the  
+right option name, and the color slots would then be  
+color.diff.new.char and color.diff.old.char.
+
+Any feedback or suggestions before I get in too deep?
+
+Cheers,
+Wincent
