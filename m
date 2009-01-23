@@ -1,137 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: how to force a commit date matching info from a mbox ?
-Date: Thu, 22 Jan 2009 16:14:58 -0800
-Message-ID: <7vljt26fp9.fsf@gitster.siamese.dyndns.org>
+Date: Fri, 23 Jan 2009 01:21:21 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901230119490.3586@pacific.mpi-cbg.de>
 References: <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git list <git@vger.kernel.org>
 To: Christian MICHON <christian.michon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 01:16:34 2009
+X-From: git-owner@vger.kernel.org Fri Jan 23 01:22:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ9iq-0004NX-R8
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 01:16:33 +0100
+	id 1LQ9oj-0005uX-UG
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 01:22:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756443AbZAWAPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 19:15:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756162AbZAWAPH
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 19:15:07 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33597 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755808AbZAWAPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 19:15:06 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id BD4F31D124;
-	Thu, 22 Jan 2009 19:15:04 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B77501D122; Thu,
- 22 Jan 2009 19:14:59 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E248573C-E8E2-11DD-8689-BE78113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1753589AbZAWAVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 19:21:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753464AbZAWAVN
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 19:21:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37540 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753421AbZAWAVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 19:21:13 -0500
+Received: (qmail invoked by alias); 23 Jan 2009 00:21:11 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp047) with SMTP; 23 Jan 2009 01:21:11 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+Zqv86AhGZkvDcwYYVAMt+UNBln7u265/uqryP86
+	NTFF/Xh/bmn0w+
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106807>
 
-Christian MICHON <christian.michon@gmail.com> writes:
+Hi,
 
-> I'd like to force the commit date to match the info/date from the time
-> I received the email (and therefore always get back the right
-> sha1sums).
->
+On Thu, 22 Jan 2009, Christian MICHON wrote:
+
+> I've a big set of patches in a mbox file: there's sufficient info inside 
+> for git-am to work.
+> 
+> Yet, each time I do import these, my sha1sums are changing because of 
+> different commit dates.
+> 
+> I'd like to force the commit date to match the info/date from the time I 
+> received the email (and therefore always get back the right sha1sums).
+> 
 > is this possible ?
 
-"am" being a tool to accept patches written in some past to faithfully
-record both author timestamp and committer timestamp, what you seem to
-want is outside of the current scope of the tool.
+Have you tried setting GIT_COMMITTER_DATE to the given date?
 
-A patch to butcher "git-am" to copy GIT_COMMITTER_DATE from
-GIT_AUTHOR_DATE and export it should be trivial to implement, though.
+Alternatively, you can always use a commit-message filter with 
+filter-branch to fix it up.
 
-Perhaps something like this totally untested patch.
-
-
-
- git-am.sh     |   13 ++++++++++++-
- t/t4150-am.sh |   20 ++++++++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletions(-)
-
-diff --git c/git-am.sh w/git-am.sh
-index e20dd88..e96071d 100755
---- c/git-am.sh
-+++ w/git-am.sh
-@@ -23,6 +23,7 @@ resolvemsg=     override error message when patch failure occurs
- r,resolved      to be used after a patch failure
- skip            skip the current patch
- abort           restore the original branch and abort the patching operation.
-+committer-date-is-author-date    lie about committer date
- rebasing        (internal use for git-rebase)"
- 
- . git-sh-setup
-@@ -133,6 +134,7 @@ dotest="$GIT_DIR/rebase-apply"
- sign= utf8=t keep= skip= interactive= resolved= rebasing= abort=
- resolvemsg= resume=
- git_apply_opt=
-+committer_date_is_author_date=
- 
- while test $# != 0
- do
-@@ -168,6 +170,8 @@ do
- 		git_apply_opt="$git_apply_opt $(sq "$1=$2")"; shift ;;
- 	-C|-p)
- 		git_apply_opt="$git_apply_opt $(sq "$1$2")"; shift ;;
-+	--committer-date-is-author-date)
-+		committer_date_is_author_date=t ;;
- 	--)
- 		shift; break ;;
- 	*)
-@@ -521,7 +525,14 @@ do
- 
- 	tree=$(git write-tree) &&
- 	parent=$(git rev-parse --verify HEAD) &&
--	commit=$(git commit-tree $tree -p $parent <"$dotest/final-commit") &&
-+	commit=$(
-+		if test -n "$committer_date_is_author_date"
-+		then
-+			GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
-+			export GIT_COMMITTER_DATE
-+		fi &&
-+		git commit-tree $tree -p $parent <"$dotest/final-commit"
-+	) &&
- 	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
- 	stop_here $this
- 
-diff --git c/t/t4150-am.sh w/t/t4150-am.sh
-index 796f795..8d3fb00 100755
---- c/t/t4150-am.sh
-+++ w/t/t4150-am.sh
-@@ -257,4 +257,24 @@ test_expect_success 'am works from file (absolute path given) in subdirectory' '
- 	test -z "$(git diff second)"
- '
- 
-+test_expect_success 'am --committer-date-is-author-date' '
-+	git checkout first &&
-+	test_tick &&
-+	git am --committer-date-is-author-date patch1 &&
-+	git cat-file commit HEAD | sed -e "/^$/q" >head1 &&
-+	at=$(sed -ne "/^author /s/.*> //p" head1) &&
-+	ct=$(sed -ne "/^committer /s/.*> //p" head1) &&
-+	test "$at" = "$ct"
-+'
-+
-+test_expect_success 'am without --committer-date-is-author-date' '
-+	git checkout first &&
-+	test_tick &&
-+	git am patch1 &&
-+	git cat-file commit HEAD | sed -e "/^$/q" >head1 &&
-+	at=$(sed -ne "/^author /s/.*> //p" head1) &&
-+	ct=$(sed -ne "/^committer /s/.*> //p" head1) &&
-+	test "$at" != "$ct"
-+'
-+
- test_done
+Ciao,
+Dscho
