@@ -1,88 +1,102 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: [PATCHv3] git mergetool: Don't repeat merge tool candidates
-Date: Sat, 24 Jan 2009 00:12:45 +0100
-Message-ID: <1232752365-23614-1-git-send-email-heipei@hackvalue.de>
-References: <7vpridr7vb.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org, Johannes Gilger <heipei@hackvalue.de>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jan 24 00:14:07 2009
+From: Vassili Karpov <av1474@comtv.ru>
+Subject: [PATCH v2] Change octal literals to be XEmacs friendly
+Date: Sat, 24 Jan 2009 02:20:52 +0300 (MSK)
+Message-ID: <Pine.LNX.4.64.0901240219530.19590@linmac.oyster.ru>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+To: git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>
+X-From: git-owner@vger.kernel.org Sat Jan 24 00:22:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQVDy-0002TZ-7C
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 00:14:06 +0100
+	id 1LQVLn-00057f-4W
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 00:22:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757942AbZAWXMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 18:12:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758002AbZAWXMn
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 18:12:43 -0500
-Received: from avalon.gnuzifer.de ([78.46.211.2]:60847 "EHLO
-	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757830AbZAWXMm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 18:12:42 -0500
-Received: from u-6-041.vpn.rwth-aachen.de ([137.226.102.41]:46101 helo=localhost)
-	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <heipei@hackvalue.de>)
-	id 1LQVCX-0008Bo-Fh; Sat, 24 Jan 2009 00:12:37 +0100
-X-Mailer: git-send-email 1.6.1.40.g8ea6a
-In-Reply-To: <7vpridr7vb.fsf@gitster.siamese.dyndns.org>
-X-Verified-Sender: yes
-X-SA-Exim-Connect-IP: 137.226.102.41
-X-SA-Exim-Mail-From: heipei@hackvalue.de
+	id S1757903AbZAWXUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 18:20:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757743AbZAWXUr
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 18:20:47 -0500
+Received: from fe01x03-cgp.akado.ru ([77.232.31.164]:55278 "EHLO akado.ru"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757572AbZAWXUq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 18:20:46 -0500
+Received: from [10.0.66.9] ([10.0.66.9] verified)
+  by fe01-cgp.akado.ru (CommuniGate Pro SMTP 5.1.16)
+  with ESMTPS id 54110093; Sat, 24 Jan 2009 02:20:41 +0300
+X-X-Sender: malc@linmac.oyster.ru
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106931>
 
-git mergetool listed some candidates for mergetools twice, depending on
-the environment.
 
-Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
+The type-of ?\octal in XEmacs is character while in FSF Emacs it is
+integer. Case expression using this syntax will not work correctly on
+XEmacs. #ooctal syntax on the other hand produces integers everywhere.
+
+Signed-off-by: Vassili Karpov <av1474@comtv.ru>
 ---
-This improves on v2 of this patch as it appends non-gui merge-tools even 
-if $DISPLAY is set. It still makes the assumption that KDE_FULL_SESSION 
-and GNOME_DESKTOP_SESSION_ID are never set at the same time. If this 
-were to happen the tool would simply prefer meld over kdiff3.
+  contrib/emacs/git.el |   30 +++++++++++++++---------------
+  1 files changed, 15 insertions(+), 15 deletions(-)
 
- git-mergetool.sh |   18 ++++++++----------
- 1 files changed, 8 insertions(+), 10 deletions(-)
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 09e8bae..715580a 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -562,29 +562,29 @@ the process output as a string, or nil if the git 
+command failed."
+    (let* ((old-type (lsh (or old-perm 0) -9))
+  	 (new-type (lsh (or new-perm 0) -9))
+  	 (str (case new-type
+-		(?\100  ;; file
++		(#o100  ;; file
+  		 (case old-type
+-		   (?\100 nil)
+-		   (?\120 "   (type change symlink -> file)")
+-		   (?\160 "   (type change subproject -> file)")))
+-		 (?\120  ;; symlink
++		   (#o100 nil)
++		   (#o120 "   (type change symlink -> file)")
++		   (#o160 "   (type change subproject -> file)")))
++		 (#o120  ;; symlink
+  		  (case old-type
+-		    (?\100 "   (type change file -> symlink)")
+-		    (?\160 "   (type change subproject -> symlink)")
++		    (#o100 "   (type change file -> symlink)")
++		    (#o160 "   (type change subproject -> symlink)")
+  		    (t "   (symlink)")))
+-		  (?\160  ;; subproject
++		  (#o160  ;; subproject
+  		   (case old-type
+-		     (?\100 "   (type change file -> subproject)")
+-		     (?\120 "   (type change symlink -> subproject)")
++		     (#o100 "   (type change file -> subproject)")
++		     (#o120 "   (type change symlink -> subproject)")
+  		     (t "   (subproject)")))
+-                  (?\110 nil)  ;; directory (internal, not a real git 
+state)
+-		  (?\000  ;; deleted or unknown
++                  (#o110 nil)  ;; directory (internal, not a real git 
+state)
++		  (#o000  ;; deleted or unknown
+  		   (case old-type
+-		     (?\120 "   (symlink)")
+-		     (?\160 "   (subproject)")))
++		     (#o120 "   (symlink)")
++		     (#o160 "   (subproject)")))
+  		  (t (format "   (unknown type %o)" new-type)))))
+      (cond (str (propertize str 'face 'git-status-face))
+-          ((eq new-type ?\110) "/")
++          ((eq new-type #o110) "/")
+            (t ""))))
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 00e1337..09f3a10 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -390,21 +390,19 @@ fi
- 
- if test -z "$merge_tool" ; then
-     if test -n "$DISPLAY"; then
--        merge_tool_candidates="kdiff3 tkdiff xxdiff meld gvimdiff"
-         if test -n "$GNOME_DESKTOP_SESSION_ID" ; then
--            merge_tool_candidates="meld $merge_tool_candidates"
--        fi
--        if test "$KDE_FULL_SESSION" = "true"; then
--            merge_tool_candidates="kdiff3 $merge_tool_candidates"
-+            merge_tool_candidates="meld kdiff3 tkdiff xxdiff gvimdiff"
-+        else
-+            merge_tool_candidates="kdiff3 tkdiff xxdiff meld gvimdiff"
-         fi
-     fi
-     if echo "${VISUAL:-$EDITOR}" | grep 'emacs' > /dev/null 2>&1; then
--        merge_tool_candidates="$merge_tool_candidates emerge"
--    fi
--    if echo "${VISUAL:-$EDITOR}" | grep 'vim' > /dev/null 2>&1; then
--        merge_tool_candidates="$merge_tool_candidates vimdiff"
-+        merge_tool_candidates="$merge_tool_candidates emerge opendiff vimdiff"
-+    elif echo "${VISUAL:-$EDITOR}" | grep 'vim' > /dev/null 2>&1; then
-+        merge_tool_candidates="$merge_tool_candidates vimdiff opendiff emerge"
-+    else
-+        merge_tool_candidates="$merge_tool_candidates opendiff emerge vimdiff"
-     fi
--    merge_tool_candidates="$merge_tool_candidates opendiff emerge vimdiff"
-     echo "merge tool candidates: $merge_tool_candidates"
-     for i in $merge_tool_candidates; do
-         init_merge_tool_path $i
+  (defun git-rename-as-string (info)
 -- 
-1.6.1.40.g8ea6a
+1.6.0.2.GIT
+
+
+
+-- 
+mailto:av1474@comtv.ru
