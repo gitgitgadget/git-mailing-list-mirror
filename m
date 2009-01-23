@@ -1,76 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: git diff colorization idea
-Date: Thu, 22 Jan 2009 22:45:14 -0800
-Message-ID: <7vfxja34hx.fsf@gitster.siamese.dyndns.org>
-References: <53497057-1ADE-4300-9F35-B218959606FE@wincent.com>
- <7vhc3q6evi.fsf@gitster.siamese.dyndns.org>
- <5034E8A9-2B17-4368-8EDF-5FEE61BB2BAD@wincent.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/3] Add "partial commit" tests during a conflicted merge
+Date: Fri, 23 Jan 2009 08:09:00 +0100
+Message-ID: <49796D0C.5070408@viscovery.net>
+References: <4978202C.3090703@viscovery.net> <alpine.DEB.2.00.0901211549070.15860@vellum.laroia.net> <49779521.9040208@drmicha.warpmail.net> <c1a864630901211346j4b702fb3tcc5a098ed7e1541d@mail.gmail.com> <20090123094509.6117@nanako3.lavabit.com> <7viqo64kfo.fsf@gitster.siamese.dyndns.org> <7vbpty4kby.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 07:46:52 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Nathan Yergler <nathan@creativecommons.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Asheesh Laroia <asheesh@asheesh.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 08:11:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQFoY-0000Dz-Pk
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 07:46:51 +0100
+	id 1LQGCK-0004gt-53
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 08:11:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751912AbZAWGpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 01:45:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751592AbZAWGpU
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 01:45:20 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62925 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751402AbZAWGpT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 01:45:19 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A86991D077;
-	Fri, 23 Jan 2009 01:45:18 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D4FCA1D056; Fri,
- 23 Jan 2009 01:45:15 -0500 (EST)
-In-Reply-To: <5034E8A9-2B17-4368-8EDF-5FEE61BB2BAD@wincent.com> (Wincent
- Colaiuta's message of "Fri, 23 Jan 2009 07:16:50 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6610352C-E919-11DD-9F48-BE78113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751912AbZAWHJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 02:09:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751302AbZAWHJI
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 02:09:08 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:15055 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751215AbZAWHJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 02:09:07 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LQGA0-0003nj-Bi; Fri, 23 Jan 2009 08:09:00 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 2658D6EF; Fri, 23 Jan 2009 08:09:00 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7vbpty4kby.fsf_-_@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106845>
 
-Wincent Colaiuta <win@wincent.com> writes:
+Junio C Hamano schrieb:
+> +test_expect_success 'setup merge commit with paths test' '
+> +	git reset --hard &&
+> +	git checkout HEAD^0 &&
+> +	echo frotz >file &&
+> +	test_tick &&
+> +	git add file &&
+> +	git commit -a -m "one side says frotz" &&
+> +	git tag one-side-says-frotz &&
+> +	git reset --hard HEAD^ &&
+> +	echo nitfol >file &&
+> +	test_tick &&
+> +	git add file &&
+> +	git commit -a -m "the other side says nitfol" &&
+> +	git tag the-other-side-says-nitfol
+> +'
+> +
+> +test_expect_success 'reject --only during a merge' '
+> +	git checkout HEAD^0 &&
+> +	git reset --hard the-other-side-says-nitfol &&
+> +	test_must_fail git merge one-side-says-frotz &&
+> +	echo yomin-only >file &&
+> +	test_must_fail git commit -m merge --only file &&
 
->>> Any feedback or suggestions before I get in too deep?
->>
->> I personally find your "prposal" picture too loud to my eye.
->
-> Yes, mine too. I wouldn't actually use those colors in practice.  
-> (Doubly so because the "removed" color looks like the "whitespace  
-> error" color.)
+I don't see why this must fail: 'file' is the only file that is different
+from HEAD. Yes, currently we fail; but if something is about to be
+changed, then this can change as well.
 
-I did not mean that your choice of colors is loud.  Not at all.  What I
-meant was the use of color _everywhere_ makes it too loud, and also the
-use of _larger number of_ colors makes it too loud..  In other words, you
-are painting the output more than what the current output does, and that
-made me find it too loud, no matter what the choice of colors are.
+> +	git reset --hard
+> +'
+> +
+> +test_expect_success 'allow --include during a merge' '
+> +	git checkout HEAD^0 &&
+> +	git reset --hard the-other-side-says-nitfol &&
+> +	test_must_fail git merge one-side-says-frotz &&
+> +	echo yomin-include >file &&
+> +	git commit -m merge --include file &&
+> +	git reset --hard
+> +'
+> +
+> +test_expect_failure 'assume --include during a merge' '
+> +	git checkout HEAD^0 &&
+> +	git reset --hard the-other-side-says-nitfol &&
+> +	test_must_fail git merge one-side-says-frotz &&
+> +	echo yomin-assumed >file &&
+> +	git add file &&
+> +	git commit -m merge file &&
+> +	git reset --hard
+> +'
 
-You might have misunderstood my illustration, but what I meant to suggest
-was to leave most of the characters on both - and + lines in monochrome
-(or whatever the "normal" is), and paint _only_ the words that are
-different.  The outcome would become _less_ colorful than the current
-"whole -/+ lines are painted" output, but "only different words are
-coloured; the words that are unmodified are left uncoloured, without
-distracting the eyes."  Much less louder than even the current one, yet
-giving more information.
+If I read the test case correctly, there is only 'file' that is different
+from HEAD, and it had a conflict. But IMO, the test should stress the
+point that after the conflicted merge there are at least two files that
+are different from HEAD, one was trivially merged, and the other had a
+conflict.
 
-As -/+ has a marker value, I think colouring them may be Ok, too.  That
-would make something like this:
-
-  | {
-  |<red>-</red>    <gray>local subcommands="add rm show prune<gray> <red>update</red>"
-  |<green>+</green>    local subcommands="add <green>rename</green> rm show prune"
-  |     if ...
+-- Hannes
