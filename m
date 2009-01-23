@@ -1,89 +1,83 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: Re: does git config get any side effect other than changing
-	.gitconfig
-Date: Fri, 23 Jan 2009 11:41:57 +0800
-Message-ID: <20090123034157.GD6931@b2j>
-References: <20090123031210.GB6931@b2j> <200901222126.46964.bss@iguanasuicide.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: git fast-import problem converting from CVS with git 1.6.1 and
+ cvs2svn 2.2.0
+Date: Fri, 23 Jan 2009 05:14:10 +0100
+Message-ID: <49794412.8070909@alum.mit.edu>
+References: <63BEA5E623E09F4D92233FB12A9F794302BC6851@emailmn.mqsoftware.com> <63BEA5E623E09F4D92233FB12A9F794302BC6855@emailmn.mqsoftware.com> <63BEA5E623E09F4D92233FB12A9F794302BC6921@emailmn.mqsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-X-From: git-owner@vger.kernel.org Fri Jan 23 04:43:31 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, cvs2svn users <users@cvs2svn.tigris.org>
+To: "Kelly F. Hickel" <kfh@mqsoftware.com>
+X-From: users-return-1044191+gcvscu-users=m.gmane.org@cvs2svn.tigris.org Fri Jan 23 05:15:39 2009
+Return-path: <users-return-1044191+gcvscu-users=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscu-users@m.gmane.org
+Received: from sc157.sjc.collab.net ([204.16.104.146] helo=sc157-tigr.sjc.collab.net)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQCx8-0000v8-L6
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 04:43:31 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754964AbZAWDmG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jan 2009 22:42:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754093AbZAWDmF
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 22:42:05 -0500
-Received: from ti-out-0910.google.com ([209.85.142.184]:25568 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754745AbZAWDmE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2009 22:42:04 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so3146664tic.23
-        for <git@vger.kernel.org>; Thu, 22 Jan 2009 19:42:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mail-followup-to:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=sfw2GuyPqWUL/KeT6sCLbxBe907FdfPE8Udv++tnRuo=;
-        b=C31HnL0AWM8US0lNbrC9Zbt744qJiszOg2Aoiv+EPHHQ5MV1o4/3s3TNy3BRr9nUcZ
-         5eA/wtFW9P89xBC7k3AaWToRLEs7RuqN1Gci1Zz0ftXipoqr1QB73+qfJVzkxGwRua50
-         AFs0tHfOGcqM44J0fYmiQrryay/7mTH2LoPOU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        b=dbSvuHB8yJS76OL+A10NcECBk30yN9uC3eeVfw051sMcCsgdgmpGIrs+HiQyGjlxoq
-         v/sB+Uox+qf7vP4AYYNmsYv/DejWl2oJnAwaQZXZEdB19zQsL1/Exg2xsMtY8UQ/7afu
-         PBTOvXu2GA2EYMZYrc4k2MxBIaZnfwJ/g09QA=
-Received: by 10.110.63.6 with SMTP id l6mr206366tia.50.1232682121836;
-        Thu, 22 Jan 2009 19:42:01 -0800 (PST)
-Received: from localhost (n218103237232.netvigator.com [218.103.237.232])
-        by mx.google.com with ESMTPS id i6sm2175646tid.16.2009.01.22.19.41.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 22 Jan 2009 19:42:00 -0800 (PST)
-Mail-Followup-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <200901222126.46964.bss@iguanasuicide.net>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106829>
+	id 1LQDSE-0006Z7-Vo
+	for gcvscu-users@m.gmane.org; Fri, 23 Jan 2009 05:15:39 +0100
+Received: from sc157-tigr.sjc.collab.net (localhost [127.0.0.1])
+	by sc157-tigr.sjc.collab.net (Postfix) with ESMTP id 0B0417B0069;
+	Thu, 22 Jan 2009 20:14:18 -0800 (PST)
+Received: from localhost ([127.0.0.1])          by Mail Reader Service (JAMES SMTP Server 2.3.0) with SMTP ID 159          for <users@cvs2svn.tigris.org.mrs>;          Thu, 22 Jan 2009 20:14:16 -0800 (PST)
+Received: from cylon1.sjc.collab.net (cylon1.sjc.collab.net [204.16.104.10])	by sc157-tigr.sjc.collab.net (Postfix) with ESMTP id 643017B0069	for <users@cvs2svn.tigris.org>; Thu, 22 Jan 2009 20:14:16 -0800 (PST)
+Received: from einhorn.in-berlin.de ([192.109.42.8])  by cylon1.sjc.collab.net with ESMTP/TLS/DHE-RSA-AES256-SHA; 22 Jan 2009 20:14:15 -0800
+Received: from [192.168.69.129] (77-21-84-251-dynip.superkabel.de [77.21.84.251])	(authenticated bits=0)	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n0N4ECvU029030	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);	Fri, 23 Jan 2009 05:14:13 +0100
+In-Reply-To: <63BEA5E623E09F4D92233FB12A9F794302BC6921@emailmn.mqsoftware.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+X-Enigmail-Version: 0.95.0
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.19) Gecko/20090105 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
+X-Envelope-From: mhagger@alum.mit.edu
+X-IRONPORT: SCANNED
+X-IronPort-AV: E=Sophos;i="4.37,310,1231142400";   d="scan'208";a="19078253"
+X-IronPort-Anti-Spam-Result: Ai4EAKrSeEnAbSoIgWdsb2JhbACTeQEBFiKnDIY8iDuFcw
+X-IronPort-Anti-Spam-Filtered: true
+List-Id: <users.cvs2svn.tigris.org>
+precedence: bulk
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106830>
 
-On Thu, 22 Jan 2009, Boyd Stephen Smith Jr. wrote:
-> >Suppose I got several git repositories to maintain, instead of using
-> >command git config [--global] again and again.  Can I call up a text
-> >editor to edit .git/config or .gitconfig manually, or just copy from
-> >another .gitconfig ?
->=20
-> Yes.  Absolutely.
+Kelly F. Hickel wrote:
+> I found the section in question, it is:
+> -- snip --
+> commit refs/heads/TAG.FIXUP
+> mark :1000007128
+> committer cvs2svn <cvs2svn> 1002043747 +0000
+> data 88
+> This commit was manufactured by cvs2svn to create tag
+> 'T_BU_Problem_9xxx_Merge_3-21-2000'.
+> merge :1000007126
+> M 100755 :180810 mfcdev/Domedit/DlgAddAlias.h
+> -- snap --
+> 
+> By my count, 88 is the ending single quote character, leaving the '.' to
+> be interpreted as a command.
+> 
+> Looks like I should go post this on the cvs2svn list.....
 
-Thanks for confirmation.  I realised that the subject is in the
-opposite tone to the message body.
+Yes, that would be helpful.  Please include enough information and data
+to enable me to reproduce your problem, because it is very mysterious.
 
---=20
-regards,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
-=E5=94=90=E8=A9=A9157 =E6=9D=8E=E5=95=86=E9=9A=B1  =E9=A2=A8=E9=9B=A8
-    =E6=B7=92=E6=B6=BC=E5=AF=B6=E5=8A=8D=E7=AF=87  =E7=BE=88=E6=B3=8A=E6=
-=AC=B2=E7=AA=AE=E5=B9=B4  =E9=BB=83=E8=91=89=E4=BB=8D=E9=A2=A8=E9=9B=A8=
-  =E9=9D=92=E6=A8=93=E8=87=AA=E7=AE=A1=E7=B5=83
-    =E6=96=B0=E7=9F=A5=E9=81=AD=E8=96=84=E4=BF=97  =E8=88=8A=E5=A5=BD=E9=
-=9A=94=E8=89=AF=E7=B7=A3  =E5=BF=83=E6=96=B7=E6=96=B0=E8=B1=90=E9=85=92=
-  =E9=8A=B7=E6=84=81=E6=96=97=E5=B9=BE=E5=8D=83
+The lines in question are (in Python)
+
+    self.f.write('data %d\n' % (len(log_msg),))
+    self.f.write('%s\n' % (log_msg,))
+
+where self.f is a file that was opened in binary mode, and log_msg is an
+8-bit or unicode string.  Since the log message is being output to a
+binary file, f.write() should squeal if the string includes any
+non-ascii characters (I just verified this with Python 2.2, 2.4, and
+2.5).  Nevertheless, I suspect that your problem is caused by some kind
+of character encoding problem, perhaps dependent on platform or Python
+version.
+
+You might also try the trunk version of cvs2svn; there have been a lot
+of changes to cvs2git since release 2.1.1--even a new command that is
+actually called cvs2git! (though for now you still need to use an
+options file to start conversions).
+
+Michael
+
+------------------------------------------------------
+http://cvs2svn.tigris.org/ds/viewMessage.do?dsForumId=1670&dsMessageId=1044191
+
+To unsubscribe from this discussion, e-mail: [users-unsubscribe@cvs2svn.tigris.org].
