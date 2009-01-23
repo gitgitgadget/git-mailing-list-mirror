@@ -1,79 +1,95 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: [kha/safe PATCH] completion bugfix: Place double pipes in front of alternate command.
-Date: Thu, 22 Jan 2009 19:26:12 -0500
-Message-ID: <1232670372-20000-1-git-send-email-ted@tedpavlic.com>
-References: <20090122232928.GA23456@diana.vm.bytemark.co.uk>
-Cc: git@vger.kernel.org, catalin.marinas@gmail.com,
-	Ted Pavlic <ted@tedpavlic.com>
-To: gitster@pobox.com, kha@treskal.com
-X-From: git-owner@vger.kernel.org Fri Jan 23 01:27:51 2009
+From: "martin f. krafft" <madduck@madduck.net>
+Subject: [PATCH] git-am: implement --reject option passed to git-apply
+Date: Fri, 23 Jan 2009 11:31:21 +1100
+Message-ID: <1232670681-25781-1-git-send-email-madduck@madduck.net>
+Cc: "martin f. krafft" <madduck@madduck.net>,
+	penny leach <penny@mjollnir.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 23 01:33:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ9tl-0007IB-A8
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 01:27:49 +0100
+	id 1LQ9z4-0000X4-0F
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 01:33:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753351AbZAWA0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 19:26:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752968AbZAWA0X
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 19:26:23 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:46697 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752627AbZAWA0X (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2009 19:26:23 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 2076A80D8055;
-	Thu, 22 Jan 2009 19:20:24 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QboqfJacmoKP; Thu, 22 Jan 2009 19:20:24 -0500 (EST)
-Received: from localhost.localdomain (cpe-76-181-62-78.columbus.res.rr.com [76.181.62.78])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id A625B80D8001;
-	Thu, 22 Jan 2009 19:20:23 -0500 (EST)
-X-Mailer: git-send-email 1.6.1.213.g28da8
-In-Reply-To: <20090122232928.GA23456@diana.vm.bytemark.co.uk>
+	id S1754397AbZAWAbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 19:31:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753731AbZAWAbx
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 19:31:53 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:34639 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753595AbZAWAbx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 19:31:53 -0500
+Received: from lapse.rw.madduck.net (unknown [IPv6:2001:388:a001:1:214:a4ff:fe04:eadc])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 405351D40B1;
+	Fri, 23 Jan 2009 01:31:41 +0100 (CET)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id 66FAC80CC; Fri, 23 Jan 2009 13:31:21 +1300 (NZDT)
+X-Mailer: git-send-email 1.6.0.1
+X-Virus-Scanned: ClamAV 0.94.2/8893/Thu Jan 22 21:18:43 2009 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106809>
 
-Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
+With --reject, git-am simply passes the --reject option to git-apply and thus
+allows people to work with reject files if they so prefer.
+
+The patch does not touch t/t4252-am-options.sh (yet) because I do not really
+understand how the testing system works.
+
+Signed-off-by: martin f. krafft <madduck@madduck.net>
+
 ---
+ Documentation/git-am.txt |    2 ++
+ git-am.sh                |    3 +++
+ 2 files changed, 5 insertions(+), 0 deletions(-)
 
-This is a patch against 
-
-    git://repo.or.cz/stgit/kha.git stable
-
-Unfortunately, the previous "[StGit PATCH 2/2]" had a small bug in it. A
-bugfix was posted, but it didn't get picked up in kha/safe. This commit
-should be applied against kha/safe to fix the problem.
-
-Alternatively, the patch provided in
-
-    <1232642662-12851-1-git-send-email-ted@tedpavlic.com>
-
-is the proper patch to stgit/master.
-
-Sorry for the extra bother.
-
- stgit/completion.py |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/stgit/completion.py b/stgit/completion.py
-index 56e81c2..38f0670 100644
---- a/stgit/completion.py
-+++ b/stgit/completion.py
-@@ -130,7 +130,7 @@ def main_switch(commands):
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 5cbbe76..efd311b 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -12,6 +12,7 @@ SYNOPSIS
+ 'git am' [--signoff] [--keep] [--utf8 | --no-utf8]
+ 	 [--3way] [--interactive]
+ 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
++	 [--reject]
+ 	 [<mbox> | <Maildir>...]
+ 'git am' (--skip | --resolved | --abort)
  
- def install():
-     return ['complete -o bashdefault -o default -F _stg stg 2>/dev/null \\', [
--            'complete -o default -F _stg stg' ] ]
-+            '|| complete -o default -F _stg stg' ] ]
- 
- def write_completion(f):
-     commands = stgit.commands.get_commands(allow_cached = False)
+@@ -63,6 +64,7 @@ default.   You could use `--no-utf8` to override this.
+ -C<n>::
+ -p<n>::
+ --directory=<dir>::
++--reject::
+ 	These flags are passed to the 'git-apply' (see linkgit:git-apply[1])
+ 	program that applies
+ 	the patch.
+diff --git a/git-am.sh b/git-am.sh
+index e20dd88..b1c05c9 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -19,6 +19,7 @@ whitespace=     pass it through git-apply
+ directory=      pass it through git-apply
+ C=              pass it through git-apply
+ p=              pass it through git-apply
++reject          pass it through git-apply
+ resolvemsg=     override error message when patch failure occurs
+ r,resolved      to be used after a patch failure
+ skip            skip the current patch
+@@ -168,6 +169,8 @@ do
+ 		git_apply_opt="$git_apply_opt $(sq "$1=$2")"; shift ;;
+ 	-C|-p)
+ 		git_apply_opt="$git_apply_opt $(sq "$1$2")"; shift ;;
++	--reject)
++		git_apply_opt="$git_apply_opt $1" ;;
+ 	--)
+ 		shift; break ;;
+ 	*)
 -- 
-1.6.1.213.g28da8
+tg: (9a01387..) git-am--reject (depends on: master)
