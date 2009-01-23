@@ -1,97 +1,158 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git mergetool: Don't repeat merge tool candidates
-Date: Fri, 23 Jan 2009 00:16:03 -0800
-Message-ID: <7v7i4m1lq4.fsf@gitster.siamese.dyndns.org>
-References: <1232569442-12480-1-git-send-email-heipei@hackvalue.de>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: how to force a commit date matching info from a mbox ?
+Date: Fri, 23 Jan 2009 17:26:46 +0900
+Message-ID: <20090123172646.6117@nanako3.lavabit.com>
+References: <7vwscm1nic.fsf@gitster.siamese.dyndns.org>
+ <7vljt26fp9.fsf@gitster.siamese.dyndns.org>
+ <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com>
+ <20090123094529.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Theodore Ts'o" <tytso@mit.edu>
-To: Johannes Gilger <heipei@hackvalue.de>
-X-From: git-owner@vger.kernel.org Fri Jan 23 09:17:41 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>,
+	Christian MICHON <christian.michon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 09:31:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQHER-0003Ya-Qn
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 09:17:40 +0100
+	id 1LQHS8-0006f7-9R
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 09:31:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753905AbZAWIQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 03:16:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753045AbZAWIQO
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 03:16:14 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34946 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752146AbZAWIQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 03:16:13 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 278FE1D13B;
-	Fri, 23 Jan 2009 03:16:10 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2601C1D064; Fri,
- 23 Jan 2009 03:16:04 -0500 (EST)
-In-Reply-To: <1232569442-12480-1-git-send-email-heipei@hackvalue.de>
- (Johannes Gilger's message of "Wed, 21 Jan 2009 21:24:02 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1764D2FE-E926-11DD-B3D3-BE78113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751396AbZAWI12 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jan 2009 03:27:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751362AbZAWI11
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 03:27:27 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:52083 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751215AbZAWI10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 03:27:26 -0500
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id C85F4C8898;
+	Fri, 23 Jan 2009 02:27:25 -0600 (CST)
+Received: from 8620.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id P9WDIFBZTHR3; Fri, 23 Jan 2009 02:27:25 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=S896scUtnqmcr+0Q4yrQRHV2b18Pk28u8wl9n12v5oDXBseWERpBpIOLnThrS+Lb/+zluBU2F/a+a/niI2oFnIKwB/l0QpdarqY95HXx/QMapCqBiSEqsJEOkJAx0NrGZucmAIW1rddk2O3tTNpTDzHSKuxzH1Ig7KCJe/48jvM=;
+  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7vwscm1nic.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106856>
 
-Johannes Gilger <heipei@hackvalue.de> writes:
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-> git mergetool listed some candidates for mergetools twice, depending on
-> the environment.
+> Nanako Shiraishi <nanako3@lavabit.com> writes:
 >
-> Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
-> ---
->  git-mergetool.sh |   13 +++++--------
->  1 files changed, 5 insertions(+), 8 deletions(-)
+>> Quoting Junio C Hamano <gitster@pobox.com>:
+>>
+>>> Perhaps something like this totally untested patch.
+>>
+>> You have test scripts already, but you say it is untested?
 >
-> diff --git a/git-mergetool.sh b/git-mergetool.sh
-> index 00e1337..8f09e4a 100755
-> --- a/git-mergetool.sh
-> +++ b/git-mergetool.sh
-> @@ -390,21 +390,18 @@ fi
->  
->  if test -z "$merge_tool" ; then
->      if test -n "$DISPLAY"; then
-> -        merge_tool_candidates="kdiff3 tkdiff xxdiff meld gvimdiff"
->          if test -n "$GNOME_DESKTOP_SESSION_ID" ; then
-> -            merge_tool_candidates="meld $merge_tool_candidates"
-> -        fi
-> -        if test "$KDE_FULL_SESSION" = "true"; then
-> -            merge_tool_candidates="kdiff3 $merge_tool_candidates"
-> +            merge_tool_candidates="meld kdiff3 tkdiff xxdiff gvimdiff"
-> +        else
-> +            merge_tool_candidates="kdiff3 tkdiff xxdiff meld gvimdiff"
->          fi
->      fi
->      if echo "${VISUAL:-$EDITOR}" | grep 'emacs' > /dev/null 2>&1; then
-> -        merge_tool_candidates="$merge_tool_candidates emerge"
-> +        merge_tool_candidates="$merge_tool_candidates emerge opendiff vimdiff"
->      fi
->      if echo "${VISUAL:-$EDITOR}" | grep 'vim' > /dev/null 2>&1; then
-> -        merge_tool_candidates="$merge_tool_candidates vimdiff"
-> +        merge_tool_candidates="$merge_tool_candidates vimdiff opendiff emerge"
->      fi
-> -    merge_tool_candidates="$merge_tool_candidates opendiff emerge vimdiff"
->      echo "merge tool candidates: $merge_tool_candidates"
->      for i in $merge_tool_candidates; do
->          init_merge_tool_path $i
+> Correct.  I did not run that new test, let alone existing ones ;-)
 
-Doesn't this change the order of the tools listed in the variable,
-affecting which one ends up being used?  I think that is a worse
-regression than repeating the same name twice in an otherwise no-op
-informational message.
+I applied your patch and run the test suite, including the new one, and=
+ they passed.
 
-Please spend a few minutes to see if there are active developers who are
-familiar with the area of code you are touching and Cc them to ask their
-input.
+I tried to write a new option I said that I wanted in my previous messa=
+ge.  Here is a patch.
 
-    git blame -L390,+20 git-mergetool.sh
+--->8---
+Subject: [PATCH] git-am: Add --ignore-date option
 
-tells me that most of this came from 301ac38 (git-mergetool: Make default
-selection of merge-tool more intelligent, 2007-06-10), so I am Cc'ing Ted.
+This new option makes the command ignore the date header field recorded=
+ in
+the format-patch output.  The commits will have the timestamp when they
+are created instead.
+
+You can work a lot in one day to accumulate many changes, but apply and
+push to the public repository only some of them at the end of the first
+day.  Then next day you can spend all your working hours reading comics=
+ or
+chatting with your coworkers, and apply your remaining patches from the
+previous day using this option to pretend that you have been working at
+the end of the day.
+
+Signed-off-by: =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=
+=81=93 <nanako3@lavabit.com>
+---
+ git-am.sh     |   12 +++++++++++-
+ t/t4150-am.sh |    9 +++++++++
+ 2 files changed, 20 insertions(+), 1 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index e96071d..eb88d90 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -24,6 +24,7 @@ r,resolved      to be used after a patch failure
+ skip            skip the current patch
+ abort           restore the original branch and abort the patching ope=
+ration.
+ committer-date-is-author-date    lie about committer date
++ignore-date     use current timestamp for author date
+ rebasing        (internal use for git-rebase)"
+=20
+ . git-sh-setup
+@@ -135,6 +136,7 @@ sign=3D utf8=3Dt keep=3D skip=3D interactive=3D res=
+olved=3D rebasing=3D abort=3D
+ resolvemsg=3D resume=3D
+ git_apply_opt=3D
+ committer_date_is_author_date=3D
++ignore_date=3D
+=20
+ while test $# !=3D 0
+ do
+@@ -172,6 +174,8 @@ do
+ 		git_apply_opt=3D"$git_apply_opt $(sq "$1$2")"; shift ;;
+ 	--committer-date-is-author-date)
+ 		committer_date_is_author_date=3Dt ;;
++	--ignore-date)
++		ignore_date=3Dt ;;
+ 	--)
+ 		shift; break ;;
+ 	*)
+@@ -379,7 +383,13 @@ do
+=20
+ 	GIT_AUTHOR_NAME=3D"$(sed -n '/^Author/ s/Author: //p' "$dotest/info")=
+"
+ 	GIT_AUTHOR_EMAIL=3D"$(sed -n '/^Email/ s/Email: //p' "$dotest/info")"
+-	GIT_AUTHOR_DATE=3D"$(sed -n '/^Date/ s/Date: //p' "$dotest/info")"
++	case "$ignore_date" in
++	    t)
++		GIT_AUTHOR_DATE=3D"$(date -R)"
++		;;
++	    '')
++		GIT_AUTHOR_DATE=3D"$(sed -n '/^Date/ s/Date: //p' "$dotest/info")"
++	esac
+=20
+ 	if test -z "$GIT_AUTHOR_EMAIL"
+ 	then
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index 8d3fb00..5ecf456 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -277,4 +277,13 @@ test_expect_success 'am without --committer-date-i=
+s-author-date' '
+ 	test "$at" !=3D "$ct"
+ '
+=20
++test_expect_success 'am --ignore-date' '
++	git checkout first &&
++	test_tick &&
++	git am --ignore-date patch1 &&
++	git cat-file commit HEAD | sed -e "/^$/q" >head1 &&
++	at=3D$(sed -ne "/^author /s/.*> //p" head1) &&
++	echo "$at" | grep "+0000"
++'
++
+ test_done
+--=20
+1.6.1.224.gb56c7
+
+--=20
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
