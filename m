@@ -1,156 +1,94 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: [PATCH] contrib git-resurrect: find traces of a branch name and resurrect it
-Date: Fri, 23 Jan 2009 15:00:17 -0600
-Message-ID: <200901231500.23182.bss@iguanasuicide.net>
-References: <200901201450.53450.bss@iguanasuicide.net> <1232740985-4551-1-git-send-email-trast@student.ethz.ch>
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: Re: [RFC/PATCH v3 3/3] archive.c: add basic support for submodules
+Date: Fri, 23 Jan 2009 22:15:21 +0100
+Message-ID: <8c5c35580901231315va79d89bu6e323d47a1b3547e@mail.gmail.com>
+References: <1232659071-14401-1-git-send-email-hjemli@gmail.com>
+	 <1232659071-14401-2-git-send-email-hjemli@gmail.com>
+	 <1232659071-14401-3-git-send-email-hjemli@gmail.com>
+	 <1232659071-14401-4-git-send-email-hjemli@gmail.com>
+	 <alpine.DEB.1.00.0901230044300.3586@pacific.mpi-cbg.de>
+	 <8c5c35580901231040i380c6458x1a6103cd6f55c479@mail.gmail.com>
+	 <7vzlhhu8qo.fsf@gitster.siamese.dyndns.org>
+	 <8c5c35580901231215q2be36abbla443975cdbb031f0@mail.gmail.com>
+	 <7vljt1u4pc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2547033.Mx3BKTHTD9";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Jan 23 22:01:00 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 22:16:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQT99-0008Dt-GD
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 22:00:59 +0100
+	id 1LQTOS-00053c-5h
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 22:16:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755103AbZAWU7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 15:59:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754721AbZAWU7f
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 15:59:35 -0500
-Received: from rei.iguanasuicide.net ([209.20.91.252]:44905 "EHLO
-	rei.iguanasuicide.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752273AbZAWU7e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 15:59:34 -0500
-Received: from [63.167.78.78]
-	by rei.iguanasuicide.net with esmtpsa (TLS-1.0:DHE_DSS_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LQT7l-0002i9-0M; Fri, 23 Jan 2009 20:59:33 +0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <1232740985-4551-1-git-send-email-trast@student.ethz.ch>
-X-Eric-Conspiracy: There is no conspiracy.
-X-Virus-Scanned: clamav@iguanasuicide.net
+	id S1755454AbZAWVPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 16:15:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755429AbZAWVPY
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 16:15:24 -0500
+Received: from wa-out-1112.google.com ([209.85.146.183]:21112 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755183AbZAWVPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 16:15:23 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so49769wah.21
+        for <git@vger.kernel.org>; Fri, 23 Jan 2009 13:15:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=/oGE8jhuKrjQnCEkw+fGhHJaLZudbi4+Rk4z5p8Kt50=;
+        b=hA0Z/PYUkCL46ukVdzo3N4Q+Ij/DFg6TKZGQ3uzx7ZNuBNXvePFIoKY3t6iwNioDLY
+         DpZXRKIfr7CoJesp1jv3zcq37dzLNpE05yn3NWp1IzLG1PoBSlvYthcAzy4ebKDqdR3m
+         AqlNdP89bgHGL3exPaMmyCEfp5e8XCxSqPPQo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=R1widXCk3ockJzMAeXwrvVKY97dd58VrXO1hCQmKn9P3xXJ8RBamBM9zGK87WEie7E
+         KKagg8qtEv8V/890egTjmak1EHCtPQ57NUbf8xWHkZwtPFfp7JmAs++i+DR/wxsabsU0
+         moB+W91q4/45m+9liIrmYRidrPAgsL73Z+WYY=
+Received: by 10.115.94.1 with SMTP id w1mr105750wal.30.1232745321885; Fri, 23 
+	Jan 2009 13:15:21 -0800 (PST)
+In-Reply-To: <7vljt1u4pc.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106915>
 
---nextPart2547033.Mx3BKTHTD9
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-On Friday 2009 January 23 14:03:05 Thomas Rast wrote:
->Boyd Stephen Smith Jr. wrote:
->> I think it could be quite nice; "undelete"-type commands are generally
->> well-received by users and when run against reflogs alone, that's what t=
-he
->> command is.
->>
->> It's useful enough to me that I'd love to see it mainlined.
+On Fri, Jan 23, 2009 at 21:50, Junio C Hamano <gitster@pobox.com> wrote:
+> Lars Hjemli <hjemli@gmail.com> writes:
+>> I would find the H flag practical for my own usage of submodules. I
+>> almost never modify the content of the currently checked out submodule
+>> but I often check out a different HEAD than what is registered in the
+>> gitlink in the superproject (typically due to testing the superproject
+>> against different versions of the submodule). And for such a use case,
+>> being able to create a tarball of my currently checked out state seems
+>> useful to me.
 >
->So here's a version for contrib with more options and some other
->tweaks.
-
-I wanted/needed the ability to ignore reflogs entirely.  Use went something=
-=20
-like this:
-1. resurrect branch from origin/pu
-2. add patches, mail to list
-3. # wait 24 hours
-4. pull, see from logs that branch was modified, but not just my changes (o=
-r=20
-without all of my changes).
-5. delete local branch
-6. Try to resurrect branch from origin/pu, get local version I just deleted.
-7. delete reflog for that branch
-8. Try to resurrect branch from origin/pu, get local version I merged into=
-=20
-master at some point.
-9. Add new option.
-
-So, I added a couple of options locally: --only-merges, so it would only lo=
-ok=20
-at the first line of commit logs, ignoring my local reflogs entirely;=20
-and --revisions, to specify arguments to pass to rev-list so it wouldn't ev=
-en=20
-see my local merges (I passed 'origin/pu origin/next').
-
-Yeah, my usage might be abusage, but it worked for me. :)
-
-Would you object to a patch adding a --reflog option and allowing each of t=
-he=20
-scan options to be negated?
-
->I removed the ability to "batch resurrect" with several <name>
->arguments since that would have conflicted with -b <newname>, but
->otherwise the features are the same.
-
-In my local version, which I was going to try and clean up over the weekend=
-, I=20
-was going to support both, by borrowing refspec syntax from fetch/push. =20
-Specifically.  Resurrecting 'js/notes' as 'pu/js/notes' would look like:
-git-resurrect -H js/notes:pu/js/notes
-
-Would you object to a patch that dropped -b in favor of the refspec syntax?
-
->> In my particular case, it wasn't useful without the -m option, but I
->> understand why it is not the default.
+> That would be more like an enhanced version of "git archive" that takes
+> the work tree state, similar to how "git grep" operates on the work tree
+> today.
 >
->Aside from the obvious speed reasons, I don't really want to teach
->people that commits "know" the branch they were on.  It is a pure
->coincidence if you can resurrect a topic branch from merge messages;
->an equivalent merge could have gone through as a fast-forward, and
->you'd never know.
+> I agree that would be useful, but I have a moderately strong suspition
+> that your "H" hack that includes the work tree state for checked out
+> submodules into a view that is primarily about the "tree" object in the
+> superproject, without the same "take from the work tree" semantics for
+> paths in the superproject, is more harmful than being helpful to the users
+> in the longer term.  It might be simple to implement, but I do not think
+> its semantics can be explained sanely.
 
-Yeah, agreed.  I made this more clear in my local version by changing the=20
-documentation from "scan for merges" to "scan first line of commit messages=
-=20
-for possible merges".  It's more wordy, but it make it clear that it is=20
-dependent on the message, and it's not tracked outside of that.
+Ok. When someone gets the itch for 'git archive --worktree', it would
+be easy enough to resurrect the idea of including the tree of the
+currently checked out HEAD in selected submodules.
 
-I also tend to merge topic branches with --no-ff so that I do get the merge=
-=20
-message, so it has a better chance of working against my repository.  (I al=
-so=20
-enjoy octopus merging when possible so the history indicates the patch sets=
-=20
-are separable, but maybe I'm just a little "touched" and haven't been bitte=
-n=20
-by by an octopus yet.[1])
+Do you think the other options makes any sense, i.e. is it any point
+in me trying to implement this?
 
-Not directly related to any issue you bring up:
-
-There seems to be some needless redundancy between USAGE and OPTIONS_SPEC.
-
-Would you object to a patch that used $USAGE inside OPTIONS_SPEC?
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
-
-[1] I hear they are even more feral than penguins.
-
---nextPart2547033.Mx3BKTHTD9
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkl6L+cACgkQdNbfk+86fC3iwwCfe5DIKP5wR+HiHucOCCJocQnO
-F84Anj71HrhCjkDFRubbeTi9u47IwV7i
-=p93f
------END PGP SIGNATURE-----
-
---nextPart2547033.Mx3BKTHTD9--
+--
+larsh
