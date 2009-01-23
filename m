@@ -1,88 +1,89 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: does git config get any side effect other than changing .gitconfig
-Date: Thu, 22 Jan 2009 21:26:42 -0600
-Message-ID: <200901222126.46964.bss@iguanasuicide.net>
-References: <20090123031210.GB6931@b2j>
+From: bill lam <cbill.lam@gmail.com>
+Subject: Re: does git config get any side effect other than changing
+	.gitconfig
+Date: Fri, 23 Jan 2009 11:41:57 +0800
+Message-ID: <20090123034157.GD6931@b2j>
+References: <20090123031210.GB6931@b2j> <200901222126.46964.bss@iguanasuicide.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1793920.gb3qfhHSbe";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: bill lam <cbill.lam@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 04:28:15 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
+To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+X-From: git-owner@vger.kernel.org Fri Jan 23 04:43:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQCiM-00068r-2Y
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 04:28:14 +0100
+	id 1LQCx8-0000v8-L6
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 04:43:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754547AbZAWD0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 22:26:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754309AbZAWD0u
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 22:26:50 -0500
-Received: from eastrmmtao103.cox.net ([68.230.240.9]:34399 "EHLO
-	eastrmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751076AbZAWD0t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 22:26:49 -0500
-Received: from eastrmimpo02.cox.net ([68.1.16.120])
-          by eastrmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090123032648.NVUT18445.eastrmmtao103.cox.net@eastrmimpo02.cox.net>;
-          Thu, 22 Jan 2009 22:26:48 -0500
-Received: from localhost ([72.204.50.125])
-	by eastrmimpo02.cox.net with bizsmtp
-	id 6rSn1b00F2i4SyG02rSoJw; Thu, 22 Jan 2009 22:26:48 -0500
-X-Authority-Analysis: v=1.0 c=1 a=cSH6ck6kn9AA:10 a=K2c2zlCuLN8A:10
- a=Fq1VQ0LPAAAA:8 a=FHAcYqadRDla-NNh8wgA:9 a=A7mtXBPZ2F_uJ6N17HTXOS61MTcA:4
- a=MSl-tDqOz04A:10 a=T3brmoaXcPoA:10 a=LY0hPdMaydYA:10
- a=Z3LHMnvLNUoxLADSBqMA:9 a=5SgaJwrVPnDNfsmCZOG9lbCO3jsA:4 a=rPt6xJ-oxjAA:10
-X-CM-Score: 0.00
-Received: from bss by localhost with local (Exim 4.69)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LQCgx-0003zh-5K; Thu, 22 Jan 2009 21:26:47 -0600
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090123031210.GB6931@b2j>
-X-Eric-Conspiracy: There is no conspiracy
+	id S1754964AbZAWDmG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jan 2009 22:42:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754093AbZAWDmF
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 22:42:05 -0500
+Received: from ti-out-0910.google.com ([209.85.142.184]:25568 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754745AbZAWDmE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2009 22:42:04 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so3146664tic.23
+        for <git@vger.kernel.org>; Thu, 22 Jan 2009 19:42:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:references:mime-version:content-type
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=sfw2GuyPqWUL/KeT6sCLbxBe907FdfPE8Udv++tnRuo=;
+        b=C31HnL0AWM8US0lNbrC9Zbt744qJiszOg2Aoiv+EPHHQ5MV1o4/3s3TNy3BRr9nUcZ
+         5eA/wtFW9P89xBC7k3AaWToRLEs7RuqN1Gci1Zz0ftXipoqr1QB73+qfJVzkxGwRua50
+         AFs0tHfOGcqM44J0fYmiQrryay/7mTH2LoPOU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        b=dbSvuHB8yJS76OL+A10NcECBk30yN9uC3eeVfw051sMcCsgdgmpGIrs+HiQyGjlxoq
+         v/sB+Uox+qf7vP4AYYNmsYv/DejWl2oJnAwaQZXZEdB19zQsL1/Exg2xsMtY8UQ/7afu
+         PBTOvXu2GA2EYMZYrc4k2MxBIaZnfwJ/g09QA=
+Received: by 10.110.63.6 with SMTP id l6mr206366tia.50.1232682121836;
+        Thu, 22 Jan 2009 19:42:01 -0800 (PST)
+Received: from localhost (n218103237232.netvigator.com [218.103.237.232])
+        by mx.google.com with ESMTPS id i6sm2175646tid.16.2009.01.22.19.41.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 22 Jan 2009 19:42:00 -0800 (PST)
+Mail-Followup-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <200901222126.46964.bss@iguanasuicide.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106829>
 
---nextPart1793920.gb3qfhHSbe
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Thu, 22 Jan 2009, Boyd Stephen Smith Jr. wrote:
+> >Suppose I got several git repositories to maintain, instead of using
+> >command git config [--global] again and again.  Can I call up a text
+> >editor to edit .git/config or .gitconfig manually, or just copy from
+> >another .gitconfig ?
+>=20
+> Yes.  Absolutely.
 
-On Thursday 22 January 2009, bill lam <cbill.lam@gmail.com> wrote=20
-about 'does git config get any side effect other than=20
-changing .gitconfig':
->Suppose I got several git repositories to maintain, instead of using
->command git config [--global] again and again.  Can I call up a text
->editor to edit .git/config or .gitconfig manually, or just copy from
->another .gitconfig ?
+Thanks for confirmation.  I realised that the subject is in the
+opposite tone to the message body.
 
-Yes.  Absolutely.
-=2D-=20
-Boyd Stephen Smith Jr.                     ,=3D ,-_-. =3D.=20
-bss@iguanasuicide.net                     ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy           `-'(. .)`-'=20
-http://iguanasuicide.net/                      \_/    =20
-
---nextPart1793920.gb3qfhHSbe
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkl5OPIACgkQ55pqL7G1QFmDsACfftXJoK6q8xF1gJPPTKEOEpdx
-jCwAni79if3Dj+iA3mzd9dljtNfm0FWG
-=NSUI
------END PGP SIGNATURE-----
-
---nextPart1793920.gb3qfhHSbe--
+--=20
+regards,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+=E5=94=90=E8=A9=A9157 =E6=9D=8E=E5=95=86=E9=9A=B1  =E9=A2=A8=E9=9B=A8
+    =E6=B7=92=E6=B6=BC=E5=AF=B6=E5=8A=8D=E7=AF=87  =E7=BE=88=E6=B3=8A=E6=
+=AC=B2=E7=AA=AE=E5=B9=B4  =E9=BB=83=E8=91=89=E4=BB=8D=E9=A2=A8=E9=9B=A8=
+  =E9=9D=92=E6=A8=93=E8=87=AA=E7=AE=A1=E7=B5=83
+    =E6=96=B0=E7=9F=A5=E9=81=AD=E8=96=84=E4=BF=97  =E8=88=8A=E5=A5=BD=E9=
+=9A=94=E8=89=AF=E7=B7=A3  =E5=BF=83=E6=96=B7=E6=96=B0=E8=B1=90=E9=85=92=
+  =E9=8A=B7=E6=84=81=E6=96=97=E5=B9=BE=E5=8D=83
