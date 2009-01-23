@@ -1,72 +1,63 @@
-From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
-Subject: Re: [PATCH] git-am: Add --ignore-date option
-Date: Fri, 23 Jan 2009 14:17:11 +0100
-Message-ID: <20090123131711.GA11507@chistera.yi.org>
-References: <7vwscm1nic.fsf@gitster.siamese.dyndns.org> <7vljt26fp9.fsf@gitster.siamese.dyndns.org> <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com> <20090123094529.6117@nanako3.lavabit.com> <20090123172646.6117@nanako3.lavabit.com> <alpine.DEB.1.00.0901231336080.3586@pacific.mpi-cbg.de>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git-svn fails to fetch repository
+Date: Fri, 23 Jan 2009 14:22:18 +0100
+Message-ID: <20090123132218.GB523@atjola.homenet>
+References: <loom.20090113T145019-951@post.gmane.org> <loom.20090113T150220-345@post.gmane.org> <496CD49D.1070201@drmicha.warpmail.net> <loom.20090113T185918-397@post.gmane.org> <20090113203922.GD30404@atjola.homenet> <loom.20090113T204616-845@post.gmane.org> <20090123085235.GA14721@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	git list <git@vger.kernel.org>,
-	Christian MICHON <christian.michon@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 23 14:18:46 2009
+Cc: Vladimir Pouzanov <farcaller@gmail.com>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Jan 23 14:24:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQLvm-0007w3-KE
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 14:18:43 +0100
+	id 1LQM14-0001U9-P8
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 14:24:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759063AbZAWNRR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jan 2009 08:17:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759025AbZAWNRQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 08:17:16 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:3275
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758966AbZAWNRO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 08:17:14 -0500
-Received: from chistera.yi.org (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id 20630801BF94;
-	Fri, 23 Jan 2009 14:17:13 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LQLuJ-00036W-EO; Fri, 23 Jan 2009 14:17:11 +0100
+	id S1755992AbZAWNWr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jan 2009 08:22:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755884AbZAWNWq
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 08:22:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55579 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755722AbZAWNWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 08:22:46 -0500
+Received: (qmail invoked by alias); 23 Jan 2009 13:22:44 -0000
+Received: from i577B96D3.versanet.de (EHLO atjola.local) [87.123.150.211]
+  by mail.gmx.net (mp065) with SMTP; 23 Jan 2009 14:22:44 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+YgqtZ05+YCnGYjbwBXIR3xhu2yh7oVlyiY/fkJd
+	+b60DQodljl6RO
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901231336080.3586@pacific.mpi-cbg.de>
-X-No-CC: Please respect my Mail-Followup-To header
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <20090123085235.GA14721@machine.or.cz>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106882>
 
-* Johannes Schindelin [Fri, 23 Jan 2009 13:38:34 +0100]:
+On 2009.01.23 09:52:35 +0100, Petr Baudis wrote:
+> On Tue, Jan 13, 2009 at 08:46:55PM +0000, Vladimir Pouzanov wrote:
+> > Bj=F6rn Steinbrink <B.Steinbrink <at> gmx.de> writes:
+> > > Is that Linux box using Gentoo? If so, try emerging subversion wi=
+th -dso
+> > > in your build flags.
+> >=20
+> > Yeah, that's gentoo. Will try rebuilding svn now.
+>=20
+> I have hit the same issue (segfault on Gentoo) and this fixed it for =
+me.
+> But do you have any details on why is the segfault caused and how to
+> prevent it? USE=3Ddso is the default on Gentoo. :-(
 
-> FWIW I have that problem in one of my workflows, and I do this:
-> 	grep -v "^Date:" < $MBOX | git am
+No idea, I just heard about that in #git. IIRC it was Mikachu who came
+up with that solution. Unfortunately, he's not around at the moment, an=
+d
+I don't recall his real name, so not on Cc. :-/
 
-> Of course, this assumes that none of my commit messages has the strin=
-g=20
-> "Date:" at the beginning of the line...
-
-In case you're interested:
-
-    % formail -I 'Date' -s < $MBOX | git am
-
-is robust against your assumption being wrong. (I realize ^Date: is not
-very likely in commit messages, but I thought I'd mention nevertheless.=
-)
-
-Cheers,
-
---=20
-Adeodato Sim=C3=B3                                     dato at net.com.=
-org.es
-Debian Developer                                  adeodato at debian.or=
-g
-=20
-- Are you sure we're good?
-- Always.
-                -- Rory and Lorelai
+Bj=F6rn
