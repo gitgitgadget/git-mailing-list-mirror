@@ -1,89 +1,74 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Merging adjacent deleted lines?
-Date: Fri, 23 Jan 2009 02:18:15 -0500
-Message-ID: <76718490901222318l7c3559ecje4a627fe2ff2ad12@mail.gmail.com>
-References: <57518fd10901211120n62f8d0e9ya8595fc9baa6476c@mail.gmail.com>
-	 <7vy6x4cqq1.fsf@gitster.siamese.dyndns.org>
-	 <57518fd10901220257p62b6d1efof97ba3fcf90dbfda@mail.gmail.com>
-	 <200901222113.31082.robin.rosenberg.lists@dewire.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/3] Add "partial commit" tests during a conflicted merge
+Date: Fri, 23 Jan 2009 08:32:15 +0100
+Message-ID: <4979727F.80007@viscovery.net>
+References: <4978202C.3090703@viscovery.net> <alpine.DEB.2.00.0901211549070.15860@vellum.laroia.net> <49779521.9040208@drmicha.warpmail.net> <c1a864630901211346j4b702fb3tcc5a098ed7e1541d@mail.gmail.com> <20090123094509.6117@nanako3.lavabit.com> <7viqo64kfo.fsf@gitster.siamese.dyndns.org> <7vbpty4kby.fsf_-_@gitster.siamese.dyndns.org> <49796D0C.5070408@viscovery.net> <7vab9i331g.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan del Strother <maillist@steelskies.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 08:19:45 2009
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Nathan Yergler <nathan@creativecommons.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Asheesh Laroia <asheesh@asheesh.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 08:33:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQGKO-00065Y-Hw
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 08:19:44 +0100
+	id 1LQGY0-0000cA-Ai
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 08:33:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752469AbZAWHSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 02:18:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752406AbZAWHSR
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 02:18:17 -0500
-Received: from rv-out-0506.google.com ([209.85.198.238]:53459 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752352AbZAWHSR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 02:18:17 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so4561592rvb.1
-        for <git@vger.kernel.org>; Thu, 22 Jan 2009 23:18:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0gjxkDM8WVLgR7rtnhnSAl+8jvYhH2lzK3YcP4HU7Gc=;
-        b=iQGKaoADH/KWkoTu6FAQFWRerx9Wc9+00bcna/pHDURUNKhQm/1Rt/EbGztzA+vyc0
-         BmCyTsh+TPJhfUUF3HLbrDX3naMj1OBt1gBL0gxs8+ZWCdQ/Ezucfk5jLmlABlmXJ2eK
-         Cw3oLuynRkapMvqVB992ZAeMcVc4fDtKWk6kQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ffuI4soWXgUU5p+GgfArvEZVTgG8GzDNRpDK5cijl6YIfdGv75B5A1dxM6Rgk5/4hf
-         GvAXpnclarokxtQrEUlBC/D1TWVsROT8CsPWVSAuq6QC6EWTR5cdKQ4X7g2hyyyEXHCU
-         ac+BJV68eZnAe6rylQSwO5ea8MpXpnyiwxOug=
-Received: by 10.140.157.1 with SMTP id f1mr1092649rve.196.1232695095766; Thu, 
-	22 Jan 2009 23:18:15 -0800 (PST)
-In-Reply-To: <200901222113.31082.robin.rosenberg.lists@dewire.com>
+	id S1752483AbZAWHcW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 02:32:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbZAWHcW
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 02:32:22 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:57334 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751179AbZAWHcV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 02:32:21 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LQGWV-0008Q7-K7; Fri, 23 Jan 2009 08:32:15 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5D32F6EF; Fri, 23 Jan 2009 08:32:15 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7vab9i331g.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106848>
 
-On Thu, Jan 22, 2009 at 3:13 PM, Robin Rosenberg
-<robin.rosenberg.lists@dewire.com> wrote:
-> torsdag 22 januari 2009 11:57:41 skrev Jonathan del Strother:
->> Mmm.  I use opendiff, which is generally ok, but in this case produced
->> a merge looking like this :
->>
->> http://pastie.org/paste/asset/367587/Picture_6.png
->>
->> Which, in my mind, isn't any clearer about the fact that both lines
->> ought to be deleted than the text conflict markers are.  Do any of the
->> other graphical tools present conflicts like that differently?
->
-> Try a three-way merge tool instead like, e.g. xxdiff.
+Junio C Hamano schrieb:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+>>> +test_expect_success 'reject --only during a merge' '
+>>> +	git checkout HEAD^0 &&
+>>> +	git reset --hard the-other-side-says-nitfol &&
+>>> +	test_must_fail git merge one-side-says-frotz &&
+>>> +	echo yomin-only >file &&
+>>> +	test_must_fail git commit -m merge --only file &&
+>> I don't see why this must fail: 'file' is the only file that is different
+>> from HEAD. Yes, currently we fail; but if something is about to be
+>> changed, then this can change as well.
+> 
+> Not at all.
 
-opendiff (aka FileMerge) *is* a three-way merge tool. If the
-screenshot above is not clear, I'm not sure what would be. The left
-pane shows your copy of the file with only line1, line3, and line4.
-The right pane shows the other copy, with only line1, line2, and
-line4.
+Read again what I said: 'file' is the *ONLY* file that is different from
+HEAD. Why should an explicit --only not work in this case?
 
-The lower pane shows the merge resolution, which currently has the
-single conflict highlighted, and is being resolved toward the right.
-You can use the Action drop down menu to resolve the conflict one of
-five ways: left, right, both (left first), both (right first),
-neither. You've currently got "right" selected. The appropriate
-resolution is "neither", which keeps neither line3 from the left, nor
-line2 from the right.
+> Avoiding --only is to prevent a much more dangerous glitch.
+[...]
 
-Shrug.
+We are in total agreement about what you said in the rest of the message.
 
-j.
+I'm proposing that, during a merge, if --only was given (or remains the
+implicit choice), then we compare the index with HEAD, and if nothing
+outside the given pathspec differs from HEAD, then allow the commit.
+
+-- Hannes
