@@ -1,86 +1,95 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH 4/4] gitweb: rss channel date
-Date: Fri, 23 Jan 2009 05:48:41 +0100
-Message-ID: <1232686121-1800-5-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1232686121-1800-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1232686121-1800-2-git-send-email-giuseppe.bilotta@gmail.com>
- <1232686121-1800-3-git-send-email-giuseppe.bilotta@gmail.com>
- <1232686121-1800-4-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+From: Stefan Karpinski <stefan.karpinski@gmail.com>
+Subject: Re: [PATCH] git-cvsserver: run post-update hook *after* update.
+Date: Thu, 22 Jan 2009 21:43:48 -0800
+Message-ID: <d4bc1a2a0901222143i1a7dd051h1778dcb563120195@mail.gmail.com>
+References: <1232144521-21947-1-git-send-email-stefan.karpinski@gmail.com>
+	 <1232144521-21947-2-git-send-email-stefan.karpinski@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 23 05:50:19 2009
+X-From: git-owner@vger.kernel.org Fri Jan 23 06:45:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQDzm-00049L-B0
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 05:50:18 +0100
+	id 1LQEqx-0004S1-UZ
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 06:45:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755978AbZAWEsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 23:48:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755851AbZAWEsk
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 23:48:40 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:61810 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755890AbZAWEsg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 23:48:36 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so2404923fgg.17
-        for <git@vger.kernel.org>; Thu, 22 Jan 2009 20:48:35 -0800 (PST)
+	id S1751026AbZAWFnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 00:43:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750960AbZAWFnu
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 00:43:50 -0500
+Received: from rv-out-0506.google.com ([209.85.198.237]:41150 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750904AbZAWFnu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 00:43:50 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so4526144rvb.1
+        for <git@vger.kernel.org>; Thu, 22 Jan 2009 21:43:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=5arRxrfCLPb4wE89aHp0smktiFBcUWS4HsBX19rSrn8=;
-        b=Yg74nRt05wgYIwFa2dpXgEJrk1fFazeGDVd3LZEhi7UKMd6sjamxW1HhjABtISfRni
-         xRKvGSndUuBfDhKscGiIqj6qNLzeEfysZB2yjpK5B7Y1ek0+UwzA8ANgInm2rof/tz2N
-         UDdNuni8Am1U52DWaARDq1AdWhw2B4ejK5BVA=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=4GFy11jFU3dlZqHIOzNHeHFAmiXIXvH5TL3cUO4jWt4=;
+        b=op2AxTc4J6w6zvogDEfnpLZ7YJTNRzU3t4+99o50jrdXAwcaP0Vsgug8mrhn1UoIZw
+         SzUQcPESVsgVQz5pMdVpbefsje5k54pw1eqbzk5bmgTiePbnYUpCOicVXw0SeuP1aN6H
+         d+BJpIZwGcnQyQygsE//53MSWbRtyNFENbPGw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=I17DMW4qFz70U3bhptLsNhQOJrr25nuc/7vX3Zt7lEDQpbu90jxFIQvoAd2qU88tAG
-         wjB0EjoCCZt1kaVb4zWfpQgvBO+d+ytQKKQsRDXvlYaJYOMeUzvhltd6pCgMorErk8vx
-         gz/NDTlmrtHljNIEkBLmxKaeCVoK5G4eNaDmc=
-Received: by 10.86.51.10 with SMTP id y10mr536376fgy.51.1232686115227;
-        Thu, 22 Jan 2009 20:48:35 -0800 (PST)
-Received: from localhost ([94.37.14.37])
-        by mx.google.com with ESMTPS id 4sm8658150fgg.44.2009.01.22.20.48.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 22 Jan 2009 20:48:34 -0800 (PST)
-X-Mailer: git-send-email 1.5.6.5
-In-Reply-To: <1232686121-1800-4-git-send-email-giuseppe.bilotta@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=a6hIs2Y1exR7pE/JGrW88YViUdjxxgIE2MyZUZa0+d+puNc3XmacdaA/TktYtrAdOW
+         Vu83x+NvOI8pWQt4amFZX31pQ2kbNy6/Zkc74cOhFlnvSFjY6Xe+dl4ll4CQ1+LtEWze
+         3roIdWascW1AT5aALk0EumZ9cQ9xrWz/HPEho=
+Received: by 10.114.184.7 with SMTP id h7mr1841442waf.151.1232689429019; Thu, 
+	22 Jan 2009 21:43:49 -0800 (PST)
+In-Reply-To: <1232144521-21947-2-git-send-email-stefan.karpinski@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106836>
 
-The RSS 2.0 specifications defines not one but _two_ dates for its
-channel element! Woohoo! Luckily, it seems that consensus seems to be
-that if both are present they should be equal, except for some very
-obscure and discouraged cases. Since lastBuildDate would make more sense
-for us and pubDate seems to be the most commonly used, we defined both
-and make them equal.
+I know that this and the other patch I sent are completely trivial and
+uninteresting, but they would appear to be correct. Do I need to prod
+more to get them included or what? Did I submit them incorrectly?
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- gitweb/gitweb.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index cc6d0fb..756868a 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -6087,6 +6087,10 @@ XML
- 			      "<link>$alt_url</link>\n" .
- 			      "</image>\n";
- 		}
-+		if (%latest_date) {
-+			print "<pubDate>$latest_date{'rfc2822'}</pubDate>\n";
-+			print "<lastBuildDate>$latest_date{'rfc2822'}</lastBuildDate>\n";
-+		}
- 		print "<generator>gitweb v.$version/$git_version</generator>\n";
- 	} elsif ($format eq 'atom') {
- 		print <<XML;
--- 
-1.5.6.5
+On Fri, Jan 16, 2009 at 2:22 PM, Stefan Karpinski
+<stefan.karpinski@gmail.com> wrote:
+>
+> CVS server was running the hook before the update
+> action was actually done. This performs the update
+> before the hook is called.
+> ---
+>
+> Unless I'm severely misunderstanding the meaning of
+> a *post-update* hook, I think this is a no-brainer.
+>
+>  git-cvsserver.perl |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+> index c1e09ea..d2e6003 100755
+> --- a/git-cvsserver.perl
+> +++ b/git-cvsserver.perl
+> @@ -1413,14 +1413,14 @@ sub req_ci
+>                close $pipe || die "bad pipe: $! $?";
+>        }
+>
+> +    $updater->update();
+> +
+>        ### Then hooks/post-update
+>        $hook = $ENV{GIT_DIR}.'hooks/post-update';
+>        if (-x $hook) {
+>                system($hook, "refs/heads/$state->{module}");
+>        }
+>
+> -    $updater->update();
+> -
+>     # foreach file specified on the command line ...
+>     foreach my $filename ( @committedfiles )
+>     {
+> --
+> 1.6.0.3.3.g08dd8
+>
