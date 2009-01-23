@@ -1,72 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-am: Add --ignore-date option
-Date: Fri, 23 Jan 2009 13:38:34 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901231336080.3586@pacific.mpi-cbg.de>
-References: <7vwscm1nic.fsf@gitster.siamese.dyndns.org> <7vljt26fp9.fsf@gitster.siamese.dyndns.org> <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com> <20090123094529.6117@nanako3.lavabit.com> <20090123172646.6117@nanako3.lavabit.com>
+From: =?utf-8?Q?S=C3=A9bastien?= Mazy <melyadon@gmail.com>
+Subject: Re: How to prefix existing svn remotes?
+Date: Fri, 23 Jan 2009 13:42:31 +0100
+Message-ID: <20090123124231.GA17616@locahost>
+References: <20090122173211.GB21798@locahost> <4979A64E.6030608@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>,
-	Christian MICHON <christian.michon@gmail.com>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 13:39:51 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Jan 23 13:44:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQLKA-0004FQ-IL
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 13:39:51 +0100
+	id 1LQLOF-0005Zw-OI
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 13:44:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754766AbZAWMi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 07:38:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754098AbZAWMi0
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 07:38:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52360 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752035AbZAWMiZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 07:38:25 -0500
-Received: (qmail invoked by alias); 23 Jan 2009 12:38:23 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp008) with SMTP; 23 Jan 2009 13:38:23 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ex9o0ahqeb22O7G995APy3GEUvbDIpXZAHv8rdn
-	HUjN94yRB7TP/e
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090123172646.6117@nanako3.lavabit.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1754837AbZAWMmj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jan 2009 07:42:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753747AbZAWMmj
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 07:42:39 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:44848 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752035AbZAWMmi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 07:42:38 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so2540249fgg.17
+        for <git@vger.kernel.org>; Fri, 23 Jan 2009 04:42:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=COo5/iuF4qDnoDjsgdIUPDlFmVKtE44yX8QXUSQ806s=;
+        b=d0QaT2QC7KUUoJtbJDEjd99fELL9K4JqJbkp6GpciTH9SSjAFlChGnfK/oo7O2rqiX
+         /3zmERDquwxKQBZrOjTk0ljFev/2bU1zdS/V5/z9Kx5bSKp3ST+WZz60hVPCgepIcl+n
+         P6stfdsjfoGRBE16gDH5QstAOBQfnd2tdh6wk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=pN6FnsxpcQKe0SzkeolAw3bs+6whf/zA5D7Is8FF4zqPDo5yhKXN0J79Ly5LYMtjdI
+         GMMcZLSGzHVtnpNRzTta7WC5lujC25dyPAikNTG93jDeNzCh2/S+7feo1ppiFljOOIpY
+         bFtvdKr/UByBfxaKdtF83s1iGtprA4SJ1CVV4=
+Received: by 10.86.57.9 with SMTP id f9mr369737fga.32.1232714556602;
+        Fri, 23 Jan 2009 04:42:36 -0800 (PST)
+Received: from localhost (vpn-cl-165-189.rz.uni-karlsruhe.de [141.3.165.189])
+        by mx.google.com with ESMTPS id d4sm4219994fga.51.2009.01.23.04.42.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 23 Jan 2009 04:42:35 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4979A64E.6030608@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106877>
 
-Hi,
+Hi Michael,
 
-[if you would have given a new mail subject to your mail, gitweb would 
- stand a chance to find it]
+Thanks for your reply.
 
-On Fri, 23 Jan 2009, Nanako Shiraishi wrote:
+On Fri, Jan 23, 2009 at 12:13:18PM +0100, Michael J Gruber wrote:
+> The following works for me:
+>=20
+> 0) fetch to make sure you're current (optional)
+> 1) edit .git/config and add the prefix (right hand side of the
+> refpsecs), or really rename in any way you want
 
-> Subject: [PATCH] git-am: Add --ignore-date option
-> 
-> This new option makes the command ignore the date header field recorded in
-> the format-patch output.  The commits will have the timestamp when they
-> are created instead.
-> 
-> You can work a lot in one day to accumulate many changes, but apply and
-> push to the public repository only some of them at the end of the first
-> day.  Then next day you can spend all your working hours reading comics or
-> chatting with your coworkers, and apply your remaining patches from the
-> previous day using this option to pretend that you have been working at
-> the end of the day.
+OK.
 
-FWIW I have that problem in one of my workflows, and I do this:
+> 2) rename the existing remote branches in the same way
 
-	grep -v "^Date:" < $MBOX | git am
+I'm not sure how I can do it. 'trunk' is the only remote-tracking svn
+branches under .git/refs/. Here is how it looks:
 
-Of course, this assumes that none of my commit messages has the string 
-"Date:" at the beginning of the line...
+ls -R .git/refs
+ .git/refs:  heads  remotes  tags
+ .git/refs/heads:  master
+ .git/refs/remotes:  trunk
 
-Ciao,
-Dscho
+Still, a 'branch0' remote exist:
+
+git show-ref
+ refs/heads/master
+ refs/remotes/branch0
+ refs/remotes/trunk
+
+--=20
+S=C3=A9bastien Mazy
