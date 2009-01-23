@@ -1,91 +1,99 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: Re: [RFC/PATCH v3 3/3] archive.c: add basic support for submodules
-Date: Fri, 23 Jan 2009 19:40:00 +0100
-Message-ID: <8c5c35580901231040i380c6458x1a6103cd6f55c479@mail.gmail.com>
-References: <1232659071-14401-1-git-send-email-hjemli@gmail.com>
-	 <1232659071-14401-2-git-send-email-hjemli@gmail.com>
-	 <1232659071-14401-3-git-send-email-hjemli@gmail.com>
-	 <1232659071-14401-4-git-send-email-hjemli@gmail.com>
-	 <alpine.DEB.1.00.0901230044300.3586@pacific.mpi-cbg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: RFC: git diff colorization idea
+Date: Fri, 23 Jan 2009 10:40:52 -0800 (PST)
+Message-ID: <m3iqo5yiek.fsf@localhost.localdomain>
+References: <53497057-1ADE-4300-9F35-B218959606FE@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 23 19:41:31 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 19:42:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQQy9-0007ru-8y
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 19:41:29 +0100
+	id 1LQQz3-0008Dd-Vt
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 19:42:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755671AbZAWSkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 13:40:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754109AbZAWSkD
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 13:40:03 -0500
-Received: from rv-out-0506.google.com ([209.85.198.225]:48375 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753241AbZAWSkC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 13:40:02 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so4825281rvb.1
-        for <git@vger.kernel.org>; Fri, 23 Jan 2009 10:40:00 -0800 (PST)
+	id S1758185AbZAWSk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 13:40:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757830AbZAWSk5
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 13:40:57 -0500
+Received: from mail-ew0-f20.google.com ([209.85.219.20]:43743 "EHLO
+	mail-ew0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757544AbZAWSk4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 13:40:56 -0500
+Received: by ewy13 with SMTP id 13so3890373ewy.13
+        for <git@vger.kernel.org>; Fri, 23 Jan 2009 10:40:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JnR/oLsfGHCuEUwFSqUlmCKNEeEIgHm00SAgO9lI9h0=;
-        b=gTZwAJ9tkaP+X98N72TMvd8yCQoESGeyCqiQWJUb2FRe53+y67C6ZPv2ngsxyjNgdH
-         y5nxJWr+BHiSp3UGzMoC9RbORRfyuz/GfFkVs2CBlNnNb6xWDtR6luL8VWckW9bWcUar
-         4hbSCZra0jWwukmptI/Ooy81xdusgbMstDMB8=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=RNtxahPR3feyPbDVwsBOpw0/UNBrEKT6Sq2VdVmtckg=;
+        b=MDwgSbbVeIX8Ybb2qJRVSWU7IuFSgifqZDGtCbVi5w/KkDYNzBOwz7LF2PEC6AGwso
+         B3gkbMFoBtRx68LH7U0R1qLfTnSkKa7PKpl08/P4vGewRf0eJqbbvO+ZOs7muRiM4Y72
+         XNwsgIoJMmJa3M7zzV0NcCdMuZnN1MANf4z+o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=NVwV4LXkdO6yRKcXvF+NJYAILURRGqnPBm96OPivZ19UxcUu4y2q1gYkOeZll4GPtP
-         s/+6YaU9vBKvbEJYiARBkE0PT0zeZ22yfTPJs1QxvfEloCZ5QR6U3TycSeip6Dimc+f0
-         hA45Ok7VsNLjv4arQiiwsUOex/Vz2mdsxMcMs=
-Received: by 10.115.18.1 with SMTP id v1mr3124784wai.175.1232736000679; Fri, 
-	23 Jan 2009 10:40:00 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0901230044300.3586@pacific.mpi-cbg.de>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=SmypVj/t8ZeqeUzB7OpMctAiICiGwKNdOUJJsmSs4mcENvPGderP3qdC1lP4pWmqpw
+         87e88N/rUtEBx+TPQX9C1kpBrCpWckkbBC6kPMkdTke8xCZfMxIn7+fAev4+nbv9tf6P
+         xgl/yljWgnJXEsUzteaJUEanXjOVCnYRnoD1M=
+Received: by 10.86.84.5 with SMTP id h5mr683877fgb.49.1232736053915;
+        Fri, 23 Jan 2009 10:40:53 -0800 (PST)
+Received: from localhost.localdomain (abwn47.neoplus.adsl.tpnet.pl [83.8.237.47])
+        by mx.google.com with ESMTPS id 3sm7351111fge.57.2009.01.23.10.40.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 23 Jan 2009 10:40:52 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0NIfRap018706;
+	Fri, 23 Jan 2009 19:41:27 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0NIfN00018703;
+	Fri, 23 Jan 2009 19:41:23 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <53497057-1ADE-4300-9F35-B218959606FE@wincent.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106901>
 
-On Fri, Jan 23, 2009 at 00:44, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Thu, 22 Jan 2009, Lars Hjemli wrote:
+Wincent Colaiuta <win@wincent.com> writes:
+
+> Lately I've been wishing that Git's diff output were colorized in a
+> way that combines the standard line-by-line colorizing with the word-
+> by-word colorizing you get with --color-words.
+
+I like this idea, also because Emacs ediff / ediff3 / emerge uses it,
+from what I understand under the name of 'refinement'.
+
+> 
+> Pictures speak louder than words, so here are some to show what I mean:
+> 
+> http://www.flickr.com/photos/wincent-colaiuta/sets/72157612877491482/
 >
->> The new --submodules option is used to trigger inclusion of checked out
->> submodules in the archive.
->>
->> The implementation currently does not verify that the submodule has been
->> registered as 'interesting' in .git/config, neither does it resolve the
->> currently checked out submodule HEAD but instead uses the commit SHA1
->> recorded in the gitlink entry to identify the submodule root tree.
->
-> Please understand that I skipped the rest of the patch.
+[...]
 
-That's too bad, I hoped on some feedback from you on the part of the
-commit message which you didn't quote:
+There was some discussion in this thread on how to do this, whether
+with --refine / --color-chars we shoud ony highlight differences, or
+whether for example use reverse (i.e. background green or background
+red), or other red / other green, or perhaps bold, or perhaps
+underline to highlight regions in line which differ
 
->> The plan is to fix these limitations by extending --submodules to allow
->> certain flags/options:
->> a|c|r     include any|checked out|registered submodules
->> H         resolve submodule HEAD to decide which tree to include
->> g:<name>  only include submodules in group <name>
->>
->> The syntax would then become '--submodules[=[a|c|r][H][g:<name>]]' and
->> group membership could be specified in .git/config and/or .gitmodules.
->> The current behavior would then match '--submodules=c' (which might be a
->> sensible default when only --submodules is specified).
+> - Meld: http://meld.sourceforge.net/meld_file1.png
 
-Wouldn't such an option address your concern about the
-consistency/semantics of the --submodules operation?
+Not extremly good example, as it uses equivalent of context diff
+format (-,+,!) with added, removed and _changed_ lines, and not
+unified diff format (only added / removed lines).
 
---
-larsh
+> Would people be interested in seeing this feature go in? [...]
+
++1 from me
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
