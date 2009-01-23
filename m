@@ -1,105 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2009, #02; Sun, 11)
-Date: Fri, 23 Jan 2009 13:04:22 +0100
-Message-ID: <200901231304.23977.jnareb@gmail.com>
-References: <7v63kmtbk6.fsf@gitster.siamese.dyndns.org> <200901120225.30175.jnareb@gmail.com> <1232548106.4977310a95d8f@mail.nimag.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-am: Add --ignore-date option
+Date: Fri, 23 Jan 2009 13:38:34 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901231336080.3586@pacific.mpi-cbg.de>
+References: <7vwscm1nic.fsf@gitster.siamese.dyndns.org> <7vljt26fp9.fsf@gitster.siamese.dyndns.org> <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com> <20090123094529.6117@nanako3.lavabit.com> <20090123172646.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: Sebastien Cevey <seb@cine7.net>
-X-From: git-owner@vger.kernel.org Fri Jan 23 13:06:17 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>,
+	Christian MICHON <christian.michon@gmail.com>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 13:39:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQKms-0002Bz-Sr
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 13:05:54 +0100
+	id 1LQLKA-0004FQ-IL
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 13:39:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752035AbZAWMD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 07:03:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751761AbZAWMDz
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 07:03:55 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:35872 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752768AbZAWMDy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 07:03:54 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so2527567fgg.17
-        for <git@vger.kernel.org>; Fri, 23 Jan 2009 04:03:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=KdZYTBitU9nPKKHKVzFNcJWbYsI9rxql+IM6ms3Fkic=;
-        b=TfKtq1yeZoJwCPMp0Y7C+Q92O0aX12ImMUDKoH8GhWgxDLm9jCo/ruPzZoKCn7TNyS
-         s0DfjUt+P9TpXepM7xfynDyw2uE+CYYhcBevOQY1zmbKGydd4hWGUGxvQvzh97plBK+J
-         0hXKO5U/WEPcEvQqCjfGh6qd4vNMaBgqeAhjY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=aMnDJ5M9P6zNaoEw5yPnvQFc/uZIVmKLb1A3i9rfsmCLNp4DnEYgIY9FvLJ2nBYnFs
-         2FGUtL8yT1FApsBNce2jrOHYQcucqpURv5ywsRr5L/E54MAZYbKaIgXVSBqD2/wi8YxX
-         dd/SqHhIJu1iLb0/P6h1Sorq6SaUagusCgK+c=
-Received: by 10.86.93.19 with SMTP id q19mr646091fgb.62.1232712232172;
-        Fri, 23 Jan 2009 04:03:52 -0800 (PST)
-Received: from ?192.168.1.11? (abwn47.neoplus.adsl.tpnet.pl [83.8.237.47])
-        by mx.google.com with ESMTPS id 4sm2651315fgg.54.2009.01.23.04.03.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 23 Jan 2009 04:03:50 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1232548106.4977310a95d8f@mail.nimag.net>
-Content-Disposition: inline
+	id S1754766AbZAWMi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 07:38:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754098AbZAWMi0
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 07:38:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52360 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752035AbZAWMiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 07:38:25 -0500
+Received: (qmail invoked by alias); 23 Jan 2009 12:38:23 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 23 Jan 2009 13:38:23 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+ex9o0ahqeb22O7G995APy3GEUvbDIpXZAHv8rdn
+	HUjN94yRB7TP/e
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090123172646.6117@nanako3.lavabit.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106876>
 
-On Wed, 21 Jan 09, Sebastien Cevey wrote:
+Hi,
 
->>>>> ----------------------------------------------------------------
->>>>> [Actively cooking]
->>>>>
->>>>> * sc/gitweb-category (Fri Dec 12 00:45:12 2008 +0100) 3 commits
->>>>>  - gitweb: Optional grouping of projects by category
->>>>>  - gitweb: Split git_project_list_body in two functions
->>>>>  - gitweb: Modularized git_get_project_description to be more generic
->>>>
->>>> This I think needs some further cooking.  I guess with addition of one
->>>> more patch to series categories could be sorted together with projects
->>>> they contain, and not always have to be in fixed ordering.
->>> 
->>> These should be moved to the Stalled category; nobody seems to be
->>> discussing improvements and sending updates to the series as far as I
->>> recall.
->> 
->> I think it is just the author being slow moving; there was quite
->> a bit of time between subsequent versions of this patch series.
+[if you would have given a new mail subject to your mail, gitweb would 
+ stand a chance to find it]
+
+On Fri, 23 Jan 2009, Nanako Shiraishi wrote:
+
+> Subject: [PATCH] git-am: Add --ignore-date option
 > 
-> I don't recall what was left to do on top of the series of patches I submitted,
-> could you refresh my mind on that if it still needs to be done? I remember the
-> discussion trailing off as categorized ordering was being discussed..
+> This new option makes the command ignore the date header field recorded in
+> the format-patch output.  The commits will have the timestamp when they
+> are created instead.
+> 
+> You can work a lot in one day to accumulate many changes, but apply and
+> push to the public repository only some of them at the end of the first
+> day.  Then next day you can spend all your working hours reading comics or
+> chatting with your coworkers, and apply your remaining patches from the
+> previous day using this option to pretend that you have been working at
+> the end of the day.
 
-I'd have to take a fresh look at discussion but I remember two things:
-first, that the code dealing with filtering out projects (e.g. removing
-forks) is high incompatibile with introducing later limiting number of
-projects per page, as it currently filters out paths _during printing_.
-So we might want to have this cleanup before your series (which now
-include a bit unnecessary preparation for projects_list view pagination).
+FWIW I have that problem in one of my workflows, and I do this:
 
-Second, there was IMHO one unnecessary sorting, as with one more commit
-we can have quite simply categories sorted in order of sorting project
-they contain, which means that if we sort projects by age (youngest or
-rather most recently changed first) then with one more commit we can
-have category containing freshest project first.
+	grep -v "^Date:" < $MBOX | git am
 
-I'll try to review this series soon, and if you don't have time I'll
-resend them with those minor corrections.
--- 
-Jakub Narebski
-Poland
+Of course, this assumes that none of my commit messages has the string 
+"Date:" at the beginning of the line...
+
+Ciao,
+Dscho
