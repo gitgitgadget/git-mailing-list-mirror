@@ -1,57 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to prefix existing svn remotes?
-Date: Fri, 23 Jan 2009 18:51:42 +0100
-Organization: At home
-Message-ID: <gld029$sa$1@ger.gmane.org>
-References: <20090122173211.GB21798@locahost> <4979A64E.6030608@drmicha.warpmail.net> <20090123124231.GA17616@locahost> <4979BFE7.8090402@drmicha.warpmail.net> <20090123171355.GA20413@locahost>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: lineups with GIT
+Date: Fri, 23 Jan 2009 13:01:31 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0901231247100.19665@iabervon.org>
+References: <1232610882661-2196604.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 23 18:52:59 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: outre <spoony.sob@hotmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 19:03:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQQD6-0007Ho-Um
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 18:52:53 +0100
+	id 1LQQMt-0002ds-1n
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 19:02:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756232AbZAWRvV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jan 2009 12:51:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755448AbZAWRvV
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 12:51:21 -0500
-Received: from main.gmane.org ([80.91.229.2]:33458 "EHLO ciao.gmane.org"
+	id S1756808AbZAWSBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 13:01:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756783AbZAWSBd
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 13:01:33 -0500
+Received: from iabervon.org ([66.92.72.58]:46073 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756048AbZAWRvU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 12:51:20 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LQQBU-00069B-PN
-	for git@vger.kernel.org; Fri, 23 Jan 2009 17:51:12 +0000
-Received: from abwn47.neoplus.adsl.tpnet.pl ([83.8.237.47])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Jan 2009 17:51:12 +0000
-Received: from jnareb by abwn47.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Jan 2009 17:51:12 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abwn47.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1756557AbZAWSBd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 13:01:33 -0500
+Received: (qmail 24863 invoked by uid 1000); 23 Jan 2009 18:01:31 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 23 Jan 2009 18:01:31 -0000
+In-Reply-To: <1232610882661-2196604.post@n2.nabble.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106896>
 
-S=E9bastien Mazy wrote:
+On Wed, 21 Jan 2009, outre wrote:
 
-> By the way, my renamed remote tracking svn branches now show under
-> .git/refs/ as expected.
+> I am trying to set up two different line-ups for a project (development and
+> testing).
+> 
+> The development line-up is the master, and test line-up pulls data from it.
+> The code is the same in both.
+> But since the line-ups are served from two different domains one folder in
+> the development line-up is called
+> iWeb.local, and in the test line-up it is called iWeb.test. That is the only
+> difference between the two.
+>
+> I tried using "git mv" command and it somewhat solved the problem. After I
+> cloned the devel line-up, I used "git rm iWeb.local iWeb.test".
+> And now if I edit a file in iWeb.local and do a pull to iWeb.test this file
+> gets properly updated while preserving the difference between
+> the folder names. But if I add a new file to iWeb.local, and then do a pull
+> I get  iWeb.local folder added together with the 
+> new file to the testing line-up.
+> 
+> I was wondering if it is intended behaviour for GIT. And if it is may be
+> someone can point me to a better way to setup two line-ups using
+> GIT.
 
-They were inside file .git/packed-refs
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+The best thing is probably to have both of them store everything in a 
+directory "iWeb", and have whatever process is used to make something 
+start serving things copy the directory into whatever location it needs. 
+It helps a lot with git if any two versions that are effectively the same 
+are exactly the same.
+
+One handy trick is to have a script that reads an untracked file to 
+determine where and how to arrange stuff for installation. Then you can 
+have different values in the working directories for the two repositories, 
+and the same (tracked) script in each repository will do the appropriate 
+different thing for that repository, while leaving the tracked content for 
+development exactly the same in testing.
+
+	-Daniel
+*This .sig left intentionally blank*
