@@ -1,75 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] Add --contains flag to git tag
-Date: Thu, 22 Jan 2009 17:18:37 -0800
-Message-ID: <7v1vuu6cr6.fsf@gitster.siamese.dyndns.org>
-References: <1232671630-19683-1-git-send-email-goulding@vivisimo.com>
- <1232671630-19683-2-git-send-email-goulding@vivisimo.com>
- <497913EE.9040608@vivisimo.com>
+Subject: Re: [PATCH] Allow cloning an empty repository
+Date: Thu, 22 Jan 2009 17:24:27 -0800
+Message-ID: <7vwscm4xx0.fsf@gitster.siamese.dyndns.org>
+References: <1232669252-21881-1-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jake Goulding <goulding@vivisimo.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 02:20:37 2009
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 02:26:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQAiq-0004Pz-DW
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 02:20:36 +0100
+	id 1LQAoE-0005a5-QC
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 02:26:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761381AbZAWBSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 20:18:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761330AbZAWBSo
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 20:18:44 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49172 "EHLO
+	id S1761273AbZAWBYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 20:24:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760603AbZAWBYj
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 20:24:39 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50463 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761381AbZAWBSn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 20:18:43 -0500
+	with ESMTP id S1761981AbZAWBYe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jan 2009 20:24:34 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 83B7993B29;
-	Thu, 22 Jan 2009 20:18:42 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F243A93B7F;
+	Thu, 22 Jan 2009 20:24:32 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4CE5293B26; Thu,
- 22 Jan 2009 20:18:38 -0500 (EST)
-In-Reply-To: <497913EE.9040608@vivisimo.com> (Jake Goulding's message of
- "Thu, 22 Jan 2009 19:48:46 -0500")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C5B7193B7C; Thu,
+ 22 Jan 2009 20:24:29 -0500 (EST)
+In-Reply-To: <1232669252-21881-1-git-send-email-srabbelier@gmail.com> (Sverre
+ Rabbelier's message of "Fri, 23 Jan 2009 01:07:32 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C5D30D82-E8EB-11DD-A7B2-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 96BBBB7E-E8EC-11DD-9CB5-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106819>
 
-Jake Goulding <goulding@vivisimo.com> writes:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-> @@ -34,7 +35,6 @@ static int show_reference(const char *refname, const
-> unsigned char *sha1,
->  			  int flag, void *cb_data)
->  {
->  	struct tag_filter *filter = cb_data;
-> -
->  	if (!fnmatch(filter->pattern, refname, 0)) {
->  		int i;
->  		unsigned long size;
+> diff --git a/builtin-clone.c b/builtin-clone.c
+> index f7e5a7b..d5bba0e 100644
+> --- a/builtin-clone.c
+> +++ b/builtin-clone.c
+> @@ -522,14 +522,23 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  					     option_upload_pack);
+>  
+>  		refs = transport_get_remote_refs(transport);
+> -		transport_fetch_refs(transport, refs);
+> +		if(refs)
+> +			transport_fetch_refs(transport, refs);
 
-Here you can see a long line wrapped.
+Thanks.
 
-What does this hunk have to do with adding --contains option anyway?
+I think the basic idea is Ok, but is it a reliable check at this point to
+see if (refs == NULL) to tell if the target repository is an empty one?
 
-> @@ -42,6 +42,18 @@ static int show_reference(const char *refname, const
-> unsigned char *sha1,
->  		char *buf, *sp, *eol;
->  		size_t len;
->
-> +		if (filter->with_commit) {
-> +			struct commit *commit;
-> +
-> +			commit = lookup_commit_reference_gently(sha1, 1);
-> +			if (!commit) {
-> +				error("tag '%s' does not point at a commit", refname);
-> +				return 0;
+I am mostly worried about a failure case (connected but couldn't get the
+refs, or perhaps connection failed to start).  If you get a NULL in such a
+case you may end up saying "oh you cloned a void" when you should say
+"nah, such a remote repository does not exist".
 
-Drop this error() call, and just return silently.  A tag that does not
-point at a commit is not an error at all.
+If transport_get_remote_refs() dies without returning NULL, that would be
+sufficient, but I didn't check.
