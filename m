@@ -1,66 +1,109 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] gittutorial: remove misleading note
-Date: Fri, 23 Jan 2009 19:02:29 +0100
-Message-ID: <1232733749-6120-1-git-send-email-vmiklos@frugalware.org>
-Cc: git@vger.kernel.org
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH] mergetool: respect autocrlf by using checkout-index
+Date: Fri, 23 Jan 2009 18:18:00 +0000
+Message-ID: <20090123181800.GA20177@hashpling.org>
+References: <20090121210348.GD9088@mit.edu> <1232578668-2203-1-git-send-email-charles@hashpling.org> <7v1vuuvt11.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Hannu Koivisto <azure@iki.fi>,
+	Theodore Tso <tytso@mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 19:04:00 2009
+X-From: git-owner@vger.kernel.org Fri Jan 23 19:19:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQQNo-0002yb-Uk
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 19:03:57 +0100
+	id 1LQQcu-0000Jz-Hn
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 19:19:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756960AbZAWSCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 13:02:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756913AbZAWSCc
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 13:02:32 -0500
-Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:56448 "EHLO
-	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755487AbZAWSCc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 13:02:32 -0500
-Received: from vmobile.example.net (dsl5400FA54.pool.t-online.hu [84.0.250.84])
-	by yugo.frugalware.org (Postfix) with ESMTPA id 42728446CEA;
-	Fri, 23 Jan 2009 19:02:30 +0100 (CET)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id C3F244BDE2; Fri, 23 Jan 2009 19:02:29 +0100 (CET)
-X-Mailer: git-send-email 1.6.1
+	id S1756907AbZAWSSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 13:18:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756291AbZAWSSG
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 13:18:06 -0500
+Received: from relay.pcl-ipout01.plus.net ([212.159.7.99]:15771 "EHLO
+	relay.pcl-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755096AbZAWSSF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jan 2009 13:18:05 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEAKyYeUnUnw4U/2dsb2JhbADMc4Vz
+Received: from pih-relay08.plus.net ([212.159.14.20])
+  by relay.pcl-ipout01.plus.net with ESMTP; 23 Jan 2009 18:18:01 +0000
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay08.plus.net with esmtp (Exim) id 1LQQbR-0004ve-HM; Fri, 23 Jan 2009 18:18:01 +0000
+Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n0NII1Vi020835
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 23 Jan 2009 18:18:01 GMT
+Received: (from charles@localhost)
+	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n0NII0qv020834;
+	Fri, 23 Jan 2009 18:18:00 GMT
+Content-Disposition: inline
+In-Reply-To: <7v1vuuvt11.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Plusnet-Relay: ec8fc09116c1d681ee54feefd53e14d6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106898>
 
-In the tutorial Alice initializes the repository, and Bob clones it. So
-Bob can just do a 'git pull', but Alice will need 'git pull <url>
-<branch>'.
+On Fri, Jan 23, 2009 at 09:20:10AM -0800, Junio C Hamano wrote:
+> Charles Bailey <charles@hashpling.org> writes:
+> 
+> > Previously, git mergetool used cat-file which does not perform git to
+> > worktree conversion. This changes mergetool to use git checkout-index
+> > instead which means that the temporary files used for mergetool use the
+> > correct line endings for the platform.
+> >
+> > Signed-off-by: Charles Bailey <charles@hashpling.org>
+> 
+> Sounds like the right thing to do and from a cursory review it looks Ok to
+> me.
+> 
+> But I do not use mergetool myself, so an Ack from Ted and a Thanks from
+> whoever reported the breakage would be encouraging ;-).
 
-The note suggested that the branch parameter is not necessary, which is
-no longer true these days.
+Yes, please!
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+I had wondered why I hadn't really noticed about this 'issue' before
+as I've used git mergetool on windows with autocrlf set to true quite
+a bit. I think that if your mergetool handles LF endings it doesn't
+really matter as it's only the temporary files that are affected and
+if the mergetool generates LF output files in response to LF input
+files then this is resolved to the correct format at the time it is
+added to the index in any case.
 
-The problem was reported by DanC on IRC.
+> > +checkout_staged_file () {
+> > +    tmpfile=$(expr "$(git checkout-index --temp --stage="$1" "$2")" : '\([^	]*\)	')
+> > +
+> > +    if test $? -eq 0 -a -n "$tmpfile" ; then
+> > +	mv -- "$tmpfile" "$3"
+> 
+> The original redirects into the final destination but this moves.  This
+> will lose the perm bits of the original and obey the perm bits
+> checkout-index gives you.  It will also behave differently when the path
+> is a symlink.  These two differences _may_ well be improvements and/or
+> bugfixes, but if that is the case please describe them as such.
 
- Documentation/gittutorial.txt |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+I hadn't actually thought about the perms thing that much but now that
+I do...
 
-diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-index 458fafd..c5d5596 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -308,9 +308,7 @@ alice$ git pull /home/bob/myrepo master
- 
- This merges the changes from Bob's "master" branch into Alice's
- current branch.  If Alice has made her own changes in the meantime,
--then she may need to manually fix any conflicts.  (Note that the
--"master" argument in the above command is actually unnecessary, as it
--is the default.)
-+then she may need to manually fix any conflicts.
- 
- The "pull" command thus performs two operations: it fetches changes
- from a remote branch, then merges them into the current branch.
+This code, and the code that it replaces, only affects the temporary
+files that form the basis for the merge. The result/destination file
+is as generated by the merge (or rebase).
+
+The redirect version (as is) will not set permissions from the index -
+effectively losing information, the new version should (I think - I'm
+not an expert in checkout-index) get the 'correct' repository
+permissions. I would say that this is, if anything, an improvement.
+The ultimate effect really depends on the mergetool and whether the
+source file permissions affect the permissions that it sets on the
+target file. In the vast majority of cases I would think that it
+doesn't have any effect.
+
+Note that symlinks in the repository are not resolved by this code
+path so they aren't affected.
+
 -- 
-1.6.1
+Charles Bailey
+http://ccgi.hashpling.plus.com/blog/
