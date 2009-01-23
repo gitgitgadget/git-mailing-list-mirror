@@ -1,94 +1,137 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: Re: [RFC/PATCH v3 3/3] archive.c: add basic support for submodules
-Date: Fri, 23 Jan 2009 22:15:21 +0100
-Message-ID: <8c5c35580901231315va79d89bu6e323d47a1b3547e@mail.gmail.com>
-References: <1232659071-14401-1-git-send-email-hjemli@gmail.com>
-	 <1232659071-14401-2-git-send-email-hjemli@gmail.com>
-	 <1232659071-14401-3-git-send-email-hjemli@gmail.com>
-	 <1232659071-14401-4-git-send-email-hjemli@gmail.com>
-	 <alpine.DEB.1.00.0901230044300.3586@pacific.mpi-cbg.de>
-	 <8c5c35580901231040i380c6458x1a6103cd6f55c479@mail.gmail.com>
-	 <7vzlhhu8qo.fsf@gitster.siamese.dyndns.org>
-	 <8c5c35580901231215q2be36abbla443975cdbb031f0@mail.gmail.com>
-	 <7vljt1u4pc.fsf@gitster.siamese.dyndns.org>
+From: Alexander Gavrilov <angavrilov@gmail.com>
+Subject: [PATCH (GIT-GUI BUG)] git-gui: Fix post-commit status with subject in non-locale encoding.
+Date: Sat, 24 Jan 2009 00:18:13 +0300
+Organization: HOME
+Message-ID: <200901240018.13457.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 22:16:56 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 23 22:18:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQTOS-00053c-5h
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 22:16:48 +0100
+	id 1LQTQS-0005ft-Qu
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 22:18:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755454AbZAWVPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 16:15:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755429AbZAWVPY
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 16:15:24 -0500
-Received: from wa-out-1112.google.com ([209.85.146.183]:21112 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755183AbZAWVPX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 16:15:23 -0500
-Received: by wa-out-1112.google.com with SMTP id v33so49769wah.21
-        for <git@vger.kernel.org>; Fri, 23 Jan 2009 13:15:21 -0800 (PST)
+	id S1755514AbZAWVR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 16:17:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755229AbZAWVR2
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 16:17:28 -0500
+Received: from fk-out-0910.google.com ([209.85.128.185]:48251 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755135AbZAWVR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 16:17:27 -0500
+Received: by fk-out-0910.google.com with SMTP id f33so1422063fkf.5
+        for <git@vger.kernel.org>; Fri, 23 Jan 2009 13:17:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/oGE8jhuKrjQnCEkw+fGhHJaLZudbi4+Rk4z5p8Kt50=;
-        b=hA0Z/PYUkCL46ukVdzo3N4Q+Ij/DFg6TKZGQ3uzx7ZNuBNXvePFIoKY3t6iwNioDLY
-         DpZXRKIfr7CoJesp1jv3zcq37dzLNpE05yn3NWp1IzLG1PoBSlvYthcAzy4ebKDqdR3m
-         AqlNdP89bgHGL3exPaMmyCEfp5e8XCxSqPPQo=
+        h=domainkey-signature:received:received:from:organization:to:subject
+         :date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=/ZInuf94hxG+K2MIxLKTAAK4qoQirDrV235xLvLNmyU=;
+        b=b53D8KUNcb9n5uWD9BWtRt4amaeoNkDteLdrZtNah3z0T2kkJR/T8ujeDfCv4z+M+j
+         7ad/ayspUhn4xjtSCqXS8R/yMHPD4imngsJYKMBj/Pi1M1ieCLZGs3IxYkEhL4ENjKjU
+         arm27e5OdSCEsO7/tDSu7f2lAcZecQbhAANyY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=R1widXCk3ockJzMAeXwrvVKY97dd58VrXO1hCQmKn9P3xXJ8RBamBM9zGK87WEie7E
-         KKagg8qtEv8V/890egTjmak1EHCtPQ57NUbf8xWHkZwtPFfp7JmAs++i+DR/wxsabsU0
-         moB+W91q4/45m+9liIrmYRidrPAgsL73Z+WYY=
-Received: by 10.115.94.1 with SMTP id w1mr105750wal.30.1232745321885; Fri, 23 
-	Jan 2009 13:15:21 -0800 (PST)
-In-Reply-To: <7vljt1u4pc.fsf@gitster.siamese.dyndns.org>
+        h=from:organization:to:subject:date:user-agent:cc:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        b=jQrGSt+YkdKWhZ+a7dbGb6ht2A1Gtwfqj7WJcd+orsu2qqC2M14Vq2KL5+EfsGmeIR
+         /CDlXSCgfoPOwzBbq7jNPsgHPaVaQX5XadX6bgvE2JH/4RtzxbcRdW28mRUWke1ddast
+         JcVhAZSrYde+2VAK/jA/yuq0uqAhSbSRksyUc=
+Received: by 10.223.124.209 with SMTP id v17mr137531far.6.1232745444151;
+        Fri, 23 Jan 2009 13:17:24 -0800 (PST)
+Received: from keydesk.localnet ([92.255.85.78])
+        by mx.google.com with ESMTPS id y15sm10730707fkd.32.2009.01.23.13.17.22
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 23 Jan 2009 13:17:23 -0800 (PST)
+User-Agent: KMail/1.10.4 (Linux/2.6.27.9-159.fc10.i686; KDE/4.1.4; i686; ; )
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106916>
 
-On Fri, Jan 23, 2009 at 21:50, Junio C Hamano <gitster@pobox.com> wrote:
-> Lars Hjemli <hjemli@gmail.com> writes:
->> I would find the H flag practical for my own usage of submodules. I
->> almost never modify the content of the currently checked out submodule
->> but I often check out a different HEAD than what is registered in the
->> gitlink in the superproject (typically due to testing the superproject
->> against different versions of the submodule). And for such a use case,
->> being able to create a tarball of my currently checked out state seems
->> useful to me.
->
-> That would be more like an enhanced version of "git archive" that takes
-> the work tree state, similar to how "git grep" operates on the work tree
-> today.
->
-> I agree that would be useful, but I have a moderately strong suspition
-> that your "H" hack that includes the work tree state for checked out
-> submodules into a view that is primarily about the "tree" object in the
-> superproject, without the same "take from the work tree" semantics for
-> paths in the superproject, is more harmful than being helpful to the users
-> in the longer term.  It might be simple to implement, but I do not think
-> its semantics can be explained sanely.
+As pointed out in msysgit bug #181, when a non-locale encoding
+is used for commits, post-commit status messages display the
+subject incorrectly. It happens because the file handle is
+not properly configured before the subject is read back.
 
-Ok. When someone gets the itch for 'git archive --worktree', it would
-be easy enough to resurrect the idea of including the tree of the
-currently checked out HEAD in selected submodules.
+This patch fixes it by factoring out the code that is
+used to setup the output handle into a separate function,
+and calling it from the reading code.
 
-Do you think the other options makes any sense, i.e. is it any point
-in me trying to implement this?
+Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
+---
 
---
-larsh
+	The original bug report:
+
+	http://code.google.com/p/msysgit/issues/detail?id=181
+
+
+ lib/commit.tcl |   29 +++++++++++++++++++----------
+ 1 files changed, 19 insertions(+), 10 deletions(-)
+
+diff --git a/lib/commit.tcl b/lib/commit.tcl
+index 9cc8410..17aba91 100644
+--- a/lib/commit.tcl
++++ b/lib/commit.tcl
+@@ -115,6 +115,23 @@ proc create_new_commit {} {
+ 	rescan ui_ready
+ }
+ 
++proc setup_commit_encoding {msg_wt {quiet 0}} {
++	global repo_config
++
++	if {[catch {set enc $repo_config(i18n.commitencoding)}]} {
++		set enc utf-8
++	}
++	set use_enc [tcl_encoding $enc]
++	if {$use_enc ne {}} {
++		fconfigure $msg_wt -encoding $use_enc
++	} else {
++		if {!$quiet} {
++			error_popup [mc "warning: Tcl does not support encoding '%s'." $enc]
++		}
++		fconfigure $msg_wt -encoding utf-8
++	}
++}
++
+ proc commit_tree {} {
+ 	global HEAD commit_type file_states ui_comm repo_config
+ 	global pch_error
+@@ -200,16 +217,7 @@ A good commit message has the following format:
+ 	set msg_p [gitdir GITGUI_EDITMSG]
+ 	set msg_wt [open $msg_p w]
+ 	fconfigure $msg_wt -translation lf
+-	if {[catch {set enc $repo_config(i18n.commitencoding)}]} {
+-		set enc utf-8
+-	}
+-	set use_enc [tcl_encoding $enc]
+-	if {$use_enc ne {}} {
+-		fconfigure $msg_wt -encoding $use_enc
+-	} else {
+-		error_popup [mc "warning: Tcl does not support encoding '%s'." $enc]
+-		fconfigure $msg_wt -encoding utf-8
+-	}
++	setup_commit_encoding $msg_wt
+ 	puts $msg_wt $msg
+ 	close $msg_wt
+ 
+@@ -362,6 +370,7 @@ A rescan will be automatically started now.
+ 		append reflogm " ($commit_type)"
+ 	}
+ 	set msg_fd [open $msg_p r]
++	setup_commit_encoding $msg_fd 1
+ 	gets $msg_fd subject
+ 	close $msg_fd
+ 	append reflogm {: } $subject
+-- 
+1.6.1.63.g950db
