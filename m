@@ -1,75 +1,72 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Allow cloning an empty repository
-Date: Fri, 23 Jan 2009 17:55:49 +0100
-Message-ID: <20090123165549.GI21473@genesis.frugalware.org>
-References: <1232669252-21881-1-git-send-email-srabbelier@gmail.com> <7vwscm4xx0.fsf@gitster.siamese.dyndns.org> <bd6139dc0901221746h258f548etf857ab37399133da@mail.gmail.com> <alpine.DEB.1.00.0901230333060.3586@pacific.mpi-cbg.de> <bd6139dc0901221847u6b8aeadcl580a091751de3d26@mail.gmail.com> <alpine.DEB.1.00.0901230419080.3586@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: CR codes from git commands
+Date: Fri, 23 Jan 2009 08:59:56 -0800
+Message-ID: <7v63k6x8j7.fsf@gitster.siamese.dyndns.org>
+References: <18805.64312.289059.660023@hungover.brentg.com>
+ <alpine.LNX.1.00.0901212319310.19665@iabervon.org>
+ <e38bce640901212334v1e672d48t81d5c81fecd929eb@mail.gmail.com>
+ <alpine.LNX.1.00.0901220238380.19665@iabervon.org>
+ <7vbptzahra.fsf@gitster.siamese.dyndns.org>
+ <e2b179460901220204x7b6a43b5hddfee623d2425429@mail.gmail.com>
+ <18808.39712.351656.138702@hungover.brentg.com>
+ <alpine.LNX.1.00.0901221117110.19665@iabervon.org>
+ <alpine.DEB.1.00.0901221751320.3586@pacific.mpi-cbg.de>
+ <18809.60512.654436.59819@hungover.brentg.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Sh7h4lnU5nPTsIof"
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 23 17:57:30 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Mike Ralphson <mike.ralphson@gmail.com>, git@vger.kernel.org
+To: Brent Goodrick <bgoodr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 23 18:01:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQPLI-0001Kn-IX
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 17:57:17 +0100
+	id 1LQPPU-00038f-In
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 18:01:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755654AbZAWQzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 11:55:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755284AbZAWQzw
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 11:55:52 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:34030 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751185AbZAWQzv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 11:55:51 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id A171458097;
-	Fri, 23 Jan 2009 17:55:51 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id D1D044465E;
-	Fri, 23 Jan 2009 17:55:49 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id BAE3A11B87A9; Fri, 23 Jan 2009 17:55:49 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901230419080.3586@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753102AbZAWRAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 12:00:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbZAWRAI
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 12:00:08 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:65147 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751185AbZAWRAG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 12:00:06 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2CD8B93AC9;
+	Fri, 23 Jan 2009 12:00:05 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2720193ABE; Fri,
+ 23 Jan 2009 11:59:57 -0500 (EST)
+In-Reply-To: <18809.60512.654436.59819@hungover.brentg.com> (Brent Goodrick's
+ message of "Fri, 23 Jan 2009 08:12:16 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4820622A-E96F-11DD-BB83-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106888>
 
+Brent Goodrick <bgoodr@gmail.com> writes:
 
---Sh7h4lnU5nPTsIof
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>  - Bare minimum: Add a new --no-cr option (e.g., "git --no-cr
+>    ...
+>  - Nice-to-have: Add a "git --no-progress" message that would never
+>  ...
+> Both options are intended to be independent of each other.
 
-On Fri, Jan 23, 2009 at 04:20:34AM +0100, Johannes Schindelin <Johannes.Sch=
-indelin@gmx.de> wrote:
-> But then, scripts have no business cloning repositories (fetching, yes. =
-=20
-> But cloning?)
+I do not think so.  --no-progress should imply --no-cr ;-)
 
-I think portals like repo.or.cz may do it.
+I do not think it makes much sense to pollute your non-terminal with 100
+lines of 1%,2%,3%,...100% if it cannot sensibly do carriage-returns.  It
+may be another knob to tweak, but it's a kind of thing you implement
+because you could, not because it makes sense.  I would be mildly against
+no-cr.
 
-Isn't setting errno (or similar variable) in the HTTP code an option?
-Then we could see why the transport failed and make a difference between
-"network error" and "no refs found".
-
---Sh7h4lnU5nPTsIof
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkl59pUACgkQe81tAgORUJaazACcCCCdvJZKa6BZTYMboPorw4Ca
-P/4An1dSDOyV1lTpCDi1OsuLCFXGt08x
-=XHyz
------END PGP SIGNATURE-----
-
---Sh7h4lnU5nPTsIof--
+I suspect we may even be able to solve it without adding --no-progress.
+Perhaps some commands do not have --quiet to squelch progress and teaching
+them --quiet will solve the issue for you?
