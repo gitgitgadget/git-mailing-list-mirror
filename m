@@ -1,109 +1,81 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH] mergetool: respect autocrlf by using checkout-index
-Date: Fri, 23 Jan 2009 18:18:00 +0000
-Message-ID: <20090123181800.GA20177@hashpling.org>
-References: <20090121210348.GD9088@mit.edu> <1232578668-2203-1-git-send-email-charles@hashpling.org> <7v1vuuvt11.fsf@gitster.siamese.dyndns.org>
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: Re: [RFC/PATCH v3 2/3] sha1_file: prepare for adding alternates on 
+	demand
+Date: Fri, 23 Jan 2009 19:35:27 +0100
+Message-ID: <8c5c35580901231035j31484249nf96e0e659b119a2b@mail.gmail.com>
+References: <1232659071-14401-1-git-send-email-hjemli@gmail.com>
+	 <1232659071-14401-2-git-send-email-hjemli@gmail.com>
+	 <1232659071-14401-3-git-send-email-hjemli@gmail.com>
+	 <alpine.DEB.1.00.0901230041500.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Hannu Koivisto <azure@iki.fi>,
-	Theodore Tso <tytso@mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 19:19:44 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 23 19:37:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQQcu-0000Jz-Hn
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 19:19:32 +0100
+	id 1LQQtg-0006MV-U5
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 19:36:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756907AbZAWSSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 13:18:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756291AbZAWSSG
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 13:18:06 -0500
-Received: from relay.pcl-ipout01.plus.net ([212.159.7.99]:15771 "EHLO
-	relay.pcl-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755096AbZAWSSF (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jan 2009 13:18:05 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEAKyYeUnUnw4U/2dsb2JhbADMc4Vz
-Received: from pih-relay08.plus.net ([212.159.14.20])
-  by relay.pcl-ipout01.plus.net with ESMTP; 23 Jan 2009 18:18:01 +0000
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay08.plus.net with esmtp (Exim) id 1LQQbR-0004ve-HM; Fri, 23 Jan 2009 18:18:01 +0000
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n0NII1Vi020835
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 23 Jan 2009 18:18:01 GMT
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n0NII0qv020834;
-	Fri, 23 Jan 2009 18:18:00 GMT
-Content-Disposition: inline
-In-Reply-To: <7v1vuuvt11.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: ec8fc09116c1d681ee54feefd53e14d6
+	id S1757021AbZAWSfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 13:35:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756991AbZAWSf3
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 13:35:29 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:60894 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756850AbZAWSf2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 13:35:28 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so15966wah.21
+        for <git@vger.kernel.org>; Fri, 23 Jan 2009 10:35:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=SM65K/B+/cJghxTO59LO5d3DixvOxxrtZ6puxnb8lD0=;
+        b=ps8nXtv82CL6nxXFLEqLCRICU6VnO+2707L4ykocEU0zBRwe9Gvt8Nq2kx6XmLBxJG
+         fsGy0Lzsj5UGgFZxCNDUFDVz2RYzqVXMSgtxCc5kGQOUr/89lyk1yw6eBBR3tH7oD95g
+         QlHcCLRkSej75EY7reTghUm8wHagy0LFVm81M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SgYAVvXDixOeO7YUMLWNyWf/i1a+URKF+3aHEk03EuunkQuZILKTpEZjwc6XcIl9mj
+         4ROReRhv1RI8HD/YeEq77049Q2EBdW7ENJFqyRwEKjFSTWc+62oU0WaNxGPfVgkiE1Xz
+         XRqX0yziNDHpc7V0fsp2rr04KRSudPuoIQubo=
+Received: by 10.114.194.1 with SMTP id r1mr4208373waf.149.1232735727993; Fri, 
+	23 Jan 2009 10:35:27 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0901230041500.3586@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106899>
 
-On Fri, Jan 23, 2009 at 09:20:10AM -0800, Junio C Hamano wrote:
-> Charles Bailey <charles@hashpling.org> writes:
-> 
-> > Previously, git mergetool used cat-file which does not perform git to
-> > worktree conversion. This changes mergetool to use git checkout-index
-> > instead which means that the temporary files used for mergetool use the
-> > correct line endings for the platform.
-> >
-> > Signed-off-by: Charles Bailey <charles@hashpling.org>
-> 
-> Sounds like the right thing to do and from a cursory review it looks Ok to
-> me.
-> 
-> But I do not use mergetool myself, so an Ack from Ted and a Thanks from
-> whoever reported the breakage would be encouraging ;-).
+On Fri, Jan 23, 2009 at 00:43, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 22 Jan 2009, Lars Hjemli wrote:
+>> +             if (!quiet)
+>> +                     error("object directory %s does not exist; "
+>> +                           "check .git/objects/info/alternates.",
+>> +                           ent->base);
+>
+> FWIW my concern is not at all addressed.  A future user of add_alt_odb()
+> (and possibly your users in rare cases, too) can trigger the error that
+> suggests looking into the alternates.  Leaving the human user puzzled.
 
-Yes, please!
+Is it the phrasing of the error message that concerns you (when
+invoked from add_alt_odb())?
 
-I had wondered why I hadn't really noticed about this 'issue' before
-as I've used git mergetool on windows with autocrlf set to true quite
-a bit. I think that if your mergetool handles LF endings it doesn't
-really matter as it's only the temporary files that are affected and
-if the mergetool generates LF output files in response to LF input
-files then this is resolved to the correct format at the time it is
-added to the index in any case.
+If so, would something like this be ok/better?
 
-> > +checkout_staged_file () {
-> > +    tmpfile=$(expr "$(git checkout-index --temp --stage="$1" "$2")" : '\([^	]*\)	')
-> > +
-> > +    if test $? -eq 0 -a -n "$tmpfile" ; then
-> > +	mv -- "$tmpfile" "$3"
-> 
-> The original redirects into the final destination but this moves.  This
-> will lose the perm bits of the original and obey the perm bits
-> checkout-index gives you.  It will also behave differently when the path
-> is a symlink.  These two differences _may_ well be improvements and/or
-> bugfixes, but if that is the case please describe them as such.
+>> +             if (!quiet)
+>> +                     error("Alternate object directory %s does not exist ",
+>> +                           ent->base);
 
-I hadn't actually thought about the perms thing that much but now that
-I do...
-
-This code, and the code that it replaces, only affects the temporary
-files that form the basis for the merge. The result/destination file
-is as generated by the merge (or rebase).
-
-The redirect version (as is) will not set permissions from the index -
-effectively losing information, the new version should (I think - I'm
-not an expert in checkout-index) get the 'correct' repository
-permissions. I would say that this is, if anything, an improvement.
-The ultimate effect really depends on the mergetool and whether the
-source file permissions affect the permissions that it sets on the
-target file. In the vast majority of cases I would think that it
-doesn't have any effect.
-
-Note that symlinks in the repository are not resolved by this code
-path so they aren't affected.
-
--- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+--
+larsh
