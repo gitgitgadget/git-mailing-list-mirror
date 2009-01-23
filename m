@@ -1,64 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: how to force a commit date matching info from a mbox ?
-Date: Fri, 23 Jan 2009 01:21:21 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901230119490.3586@pacific.mpi-cbg.de>
-References: <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git list <git@vger.kernel.org>
-To: Christian MICHON <christian.michon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 01:22:38 2009
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: [kha/safe PATCH] completion bugfix: Place double pipes in front of alternate command.
+Date: Thu, 22 Jan 2009 19:26:12 -0500
+Message-ID: <1232670372-20000-1-git-send-email-ted@tedpavlic.com>
+References: <20090122232928.GA23456@diana.vm.bytemark.co.uk>
+Cc: git@vger.kernel.org, catalin.marinas@gmail.com,
+	Ted Pavlic <ted@tedpavlic.com>
+To: gitster@pobox.com, kha@treskal.com
+X-From: git-owner@vger.kernel.org Fri Jan 23 01:27:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQ9oj-0005uX-UG
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 01:22:38 +0100
+	id 1LQ9tl-0007IB-A8
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 01:27:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753589AbZAWAVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jan 2009 19:21:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753464AbZAWAVN
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 19:21:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37540 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753421AbZAWAVN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jan 2009 19:21:13 -0500
-Received: (qmail invoked by alias); 23 Jan 2009 00:21:11 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp047) with SMTP; 23 Jan 2009 01:21:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Zqv86AhGZkvDcwYYVAMt+UNBln7u265/uqryP86
-	NTFF/Xh/bmn0w+
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1753351AbZAWA0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jan 2009 19:26:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752968AbZAWA0X
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Jan 2009 19:26:23 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:46697 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752627AbZAWA0X (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jan 2009 19:26:23 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 2076A80D8055;
+	Thu, 22 Jan 2009 19:20:24 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id QboqfJacmoKP; Thu, 22 Jan 2009 19:20:24 -0500 (EST)
+Received: from localhost.localdomain (cpe-76-181-62-78.columbus.res.rr.com [76.181.62.78])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id A625B80D8001;
+	Thu, 22 Jan 2009 19:20:23 -0500 (EST)
+X-Mailer: git-send-email 1.6.1.213.g28da8
+In-Reply-To: <20090122232928.GA23456@diana.vm.bytemark.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106808>
 
-Hi,
+Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
+---
 
-On Thu, 22 Jan 2009, Christian MICHON wrote:
+This is a patch against 
 
-> I've a big set of patches in a mbox file: there's sufficient info inside 
-> for git-am to work.
-> 
-> Yet, each time I do import these, my sha1sums are changing because of 
-> different commit dates.
-> 
-> I'd like to force the commit date to match the info/date from the time I 
-> received the email (and therefore always get back the right sha1sums).
-> 
-> is this possible ?
+    git://repo.or.cz/stgit/kha.git stable
 
-Have you tried setting GIT_COMMITTER_DATE to the given date?
+Unfortunately, the previous "[StGit PATCH 2/2]" had a small bug in it. A
+bugfix was posted, but it didn't get picked up in kha/safe. This commit
+should be applied against kha/safe to fix the problem.
 
-Alternatively, you can always use a commit-message filter with 
-filter-branch to fix it up.
+Alternatively, the patch provided in
 
-Ciao,
-Dscho
+    <1232642662-12851-1-git-send-email-ted@tedpavlic.com>
+
+is the proper patch to stgit/master.
+
+Sorry for the extra bother.
+
+ stgit/completion.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/stgit/completion.py b/stgit/completion.py
+index 56e81c2..38f0670 100644
+--- a/stgit/completion.py
++++ b/stgit/completion.py
+@@ -130,7 +130,7 @@ def main_switch(commands):
+ 
+ def install():
+     return ['complete -o bashdefault -o default -F _stg stg 2>/dev/null \\', [
+-            'complete -o default -F _stg stg' ] ]
++            '|| complete -o default -F _stg stg' ] ]
+ 
+ def write_completion(f):
+     commands = stgit.commands.get_commands(allow_cached = False)
+-- 
+1.6.1.213.g28da8
