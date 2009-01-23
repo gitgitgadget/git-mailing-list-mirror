@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/3] Add "partial commit" tests during a conflicted merge
-Date: Thu, 22 Jan 2009 22:17:53 -0800
-Message-ID: <7vbpty4kby.fsf_-_@gitster.siamese.dyndns.org>
+Subject: [PATCH 2/3] builtin-commit: shorten eye-sore overlong lines
+Date: Thu, 22 Jan 2009 22:19:04 -0800
+Message-ID: <7v63k64k9z.fsf_-_@gitster.siamese.dyndns.org>
 References: <4978202C.3090703@viscovery.net>
  <alpine.DEB.2.00.0901211549070.15860@vellum.laroia.net>
  <49779521.9040208@drmicha.warpmail.net>
@@ -15,108 +15,96 @@ Cc: Johannes Sixt <j.sixt@viscovery.net>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Asheesh Laroia <asheesh@asheesh.org>, git@vger.kernel.org
 To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 07:20:00 2009
+X-From: git-owner@vger.kernel.org Fri Jan 23 07:21:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQFOZ-0001Zk-Oz
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 07:20:00 +0100
+	id 1LQFPn-0001oJ-4W
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 07:21:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751935AbZAWGSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 01:18:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761734AbZAWGSF
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 01:18:05 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60896 "EHLO
+	id S1762101AbZAWGTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 01:19:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761183AbZAWGTR
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 01:19:17 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61130 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761755AbZAWGSD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 01:18:03 -0500
+	with ESMTP id S1761494AbZAWGTQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 01:19:16 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 29ED41D1E1;
-	Fri, 23 Jan 2009 01:18:02 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6C72A1D1E5;
+	Fri, 23 Jan 2009 01:19:14 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D844B1D1E0; Fri,
- 23 Jan 2009 01:17:54 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B1CF21D1E4; Fri,
+ 23 Jan 2009 01:19:06 -0500 (EST)
 In-Reply-To: <7viqo64kfo.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
  message of "Thu, 22 Jan 2009 22:15:39 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 969F6FEA-E915-11DD-878E-BE78113D384A-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C1B34AEE-E915-11DD-9135-BE78113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106840>
 
-We are supposed to reject "--only path..." aka "a partial commit" during a
-conflicted merge resolution, and accept "--include path..." aka "an also
-commit" in such a case.
-
-Recent git (since v1.3.0) always assumes that "git commit" with paths but
-without --only nor --include requests the "--only" semantics, but there is
-a discussion that it might be a good idea to assume "--include" semantics
-during a merge.
-
-The last test this commit adds expects such a behaviour and marked as
-"expect_failure".  It will be changed by the third patch in the series.
+This does not change anything other than the way the variable to hold
+an informative message thrown in the commit log buffer is assigned.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t7501-commit.sh |   44 ++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 44 insertions(+), 0 deletions(-)
+ * This does not really belong to the series in the sense that it is
+   needed to implement the new semantics, but these long lines have always
+   bothered me.
 
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index b4e2b4d..0c10105 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -365,4 +365,48 @@ test_expect_success 'amend using the message from a commit named with tag' '
+ builtin-commit.c |   27 +++++++++++++++++++++++++--
+ 1 files changed, 25 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 7aaa530..d861263 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -71,6 +71,29 @@ static int use_editor = 1, initial_commit, in_merge;
+ static const char *only_include_assumed;
+ static struct strbuf message;
  
- '
- 
-+test_expect_success 'setup merge commit with paths test' '
-+	git reset --hard &&
-+	git checkout HEAD^0 &&
-+	echo frotz >file &&
-+	test_tick &&
-+	git add file &&
-+	git commit -a -m "one side says frotz" &&
-+	git tag one-side-says-frotz &&
-+	git reset --hard HEAD^ &&
-+	echo nitfol >file &&
-+	test_tick &&
-+	git add file &&
-+	git commit -a -m "the other side says nitfol" &&
-+	git tag the-other-side-says-nitfol
-+'
++enum {
++	MSG_AMEND_CLEVER,
++	MSG_ASSUME_PARTIAL,
++};
 +
-+test_expect_success 'reject --only during a merge' '
-+	git checkout HEAD^0 &&
-+	git reset --hard the-other-side-says-nitfol &&
-+	test_must_fail git merge one-side-says-frotz &&
-+	echo yomin-only >file &&
-+	test_must_fail git commit -m merge --only file &&
-+	git reset --hard
-+'
++static void set_partial_commit_message(int msgnum)
++{
++	const char *msg;
 +
-+test_expect_success 'allow --include during a merge' '
-+	git checkout HEAD^0 &&
-+	git reset --hard the-other-side-says-nitfol &&
-+	test_must_fail git merge one-side-says-frotz &&
-+	echo yomin-include >file &&
-+	git commit -m merge --include file &&
-+	git reset --hard
-+'
++	switch (msgnum) {
++	case MSG_AMEND_CLEVER:
++		msg = "Clever... amending the last one with dirty index.";
++		break;
++	case MSG_ASSUME_PARTIAL:
++		msg = "Explicit paths specified without -i nor -o; assuming --only paths...";
++		break;
++	default:
++		die("Oops (%d) is not a valid message number", msgnum);
++		break;
++	}
++	only_include_assumed = msg;
++}
 +
-+test_expect_failure 'assume --include during a merge' '
-+	git checkout HEAD^0 &&
-+	git reset --hard the-other-side-says-nitfol &&
-+	test_must_fail git merge one-side-says-frotz &&
-+	echo yomin-assumed >file &&
-+	git add file &&
-+	git commit -m merge file &&
-+	git reset --hard
-+'
-+
- test_done
+ static int opt_parse_m(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct strbuf *buf = opt->value;
+@@ -788,9 +811,9 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 	if (argc == 0 && (also || (only && !amend)))
+ 		die("No paths with --include/--only does not make sense.");
+ 	if (argc == 0 && only && amend)
+-		only_include_assumed = "Clever... amending the last one with dirty index.";
++		set_partial_commit_message(MSG_AMEND_CLEVER);
+ 	if (argc > 0 && !also && !only)
+-		only_include_assumed = "Explicit paths specified without -i nor -o; assuming --only paths...";
++		set_partial_commit_message(MSG_ASSUME_PARTIAL);
+ 	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
+ 		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
+ 	else if (!strcmp(cleanup_arg, "verbatim"))
 -- 
 1.6.1.265.g9a013
