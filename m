@@ -1,64 +1,74 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: RFC: git diff colorization idea
-Date: Fri, 23 Jan 2009 17:28:09 +0900
-Message-ID: <20090123172809.6117@nanako3.lavabit.com>
-References: <7vhc3q6evi.fsf@gitster.siamese.dyndns.org>
- <53497057-1ADE-4300-9F35-B218959606FE@wincent.com>
+From: Christian MICHON <christian.michon@gmail.com>
+Subject: Re: how to force a commit date matching info from a mbox ?
+Date: Fri, 23 Jan 2009 09:51:48 +0100
+Message-ID: <46d6db660901230051x57be0119ge324e4e664b1c335@mail.gmail.com>
+References: <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com>
+	 <7vljt26fp9.fsf@gitster.siamese.dyndns.org>
+	 <46d6db660901230008q418f3d3bsc68ca4e9d675cb36@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 23 09:31:54 2009
+X-From: git-owner@vger.kernel.org Fri Jan 23 09:53:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQHS8-0006f7-VK
-	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 09:31:49 +0100
+	id 1LQHmw-0003Yi-PI
+	for gcvg-git-2@gmane.org; Fri, 23 Jan 2009 09:53:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027AbZAWI2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 03:28:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751464AbZAWI2S
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 03:28:18 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:52101 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751405AbZAWI2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 03:28:17 -0500
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id E0C33C7B31;
-	Fri, 23 Jan 2009 02:28:16 -0600 (CST)
-Received: from 8620.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id LZ32EKR8HX4P; Fri, 23 Jan 2009 02:28:16 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=bVawa9dlksd2MeZf6eXmdkeG59ql2QipC24XxY5BB2Rj6VGyAaEGD0HEuVw75OxGOku1L4dr8rd7G97U/itvfN1bojpdVi8yNWJ/MCUlczLCf5YPZoKjliS3faDMRHMoQaY8PybZj6fiwBz5MXZclWVjrGSpRtOJTJgqCmI/O+M=;
-  h=From:To:Cc:Subject:Date:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7vhc3q6evi.fsf@gitster.siamese.dyndns.org>
+	id S1753013AbZAWIvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 03:51:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752501AbZAWIvv
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 03:51:51 -0500
+Received: from mail-ew0-f20.google.com ([209.85.219.20]:45857 "EHLO
+	mail-ew0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752146AbZAWIvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 03:51:50 -0500
+Received: by ewy13 with SMTP id 13so3315170ewy.13
+        for <git@vger.kernel.org>; Fri, 23 Jan 2009 00:51:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=M6JVn1SaN/8sArfOcVmA6zXIqh48NsvJQlFQrfL5m8M=;
+        b=I+5LVQ4Whz5YEV4i+yX5qfBsV3w0eCtwogsJXSW1/tvQdyY3HxjBqZdrMgjEEC86z9
+         peQFta66eQJxL732UeEIrApTeGMElqJ6XyRyNrYFcRHnJ5W/z6vceYQ2YDp+1vNCPRA0
+         usgfjrRRbndjWi9C0Hmze16w87fWJM4s+2X/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=N9RThDp2u7kU4hTcX0JwMr2rjyuZYp/lXZp2ZzVGh0GopHWhx4njKTS8hgn/r8qRrF
+         uPxOk3nsctDLqaoaqDJm+mHaMzvZWgB2JI/uyl+fNvkcDcmi9hxnO5zzuL4pUMI+x4rY
+         PS5anNlBnKFveUB8R8SVv9OGPXb8Vyx8qS3/0=
+Received: by 10.103.247.14 with SMTP id z14mr1308877mur.70.1232700708669; Fri, 
+	23 Jan 2009 00:51:48 -0800 (PST)
+In-Reply-To: <46d6db660901230008q418f3d3bsc68ca4e9d675cb36@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106858>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
-
-> If you were to go this route, I suspect that showing the unchanged part on
-> the preimage line in light gray might make sense, like:
+On Fri, Jan 23, 2009 at 9:08 AM, Christian MICHON
+<christian.michon@gmail.com> wrote:
+>> A patch to butcher "git-am" to copy GIT_COMMITTER_DATE from
+>> GIT_AUTHOR_DATE and export it should be trivial to implement, though.
+>>
+>> Perhaps something like this totally untested patch.
+>>
 >
->   | _git_remote ()
->   | {
->   |-    <gray>local subcommands="add rm show prune<gray> <red>update</red>"
->   |+    local subcommands="add <green>rename</green> rm show prune"
->   |     local subcommand=$(__git_find_subcommand "$subcommands")"
->   |     if ...
+> I love this idea. I'll try to test it asap. Thanks!
 >
-> because there will be the same chars/words on the postimage line anyway.
 
-I think this makes a lot more sense than any of the screenshot
-WIncent prepared on his web pages, and it is a much easier output
-for users to spot which word is different by not coloring the
-unchanged word at all.
+working fine! I've predictable/reproducible commits with this patch!
+
+many thanks and kudos!
 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
