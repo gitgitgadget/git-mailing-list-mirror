@@ -1,76 +1,61 @@
-From: Benjamin Kramer <benny.kra@googlemail.com>
-Subject: [PATCH v2] Makefile: Use libc strlcpy on OSX >= 10.2
-Date: Sat, 24 Jan 2009 20:01:04 +0100
-Message-ID: <7f978c810901241101h227c5437p88ca7c9cc54abc9a@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] handle color.ui at a central place
+Date: Sat, 24 Jan 2009 14:17:01 -0500
+Message-ID: <20090124191700.GA17935@coredump.intra.peff.net>
+References: <20090117153846.GB27071@coredump.intra.peff.net> <200901220113.32711.markus.heidelberg@web.de> <7vmydi4kiz.fsf@gitster.siamese.dyndns.org> <200901241228.33690.markus.heidelberg@web.de> <7vk58ko8k7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jan 24 20:02:35 2009
+Content-Type: text/plain; charset=utf-8
+Cc: markus.heidelberg@web.de,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 24 20:19:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQnm3-0000SQ-HN
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 20:02:31 +0100
+	id 1LQo24-00060k-KA
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 20:19:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753605AbZAXTBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 14:01:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752556AbZAXTBI
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 14:01:08 -0500
-Received: from fk-out-0910.google.com ([209.85.128.187]:36356 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752527AbZAXTBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 14:01:07 -0500
-Received: by fk-out-0910.google.com with SMTP id f33so1815680fkf.5
-        for <git@vger.kernel.org>; Sat, 24 Jan 2009 11:01:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=v+7ibd8b2Wear1JL6L+TujsdHB4wAwqVteQFR3ZKZ/0=;
-        b=bdDvZR0yUcqyBeNFZEVg9ptEm0HY5dt21+hN90ORYI0i9c4zuKbZJwT2CN80kCdQnv
-         fvbLpYkezGREMKaCq5/PqsYIFWMTwT6L+KsQIA6MvceUY738eL7w4wzcBwzBdEa2a46D
-         lAT8TmXCIZL4XkjURjjavxs5VzwCvVNa5wAXo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=RCCbrvyYuomBVNHtzgIUczwSP7viGLOVi9Z/TDpD7sk1m1RMeXwyBirIeE7bRTVnV/
-         Bs//RjMaDcL6+1e4avX2AGTCLPqUsV9rDTy8sMG1JX7+mBr2JPsXrAdnvYNlOREAp/Vg
-         SiXveS9DJ4Me7Ly9E/LjHmf3Sz529d9dU1fto=
-Received: by 10.103.226.10 with SMTP id d10mr2840004mur.84.1232823664563; Sat, 
-	24 Jan 2009 11:01:04 -0800 (PST)
+	id S1753678AbZAXTRG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 14:17:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753363AbZAXTRE
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 14:17:04 -0500
+Received: from peff.net ([208.65.91.99]:60747 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752942AbZAXTRE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 14:17:04 -0500
+Received: (qmail 19110 invoked by uid 107); 24 Jan 2009 19:17:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 24 Jan 2009 14:17:09 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 24 Jan 2009 14:17:01 -0500
+Content-Disposition: inline
+In-Reply-To: <7vk58ko8k7.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106992>
 
-OSX supports strlcpy(3) since 10.2 so we don't need
-to use our own. This revised also patch checks the darwin
-version. 10.0 is darwin v1.3; 10.1 is darwin v1.4.
+On Sat, Jan 24, 2009 at 10:36:24AM -0800, Junio C Hamano wrote:
 
-Signed-off-by: Benjamin Kramer <benny.kra@gmail.com>
----
- Makefile |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+> Why should format-patch need to even worry about protecting itself from
+> "color.ui" to begin with?
 
-diff --git a/Makefile b/Makefile
-index b4d9cb4..7dd5224 100644
---- a/Makefile
-+++ b/Makefile
-@@ -643,7 +643,9 @@ ifeq ($(uname_S),Darwin)
- 	ifneq ($(shell expr "$(uname_R)" : '9\.'),2)
- 		OLD_ICONV = UnfortunatelyYes
- 	endif
--	NO_STRLCPY = YesPlease
-+	ifeq ($(shell expr "$(uname_R)" : '1\.'),2)
-+		NO_STRLCPY = YesPlease
-+	endif
- 	NO_MEMMEM = YesPlease
- 	THREADED_DELTA_SEARCH = YesPlease
- endif
--- 
-1.6.1.285.g3454
+Agreed. In the "should I use color" function I proposed, there should be
+a big fat "are_we_a_porcelain_that_will_allow_any_color_at_all" flag
+at the top, which will make it totally clear how to make sure color is
+off.
+
+> You did not find the breakage in format-patch either to begin with; so
+> your not finding does not give us much confidence that there is no other
+> breakage, does it?
+> 
+> Grumble...
+
+Sadly, this is an area that is not covered very well in the tests
+(partially, I think, because it is "just" output which we tend to
+neglect, and partially because the isatty() stuff is hard to test with
+our harness). So I don't think it's _entirely_ Markus' fault.
+
+-Peff
