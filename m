@@ -1,66 +1,56 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH] Use time_t for timestamps returned by approxidate() instead of unsigned
-Date: Sat, 24 Jan 2009 06:22:58 +0100
-Message-ID: <200901240622.59069.markus.heidelberg@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Use time_t for timestamps returned by approxidate()
+ instead of unsigned
+Date: Sat, 24 Jan 2009 07:27:00 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901240726070.13232@racer>
 References: <1232665622-5110-1-git-send-email-tim.henigan@gmail.com>
-Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org, gitster@pobox.com
 To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 24 06:24:04 2009
+X-From: git-owner@vger.kernel.org Sat Jan 24 07:28:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQazz-0006SJ-PV
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 06:24:04 +0100
+	id 1LQc0L-0000XR-3N
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 07:28:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750760AbZAXFWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 00:22:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750730AbZAXFWj
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 00:22:39 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:56871 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750719AbZAXFWj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 00:22:39 -0500
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 017F9F6F9203;
-	Sat, 24 Jan 2009 06:22:38 +0100 (CET)
-Received: from [89.59.96.236] (helo=pluto)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LQayb-0005vo-00; Sat, 24 Jan 2009 06:22:37 +0100
-User-Agent: KMail/1.9.9
+	id S1750830AbZAXG1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 01:27:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750812AbZAXG1G
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 01:27:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54703 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750808AbZAXG1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 01:27:06 -0500
+Received: (qmail invoked by alias); 24 Jan 2009 06:27:02 -0000
+Received: from pD9EB3F9A.dip0.t-ipconnect.de (EHLO noname) [217.235.63.154]
+  by mail.gmx.net (mp023) with SMTP; 24 Jan 2009 07:27:02 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19ZRCxxjZRZ9Mp0QMZFMl8qRZFiM9fBvrs3hO1opC
+	DjMq6/D5zI1e/i
+X-X-Sender: gene099@racer
 In-Reply-To: <1232665622-5110-1-git-send-email-tim.henigan@gmail.com>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+NoPF82yy6A3i7AfcEItXEeTl9i00ES06+QAg6
-	hVHJDnfqIftq62kLunHmWKpBh2Ko+1bjQ0QXalWH5F0tPcG2ac
-	rib16jfMqU83mDyo9ivQ==
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106956>
 
-Tim Henigan, 23.01.2009:
-> Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
-> ---
->  mode change 100644 => 100755 builtin-gc.c
->  mode change 100644 => 100755 builtin-reflog.c
->  mode change 100644 => 100755 builtin-show-branch.c
->  mode change 100644 => 100755 cache.h
->  mode change 100644 => 100755 date.c
->  mode change 100644 => 100755 parse-options.c
->  mode change 100644 => 100755 reflog-walk.c
->  mode change 100644 => 100755 refs.c
->  mode change 100644 => 100755 refs.h
->  mode change 100644 => 100755 revision.c
->  mode change 100644 => 100755 revision.h
->  mode change 100644 => 100755 sha1_name.c
+Hi,
 
-Oops
+On Thu, 22 Jan 2009, Tim Henigan wrote:
+
+> Use time_t for timestamps returned by approxidate() instead of unsigned 
+> long.  All references to approxidate were checked as well as references 
+> to OPT_DATE.
+
+Hmm.  I vaguely remember Linus mentioning recently that unsigned long is 
+the appropriate data type for the Unix Epoch...
+
+Ciao,
+Dscho
