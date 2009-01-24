@@ -1,127 +1,143 @@
-From: Thomas Rast <trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Heads up: major rebase -i -p rework coming up
-Date: Sat, 24 Jan 2009 23:47:20 +0100
-Message-ID: <200901242347.23187.trast@student.ethz.ch>
+Date: Sat, 24 Jan 2009 15:01:12 -0800
+Message-ID: <7vzlhgl35z.fsf@gitster.siamese.dyndns.org>
 References: <alpine.DEB.1.00.0901242056070.14855@racer>
+ <7vpricmoda.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0901242156320.14855@racer>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart14020543.1GEsHnkxYr";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Stephen Haberman <stephen@exigencecorp.com>,
-	spearce@spearce.org,
-	=?utf-8?q?Bj=C3=B6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org,
+	Stephen Haberman <stephen@exigencecorp.com>,
+	spearce@spearce.org, Thomas Rast <trast@student.ethz.ch>,
+	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 24 23:48:56 2009
+X-From: git-owner@vger.kernel.org Sun Jan 25 00:03:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQrIz-0000Qx-G0
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 23:48:45 +0100
+	id 1LQrWp-0004Z5-Pb
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 00:03:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751272AbZAXWrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 17:47:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751209AbZAXWrK
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 17:47:10 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:11737 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750950AbZAXWrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 17:47:09 -0500
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 24 Jan 2009 23:47:07 +0100
-Received: from thomas.localnet ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 24 Jan 2009 23:47:07 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.25.20-0.1-default; KDE/4.1.96; x86_64; ; )
-In-Reply-To: <alpine.DEB.1.00.0901242056070.14855@racer>
-X-OriginalArrivalTime: 24 Jan 2009 22:47:07.0744 (UTC) FILETIME=[AF7FEE00:01C97E75]
+	id S1752065AbZAXXBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 18:01:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbZAXXB3
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 18:01:29 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49241 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751209AbZAXXB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 18:01:28 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A629E1D343;
+	Sat, 24 Jan 2009 18:01:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3C3A31D0E0; Sat,
+ 24 Jan 2009 18:01:19 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0901242156320.14855@racer> (Johannes
+ Schindelin's message of "Sat, 24 Jan 2009 22:04:53 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: EE509FCE-EA6A-11DD-A5DD-BE78113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107015>
 
---nextPart14020543.1GEsHnkxYr
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Johannes Schindelin wrote:
-> Worse, the whole concept of "pick <merge-sha1>" just does not fly well.
-[...]
-> - merge $sha1 [$sha1...] was $sha1 "Merge ..."
->=20
-> 	will merge the given list of commits into the current HEAD, for=20
-> 	the user's reference and to keep up-to-date what was rewritten,=20
-> 	the original merge is shown after the keyword "was" (which is not=20
-> 	a valid SHA-1, luckily)
+>> - What's with the apostrophe?  I seem to remember that you argued it 
+>>   would be enough to make "A" stand for the original when it is used for 
+>>   the first time and the second and later use can stand for the result 
+>>   of the last use (e.g. the "goto A'" above can be simply spelled as 
+>>   "goto A"), when I suggested to use "mark" in a way similar to how 
+>>   fast-import language uses it during the sequencer discussion?
+>> 
+>>   I am not complaining; I am just being curious why the sudden change of 
+>>   heart.
+>
+> Very easy explanation.  I got convinced by your arguments.  Even if I 
+> could imagine that I never use the thing without apostrophe, it is good to 
+> have an obvious indicator that this is not necessarily the original 
+> commit.
 
-I really like the underlying idea.  I'm not even sure if the current
-semantics are well-defined in all cases; an explicit merge command at
-least makes it very clear what is going on.
+Now that does not make much sense to me.
 
-However, I think the syntax as proposed above is a bit confusing in
-the usual two-parent merge.  I couldn't tell whether
+The reason I suggested that 'mark' would give a cleaner semantics was
+because in your earlier design "A" could either stand for the original or
+it could stand for the result of an operation that used "A", and there
+could be more than one operation that uses "A".  Explicitly naming each
+result with a mark would give us an unambiguous way to distinguish them.
 
-  merge A was B
+I however do not think you would ever use A twice in the context of
+"rebase -i/-p".  Cherry-picking the same commit twice to create two copies
+of them will not happen in that context.
 
-was intended to be read as "the merge of A into the current branch" or
-"the merge with sha1 A" right away, and I doubt I'll be able to tell
-without looking in the (rare) cases I have to invoke rebase -i -p.
+While trying to recreate something like this on top of a commit "o", you
+would have to talk about "A" multiple times,...
 
-I can't really come up with a better replacement for 'was', so how
-about
+          B---M
+         /   / \
+ ---o---A---C   \
+     \   \       \
+      D---N-------O
 
-  merge A  # was B "Merge..."
+... but even in such a picture, after one "pick A", you would always want
+to refer to the result of the pick, and never the original A.
 
-which would make it more clear that the "was B..." has no effect
-whatsoever on the merge's semantics.
+    pick A
+    goto A'^
+    pick D
+    merge A' was N
+    goto A'
+    pick B
+    goto A'
+    pick C
+    merge B' was M
+    merge N' was O
 
-> A - B - - - E=20
->   \       /
->     C - D
->=20
-> could yield this TODO script:
->=20
-> 	pick A
-> 	pick C
-> 	pick D
-> 	goto A'
-> 	pick B
-> 	merge D' was E
+So I am inclined to think that "first use refers to the original, second
+and thereafter will refer to the result of the first use" would be a good
+enough semantics for "rebase -i/-p", and you do not need "A" vs "A'" for
+this.
 
-I kind of wonder if it would be possible to decorate the TODO with
-'git log --graph' output, to make it easier to follow the history as
-it is built.  Perhaps something like
+By the way, I think this example shows that your "goto" might need a way
+to refer to the "onto" commit in some way (I just used "A'^" there).
 
-  *   pick A
-  |\
-  * | pick B
-      goto A'
-  | * pick C
-  | * pick D
-  |/
-      goto B'
-  *   merge D'  # was E
+On the other hand, if you are aiming to allow users to create (by editing
+the insn file) an arbitrarily different structure like this, starting from
+the same topology:
 
-Well, maybe it's not such a good idea after all.
+  ---o---B---C---A
+      \           \
+       A---D-------O
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+that is, rebasing the upper line of development into one linear sequence
+with different patch order, while rebasing the lower line into another
+linear sequence by rebasing D on top of A, you would need to be able to
+refer to the two different results of "using A", and your "A'" notation
+would not help.
 
---nextPart14020543.1GEsHnkxYr
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+    pick B
+    pick C
+    pick A
+    goto B'^
+    pick A
+    pick D
+    merge A' was O
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+The last "merge A' was O" is done while on the result of applying D on top
+of the result of applying A on the lower line, and wants to call the tip
+of the upper line by referring it as "the result of applying A". 
 
-iEYEABECAAYFAkl7mnsACgkQqUud07tmzP28igCeNrXabQy0s1Fkzg5bju+pYC19
-/H8Ani+FYtKKrGpO3DE8iFGY4+RyDq5j
-=v//n
------END PGP SIGNATURE-----
+But there are two results from applying A, and I do not think you can
+avoid 'mark', even though you for some reason seem to hate it.
 
---nextPart14020543.1GEsHnkxYr--
+If this kind of transformation is outside the scope of your redesign
+(which I think is a sensible design decision), I do not see why you would
+need "A vs A'".
+
+You either need the full power of 'mark', or "A is original until it is
+used, and then the one and only one result once it is used,"; nothing in
+between like "A vs A'" would make much sense.
