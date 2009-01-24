@@ -1,56 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Use time_t for timestamps returned by approxidate()
- instead of unsigned
-Date: Sat, 24 Jan 2009 07:27:00 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901240726070.13232@racer>
-References: <1232665622-5110-1-git-send-email-tim.henigan@gmail.com>
+From: Robin Rosenberg <robin.rosenberg@gmail.com>
+Subject: Re: [PATCH (GIT-GUI BUG)] git-gui: Fix post-commit status with subject in non-locale encoding.
+Date: Sat, 24 Jan 2009 07:37:30 +0100
+Message-ID: <200901240737.31092.robin.rosenberg@gmail.com>
+References: <200901240018.13457.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Tim Henigan <tim.henigan@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 24 07:28:43 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 24 07:39:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQc0L-0000XR-3N
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 07:28:29 +0100
+	id 1LQcAa-0002F7-TX
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 07:39:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750830AbZAXG1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 01:27:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750812AbZAXG1G
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 01:27:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54703 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750808AbZAXG1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 01:27:06 -0500
-Received: (qmail invoked by alias); 24 Jan 2009 06:27:02 -0000
-Received: from pD9EB3F9A.dip0.t-ipconnect.de (EHLO noname) [217.235.63.154]
-  by mail.gmx.net (mp023) with SMTP; 24 Jan 2009 07:27:02 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ZRCxxjZRZ9Mp0QMZFMl8qRZFiM9fBvrs3hO1opC
-	DjMq6/D5zI1e/i
-X-X-Sender: gene099@racer
-In-Reply-To: <1232665622-5110-1-git-send-email-tim.henigan@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1750830AbZAXGhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 01:37:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbZAXGhj
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 01:37:39 -0500
+Received: from rv-out-0506.google.com ([209.85.198.238]:41951 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750792AbZAXGhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 01:37:39 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so5067535rvb.1
+        for <git@vger.kernel.org>; Fri, 23 Jan 2009 22:37:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=YQZY/R37gXwALGieLiPpUKkcr1D5Hgq6GWGDNprHDfw=;
+        b=CN3pwntKnUoEd8sw985ITdWNApJvgxf7QbEGgqElb3XAsJloukRkuc1a0LPafHSjIb
+         6sRFpY5to44wp9HcDzYqSsNL5U6pFLs9ZWLTPtDg/8O5zvnP+OxZeJQq7FRjJpv34sO/
+         KXujJb32uGhHuRYL1cWZ3wPdAtz+DMtYoMHl4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=SXcqIbhv+dNToYSMIXKfuIKArEayRARH9MLqLojsetEZnMcZlOjFfvGbxXWKdps7wK
+         HRgAsKAUcgTyG65AfbYB0BDU4EnOQaHvbdtUvaGfW41+eD4Ve0zJBBxA5Fj6cb7ExySF
+         RlQqvfcStxMqwuwv8CEXF52i4uPzHqrZJAPqM=
+Received: by 10.141.180.5 with SMTP id h5mr3028467rvp.82.1232779058068;
+        Fri, 23 Jan 2009 22:37:38 -0800 (PST)
+Received: from sleipner.localnet (h59n1fls34o811.telia.com [213.67.102.59])
+        by mx.google.com with ESMTPS id g31sm24000289rvb.4.2009.01.23.22.37.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 23 Jan 2009 22:37:35 -0800 (PST)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <200901240018.13457.angavrilov@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106957>
 
-Hi,
+fredag 23 januari 2009 22:18:13 skrev Alexander Gavrilov:
+> As pointed out in msysgit bug #181, when a non-locale encoding
+> is used for commits, post-commit status messages display the
+> subject incorrectly. It happens because the file handle is
+> not properly configured before the subject is read back.
+> 
+> This patch fixes it by factoring out the code that is
+> used to setup the output handle into a separate function,
+> and calling it from the reading code.
 
-On Thu, 22 Jan 2009, Tim Henigan wrote:
+Ack. Works fine now.
 
-> Use time_t for timestamps returned by approxidate() instead of unsigned 
-> long.  All references to approxidate were checked as well as references 
-> to OPT_DATE.
+Thanks.
 
-Hmm.  I vaguely remember Linus mentioning recently that unsigned long is 
-the appropriate data type for the Unix Epoch...
-
-Ciao,
-Dscho
+-- robin
