@@ -1,119 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Change octal literals to be XEmacs friendly
-Date: Fri, 23 Jan 2009 17:31:08 -0800
-Message-ID: <7vocxxpk0z.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0901240219530.19590@linmac.oyster.ru>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: how to force a commit date matching info from a mbox ?
+Date: Sat, 24 Jan 2009 02:43:47 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901240242270.3586@pacific.mpi-cbg.de>
+References: <7vwscm1nic.fsf@gitster.siamese.dyndns.org> <7vljt26fp9.fsf@gitster.siamese.dyndns.org> <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com> <20090123094529.6117@nanako3.lavabit.com> <20090123172646.6117@nanako3.lavabit.com>
+ <7vtz7qxsxc.fsf@gitster.siamese.dyndns.org> <20090123222906.GC11328@coredump.intra.peff.net> <alpine.DEB.1.00.0901240133510.3586@pacific.mpi-cbg.de> <20090124005225.GA9864@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>
-To: Vassili Karpov <av1474@comtv.ru>
-X-From: git-owner@vger.kernel.org Sat Jan 24 02:32:53 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	git list <git@vger.kernel.org>,
+	Christian MICHON <christian.michon@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jan 24 02:44:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQXOA-0005sQ-V1
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 02:32:47 +0100
+	id 1LQXZu-0008G1-N5
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 02:44:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753653AbZAXBbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 20:31:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753625AbZAXBbQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 20:31:16 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40645 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753549AbZAXBbQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 20:31:16 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2440E92AA6;
-	Fri, 23 Jan 2009 20:31:15 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AA37192AA5; Fri,
- 23 Jan 2009 20:31:10 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0901240219530.19590@linmac.oyster.ru> (Vassili
- Karpov's message of "Sat, 24 Jan 2009 02:20:52 +0300 (MSK)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B0D9B522-E9B6-11DD-A070-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753680AbZAXBnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 20:43:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753549AbZAXBnX
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 20:43:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41092 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753527AbZAXBnX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 20:43:23 -0500
+Received: (qmail invoked by alias); 24 Jan 2009 01:43:20 -0000
+Received: from pD9EB2F6A.dip0.t-ipconnect.de (EHLO noname) [217.235.47.106]
+  by mail.gmx.net (mp023) with SMTP; 24 Jan 2009 02:43:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Q6/xzdwnQS6pO6m1WK53AaNO+JSHmra07/vpWT0
+	rgbSZMdKTwPi1X
+X-X-Sender: gene099@racer
+In-Reply-To: <20090124005225.GA9864@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106942>
 
-Vassili Karpov <av1474@comtv.ru> writes:
+Hi,
 
-Please don't use "format=flowed"; your patch is whitespace damaged and
-does not apply.
+On Fri, 23 Jan 2009, Jeff King wrote:
 
-> The type-of ?\octal in XEmacs is character while in FSF Emacs it is
-> integer. Case expression using this syntax will not work correctly on
-> XEmacs. #ooctal syntax on the other hand produces integers everywhere.
->
-> Signed-off-by: Vassili Karpov <av1474@comtv.ru>
-> ---
->  contrib/emacs/git.el |   30 +++++++++++++++---------------
->  1 files changed, 15 insertions(+), 15 deletions(-)
->
-> diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-> index 09e8bae..715580a 100644
-> --- a/contrib/emacs/git.el
-> +++ b/contrib/emacs/git.el
-> @@ -562,29 +562,29 @@ the process output as a string, or nil if the
-> git command failed."
->    (let* ((old-type (lsh (or old-perm 0) -9))
->  	 (new-type (lsh (or new-perm 0) -9))
->  	 (str (case new-type
-> -		(?\100  ;; file
-> +		(#o100  ;; file
->  		 (case old-type
-> -		   (?\100 nil)
-> -		   (?\120 "   (type change symlink -> file)")
-> -		   (?\160 "   (type change subproject -> file)")))
-> -		 (?\120  ;; symlink
-> +		   (#o100 nil)
-> +		   (#o120 "   (type change symlink -> file)")
-> +		   (#o160 "   (type change subproject -> file)")))
-> +		 (#o120  ;; symlink
->  		  (case old-type
-> -		    (?\100 "   (type change file -> symlink)")
-> -		    (?\160 "   (type change subproject -> symlink)")
-> +		    (#o100 "   (type change file -> symlink)")
-> +		    (#o160 "   (type change subproject -> symlink)")
->  		    (t "   (symlink)")))
-> -		  (?\160  ;; subproject
-> +		  (#o160  ;; subproject
->  		   (case old-type
-> -		     (?\100 "   (type change file -> subproject)")
-> -		     (?\120 "   (type change symlink -> subproject)")
-> +		     (#o100 "   (type change file -> subproject)")
-> +		     (#o120 "   (type change symlink -> subproject)")
->  		     (t "   (subproject)")))
-> -                  (?\110 nil)  ;; directory (internal, not a real git
-> state)
-> -		  (?\000  ;; deleted or unknown
-> +                  (#o110 nil)  ;; directory (internal, not a real git
-> state)
-> +		  (#o000  ;; deleted or unknown
->  		   (case old-type
-> -		     (?\120 "   (symlink)")
-> -		     (?\160 "   (subproject)")))
-> +		     (#o120 "   (symlink)")
-> +		     (#o160 "   (subproject)")))
->  		  (t (format "   (unknown type %o)" new-type)))))
->      (cond (str (propertize str 'face 'git-status-face))
-> -          ((eq new-type ?\110) "/")
-> +          ((eq new-type #o110) "/")
->            (t ""))))
->
->  (defun git-rename-as-string (info)
-> -- 
-> 1.6.0.2.GIT
->
->
->
-> -- 
-> mailto:av1474@comtv.ru
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> On Sat, Jan 24, 2009 at 01:34:41AM +0100, Johannes Schindelin wrote:
+> 
+> > > So good to know, and I will start generating my patches differently.
+> > 
+> > Note that your patches will not be found using Pasky's "mail" link in 
+> > gitweb, if you do not put the commit subject into the _real_ mail subject.
+> > 
+> > Dunno if I like that.
+> 
+> I think that is not a new problem. Quite a few patches are "how about
+> this" patches in the middle of a thread, and leave the old subject.
+> IMHO, that is a failing of the tool in not tracking common practice, not
+> the other way around.
+
+You know exactly what "fixing the tool" would mean.
+
+Ciao,
+Dscho
