@@ -1,143 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Heads up: major rebase -i -p rework coming up
-Date: Sat, 24 Jan 2009 15:01:12 -0800
-Message-ID: <7vzlhgl35z.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0901242056070.14855@racer>
- <7vpricmoda.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0901242156320.14855@racer>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephan Beyer <s-beyer@gmx.net>, git@vger.kernel.org,
-	Stephen Haberman <stephen@exigencecorp.com>,
-	spearce@spearce.org, Thomas Rast <trast@student.ethz.ch>,
-	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jan 25 00:03:04 2009
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: [PATCH 01/10] cvsserver: removed unused sha1Or-k mode from kopts_from_path
+Date: Sat, 24 Jan 2009 16:43:12 -0700
+Message-ID: <1232840601-24696-2-git-send-email-mmogilvi_git@miniinfo.net>
+References: <1232840601-24696-1-git-send-email-mmogilvi_git@miniinfo.net>
+Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 25 00:45:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQrWp-0004Z5-Pb
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 00:03:04 +0100
+	id 1LQsBX-0006Ei-3w
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 00:45:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752065AbZAXXBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 18:01:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbZAXXB3
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 18:01:29 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49241 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751209AbZAXXB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 18:01:28 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A629E1D343;
-	Sat, 24 Jan 2009 18:01:27 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3C3A31D0E0; Sat,
- 24 Jan 2009 18:01:19 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0901242156320.14855@racer> (Johannes
- Schindelin's message of "Sat, 24 Jan 2009 22:04:53 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EE509FCE-EA6A-11DD-A5DD-BE78113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1753262AbZAXXnb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 18:43:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752475AbZAXXn3
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 18:43:29 -0500
+Received: from qmta10.emeryville.ca.mail.comcast.net ([76.96.30.17]:37674 "EHLO
+	QMTA10.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751629AbZAXXn3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Jan 2009 18:43:29 -0500
+Received: from OMTA09.emeryville.ca.mail.comcast.net ([76.96.30.20])
+	by QMTA10.emeryville.ca.mail.comcast.net with comcast
+	id 7SAC1b00H0S2fkCAAbjUak; Sat, 24 Jan 2009 23:43:28 +0000
+Received: from mmogilvi.homeip.net ([75.70.161.67])
+	by OMTA09.emeryville.ca.mail.comcast.net with comcast
+	id 7bjT1b0041TYyYj8VbjT6P; Sat, 24 Jan 2009 23:43:28 +0000
+Received: from localhost.localdomain (bean [192.168.30.96])
+	by mmogilvi.homeip.net (Postfix) with ESMTP id 29CE489115;
+	Sat, 24 Jan 2009 16:43:24 -0700 (MST)
+X-Mailer: git-send-email 1.6.1.81.g9833d.dirty
+In-Reply-To: <1232840601-24696-1-git-send-email-mmogilvi_git@miniinfo.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107016>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+sha1Or-k was a vestige from an early, never-released
+attempt to handle some oddball cases of CRLF conversion (-k option).
+Ultimately it wasn't needed, and I should have gotten rid of it
+before submitting the CRLF patch in the first place.
 
->> - What's with the apostrophe?  I seem to remember that you argued it 
->>   would be enough to make "A" stand for the original when it is used for 
->>   the first time and the second and later use can stand for the result 
->>   of the last use (e.g. the "goto A'" above can be simply spelled as 
->>   "goto A"), when I suggested to use "mark" in a way similar to how 
->>   fast-import language uses it during the sequencer discussion?
->> 
->>   I am not complaining; I am just being curious why the sudden change of 
->>   heart.
->
-> Very easy explanation.  I got convinced by your arguments.  Even if I 
-> could imagine that I never use the thing without apostrophe, it is good to 
-> have an obvious indicator that this is not necessarily the original 
-> commit.
+See also 90948a42892779 (add ability to guess -kb from contents).
 
-Now that does not make much sense to me.
+Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+---
+ git-cvsserver.perl |   38 +++++---------------------------------
+ 1 files changed, 5 insertions(+), 33 deletions(-)
 
-The reason I suggested that 'mark' would give a cleaner semantics was
-because in your earlier design "A" could either stand for the original or
-it could stand for the result of an operation that used "A", and there
-could be more than one operation that uses "A".  Explicitly naming each
-result with a mark would give us an unambiguous way to distinguish them.
-
-I however do not think you would ever use A twice in the context of
-"rebase -i/-p".  Cherry-picking the same commit twice to create two copies
-of them will not happen in that context.
-
-While trying to recreate something like this on top of a commit "o", you
-would have to talk about "A" multiple times,...
-
-          B---M
-         /   / \
- ---o---A---C   \
-     \   \       \
-      D---N-------O
-
-... but even in such a picture, after one "pick A", you would always want
-to refer to the result of the pick, and never the original A.
-
-    pick A
-    goto A'^
-    pick D
-    merge A' was N
-    goto A'
-    pick B
-    goto A'
-    pick C
-    merge B' was M
-    merge N' was O
-
-So I am inclined to think that "first use refers to the original, second
-and thereafter will refer to the result of the first use" would be a good
-enough semantics for "rebase -i/-p", and you do not need "A" vs "A'" for
-this.
-
-By the way, I think this example shows that your "goto" might need a way
-to refer to the "onto" commit in some way (I just used "A'^" there).
-
-On the other hand, if you are aiming to allow users to create (by editing
-the insn file) an arbitrarily different structure like this, starting from
-the same topology:
-
-  ---o---B---C---A
-      \           \
-       A---D-------O
-
-that is, rebasing the upper line of development into one linear sequence
-with different patch order, while rebasing the lower line into another
-linear sequence by rebasing D on top of A, you would need to be able to
-refer to the two different results of "using A", and your "A'" notation
-would not help.
-
-    pick B
-    pick C
-    pick A
-    goto B'^
-    pick A
-    pick D
-    merge A' was O
-
-The last "merge A' was O" is done while on the result of applying D on top
-of the result of applying A on the lower line, and wants to call the tip
-of the upper line by referring it as "the result of applying A". 
-
-But there are two results from applying A, and I do not think you can
-avoid 'mark', even though you for some reason seem to hate it.
-
-If this kind of transformation is outside the scope of your redesign
-(which I think is a sensible design decision), I do not see why you would
-need "A vs A'".
-
-You either need the full power of 'mark', or "A is original until it is
-used, and then the one and only one result once it is used,"; nothing in
-between like "A vs A'" would make much sense.
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index fef7faf..1de0c1e 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -2355,42 +2355,14 @@ sub kopts_from_path
+         }
+         elsif( ($cfg->{gitcvs}{allbinary} =~ /^\s*guess\s*$/i) )
+         {
+-            if( $srcType eq "sha1Or-k" &&
+-                !defined($name) )
++            if( is_binary($srcType,$name) )
+             {
+-                my ($ret)=$state->{entries}{$path}{options};
+-                if( !defined($ret) )
+-                {
+-                    $ret=$state->{opt}{k};
+-                    if(defined($ret))
+-                    {
+-                        $ret="-k$ret";
+-                    }
+-                    else
+-                    {
+-                        $ret="";
+-                    }
+-                }
+-                if( ! ($ret=~/^(|-kb|-kkv|-kkvl|-kk|-ko|-kv)$/) )
+-                {
+-                    print "E Bad -k option\n";
+-                    $log->warn("Bad -k option: $ret");
+-                    die "Error: Bad -k option: $ret\n";
+-                }
+-
+-                return $ret;
++                $log->debug("... as binary");
++                return "-kb";
+             }
+             else
+             {
+-                if( is_binary($srcType,$name) )
+-                {
+-                    $log->debug("... as binary");
+-                    return "-kb";
+-                }
+-                else
+-                {
+-                    $log->debug("... as text");
+-                }
++                $log->debug("... as text");
+             }
+         }
+     }
+@@ -2497,7 +2469,7 @@ sub open_blob_or_die
+             die "Unable to open file $name: $!\n";
+         }
+     }
+-    elsif( $srcType eq "sha1" || $srcType eq "sha1Or-k" )
++    elsif( $srcType eq "sha1" )
+     {
+         unless ( defined ( $name ) and $name =~ /^[a-zA-Z0-9]{40}$/ )
+         {
+-- 
+1.6.1.81.g9833d.dirty
