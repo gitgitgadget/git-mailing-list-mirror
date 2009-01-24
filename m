@@ -1,68 +1,104 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: how to force a commit date matching info from a mbox ?
-Date: Sat, 24 Jan 2009 02:43:47 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901240242270.3586@pacific.mpi-cbg.de>
-References: <7vwscm1nic.fsf@gitster.siamese.dyndns.org> <7vljt26fp9.fsf@gitster.siamese.dyndns.org> <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com> <20090123094529.6117@nanako3.lavabit.com> <20090123172646.6117@nanako3.lavabit.com>
- <7vtz7qxsxc.fsf@gitster.siamese.dyndns.org> <20090123222906.GC11328@coredump.intra.peff.net> <alpine.DEB.1.00.0901240133510.3586@pacific.mpi-cbg.de> <20090124005225.GA9864@sigill.intra.peff.net>
+From: Keith Cascio <keith@CS.UCLA.EDU>
+Subject: Re: [RFC PATCH (GIT-GUI/CORE BUG)] git-gui: Avoid an infinite rescan
+ loop in handle_empty_diff.
+Date: Fri, 23 Jan 2009 17:46:57 -0800 (PST)
+Message-ID: <alpine.GSO.2.00.0901231743360.11562@kiwi.cs.ucla.edu>
+References: <200901240052.58259.angavrilov@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	git list <git@vger.kernel.org>,
-	Christian MICHON <christian.michon@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jan 24 02:44:55 2009
+Cc: git@vger.kernel.org, Shawn O Pearce <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Andy Davey <as.davey@gmail.com>,
+	kbro <kevin.broadey@googlemail.com>
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 24 02:48:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQXZu-0008G1-N5
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 02:44:55 +0100
+	id 1LQXdX-0000hd-BA
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 02:48:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753680AbZAXBnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 20:43:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753549AbZAXBnX
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 20:43:23 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41092 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753527AbZAXBnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 20:43:23 -0500
-Received: (qmail invoked by alias); 24 Jan 2009 01:43:20 -0000
-Received: from pD9EB2F6A.dip0.t-ipconnect.de (EHLO noname) [217.235.47.106]
-  by mail.gmx.net (mp023) with SMTP; 24 Jan 2009 02:43:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Q6/xzdwnQS6pO6m1WK53AaNO+JSHmra07/vpWT0
-	rgbSZMdKTwPi1X
-X-X-Sender: gene099@racer
-In-Reply-To: <20090124005225.GA9864@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1753654AbZAXBrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 20:47:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753527AbZAXBrJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 20:47:09 -0500
+Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:47544 "EHLO kiwi.cs.ucla.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753282AbZAXBrI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 20:47:08 -0500
+Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n0O1kwaM012049;
+	Fri, 23 Jan 2009 17:46:58 -0800 (PST)
+Received: from localhost (keith@localhost)
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n0O1kvOY012046;
+	Fri, 23 Jan 2009 17:46:57 -0800 (PST)
+X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
+In-Reply-To: <200901240052.58259.angavrilov@gmail.com>
+User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106943>
 
-Hi,
+Teach git-gui to check diff's exit code
+in order to know whether a file actually
+changed or not.
 
-On Fri, 23 Jan 2009, Jeff King wrote:
+Signed-off-by: Keith Cascio <keith@cs.ucla.edu>
+---
+Alexander,
+I encountered the same problem and I tried a different way
+to prevent it.  Could you please try this alternative patch
+and see if it works in your setup?  If so, it might be
+a lower-impact solution.  Even if it doesn't solve your
+problem, I think it is still an improvement over what
+exists and could co-exist with your patch.
+                                     -- Keith Cascio
 
-> On Sat, Jan 24, 2009 at 01:34:41AM +0100, Johannes Schindelin wrote:
-> 
-> > > So good to know, and I will start generating my patches differently.
-> > 
-> > Note that your patches will not be found using Pasky's "mail" link in 
-> > gitweb, if you do not put the commit subject into the _real_ mail subject.
-> > 
-> > Dunno if I like that.
-> 
-> I think that is not a new problem. Quite a few patches are "how about
-> this" patches in the middle of a thread, and leave the old subject.
-> IMHO, that is a failing of the tool in not tracking common practice, not
-> the other way around.
+ git-gui/lib/diff.tcl |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
-You know exactly what "fixing the tool" would mean.
-
-Ciao,
-Dscho
+diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
+index bbbf15c..94faf95 100644
+--- a/git-gui/lib/diff.tcl
++++ b/git-gui/lib/diff.tcl
+@@ -276,6 +276,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 	}
+ 
+ 	lappend cmd -p
++	lappend cmd --exit-code
+ 	lappend cmd --no-color
+ 	if {$repo_config(gui.diffcontext) >= 1} {
+ 		lappend cmd "-U$repo_config(gui.diffcontext)"
+@@ -310,6 +311,7 @@ proc read_diff {fd cont_info} {
+ 	global ui_diff diff_active
+ 	global is_3way_diff is_conflict_diff current_diff_header
+ 	global current_diff_queue
++	global errorCode
+ 
+ 	$ui_diff conf -state normal
+ 	while {[gets $fd line] >= 0} {
+@@ -397,7 +399,9 @@ proc read_diff {fd cont_info} {
+ 	$ui_diff conf -state disabled
+ 
+ 	if {[eof $fd]} {
+-		close $fd
++		fconfigure $fd -blocking 1
++		catch { close $fd } err
++		set diff_exit_status $errorCode
+ 
+ 		if {$current_diff_queue ne {}} {
+ 			advance_diff_queue $cont_info
+@@ -413,7 +417,7 @@ proc read_diff {fd cont_info} {
+ 		}
+ 		ui_ready
+ 
+-		if {[$ui_diff index end] eq {2.0}} {
++		if {$diff_exit_status eq "NONE"} {
+ 			handle_empty_diff
+ 		}
+ 		set callback [lindex $cont_info 1]
+-- 
+1.6.1
