@@ -1,170 +1,119 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH 2/2 (v2)] git-am: Add --ignore-date option
-Date: Sat, 24 Jan 2009 10:18:02 +0900
-Message-ID: <20090124101802.6117@nanako3.lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Change octal literals to be XEmacs friendly
+Date: Fri, 23 Jan 2009 17:31:08 -0800
+Message-ID: <7vocxxpk0z.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0901240219530.19590@linmac.oyster.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 24 02:19:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>
+To: Vassili Karpov <av1474@comtv.ru>
+X-From: git-owner@vger.kernel.org Sat Jan 24 02:32:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQXBa-00036o-AX
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 02:19:46 +0100
+	id 1LQXOA-0005sQ-V1
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 02:32:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753607AbZAXBSR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jan 2009 20:18:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753547AbZAXBSR
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 20:18:17 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:53008 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753420AbZAXBSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 20:18:16 -0500
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id CE89BC7AA6;
-	Fri, 23 Jan 2009 19:18:15 -0600 (CST)
-Received: from 7951.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id AJN1JPYYPTDY; Fri, 23 Jan 2009 19:18:15 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=yMJropgjjM0sXxoIEHOYG+LyKTSH0k7ADfWds4cRCJEQd+uchHg0W4CkyKGUMXPRlWUJu1MV7YzoZvhfnit6wisDkFlFvoN7MR8bDX8Voi2CMHml1iwibRDW/c2NmGhgSbEiEMm0Iz8TVBG5BvIXlVzDTSNGGIHAfuNdodF/Vpg=;
-  h=From:To:Cc:Subject:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+	id S1753653AbZAXBbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 20:31:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753625AbZAXBbQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 20:31:16 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40645 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753549AbZAXBbQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 20:31:16 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2440E92AA6;
+	Fri, 23 Jan 2009 20:31:15 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AA37192AA5; Fri,
+ 23 Jan 2009 20:31:10 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0901240219530.19590@linmac.oyster.ru> (Vassili
+ Karpov's message of "Sat, 24 Jan 2009 02:20:52 +0300 (MSK)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B0D9B522-E9B6-11DD-A070-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106941>
 
-This new option tells 'git-am' to ignore the date header field
-recorded in the format-patch output. The commits will have the
-timestamp when they are created instead.
+Vassili Karpov <av1474@comtv.ru> writes:
 
-You can work a lot in one day to accumulate many changes, but
-apply and push to the public repository only some of them at
-the end of the first day. Then next day you can spend all your
-working hours reading comics or chatting with your coworkers,
-and apply your remaining patches from the previous day using
-this option to pretend that you have been working at the end
-of the day.
+Please don't use "format=flowed"; your patch is whitespace damaged and
+does not apply.
 
-Signed-off-by: =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=
-=81=93 <nanako3@lavabit.com>
----
-
-Added documentation and copied your response about the new
-test as a comment.
-
- Documentation/git-am.txt |   17 ++++++++++++++++-
- git-am.sh                |    8 ++++++++
- t/t4150-am.sh            |   13 +++++++++++++
- 3 files changed, 37 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 5cbbe76..c10c91b 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -10,7 +10,8 @@ SYNOPSIS
- --------
- [verse]
- 'git am' [--signoff] [--keep] [--utf8 | --no-utf8]
--	 [--3way] [--interactive]
-+	 [--3way] [--interactive] [--committer-date-is-author-date]
-+	 [--ignore-date]
- 	 [--whitespace=3D<option>] [-C<n>] [-p<n>] [--directory=3D<dir>]
- 	 [<mbox> | <Maildir>...]
- 'git am' (--skip | --resolved | --abort)
-@@ -71,6 +72,20 @@ default.   You could use `--no-utf8` to override thi=
-s.
- --interactive::
- 	Run interactively.
-=20
-+--committer-date-is-author-date::
-+	By default the command records the date from the e-mail
-+	message as the commit author date, and uses the time of
-+	commit creation as the committer date. This allows the
-+	user to lie about the committer date by using the same
-+	timestamp as the author date.
-+
-+--ignore-date::
-+	By default the command records the date from the e-mail
-+	message as the commit author date, and uses the time of
-+	commit creation as the committer date. This allows the
-+	user to lie about author timestamp by using the same
-+	timestamp as the committer date.
-+
- --skip::
- 	Skip the current patch.  This is only meaningful when
- 	restarting an aborted patch.
-diff --git a/git-am.sh b/git-am.sh
-index e96071d..f935178 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -24,6 +24,7 @@ r,resolved      to be used after a patch failure
- skip            skip the current patch
- abort           restore the original branch and abort the patching ope=
-ration.
- committer-date-is-author-date    lie about committer date
-+ignore-date     use current timestamp for author date
- rebasing        (internal use for git-rebase)"
-=20
- . git-sh-setup
-@@ -135,6 +136,7 @@ sign=3D utf8=3Dt keep=3D skip=3D interactive=3D res=
-olved=3D rebasing=3D abort=3D
- resolvemsg=3D resume=3D
- git_apply_opt=3D
- committer_date_is_author_date=3D
-+ignore_date=3D
-=20
- while test $# !=3D 0
- do
-@@ -172,6 +174,8 @@ do
- 		git_apply_opt=3D"$git_apply_opt $(sq "$1$2")"; shift ;;
- 	--committer-date-is-author-date)
- 		committer_date_is_author_date=3Dt ;;
-+	--ignore-date)
-+		ignore_date=3Dt ;;
- 	--)
- 		shift; break ;;
- 	*)
-@@ -526,6 +530,10 @@ do
- 	tree=3D$(git write-tree) &&
- 	parent=3D$(git rev-parse --verify HEAD) &&
- 	commit=3D$(
-+		if test -n "$ignore_date"
-+		then
-+			GIT_AUTHOR_DATE=3D
-+		fi
- 		if test -n "$committer_date_is_author_date"
- 		then
- 			GIT_COMMITTER_DATE=3D"$GIT_AUTHOR_DATE"
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 8d3fb00..2ad9048 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -277,4 +277,17 @@ test_expect_success 'am without --committer-date-i=
-s-author-date' '
- 	test "$at" !=3D "$ct"
- '
-=20
-+# This checks for +0000 because TZ is set to UTC and that should
-+# show up when the current time is used. The date in message is set
-+# by test_tick that uses -0700 timezone; if this feature does not
-+# work, we will see that instead of +0000.
-+test_expect_success 'am --ignore-date' '
-+	git checkout first &&
-+	test_tick &&
-+	git am --ignore-date patch1 &&
-+	git cat-file commit HEAD | sed -e "/^$/q" >head1 &&
-+	at=3D$(sed -ne "/^author /s/.*> //p" head1) &&
-+	echo "$at" | grep "+0000"
-+'
-+
- test_done
---=20
-1.6.1
-
---=20
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+> The type-of ?\octal in XEmacs is character while in FSF Emacs it is
+> integer. Case expression using this syntax will not work correctly on
+> XEmacs. #ooctal syntax on the other hand produces integers everywhere.
+>
+> Signed-off-by: Vassili Karpov <av1474@comtv.ru>
+> ---
+>  contrib/emacs/git.el |   30 +++++++++++++++---------------
+>  1 files changed, 15 insertions(+), 15 deletions(-)
+>
+> diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+> index 09e8bae..715580a 100644
+> --- a/contrib/emacs/git.el
+> +++ b/contrib/emacs/git.el
+> @@ -562,29 +562,29 @@ the process output as a string, or nil if the
+> git command failed."
+>    (let* ((old-type (lsh (or old-perm 0) -9))
+>  	 (new-type (lsh (or new-perm 0) -9))
+>  	 (str (case new-type
+> -		(?\100  ;; file
+> +		(#o100  ;; file
+>  		 (case old-type
+> -		   (?\100 nil)
+> -		   (?\120 "   (type change symlink -> file)")
+> -		   (?\160 "   (type change subproject -> file)")))
+> -		 (?\120  ;; symlink
+> +		   (#o100 nil)
+> +		   (#o120 "   (type change symlink -> file)")
+> +		   (#o160 "   (type change subproject -> file)")))
+> +		 (#o120  ;; symlink
+>  		  (case old-type
+> -		    (?\100 "   (type change file -> symlink)")
+> -		    (?\160 "   (type change subproject -> symlink)")
+> +		    (#o100 "   (type change file -> symlink)")
+> +		    (#o160 "   (type change subproject -> symlink)")
+>  		    (t "   (symlink)")))
+> -		  (?\160  ;; subproject
+> +		  (#o160  ;; subproject
+>  		   (case old-type
+> -		     (?\100 "   (type change file -> subproject)")
+> -		     (?\120 "   (type change symlink -> subproject)")
+> +		     (#o100 "   (type change file -> subproject)")
+> +		     (#o120 "   (type change symlink -> subproject)")
+>  		     (t "   (subproject)")))
+> -                  (?\110 nil)  ;; directory (internal, not a real git
+> state)
+> -		  (?\000  ;; deleted or unknown
+> +                  (#o110 nil)  ;; directory (internal, not a real git
+> state)
+> +		  (#o000  ;; deleted or unknown
+>  		   (case old-type
+> -		     (?\120 "   (symlink)")
+> -		     (?\160 "   (subproject)")))
+> +		     (#o120 "   (symlink)")
+> +		     (#o160 "   (subproject)")))
+>  		  (t (format "   (unknown type %o)" new-type)))))
+>      (cond (str (propertize str 'face 'git-status-face))
+> -          ((eq new-type ?\110) "/")
+> +          ((eq new-type #o110) "/")
+>            (t ""))))
+>
+>  (defun git-rename-as-string (info)
+> -- 
+> 1.6.0.2.GIT
+>
+>
+>
+> -- 
+> mailto:av1474@comtv.ru
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
