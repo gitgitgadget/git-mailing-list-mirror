@@ -1,76 +1,105 @@
-From: Robin Rosenberg <robin.rosenberg@gmail.com>
-Subject: Re: [PATCH (GIT-GUI BUG)] git-gui: Fix post-commit status with subject in non-locale encoding.
-Date: Sat, 24 Jan 2009 07:37:30 +0100
-Message-ID: <200901240737.31092.robin.rosenberg@gmail.com>
-References: <200901240018.13457.angavrilov@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/2] user-manual: Simplify the user configuration.
+Date: Sat, 24 Jan 2009 10:21:14 +0200
+Message-ID: <94a0d4530901240021u65adeff8pb6995ef707bc1f68@mail.gmail.com>
+References: <1232561365-5919-1-git-send-email-felipe.contreras@gmail.com>
+	 <7v8wp4e5wn.fsf@gitster.siamese.dyndns.org>
+	 <94a0d4530901211319t8126611wc1437848631fe988@mail.gmail.com>
+	 <831vuvfh7t.fsf@kalahari.s2.org>
+	 <94a0d4530901220857q1027c05bs137dcc0244a1cc5a@mail.gmail.com>
+	 <83wscndv57.fsf@kalahari.s2.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 24 07:39:14 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Hannu Koivisto <azure@iki.fi>
+X-From: git-owner@vger.kernel.org Sat Jan 24 09:22:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQcAa-0002F7-TX
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 07:39:05 +0100
+	id 1LQdms-00049I-6S
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 09:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750830AbZAXGhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 01:37:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbZAXGhj
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 01:37:39 -0500
-Received: from rv-out-0506.google.com ([209.85.198.238]:41951 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750792AbZAXGhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 01:37:39 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so5067535rvb.1
-        for <git@vger.kernel.org>; Fri, 23 Jan 2009 22:37:38 -0800 (PST)
+	id S1751001AbZAXIVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 03:21:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750980AbZAXIVR
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 03:21:17 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:59913 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750868AbZAXIVQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 03:21:16 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so2816313fgg.17
+        for <git@vger.kernel.org>; Sat, 24 Jan 2009 00:21:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=YQZY/R37gXwALGieLiPpUKkcr1D5Hgq6GWGDNprHDfw=;
-        b=CN3pwntKnUoEd8sw985ITdWNApJvgxf7QbEGgqElb3XAsJloukRkuc1a0LPafHSjIb
-         6sRFpY5to44wp9HcDzYqSsNL5U6pFLs9ZWLTPtDg/8O5zvnP+OxZeJQq7FRjJpv34sO/
-         KXujJb32uGhHuRYL1cWZ3wPdAtz+DMtYoMHl4=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pc7HzQY5rrvKrdel8V0UfEDzVm9gnkgd7m0xcAFQBiU=;
+        b=Lv5Tt90cOTqLoKbmEyG/XFk7oMp5EyvcLg4AfM8u18OMmLwvfODHEaFsJKA1f+uTqZ
+         tc21Kp65dxgzV7z6vIjkDY470avsA4adtQ+ZIHsfjWDgZGhOeeHQKxZbE9/kg/Vknxfs
+         6Y8DVeZL4tjzw5iQs5J4d+11EjideHANMLAwQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=SXcqIbhv+dNToYSMIXKfuIKArEayRARH9MLqLojsetEZnMcZlOjFfvGbxXWKdps7wK
-         HRgAsKAUcgTyG65AfbYB0BDU4EnOQaHvbdtUvaGfW41+eD4Ve0zJBBxA5Fj6cb7ExySF
-         RlQqvfcStxMqwuwv8CEXF52i4uPzHqrZJAPqM=
-Received: by 10.141.180.5 with SMTP id h5mr3028467rvp.82.1232779058068;
-        Fri, 23 Jan 2009 22:37:38 -0800 (PST)
-Received: from sleipner.localnet (h59n1fls34o811.telia.com [213.67.102.59])
-        by mx.google.com with ESMTPS id g31sm24000289rvb.4.2009.01.23.22.37.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 23 Jan 2009 22:37:35 -0800 (PST)
-User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
-In-Reply-To: <200901240018.13457.angavrilov@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=NoV6KHV37V8xBAQkLgIWGWangCr3vXMBCaPXsqK80tl6JpdDjmJkhPpH83ZzGc8GVv
+         2MY1CF+Ju+6rNIPaq/bpeRINmTBIdjUt6Ra1+WBsrfK8VijjwiRDaL/2TT/KsidwAp+a
+         a6BxyI3PzzZCJ1QKSX3rO+y4ia0g4TspVGM+o=
+Received: by 10.86.80.17 with SMTP id d17mr339648fgb.14.1232785274756; Sat, 24 
+	Jan 2009 00:21:14 -0800 (PST)
+In-Reply-To: <83wscndv57.fsf@kalahari.s2.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106958>
 
-fredag 23 januari 2009 22:18:13 skrev Alexander Gavrilov:
-> As pointed out in msysgit bug #181, when a non-locale encoding
-> is used for commits, post-commit status messages display the
-> subject incorrectly. It happens because the file handle is
-> not properly configured before the subject is read back.
-> 
-> This patch fixes it by factoring out the code that is
-> used to setup the output handle into a separate function,
-> and calling it from the reading code.
+On Thu, Jan 22, 2009 at 8:59 PM, Hannu Koivisto <azure@iki.fi> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> On Thu, Jan 22, 2009 at 6:17 PM, Hannu Koivisto <azure@iki.fi> wrote:
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>
+>>>> This brings back my previous question: where is the home directory in
+>>>> a Windows system?
+>>>
+>>> It's where %HOMEDRIVE%%HOMEPATH% points to.
+>>
+>> I thought it was something like that. Do we want something like that
+>> in the manual, or should we assume Windows users know that?
+>
+> I should have added that Unix programs (i.e. Cygwin programs and
+> even some native ports) probably use %HOME% which may be different
+> from %HOMEDRIVE%%HOMEPATH%.  I recall that if you haven't
+> explicitly set up HOME in Windows environment, Cygwin sets it up
+> magically from passwd or falls back to %HOMEDRIVE%%HOMEPATH%.  I
+> have no idea if msysgit respects %HOME% if it is set or always uses
+> %HOMEDRIVE%%HOMEPATH% or something completely different (user
+> profile, most likely).
+>
+> It certainly may be that "home directory" is a foreign concept to
+> some Windows users.  Some might know it as a user profile or a
+> personal folder (just guessing, I'm pretty isolated from less
+> experienced Windows users), even though user profile is a separate
+> concept from "home directory" (note that there is %USERPROFILE%
+> which by default is the same as %HOMEDRIVE%%HOMEPATH% at least in
+> XP).
+>
+> In any case, what Cygwin git does should be expected by Cygwin
+> users.  If msysgit wanted to be a really native Windows application
+> and store the configuration where Microsoft thinks it should be
+> stored, it probably shouldn't store the config under "home
+> directory" to begin with (I'm guessing that's what it does) but
+> under %USERPROFILE\Application Data\Git (...FILE\Local
+> Settings\... in case non-roaming storage is wanted).  And in that
+> case the manual might be misleading for msysgit users.  See
+> e.g. <http://msdn.microsoft.com/en-us/library/ms995853.aspx>.
 
-Ack. Works fine now.
+Isn't that enough argument to stop assuming the user knows where is
+the "home directory"?
 
-Thanks.
-
--- robin
+-- 
+Felipe Contreras
