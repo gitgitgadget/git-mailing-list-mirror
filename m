@@ -1,88 +1,132 @@
 From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: [PATCH 10/10] cvsserver doc: emphasize using CVS_SERVER= phrase within CVSROOT
-Date: Sat, 24 Jan 2009 16:43:21 -0700
-Message-ID: <1232840601-24696-11-git-send-email-mmogilvi_git@miniinfo.net>
+Subject: [PATCH 03/10] cvsserver: remove unused functions _headrev and gethistory
+Date: Sat, 24 Jan 2009 16:43:14 -0700
+Message-ID: <1232840601-24696-4-git-send-email-mmogilvi_git@miniinfo.net>
 References: <1232840601-24696-1-git-send-email-mmogilvi_git@miniinfo.net>
  <1232840601-24696-2-git-send-email-mmogilvi_git@miniinfo.net>
  <1232840601-24696-3-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-4-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-5-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-6-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-7-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-8-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-9-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-10-git-send-email-mmogilvi_git@miniinfo.net>
 Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 25 00:45:26 2009
+X-From: git-owner@vger.kernel.org Sun Jan 25 00:45:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQsBc-0006Ei-Ok
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 00:45:13 +0100
+	id 1LQsBa-0006Ei-TE
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 00:45:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753949AbZAXXnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 18:43:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753858AbZAXXnp
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 18:43:45 -0500
-Received: from qmta02.emeryville.ca.mail.comcast.net ([76.96.30.24]:57609 "EHLO
-	QMTA02.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753457AbZAXXnc (ORCPT
+	id S1753841AbZAXXnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 18:43:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753723AbZAXXnl
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 18:43:41 -0500
+Received: from qmta03.emeryville.ca.mail.comcast.net ([76.96.30.32]:36407 "EHLO
+	QMTA03.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752996AbZAXXnc (ORCPT
 	<rfc822;git@vger.kernel.org>); Sat, 24 Jan 2009 18:43:32 -0500
-Received: from OMTA13.emeryville.ca.mail.comcast.net ([76.96.30.52])
-	by QMTA02.emeryville.ca.mail.comcast.net with comcast
-	id 7XJd1b00E17UAYkA2bjZWM; Sat, 24 Jan 2009 23:43:33 +0000
+Received: from OMTA07.emeryville.ca.mail.comcast.net ([76.96.30.59])
+	by QMTA03.emeryville.ca.mail.comcast.net with comcast
+	id 7R291b0091GXsucA3bjYG9; Sat, 24 Jan 2009 23:43:32 +0000
 Received: from mmogilvi.homeip.net ([75.70.161.67])
-	by OMTA13.emeryville.ca.mail.comcast.net with comcast
-	id 7bjW1b00J1TYyYj8ZbjY5Q; Sat, 24 Jan 2009 23:43:32 +0000
+	by OMTA07.emeryville.ca.mail.comcast.net with comcast
+	id 7bjW1b00F1TYyYj8TbjXDg; Sat, 24 Jan 2009 23:43:32 +0000
 Received: from localhost.localdomain (bean [192.168.30.96])
-	by mmogilvi.homeip.net (Postfix) with ESMTP id 16E9C8911E;
-	Sat, 24 Jan 2009 16:43:26 -0700 (MST)
+	by mmogilvi.homeip.net (Postfix) with ESMTP id 7EB1289117;
+	Sat, 24 Jan 2009 16:43:24 -0700 (MST)
 X-Mailer: git-send-email 1.6.1.81.g9833d.dirty
-In-Reply-To: <1232840601-24696-10-git-send-email-mmogilvi_git@miniinfo.net>
+In-Reply-To: <1232840601-24696-3-git-send-email-mmogilvi_git@miniinfo.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107024>
 
-Add information about CVSROOT=":ext;CVS_SERVER=git-cvsserver:..." to
-"SYNOPSIS" section.  This information was/is already spelled out deep in
-the "INSTALLATION" section, but this new method is far superior to
-the old backwards-compatible option (separate environment variable),
-so try to emphasize it's use for versions of CVS that support it.
-
-Also mention how to connect to a local git repository using
-git-cvsserver.
+Remove:
+   - _headrev() - cvsserver already uses similar functionality
+     from getmeta() and gethead().
+   - gethistory() - cvsserver already uses similar functions
+     gethistorydense() and getlog().
+   - #'annotate' comment  - Uncommented annotate line is 2 lines earlier.
 
 Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
 ---
- Documentation/git-cvsserver.txt |   12 ++++++++++++
- 1 files changed, 12 insertions(+), 0 deletions(-)
+ git-cvsserver.perl |   37 ++++---------------------------------
+ 1 files changed, 4 insertions(+), 33 deletions(-)
 
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index 6f8cd88..d1dc5be 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -14,6 +14,18 @@ SSH:
- export CVS_SERVER=git-cvsserver
- 'cvs' -d :ext:user@server/path/repo.git co <HEAD_name>
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index f7891b8..fe23b49 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -78,7 +78,6 @@ my $methods = {
+     'editors'         => \&req_EMPTY,
+     'annotate'        => \&req_annotate,
+     'Global_option'   => \&req_Globaloption,
+-    #'annotate'        => \&req_CATCHALL,
+ };
  
-+SSH with newer CVS versions (>= 1.12.11):
-+
-+[verse]
-+export CVSROOT=":ext;CVS_SERVER=git-cvsserver:user@server/path/repo.git"
-+'cvs' -d "$CVSROOT" co <HEAD_name>
-+
-+Local repository:
-+
-+[verse]
-+export CVSROOT=":fork;CVS_SERVER=git-cvsserver:/path/repo.git"
-+'cvs' -d "$CVSROOT" co <HEAD_name>
-+
- pserver (/etc/inetd.conf):
+ ##############################################
+@@ -3310,19 +3309,6 @@ sub insert_head
+     $insert_head->execute($name, $revision, $filehash, $commithash, $modified, $author, $mode);
+ }
  
- [verse]
+-sub _headrev
+-{
+-    my $self = shift;
+-    my $filename = shift;
+-    my $tablename = $self->tablename("head");
+-
+-    my $db_query = $self->{dbh}->prepare_cached("SELECT filehash, revision, mode FROM $tablename WHERE name=?",{},1);
+-    $db_query->execute($filename);
+-    my ( $hash, $revision, $mode ) = $db_query->fetchrow_array;
+-
+-    return ( $hash, $revision, $mode );
+-}
+-
+ sub _get_prop
+ {
+     my $self = shift;
+@@ -3382,6 +3368,8 @@ sub gethead
+ 
+ =head2 getlog
+ 
++See also gethistorydense().
++
+ =cut
+ 
+ sub getlog
+@@ -3467,25 +3455,6 @@ sub commitmessage
+     return $message;
+ }
+ 
+-=head2 gethistory
+-
+-This function takes a filename (with path) argument and returns an arrayofarrays
+-containing revision,filehash,commithash ordered by revision descending
+-
+-=cut
+-sub gethistory
+-{
+-    my $self = shift;
+-    my $filename = shift;
+-    my $tablename = $self->tablename("revision");
+-
+-    my $db_query;
+-    $db_query = $self->{dbh}->prepare_cached("SELECT revision, filehash, commithash FROM $tablename WHERE name=? ORDER BY revision DESC",{},1);
+-    $db_query->execute($filename);
+-
+-    return $db_query->fetchall_arrayref;
+-}
+-
+ =head2 gethistorydense
+ 
+ This function takes a filename (with path) argument and returns an arrayofarrays
+@@ -3495,6 +3464,8 @@ This version of gethistory skips deleted entries -- so it is useful for annotate
+ The 'dense' part is a reference to a '--dense' option available for git-rev-list
+ and other git tools that depend on it.
+ 
++See also getlog().
++
+ =cut
+ sub gethistorydense
+ {
 -- 
 1.6.1.81.g9833d.dirty
