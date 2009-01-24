@@ -1,85 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Heads up: major rebase -i -p rework coming up
-Date: Sat, 24 Jan 2009 12:37:53 -0800
-Message-ID: <7vpricmoda.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0901242056070.14855@racer>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] handle color.ui at a central place
+Date: Sat, 24 Jan 2009 15:45:39 -0500
+Message-ID: <20090124204539.GA18548@coredump.intra.peff.net>
+References: <20090117153846.GB27071@coredump.intra.peff.net> <200901220113.32711.markus.heidelberg@web.de> <7vmydi4kiz.fsf@gitster.siamese.dyndns.org> <200901241228.33690.markus.heidelberg@web.de> <7vk58ko8k7.fsf@gitster.siamese.dyndns.org> <20090124191700.GA17935@coredump.intra.peff.net> <7vvds4movp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stephen Haberman <stephen@exigencecorp.com>,
-	spearce@spearce.org, Thomas Rast <trast@student.ethz.ch>,
-	=?utf-8?Q?Bj?= =?utf-8?Q?=C3=B6rn?= Steinbrink 
-	<B.Steinbrink@gmx.de>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 24 21:39:35 2009
+Content-Type: text/plain; charset=utf-8
+Cc: markus.heidelberg@web.de,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 24 21:47:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQpHw-0005JH-1K
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 21:39:32 +0100
+	id 1LQpPG-0007NK-8c
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 21:47:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755501AbZAXUiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 15:38:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755414AbZAXUiG
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 15:38:06 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60827 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755428AbZAXUiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 15:38:05 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CD9E59369A;
-	Sat, 24 Jan 2009 15:38:03 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ACB5493699; Sat,
- 24 Jan 2009 15:37:55 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0901242056070.14855@racer> (Johannes
- Schindelin's message of "Sat, 24 Jan 2009 21:25:33 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E6072B3A-EA56-11DD-B46B-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1755573AbZAXUpm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 15:45:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755559AbZAXUpm
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 15:45:42 -0500
+Received: from peff.net ([208.65.91.99]:39393 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755428AbZAXUpl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 15:45:41 -0500
+Received: (qmail 19645 invoked by uid 107); 24 Jan 2009 20:45:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 24 Jan 2009 15:45:48 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 24 Jan 2009 15:45:39 -0500
+Content-Disposition: inline
+In-Reply-To: <7vvds4movp.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107006>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Sat, Jan 24, 2009 at 12:26:50PM -0800, Junio C Hamano wrote:
 
-> 	pick A
-> 	pick C
-> 	pick D
-> 	goto A'
-> 	pick B
-> 	merge D' was E
->
-> This should lead to a much more intuitive user experience.
->
-> I am very sorry if somebody actually scripted rebase -i -p (by setting 
-> GIT_EDITOR with a script), but I am very certain that this cleanup is 
-> absolutely necessary to make rebase -i -p useful.
+> > Sadly, this is an area that is not covered very well in the tests
+> > (partially, I think, because it is "just" output which we tend to
+> > neglect, and partially because the isatty() stuff is hard to test with
+> > our harness). So I don't think it's _entirely_ Markus' fault.
+> 
+> Oh, don't get me wrong.  I am not interested in finding whose fault it
+> was.  I was just stating the fact that one person not finding a breakage
+> does not mean much as an assurance.
 
-Three questions.
+OK. I was just trying to encourage Markus to keep trying. ;)
 
-- An obvious one first.  How does this relate to the sequencer project (that
-  seems to have gone somewhat dark?)
+> +test_expect_success 'format-patch is colorless even with color.ui = auto' '
+> +	git config color.ui auto &&
+> +	TERM=ansi git format-patch -1 >/dev/tty &&
+> +	grep "^+5$" 0001-foo.patch
+> +'
+> +
 
-- What's with the apostrophe?  I seem to remember that you argued it would
-  be enough to make "A" stand for the original when it is used for the
-  first time and the second and later use can stand for the result of the
-  last use (e.g. the "goto A'" above can be simply spelled as "goto A"),
-  when I suggested to use "mark" in a way similar to how fast-import
-  language uses it during the sequencer discussion?
+Actually, could this not just be "format-patch is colorless even with
+color.ui = always"? I.e., shouldn't format-patch _always_ not have
+color, no matter what (and we assume that "always" is a superset of
+"auto"). And then it is also much easier to test.
 
-  I am not complaining; I am just being curious why the sudden change of
-  heart.
+Of course that doesn't fix the fact that it would _also_ be nice to test
+"auto" functionality in general. Here you use the fact that format-patch
+sends output to a file. But I don't think there is a good way to test
+that "git log --color=auto" works as expected.
 
-- Why do you need "merge D' was E"?  Shouldn't "pick E" be able to notice
-  that E is a merge and decompose it into "merge D' was E" internally?
-
-  This one I am somewhat complaining, unless your answer is "because this
-  way the user could drop some parents from the merge in the editor".
-
-  And if your answer is that, then my next question will be "if that is
-  the case, can the user be expected to easily find out which commit each
-  parent SHA-1 refers to, without having more hint on the 'merge' insn
-  line?"
+-Peff
