@@ -1,60 +1,78 @@
-From: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
-Subject: problems with http://git-scm.com/
-Date: Sat, 24 Jan 2009 17:37:56 +0000
-Message-ID: <20090124173756.GU6683@cs-wsok.swansea.ac.uk>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: Re: [PATCH] mergetool merge/skip/abort
+Date: Sat, 24 Jan 2009 13:36:32 -0500
+Message-ID: <81bfc67a0901241036v6ca30c24q54487e118fd67c1c@mail.gmail.com>
+References: <81bfc67a0901210637j52fa7a55q51b599e9ff16f6dc@mail.gmail.com>
+	 <20090121170434.GA21727@hashpling.org>
+	 <81bfc67a0901220617l22b5a8e4ma48bb069d67cae91@mail.gmail.com>
+	 <20090122142258.GA2316@hashpling.org>
+	 <81bfc67a0901230716i166bfc4chd9a5c0990b0cd3b6@mail.gmail.com>
+	 <7vwscmue5z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 24 19:20:19 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Charles Bailey <charles@hashpling.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 24 19:38:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQn75-0005D6-Gn
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 19:20:11 +0100
+	id 1LQnOO-00024f-Os
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 19:38:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753988AbZAXSSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 13:18:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753972AbZAXSSj
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 13:18:39 -0500
-Received: from mhs.swan.ac.uk ([137.44.1.33]:40088 "EHLO mhs.swan.ac.uk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752224AbZAXSSi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 13:18:38 -0500
-X-Greylist: delayed 2441 seconds by postgrey-1.27 at vger.kernel.org; Sat, 24 Jan 2009 13:18:38 EST
-Received: from [137.44.2.59] (helo=cs-svr1.swan.ac.uk)
-	by mhs.swan.ac.uk with esmtp (Exim 4.69)
-	(envelope-from <O.Kullmann@swansea.ac.uk>)
-	id 1LQmSC-0004Um-05; Sat, 24 Jan 2009 17:37:56 +0000
-Received: from cs-wsok.swansea.ac.uk (cs-wsok [137.44.2.227])
-	by cs-svr1.swan.ac.uk (Postfix) with ESMTP id B70E2DB00A;
-	Sat, 24 Jan 2009 17:37:55 +0000 (GMT)
-Received: by cs-wsok.swansea.ac.uk (Postfix, from userid 3579)
-	id 8460F741E9; Sat, 24 Jan 2009 17:37:56 +0000 (GMT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S1754563AbZAXSgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 13:36:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754476AbZAXSge
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 13:36:34 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:19606 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752870AbZAXSgd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 13:36:33 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so2964081fgg.17
+        for <git@vger.kernel.org>; Sat, 24 Jan 2009 10:36:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CJzo2k+mO+PAo3mXDs7bkPf6wYhrRY8p2EOBI9EboXM=;
+        b=krTSJl8F8VaJvM6YcabeZmoVP3UGIm3tcpsXeCx09mAhNQdA9UBgBOL7upKbk7dJ0T
+         JH9uTkHE8vGNwP5q/19c3pianwBdm89NggFjF9mZoUUp3M1HvPlaNknzFaDeRNiS4X/n
+         JC6bTOw0fpmhNeDORuV51fwp0FzaKCOs6PQtA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DtQBg6bGY6hAg6CqPjruPn1Yx+WZiFwiJSkNz20HnO3iSOHuu8Z61eVH0S+QrRdWkl
+         FdeO4nny5y8fqLHtfvdLb9Fczr9hsI2eiOAjgP3TuAmvXRk0mB4bZ2RHDWC5Dtzo3B5G
+         jWND2HYizs8dShIkfLILTUGEIZofy+mplpyeU=
+Received: by 10.223.115.12 with SMTP id g12mr2717823faq.92.1232822192181; Sat, 
+	24 Jan 2009 10:36:32 -0800 (PST)
+In-Reply-To: <7vwscmue5z.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106983>
 
-Hi,
+> I do not use mergetool myself so I generally do not pay attention to
+>  patches on this tool, but I would want to pick up ones that people
+>  involved in mergetool discussion can agree to be good patches.
 
-since a few docs my (somewhat rusty) Konqueror can't load
-http://git-scm.com/
-anymore.
+yeah I can see that.
 
-Now checking at
-http://validator.w3.org/
-we get one error:
+>  There are a few mergetool updates in flight from various authors.  How
+>  does your submission compare with others' in both form/presentation and
+>  clarity of logic (remember, I am not keeping track)?
 
- Line 174, Column 14: there is no attribute "clear".
-    <br clear="all"/>
+to be honest, a quick search of the past 2 months of patches didn't
+show me any patches that do the same thing as mine, so I'm not sure
+that comparing one feature to a different feature is good. I did try
+to remain consistent and even improve consistency with existing UI,
+and use the same/similar logic to existing.  I'm not keeping track
+either, just fixing my own problem.
+-- 
+Caleb Cushing
 
-And that shouldn't be (since http://git-scm.com/ claims to
-be strict xhtml).
-Don't know whether this is the problem, but that attribute
-clearly should be removed anyway.
-
-Oliver
+http://xenoterracide.blogspot.com
