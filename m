@@ -1,100 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Heads up: major rebase -i -p rework coming up
-Date: Sat, 24 Jan 2009 21:25:33 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901242056070.14855@racer>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Heads up: major rebase -i -p rework coming up
+Date: Sat, 24 Jan 2009 12:37:53 -0800
+Message-ID: <7vpricmoda.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0901242056070.14855@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, Stephen Haberman <stephen@exigencecorp.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Stephen Haberman <stephen@exigencecorp.com>,
 	spearce@spearce.org, Thomas Rast <trast@student.ethz.ch>,
-	=?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 24 21:28:31 2009
+	=?utf-8?Q?Bj?= =?utf-8?Q?=C3=B6rn?= Steinbrink 
+	<B.Steinbrink@gmx.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jan 24 21:39:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQp7G-0002QS-GX
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 21:28:30 +0100
+	id 1LQpHw-0005JH-1K
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 21:39:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755439AbZAXUZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 15:25:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755428AbZAXUZH
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 15:25:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40561 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755028AbZAXUZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 15:25:06 -0500
-Received: (qmail invoked by alias); 24 Jan 2009 20:25:03 -0000
-Received: from pD9EB3F9A.dip0.t-ipconnect.de (EHLO noname) [217.235.63.154]
-  by mail.gmx.net (mp013) with SMTP; 24 Jan 2009 21:25:03 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19m7EdXyo5m7GhI4OW/UUUu7b3OVLlK+IHlplb8p7
-	UmT01kUtWjEwIq
-X-X-Sender: gene099@racer
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1755501AbZAXUiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 15:38:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755414AbZAXUiG
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 15:38:06 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60827 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755428AbZAXUiF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 15:38:05 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CD9E59369A;
+	Sat, 24 Jan 2009 15:38:03 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ACB5493699; Sat,
+ 24 Jan 2009 15:37:55 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0901242056070.14855@racer> (Johannes
+ Schindelin's message of "Sat, 24 Jan 2009 21:25:33 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E6072B3A-EA56-11DD-B46B-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107005>
 
-Hi all,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-as probably everybody agrees, the code to preserve merges is a big mess 
-right now.
+> 	pick A
+> 	pick C
+> 	pick D
+> 	goto A'
+> 	pick B
+> 	merge D' was E
+>
+> This should lead to a much more intuitive user experience.
+>
+> I am very sorry if somebody actually scripted rebase -i -p (by setting 
+> GIT_EDITOR with a script), but I am very certain that this cleanup is 
+> absolutely necessary to make rebase -i -p useful.
 
-Worse, the whole concept of "pick <merge-sha1>" just does not fly well.
+Three questions.
 
-So I started a _major_ cleanup, which happens to reduce the code very 
-nicely so far.
+- An obvious one first.  How does this relate to the sequencer project (that
+  seems to have gone somewhat dark?)
 
-It will take a few days to flesh out, I guess, but these are the major 
-ideas of my work:
+- What's with the apostrophe?  I seem to remember that you argued it would
+  be enough to make "A" stand for the original when it is used for the
+  first time and the second and later use can stand for the result of the
+  last use (e.g. the "goto A'" above can be simply spelled as "goto A"),
+  when I suggested to use "mark" in a way similar to how fast-import
+  language uses it during the sequencer discussion?
 
-- pick $sha1
+  I am not complaining; I am just being curious why the sudden change of
+  heart.
 
-	will only work on non-merges in the future
+- Why do you need "merge D' was E"?  Shouldn't "pick E" be able to notice
+  that E is a merge and decompose it into "merge D' was E" internally?
 
-- merge $sha1 [$sha1...] was $sha1 "Merge ..."
+  This one I am somewhat complaining, unless your answer is "because this
+  way the user could drop some parents from the merge in the editor".
 
-	will merge the given list of commits into the current HEAD, for 
-	the user's reference and to keep up-to-date what was rewritten, 
-	the original merge is shown after the keyword "was" (which is not 
-	a valid SHA-1, luckily)
-
-- goto $sha1
-
-	will reset the HEAD to the given commit
-
-- $sha1'
-
-	for merge and goto, if a $sha1 ends in a single quote, the 
-	rewritten commit is substituted (if there is one)
-
-Example:
-
-A - B - - - E 
-  \       /
-    C - D
-
-could yield this TODO script:
-
-	pick A
-	pick C
-	pick D
-	goto A'
-	pick B
-	merge D' was E
-
-This should lead to a much more intuitive user experience.
-
-I am very sorry if somebody actually scripted rebase -i -p (by setting 
-GIT_EDITOR with a script), but I am very certain that this cleanup is 
-absolutely necessary to make rebase -i -p useful.
-
-As always, I am thankful for suggestions to make this even more useful, or 
-even easier to operate.
-
-Ciao,
-Dscho
+  And if your answer is that, then my next question will be "if that is
+  the case, can the user be expected to easily find out which commit each
+  parent SHA-1 refers to, without having more hint on the 'merge' insn
+  line?"
