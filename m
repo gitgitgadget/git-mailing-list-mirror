@@ -1,90 +1,79 @@
-From: Chad Dombrova <chadrik@gmail.com>
-Subject: read-only working copies using links
-Date: Sat, 24 Jan 2009 01:17:19 -0800
-Message-ID: <3EE64C92-CB4C-47BD-9C48-E369AED4B82F@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: http fixes, was Re: [PATCH] Allow cloning an empty repository
+Date: Sat, 24 Jan 2009 10:39:34 +0100
+Message-ID: <bd6139dc0901240139l76ea28bq2610bf0ac07087b3@mail.gmail.com>
+References: <1232669252-21881-1-git-send-email-srabbelier@gmail.com>
+	 <7vwscm4xx0.fsf@gitster.siamese.dyndns.org>
+	 <bd6139dc0901221746h258f548etf857ab37399133da@mail.gmail.com>
+	 <alpine.DEB.1.00.0901230333060.3586@pacific.mpi-cbg.de>
+	 <20090123215559.GA5561@glandium.org>
+	 <alpine.DEB.1.00.0901240125190.3586@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 24 10:18:51 2009
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jan 24 10:47:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQefB-0007FJ-Q0
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 10:18:50 +0100
+	id 1LQf6K-0004eI-Mi
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 10:46:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbZAXJR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 04:17:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbZAXJRZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 04:17:25 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:24952 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750806AbZAXJRY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 04:17:24 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so2309770yxm.1
-        for <git@vger.kernel.org>; Sat, 24 Jan 2009 01:17:22 -0800 (PST)
+	id S1751130AbZAXJpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 04:45:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751047AbZAXJpS
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 04:45:18 -0500
+Received: from rn-out-0910.google.com ([64.233.170.185]:43161 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751029AbZAXJpR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 04:45:17 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so1317410rnd.17
+        for <git@vger.kernel.org>; Sat, 24 Jan 2009 01:45:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=dJr2ve3DIcsG5gkGWif/LizJwdpzXxTQ1df3qGPHPIA=;
-        b=ohjAPFaP91okNQKzbDLLl91VhO/SAQRX4I9/XfX5W4j1aZC/enKRzCR+7ValqnZRcV
-         YPLgpZlWZCJj2HkLjVMbLP/isBy/sp9l76PY35YMeO8BvxNZ7wOd5soDqZXQAEoalJKh
-         3EYpUmVsvkemUKDpAqn+X5QHpd1qFZILZtSqE=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=qDFeBkG8qeSpAra31zZJsB7pTJIkWmHILL35WxxGQxQ=;
+        b=h0ufKaJclouyh+myJ1xhJAbPBQrpoe8NZ4rA2vlncv298JTaP/+N2RXG4GZlBEkStX
+         NS6MwaDyI8c9eACted78OFGPmxPLe4UTXTYWp5YaOVHaHW92lxjW8ud4y3pPwWVZ68GY
+         3BROyjyZi0gYULm08Z4ttRcZvLgS3770UYvzY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=YTvuOo7dXzBiA2eM7kUifKHzLorGFsqNute8B4BkKJBcuO9eQ1Ki/vH+R40D9PQGgR
-         nXrDoPC0pqeN8LjpbPfrpzG1FeAFPvfADnbHLM51k3zWL7NB3+t2pVYd84Svb1wvOpQK
-         EUiljFyTho2f7D6AtfjETypKN1eNHrD+DvHvg=
-Received: by 10.150.212.14 with SMTP id k14mr1395125ybg.7.1232788642543;
-        Sat, 24 Jan 2009 01:17:22 -0800 (PST)
-Received: from ?10.0.1.100? (pool-71-106-182-59.lsanca.dsl-w.verizon.net [71.106.182.59])
-        by mx.google.com with ESMTPS id 34sm10609097yxm.34.2009.01.24.01.17.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 24 Jan 2009 01:17:21 -0800 (PST)
-X-Mailer: Apple Mail (2.929.2)
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=L2upXhyozkTDYobUuWKzWzMBE+YrnL8D4HEeRHyfty+DQUVY9oN8L5cVm8YA40aUmD
+         FMsm3NAauyYbcezZuCKqD7whX9lZyEwsCon2s6lMvHOV+T4S5Tv3WKWouPTBrRU0K7Qp
+         hRdxLsFzRgXQR9eh/RTxrgjGsYctOH7+5w4Qo=
+Received: by 10.150.51.2 with SMTP id y2mr1885868yby.197.1232789974774; Sat, 
+	24 Jan 2009 01:39:34 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0901240125190.3586@pacific.mpi-cbg.de>
+X-Google-Sender-Auth: cdde558b23aa8dc9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106961>
 
-hi all,
+On Sat, Jan 24, 2009 at 01:26, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Fri, 23 Jan 2009, Mike Hommey wrote:
+>> As I said when posting my patch batch, I don't have much time nor
+>> motivation to work on this series. But let's make a deal: if someone
+>> writes a good enough http test suite, I'll polish the http code.
+>
+> I already said in my replied to your patch that I will add the http test
+> suite if you fix your patches.
 
-there's a major feature for working with large binaries that has not  
-yet been addressed by git:  the ability to check out a file as a  
-symbolic/hard link to a blob in the repository, instead of duplicating  
-the file into the working copy.
+I think Mike meant that he wants a working test suite before
+continuing work on it? As in, what's the point in working on something
+if you don't have a working test-suite to test your solution against
+;).
 
-imagine a scenario where one user is putting large binary files into a  
-git repo on a networked server.  100 other users on the server need  
-read-only access to this repo.  they clone the repo using --shared or  
---local, which saves disk space for the object files, but each of  
-these 100 working copies also creates copies of all the binary files  
-at the HEAD revision. it would be 100x as efficient in both disk space  
-and checkout speeds if, in place of these files, symbolic or hard  
-links were made to the blob files in .git/objects.
+-- 
+Cheers,
 
-the crux of the issue is that the blob objects would have to be stored  
-as exact copies of the original files.  it would seem there are two  
-things that currently prevent this from happening.  1) blobs are  
-stored with compression and 2) they include a small header.   
-compression can be disabled by setting core.loosecompression to 0, so  
-that seems like less of an issue.  as for the header, wouldn't it be  
-possible to store it separately?  in other words, store two files per  
-blob directory, a small stub file with the header info and the  
-unaltered file data.
-
-what are the caveats to a system like this?  has anyone looked into  
-this before?
-
--chad
-
-p.s.
-i tried submitting a post through nabble a few days and it said that  
-it was still pending, so i thought i'd try submitting directly to the  
-mailing list.  sorry, if i end up double-posting
+Sverre Rabbelier
