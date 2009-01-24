@@ -1,81 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Makefile: Use libc strlcpy on OSX >= 10.2
-Date: Sat, 24 Jan 2009 11:42:10 -0800
-Message-ID: <7v8wp0o5il.fsf@gitster.siamese.dyndns.org>
-References: <7f978c810901241101h227c5437p88ca7c9cc54abc9a@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH v3 3/3] archive.c: add basic support for submodules
+Date: Sat, 24 Jan 2009 20:52:07 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901242049580.14855@racer>
+References: <1232659071-14401-1-git-send-email-hjemli@gmail.com>  <1232659071-14401-2-git-send-email-hjemli@gmail.com>  <1232659071-14401-3-git-send-email-hjemli@gmail.com>  <1232659071-14401-4-git-send-email-hjemli@gmail.com>  <alpine.DEB.1.00.0901230044300.3586@pacific.mpi-cbg.de>
+  <8c5c35580901231040i380c6458x1a6103cd6f55c479@mail.gmail.com>  <alpine.DEB.1.00.0901232054360.21467@intel-tinevez-2-302>  <8c5c35580901240044y452b465fj94df82fc2b8f7ee9@mail.gmail.com>  <alpine.DEB.1.00.0901241443270.13232@racer>
+ <8c5c35580901241126q2da83f50m1472ed017b92c982@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Benjamin Kramer <benny.kra@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 24 20:44:09 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 24 20:55:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQoQI-0004zn-Gz
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 20:44:06 +0100
+	id 1LQobf-0008Mw-NX
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 20:55:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753363AbZAXTmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 14:42:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbZAXTmS
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 14:42:18 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45977 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751761AbZAXTmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 14:42:17 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 96DA5933AE;
-	Sat, 24 Jan 2009 14:42:15 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9931C933AC; Sat,
- 24 Jan 2009 14:42:12 -0500 (EST)
-In-Reply-To: <7f978c810901241101h227c5437p88ca7c9cc54abc9a@mail.gmail.com>
- (Benjamin Kramer's message of "Sat, 24 Jan 2009 20:01:04 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1A54B0D6-EA4F-11DD-866E-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1754846AbZAXTvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 14:51:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752284AbZAXTvl
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 14:51:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37904 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751761AbZAXTvk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 14:51:40 -0500
+Received: (qmail invoked by alias); 24 Jan 2009 19:51:37 -0000
+Received: from pD9EB3F9A.dip0.t-ipconnect.de (EHLO noname) [217.235.63.154]
+  by mail.gmx.net (mp003) with SMTP; 24 Jan 2009 20:51:37 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18hV59YfNwhEym0+9ST/GtP4LYkGDxjy4pb6mX2Nw
+	wEYGPPjpGWtLMF
+X-X-Sender: gene099@racer
+In-Reply-To: <8c5c35580901241126q2da83f50m1472ed017b92c982@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106999>
 
-Benjamin Kramer <benny.kra@googlemail.com> writes:
+Hi,
 
-> OSX supports strlcpy(3) since 10.2 so we don't need
-> to use our own. This revised also patch checks the darwin
-> version. 10.0 is darwin v1.3; 10.1 is darwin v1.4.
+On Sat, 24 Jan 2009, Lars Hjemli wrote:
 
-What does the output from "uname -r" and "uname -s" look like on your box
-(and older OSX boxes)?
+> $ git archive --submodules <tree-ish>: Create an archive which
+> includes the trees of all gitlink entries in <tree-ish>, fail unless
+> all the required objects are available.
+> 
+> $ git archive --submodules=<group>: Same as above, but only traverse
+> submodules in the specified group (as defined in $GIT_CONFIG).
 
-> @@ -643,7 +643,9 @@ ifeq ($(uname_S),Darwin)
->  	ifneq ($(shell expr "$(uname_R)" : '9\.'),2)
->  		OLD_ICONV = UnfortunatelyYes
->  	endif
+How about having the former with --submodules='*' and let --submodules 
+without argument include those submodules that are checked out (none in a 
+bare repository)?
 
-This existing one says "If 'uname -r' output does not begin with two
-characters '9.' (nine and dot), then set OLD_ICONV".
-
-> -	NO_STRLCPY = YesPlease
-> +	ifeq ($(shell expr "$(uname_R)" : '1\.'),2)
-
-And this new one says "If 'uname -r' output begins with two characters
-'1.' (one and dot), then set NO_STRLCPY".
-
-> +		NO_STRLCPY = YesPlease
-> +	endif
-
-I am guessing that 'uname -r' says 9.X in "Darwin 9.X" (which is OSX
-10.5), and existing conditional says that versions before 9.X needs
-OLD_ICONV but later ones do not need it.
-
-Does 1.X stand for OSX 10.2?  A quick googling finds a handful pages that
-say that OSX 10.2 = Darwin 6.x and OSX 10.3 = Darwin 7.x, and I am not
-sure where you are getting that "begins with one-and-dot" from....
-
->  	NO_MEMMEM = YesPlease
->  	THREADED_DELTA_SEARCH = YesPlease
->  endif
-> -- 
-> 1.6.1.285.g3454
+Thanks,
+Dscho
