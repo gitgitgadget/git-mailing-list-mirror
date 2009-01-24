@@ -1,86 +1,91 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/4] gitweb feed metadata tuneups
-Date: Sat, 24 Jan 2009 17:02:36 +0100
-Message-ID: <200901241702.38224.jnareb@gmail.com>
-References: <1232686121-1800-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH] Use time_t for timestamps returned by approxidate() 
+	instead of unsigned
+Date: Sat, 24 Jan 2009 11:13:18 -0500
+Message-ID: <32c343770901240813k2eeb19b0q65b533f829cb44d4@mail.gmail.com>
+References: <1232665622-5110-1-git-send-email-tim.henigan@gmail.com>
+	 <alpine.DEB.1.00.0901240726070.13232@racer>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 24 17:03:39 2009
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jan 24 17:15:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQkyu-0001pn-G9
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 17:03:36 +0100
+	id 1LQl9x-0005d6-JR
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 17:15:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753951AbZAXQCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 11:02:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753259AbZAXQCM
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 11:02:12 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:40759 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753740AbZAXQCL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 11:02:11 -0500
-Received: by fxm13 with SMTP id 13so1266181fxm.13
-        for <git@vger.kernel.org>; Sat, 24 Jan 2009 08:02:10 -0800 (PST)
+	id S1753870AbZAXQNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 11:13:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753951AbZAXQNV
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 11:13:21 -0500
+Received: from fk-out-0910.google.com ([209.85.128.188]:10012 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753631AbZAXQNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 11:13:20 -0500
+Received: by fk-out-0910.google.com with SMTP id f33so1753639fkf.5
+        for <git@vger.kernel.org>; Sat, 24 Jan 2009 08:13:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=VaSxHPpkQPFpphresHYM3y+0Xz4p4q4t+VbEnGLH/Us=;
-        b=PYqhrRIbmpykwgF41tTz6hoPSSBkBpktIxdNy4n49pm1HaFGWA4dJPBg2c6jU4BHKc
-         S1SSNkIBq1eCe6J48fZXED9fRjk2krOkpNUvhtz3PgbRt8EvxAtLAGXhi5sSPLDTpFLx
-         mSkD+cfvrJ0ziyfD8MNaBjZWNWrujhDe7tH7k=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Z8kVNaiV4Cx2B+ui200QYAMOEyn7BMuVJodsJzDwe7Y=;
+        b=nCneYrXT6RhAF9tMGv/y8b3roUkLwrYM7D1pzzGhVwXOpeHQkB3uqXSFSlXCvRBf64
+         eVtPyFBgVsEd/0xgxWYn7RFoZvoViAEdnPM3aUAjiYfOKjZHvIQSBSCkJbUVd3UzvzvC
+         Xx0e/f6sWGqjLVjiUALMImCnwe9nTdwkZ+kPk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=cWxKBhAg+QLbeEawstGisvQA8K40vREfCXxxm5YrgZS1UwJ2n+n5f/xKyPJXJoFzVE
-         jRnsQqXCnCYYt5B6Cc0kW2RzD3ddkOqWG+rCj5n9hAqxhbfCRXPA0pzXnLc673Bzposm
-         beZ7WxfjoQCkC4oeaPYUKBuwqBz+a70tX572E=
-Received: by 10.103.121.19 with SMTP id y19mr391216mum.56.1232812929891;
-        Sat, 24 Jan 2009 08:02:09 -0800 (PST)
-Received: from ?192.168.1.11? (abvk20.neoplus.adsl.tpnet.pl [83.8.208.20])
-        by mx.google.com with ESMTPS id w5sm10891139mue.25.2009.01.24.08.02.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 24 Jan 2009 08:02:08 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1232686121-1800-1-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LaRY6iFiFpmqTqoVaFzRgrAJuFwsABOLF0sz1FTII5ylzhySVVgV8DF/bCPeyLOnS8
+         L9QUcxgXPajB8yqw+6AfIi7e3dJ1d0xE9rVqpAIf4LV/jvSQtzpIubQXc6cnW5cG/Xr9
+         bcUoiAcVFaHsTjIin+bEu82rjT9uWiaAApa+Y=
+Received: by 10.103.90.17 with SMTP id s17mr993072mul.73.1232813598381; Sat, 
+	24 Jan 2009 08:13:18 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0901240726070.13232@racer>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106973>
 
-On Fri, 23 Jan 2009, Giuseppe Bilotta wrote:
+On Sat, Jan 24, 2009 at 1:27 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi,
+>
+> On Thu, 22 Jan 2009, Tim Henigan wrote:
+>
+> > Use time_t for timestamps returned by approxidate() instead of unsigned
+> > long.  All references to approxidate were checked as well as references
+> > to OPT_DATE.
+>
+> Hmm.  I vaguely remember Linus mentioning recently that unsigned long is
+> the appropriate data type for the Unix Epoch...
 
-> The next four patches add some metadata to gitweb generated feeds:
-> channel image, managing editor and last-update dates are added to RSS
-> feeds, and the feed generator (gitweb, with version specification) is
-> added to both RSS and Atom feeds.
-> 
-> Giuseppe Bilotta (4):
->   gitweb: channel image in rss feed
->   gitweb: feed generator metadata
->   gitweb: rss feed managingEditor
->   gitweb: rss channel date
-> 
->  gitweb/gitweb.perl |   20 +++++++++++++++++++-
->  1 files changed, 19 insertions(+), 1 deletions(-)
+You are correct. I just found a post on this list where Linus
+specifically rejected a similar patch from another contributor.  A
+quote from https://kerneltrap.org/mailarchive/git/2008/11/6/4014124:
 
-I like this series; however I do not use gitweb feeds (Atom or RSS),
-so I cannot say anything on their validity and usefullness.
+    " "time_t" is one of those totally broken unix types. The
+standards say that
+    it's an "arithmetic" type, but leaves it open to be just about anything.
+    Traditionally, it's a signed integer (bad), and in theory it could even be
+    a floating point value, I think.
 
-P.S. I tried to look up who is responsible (who have added) RSS code,
-but unfortunately it looks like it dates back to Kay Sievers.
-Unfortunately because IIRC he is not active on the list...
--- 
-Jakub Narebski
-Poland
+    And in _all_ such cases, it's actually better to cast it to "unsigned
+    long" than keep time in a system-dependent format that is most likely
+    either _already_ "unsigned long", or alternatively broken."
+
+Should I update the GitWiki page to remove this Janitor task or do you
+keep it as a test to see if people are properly searching the mail
+archives?
+
+Sorry to waste your time on the patch review.
+
+Thanks,
+Tim
