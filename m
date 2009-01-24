@@ -1,59 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: how to force a commit date matching info from a mbox ?
-Date: Fri, 23 Jan 2009 21:35:48 -0500
-Message-ID: <20090124023547.GA12311@coredump.intra.peff.net>
-References: <7vwscm1nic.fsf@gitster.siamese.dyndns.org> <7vljt26fp9.fsf@gitster.siamese.dyndns.org> <46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com> <20090123094529.6117@nanako3.lavabit.com> <20090123172646.6117@nanako3.lavabit.com> <7vtz7qxsxc.fsf@gitster.siamese.dyndns.org> <20090123222906.GC11328@coredump.intra.peff.net> <alpine.DEB.1.00.0901240133510.3586@pacific.mpi-cbg.de> <20090124005225.GA9864@sigill.intra.peff.net> <alpine.DEB.1.00.0901240242270.3586@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH (GIT-GUI/CORE BUG)] git-gui: Avoid an infinite rescan
+ loop in handle_empty_diff.
+Date: Fri, 23 Jan 2009 19:29:08 -0800
+Message-ID: <7v7i4lpekb.fsf@gitster.siamese.dyndns.org>
+References: <200901240052.58259.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	git list <git@vger.kernel.org>,
-	Christian MICHON <christian.michon@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 24 03:37:27 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Andy Davey <as.davey@gmail.com>,
+	kbro <kevin.broadey@googlemail.com>
+To: Alexander Gavrilov <angavrilov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 24 04:30:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQYOf-0002P1-Hz
-	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 03:37:21 +0100
+	id 1LQZEM-0004eS-54
+	for gcvg-git-2@gmane.org; Sat, 24 Jan 2009 04:30:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753811AbZAXCfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jan 2009 21:35:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752108AbZAXCfv
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 21:35:51 -0500
-Received: from peff.net ([208.65.91.99]:35913 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751996AbZAXCfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jan 2009 21:35:51 -0500
-Received: (qmail 13379 invoked by uid 107); 24 Jan 2009 02:35:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 23 Jan 2009 21:35:56 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Jan 2009 21:35:48 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901240242270.3586@pacific.mpi-cbg.de>
+	id S1754196AbZAXD3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jan 2009 22:29:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754174AbZAXD3T
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Jan 2009 22:29:19 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35567 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754134AbZAXD3S (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jan 2009 22:29:18 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 40FDB1D27A;
+	Fri, 23 Jan 2009 22:29:16 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 32EAC1D273; Fri,
+ 23 Jan 2009 22:29:10 -0500 (EST)
+In-Reply-To: <200901240052.58259.angavrilov@gmail.com> (Alexander Gavrilov's
+ message of "Sat, 24 Jan 2009 00:52:57 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2D867A82-E9C7-11DD-8A37-BE78113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/106949>
 
-On Sat, Jan 24, 2009 at 02:43:47AM +0100, Johannes Schindelin wrote:
+Alexander Gavrilov <angavrilov@gmail.com> writes:
 
-> > I think that is not a new problem. Quite a few patches are "how about
-> > this" patches in the middle of a thread, and leave the old subject.
-> > IMHO, that is a failing of the tool in not tracking common practice, not
-> > the other way around.
-> 
-> You know exactly what "fixing the tool" would mean.
+>     $ git config core.autocrlf true
 
-Yes, I know. I think Pasky's tool is a clever hack, but I never expected
-it to be comprehensive in its results. At the GitTogether, we discussed
-some interesting ideas for tracking the mailing list and showing a more
-patch-oriented view, but those would be a lot of work, and I am not
-volunteering to do it right now.
+This operation, when done in an already populated work tree, invalidates
+all the state that is cached in the index, and you would need to adjust
+things to the altered reality caused by this operation before doing
+anything else.  There are different reasons you would want to flip the
+configuration after you have files in your work tree, and depending on the
+situation, the correct adjustment would differ.
 
-What I meant by my comment was that I am not too concerned with tweaking
-my workflow to help Pasky's tool.
+You may have started a project in this repository, your work tree files
+all have CRLF endings that is your platform convention, and after adding
+the files to the index (but before making a commit) you may have realized
+that you would want to keep your project cross platform, and that may be
+the reason you are flipping the configuration.  If that is the case, your
+index is already contaminated with CRLF, but your files have the line
+ending that is correct (for you).  You would want to remove the index and
+"add ." to stage everything again before proceeding, to have the autocrlf
+mechanism to correct the line endings in the repository objects.
 
--Peff
+This would be the best case in one extreme.
+
+On the other hand, you may have cloned a cross platform project from
+elsewhere (in other words, your objects and the index have the correct
+line ending), the checkout was done without autocrlf and it does not match
+the local filesystem convention to use CRLF, and that may be the reason
+you are flipping the configuration.  If that is the case, before making
+any changes to the work tree files, the right adjustment would be to
+remove the index, and "reset --hard" to force a checkout that follows your
+autocrlf settings, so that the work tree files are corrected.
+
+This would be the best case in the other end of the extreme.
+
+And there will be different cases in between these extremes.
+
+I think clueful users who flips the configuration from the command line
+would know all of the above, know what they want and can tell what the
+best course of action would be, but I at the same time wonder if git-gui
+should (and if so, can) offer a simple and safe way to help this process
+from others.
