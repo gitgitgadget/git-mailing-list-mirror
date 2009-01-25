@@ -1,178 +1,147 @@
 From: "Vitaly \"_Vi\" Shukela" <public_vi@tut.by>
-Subject: [PATCH 1/3] git-svn: add --ignore-paths option for fetching
-Date: Sun, 25 Jan 2009 21:49:02 +0200
-Message-ID: <1232912944-27076-1-git-send-email-public_vi@tut.by>
+Subject: [PATCH 3/3] git-svn: Add test for --ignore-paths parameter
+Date: Sun, 25 Jan 2009 21:49:04 +0200
+Message-ID: <1232912944-27076-3-git-send-email-public_vi@tut.by>
+References: <1232912944-27076-1-git-send-email-public_vi@tut.by>
+ <1232912944-27076-2-git-send-email-public_vi@tut.by>
 Cc: git@vger.kernel.org, "Vitaly \"_Vi\" Shukela" <public_vi@tut.by>
 To: trast@student.ethz.ch
-X-From: git-owner@vger.kernel.org Sun Jan 25 20:51:24 2009
+X-From: git-owner@vger.kernel.org Sun Jan 25 20:51:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRB0r-0008Lv-Dg
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 20:51:21 +0100
+	id 1LRB0t-0008Lv-DB
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 20:51:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751017AbZAYTtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 14:49:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbZAYTtt
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 14:49:49 -0500
+	id S1751124AbZAYTtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 14:49:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751061AbZAYTtx
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 14:49:53 -0500
 Received: from mail.tut.by ([195.137.160.40]:48493 "EHLO speedy.tutby.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750872AbZAYTts (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 14:49:48 -0500
+	id S1751089AbZAYTtw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 14:49:52 -0500
 Received: from [93.125.21.130] (account public_vi@tut.by HELO localhost.localdomain)
   by speedy.tutby.com (CommuniGate Pro SMTP 5.1.12)
-  with ESMTPSA id 136551189; Sun, 25 Jan 2009 21:49:36 +0200
+  with ESMTPSA id 136551244; Sun, 25 Jan 2009 21:49:38 +0200
 X-Mailer: git-send-email 1.6.1.288.gff3b4
+In-Reply-To: <1232912944-27076-2-git-send-email-public_vi@tut.by>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107089>
 
 
 Signed-off-by: Vitaly "_Vi" Shukela <public_vi@tut.by>
 ---
- git-svn.perl |   43 +++++++++++++++++++++++++++----------------
- 1 files changed, 27 insertions(+), 16 deletions(-)
+ t/t9134-git-svn-ignore-paths.sh |   97 +++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 97 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9134-git-svn-ignore-paths.sh
 
-diff --git a/git-svn.perl b/git-svn.perl
-index d4cb538..40b0e9e 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -70,7 +70,8 @@ my ($_stdin, $_help, $_edit,
- $Git::SVN::_follow_parent = 1;
- my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
-                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
--                    'no-auth-cache' => \$Git::SVN::Prompt::_no_auth_cache );
-+                    'no-auth-cache' => \$Git::SVN::Prompt::_no_auth_cache,
-+                    'ignore-paths=s' => \$SVN::Git::Fetcher::ignore_regex );
- my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
- 		'authors-file|A=s' => \$_authors,
- 		'repack:i' => \$Git::SVN::_repack,
-@@ -3245,6 +3246,21 @@ use warnings;
- use Carp qw/croak/;
- use File::Temp qw/tempfile/;
- use IO::File qw//;
-+use vars qw/ $ignore_regex/;
+diff --git a/t/t9134-git-svn-ignore-paths.sh b/t/t9134-git-svn-ignore-paths.sh
+new file mode 100755
+index 0000000..094cb6a
+--- /dev/null
++++ b/t/t9134-git-svn-ignore-paths.sh
+@@ -0,0 +1,97 @@
++#!/bin/sh
++#
++# Copyright (c) 2009 Eric Wong
++#
 +
-+# returns true if a given path is inside a ".git" directory
-+sub in_dot_git($) {
-+	$_[0] =~ m{(?:^|/)\.git(?:/|$)};
-+}
++test_description='git svn property tests'
++. ./lib-git-svn.sh
 +
-+# 0 -- don't ignore, 1 -- ignore
-+sub is_path_ignored($) {
-+    my ($path) = @_;
-+    return 1 if in_dot_git($path);
-+    return 0 unless defined($ignore_regex);
-+    return 1 if $path =~ m!$ignore_regex!o;
-+    return 0;
-+}
- 
- # file baton members: path, mode_a, mode_b, pool, fh, blob, base
- sub new {
-@@ -3292,11 +3308,6 @@ sub _mark_empty_symlinks {
- 	\%ret;
- }
- 
--# returns true if a given path is inside a ".git" directory
--sub in_dot_git {
--	$_[0] =~ m{(?:^|/)\.git(?:/|$)};
--}
--
- sub set_path_strip {
- 	my ($self, $path) = @_;
- 	$self->{path_strip} = qr/^\Q$path\E(\/|$)/ if length $path;
-@@ -3322,7 +3333,7 @@ sub git_path {
- 
- sub delete_entry {
- 	my ($self, $path, $rev, $pb) = @_;
--	return undef if in_dot_git($path);
-+	return undef if is_path_ignored($path);
- 
- 	my $gpath = $self->git_path($path);
- 	return undef if ($gpath eq '');
-@@ -3352,7 +3363,7 @@ sub open_file {
- 	my ($self, $path, $pb, $rev) = @_;
- 	my ($mode, $blob);
- 
--	goto out if in_dot_git($path);
-+	goto out if is_path_ignored($path);
- 
- 	my $gpath = $self->git_path($path);
- 	($mode, $blob) = (command('ls-tree', $self->{c}, '--', $gpath)
-@@ -3372,7 +3383,7 @@ sub add_file {
- 	my ($self, $path, $pb, $cp_path, $cp_rev) = @_;
- 	my $mode;
- 
--	if (!in_dot_git($path)) {
-+	if (!is_path_ignored($path)) {
- 		my ($dir, $file) = ($path =~ m#^(.*?)/?([^/]+)$#);
- 		delete $self->{empty}->{$dir};
- 		$mode = '100644';
-@@ -3383,7 +3394,7 @@ sub add_file {
- 
- sub add_directory {
- 	my ($self, $path, $cp_path, $cp_rev) = @_;
--	goto out if in_dot_git($path);
-+	goto out if is_path_ignored($path);
- 	my $gpath = $self->git_path($path);
- 	if ($gpath eq '') {
- 		my ($ls, $ctx) = command_output_pipe(qw/ls-tree
-@@ -3407,7 +3418,7 @@ out:
- 
- sub change_dir_prop {
- 	my ($self, $db, $prop, $value) = @_;
--	return undef if in_dot_git($db->{path});
-+	return undef if is_path_ignored($db->{path});
- 	$self->{dir_prop}->{$db->{path}} ||= {};
- 	$self->{dir_prop}->{$db->{path}}->{$prop} = $value;
- 	undef;
-@@ -3415,7 +3426,7 @@ sub change_dir_prop {
- 
- sub absent_directory {
- 	my ($self, $path, $pb) = @_;
--	return undef if in_dot_git($pb->{path});
-+	return undef if is_path_ignored($path);
- 	$self->{absent_dir}->{$pb->{path}} ||= [];
- 	push @{$self->{absent_dir}->{$pb->{path}}}, $path;
- 	undef;
-@@ -3423,7 +3434,7 @@ sub absent_directory {
- 
- sub absent_file {
- 	my ($self, $path, $pb) = @_;
--	return undef if in_dot_git($pb->{path});
-+	return undef if is_path_ignored($path);
- 	$self->{absent_file}->{$pb->{path}} ||= [];
- 	push @{$self->{absent_file}->{$pb->{path}}}, $path;
- 	undef;
-@@ -3431,7 +3442,7 @@ sub absent_file {
- 
- sub change_file_prop {
- 	my ($self, $fb, $prop, $value) = @_;
--	return undef if in_dot_git($fb->{path});
-+	return undef if is_path_ignored($fb->{path});
- 	if ($prop eq 'svn:executable') {
- 		if ($fb->{mode_b} != 120000) {
- 			$fb->{mode_b} = defined $value ? 100755 : 100644;
-@@ -3447,7 +3458,7 @@ sub change_file_prop {
- 
- sub apply_textdelta {
- 	my ($self, $fb, $exp) = @_;
--	return undef if (in_dot_git($fb->{path}));
-+	return undef if is_path_ignored($fb->{path});
- 	my $fh = $::_repository->temp_acquire('svn_delta');
- 	# $fh gets auto-closed() by SVN::TxDelta::apply(),
- 	# (but $base does not,) so dup() it for reading in close_file
-@@ -3494,7 +3505,7 @@ sub apply_textdelta {
- 
- sub close_file {
- 	my ($self, $fb, $exp) = @_;
--	return undef if (in_dot_git($fb->{path}));
-+	return undef if is_path_ignored($fb->{path});
- 
- 	my $hash;
- 	my $path = $self->git_path($fb->{path});
++test_expect_success 'setup test repository' '
++	svn co "$svnrepo" s &&
++	(
++		cd s &&
++		mkdir qqq www &&
++		echo test_qqq > qqq/test_qqq.txt &&
++		echo test_www > www/test_www.txt &&
++		svn add qqq &&
++		svn add www &&
++		svn commit -m "create some files" &&
++		svn up &&
++		echo hi >> www/test_www.txt &&
++		svn commit -m "modify www/test_www.txt" &&
++		svn up
++	)
++'
++
++test_expect_success 'clone an SVN repository with ignored www directory' '
++	git svn clone --ignore-paths="^www" "$svnrepo" g &&
++	echo test_qqq > expect &&
++	for i in g/*/*.txt; do cat $i >> expect2; done &&
++	test_cmp expect expect2
++'
++
++test_expect_success 'SVN-side change outside of www' '
++	(
++		cd s &&
++		echo b >> qqq/test_qqq.txt &&
++		svn commit -m "SVN-side change outside of www" &&
++		svn up &&
++		svn log -v | fgrep "SVN-side change outside of www"
++	)
++'
++
++test_expect_success 'update git svn-cloned repo' '
++	(
++		cd g &&
++		git svn rebase --ignore-paths="^www" &&
++		echo -e "test_qqq\nb" > expect &&
++		for i in */*.txt; do cat $i >> expect2; done &&
++		test_cmp expect2 expect &&
++		rm expect expect2
++	)
++'
++
++test_expect_success 'SVN-side change inside of ignored www' '
++	(
++		cd s &&
++		echo zaq >> www/test_www.txt
++		svn commit -m "SVN-side change inside of www/test_www.txt" &&
++		svn up &&
++		svn log -v | fgrep "SVN-side change inside of www/test_www.txt"
++	)
++'
++
++test_expect_success 'update git svn-cloned repo' '
++	(
++		cd g &&
++		git svn rebase --ignore-paths="^www" &&
++		echo -e "test_qqq\nb" > expect &&
++		for i in */*.txt; do cat $i >> expect2; done &&
++		test_cmp expect2 expect &&
++		rm expect expect2
++	)
++'
++
++test_expect_success 'SVN-side change in and out of ignored www' '
++	(
++		cd s &&
++		echo cvf >> www/test_www.txt
++		echo ygg >> qqq/test_qqq.txt
++		svn commit -m "SVN-side change in and out of ignored www" &&
++		svn up &&
++		svn log -v | fgrep "SVN-side change in and out of ignored www"
++	)
++'
++
++test_expect_success 'update git svn-cloned repo again' '
++	(
++		cd g &&
++		git svn rebase --ignore-paths="^www" &&
++		echo -e "test_qqq\nb\nygg" > expect &&
++		for i in */*.txt; do cat $i >> expect2; done &&
++		test_cmp expect2 expect &&
++		rm expect expect2
++	)
++'
++
++test_done
 -- 
 1.6.1.288.gff3b4
