@@ -1,76 +1,74 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Allow cloning an empty repository
-Date: Sun, 25 Jan 2009 19:33:01 +0100
-Message-ID: <bd6139dc0901251033g166478d5y2050977cc7beaa5a@mail.gmail.com>
-References: <1232669252-21881-1-git-send-email-srabbelier@gmail.com>
-	 <7vwscm4xx0.fsf@gitster.siamese.dyndns.org>
-	 <bd6139dc0901221746h258f548etf857ab37399133da@mail.gmail.com>
-	 <alpine.DEB.1.00.0901230333060.3586@pacific.mpi-cbg.de>
-	 <20090123230520.GL21473@genesis.frugalware.org>
-	 <alpine.DEB.1.00.0901240131570.3586@pacific.mpi-cbg.de>
-	 <bd6139dc0901231642v6bd593d3mfefaca3c419a9f0a@mail.gmail.com>
-	 <20090125004955.GY21473@genesis.frugalware.org>
-	 <bd6139dc0901241655n66f75a8fn8450b774809fa8e7@mail.gmail.com>
-	 <7vy6x0j7py.fsf@gitster.siamese.dyndns.org>
+From: Keith Cascio <keith@CS.UCLA.EDU>
+Subject: Re: [PATCH v1 1/3] Introduce config variable "diff.primer"
+Date: Sun, 25 Jan 2009 10:44:25 -0800 (PST)
+Message-ID: <alpine.GSO.2.00.0901251033160.12651@kiwi.cs.ucla.edu>
+References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <1232904657-31831-2-git-send-email-keith@cs.ucla.edu> <alpine.DEB.1.00.0901251916010.14855@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailinglist <git@vger.kernel.org>,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 25 19:34:30 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-1543968957-1232909065=:12651"
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jan 25 19:46:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LR9oT-0000Fi-Rr
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 19:34:30 +0100
+	id 1LR9ze-0002hn-1z
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 19:46:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750854AbZAYSdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 13:33:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750834AbZAYSdF
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 13:33:05 -0500
-Received: from el-out-1112.google.com ([209.85.162.178]:44296 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750817AbZAYSdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 13:33:03 -0500
-Received: by el-out-1112.google.com with SMTP id b25so958726elf.1
-        for <git@vger.kernel.org>; Sun, 25 Jan 2009 10:33:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=Nf50Yfcua8RJOTrw5knpLzNApM6aAuNmvYkQgBvNMoQ=;
-        b=n2f0J52UwZhOAysYN/c8USNuQ3TuaAP7+B440IepyngSaPMMyCW26VcQTTCRpp8IDs
-         ebc/qdq7JXkSvaLe25kPj/MtHGLnOKeU8idWWyDVNSklq9lT1I6xIbPRHHRRWZRSdMp9
-         VCdXhHsON5CQ+rQJJyCrsSLSWkjEWf0QlP0Lo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=bwx1RDCMC2L6njOxbQl645QCVsd7VtYuSLWcLcxHajZoD0Y7Old2mEzvzx3mjdU9Yk
-         eRXqzZ5TM/mZwuUZjfzK2LgI3TFE3cNOehwYEq69rsidBY5YPFkGbtlEQX18uYVxxvPh
-         DZHoUqMVnTDk4w0zztgiDelAWrptIMvh9Hsbw=
-Received: by 10.150.200.16 with SMTP id x16mr858279ybf.202.1232908381806; Sun, 
-	25 Jan 2009 10:33:01 -0800 (PST)
-In-Reply-To: <7vy6x0j7py.fsf@gitster.siamese.dyndns.org>
-X-Google-Sender-Auth: a64ce42c65496661
+	id S1750855AbZAYSoh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 13:44:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750828AbZAYSoh
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 13:44:37 -0500
+Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:36213 "EHLO kiwi.cs.ucla.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750776AbZAYSoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 13:44:37 -0500
+Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n0PIiPdH014366;
+	Sun, 25 Jan 2009 10:44:25 -0800 (PST)
+Received: from localhost (keith@localhost)
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n0PIiPPl014363;
+	Sun, 25 Jan 2009 10:44:25 -0800 (PST)
+X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
+In-Reply-To: <alpine.DEB.1.00.0901251916010.14855@racer>
+User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107077>
 
-On Sun, Jan 25, 2009 at 06:05, Junio C Hamano <gitster@pobox.com> wrote:
-> Yeah, it is on 'next' and I've pushed the results out last night, but I
-> got sick and didn't manage to send out "What's cooking".
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Ok, awesome! :).
+---559023410-1543968957-1232909065=:12651
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 8BIT
 
--- 
-Cheers,
+On Sun, 25 Jan 2009, Johannes Schindelin wrote:
 
-Sverre Rabbelier
+> That would break existing scripts using "git diff" rather badly.  We already 
+> did not allow something like "git config alias.diff ..." from changing the 
+> behavior of "git diff", so I cannot find a reason why we should let 
+> diff.primer (a misnomer BTW) override the behavior.
+
+I took special care to protect all core scripts from the effects.  Quote from 
+patch 1/3:
+> Protect git-format-patch, git-apply,
+> git-am, git-rebase, git-gui and gitk
+> from inapplicable options.
+
+I fact, by introducing the cpp macro DIFF_MACHINE_FRIENDLY() and the 
+command-line options "--machine-friendly" and "--no-primer", I made such 
+protection declarative.  Don't you find it preferable that existing programs and 
+scripts would explicitly declare their desire for machine-friendly output?
+
+The name "primer" is open to discussion, of course.  But I like it.
+From Merriam-Webster:
+primer n 1: a device for priming 2: material used in priming a surface
+prime vb 1: fill, load 2: to prepare for firing 3: to apply the first color, coating or preparation to <~ a wall>
+
+Thanks for your input.  More input welcome.
+                                    -- Keith
+---559023410-1543968957-1232909065=:12651--
