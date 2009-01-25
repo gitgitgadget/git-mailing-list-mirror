@@ -1,66 +1,50 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 1/3] git-svn: add --ignore-paths option for fetching
-Date: Sun, 25 Jan 2009 21:41:04 +0100
-Message-ID: <bd6139dc0901251241g423d4fbdk323ea97ac79eb2a3@mail.gmail.com>
-References: <1232912944-27076-1-git-send-email-public_vi@tut.by>
+From: Keith Cascio <keith@CS.UCLA.EDU>
+Subject: Re: [PATCH v1 0/3] Introduce config variable "diff.primer"
+Date: Sun, 25 Jan 2009 12:41:21 -0800 (PST)
+Message-ID: <alpine.GSO.2.00.0901251239000.12651@kiwi.cs.ucla.edu>
+References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <7vr62rcee5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: trast@student.ethz.ch, git@vger.kernel.org
-To: Vitaly _Vi Shukela <public_vi@tut.by>
-X-From: git-owner@vger.kernel.org Sun Jan 25 21:43:01 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 25 21:43:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRBoP-0002TM-H6
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 21:42:33 +0100
+	id 1LRBof-0002Zr-Oz
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 21:42:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751297AbZAYUlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 15:41:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbZAYUlH
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 15:41:07 -0500
-Received: from mail-gx0-f21.google.com ([209.85.217.21]:54607 "EHLO
-	mail-gx0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751190AbZAYUlG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 15:41:06 -0500
-Received: by gxk14 with SMTP id 14so4952098gxk.13
-        for <git@vger.kernel.org>; Sun, 25 Jan 2009 12:41:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=/opusE8fgXp6Ln4B81zE4EBusbq1iipYOc7PqN0JcMc=;
-        b=hZRdjwjS8Av7O2Z9K2gkXCK+43IAPtbqVVoinEbLZ8NJzrtF8nbVQg6Ns1MXuwRVuz
-         W5bpQhZ2hxuXtxJUxCbEWtziCnW7yayymh1iQMMvoQzOnEqZbkWWRuXm1QKTQY93+1Sa
-         S3R4Rd82YA968WOLYuhwAE//3kCtcQSPaeObs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=L9k9is1xL+OkjDBOpCfg/nR3RHjxeTOpxlogIRMOMFNcbMEH0DqPexFUCksGhDVlbJ
-         kYiXH4dSArH6U4lxDltWuHnDrDTPmsMzI7JaO0vZZ0ZYPl/0Y/2A71SeLGDX3swffZ3N
-         NtlrpdHCFSVSx7KuBMcY5g6Z0ueolC2bpmPO0=
-Received: by 10.151.147.16 with SMTP id z16mr83353ybn.52.1232916064478; Sun, 
-	25 Jan 2009 12:41:04 -0800 (PST)
-In-Reply-To: <1232912944-27076-1-git-send-email-public_vi@tut.by>
-X-Google-Sender-Auth: 139840f0d1b800bc
+	id S1751324AbZAYUl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 15:41:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751304AbZAYUlZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 15:41:25 -0500
+Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:37707 "EHLO kiwi.cs.ucla.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751306AbZAYUlZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 15:41:25 -0500
+Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n0PKfLP0016183;
+	Sun, 25 Jan 2009 12:41:21 -0800 (PST)
+Received: from localhost (keith@localhost)
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n0PKfL5f016180;
+	Sun, 25 Jan 2009 12:41:21 -0800 (PST)
+X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
+In-Reply-To: <7vr62rcee5.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107101>
 
-On Sun, Jan 25, 2009 at 20:49, Vitaly _Vi Shukela <public_vi@tut.by> wrote:
->
-> Signed-off-by: Vitaly "_Vi" Shukela <public_vi@tut.by>
+On Sun, 25 Jan 2009, Junio C Hamano wrote:
 
-You still did not explain _in your commit message_ why it would be
-useful to have, which is what Thomas asked for ;).
+> I am puzzled.
+> 
+> The gitattributes mechanism is about per-path settings, but I do not think a 
+> mnemonicprefix that is per-path makes much sense.
 
--- 
-Cheers,
-
-Sverre Rabbelier
+That was just an example (perhaps poorly chosen).  What I meant to suggest is 
+making gitattributes consistent with gitconfig WRT at least the [diff] section.  
+But maybe that's not appropriate.  Thanks for the insight.
