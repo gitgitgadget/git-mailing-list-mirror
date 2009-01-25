@@ -1,72 +1,60 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH 1/2] user-manual: Simplify the user configuration.
-Date: Sun, 25 Jan 2009 23:55:24 +0100
-Message-ID: <190FD80D-0F10-4C76-9029-1434F362EFDB@wincent.com>
-References: <7v8wp4e5wn.fsf@gitster.siamese.dyndns.org> <94a0d4530901211319t8126611wc1437848631fe988@mail.gmail.com> <831vuvfh7t.fsf@kalahari.s2.org> <94a0d4530901220857q1027c05bs137dcc0244a1cc5a@mail.gmail.com> <83wscndv57.fsf@kalahari.s2.org> <94a0d4530901240021u65adeff8pb6995ef707bc1f68@mail.gmail.com> <alpine.DEB.1.00.0901241438370.13232@racer> <94a0d4530901240604o5ae0d321h17dc6aabeefe9d53@mail.gmail.com> <7vvds3dszy.fsf@gitster.siamese.dyndns.org> <94a0d4530901251312q4201d51btd806fe860a12afd6@mail.gmail.com> <20090125214435.GA20173@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Hannu Koivisto <azure@iki.fi>, git@vger.kernel.org
+From: Keith Cascio <keith@CS.UCLA.EDU>
+Subject: Re: [PATCH v1 1/3] Introduce config variable "diff.primer"
+Date: Sun, 25 Jan 2009 14:58:34 -0800 (PST)
+Message-ID: <alpine.GSO.2.00.0901251446260.12651@kiwi.cs.ucla.edu>
+References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <1232904657-31831-2-git-send-email-keith@cs.ucla.edu> <alpine.DEB.1.00.0901251916010.14855@racer> <alpine.GSO.2.00.0901251033160.12651@kiwi.cs.ucla.edu>
+ <20090125221141.GA17490@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jan 25 23:57:23 2009
+X-From: git-owner@vger.kernel.org Mon Jan 26 00:00:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRDud-0002AN-MK
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 23:57:08 +0100
+	id 1LRDxU-0002zc-BC
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 00:00:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006AbZAYWzn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jan 2009 17:55:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751003AbZAYWzm
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 17:55:42 -0500
-Received: from wincent1.inetu.net ([209.235.192.161]:40909 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751001AbZAYWzm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jan 2009 17:55:42 -0500
-Received: from cuzco.lan (156.pool85-53-20.dynamic.orange.es [85.53.20.156])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n0PMtPUU005619
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 25 Jan 2009 17:55:28 -0500
-In-Reply-To: <20090125214435.GA20173@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.930.3)
+	id S1750913AbZAYW6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 17:58:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbZAYW6j
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 17:58:39 -0500
+Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:39146 "EHLO kiwi.cs.ucla.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750879AbZAYW6j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 17:58:39 -0500
+Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n0PMwYm2018009;
+	Sun, 25 Jan 2009 14:58:34 -0800 (PST)
+Received: from localhost (keith@localhost)
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n0PMwYoS018005;
+	Sun, 25 Jan 2009 14:58:34 -0800 (PST)
+X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
+In-Reply-To: <20090125221141.GA17490@coredump.intra.peff.net>
+User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107119>
 
-El 25/1/2009, a las 22:44, Jeff King escribi=F3:
+On Sun, 25 Jan 2009, Jeff King wrote:
 
-> On Sun, Jan 25, 2009 at 11:12:57PM +0200, Felipe Contreras wrote:
->
->> However, my last proposal was to have both the git config --global
->> *and* the $HOME/.gitconfig description. Is there any argument agains=
-t
->> that?
->
-> This is like the fifth time you have asked, and for some reason, =20
-> nobody
-> seems to have said yes or no. So I will go ahead and say: yes, I thin=
-k
-> that is a fine idea.
->
-> I think there should also be some explanatory text that indicates the=
-y
-> are totally interchangeable for the rest of the document. Something
-> like: "When we show configuration in the rest of this document, we =20
-> will
-> use format X [I think probably "git config $VAR $VALUE"]. But you can
-> use whichever method you are most comfortable with."
+> FWIW, I found it very confusing. I would have expected "diff.options" or 
+> "diff.defaults". There is also some precedent in the form of GIT_DIFF_OPTS, 
+> but I believe it _only_ handles --unified and -u, so it is not necessarily a 
+> useful model.
 
-I already suggested something similar about 4 days ago:
+OK, point taken.  I wasn't trying to be idiosyncratic at all.  Just trying to be 
+explicit and avoid all confusion.  Since all diff options already have default 
+values, primer looks to me like the layer one step above defaults, hence the 
+painting analogy.  Mercurial calls it "defaults", but that doesn't mean we 
+should necessarily follow in their footsteps (see 
+http://article.gmane.org/gmane.comp.version-control.git/107103).
 
-http://article.gmane.org/gmane.comp.version-control.git/106673/
+I think being as clear as possible about what primer is, that is it NOT 
+defaults, helps to feel more comfortable with its consequences, i.e. in my 
+opinion, that it will not break things.
 
-Cheers,
-Wincent
+                                   -- Keith
