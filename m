@@ -1,71 +1,109 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 08/10] run test suite without dashed git-commands in
- PATH
-Date: Sun, 25 Jan 2009 02:59:53 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901250255250.14855@racer>
-References: <1232840601-24696-1-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-2-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-3-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-4-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-5-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-6-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-7-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-8-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-9-git-send-email-mmogilvi_git@miniinfo.net>
+Subject: Re: Heads up: major rebase -i -p rework coming up
+Date: Sun, 25 Jan 2009 03:05:38 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901250303150.14855@racer>
+References: <alpine.DEB.1.00.0901242056070.14855@racer> <200901242347.23187.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-X-From: git-owner@vger.kernel.org Sun Jan 25 03:00:52 2009
+Cc: git@vger.kernel.org, Stephen Haberman <stephen@exigencecorp.com>,
+	spearce@spearce.org,
+	=?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Jan 25 03:07:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQuIq-0001qu-AC
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 03:00:48 +0100
+	id 1LQuOv-0003FR-8a
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 03:07:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754747AbZAYB71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 20:59:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754633AbZAYB70
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 20:59:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52942 "HELO mail.gmx.net"
+	id S1754483AbZAYCFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 21:05:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754060AbZAYCFM
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 21:05:12 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56246 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754483AbZAYB7Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jan 2009 20:59:25 -0500
-Received: (qmail invoked by alias); 25 Jan 2009 01:59:23 -0000
+	id S1751689AbZAYCFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 21:05:11 -0500
+Received: (qmail invoked by alias); 25 Jan 2009 02:05:09 -0000
 Received: from pD9EB3F9A.dip0.t-ipconnect.de (EHLO noname) [217.235.63.154]
-  by mail.gmx.net (mp016) with SMTP; 25 Jan 2009 02:59:23 +0100
+  by mail.gmx.net (mp039) with SMTP; 25 Jan 2009 03:05:09 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18V2d1J1oUVaaUztLnDcY0j22U2DPfYdMmdf6fBia
-	XAtyVUfaPUWFrN
+X-Provags-ID: V01U2FsdGVkX18G7zwqeJIGE0hNp91Y2tX0qSpEZoHdQs7JY++pnh
+	X5g4qGQiIkv9oR
 X-X-Sender: gene099@racer
-In-Reply-To: <1232840601-24696-9-git-send-email-mmogilvi_git@miniinfo.net>
+In-Reply-To: <200901242347.23187.trast@student.ethz.ch>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107035>
 
 Hi,
 
-On Sat, 24 Jan 2009, Matthew Ogilvie wrote:
+On Sat, 24 Jan 2009, Thomas Rast wrote:
 
->  .gitignore          |    1 +
->  Makefile            |   42 +++++++++++++++++++++++++++++++-----------
->  t/test-lib.sh       |   14 +++++++++++++-
->  test-bin-wrapper.sh |   12 ++++++++++++
->  4 files changed, 57 insertions(+), 12 deletions(-)
->  create mode 100644 test-bin-wrapper.sh
+> Johannes Schindelin wrote:
+> > Worse, the whole concept of "pick <merge-sha1>" just does not fly well.
+> [...]
+> > - merge $sha1 [$sha1...] was $sha1 "Merge ..."
+> > 
+> > 	will merge the given list of commits into the current HEAD, for 
+> > 	the user's reference and to keep up-to-date what was rewritten, the 
+> > 	original merge is shown after the keyword "was" (which is not a valid 
+> > 	SHA-1, luckily)
+> 
+> I really like the underlying idea.  I'm not even sure if the current 
+> semantics are well-defined in all cases; an explicit merge command at 
+> least makes it very clear what is going on.
+> 
+> However, I think the syntax as proposed above is a bit confusing in the 
+> usual two-parent merge.  I couldn't tell whether
+> 
+>   merge A was B
+> 
+> was intended to be read as "the merge of A into the current branch" or 
+> "the merge with sha1 A" right away, and I doubt I'll be able to tell 
+> without looking in the (rare) cases I have to invoke rebase -i -p.
+> 
+> I can't really come up with a better replacement for 'was', so how about
+> 
+>   merge A  # was B "Merge..."
+> 
+> which would make it more clear that the "was B..." has no effect 
+> whatsoever on the merge's semantics.
 
-I am strongly opposed to a patch this big, just for something as 3rd class 
-as CVS server faking.  We already have a big fallout from all that bending 
-over for Windows support, and I do not like it at all.
+Hmm.  You're right, that is not really intuitive.  How about
 
-Note: I do not even have to look further than the diffstat to see that it 
-is wrong.
+	merge (B) A # Merge...
 
-The point is: if cvsserver wants to pretend that it is in a fake bin where 
-almost none of the other Git programs are, fine, let's do that _in the 
-test for cvsserver_.
+instead?
 
-Let's not fsck up the whole test suite just for one user.
+> > A - B - - - E 
+> >   \       /
+> >     C - D
+> > 
+> > could yield this TODO script:
+> > 
+> > 	pick A
+> > 	pick C
+> > 	pick D
+> > 	goto A'
+> > 	pick B
+> > 	merge D' was E
+> 
+> I kind of wonder if it would be possible to decorate the TODO with
+> 'git log --graph' output, to make it easier to follow the history as
+> it is built.
+
+I wondered about that, too, and abandoned it as my common operation is cut 
+& past lines around.  The result would look _utterly_ confusing.
+
+Maybe I should have mentioned that to spare you the brain cycles thinking 
+about --graph...
 
 Ciao,
 Dscho
