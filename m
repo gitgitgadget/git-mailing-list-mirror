@@ -1,272 +1,162 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Jan 2009, #06; Sat, 24)
-Date: Sat, 24 Jan 2009 21:00:31 -0800
-Message-ID: <7v8wp0kmj4.fsf@gitster.siamese.dyndns.org>
+Subject: What's in git.git (Jan 2009, #03; Sat, 24)
+Date: Sat, 24 Jan 2009 21:01:04 -0800
+Message-ID: <7v3af8kmi7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 25 06:02:05 2009
+X-From: git-owner@vger.kernel.org Sun Jan 25 06:02:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQx8F-00056A-SA
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 06:02:04 +0100
+	id 1LQx8p-0005AE-Bj
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 06:02:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750738AbZAYFAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 00:00:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750711AbZAYFAj
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 00:00:39 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62083 "EHLO
+	id S1750850AbZAYFBP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jan 2009 00:01:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750796AbZAYFBO
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 00:01:14 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40957 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750703AbZAYFAh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 00:00:37 -0500
+	with ESMTP id S1750786AbZAYFBN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jan 2009 00:01:13 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3F78B9307E;
-	Sun, 25 Jan 2009 00:00:36 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1F0B11D147;
+	Sun, 25 Jan 2009 00:01:10 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CADA09307D; Sun,
- 25 Jan 2009 00:00:33 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 10B8F1D10C; Sun,
+ 25 Jan 2009 00:01:05 -0500 (EST)
+X-maint-at: 692be9f365be09160f8baa1d6d521d0f65ec4cf9
 X-master-at: 5dc1308562ab5991ecada68b06707709bea408c9
-X-next-at: 7298c8d081d90e4a3c5161414c17908750ecf5a9
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1A45104C-EA9D-11DD-BE52-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 2E741E6E-EA9D-11DD-B673-BE78113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107040>
 
-Here are the topics that have been cooking.  Commits prefixed with '-' are
-only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
-marked with '.' do not appear in any of the branches, but I am still
-holding onto them.
+* The 'maint' branch has these fixes since the last announcement.
 
-The topics list the commits in reverse chronological order.  The topics
-meant to be merged to the maintenance series have "maint-" in their names.
+Anders Melchiorsen (4):
+  Documentation: git push repository can also be a remote
+  Documentation: remove a redundant elaboration
+  Documentation: mention branches rather than heads
+  Documentation: avoid using undefined parameters
 
-[jc: This message was actually prepared last night and reports the state
-as of 23 hours ago, but then I got sick and I didn't manage to send it
-out. I wasn't productive today, so it unfortunately reflects the current
-status as well.]
+Boyd Stephen Smith Jr (1):
+  Fix Documentation for git-describe
 
-----------------------------------------------------------------
-[New Topics]
+Clemens Buchacher (3):
+  unpack-trees: handle failure in verify_absent
+  unpack-trees: fix path search bug in verify_absent
+  unpack-trees: remove redundant path search in verify_absent
 
-* jg/mergetool (Sat Jan 24 00:12:45 2009 +0100) 1 commit
- - [wait for an ack from ted] mergetool: Don't repeat merge tool
-   candidates
+Johannes Schindelin (3):
+  bisect view: call gitk if Cygwin's SESSIONNAME variable is set
+  git add: do not add files from a submodule
+  Rename diff.suppress-blank-empty to diff.suppressBlankEmpty
 
-* cb/mergetool (Wed Jan 21 22:57:48 2009 +0000) 1 commit
- - [wait for ack from ted] mergetool: respect autocrlf by using
-   checkout-index
+Junio C Hamano (1):
+  format-patch: show patch text for the root commit
 
-* jc/commit-assume-also-during-merge (Thu Jan 22 22:21:49 2009 -0800) 3 commits
- - git commit: pathspec without -i/-o implies -i semantics during a
-   merge
- - builtin-commit: shorten eye-sore overlong lines
- - Add "partial commit" tests during a conflicted merge
+Lars Noschinski (1):
+  shell: Document that 'cvs server' is a valid command
 
-This is only meant as a weatherballoon to help facilitate discussion.
+Paul Jarc (1):
+  configure clobbers LDFLAGS
 
-* sr/clone-empty (Fri Jan 23 01:07:32 2009 +0100) 1 commit
- + Allow cloning an empty repository
+Philippe Bruhat (1):
+  Git.pm: correctly handle directory name that evaluates to "false"
 
-At last ;-)  This is a reasonable thing to do, and should be fast tracked
-to 'master'.
+Ren=C3=A9 Scharfe (1):
+  shortlog: handle multi-line subjects like log --pretty=3Doneline et. =
+al. do
 
-* cc/replace (Fri Jan 23 10:07:46 2009 +0100) 7 commits
- - environment: add global variable to disable replacement
- - mktag: call "check_sha1_signature" with the replacement sha1
- - replace_object: add a test case
- - object: call "check_sha1_signature" with the replacement sha1
- - sha1_file: add a "read_sha1_file_repl" function
- - replace_object: add mechanism to replace objects found in
-   "refs/replace/"
- - refs: add a "for_each_replace_ref" function
+Thomas Rast (3):
+  diff: accept -- when using --no-index
+  diff --no-index: test for pager after option parsing
+  diff --no-index -q: fix endless loop
 
-----------------------------------------------------------------
-[Stalled and may need help and prodding to go forward]
 
-* jc/blame (Wed Jun 4 22:58:40 2008 -0700) 2 commits
- + blame: show "previous" information in --porcelain/--incremental
-   format
- + git-blame: refactor code to emit "porcelain format" output
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-This gives Porcelains (like gitweb) the information on the commit _before_
-the one that the final blame is laid on, which should save them one
-rev-parse to dig further.  The line number in the "previous" information
-may need refining, and sanity checking code for reference counting may
-need to be resurrected before this can move forward.
+Arjen Laarhoven (1):
+  t/t4202-log.sh: Add testcases
 
-* db/foreign-scm (Sun Jan 11 15:12:10 2009 -0500) 3 commits
- - Support fetching from foreign VCSes
- - Add specification of git-vcs helpers
- - Add "vcs" config option in remotes
+Bj=C3=B6rn Steinbrink (1):
+  Rename detection: Avoid repeated filespec population
 
-The "spec" did not seem quite well cooked yet, but in the longer term I
-think something like this to allow interoperating with other SCMs as if
-the other end is a native git repository is a very worthy goal.
+Brandon Casey (1):
+  Makefile: use shell for-loop rather than Make's foreach loop during
+    install
 
-----------------------------------------------------------------
-[Reverted]
+Jeff King (2):
+  color: make it easier for non-config to parse color specs
+  expand --pretty=3Dformat color options
 
-* mh/unify-color (Fri Jan 23 01:25:23 2009 -0800) 3 commits
- ? Revert previous two commits
- ? move the color variables to color.c
- ? handle color.ui at a central place
+Johannes Schindelin (3):
+  Implement the patience diff algorithm
+  Introduce the diff option '--patience'
+  bash completions: Add the --patience option
 
-This broke git-format-patch badly.
+Jonas Flod=C3=A9n (1):
+  git-am: Make it easier to see which patch failed
 
-----------------------------------------------------------------
-[Actively cooking]
+Junio C Hamano (4):
+  git-am: add --directory=3D<dir> option
+  Teach format-patch to handle output directory relative to cwd
+  git-am: fix shell quoting
+  git-am: re-fix the diag message printing
 
-* js/valgrind (Wed Jan 21 02:36:40 2009 +0100) 2 commits
- - valgrind: ignore ldso errors
- - Add valgrind support in test scripts
+Keith Cascio (2):
+  test more combinations of ignore-whitespace options to diff
+  Fix combined use of whitespace ignore options to diff
 
-Dscho seems to have some updates out of discussion with Peff, which is not
-queued here.
+Linus Torvalds (1):
+  Wrap inflate and other zlib routines for better error reporting
 
-* sp/runtime-prefix (Sun Jan 18 13:00:15 2009 +0100) 7 commits
- - Windows: Revert to default paths and convert them by
-   RUNTIME_PREFIX
- - Compute prefix at runtime if RUNTIME_PREFIX is set
- - Modify setup_path() to only add git_exec_path() to PATH
- - Add calls to git_extract_argv0_path() in programs that call
-   git_config_*
- - git_extract_argv0_path(): Move check for valid argv0 from caller
-   to callee
- - Refactor git_set_argv0_path() to git_extract_argv0_path()
- - Move computation of absolute paths from Makefile to runtime (in
-   preparation for RUNTIME_PREFIX)
+Markus Heidelberg (4):
+  contrib/difftool: change trap condition from SIGINT to INT
+  contrib/difftool: remove distracting 'echo' in the SIGINT handler
+  use uppercase POSIX compliant signals for the 'trap' command
+  bash completion: add 'rename' subcommand to git-remote
 
-We should move this to 'next' soon with J6t's blessing.
+Ralf Wildenhues (1):
+  Fix naming scheme for configure cache variables.
 
-* lh/submodule-tree-traversal (Mon Jan 12 00:45:55 2009 +0100) 3 commits
- + builtin-ls-tree: enable traversal of submodules
- + archive.c: enable traversal of submodules
- + tree.c: add support for traversal of submodules
+Ray Chuan (1):
+  http-push: refactor lock-related headers creation for curl requests
 
-There were a few updates posted, which I haven't picked up.
+Ren=C3=A9 Scharfe (5):
+  Add ctype test
+  Reformat ctype.c
+  Change NUL char handling of isspecial()
+  Add is_regex_special()
+  Optimize color_parse_mem
 
-* jk/signal-cleanup (Thu Jan 22 01:03:28 2009 -0500) 5 commits
- - pager: do wait_for_pager on signal death
- - refactor signal handling for cleanup functions
- - chain kill signals for cleanup functions
- - diff: refactor tempfile cleanup handling
- - Windows: Fix signal numbers
+SZEDER G=C3=A1bor (1):
+  Fix gitdir detection when in subdir of gitdir
 
-Ready for 'next', but not tonight (yet).
+Santi B=C3=A9jar (2):
+  commit: more compact summary and without extra quotes
+  tutorial-2: Update with the new "git commit" ouput
 
-* ks/maint-mailinfo-folded (Tue Jan 13 01:21:04 2009 +0300) 5 commits
- - mailinfo: tests for RFC2047 examples
- - mailinfo: add explicit test for mails like '<a.u.thor@example.com>
-   (A U Thor)'
- - mailinfo: more smarter removal of rfc822 comments from 'From'
- + mailinfo: 'From:' header should be unfold as well
- + mailinfo: correctly handle multiline 'Subject:' header
+Stephan Beyer (5):
+  checkout: don't crash on file checkout before running post-checkout h=
+ook
+  Move run_hook() from builtin-commit.c into run-command.c (libgit)
+  api-run-command.txt: talk about run_hook()
+  run_hook(): check the executability of the hook before filling argv
+  run_hook(): allow more than 9 hook arguments
 
-As far as I can see, the only remaining thing is a minor fix-up in the
-"comment removal" one before we can move this fully to 'next'.
+Thomas Rast (2):
+  bash completion: move pickaxe options to log
+  bash completion: refactor diff options
 
-* js/notes (Tue Jan 13 20:57:16 2009 +0100) 6 commits
- + git-notes: fix printing of multi-line notes
- + notes: fix core.notesRef documentation
- + Add an expensive test for git-notes
- + Speed up git notes lookup
- + Add a script to edit/inspect notes
- + Introduce commit notes
-
-It would be nice to hear a real world success story using the notes
-mechanism; Dscho says he also wants to make sure the current choice
-of the structure scales well before casting it in stone.
-
-* sc/gitweb-category (Fri Dec 12 00:45:12 2008 +0100) 3 commits
- - gitweb: Optional grouping of projects by category
- - gitweb: Split git_project_list_body in two functions
- - gitweb: Modularized git_get_project_description to be more generic
-
-Design discussion between Jakub and Sebastien continues.
-
-----------------------------------------------------------------
-[Graduated to "master"]
-
-* js/patience-diff (Thu Jan 1 17:39:37 2009 +0100) 3 commits
- + bash completions: Add the --patience option
- + Introduce the diff option '--patience'
- + Implement the patience diff algorithm
-
-----------------------------------------------------------------
-[Will merge to "master" soon]
-
-* kb/lstat-cache (Sun Jan 18 16:14:54 2009 +0100) 5 commits
- + lstat_cache(): introduce clear_lstat_cache() function
- + lstat_cache(): introduce invalidate_lstat_cache() function
- + lstat_cache(): introduce has_dirs_only_path() function
- + lstat_cache(): introduce has_symlink_or_noent_leading_path()
-   function
- + lstat_cache(): more cache effective symlink/directory detection
-
-* tr/previous-branch (Wed Jan 21 00:37:38 2009 -0800) 10 commits
- + Simplify parsing branch switching events in reflog
- + Introduce for_each_recent_reflog_ent().
- + interpret_nth_last_branch(): plug small memleak
- + Fix reflog parsing for a malformed branch switching entry
- + Fix parsing of @{-1}@{1}
- + interpret_nth_last_branch(): avoid traversing the reflog twice
- + checkout: implement "-" abbreviation, add docs and tests
- + sha1_name: support @{-N} syntax in get_sha1()
- + sha1_name: tweak @{-N} lookup
- + checkout: implement "@{-N}" shortcut name for N-th last branch
-
-* js/maint-all-implies-HEAD (Sat Jan 17 22:27:08 2009 -0800) 2 commits
- + bundle: allow the same ref to be given more than once
- + revision walker: include a detached HEAD in --all
-
-* cb/add-pathspec (Wed Jan 14 15:54:35 2009 +0100) 2 commits
- + remove pathspec_match, use match_pathspec instead
- + clean up pathspec matching
-
-* js/diff-color-words (Tue Jan 20 22:59:54 2009 -0600) 9 commits
- + Change the spelling of "wordregex".
- + color-words: Support diff.wordregex config option
- + color-words: make regex configurable via attributes
- + color-words: expand docs with precise semantics
- + color-words: enable REG_NEWLINE to help user
- + color-words: take an optional regular expression describing words
- + color-words: change algorithm to allow for 0-character word
-   boundaries
- + color-words: refactor word splitting and use ALLOC_GROW()
- + Add color_fwrite_lines(), a function coloring each line
-   individually
-
-----------------------------------------------------------------
-[On Hold]
-
-* jk/renamelimit (Sat May 3 13:58:42 2008 -0700) 1 commit
- . diff: enable "too large a rename" warning when -M/-C is explicitly
-   asked for
-
-* jc/stripspace (Sun Mar 9 00:30:35 2008 -0800) 6 commits
- . git-am --forge: add Signed-off-by: line for the author
- . git-am: clean-up Signed-off-by: lines
- . stripspace: add --log-clean option to clean up signed-off-by:
-   lines
- . stripspace: use parse_options()
- . Add "git am -s" test
- . git-am: refactor code to add signed-off-by line for the committer
-
-* jc/post-simplify (Fri Aug 15 01:34:51 2008 -0700) 2 commits
- . revision --simplify-merges: incremental simplification
- . revision --simplify-merges: prepare for incremental simplification
-
-* jk/valgrind (Thu Oct 23 04:30:45 2008 +0000) 2 commits
- . valgrind: ignore ldso errors
- . add valgrind support in test scripts
-
-* wp/add-patch-find (Thu Nov 27 04:08:03 2008 +0000) 3 commits
- . In add --patch, Handle K,k,J,j slightly more gracefully.
- . Add / command in add --patch
- . git-add -i/-p: Change prompt separater from slash to comma
+martin f. krafft (1):
+  git-am: implement --reject option passed to git-apply
