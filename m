@@ -1,234 +1,103 @@
-From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: [PATCH 08/10] run test suite without dashed git-commands in PATH
-Date: Sat, 24 Jan 2009 16:43:19 -0700
-Message-ID: <1232840601-24696-9-git-send-email-mmogilvi_git@miniinfo.net>
-References: <1232840601-24696-1-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-2-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-3-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-4-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-5-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-6-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-7-git-send-email-mmogilvi_git@miniinfo.net>
- <1232840601-24696-8-git-send-email-mmogilvi_git@miniinfo.net>
-Cc: Matthew Ogilvie <mmogilvi_git@miniinfo.net>,
-	<Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 25 00:53:52 2009
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: Re: [PATCH] mergetool merge/skip/abort
+Date: Sat, 24 Jan 2009 19:18:05 -0500
+Message-ID: <81bfc67a0901241618kfaa79bcy8fdb16ecedf5f8b5@mail.gmail.com>
+References: <81bfc67a0901210637j52fa7a55q51b599e9ff16f6dc@mail.gmail.com>
+	 <20090121170434.GA21727@hashpling.org>
+	 <81bfc67a0901220617l22b5a8e4ma48bb069d67cae91@mail.gmail.com>
+	 <20090122142258.GA2316@hashpling.org>
+	 <81bfc67a0901230716i166bfc4chd9a5c0990b0cd3b6@mail.gmail.com>
+	 <7vwscmue5z.fsf@gitster.siamese.dyndns.org>
+	 <81bfc67a0901241036v6ca30c24q54487e118fd67c1c@mail.gmail.com>
+	 <20090125064539.6117@nanako3.lavabit.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Charles Bailey <charles@hashpling.org>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Sun Jan 25 01:19:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQsJw-0008RY-Ks
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 00:53:49 +0100
+	id 1LQsj2-00069M-IT
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 01:19:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753500AbZAXXwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jan 2009 18:52:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247AbZAXXwX
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 18:52:23 -0500
-Received: from qmta04.emeryville.ca.mail.comcast.net ([76.96.30.40]:38663 "EHLO
-	QMTA04.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752996AbZAXXwW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Jan 2009 18:52:22 -0500
-Received: from OMTA07.emeryville.ca.mail.comcast.net ([76.96.30.59])
-	by QMTA04.emeryville.ca.mail.comcast.net with comcast
-	id 7Tw71b00C1GXsucA4bsNW0; Sat, 24 Jan 2009 23:52:22 +0000
-Received: from mmogilvi.homeip.net ([75.70.161.67])
-	by OMTA07.emeryville.ca.mail.comcast.net with comcast
-	id 7bsL1b00M1TYyYj8TbsMgE; Sat, 24 Jan 2009 23:52:22 +0000
-Received: from localhost.localdomain (bean [192.168.30.96])
-	by mmogilvi.homeip.net (Postfix) with ESMTP id 9688C8911C;
-	Sat, 24 Jan 2009 16:43:25 -0700 (MST)
-X-Mailer: git-send-email 1.6.1.81.g9833d.dirty
-In-Reply-To: <1232840601-24696-8-git-send-email-mmogilvi_git@miniinfo.net>
+	id S1752030AbZAYASM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jan 2009 19:18:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751835AbZAYASJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Jan 2009 19:18:09 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:34417 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751765AbZAYASI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jan 2009 19:18:08 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so3038295fgg.17
+        for <git@vger.kernel.org>; Sat, 24 Jan 2009 16:18:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zwEgM+384KRgPj/nPvndmYi39H+Fwof021rtwEDPyu0=;
+        b=okMfkWn79bk4CqxnrNDgtx9Y6+CCJBk0D948V4D0uGVmw9YjJ0W3Z0N7QaMiswXC9h
+         Xs+lq+eH/sXW9KG7kSTGxtMACaNYWTgNi8uhJXxjRTxmf0ezP+BfU1V70mRvAXOxPEpn
+         ewjMOYvqQGuYFgolh/YmEB0Ih+VXArB1exAOk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=b8t759JOa8iiX+uvh8pA7gnADmK1CyT3i+GPDXPWXehIrbd9K45nRGjbhM54XN8HQy
+         GhddXPJRFdpZO2IAGZXarTsiqlR/z/DinF/mX1XnUSeSDDeDDbOSMgIE2Q+iOzr5ixXi
+         Viizvu1YFdoh9ngh0Q/Isd8rAU3OBT9uxJXIc=
+Received: by 10.223.126.145 with SMTP id c17mr41686fas.102.1232842685164; Sat, 
+	24 Jan 2009 16:18:05 -0800 (PST)
+In-Reply-To: <20090125064539.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107027>
 
-Exclude GIT_EXEC_PATH from PATH, to emulate the default user environment,
-and ensure all the programs (especially scripts) run correctly in
-such an environment.
+>   1. You copy-and-pasted output from format-patch, and have the header
+>     part in the message body. Charles and Johannes have moved them to the
+>     Email header.
+>
+>     Their messages are in the form the tool used for patch acceptance
+>     expects. Yours isn't, and forces Junio to manually edit your message
+>     before handling it.
 
-This works by creating a test-bin directory with wrapper scripts for
-the programs normally installed in "bin", and only including that
-directory in the PATH.
+I'll get to the rest later...
 
-Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
----
+but I tried sending the patch via email as you said followed this...
+verbatim except replacing user@ and p4ssw0rd with my credentials, and
+I got an auth error back. currently I've no idea how I would send
+stuff from gmail. and I reject inline patches in funtoo because I use
+webmail and they are impossible for me to handle easily.
 
-Valgrind conflict:  As I was preparing this email, I noticed that a patch
-for running the test suite under valgrind has been under discussion
-in the mailing list.  The valgrind patch probably conflicts with this
-one.  I've thought of some possible ways to resolve it:
+Submitting properly formatted patches via Gmail is simple now that
+IMAP support is available. First, edit your ~/.gitconfig to specify your
+account settings:
 
-   1. Extend this patch to support valgrind by adding
-environment-variable controlled hook to test-bin-wrapper.sh,
-and enhance the makefile rules to disable the valgrind hook
-for instances of the script that are wrapping other scripts.
-(This allows dashless, valgrind, or both.)
+[imap]
+    folder = "[Gmail]/Drafts"
+    host = imaps://imap.gmail.com
+    user = user@gmail.com
+    pass = p4ssw0rd
+    port = 993
+    sslverify = false
 
-   2. Or change the valgrind patch to only add executables typically
-found in bindir (not GIT_EXEC_PATH) to the symlink directory.  To
-support dashless by itself, it would need to do a similar symlink
-when asked for dashless without valgrind.
+Next, ensure that your Gmail settings are correct. In "Settings" the
+"Use Unicode (UTF-8) encoding for outgoing messages" should be checked.
 
-   3. Or keep the core of both patches, and just fix up the setup
-in test-lib.sh to only enable one or the other (never both).
+Once your commits are ready to send to the mailing list, run the following
+command to send the patch emails to your Gmail Drafts folder.
 
-Thoughts?
+    $ git format-patch -M --stdout origin/master | git imap-send
 
---
-Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
 
- .gitignore          |    1 +
- Makefile            |   42 +++++++++++++++++++++++++++++++-----------
- t/test-lib.sh       |   14 +++++++++++++-
- test-bin-wrapper.sh |   12 ++++++++++++
- 4 files changed, 57 insertions(+), 12 deletions(-)
- create mode 100644 test-bin-wrapper.sh
 
-diff --git a/.gitignore b/.gitignore
-index d9adce5..13a0d33 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -143,6 +143,7 @@ git-write-tree
- git-core-*/?*
- gitk-wish
- gitweb/gitweb.cgi
-+test-bin
- test-chmtime
- test-date
- test-delta
-diff --git a/Makefile b/Makefile
-index b4d9cb4..197a6f0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -330,6 +330,15 @@ ALL_PROGRAMS = $(PROGRAMS) $(SCRIPTS)
- # what 'all' will build but not install in gitexecdir
- OTHER_PROGRAMS = git$X gitweb/gitweb.cgi
- 
-+# what test wrappers are needed and 'install' will install, in bindir
-+BINDIR_PROGRAMS_NEED_X += git
-+BINDIR_PROGRAMS_NEED_X += git-upload-pack
-+BINDIR_PROGRAMS_NEED_X += git-receive-pack
-+BINDIR_PROGRAMS_NEED_X += git-upload-archive
-+BINDIR_PROGRAMS_NEED_X += git-shell
-+
-+BINDIR_PROGRAMS_NO_X += git-cvsserver
-+
- # Set paths to tools early so that they can be used for version tests.
- ifndef SHELL_PATH
- 	SHELL_PATH = /bin/sh
-@@ -1356,17 +1365,25 @@ endif
- 
- ### Testing rules
- 
--TEST_PROGRAMS += test-chmtime$X
--TEST_PROGRAMS += test-ctype$X
--TEST_PROGRAMS += test-date$X
--TEST_PROGRAMS += test-delta$X
--TEST_PROGRAMS += test-genrandom$X
--TEST_PROGRAMS += test-match-trees$X
--TEST_PROGRAMS += test-parse-options$X
--TEST_PROGRAMS += test-path-utils$X
--TEST_PROGRAMS += test-sha1$X
-+TEST_PROGRAMS_NEED_X += test-chmtime
-+TEST_PROGRAMS_NEED_X += test-ctype
-+TEST_PROGRAMS_NEED_X += test-date
-+TEST_PROGRAMS_NEED_X += test-delta
-+TEST_PROGRAMS_NEED_X += test-genrandom
-+TEST_PROGRAMS_NEED_X += test-match-trees
-+TEST_PROGRAMS_NEED_X += test-parse-options
-+TEST_PROGRAMS_NEED_X += test-path-utils
-+TEST_PROGRAMS_NEED_X += test-sha1
-+
-+TEST_PROGRAMS = $(patsubst %,%$X,$(TEST_PROGRAMS_NEED_X))
- 
--all:: $(TEST_PROGRAMS)
-+test_bindir_programs := $(patsubst %,test-bin/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
-+
-+all:: $(TEST_PROGRAMS) $(test_bindir_programs)
-+
-+test-bin/%: test-bin-wrapper.sh
-+	@mkdir -p test-bin
-+	$(QUIET_GEN)sed -e 's|__GIT_EXEC_PATH__|$(shell pwd)|' -e 's|__PROG__|$(@F)|' < $< > $@ && chmod +x $@
- 
- # GNU make supports exporting all variables by "export" without parameters.
- # However, the environment gets quite big, and some programs have problems
-@@ -1425,11 +1442,13 @@ endif
- gitexec_instdir_SQ = $(subst ','\'',$(gitexec_instdir))
- export gitexec_instdir
- 
-+install_bindir_programs := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)) $(BINDIR_PROGRAMS_NO_X)
-+
- install: all
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
- 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
--	$(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-archive$X git-shell$X git-cvsserver '$(DESTDIR_SQ)$(bindir_SQ)'
-+	$(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
- 	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
- 	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
- ifndef NO_TCLTK
-@@ -1533,6 +1552,7 @@ clean:
- 		$(LIB_FILE) $(XDIFF_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
- 	$(RM) $(TEST_PROGRAMS)
-+	$(RM) -r test-bin
- 	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags cscope*
- 	$(RM) -r autom4te.cache
- 	$(RM) config.log config.mak.autogen config.mak.append config.status config.cache
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 41d5a59..2f42b5b 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -89,6 +89,8 @@ do
- 		verbose=t; shift ;;
- 	-q|--q|--qu|--qui|--quie|--quiet)
- 		quiet=t; shift ;;
-+	--with-dashes)
-+		with_dashes=t; shift ;;
- 	--no-color)
- 		color=; shift ;;
- 	--no-python)
-@@ -467,8 +469,18 @@ test_done () {
- # Test the binaries we have just built.  The tests are kept in
- # t/ subdirectory and are run in 'trash directory' subdirectory.
- TEST_DIRECTORY=$(pwd)
--PATH=$TEST_DIRECTORY/..:$PATH
- GIT_EXEC_PATH=$(pwd)/..
-+git_bin_dir="$TEST_DIRECTORY/../test-bin"
-+if ! test -x "$git_bin_dir/git" ; then
-+	if test -z "$with_dashes" ; then
-+		say "$git_bin_dir/git is not executable; using GIT_EXEC_PATH"
-+	fi
-+	with_dashes=t
-+fi
-+PATH="$git_bin_dir:$PATH"
-+if test -n "$with_dashes" ; then
-+	PATH="$TEST_DIRECTORY/..:$PATH"
-+fi
- GIT_TEMPLATE_DIR=$(pwd)/../templates/blt
- unset GIT_CONFIG
- GIT_CONFIG_NOSYSTEM=1
-diff --git a/test-bin-wrapper.sh b/test-bin-wrapper.sh
-new file mode 100644
-index 0000000..199d098
---- /dev/null
-+++ b/test-bin-wrapper.sh
-@@ -0,0 +1,12 @@
-+#!/bin/sh
-+
-+# test-bin-wrapper.sh: Template for git executable wrapper scripts
-+# to run test suite against sandbox, but with only bindir-installed
-+# executables in PATH.  The Makefile copies this into various
-+# files in test-bin, substituting __GIT_EXEC_PATH__ and __PROG__.
-+
-+GIT_EXEC_PATH="__GIT_EXEC_PATH__"
-+GIT_TEMPLATE_DIR="__GIT_EXEC_PATH__/templates/blt"
-+export GIT_EXEC_PATH GIT_TEMPLATE_DIR
-+
-+exec "${GIT_EXEC_PATH}/__PROG__" "$@"
 -- 
-1.6.1.81.g9833d.dirty
+Caleb Cushing
+
+http://xenoterracide.blogspot.com
