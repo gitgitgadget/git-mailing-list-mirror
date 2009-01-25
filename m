@@ -1,88 +1,95 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH 1/2] handle color.ui at a central place
-Date: Sun, 25 Jan 2009 15:15:54 +0100
-Message-ID: <200901251515.55434.markus.heidelberg@web.de>
-References: <20090117153846.GB27071@coredump.intra.peff.net> <200901241228.33690.markus.heidelberg@web.de> <7vk58ko8k7.fsf@gitster.siamese.dyndns.org>
-Reply-To: markus.heidelberg@web.de
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Heads up: major rebase -i -p rework coming up
+Date: Sun, 25 Jan 2009 15:17:10 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901251509550.14855@racer>
+References: <alpine.DEB.1.00.0901242056070.14855@racer> <200901242347.23187.trast@student.ethz.ch> <alpine.DEB.1.00.0901250303150.14855@racer> <alpine.DEB.1.00.0901250324320.14855@racer> <glhqdi$tec$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	=?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 25 15:17:20 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-38952180-1232893032=:14855"
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 25 15:18:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LR5nb-0003Xy-Rf
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 15:17:20 +0100
+	id 1LR5oa-0003pF-Bs
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 15:18:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753993AbZAYOP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 09:15:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753928AbZAYOP2
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 09:15:28 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:37047 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753713AbZAYOP1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 09:15:27 -0500
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id EC1ADFC4076F;
-	Sun, 25 Jan 2009 15:15:25 +0100 (CET)
-Received: from [89.59.126.247] (helo=pluto)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LR5ll-000064-00; Sun, 25 Jan 2009 15:15:25 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vk58ko8k7.fsf@gitster.siamese.dyndns.org>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+/Z3ZzGU24zp84N+sRP2aGHwHeRhnsHf76efa6
-	W3ntH6tmKOAi28I7mwRVZn5jJrOOdKjCZc9ohq3MLro0dgT7dw
-	8gkTklV3tL8UHzUiy2pw==
+	id S1754812AbZAYOQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 09:16:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754242AbZAYOQs
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 09:16:48 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46335 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753124AbZAYOQs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 09:16:48 -0500
+Received: (qmail invoked by alias); 25 Jan 2009 14:16:41 -0000
+Received: from pD9EB3E0E.dip0.t-ipconnect.de (EHLO noname) [217.235.62.14]
+  by mail.gmx.net (mp040) with SMTP; 25 Jan 2009 15:16:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18MNRhufPsMSaYCWgnB80M75NS1q537PD2heYgm70
+	jADrpM4sH0MSf+
+X-X-Sender: gene099@racer
+In-Reply-To: <glhqdi$tec$1@ger.gmane.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107061>
 
-Junio C Hamano, 24.01.2009:
-> Markus Heidelberg <markus.heidelberg@web.de> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-38952180-1232893032=:14855
+Content-Type: TEXT/PLAIN; charset=iso-8859-2
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+[please do not forget to Cc: me; today is a slow day, so I did not miss 
+ your mail, but that is definitely not true on other days.]
+
+On Sun, 25 Jan 2009, Jakub Narebski wrote:
+
+> Johannes Schindelin wrote:
 > 
-> > So with the following diff it works:
-> >
-> > -	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
-> > +	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")
-> > +				       || !strcmp(var, "color.ui")) {
+> >> Hmm.  You're right, that is not really intuitive.  How about
+> >> 
+> >>       merge (B) A # Merge...
+> >> 
+> >> instead?
+> > 
+> > Or even better:
+> > 
+> >         merge B parent A' # Merge...
 > 
-> Why should format-patch need to even worry about protecting itself from
-> "color.ui" to begin with?
+> merge B with A' # Merge... 
 
-That's the reason, why color handling needs another rework than my
-patch, which only was originated from the color.ui git_use_color_default
-workarounds. Call it shortsighted, if you want.
+No, that does not catch the meaning.
 
-> If your patch is making color handling saner, I would expect that
-> format-patch can *lose* the existing "ignore diff.color or color.diff"
-> workaround as a result of that.  If you need to add even *more* workaround
-> code like that, there's something wrong, don't you think?
+B is the _original_ merge commit.  So it actually knows what parents it 
+has, but we want to give the user the freedom to change those parents.
 
-That's the reason, why it doesn't make sense to continue work on my
-patch base.
+The first parent is easy: this will be HEAD at that stage.
 
-> > format-patch is perhaps the only place where the commit has broken
-> > things, because I didn't find other places,...
-> 
-> You did not find the breakage in format-patch either to begin with; so
-> your not finding does not give us much confidence that there is no other
-> breakage, does it?
+The other parents will be relatively easy: just replace A' by something 
+else.
 
-Of course not.
+_However_ now that the merge commit B will be _redone_, we _still_ want to 
+be able to refer to it later in the rebase script.  Therefore, rebase has 
+to know that we _redid_ B at this stage.
 
-> Grumble...
+Another idea:
 
-Why grumble? That was just a personal suspicion. I didn't say: "I think
-this is the only breakage place, please reapply".
+	merge B Merge bla/blub
+	parent A' bla/blub
+
+Hmm?
+
+Ciao,
+Dscho
+
+--8323329-38952180-1232893032=:14855--
