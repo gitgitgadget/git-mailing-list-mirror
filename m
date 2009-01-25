@@ -1,68 +1,61 @@
-From: Keith Cascio <keith@CS.UCLA.EDU>
-Subject: Re: [PATCH v1 3/3] git-gui hooks for new config variable
- "diff.primer"
-Date: Sun, 25 Jan 2009 10:58:51 -0800 (PST)
-Message-ID: <alpine.GSO.2.00.0901251045090.12651@kiwi.cs.ucla.edu>
-References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <1232904657-31831-2-git-send-email-keith@cs.ucla.edu> <1232904657-31831-3-git-send-email-keith@cs.ucla.edu> <1232904657-31831-4-git-send-email-keith@cs.ucla.edu>
- <alpine.DEB.1.00.0901251918230.14855@racer>
+From: Serge van den Boom <svdb@stack.nl>
+Subject: [PATCH] Makefile: Make 'configure --with-expat=path' actually work
+Date: Sun, 25 Jan 2009 20:24:41 +0100 (CET)
+Message-ID: <alpine.BSF.2.00.0901251938120.97940@toad.stack.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Shawn O Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Jan 25 20:00:38 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 25 20:34:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRADk-0005Ze-Ir
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 20:00:37 +0100
+	id 1LRAkF-0004ha-ED
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 20:34:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750980AbZAYS7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 13:59:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbZAYS7M
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 13:59:12 -0500
-Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:36423 "EHLO kiwi.cs.ucla.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750868AbZAYS7L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 13:59:11 -0500
-Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n0PIwpA2014575;
-	Sun, 25 Jan 2009 10:58:51 -0800 (PST)
-Received: from localhost (keith@localhost)
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n0PIwpPG014572;
-	Sun, 25 Jan 2009 10:58:51 -0800 (PST)
-X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
-In-Reply-To: <alpine.DEB.1.00.0901251918230.14855@racer>
-User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
+	id S1750974AbZAYTb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 14:31:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbZAYTb1
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 14:31:27 -0500
+Received: from meestal-mk5.stack.nl ([131.155.140.149]:56178 "EHLO
+	mx1.stack.nl" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750935AbZAYTb0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 14:31:26 -0500
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sun, 25 Jan 2009 14:31:26 EST
+Received: from toad.stack.nl (toad.stack.nl [IPv6:2001:610:1108:5010::135])
+	by mx1.stack.nl (Postfix) with ESMTP id C7AD13F64A
+	for <git@vger.kernel.org>; Sun, 25 Jan 2009 20:24:41 +0100 (CET)
+Received: by toad.stack.nl (Postfix, from userid 1106)
+	id C0E1973F89; Sun, 25 Jan 2009 20:24:41 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by toad.stack.nl (Postfix) with ESMTP id B607D73F56
+	for <git@vger.kernel.org>; Sun, 25 Jan 2009 20:24:41 +0100 (CET)
+User-Agent: Alpine 2.00 (BSF 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107086>
 
-On Sun, 25 Jan 2009, Johannes Schindelin wrote:
+The prefix specified with the --with-expat option of configure was not
+actually used.
 
-> Rather than storing the information about how to call "git diff" as 
-> diff.primer, why don't you store that information in a config variable 
-> gui.whiteSpaceMode and teach "git gui" to call "git diff" accordingly?
-> 
-> That would have the further advantage of not breaking other people's 
-> setups...
-
-This wasn't just for the GUI.  Using Git for a project I imported from CVS, I 
-wanted --ignore-space-at-eol to be in effect at all times on the command line.  
-Of course, the "alias.dff" approach suggested yesterday by Teemu would work for 
-that.  But I got the feeling this is a more general need.  I'll name my primary 
-inspiration: ExamDiff (a Windows program).  ExamDiff lets you specify a wide 
-range of options that remain in effect over all invocations.  Seems like 
-something a lot of users would find natural.  Please comment.
-
-> Please submit git-gui patches without the git-gui prefix, as it makes it 
-> harder on the maintainer of git-gui, Shawn (who you did not Cc: BTW).
-
-Sorry Shawn, I should have Cc'd you.  Please let me know if I can improve the 
-git-gui code in any way.
-
-                                        -- Keith
+Signed-off-by: Serge van den Boom <svdb@stack.nl>
+---
+diff --git a/Makefile b/Makefile
+index b4d9cb4..e7218cb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -849,7 +849,12 @@ else
+  		endif
+  	endif
+  	ifndef NO_EXPAT
+-		EXPAT_LIBEXPAT = -lexpat
++		ifdef EXPATDIR
++			BASIC_CFLAGS += -I$(EXPATDIR)/include
++			EXPAT_LIBEXPAT = -L$(EXPATDIR)/$(lib) $(CC_LD_DYNPATH)$(EXPATDIR)/$(lib) -lexpat
++		else
++			EXPAT_LIBEXPAT = -lexpat
++		endif
+  	endif
+  endif
