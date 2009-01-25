@@ -1,188 +1,175 @@
-From: Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH] http-push: refactor request url creation
-Date: Sun, 25 Jan 2009 14:08:57 +0800
-Message-ID: <be6fef0d0901242208p635264e5jc1f95d784cd51450@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jan 25 07:10:31 2009
+From: "Vitaly \"_Vi\" Shukela" <public_vi@tut.by>
+Subject: [PATCH] git-svn: add --ignore-paths option for fetching
+Date: Sun, 25 Jan 2009 08:27:22 +0200
+Message-ID: <1232864842-8841-1-git-send-email-public_vi@tut.by>
+Cc: "Vitaly \"_Vi\" Shukela" <public_vi@tut.by>
+To: git@vger.kernel.org, normalperson@yhbt.net
+X-From: git-owner@vger.kernel.org Sun Jan 25 07:44:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LQyCS-0007un-UE
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 07:10:29 +0100
+	id 1LQyjb-0004ld-W0
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 07:44:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbZAYGJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 01:09:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbZAYGJB
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 01:09:01 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:8875 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751034AbZAYGJA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 01:09:00 -0500
-Received: by wa-out-1112.google.com with SMTP id v33so300772wah.21
-        for <git@vger.kernel.org>; Sat, 24 Jan 2009 22:08:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=ToSGoQkGQHQ9TSAnjwMqv9lz3izgaqh4Y5dQzwVL2Dg=;
-        b=OGAnpdhNW0mtLUYxurIwTwFJqaOonJ1+qaJocYrU7idDmF9KIcs2XsfHDnV0uzum83
-         30kuRYGrt5wuppikCIO2tRVhogfy+WaWSGeesmdkpcqyCrk2//oNC1Z43TvE1A90CXAS
-         jgd4j06irgev6EO03Wd1wFEpLbrLMbykIJSrA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=cW16T1jIg9WTbBab+vYJdU9EbokRDcUxCZhV9qMXcsYtkflKf6fgD29jAMsmKJEyXw
-         qUBpfhyQn0aIqMtdaqemtf0EA2e3BDk8uLseUIOVBtwJbFE6HIzQbLW5yl2US9Zp2bQr
-         jglvi+q03b+uGNg7hTtmyRrJ2vn2XFp3DsOz4=
-Received: by 10.114.81.1 with SMTP id e1mr611020wab.212.1232863737271; Sat, 24 
-	Jan 2009 22:08:57 -0800 (PST)
+	id S1751337AbZAYGnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 01:43:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbZAYGnQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 01:43:16 -0500
+Received: from mail.tut.by ([195.137.160.40]:45328 "EHLO speedy.tutby.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751175AbZAYGnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 01:43:15 -0500
+X-Greylist: delayed 904 seconds by postgrey-1.27 at vger.kernel.org; Sun, 25 Jan 2009 01:43:14 EST
+Received: from [93.125.18.207] (account public_vi@tut.by HELO localhost.localdomain)
+  by speedy.tutby.com (CommuniGate Pro SMTP 5.1.12)
+  with ESMTPSA id 136267448; Sun, 25 Jan 2009 08:28:03 +0200
+X-Mailer: git-send-email 1.6.1.224.gb56c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107045>
 
-Currently, functions that deal with objects on the remote repository
-have to allocate and do strcpys to generate the URL.
 
-This patch saves them this trouble, by providing a function that
-returns a URL: either the object's 2-digit hex directory (eg.
-/objects/a1/) or the complete object location (eg. /objects/a1/b2).
-
-Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+Signed-off-by: Vitaly "_Vi" Shukela <public_vi@tut.by>
 ---
+ Documentation/git-svn.txt |    4 ++++
+ git-svn.perl              |   25 +++++++++++++++++++++++--
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
-* renamed only_two_digit_postfix in original patch to only_two_digit_prefix
-* rebased and generated on master (5dc1308)
-
- http-push.c |   58 +++++++++++++++++++---------------------------------------
- 1 files changed, 19 insertions(+), 39 deletions(-)
-
-diff --git a/http-push.c b/http-push.c
-index eca4a8e..27825f2 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -208,6 +208,16 @@ static struct curl_slist
-*get_dav_token_headers(struct remote_lock *lock, enum d
- 	return dav_headers;
- }
-
-+static char *get_remote_object_url(const char *url, const char *hex,
-int only_two_digit_prefix) {
-+	struct strbuf buf = STRBUF_INIT;
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 63d2f5e..4aeb88b 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -96,6 +96,10 @@ COMMANDS
+ 	Store Git commit times in the local timezone instead of UTC.  This
+ 	makes 'git-log' (even without --date=local) show the same times
+ 	that `svn log` would in the local timezone.
++--ignore-paths=<regex>;;
++	This allows one to specify regular expression that will
++	cause skipping of all matching paths from checkout from SVN.
++	Example: --ignore-paths='^doc'
+ 
+ This doesn't interfere with interoperating with the Subversion
+ repository you cloned from, but if you wish for your local Git
+diff --git a/git-svn.perl b/git-svn.perl
+index d4cb538..4909b23 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -70,7 +70,8 @@ my ($_stdin, $_help, $_edit,
+ $Git::SVN::_follow_parent = 1;
+ my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
+                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
+-                    'no-auth-cache' => \$Git::SVN::Prompt::_no_auth_cache );
++                    'no-auth-cache' => \$Git::SVN::Prompt::_no_auth_cache,
++                    'ignore-paths=s' => \$SVN::Git::Fetcher::ignoreRegex );
+ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
+ 		'authors-file|A=s' => \$_authors,
+ 		'repack:i' => \$Git::SVN::_repack,
+@@ -3245,6 +3246,15 @@ use warnings;
+ use Carp qw/croak/;
+ use File::Temp qw/tempfile/;
+ use IO::File qw//;
++use vars qw/ $ignoreRegex/;
 +
-+	strbuf_addf(&buf, "%sobjects/%.*s/", url, 2, hex);
-+	if(!only_two_digit_prefix)
-+		strbuf_addf(&buf, "%s", hex+2);
-+
-+	return strbuf_detach(&buf, NULL);
++# 0 -- don't ignore, 1 -- ignore
++sub isPathIgnored($) {
++    return 0 unless defined($ignoreRegex);
++    my $path = shift;
++    return 1 if $path =~ m!^$ignoreRegex!o;
++    return 0;
 +}
+ 
+ # file baton members: path, mode_a, mode_b, pool, fh, blob, base
+ sub new {
+@@ -3323,6 +3333,7 @@ sub git_path {
+ sub delete_entry {
+ 	my ($self, $path, $rev, $pb) = @_;
+ 	return undef if in_dot_git($path);
++	return undef if isPathIgnored($path);
+ 
+ 	my $gpath = $self->git_path($path);
+ 	return undef if ($gpath eq '');
+@@ -3353,6 +3364,7 @@ sub open_file {
+ 	my ($mode, $blob);
+ 
+ 	goto out if in_dot_git($path);
++	goto out if isPathIgnored($path);
+ 
+ 	my $gpath = $self->git_path($path);
+ 	($mode, $blob) = (command('ls-tree', $self->{c}, '--', $gpath)
+@@ -3372,11 +3384,14 @@ sub add_file {
+ 	my ($self, $path, $pb, $cp_path, $cp_rev) = @_;
+ 	my $mode;
+ 
++	goto out if isPathIgnored($path);
 +
- static void finish_request(struct transfer_request *request);
- static void release_request(struct transfer_request *request);
-
-@@ -253,8 +263,6 @@ static void start_fetch_loose(struct
-transfer_request *request)
- 	char *hex = sha1_to_hex(request->obj->sha1);
- 	char *filename;
- 	char prevfile[PATH_MAX];
--	char *url;
--	char *posn;
- 	int prevlocal;
- 	unsigned char prev_buf[PREV_BUF_SIZE];
- 	ssize_t prev_read = 0;
-@@ -304,17 +312,7 @@ static void start_fetch_loose(struct
-transfer_request *request)
-
- 	git_SHA1_Init(&request->c);
-
--	url = xmalloc(strlen(remote->url) + 50);
--	request->url = xmalloc(strlen(remote->url) + 50);
--	strcpy(url, remote->url);
--	posn = url + strlen(remote->url);
--	strcpy(posn, "objects/");
--	posn += 8;
--	memcpy(posn, hex, 2);
--	posn += 2;
--	*(posn++) = '/';
--	strcpy(posn, hex + 2);
--	strcpy(request->url, url);
-+	request->url = get_remote_object_url(remote->url, hex, 0);
-
- 	/* If a previous temp file is present, process what was already
- 	   fetched. */
-@@ -358,7 +356,7 @@ static void start_fetch_loose(struct
-transfer_request *request)
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, request);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
- 	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, request->errorstr);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-+	curl_easy_setopt(slot->curl, CURLOPT_URL, request->url);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
-
- 	/* If we have successfully processed data from a previous fetch
-@@ -387,16 +385,8 @@ static void start_mkcol(struct transfer_request *request)
- {
- 	char *hex = sha1_to_hex(request->obj->sha1);
- 	struct active_request_slot *slot;
--	char *posn;
-
--	request->url = xmalloc(strlen(remote->url) + 13);
--	strcpy(request->url, remote->url);
--	posn = request->url + strlen(remote->url);
--	strcpy(posn, "objects/");
--	posn += 8;
--	memcpy(posn, hex, 2);
--	posn += 2;
--	strcpy(posn, "/");
-+	request->url = get_remote_object_url(remote->url, hex, 1);
-
- 	slot = get_active_slot();
- 	slot->callback_func = process_response;
-@@ -511,7 +501,7 @@ static void start_put(struct transfer_request *request)
- {
- 	char *hex = sha1_to_hex(request->obj->sha1);
- 	struct active_request_slot *slot;
--	char *posn;
-+	struct strbuf url_buf = STRBUF_INIT;
- 	enum object_type type;
- 	char hdr[50];
- 	void *unpacked;
-@@ -550,21 +540,11 @@ static void start_put(struct transfer_request *request)
-
- 	request->buffer.buf.len = stream.total_out;
-
--	request->url = xmalloc(strlen(remote->url) +
--			       strlen(request->lock->token) + 51);
--	strcpy(request->url, remote->url);
--	posn = request->url + strlen(remote->url);
--	strcpy(posn, "objects/");
--	posn += 8;
--	memcpy(posn, hex, 2);
--	posn += 2;
--	*(posn++) = '/';
--	strcpy(posn, hex + 2);
--	request->dest = xmalloc(strlen(request->url) + 14);
--	sprintf(request->dest, "Destination: %s", request->url);
--	posn += 38;
--	*(posn++) = '_';
--	strcpy(posn, request->lock->token);
-+	strbuf_addf(&url_buf, "Destination: %s",
-get_remote_object_url(remote->url, hex, 0));
-+	request->dest = strbuf_detach(&url_buf, NULL);
-+
-+	strbuf_addf(&url_buf, "%s_%s", get_remote_object_url(remote->url,
-hex, 0), request->lock->token);
-+	request->url = strbuf_detach(&url_buf, NULL);
-
- 	slot = get_active_slot();
- 	slot->callback_func = process_response;
+ 	if (!in_dot_git($path)) {
+ 		my ($dir, $file) = ($path =~ m#^(.*?)/?([^/]+)$#);
+ 		delete $self->{empty}->{$dir};
+ 		$mode = '100644';
+ 	}
++out:
+ 	{ path => $path, mode_a => $mode, mode_b => $mode,
+ 	  pool => SVN::Pool->new, action => 'A' };
+ }
+@@ -3384,6 +3399,7 @@ sub add_file {
+ sub add_directory {
+ 	my ($self, $path, $cp_path, $cp_rev) = @_;
+ 	goto out if in_dot_git($path);
++	goto out if isPathIgnored($path);
+ 	my $gpath = $self->git_path($path);
+ 	if ($gpath eq '') {
+ 		my ($ls, $ctx) = command_output_pipe(qw/ls-tree
+@@ -3408,6 +3424,7 @@ out:
+ sub change_dir_prop {
+ 	my ($self, $db, $prop, $value) = @_;
+ 	return undef if in_dot_git($db->{path});
++	return undef if isPathIgnored($db->{path});
+ 	$self->{dir_prop}->{$db->{path}} ||= {};
+ 	$self->{dir_prop}->{$db->{path}}->{$prop} = $value;
+ 	undef;
+@@ -3416,6 +3433,7 @@ sub change_dir_prop {
+ sub absent_directory {
+ 	my ($self, $path, $pb) = @_;
+ 	return undef if in_dot_git($pb->{path});
++	return undef if isPathIgnored($path);
+ 	$self->{absent_dir}->{$pb->{path}} ||= [];
+ 	push @{$self->{absent_dir}->{$pb->{path}}}, $path;
+ 	undef;
+@@ -3424,6 +3442,7 @@ sub absent_directory {
+ sub absent_file {
+ 	my ($self, $path, $pb) = @_;
+ 	return undef if in_dot_git($pb->{path});
++	return undef if isPathIgnored($path);
+ 	$self->{absent_file}->{$pb->{path}} ||= [];
+ 	push @{$self->{absent_file}->{$pb->{path}}}, $path;
+ 	undef;
+@@ -3432,6 +3451,7 @@ sub absent_file {
+ sub change_file_prop {
+ 	my ($self, $fb, $prop, $value) = @_;
+ 	return undef if in_dot_git($fb->{path});
++	return undef if isPathIgnored($fb->{path});
+ 	if ($prop eq 'svn:executable') {
+ 		if ($fb->{mode_b} != 120000) {
+ 			$fb->{mode_b} = defined $value ? 100755 : 100644;
+@@ -3448,6 +3468,7 @@ sub change_file_prop {
+ sub apply_textdelta {
+ 	my ($self, $fb, $exp) = @_;
+ 	return undef if (in_dot_git($fb->{path}));
++	return undef if isPathIgnored($fb->{path});
+ 	my $fh = $::_repository->temp_acquire('svn_delta');
+ 	# $fh gets auto-closed() by SVN::TxDelta::apply(),
+ 	# (but $base does not,) so dup() it for reading in close_file
+@@ -3495,7 +3516,7 @@ sub apply_textdelta {
+ sub close_file {
+ 	my ($self, $fb, $exp) = @_;
+ 	return undef if (in_dot_git($fb->{path}));
+-
++	return undef if isPathIgnored($fb->{path});
+ 	my $hash;
+ 	my $path = $self->git_path($fb->{path});
+ 	if (my $fh = $fb->{fh}) {
 -- 
-1.6.0.4
+1.5.6.5
