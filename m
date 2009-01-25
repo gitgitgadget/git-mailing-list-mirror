@@ -1,60 +1,91 @@
-From: Keith Cascio <keith@CS.UCLA.EDU>
-Subject: Re: [PATCH v1 1/3] Introduce config variable "diff.primer"
-Date: Sun, 25 Jan 2009 14:58:34 -0800 (PST)
-Message-ID: <alpine.GSO.2.00.0901251446260.12651@kiwi.cs.ucla.edu>
-References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <1232904657-31831-2-git-send-email-keith@cs.ucla.edu> <alpine.DEB.1.00.0901251916010.14855@racer> <alpine.GSO.2.00.0901251033160.12651@kiwi.cs.ucla.edu>
- <20090125221141.GA17490@coredump.intra.peff.net>
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: Re: [PATCH 0/2] Add submodule-support to git archive
+Date: Mon, 26 Jan 2009 00:12:25 +0100
+Message-ID: <8c5c35580901251512q5058dde3rdfae81979c46c36a@mail.gmail.com>
+References: <1232844726-14902-1-git-send-email-hjemli@gmail.com>
+	 <20090125135340.6117@nanako3.lavabit.com>
+	 <8c5c35580901250018x6827291cj36e6bcb10afa9b27@mail.gmail.com>
+	 <7veiyrdszf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 26 00:00:04 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 00:14:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRDxU-0002zc-BC
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 00:00:04 +0100
+	id 1LREAp-0005lM-Dc
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 00:13:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750913AbZAYW6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 17:58:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbZAYW6j
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 17:58:39 -0500
-Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:39146 "EHLO kiwi.cs.ucla.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750879AbZAYW6j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 17:58:39 -0500
-Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n0PMwYm2018009;
-	Sun, 25 Jan 2009 14:58:34 -0800 (PST)
-Received: from localhost (keith@localhost)
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n0PMwYoS018005;
-	Sun, 25 Jan 2009 14:58:34 -0800 (PST)
-X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
-In-Reply-To: <20090125221141.GA17490@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
+	id S1750877AbZAYXM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 18:12:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750781AbZAYXM0
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 18:12:26 -0500
+Received: from rv-out-0506.google.com ([209.85.198.232]:17704 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775AbZAYXM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 18:12:26 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so5595716rvb.1
+        for <git@vger.kernel.org>; Sun, 25 Jan 2009 15:12:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=/0SUOTRsEQyqSoDP8+Z6uZY8Zf/SFViJVSxIfaRh2zk=;
+        b=aTneLckjRLPHSewbi8JPr3Qbn6KK56DaEDuygnrm0V9G5qmrKS42pQOWLvUDo6+7iA
+         gVSrG9cJFskhO7K7fx/cHhr1Exbj62xgbCvdhbdC05+Zep60bem3odU57ZFEwR+JY5A9
+         sOm5XkVqcD7xLjNFhqv8qe31eEpw3zNKkaHDY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=X3ZZPH4KdIp+Qb9uK3FqfIdQOENJSAqfATG+RQoONxO9AHZ497erqOIggKxnjElsTb
+         iKvKV1kr0Ef/IGT0LE1JQVeKz69sMQTTEpnePgTRNFBhKMMecjzvTaxXfQfri6RtVwHw
+         LPKRVSczQ2nXPHppfX2hNzzN3UexMEtvjJ7fg=
+Received: by 10.114.57.1 with SMTP id f1mr699437waa.145.1232925145546; Sun, 25 
+	Jan 2009 15:12:25 -0800 (PST)
+In-Reply-To: <7veiyrdszf.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107120>
 
-On Sun, 25 Jan 2009, Jeff King wrote:
+On Sun, Jan 25, 2009 at 21:35, Junio C Hamano <gitster@pobox.com> wrote:
+> Lars Hjemli <hjemli@gmail.com> writes:
+>
+>> On Sun, Jan 25, 2009 at 05:53, Nanako Shiraishi <nanako3@lavabit.com> wrote:
+>>> What would I do to try this new series? Fork a branch from Junio's master branch,
+>>> apply your new patches, and merge the result to Junio's next?
+>>
+>> Yes, that sounds right (btw: the series is buildt on top of 5dc1308562
+>> (Merge branch 'js/patience-diff') and can be pulled from
+>> git://hjemli.net/pub/git/git lh/traverse-gitlinks).
+>>
+>> But before merging with 'next', you'll need to `git revert -m 1 bdf31cbc00`.
+>
+> Yuck, that is too much to ask for regular testers and users.
 
-> FWIW, I found it very confusing. I would have expected "diff.options" or 
-> "diff.defaults". There is also some precedent in the form of GIT_DIFF_OPTS, 
-> but I believe it _only_ handles --unified and -u, so it is not necessarily a 
-> useful model.
+Sorry about that.
 
-OK, point taken.  I wasn't trying to be idiosyncratic at all.  Just trying to be 
-explicit and avoid all confusion.  Since all diff options already have default 
-values, primer looks to me like the layer one step above defaults, hence the 
-painting analogy.  Mercurial calls it "defaults", but that doesn't mean we 
-should necessarily follow in their footsteps (see 
-http://article.gmane.org/gmane.comp.version-control.git/107103).
 
-I think being as clear as possible about what primer is, that is it NOT 
-defaults, helps to feel more comfortable with its consequences, i.e. in my 
-opinion, that it will not break things.
+> Could we switch to incremental refinements once a series hits next, pretty
+> please?
 
-                                   -- Keith
+The problem in this particular case is that the design has changed so
+much since the first iteration that we're not really talking about
+incremental refinements but rather a different approach to the same
+problem.
+
+If you want me to build on top of the series in next anyways, would it
+be acceptable if the first patch on top of ee306d2d59 reverts the
+previous attempt? I think the rest of the series will be easier to
+review that way.
+
+--
+larsh
