@@ -1,91 +1,83 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 1/2] user-manual: Simplify the user configuration.
-Date: Sun, 25 Jan 2009 23:12:57 +0200
-Message-ID: <94a0d4530901251312q4201d51btd806fe860a12afd6@mail.gmail.com>
-References: <1232561365-5919-1-git-send-email-felipe.contreras@gmail.com>
-	 <7v8wp4e5wn.fsf@gitster.siamese.dyndns.org>
-	 <94a0d4530901211319t8126611wc1437848631fe988@mail.gmail.com>
-	 <831vuvfh7t.fsf@kalahari.s2.org>
-	 <94a0d4530901220857q1027c05bs137dcc0244a1cc5a@mail.gmail.com>
-	 <83wscndv57.fsf@kalahari.s2.org>
-	 <94a0d4530901240021u65adeff8pb6995ef707bc1f68@mail.gmail.com>
-	 <alpine.DEB.1.00.0901241438370.13232@racer>
-	 <94a0d4530901240604o5ae0d321h17dc6aabeefe9d53@mail.gmail.com>
-	 <7vvds3dszy.fsf@gitster.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: [PATCH] Mention "local convention" rule in the CodingGuidelines
+Date: Mon, 26 Jan 2009 06:15:48 +0900
+Message-ID: <20090126061548.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Hannu Koivisto <azure@iki.fi>, git@vger.kernel.org
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 25 22:14:31 2009
+X-From: git-owner@vger.kernel.org Sun Jan 25 22:17:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRCJG-0003i4-1E
-	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 22:14:26 +0100
+	id 1LRCMG-0004V7-Tx
+	for gcvg-git-2@gmane.org; Sun, 25 Jan 2009 22:17:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751981AbZAYVNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 16:13:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751962AbZAYVNA
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 16:13:00 -0500
-Received: from fg-out-1718.google.com ([72.14.220.153]:24374 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751194AbZAYVM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 16:12:59 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so3275064fgg.17
-        for <git@vger.kernel.org>; Sun, 25 Jan 2009 13:12:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=DHnomcL9KYoksd3d+ctlaQy4F/Fc92Qb1tPpo0SQXBs=;
-        b=jxHTV76TXw6dZ4wrvkxfUU7v8l5ZhSjjFfGGklbECIiHuriviho99T8VYpCLkrit0R
-         AqpgvNSMOMtzU0rmA3vIDJwKJF98C+cj39vYWHrf44wDd+Q8qo8jp6cWR0RfFE7N6baw
-         qmwg+JtTtnv8gHmlemdi4yoK70H3ZkrDxyvPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=foVORbUxMN+bGHeysPCWg8VIdDyEdyG7MmlibBVbMdyCWMdI5QwjoAYALjmAda2ZyI
-         XYIvReWv0j+fIrtIJwzj4EfgC7QHJWGqSl3N/QSHN0WzRwv656rhqlyH4rKnjCUA2LkA
-         gNGgN4RDFG5zPgACWOaYYHYZPGxLv6w2ElgV0=
-Received: by 10.86.79.4 with SMTP id c4mr527823fgb.7.1232917977654; Sun, 25 
-	Jan 2009 13:12:57 -0800 (PST)
-In-Reply-To: <7vvds3dszy.fsf@gitster.siamese.dyndns.org>
+	id S1751885AbZAYVQK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jan 2009 16:16:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751739AbZAYVQJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 16:16:09 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:47035 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751003AbZAYVQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 16:16:08 -0500
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id 74E51C8418;
+	Sun, 25 Jan 2009 15:16:07 -0600 (CST)
+Received: from 4719.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id OF0HZX0W5CTG; Sun, 25 Jan 2009 15:16:07 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=KmuZFklRwrN1wXFSuKMIuRmh0xeXJciQyHjJvFmq9cbx2OA0VgB390CzjBjCExobM+VHsAfB2rCKX1BfwW5/StiQUf60V6dx6/3dHrsHT0dPurJHza2o42o9Po+cjaHLC1Aa378i6y/klTx0QMUy/eqepi9WojsvM2upKrLm4qA=;
+  h=From:To:Cc:Subject:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107106>
 
-On Sun, Jan 25, 2009 at 10:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> It's much easier for everyone to just use git config --global than
->> explain how create and edit the .gitconfig file. If this is explained
->> it shouldn't be in the "Telling git your name" section.
->
-> I think it is Ok to have, and it probably is helpful to have, a document
-> that accompanies the generic manual, "Platform supplement", to explain
-> things like "On this platform, what is referred to as $HOME in the generic
-> manual is implemented as %HOMEDRIVE%%HOMEPATH%", to cover peculiarities of
-> each platform.
->
-> But I think it is going backwards to butcher the description in the main
-> manual in order to make the platform supplement shorter.  Even Windows is
-> not a good enough reason to break the logical ordering of how things
-> should be best taught to the readers of the manual, which is not specific
-> to a platform.
+The document suggests to imitate the existing code, but didn't
+say which existing code it should imitate. This clarifies.
 
-That's why I think there should be a whole section regarding git
-configuration before "Telling git your name".
+Signed-off-by: =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=
+=81=93 <nanako3@lavabit.com>
+---
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-However, my last proposal was to have both the git config --global
-*and* the $HOME/.gitconfig description. Is there any argument against
-that?
+> It is always preferable to match the _local_ convention.  I'd expect =
+a new
+> script added to git suite to match my preference (the one I showed yo=
+u in
+> my comments to you that is used in git-am, which is what you suggeste=
+d
+> above), but I'd expect a modification to mergetool to match the style
+> mergetool already uses.
 
--- 
-Felipe Contreras
+ Documentation/CodingGuidelines |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuide=
+lines
+index f628c1f..664c6c2 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -21,8 +21,13 @@ code.  For git in general, three rough rules are:
+=20
+ As for more concrete guidelines, just imitate the existing code
+ (this is a good guideline, no matter which project you are
+-contributing to).  But if you must have a list of rules,
+-here they are.
++contributing to). It is always preferable to match the _local_
++convention. A new code added to git suite is expected to match
++the overall style of existing code. A modification to an existing
++code is expected to match the style the surrounding code already
++uses (even if it doesn't match the overall style of existing code).
++
++But if you must have a list of rules, here they are.
+=20
+ For shell scripts specifically (not exhaustive):
+=20
+--=20
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
