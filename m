@@ -1,113 +1,89 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: [PATCH (update)] make: By default, remove -pthread on Darwin (it is included by cstdlib).
-Date: Mon, 26 Jan 2009 11:33:29 -0500
-Message-ID: <1232987609-6229-1-git-send-email-ted@tedpavlic.com>
-References: <1232987160-5635-1-git-send-email-ted@tedpavlic.com>
-Cc: git@vger.kernel.org, Ted Pavlic <ted@tedpavlic.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jan 26 17:35:13 2009
+From: "Nathan W. Panike" <nathan.panike@gmail.com>
+Subject: [PATCH v2] Allow format-patch to create patches for merges
+Date: Mon, 26 Jan 2009 10:43:32 -0600
+Message-ID: <1232988212-8613-1-git-send-email-nathan.panike@gmail.com>
+References: <d77df1110901260827j2200fe41oe1b84c387d88aba () mail ! gmail ! com>
+Cc: "Nathan W. Panike" <nathan.panike@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 26 17:45:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRUQS-0002gR-D4
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 17:35:04 +0100
+	id 1LRUa7-0006lO-Oo
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 17:45:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751541AbZAZQdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 11:33:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbZAZQdj
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 11:33:39 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:53519 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751448AbZAZQdi (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Jan 2009 11:33:38 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 7A80980D803D;
-	Mon, 26 Jan 2009 11:27:33 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ggznyWx3IdZF; Mon, 26 Jan 2009 11:27:33 -0500 (EST)
-Received: from localhost.localdomain (tedpc.ece.ohio-state.edu [164.107.164.122])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 5CD4180D803E;
-	Mon, 26 Jan 2009 11:27:33 -0500 (EST)
-X-Mailer: git-send-email 1.6.1.213.g28da8
-In-Reply-To: <1232987160-5635-1-git-send-email-ted@tedpavlic.com>
+	id S1751694AbZAZQni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 11:43:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751601AbZAZQni
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 11:43:38 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:58034 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751487AbZAZQnh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 11:43:37 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so2592475yxm.1
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 08:43:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=TJJVux2Bafx/LbpOqciS9xe3iscs3ixIYcw03frgWWU=;
+        b=XInGzxZMcfCjqAJu2C3DB3OxuYH/t47NQYMdCqiiDtjqqzQWSRaw1xVpSRJMlaAotU
+         fbmza0+n3Zqy2jWgoMvVebt+Pjiil8BSvfvxt1rfGExz9GEGWc1K+5HoAHcVD2L8PpXT
+         ZPEUGoVKO2ntTwbUUJEndKvcwLUBcbOjXriFs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=i0sMG+jiFy0ufPaB4SA88E1XXgPJPUpUDyv31BKrGs81mCiUVrGGLnW9K86UvgpAJb
+         ilaHOTWU/abD4DJyBIcz/1FMzkBhkMix3NymmTnHCxgJ7HbMUYnJuyghOFsJq9WBGqcE
+         lDIze/NygxknOjLcHlP13CLUAd1ysnXLUuqng=
+Received: by 10.143.13.17 with SMTP id q17mr2136912wfi.222.1232988215430;
+        Mon, 26 Jan 2009 08:43:35 -0800 (PST)
+Received: from localhost (dyn-108-207.uwnet.wisc.edu [72.33.108.207])
+        by mx.google.com with ESMTPS id 22sm30450503wfg.50.2009.01.26.08.43.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 26 Jan 2009 08:43:34 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.1.GIT
+In-Reply-To: <d77df1110901260827j2200fe41oe1b84c387d88aba () mail ! gmail ! com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107231>
 
-As discussed in
+The behavior for git format-patch is to ignore merge commits, producing an
+empty patch.  The code does not allow the user to change this behavior. This
+patch changes that behavior by allowing the user to specify -c or -m at the
+command line to produce a patch for a merge commit.
 
-http://lists.apple.com/archives/Unix-porting/2005/Mar/msg00019.html
-
-the Mac OS X C standard library is always thread safe and always
-includes the pthread library. So explicitly using -pthread causes an
-'unrecognized option' compiler warning.
-
-This patch clears PTHREAD_LIBS by default. However, if
-FORCE_DARWIN_PTHREAD_LIBS is defined, then PTHREAD_LIBS will be set as
-before.
-
-Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
+Signed-off-by: Nathan W. Panike <nathan.panike@gmail.com>
 ---
+Add Sign off.
 
-This update adds the documentation comment in the Makefile to
-configure.ac as well.
+This seems to solve my problem, but maybe my workflow is sufficiently different
+that it is a problem no one else has. Maybe someone can point me in a direction
+that solves problems more users have.
 
- Makefile     |   11 +++++++++++
- configure.ac |    8 ++++++++
- 2 files changed, 19 insertions(+), 0 deletions(-)
+Thanks,
 
-diff --git a/Makefile b/Makefile
-index b4d9cb4..86f0a66 100644
---- a/Makefile
-+++ b/Makefile
-@@ -70,6 +70,14 @@ all::
- # specify your own (or DarwinPort's) include directories and
- # library directories by defining CFLAGS and LDFLAGS appropriately.
- #
-+# Define FORCE_DARWIN_PTHREAD_LIBS if you are building on Darwin/Mac OS
-+# X and want PTHREAD_LIBS to be set. On Mac OS X, all components of the
-+# C standard library that are defined to be thread safe by the POSIX
-+# standard already include the pthread library. Hence, the -pthread
-+# option is redundant and will generate an 'unrecognized option'
-+# warning. So PTHREAD_LIBS will be cleared unless
-+# FORCE_DARWIN_PTHREAD_LIBS is set.
-+#
- # Define PPC_SHA1 environment variable when running make to make use of
- # a bundled SHA1 routine optimized for PowerPC.
- #
-@@ -817,6 +825,9 @@ ifeq ($(uname_S),Darwin)
- 			BASIC_LDFLAGS += -L/opt/local/lib
- 		endif
- 	endif
-+	ifndef FORCE_DARWIN_PTHREAD_LIBS
-+		PTHREAD_LIBS =
-+	endif
- endif
+Nathan Panike
+ builtin-log.c |    4 ----
+ 1 files changed, 0 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-log.c b/builtin-log.c
+index 2ae39af..ea4729d 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -994,10 +994,6 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
  
- ifndef CC_LD_DYNPATH
-diff --git a/configure.ac b/configure.ac
-index 082a03d..a53d97c 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -578,6 +578,14 @@ GIT_PARSE_WITH(expat))
- # specify your own (or DarwinPort's) include directories and
- # library directories by defining CFLAGS and LDFLAGS appropriately.
- #
-+# Define FORCE_DARWIN_PTHREAD_LIBS if you are building on Darwin/Mac OS
-+# X and want PTHREAD_LIBS to be set. On Mac OS X, all components of the
-+# C standard library that are defined to be thread safe by the POSIX
-+# standard already include the pthread library. Hence, the -pthread
-+# option is redundant and will generate an 'unrecognized option'
-+# warning. So PTHREAD_LIBS will be cleared unless
-+# FORCE_DARWIN_PTHREAD_LIBS is set.
-+#
- # Define NO_MMAP if you want to avoid mmap.
- #
- # Define NO_ICONV if your libc does not properly support iconv.
+-		/* ignore merges */
+-		if (commit->parents && commit->parents->next)
+-			continue;
+-
+ 		if (ignore_if_in_upstream &&
+ 				has_commit_patch_id(commit, &ids))
+ 			continue;
 -- 
-1.6.1.213.g28da8
+1.6.1.1.GIT
