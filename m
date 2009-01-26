@@ -1,137 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: check if-modified-since for feeds
-Date: Mon, 26 Jan 2009 03:18:05 +0100
-Message-ID: <200901260318.05301.jnareb@gmail.com>
-References: <1232686121-1800-5-git-send-email-giuseppe.bilotta@gmail.com> <1232923370-4427-1-git-send-email-giuseppe.bilotta@gmail.com> <1232923370-4427-2-git-send-email-giuseppe.bilotta@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 1/3] Introduce config variable "diff.primer"
+Date: Sun, 25 Jan 2009 18:30:18 -0800
+Message-ID: <7v1vuqdcjp.fsf@gitster.siamese.dyndns.org>
+References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu>
+ <1232904657-31831-2-git-send-email-keith@cs.ucla.edu>
+ <7v1vurf7lq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 26 03:19:38 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Keith Cascio <keith@cs.ucla.edu>
+X-From: git-owner@vger.kernel.org Mon Jan 26 03:31:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRH4Z-0006a1-KY
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 03:19:36 +0100
+	id 1LRHGT-0008GL-Pq
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 03:31:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751172AbZAZCSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 21:18:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbZAZCSK
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 21:18:10 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:31090 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751043AbZAZCSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 21:18:09 -0500
-Received: by fg-out-1718.google.com with SMTP id 19so3341633fgg.17
-        for <git@vger.kernel.org>; Sun, 25 Jan 2009 18:18:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=Ud4XsfePWZjcJZbqRMIstKUUirQKbM5tJSfiTv98V4I=;
-        b=LbIrWyv6OlcPai4MDvEPb42MJYTLNsQUAjz4BTbxHqdWu1pVruLE2ewUjhNz4db2Nv
-         bcUL/5KLcSdvfY4EAawfqRYjIaZM8h46tUcc83PrAoAgW1rSWkIL9HpzczQ7G9QGwUKC
-         Nohay0u1tGF4u7bbRW+8FtDMLtei8h631+2nA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=oTp6LCGZIirljYSVrT+rfVMfLql8DhSeQSco+l0A0w8EF619xpU6HPBu6fkrIvBtwL
-         I22miJNE6z7u1stXOVuBAmtdG6lAr7ma0DLuYWq16BuX2hXnQZeNqJb0W7wS/HjmY19O
-         vfsxPoR6uoKZG4Vsj2n/CKV44AUHfT+diECPo=
-Received: by 10.86.33.10 with SMTP id g10mr1590149fgg.40.1232936287329;
-        Sun, 25 Jan 2009 18:18:07 -0800 (PST)
-Received: from ?192.168.1.15? (abvk161.neoplus.adsl.tpnet.pl [83.8.208.161])
-        by mx.google.com with ESMTPS id d4sm3274225fga.51.2009.01.25.18.18.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 Jan 2009 18:18:06 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1232923370-4427-2-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+	id S1751194AbZAZCa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 21:30:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbZAZCa2
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 21:30:28 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63787 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751127AbZAZCa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 21:30:27 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F341C93BFD;
+	Sun, 25 Jan 2009 21:30:25 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5DC2493BFC; Sun,
+ 25 Jan 2009 21:30:20 -0500 (EST)
+In-Reply-To: <7v1vurf7lq.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 25 Jan 2009 12:34:09 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4A259638-EB51-11DD-8F8D-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107160>
 
-Should be "[PATCH 2/2]" or similar, just in case.
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Sun, 25 Jun 2009, Giuseppe Bilotta wrote:
+> Scriptability by definition means you do not know how scripts written by
+> people around plumbing use the output; I do not think you can sensibly say
+> "this should not be turned on in a machine friendly output, but this is
+> safe to use".
+>
+> I would not be opposed to an enhancement to the plumbing that the scripts
+> can use to say "I am willing to take any option (or perhaps "these
+> options") given to me via diff.primer".  Some scripts may want to be just
+> a pass-thru of whatever the underlying git-diff-* command outputs, and it
+> may be a handy way to magically upgrade them to allow their invocation of
+> lowlevel plumbing to be affected by what the end-user configured.  But
+> that magic upgrade has to be an opt/in process.
 
-> Offering Last-modified header
+I suspect it is pretty much orthogonal to the "use user's default without
+being told from the command line", but it might be a worthy goal to
+introduce a mechanism for the scripts to accept "safe" default options
+from the end user while rejecting undesirable ones that would interfere
+with the way it uses plumbing.
 
-And skipping generating the body if client uses 'HEAD' request to
-get only Last-Modified header.
+For example, gitk drives "git rev-list" and many options you give from the
+command line (e.g. "gitk --all --simplify-merges -- drivers/") are passed
+to the underlying plumbing.
 
->                              for feeds is only half the work: we should 
-> also check that same date against If-modified-since, and bail out early
-> with 304 Not Modified.
+This is a double edged sword.  When we add new features to git-rev-list,
+(e.g. --simplify-merges or --simplify-by-decoration are fairly recent
+inventions that did not exist when gitk was written originally), some of
+them can be safely passed and automagically translates to a new feature in
+gitk.  However, use of some options (e.g. --reverse) breaks the assumption
+the tool makes on the output from the underlying plumbing and should not
+be accepted from the end-user.
 
-Lacks signoff.
+It would be a good addition to our toolset if scripts like gitk can
+declare which options and features are safe to accept from the end user to
+pass down to the plumbing tools.  "git rev-parse", which lets the script
+sift between options that are meant to affect ancestry traversal and the
+ones that are for other (primarily diff family) commands, does not do
+anything fancy like that, but it would be a logical place to do this sort
+of thing.
 
-> ---
->  gitweb/gitweb.perl |   20 +++++++++++++++++++-
->  1 files changed, 19 insertions(+), 1 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 8c49c75..0a5d229 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -6015,7 +6015,25 @@ sub git_feed {
->  	}
->  	if (defined($commitlist[0])) {
->  		%latest_commit = %{$commitlist[0]};
-> -		%latest_date   = parse_date($latest_commit{'committer_epoch'});
-> +		my $latest_epoch = $latest_commit{'committer_epoch'};
-> +		%latest_date   = parse_date($latest_epoch);
-> +		my $if_modified = $cgi->http('IF_MODIFIED_SINCE');
-> +		if (defined $if_modified) {
-> +			my $since;
-> +			if (eval { require HTTP::Date; 1; }) {
-> +				$since = HTTP::Date::str2time($if_modified);
-> +			} elsif (eval { require Time::ParseDate; 1; }) {
-> +				$since = Time::ParseDate::parsedate($if_modified, GMT => 1);
-> +			}
+And it is not limited to "scripts" use.  A recent topic on rejecting
+colouring options from being given to format-patch would also be helped
+with such a mechanism if it is available to builtins.
 
-I'd really like to fallback on hand-parsing, as we have to parse date
-in well defined HTTP-date format (RFC-1123, update to RFC-822), which
-I think is what we send in Last-Modified header (or is it RFC-2822?).
-
-But that might be too much work. I like the checking for modules,
-and the fallback cascade, but could you explain why in this order?
-
-> +			if (defined $since && $latest_epoch <= $since) {
-> +				print $cgi->header(
-> +					-type => $content_type,
-> +					-charset => 'utf-8',
-> +					-last_modified => $latest_date{'rfc2822'},
-> +					-status => 304);
-
-I think we spell HTTP status messages in full (even if it is hidden
-in die_error subroutine), i.e.
-
-+					-status => '304 Not Modified');
-
-> +				return;
-> +			}
-> +		}
->  		print $cgi->header(
->  			-type => $content_type,
->  			-charset => 'utf-8',
-> -- 
-> 1.5.6.5
-> 
-> 
-
-P.S. It would be nice to have this mechanism (responding to
-cache-control headers such as If-Modified-Since) for all of gitweb,
-but I guess it is most critical for feeds, which are _polled_.
-
--- 
-Jakub Narebski
-Poland
+Just an idle thought.
