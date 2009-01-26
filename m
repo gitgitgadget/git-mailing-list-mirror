@@ -1,74 +1,70 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 1/2] rebase -i --root: simplify code
-Date: Mon, 26 Jan 2009 00:53:03 +0100
-Message-ID: <200901260053.06315.trast@student.ethz.ch>
-References: <alpine.DEB.1.00.0901260029480.14855@racer> <alpine.DEB.1.00.0901260031460.14855@racer> <200901260049.25563.trast@student.ethz.ch>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3 2/3] valgrind: ignore ldso and more libz errors
+Date: Mon, 26 Jan 2009 01:02:24 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901260101030.14855@racer>
+References: <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302> <alpine.DEB.1.00.0901201602410.5159@intel-tinevez-2-302> <20090121001219.GA18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210209580.19014@racer> <20090121190201.GA21686@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0901212137130.3586@pacific.mpi-cbg.de> <20090121215318.GA9107@sigill.intra.peff.net> <alpine.DEB.1.00.0901212332030.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901260014470.14855@racer> <alpine.DEB.1.00.0901260019000.14855@racer>
+ <20090125233243.GD19099@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3047796.B9pkgpXj1m";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 26 00:54:34 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 26 01:03:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LREoE-0006pE-58
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 00:54:34 +0100
+	id 1LREwq-00008d-27
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 01:03:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbZAYXxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 18:53:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750912AbZAYXxK
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 18:53:10 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:28789 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750860AbZAYXxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 18:53:10 -0500
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 26 Jan 2009 00:53:07 +0100
-Received: from thomas.localnet ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 26 Jan 2009 00:53:07 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.25.20-0.1-default; KDE/4.1.96; x86_64; ; )
-In-Reply-To: <200901260049.25563.trast@student.ethz.ch>
-X-OriginalArrivalTime: 25 Jan 2009 23:53:07.0739 (UTC) FILETIME=[1240F6B0:01C97F48]
+	id S1750834AbZAZAB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 19:01:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750806AbZAZABz
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 19:01:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44023 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750797AbZAZABy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 19:01:54 -0500
+Received: (qmail invoked by alias); 26 Jan 2009 00:01:52 -0000
+Received: from pD9EB3E0E.dip0.t-ipconnect.de (EHLO noname) [217.235.62.14]
+  by mail.gmx.net (mp004) with SMTP; 26 Jan 2009 01:01:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18x1gVBD5gxJitVHQEe6vq1w8zW0WWJWeIg24MRhU
+	06CVVHrUPCgeYt
+X-X-Sender: gene099@racer
+In-Reply-To: <20090125233243.GD19099@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107143>
 
---nextPart3047796.B9pkgpXj1m
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi,
 
-Thomas Rast wrote:
->           test ! -s "$DOTEST"/upstream && REBASE_ROOT=3Dt
+On Sun, 25 Jan 2009, Jeff King wrote:
 
-Actually, I think that test never worked (and it's clearly my fault).
+> On Mon, Jan 26, 2009 at 12:19:12AM +0100, Johannes Schindelin wrote:
+> 
+> > On some Linux systems, we get a host of Cond and Addr errors from 
+> > calls to dlopen that are caused by nss modules. We should be able to 
+> > safely ignore anything happening in ld-*.so as "not our problem."
+> > 
+> > [Johannes: I added some more...]
+> > 
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> Your 0/3 cover letter lists this me as the author of this patch, but 
+> there is no "From:" line at the top of this email. I don't particularly 
+> care one way or the other for this patch, but I wanted to point it out 
+> as a potential issue with your patch-sending workflow.
 
-The corresponding 'echo $UPSTREAM > "$DOTEST"/upstream' just expanded
-to 'echo > ...', resulting in a file containing a single newline, but
-never a zero-length file.  Duh.
+Yep, sorry.  I would not touch send-email with lead-protected gloves, so 
+what I do is to edit all patches I send.  And in this case, I missed the 
+fact that there was another "From:".  I am sorry.
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart3047796.B9pkgpXj1m
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkl8+2IACgkQqUud07tmzP0oPgCeIhhSnoVjv9XWPZ7wbHL+kOJG
-o8QAnR4DQt+I765uGg+m1Unq1YiiACzO
-=9Z6d
------END PGP SIGNATURE-----
-
---nextPart3047796.B9pkgpXj1m--
+Ciao,
+Dscho "who is burning midnight oil again"
