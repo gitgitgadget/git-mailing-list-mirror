@@ -1,98 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] diff.c: output correct index lines for a split diff
-Date: Mon, 26 Jan 2009 04:07:12 -0500
-Message-ID: <20090126090712.GA12648@coredump.intra.peff.net>
-References: <lyhc3q9pl1.fsf@leia.mandriva.com> <20090126003556.GA19368@coredump.intra.peff.net> <7vy6wy8qmm.fsf@gitster.siamese.dyndns.org> <7vhc3m8o0b.fsf_-_@gitster.siamese.dyndns.org>
+From: Johannes Gilger <heipei@hackvalue.de>
+Subject: Re: Translations in Git release?
+Date: Mon, 26 Jan 2009 09:54:56 +0000 (UTC)
+Message-ID: <glk19g$2f5$1@ger.gmane.org>
+References: <60646ee10901250941s34f7accem1b74fc201e895a41@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Pixel <pixel@mandriva.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 26 10:08:45 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 26 10:57:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRNST-0006L9-Pm
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 10:08:42 +0100
+	id 1LROCt-0002c9-Ad
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 10:56:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751790AbZAZJHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 04:07:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbZAZJHQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 04:07:16 -0500
-Received: from peff.net ([208.65.91.99]:42881 "EHLO peff.net"
+	id S1751172AbZAZJzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 04:55:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751139AbZAZJzK
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 04:55:10 -0500
+Received: from main.gmane.org ([80.91.229.2]:51631 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751498AbZAZJHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 04:07:14 -0500
-Received: (qmail 1519 invoked by uid 107); 26 Jan 2009 09:07:22 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 26 Jan 2009 04:07:22 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Jan 2009 04:07:12 -0500
-Content-Disposition: inline
-In-Reply-To: <7vhc3m8o0b.fsf_-_@gitster.siamese.dyndns.org>
+	id S1751101AbZAZJzJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 04:55:09 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LROBN-0003iF-Oe
+	for git@vger.kernel.org; Mon, 26 Jan 2009 09:55:05 +0000
+Received: from u-6-187.vpn.rwth-aachen.de ([137.226.102.187])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 09:55:05 +0000
+Received: from heipei by u-6-187.vpn.rwth-aachen.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 09:55:05 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: u-6-187.vpn.rwth-aachen.de
+User-Agent: slrn/0.9.9p1 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107181>
 
-On Mon, Jan 26, 2009 at 12:33:56AM -0800, Junio C Hamano wrote:
+On 2009-01-25, Dill <sarpulhu@gmail.com> wrote:
+> Is there a plan to include translations of the Documentation within
+> Git or should they exist outside of the project?
 
-> This moves the code to generate metainfo lines around, so that two
-> independent sets of metainfo lines are used for the split halves.
+My oppinion on localization of software (and its documentation) is 
+generally a negative one. 
 
-The patch and the generated output look correct to me, so
+- People who use software like git are (in my experience) people who 
+have a solid foundation of english, especially  when it comes to 
+computer-topics.
+- The effort that goes into translating the vast git documentation and 
+keeping it up-to-date isn't small, energy better spent in other areas.
+- Translating a lot of technical terms into a language like german is 
+really ugly and not fun to read. I always prefer reading english 
+documentation and using non-localized versions of programs as it enables 
+me to easier partake in discussions about it and also enables me to 
+google for error messages without trying every different language the 
+message could be in ;)
 
-Acked-by: Jeff King <peff@peff.net>
+But thats just me, if you want to start a translation effort knock 
+yourself out
 
-> I did not include your new test script here; perhaps we can add it to an
-> existing typechange diff/apply test, like t4114?
+Greetings,
+Jojo
 
-I think it makes sense to add to t4114. Please squash in the test below.
-
-One think to note, though: test 8 (binary -> symlink) shows breakage
-with the current master, but test 9 (symlink -> binary) does not.
-However, if you run the test under "-d" you can see that the diff has
-bogus metainfo. It's just that "apply" doesn't care.
-
-Your test fixes the test failure, and I verified manually that the diff
-output is sensible. I don't think an additional test is worth it, but we
-could add one that explicitly checks the metainfo if you want to be
-extra paranoid.
-
----
-diff --git a/t/t4114-apply-typechange.sh b/t/t4114-apply-typechange.sh
-index 5533492..0f185ca 100755
---- a/t/t4114-apply-typechange.sh
-+++ b/t/t4114-apply-typechange.sh
-@@ -25,6 +25,10 @@ test_expect_success 'setup repository and commits' '
- 	git update-index foo &&
- 	git commit -m "foo back to file" &&
- 	git branch foo-back-to-file &&
-+	printf "\0" > foo &&
-+	git update-index foo &&
-+	git commit -m "foo becomes binary" &&
-+	git branch foo-becomes-binary &&
- 	rm -f foo &&
- 	git update-index --remove foo &&
- 	mkdir foo &&
-@@ -85,6 +89,20 @@ test_expect_success 'symlink becomes file' '
- 	'
- test_debug 'cat patch'
- 
-+test_expect_success 'binary file becomes symlink' '
-+	git checkout -f foo-becomes-binary &&
-+	git diff-tree -p --binary HEAD foo-symlinked-to-bar > patch &&
-+	git apply --index < patch
-+	'
-+test_debug 'cat patch'
-+
-+test_expect_success 'symlink becomes binary file' '
-+	git checkout -f foo-symlinked-to-bar &&
-+	git diff-tree -p --binary HEAD foo-becomes-binary > patch &&
-+	git apply --index < patch
-+	'
-+test_debug 'cat patch'
-+
- 
- test_expect_success 'symlink becomes directory' '
- 	git checkout -f foo-symlinked-to-bar &&
+-- 
+Johannes Gilger <heipei@hackvalue.de>
+http://hackvalue.de/heipei/
+GPG-Key: 0x42F6DE81
+GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
