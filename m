@@ -1,117 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetool: respect autocrlf by using checkout-index
-Date: Mon, 26 Jan 2009 15:09:07 -0800
-Message-ID: <7vocxt3bsc.fsf@gitster.siamese.dyndns.org>
-References: <20090121210348.GD9088@mit.edu>
- <1232578668-2203-1-git-send-email-charles@hashpling.org>
- <7v1vuuvt11.fsf@gitster.siamese.dyndns.org> <83skn6doxm.fsf@kalahari.s2.org>
- <20090126163114.GD32604@hashpling.org>
- <7v7i4h4v19.fsf@gitster.siamese.dyndns.org>
- <7vskn53em1.fsf@gitster.siamese.dyndns.org>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH v2] Change octal literals to be XEmacs friendly
+Date: Mon, 26 Jan 2009 23:59:47 +0100
+Message-ID: <877i4had24.fsf@wine.dyndns.org>
+References: <Pine.LNX.4.64.0901240219530.19590@linmac.oyster.ru>
+	<874ozp79y4.fsf@Astalo.kon.iki.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Hannu Koivisto <azure@iki.fi>, git@vger.kernel.org,
-	Theodore Tso <tytso@mit.edu>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Tue Jan 27 00:10:51 2009
+Cc: git@vger.kernel.org
+To: Kalle Olavi Niemitalo <kon@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Jan 27 00:24:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRabK-0004lO-RB
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 00:10:43 +0100
+	id 1LRaoN-0008Nq-FP
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 00:24:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752634AbZAZXJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 18:09:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752566AbZAZXJR
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 18:09:17 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63922 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751702AbZAZXJQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 18:09:16 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EEBF51D5C9;
-	Mon, 26 Jan 2009 18:09:14 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 997FA1D5C7; Mon,
- 26 Jan 2009 18:09:09 -0500 (EST)
-In-Reply-To: <7vskn53em1.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 26 Jan 2009 14:08:06 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 59AC07BA-EBFE-11DD-9D70-0372113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752811AbZAZXWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 18:22:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752667AbZAZXWc
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 18:22:32 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:37990 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751691AbZAZXWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 18:22:32 -0500
+X-Greylist: delayed 1355 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Jan 2009 18:22:31 EST
+Received: from adsl-62-167-29-78.adslplus.ch ([62.167.29.78] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1LRaQn-0007iW-75; Mon, 26 Jan 2009 16:59:55 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 07CA51E71F0; Mon, 26 Jan 2009 23:59:47 +0100 (CET)
+In-Reply-To: <874ozp79y4.fsf@Astalo.kon.iki.fi> (Kalle Olavi Niemitalo's
+	message of "Sat, 24 Jan 2009 03:46:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+X-Spam-Score: -3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107295>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Kalle Olavi Niemitalo <kon@iki.fi> writes:
 
-> Perhaps something along this line to teach
+> Vassili Karpov <av1474@comtv.ru> writes:
 >
->     $ git merge-file --attribute-path=frotz.c file1 orig_file file2
+>> #ooctal syntax on the other hand produces integers everywhere.
 >
-> to merge what happened since orig_file to file2 into file1, and deposit
-> the result after converting it appropriately for path "frotz.c" obeying
-> core.autocrlf and gitattribute rules.
+> GNU Emacs 20.7 doesn't support #o, but neither does it include
+> the ewoc and log-edit libraries required by the current git.el.
 >
-> I see rerere.c::merge() has the exact same issue, but its breakage is half
-> hidden by its use of fopen(path, "w").  It should explicitly use
-> convert_to_working_tree() like this patch does, and write the results out
-> in binary mode.
+> It would be nice to have a comment in git.el saying which
+> versions of Emacs and XEmacs it is supposed to support, but I
+> guess people wouldn't bother testing those on every commit.
 
-Second try.  I forgot how convert_* worked X-<.
+I try to make sure that it still works with Emacs 21, but for older
+versions you're on your own. Of course if you find problems patches are
+welcome...
 
- builtin-merge-file.c |   20 +++++++++++++++++++-
- 1 files changed, 19 insertions(+), 1 deletions(-)
-
-diff --git i/builtin-merge-file.c w/builtin-merge-file.c
-index 96edb97..edee815 100644
---- i/builtin-merge-file.c
-+++ w/builtin-merge-file.c
-@@ -5,7 +5,7 @@
- #include "parse-options.h"
- 
- static const char *const merge_file_usage[] = {
--	"git merge-file [options] [-L name1 [-L orig [-L name2]]] file1 orig_file file2",
-+	"git merge-file [options] [-L name1 [-L orig [-L name2]]] [--attribute-path path] file1 orig_file file2",
- 	NULL
- };
- 
-@@ -30,10 +30,13 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 	int merge_level = XDL_MERGE_ZEALOUS_ALNUM;
- 	int merge_style = 0, quiet = 0;
- 	int nongit;
-+	char *attribute_path = NULL;
- 
- 	struct option options[] = {
- 		OPT_BOOLEAN('p', "stdout", &to_stdout, "send results to standard output"),
- 		OPT_SET_INT(0, "diff3", &merge_style, "use a diff3 based merge", XDL_MERGE_DIFF3),
-+		OPT_STRING('a', "attribute-path", &attribute_path, "path",
-+			   "apply work-tree conversion for the path"),
- 		OPT__QUIET(&quiet),
- 		OPT_CALLBACK('L', NULL, names, "name",
- 			     "set labels for file1/orig_file/file2", &label_cb),
-@@ -73,6 +76,21 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 	for (i = 0; i < 3; i++)
- 		free(mmfs[i].ptr);
- 
-+	if (ret >= 0 && attribute_path) {
-+		struct strbuf buf = STRBUF_INIT;
-+		int st;
-+		st = convert_to_working_tree(attribute_path,
-+					     result.ptr, result.size,
-+					     &buf);
-+		if (st) {
-+			size_t len;
-+
-+			free(result.ptr);
-+			result.ptr = strbuf_detach(&buf, &len);
-+			result.size = len;
-+		}
-+	}
-+
- 	if (ret >= 0) {
- 		const char *filename = argv[0];
- 		FILE *f = to_stdout ? stdout : fopen(filename, "wb");
+-- 
+Alexandre Julliard
+julliard@winehq.org
