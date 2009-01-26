@@ -1,103 +1,144 @@
-From: "Nathan W. Panike" <nathan.panike@gmail.com>
-Subject: [PATCH] Allow format-patch to create patches for merges
-Date: Mon, 26 Jan 2009 08:04:10 -0600
-Message-ID: <1232978650-7008-1-git-send-email-nathan.panike@gmail.com>
-Cc: "Nathan W. Panike" <nathan.panike@gmail.com>,
-	Johannes.Schindelin@gmx.de, gitster@pobox.com, aspotashev@gmail.com
+From: Jake Goulding <goulding@vivisimo.com>
+Subject: [PATCH 2/3] Make has_commit non-static
+Date: Mon, 26 Jan 2009 09:13:24 -0500
+Message-ID: <1232979205-17161-2-git-send-email-goulding@vivisimo.com>
+References: <1232979205-17161-1-git-send-email-goulding@vivisimo.com>
+Cc: gitster@pobox.com, Jake Goulding <goulding@vivisimo.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 26 15:06:00 2009
+X-From: git-owner@vger.kernel.org Mon Jan 26 15:15:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRS5t-0007Kf-M5
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 15:05:50 +0100
+	id 1LRSEs-0001XV-W1
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 15:14:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751422AbZAZOEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 09:04:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbZAZOEP
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 09:04:15 -0500
-Received: from wf-out-1314.google.com ([209.85.200.168]:10344 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751331AbZAZOEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 09:04:14 -0500
-Received: by wf-out-1314.google.com with SMTP id 27so6895179wfd.4
-        for <git@vger.kernel.org>; Mon, 26 Jan 2009 06:04:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=rIGtNsyqpfBtGS/94nzEW34cN2X/Rq1lU47FezLKa/w=;
-        b=bSYD+/U5jMllYSKz9n/r5sTU35qGW6qe3mdljWCZW3P6Td3SsqcNRMZUgjKzls+d9u
-         RsWr8t35UXQlZcGrV3oftE9fwUgvGovPVd+RABLn6dRB6Bhg+yNsvw0+bZvSBdl1PbIV
-         TY/PHt8FZRb5tXx70gb2gzV6gAl80XYdMKAsI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=prm4f+1LmStyhP8ZxPGfjutYfmuHBbXssxDyrOnnPtz453AkejRVJS1U1UWmRncjQJ
-         Ukk/nmVHbEAGT4on/5AM3mdfK8be8WI41KO12SQ7x059WzgUTAI+ePWIeGYt6AqA+dNx
-         985wY1lv46/J3ozS8TnZVMqBvsEUFD37YonHs=
-Received: by 10.142.125.4 with SMTP id x4mr357805wfc.223.1232978653836;
-        Mon, 26 Jan 2009 06:04:13 -0800 (PST)
-Received: from localhost (adsl-76-204-100-245.dsl.mdsnwi.sbcglobal.net [76.204.100.245])
-        by mx.google.com with ESMTPS id 22sm23081242wfg.30.2009.01.26.06.04.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 26 Jan 2009 06:04:13 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.1.GIT
+	id S1751403AbZAZONb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 09:13:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbZAZONa
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 09:13:30 -0500
+Received: from scalix.vivisimo.com ([207.97.211.28]:43820 "EHLO
+	mail.vivisimo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751328AbZAZON3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 09:13:29 -0500
+Received: from mail.office.vivisimo.com (mail.office.vivisimo.com [206.210.75.84])
+	by mail.vivisimo.com (Postfix) with ESMTP id CFB0585294F;
+	Mon, 26 Jan 2009 09:13:28 -0500 (EST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.office.vivisimo.com (Postfix) with ESMTP id A511A2E68D3;
+	Mon, 26 Jan 2009 09:13:28 -0500 (EST)
+X-Virus-Scanned: amavisd-new at vivisimo.com
+Received: from mail.office.vivisimo.com ([127.0.0.1])
+	by localhost (mail.office.vivisimo.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id uSEWoLWeZHLG; Mon, 26 Jan 2009 09:13:28 -0500 (EST)
+Received: from localhost.localdomain (jpg-melchior.vivisimo.com [192.168.0.20])
+	by mail.office.vivisimo.com (Postfix) with ESMTP id 72A682E68D0;
+	Mon, 26 Jan 2009 09:13:28 -0500 (EST)
+X-Mailer: git-send-email 1.6.0.6
+In-Reply-To: <1232979205-17161-1-git-send-email-goulding@vivisimo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107212>
 
-The behavior for git format-patch is to ignore merge commits, producing an
-empty patch.  The code does not allow the user to change this behavior. This
-patch changes that behavior by allowing the user to specify -c or -m at the
-command line to produce a patch for a merge commit.
+Moving has_commit from branch to a common location in preparation for
+using it in tag. Renaming it to commit_has_any_in_commit_list to be
+more unique.
+
+Signed-off-by: Jake Goulding <goulding@vivisimo.com>
 ---
-Hi:
 
-I am sure there are good reasons for the current behavior of format-patch, but
-it seems to me that if the user explicitly wants to produce a patch for a merge
-commit, he should be allowed to do so.  If merge_commit represents a merge,
-then this patch allows the user to issue the command
+Function renamed to less-generic name as suggested by Junio.
 
-git format-patch -m -1 $merge_commit 
+ builtin-branch.c |   20 +++-----------------
+ commit.c         |   16 ++++++++++++++++
+ commit.h         |    1 +
+ 3 files changed, 20 insertions(+), 17 deletions(-)
 
-or 
-
-git format-patch -c -1 $merge_commit
-
-and actually produce a patch.  The current behavior is that neither command
-will produce a patch.  With or without the patch applied, the command
-
-git format-patch -1 $merge_commit
-
-does not produce a patch when merge_commit is a merge.  Thus the patch does not
-change the default behavior of ignoring merges, at least by the limited testing
-I have done.  
-
-Thanks for your consideration.
-
-Nathan Panike
-
- builtin-log.c |    4 ----
- 1 files changed, 0 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-log.c b/builtin-log.c
-index 2ae39af..ea4729d 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -994,10 +994,6 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 82d6fb2..a30ef76 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -193,21 +193,6 @@ struct ref_list {
+ 	int kinds;
+ };
  
--		/* ignore merges */
--		if (commit->parents && commit->parents->next)
--			continue;
+-static int has_commit(struct commit *commit, struct commit_list *with_commit)
+-{
+-	if (!with_commit)
+-		return 1;
+-	while (with_commit) {
+-		struct commit *other;
 -
- 		if (ignore_if_in_upstream &&
- 				has_commit_patch_id(commit, &ids))
- 			continue;
+-		other = with_commit->item;
+-		with_commit = with_commit->next;
+-		if (in_merge_bases(other, &commit, 1))
+-			return 1;
+-	}
+-	return 0;
+-}
+-
+ static int append_ref(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
+ {
+ 	struct ref_list *ref_list = (struct ref_list*)(cb_data);
+@@ -231,7 +216,7 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+ 		return error("branch '%s' does not point at a commit", refname);
+ 
+ 	/* Filter with with_commit if specified */
+-	if (!has_commit(commit, ref_list->with_commit))
++	if (!commit_has_any_in_commit_list(commit, ref_list->with_commit))
+ 		return 0;
+ 
+ 	/* Don't add types the caller doesn't want */
+@@ -401,7 +386,8 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
+ 	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
+ 
+ 	detached = (detached && (kinds & REF_LOCAL_BRANCH));
+-	if (detached && head_commit && has_commit(head_commit, with_commit)) {
++	if (detached && head_commit &&
++	    commit_has_any_in_commit_list(head_commit, with_commit)) {
+ 		struct ref_item item;
+ 		item.name = xstrdup("(no branch)");
+ 		item.kind = REF_LOCAL_BRANCH;
+diff --git a/commit.c b/commit.c
+index c99db16..97c8a8a 100644
+--- a/commit.c
++++ b/commit.c
+@@ -705,6 +705,22 @@ struct commit_list *get_merge_bases(struct commit *one, struct commit *two,
+ 	return get_merge_bases_many(one, 1, &two, cleanup);
+ }
+ 
++int commit_has_any_in_commit_list(struct commit *commit,
++				  struct commit_list *with_commit)
++{
++	if (!with_commit)
++		return 1;
++	while (with_commit) {
++		struct commit *other;
++
++		other = with_commit->item;
++		with_commit = with_commit->next;
++		if (in_merge_bases(other, &commit, 1))
++			return 1;
++	}
++	return 0;
++}
++
+ int in_merge_bases(struct commit *commit, struct commit **reference, int num)
+ {
+ 	struct commit_list *bases, *b;
+diff --git a/commit.h b/commit.h
+index 3a7b06a..4084102 100644
+--- a/commit.h
++++ b/commit.h
+@@ -133,6 +133,7 @@ extern int is_repository_shallow(void);
+ extern struct commit_list *get_shallow_commits(struct object_array *heads,
+ 		int depth, int shallow_flag, int not_shallow_flag);
+ 
++int commit_has_any_in_commit_list(struct commit *, struct commit_list *);
+ int in_merge_bases(struct commit *, struct commit **, int);
+ 
+ extern int interactive_add(int argc, const char **argv, const char *prefix);
 -- 
-1.6.1.1.GIT
+1.6.0.6
