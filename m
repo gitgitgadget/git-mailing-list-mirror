@@ -1,99 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: backwards compatibility, was Re: [PATCH v1 1/3] Introduce config
- variable "diff.primer"
-Date: Mon, 26 Jan 2009 12:28:55 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901261220300.14855@racer>
-References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <1232904657-31831-2-git-send-email-keith@cs.ucla.edu> <7v1vurf7lq.fsf@gitster.siamese.dyndns.org> <alpine.GSO.2.00.0901251345240.12651@kiwi.cs.ucla.edu> <20090126031206.GB14277@sigill.intra.peff.net>
- <alpine.DEB.1.00.0901261154330.14855@racer> <20090126111605.GB19993@coredump.intra.peff.net>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] gitweb: ensure the default stylesheet is accessible
+Date: Mon, 26 Jan 2009 12:35:36 +0100
+Message-ID: <cb7bb73a0901260335n3cc53295m162ca56810702596@mail.gmail.com>
+References: <1232933322-9186-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200901260248.22120.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Keith Cascio <keith@CS.UCLA.EDU>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 26 12:29:55 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 12:42:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRPf6-0007sZ-QH
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 12:29:53 +0100
+	id 1LRPrJ-0001py-6L
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 12:42:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751124AbZAZL21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 06:28:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751095AbZAZL21
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 06:28:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58899 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750923AbZAZL20 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 06:28:26 -0500
-Received: (qmail invoked by alias); 26 Jan 2009 11:28:24 -0000
-Received: from pD9EB294D.dip0.t-ipconnect.de (EHLO noname) [217.235.41.77]
-  by mail.gmx.net (mp031) with SMTP; 26 Jan 2009 12:28:24 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18VSrUMF7wVLgxSueCCfWmwBeQVXg1dtRfAjn1XXh
-	lUvz7BASukaYkj
-X-X-Sender: gene099@racer
-In-Reply-To: <20090126111605.GB19993@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1751420AbZAZLlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 06:41:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbZAZLlF
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 06:41:05 -0500
+Received: from mail-ew0-f21.google.com ([209.85.219.21]:50279 "EHLO
+	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751394AbZAZLlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 06:41:04 -0500
+X-Greylist: delayed 323 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Jan 2009 06:41:03 EST
+Received: by ewy14 with SMTP id 14so323180ewy.13
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 03:41:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=j+kfdvlLrAytoqItXb0epo+APSvMzP5qlEPagqShgx0=;
+        b=MTuDXg98gsi/sN+e16vRuJsV/nU0AEgCx93H+ek2lpDb8g8ixe1B+E93/N2G3kE4Ng
+         ghdHRPb7eQWeK4Qdy4eWLdToZjgpXv22MMHoAcinNHnvi9OG4l5anrljarKTprjpFxkc
+         V0360wbHC2POCRhR6a94KpUI69NprY31nh0Bk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Zq0RtqadXRCXERdER2oZqYFDJJbmq1aG+muYY1K0TRfsu6qQMcafeYKzNUJYRyGEko
+         k2bAd1Z84ZkML1XaIuGe5oIeVCxU/Wuxcz3PZQeq5f9TsHeBMi9L/ZsaJk7QAeAq3X+L
+         YUgFgCzvptVMFR6QhaTGKxx7l3zuUj4GU6dw4=
+Received: by 10.210.139.15 with SMTP id m15mr3905039ebd.69.1232969736740; Mon, 
+	26 Jan 2009 03:35:36 -0800 (PST)
+In-Reply-To: <200901260248.22120.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107193>
 
-Hi,
+On Mon, Jan 26, 2009 at 2:48 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Mon, 26 Jan 2009, Giuseppe Bilotta wrote:
+>
+>> On some installations the CSS fails to be linked correctly when
+>> path_info is enabled, since the link refers to "gitweb.css", whereas it
+>> should be "${my_uri}/gitweb.css". Fix by setting the appropriate default
+>> in the Makefile.
+>
+> Why "on some installations"? What does "some" mean? I don't think it
+> is something indeterministic: please spell when one can have problems
+> with linking CSS file.
 
-On Mon, 26 Jan 2009, Jeff King wrote:
+The truth is, I haven't the slightest idea. It works fine on my
+machine, it doesn't without the patch on ruby-rbot.org, but I really
+don't know why.
 
-> On Mon, Jan 26, 2009 at 11:59:46AM +0100, Johannes Schindelin wrote:
-> 
-> > Just a reminder: we are very conservative when it comes to breaking 
-> > backwards compatibility.  For example, people running (but not upgrading) 
-> > gitweb who want to upgrade Git may rightfully expect their setups not to 
-> > be broken for a long time, if ever.
-> 
-> Are you aware that gitweb no longer calls "git diff", exactly because
-> of problems caused by calling a porcelain from a script?
+> Wouldn't it be simpler to deal with problem of base URL when using
+> path_info gitweb URLs to add BASE element to HTML head if we use
+> path_info? Something like:
+>
+>        if ($ENV{'PATH_INFO'}) {  # $path_info is unfortunately stripped
+>                print qq(<base href="$my_uri">\n);
+>        }
+>
+> somewhere in git_header_html() subroutine?
 
-As I said: do you really expect people not to forget to upgrade gitweb 
-manually when they do "sudo make install" with a new Git version?
+Ah, this might work. I'll test it.
 
-> I don't want to break existing setups, either. But at some point you 
-> have to say "this is porcelain, so don't rely on there not being any 
-> user-triggered effects in its behavior". If porcelain is cast in stone, 
-> then what is the point in differentiating plumbing from porcelain?
+> It is not the same case for git-logo.png and git-favicon.png as for
+> gitweb.css? If it is not, please explain why in commit message.
+> If it is, then your patch is only partial solution to path_info
+> problem.
 
-Two points there:
+Oh, interesting, true, I hadn't noticed.
 
-- with gitweb, we were the offenders ourselves.  So we should give the 
-  users of gitweb at least _some_ slack.
+I'll look into the base thing.
 
-- Concretely for the "porcelain" git diff: This workflow
-
-	git diff > my-patch
-	<attach and send to somebody>
-
-  is probably pretty wide spread.  And it is okay, a user is not a script, 
-  they are very much allowed to use porcelain.  And we _would_ break 
-  expectations there.
-
-Now, I have another two, fundamental problems with the diff options 
-defaults: you are restricting the thing to _one_ set of options, and when 
-somebody wants to run without those options, she has to actively _undo_ 
-them.
-
-Remember, sometimes you need another set of options. Like, when I send 
-mail to a Git user, I want "-M -C -C", when I send mail to a non-Git user, 
-I do not want any additional options (and try to undo "-M -C -C" on the 
-command line, good luck), and sometimes it is much easier to see what 
-happened with a word diff.
-
-So what I need are three different sets of diff options.
-
-Guess how well that works with aliases -- we are talking command line 
-here after all, right?
-
-Ciao,
-Dscho
+-- 
+Giuseppe "Oblomov" Bilotta
