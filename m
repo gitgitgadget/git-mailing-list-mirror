@@ -1,77 +1,68 @@
-From: Perry Smith <pedzsan@gmail.com>
-Subject: git 1.6.1 on AIX 5.3
-Date: Mon, 26 Jan 2009 14:02:15 -0600
-Message-ID: <A8D76E61-4442-4640-BD0C-84085375E6F1@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v929.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Jan Engelhardt <jengelh@medozas.de>
+Subject: git push --all not so all (was: Re: [ANNOUNCE] conntrack-tools 0.9.10
+ released)
+Date: Mon, 26 Jan 2009 21:03:21 +0100 (CET)
+Message-ID: <alpine.LSU.2.00.0901262102190.25738@fbirervta.pbzchgretzou.qr>
+References: <497CD41A.3040106@netfilter.org> <alpine.LSU.2.00.0901260050030.31299@fbirervta.pbzchgretzou.qr> <497E03E7.7030201@netfilter.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Netfilter Developer Mailing List 
+	<netfilter-devel@vger.kernel.org>, pablo@netfilter.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 26 21:03:53 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+X-From: netfilter-devel-owner@vger.kernel.org Mon Jan 26 21:05:00 2009
+Return-path: <netfilter-devel-owner@vger.kernel.org>
+Envelope-to: gnnd-netfilter-devel@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRXgQ-0007I9-Sx
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 21:03:47 +0100
+	id 1LRXhN-0007Nv-Dj
+	for gnnd-netfilter-devel@gmane.org; Mon, 26 Jan 2009 21:04:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753352AbZAZUCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 15:02:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752929AbZAZUCV
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 15:02:21 -0500
-Received: from qw-out-2122.google.com ([74.125.92.27]:21242 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751641AbZAZUCV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 15:02:21 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so2904857qwe.37
-        for <git@vger.kernel.org>; Mon, 26 Jan 2009 12:02:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=GMH03LUR4Q2l11QtNsFjU62y/2qEoqhIbzY/pI2snqA=;
-        b=lgfZyAEm7x1cl5A6EB7PA1whZltlWueAze6+8phx3qsDAy1GBu4venazH8M/Ocfnoy
-         mdCSr99RvEikQpQhl6ROxQirOKMX/sEiZ5hxeY1L4dcoL0g46WZkqxeWmFMI7ngvb3TM
-         WmMGLYpljynWG7R/tr42n1ohqaAR2e5hHh6fg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=WWbGcCKaAHGr8v0PuNy2Y89ogXeEu3xs0xomgkpkjpfEKUUTpLeUOTFUAp54pdjnTl
-         08iy4tNTdHjSIpIiR+k+k8mDHb11/OoZRWbPFgx+YLT7sl2RWB5YtFB/0uf9bQTwZTaq
-         SyjNpmG5aXCXpxkmtXIoq8HlD377tANZ1lJ+Q=
-Received: by 10.214.181.12 with SMTP id d12mr6391783qaf.140.1233000139017;
-        Mon, 26 Jan 2009 12:02:19 -0800 (PST)
-Received: from NewToy.austin.ibm.com ([32.97.110.64])
-        by mx.google.com with ESMTPS id 6sm424379qwd.54.2009.01.26.12.02.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 26 Jan 2009 12:02:17 -0800 (PST)
-X-Mailer: Apple Mail (2.929.2)
-Sender: git-owner@vger.kernel.org
+	id S1753247AbZAZUDY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gnnd-netfilter-devel@m.gmane.org>);
+	Mon, 26 Jan 2009 15:03:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752723AbZAZUDY
+	(ORCPT <rfc822;netfilter-devel-outgoing>);
+	Mon, 26 Jan 2009 15:03:24 -0500
+Received: from sovereign.computergmbh.de ([85.214.69.204]:47177 "EHLO
+	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751768AbZAZUDX (ORCPT
+	<rfc822;netfilter-devel@vger.kernel.org>);
+	Mon, 26 Jan 2009 15:03:23 -0500
+Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
+	id 9B468180638E8; Mon, 26 Jan 2009 21:03:21 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by sovereign.computergmbh.de (Postfix) with ESMTP id 95D5E1CC769BB;
+	Mon, 26 Jan 2009 21:03:21 +0100 (CET)
+In-Reply-To: <497E03E7.7030201@netfilter.org>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+Sender: netfilter-devel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107263>
+List-ID: <netfilter-devel.vger.kernel.org>
+X-Mailing-List: netfilter-devel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107264>
 
-I tried building git 1.6.1 on AIX 5.3 as an "out of tree" build and it  
-does not seem to be set up to do out of tree builds.  If that is not  
-true, please let me know.
 
-The install process wants to call install with a -d option.  AIX has  
-two install programs but they are pretty old -- neither takes a -d  
-option.
+On Monday 2009-01-26 19:41, Pablo Neira Ayuso wrote:
+>Jan Engelhardt wrote:
+>> On Sunday 2009-01-25 22:05, Pablo Neira Ayuso wrote:
+>>=20
+>>> Hi!
+>>>
+>>> The netfilter project presents another development release of the
+>>> conntrack-tools. As usual, this release includes important fixes,
+>>> improvements and new features, mainly:
+>>=20
+>> The git tag for 0.9.10 seems to be missing.
+>
+>I forgot to add git push --tags to my release scripts, thanks for the
+>notice.
 
-Is there a GNU install program I can get?  I've not been able to  
-locate one.
-
-The curious thing is I installed git 1.5.6.4 on a similar AIX system a  
-few months ago and succeeded.
-
-Last -- just so I know for future reference, is this list a 'text only  
-email' list?
-
-Thank you for your help,
-Perry
-Ease Software, Inc. ( http://www.easesoftware.com )
-
-Low cost SATA Disk Systems for IBMs p5, pSeries, and RS/6000 AIX systems
+I always wonder why `git push --all` does not push everything
+(it should be true to its name, really)=C2=A0=E2=80=94 such as tags  o_=
+O
+--
+To unsubscribe from this list: send the line "unsubscribe netfilter-dev=
+el" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
