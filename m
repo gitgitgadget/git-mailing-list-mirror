@@ -1,133 +1,135 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -i: correctly remember --root flag across
- --continue
-Date: Mon, 26 Jan 2009 13:49:24 -0800
-Message-ID: <7vzlhd3fh7.fsf@gitster.siamese.dyndns.org>
-References: <7vtz7ma9z1.fsf@gitster.siamese.dyndns.org>
- <1232960722-17480-1-git-send-email-trast@student.ethz.ch>
- <7veiyp4w2m.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] mergetool: respect autocrlf by using checkout-index
+Date: Mon, 26 Jan 2009 14:08:06 -0800
+Message-ID: <7vskn53em1.fsf@gitster.siamese.dyndns.org>
+References: <20090121210348.GD9088@mit.edu>
+ <1232578668-2203-1-git-send-email-charles@hashpling.org>
+ <7v1vuuvt11.fsf@gitster.siamese.dyndns.org> <83skn6doxm.fsf@kalahari.s2.org>
+ <20090126163114.GD32604@hashpling.org>
+ <7v7i4h4v19.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jan 26 22:51:10 2009
+Cc: Hannu Koivisto <azure@iki.fi>, git@vger.kernel.org,
+	Theodore Tso <tytso@mit.edu>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Mon Jan 26 23:09:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRZM8-0002Zt-KA
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 22:50:57 +0100
+	id 1LRZeI-0000fg-Re
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 23:09:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752488AbZAZVtc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 16:49:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbZAZVtb
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 16:49:31 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55696 "EHLO
+	id S1752483AbZAZWIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 17:08:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752289AbZAZWIQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 17:08:16 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57505 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752004AbZAZVtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 16:49:31 -0500
+	with ESMTP id S1752004AbZAZWIP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 17:08:15 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 225CF1D5B1;
-	Mon, 26 Jan 2009 16:49:30 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EC4491D5BB;
+	Mon, 26 Jan 2009 17:08:13 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 185EE1D5B6; Mon,
- 26 Jan 2009 16:49:25 -0500 (EST)
-In-Reply-To: <7veiyp4w2m.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 26 Jan 2009 13:05:37 -0800")
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6DB3B1D5B2; Mon,
+ 26 Jan 2009 17:08:08 -0500 (EST)
+In-Reply-To: <7v7i4h4v19.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 26 Jan 2009 13:28:02 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 35AFD2A2-EBF3-11DD-9EC7-0372113D384A-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D389E1C8-EBF5-11DD-8BAB-0372113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107291>
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Thomas Rast <trast@student.ethz.ch> writes:
-> ...
->> +sed 's/#/ /g' > expect-conflict-p <<'EOF'
->> +*   Merge branch 'third' into other
->> +|\##
->> +| * 6
->> +* |   Merge branch 'side' into other
->> +|\ \##
->> +| * | 5
->> +* | | 4
->> +|/ /##
->> +* | 3
->> +|/##
->> +* conflict
->> +* 2
->> +* 1
->> +EOF
+> Charles Bailey <charles@hashpling.org> writes:
 >
-> I do not like this very much.  Future improvements of the graph drawing
-> algorithm (one obvious "flaw" you are exposing by the above is that it has
-> trailing whitespaces that can be trimmed, and somebody else may be
-> inclined to fix) would break the expectation this test vector has.
+>> I suspect that the LF endings in the file is due to the fact that in
+>> builtin-merge-file.c, the file is opened (fopen) in binary mode
+>> ("wb"), but xdl_merge terminates all lines with a raw '\n'.
+>>
+>> The obvious fix would be to change fopen in builtin-file-merge.c to
+>> use "w" instead, but this doesn't work in a number of scenarios. In
+>> particular, it is wrong for repositories on windows with core.autocrlf
+>> set to false, and would not fix non-windows repositories with
+>> core.autocrlf set to true.
+>>
+>> Currently, I've no idea as to what the solution should be.
 >
-> Do you have to compare the topology this way, or are there other more
-> reliable ways?
+> "git file-merge" is designed to be a replacement for stock RCS merge, and
+> unfortunately it does not call convert_to_working_tree(), nor has any way
+> to know for which path it should take the attributes to apply to affect
+> what convert_to_working_tree() should do even if it were to call it.
+>
+> I think we would need a new option to the command that says "pretend this
+> is about merging this path, and use the gitattributes specified for it
+> when writing out the result."
 
-Perhaps something like this.
+Perhaps something along this line to teach
 
- t/t3412-rebase-root.sh |   36 +++++++++++++++++++++---------------
- 1 files changed, 21 insertions(+), 15 deletions(-)
+    $ git merge-file --attribute-path=frotz.c file1 orig_file file2
 
-diff --git i/t/t3412-rebase-root.sh w/t/t3412-rebase-root.sh
-index 29bb6d0..2408cf8 100755
---- i/t/t3412-rebase-root.sh
-+++ w/t/t3412-rebase-root.sh
-@@ -240,19 +240,24 @@ test_expect_success 'rebase -i --root with conflict (second part)' '
- '
+to merge what happened since orig_file to file2 into file1, and deposit
+the result after converting it appropriately for path "frotz.c" obeying
+core.autocrlf and gitattribute rules.
+
+I see rerere.c::merge() has the exact same issue, but its breakage is half
+hidden by its use of fopen(path, "w").  It should explicitly use
+convert_to_working_tree() like this patch does, and write the results out
+in binary mode.
+
+ builtin-merge-file.c |   18 +++++++++++++++++-
+ 1 files changed, 17 insertions(+), 1 deletions(-)
+
+diff --git i/builtin-merge-file.c w/builtin-merge-file.c
+index 96edb97..61d1092 100644
+--- i/builtin-merge-file.c
++++ w/builtin-merge-file.c
+@@ -5,7 +5,7 @@
+ #include "parse-options.h"
  
- sed 's/#/ /g' > expect-conflict-p <<'EOF'
--*   Merge branch 'third' into other
--|\##
--| * 6
--* |   Merge branch 'side' into other
--|\ \##
--| * | 5
--* | | 4
--|/ /##
--* | 3
--|/##
--* conflict
--* 2
--* 1
-+commit conflict3 conflict3~1 conflict3^2
-+Merge branch 'third' into other
-+commit conflict3^2 conflict3~4
-+6
-+commit conflict3~1 conflict3~2 conflict3~1^2
-+Merge branch 'side' into other
-+commit conflict3~1^2 conflict3~3
-+5
-+commit conflict3~2 conflict3~3
-+4
-+commit conflict3~3 conflict3~4
-+3
-+commit conflict3~4 conflict3~5
-+conflict
-+commit conflict3~5 conflict3~6
-+2
-+commit conflict3~6
-+1
- EOF
+ static const char *const merge_file_usage[] = {
+-	"git merge-file [options] [-L name1 [-L orig [-L name2]]] file1 orig_file file2",
++	"git merge-file [options] [-L name1 [-L orig [-L name2]]] [--attribute-path path] file1 orig_file file2",
+ 	NULL
+ };
  
- test_expect_success 'rebase -i -p --root with conflict (first part)' '
-@@ -268,8 +273,9 @@ test_expect_success 'fix the conflict' '
+@@ -30,10 +30,13 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 	int merge_level = XDL_MERGE_ZEALOUS_ALNUM;
+ 	int merge_style = 0, quiet = 0;
+ 	int nongit;
++	char *attribute_path = NULL;
  
- test_expect_success 'rebase -i -p --root with conflict (second part)' '
- 	git rebase --continue &&
--	git log --graph --topo-order --pretty=tformat:"%s" > conflict3 &&
--	test_cmp expect-conflict-p conflict3
-+	git rev-list --topo-order --parents --pretty="tformat:%s" HEAD |
-+	git name-rev --stdin --name-only --refs=refs/heads/conflict3 >out &&
-+	test_cmp expect-conflict-p out
- '
+ 	struct option options[] = {
+ 		OPT_BOOLEAN('p', "stdout", &to_stdout, "send results to standard output"),
+ 		OPT_SET_INT(0, "diff3", &merge_style, "use a diff3 based merge", XDL_MERGE_DIFF3),
++		OPT_STRING('a', "attribute-path", &attribute_path, "path",
++			   "apply work-tree conversion for the path"),
+ 		OPT__QUIET(&quiet),
+ 		OPT_CALLBACK('L', NULL, names, "name",
+ 			     "set labels for file1/orig_file/file2", &label_cb),
+@@ -73,6 +76,19 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 	for (i = 0; i < 3; i++)
+ 		free(mmfs[i].ptr);
  
- test_done
++	if (ret >= 0 && attribute_path) {
++		struct strbuf buf = STRBUF_INIT;
++		ret = convert_to_working_tree(attribute_path,
++					      result.ptr, result.size,
++					      &buf);
++		free(result.ptr);
++		if (!ret) {
++			size_t len;
++			result.ptr = strbuf_detach(&buf, &len);
++			result.size = len;
++		}
++	}
++
+ 	if (ret >= 0) {
+ 		const char *filename = argv[0];
+ 		FILE *f = to_stdout ? stdout : fopen(filename, "wb");
