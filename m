@@ -1,86 +1,137 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: Re: diff settings
-Date: Sun, 25 Jan 2009 21:06:47 -0500
-Message-ID: <497D1AB7.7000208@tedpavlic.com>
-References: <alpine.GSO.2.00.0901240936080.23073@kiwi.cs.ucla.edu> <87ocxwv6qg.fsf@iki.fi> <alpine.GSO.2.00.0901241159050.23073@kiwi.cs.ucla.edu> <497CD352.2060402@tedpavlic.com> <alpine.GSO.2.00.0901251307030.12651@kiwi.cs.ucla.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: check if-modified-since for feeds
+Date: Mon, 26 Jan 2009 03:18:05 +0100
+Message-ID: <200901260318.05301.jnareb@gmail.com>
+References: <1232686121-1800-5-git-send-email-giuseppe.bilotta@gmail.com> <1232923370-4427-1-git-send-email-giuseppe.bilotta@gmail.com> <1232923370-4427-2-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: Teemu Likonen <tlikonen@iki.fi>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Keith Cascio <keith@CS.UCLA.EDU>
-X-From: git-owner@vger.kernel.org Mon Jan 26 03:08:27 2009
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 03:19:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRGtj-0004n5-Ii
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 03:08:24 +0100
+	id 1LRH4Z-0006a1-KY
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 03:19:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754054AbZAZCGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 21:06:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751298AbZAZCGz
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 21:06:55 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:51509 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754023AbZAZCGy (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jan 2009 21:06:54 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 3080580D8035;
-	Sun, 25 Jan 2009 21:00:49 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3pqojfwmDdnp; Sun, 25 Jan 2009 21:00:49 -0500 (EST)
-Received: from TedBook.local (cpe-76-181-62-78.columbus.res.rr.com [76.181.62.78])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id B827080D8016;
-	Sun, 25 Jan 2009 21:00:48 -0500 (EST)
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <alpine.GSO.2.00.0901251307030.12651@kiwi.cs.ucla.edu>
+	id S1751172AbZAZCSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 21:18:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbZAZCSK
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 21:18:10 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:31090 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751043AbZAZCSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 21:18:09 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so3341633fgg.17
+        for <git@vger.kernel.org>; Sun, 25 Jan 2009 18:18:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=Ud4XsfePWZjcJZbqRMIstKUUirQKbM5tJSfiTv98V4I=;
+        b=LbIrWyv6OlcPai4MDvEPb42MJYTLNsQUAjz4BTbxHqdWu1pVruLE2ewUjhNz4db2Nv
+         bcUL/5KLcSdvfY4EAawfqRYjIaZM8h46tUcc83PrAoAgW1rSWkIL9HpzczQ7G9QGwUKC
+         Nohay0u1tGF4u7bbRW+8FtDMLtei8h631+2nA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=oTp6LCGZIirljYSVrT+rfVMfLql8DhSeQSco+l0A0w8EF619xpU6HPBu6fkrIvBtwL
+         I22miJNE6z7u1stXOVuBAmtdG6lAr7ma0DLuYWq16BuX2hXnQZeNqJb0W7wS/HjmY19O
+         vfsxPoR6uoKZG4Vsj2n/CKV44AUHfT+diECPo=
+Received: by 10.86.33.10 with SMTP id g10mr1590149fgg.40.1232936287329;
+        Sun, 25 Jan 2009 18:18:07 -0800 (PST)
+Received: from ?192.168.1.15? (abvk161.neoplus.adsl.tpnet.pl [83.8.208.161])
+        by mx.google.com with ESMTPS id d4sm3274225fga.51.2009.01.25.18.18.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 25 Jan 2009 18:18:06 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1232923370-4427-2-git-send-email-giuseppe.bilotta@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107159>
 
->> Mercurial has a "defaults.*" that does exactly what you want. That is, you can
->> [defaults]
->> diff = -w
->> and "hg diff" will automatically do "hg diff -w". Such a feature might be a
->> nice addition to git.
-> Thank you, that is very interesting.  I just submitted a patch this morning that
-> does exactly what you describe, but I called it "primer" instead of "defaults"
-> because it seemed more explicit.  Check it out.
+Should be "[PATCH 2/2]" or similar, just in case.
 
-I saw that. However, in Mercurial's case, the [defaults] section applies 
-to all commands (including new ones introduced by extensions). That is, 
-it looks like your patch adds a diff.primer, but Mercurial would add a 
-primer.* that allows you to have a primer.diff, primer.commit, etc.
+On Sun, 25 Jun 2009, Giuseppe Bilotta wrote:
 
-For example, wouldn't it be nice to have something like...
+> Offering Last-modified header
 
-[defaults]
-diff = -w
-commit = -a
+And skipping generating the body if client uses 'HEAD' request to
+get only Last-Modified header.
 
-etc.? Right now the only way you can do that is with aliases (e.g., I 
-have an alias from "ci" to "commit -a").
+>                              for feeds is only half the work: we should 
+> also check that same date against If-modified-since, and bail out early
+> with 304 Not Modified.
 
-This task is pretty easy in Mercurial because Mercurial porcelains are 
-implemented as modules that are all executed through the central "hg" 
-command. This isn't the case with git.
+Lacks signoff.
 
-(on a somewhat unrelated note, Mercurial does have a [diff] section that 
-allows for, say, forcing the use of git diff and other things)
+> ---
+>  gitweb/gitweb.perl |   20 +++++++++++++++++++-
+>  1 files changed, 19 insertions(+), 1 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 8c49c75..0a5d229 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -6015,7 +6015,25 @@ sub git_feed {
+>  	}
+>  	if (defined($commitlist[0])) {
+>  		%latest_commit = %{$commitlist[0]};
+> -		%latest_date   = parse_date($latest_commit{'committer_epoch'});
+> +		my $latest_epoch = $latest_commit{'committer_epoch'};
+> +		%latest_date   = parse_date($latest_epoch);
+> +		my $if_modified = $cgi->http('IF_MODIFIED_SINCE');
+> +		if (defined $if_modified) {
+> +			my $since;
+> +			if (eval { require HTTP::Date; 1; }) {
+> +				$since = HTTP::Date::str2time($if_modified);
+> +			} elsif (eval { require Time::ParseDate; 1; }) {
+> +				$since = Time::ParseDate::parsedate($if_modified, GMT => 1);
+> +			}
 
---Ted
+I'd really like to fallback on hand-parsing, as we have to parse date
+in well defined HTTP-date format (RFC-1123, update to RFC-822), which
+I think is what we send in Last-Modified header (or is it RFC-2822?).
 
+But that might be too much work. I like the checking for modules,
+and the fallback cascade, but could you explain why in this order?
 
+> +			if (defined $since && $latest_epoch <= $since) {
+> +				print $cgi->header(
+> +					-type => $content_type,
+> +					-charset => 'utf-8',
+> +					-last_modified => $latest_date{'rfc2822'},
+> +					-status => 304);
+
+I think we spell HTTP status messages in full (even if it is hidden
+in die_error subroutine), i.e.
+
++					-status => '304 Not Modified');
+
+> +				return;
+> +			}
+> +		}
+>  		print $cgi->header(
+>  			-type => $content_type,
+>  			-charset => 'utf-8',
+> -- 
+> 1.5.6.5
+> 
+> 
+
+P.S. It would be nice to have this mechanism (responding to
+cache-control headers such as If-Modified-Since) for all of gitweb,
+but I guess it is most critical for feeds, which are _polled_.
 
 -- 
-Ted Pavlic <ted@tedpavlic.com>
-
-   Please visit my ALS association page:
-         http://web.alsa.org/goto/tedpavlic
-   My family appreciates your support in the fight to defeat ALS.
+Jakub Narebski
+Poland
