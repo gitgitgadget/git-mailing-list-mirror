@@ -1,69 +1,72 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Translations in Git release?
-Date: Mon, 26 Jan 2009 11:07:15 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0901261104060.7798@ds9.cixit.se>
-References: <60646ee10901250941s34f7accem1b74fc201e895a41@mail.gmail.com>
- <glk19g$2f5$1@ger.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] http-push: refactor request url creation
+Date: Mon, 26 Jan 2009 11:41:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901261141070.14855@racer>
+References: <be6fef0d0901242208p635264e5jc1f95d784cd51450@mail.gmail.com>  <7vpribdszr.fsf@gitster.siamese.dyndns.org> <be6fef0d0901251752p5b34c053pb24dce8a35b06fce@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Johannes Gilger <heipei@hackvalue.de>
-X-From: git-owner@vger.kernel.org Mon Jan 26 11:17:47 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 11:44:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LROXD-000818-M4
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 11:17:40 +0100
+	id 1LROxW-0005kT-Cn
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 11:44:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101AbZAZKQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 05:16:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751073AbZAZKQO
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 05:16:14 -0500
-Received: from ds9.cixit.se ([193.15.169.228]:59170 "EHLO ds9.cixit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750939AbZAZKQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 05:16:13 -0500
-X-Greylist: delayed 532 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Jan 2009 05:16:13 EST
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id n0QA7Fac032260
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 26 Jan 2009 11:07:15 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id n0QA7FEa032255;
-	Mon, 26 Jan 2009 11:07:15 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <glk19g$2f5$1@ger.gmane.org>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Mon, 26 Jan 2009 11:07:15 +0100 (CET)
+	id S1751152AbZAZKlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 05:41:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751101AbZAZKlF
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 05:41:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33542 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750943AbZAZKlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 05:41:03 -0500
+Received: (qmail invoked by alias); 26 Jan 2009 10:40:59 -0000
+Received: from pD9EB294D.dip0.t-ipconnect.de (EHLO noname) [217.235.41.77]
+  by mail.gmx.net (mp005) with SMTP; 26 Jan 2009 11:40:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+7EFF/lpS7OByibSMxJ5oFLLrpOLQqewafymICY7
+	d4/WuW02GnYO7J
+X-X-Sender: gene099@racer
+In-Reply-To: <be6fef0d0901251752p5b34c053pb24dce8a35b06fce@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107184>
 
-Johannes Gilger:
+Hi,
 
-> My oppinion on localization of software (and its documentation) is
-> generally a negative one.
+On Mon, 26 Jan 2009, Ray Chuan wrote:
 
-That's the normal response from tech-savvy people. They usually dislike
-translations because they think it cannot convey the same ideas as the
-original.
+> On Mon, Jan 26, 2009 at 4:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> >> @@ -304,17 +312,7 @@ static void start_fetch_loose(struct
+> >> transfer_request *request)
+> >>
+> >>       git_SHA1_Init(&request->c);
+> >>
+> >> -     url = xmalloc(strlen(remote->url) + 50);
+> >> ...
+> >> -     strcpy(request->url, url);
+> >> +     request->url = get_remote_object_url(remote->url, hex, 0);
+> >> ...
+> >> -     curl_easy_setopt(slot->curl, CURLOPT_URL, url);
+> >> +     curl_easy_setopt(slot->curl, CURLOPT_URL, request->url);
+> >
+> > The original code gave a separate "url" to setop() but this gives the same
+> > string.  Does curl_easy_setop() copies the given string away?  IOW is this
+> > change safe?
+> >
+> 
+> curl strdup's it, so this is safe.
 
-However, for a lot of less techy people, having to use software and
-read documentation in a non-native language *is* a big hurdle for using
-computers. That is especially true when it comes to complex software,
-such as Git.
+I might have mentioned that things like this _need_ to go into the commit 
+message.
 
-I would very much like to see the core git commands translated. The
-command-line svn client already talks Swedish to me (cvs does not,
-though), and I would be very happy to teach git the same. I already did
-translate git-gui and gitk, which was as much for my own benefit as
-others.
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+Ciao,
+Dscho
