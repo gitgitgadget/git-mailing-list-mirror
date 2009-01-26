@@ -1,112 +1,97 @@
 From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH/RFC v1 2/6] remove some memcpy() and strchr() calls inside
- create_directories()
-Date: Mon, 26 Jan 2009 22:17:13 +0100
-Message-ID: <1233004637-15112-3-git-send-email-barvik@broadpark.no>
+Subject: [PATCH/RFC v1 4/6] use fstat() instead of lstat() when we have an
+ opened file
+Date: Mon, 26 Jan 2009 22:17:15 +0100
+Message-ID: <1233004637-15112-5-git-send-email-barvik@broadpark.no>
 References: <1233004637-15112-1-git-send-email-barvik@broadpark.no>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
 Cc: Kjetil Barvik <barvik@broadpark.no>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 26 22:19:11 2009
+X-From: git-owner@vger.kernel.org Mon Jan 26 22:19:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRYrE-0000UB-VP
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 22:19:01 +0100
+	id 1LRYrG-0000UB-G6
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 22:19:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752516AbZAZVR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 16:17:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752207AbZAZVR1
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 16:17:27 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:62233 "EHLO
+	id S1752572AbZAZVRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 16:17:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752402AbZAZVRb
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 16:17:31 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:62238 "EHLO
 	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752384AbZAZVRY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 16:17:24 -0500
+	with ESMTP id S1752511AbZAZVR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 16:17:28 -0500
 Received: from osl1sminn1.broadpark.no ([80.202.4.59])
  by osl1smout1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KE3003TOKGYXC90@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Mon, 26 Jan 2009 22:17:22 +0100 (CET)
+ with ESMTP id <0KE3003TYKH1XC90@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Mon, 26 Jan 2009 22:17:25 +0100 (CET)
 Received: from localhost.localdomain ([80.203.78.144])
  by osl1sminn1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
  with ESMTPA id <0KE3001KZKGTUNC0@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Mon, 26 Jan 2009 22:17:22 +0100 (CET)
+ git@vger.kernel.org; Mon, 26 Jan 2009 22:17:25 +0100 (CET)
 X-Mailer: git-send-email 1.6.1.349.g99fa5
 In-reply-to: <1233004637-15112-1-git-send-email-barvik@broadpark.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107283>
 
-Remove the call to memcpy() and strchr() for each path component
-tested, and instead add each path component as we go forward inside
-the while-loop.
-
-Impact: small optimisation
+Currently inside write_entry() we do an lstat(path, &st) call on a
+file which have just been opened inside the exact same function.  It
+should be better to call fstat(fd, &st) on the file while it is
+opened, and it should be at least as fast as the lstat() method.
 
 Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
 ---
-
-OK, maybe I instead should have tried to merge the function
-create_directories() with the safe_create_leading_directories() and
-*_const() functions?  What do pepople think?
-
-
- entry.c |   23 ++++++++++++++---------
- 1 files changed, 14 insertions(+), 9 deletions(-)
+ entry.c |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/entry.c b/entry.c
-index 05aa58d..c2404ea 100644
+index 8543755..c932ae8 100644
 --- a/entry.c
 +++ b/entry.c
-@@ -2,15 +2,19 @@
- #include "blob.h"
- #include "dir.h"
- 
--static void create_directories(const char *path, const struct checkout *state)
-+static void
-+create_directories(int path_len, const char *path, const struct checkout *state)
+@@ -96,11 +96,12 @@ write_entry(struct cache_entry *ce, char *path, const struct checkout *state,
+ 	    int to_tempfile)
  {
--	int len = strlen(path);
--	char *buf = xmalloc(len + 1);
--	const char *slash = path;
--
--	while ((slash = strchr(slash+1, '/')) != NULL) {
--		len = slash - path;
--		memcpy(buf, path, len);
-+	char *buf = xmalloc(path_len + 1);
-+	int len = 0;
-+
-+	while (len < path_len) {
-+		do {
-+			buf[len] = path[len];
-+			len++;
-+		} while (len < path_len && path[len] != '/');
-+		if (len >= path_len)
-+			break;
- 		buf[len] = 0;
+ 	unsigned int ce_mode_s_ifmt = ce->ce_mode & S_IFMT;
+-	int fd, ret;
++	int fd, ret, fstat_done = 0;
+ 	char *new;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	unsigned long size;
+ 	size_t wrote, newsize = 0;
++	struct stat st;
  
- 		/*
-@@ -190,6 +194,7 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
+ 	switch (ce_mode_s_ifmt) {
+ 	case S_IFREG:
+@@ -151,6 +152,10 @@ write_entry(struct cache_entry *ce, char *path, const struct checkout *state,
+ 		}
  
- 	memcpy(path, state->base_dir, len);
- 	strcpy(path + len, ce->name);
-+	len += ce_namelen(ce);
+ 		wrote = write_in_full(fd, new, size);
++		if (state->refresh_cache) {
++			fstat(fd, &st);
++			fstat_done = 1;
++		}
+ 		close(fd);
+ 		free(new);
+ 		if (wrote != size)
+@@ -174,8 +179,8 @@ write_entry(struct cache_entry *ce, char *path, const struct checkout *state,
+ 	}
  
- 	if (!lstat(path, &st)) {
- 		unsigned changed = ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID);
-@@ -218,6 +223,6 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
- 			return error("unable to unlink old '%s' (%s)", path, strerror(errno));
- 	} else if (state->not_new)
- 		return 0;
--	create_directories(path, state);
-+	create_directories(len, path, state);
- 	return write_entry(ce, path, state, 0);
- }
+ 	if (state->refresh_cache) {
+-		struct stat st;
+-		lstat(ce->name, &st);
++		if (!fstat_done)
++			lstat(ce->name, &st);
+ 		fill_stat_cache_info(ce, &st);
+ 	}
+ 	return 0;
 -- 
 1.6.1.349.g99fa5
