@@ -1,58 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Add submodule-support to git archive
-Date: Sun, 25 Jan 2009 16:41:34 -0800
-Message-ID: <7vmydedhkx.fsf@gitster.siamese.dyndns.org>
-References: <1232844726-14902-1-git-send-email-hjemli@gmail.com>
- <20090125135340.6117@nanako3.lavabit.com>
- <8c5c35580901250018x6827291cj36e6bcb10afa9b27@mail.gmail.com>
- <7veiyrdszf.fsf@gitster.siamese.dyndns.org>
- <8c5c35580901251512q5058dde3rdfae81979c46c36a@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] Valgrind support: check for more than just programming
+ errors
+Date: Mon, 26 Jan 2009 01:43:13 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901260142100.14855@racer>
+References: <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302> <alpine.DEB.1.00.0901201602410.5159@intel-tinevez-2-302> <20090121001219.GA18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210209580.19014@racer> <20090121190201.GA21686@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0901212137130.3586@pacific.mpi-cbg.de> <20090121215318.GA9107@sigill.intra.peff.net> <alpine.DEB.1.00.0901212332030.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901260014470.14855@racer> <alpine.DEB.1.00.0901260019160.14855@racer>
+ <20090125234249.GE19099@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 26 01:43:16 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 26 01:44:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRFZE-0007Fd-Kb
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 01:43:09 +0100
+	id 1LRFaD-0007Uy-Jh
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 01:44:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750919AbZAZAlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 19:41:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbZAZAlm
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 19:41:42 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50063 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750786AbZAZAlm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 19:41:42 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C32261D426;
-	Sun, 25 Jan 2009 19:41:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D37781D3EA; Sun,
- 25 Jan 2009 19:41:35 -0500 (EST)
-In-Reply-To: <8c5c35580901251512q5058dde3rdfae81979c46c36a@mail.gmail.com>
- (Lars Hjemli's message of "Mon, 26 Jan 2009 00:12:25 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 18CF9160-EB42-11DD-9927-BE78113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1750943AbZAZAmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 19:42:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750924AbZAZAmo
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 19:42:44 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48897 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750880AbZAZAmn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 19:42:43 -0500
+Received: (qmail invoked by alias); 26 Jan 2009 00:42:41 -0000
+Received: from pD9EB3E0E.dip0.t-ipconnect.de (EHLO noname) [217.235.62.14]
+  by mail.gmx.net (mp061) with SMTP; 26 Jan 2009 01:42:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18L8UtilNcLWZ27WweUPSls3ULskqs+J9gKRSUpO9
+	CQ/6FFoA76bVQW
+X-X-Sender: gene099@racer
+In-Reply-To: <20090125234249.GE19099@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107148>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+Hi,
 
-> If you want me to build on top of the series in next anyways, would it
-> be acceptable if the first patch on top of ee306d2d59 reverts the
-> previous attempt? I think the rest of the series will be easier to
-> review that way.
+On Sun, 25 Jan 2009, Jeff King wrote:
 
-Ok, then I'll simply revert and then queue the new ones on top of it.
+> On Mon, Jan 26, 2009 at 12:20:21AM +0100, Johannes Schindelin wrote:
+> 
+> > While it is not strictly necessary to look through the whole PATH to
+> > find git binaries to override, it is in line with running an expensive
+> > test (which valgrind is) to make extra sure that no binary is tested
+> > that actually comes from the git.git checkout.
+> 
+> Should this be "...no binary is tested that _doesn't_ actually come from
+> the git.git checkout"?
 
-Thanks.
+Yep, that was half the change to "that only binaries are tested...".
+
+Thanks,
+Dscho
