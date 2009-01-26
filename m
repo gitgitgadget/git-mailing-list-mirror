@@ -1,70 +1,103 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Translations [of Documentation] in Git release?
-Date: Mon, 26 Jan 2009 14:34:20 +0100
-Message-ID: <20090126133420.GK21473@genesis.frugalware.org>
-References: <60646ee10901250941s34f7accem1b74fc201e895a41@mail.gmail.com> <m3hc3mxn9d.fsf@localhost.localdomain> <Pine.LNX.4.64.0901261426350.7798@ds9.cixit.se>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="07UuamFNDT4U/3KT"
-Cc: Jakub Narebski <jnareb@gmail.com>, Dill <sarpulhu@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Jan 26 14:35:48 2009
+From: "Nathan W. Panike" <nathan.panike@gmail.com>
+Subject: [PATCH] Allow format-patch to create patches for merges
+Date: Mon, 26 Jan 2009 08:04:10 -0600
+Message-ID: <1232978650-7008-1-git-send-email-nathan.panike@gmail.com>
+Cc: "Nathan W. Panike" <nathan.panike@gmail.com>,
+	Johannes.Schindelin@gmx.de, gitster@pobox.com, aspotashev@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 26 15:06:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRRcy-0006As-9d
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 14:35:48 +0100
+	id 1LRS5t-0007Kf-M5
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 15:05:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751152AbZAZNeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 08:34:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750872AbZAZNeX
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 08:34:23 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:45991 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750738AbZAZNeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 08:34:22 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id B7476580C8;
-	Mon, 26 Jan 2009 14:34:21 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 1BE794465E;
-	Mon, 26 Jan 2009 14:34:20 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id A322E11B87A9; Mon, 26 Jan 2009 14:34:20 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0901261426350.7798@ds9.cixit.se>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751422AbZAZOEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 09:04:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbZAZOEP
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 09:04:15 -0500
+Received: from wf-out-1314.google.com ([209.85.200.168]:10344 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751331AbZAZOEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 09:04:14 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so6895179wfd.4
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 06:04:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=rIGtNsyqpfBtGS/94nzEW34cN2X/Rq1lU47FezLKa/w=;
+        b=bSYD+/U5jMllYSKz9n/r5sTU35qGW6qe3mdljWCZW3P6Td3SsqcNRMZUgjKzls+d9u
+         RsWr8t35UXQlZcGrV3oftE9fwUgvGovPVd+RABLn6dRB6Bhg+yNsvw0+bZvSBdl1PbIV
+         TY/PHt8FZRb5tXx70gb2gzV6gAl80XYdMKAsI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=prm4f+1LmStyhP8ZxPGfjutYfmuHBbXssxDyrOnnPtz453AkejRVJS1U1UWmRncjQJ
+         Ukk/nmVHbEAGT4on/5AM3mdfK8be8WI41KO12SQ7x059WzgUTAI+ePWIeGYt6AqA+dNx
+         985wY1lv46/J3ozS8TnZVMqBvsEUFD37YonHs=
+Received: by 10.142.125.4 with SMTP id x4mr357805wfc.223.1232978653836;
+        Mon, 26 Jan 2009 06:04:13 -0800 (PST)
+Received: from localhost (adsl-76-204-100-245.dsl.mdsnwi.sbcglobal.net [76.204.100.245])
+        by mx.google.com with ESMTPS id 22sm23081242wfg.30.2009.01.26.06.04.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 26 Jan 2009 06:04:13 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.1.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107211>
 
+The behavior for git format-patch is to ignore merge commits, producing an
+empty patch.  The code does not allow the user to change this behavior. This
+patch changes that behavior by allowing the user to specify -c or -m at the
+command line to produce a patch for a merge commit.
+---
+Hi:
 
---07UuamFNDT4U/3KT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I am sure there are good reasons for the current behavior of format-patch, but
+it seems to me that if the user explicitly wants to produce a patch for a merge
+commit, he should be allowed to do so.  If merge_commit represents a merge,
+then this patch allows the user to issue the command
 
-On Mon, Jan 26, 2009 at 02:27:17PM +0100, Peter Krefting <peter@softwolves.pp.se> wrote:
-> There is a lot of documentation being translated using PO files. po4a -
-> http://po4a.alioth.debian.org/ - is a nice starting point for that.
+git format-patch -m -1 $merge_commit 
 
-Actually it supports asciidoc files as well, but only the CVS version,
-so probably the po4a version installed on most machines (as a distro
-package) is not capable of managing asciidoc files.
+or 
 
---07UuamFNDT4U/3KT
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+git format-patch -c -1 $merge_commit
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+and actually produce a patch.  The current behavior is that neither command
+will produce a patch.  With or without the patch applied, the command
 
-iEYEARECAAYFAkl9u9wACgkQe81tAgORUJZuLACfTucevzSUcRDsg9F48LEXaFE7
-dyUAn0oC0Te3HYUVDL0oLoAwvM4EBfdl
-=Cj3E
------END PGP SIGNATURE-----
+git format-patch -1 $merge_commit
 
---07UuamFNDT4U/3KT--
+does not produce a patch when merge_commit is a merge.  Thus the patch does not
+change the default behavior of ignoring merges, at least by the limited testing
+I have done.  
+
+Thanks for your consideration.
+
+Nathan Panike
+
+ builtin-log.c |    4 ----
+ 1 files changed, 0 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-log.c b/builtin-log.c
+index 2ae39af..ea4729d 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -994,10 +994,6 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
+-		/* ignore merges */
+-		if (commit->parents && commit->parents->next)
+-			continue;
+-
+ 		if (ignore_if_in_upstream &&
+ 				has_commit_patch_id(commit, &ids))
+ 			continue;
+-- 
+1.6.1.1.GIT
