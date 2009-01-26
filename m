@@ -1,113 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.6.1.1
-Date: Sun, 25 Jan 2009 17:19:16 -0800
-Message-ID: <7vfxj6dfu3.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH] gitweb: ensure the default stylesheet is accessible
+Date: Mon, 26 Jan 2009 02:28:42 +0100
+Message-ID: <1232933322-9186-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 26 02:20:58 2009
+X-From: git-owner@vger.kernel.org Mon Jan 26 02:30:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRG9j-00054t-5x
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 02:20:51 +0100
+	id 1LRGIY-0006T6-Tw
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 02:29:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750991AbZAZBT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 20:19:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750912AbZAZBT0
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 20:19:26 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50138 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750855AbZAZBT0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 20:19:26 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A16BE93625;
-	Sun, 25 Jan 2009 20:19:24 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B751893620; Sun,
- 25 Jan 2009 20:19:19 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5E317BD8-EB47-11DD-9F20-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1750964AbZAZB22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 20:28:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750944AbZAZB22
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 20:28:28 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:4481 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750868AbZAZB21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 20:28:27 -0500
+Received: by fg-out-1718.google.com with SMTP id 19so3332683fgg.17
+        for <git@vger.kernel.org>; Sun, 25 Jan 2009 17:28:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=fWxI/96H3btFPLEv4Z2uoC67HaIv/j+0g8+OzzUNgtU=;
+        b=ec+VCaqkdSGPs9HXuxlDjNZzZoRUgJsX0eFWTjFwGCHVb28kmK5lidD/mBjIzGN7S1
+         gT3vD2xxD5+6R5pYBSnrreI/c4MYllMsOvibTkAk1wYtpYLUiuaaAKXJjPRgR4RKXR8D
+         8ihwY2ZlxsHuC9NGU5YDadr+ZHt7BGYhS1et0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Ak2m5iBbDOfrvTBJVj/R0bcsRu1GobxzaNKpMoXRq8GL0oT6UT2JXOt5Rv/oGIfFRA
+         X3KrDvs+eNoCFHVQ35SNhSvwWF+hdi0wrpgxG8Y0iqdQOgyyRx/WXlmyavEn+5K+giJ1
+         h7MM7Gfg1SUTVA++BHRgwBa4fLuB9lQ32oW80=
+Received: by 10.86.33.10 with SMTP id g10mr621791fgg.75.1232933304934;
+        Sun, 25 Jan 2009 17:28:24 -0800 (PST)
+Received: from localhost ([94.37.14.37])
+        by mx.google.com with ESMTPS id l19sm3738558fgb.42.2009.01.25.17.28.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 25 Jan 2009 17:28:24 -0800 (PST)
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107154>
 
-The latest maintenance release GIT 1.6.1.1 is available at the
-usual places:
+On some installations the CSS fails to be linked correctly when
+path_info is enabled, since the link refers to "gitweb.css", whereas it
+should be "${my_uri}/gitweb.css". Fix by setting the appropriate default
+in the Makefile.
 
-  http://www.kernel.org/pub/software/scm/git/
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-  git-1.6.1.1.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.6.1.1.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.6.1.1.tar.{gz,bz2}		(preformatted docs)
-
-The RPM binary packages for a few architectures are also provided
-as courtesy.
-
-  RPMS/$arch/git-*-1.6.1.1-1.fc9.$arch.rpm	(RPM)
-
-----------------------------------------------------------------
-GIT v1.6.1.1 Release Notes
-==========================
-
-Fixes since v1.6.1
-------------------
-
-* "git add frotz/nitfol" when "frotz" is a submodule should have errored
-  out, but it didn't.
-
-* "git apply" took file modes from the patch text and updated the mode
-  bits of the target tree even when the patch was not about mode changes.
-
-* "git bisect view" on Cygwin did not launch gitk
-
-* "git checkout $tree" did not trigger an error.
-
-* "git commit" tried to remove COMMIT_EDITMSG from the work tree by mistake.
-
-* "git describe --all" complained when a commit is described with a tag,
-  which was nonsense.
-
-* "git diff --no-index --" did not trigger no-index (aka "use git-diff as
-  a replacement of diff on untracked files") behaviour.
-
-* "git format-patch -1 HEAD" on a root commit failed to produce patch
-  text.
-
-* "git fsck branch" did not work as advertised; instead it behaved the same
-  way as "git fsck".
-
-* "git log --pretty=format:%s" did not handle a multi-line subject the
-  same way as built-in log listers (i.e. shortlog, --pretty=oneline, etc.)
-
-* "git daemon", and "git merge-file" are more careful when freopen fails
-  and barf, instead of going on and writing to unopened filehandle.
-
-* "git http-push" did not like some RFC 4918 compliant DAV server
-  responses.
-
-* "git merge -s recursive" mistakenly overwritten an untracked file in the
-  work tree upon delete/modify conflict.
-
-* "git merge -s recursive" didn't leave the index unmerged for entries with
-  rename/delete conflictd.
-
-* "git merge -s recursive" clobbered untracked files in the work tree.
-
-* "git mv -k" with more than one errorneous paths misbehaved.
-
-* "git read-tree -m -u" hence branch switching incorrectly lost a
-  subdirectory in rare cases.
-
-* "git rebase -i" issued an unnecessary error message upon a user error of
-  marking the first commit to be "squash"ed.
-
-* "git shortlog" did not format a commit message with multi-line
-  subject correctly.
-
-Comes with many documentation updates.
+diff --git a/Makefile b/Makefile
+index 4ef8234..4f60de9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -215,7 +215,7 @@ GITWEB_STRICT_EXPORT =
+ GITWEB_BASE_URL =
+ GITWEB_LIST =
+ GITWEB_HOMETEXT = indextext.html
+-GITWEB_CSS = gitweb.css
++GITWEB_CSS = $${my_uri}/gitweb.css
+ GITWEB_LOGO = git-logo.png
+ GITWEB_FAVICON = git-favicon.png
+ GITWEB_SITE_HEADER =
+-- 
+1.5.6.5
