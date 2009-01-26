@@ -1,78 +1,100 @@
-From: Keith Cascio <keith@CS.UCLA.EDU>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH v1 1/3] Introduce config variable "diff.primer"
-Date: Sun, 25 Jan 2009 18:37:26 -0800 (PST)
-Message-ID: <alpine.GSO.2.00.0901251836150.12651@kiwi.cs.ucla.edu>
-References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <1232904657-31831-2-git-send-email-keith@cs.ucla.edu> <7v1vurf7lq.fsf@gitster.siamese.dyndns.org> <7v1vuqdcjp.fsf@gitster.siamese.dyndns.org>
+Date: Sun, 25 Jan 2009 22:12:07 -0500
+Message-ID: <20090126031206.GB14277@sigill.intra.peff.net>
+References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <1232904657-31831-2-git-send-email-keith@cs.ucla.edu> <7v1vurf7lq.fsf@gitster.siamese.dyndns.org> <alpine.GSO.2.00.0901251345240.12651@kiwi.cs.ucla.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 26 03:42:15 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Keith Cascio <keith@CS.UCLA.EDU>
+X-From: git-owner@vger.kernel.org Mon Jan 26 04:13:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRHQQ-0001Hk-5k
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 03:42:10 +0100
+	id 1LRHur-0005fC-D9
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 04:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751127AbZAZChh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 21:37:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750970AbZAZChg
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 21:37:36 -0500
-Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:41597 "EHLO kiwi.cs.ucla.edu"
+	id S1751224AbZAZDMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 22:12:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751154AbZAZDMM
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 22:12:12 -0500
+Received: from peff.net ([208.65.91.99]:58603 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750868AbZAZChf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 21:37:35 -0500
-Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n0Q2bR76021212;
-	Sun, 25 Jan 2009 18:37:27 -0800 (PST)
-Received: from localhost (keith@localhost)
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n0Q2bQh0021209;
-	Sun, 25 Jan 2009 18:37:27 -0800 (PST)
-X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
-In-Reply-To: <7v1vuqdcjp.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
+	id S1750970AbZAZDML (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 22:12:11 -0500
+Received: (qmail 31872 invoked by uid 107); 26 Jan 2009 03:12:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 25 Jan 2009 22:12:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Jan 2009 22:12:07 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.GSO.2.00.0901251345240.12651@kiwi.cs.ucla.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107163>
 
-On Sun, 25 Jan 2009, Junio C Hamano wrote:
+On Sun, Jan 25, 2009 at 06:40:02PM -0800, Keith Cascio wrote:
 
-> I suspect it is pretty much orthogonal to the "use user's default without 
-> being told from the command line", but it might be a worthy goal to introduce 
-> a mechanism for the scripts to accept "safe" default options from the end user 
-> while rejecting undesirable ones that would interfere with the way it uses 
-> plumbing.
-> 
-> For example, gitk drives "git rev-list" and many options you give from the 
-> command line (e.g. "gitk --all --simplify-merges -- drivers/") are passed to 
-> the underlying plumbing.
-> 
-> This is a double edged sword.  When we add new features to git-rev-list, (e.g. 
-> --simplify-merges or --simplify-by-decoration are fairly recent inventions 
-> that did not exist when gitk was written originally), some of them can be 
-> safely passed and automagically translates to a new feature in gitk.  
-> However, use of some options (e.g. --reverse) breaks the assumption the tool 
-> makes on the output from the underlying plumbing and should not be accepted 
-> from the end-user.
-> 
-> It would be a good addition to our toolset if scripts like gitk can declare 
-> which options and features are safe to accept from the end user to pass down 
-> to the plumbing tools.  "git rev-parse", which lets the script sift between 
-> options that are meant to affect ancestry traversal and the ones that are for 
-> other (primarily diff family) commands, does not do anything fancy like that, 
-> but it would be a logical place to do this sort of thing.
-> 
-> And it is not limited to "scripts" use.  A recent topic on rejecting colouring 
-> options from being given to format-patch would also be helped with such a 
-> mechanism if it is available to builtins.
-> 
-> Just an idle thought.
+> I agree opt-in is always better with new grammar/semantics.  However,
+> the constraint I was trying to live inside is: if I call "git diff" on
+> the command line with no options at all, then primer active.  Yet
+> perhaps that's not possible, and the only way to do primer is to
+> require opt-in spelled "--primer".  Then I can tell bash to alias
+> 'gitdiff' as 'git diff --primer' and use that on the command line.
 
+What's the point of aliasing something that isn't "git diff" to "git
+diff --primer"? At that point, couldn't you just do away with --primer
+entirely and alias "gitdiff" to "git diff --whatever --your --primer
+--options --are"?
 
-Yes yes yes yes!!!!!  I've been working on a response to your previous message, 
-in which I address exactly this possibility.  Coming soon.
+Anyway, I think that isn't necessary. We _do_ have a mechanism to handle
+this already: some commands are plumbing, and must have stable
+interfaces, and some commands are porcelain, and can do your magic
+automatically. For example, gitk doesn't actually call "git diff"; it
+calls "git diff-tree", "git diff-index", etc.
+
+So if you just want this from the command line, then I think it is safe
+to have "git diff" always respect "diff.primer", and scripts shouldn't
+be impacted.
+
+But this can break down in two ways:
+
+  1. Sometimes we blur the line of plumbing and porcelain, where
+     functionality is available only through plumbing. For example,
+     gitweb until recently called "git diff" because there is no other
+     way to diff two arbitrary blobs. But the solution there is, I
+     think, to make that functionality available through plumbing. Not
+     to disallow enhancements to porcelain.
+
+  2. When you want a script to take advantage of porcelain-like options,
+     the situation is much more difficult (and this is what Junio was
+     talking about in his last mail).
+
+     What I think is sane is:
+
+       a. You grow new feature X.
+       b. Porcelain takes advantage of any config that asks us to use X.
+       c. Plumbing does _not_ respect such config, but will respect
+          command line options.
+       d. Scripts control which command line options they use; when the
+          script writer decides feature X will not interfere (either
+          because it is harmless to the script's use, or because the
+          script is enhanced to handle the new behavior), then it can
+          pass an "--allow-X" command line option.
+
+     And of course that has two disadvantages (and I'm running out of
+     numbering schemes):
+
+       I. You have to wait for the script to be updated before you can
+          start using X, even if _you_ know that it's harmless.
+
+      II. Point (d) is not always true. Junio mentioned the fact that
+          gitk passes command line parameters blindly to rev-list, which
+          is potentially unsafe. Up until now, our attitude has been "if
+          it hurts, don't do it". In other words, if you call "gitk
+          --reverse" and it looks ugly, then it is your fault. :)
+
+-Peff
