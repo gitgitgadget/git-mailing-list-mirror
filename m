@@ -1,94 +1,100 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] gitweb: ensure the default stylesheet is accessible
-Date: Mon, 26 Jan 2009 12:35:36 +0100
-Message-ID: <cb7bb73a0901260335n3cc53295m162ca56810702596@mail.gmail.com>
-References: <1232933322-9186-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200901260248.22120.jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: last-modified time should be commiter, not author
+Date: Mon, 26 Jan 2009 12:43:11 +0100
+Message-ID: <cb7bb73a0901260343leebb09fld144f1dec7c8470a@mail.gmail.com>
+References: <1232686121-1800-5-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1232923370-4427-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200901260254.49919.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 26 12:42:29 2009
+X-From: git-owner@vger.kernel.org Mon Jan 26 12:44:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRPrJ-0001py-6L
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 12:42:29 +0100
+	id 1LRPtR-0002JR-5u
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 12:44:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751420AbZAZLlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 06:41:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbZAZLlF
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 06:41:05 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:50279 "EHLO
+	id S1751457AbZAZLnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 06:43:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbZAZLnP
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 06:43:15 -0500
+Received: from mail-ew0-f21.google.com ([209.85.219.21]:45022 "EHLO
 	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751394AbZAZLlE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 06:41:04 -0500
-X-Greylist: delayed 323 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Jan 2009 06:41:03 EST
-Received: by ewy14 with SMTP id 14so323180ewy.13
-        for <git@vger.kernel.org>; Mon, 26 Jan 2009 03:41:00 -0800 (PST)
+	with ESMTP id S1751448AbZAZLnO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 06:43:14 -0500
+Received: by ewy14 with SMTP id 14so324735ewy.13
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 03:43:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=j+kfdvlLrAytoqItXb0epo+APSvMzP5qlEPagqShgx0=;
-        b=MTuDXg98gsi/sN+e16vRuJsV/nU0AEgCx93H+ek2lpDb8g8ixe1B+E93/N2G3kE4Ng
-         ghdHRPb7eQWeK4Qdy4eWLdToZjgpXv22MMHoAcinNHnvi9OG4l5anrljarKTprjpFxkc
-         V0360wbHC2POCRhR6a94KpUI69NprY31nh0Bk=
+        bh=/D7PmlBdGUjhawzuK282LgZ7IfnUJtKKPtAYBeYEFso=;
+        b=FPAj2tsclc+Cu+M2ldxxt/3MiBWCn+25RcDxR9rgegS1OK0D19UoPn+hDSoGe7lYuO
+         ZgfNuJkHZL3DEDaToasB/xob8Ip7NOfNfVvpdIkW7o1+mQscjHReUim1Un5uQd96NiWN
+         4dBI3CD9RjNGDMvktlgQQopaXbyUWaza6rbyM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=Zq0RtqadXRCXERdER2oZqYFDJJbmq1aG+muYY1K0TRfsu6qQMcafeYKzNUJYRyGEko
-         k2bAd1Z84ZkML1XaIuGe5oIeVCxU/Wuxcz3PZQeq5f9TsHeBMi9L/ZsaJk7QAeAq3X+L
-         YUgFgCzvptVMFR6QhaTGKxx7l3zuUj4GU6dw4=
-Received: by 10.210.139.15 with SMTP id m15mr3905039ebd.69.1232969736740; Mon, 
-	26 Jan 2009 03:35:36 -0800 (PST)
-In-Reply-To: <200901260248.22120.jnareb@gmail.com>
+        b=JbZZSSMTqhvneecRMjdATlS2y0xCTrXfid+jyxJmlJgYcOWT0ViBTbRoWYQ855XMu7
+         CG4ul5L5xXgnJqYiYZm0eWNqhKJTGi+cVq2tGx1YzxyMqxZeTgbFLsySY6mhLkN/twjQ
+         WqVk7vl+EGF/ZCMyPG5ndfw4hCu5agY1Y/Yos=
+Received: by 10.210.65.15 with SMTP id n15mr6550257eba.186.1232970191815; Mon, 
+	26 Jan 2009 03:43:11 -0800 (PST)
+In-Reply-To: <200901260254.49919.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107194>
 
-On Mon, Jan 26, 2009 at 2:48 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Mon, 26 Jan 2009, Giuseppe Bilotta wrote:
+On Mon, Jan 26, 2009 at 2:54 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Sun, 25 Jan 2009, Giuseppe Bilotta wrote:
 >
->> On some installations the CSS fails to be linked correctly when
->> path_info is enabled, since the link refers to "gitweb.css", whereas it
->> should be "${my_uri}/gitweb.css". Fix by setting the appropriate default
->> in the Makefile.
+>> Subject: [PATCH] gitweb: last-modified time should be commiter, not author
 >
-> Why "on some installations"? What does "some" mean? I don't think it
-> is something indeterministic: please spell when one can have problems
-> with linking CSS file.
+> Should be really either "[PATCH 1/2]" or "[PATCH 5/4]" or "[PATCH 5/6]"
+> just in case for the next patch, because next patch _depends_ on this
+> one, and just in case of threading problem it should be marked as it;
+> it also makes easier to apply patches from emails saved as individual
+> files each.
 
-The truth is, I haven't the slightest idea. It works fine on my
-machine, it doesn't without the patch on ruby-rbot.org, but I really
-don't know why.
+I'll resend the whole 6-patch series cc'ing Junio too
 
-> Wouldn't it be simpler to deal with problem of base URL when using
-> path_info gitweb URLs to add BASE element to HTML head if we use
-> path_info? Something like:
+>> Use the committer time for the last-modified header to ensure a more
+>> correct guess of the last time the repository was modified.
 >
->        if ($ENV{'PATH_INFO'}) {  # $path_info is unfortunately stripped
->                print qq(<base href="$my_uri">\n);
->        }
+> Good catch, good thinking IMHO. Committer date has much better chance
+> to be monotonic than author date, and is more close related to
+> _publishing_ date (author date is more of _creation_ date).
+
+BTW, it is still not good enough. Consider a remote repo to which you
+just pushed some changes you commited last week. The last-modified
+date would be last-week, even if you just pushed those changes.
+
+This used to be a problem for us on ruby-rbot because even when
+watching the feed we would get no updates on the irc channel (the bot
+thought the feed could still be cached). the if-modified thing seems
+to have fixed this though.
+
+> Lack signoff; if Junio forges it (or you reply that it should be
+> signed off), you can add from me
 >
-> somewhere in git_header_html() subroutine?
+> Acked-by: Jakub Narebski <jnareb@gmail.com>
+>
+>
+> P.S. I wonder what other web interfaces do, for example cgit. I guess
+> that web interfaces for other SCMs like SVN::Web, ViewVC etc. do not
+> have this problem because they have only one, single date.
 
-Ah, this might work. I'll test it.
-
-> It is not the same case for git-logo.png and git-favicon.png as for
-> gitweb.css? If it is not, please explain why in commit message.
-> If it is, then your patch is only partial solution to path_info
-> problem.
-
-Oh, interesting, true, I hadn't noticed.
-
-I'll look into the base thing.
+HEAD'ing a cgit atom url gives a last-modified date one hour from the
+request, it seems. This is actually a typical (and not nice) behaviour
+of many CGI scripts.
 
 -- 
 Giuseppe "Oblomov" Bilotta
