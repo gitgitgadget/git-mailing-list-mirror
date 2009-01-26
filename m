@@ -1,141 +1,104 @@
 From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH/RFC v1 1/6] symlinks.c: small cleanup and optimisation
-Date: Mon, 26 Jan 2009 22:17:12 +0100
-Message-ID: <1233004637-15112-2-git-send-email-barvik@broadpark.no>
-References: <1233004637-15112-1-git-send-email-barvik@broadpark.no>
+Subject: [PATCH/RFC v1 0/6] git checkout: more cleanups, optimisation,
+ less lstat() calls
+Date: Mon, 26 Jan 2009 22:17:11 +0100
+Message-ID: <1233004637-15112-1-git-send-email-barvik@broadpark.no>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
 Cc: Kjetil Barvik <barvik@broadpark.no>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 26 22:19:01 2009
+X-From: git-owner@vger.kernel.org Mon Jan 26 22:19:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRYrE-0000UB-7f
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 22:19:00 +0100
+	id 1LRYrD-0000UB-G4
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 22:18:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752471AbZAZVRZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 16:17:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbZAZVRY
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 16:17:24 -0500
+	id S1752179AbZAZVRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 16:17:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752229AbZAZVRW
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 16:17:22 -0500
 Received: from osl1smout1.broadpark.no ([80.202.4.58]:62233 "EHLO
 	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752193AbZAZVRW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 16:17:22 -0500
+	with ESMTP id S1752003AbZAZVRV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 16:17:21 -0500
 Received: from osl1sminn1.broadpark.no ([80.202.4.59])
  by osl1smout1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KE3003TMKGXXC90@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Mon, 26 Jan 2009 22:17:21 +0100 (CET)
+ with ESMTP id <0KE3003TKKGVXC90@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Mon, 26 Jan 2009 22:17:19 +0100 (CET)
 Received: from localhost.localdomain ([80.203.78.144])
  by osl1sminn1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
  with ESMTPA id <0KE3001KZKGTUNC0@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Mon, 26 Jan 2009 22:17:21 +0100 (CET)
+ git@vger.kernel.org; Mon, 26 Jan 2009 22:17:19 +0100 (CET)
 X-Mailer: git-send-email 1.6.1.349.g99fa5
-In-reply-to: <1233004637-15112-1-git-send-email-barvik@broadpark.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107281>
 
-Simplify the if-else test in longest_match_lstat_cache() such that we
-only have one simple if test.  Instead of testing for 'i == cache.len'
-or 'i == len', we transform this to a common test for 'i == max_len'.
+Here is 6 small patches which should further improve the time it take
+to do 'git checkout'.  After the 6 patches, the numbers from the 'git
+checkout -q my-v2.6.27' test, should now look like this:
 
-And to further optimise we use 'i >= max_len' instead of 'i ==
-max_len', the reason is that it is now the exact opposite of one part
-inside the while-loop termination expression 'i < max_len && name[i]
-== cache.path[i]', and then the compiler can hopefully/probably reuse
-a test-result from it.
+TOTAL        136752 100.000% OK:124567 NOT: 12185   8.641698 sec   63 usec/call
+lstat64       55502  40.586% OK: 49122 NOT:  6380   2.463762 sec   44 usec/call
+    strings   55502 tot  30163 uniq   1.840 /uniq   2.463762 sec   44 usec/call
+    files     47122 tot  23813 uniq   1.979 /uniq   2.070486 sec   44 usec/call
+    dirs       2000 tot   1436 uniq   1.393 /uniq   0.087281 sec   44 usec/call
+    errors     6380 tot   5187 uniq   1.230 /uniq   0.305995 sec   48 usec/call
+                  4   0.007% OK:     3 NOT:     1  "arch/sh/boards"
+                  3   0.005% OK:     3 NOT:     0  ".git/HEAD"
+                  3   0.005% OK:     3 NOT:     0  ".git/refs/heads/my-v2.6.27"
+                  3   0.005% OK:     3 NOT:     0  ".gitignore"
+                  3   0.005% OK:     3 NOT:     0  ".mailmap"
+                  3   0.005% OK:     3 NOT:     0  "CREDITS"
+                  3   0.005% OK:     3 NOT:     0  "Documentation"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/00-INDEX"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/ABI/testing/sysfs-block"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/ABI/testing/sysfs-firmware-acpi"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/CodingStyle"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/DMA-API.txt"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/DMA-mapping.txt"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/DocBook/Makefile"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/DocBook/gadget.tmpl"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/DocBook/kernel-api.tmpl"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/DocBook/kernel-locking.tmpl"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/DocBook/procfs-guide.tmpl"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/DocBook/procfs_example.c"
+                  3   0.005% OK:     3 NOT:     0  "Documentation/DocBook/rapidio.tmpl"
+<snipp>
+fstat64       14403  10.532% OK: 14403 NOT:     0   0.179938 sec   12 usec/call
 
-We do similar transformations inside the lstat_cache() and the
-invalidate_lstat_cache() functions.
+So, since last time, and because of patch 4/6, almost 14 400 of the
+lstat() calls has now become fstat() calls, and it seems we have saved
+(* 14403 (- 44 12)) = 460 896 microseconds system time because of
+this.  I am planing to do a more complete and long-running
+/usr/bin/time test, to get real numbers.
 
-The result is a little smaller text-size as shown below:
+With both patch-series, the count of lstat() calls for this particular
+test have dropped from 120 954 to 55 502, which is a total reduction
+of 65 452 calls or 54%.
 
- ~/git/git $ size symlinks_??_*
-   text	   data	    bss	    dec	    hex	filename
-   1282       0	   4116	   5398	   1516	symlinks_O2_after.o
-   1378       0	   4116	   5494	   1576	symlinks_O2_before.o
-    896       0	   4116	   5012	   1394	symlinks_Os_after.o
-    902       0	   4116	   5018	   139a	symlinks_Os_before.o
+Please note that patch 6/6 is only to be a debug patch, to catch a
+possible ping-pong situation inside the lstat_cache(), so I think that
+it should at _most_ be merged to the pu branch, such that people who
+wish to test, can 'git cherry-pick' the patch from there.
 
-'O2' means that the file is compiled with 'gcc -O2', and similar 'Os'
-means that the file is compiled with 'gcc -Os' (gcc 4.3.2).
 
-Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
----
- symlinks.c |   25 +++++++++++++------------
- 1 files changed, 13 insertions(+), 12 deletions(-)
+Kjetil Barvik (6):
+  symlinks.c: small cleanup and optimisation
+  remove some memcpy() and strchr() calls inside create_directories()
+  cleanup of write_entry() in entry.c
+  use fstat() instead of lstat() when we have an opened file
+  combine-diff.c: remove a call to fstat() inside show_patch_diff()
+  lstat_cache(): print a warning if doing ping-pong between cache types
 
-diff --git a/symlinks.c b/symlinks.c
-index f262b7c..81f490c 100644
---- a/symlinks.c
-+++ b/symlinks.c
-@@ -25,15 +25,16 @@ static inline int longest_match_lstat_cache(int len, const char *name,
- 		}
- 		i++;
- 	}
--	/* Is the cached path string a substring of 'name'? */
--	if (i == cache.len && cache.len < len && name[cache.len] == '/') {
--		match_len_prev = match_len;
--		match_len = cache.len;
--	/* Is 'name' a substring of the cached path string? */
--	} else if ((i == len && len < cache.len && cache.path[len] == '/') ||
--		   (i == len && len == cache.len)) {
-+	/*
-+	 * Is the cached path string a substring of 'name', is 'name'
-+	 * a substring of the cached path string, or is 'name' and the
-+	 * cached path string the exact same string?
-+	 */
-+	if (i >= max_len && ((i < len && name[i] == '/') ||
-+			     (i < cache.len && cache.path[i] == '/') ||
-+			     (len == cache.len))) {
- 		match_len_prev = match_len;
--		match_len = len;
-+		match_len = i;
- 	}
- 	*previous_slash = match_len_prev;
- 	return match_len;
-@@ -91,7 +92,7 @@ static int lstat_cache(int len, const char *name,
- 		match_len = last_slash =
- 			longest_match_lstat_cache(len, name, &previous_slash);
- 		match_flags = cache.flags & track_flags & (FL_NOENT|FL_SYMLINK);
--		if (match_flags && match_len == cache.len)
-+		if (match_flags && match_len >= cache.len)
- 			return match_flags;
- 		/*
- 		 * If we now have match_len > 0, we would know that
-@@ -102,7 +103,7 @@ static int lstat_cache(int len, const char *name,
- 		 * we can return immediately.
- 		 */
- 		match_flags = track_flags & FL_DIR;
--		if (match_flags && len == match_len)
-+		if (match_flags && match_len >= len)
- 			return match_flags;
- 	}
- 
-@@ -153,7 +154,7 @@ static int lstat_cache(int len, const char *name,
- 		cache.path[last_slash] = '\0';
- 		cache.len = last_slash;
- 		cache.flags = save_flags;
--	} else if (track_flags & FL_DIR &&
-+	} else if ((track_flags & FL_DIR) &&
- 		   last_slash_dir > 0 && last_slash_dir <= PATH_MAX) {
- 		/*
- 		 * We have a separate test for the directory case,
-@@ -184,7 +185,7 @@ void invalidate_lstat_cache(int len, const char *name)
- 	int match_len, previous_slash;
- 
- 	match_len = longest_match_lstat_cache(len, name, &previous_slash);
--	if (len == match_len) {
-+	if (match_len >= len) {
- 		if ((cache.track_flags & FL_DIR) && previous_slash > 0) {
- 			cache.path[previous_slash] = '\0';
- 			cache.len = previous_slash;
--- 
-1.6.1.349.g99fa5
+ combine-diff.c |    5 +-
+ entry.c        |  144 ++++++++++++++++++++++++++++++--------------------------
+ symlinks.c     |   48 ++++++++++++++-----
+ 3 files changed, 115 insertions(+), 82 deletions(-)
