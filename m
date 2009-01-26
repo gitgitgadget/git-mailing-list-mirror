@@ -1,64 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Common ancestor in merge diffs?
-Date: Mon, 26 Jan 2009 19:59:07 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901261958320.25749@intel-tinevez-2-302>
-References: <alpine.LNX.1.00.0901261318030.19665@iabervon.org>
+From: jidanni@jidanni.org
+Subject: [PATCH] git-bundle(1): add no references required simplest case
+Date: Tue, 27 Jan 2009 03:02:08 +0800
+Message-ID: <87d4e97uxb.fsf_-_@jidanni.org>
+References: <87zlirc49l.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Jan 26 20:02:51 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: spearce@spearce.org, git@vger.kernel.org
+To: mdl123@verizon.net, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jan 26 20:07:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRWi4-0003hK-Rn
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 20:01:25 +0100
+	id 1LRWkh-0004pu-Ar
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 20:04:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752279AbZAZS76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 13:59:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752248AbZAZS75
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 13:59:57 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52467 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752144AbZAZS75 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 13:59:57 -0500
-Received: (qmail invoked by alias); 26 Jan 2009 18:59:34 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp031) with SMTP; 26 Jan 2009 19:59:34 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/OWU0CbQfOHWZK523qqh3Uxrs/6KC6cFW/mk2TTL
-	sd8CcDE3FjfTBP
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <alpine.LNX.1.00.0901261318030.19665@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1753026AbZAZTCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 14:02:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752921AbZAZTCQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 14:02:16 -0500
+Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:60690 "EHLO
+	homiemail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753026AbZAZTCP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Jan 2009 14:02:15 -0500
+Received: from jidanni.org (122-127-37-230.dynamic.hinet.net [122.127.37.230])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by homiemail-a1.g.dreamhost.com (Postfix) with ESMTP id 7C2ED119E3B;
+	Mon, 26 Jan 2009 11:02:12 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107248>
 
-Hi,
+Signed-off-by: jidanni <jidanni@jidanni.org>
+---
+See http://article.gmane.org/gmane.comp.version-control.git/103576
+ Documentation/git-bundle.txt |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-On Mon, 26 Jan 2009, Daniel Barkalow wrote:
-
-> I was just doing an annoying merge (I'd reorganized code while other 
-> people made changes to it), and I kept having the problem that it was hard 
-> to figure out what each side had done. Is there some way to ask git for 
-> the diffs between the common ancestor (which is unique in my case, so it's 
-> actually useful) and each of the sides of the merge?
-
-How about
-
-	git diff HEAD...MERGE_HEAD
-
-and
-
-	git diff MERGE_HEAD...HEAD
-
-?  I might have misunderstood, though.
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+index 1b66ab7..7c1e990 100644
+--- a/Documentation/git-bundle.txt
++++ b/Documentation/git-bundle.txt
+@@ -164,6 +164,13 @@ $ git pull bundle
+ would treat it as if it is talking with a remote side over the
+ network.
+ 
++If a bundle requires no references, one may simply use:
++
++------------
++$ git init
++$ git pull bundle.bdl master
++------------
++
+ Author
+ ------
+ Written by Mark Levedahl <mdl123@verizon.net>
+-- 
+1.6.0.6
