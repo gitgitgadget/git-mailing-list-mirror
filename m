@@ -1,146 +1,207 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Reintegrate script
-Date: Mon, 26 Jan 2009 01:03:16 -0800
-Message-ID: <7vd4ea8mnf.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 26 10:06:41 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] rebase -i: correctly remember --root flag across --continue
+Date: Mon, 26 Jan 2009 10:05:22 +0100
+Message-ID: <1232960722-17480-1-git-send-email-trast@student.ethz.ch>
+References: <7vtz7ma9z1.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 10:07:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRNQ6-0005nW-H5
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 10:06:15 +0100
+	id 1LRNRN-000681-86
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 10:07:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751015AbZAZJD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 04:03:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750935AbZAZJDZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 04:03:25 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47852 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750909AbZAZJDY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 04:03:24 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A7EA934EF;
-	Mon, 26 Jan 2009 04:03:21 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 48E86934ED; Mon,
- 26 Jan 2009 04:03:18 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2E204A0A-EB88-11DD-9A3D-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751093AbZAZJFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 04:05:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbZAZJFv
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 04:05:51 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:24603 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750978AbZAZJFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 04:05:50 -0500
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 26 Jan 2009 10:05:48 +0100
+Received: from localhost.localdomain ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 26 Jan 2009 10:05:48 +0100
+X-Mailer: git-send-email 1.6.1.469.g6f3d5
+In-Reply-To: <7vtz7ma9z1.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 26 Jan 2009 09:05:48.0420 (UTC) FILETIME=[478F5440:01C97F95]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107179>
 
-In a workflow that uses topic branches heavily, you would need to keep
-updating test integration branch(es) all the time.  If they are managed
-like my 'next' by merging the tips of topics that have grown since the
-last integration, it is not so difficult.  You only need to review output
-from "git branch --no-merged next" to see if there are topics that can and
-needs to be merged to 'next'.
+From: Junio C Hamano <gitster@pobox.com>
 
-But sometimes it is easier to rebuild a test integration branch from
-scratch all the time, especially if you do not publish it for others to
-build on.
+d911d14 (rebase -i: learn to rebase root commit, 2009-01-02) tried to
+remember the --root flag across a merge conflict in a broken way.
+Introduce a flag file $DOTEST/rebase-root to fix and clarify.
 
-I've been using this script for some time to rebuild jch and pu branches
-in my workflow.  jch's tip is supposed to always match 'next', but it is
-rebuilt from scratch on top of 'master' by merging the same topics that
-are in 'next'.  You can use the same script in your work.
+While at it, also make sure $UPSTREAM is always initialized to guard
+against existing values in the environment.
 
-To use it, you give a commit range base..tip to the script, and you will
-see a shell script that uses a series of 'git-merge'.  "base" is the more
-stable branch that you rebuild your test integration branch on top (in my
-case, 'master'), and "tip" is where the tip of the test integration branch
-is from the last round (in my case, 'jch' or 'pu').
-
-Then you can run the resulting script, fix conflicted merge and use
-'git-commit', and then repeat until all the branches are re-integrated on
-top of the base branch.
-
-    $ Meta/Reintegrate master..jch >/var/tmp/redo-jch.sh
-    $ cat /var/tmp/redo-jch.sh
-    #!/bin/sh
-    while read branch eh
-    do
-	    case "$eh" in
-	    "") git merge "$branch" || break ;;
-	    ?*) echo >&2 "Eh? $branch $eh"; break ;;
-	    esac
-    done <<EOF
-    jc/blame
-    js/notes
-    ks/maint-mailinfo-folded~3
-    tr/previous-branch
-    EOF
-    $ git checkout jch
-    $ git reset --hard master
-    $ /var/tmp/redo-jch.sh
-    ... if there is conflict, resolve, "git commit" here ...
-    $ /var/tmp/redo-jch.sh
-    ... repeat until everything is applied.
+[tr: added tests]
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
 
- * This is taken from my 'todo' branch, which I keep a checkout in Meta/
-   directory.
+Junio C Hamano wrote:
+> Since you never use the value stored in "$DOTEST/upstream" for anything
+> else anyway, how about doing something like this instead?  It would make
+> the meaning of the file used as a state variable much clearer.
 
- Reintegrate |   42 ++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 42 insertions(+), 0 deletions(-)
- create mode 100755 Reintegrate
+Yes, thanks, a patch precisely "like this" is in fact the right fix.
 
-diff --git a/Reintegrate b/Reintegrate
-new file mode 100755
-index 0000000..dfdb73e
---- /dev/null
-+++ b/Reintegrate
-@@ -0,0 +1,42 @@
-+#!/bin/sh
-+
-+merge_msg="Merge branch '\(.*\)'"
-+x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
-+x40="$x40$x40$x40$x40$x40$x40$x40$x40"
-+LF='
+I came up with some tests that try a conflicted --root rebase of each
+flavour, to guard against the problem in the future.  I wasn't
+entirely sure how to shape this into a patch, but here's a version
+that forges patch message and sign-off in your name.
+
+Dscho, with that confusion cleared, you can add my Ack to your 1/2
+(unchanged, though I'm afraid you'll get a textual conflict).
+
+
+ git-rebase--interactive.sh |   10 ++++-
+ t/t3412-rebase-root.sh     |   88 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 96 insertions(+), 2 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 21ac20c..17cf0e5 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -456,7 +456,7 @@ get_saved_options () {
+ 	test -d "$REWRITTEN" && PRESERVE_MERGES=t
+ 	test -f "$DOTEST"/strategy && STRATEGY="$(cat "$DOTEST"/strategy)"
+ 	test -f "$DOTEST"/verbose && VERBOSE=t
+-	test ! -s "$DOTEST"/upstream && REBASE_ROOT=t
++	test -f "$DOTEST"/rebase-root && REBASE_ROOT=t
+ }
+ 
+ while test $# != 0
+@@ -585,6 +585,7 @@ first and then run 'git rebase --continue' again."
+ 			test -z "$ONTO" && ONTO=$UPSTREAM
+ 			shift
+ 		else
++			UPSTREAM=
+ 			UPSTREAM_ARG=--root
+ 			test -z "$ONTO" &&
+ 				die "You must specify --onto when using --root"
+@@ -611,7 +612,12 @@ first and then run 'git rebase --continue' again."
+ 			echo "detached HEAD" > "$DOTEST"/head-name
+ 
+ 		echo $HEAD > "$DOTEST"/head
+-		echo $UPSTREAM > "$DOTEST"/upstream
++		case "$REBASE_ROOT" in
++		'')
++			rm -f "$DOTEST"/rebase-root ;;
++		*)
++			: >"$DOTEST"/rebase-root ;;
++		esac
+ 		echo $ONTO > "$DOTEST"/onto
+ 		test -z "$STRATEGY" || echo "$STRATEGY" > "$DOTEST"/strategy
+ 		test t = "$VERBOSE" && : > "$DOTEST"/verbose
+diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
+index 6359580..29bb6d0 100755
+--- a/t/t3412-rebase-root.sh
++++ b/t/t3412-rebase-root.sh
+@@ -184,4 +184,92 @@ test_expect_success 'pre-rebase hook stops rebase -i' '
+ 	test 0 = $(git rev-list other...stops2 | wc -l)
+ '
+ 
++test_expect_success 'remove pre-rebase hook' '
++	rm -f .git/hooks/pre-rebase
 +'
 +
-+echo '#!/bin/sh
-+while read branch eh
-+do
-+	case "$eh" in
-+	"") git merge "$branch" || break ;;
-+	?*) echo >&2 "Eh? $branch $eh"; break ;;
-+	esac
-+done <<EOF'
++test_expect_success 'set up a conflict' '
++	git checkout master &&
++	echo conflict > B &&
++	git add B &&
++	git commit -m conflict
++'
 +
-+git log --pretty=oneline --first-parent "$1" |
-+{
-+	series=
-+	while read commit msg
-+	do
-+		other=$(git rev-parse --verify "$commit^2") &&
-+		branch=$(expr "$msg" : "$merge_msg") &&
-+		tip=$(git rev-parse --verify "refs/heads/$branch" 2>/dev/null) &&
-+		merged=$(git name-rev --refs="refs/heads/$branch" "$other" 2>/dev/null) &&
-+		merged=$(expr "$merged" : "$x40 \(.*\)") &&
-+		test "$merged" != undefined || {
-+			other=$(git log -1 --pretty='format:%s' $other) &&
-+			merged="$branch :rebased? $other"
-+		}
-+		if test -z "$series"
-+		then
-+			series="$merged"
-+		else
-+			series="$merged$LF$series"
-+		fi
-+	done
-+	echo "$series"
-+}
++test_expect_success 'rebase --root with conflict (first part)' '
++	git checkout -b conflict1 other &&
++	test_must_fail git rebase --root --onto master &&
++	git ls-files -u | grep "B$"
++'
 +
-+echo 'EOF'
++test_expect_success 'fix the conflict' '
++	echo 3 > B &&
++	git add B
++'
++
++cat > expect-conflict <<EOF
++6
++5
++4
++3
++conflict
++2
++1
++EOF
++
++test_expect_success 'rebase --root with conflict (second part)' '
++	git rebase --continue &&
++	git log --pretty=tformat:"%s" > conflict1 &&
++	test_cmp expect-conflict conflict1
++'
++
++test_expect_success 'rebase -i --root with conflict (first part)' '
++	git checkout -b conflict2 other &&
++	GIT_EDITOR=: test_must_fail git rebase -i --root --onto master &&
++	git ls-files -u | grep "B$"
++'
++
++test_expect_success 'fix the conflict' '
++	echo 3 > B &&
++	git add B
++'
++
++test_expect_success 'rebase -i --root with conflict (second part)' '
++	git rebase --continue &&
++	git log --pretty=tformat:"%s" > conflict2 &&
++	test_cmp expect-conflict conflict2
++'
++
++sed 's/#/ /g' > expect-conflict-p <<'EOF'
++*   Merge branch 'third' into other
++|\##
++| * 6
++* |   Merge branch 'side' into other
++|\ \##
++| * | 5
++* | | 4
++|/ /##
++* | 3
++|/##
++* conflict
++* 2
++* 1
++EOF
++
++test_expect_success 'rebase -i -p --root with conflict (first part)' '
++	git checkout -b conflict3 other &&
++	GIT_EDITOR=: test_must_fail git rebase -i -p --root --onto master &&
++	git ls-files -u | grep "B$"
++'
++
++test_expect_success 'fix the conflict' '
++	echo 3 > B &&
++	git add B
++'
++
++test_expect_success 'rebase -i -p --root with conflict (second part)' '
++	git rebase --continue &&
++	git log --graph --topo-order --pretty=tformat:"%s" > conflict3 &&
++	test_cmp expect-conflict-p conflict3
++'
++
+ test_done
 -- 
-1.6.1.1.248.g7f6d2
+1.6.1.469.g6f3d5
