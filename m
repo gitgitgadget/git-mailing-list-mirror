@@ -1,82 +1,133 @@
-From: "Nathan W. Panike" <nathan.panike@gmail.com>
-Subject: Re: [PATCH] Allow format-patch to create patches for merges
-Date: Mon, 26 Jan 2009 15:46:42 -0600
-Message-ID: <d77df1110901261346k7951809cv240ccddc22bf4884@mail.gmail.com>
-References: <1232978650-7008-1-git-send-email-nathan.panike@gmail.com>
-	 <alpine.DEB.1.00.0901261604420.25749@intel-tinevez-2-302>
-	 <d77df1110901260827j2200fe41oe1b84c387d88aba@mail.gmail.com>
-	 <20090126204543.GF27604@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -i: correctly remember --root flag across
+ --continue
+Date: Mon, 26 Jan 2009 13:49:24 -0800
+Message-ID: <7vzlhd3fh7.fsf@gitster.siamese.dyndns.org>
+References: <7vtz7ma9z1.fsf@gitster.siamese.dyndns.org>
+ <1232960722-17480-1-git-send-email-trast@student.ethz.ch>
+ <7veiyp4w2m.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 26 22:48:44 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jan 26 22:51:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRZJU-0001Ya-EL
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 22:48:12 +0100
+	id 1LRZM8-0002Zt-KA
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 22:50:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752592AbZAZVqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 16:46:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752252AbZAZVqo
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 16:46:44 -0500
-Received: from yx-out-2324.google.com ([74.125.44.30]:39517 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751811AbZAZVqo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 16:46:44 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so2663688yxm.1
-        for <git@vger.kernel.org>; Mon, 26 Jan 2009 13:46:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RAJ5CG5YtB9qfZfVWKJvjXPXJ6wCif7j1pb3PoC2csQ=;
-        b=efKsnKw2MAtkOOGSWdm0X/NbJoUVDovaEdU2oNV7SBTwdGoLATwMnANlXxGR3V+l/m
-         AAIzfMqluZ0YxbWAgqafaKTNBYGLaG4Bnd3XS92oDWSzIGc9yqYgM2zv125IwJ2F7/uB
-         La9T/XaowceLu4THi4tcIqP9rvWtpxJ97raJE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pmcQJomp5JehCvqh+rRcMOvGtz7MI+4qoft2IFcth5e3td8Gh7Wef1Z64RN/MF4HgH
-         +AOVmergU0NyoPUV227idj4p1dAetBS1KEE1ui6ufL1DiKqD1E27f1SUlylLLf+2ye1c
-         +2AX3y1Gwn/1tHfTklJRrQEmmAVzZsBsPamw8=
-Received: by 10.90.50.5 with SMTP id x5mr130395agx.106.1233006402324; Mon, 26 
-	Jan 2009 13:46:42 -0800 (PST)
-In-Reply-To: <20090126204543.GF27604@coredump.intra.peff.net>
+	id S1752488AbZAZVtc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 16:49:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbZAZVtb
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 16:49:31 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55696 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752004AbZAZVtb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 16:49:31 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 225CF1D5B1;
+	Mon, 26 Jan 2009 16:49:30 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 185EE1D5B6; Mon,
+ 26 Jan 2009 16:49:25 -0500 (EST)
+In-Reply-To: <7veiyp4w2m.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 26 Jan 2009 13:05:37 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 35AFD2A2-EBF3-11DD-9EC7-0372113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107290>
 
-I have not used the bundle stuff, but yes, it seems to be a better fit
-for what I am trying to do.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks,
+> Thomas Rast <trast@student.ethz.ch> writes:
+> ...
+>> +sed 's/#/ /g' > expect-conflict-p <<'EOF'
+>> +*   Merge branch 'third' into other
+>> +|\##
+>> +| * 6
+>> +* |   Merge branch 'side' into other
+>> +|\ \##
+>> +| * | 5
+>> +* | | 4
+>> +|/ /##
+>> +* | 3
+>> +|/##
+>> +* conflict
+>> +* 2
+>> +* 1
+>> +EOF
+>
+> I do not like this very much.  Future improvements of the graph drawing
+> algorithm (one obvious "flaw" you are exposing by the above is that it has
+> trailing whitespaces that can be trimmed, and somebody else may be
+> inclined to fix) would break the expectation this test vector has.
+>
+> Do you have to compare the topology this way, or are there other more
+> reliable ways?
 
-Nathan Panike
+Perhaps something like this.
 
-On Mon, Jan 26, 2009 at 2:45 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Jan 26, 2009 at 10:27:18AM -0600, Nathan W. Panike wrote:
->
->> I think I have an unusual workflow where my patch makes sense,
->> although it probably does not for the vast majority of git users.  I
->> regularly use 3 machines: S, L, and H.  I keep my work synchronized by
->> using git.  Normally, I fetch from S to L or to H, depending on which
->> machine I am working on at the moment.  I also push from L or H to S.
->> I sporadically lose connectivity to S, so I have a hook in the repo on
->> S to send a backup email to me on mail server M, which has a more
->> reliable connection.  This email also serves as a  reminder when I
->
-> Have you considered sending a bundle instead of a patch in the backup
-> email? That is the more exact equivalent of a push (i.e., it preserves
-> your actual commits, sha1 and all).
->
-> -Peff
->
+ t/t3412-rebase-root.sh |   36 +++++++++++++++++++++---------------
+ 1 files changed, 21 insertions(+), 15 deletions(-)
+
+diff --git i/t/t3412-rebase-root.sh w/t/t3412-rebase-root.sh
+index 29bb6d0..2408cf8 100755
+--- i/t/t3412-rebase-root.sh
++++ w/t/t3412-rebase-root.sh
+@@ -240,19 +240,24 @@ test_expect_success 'rebase -i --root with conflict (second part)' '
+ '
+ 
+ sed 's/#/ /g' > expect-conflict-p <<'EOF'
+-*   Merge branch 'third' into other
+-|\##
+-| * 6
+-* |   Merge branch 'side' into other
+-|\ \##
+-| * | 5
+-* | | 4
+-|/ /##
+-* | 3
+-|/##
+-* conflict
+-* 2
+-* 1
++commit conflict3 conflict3~1 conflict3^2
++Merge branch 'third' into other
++commit conflict3^2 conflict3~4
++6
++commit conflict3~1 conflict3~2 conflict3~1^2
++Merge branch 'side' into other
++commit conflict3~1^2 conflict3~3
++5
++commit conflict3~2 conflict3~3
++4
++commit conflict3~3 conflict3~4
++3
++commit conflict3~4 conflict3~5
++conflict
++commit conflict3~5 conflict3~6
++2
++commit conflict3~6
++1
+ EOF
+ 
+ test_expect_success 'rebase -i -p --root with conflict (first part)' '
+@@ -268,8 +273,9 @@ test_expect_success 'fix the conflict' '
+ 
+ test_expect_success 'rebase -i -p --root with conflict (second part)' '
+ 	git rebase --continue &&
+-	git log --graph --topo-order --pretty=tformat:"%s" > conflict3 &&
+-	test_cmp expect-conflict-p conflict3
++	git rev-list --topo-order --parents --pretty="tformat:%s" HEAD |
++	git name-rev --stdin --name-only --refs=refs/heads/conflict3 >out &&
++	test_cmp expect-conflict-p out
+ '
+ 
+ test_done
