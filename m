@@ -1,88 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: bug: transform a binary file into a symlink in one commit =>
-	invalid binary patch
-Date: Sun, 25 Jan 2009 19:35:56 -0500
-Message-ID: <20090126003556.GA19368@coredump.intra.peff.net>
-References: <lyhc3q9pl1.fsf@leia.mandriva.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Add submodule-support to git archive
+Date: Sun, 25 Jan 2009 16:41:34 -0800
+Message-ID: <7vmydedhkx.fsf@gitster.siamese.dyndns.org>
+References: <1232844726-14902-1-git-send-email-hjemli@gmail.com>
+ <20090125135340.6117@nanako3.lavabit.com>
+ <8c5c35580901250018x6827291cj36e6bcb10afa9b27@mail.gmail.com>
+ <7veiyrdszf.fsf@gitster.siamese.dyndns.org>
+ <8c5c35580901251512q5058dde3rdfae81979c46c36a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Pixel <pixel@mandriva.com>
-X-From: git-owner@vger.kernel.org Mon Jan 26 01:37:33 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 01:43:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRFTo-0006FX-PG
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 01:37:33 +0100
+	id 1LRFZE-0007Fd-Kb
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 01:43:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750862AbZAZAgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 19:36:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750846AbZAZAgA
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 19:36:00 -0500
-Received: from peff.net ([208.65.91.99]:58939 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750786AbZAZAf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 19:35:59 -0500
-Received: (qmail 29729 invoked by uid 107); 26 Jan 2009 00:36:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 25 Jan 2009 19:36:05 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Jan 2009 19:35:56 -0500
-Content-Disposition: inline
-In-Reply-To: <lyhc3q9pl1.fsf@leia.mandriva.com>
+	id S1750919AbZAZAlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 19:41:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbZAZAlm
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 19:41:42 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50063 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750786AbZAZAlm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 19:41:42 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C32261D426;
+	Sun, 25 Jan 2009 19:41:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D37781D3EA; Sun,
+ 25 Jan 2009 19:41:35 -0500 (EST)
+In-Reply-To: <8c5c35580901251512q5058dde3rdfae81979c46c36a@mail.gmail.com>
+ (Lars Hjemli's message of "Mon, 26 Jan 2009 00:12:25 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 18CF9160-EB42-11DD-9927-BE78113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107147>
 
-On Fri, Jan 23, 2009 at 01:25:30PM +0100, Pixel wrote:
+Lars Hjemli <hjemli@gmail.com> writes:
 
-> i hit a bug (git 1.6.1): when you transform a binary file into a
-> symlink in one commit, the binary patch can't be used in "git apply".
-> Is it a known issue?
+> If you want me to build on top of the series in next anyways, would it
+> be acceptable if the first patch on top of ee306d2d59 reverts the
+> previous attempt? I think the rest of the series will be easier to
+> review that way.
 
-Not that I know of.
+Ok, then I'll simply revert and then queue the new ones on top of it.
 
-Below is a patch against the test suite that fairly neatly displays the
-problem. I didn't get a chance to look into actually fixing it, though
-(I'm not even sure the problem is in apply, and not in the generated
-patch).
-
----
-diff --git a/t/t4130-apply-symlink-binary.sh b/t/t4130-apply-symlink-binary.sh
-new file mode 100755
-index 0000000..0ee2ba1
---- /dev/null
-+++ b/t/t4130-apply-symlink-binary.sh
-@@ -0,0 +1,30 @@
-+#!/bin/sh
-+
-+test_description='apply handles binary to symlink conversion'
-+. ./test-lib.sh
-+
-+test_expect_success 'create commit with binary' '
-+	echo content >file && git add file &&
-+	printf "\0" > binary && git add binary &&
-+	git commit -m one
-+'
-+
-+test_expect_success 'convert binary to symlink' '
-+	rm binary &&
-+	ln -s file binary &&
-+	git add binary &&
-+	git commit -m two
-+'
-+
-+test_expect_success 'create patch' '
-+	git diff-tree --binary HEAD^ HEAD >patch
-+'
-+
-+test_expect_success 'apply patch' '
-+	git reset --hard HEAD^ &&
-+	git apply patch &&
-+	test -h binary &&
-+	test_cmp binary file
-+'
-+
-+test_done
+Thanks.
