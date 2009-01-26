@@ -1,85 +1,77 @@
-From: Dill <sarpulhu@gmail.com>
-Subject: Re: Translations [of Documentation] in Git release?
-Date: Mon, 26 Jan 2009 12:58:24 -0700
-Message-ID: <60646ee10901261158w65b539dida26d2bd3bae6903@mail.gmail.com>
-References: <60646ee10901250941s34f7accem1b74fc201e895a41@mail.gmail.com>
-	 <m3hc3mxn9d.fsf@localhost.localdomain>
-	 <Pine.LNX.4.64.0901261426350.7798@ds9.cixit.se>
-	 <200901261631.18157.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Perry Smith <pedzsan@gmail.com>
+Subject: git 1.6.1 on AIX 5.3
+Date: Mon, 26 Jan 2009 14:02:15 -0600
+Message-ID: <A8D76E61-4442-4640-BD0C-84085375E6F1@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 26 21:00:06 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 26 21:03:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRXcj-000633-9N
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 20:59:57 +0100
+	id 1LRXgQ-0007I9-Sx
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 21:03:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156AbZAZT60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 14:58:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbZAZT60
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 14:58:26 -0500
-Received: from rv-out-0506.google.com ([209.85.198.228]:44917 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751500AbZAZT6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 14:58:25 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so6004809rvb.1
-        for <git@vger.kernel.org>; Mon, 26 Jan 2009 11:58:24 -0800 (PST)
+	id S1753352AbZAZUCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 15:02:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752929AbZAZUCV
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 15:02:21 -0500
+Received: from qw-out-2122.google.com ([74.125.92.27]:21242 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751641AbZAZUCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 15:02:21 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so2904857qwe.37
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 12:02:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AlbwA/0ks+dSzXnVXGhLTqET+8SyQYURmUTtepiTM90=;
-        b=eigDYYKUE/u4+AGwUCfOn+Nq/eWnamx+iUEJl8eEuG5OK4Evc8TXosMHXxFiXDxzEk
-         +d5UFvQQhqTsLHBVSm+ujdsXePahDDw2Ei7pCTZQ3lqZeJo1obBSYKJ5t+dzeEa+/BJ5
-         C44eHmznWxJYgJRK7W/LiRosz0GaFCwWQeMjo=
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=GMH03LUR4Q2l11QtNsFjU62y/2qEoqhIbzY/pI2snqA=;
+        b=lgfZyAEm7x1cl5A6EB7PA1whZltlWueAze6+8phx3qsDAy1GBu4venazH8M/Ocfnoy
+         mdCSr99RvEikQpQhl6ROxQirOKMX/sEiZ5hxeY1L4dcoL0g46WZkqxeWmFMI7ngvb3TM
+         WmMGLYpljynWG7R/tr42n1ohqaAR2e5hHh6fg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jWRGc3XvjRRRMcCH2Uv95S5xKw/Q3qeEikymPGJO+bTFHiMHzMHbKDcKXeot0eWrlh
-         l5s1V1XDsm/WmTT5Z1ERMHupM0XL4Ch+jFhMzNS+7XaME+OCqrnCC52DslhFG6FXhMNY
-         1xL8cH+eKitVDmmPaNrnVCZpZ0dqFSQwoz3wg=
-Received: by 10.141.180.5 with SMTP id h5mr1205088rvp.82.1232999904423; Mon, 
-	26 Jan 2009 11:58:24 -0800 (PST)
-In-Reply-To: <200901261631.18157.jnareb@gmail.com>
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=WWbGcCKaAHGr8v0PuNy2Y89ogXeEu3xs0xomgkpkjpfEKUUTpLeUOTFUAp54pdjnTl
+         08iy4tNTdHjSIpIiR+k+k8mDHb11/OoZRWbPFgx+YLT7sl2RWB5YtFB/0uf9bQTwZTaq
+         SyjNpmG5aXCXpxkmtXIoq8HlD377tANZ1lJ+Q=
+Received: by 10.214.181.12 with SMTP id d12mr6391783qaf.140.1233000139017;
+        Mon, 26 Jan 2009 12:02:19 -0800 (PST)
+Received: from NewToy.austin.ibm.com ([32.97.110.64])
+        by mx.google.com with ESMTPS id 6sm424379qwd.54.2009.01.26.12.02.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 26 Jan 2009 12:02:17 -0800 (PST)
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107263>
 
-I was thinking of handling it like the Linux kernel documentation...?
+I tried building git 1.6.1 on AIX 5.3 as an "out of tree" build and it  
+does not seem to be set up to do out of tree builds.  If that is not  
+true, please let me know.
 
-On 1/26/09, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Mon, 26 Jan 2009, Peter Krefting wrote:
->> Jakub Narebski wrote:
->>
->> > With GUI translations we just use gettext conventions. I don't know
->> > any such convention for docs:
->>
->> There is a lot of documentation being translated using PO files. po4a -
->> http://po4a.alioth.debian.org/ - is a nice starting point for that.
->
-> I'm not sure if XLIFF wouldn't be better format to use to translate
-> _documents_.  Gettext was meant to translate, I think, not very long
-> messages in programs.
->
-> Also I am not sure how much support this idea has. True, in last Git
-> User's Survey[1] 63% to 76% wanted (parts of) Documentation... but that
-> was out of 325 people who answered this question, with 3236 responses
-> to survey in total, so numbers are more like 6% - 8%.
->
-> [1] http://git.or.cz/gitwiki/GitSurvey2008
-> [2] http://translate.sourceforge.net/wiki/
->
-> --
-> Jakub Narebski
-> Poland
->
+The install process wants to call install with a -d option.  AIX has  
+two install programs but they are pretty old -- neither takes a -d  
+option.
+
+Is there a GNU install program I can get?  I've not been able to  
+locate one.
+
+The curious thing is I installed git 1.5.6.4 on a similar AIX system a  
+few months ago and succeeded.
+
+Last -- just so I know for future reference, is this list a 'text only  
+email' list?
+
+Thank you for your help,
+Perry
+Ease Software, Inc. ( http://www.easesoftware.com )
+
+Low cost SATA Disk Systems for IBMs p5, pSeries, and RS/6000 AIX systems
