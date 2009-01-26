@@ -1,66 +1,68 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: Hosting from Windows XP.
-Date: Tue, 27 Jan 2009 01:44:16 +0800
-Message-ID: <be6fef0d0901260944l7e128588xc560810515e5f941@mail.gmail.com>
-References: <c115fd3c0901260827ge5e4b29w871b345da2373f6b@mail.gmail.com>
-	 <alpine.DEB.1.00.0901261744240.25749@intel-tinevez-2-302>
+From: Peter Simons <simons@cryp.to>
+Subject: Re: Emacs git-mode feature request: support fill-paragraph correctly
+Date: Mon, 26 Jan 2009 18:46:15 +0100
+Organization: private
+Message-ID: <87mydet0yg.fsf@write-only.cryp.to>
+References: <87tz7mth3g.fsf@write-only.cryp.to> <808woyz2k7.fsf@tiny.isode.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Tim Visher <tim.visher@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 26 18:45:58 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 26 18:48:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRVWp-0002Oj-Se
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 18:45:44 +0100
+	id 1LRVYx-00037x-DX
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 18:47:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751931AbZAZRoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 12:44:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751834AbZAZRoS
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 12:44:18 -0500
-Received: from rv-out-0506.google.com ([209.85.198.229]:39280 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751497AbZAZRoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 12:44:17 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so5947909rvb.1
-        for <git@vger.kernel.org>; Mon, 26 Jan 2009 09:44:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=HLDsCuV/jiJN/AnMpn8LV2RxRL0tcPXY4b9slSvqXUk=;
-        b=crLvMtUHErGusIiXjWXczruDrkItSsz+KuOEGvKUysyxQSe4hZmrk/q2EFRW8o/Lni
-         mseF4hGDzrwzaMxrXBk76yGiyOauJBIf+d+NmWGUEvTa2ic1X1ywcQeoOHC5CizO7YkL
-         PebaXp4IXzO60Rb1wD+SDiOJqkpOjjFMDdWqk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=F7HuNBp2RN927lTNrhb98WsiMJYRT/Q+b06JqEGXoN2gsCY+PDwRGTnHNiErYzYHzE
-         b1y4FAfRlG0RjvN/TG0WhM0Pt0/i0vD6Bz54Q74SitCLeCy1/Q4+AxPjcK4DnpAv0fCI
-         rv4GFq7R2rbCbjtT/zsvEoB0bm1bQvy/sqBSA=
-Received: by 10.115.18.3 with SMTP id v3mr2754863wai.32.1232991856712; Mon, 26 
-	Jan 2009 09:44:16 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0901261744240.25749@intel-tinevez-2-302>
+	id S1752003AbZAZRq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 12:46:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751845AbZAZRq2
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 12:46:28 -0500
+Received: from main.gmane.org ([80.91.229.2]:60565 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751834AbZAZRq1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 12:46:27 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LRVXU-0006Pn-08
+	for git@vger.kernel.org; Mon, 26 Jan 2009 17:46:24 +0000
+Received: from p54bd1659.dip0.t-ipconnect.de ([84.189.22.89])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 17:46:23 +0000
+Received: from simons by p54bd1659.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 17:46:23 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p54bd1659.dip0.t-ipconnect.de
+Cancel-Lock: sha1:vn6pf9MfhhNtq+2YmV/zon27tXA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107237>
 
-Hi,
+Bruce Stephens <bruce.stephens@isode.com> writes:
 
-On Tue, Jan 27, 2009 at 12:45 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Use a net share.  Use the native permission system to restrict/open up the
-> repository for certain people to read from/write to.
+ >> Other modes, such as message-mode, do support that kind of thing
+ >> correctly, so apparently it is possible to configure what the
+ >> editor considers as a paragraph. Is there some Emacs wizard out
+ >> there who'd be kind enough to improve git-mode accordingly?
+ >
+ > I suspect this doesn't directly relate to git-mode. What mode
+ > does emacs say you're in at this point? I'm guessing the buffer
+ > name is COMMIT_EDITMSG and the mode is fundamental-mode?
 
-hmm, does this entail git daemon usage too?
+The buffer is in "log-edit" mode.
 
--- 
-Cheers,
-Ray Chuan
+ > In that case you could stick this in your .emacs if you wanted to
+ > use message-mode:
+ >
+ > (setq auto-mode-alist (cons '("COMMIT_EDITMSG" . message-mode) auto-mode-alist))
+
+Unfortunately, it's not that easy. I'm not an Emacs expert, but I'd
+assume that switching into a different mode would change the meaning
+of C-c C-c.
+
+Peter
