@@ -1,66 +1,69 @@
-From: Keith Cascio <keith@CS.UCLA.EDU>
-Subject: Re: [PATCH v1 0/3] Introduce config variable "diff.primer"
-Date: Mon, 26 Jan 2009 17:47:54 -0800 (PST)
-Message-ID: <alpine.GSO.2.00.0901261734360.16158@kiwi.cs.ucla.edu>
-References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <7vr62rcee5.fsf@gitster.siamese.dyndns.org> <alpine.GSO.2.00.0901251239000.12651@kiwi.cs.ucla.edu> <20090125220756.GA18855@coredump.intra.peff.net>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] mergetool merge/skip/abort
+Date: Mon, 26 Jan 2009 17:58:35 -0500
+Message-ID: <20090126225835.GB10118@mit.edu>
+References: <81bfc67a0901210637j52fa7a55q51b599e9ff16f6dc@mail.gmail.com> <20090121170434.GA21727@hashpling.org> <81bfc67a0901220617l22b5a8e4ma48bb069d67cae91@mail.gmail.com> <20090122142258.GA2316@hashpling.org> <81bfc67a0901230716i166bfc4chd9a5c0990b0cd3b6@mail.gmail.com> <7vwscmue5z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 27 02:49:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Caleb Cushing <xenoterracide@gmail.com>,
+	Charles Bailey <charles@hashpling.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 03:08:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRd51-0002sH-UM
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 02:49:32 +0100
+	id 1LRdNN-0006Q5-ND
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 03:08:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752648AbZA0BsH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 20:48:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751954AbZA0BsF
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 20:48:05 -0500
-Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:63673 "EHLO kiwi.cs.ucla.edu"
+	id S1752365AbZA0CHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 21:07:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752128AbZA0CHD
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 21:07:03 -0500
+Received: from THUNK.ORG ([69.25.196.29]:33942 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750989AbZA0BsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 20:48:04 -0500
-Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n0R1ltTp022038;
-	Mon, 26 Jan 2009 17:47:55 -0800 (PST)
-Received: from localhost (keith@localhost)
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n0R1ls9k022035;
-	Mon, 26 Jan 2009 17:47:55 -0800 (PST)
-X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
-In-Reply-To: <20090125220756.GA18855@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
+	id S1751959AbZA0CHB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 21:07:01 -0500
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1LRdLu-0008O9-4z; Mon, 26 Jan 2009 21:06:58 -0500
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1LRaPb-0002g6-AO; Mon, 26 Jan 2009 17:58:35 -0500
+Content-Disposition: inline
+In-Reply-To: <7vwscmue5z.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107299>
 
-On Sun, 25 Jan 2009, Jeff King wrote:
-
-> let's say I have a gitattributes file like this:
->    *.c diff=c
-> and my config says:
->   [diff]
->     opt1 = val1_default
->     opt2 = val2_default
->   [diff "c"]
->     opt1 = val1_c
+On Fri, Jan 23, 2009 at 09:26:32AM -0800, Junio C Hamano wrote:
+> Caleb Cushing <xenoterracide@gmail.com> writes:
 > 
-> Now obviously if I want to use opt1 for my C files, it should be val1_c.
-> But if I want to use opt2, what should it use? There are two reasonable
-> choices, I think:
->   1. You use val2_default. The rationale is that the "c" diff driver did
->      not define an opt2, so you fall back to the global default.
->   2. It is unset. The rationale is that you are using the "c" diff
->      driver, and it has left the value unset. The default then means "if
->      you have no diff driver setup".
+> > so does my patch satisfy now? what's it take to get it included in the
+> > next version of git?
+> 
+> I do not use mergetool myself so I generally do not pay attention to
+> patches on this tool, but I would want to pick up ones that people
+> involved in mergetool discussion can agree to be good patches.
+> 
+> There are a few mergetool updates in flight from various authors.  How
+> does your submission compare with others' in both form/presentation and
+> clarity of logic (remember, I am not keeping track)?
 
-I'm in favor of option (2), because [diff] a.k.a [diff ""] serving as the 
-fallback for [diff *] feels like a special case.  If a full system of precedence 
-and fallbacks is desired for .git/config, we should adopt explicit grammar that 
-lets me define an arbitrary precedence tree over all sections.  Once a powerful 
-concept is born, somewhere down the road, some user will desire its 
-universalization.
+I was the original author of mergetool, and for a while I was the
+person that was reviewing and managing the mergetool patches for
+Junio.  Unfortunately, in the last couple of months I just haven't had
+the time keep up with the various mergetool proposed patch updates.
+
+So maybe it's time for me to hand it off to someone who has the time
+and interest in continuing to hack mergetool, and has the necessary
+"good taste" and such that Junio would be willing to trust that person
+to be the git mergetool patch wrangler?
+
+							- Ted
