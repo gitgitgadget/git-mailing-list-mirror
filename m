@@ -1,85 +1,62 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Translations [of Documentation] in Git release?
-Date: Mon, 26 Jan 2009 16:31:17 +0100
-Message-ID: <200901261631.18157.jnareb@gmail.com>
-References: <60646ee10901250941s34f7accem1b74fc201e895a41@mail.gmail.com> <m3hc3mxn9d.fsf@localhost.localdomain> <Pine.LNX.4.64.0901261426350.7798@ds9.cixit.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Allow format-patch to create patches for merges
+Date: Mon, 26 Jan 2009 16:36:47 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901261604420.25749@intel-tinevez-2-302>
+References: <1232978650-7008-1-git-send-email-nathan.panike@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Dill <sarpulhu@gmail.com>, Git Mailing List <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Jan 26 16:33:15 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com, aspotashev@gmail.com
+To: "Nathan W. Panike" <nathan.panike@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 16:38:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRTSN-0006DC-FN
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 16:32:59 +0100
+	id 1LRTXk-0007qR-9a
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 16:38:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751621AbZAZPbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 10:31:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751615AbZAZPbe
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 10:31:34 -0500
-Received: from ey-out-2122.google.com ([74.125.78.27]:12376 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751590AbZAZPbd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 10:31:33 -0500
-Received: by ey-out-2122.google.com with SMTP id 22so1280313eye.37
-        for <git@vger.kernel.org>; Mon, 26 Jan 2009 07:31:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=ExawDnWCF51tdB5MEptLpI+n06Qf9h1ebWh0nJTh68s=;
-        b=dzwuxWrKEWrgiFr9OE8utCOsiPUNgiramBqsoeo7afaYkCJw11pT3OsA1ztUhxvLio
-         Ffp/SKLBxnU35dCDCMemH+GEa4FpYmIkGh8MIav1qGFAkSl9HySxsBho/C2NhYHfOnPo
-         OOCl5PQPZqBotUG886sXoIP0Ql5s3cznppTiQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=ZwtnD7/YPsf052dLp/URk8IXmd+oF81gfxXQPKxNR7VTL8b5xonaxMZH7fNsOAxf05
-         qmcmnUg7LAPP5RWwUTHrvaDJruouzqAlUnv7JXBsiDU/ryecEwh2/qu0I0wa7nAhQqcd
-         5RuIk5Ohwjj4ZdKnaDAG6pPPDvRh6sje8Y1S8=
-Received: by 10.67.106.13 with SMTP id i13mr1334643ugm.7.1232983890112;
-        Mon, 26 Jan 2009 07:31:30 -0800 (PST)
-Received: from ?192.168.1.15? (abvk161.neoplus.adsl.tpnet.pl [83.8.208.161])
-        by mx.google.com with ESMTPS id 34sm4595128ugh.10.2009.01.26.07.31.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 26 Jan 2009 07:31:28 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0901261426350.7798@ds9.cixit.se>
-Content-Disposition: inline
+	id S1751533AbZAZPhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 10:37:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbZAZPhF
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 10:37:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41408 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751533AbZAZPhE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 10:37:04 -0500
+Received: (qmail invoked by alias); 26 Jan 2009 15:37:02 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp040) with SMTP; 26 Jan 2009 16:37:02 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX184EZMslVc4za1lnB2HVpci/pOe7pf9V2ZELJo4Av
+	D2ZSYCES3quizt
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <1232978650-7008-1-git-send-email-nathan.panike@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107220>
 
-On Mon, 26 Jan 2009, Peter Krefting wrote:
-> Jakub Narebski wrote:
-> 
-> > With GUI translations we just use gettext conventions. I don't know
-> > any such convention for docs:
-> 
-> There is a lot of documentation being translated using PO files. po4a -
-> http://po4a.alioth.debian.org/ - is a nice starting point for that.
+Hi,
 
-I'm not sure if XLIFF wouldn't be better format to use to translate
-_documents_.  Gettext was meant to translate, I think, not very long
-messages in programs.
+On Mon, 26 Jan 2009, Nathan W. Panike wrote:
 
-Also I am not sure how much support this idea has. True, in last Git
-User's Survey[1] 63% to 76% wanted (parts of) Documentation... but that
-was out of 325 people who answered this question, with 3236 responses
-to survey in total, so numbers are more like 6% - 8%.
+> The behavior for git format-patch is to ignore merge commits, producing 
+> an empty patch.  The code does not allow the user to change this 
+> behavior. This patch changes that behavior by allowing the user to 
+> specify -c or -m at the command line to produce a patch for a merge 
+> commit.
 
-[1] http://git.or.cz/gitwiki/GitSurvey2008
-[2] http://translate.sourceforge.net/wiki/
+Your patch is almost perfect, except that you
 
--- 
-Jakub Narebski
-Poland
+- lack an explanation when this makes sense (format-patch is commonly used 
+  for mail-based patch queues, and only -m 1 would make sense there, and 
+  only if you run format-patch with --first-parent),
+
+- did not add your Sign-off :-)
+
+Ciao,
+Dscho
