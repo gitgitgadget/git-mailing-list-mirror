@@ -1,71 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: backwards compatibility, was Re: [PATCH v1 1/3] Introduce
-	config variable "diff.primer"
-Date: Mon, 26 Jan 2009 13:48:30 -0500
-Message-ID: <20090126184829.GA27543@coredump.intra.peff.net>
-References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <1232904657-31831-2-git-send-email-keith@cs.ucla.edu> <7v1vurf7lq.fsf@gitster.siamese.dyndns.org> <alpine.GSO.2.00.0901251345240.12651@kiwi.cs.ucla.edu> <20090126031206.GB14277@sigill.intra.peff.net> <alpine.DEB.1.00.0901261154330.14855@racer> <20090126111605.GB19993@coredump.intra.peff.net> <76718490901260729m21ba140dke157d1d461aed2d5@mail.gmail.com>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: [PATCH (update)] make: By default, remove -pthread on Darwin
+ (it is included by cstdlib).
+Date: Mon, 26 Jan 2009 13:57:32 -0500
+Message-ID: <497E079C.7090303@tedpavlic.com>
+References: <1232987160-5635-1-git-send-email-ted@tedpavlic.com> <1232987609-6229-1-git-send-email-ted@tedpavlic.com> <7vr62q6jtp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Keith Cascio <keith@cs.ucla.edu>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 26 19:50:20 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 19:59:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRWX0-0007xa-Hv
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 19:49:59 +0100
+	id 1LRWfs-0002qh-JE
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 19:59:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751799AbZAZSsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 13:48:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751554AbZAZSsd
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 13:48:33 -0500
-Received: from peff.net ([208.65.91.99]:45299 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751470AbZAZSsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 13:48:32 -0500
-Received: (qmail 5304 invoked by uid 107); 26 Jan 2009 18:48:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 26 Jan 2009 13:48:40 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Jan 2009 13:48:30 -0500
-Content-Disposition: inline
-In-Reply-To: <76718490901260729m21ba140dke157d1d461aed2d5@mail.gmail.com>
+	id S1751885AbZAZS5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 13:57:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751845AbZAZS5i
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 13:57:38 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:52799 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751648AbZAZS5i (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Jan 2009 13:57:38 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id B948780D803F;
+	Mon, 26 Jan 2009 13:51:32 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Nn0Wxuxg0qB7; Mon, 26 Jan 2009 13:51:32 -0500 (EST)
+Received: from tedbook.mshome.net (tedpc.ece.ohio-state.edu [164.107.164.122])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id A465480D803D;
+	Mon, 26 Jan 2009 13:51:32 -0500 (EST)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
+In-Reply-To: <7vr62q6jtp.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107246>
 
-On Mon, Jan 26, 2009 at 10:29:17AM -0500, Jay Soffian wrote:
+...
+>> This patch clears PTHREAD_LIBS by default. However, if
+>> FORCE_DARWIN_PTHREAD_LIBS is defined, then PTHREAD_LIBS will be set as
+>> before.
+>
+> Why is this even configurable?  You explained pretty clearly that:
+...
+> But the above leaves the reader wondering in what situation it may be
+> useful to use FORCE_* and for what purpose other than to get the nasty
+> warning back (which probably is not most users want to).
 
-> Aside, AIX has commands that are run both directly or via smit (a
-> curses-based interface). When smit calls the commands, it passes a
-> switch to let said commands know that they are being run from smit.
-> e.g.:
-> 
->        -J
->             This flag is used when the installp command is executed from the
->             System Management Interface Tool (SMIT) menus.
-> 
-> Perhaps adding such a concept to those git commands which can be used
-> in both porcelain and plumbing contexts would be useful for git.
+I was afraid that there would be some strange situation where someone 
+would have a configuration where they might want pthreads turned on. I 
+suppose that if someone is in that specialized situation, they will be 
+able to customize their build environment on their own.
 
-Sure, I think that is one of many possible ways that we could
-differentiate between confusing plumbing and porcelain; another is
-splitting functionality into two similar commands, one of which is
-plumbing and one of which is porcelain.
+I will submit a new patch without the define.
 
-The real problem with plans like that, though, is that there are
-_already_ scripts in the wild that don't understand "-J" (or whatever).
-My impression from your description above is that "-J" means "don't use
-fancy features, because we're being called from the menus". And you
-really want the opposite, which is that scripts opt _in_ to fancy
-features, not _out_.
+Thanks --
+Ted
 
-But then you have that problem that the _user_ is stuck specifying "OK,
-turn on fancy features." And I don't relish the thought of typing "git
-diff -J" every time. :)
+-- 
+Ted Pavlic <ted@tedpavlic.com>
 
--Peff
+   Please visit my ALS association page:
+         http://web.alsa.org/goto/tedpavlic
+   My family appreciates your support in the fight to defeat ALS.
