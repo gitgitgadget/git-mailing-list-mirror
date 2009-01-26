@@ -1,82 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] rebase -i --root: fix check for number of
- arguments
-Date: Mon, 26 Jan 2009 01:49:45 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901260148290.14855@racer>
-References: <alpine.DEB.1.00.0901260029480.14855@racer> <alpine.DEB.1.00.0901260032000.14855@racer> <200901260108.07402.trast@student.ethz.ch>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: fix memory leak when checking for empty symlinks
+Date: Sun, 25 Jan 2009 17:15:51 -0800
+Message-ID: <20090126011551.GA8628@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jan 26 01:50:44 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 02:17:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRFgZ-00009j-Ue
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 01:50:44 +0100
+	id 1LRG6H-0004Xj-61
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 02:17:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750901AbZAZAtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jan 2009 19:49:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbZAZAtQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 19:49:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53102 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750834AbZAZAtP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jan 2009 19:49:15 -0500
-Received: (qmail invoked by alias); 26 Jan 2009 00:49:13 -0000
-Received: from pD9EB3E0E.dip0.t-ipconnect.de (EHLO noname) [217.235.62.14]
-  by mail.gmx.net (mp011) with SMTP; 26 Jan 2009 01:49:13 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+U5c9cvMyUGSsiXrh4K60oRvoOuHGP7bUfN7LR5x
-	pfhw4EV611lAxk
-X-X-Sender: gene099@racer
-In-Reply-To: <200901260108.07402.trast@student.ethz.ch>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1750911AbZAZBPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jan 2009 20:15:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750880AbZAZBPw
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Jan 2009 20:15:52 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:52891 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750868AbZAZBPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jan 2009 20:15:52 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5127D1F602;
+	Mon, 26 Jan 2009 01:15:51 +0000 (UTC)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107151>
 
-Hi,
+By enforcing SVN::Pool usage when calling get_file once again.
 
-On Mon, 26 Jan 2009, Thomas Rast wrote:
+This regression was introduced with the reintroduction of
+SVN::Ra::get_file() usage in
+dbc6c74d0858d77e61e092a48d467e725211f8e9
 
-> Johannes Schindelin wrote:
-> > 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  git-rebase--interactive.sh |    3 ++-
-> >  1 files changed, 2 insertions(+), 1 deletions(-)
-> > 
-> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> > index 6e2bf25..5df35b2 100755
-> > --- a/git-rebase--interactive.sh
-> > +++ b/git-rebase--interactive.sh
-> > @@ -571,7 +571,8 @@ first and then run 'git rebase --continue' again."
-> >  		;;
-> >  	--)
-> >  		shift
-> > -		test ! -z "$REBASE_ROOT" -o $# -eq 1 -o $# -eq 2 || usage
-> > +		test -z "$REBASE_ROOT" -a $# -ge 1 -a $# -le 2 ||
-> > +		test ! -z "$REBASE_ROOT" -a $# -le 1 || usage
-> >  		test -d "$DOTEST" &&
-> >  			die "Interactive rebase already started"
-> 
-> Acked-by: Thomas Rast <trast@student.ethz.ch>
-> 
-> I'll postpone 1/2 till I've had enough sleep to check whether
-> --continue ever needed to know about --root, and either remove or fix
-> the remembering.  (Sorry for the noise.)
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-It does need to remember, as pick_one wants to look at the parent to be 
-able to fast-forward.
-
-But the sane fix is to add a file "$DOTEST"/root in case we're running 
-under --root.
-
-Ciao,
-Dscho
+diff --git a/git-svn.perl b/git-svn.perl
+index d4cb538..5d39b39 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -4021,7 +4021,8 @@ my ($ra_invalid, $can_do_switch, %ignored_err, $RA);
+ BEGIN {
+ 	# enforce temporary pool usage for some simple functions
+ 	no strict 'refs';
+-	for my $f (qw/rev_proplist get_latest_revnum get_uuid get_repos_root/) {
++	for my $f (qw/rev_proplist get_latest_revnum get_uuid get_repos_root
++	              get_file/) {
+ 		my $SUPER = "SUPER::$f";
+ 		*$f = sub {
+ 			my $self = shift;
+-- 
+Eric Wong
