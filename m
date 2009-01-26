@@ -1,72 +1,74 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Translations [of Documentation] in Git release?
-Date: Mon, 26 Jan 2009 20:30:35 +0100
-Message-ID: <bd6139dc0901261130ic64f767gddc960ebe3dfecf2@mail.gmail.com>
-References: <60646ee10901250941s34f7accem1b74fc201e895a41@mail.gmail.com>
-	 <m3hc3mxn9d.fsf@localhost.localdomain>
-	 <Pine.LNX.4.64.0901261426350.7798@ds9.cixit.se>
-	 <200901261631.18157.jnareb@gmail.com>
-	 <20090126162351.GA8911@glandium.org>
+From: Ittay Dror <ittay.dror@gmail.com>
+Subject: connecting existing local git repository to svn
+Date: Mon, 26 Jan 2009 21:29:44 +0200
+Message-ID: <497E0F28.9030805@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Dill <sarpulhu@gmail.com>, Git Mailing List <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Mon Jan 26 20:32:38 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 26 20:33:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRXBj-0001ZV-JN
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 20:32:04 +0100
+	id 1LRXCB-0001jU-4k
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 20:32:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752370AbZAZTah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 14:30:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752085AbZAZTah
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 14:30:37 -0500
-Received: from mail-gx0-f21.google.com ([209.85.217.21]:35459 "EHLO
-	mail-gx0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751870AbZAZTag (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 14:30:36 -0500
-Received: by gxk14 with SMTP id 14so5294222gxk.13
-        for <git@vger.kernel.org>; Mon, 26 Jan 2009 11:30:35 -0800 (PST)
+	id S1753538AbZAZTbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 14:31:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753454AbZAZTbE
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 14:31:04 -0500
+Received: from mail-ew0-f21.google.com ([209.85.219.21]:58611 "EHLO
+	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753414AbZAZTbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 14:31:03 -0500
+Received: by ewy14 with SMTP id 14so964106ewy.13
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 11:31:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=l8fpU4uuT52Gall+/pU0Xf7V1vjwLKQXdiNX+cX/VMk=;
-        b=hU0t43Nk9l0LOZVPIf4xLHecUTyyntxTSyphHCYfiKp+U+iO6R4n/doNGd6L3CphHD
-         /fEons8cVPJs/voO7XM7EeydgKsDI2Td2DxXTBgnP2gNz4AbnT0zIfDuwtPGfM7F0CYJ
-         6j+8rIP0fq5H+x5KtDv/qAVp00te3y03KJAvA=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=kACb38AeQR2zb++Yh5vu5D9qkK1XtgvV806AzglHkic=;
+        b=e119K+sxF8Q39mVW+st8dW9YcMz1ymb1B9Th+guVqeAimdJZVMJvXYYet90ASQtMFl
+         K+0M39C9DOIp4WCDfufnj63SXzoEVYJF+S930EMtARQ/qbBVItR7TVR91fcZ3bWwmXCH
+         WIWSu9om30xBFdZ7mVK4rFjsCAF3TPAYJSQnk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=oVo8faSBi68+qu03o4E+8DbJsObLGXiSU7PZMUuMOTBZiu+7412S3mIShAWLOcsEBL
-         zfnCVHCUTW2xiodDidBPyi2UKQoz/uJ60Af8qxyHlKMiY9bOwEz+8jEPRPFXvWUwOiQc
-         gQsaJUQCWE6V8c4/WM6rIIBE6ft6ztR+8DvS4=
-Received: by 10.151.78.15 with SMTP id f15mr976390ybl.124.1232998235641; Mon, 
-	26 Jan 2009 11:30:35 -0800 (PST)
-In-Reply-To: <20090126162351.GA8911@glandium.org>
-X-Google-Sender-Auth: 89784b869dbcb773
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=vqTZugaLIVYR5ZQzpoNWu9vpvmJSCFjswXE2r4TS7gPnHhRvJotP46On99ejEzQDhQ
+         hnfwbvSNjB5BEfFymc6PM8jjVgexNhG7tOqk4CoPPyGaRkn/igtR2Cfngmz6kZ7DP8p0
+         QCSk8W0zIUGmNR9/kZKCAIThSvDtyBFlNPaw4=
+Received: by 10.86.54.3 with SMTP id c3mr513880fga.3.1232998259812;
+        Mon, 26 Jan 2009 11:30:59 -0800 (PST)
+Received: from ?192.168.1.9? (bzq-84-108-89-36.cablep.bezeqint.net [84.108.89.36])
+        by mx.google.com with ESMTPS id d4sm55732fga.51.2009.01.26.11.30.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 26 Jan 2009 11:30:59 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107256>
 
-On Mon, Jan 26, 2009 at 17:23, Mike Hommey <mh@glandium.org> wrote:
-> On the other hand, the people who would really need the translations
-> didn't answer the survey at all, since they couldn't read it.
+Hi,
 
-Perhaps the basics can be translated at least, the documents that do
-not require much change because they represent stable concepts?
 
--- 
-Cheers,
+I'd like to create a branch in a subversion repository so that I can 
+work with git-svn on it.
 
-Sverre Rabbelier
+
+My git repository is already with a history, that I don't want to 
+replicate to subversion, I want to start with subversion having just the 
+latest revision and then continue from there normally (git svn 
+dcommit/rebase).
+
+
+How can I do that?
+
+
+Thanks,
+
+Ittay
