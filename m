@@ -1,69 +1,88 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Translations [of Documentation] in Git release?
-Date: Mon, 26 Jan 2009 17:23:51 +0100
-Organization: glandium.org
-Message-ID: <20090126162351.GA8911@glandium.org>
-References: <60646ee10901250941s34f7accem1b74fc201e895a41@mail.gmail.com> <m3hc3mxn9d.fsf@localhost.localdomain> <Pine.LNX.4.64.0901261426350.7798@ds9.cixit.se> <200901261631.18157.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Krefting <peter@softwolves.pp.se>, Dill <sarpulhu@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 26 17:25:43 2009
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: [PATCH] make: By default, remove -pthread on Darwin (it is included by cstdlib).
+Date: Mon, 26 Jan 2009 11:26:00 -0500
+Message-ID: <1232987160-5635-1-git-send-email-ted@tedpavlic.com>
+Cc: git@vger.kernel.org, Ted Pavlic <ted@tedpavlic.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Jan 26 17:27:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRUHL-0007G4-2r
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 17:25:39 +0100
+	id 1LRUJF-0007zi-JZ
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 17:27:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751610AbZAZQYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 11:24:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751531AbZAZQYN
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 11:24:13 -0500
-Received: from vuizook.err.no ([85.19.221.46]:56731 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751499AbZAZQYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 11:24:12 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1LRUFo-0007Iu-No; Mon, 26 Jan 2009 17:24:07 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1LRUFb-0002N3-O6; Mon, 26 Jan 2009 17:23:51 +0100
-Content-Disposition: inline
-In-Reply-To: <200901261631.18157.jnareb@gmail.com>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1751656AbZAZQ0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 11:26:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751613AbZAZQ0K
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 11:26:10 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:42924 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751606AbZAZQ0J (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Jan 2009 11:26:09 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id E975380D8047;
+	Mon, 26 Jan 2009 11:20:03 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id t7ZWLupACfRo; Mon, 26 Jan 2009 11:20:03 -0500 (EST)
+Received: from localhost.localdomain (tedpc.ece.ohio-state.edu [164.107.164.122])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id D582580D803E;
+	Mon, 26 Jan 2009 11:20:03 -0500 (EST)
+X-Mailer: git-send-email 1.6.1.213.g28da8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107225>
 
-On Mon, Jan 26, 2009 at 04:31:17PM +0100, Jakub Narebski wrote:
-> On Mon, 26 Jan 2009, Peter Krefting wrote:
-> > Jakub Narebski wrote:
-> > 
-> > > With GUI translations we just use gettext conventions. I don't know
-> > > any such convention for docs:
-> > 
-> > There is a lot of documentation being translated using PO files. po4a -
-> > http://po4a.alioth.debian.org/ - is a nice starting point for that.
-> 
-> I'm not sure if XLIFF wouldn't be better format to use to translate
-> _documents_.  Gettext was meant to translate, I think, not very long
-> messages in programs.
-> 
-> Also I am not sure how much support this idea has. True, in last Git
-> User's Survey[1] 63% to 76% wanted (parts of) Documentation... but that
-> was out of 325 people who answered this question, with 3236 responses
-> to survey in total, so numbers are more like 6% - 8%.
+As discussed in
 
-On the other hand, the people who would really need the translations
-didn't answer the survey at all, since they couldn't read it.
+http://lists.apple.com/archives/Unix-porting/2005/Mar/msg00019.html
 
-Mike
+the Mac OS X C standard library is always thread safe and always
+includes the pthread library. So explicitly using -pthread causes an
+'unrecognized option' compiler warning.
+
+This patch clears PTHREAD_LIBS by default. However, if
+FORCE_DARWIN_PTHREAD_LIBS is defined, then PTHREAD_LIBS will be set as
+before.
+
+Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
+---
+ Makefile |   12 ++++++++++++
+ 1 files changed, 12 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index b4d9cb4..30764af 100644
+--- a/Makefile
++++ b/Makefile
+@@ -70,6 +70,15 @@ all::
+ # specify your own (or DarwinPort's) include directories and
+ # library directories by defining CFLAGS and LDFLAGS appropriately.
+ #
++#
++# Define FORCE_DARWIN_PTHREAD_LIBS if you are building on Darwin/Mac OS
++# X and want PTHREAD_LIBS to be set. On Mac OS X, all components of the
++# C standard library that are defined to be thread safe by the POSIX
++# standard already include the pthread library. Hence, the -pthread
++# option is redundant and will generate an 'unrecognized option'
++# warning. So PTHREAD_LIBS will be cleared unless
++# FORCE_DARWIN_PTHREAD_LIBS is set.
++#
+ # Define PPC_SHA1 environment variable when running make to make use of
+ # a bundled SHA1 routine optimized for PowerPC.
+ #
+@@ -817,6 +826,9 @@ ifeq ($(uname_S),Darwin)
+ 			BASIC_LDFLAGS += -L/opt/local/lib
+ 		endif
+ 	endif
++	ifndef FORCE_DARWIN_PTHREAD_LIBS
++		PTHREAD_LIBS =
++	endif
+ endif
+ 
+ ifndef CC_LD_DYNPATH
+-- 
+1.6.1.213.g28da8
