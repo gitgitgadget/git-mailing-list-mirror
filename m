@@ -1,135 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetool: respect autocrlf by using checkout-index
-Date: Mon, 26 Jan 2009 14:08:06 -0800
-Message-ID: <7vskn53em1.fsf@gitster.siamese.dyndns.org>
-References: <20090121210348.GD9088@mit.edu>
- <1232578668-2203-1-git-send-email-charles@hashpling.org>
- <7v1vuuvt11.fsf@gitster.siamese.dyndns.org> <83skn6doxm.fsf@kalahari.s2.org>
- <20090126163114.GD32604@hashpling.org>
- <7v7i4h4v19.fsf@gitster.siamese.dyndns.org>
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: git 1.6.1 on AIX 5.3
+Date: Mon, 26 Jan 2009 22:32:37 +0000
+Message-ID: <e2b179460901261432r601fa006iaf04fc42487e7235@mail.gmail.com>
+References: <A8D76E61-4442-4640-BD0C-84085375E6F1@gmail.com>
+	 <20090126210027.GG27604@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Hannu Koivisto <azure@iki.fi>, git@vger.kernel.org,
-	Theodore Tso <tytso@mit.edu>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Mon Jan 26 23:09:44 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Perry Smith <pedzsan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 23:34:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRZeI-0000fg-Re
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 23:09:43 +0100
+	id 1LRa1t-0000fr-Ne
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 23:34:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752483AbZAZWIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 17:08:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752289AbZAZWIQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 17:08:16 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57505 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752004AbZAZWIP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 17:08:15 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EC4491D5BB;
-	Mon, 26 Jan 2009 17:08:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6DB3B1D5B2; Mon,
- 26 Jan 2009 17:08:08 -0500 (EST)
-In-Reply-To: <7v7i4h4v19.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon, 26 Jan 2009 13:28:02 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D389E1C8-EBF5-11DD-8BAB-0372113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752417AbZAZWck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 17:32:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752289AbZAZWck
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 17:32:40 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:41012 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752000AbZAZWcj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 17:32:39 -0500
+Received: by qyk4 with SMTP id 4so6796845qyk.13
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 14:32:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nRO+pG9t0N0g9ygNCs26L67mSsNtg+ljaZM3NBeQ4ps=;
+        b=K9n636R/M/xeC/E4Z9fz7676TAJdq+XJ1KMnhHcb6SU7BJh1w6WsFpAUSFxA7wn1/E
+         +8/wm+sdLO0i8PuEtysW27UqSZZe3XsiYmdYfrvUyKDaFtSkVPk9dqWcnhiHUJ+glLFm
+         0L6DT5q3cmPuvcGjqwPNjC2Iio2jWIQTSYIiU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SzCAq/TiwO2bpAzUJO13tBblJbLlxFQwdrDgCtfkMrGzomjNTIwZM7iSxJThAzYqDW
+         /gI3FX14cj1hXhvTe4L+9sOGOmaHQfTl9huG8TccS+XbuSu0wYYZaCjMjXcDWjzzbKpW
+         YHA3AfiAem+Gvo7TUC7Bkl9P/2k84d58vpDdg=
+Received: by 10.214.59.5 with SMTP id h5mr2931666qaa.181.1233009157423; Mon, 
+	26 Jan 2009 14:32:37 -0800 (PST)
+In-Reply-To: <20090126210027.GG27604@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107292>
 
-Junio C Hamano <gitster@pobox.com> writes:
+2009/1/26 Jeff King <peff@peff.net>:
+> [cc-ing Mike Ralphson, our local AIX expert]
 
-> Charles Bailey <charles@hashpling.org> writes:
+Bless you!
+
+> On Mon, Jan 26, 2009 at 02:02:15PM -0600, Perry Smith wrote:
 >
->> I suspect that the LF endings in the file is due to the fact that in
->> builtin-merge-file.c, the file is opened (fopen) in binary mode
->> ("wb"), but xdl_merge terminates all lines with a raw '\n'.
+>> I tried building git 1.6.1 on AIX 5.3 as an "out of tree" build and it
+>> does not seem to be set up to do out of tree builds.  If that is not
+>> true, please let me know.
 >>
->> The obvious fix would be to change fopen in builtin-file-merge.c to
->> use "w" instead, but this doesn't work in a number of scenarios. In
->> particular, it is wrong for repositories on windows with core.autocrlf
->> set to false, and would not fix non-windows repositories with
->> core.autocrlf set to true.
+>> The install process wants to call install with a -d option.  AIX has two
+>> install programs but they are pretty old -- neither takes a -d option.
 >>
->> Currently, I've no idea as to what the solution should be.
+>> Is there a GNU install program I can get?  I've not been able to locate
+>> one.
 >
-> "git file-merge" is designed to be a replacement for stock RCS merge, and
-> unfortunately it does not call convert_to_working_tree(), nor has any way
-> to know for which path it should take the attributes to apply to affect
-> what convert_to_working_tree() should do even if it were to call it.
+> It's in GNU coreutils:
 >
-> I think we would need a new option to the command that says "pretend this
-> is about merging this path, and use the gitattributes specified for it
-> when writing out the result."
+>  http://www.gnu.org/software/coreutils/
+>
+> I don't know what Mike uses to install on AIX; you can see his config
+> setup here:
+>
+>  http://repo.or.cz/w/git/gitbuild.git?a=tree;f=mr/aix;hb=platform
+>
+> but I don't see any override of install.
 
-Perhaps something along this line to teach
+I've got the AIX Toolbox for Linux applications[1] installed and ahead
+of /bin and /usr/bin on my PATH. Beware that some of these don't
+function as well as the stock AIX utilities and should normally be
+removed. I've posted about this on what is ostensibly a blog but which
+is really just a post-it note I'm less likely to lose[2].
 
-    $ git merge-file --attribute-path=frotz.c file1 orig_file file2
+Failing that, many programs which are primarily configured using
+autoconf will ship with an install shell script which you can co-opt,
+some apache stuff does too[3].
 
-to merge what happened since orig_file to file2 into file1, and deposit
-the result after converting it appropriately for path "frotz.c" obeying
-core.autocrlf and gitattribute rules.
+Any other questions, don't hesitate to ask.
 
-I see rerere.c::merge() has the exact same issue, but its breakage is half
-hidden by its use of fopen(path, "w").  It should explicitly use
-convert_to_working_tree() like this patch does, and write the results out
-in binary mode.
+Mike
 
- builtin-merge-file.c |   18 +++++++++++++++++-
- 1 files changed, 17 insertions(+), 1 deletions(-)
+[1] http://www-03.ibm.com/systems/power/software/aix/linux/index.html
 
-diff --git i/builtin-merge-file.c w/builtin-merge-file.c
-index 96edb97..61d1092 100644
---- i/builtin-merge-file.c
-+++ w/builtin-merge-file.c
-@@ -5,7 +5,7 @@
- #include "parse-options.h"
- 
- static const char *const merge_file_usage[] = {
--	"git merge-file [options] [-L name1 [-L orig [-L name2]]] file1 orig_file file2",
-+	"git merge-file [options] [-L name1 [-L orig [-L name2]]] [--attribute-path path] file1 orig_file file2",
- 	NULL
- };
- 
-@@ -30,10 +30,13 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 	int merge_level = XDL_MERGE_ZEALOUS_ALNUM;
- 	int merge_style = 0, quiet = 0;
- 	int nongit;
-+	char *attribute_path = NULL;
- 
- 	struct option options[] = {
- 		OPT_BOOLEAN('p', "stdout", &to_stdout, "send results to standard output"),
- 		OPT_SET_INT(0, "diff3", &merge_style, "use a diff3 based merge", XDL_MERGE_DIFF3),
-+		OPT_STRING('a', "attribute-path", &attribute_path, "path",
-+			   "apply work-tree conversion for the path"),
- 		OPT__QUIET(&quiet),
- 		OPT_CALLBACK('L', NULL, names, "name",
- 			     "set labels for file1/orig_file/file2", &label_cb),
-@@ -73,6 +76,19 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 	for (i = 0; i < 3; i++)
- 		free(mmfs[i].ptr);
- 
-+	if (ret >= 0 && attribute_path) {
-+		struct strbuf buf = STRBUF_INIT;
-+		ret = convert_to_working_tree(attribute_path,
-+					      result.ptr, result.size,
-+					      &buf);
-+		free(result.ptr);
-+		if (!ret) {
-+			size_t len;
-+			result.ptr = strbuf_detach(&buf, &len);
-+			result.size = len;
-+		}
-+	}
-+
- 	if (ret >= 0) {
- 		const char *filename = argv[0];
- 		FILE *f = to_stdout ? stdout : fopen(filename, "wb");
+[2] http://mermade.blogspot.com/2008/04/aix-toolbox.html
+
+[3] http://svn.apache.org/repos/asf/tcl/websh/trunk/src/unix/install-sh
