@@ -1,326 +1,146 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] diff.c: output correct index lines for a split diff
-Date: Mon, 26 Jan 2009 00:33:56 -0800
-Message-ID: <7vhc3m8o0b.fsf_-_@gitster.siamese.dyndns.org>
-References: <lyhc3q9pl1.fsf@leia.mandriva.com>
- <20090126003556.GA19368@coredump.intra.peff.net>
- <7vy6wy8qmm.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH] Reintegrate script
+Date: Mon, 26 Jan 2009 01:03:16 -0800
+Message-ID: <7vd4ea8mnf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pixel <pixel@mandriva.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 26 09:35:35 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 26 10:06:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRMwO-000656-MD
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 09:35:33 +0100
+	id 1LRNQ6-0005nW-H5
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 10:06:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751038AbZAZIeK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 03:34:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbZAZIeJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 03:34:09 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41582 "EHLO
+	id S1751015AbZAZJD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 04:03:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750935AbZAZJDZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 04:03:25 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47852 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750777AbZAZIeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 03:34:07 -0500
+	with ESMTP id S1750909AbZAZJDY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 04:03:24 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A301C93362;
-	Mon, 26 Jan 2009 03:34:03 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A7EA934EF;
+	Mon, 26 Jan 2009 04:03:21 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8F8219335C; Mon,
- 26 Jan 2009 03:33:58 -0500 (EST)
-In-Reply-To: <7vy6wy8qmm.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun, 25 Jan 2009 23:37:21 -0800")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 48E86934ED; Mon,
+ 26 Jan 2009 04:03:18 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 167DDF7E-EB84-11DD-B3E5-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 2E204A0A-EB88-11DD-9A3D-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107178>
 
-A patch that changes the filetype (e.g. regular file to symlink) of a path
-must be split into a deletion event followed by a creation event, which
-means that we need to have two independent metainfo lines for each.
-However, the code reused the single set of metainfo lines.
+In a workflow that uses topic branches heavily, you would need to keep
+updating test integration branch(es) all the time.  If they are managed
+like my 'next' by merging the tips of topics that have grown since the
+last integration, it is not so difficult.  You only need to review output
+from "git branch --no-merged next" to see if there are topics that can and
+needs to be merged to 'next'.
 
-As the blob object names recorded on the index lines are usually not used
-nor validated on the receiving end, this is not an issue with normal use
-of the resulting patch.  However, when accepting a binary patch to delete
-a blob, git-apply verified that the postimage blob object name on the
-index line is 0{40}, hence a patch that deletes a regular file blob that
-records binary contents to create a blob with different filetype (e.g. a
-symbolic link) failed to apply.  "git am -3" also uses the blob object
-names recorded on the index line, so it would also misbehave when
-synthesizing a preimage tree.
+But sometimes it is easier to rebuild a test integration branch from
+scratch all the time, especially if you do not publish it for others to
+build on.
 
-This moves the code to generate metainfo lines around, so that two
-independent sets of metainfo lines are used for the split halves.
+I've been using this script for some time to rebuild jch and pu branches
+in my workflow.  jch's tip is supposed to always match 'next', but it is
+rebuilt from scratch on top of 'master' by merging the same topics that
+are in 'next'.  You can use the same script in your work.
 
-The fix revealed that one test expected the incorrect behaviour, which is
-also fixed here.
+To use it, you give a commit range base..tip to the script, and you will
+see a shell script that uses a series of 'git-merge'.  "base" is the more
+stable branch that you rebuild your test integration branch on top (in my
+case, 'master'), and "tip" is where the tip of the test integration branch
+is from the last round (in my case, 'jch' or 'pu').
+
+Then you can run the resulting script, fix conflicted merge and use
+'git-commit', and then repeat until all the branches are re-integrated on
+top of the base branch.
+
+    $ Meta/Reintegrate master..jch >/var/tmp/redo-jch.sh
+    $ cat /var/tmp/redo-jch.sh
+    #!/bin/sh
+    while read branch eh
+    do
+	    case "$eh" in
+	    "") git merge "$branch" || break ;;
+	    ?*) echo >&2 "Eh? $branch $eh"; break ;;
+	    esac
+    done <<EOF
+    jc/blame
+    js/notes
+    ks/maint-mailinfo-folded~3
+    tr/previous-branch
+    EOF
+    $ git checkout jch
+    $ git reset --hard master
+    $ /var/tmp/redo-jch.sh
+    ... if there is conflict, resolve, "git commit" here ...
+    $ /var/tmp/redo-jch.sh
+    ... repeat until everything is applied.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
-  Junio C Hamano <gitster@pobox.com> writes:
+ * This is taken from my 'todo' branch, which I keep a checkout in Meta/
+   directory.
 
-  > Jeff King <peff@peff.net> writes:
-  > ...
-  >> Below is a patch against the test suite that fairly neatly displays the
-  >> problem. I didn't get a chance to look into actually fixing it, though
-  >> (I'm not even sure the problem is in apply, and not in the generated
-  >> patch).
-  >
-  > The generated diff is wrong.
-  >
-  > A filepair that changes type must be split into deletion followed by
-  > creation, which means the "index" line should say 0{40} on the right hand
-  > side for the first half and then 0{40} on the left hand side for the
-  > second half.  The patch generated by this step:
-  >
-  >> +test_expect_success 'create patch' '
-  >> +	git diff-tree --binary HEAD^ HEAD >patch
-  >> +'
-  >
-  > However says the blob contents change from "\0" to "file" on both.
-  >
-  > This is because diff.c::run_diff() computes "index" only once and reuses
-  > it for both halves.
+ Reintegrate |   42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 42 insertions(+), 0 deletions(-)
+ create mode 100755 Reintegrate
 
-I did not include your new test script here; perhaps we can add it to an
-existing typechange diff/apply test, like t4114?
-
- diff.c                   |  146 +++++++++++++++++++++++++---------------------
- t/t4030-diff-textconv.sh |    2 +-
- 2 files changed, 81 insertions(+), 67 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 972b3da..7e18364 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2081,16 +2081,86 @@ static void run_external_diff(const char *pgm,
- 	}
- }
- 
-+static int similarity_index(struct diff_filepair *p)
+diff --git a/Reintegrate b/Reintegrate
+new file mode 100755
+index 0000000..dfdb73e
+--- /dev/null
++++ b/Reintegrate
+@@ -0,0 +1,42 @@
++#!/bin/sh
++
++merge_msg="Merge branch '\(.*\)'"
++x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
++x40="$x40$x40$x40$x40$x40$x40$x40$x40"
++LF='
++'
++
++echo '#!/bin/sh
++while read branch eh
++do
++	case "$eh" in
++	"") git merge "$branch" || break ;;
++	?*) echo >&2 "Eh? $branch $eh"; break ;;
++	esac
++done <<EOF'
++
++git log --pretty=oneline --first-parent "$1" |
 +{
-+	return p->score * 100 / MAX_SCORE;
++	series=
++	while read commit msg
++	do
++		other=$(git rev-parse --verify "$commit^2") &&
++		branch=$(expr "$msg" : "$merge_msg") &&
++		tip=$(git rev-parse --verify "refs/heads/$branch" 2>/dev/null) &&
++		merged=$(git name-rev --refs="refs/heads/$branch" "$other" 2>/dev/null) &&
++		merged=$(expr "$merged" : "$x40 \(.*\)") &&
++		test "$merged" != undefined || {
++			other=$(git log -1 --pretty='format:%s' $other) &&
++			merged="$branch :rebased? $other"
++		}
++		if test -z "$series"
++		then
++			series="$merged"
++		else
++			series="$merged$LF$series"
++		fi
++	done
++	echo "$series"
 +}
 +
-+static void fill_metainfo(struct strbuf *msg,
-+			  const char *name,
-+			  const char *other,
-+			  struct diff_filespec *one,
-+			  struct diff_filespec *two,
-+			  struct diff_options *o,
-+			  struct diff_filepair *p)
-+{
-+	strbuf_init(msg, PATH_MAX * 2 + 300);
-+	switch (p->status) {
-+	case DIFF_STATUS_COPIED:
-+		strbuf_addf(msg, "similarity index %d%%", similarity_index(p));
-+		strbuf_addstr(msg, "\ncopy from ");
-+		quote_c_style(name, msg, NULL, 0);
-+		strbuf_addstr(msg, "\ncopy to ");
-+		quote_c_style(other, msg, NULL, 0);
-+		strbuf_addch(msg, '\n');
-+		break;
-+	case DIFF_STATUS_RENAMED:
-+		strbuf_addf(msg, "similarity index %d%%", similarity_index(p));
-+		strbuf_addstr(msg, "\nrename from ");
-+		quote_c_style(name, msg, NULL, 0);
-+		strbuf_addstr(msg, "\nrename to ");
-+		quote_c_style(other, msg, NULL, 0);
-+		strbuf_addch(msg, '\n');
-+		break;
-+	case DIFF_STATUS_MODIFIED:
-+		if (p->score) {
-+			strbuf_addf(msg, "dissimilarity index %d%%\n",
-+				    similarity_index(p));
-+			break;
-+		}
-+		/* fallthru */
-+	default:
-+		/* nothing */
-+		;
-+	}
-+	if (one && two && hashcmp(one->sha1, two->sha1)) {
-+		int abbrev = DIFF_OPT_TST(o, FULL_INDEX) ? 40 : DEFAULT_ABBREV;
-+
-+		if (DIFF_OPT_TST(o, BINARY)) {
-+			mmfile_t mf;
-+			if ((!fill_mmfile(&mf, one) && diff_filespec_is_binary(one)) ||
-+			    (!fill_mmfile(&mf, two) && diff_filespec_is_binary(two)))
-+				abbrev = 40;
-+		}
-+		strbuf_addf(msg, "index %.*s..%.*s",
-+			    abbrev, sha1_to_hex(one->sha1),
-+			    abbrev, sha1_to_hex(two->sha1));
-+		if (one->mode == two->mode)
-+			strbuf_addf(msg, " %06o", one->mode);
-+		strbuf_addch(msg, '\n');
-+	}
-+	if (msg->len)
-+		strbuf_setlen(msg, msg->len - 1);
-+}
-+
- static void run_diff_cmd(const char *pgm,
- 			 const char *name,
- 			 const char *other,
- 			 const char *attr_path,
- 			 struct diff_filespec *one,
- 			 struct diff_filespec *two,
--			 const char *xfrm_msg,
-+			 struct strbuf *msg,
- 			 struct diff_options *o,
--			 int complete_rewrite)
-+			 struct diff_filepair *p)
- {
-+	const char *xfrm_msg = NULL;
-+	int complete_rewrite = (p->status == DIFF_STATUS_MODIFIED) && p->score;
-+
-+	if (msg) {
-+		fill_metainfo(msg, name, other, one, two, o, p);
-+		xfrm_msg = msg->len ? msg->buf : NULL;
-+	}
-+
- 	if (!DIFF_OPT_TST(o, ALLOW_EXTERNAL))
- 		pgm = NULL;
- 	else {
-@@ -2130,11 +2200,6 @@ static void diff_fill_sha1_info(struct diff_filespec *one)
- 		hashclr(one->sha1);
- }
- 
--static int similarity_index(struct diff_filepair *p)
--{
--	return p->score * 100 / MAX_SCORE;
--}
--
- static void strip_prefix(int prefix_length, const char **namep, const char **otherp)
- {
- 	/* Strip the prefix but do not molest /dev/null and absolute paths */
-@@ -2148,13 +2213,11 @@ static void run_diff(struct diff_filepair *p, struct diff_options *o)
- {
- 	const char *pgm = external_diff();
- 	struct strbuf msg;
--	char *xfrm_msg;
- 	struct diff_filespec *one = p->one;
- 	struct diff_filespec *two = p->two;
- 	const char *name;
- 	const char *other;
- 	const char *attr_path;
--	int complete_rewrite = 0;
- 
- 	name  = p->one->path;
- 	other = (strcmp(name, p->two->path) ? p->two->path : NULL);
-@@ -2164,83 +2227,34 @@ static void run_diff(struct diff_filepair *p, struct diff_options *o)
- 
- 	if (DIFF_PAIR_UNMERGED(p)) {
- 		run_diff_cmd(pgm, name, NULL, attr_path,
--			     NULL, NULL, NULL, o, 0);
-+			     NULL, NULL, NULL, o, p);
- 		return;
- 	}
- 
- 	diff_fill_sha1_info(one);
- 	diff_fill_sha1_info(two);
- 
--	strbuf_init(&msg, PATH_MAX * 2 + 300);
--	switch (p->status) {
--	case DIFF_STATUS_COPIED:
--		strbuf_addf(&msg, "similarity index %d%%", similarity_index(p));
--		strbuf_addstr(&msg, "\ncopy from ");
--		quote_c_style(name, &msg, NULL, 0);
--		strbuf_addstr(&msg, "\ncopy to ");
--		quote_c_style(other, &msg, NULL, 0);
--		strbuf_addch(&msg, '\n');
--		break;
--	case DIFF_STATUS_RENAMED:
--		strbuf_addf(&msg, "similarity index %d%%", similarity_index(p));
--		strbuf_addstr(&msg, "\nrename from ");
--		quote_c_style(name, &msg, NULL, 0);
--		strbuf_addstr(&msg, "\nrename to ");
--		quote_c_style(other, &msg, NULL, 0);
--		strbuf_addch(&msg, '\n');
--		break;
--	case DIFF_STATUS_MODIFIED:
--		if (p->score) {
--			strbuf_addf(&msg, "dissimilarity index %d%%\n",
--					similarity_index(p));
--			complete_rewrite = 1;
--			break;
--		}
--		/* fallthru */
--	default:
--		/* nothing */
--		;
--	}
--
--	if (hashcmp(one->sha1, two->sha1)) {
--		int abbrev = DIFF_OPT_TST(o, FULL_INDEX) ? 40 : DEFAULT_ABBREV;
--
--		if (DIFF_OPT_TST(o, BINARY)) {
--			mmfile_t mf;
--			if ((!fill_mmfile(&mf, one) && diff_filespec_is_binary(one)) ||
--			    (!fill_mmfile(&mf, two) && diff_filespec_is_binary(two)))
--				abbrev = 40;
--		}
--		strbuf_addf(&msg, "index %.*s..%.*s",
--				abbrev, sha1_to_hex(one->sha1),
--				abbrev, sha1_to_hex(two->sha1));
--		if (one->mode == two->mode)
--			strbuf_addf(&msg, " %06o", one->mode);
--		strbuf_addch(&msg, '\n');
--	}
--
--	if (msg.len)
--		strbuf_setlen(&msg, msg.len - 1);
--	xfrm_msg = msg.len ? msg.buf : NULL;
--
- 	if (!pgm &&
- 	    DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two) &&
- 	    (S_IFMT & one->mode) != (S_IFMT & two->mode)) {
--		/* a filepair that changes between file and symlink
-+		/*
-+		 * a filepair that changes between file and symlink
- 		 * needs to be split into deletion and creation.
- 		 */
- 		struct diff_filespec *null = alloc_filespec(two->path);
- 		run_diff_cmd(NULL, name, other, attr_path,
--			     one, null, xfrm_msg, o, 0);
-+			     one, null, &msg, o, p);
- 		free(null);
-+		strbuf_release(&msg);
-+
- 		null = alloc_filespec(one->path);
- 		run_diff_cmd(NULL, name, other, attr_path,
--			     null, two, xfrm_msg, o, 0);
-+			     null, two, &msg, o, p);
- 		free(null);
- 	}
- 	else
- 		run_diff_cmd(pgm, name, other, attr_path,
--			     one, two, xfrm_msg, o, complete_rewrite);
-+			     one, two, &msg, o, p);
- 
- 	strbuf_release(&msg);
- }
-diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
-index 2f27a0b..a3f0897 100755
---- a/t/t4030-diff-textconv.sh
-+++ b/t/t4030-diff-textconv.sh
-@@ -104,7 +104,7 @@ cat >expect.typechange <<'EOF'
- -1
- diff --git a/file b/file
- new file mode 120000
--index ad8b3d2..67be421
-+index 0000000..67be421
- --- /dev/null
- +++ b/file
- @@ -0,0 +1 @@
++echo 'EOF'
 -- 
 1.6.1.1.248.g7f6d2
