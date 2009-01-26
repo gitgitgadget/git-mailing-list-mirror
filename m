@@ -1,73 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: backwards compatibility, was Re: [PATCH v1 1/3] Introduce
-	config variable "diff.primer"
-Date: Mon, 26 Jan 2009 06:16:05 -0500
-Message-ID: <20090126111605.GB19993@coredump.intra.peff.net>
-References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <1232904657-31831-2-git-send-email-keith@cs.ucla.edu> <7v1vurf7lq.fsf@gitster.siamese.dyndns.org> <alpine.GSO.2.00.0901251345240.12651@kiwi.cs.ucla.edu> <20090126031206.GB14277@sigill.intra.peff.net> <alpine.DEB.1.00.0901261154330.14855@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Reintegrate script
+Date: Mon, 26 Jan 2009 12:18:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901261218070.14855@racer>
+References: <7vd4ea8mnf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Keith Cascio <keith@CS.UCLA.EDU>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 26 12:17:39 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 12:19:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRPTD-0005K9-SM
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 12:17:36 +0100
+	id 1LRPV3-0005eW-JU
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 12:19:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750974AbZAZLQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 06:16:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750738AbZAZLQI
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 06:16:08 -0500
-Received: from peff.net ([208.65.91.99]:54403 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750706AbZAZLQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 06:16:07 -0500
-Received: (qmail 2390 invoked by uid 107); 26 Jan 2009 11:16:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 26 Jan 2009 06:16:15 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Jan 2009 06:16:05 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901261154330.14855@racer>
+	id S1751305AbZAZLSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 06:18:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751139AbZAZLSC
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 06:18:02 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45236 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750768AbZAZLSB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 06:18:01 -0500
+Received: (qmail invoked by alias); 26 Jan 2009 11:17:59 -0000
+Received: from pD9EB294D.dip0.t-ipconnect.de (EHLO noname) [217.235.41.77]
+  by mail.gmx.net (mp006) with SMTP; 26 Jan 2009 12:17:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18cX1k6MgYce+90JIaHn/64uSZYahQ395dBiP2Kz7
+	jrliyO/11YlyzA
+X-X-Sender: gene099@racer
+In-Reply-To: <7vd4ea8mnf.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107190>
 
-On Mon, Jan 26, 2009 at 11:59:46AM +0100, Johannes Schindelin wrote:
+Hi,
 
-> Just a reminder: we are very conservative when it comes to breaking 
-> backwards compatibility.  For example, people running (but not upgrading) 
-> gitweb who want to upgrade Git may rightfully expect their setups not to 
-> be broken for a long time, if ever.
+On Mon, 26 Jan 2009, Junio C Hamano wrote:
+
+> In a workflow that uses topic branches heavily, you would need to keep 
+> updating test integration branch(es) all the time.  If they are managed 
+> like my 'next' by merging the tips of topics that have grown since the 
+> last integration, it is not so difficult.  You only need to review 
+> output from "git branch --no-merged next" to see if there are topics 
+> that can and needs to be merged to 'next'.
 > 
-> So your mentioning gitweb using "git diff" precludes all kind of cute 
-> games, methinks.
+> But sometimes it is easier to rebuild a test integration branch from
+> scratch all the time, especially if you do not publish it for others to
+> build on.
 
-Are you aware that gitweb no longer calls "git diff", exactly because
-of problems caused by calling a porcelain from a script?
+FWIW that is exactly what I am aiming at with my rebase -i -p work.
 
-I don't want to break existing setups, either. But at some point you
-have to say "this is porcelain, so don't rely on there not being any
-user-triggered effects in its behavior". If porcelain is cast in stone,
-then what is the point in differentiating plumbing from porcelain?
-
-And when the line is blurred (as I think it is in several places), then
-it has to be dealt with on a case-by-case basis. What is the benefit,
-and what is the likelihood and extent of harm?
-
-> And please no "anybody who would do this and that would be nuts" excuses: 
-> if you want to change something fundamental like this, _you_ have to 
-> defend it.
-> 
-> It is not acceptable to just shout out what you want and expect those 
-> affected negatively to do the impact analysis for you.
-
-This message is addressed to me, but I don't know exactly what you think
-I'm proposing, failing to defend, or failing to do an impact analysis
-for. Or are you speaking generally of the "you" who submit patches?
-
--Peff
+Ciao,
+Dscho
