@@ -1,74 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: bug: transform a binary file into a symlink in one commit =>
- invalid binary patch
-Date: Sun, 25 Jan 2009 23:37:21 -0800
-Message-ID: <7vy6wy8qmm.fsf@gitster.siamese.dyndns.org>
-References: <lyhc3q9pl1.fsf@leia.mandriva.com>
- <20090126003556.GA19368@coredump.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: What's cooking in git.git (Jan 2009, #06; Sat, 24)
+Date: Mon, 26 Jan 2009 08:52:07 +0100
+Message-ID: <497D6BA7.4070409@viscovery.net>
+References: <7v8wp0kmj4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pixel <pixel@mandriva.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 26 08:39:40 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 26 08:53:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRM48-0004Jk-OH
-	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 08:39:29 +0100
+	id 1LRMHu-0006VQ-Kt
+	for gcvg-git-2@gmane.org; Mon, 26 Jan 2009 08:53:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbZAZHha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 02:37:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbZAZHh3
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 02:37:29 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61330 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751101AbZAZHh3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 02:37:29 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A364093033;
-	Mon, 26 Jan 2009 02:37:27 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 48E2793032; Mon,
- 26 Jan 2009 02:37:22 -0500 (EST)
-In-Reply-To: <20090126003556.GA19368@coredump.intra.peff.net> (Jeff King's
- message of "Sun, 25 Jan 2009 19:35:56 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2E4C3388-EB7C-11DD-B4BC-5720C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751324AbZAZHwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 02:52:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751317AbZAZHwQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 02:52:16 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:33493 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751263AbZAZHwP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 02:52:15 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LRMGO-0001YH-9s; Mon, 26 Jan 2009 08:52:08 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 15808A865; Mon, 26 Jan 2009 08:52:08 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7v8wp0kmj4.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107174>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano schrieb:
+> * sp/runtime-prefix (Sun Jan 18 13:00:15 2009 +0100) 7 commits
+>  - Windows: Revert to default paths and convert them by
+>    RUNTIME_PREFIX
+>  - Compute prefix at runtime if RUNTIME_PREFIX is set
+>  - Modify setup_path() to only add git_exec_path() to PATH
+>  - Add calls to git_extract_argv0_path() in programs that call
+>    git_config_*
+>  - git_extract_argv0_path(): Move check for valid argv0 from caller
+>    to callee
+>  - Refactor git_set_argv0_path() to git_extract_argv0_path()
+>  - Move computation of absolute paths from Makefile to runtime (in
+>    preparation for RUNTIME_PREFIX)
+> 
+> We should move this to 'next' soon with J6t's blessing.
 
-> On Fri, Jan 23, 2009 at 01:25:30PM +0100, Pixel wrote:
->
->> i hit a bug (git 1.6.1): when you transform a binary file into a
->> symlink in one commit, the binary patch can't be used in "git apply".
->> Is it a known issue?
->
-> Not that I know of.
->
-> Below is a patch against the test suite that fairly neatly displays the
-> problem. I didn't get a chance to look into actually fixing it, though
-> (I'm not even sure the problem is in apply, and not in the generated
-> patch).
+I've been using this series for a few days now without problems:
 
-The generated diff is wrong.
+Acked-by: Johannes Sixt <j6t@kdbg.org>
 
-A filepair that changes type must be split into deletion followed by
-creation, which means the "index" line should say 0{40} on the right hand
-side for the first half and then 0{40} on the left hand side for the
-second half.  The patch generated by this step:
-
-> +test_expect_success 'create patch' '
-> +	git diff-tree --binary HEAD^ HEAD >patch
-> +'
-
-However says the blob contents change from "\0" to "file" on both.
-
-This is because diff.c::run_diff() computes "index" only once and reuses
-it for both halves.
+-- Hannes
