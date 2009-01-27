@@ -1,89 +1,99 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv3] gitweb: make static files accessible with PATH_INFO
-Date: Tue, 27 Jan 2009 14:29:06 +0100
-Message-ID: <1233062946-22395-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+From: Robert Wohlrab <robert.wohlrab@gmx.de>
+Subject: Wrong url using relative submodule over gitorious-ssh
+Date: Tue, 27 Jan 2009 14:37:43 +0100
+Message-ID: <200901271437.43737.robert.wohlrab@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 27 14:31:04 2009
+X-From: git-owner@vger.kernel.org Tue Jan 27 14:39:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRo1X-0003zR-GG
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 14:30:39 +0100
+	id 1LRoA0-0007T8-Tp
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 14:39:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753527AbZA0N3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 08:29:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753255AbZA0N3M
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 08:29:12 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:4199 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753372AbZA0N3L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 08:29:11 -0500
-Received: by fg-out-1718.google.com with SMTP id 13so138547fge.17
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 05:29:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=Fda4E0VJ0Z+Ry6TJ2Xp7SSGH93KsUVexaIy9l6vCmJI=;
-        b=dM4ROEqowbWPcPHE+aZtmtC+QZ7AL3JCi15AZ/xBOkZCoQpMYJ8ic96D5N24SYnPT2
-         dNMSvv+kn3fZCL/Hjv5O1Zv1gRcgmELHXiWMYp/erYldLXPSJTf+P9booh4RTNFSGWWi
-         FdcZhBrnzpqTwhGde45FkNhPhEApmduR0FVtc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=eTv2pot26wsHOfAz/2EdsG5AbdKh57os3Dbj9X8akc4BLyar0OLl0zPY7kiuS5Nzw3
-         WgdhFohDOT5KmMTGC73hcYZRWd4CRe09K7t4frIURp00nBFExtm0ipA1pQzkTUlbEoYD
-         +MG/Ofk0zqReVmvuhqFxIVOasUhiWL2ySwg4o=
-Received: by 10.86.93.17 with SMTP id q17mr74023fgb.46.1233062948333;
-        Tue, 27 Jan 2009 05:29:08 -0800 (PST)
-Received: from localhost ([94.37.14.37])
-        by mx.google.com with ESMTPS id e20sm156658fga.53.2009.01.27.05.29.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jan 2009 05:29:07 -0800 (PST)
-X-Mailer: git-send-email 1.5.6.5
+	id S1753728AbZA0Nhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 08:37:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753538AbZA0Nhy
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 08:37:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36028 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753373AbZA0Nhx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 08:37:53 -0500
+Received: (qmail invoked by alias); 27 Jan 2009 13:37:51 -0000
+Received: from unknown (EHLO sven-desktop.localnet) [89.246.192.191]
+  by mail.gmx.net (mp044) with SMTP; 27 Jan 2009 14:37:51 +0100
+X-Authenticated: #15668376
+X-Provags-ID: V01U2FsdGVkX182/VwMGrM2WZVQTxoO6M6CVmHpYNp4UAkfFu1dMS
+	nK4fle+EC8lZOz
+User-Agent: KMail/1.11.0 (Linux/2.6.28.1; KDE/4.2.0; x86_64; ; )
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107345>
 
-When PATH_INFO is defined, static files such as the defalt CSS or the
-shortcut icon are not accessible beyond the summary page (e.g. in
-shortlog or commit view).
+Hi,
+I tried to use submodules in git. Since I am using gitorious at the moment it 
+would be nice to have relative urls to be able to checkout as user and as 
+developer. When I am using a checkout over git's native protocol it works fine 
+but when I am trying to use ssh it creates a bogus url and nothing changes if 
+I am using more ../ before the url.
+Lets explain it by example. First thing is that we are assuming that we 
+checked out it over git's own protocol (it is emulated by setting the origin 
+url in my example)
 
-Fix this by adding a <base> tag pointing to the script base URL.
+$ mkdir test1
+$ cd test1
+$ git init
+$ git remote add origin git://gitorious.org/test/mainline.git
+$ git submodule init
+$ git submodule add ../../test2/mainline.git subdir
+ Initialized empty Git repository in ~/test1/subdir/.git/
+ remote: Counting objects: 123, done.
+ ....
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
-Of course, last time I forgot that the BASE href is supposed to be
-absolute. While Opera apparently has no problem with it being relative,
-other browsers such as Firefox are stricter about it.
+Ok, you will receive a 
+ Initialized empty Git repository in ~/test1/subdir/.git/
+ fatal: The remote end hung up unexpectedly
+ Clone of 'git://gitorious.org/test2/mainline.git' into submodule path 
+'subdir' failed
+but that is fine because git://gitorious.org/test2/mainline.git is a valid 
+gitorious url (if somebody would create test2 as project).
 
- gitweb/gitweb.perl |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+Lets take a look at gitorious urls for ssh push access. They look like 
+git@gitorious.org:test1/mainline.git - similar to the ones used for pull over 
+the public git daemon.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 931db4f..411b1f6 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2901,6 +2901,14 @@ sub git_header_html {
- <meta name="robots" content="index, nofollow"/>
- <title>$title</title>
- EOF
-+# the stylesheet, favicon etc urls won't work correctly with path_info unless we set the appropriate base URL
-+	if ($ENV{'PATH_INFO'}) {
-+		my $base = $my_url;
-+		my $sname = $ENV{'SCRIPT_NAME'};
-+		$base =~ s,\Q$sname\E$,,;
-+		$base .= "/";
-+		print "<base href=\"$base\"/>\n";
-+	}
- # print out each stylesheet that exist
- 	if (defined $stylesheet) {
- #provides backwards capability for those people who define style sheet in a config file
+$ mkdir test1
+$ cd test1
+$ git init
+$ git remote add origin git@gitorious.org:test1/mainline.git
+$ git submodule init
+$ git submodule add ../../test2/mainline.git subdir
+ Initialized empty Git repository in ~/test1/subdir/.git/
+ Access denied or bad repository path
+ fatal: The remote end hung up unexpectedly
+ Clone of 'git@gitorious.org:test1/test2/mainline.git' into submodule path 
+'subdir' failed
+
+This is definitely not the url I expected. It is unimportant how many more ../ 
+I add but the test1/ will not get away. It is also important that their is no 
+/ after : or otherwise the clone will fail too.
+
+This is an important issue for KDE because they want to use (Qt's) gitorious 
+and maybe submodules when they want switch to git.
+
+$ git --version                                                                                                                                                 
+ git version 1.6.1.1.230.gdfb04
+and on my origin/next test
+$ git --version                                                                                                                                                 
+ git version 1.6.1.1.363.g2a3bd
 -- 
-1.5.6.5
+Robert Wohlrab
