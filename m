@@ -1,78 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bad objects error since upgrading GitHub servers to 1.6.1
-Date: Tue, 27 Jan 2009 15:51:06 -0800
-Message-ID: <7v1vuo1f6d.fsf@gitster.siamese.dyndns.org>
-References: <bab6a2ab0901271504j73dce7afjf8436c3c7c83b770@mail.gmail.com>
- <bab6a2ab0901271510y1e3e6912t82ff16e0f912d4b6@mail.gmail.com>
- <alpine.DEB.1.00.0901280034310.3586@pacific.mpi-cbg.de>
- <20090127233939.GD1321@spearce.org>
+From: Geoffrey Lee <geoffreyj.lee@gmail.com>
+Subject: Re: Anyone have access to 64-bit Vista?
+Date: Tue, 27 Jan 2009 15:59:01 -0800
+Message-ID: <83d7aaa40901271559y2767c6aes3fbecb28a88f4759@mail.gmail.com>
+References: <83d7aaa40901270130g3bebb3d6we4839b567f310e46@mail.gmail.com>
+	 <20090127122456.0df531c3.stephen@exigencecorp.com>
+	 <83d7aaa40901271441h47c98edepc16f5026de636134@mail.gmail.com>
+	 <alpine.DEB.1.00.0901272350360.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	PJ Hyett <pjhyett@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jan 28 00:52:43 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 28 01:00:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRxjW-0002q9-K3
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 00:52:43 +0100
+	id 1LRxrD-0005Fr-IO
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 01:00:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751281AbZA0XvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 18:51:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751229AbZA0XvR
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 18:51:17 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48419 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750937AbZA0XvR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 18:51:17 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A20AE1D6B1;
-	Tue, 27 Jan 2009 18:51:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 571911D69F; Tue,
- 27 Jan 2009 18:51:08 -0500 (EST)
-In-Reply-To: <20090127233939.GD1321@spearce.org> (Shawn O. Pearce's message
- of "Tue, 27 Jan 2009 15:39:39 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 61564E06-ECCD-11DD-9E99-0372113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752269AbZA0X7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 18:59:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751927AbZA0X7F
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 18:59:05 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:52561 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752908AbZA0X7C (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 18:59:02 -0500
+Received: by qyk4 with SMTP id 4so7625868qyk.13
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 15:59:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=m9o9tk8krjffqn6a5aFCMsvpQXRRvp7Vb8pvedJdDhE=;
+        b=aZiOtGHjlV1mTAqB7jp2SIcL0sgI6VhhYs9uX4FJk6g6iZTIJfuWU4nLDpyeBpCwcD
+         s/mAsQCJyB8ICYWZWM7oPV8RJmMlfcBQWijfaT+h34DFdlopPR5JccNf1/x85w9TiCgm
+         qBb7Fd8tFSKFclMrY4zC6Rj8ahLL/GpVEG8S0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=fShWBgyqKPIxDbQquUcYtMICDkjFb3pt0ByAFoAvoYprUc3AQeUjPZgiu0kWnqBOg3
+         hpWonjHU/GVBldLeMKaxD7Up6JBl4ysqBc3dqUS0BY96GEvFcLn0IiO8HZ8rKRXbZ+Uc
+         zih59K3jnnEmAlN+S4HhPM6ozDs2xWddnDSHo=
+Received: by 10.214.113.21 with SMTP id l21mr2951649qac.182.1233100741215; 
+	Tue, 27 Jan 2009 15:59:01 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0901272350360.3586@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107429>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On Tue, Jan 27, 2009 at 2:51 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> How could it?  You cannot have 32-bit code and 64-bit code running in the
+> same process.  At least not with x86_64 (AFAIK).
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> On Tue, 27 Jan 2009, PJ Hyett wrote:
->> 
->> > To expand further, here's the output from the command line when this happened.
->> > 
->> > ~/Development/github(jetty)$ git push pjhyett jetty
->> > fatal: bad object e13a86261c6e710af8fd4b5fb093b28b8583d820
->> > error: pack-objects died with strange error
->> > error: failed to push some refs to 'git@github.com:pjhyett/github.git'
->> 
->> Hmm.  The only thing I could think of is that the pack-objects used by 
->> your git-daemon is somehow not at the right version...
->
-> No, that's pack-objects on the client.
->
-> Its freaking weird.  I don't know why a server side upgrade would
-> cause this on the client side.
->
-> FWIW, in 1.6.1 the only mention of those bad object messages
-> is inside revision.c.  I can't see why we'd get one of those
-> by itself.  I would have expected messages from deeper down
-> too, like from sha1_file.c.
+Yeah it seems obvious now, but I had gotten used to 64-bit Windows
+being able to run 32-bit apps so seamlessly that I didn't think about
+it.
 
-As we do not know what version github used to run (or for that matter what
-custom code it adds to 1.6.1), I guessed that the previous one was 1.6.0.6
-and did some comparison.  The client side pack_object() learned to take
-alternates on the server side into account to avoid pushing objects that
-the target repository has through its alternates, so it is not totally
-unexpected the client side changes its behaviour depending on what the
-server does.
+-Geoffrey Lee
