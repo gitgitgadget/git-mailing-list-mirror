@@ -1,65 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/6] lib-rebase.sh: Document what set_fake_editor()
- does
-Date: Tue, 27 Jan 2009 22:58:59 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901272258000.14855@racer>
-References: <alpine.DEB.1.00.0901271012550.14855@racer> <20090127085418.e113ad5a.stephen@exigencecorp.com> <alpine.DEB.1.00.0901271844340.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901271846340.3586@pacific.mpi-cbg.de>
- <7v3af431iz.fsf@gitster.siamese.dyndns.org>
+From: Sverre Rabbelier <alturin@gmail.com>
+Subject: git-am annoyance
+Date: Tue, 27 Jan 2009 23:07:14 +0100
+Message-ID: <bd6139dc0901271407i4406d5e6u6db1df9e5a7bdc4f@mail.gmail.com>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Stephen Haberman <stephen@exigencecorp.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 27 23:00:13 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git Mailinglist <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 27 23:08:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRvyO-0007nZ-8c
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 22:59:56 +0100
+	id 1LRw6t-0002VN-TL
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:08:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751885AbZA0V6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 16:58:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751799AbZA0V6b
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 16:58:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60112 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750898AbZA0V6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 16:58:31 -0500
-Received: (qmail invoked by alias); 27 Jan 2009 21:58:28 -0000
-Received: from pD9EB30BF.dip0.t-ipconnect.de (EHLO noname) [217.235.48.191]
-  by mail.gmx.net (mp011) with SMTP; 27 Jan 2009 22:58:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX181Ol8XMxQ1eiBI+kh/PmdwShPa2bgQWB+6BChPb+
-	MhCA5D4wf4BPIn
-X-X-Sender: gene099@racer
-In-Reply-To: <7v3af431iz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+	id S1751304AbZA0WHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 17:07:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751656AbZA0WHS
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:07:18 -0500
+Received: from yx-out-2324.google.com ([74.125.44.30]:27138 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751052AbZA0WHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 17:07:16 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so2880138yxm.1
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 14:07:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:date:message-id
+         :subject:from:to:content-type:content-transfer-encoding;
+        bh=/QDrGkPyC4MPtSVuDE9gnyCcyYeKjYmnFT3fQfdSJBc=;
+        b=pX0wHMKpWSzPE4ZDpSht3drR4IvnZIe0uMz0bgpV3kLZJjFMXjVzdEzHVa4yzTUXTD
+         Z4IMs7hbIJ1tJXDR1nbtjKq2JLv4o9pTWvT0viX7oOAlfwrhm3qMIwQ3oEN3bJM/CXZT
+         EKYLo8jwdvG8OzSHJ2VCzgWf/YNyhTS0AZ488=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=KCxNP0shE72jwSRKj6oQ5mlUO4SGqePAospngO+G/jtm4MMQsS7bxX1uMPn/Pl4nJF
+         /axw6vVfxFPgvromiDqfqZ/SRZtlkRkzh+hEWrMJMwqm91tBjlrmihKDFUe/+Ndkfc6M
+         TipNuHCSj/i1WcBe01KD9k5iLHHa8IwgWrv1s=
+Received: by 10.150.96.10 with SMTP id t10mr445607ybb.213.1233094034339; Tue, 
+	27 Jan 2009 14:07:14 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107394>
 
-Hi,
+Heya,
 
-On Tue, 27 Jan 2009, Junio C Hamano wrote:
+Observe what happens if, on accident, rather than running a alias
+(amendall), the 'tab' didn't catch on:
+$ git am
+^C
+$ # ok, now what do I do?
+$ git status
+# On branch checker-caching
+nothing to commit (working directory clean)
+$ # looks like everything is ok, great
+$ # ... some time later
+$ # same thing happens
+$ git am
+cat: /home/sverre/code/Melange/.git/rebase-apply/next: No such file or directory
+cat: /home/sverre/code/Melange/.git/rebase-apply/utf8: No such file or directory
+cat: /home/sverre/code/Melange/.git/rebase-apply/keep: No such file or directory
+cat: /home/sverre/code/Melange/.git/rebase-apply/threeway: No such
+file or directory
+cat: /home/sverre/code/Melange/.git/rebase-apply/apply-opt: No such
+file or directory
+cat: /home/sverre/code/Melange/.git/rebase-apply/sign: No such file or directory
+cat: /home/sverre/code/Melange/.git/rebase-apply/next: No such file or directory
+/usr/local/libexec/git-core//git-am: line 319: test: : integer
+expression expected
+/usr/local/libexec/git-core//git-am: line 326: test: : integer
+expression expected
+$ # whoops?!
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > rnyn
-> > Make it easy for other authors to use rebase tests' fake-editor.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> 
-> Perhaps a very welcome addition, except that I did not find rnyn in my
-> dictionary, and the patch textually depends on /bin_sh bug ;-)
+Wouldn't it be nice if "git am" without any arguments just prints a
+usage message? Either that, or provides you with a way to bail out? Or
+if it'd clean up after itself so that it doesn't crash?
 
-Oh, that? It is perfectly *snarf* normal.  Just my *pucker* Tourette 
-syndrome kicking in.
+-- 
+Cheers,
 
-Ciao,
-Dscho
+Sverre Rabbelier
