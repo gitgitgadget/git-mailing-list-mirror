@@ -1,87 +1,108 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH 0/3] fix "Funny: git -p submodule summary"
-Date: Tue, 27 Jan 2009 17:31:02 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901271728130.3586@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de> <20090127062512.GA10487@coredump.intra.peff.net>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Building Documentation in Cygwin
+Date: Wed, 28 Jan 2009 00:32:05 +0800
+Message-ID: <be6fef0d0901270832o1a176691nab5500a86c531795@mail.gmail.com>
+References: <c115fd3c0901270741h2f213b99s31bac8829bd182c2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 27 17:33:41 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 17:34:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRqrG-00007E-0A
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 17:32:14 +0100
+	id 1LRqsY-0000s7-LU
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 17:33:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753527AbZA0Qau (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 11:30:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbZA0Qas
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 11:30:48 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52577 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753441AbZA0Qas (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 11:30:48 -0500
-Received: (qmail invoked by alias); 27 Jan 2009 16:30:44 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp048) with SMTP; 27 Jan 2009 17:30:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18GZNcQIwUGwFYLZBExzLUnlrTgc8TDsgNDmkc4z/
-	YycDQm8jNgpYn0
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090127062512.GA10487@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1753656AbZA0QcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 11:32:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753548AbZA0QcI
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 11:32:08 -0500
+Received: from wf-out-1314.google.com ([209.85.200.171]:62777 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753459AbZA0QcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 11:32:07 -0500
+Received: by wf-out-1314.google.com with SMTP id 27so7560226wfd.4
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 08:32:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=yIZKPpWJ0YXVe0UrxWUPxeWDe0ig0KH23EJ+UvdBQh8=;
+        b=vcfrV5H9fAZUeFxVPYD4oFYThn/yJuipGRqmTMMoF6r9vZ0uzIhkZaT489uckCkA3C
+         h6rpZjw4O98U054+sBtrjg9DFgkn6ibMmMXK3FP/7Me+PK0mnKdoDUO3VzS7+gFEmwHM
+         SpobV7feXCU6CrnQJiMPJZ0EACvy82orTMQ1Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Dh2/l0ZgdkJB1vY/XZ4a+XdH50XvF6tvIRPXPHS04kgJzfe+6SnT+9Bm+u9NIMPUzX
+         7x8HSvpur9TghQPUCS/fTVBD/eKoF8yy2zEnOxyI7nDZN7JFX+uCGThG5INx9gVLMUF5
+         742gnp6QSuf7O41rsDcmDhpNtuG5fXN/ZVw28=
+Received: by 10.114.157.1 with SMTP id f1mr2566054wae.43.1233073925821; Tue, 
+	27 Jan 2009 08:32:05 -0800 (PST)
+In-Reply-To: <c115fd3c0901270741h2f213b99s31bac8829bd182c2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107359>
 
 Hi,
 
-On Tue, 27 Jan 2009, Jeff King wrote:
+On Tue, Jan 27, 2009 at 11:41 PM, Tim Visher <tim.visher@gmail.com> wrote:
+>    $ make install-man
+>    rm -f doc.dep+ doc.dep
+>    /usr/bin/perl ./build-docdep.perl >doc.dep+
+>    mv doc.dep+ doc.dep
+>    make -C ../ GIT-VERSION-FILE
+>    make[1]: Entering directory `/cygdrive/c/Documents and
+> Settings/tvishe01/Desktop/Projects/git'
+>    make[1]: `GIT-VERSION-FILE' is up to date.
+>    make[1]: Leaving directory `/cygdrive/c/Documents and
+> Settings/tvishe01/Desktop/Projects/git'
+>    make -C ../ GIT-VERSION-FILE
+>    make[1]: Entering directory `/cygdrive/c/Documents and
+> Settings/tvishe01/Desktop/Projects/git'
+>    make[1]: `GIT-VERSION-FILE' is up to date.
+>    make[1]: Leaving directory `/cygdrive/c/Documents and
+> Settings/tvishe01/Desktop/Projects/git'
+>    rm -f git-add.xml+ git-add.xml
+>    asciidoc -b docbook -d manpage -f asciidoc.conf \
+>                     -agit_version=1.6.1.1.230.gdfb04 -o git-add.xml+
+> git-add.txt
+>    mv git-add.xml+ git-add.xml
+>    rm -f git-add.1
+>    xmlto -m callouts.xsl man git-add.xml
+>    xmlto: input does not validate (status 3)
 
-> On Thu, Jan 08, 2009 at 04:07:08PM +0100, Johannes Schindelin wrote:
-> 
-> > Just try this with a submodule that has more changes than fit on a 
-> > screen:
-> > 
-> > 	$ git -p submodule summary
-> > 
-> > In my tests, it consistently fscks up my console.  I wonder if this is 
-> > related to ea27a18(spawn pager via run_command interface).
-> 
-> OK, here is a patch series that fixes the problem:
-> 
->   1/3: git: s/run_command/run_builtin/
->   2/3: run_command: handle missing command errors more gracefully
->   3/3: git: use run_command to execute dashed externals
-> 
-> 1 is a cleanup, 2 is infrastructure support, and 3 is the actual fix.
+hmm i tried running this and this rule passed for me.
 
-I like the patch series, well designed and concise (especially with the 
-fixes Hannes proposed).
+try running xmlto in verbose, what does it output? here's mine:
 
-> There are two potential downsides to the fix:
-> 
->  1. There is an extra fork and a parent process sitting in memory for
->     dashed externals. This is pretty necessary to any fix, since
->     something has to wait to do pager cleanup, and we can't rely on the
->     child to do so.
+---cut---
 
-Actually, I think this is a good thing; that way, we can catch 
-segmentation fault properly and display an error message in the pager.  
-That was not possible previously.
+$ xmlto -v -m callouts.xsl man git-add.xml
+Format script: /usr/share/xmlto/format/docbook/man
+Convert to troff
+Real stylesheet:
+http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl
+xmllint >/dev/null --xinclude --postvalid
+/cygdrive/g/temp/git/git/Documentation/git-add.xml
+Stylesheet: /tmp/xmlto-xsl.nEUjsh
+xsltproc --nonet --xinclude \
+ -o /tmp/xmlto.MvioXw/git-add.proc \
+ /tmp/xmlto-xsl.nEUjsh \
+ /cygdrive/g/temp/git/git/Documentation/git-add.xml
+Writing git-add.1 for refentry
 
->  2. A failed attempt to execute a dashed external results in an extra
->     fork. For builtins, this has no impact, since they take precedence.
->     For aliases, though, it means we will do an extra fork before
->     realizing that there is no dashed external and trying the alias.
+---cut---
 
-All the more reason to build more programs in :-)
+you might also want to try getting the cygwin package docbook-xml42.
 
-Ciao,
-Dscho
+-- 
+Cheers,
+Ray Chuan
