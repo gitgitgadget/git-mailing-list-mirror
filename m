@@ -1,114 +1,152 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 6/6] Simplify t3412
-Date: Tue, 27 Jan 2009 18:49:00 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901271848440.3586@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0901271012550.14855@racer> <20090127085418.e113ad5a.stephen@exigencecorp.com> <alpine.DEB.1.00.0901271844340.3586@pacific.mpi-cbg.de>
+From: Anton <Anton.Sharonov@gmail.com>
+Subject: rebase failure if commit message looks like a patch
+Date: Tue, 27 Jan 2009 17:50:43 +0000 (UTC)
+Message-ID: <loom.20090127T173025-125@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Stephen Haberman <stephen@exigencecorp.com>,
-	Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jan 27 18:50:33 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 27 18:57:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRs4h-0000my-Qz
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 18:50:12 +0100
+	id 1LRsAx-0003Lp-J8
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 18:56:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755407AbZA0Rsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 12:48:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753305AbZA0Rsq
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 12:48:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44621 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752786AbZA0Rsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 12:48:45 -0500
-Received: (qmail invoked by alias); 27 Jan 2009 17:48:42 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp068) with SMTP; 27 Jan 2009 18:48:42 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+sraRsoVisuQwZGepI9i9UupFSu7/e5rK7DIHWj7
-	Is8rhRu90TPokF
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0901271844340.3586@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1754848AbZA0RzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 12:55:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753934AbZA0RzI
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 12:55:08 -0500
+Received: from main.gmane.org ([80.91.229.2]:53820 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754138AbZA0RzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 12:55:07 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LRs9O-00081d-7t
+	for git@vger.kernel.org; Tue, 27 Jan 2009 17:55:02 +0000
+Received: from cpe90-146-243-234.liwest.at ([90.146.243.234])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 17:55:02 +0000
+Received: from Anton.Sharonov by cpe90-146-243-234.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 17:55:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 90.146.243.234 (Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107372>
 
+I have found a strange behaviour of "git rebase", present in following versions:
 
-Use the newly introduced test_commit() and test_merge() helpers.
+git 1.6.1, linux,
+git 1.6.0.4, cygwin
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+if the commit message of one of revisions on local branch
+containing something, what looks like patch:
 
-	Thomas, this touches your code.
+------------------ bad-commit-message { ---------------
+changeset a1 - feature added
 
- t/t3412-rebase-root.sh |   30 +++++++++---------------------
- 1 files changed, 9 insertions(+), 21 deletions(-)
+--- a0  2009-01-25 10:09:05.953125000 +0100
++++ ./r/a       2009-01-25 10:15:20.093750000 +0100
+@@ -1,5 +1,5 @@
+-1
++1 - upstream
+ 2
+ 3
+ 4
+-5
++5 - feature
+------------------ bad-commit-message } ---------------
 
-diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
-index 6359580..39f7768 100755
---- a/t/t3412-rebase-root.sh
-+++ b/t/t3412-rebase-root.sh
-@@ -6,24 +6,16 @@ Tests if git rebase --root --onto <newparent> can rebase the root commit.
- '
- . ./test-lib.sh
- 
-+. ../lib-rebase.sh
-+
- test_expect_success 'prepare repository' '
--	echo 1 > A &&
--	git add A &&
--	git commit -m 1 &&
--	echo 2 > A &&
--	git add A &&
--	git commit -m 2 &&
-+	test_commit 1 A &&
-+	test_commit 2 A &&
- 	git symbolic-ref HEAD refs/heads/other &&
- 	rm .git/index &&
--	echo 3 > B &&
--	git add B &&
--	git commit -m 3 &&
--	echo 1 > A &&
--	git add A &&
--	git commit -m 1b &&
--	echo 4 > B &&
--	git add B &&
--	git commit -m 4
-+	test_commit 3 B &&
-+	test_commit 1b A 1 &&
-+	test_commit 4 B
- '
- 
- test_expect_success 'rebase --root expects --onto' '
-@@ -103,9 +95,7 @@ test_expect_success 'pre-rebase got correct input (5)' '
- test_expect_success 'set up merge history' '
- 	git checkout other^ &&
- 	git checkout -b side &&
--	echo 5 > C &&
--	git add C &&
--	git commit -m 5 &&
-+	test_commit 5 C &&
- 	git checkout other &&
- 	git merge side
- '
-@@ -132,9 +122,7 @@ test_expect_success 'set up second root and merge' '
- 	git symbolic-ref HEAD refs/heads/third &&
- 	rm .git/index &&
- 	rm A B C &&
--	echo 6 > D &&
--	git add D &&
--	git commit -m 6 &&
-+	test_commit 6 D &&
- 	git checkout other &&
- 	git merge third
- '
+Following shell script reproduces the bug for me:
+
+------------------ show-bug.sh { ---------------
+#!/bin/bash
+rm -rf r # clean-up
+mkdir r # repo dir
+cd r
+git init
+cd ..
+cp a0 r/a
+cd r
+git add a
+git ci -m "initial addition of a0"
+git br feature
+git co feature
+cd ..
+cp a1 r/a
+cd r
+git add a
+## no bug
+#git ci -m "changeset a1 - feature added"
+# bug
+git ci -F ../bad-commit-message
+git co master
+cd ..
+cp a2 r/a
+cd r
+git add a
+git ci -m "changeset a2 - upstream revision"
+git co feature
+git rebase master
+------------------ show-bug.sh } ---------------
+
+produces the error on final rebase attempt:
+
+First, rewinding head to replay your work on top of it...
+Applying: changeset a1 - feature added
+error: r/a: does not exist in index
+fatal: sha1 information is lacking or useless (r/a).
+Repository lacks necessary blobs to fall back on 3-way merge.
+Cannot fall back to three-way merge.
+Patch failed at 0001.
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase --abort".
+
+In case one uses
+# no bug
+git ci -m "changeset a1 - feature added"
+instead of
+# bug
+git ci -F ../bad-commit-message
+
+The final rebase succeded !
+
+Content of other files:
+
+---------------- a0 { -------------------
+1
+2
+3
+4
+5
+---------------- a0 } -------------------
+
+---------------- a1 { -------------------
+1
+2
+3
+4
+5 - feature
+---------------- a1 } -------------------
+
+---------------- a2 { -------------------
+1 - upstream
+2
+3
+4
+5
+---------------- a2 } -------------------
+
 -- 
-1.6.1.482.g7d54be
+Anton
