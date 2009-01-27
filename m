@@ -1,74 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mergetool merge/skip/abort
-Date: Tue, 27 Jan 2009 14:37:16 -0800
-Message-ID: <7vk58g1ilf.fsf@gitster.siamese.dyndns.org>
-References: <81bfc67a0901210637j52fa7a55q51b599e9ff16f6dc@mail.gmail.com>
- <20090121170434.GA21727@hashpling.org>
- <81bfc67a0901220617l22b5a8e4ma48bb069d67cae91@mail.gmail.com>
- <20090122142258.GA2316@hashpling.org>
- <81bfc67a0901230716i166bfc4chd9a5c0990b0cd3b6@mail.gmail.com>
- <7vwscmue5z.fsf@gitster.siamese.dyndns.org> <20090126225835.GB10118@mit.edu>
- <20090127220947.GA21319@hashpling.org>
+From: Sverre Rabbelier <alturin@gmail.com>
+Subject: Re: git-am annoyance
+Date: Tue, 27 Jan 2009 23:37:45 +0100
+Message-ID: <bd6139dc0901271437l19f1201ch867f1a7c2045e54b@mail.gmail.com>
+References: <bd6139dc0901271407i4406d5e6u6db1df9e5a7bdc4f@mail.gmail.com>
+	 <7vr62o1iww.fsf@gitster.siamese.dyndns.org>
+Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Tue Jan 27 23:38:59 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 23:39:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRwa1-0003mF-1X
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:38:49 +0100
+	id 1LRwas-00044t-5a
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:39:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752562AbZA0WhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 17:37:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751666AbZA0WhY
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:37:24 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39315 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752473AbZA0WhX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 17:37:23 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D611E94918;
-	Tue, 27 Jan 2009 17:37:22 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 859A194912; Tue,
- 27 Jan 2009 17:37:18 -0500 (EST)
-In-Reply-To: <20090127220947.GA21319@hashpling.org> (Charles Bailey's message
- of "Tue, 27 Jan 2009 22:09:47 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 10624C34-ECC3-11DD-ACB0-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1755010AbZA0Wht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 17:37:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754634AbZA0Whs
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:37:48 -0500
+Received: from rn-out-0910.google.com ([64.233.170.189]:56241 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752580AbZA0Whr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 17:37:47 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so2337050rnd.17
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 14:37:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2O7o6gQX2mI1XCKll+4oMzn34bXi82PBrM/LZzVL7zA=;
+        b=nUEU9Voxvx5ZUeugf2cei1k8o/yHJOciSkJs7sbSy3iAsbp0kGkM+TEspzyXZ7d2Y+
+         Pfcw85ERK0WwzStmNoTPNTbiOHwZAv0xibwzerKd7Qniujp/Y8p4ROS2/SdSufojnwRJ
+         hKfwgaevVezHwmT617Uk/LQhdP4+UczIf/FCU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=byJsI6bBNCCe8EXhOCfh0wVtdcK85uVYgJfnMdPOxaBeTEFtC+XFWm4uhICyM1KFlM
+         eAgXQrh4LvoPKv6vPmTJNTrplHPzOtTK49XZDDPuTm6Y3ab7TYITkJOSH+z6vGCwOD2a
+         GHjSMalEXBTkgymWeHIoIZChJnoxVGlYmN6xI=
+Received: by 10.151.48.20 with SMTP id a20mr1280044ybk.4.1233095865519; Tue, 
+	27 Jan 2009 14:37:45 -0800 (PST)
+In-Reply-To: <7vr62o1iww.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107408>
 
-Charles Bailey <charles@hashpling.org> writes:
+On Tue, Jan 27, 2009 at 23:30, Junio C Hamano <gitster@pobox.com> wrote:
+> It wants to read from the stdin as "git am < mbox" is a valid usage.
 
-> On Mon, Jan 26, 2009 at 05:58:35PM -0500, Theodore Tso wrote:
-> ...
-> A quick blame session has shown that after Ted I've probably touched
-> the next most number of lines of mergetool. It's a crude measure and
-> not necessarily a sign of competence, I admit.
+Ah, ofcourse, that makes sense :).
+
+> A patch to detect that the input was killed with ^C and clean things up
+> would be welcome.  Also we may be able to detect "-t 0", too.
+
+What is '-t 0'? How would one detect this in bash?
+
+>> $ # ok, now what do I do?
 >
-> Although not rolling in spare time, I feel I'd be able review
-> mergetool patches at roughly the rate that they tend to appear at the
-> moment.
+> Here is one thing you could do.
 >
-> Given the above, if I pass the "good taste" and "Junio trust" tests I
-> feel that I should offer my services as mergetool patch wrangler.
+>    $ PS1=': $(__git_ps1 "%s"); '
+>    : master|AM/REBASE;
+>    : master|AM/REBASE; git am --abort
 
-Competence certainly counts to a certain extent, but volunteerism,
-willingness, and enthusiasm count too.
+Ugh, I couldn't even get that thing to work :P.
 
-Taste is sometimes a relative thing and we can make sure where we agree to
-disagree on the list case by case basis.
+> But you are right.  We should be able to detect this.
 
-Most importantly, anybody who will suffer when the tool breaks will be
-much better person than I to look after it.  That is one of the largest
-ingredient in the "trust" factor.
+That would be nice indeed.
 
-Thanks.
+> I think it was just people who often use "am" are so used to correctly the
+> command that the state where no state files are created didn't happen
+> often and never reported the breakage.
+
+Ok, am glad I reported it then, now it's a known issue at least.
+
+-- 
+Cheers,
+
+Sverre Rabbelier
