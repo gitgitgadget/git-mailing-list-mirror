@@ -1,61 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/6] t3404 & t3411: undo copy&paste
-Date: Tue, 27 Jan 2009 14:46:33 -0800
-Message-ID: <7veiyo1i5y.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0901271012550.14855@racer>
- <20090127085418.e113ad5a.stephen@exigencecorp.com>
- <alpine.DEB.1.00.0901271844340.3586@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0901271845380.3586@pacific.mpi-cbg.de>
- <7v7i4g31lj.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0901272254450.14855@racer>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-am annoyance
+Date: Tue, 27 Jan 2009 23:49:35 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901272348380.3586@pacific.mpi-cbg.de>
+References: <bd6139dc0901271407i4406d5e6u6db1df9e5a7bdc4f@mail.gmail.com>  <7vr62o1iww.fsf@gitster.siamese.dyndns.org> <bd6139dc0901271437l19f1201ch867f1a7c2045e54b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Haberman <stephen@exigencecorp.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 27 23:48:14 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailinglist <git@vger.kernel.org>
+To: sverre@rabbelier.nl
+X-From: git-owner@vger.kernel.org Tue Jan 27 23:50:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRwj0-00070k-Ki
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:48:07 +0100
+	id 1LRwlX-0007y8-L6
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:50:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752044AbZA0Wqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 17:46:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752019AbZA0Wqm
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:46:42 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42975 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752003AbZA0Wql (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 17:46:41 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3E3161D6A0;
-	Tue, 27 Jan 2009 17:46:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5F55F1D696; Tue,
- 27 Jan 2009 17:46:35 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0901272254450.14855@racer> (Johannes
- Schindelin's message of "Tue, 27 Jan 2009 22:57:33 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5C9B6C74-ECC4-11DD-9807-0372113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1752577AbZA0WtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 17:49:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752269AbZA0WtR
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:49:17 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36327 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751678AbZA0WtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 17:49:17 -0500
+Received: (qmail invoked by alias); 27 Jan 2009 22:49:15 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp025) with SMTP; 27 Jan 2009 23:49:15 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/GqkQMhiLG0sYzbUYJXf8NBdWy69+igQCR+bfCWC
+	izX7bddOzLbFtk
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <bd6139dc0901271437l19f1201ch867f1a7c2045e54b@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107411>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
->> > +		sed -n "${line}p" < "$1".tmp
->> > +		sed -n "${line}s/^pick/$action/p" < "$1".tmp >> "$1"
->> > +		sed -n "${line}s/^pick/$action/p" < "$1".tmp
->
->
-> Probably.  It is for debugging, anyway.  As everything you only see with 
-> -v.
+On Tue, 27 Jan 2009, Sverre Rabbelier wrote:
 
-Exactly.  That is why I'd rather want to see what exact insn sequence is
-being fed to the "rebase -i".  Because I'd be debugging my new test or
-changes to "rebase -i", not debugging fake-editor's use of sed.
+> What is '-t 0'? How would one detect this in bash?
+
+It detects if file descriptor 0 (stdin) is a terminal.  "man test" to the 
+rescue ;-)
+
+Ciao,
+Dscho
+
+P.S.: if I hadn't tried exactly that in my valgrind patches recently, I 
+would not have known either...
