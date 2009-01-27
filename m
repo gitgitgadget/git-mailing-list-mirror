@@ -1,120 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] contrib git-resurrect: find traces of a branch name
- and resurrect it
-Date: Mon, 26 Jan 2009 22:31:27 -0800
-Message-ID: <7vwschz2dc.fsf@gitster.siamese.dyndns.org>
-References: <200901261254.39360.trast@student.ethz.ch>
- <1232973657-31444-1-git-send-email-trast@student.ethz.ch>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Translations [of Documentation] in Git release?
+Date: Tue, 27 Jan 2009 08:01:53 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0901270800100.26770@ds9.cixit.se>
+References: <60646ee10901250941s34f7accem1b74fc201e895a41@mail.gmail.com> 
+ <m3hc3mxn9d.fsf@localhost.localdomain>  <Pine.LNX.4.64.0901261426350.7798@ds9.cixit.se>
+  <200901261631.18157.jnareb@gmail.com>  <20090126162351.GA8911@glandium.org>
+ <bd6139dc0901261130ic64f767gddc960ebe3dfecf2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jan 27 07:33:09 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mike Hommey <mh@glandium.org>, Jakub Narebski <jnareb@gmail.com>,
+	Dill <sarpulhu@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 27 08:03:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRhVP-0001XP-HB
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 07:33:04 +0100
+	id 1LRhzE-0006sY-1d
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 08:03:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752084AbZA0Gbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 01:31:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751954AbZA0Gbh
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 01:31:37 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54526 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751492AbZA0Gbh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 01:31:37 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CA00B935CA;
-	Tue, 27 Jan 2009 01:31:35 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F267D935C2; Tue,
- 27 Jan 2009 01:31:29 -0500 (EST)
-In-Reply-To: <1232973657-31444-1-git-send-email-trast@student.ethz.ch>
- (Thomas Rast's message of "Mon, 26 Jan 2009 13:40:57 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 25406776-EC3C-11DD-A2AE-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751875AbZA0HC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 02:02:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751857AbZA0HC0
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 02:02:26 -0500
+Received: from ds9.cixit.se ([193.15.169.228]:48498 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751743AbZA0HC0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 02:02:26 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id n0R71vac028352
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Jan 2009 08:01:57 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id n0R71r0B028340;
+	Tue, 27 Jan 2009 08:01:57 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <bd6139dc0901261130ic64f767gddc960ebe3dfecf2@mail.gmail.com>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Tue, 27 Jan 2009 08:01:57 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107320>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Sverre Rabbelier:
 
-> Add a tool 'git-resurrect.sh <branch>' that tries to find traces of
-> the <branch> in the HEAD reflog and, optionally, all merge commits in
-> the repository.  It can then resurrect the branch, pointing it at the
-> most recent of all candidate commits found.
->
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
->
-> Fixed the -h to upper-case in the short options summaries, and removed
-> a stray 'q' in the default assignment of new_name.
+> Perhaps the basics can be translated at least, the documents that do
+> not require much change because they represent stable concepts?
 
-I hate to paint bikeshed, but -H "try-hard" looks somewhat unusual doesn't
-it?  It sounds more like --all (find from all possible sources).
+I usually start out translating the program output, then manual pages,
+and then, time permitting, documentation.
 
-> +. git-sh-setup
-> +cd_to_toplevel
+Git is a bit special in that regard since "--help" gets hardwired to
+display the manual page, so one can't just translate the help screen.
 
-Why?
-
-> +search_reflog () {
-> +        sed -n 's~^\([^ ]*\) .*\tcheckout: moving from '"$1"' .*~\1~p' \
-> +                < .git/logs/HEAD
-> +}
-
-Once you used ". git-sh-setup", use "$GIT_DIR/logs/HEAD".  That way, you
-can work in a bare repository (and you do not have to cd_to_toplevel,
-either, I think).
-
-Oh, don't forget to skip this step if the reflog does not exist.
-
-> +search_reflog_merges () {
-> +        sed -n 's~^[^ ]* \([^ ]*\) .*\tmerge '"$1"':~\1~p' \
-> +                < .git/logs/HEAD
-> +}
-
-The two commits both point at the HEAD that merges the other branch into,
-so this finds a merge commit that has the tip of target branch as its
-second parent.  Is that really what you want?
-
-> +search_merges () {
-> +	git rev-list --pretty=tformat:"%h %p:%s" --all |
-> +	grep "Merge branch.*'$branch'.*into" |
-
-"git merge tr/topic~4" can say "Merge branch 'tr/topic' (early part)".
-Also merge into 'master' won't have "into ...".
-
-> +	while read sha rest; do
-> +		parents="$(echo "$rest" | cut -d: -f1)"
-> +		case "$parents" in
-> +		    *' '*' '*)
-> +			warn "$branch took part in octopus merge $sha"
-> +			warn "check manually!"
-> +			;;
-> +		    *' '*)
-> +			echo "$parents" | cut -d' ' -f2
-> +			;;
-> +		esac
-> +	done
-
-Reading everything down to the root commit sounds like fun.  rev-list
-gives you the output from newer to older so you may want to break out once
-you have found enough candidates.
-
-Anyway, if I were doing this script, I'd write this part like this without
-a shell loop:
-
-        _x40="[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]"
-        _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
-
-	git rev-list --all --grep="Merge branch '$1'" \
-        	--pretty=tformat:"%H %P %s" |
-	sed -ne "s/^$_x40 $_x40 \($_x40\) Merge .*/\1/p"
+-- 
+\\// Peter - http://www.softwolves.pp.se/
