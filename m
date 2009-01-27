@@ -1,67 +1,45 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v1 0/3] Introduce config variable "diff.primer"
-Date: Mon, 26 Jan 2009 23:54:52 -0500
-Message-ID: <20090127045452.GB735@coredump.intra.peff.net>
-References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <7vr62rcee5.fsf@gitster.siamese.dyndns.org> <alpine.GSO.2.00.0901251239000.12651@kiwi.cs.ucla.edu> <20090125220756.GA18855@coredump.intra.peff.net> <alpine.GSO.2.00.0901261734360.16158@kiwi.cs.ucla.edu>
+Subject: Re: how to see full file with diff marks
+Date: Mon, 26 Jan 2009 23:57:03 -0500
+Message-ID: <20090127045702.GC735@coredump.intra.peff.net>
+References: <497E92C1.80102@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Keith Cascio <keith@CS.UCLA.EDU>
-X-From: git-owner@vger.kernel.org Tue Jan 27 05:56:21 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ittay Dror <ittay.dror@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 05:58:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRfzn-0002Hr-Us
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 05:56:20 +0100
+	id 1LRg1x-0002eN-4S
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 05:58:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751798AbZA0Eyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 23:54:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751601AbZA0Eyz
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 23:54:55 -0500
-Received: from peff.net ([208.65.91.99]:44017 "EHLO peff.net"
+	id S1751856AbZA0E5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 23:57:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751846AbZA0E5H
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 23:57:07 -0500
+Received: from peff.net ([208.65.91.99]:44020 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751372AbZA0Eyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 23:54:54 -0500
-Received: (qmail 8751 invoked by uid 107); 27 Jan 2009 04:55:02 -0000
+	id S1751785AbZA0E5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 23:57:06 -0500
+Received: (qmail 8777 invoked by uid 107); 27 Jan 2009 04:57:13 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 26 Jan 2009 23:55:02 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Jan 2009 23:54:52 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 26 Jan 2009 23:57:13 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Jan 2009 23:57:03 -0500
 Content-Disposition: inline
-In-Reply-To: <alpine.GSO.2.00.0901261734360.16158@kiwi.cs.ucla.edu>
+In-Reply-To: <497E92C1.80102@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107310>
 
-On Mon, Jan 26, 2009 at 05:47:54PM -0800, Keith Cascio wrote:
+On Tue, Jan 27, 2009 at 06:51:13AM +0200, Ittay Dror wrote:
 
-> >   2. It is unset. The rationale is that you are using the "c" diff
-> >      driver, and it has left the value unset. The default then means "if
-> >      you have no diff driver setup".
-> 
-> I'm in favor of option (2), because [diff] a.k.a [diff ""] serving as
+> I have a large file and I want to view the changes between two commits,  
+> but in the context of the whole file, not just hunks. How can I do that?
 
-Nit: [diff] and [diff ""] are different. The "dotted" notation which we
-use in the code and which git-config respects for a variable "foo" in
-each section would look like "diff.foo" and "diff..foo", respectively.
-
-> the fallback for [diff *] feels like a special case.  If a full system
-> of precedence 
-
-Yes, I think having a "this is the default driver whose driver-specific
-options are used if you don't have a different driver" is semantically
-simple and clear.
-
-> and fallbacks is desired for .git/config, we should adopt explicit
-> grammar that lets me define an arbitrary precedence tree over all
-> sections.  Once a powerful concept is born, somewhere down the road,
-> some user will desire its universalization.
-
-OK, now you're scaring me. :) I'm not sure I want to see the grammar you
-would use to define an arbitrary precedence tree, or whether such
-complexity has any real-world use in git config. I think you would have
-to show a concrete example to prove the utility of something like that.
+git diff -U9999999 ?
 
 -Peff
