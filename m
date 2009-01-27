@@ -1,111 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Valgrind updates
-Date: Tue, 27 Jan 2009 03:50:48 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901270327200.26199@intel-tinevez-2-302>
-References: <20090120044447.GF30714@sigill.intra.peff.net> <alpine.DEB.1.00.0901201447290.5159@intel-tinevez-2-302> <20090120141932.GB10688@sigill.intra.peff.net> <alpine.DEB.1.00.0901201545570.5159@intel-tinevez-2-302> <20090120232439.GA17746@coredump.intra.peff.net>
- <alpine.DEB.1.00.0901210105470.19014@racer> <20090121001551.GB18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210119510.19014@racer> <20090121003739.GA18373@coredump.intra.peff.net> <alpine.DEB.1.00.0901210216440.19014@racer> <20090121190757.GB21686@coredump.intra.peff.net>
- <alpine.DEB.1.00.0901212259420.3586@pacific.mpi-cbg.de>
+From: Keith Cascio <keith@CS.UCLA.EDU>
+Subject: Re: backwards compatibility, was Re: [PATCH v1 1/3] Introduce config
+ variable "diff.primer"
+Date: Mon, 26 Jan 2009 19:01:33 -0800 (PST)
+Message-ID: <alpine.GSO.2.00.0901261749230.16158@kiwi.cs.ucla.edu>
+References: <1232904657-31831-1-git-send-email-keith@cs.ucla.edu> <1232904657-31831-2-git-send-email-keith@cs.ucla.edu> <7v1vurf7lq.fsf@gitster.siamese.dyndns.org> <alpine.GSO.2.00.0901251345240.12651@kiwi.cs.ucla.edu> <20090126031206.GB14277@sigill.intra.peff.net>
+ <alpine.DEB.1.00.0901261154330.14855@racer> <20090126111605.GB19993@coredump.intra.peff.net> <alpine.DEB.1.00.0901261220300.14855@racer> <20090126115957.GA20558@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 27 03:52:33 2009
+X-From: git-owner@vger.kernel.org Tue Jan 27 04:03:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRe40-0005pU-Mi
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 03:52:33 +0100
+	id 1LReEF-0007i3-JE
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 04:03:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752887AbZA0CvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 21:51:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbZA0CvI
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 21:51:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55018 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752365AbZA0CvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 21:51:07 -0500
-Received: (qmail invoked by alias); 27 Jan 2009 02:51:03 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp060) with SMTP; 27 Jan 2009 03:51:03 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18/fEYsouQ/5H5lx52P4qAQPxWvnrg7KGNXBS97aU
-	s7tWJ1lkGNFngI
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <alpine.DEB.1.00.0901212259420.3586@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1752580AbZA0DBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 22:01:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752241AbZA0DBm
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 22:01:42 -0500
+Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:64619 "EHLO kiwi.cs.ucla.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751977AbZA0DBl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 22:01:41 -0500
+Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n0R31Ygm023241;
+	Mon, 26 Jan 2009 19:01:34 -0800 (PST)
+Received: from localhost (keith@localhost)
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n0R31Yl3023238;
+	Mon, 26 Jan 2009 19:01:34 -0800 (PST)
+X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
+In-Reply-To: <20090126115957.GA20558@coredump.intra.peff.net>
+User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107301>
 
-Hi,
+On Mon, 26 Jan 2009, Jeff King wrote:
 
-it is real late now, so I am uncomfortable sending off a new patch series 
-(I _know_ that I'll just introduce a stupid bug or forget to write a 
-commit message or whatever).  In case you are interested in the current 
-progress, you know where my branches are.
+> Yep, that's what defaults are. And guess what: we _already_ have the same 
+> thing. I have diff.renames set in my ~/.gitconfig. That does _exactly_ what
+> 
+>   git config --global diff.primer -M
+> 
+> would do. It's just a syntax that saves us from having to introduce a boatload 
+> of new variables, one per command line option.
 
-The changes I made:
 
-- added t/valgrind/templates to t/.gitignore, too,
+Great point, IOW, primer magnifies already existing pitfalls.  I like that about 
+primer v1, however unsatisfying it is otherwise.  Rather than stick a piece of 
+chewing gum in that chink in the dam, let's repair it and get the whole darn 
+thing ready for the 21st century while we're at it.
 
-- split out the valgrind-unrelated parts that Peff complained about,
+> However, there are two other drawbacks of aliases that I can think of:
+>   1. They are tied to a specific command, whereas diff options are tied
+>      to the concept of diffing. So now I have to write an alias (with a
+>      new name) for each command:
+>        git config alias.mylog 'log -w'
+>        git config alias.mydiff 'diff -w'
+>        git config alias.myshow 'show -w'
+>   2. They can't change defaults based on the file to be diffed. One of
+>      the things Keith mentioned (and I don't remember if this was
+>      implemented in his patch series) was supporting this for
+>      gitattributes diff drivers. How do I do
+>        git config diff.tex.primer -w
+>      using aliases?
 
-- added some more suppressions I needed,
+This scenario was specifically part of my motivation for imagining primer v1 as 
+I did.
 
-- added a mode whereby the tests' results are written to test-results/,
+> But now you have me defending Keith's proposal
 
-- provided a Makefile target for further convenience,
+And well.
 
-- added a script to coalesce the valgrind results by backtrace,
+> which he should be doing himself ;P
 
-- split out a patch that lets --valgrind imply --verbose, and
+True.  I'm at the point here where I will demand of myself one of two outcomes.  
+Either I:
 
-- ran the scripts several times, which is a PITA because one run takes 5.5 
-  hours (and the first time I forgot to redirect stderr, ouch, thus the 
-  test-results/ patch).
+(1) Satisfy myself on a deep, foundational level why the inescapable structure 
+of not just this particularly well-constituted software project (Git!), but 
+software projects in general, since surely many a fearless development team has 
+braved this philosophical sticky place before us, prevents one from getting 
+everything one wants, i.e. forces a compromise, a.k.a. the "no silver bullet" 
+interpretation.
 
-I have an output from a previous full run, albeit it was done with an 
-earlier version of the valgrind patch series I was not comfortable with, 
-so I will not send it here.  Besides, it is 300K (bzip2 -9 reduces that to 
-20K), and I am sure you don't want to have it.
+(2) Write primer patch v2 that somehow does THE RIGHT THING, also satisfying on 
+a deep level to at least myself, a.k.a. the silver bullet.
 
-Just that much, most of the backtraces are pretty repetitive.  In fact, I 
-think most if not all of them touch xwrite.c (I got other errors from my 
-patches, as I expected).
-
-==valgrind== Syscall param write(buf) points to uninitialised byte(s)
-==valgrind==    at 0x5609E40: __write_nocancel (in /lib/libpthread-2.6.1.so)
-==valgrind==    by 0x4D0380: xwrite (wrapper.c:129)
-==valgrind==    by 0x4D046E: write_in_full (wrapper.c:159)
-==valgrind==    by 0x4C0697: write_buffer (sha1_file.c:2275)
-==valgrind==    by 0x4C0B1C: write_loose_object (sha1_file.c:2387)
-==valgrind==    by 0x4C0C4F: write_sha1_file (sha1_file.c:2418)
-==valgrind==    by 0x46DBB8: update_one (cache-tree.c:348)
-==valgrind==    by 0x46D8CF: update_one (cache-tree.c:282)
-==valgrind==    by 0x46DCCA: cache_tree_update (cache-tree.c:373)
-==valgrind==    by 0x46E2B5: write_cache_as_tree (cache-tree.c:562)
-==valgrind==    by 0x4662D4: cmd_write_tree (builtin-write-tree.c:36)
-==valgrind==    by 0x404F37: run_command (git.c:243)
-==valgrind==  Address 0x713dc23 is 51 bytes inside a block of size 195 alloc'd
-==valgrind==    at 0x4C2273B: malloc (in /usr/local/lib/valgrind/amd64-linux/vgpreload_memcheck.so)
-==valgrind==    by 0x4CFFCC: xmalloc (wrapper.c:20)
-==valgrind==    by 0x4C0A33: write_loose_object (sha1_file.c:2362)
-==valgrind==    by 0x4C0C4F: write_sha1_file (sha1_file.c:2418)
-==valgrind==    by 0x46DBB8: update_one (cache-tree.c:348)
-==valgrind==    by 0x46D8CF: update_one (cache-tree.c:282)
-==valgrind==    by 0x46DCCA: cache_tree_update (cache-tree.c:373)
-==valgrind==    by 0x46E2B5: write_cache_as_tree (cache-tree.c:562)
-==valgrind==    by 0x4662D4: cmd_write_tree (builtin-write-tree.c:36)
-==valgrind==    by 0x404F37: run_command (git.c:243)
-==valgrind==    by 0x4050E4: handle_internal_command (git.c:387)
-==valgrind==    by 0x4051CA: run_argv (git.c:425)
-
-which can be reproduced by running t0000-basic.out in valgrind mode.
-
-Good night, Vietnam,
-Dscho
+                                            -- Keith
