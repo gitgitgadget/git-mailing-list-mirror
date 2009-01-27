@@ -1,140 +1,70 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2 3/6] test-lib.sh: introduce test_commit() and test_merge()
- helpers
-Date: Tue, 27 Jan 2009 23:34:48 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901272334380.3586@pacific.mpi-cbg.de>
-References: <7v7i4g31lj.fsf@gitster.siamese.dyndns.org>
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: Re: Heads up: major rebase -i -p rework coming up
+Date: Tue, 27 Jan 2009 16:36:50 -0600
+Organization: Exigence
+Message-ID: <20090127163650.34581368.stephen@exigencecorp.com>
+References: <alpine.DEB.1.00.0901242056070.14855@racer>
+	<20090127092117.d13f24e7.stephen@exigencecorp.com>
+	<20090128071054.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jan 27 23:36:37 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, spearce@spearce.org,
+	Thomas Rast <trast@student.ethz.ch>,
+	Bjrn Steinbrink <B.Steinbrink@gmx.de>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 23:38:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRwXh-0002ti-EJ
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:36:25 +0100
+	id 1LRwZe-0003e1-SQ
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:38:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753175AbZA0Wed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 17:34:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752407AbZA0Web
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:34:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38475 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755412AbZA0Wea (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 17:34:30 -0500
-Received: (qmail invoked by alias); 27 Jan 2009 22:34:28 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp016) with SMTP; 27 Jan 2009 23:34:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18dF78qY0sdn1rgxrffBQbQcdgVDJzCLY7QQImRWf
-	1oQc7U8mr1Fxoj
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7v7i4g31lj.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.45
+	id S1752391AbZA0WhA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 17:37:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751998AbZA0WhA
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:37:00 -0500
+Received: from smtp182.sat.emailsrvr.com ([66.216.121.182]:49239 "EHLO
+	smtp182.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751793AbZA0Wg7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 17:36:59 -0500
+Received: from relay18.relay.sat.mlsrvr.com (localhost [127.0.0.1])
+	by relay18.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id EB6721B8055;
+	Tue, 27 Jan 2009 17:36:58 -0500 (EST)
+Received: by relay18.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTPSA id 682D11B7FDC;
+	Tue, 27 Jan 2009 17:36:58 -0500 (EST)
+In-Reply-To: <20090128071054.6117@nanako3.lavabit.com>
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107406>
 
-Often we just need to add a commit with a given (short) name, that will
-be tagged with the same name.  Now, relatively complicated graphs can be
-constructed easily and in a clear fashion:
 
-	test_commit A &&
-	test_commit B &&
-	git checkout A &&
-	test_commit C &&
-	test_merge D B
+> >     a -- b -- c  origin/feature
+> >       \
+> >        d -- e    feature
+> >            /
+> >       ... g      origin/master
 
-will construct this graph:
+> Sorry for asking a basic question, but if "feature" is a topic branch
+> for advance the feature, why are you merging origin/master into it?
+> Doesn't it blur the theme of the branch by including "development of
+> the feature and all the random things that happened while it was being
+> developed in other places"?
 
-	A - B
-	  \   \
-	    C - D
+We merged origin/master because a release had just happened (e.g. master
+moved from 1.0 -> 1.1), and when QA looks at origin/feature, they wanted
+to see it integrated with the latest release (e.g. 1.1).
 
-For simplicity, files whose name is the lower case version of the commit
-message (to avoid a warning about ambiguous names) will be committed, with
-the corresponding commit messages as contents.
+Now, granted, if feature was a private/unpublished branch, we would
+rebase the entire thing (a/b/c) on top of master (g), but a/b/c has
+already been published to our bug tracker, email lists, and other
+developers who are collaborating on origin/feature, so between polluting
+feature with a merge from master and changing the published hashes, we
+chose the merge.
 
-If you need to provide a different file/different contents, you can use
-the more explicit form
-
-	test_commit $MESSAGE $FILENAME $CONTENTS
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/README      |   18 ++++++++++++++++++
- t/test-lib.sh |   25 +++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 0 deletions(-)
-
-diff --git a/t/README b/t/README
-index 8f12d48..f208cf1 100644
---- a/t/README
-+++ b/t/README
-@@ -212,6 +212,24 @@ library for your script to use.
-    is to summarize successes and failures in the test script and
-    exit with an appropriate error code.
- 
-+ - test_tick
-+
-+   Make commit and tag names consistent by setting the author and
-+   committer times to defined stated.  Subsequent calls will
-+   advance the times by a fixed amount.
-+
-+ - test_commit <message> [<filename> [<contents>]]
-+
-+   Creates a commit with the given message, committing the given
-+   file with the given contents (default for both is to reuse the
-+   message string), and adds a tag (again reusing the message
-+   string as name).  Calls test_tick to make the SHA-1s
-+   reproducible.
-+
-+ - test_merge <message> <commit-or-tag>
-+
-+   Merges the given rev using the given message.  Like test_commit,
-+   creates a tag and calls test_tick before committing.
- 
- Tips for Writing Tests
- ----------------------
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 41d5a59..c1839f7 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -193,6 +193,31 @@ test_tick () {
- 	export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
- }
- 
-+# Call test_commit with the arguments "<message> [<file> [<contents>]]"
-+#
-+# This will commit a file with the given contents and the given commit
-+# message.  It will also add a tag with <message> as name.
-+#
-+# Both <file> and <contents> default to <message>.
-+
-+test_commit () {
-+	file=${2:-$(echo "$1" | tr 'A-Z' 'a-z')}
-+	echo "${3-$1}" > "$file" &&
-+	git add "$file" &&
-+	test_tick &&
-+	git commit -m "$1" &&
-+	git tag "$1"
-+}
-+
-+# Call test_merge with the arguments "<message> <commit>", where <commit>
-+# can be a tag pointing to the commit-to-merge.
-+
-+test_merge () {
-+	test_tick &&
-+	git merge -m "$1" "$2" &&
-+	git tag "$1"
-+}
-+
- # You are not expected to call test_ok_ and test_failure_ directly, use
- # the text_expect_* functions instead.
- 
--- 
-1.6.1.482.g7d54be
+- Stephen
