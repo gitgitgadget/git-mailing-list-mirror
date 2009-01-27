@@ -1,100 +1,75 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: [topgit] shared topic branch
-Date: Mon, 26 Jan 2009 13:00:49 +0100
-Message-ID: <20090126120049.GA9676@lapse.rw.madduck.net>
-References: <EFB70468-7900-4B22-925D-3FC5F05F951B@gmail.com>
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: Re: [PATCH 08/10] run test suite without dashed git-commands in PATH
+Date: Mon, 26 Jan 2009 23:13:49 -0700
+Message-ID: <20090127061349.GA2417@comcast.net>
+References: <1232840601-24696-3-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-4-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-5-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-6-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-7-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-8-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-9-git-send-email-mmogilvi_git@miniinfo.net> <alpine.DEB.1.00.0901250255250.14855@racer> <20090126064004.GA3004@comcast.net> <alpine.DEB.1.00.0901261201470.14855@racer>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+QahgC5+KEYLbs62"
-To: Fabien Thomas <thomas.fabien@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 27 06:58:09 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 27 07:15:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRgxc-0004W2-WF
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 06:58:09 +0100
+	id 1LRhEF-00075h-Pe
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 07:15:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751665AbZA0F4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 00:56:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbZA0F4o
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 00:56:44 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:34088 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751573AbZA0F4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 00:56:43 -0500
-Received: from lapse.rw.madduck.net (lapse.rw.madduck.net [IPv6:2001:41e0:ff3a::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id D83151D40B2;
-	Tue, 27 Jan 2009 06:56:34 +0100 (CET)
-Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
-	id 51C6780F4; Mon, 26 Jan 2009 13:00:50 +0100 (CET)
+	id S1751844AbZA0GNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 01:13:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751688AbZA0GNz
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 01:13:55 -0500
+Received: from qmta02.emeryville.ca.mail.comcast.net ([76.96.30.24]:46097 "EHLO
+	QMTA02.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751596AbZA0GNy (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2009 01:13:54 -0500
+Received: from OMTA13.emeryville.ca.mail.comcast.net ([76.96.30.52])
+	by QMTA02.emeryville.ca.mail.comcast.net with comcast
+	id 8REr1b00P17UAYkA2WDtMc; Tue, 27 Jan 2009 06:13:53 +0000
+Received: from mmogilvi.homeip.net ([75.70.161.67])
+	by OMTA13.emeryville.ca.mail.comcast.net with comcast
+	id 8WDr1b00L1TYyYj8ZWDsrX; Tue, 27 Jan 2009 06:13:52 +0000
+Received: by mmogilvi.homeip.net (Postfix, from userid 501)
+	id C585B89115; Mon, 26 Jan 2009 23:13:49 -0700 (MST)
 Content-Disposition: inline
-In-Reply-To: <EFB70468-7900-4B22-925D-3FC5F05F951B@gmail.com>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux 5.0 kernel 2.6.27-1-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/8907/Tue Jan 27 03:40:54 2009 on clegg.madduck.net
-X-Virus-Status: Clean
+In-Reply-To: <alpine.DEB.1.00.0901261201470.14855@racer>
+User-Agent: Mutt/1.5.4i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107314>
 
+On Mon, Jan 26, 2009 at 12:06:08PM +0100, Johannes Schindelin wrote:
+> So maybe I was wrong to assume that this is cvsserver specific, but then, 
+> you made that mistake rather easy to make.
 
---+QahgC5+KEYLbs62
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, in retrospect I probably should have split off patches 6, 7,
+8, and maybe 5 (5-7 fix issues that patch 8 exposes in the test suite)
+into a separate patch series.  When or if a v2 is needed, should
+I split them off then?
 
-also sprach Fabien Thomas <thomas.fabien@gmail.com> [2008.12.18.2102 +0100]:
-> I'm testing topgit 0.5 in a shared env. (multiple user working on same =
-=20
-> patch).
+> >     4. The test-bin-wrapper.sh script does not actually need to set 
+> >        environment variables (GIT_EXEC_DIT and templates) for purposes 
+> >        of this patch.  But my thought was that in this form you could 
+> >        run things straight out of the test-bin directory to manually try 
+> >        out new code without needing to actually install a build or mess 
+> >        with the environment variables yourself.  It could also be 
+> >        extended to handle other global wrapper needs relatively easily, 
+> >        such as valgrind.
+> 
+> Umm.
+> 
+> You missed the valgrind patch series.
 
-Sorry for the late reply!
+Actually, I'm (poorly) alluding to some comments in the original patch
+8 email, where I pointed out an expected conflict with the valgrind
+patches.  To briefly recap, there are at least 3 possible strategies
+of resolving such a conflict, and I'm not sure which makes the most
+sense: Keep valgrind design, and extend it with limited bindir
+support.  Keep limited bindir design and extend it with valgrind
+support.  Or keep both, and have the runtime setup logic make
+them mutually exclusive.
 
-> My problem is that when i want to push my local work i'm doing
-> "git  push" that will force update the remote branch. The problem
-> is that each time master is not up to date i will push my  entire
-> master or topic branch to the remote.
-
-I do not understand what you mean. Could yo please try to give us
-more detail? git push is intended to push all local changes to the
-remote, so I don't understand what your problem is.
-
-> [remote "origin"]
-[...]
-> 	push =3D +refs/top-bases/*:refs/top-bases/*
-> 	push =3D +refs/heads/*:refs/heads/*
-
-Those two lines ensure that git pushes all local heads as well as
-all top-bases.
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-it may look like i'm just sitting here doing nothing.
-but i'm really actively waiting
-for all my problems to go away.
-=20
-spamtraps: madduck.bogus@madduck.net
-
---+QahgC5+KEYLbs62
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkl9pekACgkQIgvIgzMMSnXhWQCfb7bB9z/EHJMBlm0bEPl2fFyc
-UOoAnjXl83kF1OV923xcbLDa1zoKrF8W
-=/5AJ
------END PGP SIGNATURE-----
-
---+QahgC5+KEYLbs62--
+--
+Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
