@@ -1,67 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-am annoyance
-Date: Tue, 27 Jan 2009 14:30:23 -0800
-Message-ID: <7vr62o1iww.fsf@gitster.siamese.dyndns.org>
-References: <bd6139dc0901271407i4406d5e6u6db1df9e5a7bdc4f@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2 0/6] rebase simplifications
+Date: Tue, 27 Jan 2009 23:34:15 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901272323530.3586@pacific.mpi-cbg.de>
+References: <7v7i4g31lj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailinglist <git@vger.kernel.org>
-To: sverre@rabbelier.nl
-X-From: git-owner@vger.kernel.org Tue Jan 27 23:32:13 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jan 27 23:35:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRwTN-0001Op-Aj
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:31:57 +0100
+	id 1LRwWz-0002dI-0C
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:35:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785AbZA0Wab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 17:30:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751562AbZA0Wab
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:30:31 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36606 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751304AbZA0Wab (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 17:30:31 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 58DBF94836;
-	Tue, 27 Jan 2009 17:30:28 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4FD1494835; Tue,
- 27 Jan 2009 17:30:24 -0500 (EST)
-In-Reply-To: <bd6139dc0901271407i4406d5e6u6db1df9e5a7bdc4f@mail.gmail.com>
- (Sverre Rabbelier's message of "Tue, 27 Jan 2009 23:07:14 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 195095CC-ECC2-11DD-809A-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752138AbZA0Wd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 17:33:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752122AbZA0Wd6
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:33:58 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58322 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751885AbZA0Wd6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 17:33:58 -0500
+Received: (qmail invoked by alias); 27 Jan 2009 22:33:56 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp058) with SMTP; 27 Jan 2009 23:33:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19lxx0ew7Rlj5uLi7ZtKnOa8CYo8SBpmXW2MNYq5E
+	/saS5JUP2vOFkn
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7v7i4g31lj.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107399>
 
-Sverre Rabbelier <alturin@gmail.com> writes:
+Changes vs  v1:
 
-> Observe what happens if, on accident, rather than running a alias
-> (amendall), the 'tab' didn't catch on:
-> $ git am
-> ^C
+removed the "rnyn" blurt (which probably marsk me as Alpine user...)
 
-It wants to read from the stdin as "git am < mbox" is a valid usage.
+removed the SHELL_PATH handling; it is a miracle to me why it works, but 
+I'd rather not meddle with the magic now that you pointed it out
 
-A patch to detect that the input was killed with ^C and clean things up
-would be welcome.  Also we may be able to detect "-t 0", too.
+Moved test_commit and test_merge into test-lib.sh
 
-> $ # ok, now what do I do?
+Fixed the quoting in test_commit and test_merge
 
-Here is one thing you could do.
+AFAIR that's all...
 
-    $ PS1=': $(__git_ps1 "%s"); '
-    : master|AM/REBASE; 
-    : master|AM/REBASE; git am --abort
+Johannes Schindelin (6):
+  t3404 & t3411: undo copy&paste
+  lib-rebase.sh: Document what set_fake_editor() does
+  test-lib.sh: introduce test_commit() and test_merge() helpers
+  Simplify t3410
+  Simplify t3411
+  Simplify t3412
 
-But you are right.  We should be able to detect this.
-
-I think it was just people who often use "am" are so used to correctly the
-command that the state where no state files are created didn't happen
-often and never reported the breakage.
+ t/README                                  |   18 ++++
+ t/lib-rebase.sh                           |   48 +++++++++++
+ t/t3404-rebase-interactive.sh             |   37 +--------
+ t/t3410-rebase-preserve-dropped-merges.sh |  124 ++++++++---------------------
+ t/t3411-rebase-preserve-around-merges.sh  |  103 +++++-------------------
+ t/t3412-rebase-root.sh                    |   28 ++-----
+ t/test-lib.sh                             |   26 ++++++
+ 7 files changed, 159 insertions(+), 225 deletions(-)
+ create mode 100644 t/lib-rebase.sh
