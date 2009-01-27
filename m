@@ -1,108 +1,98 @@
 From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: Heads up: rebase -i -p will be made sane again
-Date: Tue, 27 Jan 2009 08:54:18 -0600
+Subject: Re: Heads up: major rebase -i -p rework coming up
+Date: Tue, 27 Jan 2009 09:21:17 -0600
 Organization: Exigence
-Message-ID: <20090127085418.e113ad5a.stephen@exigencecorp.com>
-References: <alpine.DEB.1.00.0901271012550.14855@racer>
+Message-ID: <20090127092117.d13f24e7.stephen@exigencecorp.com>
+References: <alpine.DEB.1.00.0901242056070.14855@racer>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, spearce@spearce.org,
+	Thomas Rast <trast@student.ethz.ch>,
+	=?ISO-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 27 16:14:26 2009
+X-From: git-owner@vger.kernel.org Tue Jan 27 16:22:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRpde-0001a1-My
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 16:14:07 +0100
+	id 1LRpm3-0004r2-VV
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 16:22:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751908AbZA0PMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 10:12:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751885AbZA0PMm
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 10:12:42 -0500
-Received: from sat6.emailsrvr.com ([64.49.219.6]:46447 "EHLO
-	smtp112.sat.emailsrvr.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751727AbZA0PMl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2009 10:12:41 -0500
-X-Greylist: delayed 1096 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Jan 2009 10:12:41 EST
-Received: from relay31.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay31.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 702971B4027;
-	Tue, 27 Jan 2009 09:54:22 -0500 (EST)
-Received: by relay31.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTPSA id 383881B401C;
-	Tue, 27 Jan 2009 09:54:22 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0901271012550.14855@racer>
+	id S1751865AbZA0PVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 10:21:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbZA0PVW
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 10:21:22 -0500
+Received: from smtp132.sat.emailsrvr.com ([66.216.121.132]:54712 "EHLO
+	smtp132.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751328AbZA0PVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 10:21:21 -0500
+Received: from relay13.relay.sat.mlsrvr.com (localhost [127.0.0.1])
+	by relay13.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id EEFC11B4839;
+	Tue, 27 Jan 2009 10:21:20 -0500 (EST)
+Received: by relay13.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTPSA id 87FF11B47F4;
+	Tue, 27 Jan 2009 10:21:20 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0901242056070.14855@racer>
 X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107351>
 
 
-> Dear list,
+> I am very sorry if somebody actually scripted rebase -i -p (by setting
+> GIT_EDITOR with a script), but I am very certain that this cleanup is
+> absolutely necessary to make rebase -i -p useful.
 
-Thanks for keeping me on the cc list--several of the later stages of
-cruft are my fault, so I don't know that I'll be able to help any more
-than commentary on the use cases I was trying to fulfill.
+I have scripted rebase-i-p, but with GIT_EDITOR=: [1]. I assume this
+will still work and just accept the default script?
 
-> As for the design bug I want to fix: imagine this history:
-> 
->   ------A
->  /     /
-> /     /
-> ---- B
-> \     \
->  \     \
->   C-----D-----E = HEAD
-> 
-> A, C and D touch the same file, and A and D agree on the contents.
-> 
-> Now, rebase -p A does the following at the moment:
-> 
->   ------A-----E' = HEAD
->  /     /
-> /     /
-> ---- B
-> 
-> In other words, C is truly forgotten, and it is pretended that D never 
-> happened, either.  That is exactly what test case 2 in t3410 tests for 
-> [*1*].
-> 
-> This is insane.
+(Er, maybe I can just use rebase-p...I forget why [1] is using the
+GIT_EDITOR=: with -i.)
 
-Agreed.
+My primary pain point with rebase-i-p has been rebasing a branch that
+has merged in another branch that has a lot of commits on it. E.g.:
 
-Does this mean you're just getting rid of the code that calls "rev list
---cherry-pick"?
+    a -- b -- c  origin/feature
+      \
+       d -- e    feature
+           /
+      ... g      origin/master
 
-If so, I'd be all for that--I did not introduce it, nor fully understand
-its nuances, and t3410 was just a hack to get the behavior of a rebase
-with a dropped/cherry picked commit from the previous behavior of being
-a no-op to instead do "something".
+Where e is merging in, say, a latest release that had a few hundred
+commits in the master branch. After resolving conflicts/etc. in e, I
+want to rebase d..e from a to be on c.
 
-A few times I've pondered just removing the --cherry-pick/drop commit
-part of rebase-p, but assumed it was there for a reason.
+The two problems have been:
 
-Also, yeah, don't treat the test cases in t3410 as "the result should be
-this exact DAG" but "the result should be something that is not a
-noop/sane".
+1) `git pull` with rebase set uses rebase-i, with no -p, so all of the
+   commits from the latest release branch that got merged in with e are
+   flattened/duplicated. This is what [1] tries to fix. I've made
+   noises about hacking the branch rebase flag but haven't followed
+   through.
 
-> [*1*] The code in t3410 was not really easy to read, even if there was an 
-> explanation what it tried to do, but the test code was inconsitent, 
-> sometimes tagging, sometimes not, sometimes committing with -a, sometimes 
-> "git add"ing first, yet almost repetitive.
-> 
-> In my endeavor not only to understand it, and either fix my code or the 
-> code in t3410, I refactored it so that others should have a much easier 
-> time to understand what it actually does.
+   I know this is a git pull issue, but I bring it up because, IIRC, the
+   t3410 test case came from a scenario where I was rebasing a merge
+   like e above and due to --cherry-pick dropping a commit (probably e
+   itself, I'm not sure), rebase-i-p as it existed then broke and
+   produced a noop. So I set off to get it to do "something" and ended
+   up introducing the "DROPPED" directory.
 
-Thanks for cleaning it up.
+2) With manual invocation of `rebase-i-p`, previously you'd get a
+   laundry list of commits from the e merge that are new to the feature
+   branch, but since g and its ancestors aren't changing, you don't need
+   to consider them in the script and so its (potentially a lot of)
+   noise. This is what the parent probing back port from git sequencer
+   addressed.
 
-I recently saw a test of yours use a `test_commit` bash function that I
-really like. My last patch submission debacle had a patch cleaning up
-t3411 by introducing `test_commit`--I can brave `git send-email` again
-if you have any interest in me resending it.
+So, I don't mean to rehash old complaints, as I'd love to see the
+rebase-i-p code cleaned up by someone who can really refactor it vs. my
+hack patches. But I wanted to emphasize the motivation for my hacks over
+their implementation so that hopefully you can still address these use
+cases in the new version.
 
 Thanks,
 Stephen
+
+[1]: http://github.com/stephenh/git-central/blob/master/scripts/pull
