@@ -1,75 +1,83 @@
-From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: Re: [PATCH 08/10] run test suite without dashed git-commands in PATH
-Date: Mon, 26 Jan 2009 23:13:49 -0700
-Message-ID: <20090127061349.GA2417@comcast.net>
-References: <1232840601-24696-3-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-4-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-5-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-6-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-7-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-8-git-send-email-mmogilvi_git@miniinfo.net> <1232840601-24696-9-git-send-email-mmogilvi_git@miniinfo.net> <alpine.DEB.1.00.0901250255250.14855@racer> <20090126064004.GA3004@comcast.net> <alpine.DEB.1.00.0901261201470.14855@racer>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCH 0/3] fix "Funny: git -p submodule summary"
+Date: Tue, 27 Jan 2009 01:25:12 -0500
+Message-ID: <20090127062512.GA10487@coredump.intra.peff.net>
+References: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 27 07:15:21 2009
+X-From: git-owner@vger.kernel.org Tue Jan 27 07:26:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRhEF-00075h-Pe
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 07:15:20 +0100
+	id 1LRhPF-0000TD-Nv
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 07:26:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751844AbZA0GNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 01:13:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751688AbZA0GNz
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 01:13:55 -0500
-Received: from qmta02.emeryville.ca.mail.comcast.net ([76.96.30.24]:46097 "EHLO
-	QMTA02.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751596AbZA0GNy (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2009 01:13:54 -0500
-Received: from OMTA13.emeryville.ca.mail.comcast.net ([76.96.30.52])
-	by QMTA02.emeryville.ca.mail.comcast.net with comcast
-	id 8REr1b00P17UAYkA2WDtMc; Tue, 27 Jan 2009 06:13:53 +0000
-Received: from mmogilvi.homeip.net ([75.70.161.67])
-	by OMTA13.emeryville.ca.mail.comcast.net with comcast
-	id 8WDr1b00L1TYyYj8ZWDsrX; Tue, 27 Jan 2009 06:13:52 +0000
-Received: by mmogilvi.homeip.net (Postfix, from userid 501)
-	id C585B89115; Mon, 26 Jan 2009 23:13:49 -0700 (MST)
+	id S1751743AbZA0GZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 01:25:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbZA0GZS
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 01:25:18 -0500
+Received: from peff.net ([208.65.91.99]:40355 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751213AbZA0GZQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 01:25:16 -0500
+Received: (qmail 9227 invoked by uid 107); 27 Jan 2009 06:25:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 27 Jan 2009 01:25:23 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Jan 2009 01:25:12 -0500
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901261201470.14855@racer>
-User-Agent: Mutt/1.5.4i
+In-Reply-To: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107315>
 
-On Mon, Jan 26, 2009 at 12:06:08PM +0100, Johannes Schindelin wrote:
-> So maybe I was wrong to assume that this is cvsserver specific, but then, 
-> you made that mistake rather easy to make.
+On Thu, Jan 08, 2009 at 04:07:08PM +0100, Johannes Schindelin wrote:
 
-Yes, in retrospect I probably should have split off patches 6, 7,
-8, and maybe 5 (5-7 fix issues that patch 8 exposes in the test suite)
-into a separate patch series.  When or if a v2 is needed, should
-I split them off then?
-
-> >     4. The test-bin-wrapper.sh script does not actually need to set 
-> >        environment variables (GIT_EXEC_DIT and templates) for purposes 
-> >        of this patch.  But my thought was that in this form you could 
-> >        run things straight out of the test-bin directory to manually try 
-> >        out new code without needing to actually install a build or mess 
-> >        with the environment variables yourself.  It could also be 
-> >        extended to handle other global wrapper needs relatively easily, 
-> >        such as valgrind.
+> Just try this with a submodule that has more changes than fit on a screen:
 > 
-> Umm.
+> 	$ git -p submodule summary
 > 
-> You missed the valgrind patch series.
+> In my tests, it consistently fscks up my console.  I wonder if this is 
+> related to ea27a18(spawn pager via run_command interface).
 
-Actually, I'm (poorly) alluding to some comments in the original patch
-8 email, where I pointed out an expected conflict with the valgrind
-patches.  To briefly recap, there are at least 3 possible strategies
-of resolving such a conflict, and I'm not sure which makes the most
-sense: Keep valgrind design, and extend it with limited bindir
-support.  Keep limited bindir design and extend it with valgrind
-support.  Or keep both, and have the runtime setup logic make
-them mutually exclusive.
+OK, here is a patch series that fixes the problem:
 
---
-Matthew Ogilvie   [mmogilvi_git@miniinfo.net]
+  1/3: git: s/run_command/run_builtin/
+  2/3: run_command: handle missing command errors more gracefully
+  3/3: git: use run_command to execute dashed externals
+
+1 is a cleanup, 2 is infrastructure support, and 3 is the actual fix.
+
+There are two potential downsides to the fix:
+
+ 1. There is an extra fork and a parent process sitting in memory for
+    dashed externals. This is pretty necessary to any fix, since
+    something has to wait to do pager cleanup, and we can't rely on the
+    child to do so.
+
+ 2. A failed attempt to execute a dashed external results in an extra
+    fork. For builtins, this has no impact, since they take precedence.
+    For aliases, though, it means we will do an extra fork before
+    realizing that there is no dashed external and trying the alias.
+
+We can fix '2' by actually doing the PATH lookup ourselves, and only
+calling run_command if we know we have a match.  We can also reduce the
+impact of both by only doing this multi-process magic if we have spawned
+a pager; then only a small subset of invocations needs to pay for it.
+
+I chose not to do the second optimization because it makes the code more
+complex and inconsistent (we now have two different ways of doing the
+same thing, depending on a seemingly unrelated setting) and fragile
+(the pager might not be the only atexit handler installed).
+
+The first (doing PATH lookup ourselves) might make sense, though.
+
+JSixt, there are some tweaks to the Windows code to report back the exec
+error. They look obviously correct to me, but I have no box to test
+(even compile test) them on.
+
+-Peff
