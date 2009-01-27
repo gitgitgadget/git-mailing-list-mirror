@@ -1,73 +1,61 @@
-From: Geoffrey Lee <geoffreyj.lee@gmail.com>
-Subject: Re: Anyone have access to 64-bit Vista?
-Date: Tue, 27 Jan 2009 14:41:04 -0800
-Message-ID: <83d7aaa40901271441h47c98edepc16f5026de636134@mail.gmail.com>
-References: <83d7aaa40901270130g3bebb3d6we4839b567f310e46@mail.gmail.com>
-	 <20090127122456.0df531c3.stephen@exigencecorp.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/6] t3404 & t3411: undo copy&paste
+Date: Tue, 27 Jan 2009 14:46:33 -0800
+Message-ID: <7veiyo1i5y.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0901271012550.14855@racer>
+ <20090127085418.e113ad5a.stephen@exigencecorp.com>
+ <alpine.DEB.1.00.0901271844340.3586@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0901271845380.3586@pacific.mpi-cbg.de>
+ <7v7i4g31lj.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0901272254450.14855@racer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 27 23:42:36 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephen Haberman <stephen@exigencecorp.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 27 23:48:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRwdb-00055v-FC
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:42:31 +0100
+	id 1LRwj0-00070k-Ki
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:48:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751666AbZA0WlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 17:41:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbZA0WlH
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:41:07 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:35638 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751133AbZA0WlG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 17:41:06 -0500
-Received: by qyk4 with SMTP id 4so7580122qyk.13
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 14:41:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=/3nd7PvciUVgb/TMJ0XpAj6dyifGIxEqXc3LkSOyyp8=;
-        b=UM0HScw8I9KEJXE8xPkXWvaG1cUTZ9DX3QNsvtbyNwEPU0X7a8yJ/yw0of7uxfYF9Y
-         CIpRvYUxbiaTa8+VAL0EtDDXKWnvJQbEcj99V6yumy9jShdIrunhX5AOwMwqYMnxc/rA
-         XxNJUP+GR8xCtxPJKNC36lCE/+6H508s+PyyQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=qp8POTDg2PJafKwCaEuZqfz2FVDyMUMXYQihaq6PFgzlh/aeqb81I79YL8FNjnnPKq
-         lN9n4Zx+KpkQcqOC8Z4wVFcBP6wG0itglds97pWK9zRwVuufDPiMYd4nY35LQGGP9blU
-         74QXVlMdf6KiFMr5hbCd6HR3a6JpMDYOn+FG0=
-Received: by 10.214.113.11 with SMTP id l11mr6090304qac.190.1233096064511; 
-	Tue, 27 Jan 2009 14:41:04 -0800 (PST)
-In-Reply-To: <20090127122456.0df531c3.stephen@exigencecorp.com>
+	id S1752044AbZA0Wqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 17:46:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752019AbZA0Wqm
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:46:42 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42975 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752003AbZA0Wql (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 17:46:41 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3E3161D6A0;
+	Tue, 27 Jan 2009 17:46:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5F55F1D696; Tue,
+ 27 Jan 2009 17:46:35 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0901272254450.14855@racer> (Johannes
+ Schindelin's message of "Tue, 27 Jan 2009 22:57:33 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5C9B6C74-ECC4-11DD-9807-0372113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107410>
 
-On Tue, Jan 27, 2009 at 10:24 AM, Stephen Haberman
-<stephen@exigencecorp.com> wrote:
-> It kind of works on my Vista 64-bit system--I do not see the shell
-> extensions in the native Windows Explorer (which is 64 bit), but I do
-> see the shell extensions in an Explorer replacement I use (Xplorer2)
-> that is 32-bit.
->
-> I've seen other oddities in 32-bit vs. 64-bit programs--e.g. my alt tab
-> replacement (Joe), which is 32-bit, works great with 32-bit programs
-> but cannot remove focus from 64-bit programs (IE, Windows Explorer,
-> etc.). Ironically, very few of the programs I use are 64-bit, so I get
-> by with the alt tab replacement.
->
-> - Stephen
->
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Thanks! It seems that 64-bit explorer.exe will not load 32-bit shell
-extensions. At least now I know I'm not going crazy. :)
+>> > +		sed -n "${line}p" < "$1".tmp
+>> > +		sed -n "${line}s/^pick/$action/p" < "$1".tmp >> "$1"
+>> > +		sed -n "${line}s/^pick/$action/p" < "$1".tmp
+>
+>
+> Probably.  It is for debugging, anyway.  As everything you only see with 
+> -v.
 
--Geoffrey Lee
+Exactly.  That is why I'd rather want to see what exact insn sequence is
+being fed to the "rebase -i".  Because I'd be debugging my new test or
+changes to "rebase -i", not debugging fake-editor's use of sed.
