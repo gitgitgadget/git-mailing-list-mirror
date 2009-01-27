@@ -1,76 +1,76 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: Re: [PATCH/RFC v1 5/6] combine-diff.c: remove a call to fstat() 
-	inside show_patch_diff()
-Date: Tue, 27 Jan 2009 12:06:52 +0000
-Message-ID: <e2b179460901270406i3425b99pb412536ce28fb44d@mail.gmail.com>
-References: <1233004637-15112-1-git-send-email-barvik@broadpark.no>
-	 <1233004637-15112-6-git-send-email-barvik@broadpark.no>
-	 <e2b179460901270135j6e4cb887radbe664ac98f39f1@mail.gmail.com>
-	 <86myddj6qi.fsf@broadpark.no>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: connecting existing local git repository to svn
+Date: Tue, 27 Jan 2009 13:16:33 +0100
+Message-ID: <bd6139dc0901270416u22b60fefp472935470b1db929@mail.gmail.com>
+References: <497E8927.1060506@gmail.com>
+	 <497EE386.5050805@drmicha.warpmail.net> <497EE4E8.8070705@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Kjetil Barvik <barvik@broadpark.no>
-X-From: git-owner@vger.kernel.org Tue Jan 27 13:08:19 2009
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Ittay Dror <ittay.dror@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 13:18:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRmjq-0003qO-Gv
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 13:08:19 +0100
+	id 1LRmtD-0006TM-RX
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 13:18:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752942AbZA0MGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 07:06:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752762AbZA0MGx
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 07:06:53 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:45115 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752648AbZA0MGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 07:06:53 -0500
-Received: by qyk4 with SMTP id 4so7152915qyk.13
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 04:06:52 -0800 (PST)
+	id S1753166AbZA0MQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 07:16:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752942AbZA0MQf
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 07:16:35 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:28495 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752262AbZA0MQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 07:16:34 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so2750849yxm.1
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 04:16:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JGSacNdRDqhGgNcTsBCIvjmJuD5felVPSr4TyDXfChg=;
-        b=fBwOhiJAS3VoEJ6/XQDEskrC5aFic3i4XGfdnhcaVeAj3/l36jGrszaW8XWGROv9D3
-         UJe5JZv02CDnQDQRP9qTVrxEYsaOHNnGQxFd4Xq5qC3pUwZjA2fEM0MldADM9QRWqBx1
-         7dL/nL4Y8Sxr89duVENHMb1Byey/4rqTirexU=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=ekZEiSnbh3UmSoqdidiR0ek60pAxhtbQSJUUp5nnvyg=;
+        b=K1Ud4/FnQkQ9I5RZ+piXfuGg7huYrK0xMGyI0gsKpZFQVqGJsUj6Ju9haSS4SfxZYW
+         suzV2FqYnPb8+V8QVt3copumlO7Dwf6Z9uvOyJou8JLnrx70mFTRko3XFX9iPxqtw6Ew
+         eTkCHuOwy62QBMLFeTbJurpXuUGOEJaGnaYPE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LvjfRUGCiZfpGfjCCrWMHntPtoFUK9trBBaiIgALqQKEmy2/a6c2c5k9Hj5I/R40Ug
-         sRSTw+0QtyG7PepDKQeAS2q1fM+j0Pet54x/FIEZ2cedaHqVbeKcvmcZCrWBONKvk9e/
-         VaJYXiPegndYqyTXY2RT7ji6C2J5WWxuryVbo=
-Received: by 10.214.46.20 with SMTP id t20mr4249325qat.103.1233058012100; Tue, 
-	27 Jan 2009 04:06:52 -0800 (PST)
-In-Reply-To: <86myddj6qi.fsf@broadpark.no>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=bttv0R4ZObC0bV1lquwHmdMATVfzgeXGwUuWu4SjnIZbgqdLPyp7VB6Myezetdsa/j
+         b+wot6pTc4FVcC/p+7BZnf4EgcsPye+EvjInTEMaKEJQb5r9dweiPFasMLWY2e/WeEj3
+         QF3GUtre1Pal15wGGa2NID8Cv+W5+9uU7yEiY=
+Received: by 10.150.149.19 with SMTP id w19mr27796ybd.176.1233058593196; Tue, 
+	27 Jan 2009 04:16:33 -0800 (PST)
+In-Reply-To: <497EE4E8.8070705@gmail.com>
+X-Google-Sender-Auth: 72fc03b8c2c7e41a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107337>
 
-2009/1/27 Kjetil Barvik <barvik@broadpark.no>
-> Mike Ralphson <mike.ralphson@gmail.com> writes:
+On Tue, Jan 27, 2009 at 11:41, Ittay Dror <ittay.dror@gmail.com> wrote:
+> git: ----v1----v2----v3--v4---v5
+> svn:                     \---v4--v5
 >
-> > 2009/1/26 Kjetil Barvik <barvik@broadpark.no>:
-> >> Currently inside show_patch_diff() we have and fstat() call after an
-> >> ok lstat() call.  Since we before the call to fstat() have already
-> >> test for the link case with S_ISLNK() the fstat() can be removed.
-> >
-> > s/have and/have an/ ?
->
->  Correct! Will fix.  Thanks!
+> so the svn history starts from v3, but the git history remains unchanged.
 
-Typo stood out and blinded me to the rest of the grammar... How about:
+Create the new branch from v3 then, and use git svn to pull it in.
+Then you can do 'git rebase that-svn-branch' on your git branch to put
+all commits (not as one big commit) on top of that branch point. Now
+you 'git checkout' that-svn-branch and do 'git reset --hard
+the-git-branch', which should now consist of
+v1--v2--v3--v4(git)--v5(git), etc. If you do 'git svn dcommit' from
+the that-svn-branch now it should dcommit to svn each of your git
+commits individually. Of course, don't forget to make a backup before
+you start messing around :P.
 
-Currently inside show_patch_diff() we have an fstat() call after an
-ok lstat() call.  Since before the call to fstat() we have already
-tested for the link case with S_ISLNK(), the fstat() can be removed.
+-- 
+Cheers,
 
-'Half-a-job' Mike
+Sverre Rabbelier
