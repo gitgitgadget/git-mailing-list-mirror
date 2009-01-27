@@ -1,69 +1,49 @@
-From: PJ Hyett <pjhyett@gmail.com>
-Subject: Bad objects error since upgrading GitHub servers to 1.6.1
-Date: Tue, 27 Jan 2009 15:04:34 -0800
-Message-ID: <bab6a2ab0901271504j73dce7afjf8436c3c7c83b770@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH 0/2] Fix two issues found by valgrind
+Date: Wed, 28 Jan 2009 00:07:21 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901280005180.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 28 00:06:18 2009
+X-From: git-owner@vger.kernel.org Wed Jan 28 00:08:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRx0K-0004hw-2I
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 00:06:00 +0100
+	id 1LRx2k-0005hr-W4
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 00:08:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787AbZA0XEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 18:04:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751637AbZA0XEg
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 18:04:36 -0500
-Received: from rv-out-0506.google.com ([209.85.198.234]:60254 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751573AbZA0XEf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 18:04:35 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so6636696rvb.1
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 15:04:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=cAluiicxdqfVA511wiG49FS2xQsoZDA9YCwjl3jd3Xw=;
-        b=Os//ypTGWPYgW/eu61JevyUlU5YE53n/6stwdEyNakkbt8y4jQC4dEwOPZQ8lSPxbR
-         IdKnEli3AcOZc9DTXuqRRmsBUb6aQa/OvAtsbJaQYLlAsGyOThUmTdO3cncFFtry89Cb
-         n5jbO5zjTpUYqp/ajf6oIZaNyJQxqEo5oBxqY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=nzLIYW7nKmZCY3xG3o8zbHSr7kyU9rxxu2KAbk1MueR++eN7b20kS4wv5na+dT+04P
-         dqPgGpHKvw5WcUU+kryEpIF7+O6v6SidUEPO6SvydYcZo5YbiF3aMUsIhnlAdZdQSR0t
-         4FhUGZE0bUpxmnTm/Br9knHpNHbENBzkdZNDQ=
-Received: by 10.141.86.14 with SMTP id o14mr1974142rvl.233.1233097474329; Tue, 
-	27 Jan 2009 15:04:34 -0800 (PST)
+	id S1751324AbZA0XHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 18:07:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751302AbZA0XHF
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 18:07:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54646 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750943AbZA0XHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 18:07:03 -0500
+Received: (qmail invoked by alias); 27 Jan 2009 23:07:01 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp021) with SMTP; 28 Jan 2009 00:07:01 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19ZBnlIOOxZ3mO1yd03DtYHyDnVzCwFs7W2rpl630
+	XzLX3Jsw6jK0O6
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107418>
 
-Hi folks,
+Okay, not tons of issues.  But at least it was worth the hassle.
 
-We upgraded our servers to Git 1.6.1 yesterday and almost immediately
-starting hearing reports of "Fatal: Bad Object Error." I have
-experienced this myself, so I'm 99% certain this isn't user error. I'm
-also using 1.6.1 locally.
+Johannes Schindelin (2):
+  test-path-utils: Fix off by one, found by valgrind
+  get_sha1_basic(): fix invalid memory access, found by valgrind
 
-I ran into this error after trying to push code to GitHub after a
-series of simple commits, I was doing absolutely nothing out of the
-ordinary.
-
-Please see our support thread for more examples:
-http://support.github.com/discussions/feature-requests/157-fatal-bad-object-error-when-doing-simple-push
-
-All of the error messages are the same. Can anyone please shed some
-light on this, I don't see any other recourse but to downgrade Git
-until this is resolved.
-
-Thanks,
-PJ
+ sha1_name.c       |    2 +-
+ test-path-utils.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
