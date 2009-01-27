@@ -1,110 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: friendlier names
-Date: Tue, 27 Jan 2009 11:17:17 -0800 (PST)
-Message-ID: <m37i4gy2z6.fsf@localhost.localdomain>
-References: <87mydc6a2r.fsf@mcbain.luannocracy.com>
-	<20090127153837.GB1321@spearce.org>
-	<7vwscgy56b.fsf@gitster.siamese.dyndns.org>
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Re: Building Documentation in Cygwin
+Date: Tue, 27 Jan 2009 14:27:21 -0500
+Message-ID: <c115fd3c0901271127q2a7f0f58i59ff446060982fd7@mail.gmail.com>
+References: <c115fd3c0901270741h2f213b99s31bac8829bd182c2@mail.gmail.com>
+	 <be6fef0d0901270832o1a176691nab5500a86c531795@mail.gmail.com>
+	 <c115fd3c0901270944p7a4b6cc5n5dfe9b2f268f038c@mail.gmail.com>
+	 <c115fd3c0901271027s61a33273lfe9dd702a66aac6@mail.gmail.com>
+	 <7vskn4y4zt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	David Abrahams <dave@boostpro.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 27 20:18:52 2009
+X-From: git-owner@vger.kernel.org Tue Jan 27 20:28:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRtSR-0001jJ-Vp
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 20:18:48 +0100
+	id 1LRtcC-0006DR-HJ
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 20:28:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755722AbZA0TRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 14:17:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755638AbZA0TRW
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 14:17:22 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:55990 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755331AbZA0TRV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 14:17:21 -0500
-Received: by fxm13 with SMTP id 13so1805282fxm.13
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 11:17:18 -0800 (PST)
+	id S1755809AbZA0T1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 14:27:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755698AbZA0T1Z
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 14:27:25 -0500
+Received: from mu-out-0910.google.com ([209.85.134.191]:21603 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755204AbZA0T1Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 14:27:24 -0500
+Received: by mu-out-0910.google.com with SMTP id g7so4635176muf.1
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 11:27:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=6g5cqasD0BaatpCEPpJqQ625f/e39qJm85rY8w8YQak=;
-        b=lgaWmyNjXeeyQB8RirB+QDFt471YpRstvF9aJiNQQIGMQW9QcObhXzFuVVBVA7UplI
-         Lz5CnzSnJpWa4evT/N61QSyEEWTRVWiFZHjpnFZCObYUFkZS3XNLfinHt7Ujt+jouuzX
-         e8XYM2xrLk20WQaLk1XxdD8weyvXTyVbF4TK8=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=qrpH+BAdwdBmVB/4ZBwVirTIXcYxjL/6XDzxCAfjTBw=;
+        b=TjzEq2ottPZkYd3WmoE16ngr9Vova/KfRV4Ng7ZkjZ6Osn8YiGewwhLFVhJTfSMB7i
+         dyg11xa9Db6RqJ3HVWr4De9VNNWz4Moh34oZELESXgc5Kvs/NfTuDhoOAW7yDdc8pbma
+         8F6gj/1gJUIp9piQFbZi+cMNjTxnTsbAujVFs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=PPkJDnbYRlB8iSO0LlpVpGZFyd6shD7PN95tNq/KjfQrVaTEqkpSKJYzBY6xl0r8RW
-         HeKyTMTmz/9yHXHASAePVnMlrhEKRvuF/LAg5RHuFduXI7ddu6tNJgb1OmyKnNtEeU7n
-         Io2vJXpWB6TRHX0KD05TuSvuiqoDs/ggaLV+U=
-Received: by 10.223.110.11 with SMTP id l11mr262189fap.50.1233083838688;
-        Tue, 27 Jan 2009 11:17:18 -0800 (PST)
-Received: from localhost.localdomain (abvq8.neoplus.adsl.tpnet.pl [83.8.214.8])
-        by mx.google.com with ESMTPS id z10sm25421788fka.13.2009.01.27.11.17.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jan 2009 11:17:17 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0RJGUlG003987;
-	Tue, 27 Jan 2009 20:16:40 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0RJFvDa003982;
-	Tue, 27 Jan 2009 20:15:57 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vwscgy56b.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ahZEDyIYkYH/8KpSq1BWyidiKwn/eIB6CHqG4FlR/8enp31SSiQt55EoNU0KHkRkPH
+         r4RnD2/XN+NKY35a72yU0CJJOU29S1YYkI8TqUdS0a+yYePfsHeTzr3BD/DXISwgMHvR
+         Cxr3FP/vyPUHCUB0/EfKC6YEyZh6eyMaldCpQ=
+Received: by 10.181.146.14 with SMTP id y14mr1243771bkn.70.1233084441725; Tue, 
+	27 Jan 2009 11:27:21 -0800 (PST)
+In-Reply-To: <7vskn4y4zt.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107385>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
->> David Abrahams <dave@boostpro.com> wrote:
->>> 
->>> For example, why couldn't the "index" be called the "stage" instead?
->>> That, along with knowing that "git add" was a synonym for "git stage"
->>> would have flattened the learning curve considerably for me.
->>
->> Historical reasons...
+On Tue, Jan 27, 2009 at 1:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-[...]
-> The way to update the cache was called "update-cache" then "update-index".
-> Because it usually is much rare to actually add a new entry to the index
-> than updating an existing entry in the index, the command had a safeguard
-> against "update-cache a-newfile" without explicit request from the user to
-> say "oh by the way I know I am adding new entries".  "git add" came much
-> later to give you a shorthand for "update-index --add".  Updating existing
-> entries in the index was still done with "update-index".
-> 
-> Later Nico taught (after much discussion) "git add" to also serve as
-> "update-index" for existing entries in the index.
-> 
-> We could have called it "git update-index" when we did that switch-over,
-> because the operation is exactly that --- updating the index.
-> 
-> But the name somehow stuck.
-[...]
+> The xml toolchain has a tendency to download dtds from the original source
+> with a way for you (typically your distribution) to tell it to use a
+> locally installed version.  "Can build online, fail when offline" is a
+> sign that it is not using the local copy.
 
-It is a bit of pity that "git add" was overloaded to also add new
-contents and not only add new file (and its contents!), instead of
-having new command "git stage" to be porcelain version of 
-"git update-index" porcelain.  And perhaps "git resolved" to only
-mark resolved entries (so e.g. "git resolved ." would not add new
-files, nor add new contents of files which were not in conflict).
+Sounds like we're on the same page.  I'm not familiar enough with any
+of these tools to know how to do anything about that.  Does anyone
+know how to explicitly inform xmlto to use a local DTD?  I have it
+installed, as far as I know, via cygwin (the docbook-xml42 package)
+but I don't know how to tell xmlto about it.
 
-Now we have to explain that "git add" adds new contents... OTOH
-it is perhaps good idea to emphasize differences between Git and
-other lesser^W SCMs. ;-)  And introduce "git add -N"... 
+Thanks in advance!
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+
+In Christ,
+
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
