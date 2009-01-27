@@ -1,71 +1,105 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: friendlier names
-Date: Tue, 27 Jan 2009 17:33:23 +0200
-Message-ID: <94a0d4530901270733q222a6181k25b1da91b35e72d4@mail.gmail.com>
-References: <87mydc6a2r.fsf@mcbain.luannocracy.com>
+From: David Abrahams <dave@boostpro.com>
+Subject: Re: "malloc failed"
+Date: Tue, 27 Jan 2009 10:32:46 -0500
+Message-ID: <87hc3k69y9.fsf@mcbain.luannocracy.com>
+References: <878wow7pth.fsf@mcbain.luannocracy.com>
+	<20090127152915.GA1321@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Abrahams <dave@boostpro.com>
-X-From: git-owner@vger.kernel.org Tue Jan 27 16:35:00 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 27 16:36:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRpxl-0000iG-4T
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 16:34:53 +0100
+	id 1LRpzS-0001Jh-38
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 16:36:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752550AbZA0Pd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 10:33:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752271AbZA0Pd0
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 10:33:26 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:39572 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751328AbZA0PdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 10:33:25 -0500
-Received: by ewy14 with SMTP id 14so1856711ewy.13
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 07:33:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7t5qEF92mKhzpkAtnSsDUSRB8zNiLAOoX7e+D2/DtlU=;
-        b=YHkkh6RrAJzIEBAmSflxGaSnaJ2q6+L4diEIusPAbzHsMih2cELLqiwWpZlNF0jtHj
-         ABzqbtRcqA5NSbgXgi9VzGpHOh4RZDWFyWRgbIkuyBGjKgIGOW/UNNH1aOarPj5CboUt
-         4C/XHBft0zsJFVaxY34l7GusFTWpfE/S79MVY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jr8AK3rbC2WKNgL7DDEgSlv0z5FwCy4k7NMslT922jWeXPDZ2Xhk0tWh6sgIDiblK7
-         mdXII4/z2v8aSlG9bVQ2KY9g6dbSCWK1ukPAyJJPwJq1gbF6wKasm/Vgr7m4D5DuwwMo
-         vi61ulRpSHk/LACABEyYvfWmAPFVQWfEGBbDo=
-Received: by 10.86.53.8 with SMTP id b8mr496042fga.13.1233070403113; Tue, 27 
-	Jan 2009 07:33:23 -0800 (PST)
-In-Reply-To: <87mydc6a2r.fsf@mcbain.luannocracy.com>
+	id S1753385AbZA0PfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 10:35:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753275AbZA0PfH
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 10:35:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:50349 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752028AbZA0PfF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 10:35:05 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LRpxv-0001F1-8T
+	for git@vger.kernel.org; Tue, 27 Jan 2009 15:35:03 +0000
+Received: from 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com ([207.172.223.249])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 15:35:03 +0000
+Received: from dave by 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 15:35:03 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:Cc881Tk3LcR9lNNnTbYFkH2/96E=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107355>
 
-On Tue, Jan 27, 2009 at 5:30 PM, David Abrahams <dave@boostpro.com> wrote:
+
+on Tue Jan 27 2009, "Shawn O. Pearce" <spearce-AT-spearce.org> wrote:
+
+> David Abrahams <dave@boostpro.com> wrote:
+>> I've been abusing Git for a purpose it wasn't intended to serve:
+>> archiving a large number of files with many duplicates and
+>> near-duplicates.  Every once in a while, when trying to do something
+>> really big, it tells me "malloc failed" and bails out (I think it's
+>> during "git add" but because of the way I issued the commands I can't
+>> tell: it could have been a commit or a gc).  This is on a 64-bit linux
+>> machine with 8G of ram and plenty of swap space, so I'm surprised.
+>> 
+>> Git is doing an amazing job at archiving and compressing all this stuff
+>> I'm putting in it, but I have to do it a wee bit at a time or it craps
+>> out.  Bug?
 >
-> I'm absolutely certain I'm not the first person to have raised this
-> issue, so feel free to point me at the threads where I can get the
-> rationale... but: to me it looks like git's choice of terminology hurts
-> its adoption and learnability.
+> No, not really.  Above you said you are "abusing git for a purpose
+> it wasn't intended to serve"...
+
+Absolutely; I want to be upfront about that :-)
+
+> Git was never designed to handle many large binary blobs of data.
+
+They're largely text blobs, although there definitely are a fair share
+of binaries.
+
+> It was mostly designed for source code, where the majority of the
+> data stored in it is some form of text file written by a human.
 >
-> For example, why couldn't the "index" be called the "stage" instead?
-> That, along with knowing that "git add" was a synonym for "git stage"
-> would have flattened the learning curve considerably for me.
+> By their very nature these files need to be relatively short (e.g.
+> under 1 MB each) as no human can sanely maintain a text file that
+> large without breaking it apart into different smaller files (like
+> the source code for an operating system kernel).
+>
+> As a result of this approach, the git code assumes it can malloc()
+> at least two blocks large enough for each file: one of the fully
+> decompressed content, and another for the fully compressed content.
+> Try doing git add on a large file and its very likely malloc
+> will fail due to ulimit issues, or you just don't have enough
+> memory/address space to go around.
 
-+1
+Oh, so maybe I'm getting hit by ulimit; I didn't think of that.  I could
+raise my ulimit to try to get around this.
 
-I think several people have mentioned it, and there have been
-different possible actions, but nothing concrete AFAIK.
+> git gc likewise needs a good chunk of memory, but it shouldn't
+> usually report "malloc failed".  Usually in git gc if a malloc fails
+> it prints a warning and degrades the quality of its data compression.
+> But there are critical bookkeeping data structures where we must be
+> able to malloc the memory, and if those fail because we've already
+> exhausted the heap early on, then yea, it can fail too.
+
+Thanks much for that, and for reminding me about ulimit.
+
+Cheers,
 
 -- 
-Felipe Contreras
+Dave Abrahams
+BoostPro Computing
+http://www.boostpro.com
