@@ -1,75 +1,65 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH] mergetool merge/skip/abort
-Date: Tue, 27 Jan 2009 22:09:47 +0000
-Message-ID: <20090127220947.GA21319@hashpling.org>
-References: <81bfc67a0901210637j52fa7a55q51b599e9ff16f6dc@mail.gmail.com> <20090121170434.GA21727@hashpling.org> <81bfc67a0901220617l22b5a8e4ma48bb069d67cae91@mail.gmail.com> <20090122142258.GA2316@hashpling.org> <81bfc67a0901230716i166bfc4chd9a5c0990b0cd3b6@mail.gmail.com> <7vwscmue5z.fsf@gitster.siamese.dyndns.org> <20090126225835.GB10118@mit.edu>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: Heads up: major rebase -i -p rework coming up
+Date: Wed, 28 Jan 2009 07:10:54 +0900
+Message-ID: <20090128071054.6117@nanako3.lavabit.com>
+References: <alpine.DEB.1.00.0901242056070.14855@racer>
+ <20090127092117.d13f24e7.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 27 23:11:20 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, spearce@spearce.org,
+	Thomas Rast <trast@student.ethz.ch>,
+	Bjrn Steinbrink <B.Steinbrink@gmx.de>
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 23:12:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRw9O-0003ER-MZ
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:11:19 +0100
+	id 1LRwAu-0003i6-PW
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:12:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752846AbZA0WJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 17:09:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752538AbZA0WJv
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:09:51 -0500
-Received: from relay.pcl-ipout02.plus.net ([212.159.7.100]:7596 "EHLO
-	relay.pcl-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752316AbZA0WJu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2009 17:09:50 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEAAcVf0nUnw6U/2dsb2JhbADLAIVHBg
-Received: from fhw-relay07.plus.net ([212.159.14.148])
-  by relay.pcl-ipout02.plus.net with ESMTP; 27 Jan 2009 22:09:48 +0000
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by fhw-relay07.plus.net with esmtp (Exim) id 1LRw7w-0004HS-Rq; Tue, 27 Jan 2009 22:09:49 +0000
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n0RM9lFU021929
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 27 Jan 2009 22:09:48 GMT
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n0RM9lNr021928;
-	Tue, 27 Jan 2009 22:09:47 GMT
-Content-Disposition: inline
-In-Reply-To: <20090126225835.GB10118@mit.edu>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: 0100f599dd094346b9ed2990db1a4fcc
+	id S1752639AbZA0WL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 17:11:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751519AbZA0WL0
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:11:26 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:37540 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751445AbZA0WLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 17:11:25 -0500
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id C0264C8889;
+	Tue, 27 Jan 2009 16:11:24 -0600 (CST)
+Received: from 2774.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id WH697K44455V; Tue, 27 Jan 2009 16:11:24 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=nT4byFKIhfLZ34/mRhZAkGUnzSWpoulHS373ole+kSTFuHR+eSjSuQGEgEfOg6VAQcLCAs1kE1CQ1XRgZCNAn7texPeR+tGBywsfLgKSEm8wsQNW3ls/qhW6Ekq8wblBFPw+OxcCmLW6CJMdNYkKSj9zVG2bsYHqO5OaUhh8Bb8=;
+  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <20090127092117.d13f24e7.stephen@exigencecorp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107396>
 
-On Mon, Jan 26, 2009 at 05:58:35PM -0500, Theodore Tso wrote:
-> I was the original author of mergetool, and for a while I was the
-> person that was reviewing and managing the mergetool patches for
-> Junio.  Unfortunately, in the last couple of months I just haven't had
-> the time keep up with the various mergetool proposed patch updates.
-> 
-> So maybe it's time for me to hand it off to someone who has the time
-> and interest in continuing to hack mergetool, and has the necessary
-> "good taste" and such that Junio would be willing to trust that person
-> to be the git mergetool patch wrangler?
-> 
-> 							- Ted
+Quoting Stephen Haberman <stephen@exigencecorp.com>:
 
-A quick blame session has shown that after Ted I've probably touched
-the next most number of lines of mergetool. It's a crude measure and
-not necessarily a sign of competence, I admit.
+> My primary pain point with rebase-i-p has been rebasing a branch that
+> has merged in another branch that has a lot of commits on it. E.g.:
+>
+>     a -- b -- c  origin/feature
+>       \
+>        d -- e    feature
+>            /
+>       ... g      origin/master
+>
+> Where e is merging in, say, a latest release that had a few hundred
+> commits in the master branch. After resolving conflicts/etc. in e, I
+> want to rebase d..e from a to be on c.
 
-Although not rolling in spare time, I feel I'd be able review
-mergetool patches at roughly the rate that they tend to appear at the
-moment.
-
-Given the above, if I pass the "good taste" and "Junio trust" tests I
-feel that I should offer my services as mergetool patch wrangler.
+Sorry for asking a basic question, but if "feature" is a topic branch for advance the feature, why are you merging origin/master into it? Doesn't it blur the theme of the branch by including "development of the feature and all the random things that happened while it was being developed in other places"?
 
 -- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
