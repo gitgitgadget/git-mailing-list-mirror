@@ -1,89 +1,109 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Translations [of Documentation] in Git release?
-Date: Tue, 27 Jan 2009 12:16:58 +0100
-Message-ID: <200901271216.59687.jnareb@gmail.com>
-References: <60646ee10901250941s34f7accem1b74fc201e895a41@mail.gmail.com> <bd6139dc0901261130ic64f767gddc960ebe3dfecf2@mail.gmail.com> <Pine.LNX.4.64.0901270800100.26770@ds9.cixit.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Fix submodule squashing into unrelated commit
+Date: Tue, 27 Jan 2009 12:42:31 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901271241010.14855@racer>
+References: <7vljsxyv58.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Mike Hommey <mh@glandium.org>, Dill <sarpulhu@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Jan 27 12:18:50 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 12:43:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRlxs-0006Zj-RM
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 12:18:45 +0100
+	id 1LRmLr-0004uV-Ah
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 12:43:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042AbZA0LRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 06:17:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752985AbZA0LRJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 06:17:09 -0500
-Received: from ik-out-1112.google.com ([66.249.90.180]:24132 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752748AbZA0LRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 06:17:06 -0500
-Received: by ik-out-1112.google.com with SMTP id c28so975187ika.5
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 03:17:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=kQshEJ+rjYjV8Ake+RYzIKWoNEx4Sa5iCl3TLn/ETGY=;
-        b=sLC402CF3LnJn4BYd4SI9dZ/HZAEAYSR9lGRuWMVaREeuUjU8ML8I1TkLFiUNT/l7X
-         eyfNo1dH1iszoPfykaKWN15JZDs601PXMAHD7SHnwxN18MK7dZCHUMgifnEr/b+YFLG+
-         +I4UtPeG0IqDkvrLVzgEQcPkXUfh6ycbl+Mjg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=SiLV3Ca8Hc+nfmbXsCRXm0YC1PvdtppolA+KZS0K/v7AJisfJ3Zo9tSmSWTxmmqLu/
-         apKxS1UX3GFGUvDdKzouKL7ulIppjPluTozm6gC3f/sEkzIPHRGWVdjlneTav3qfZ9pk
-         7+eUNKtaSYpVhM1mv8lMHKmPh8kfs/lP0DlTY=
-Received: by 10.86.36.17 with SMTP id j17mr806172fgj.0.1233055024918;
-        Tue, 27 Jan 2009 03:17:04 -0800 (PST)
-Received: from ?192.168.1.15? (abvx18.neoplus.adsl.tpnet.pl [83.8.221.18])
-        by mx.google.com with ESMTPS id 4sm11821031fge.55.2009.01.27.03.17.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jan 2009 03:17:04 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0901270800100.26770@ds9.cixit.se>
-Content-Disposition: inline
+	id S1753061AbZA0LmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 06:42:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752914AbZA0LmF
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 06:42:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45700 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752741AbZA0LmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 06:42:04 -0500
+Received: (qmail invoked by alias); 27 Jan 2009 11:42:00 -0000
+Received: from pD9EB30BF.dip0.t-ipconnect.de (EHLO noname) [217.235.48.191]
+  by mail.gmx.net (mp017) with SMTP; 27 Jan 2009 12:42:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18nw6gUh9wng2q1wUyBFCRawp5VLcP2dzzreB0ULi
+	5jjUzt42/sDO+a
+X-X-Sender: gene099@racer
+In-Reply-To: <7vljsxyv58.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107334>
 
-On Tue, 27 Jan 2009, Peter Krefting wrote:
-> Sverre Rabbelier:
-> 
-> > Perhaps the basics can be translated at least, the documents that do
-> > not require much change because they represent stable concepts?
-> 
-> I usually start out translating the program output, then manual pages,
-> and then, time permitting, documentation.
 
-The problem with translating program output (program messages) in Git
-is twofold: fundamental and technical.  Fundamental, that program
-output is considered API (at least for plumbing commands) and used
-when scripting (this might be ameliorated with "I am script" switch
-or environmental variable).  Technical, because Git is mixture of
-programs in C, shell scripts, and Perl scripts, and you have to come
-with technical means of translating messages in all three of them.
+Actually, I think the issue is pretty independent of submodules; when
+"git commit" gets an empty parameter, it misinterprets it as a file.
 
-> Git is a bit special in that regard since "--help" gets hardwired to
-> display the manual page, so one can't just translate the help screen.
+So avoid passing an empty parameter to "git commit".
 
-Not in all cases. Sometimes it shows "long usage". Perhaps that should
-be made more consistent?
+Actually, this is a nice cleanup, as MSG_FILE and EDIT_COMMIT were mutually
+exclusive; use one variable instead
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	We might want to safeguard "git commit", too.
+
+ git-rebase--interactive.sh    |    9 ++++-----
+ t/t3404-rebase-interactive.sh |    2 +-
+ 2 files changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 002929e..3ac7162 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -373,17 +373,15 @@ do_next () {
+ 		pick_one -n $sha1 || failed=t
+ 		case "$(peek_next_command)" in
+ 		squash|s)
+-			EDIT_COMMIT=
+ 			USE_OUTPUT=output
+ 			MSG_OPT=-F
+-			MSG_FILE="$MSG"
++			EDIT_OR_FILE="$MSG"
+ 			cp "$MSG" "$SQUASH_MSG"
+ 			;;
+ 		*)
+-			EDIT_COMMIT=-e
+ 			USE_OUTPUT=
+ 			MSG_OPT=
+-			MSG_FILE=
++			EDIT_OR_FILE=-e
+ 			rm -f "$SQUASH_MSG" || exit
+ 			cp "$MSG" "$GIT_DIR"/SQUASH_MSG
+ 			rm -f "$GIT_DIR"/MERGE_MSG || exit
+@@ -397,7 +395,8 @@ do_next () {
+ 			GIT_AUTHOR_NAME="$GIT_AUTHOR_NAME" \
+ 			GIT_AUTHOR_EMAIL="$GIT_AUTHOR_EMAIL" \
+ 			GIT_AUTHOR_DATE="$GIT_AUTHOR_DATE" \
+-			$USE_OUTPUT git commit --no-verify $MSG_OPT "$MSG_FILE" $EDIT_COMMIT || failed=t
++			$USE_OUTPUT git commit --no-verify \
++				$MSG_OPT "$EDIT_OR_FILE" || failed=t
+ 		fi
+ 		if test $failed = t
+ 		then
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 6ffb9ad..4becc55 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -484,7 +484,7 @@ test_expect_success 'submodule rebase setup' '
+ 	git commit -a -m "Three changes submodule"
+ '
+ 
+-test_expect_failure 'submodule rebase -i' '
++test_expect_success 'submodule rebase -i' '
+ 	FAKE_LINES="1 squash 2 3" git rebase -i A
+ '
+ 
 -- 
-Jakub Narebski
-Poland
+1.6.1.482.g7d54be
