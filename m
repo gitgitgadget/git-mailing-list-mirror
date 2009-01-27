@@ -1,105 +1,120 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFC/PATCH 3/3] git: use run_command to execute dashed externals
-Date: Tue, 27 Jan 2009 01:27:40 -0500
-Message-ID: <20090127062740.GC13161@coredump.intra.peff.net>
-References: <20090127062512.GA10487@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] contrib git-resurrect: find traces of a branch name
+ and resurrect it
+Date: Mon, 26 Jan 2009 22:31:27 -0800
+Message-ID: <7vwschz2dc.fsf@gitster.siamese.dyndns.org>
+References: <200901261254.39360.trast@student.ethz.ch>
+ <1232973657-31444-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 27 07:29:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jan 27 07:33:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRhRb-0000rP-Sh
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 07:29:08 +0100
+	id 1LRhVP-0001XP-HB
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 07:33:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751951AbZA0G1n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 01:27:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751875AbZA0G1n
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 01:27:43 -0500
-Received: from peff.net ([208.65.91.99]:40422 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751885AbZA0G1n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 01:27:43 -0500
-Received: (qmail 9297 invoked by uid 107); 27 Jan 2009 06:27:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 27 Jan 2009 01:27:50 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Jan 2009 01:27:40 -0500
-Content-Disposition: inline
-In-Reply-To: <20090127062512.GA10487@coredump.intra.peff.net>
+	id S1752084AbZA0Gbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 01:31:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751954AbZA0Gbh
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 01:31:37 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54526 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751492AbZA0Gbh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 01:31:37 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CA00B935CA;
+	Tue, 27 Jan 2009 01:31:35 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F267D935C2; Tue,
+ 27 Jan 2009 01:31:29 -0500 (EST)
+In-Reply-To: <1232973657-31444-1-git-send-email-trast@student.ethz.ch>
+ (Thomas Rast's message of "Mon, 26 Jan 2009 13:40:57 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 25406776-EC3C-11DD-A2AE-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107319>
 
-We used to simply try calling execvp(); if it succeeded,
-then we were done and the new program was running. If it
-didn't, then we knew that it wasn't a valid command.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-Unfortunately, this interacted badly with the new pager
-handling. Now that git remains the parent process and the
-pager is spawned, git has to hang around until the pager is
-finished. We install an atexit handler to do this, but that
-handler never gets called if we successfully run execvp.
+> Add a tool 'git-resurrect.sh <branch>' that tries to find traces of
+> the <branch> in the HEAD reflog and, optionally, all merge commits in
+> the repository.  It can then resurrect the branch, pointing it at the
+> most recent of all candidate commits found.
+>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+>
+> Fixed the -h to upper-case in the short options summaries, and removed
+> a stray 'q' in the default assignment of new_name.
 
-You could see this behavior by running any dashed external
-using a pager (e.g., "git -p stash list"). The command
-finishes running, but the pager is still going. In the case
-of less, it then gets an error reading from the terminal and
-exits, potentially leaving the terminal in a broken state
-(and not showing the output).
+I hate to paint bikeshed, but -H "try-hard" looks somewhat unusual doesn't
+it?  It sounds more like --all (find from all possible sources).
 
-This patch just uses run_command to try running the
-dashed external. The parent git process then waits for the
-external process to complete and then handles the pager
-cleanup as it would for an internal command.
+> +. git-sh-setup
+> +cd_to_toplevel
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- git.c |   14 ++++++++++----
- 1 files changed, 10 insertions(+), 4 deletions(-)
+Why?
 
-diff --git a/git.c b/git.c
-index 45e493d..79a836c 100644
---- a/git.c
-+++ b/git.c
-@@ -2,6 +2,7 @@
- #include "exec_cmd.h"
- #include "cache.h"
- #include "quote.h"
-+#include "run-command.h"
- 
- const char git_usage_string[] =
- 	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
-@@ -392,6 +393,7 @@ static void execv_dashed_external(const char **argv)
- {
- 	struct strbuf cmd = STRBUF_INIT;
- 	const char *tmp;
-+	int status;
- 
- 	strbuf_addf(&cmd, "git-%s", argv[0]);
- 
-@@ -406,10 +408,14 @@ static void execv_dashed_external(const char **argv)
- 
- 	trace_argv_printf(argv, "trace: exec:");
- 
--	/* execvp() can only ever return if it fails */
--	execvp(cmd.buf, (char **)argv);
--
--	trace_printf("trace: exec failed: %s\n", strerror(errno));
-+	/*
-+	 * if we fail because the command is not found, it is
-+	 * OK to return. Otherwise, we just pass along the status code.
-+	 */
-+	status = run_command_v_opt(argv, 0);
-+	if (status != -ERR_RUN_COMMAND_EXEC)
-+		exit(status);
-+	errno = ENOENT; /* as if we called execvp */
- 
- 	argv[0] = tmp;
- 
--- 
-1.6.1.1.367.g30b36
+> +search_reflog () {
+> +        sed -n 's~^\([^ ]*\) .*\tcheckout: moving from '"$1"' .*~\1~p' \
+> +                < .git/logs/HEAD
+> +}
+
+Once you used ". git-sh-setup", use "$GIT_DIR/logs/HEAD".  That way, you
+can work in a bare repository (and you do not have to cd_to_toplevel,
+either, I think).
+
+Oh, don't forget to skip this step if the reflog does not exist.
+
+> +search_reflog_merges () {
+> +        sed -n 's~^[^ ]* \([^ ]*\) .*\tmerge '"$1"':~\1~p' \
+> +                < .git/logs/HEAD
+> +}
+
+The two commits both point at the HEAD that merges the other branch into,
+so this finds a merge commit that has the tip of target branch as its
+second parent.  Is that really what you want?
+
+> +search_merges () {
+> +	git rev-list --pretty=tformat:"%h %p:%s" --all |
+> +	grep "Merge branch.*'$branch'.*into" |
+
+"git merge tr/topic~4" can say "Merge branch 'tr/topic' (early part)".
+Also merge into 'master' won't have "into ...".
+
+> +	while read sha rest; do
+> +		parents="$(echo "$rest" | cut -d: -f1)"
+> +		case "$parents" in
+> +		    *' '*' '*)
+> +			warn "$branch took part in octopus merge $sha"
+> +			warn "check manually!"
+> +			;;
+> +		    *' '*)
+> +			echo "$parents" | cut -d' ' -f2
+> +			;;
+> +		esac
+> +	done
+
+Reading everything down to the root commit sounds like fun.  rev-list
+gives you the output from newer to older so you may want to break out once
+you have found enough candidates.
+
+Anyway, if I were doing this script, I'd write this part like this without
+a shell loop:
+
+        _x40="[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]"
+        _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+
+	git rev-list --all --grep="Merge branch '$1'" \
+        	--pretty=tformat:"%H %P %s" |
+	sed -ne "s/^$_x40 $_x40 \($_x40\) Merge .*/\1/p"
