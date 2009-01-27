@@ -1,85 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git 1.6.1 on AIX 5.3
-Date: Mon, 26 Jan 2009 22:52:23 -0500
-Message-ID: <20090127035223.GA28690@coredump.intra.peff.net>
-References: <A8D76E61-4442-4640-BD0C-84085375E6F1@gmail.com> <20090126210027.GG27604@coredump.intra.peff.net> <e2b179460901261432r601fa006iaf04fc42487e7235@mail.gmail.com> <9E98493A-B17A-4905-8BEA-3E0B837961D6@gmail.com>
+From: Ittay Dror <ittay.dror@gmail.com>
+Subject: connecting existing local git repository to svn
+Date: Tue, 27 Jan 2009 06:10:15 +0200
+Message-ID: <497E8927.1060506@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Mike Ralphson <mike.ralphson@gmail.com>, git@vger.kernel.org
-To: Perry Smith <pedzsan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 27 04:53:55 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 27 05:12:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRf1L-0008DX-AY
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 04:53:51 +0100
+	id 1LRfJe-0002gB-EZ
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 05:12:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751318AbZA0Dw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jan 2009 22:52:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbZA0Dw0
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 22:52:26 -0500
-Received: from peff.net ([208.65.91.99]:41379 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750974AbZA0Dw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jan 2009 22:52:26 -0500
-Received: (qmail 8422 invoked by uid 107); 27 Jan 2009 03:52:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 26 Jan 2009 22:52:33 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Jan 2009 22:52:23 -0500
-Content-Disposition: inline
-In-Reply-To: <9E98493A-B17A-4905-8BEA-3E0B837961D6@gmail.com>
+	id S1751526AbZA0ELV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jan 2009 23:11:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751383AbZA0ELV
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Jan 2009 23:11:21 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:62006 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751470AbZA0ELU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jan 2009 23:11:20 -0500
+Received: by ug-out-1314.google.com with SMTP id 39so190720ugf.37
+        for <git@vger.kernel.org>; Mon, 26 Jan 2009 20:11:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=kACb38AeQR2zb++Yh5vu5D9qkK1XtgvV806AzglHkic=;
+        b=iIxqQRRoglQBqbO2oz3i96KCx/JEk/9rSWLA+v5FzLSB7so73p4Tk3w7KVPxCNXWBu
+         6pW70tHacYSG7iWmlOc11c7bc+JdnKT93AwAduL6UDCj5SKLpNTSv2SHSb1GnK8HHL3C
+         ZWGioOHnm8NLob7K6FPQ9bpy+P7WTGmMWjO50=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=MQT4Py3LV8F4ATAXE8Nu6kHFk6dc6S1tAk9G7Cy775opuOUIxvXx03AYRhKZvywU3T
+         VtxBv1Zdctgq7LX5gSBLwgsupVNjJsAz+fjbS9YzKk2kTehhzO9GWbhIoAHYapR2dtr3
+         d0ENcVYLhvCSKUzmLGAI/omkfxcWUoGL2YYb8=
+Received: by 10.66.217.18 with SMTP id p18mr1597713ugg.60.1233029478630;
+        Mon, 26 Jan 2009 20:11:18 -0800 (PST)
+Received: from ?10.10.2.8? ([212.143.191.180])
+        by mx.google.com with ESMTPS id j4sm5435998ugf.16.2009.01.26.20.11.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 26 Jan 2009 20:11:17 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107304>
 
-On Mon, Jan 26, 2009 at 04:57:16PM -0600, Perry Smith wrote:
+Hi,
 
-> A few other comments:  I had to add in the --without-tcltk flag.  I
-> don't have tcl installed but the config did not autodetect that it was
-> not present.
 
-Hmm. It looks like we respect --with[out]-tcltk, and without it we
-always say "just use wish from the PATH" without detecting whether it
-actually exists:
+I'd like to create a branch in a subversion repository so that I can
+work with git-svn on it.
 
-    # No Tcl/Tk switches given. Do not check for Tcl/Tk, use bare
-    # 'wish'.
-    TCLTK_PATH=wish
-    AC_SUBST(TCLTK_PATH)
 
-I'm sure the fix would be something along the lines of
+My git repository is already with a history, that I don't want to
+replicate to subversion, I want to start with subversion having just the
+latest revision and then continue from there normally (git svn
+dcommit/rebase).
 
-    if which wish; then
-      TCLTK_PATH=wish
-    else
-      NO_TCLTK=yes
-    fi
 
-but I know for fact that is not portable and that there must be some
-special autoconf way of doing the same thing.
+How can I do that?
 
-> I can't tell if make test is happy or not.  The output looks like its
-> happy but the exit code is 2.
 
-That doesn't sound very happy. You should see either a "command failed"
-error from make, or some results like:
+Thanks,
 
-   '/bin/sh' ./aggregate-results.sh test-results/t*-*
-   fixed   1
-   success 4026
-   failed  0
-   broken  3
-   total   4030
-
-where "broken" is OK (it is a test that is marked as "we know this is
-broken currently, but ideally it would be fixed in the future") but
-"failed" is a problem.
-
-But I believe unless you are using "make -k", that it won't even
-aggregate the results if something fails, and you should just see make
-complaining about the failed test script.
-
--Peff
+Ittay
