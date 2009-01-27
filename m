@@ -1,76 +1,69 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: connecting existing local git repository to svn
-Date: Tue, 27 Jan 2009 13:16:33 +0100
-Message-ID: <bd6139dc0901270416u22b60fefp472935470b1db929@mail.gmail.com>
-References: <497E8927.1060506@gmail.com>
-	 <497EE386.5050805@drmicha.warpmail.net> <497EE4E8.8070705@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH 0/3] fix "Funny: git -p submodule summary"
+Date: Tue, 27 Jan 2009 07:23:15 -0500
+Message-ID: <20090127122315.GA22628@sigill.intra.peff.net>
+References: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de> <20090127062512.GA10487@coredump.intra.peff.net> <497EDCB0.8080806@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Ittay Dror <ittay.dror@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 27 13:18:03 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Jan 27 13:26:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRmtD-0006TM-RX
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 13:18:00 +0100
+	id 1LRn0x-0000AY-Ib
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 13:26:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753166AbZA0MQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 07:16:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752942AbZA0MQf
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 07:16:35 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:28495 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752262AbZA0MQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 07:16:34 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so2750849yxm.1
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 04:16:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=ekZEiSnbh3UmSoqdidiR0ek60pAxhtbQSJUUp5nnvyg=;
-        b=K1Ud4/FnQkQ9I5RZ+piXfuGg7huYrK0xMGyI0gsKpZFQVqGJsUj6Ju9haSS4SfxZYW
-         suzV2FqYnPb8+V8QVt3copumlO7Dwf6Z9uvOyJou8JLnrx70mFTRko3XFX9iPxqtw6Ew
-         eTkCHuOwy62QBMLFeTbJurpXuUGOEJaGnaYPE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=bttv0R4ZObC0bV1lquwHmdMATVfzgeXGwUuWu4SjnIZbgqdLPyp7VB6Myezetdsa/j
-         b+wot6pTc4FVcC/p+7BZnf4EgcsPye+EvjInTEMaKEJQb5r9dweiPFasMLWY2e/WeEj3
-         QF3GUtre1Pal15wGGa2NID8Cv+W5+9uU7yEiY=
-Received: by 10.150.149.19 with SMTP id w19mr27796ybd.176.1233058593196; Tue, 
-	27 Jan 2009 04:16:33 -0800 (PST)
-In-Reply-To: <497EE4E8.8070705@gmail.com>
-X-Google-Sender-Auth: 72fc03b8c2c7e41a
+	id S1752930AbZA0MXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 07:23:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752874AbZA0MXU
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 07:23:20 -0500
+Received: from peff.net ([208.65.91.99]:60593 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752262AbZA0MXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 07:23:20 -0500
+Received: (qmail 11066 invoked by uid 107); 27 Jan 2009 12:23:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 27 Jan 2009 07:23:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Jan 2009 07:23:15 -0500
+Content-Disposition: inline
+In-Reply-To: <497EDCB0.8080806@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107338>
 
-On Tue, Jan 27, 2009 at 11:41, Ittay Dror <ittay.dror@gmail.com> wrote:
-> git: ----v1----v2----v3--v4---v5
-> svn:                     \---v4--v5
->
-> so the svn history starts from v3, but the git history remains unchanged.
+On Tue, Jan 27, 2009 at 11:06:40AM +0100, Johannes Sixt wrote:
 
-Create the new branch from v3 then, and use git svn to pull it in.
-Then you can do 'git rebase that-svn-branch' on your git branch to put
-all commits (not as one big commit) on top of that branch point. Now
-you 'git checkout' that-svn-branch and do 'git reset --hard
-the-git-branch', which should now consist of
-v1--v2--v3--v4(git)--v5(git), etc. If you do 'git svn dcommit' from
-the that-svn-branch now it should dcommit to svn each of your git
-commits individually. Of course, don't forget to make a backup before
-you start messing around :P.
+> - Note that run_command returns the negated exit code, therefore, we must 
+> negate it again in the call to exit(). Without this t6030 failed. (And 
+> negative exit codes causes grief on Windows because bash for some reason 
+> does not recognize that as failure.)
 
--- 
-Cheers,
+Oops, indeed. And you made me realize that I forgot to run the test
+script against this patchset.
 
-Sverre Rabbelier
+However, I'm not sure just negating the exit code is sufficient.
+run_command can return codes in the 10000 range for its own internal
+errors. We don't want to pass those out through exit, which will
+truncate them to 8 bits.
+
+> - The close() calls can overwrite errno.
+
+Good point.
+
+> And since fork() should not  (cannot?) fail with ENOENT, it's safe to
+> remove the #ifdef __MINGW32__.
+
+Yeah, I thought of that, but I was worried it might make the code a
+little bit non-obvious (but it does clean up an ifdef, which is ugly,
+too).
+
+Thanks for your feedback. I'll squash in your fixes and repost 2/3 later
+today.
+
+-Peff
