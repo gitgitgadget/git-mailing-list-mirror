@@ -1,70 +1,74 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: Heads up: major rebase -i -p rework coming up
-Date: Tue, 27 Jan 2009 16:36:50 -0600
-Organization: Exigence
-Message-ID: <20090127163650.34581368.stephen@exigencecorp.com>
-References: <alpine.DEB.1.00.0901242056070.14855@racer>
-	<20090127092117.d13f24e7.stephen@exigencecorp.com>
-	<20090128071054.6117@nanako3.lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] mergetool merge/skip/abort
+Date: Tue, 27 Jan 2009 14:37:16 -0800
+Message-ID: <7vk58g1ilf.fsf@gitster.siamese.dyndns.org>
+References: <81bfc67a0901210637j52fa7a55q51b599e9ff16f6dc@mail.gmail.com>
+ <20090121170434.GA21727@hashpling.org>
+ <81bfc67a0901220617l22b5a8e4ma48bb069d67cae91@mail.gmail.com>
+ <20090122142258.GA2316@hashpling.org>
+ <81bfc67a0901230716i166bfc4chd9a5c0990b0cd3b6@mail.gmail.com>
+ <7vwscmue5z.fsf@gitster.siamese.dyndns.org> <20090126225835.GB10118@mit.edu>
+ <20090127220947.GA21319@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, spearce@spearce.org,
-	Thomas Rast <trast@student.ethz.ch>,
-	Bjrn Steinbrink <B.Steinbrink@gmx.de>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Tue Jan 27 23:38:27 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Tue Jan 27 23:38:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRwZe-0003e1-SQ
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:38:27 +0100
+	id 1LRwa1-0003mF-1X
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 23:38:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752391AbZA0WhA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 17:37:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751998AbZA0WhA
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:37:00 -0500
-Received: from smtp182.sat.emailsrvr.com ([66.216.121.182]:49239 "EHLO
-	smtp182.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751793AbZA0Wg7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 17:36:59 -0500
-Received: from relay18.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay18.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id EB6721B8055;
-	Tue, 27 Jan 2009 17:36:58 -0500 (EST)
-Received: by relay18.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTPSA id 682D11B7FDC;
-	Tue, 27 Jan 2009 17:36:58 -0500 (EST)
-In-Reply-To: <20090128071054.6117@nanako3.lavabit.com>
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1752562AbZA0WhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 17:37:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751666AbZA0WhY
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 17:37:24 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39315 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752473AbZA0WhX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 17:37:23 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D611E94918;
+	Tue, 27 Jan 2009 17:37:22 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 859A194912; Tue,
+ 27 Jan 2009 17:37:18 -0500 (EST)
+In-Reply-To: <20090127220947.GA21319@hashpling.org> (Charles Bailey's message
+ of "Tue, 27 Jan 2009 22:09:47 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 10624C34-ECC3-11DD-ACB0-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107407>
 
+Charles Bailey <charles@hashpling.org> writes:
 
-> >     a -- b -- c  origin/feature
-> >       \
-> >        d -- e    feature
-> >            /
-> >       ... g      origin/master
+> On Mon, Jan 26, 2009 at 05:58:35PM -0500, Theodore Tso wrote:
+> ...
+> A quick blame session has shown that after Ted I've probably touched
+> the next most number of lines of mergetool. It's a crude measure and
+> not necessarily a sign of competence, I admit.
+>
+> Although not rolling in spare time, I feel I'd be able review
+> mergetool patches at roughly the rate that they tend to appear at the
+> moment.
+>
+> Given the above, if I pass the "good taste" and "Junio trust" tests I
+> feel that I should offer my services as mergetool patch wrangler.
 
-> Sorry for asking a basic question, but if "feature" is a topic branch
-> for advance the feature, why are you merging origin/master into it?
-> Doesn't it blur the theme of the branch by including "development of
-> the feature and all the random things that happened while it was being
-> developed in other places"?
+Competence certainly counts to a certain extent, but volunteerism,
+willingness, and enthusiasm count too.
 
-We merged origin/master because a release had just happened (e.g. master
-moved from 1.0 -> 1.1), and when QA looks at origin/feature, they wanted
-to see it integrated with the latest release (e.g. 1.1).
+Taste is sometimes a relative thing and we can make sure where we agree to
+disagree on the list case by case basis.
 
-Now, granted, if feature was a private/unpublished branch, we would
-rebase the entire thing (a/b/c) on top of master (g), but a/b/c has
-already been published to our bug tracker, email lists, and other
-developers who are collaborating on origin/feature, so between polluting
-feature with a merge from master and changing the published hashes, we
-chose the merge.
+Most importantly, anybody who will suffer when the tool breaks will be
+much better person than I to look after it.  That is one of the largest
+ingredient in the "trust" factor.
 
-- Stephen
+Thanks.
