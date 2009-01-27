@@ -1,69 +1,55 @@
-From: Jeff King <peff@peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: [RFC/PATCH 0/3] fix "Funny: git -p submodule summary"
-Date: Tue, 27 Jan 2009 07:23:15 -0500
-Message-ID: <20090127122315.GA22628@sigill.intra.peff.net>
-References: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de> <20090127062512.GA10487@coredump.intra.peff.net> <497EDCB0.8080806@kdbg.org>
+Date: Tue, 27 Jan 2009 13:46:19 +0100
+Message-ID: <497F021B.2050306@viscovery.net>
+References: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de> <20090127062512.GA10487@coredump.intra.peff.net> <497EDCB0.8080806@kdbg.org> <20090127122315.GA22628@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jan 27 13:26:00 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 27 13:47:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRn0x-0000AY-Ib
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 13:26:00 +0100
+	id 1LRnM5-00074V-GF
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 13:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752930AbZA0MXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 07:23:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752874AbZA0MXU
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 07:23:20 -0500
-Received: from peff.net ([208.65.91.99]:60593 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752262AbZA0MXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 07:23:20 -0500
-Received: (qmail 11066 invoked by uid 107); 27 Jan 2009 12:23:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 27 Jan 2009 07:23:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Jan 2009 07:23:15 -0500
-Content-Disposition: inline
-In-Reply-To: <497EDCB0.8080806@kdbg.org>
+	id S1752942AbZA0MqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 07:46:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752519AbZA0MqX
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 07:46:23 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:17007 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752847AbZA0MqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 07:46:23 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LRnKd-0003qL-V8; Tue, 27 Jan 2009 13:46:20 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id A342C4FB; Tue, 27 Jan 2009 13:46:19 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <20090127122315.GA22628@sigill.intra.peff.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107339>
 
-On Tue, Jan 27, 2009 at 11:06:40AM +0100, Johannes Sixt wrote:
+Jeff King schrieb:
+> However, I'm not sure just negating the exit code is sufficient.
+> run_command can return codes in the 10000 range for its own internal
+> errors. We don't want to pass those out through exit, which will
+> truncate them to 8 bits.
 
-> - Note that run_command returns the negated exit code, therefore, we must 
-> negate it again in the call to exit(). Without this t6030 failed. (And 
-> negative exit codes causes grief on Windows because bash for some reason 
-> does not recognize that as failure.)
+Exit code and start_command/finish_command's return code handling is a
+complete mess IMHO and deserves a clean-up series of its own. If the few
+codes at 10000 and above are truncated to 8 bits, then we get exit codes
+16 and higher; I think that's good enough for this series.
 
-Oops, indeed. And you made me realize that I forgot to run the test
-script against this patchset.
-
-However, I'm not sure just negating the exit code is sufficient.
-run_command can return codes in the 10000 range for its own internal
-errors. We don't want to pass those out through exit, which will
-truncate them to 8 bits.
-
-> - The close() calls can overwrite errno.
-
-Good point.
-
-> And since fork() should not  (cannot?) fail with ENOENT, it's safe to
-> remove the #ifdef __MINGW32__.
-
-Yeah, I thought of that, but I was worried it might make the code a
-little bit non-obvious (but it does clean up an ifdef, which is ugly,
-too).
-
-Thanks for your feedback. I'll squash in your fixes and repost 2/3 later
-today.
-
--Peff
+-- Hannes
