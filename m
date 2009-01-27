@@ -1,147 +1,110 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Valgrind updates
-Date: Tue, 27 Jan 2009 10:55:40 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0901271006060.3123@localhost.localdomain>
-References: <alpine.DEB.1.00.0901210105470.19014@racer> <20090121001551.GB18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210119510.19014@racer> <20090121003739.GA18373@coredump.intra.peff.net> <alpine.DEB.1.00.0901210216440.19014@racer>
- <20090121190757.GB21686@coredump.intra.peff.net> <alpine.DEB.1.00.0901212259420.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901270327200.26199@intel-tinevez-2-302> <alpine.LFD.2.00.0901261934450.3123@localhost.localdomain> <alpine.DEB.1.00.0901270512171.14855@racer>
- <20090127131404.GA11870@sirena.org.uk> <alpine.DEB.1.00.0901271742430.3586@pacific.mpi-cbg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: friendlier names
+Date: Tue, 27 Jan 2009 11:17:17 -0800 (PST)
+Message-ID: <m37i4gy2z6.fsf@localhost.localdomain>
+References: <87mydc6a2r.fsf@mcbain.luannocracy.com>
+	<20090127153837.GB1321@spearce.org>
+	<7vwscgy56b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mark Brown <broonie@sirena.org.uk>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, zlib@gzip.org
-X-From: git-owner@vger.kernel.org Tue Jan 27 19:58:12 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	David Abrahams <dave@boostpro.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 20:18:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRt8T-0002v0-QJ
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 19:58:10 +0100
+	id 1LRtSR-0001jJ-Vp
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 20:18:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755205AbZA0S4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 13:56:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755056AbZA0S4o
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 13:56:44 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:53664 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753665AbZA0S4n (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2009 13:56:43 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0RItgbO008951
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 27 Jan 2009 10:55:43 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0RItedF021654;
-	Tue, 27 Jan 2009 10:55:40 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.DEB.1.00.0901271742430.3586@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.462 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755722AbZA0TRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 14:17:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755638AbZA0TRW
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 14:17:22 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:55990 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755331AbZA0TRV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 14:17:21 -0500
+Received: by fxm13 with SMTP id 13so1805282fxm.13
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 11:17:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=6g5cqasD0BaatpCEPpJqQ625f/e39qJm85rY8w8YQak=;
+        b=lgaWmyNjXeeyQB8RirB+QDFt471YpRstvF9aJiNQQIGMQW9QcObhXzFuVVBVA7UplI
+         Lz5CnzSnJpWa4evT/N61QSyEEWTRVWiFZHjpnFZCObYUFkZS3XNLfinHt7Ujt+jouuzX
+         e8XYM2xrLk20WQaLk1XxdD8weyvXTyVbF4TK8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=PPkJDnbYRlB8iSO0LlpVpGZFyd6shD7PN95tNq/KjfQrVaTEqkpSKJYzBY6xl0r8RW
+         HeKyTMTmz/9yHXHASAePVnMlrhEKRvuF/LAg5RHuFduXI7ddu6tNJgb1OmyKnNtEeU7n
+         Io2vJXpWB6TRHX0KD05TuSvuiqoDs/ggaLV+U=
+Received: by 10.223.110.11 with SMTP id l11mr262189fap.50.1233083838688;
+        Tue, 27 Jan 2009 11:17:18 -0800 (PST)
+Received: from localhost.localdomain (abvq8.neoplus.adsl.tpnet.pl [83.8.214.8])
+        by mx.google.com with ESMTPS id z10sm25421788fka.13.2009.01.27.11.17.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 27 Jan 2009 11:17:17 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0RJGUlG003987;
+	Tue, 27 Jan 2009 20:16:40 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0RJFvDa003982;
+	Tue, 27 Jan 2009 20:15:57 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vwscgy56b.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107384>
 
+Junio C Hamano <gitster@pobox.com> writes:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>> David Abrahams <dave@boostpro.com> wrote:
+>>> 
+>>> For example, why couldn't the "index" be called the "stage" instead?
+>>> That, along with knowing that "git add" was a synonym for "git stage"
+>>> would have flattened the learning curve considerably for me.
+>>
+>> Historical reasons...
 
-
-On Tue, 27 Jan 2009, Johannes Schindelin wrote:
+[...]
+> The way to update the cache was called "update-cache" then "update-index".
+> Because it usually is much rare to actually add a new entry to the index
+> than updating an existing entry in the index, the command had a safeguard
+> against "update-cache a-newfile" without explicit request from the user to
+> say "oh by the way I know I am adding new entries".  "git add" came much
+> later to give you a shorthand for "update-index --add".  Updating existing
+> entries in the index was still done with "update-index".
 > 
-> Come to think of it, the word "suppression" is probably a good indicator 
-> that valgrind never claimed it would mark the zlib buffer as properly 
-> initialized.
+> Later Nico taught (after much discussion) "git add" to also serve as
+> "update-index" for existing entries in the index.
+> 
+> We could have called it "git update-index" when we did that switch-over,
+> because the operation is exactly that --- updating the index.
+> 
+> But the name somehow stuck.
+[...]
 
-Hmm. The zlib faq has a note about zlib doing a conditional on 
-uninitialized memory that doesn't matter, and that is what the suppression 
-should be about (to avoid a warning about "Conditional jump or move 
-depends on uninitialised value").
+It is a bit of pity that "git add" was overloaded to also add new
+contents and not only add new file (and its contents!), instead of
+having new command "git stage" to be porcelain version of 
+"git update-index" porcelain.  And perhaps "git resolved" to only
+mark resolved entries (so e.g. "git resolved ." would not add new
+files, nor add new contents of files which were not in conflict).
 
-But that one is documented to not matter for the actual output (zlib 
-FAQ#36).
+Now we have to explain that "git add" adds new contents... OTOH
+it is perhaps good idea to emphasize differences between Git and
+other lesser^W SCMs. ;-)  And introduce "git add -N"... 
 
-It's possible that zlib really does leave padding bytes around that 
-literally don't matter, and that don't get initialized. That really would 
-be bad, because it means that the output of git wouldn't be repeatable. 
-But I doubt this is the case - original git used to actually do the SHA1 
-over the _compressed_ data, which was admittedly a totally and utterly 
-broken design (and we fixed it), but it did work. Maybe it worked by luck, 
-but I somehow doubt it.
-
-Some googling did find this:
-
-	http://mailman.few.vu.nl/pipermail/sysprog/2008-October/000298.html
-
-which looks very similar: an uninitialized byte in the middle of a 
-deflate() packet.
-
-Anyway, I'm just going to Cc 'zlib@gzip.org', since this definitely is 
-_not_ the same issue as in the FAQ, and we're not the only ones seeing it. 
-For the zlib people: the code is literally this:
-
-        /* Set it up */
-        memset(&stream, 0, sizeof(stream));
-        deflateInit(&stream, zlib_compression_level);
-        size = 8 + deflateBound(&stream, len+hdrlen);
-        compressed = xmalloc(size);
-
-        /* Compress it */
-        stream.next_out = compressed;
-        stream.avail_out = size;
-
-        /* First header.. */
-        stream.next_in = (unsigned char *)hdr;
-        stream.avail_in = hdrlen;
-        while (deflate(&stream, 0) == Z_OK)
-                /* nothing */;
-
-        /* Then the data itself.. */
-        stream.next_in = buf;
-        stream.avail_in = len;
-        ret = deflate(&stream, Z_FINISH);
-        if (ret != Z_STREAM_END)
-                die("unable to deflate new object %s (%d)", sha1_to_hex(sha1), ret);
-
-        ret = deflateEnd(&stream);
-        if (ret != Z_OK)
-                die("deflateEnd on object %s failed (%d)", sha1_to_hex(sha1), ret);
-
-        size = stream.total_out;
-
-        if (write_buffer(fd, compressed, size) < 0)
-                die("unable to write sha1 file");
-
-and valgrind complains that the "write_buffer()" call will touch an 
-uninitialized byte (just one byte, and in the _middle_ of the buffer, no 
-less):
-
-> Yet, the buffer in question is 195 bytes, stream.total_count (which 
-> totally agrees with size - stream.avail_out) says it is 58 bytes, and 
-> valgrind says that the byte with offset 51 is uninitialized.
-
-The thing to note here is that what we are passing in to "write_buffer()" 
-is _exactly_ what zlib deflated for us:
-
- - 'compressed' is the allocation, and is what we used to initialize 
-   'stream.next_out' with (at the top of the code sequence above)
-
- - 'size' is gotten from 'stream.total_out' at the end of the compression.
-
-Maybe the zlib people can tell us that we're idiots and the above is 
-buggy, but maybe there is a real bug in zlib. Maybe it's triggered by our 
-use of using two different input buffers to deflate() (ie we compress the 
-header first, and then the body of the actual data, and put it all in one 
-single output buffer), which may be unusual usage of zlib routines and may 
-be why there aren't tons of reports of this.
-
-(Our use of just depending on deflate() returning Z_BUF_ERROR after 
-consuming all of the header data is probably also "unusual", but the 
-manual explicitly says that it's not fatal and that deflate can be called 
-again with more buffers).
-
-Oh Gods of zlib, please hear our plea for clarification..
-
-			Linus
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
