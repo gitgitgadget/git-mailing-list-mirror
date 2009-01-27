@@ -1,65 +1,58 @@
-From: Tim Visher <tim.visher@gmail.com>
-Subject: Re: Hosting from Windows XP.
-Date: Tue, 27 Jan 2009 13:24:53 -0500
-Message-ID: <c115fd3c0901271024r5ecf1dd1g952c807dd5a6a3b4@mail.gmail.com>
-References: <c115fd3c0901260827ge5e4b29w871b345da2373f6b@mail.gmail.com>
-	 <glkvpp$fvr$1@ger.gmane.org>
+From: Stephen Haberman <stephen@exigencecorp.com>
+Subject: Re: Anyone have access to 64-bit Vista?
+Date: Tue, 27 Jan 2009 12:24:56 -0600
+Organization: Exigence
+Message-ID: <20090127122456.0df531c3.stephen@exigencecorp.com>
+References: <83d7aaa40901270130g3bebb3d6we4839b567f310e46@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Johannes Gilger <heipei@hackvalue.de>
-X-From: git-owner@vger.kernel.org Tue Jan 27 19:26:31 2009
+To: Geoffrey Lee <geoffreyj.lee@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 19:26:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRsdk-0007UK-1I
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 19:26:24 +0100
+	id 1LRsdu-0007YT-H4
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 19:26:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754872AbZA0SY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 13:24:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753832AbZA0SY4
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 13:24:56 -0500
-Received: from fk-out-0910.google.com ([209.85.128.190]:41735 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752786AbZA0SYz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 13:24:55 -0500
-Received: by fk-out-0910.google.com with SMTP id f33so3293229fkf.5
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 10:24:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=fVtv1ltuHEom7CUhrMoFkfBq0/dYw8W6SO//c3zumyU=;
-        b=KcWqFKn3FF62qwSTtbX98ZFtPNWx4+L6jyQdEO06rUC1a3Eh0HCfHPIfAtg1L3Ydk0
-         y35PaxXyFFUSrxIkrGT6KurpPrR+vVqEanu1uHTWyEH6qujmeEgURWofGUSfCvz6Odxv
-         59m++q9ytltn9CAPZyQeGslSxJ4qGPSSrS/GA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xXhj5G1SVCirMmSvBt33t+f2F9jkffBlkr0X2TrZveIChxejtZaqK9V2+EVi+VFf5f
-         GefnuSZWbbMR/p4Yk4QLzOdTVl1fq1iyvKs85ghaWDsCBC7NnhKJG7q20I2MReOXRPIT
-         nhtBbpIcOOm46Uy1JGiaEcKvTdVukFuc77Sds=
-Received: by 10.181.198.10 with SMTP id a10mr2473068bkq.120.1233080693467; 
-	Tue, 27 Jan 2009 10:24:53 -0800 (PST)
-In-Reply-To: <glkvpp$fvr$1@ger.gmane.org>
+	id S1755204AbZA0SZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 13:25:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755171AbZA0SZH
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 13:25:07 -0500
+Received: from smtp202.sat.emailsrvr.com ([66.216.121.202]:34632 "EHLO
+	smtp202.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755156AbZA0SZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 13:25:06 -0500
+Received: from relay10.relay.sat.mlsrvr.com (localhost [127.0.0.1])
+	by relay10.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id B54E81E234E;
+	Tue, 27 Jan 2009 13:25:05 -0500 (EST)
+Received: by relay10.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTPSA id 6C4721E2326;
+	Tue, 27 Jan 2009 13:25:05 -0500 (EST)
+In-Reply-To: <83d7aaa40901270130g3bebb3d6we4839b567f310e46@mail.gmail.com>
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107379>
 
-Well, I ended up going with Cygwin.  Didn't feel like the hassle of
-all of the rest of that stuff.  Thanks so much, everyone. :)
 
--- 
+> I'm trying to develop for TortoiseGit on a 64-bit Vista SP1 system,
+> but I'm having trouble registering the shell extensions with explorer.
+> I'm hoping somebody else here who has access to 64-bit Vista can tell
+> me if TortoiseGit runs on their machine?
 
-In Christ,
+It kind of works on my Vista 64-bit system--I do not see the shell
+extensions in the native Windows Explorer (which is 64 bit), but I do
+see the shell extensions in an Explorer replacement I use (Xplorer2)
+that is 32-bit.
 
-Timmy V.
+I've seen other oddities in 32-bit vs. 64-bit programs--e.g. my alt tab
+replacement (Joe), which is 32-bit, works great with 32-bit programs
+but cannot remove focus from 64-bit programs (IE, Windows Explorer,
+etc.). Ironically, very few of the programs I use are 64-bit, so I get
+by with the alt tab replacement.
 
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+- Stephen
