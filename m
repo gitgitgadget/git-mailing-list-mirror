@@ -1,152 +1,119 @@
-From: Anton <Anton.Sharonov@gmail.com>
-Subject: rebase failure if commit message looks like a patch
-Date: Tue, 27 Jan 2009 17:50:43 +0000 (UTC)
-Message-ID: <loom.20090127T173025-125@post.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Heads up: rebase -i -p will be made sane again
+Date: Tue, 27 Jan 2009 18:59:57 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901271855240.3586@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0901271012550.14855@racer> <20090127085418.e113ad5a.stephen@exigencecorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 27 18:57:25 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Stephen Haberman <stephen@exigencecorp.com>
+X-From: git-owner@vger.kernel.org Tue Jan 27 19:02:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRsAx-0003Lp-J8
-	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 18:56:40 +0100
+	id 1LRsFb-0005Vk-8D
+	for gcvg-git-2@gmane.org; Tue, 27 Jan 2009 19:01:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754848AbZA0RzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 12:55:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753934AbZA0RzI
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 12:55:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:53820 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754138AbZA0RzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 12:55:07 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LRs9O-00081d-7t
-	for git@vger.kernel.org; Tue, 27 Jan 2009 17:55:02 +0000
-Received: from cpe90-146-243-234.liwest.at ([90.146.243.234])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 17:55:02 +0000
-Received: from Anton.Sharonov by cpe90-146-243-234.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 17:55:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 90.146.243.234 (Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5)
+	id S1755475AbZA0R7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 12:59:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754714AbZA0R7p
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 12:59:45 -0500
+Received: from mail.gmx.net ([213.165.64.20]:32772 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753934AbZA0R7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 12:59:44 -0500
+Received: (qmail invoked by alias); 27 Jan 2009 17:59:38 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp064) with SMTP; 27 Jan 2009 18:59:38 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/fXzcvcejf+yoskdJPl7pFQ/SSY5VMpqcqdWApdn
+	o4obDQ3WkQJmYp
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090127085418.e113ad5a.stephen@exigencecorp.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107373>
 
-I have found a strange behaviour of "git rebase", present in following versions:
+Hi,
 
-git 1.6.1, linux,
-git 1.6.0.4, cygwin
+On Tue, 27 Jan 2009, Stephen Haberman wrote:
 
-if the commit message of one of revisions on local branch
-containing something, what looks like patch:
+> > As for the design bug I want to fix: imagine this history:
+> > 
+> >   ------A
+> >  /     /
+> > /     /
+> > ---- B
+> > \     \
+> >  \     \
+> >   C-----D-----E = HEAD
+> > 
+> > A, C and D touch the same file, and A and D agree on the contents.
+> > 
+> > Now, rebase -p A does the following at the moment:
+> > 
+> >   ------A-----E' = HEAD
+> >  /     /
+> > /     /
+> > ---- B
+> > 
+> > In other words, C is truly forgotten, and it is pretended that D never 
+> > happened, either.  That is exactly what test case 2 in t3410 tests for 
+> > [*1*].
+> > 
+> > This is insane.
+> 
+> Agreed.
 
------------------- bad-commit-message { ---------------
-changeset a1 - feature added
+Good!  I already feared that you would be disagreeing with me.
 
---- a0  2009-01-25 10:09:05.953125000 +0100
-+++ ./r/a       2009-01-25 10:15:20.093750000 +0100
-@@ -1,5 +1,5 @@
--1
-+1 - upstream
- 2
- 3
- 4
--5
-+5 - feature
------------------- bad-commit-message } ---------------
+> Does this mean you're just getting rid of the code that calls "rev list 
+> --cherry-pick"?
 
-Following shell script reproduces the bug for me:
+Not exactly.  The idea of rebasing is to stay on top of an upstream.  If 
+that upstream has your changes already, you do not want to reapply them -- 
+even with --preserve-merges.
 
------------------- show-bug.sh { ---------------
-#!/bin/bash
-rm -rf r # clean-up
-mkdir r # repo dir
-cd r
-git init
-cd ..
-cp a0 r/a
-cd r
-git add a
-git ci -m "initial addition of a0"
-git br feature
-git co feature
-cd ..
-cp a1 r/a
-cd r
-git add a
-## no bug
-#git ci -m "changeset a1 - feature added"
-# bug
-git ci -F ../bad-commit-message
-git co master
-cd ..
-cp a2 r/a
-cd r
-git add a
-git ci -m "changeset a2 - upstream revision"
-git co feature
-git rebase master
------------------- show-bug.sh } ---------------
+Now, a merge cannot be sent as a patch mail, for good reasons.  So 
+whatever merge might look like yours, it is not.  So it is your 
+responsibility to say that yours is obsolete, and delete it from the 
+rebase script.
 
-produces the error on final rebase attempt:
+If your merge is in upstream (because a pull-request was heeded, for 
+example), then you will not see the commits anyway.
 
-First, rewinding head to replay your work on top of it...
-Applying: changeset a1 - feature added
-error: r/a: does not exist in index
-fatal: sha1 information is lacking or useless (r/a).
-Repository lacks necessary blobs to fall back on 3-way merge.
-Cannot fall back to three-way merge.
-Patch failed at 0001.
+> A few times I've pondered just removing the --cherry-pick/drop commit 
+> part of rebase-p, but assumed it was there for a reason.
 
-When you have resolved this problem run "git rebase --continue".
-If you would prefer to skip this patch, instead run "git rebase --skip".
-To restore the original branch and stop rebasing run "git rebase --abort".
+I will find the "dropped" commits using git log -p | git patch-id.
 
-In case one uses
-# no bug
-git ci -m "changeset a1 - feature added"
-instead of
-# bug
-git ci -F ../bad-commit-message
+It is still nice to tell the user if she wants to merge a parent that is 
+already in upstream, so I would not like to miss out on that information.
 
-The final rebase succeded !
+> > [*1*] The code in t3410 was not really easy to read, even if there was 
+> > an explanation what it tried to do, but the test code was inconsitent, 
+> > sometimes tagging, sometimes not, sometimes committing with -a, 
+> > sometimes "git add"ing first, yet almost repetitive.
+> > 
+> > In my endeavor not only to understand it, and either fix my code or 
+> > the code in t3410, I refactored it so that others should have a much 
+> > easier time to understand what it actually does.
+> 
+> Thanks for cleaning it up.
+> 
+> I recently saw a test of yours use a `test_commit` bash function that I 
+> really like. My last patch submission debacle had a patch cleaning up 
+> t3411 by introducing `test_commit`--I can brave `git send-email` again 
+> if you have any interest in me resending it.
 
-Content of other files:
+Heh... so I sent that part of the patches.  Hopefully they will get in 
+soon, as they should be rather obvious, and I have a lot more to come...
 
----------------- a0 { -------------------
-1
-2
-3
-4
-5
----------------- a0 } -------------------
-
----------------- a1 { -------------------
-1
-2
-3
-4
-5 - feature
----------------- a1 } -------------------
-
----------------- a2 { -------------------
-1 - upstream
-2
-3
-4
-5
----------------- a2 } -------------------
-
--- 
-Anton
+Ciao,
+Dscho
