@@ -1,69 +1,82 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: (beginner) git rm
-Date: Wed, 28 Jan 2009 13:19:13 +0100
-Message-ID: <49804D41.3010801@dbservice.com>
-References: <1233137498146-2231416.post@n2.nabble.com> <Pine.LNX.4.64.0901281133380.645@ds9.cixit.se> <1233140751523-2231622.post@n2.nabble.com> <49804385.908@dbservice.com> <1233144045221-2231849.post@n2.nabble.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Windows: Fix intermittent failures of t7701
+Date: Wed, 28 Jan 2009 13:43:04 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901281341330.3586@pacific.mpi-cbg.de>
+References: <497F076F.8060509@viscovery.net> <alpine.DEB.1.00.0901271740320.3586@pacific.mpi-cbg.de> <20090128042814.GA18216@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Zabre <427@free.fr>
-X-From: git-owner@vger.kernel.org Wed Jan 28 13:21:29 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 28 13:44:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LS9Q0-0006NI-L9
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 13:21:21 +0100
+	id 1LS9m7-0005hy-Id
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 13:44:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752257AbZA1MTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 07:19:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752171AbZA1MTu
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 07:19:50 -0500
-Received: from office.neopsis.com ([78.46.209.98]:49168 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751172AbZA1MTt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 07:19:49 -0500
-Received: from [192.168.0.130] ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com;
-	Wed, 28 Jan 2009 13:19:46 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090126 Shredder/3.0b2pre
-In-Reply-To: <1233144045221-2231849.post@n2.nabble.com>
+	id S1751403AbZA1Mmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 07:42:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbZA1Mmp
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 07:42:45 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38633 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751123AbZA1Mmo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 07:42:44 -0500
+Received: (qmail invoked by alias); 28 Jan 2009 12:42:43 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp043) with SMTP; 28 Jan 2009 13:42:43 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+8tMIqvt+8xMDux4c4zw519NbCq7PZkp/nvXWGEt
+	lEVTcEWTRd9UGb
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090128042814.GA18216@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107531>
 
-On 01/28/2009 01:00 PM, Zabre wrote:
->
-> Tomas Carnecky wrote:
->> Do you mean 'undelete' a file? git checkout d.txt - That restores the
->> file in the working tree and resets the index just for that file.
->>
->
-> Hi Tom,
-> (thank you for your interest in my newbie problems)
->
-> yes that's what I mean : 'undelete' a file, after a "git rm d.txt".
-> But I did not manage to apply your solution succesfully :
-> $ git rm d.txt
-> $ ls
-> a.txt b.txt c.txt
-> $ git status
-> # On branch new
-> # Changes to be committed:
-> #   (use "git reset HEAD<file>..." to unstage)
-> #
-> #	deleted:    d.txt
-> #
-> $ git checkout d.txt
-> error: pathspec 'mamma.txt' did not match any file(s) known to git.
-> Did you forget to 'git add'?
+Hi,
 
-Oops, sorry. git checkout HEAD -- d.txt
-You have to tell which version of d.txt you want. In your case the 
-version in HEAD.
+On Tue, 27 Jan 2009, Jeff King wrote:
 
-tom
+> On Tue, Jan 27, 2009 at 05:42:03PM +0100, Johannes Schindelin wrote:
+> 
+> > > We want to catch failures of test-chmtime; but since it appears in a 
+> > > pipe, we cannot access its exit code. Therefore, we at least make sure 
+> > > that it prints time stamps of all files that are passed on its command 
+> > > line.
+> > 
+> > I use this trick in my valgrind series:
+> > 
+> > 	($PROGRAM; echo $? > exit.code) | $OTHER_PROGRAM &&
+> > 	test 0 = "$(cat exit.code)"
+> 
+> Oh, that's far too readable. How about:
+> 
+>   exec 3>&1
+>   status=$( ( ($PROGRAM ; echo $? >&4) | $OTHER_PROGRAM >&3) 4>&1 )
+>   exec 3>&-
+> 
+> But seriously, I think if we are talking about tests, then
+> 
+>   $PROGRAM >output &&
+>   $OTHER_PROGRAM <output
+> 
+> is very clear to read, and as a bonus makes "output" accessible for
+> viewing when the test breaks.
+
+The real problem is that in my case, OTHER_PROGRAM=tee.
+
+But you're right, Hannes was talking about tests, where it might 
+even make sense to have a record of what was passed between the 
+two programs.
+
+Ciao,
+Dscho
