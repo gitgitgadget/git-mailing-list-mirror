@@ -1,85 +1,52 @@
-From: Stephen Haberman <stephen@exigencecorp.com>
-Subject: Re: Heads up: rebase -i -p will be made sane again
-Date: Tue, 27 Jan 2009 21:39:50 -0600
-Organization: Exigence
-Message-ID: <20090127213950.3596ecf9.stephen@exigencecorp.com>
-References: <alpine.DEB.1.00.0901271012550.14855@racer>
-	<20090127085418.e113ad5a.stephen@exigencecorp.com>
-	<alpine.DEB.1.00.0901280225240.3586@pacific.mpi-cbg.de>
+From: Stephen Bannasch <stephen.bannasch@deanbrook.org>
+Subject: Re: Bad objects error since upgrading GitHub servers to 1.6.1
+Date: Tue, 27 Jan 2009 22:52:42 -0500
+Message-ID: <p06240812c5a58676a1e2@[63.138.152.192]>
+References: <alpine.DEB.1.00.0901280034310.3586@pacific.mpi-cbg.de> <20090127233939.GD1321@spearce.org>
+ <7v1vuo1f6d.fsf@gitster.siamese.dyndns.org> <bab6a2ab0901271634x7201130bx4a565bd8bea6967b@mail.gmail.com>
+ <7vvds0z1c1.fsf@gitster.siamese.dyndns.org> <7vk58gz04l.fsf@gitster.siamese.dyndns.org>
+ <7vfxj4yzjj.fsf@gitster.siamese.dyndns.org> <bab6a2ab0901271757i4602774ahef1d881b7ed58097@mail.gmail.com>
+ <20090128020220.GE1321@spearce.org> <7v3af4yvmu.fsf@gitster.siamese.dyndns.org> <20090128033020.GF1321@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 28 04:41:25 2009
+Content-Type: text/plain; charset="us-ascii" ; format="flowed"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 28 04:54:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LS1Iq-0002TK-Pi
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 04:41:25 +0100
+	id 1LS1VJ-0004rQ-Ni
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 04:54:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752224AbZA1Dj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 22:39:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbZA1Dj6
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 22:39:58 -0500
-Received: from smtp112.sat.emailsrvr.com ([66.216.121.112]:59148 "EHLO
-	smtp112.sat.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752127AbZA1Dj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 22:39:57 -0500
-Received: from relay1.relay.sat.mlsrvr.com (localhost [127.0.0.1])
-	by relay1.relay.sat.mlsrvr.com (SMTP Server) with ESMTP id 2E884CD56F;
-	Tue, 27 Jan 2009 22:39:57 -0500 (EST)
-Received: by relay1.relay.sat.mlsrvr.com (Authenticated sender: stephen-AT-exigencecorp.com) with ESMTPSA id EA124CD569;
-	Tue, 27 Jan 2009 22:39:56 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0901280225240.3586@pacific.mpi-cbg.de>
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1752253AbZA1Dww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 22:52:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752229AbZA1Dww
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 22:52:52 -0500
+Received: from deanbrook.org ([72.52.70.192]:60358 "HELO deanbrook.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752194AbZA1Dww (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 22:52:52 -0500
+Received: from ::ffff:71.161.144.33 ([71.161.144.33]) by deanbrook.org for <git@vger.kernel.org>; Tue, 27 Jan 2009 19:52:49 -0800
+In-Reply-To: <20090128033020.GF1321@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107465>
 
+At 7:30 PM -0800 1/27/09, Shawn O. Pearce wrote:
+>PJ - the short story here is, to forever work around these buggy
+>1.6.1 clients, you'd have to either run an old server forever,
+>or forever run a patched server that disables the newer ".have"
+>extension in the advertised data written by git-upload-pack.
+>There just isn't a way to hide this from the client.
+>
+>Really though, I'd recommend getting your users to upgrade to a
+>non-buggy client.  Pasky has the same problem on repo.or.cz; if
+>he doesn't have it already he will soon when he upgrades...
 
-> Actually, I misread t3410 a great deal.  The situation is as follows:
-> 
->     ... UPSTREAM
->            \
-> ... A - B - C -D
-> 
-> A is a patch the upstream does not have, B is a patch UPSTREAM has,
-> and "git diff C^!" (i.e. the diff of C to its first parent) is _also_ 
-> identical to a diff of a merge that is in UPSTREAM.
-> 
-> Basically, t3410 tests that after "git rebase -i -p UPSTREAM" and leaving 
-> the rebase script as-is, essentially, A and D are cherry-picked on top of 
-> UPSTREAM.
+Do you know if this problem is fixed in tag v1.6.1.1?
 
-Cool--I "knew" that, but could not have articulated the case as
-succinctly.
-
-> > Does this mean you're just getting rid of the code that calls "rev list 
-> > --cherry-pick"?
-> 
-> Only now do I understand.
-> 
-> I misread the code for --cherry-pick.  For merges, it adds the diff to the 
-> first parent!
-
-Ah, so that is how --cherry-pick works--I'd never looked into the
-patch-id stuff before. Makes sense, both of how it is leveraged by
-rev-list --cherry-pick and also that it doesn't make sense to only be
-against the first parent of merges.
-
-> So I adapted my code to find the "dropped" merges in
-> git-rebase--interactive, too, for now, but I guess the proper fix is
-> something like this:
-
-So, if C, as a merge commit, doesn't get a patch id anymore (right?),
-does that mean that C is included with A and D in the cherry-picking
-on top of UPSTREAM (because with no patch id it cannot be recognized
-as a duplicate)? So then C' is an empty-commit? This would be fine, I
-think, or can you detect that C is a noop somehow without patch ids?
-
-Thanks,
-Stephen
+   Tagger: Junio C Hamano <gitster@pobox.com>
+   Date:   Sun Jan 25 12:41:48 2009 -0800
+   commit 5c415311f743ccb11a50f350ff1c385778f049d6
