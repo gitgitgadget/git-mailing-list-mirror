@@ -1,74 +1,111 @@
-From: Zabre <427@free.fr>
-Subject: Re: (beginner) git rm
-Date: Wed, 28 Jan 2009 12:42:02 -0800 (PST)
-Message-ID: <1233175322729-2234796.post@n2.nabble.com>
-References: <1233137498146-2231416.post@n2.nabble.com> <Pine.LNX.4.64.0901281133380.645@ds9.cixit.se> <1233140751523-2231622.post@n2.nabble.com> <49804385.908@dbservice.com> <1233144045221-2231849.post@n2.nabble.com> <49804D41.3010801@dbservice.com> <1233166992184-2233892.post@n2.nabble.com> <20090128201727.GD7503@atjola.homenet>
+From: Serge van den Boom <svdb@stack.nl>
+Subject: [PATCH v2] Makefile: Make 'configure --with-expat=path' actually
+ work
+Date: Wed, 28 Jan 2009 21:43:57 +0100 (CET)
+Message-ID: <alpine.BSF.2.00.0901282120240.74552@toad.stack.nl>
+References: <alpine.BSF.2.00.0901251938120.97940@toad.stack.nl> <7vocxrqm57.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 28 21:45:34 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 28 21:46:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSHHx-0001h4-Uw
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 21:45:34 +0100
+	id 1LSHI4-0001h4-MB
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 21:45:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757467AbZA1UmH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jan 2009 15:42:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756300AbZA1UmG
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 15:42:06 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:57037 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756293AbZA1UmD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Jan 2009 15:42:03 -0500
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1LSHEY-0001C6-Nn
-	for git@vger.kernel.org; Wed, 28 Jan 2009 12:42:02 -0800
-In-Reply-To: <20090128201727.GD7503@atjola.homenet>
-X-Nabble-From: 427@free.fr
+	id S1756672AbZA1UoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 15:44:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759433AbZA1UoB
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 15:44:01 -0500
+Received: from meestal-mk5.stack.nl ([131.155.140.149]:63690 "EHLO
+	mx1.stack.nl" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1759436AbZA1UoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 15:44:00 -0500
+Received: from toad.stack.nl (toad.stack.nl [IPv6:2001:610:1108:5010::135])
+	by mx1.stack.nl (Postfix) with ESMTP id 5A7703F715;
+	Wed, 28 Jan 2009 21:43:57 +0100 (CET)
+Received: by toad.stack.nl (Postfix, from userid 1106)
+	id 52B7D73F8B; Wed, 28 Jan 2009 21:43:57 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by toad.stack.nl (Postfix) with ESMTP id 4C09E73F57;
+	Wed, 28 Jan 2009 21:43:57 +0100 (CET)
+In-Reply-To: <7vocxrqm57.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (BSF 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107574>
 
+While the configure script sets the EXPATDIR environment variable to
+whatever value was passed to its option --with-expat as the prefix of
+the location of the expat library and headers, the Makefile ignored it.
+This patch fixes this bug.
 
+Signed-off-by: Serge van den Boom <svdb@stack.nl>
+---
 
-Bj=C3=B6rn Steinbrink wrote:
->=20
-> The "git checkout -- d.txt" is also a valid command, but that restore=
-s
-> the file from the index.
->=20
-> git checkout -- paths
-> 	=3D=3D> Copy "paths" from the index to the working tree
->=20
-> git checkout <tree-ish> -- paths
-> 	=3D=3D> Copy "paths" from the tree-ish to the index and working tree
->=20
-> So, for "rm d.txt", a plain "git checkout -- d.txt" would also do the
-> trick, as d.txt is still in the index. But your "git rm d.txt" also
-> removed the file from the index, and thus that checkout does nothing.
-> But "git checkout HEAD -- d.txt" works, as it gets the file from HEAD
-> and puts it into the index and working tree.
->=20
+On Wed, 28 Jan 2009, Junio C Hamano wrote:
+> Serge van den Boom <svdb@stack.nl> writes:
+> > The prefix specified with the --with-expat option of configure was not
+> > actually used.
+> 
+> I see configure.ac already has support for autodetection but I realized it
+> only after running "git grep EXPATDIR".  "Even though the configure script
+> knows how to autodetect presence of the expat library and set EXPATDIR to
+> the prefix of the location it was found, the Makefile ignored it and only
+> honoured NO_EXPAT" might have been a better way to describe the breakage
+> the patch fixes.
 
-This is enlightening, thank you very much!
-(I knew I would love git more and more)
+That's not entirely right, unless I'm missing something. The configure script
+does not try to detect expat itself, though it passes on the argument
+to --with-expat to the Makefile, via the EXPATDIR environment variable.
 
-Oh just one (probably stupid) thing : <tree-ish> does represent a direc=
-tory
-being the root of a tree of folders (which has been added to the index)=
-,
-does it?
-This is the way I understand it at the moment. It must be a convention =
-I
-don't know just yet. (I need to investigate on this)
---=20
-View this message in context: http://n2.nabble.com/%28beginner%29-git-r=
-m-tp2231416p2234796.html
-Sent from the git mailing list archive at Nabble.com.
+> If you look at the Makefile, you will notice a sequence of comments like
+> this:
+> 
+>     # Define NO_CURL if you do not have libcurl installed.  git-http-pull and
+>     # git-http-push are not built, and you cannot use http:// and https://
+>     # transports.
+>     #
+>     # Define CURLDIR=/foo/bar if your curl header and library files are in
+>     # /foo/bar/include and /foo/bar/lib directories.
+>     #
+> 
+> Please add one for EXPATDIR, just after "Define NO_EXPAT if ...".  People
+> who do not run ./configure but add their own customizations in config.mak
+> should benefit from your patch as well.
+
+Ok.
+
+diff --git a/Makefile b/Makefile
+index 9d451cf..a7310f2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -23,6 +23,9 @@ all::
+ # Define NO_EXPAT if you do not have expat installed.  git-http-push is
+ # not built, and you cannot push using http:// and https:// transports.
+ #
++# Define EXPATDIR=/foo/bar if your expat header and library files are in
++# /foo/bar/include and /foo/bar/lib directories.
++#
+ # Define NO_D_INO_IN_DIRENT if you don't have d_ino in your struct dirent.
+ #
+ # Define NO_D_TYPE_IN_DIRENT if your platform defines DT_UNKNOWN but lacks
+@@ -850,7 +853,12 @@ else
+ 		endif
+ 	endif
+ 	ifndef NO_EXPAT
+-		EXPAT_LIBEXPAT = -lexpat
++		ifdef EXPATDIR
++			BASIC_CFLAGS += -I$(EXPATDIR)/include
++			EXPAT_LIBEXPAT = -L$(EXPATDIR)/$(lib) $(CC_LD_DYNPATH)$(EXPATDIR)/$(lib) -lexpat
++		else
++			EXPAT_LIBEXPAT = -lexpat
++		endif
+ 	endif
+ endif
+ 
