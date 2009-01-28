@@ -1,85 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 Subject: Re: [PATCHv2] gitweb: make static files accessible with PATH_INFO
-Date: Wed, 28 Jan 2009 01:20:38 +0100
-Message-ID: <200901280120.38985.jnareb@gmail.com>
+Date: Wed, 28 Jan 2009 01:33:35 +0100
+Message-ID: <cb7bb73a0901271633meb3be90k173ec3cf1a6e33de@mail.gmail.com>
 References: <1232973937-23875-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200901280120.38985.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 01:22:07 2009
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 28 01:35:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRyBx-0002vN-UL
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 01:22:06 +0100
+	id 1LRyOW-0006FG-V1
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 01:35:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632AbZA1AUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 19:20:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbZA1AUl
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 19:20:41 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:23792 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751375AbZA1AUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 19:20:40 -0500
-Received: by fg-out-1718.google.com with SMTP id 13so336809fge.17
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 16:20:38 -0800 (PST)
+	id S1753000AbZA1Adj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 19:33:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752524AbZA1Adj
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 19:33:39 -0500
+Received: from ik-out-1112.google.com ([66.249.90.178]:41367 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752335AbZA1Adi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 19:33:38 -0500
+Received: by ik-out-1112.google.com with SMTP id c28so1141546ika.5
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 16:33:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=VRT0OEApoeZOYPERF7ddu0i1FA/cPu5vxO0WKt9CaD8=;
-        b=nLlY8P4nOL3xegVWBzZy4WsvyCkLQnwfTM8F/w7Gmh1Hb5Ea828aGlNWST5rAyJHn3
-         g3J3hc1Uh6rDxN8OAGM9LHeLhUBWRuZRJKsnsR3BOjQdZOiGICJr3/moyLa0Citq2AIA
-         givqCZdl7jJXTKwyHx8TtiMaVudvmb4hF2ctQ=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wBghIP6ayJVx6qSK7b+C0xIUDPSVy3K5w/4w+XHCGPw=;
+        b=Pk9x44RNmrFClb2xJvLfXQHzAYNPjbwyfn1rhhhHLrkIM6CsO0oh1BYVB0AclFLGo/
+         Vk7IFiVjhkHVffh7lXPoj/CQXG71wI44Qd+EbCo6sVtJwdf1wg14YJkUJkovc++mUl6y
+         ZQCLpuQjYMT3+i6+vgkkTNmlFzKMNY1Mreuf8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=ql1eL/nnz9P4OUjORxLpN37WdxnP89f7lqo/KMfIW1K3YvbD3BkgnaG3MzCCTyicAB
-         OkR9s37cvmkJYg6mKjRlk6n1vf/Exnazrd9yi015uVeA3ksRgjCYquY3B/TpBP8tfV48
-         +qV9/SYU+iNl7anyUar5xBmTwqVaqnaSWfxtI=
-Received: by 10.86.60.14 with SMTP id i14mr328854fga.21.1233102038695;
-        Tue, 27 Jan 2009 16:20:38 -0800 (PST)
-Received: from ?192.168.1.15? (abvq8.neoplus.adsl.tpnet.pl [83.8.214.8])
-        by mx.google.com with ESMTPS id 4sm2591202fge.25.2009.01.27.16.20.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jan 2009 16:20:37 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1232973937-23875-1-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jKiBO/YNiD5Ua7nvTjggAW8Oq7Q5Xmi2DlP4KgEl94ioSCrCtYD1zHAuQfxL9E+fDP
+         vT8zsMnde3EQFhiy8cVld2gfzjtEe/Lpj32cmvmOqHIJR3c2ZBvxI5mROtGfQkqARMkg
+         B4k1aBKoMVXsPUeyX7sSCwkDJK8X8oecVuAwU=
+Received: by 10.210.119.16 with SMTP id r16mr1875845ebc.91.1233102815679; Tue, 
+	27 Jan 2009 16:33:35 -0800 (PST)
+In-Reply-To: <200901280120.38985.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107433>
 
-On Mon, 26 Jan 2009, Giuseppe Bilotta wrote:
+On Wed, Jan 28, 2009 at 1:20 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Mon, 26 Jan 2009, Giuseppe Bilotta wrote:
+>
+>> It's sick that $cgi->url() has no way to print the script base url
+>> without path_info information (or that, if it has, it's very well
+>> hidden).
+>
+> Actually:
+>
+> http://localhost/cgi-bin/gitweb/printenv.cgi/path/info?query=a;string=b;c=c;c=a
+>
+> url(-absolute=>1)  = /cgi-bin/gitweb/printenv.cgi
+> url(-relative=>1)  = /cgi-bin/gitweb/printenv.cgi
+> url(-full=>1)      = http://localhost/cgi-bin/gitweb/printenv.cgi
+> url(-path_info=>1) = http://localhost/cgi-bin/gitweb/printenv.cgi/path/info
+> url(-query=>1)     = http://localhost/cgi-bin/gitweb/printenv.cgi?query=a;string=b;c=c;c=a
+> url(-base=>1)      = http://localhost
+>
+> $ENV{'SCRIPT_NAME'} = /cgi-bin/gitweb/printenv.cgi
+> $ENV{'PATH_INFO'}   = /path/info
 
-> It's sick that $cgi->url() has no way to print the script base url
-> without path_info information (or that, if it has, it's very well
-> hidden).
+Yeah, but all of these have the script name in it, I was looking for
+one without the script name. But more about this in the other reply.
 
-Actually:
-
-http://localhost/cgi-bin/gitweb/printenv.cgi/path/info?query=a;string=b;c=c;c=a
-
-url(-absolute=>1)  = /cgi-bin/gitweb/printenv.cgi
-url(-relative=>1)  = /cgi-bin/gitweb/printenv.cgi
-url(-full=>1)      = http://localhost/cgi-bin/gitweb/printenv.cgi
-url(-path_info=>1) = http://localhost/cgi-bin/gitweb/printenv.cgi/path/info
-url(-query=>1)     = http://localhost/cgi-bin/gitweb/printenv.cgi?query=a;string=b;c=c;c=a
-url(-base=>1)      = http://localhost 
-
-$ENV{'SCRIPT_NAME'} = /cgi-bin/gitweb/printenv.cgi
-$ENV{'PATH_INFO'}   = /path/info
-
-With CGI.pm version 3.10
 -- 
-Jakub Narebski
-Poland
+Giuseppe "Oblomov" Bilotta
