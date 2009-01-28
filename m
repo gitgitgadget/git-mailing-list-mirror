@@ -1,71 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bad objects error since upgrading GitHub servers to 1.6.1
-Date: Wed, 28 Jan 2009 13:16:19 -0500
-Message-ID: <20090128181619.GG8863@coredump.intra.peff.net>
-References: <20090128020220.GE1321@spearce.org> <7v3af4yvmu.fsf@gitster.siamese.dyndns.org> <20090128033020.GF1321@spearce.org> <7v1vuoxcxk.fsf@gitster.siamese.dyndns.org> <20090128044150.GI1321@spearce.org> <7vd4e7x5ov.fsf@gitster.siamese.dyndns.org> <20090128075515.GA1133@coredump.intra.peff.net> <7vfxj3vos2.fsf@gitster.siamese.dyndns.org> <20090128081745.GA2172@coredump.intra.peff.net> <20090128161652.GK1321@spearce.org>
+From: Zabre <427@free.fr>
+Subject: Re: (beginner) git rm
+Date: Wed, 28 Jan 2009 10:23:12 -0800 (PST)
+Message-ID: <1233166992184-2233892.post@n2.nabble.com>
+References: <1233137498146-2231416.post@n2.nabble.com> <Pine.LNX.4.64.0901281133380.645@ds9.cixit.se> <1233140751523-2231622.post@n2.nabble.com> <49804385.908@dbservice.com> <1233144045221-2231849.post@n2.nabble.com> <49804D41.3010801@dbservice.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	PJ Hyett <pjhyett@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jan 28 19:18:32 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 28 19:24:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSEzN-0004rV-Ag
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 19:18:13 +0100
+	id 1LSF5b-0007T1-VR
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 19:24:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751965AbZA1SQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 13:16:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753389AbZA1SQW
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 13:16:22 -0500
-Received: from peff.net ([208.65.91.99]:37885 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752979AbZA1SQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 13:16:21 -0500
-Received: (qmail 24447 invoked by uid 107); 28 Jan 2009 18:16:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 13:16:30 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 13:16:19 -0500
-Content-Disposition: inline
-In-Reply-To: <20090128161652.GK1321@spearce.org>
+	id S1751404AbZA1SXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 13:23:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbZA1SXN
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 13:23:13 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:57962 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751325AbZA1SXN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 13:23:13 -0500
+Received: from tervel.nabble.com ([192.168.236.150])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1LSF4C-00033t-7E
+	for git@vger.kernel.org; Wed, 28 Jan 2009 10:23:12 -0800
+In-Reply-To: <49804D41.3010801@dbservice.com>
+X-Nabble-From: 427@free.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107559>
 
-On Wed, Jan 28, 2009 at 08:16:53AM -0800, Shawn O. Pearce wrote:
 
-> > But what is more important is that your repository _is_ corrupted,
+
+Tomas Carnecky wrote:
 > 
-> Depends.  If the SHA-1 came from the remote side during send-pack,
-
-Sorry, there is a critical typo in there. I meant to say "_if_ your
-repository is corrupted" (and I have no idea how I ended up not only
-omitting a word, but emphasizing the wrong one, so I can only suspect
-the typo was in my brain and not my fingers).
-
-So basically I agree with everything you said.
-
-> Yup, I agree.  But as you and Junio have already pointed out, C Git
-> can miss some types of corruption because the revision machinary has
-> some gaps.  *sigh*
+> Oops, sorry. git checkout HEAD -- d.txt
+> You have to tell which version of d.txt you want. In your case the 
+> version in HEAD.
 > 
-> I'd really like to see those gaps closed.  But I don't have a good
-> enough handle on the code structure of the C Git revision machinary
-> to do that myself in a short period of time.  I know JGit's well...
-> but that's only because I wrote it.  ;-)
 
-I would like to see them closed, too. But keep in mind that this may
-actually be a harder form of corruption to achieve than something like
-just flipping some bits. Once the objects are in a packfile, you are
-unlikely to lose a single or a small number of objects. But like with
-any type of corruption, it is infrequent enough that it is hard to say
-which is more common or "worse".
-
--Peff
+Thank you for this precision, it makes me understand this command better.
+(Sorry for my late answer I've been unable to check my computer for a few
+hours)
+-- 
+View this message in context: http://n2.nabble.com/%28beginner%29-git-rm-tp2231416p2233892.html
+Sent from the git mailing list archive at Nabble.com.
