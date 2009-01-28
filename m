@@ -1,64 +1,96 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH v3 1/2] git-am: emit usage when called w/o arguments and 
-	w/o patch on stdin
-Date: Wed, 28 Jan 2009 11:40:37 -0500
-Message-ID: <76718490901280840g7d36aa96u3d0f98a709ac9fde@mail.gmail.com>
-References: <1233154990-19745-1-git-send-email-jaysoffian@gmail.com>
-	 <780A42F8-E27C-404A-945C-38C16378EF57@ai.rug.nl>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Honoring a checked out gitattributes file
+Date: Wed, 28 Jan 2009 17:44:03 +0100
+Message-ID: <49808B53.6040907@drmicha.warpmail.net>
+References: <498078F1.20807@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, sverre@rabbelier.nl
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Wed Jan 28 17:42:10 2009
+Cc: git <git@vger.kernel.org>
+To: Kristian Amlie <kristian.amlie@trolltech.com>
+X-From: git-owner@vger.kernel.org Wed Jan 28 17:45:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSDUP-0008WP-Mt
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 17:42:10 +0100
+	id 1LSDXi-0001Pc-9p
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 17:45:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754238AbZA1Qkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 11:40:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751798AbZA1Qkj
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 11:40:39 -0500
-Received: from rv-out-0506.google.com ([209.85.198.232]:25038 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498AbZA1Qki (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 11:40:38 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so7025856rvb.1
-        for <git@vger.kernel.org>; Wed, 28 Jan 2009 08:40:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2IEheXbQ+Vx+ZyDrUam+QsJoxp2Xxh7x+P+ocqLfD4M=;
-        b=sVtx4sTgt+d70TFuri+HP95dW2K58dDEUuMABq3irYP5jijcMkrASogf4v+fJseNYK
-         LcYXZJi8mf+ECjrDDaMxZdgPNb3mIKoz26568gw1o4FA+tLJvl4sxEFZCmO75i6Qxits
-         4rs6g6bKvwcEqLshoh+I8twsm2UhlHLRzOZoE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=hBZgOS+PMC6FhWmObbYqhxnwcS/ftpRBBXXNdOZM2v55/H+kmQjjWDZ9I469/jHCOO
-         R+MXqTOBiZMUVxzMQqulyJSWj0WXviZDZcAANOYReg3xX6m4xTENYG97cN0BWXDha10T
-         L4oKyOKm9997/4yuyV9L+5GgvSGpaEZb+Bb9g=
-Received: by 10.140.133.10 with SMTP id g10mr5547537rvd.214.1233160837651; 
-	Wed, 28 Jan 2009 08:40:37 -0800 (PST)
-In-Reply-To: <780A42F8-E27C-404A-945C-38C16378EF57@ai.rug.nl>
+	id S1754907AbZA1QoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 11:44:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754879AbZA1QoI
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 11:44:08 -0500
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:42852 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754686AbZA1QoH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jan 2009 11:44:07 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.fastmail.fm (Postfix) with ESMTP id 0547625FCD5;
+	Wed, 28 Jan 2009 11:44:06 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 28 Jan 2009 11:44:06 -0500
+X-Sasl-enc: 2l6q5Ua/LrPqwykkagsl5TdlTvomHojoonFE7hJrPr+j 1233161045
+Received: from [139.174.44.152] (steinitz.math.tu-clausthal.de [139.174.44.152])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 637072C28B;
+	Wed, 28 Jan 2009 11:44:05 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
+In-Reply-To: <498078F1.20807@trolltech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107549>
 
-On Wed, Jan 28, 2009 at 11:18 AM, Pieter de Bie <pdebie@ai.rug.nl> wrote:
-> FWIW, I sometimes like to run 'git am', paste in a patch and hit ctrl-d.
->
-> I can probably retrain my finger to use 'git am -', but I'm not sure if that
-> works (after this patch)? At least it's not mentioned in the manpage.
+Kristian Amlie venit, vidit, dixit 28.01.2009 16:25:
+> Hi!
+> 
+> We currently use msysGit in our company test farm to checkout the latest
+> development branch and do autotests. However, we have one problem:
+> Certain files require UNIX line endings, even though this is a Windows
+> system. For this we use .gitattributes.
+> 
+> However, if the .gitattributes file is also checked in to the branch, it
+> will not always be honored. I browsed the code a bit, and it seems to
+> happen whenever there is an existing .gitattributes file, but the
+> checkout adds new files to it. These new files will not get the correct
+> line endings (although I'm not sure if it happens *every* time, it could
+> depend on the order they are checked out).
+> 
+> I think this should be fairly straightforward to fix, by ensuring that
+> if there is a file called .gitattributes in the index of the current
+> directory, check it out first, before all the other files that may be
+> affected by it. I can produce a patch and testcase for it, but I wanted
+> to hear the opinions of some developers in case there is an obvious flaw
+> in my solution.
+> 
+> What do you think?
 
-"git am -" doesn't work (before or after this patch), but "cat | git am" will.
+I think there's a general time ordering problem. Say you do the
+following commits:
 
-j.
+A: add a.txt
+B: add a .gitattributes file covering *.txt (say with crlf or any filter)
+C: add c.txt
+
+Now, with an empty dir, you do either
+
+1) checkout A, B, C sequentially
+2) checkout C
+
+The contents of the checkout will be different in cases 1) and 2):
+1) a.txt is checked out out as is, c.txt according to the attributes
+2) with current git: probably like 1), with your suggestion: both a.txt
+and c.txt filtered according to the attributes.
+
+If you add a file and .gitattributes covering it in the same commit
+there is an ordering ambiguity which can be solved (patched away)
+easily, but I think the difference between 1) and 2) is still
+problematic, and would need to be dealt with.
+
+The main problem seems to be that changing a file like gitattributes can
+potentially change (by changing filters) the contents which should be
+stored for a different file even if the checkout of that file doesn't
+change.
+
+Cheers,
+Michael
