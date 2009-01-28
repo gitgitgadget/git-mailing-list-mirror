@@ -1,99 +1,123 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: friendlier names
-Date: Wed, 28 Jan 2009 03:12:16 +0100
-Message-ID: <200901280312.16717.jnareb@gmail.com>
-References: <87mydc6a2r.fsf@mcbain.luannocracy.com> <m37i4gy2z6.fsf@localhost.localdomain> <7vocxsy1dd.fsf@gitster.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH 2/2] git-am: minor cleanups
+Date: Tue, 27 Jan 2009 21:38:58 -0500
+Message-ID: <1233110338-16806-2-git-send-email-jaysoffian@gmail.com>
+References: <1233110338-16806-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	David Abrahams <dave@boostpro.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 03:13:51 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>, gitster@pobox.com,
+	sverre@rabbelier.nl
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 28 03:40:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRzw6-0002oM-Kh
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 03:13:51 +0100
+	id 1LS0M5-0007pw-N4
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 03:40:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751925AbZA1CMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 21:12:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751689AbZA1CMS
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 21:12:18 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:31400 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751365AbZA1CMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 21:12:18 -0500
-Received: by fg-out-1718.google.com with SMTP id 13so365537fge.17
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 18:12:16 -0800 (PST)
+	id S1752032AbZA1CjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 21:39:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751961AbZA1CjH
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 21:39:07 -0500
+Received: from qw-out-2122.google.com ([74.125.92.27]:38428 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751414AbZA1CjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 21:39:05 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so3274637qwe.37
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 18:39:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=slVCk8Y8r6edpzzbr0nUqMktyUYrKir3ikPFTxGpqAY=;
-        b=OEgBEPYHSNcHTNYzIXKTOcpGrat0Dkgj+Y9jMunb53tZDKlSpnu4CNuXJEwEOvSgYE
-         xDM37R7jNhlHIQmjtxatSR8yQq+7r9z+v4HDxkE5GFqrZh1c8HOYCd02z75NANNsdIB/
-         ODRcmNy0umfOCWq5VlSiaJYSne8nYvJZwASQY=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=aScLfzlAIXPGXXgEhlKfEE7YorEzwPov3LOwBZxweoQ=;
+        b=UL03EF/3i2FEEoflvDpI3MU8WssKuNAg9FPw8PsT9EAVlDFeF4TsGTjKXM4uvABwr/
+         vnjQJQmoN74SyU/W7TMgA64uCz4NGvBnc+/AejWBV7tOzGnaEduv4SrNV8HOQyEXwe2U
+         4leOCIs9LoIprzSAKBmRtgx2NpGvDsSyJgXnA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=BYm/xRYepPvZJ8kpUp4sxG1bnEwhUHFFluw1F4Q8rTF1UTohMN3Fh5XYQ44TOvS+Q6
-         XJ1rKp83GOSD+4rFe7zss2pF3B33V7xsdoMToQa0VvdbBVPDqrmmqUVN0AXPEp2uUQZO
-         CNs0THzO+bSx4POsuj6uswTDh6M+OSQlmfCcE=
-Received: by 10.86.91.3 with SMTP id o3mr1043076fgb.35.1233108736176;
-        Tue, 27 Jan 2009 18:12:16 -0800 (PST)
-Received: from ?192.168.1.15? (abvq8.neoplus.adsl.tpnet.pl [83.8.214.8])
-        by mx.google.com with ESMTPS id l19sm570691fgb.52.2009.01.27.18.12.14
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=AvXH8TF8TbNah+GQSdsT6lFLwxbbwf/9E0rmsPN5ES9nM23zZSUUgPPJn/2jiQqr4I
+         TNtVDmEGF+XSUoUCpYAiXOiGjVnUbat6A0sWlgfzGYbdhVq2zgRfKEEYlAk+n6SuoLaU
+         OA21cUdi6S453xpxEceeMPLHqzkPDZf6A8E5U=
+Received: by 10.214.12.8 with SMTP id 8mr349283qal.65.1233110343725;
+        Tue, 27 Jan 2009 18:39:03 -0800 (PST)
+Received: from localhost (cpe-075-189-159-045.nc.res.rr.com [75.189.159.45])
+        by mx.google.com with ESMTPS id 8sm1141664ywg.35.2009.01.27.18.39.02
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jan 2009 18:12:15 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vocxsy1dd.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+        Tue, 27 Jan 2009 18:39:02 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.224.gb56c
+In-Reply-To: <1233110338-16806-1-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107453>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > It is a bit of pity that "git add" was overloaded to also add new
-> > contents and not only add new file (and its contents!), instead of
-> > having new command "git stage" to be porcelain version of 
-> > "git update-index" porcelain.  And perhaps "git resolved" to only
-> > mark resolved entries (so e.g. "git resolved ." would not add new
-> > files, nor add new contents of files which were not in conflict).
-> 
-> I do not think so.
-> 
-> People who are taught with various means (including "git stage" alias)
-> understand that you prepare the contents you want to record in the commit
-> you are about to make by updating the contents registered in the index aka
-> staging area, then you do not need "git resolved".
+Update usage statement to remove a no-longer supported option, and to hide two
+options (one a no-op, one internal) unless --help-all is used.
 
-"Who are taught". This makes for Git to be more "user selective".
-Not that this matter much, as world domination is not our goal ;-)
+Use "test -t 0" instead of deprecated "tty -s" to detect when stdin is a
+terminal. (test -t 0 is used elsewhere in git-am and in other git shell
+scripts, tty -s is not.)
+
+Use "test ..." instead of "[ ... ]" and "die <msg>" instead of "echo <msg>
+>&2; exit 1" to be consistent with rest of script.
+---
+While fixing Sverre's issue, I noticed a few other things about git-am that
+seemed worth cleaning up. These seem much to small to split into separate
+patches so I included them together. Let me know if they should be split.
+
+ git-am.sh |   12 ++++--------
+ 1 files changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index 36227c6..2ad229b 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -8,9 +8,8 @@ OPTIONS_SPEC="\
+ git am [options] [<mbox>|<Maildir>...]
+ git am [options] (--resolved | --skip | --abort)
+ --
+-d,dotest=       (removed -- do not use)
+ i,interactive   run interactively
+-b,binary        (historical option -- no-op)
++b,binary*       (historical option -- no-op)
+ 3,3way          allow fall back on 3way merging if needed
+ s,signoff       add a Signed-off-by line to the commit message
+ u,utf8          recode into utf8 (default)
+@@ -24,7 +23,7 @@ resolvemsg=     override error message when patch failure occurs
+ r,resolved      to be used after a patch failure
+ skip            skip the current patch
+ abort           restore the original branch and abort the patching operation.
+-rebasing        (internal use for git-rebase)"
++rebasing*       (internal use for git-rebase)"
  
-> You resolve, you have the desired content in your work tree, and you
-> register the updated contents from your work tree to the index aka staging
-> area, in exactly the same way as you do when you want to include updated
-> contents for any commit.
-
-While I don't think that "git resolved" is something really needed,
-the difference is with "git add ." and "git resolved ." and between
-"git add *" and "git resolved *", where the latter would update only
-resolved merge conflict resolutions, and would not pick up independent
-changes to the files that were not in conflict.
-
-BTW with "git add" way you have to know that "git add"-ing a file
-would clear 'is in merge conflict' flags (well, will hide >0 stages...).
-
+ . git-sh-setup
+ prefix=$(git rev-parse --show-prefix)
+@@ -204,7 +203,7 @@ then
+ 		# unreliable -- stdin could be /dev/null for example
+ 		# and the caller did not intend to feed us a patch but
+ 		# wanted to continue unattended.
+-		tty -s
++		test -t 0
+ 		;;
+ 	*)
+ 		false
+@@ -280,10 +279,7 @@ fi
+ case "$resolved" in
+ '')
+ 	files=$(git diff-index --cached --name-only HEAD --) || exit
+-	if [ "$files" ]; then
+-	   echo "Dirty index: cannot apply patches (dirty: $files)" >&2
+-	   exit 1
+-	fi
++	test "$files" && die "Dirty index: cannot apply patches (dirty: $files)"
+ esac
+ 
+ if test "$(cat "$dotest/utf8")" = t
 -- 
-Jakub Narebski
-Poland
+1.6.1.224.gb56c
