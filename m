@@ -1,85 +1,94 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH v3 1/2] git-am: emit usage when called w/o arguments and w/o patch on stdin
-Date: Wed, 28 Jan 2009 10:03:09 -0500
-Message-ID: <1233154990-19745-1-git-send-email-jaysoffian@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, gitster@pobox.com,
-	sverre@rabbelier.nl
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 28 16:04:56 2009
+From: Perry Smith <pedzsan@gmail.com>
+Subject: Re: git 1.6.1 on AIX 5.3
+Date: Wed, 28 Jan 2009 09:03:23 -0600
+Message-ID: <87325FCF-CD16-43CE-9CD0-CAC73904903A@gmail.com>
+References: <A8D76E61-4442-4640-BD0C-84085375E6F1@gmail.com> <20090126210027.GG27604@coredump.intra.peff.net> <e2b179460901261432r601fa006iaf04fc42487e7235@mail.gmail.com> <9E98493A-B17A-4905-8BEA-3E0B837961D6@gmail.com> <e2b179460901270210q69fe1e42xb801553e4e9005e9@mail.gmail.com> <BAD975AD-323D-4278-8405-0B57E7202797@gmail.com> <20090128070114.GB19165@coredump.intra.peff.net> <7v4ozjx4ni.fsf@gitster.siamese.dyndns.org> <20090128074204.GA31951@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Mike Ralphson <mike.ralphson@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 28 16:06:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSByB-0004CO-AS
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 16:04:47 +0100
+	id 1LSByX-0004Lo-Md
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 16:05:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751516AbZA1PDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 10:03:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751120AbZA1PDR
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 10:03:17 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:44383 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751282AbZA1PDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 10:03:16 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so3395011qwe.37
-        for <git@vger.kernel.org>; Wed, 28 Jan 2009 07:03:14 -0800 (PST)
+	id S1751597AbZA1PD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 10:03:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbZA1PD2
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 10:03:28 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:34589 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751557AbZA1PD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 10:03:27 -0500
+Received: by mail-qy0-f11.google.com with SMTP id 4so7961762qyk.13
+        for <git@vger.kernel.org>; Wed, 28 Jan 2009 07:03:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=iW5ThPz+lLqxRFXPajybOK4pmHtVLX7WqLma4XWFlGc=;
-        b=RqKNtU8dKxLPLzq4N24jYAAuV66xzPuNqueyPW4n5fHbOal+Z09QT+bHWYE1wDMiiV
-         NlJgD+jxTnAfOfvlGzCaFg72FMGGBQ8yrylgZyD3Q3vJTvCc8eRqvrgRbIG0iPQgbNX/
-         nmGOAXR5pjSRDmTHjOzEZmWUBxLpqzpf3jD50=
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=WcP0rjf/W6YIt54/kmIs9TLfYNNudvzC1arncXL5SRM=;
+        b=n7nJnJioAcrlOXzksV3XeofeJL5SGhVv0LLIvoASR6JoFhKntka4HWPzj/yDXNjFzs
+         ruAfoT5bzEEUn97OiFLEoRzOVmI+2lze/TqgXMLWcVI5j2cRPtMVdNo6DFTTzZHIYPDa
+         Ng3yNduEbg0SvAt796Z9oOXZLOI+r1RRj1ESs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=SEqYjhucqUSgQkBZLPuSfTeJ2cFeX73z6BeJIWzzhoDkEw/AxXr+6ZgMctM/s/Vuxv
-         UB8GtrZDpWGn2RzRsclas2bEImnWSgwXnOJgUPtCGIh5XrjLuyWGQNI5+4tOyewZPxuL
-         QcrbRrhvIPa0ZCMH/QG/uKo+IyTRBOFiee5sg=
-Received: by 10.214.43.7 with SMTP id q7mr443751qaq.33.1233154994651;
-        Wed, 28 Jan 2009 07:03:14 -0800 (PST)
-Received: from localhost (cpe-075-189-159-045.nc.res.rr.com [75.189.159.45])
-        by mx.google.com with ESMTPS id 6sm2800258ywp.38.2009.01.28.07.03.12
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=v9F6kVCzTk/M26d6V2jHqjkGO7zFRDSgAuhjuDDdjG4yEYDsbC0JwYw7fR5pKC6Mbd
+         QJ+foqAMMWrZ1qPRbytnRBEdXdV28qgJlYsLVm3t9xbxCSvU/qiWK1nMplwzfyYS2FZk
+         QaM8VpM0TSN8yqMx4crHoSiYl0qv4putbkZwo=
+Received: by 10.214.81.3 with SMTP id e3mr6830123qab.66.1233155007239;
+        Wed, 28 Jan 2009 07:03:27 -0800 (PST)
+Received: from newtoy.easesoftware.com ([64.128.19.234])
+        by mx.google.com with ESMTPS id 7sm3355221qwf.7.2009.01.28.07.03.25
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 28 Jan 2009 07:03:13 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.224.gb56c
+        Wed, 28 Jan 2009 07:03:26 -0800 (PST)
+In-Reply-To: <20090128074204.GA31951@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.929.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107541>
 
-When git am is called w/o arguments, w/o a patch on stdin and the user hits
-ctrl-c, it leaves behind a partially populated $dotest directory. After this
-commit, it emits usage when called w/o arguments and w/o a patch on stdin.
+On Jan 28, 2009, at 1:42 AM, Jeff King wrote:
 
-Noticed by Sverre Rabbelier
+> On Tue, Jan 27, 2009 at 11:37:21PM -0800, Junio C Hamano wrote:
+>
+>>>> Just to be sure we are on the same page.  My directory structure  
+>>>> has a
+>>>> top/src/git-1.6.1 and top/build/git.1.6.1.  The src/git-1.6.1 is  
+>>>> the
+>>>> tar ball.  The  build/git-1.6.1 starts out empty.  I cd into it and
+>>>> then do: ../../src/git-1.6.1/configure <options>  After this
+>>>> completes, you can do "make".
+>>>
+>>> I don't see how this would work without automake support, which  
+>>> git does
+>>> not have.
+>>
+>> ... nor want to have ;-).
+>
+> Heh. Yes, in case there was any confusion: I don't want my statement  
+> in
+> any way to be construed as a suggestion to support automake.
+>
+> I would not be opposed to it if it somehow enhanced some users'
+> experience without bothering people who didn't want to touch it (like
+> the way that autoconf support is implemented). But I don't see how  
+> that
+> would be possible.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
-Change from v2: make Junio happy by no longer removing $dotest if git-am is
-interupted while mailsplit is running.
+Thats fine.  I didn't know if this was a "known" situation or not so I  
+just mentioned it.
 
- git-am.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/git-am.sh b/git-am.sh
-index b1c05c9..92a64b2 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -254,6 +254,7 @@ else
- 		done
- 		shift
- 	fi
-+	test $# = 0 && test -t 0 && usage
- 	git mailsplit -d"$prec" -o"$dotest" -b -- "$@" > "$dotest/last" ||  {
- 		rm -fr "$dotest"
- 		exit 1
--- 
-1.6.1.224.gb56c
+As I mentioned, most open source code supports this style of build.  I  
+have no idea
+what it would take to get it to work.
