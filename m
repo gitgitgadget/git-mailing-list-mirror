@@ -1,99 +1,48 @@
-From: Kristian Amlie <kristian.amlie@trolltech.com>
-Subject: Re: Honoring a checked out gitattributes file
-Date: Wed, 28 Jan 2009 18:25:13 +0100
-Message-ID: <498094F9.5070201@trolltech.com>
-References: <498078F1.20807@trolltech.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 1/2] git-am: emit usage when called w/o arguments
+	and w/o patch on stdin
+Date: Wed, 28 Jan 2009 12:51:06 -0500
+Message-ID: <20090128175106.GD8863@coredump.intra.peff.net>
+References: <1233154990-19745-1-git-send-email-jaysoffian@gmail.com> <780A42F8-E27C-404A-945C-38C16378EF57@ai.rug.nl>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Cc: git <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jan 28 18:27:05 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, sverre@rabbelier.nl
+To: Pieter de Bie <pdebie@ai.rug.nl>
+X-From: git-owner@vger.kernel.org Wed Jan 28 18:52:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSEBh-0001Ah-UM
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 18:26:54 +0100
+	id 1LSEaZ-00035a-Gj
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 18:52:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751272AbZA1RZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 12:25:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbZA1RZ1
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 12:25:27 -0500
-Received: from hoat.troll.no ([62.70.27.150]:46865 "EHLO hoat.troll.no"
+	id S1753285AbZA1RvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 12:51:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753187AbZA1RvJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 12:51:09 -0500
+Received: from peff.net ([208.65.91.99]:40348 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751240AbZA1RZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 12:25:26 -0500
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 134E020F7D;
-	Wed, 28 Jan 2009 18:25:21 +0100 (CET)
-Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id 0822420F6C;
-	Wed, 28 Jan 2009 18:25:21 +0100 (CET)
-Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
-	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n0SHPJwo002070;
-	Wed, 28 Jan 2009 18:25:20 +0100
-Received: from [172.24.90.99] ( [172.24.90.99])
-    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
-    via ESMTP; Wed, 28 Jan 2009 18:25:17 +0100 (CET)
-In-Reply-To: <49808B53.6040907@drmicha.warpmail.net>
-References: <49808B53.6040907@drmicha.warpmail.net>
-x-scalix-Hops: 1
-User-Agent: Thunderbird 2.0.0.19 (X11/20090122)
-X-Enigmail-Version: 0.95.7
+	id S1752911AbZA1RvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 12:51:08 -0500
+Received: (qmail 24247 invoked by uid 107); 28 Jan 2009 17:51:17 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 12:51:17 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 12:51:06 -0500
 Content-Disposition: inline
+In-Reply-To: <780A42F8-E27C-404A-945C-38C16378EF57@ai.rug.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107553>
 
-Michael J Gruber wrote:
-> I think there's a general time ordering problem. Say you do the
-> following commits:
-> 
-> A: add a.txt
-> B: add a .gitattributes file covering *.txt (say with crlf or any filter)
-> C: add c.txt
-> 
-> Now, with an empty dir, you do either
-> 
-> 1) checkout A, B, C sequentially
-> 2) checkout C
-> 
-> The contents of the checkout will be different in cases 1) and 2):
-> 1) a.txt is checked out out as is, c.txt according to the attributes
-> 2) with current git: probably like 1), with your suggestion: both a.txt
-> and c.txt filtered according to the attributes.
-> 
-> If you add a file and .gitattributes covering it in the same commit
-> there is an ordering ambiguity which can be solved (patched away)
-> easily, but I think the difference between 1) and 2) is still
-> problematic, and would need to be dealt with.
+On Wed, Jan 28, 2009 at 04:18:30PM +0000, Pieter de Bie wrote:
 
-I agree.
+> FWIW, I sometimes like to run 'git am', paste in a patch and hit ctrl-d.
 
-> 
-> The main problem seems to be that changing a file like gitattributes can
-> potentially change (by changing filters) the contents which should be
-> stored for a different file even if the checkout of that file doesn't
-> change.
+I have to admit, I usually am opposed to this sort of terminal DWIMmery
+for exactly that reason. But I don't personally ever cut and paste into
+git-am, so I was trying not to raise a fuss. ;)
 
-Yes, that is a problem. Ideally, the crlf attribute would be tied to the
-file entry itself rather than a separate file (so changing the attribute
-would mean a change to the file), but I guess we are stuck with what we
-have.
-
-I still think that case 2) is the most common, and fixing it has the
-appealing property that if the repository line endings are broken for
-some reason (because of case 1 or something else), then recloning or
-checking out from scratch is guaranteed to bring the working tree into
-the "correct" state.
-
-Since fixing both cases is a pretty big task and fixing only case 2 is
-small, I propose that we go ahead with that.
-
---
-Kristian Amlie
+-Peff
