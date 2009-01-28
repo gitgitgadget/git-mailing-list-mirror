@@ -1,71 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4] gitweb: make static files accessible with PATH_INFO
-Date: Tue, 27 Jan 2009 17:07:41 -0800
-Message-ID: <7vocxsz19e.fsf@gitster.siamese.dyndns.org>
-References: <1233103932-6325-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Bad objects error since upgrading GitHub servers to 1.6.1
+Date: Wed, 28 Jan 2009 02:15:51 +0100
+Message-ID: <20090128011551.GB7503@atjola.homenet>
+References: <bab6a2ab0901271504j73dce7afjf8436c3c7c83b770@mail.gmail.com> <bab6a2ab0901271510y1e3e6912t82ff16e0f912d4b6@mail.gmail.com> <alpine.LFD.2.00.0901271655090.3123@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 02:09:21 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: PJ Hyett <pjhyett@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 28 02:18:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRyve-0005wZ-Gq
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 02:09:19 +0100
+	id 1LRz4K-0007t4-0G
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 02:18:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751942AbZA1BHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 20:07:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751625AbZA1BHy
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 20:07:54 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55015 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751015AbZA1BHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 20:07:53 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5F4E11D6C2;
-	Tue, 27 Jan 2009 20:07:52 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 882C41D6C1; Tue,
- 27 Jan 2009 20:07:48 -0500 (EST)
-In-Reply-To: <1233103932-6325-1-git-send-email-giuseppe.bilotta@gmail.com>
- (Giuseppe Bilotta's message of "Wed, 28 Jan 2009 01:52:12 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1664BE5E-ECD8-11DD-8675-0372113D384A-77302942!a-sasl-quonix.pobox.com
+	id S1751747AbZA1BQw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jan 2009 20:16:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbZA1BQv
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 20:16:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38871 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751241AbZA1BQu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 20:16:50 -0500
+Received: (qmail invoked by alias); 28 Jan 2009 01:16:47 -0000
+Received: from i577BB3F1.versanet.de (EHLO atjola.local) [87.123.179.241]
+  by mail.gmx.net (mp007) with SMTP; 28 Jan 2009 02:16:47 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+Htk5dKkWHzvlmmOSSpsRCEjbvdK2kyAmDirUr6r
+	aHxmmRnQRvlP05
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0901271655090.3123@localhost.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107442>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+On 2009.01.27 17:00:54 -0800, Linus Torvalds wrote:
+>=20
+>=20
+> On Tue, 27 Jan 2009, PJ Hyett wrote:
+> >=20
+> > ~/Development/github(jetty)$ git fsck --full
+> > warning in tree 0d640d99b492b0c7db034e92d0460a7f84b22356: contains =
+zero-padded file modes
+> > ..
+>=20
+> Ouch. This is unrelated to your issue, but I'm wondering what project=
+=20
+> contains these invalid trees, and how they were created.
+>=20
+> Zero-padded tree entries can cause "object aliases", ie two trees tha=
+t=20
+> have logically the same contents end up with different data (due to=20
+> different amounts of padding) and thus different SHA1's. It shouldn't=
+ be=20
+> serious per se, but it's somethign that really shouldn't happen.
+>=20
+> What project does it come from, and how did such a tree get generated=
+?
 
-> When PATH_INFO is defined, static files such as the default CSS or the
-> shortcut icon are not accessible beyond the summary page (e.g. in
-> shortlog or commit view).
->
-> Fix this by adding a <base> tag pointing to the script's own URL.
->
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-> ---
->  gitweb/gitweb.perl |    5 +++++
->  1 files changed, 5 insertions(+), 0 deletions(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 931db4f..55e3081 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -2901,6 +2901,11 @@ sub git_header_html {
->  <meta name="robots" content="index, nofollow"/>
->  <title>$title</title>
->  EOF
-> +# the stylesheet, favicon etc urls won't work correctly with path_info unless we
-> +# set the appropriate base URL
-> +	if ($ENV{'PATH_INFO'}) {
-> +		print "<base href=\"$my_url\" />\n";
-> +	}
+I guess that's still from their webinterface that allows to edit file
+directly, without having a clone ofthe repo. The initial(?) version use=
+d
+to create such broken objects. It also got the order of entries in a
+tree object wrong IIRC. Back then, Scott and myself tracked that down o=
+n
+#git, to their ruby(?) stuff that creates the objects. But maybe the
+breakage is back?
 
-Perhaps this is a stupid question, but is $my_url already safe to include
-in the output without any further quoting at this point in the codepath?
+Bj=F6rn
