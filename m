@@ -1,73 +1,108 @@
-From: Sverre Rabbelier <alturin@gmail.com>
-Subject: Re: [PATCH v3 1/2] git-am: emit usage when called w/o arguments and 
-	w/o patch on stdin
-Date: Wed, 28 Jan 2009 19:33:48 +0100
-Message-ID: <bd6139dc0901281033r27b84f5dx7b55e1cfcf796a76@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/2] git-am: emit usage when called w/o arguments and
+ w/o patch on stdin
+Date: Wed, 28 Jan 2009 10:52:51 -0800
+Message-ID: <7v3af3s1oc.fsf@gitster.siamese.dyndns.org>
 References: <1233154990-19745-1-git-send-email-jaysoffian@gmail.com>
-	 <780A42F8-E27C-404A-945C-38C16378EF57@ai.rug.nl>
-	 <76718490901280840g7d36aa96u3d0f98a709ac9fde@mail.gmail.com>
-	 <7v3af3thyj.fsf@gitster.siamese.dyndns.org>
-	 <76718490901281026i45c26cb0r978f795a50dede19@mail.gmail.com>
-Reply-To: sverre@rabbelier.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, sverre@rabbelier.nl
 To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 19:35:21 2009
+X-From: git-owner@vger.kernel.org Wed Jan 28 19:54:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSFFs-0002rX-Ko
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 19:35:17 +0100
+	id 1LSFYR-00012M-Bc
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 19:54:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751403AbZA1Sdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 13:33:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbZA1Sdu
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 13:33:50 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:51659 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751155AbZA1Sdu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 13:33:50 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so3055205yxm.1
-        for <git@vger.kernel.org>; Wed, 28 Jan 2009 10:33:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=iImNzLkqVQ7b2U9AG9XKDFTe+g9/Zw2w908K5dQgRRY=;
-        b=sqxMrNwXPLrJCXCD/UKe/DKFYpNQGdhDeKOEwRAHiRl4EtRbd4SMN7M3oxL2GEtXih
-         /LXBznrw5AkBxuh8IWQj53S2y7tc5E1wPQF/EJnQ66gAr5F+lCyAWYHcHpSWgb8dzTU8
-         KNFV4nV8Pfa/wFI6PrHXhxteEfzhen52LMiv8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=TfI9sIcafGraS53Gnz1qLaccGVxGeVSDIxAKMLXzJ1Q8ex9hW3AB39xpaE7/cq5nva
-         ++v+BtJOsP2Nuk1Nqe604q7go7ePb25X7QgCmrAU1p2ieJPxMg5kjehNVvWZQ6gG6FhY
-         CzuSBf8erBceNAAdSDFX9fwfgk6lV05yxji44=
-Received: by 10.150.202.9 with SMTP id z9mr3152109ybf.11.1233167629001; Wed, 
-	28 Jan 2009 10:33:49 -0800 (PST)
-In-Reply-To: <76718490901281026i45c26cb0r978f795a50dede19@mail.gmail.com>
+	id S1752789AbZA1SxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 13:53:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752644AbZA1SxA
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 13:53:00 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50471 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752102AbZA1Sw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 13:52:58 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6813D942E0;
+	Wed, 28 Jan 2009 13:52:57 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 02479942DC; Wed,
+ 28 Jan 2009 13:52:52 -0500 (EST)
+In-Reply-To: <1233154990-19745-1-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Wed, 28 Jan 2009 10:03:09 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E0C32EBC-ED6C-11DD-957C-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107564>
 
-On Wed, Jan 28, 2009 at 19:26, Jay Soffian <jaysoffian@gmail.com> wrote:
-> Well perhaps we should just deal w/ctrl-c only and ignore the terminal
-> check altogether.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-That would suit my needs; as long as doing "git am" and then ^C does
-not change my worktree and .git directory. Doing a stray "git am
---abort" after aborting does not obliterate my worktree as it does now
-(not nice!), even so, it will change where my branch is currently at!
+> When git am is called w/o arguments, w/o a patch on stdin and the user hits
+> ctrl-c, it leaves behind a partially populated $dotest directory. After this
+> commit, it emits usage when called w/o arguments and w/o a patch on stdin.
+>
+> Noticed by Sverre Rabbelier
+>
+> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+> ---
+> Change from v2: make Junio happy by no longer removing $dotest if git-am is
+> interupted while mailsplit is running.
 
--- 
-Cheers,
+Sorry, I think I was misleading.  I did not mean that "Also" change was a
+bad thing to do.  It just did not logically belong to this "is it coming
+from the tty?" issue.
 
-Sverre Rabbelier
+While you are looking at "am", I have a complaint about a very rough and
+dangerous edge around a relatively new "usability" feature.
+
+A scenario goes like this.
+
+ (1) You have a patch, try to apply it to one existing topic branch
+
+	$ git checkout myTopic
+	$ git am some-patch
+
+ (2) You see it does not apply, you realize that the patch is more suited
+     for another branch.
+
+	$ git checkout anotherTopic
+        $ git am
+
+ (3) It still does not apply, you examine the patch, and find flaws in its
+     logic and decide not to apply it at all anywhere.
+
+	$ git am --abort
+
+After this, the tip of anotherTopic is updated to where the tip of myTopic
+was!
+
+Being able to remove the state directory $GIT_DIR/rebase-apply from the
+command line is very useful when you want to get a clean slate to run
+another git-am session, and often it is handy to abort the application of
+the whole series when you do so (the latter is done by resetting the
+original branch back to the original commit).  But being able to switch
+branches after starting application of patches from one mailbox is also
+useful in practice, so at least the latter should not be done blindly when
+the user asks for --abort.  We definitely need some safety here.
+
+Perhaps....
+
+ (1) If --abort is asked for and you are on a branch different from where
+     you started your "git am" session from, error out without doing
+     anything.
+
+ (2) Add --clean that does what the current --abort does, except for the
+     rewinding of the HEAD.
+
+The second one may be useful regardless of the "rough and dangerous edge"
+issue above.  The early parts of the series may be useful and you may want
+to keep the result from their application, while discarding the remainder
+of the series.
+
+Hmm?
