@@ -1,108 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] git-am: emit usage when called w/o arguments and
- w/o patch on stdin
-Date: Wed, 28 Jan 2009 10:52:51 -0800
-Message-ID: <7v3af3s1oc.fsf@gitster.siamese.dyndns.org>
-References: <1233154990-19745-1-git-send-email-jaysoffian@gmail.com>
+Subject: Re: Bad objects error since upgrading GitHub servers to 1.6.1
+Date: Wed, 28 Jan 2009 11:00:12 -0800
+Message-ID: <7vy6wvqmrn.fsf@gitster.siamese.dyndns.org>
+References: <7v1vuo1f6d.fsf@gitster.siamese.dyndns.org>
+ <bab6a2ab0901271634x7201130bx4a565bd8bea6967b@mail.gmail.com>
+ <7vvds0z1c1.fsf@gitster.siamese.dyndns.org>
+ <7vk58gz04l.fsf@gitster.siamese.dyndns.org>
+ <7vfxj4yzjj.fsf@gitster.siamese.dyndns.org>
+ <bab6a2ab0901271757i4602774ahef1d881b7ed58097@mail.gmail.com>
+ <20090128020220.GE1321@spearce.org>
+ <7v3af4yvmu.fsf@gitster.siamese.dyndns.org>
+ <20090128033020.GF1321@spearce.org>
+ <7v1vuoxcxk.fsf@gitster.siamese.dyndns.org>
+ <20090128044150.GI1321@spearce.org>
+ <7vd4e7x5ov.fsf@gitster.siamese.dyndns.org>
+ <7vvdrzvpwd.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.2.00.0901280738430.3123@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, sverre@rabbelier.nl
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 19:54:30 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	PJ Hyett <pjhyett@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 28 20:02:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSFYR-00012M-Bc
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 19:54:27 +0100
+	id 1LSFfb-0003db-5Z
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 20:01:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752789AbZA1SxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 13:53:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752644AbZA1SxA
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 13:53:00 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50471 "EHLO
+	id S1751328AbZA1TAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 14:00:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbZA1TAX
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 14:00:23 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36159 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752102AbZA1Sw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 13:52:58 -0500
+	with ESMTP id S1751081AbZA1TAW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 14:00:22 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6813D942E0;
-	Wed, 28 Jan 2009 13:52:57 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0CC3F1D6DA;
+	Wed, 28 Jan 2009 14:00:20 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 02479942DC; Wed,
- 28 Jan 2009 13:52:52 -0500 (EST)
-In-Reply-To: <1233154990-19745-1-git-send-email-jaysoffian@gmail.com> (Jay
- Soffian's message of "Wed, 28 Jan 2009 10:03:09 -0500")
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A465B1D7DE; Wed,
+ 28 Jan 2009 14:00:13 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.0901280738430.3123@localhost.localdomain>
+ (Linus Torvalds's message of "Wed, 28 Jan 2009 07:45:00 -0800 (PST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E0C32EBC-ED6C-11DD-957C-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: E8919FBA-ED6D-11DD-811F-0372113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107565>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> When git am is called w/o arguments, w/o a patch on stdin and the user hits
-> ctrl-c, it leaves behind a partially populated $dotest directory. After this
-> commit, it emits usage when called w/o arguments and w/o a patch on stdin.
+> On Tue, 27 Jan 2009, Junio C Hamano wrote:
+>> 
+>>  - When digging deeper into the ancestry chain of a commit that is already
+>>    painted as UNINTERESTING, in order to paint its parents UNINTERESTING,
+>>    we barfed if parse_parent() for a parent commit object failed.  We can
+>>    ignore such a parent commit object.
 >
-> Noticed by Sverre Rabbelier
+> Wouldn't it be better to still mark it UNINTERESTING too?
 >
-> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
-> ---
-> Change from v2: make Junio happy by no longer removing $dotest if git-am is
-> interupted while mailsplit is running.
+>> @@ -480,7 +483,7 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit,
+>>  			struct commit *p = parent->item;
+>>  			parent = parent->next;
+>>  			if (parse_commit(p) < 0)
+>> -				return -1;
+>> +				continue;
+>>  			p->object.flags |= UNINTERESTING;
+>>  			if (p->parents)
+>>  				mark_parents_uninteresting(p);
+>
+> IOW, move that
+>
+> 	p->object.flags |= UNINTERESTING;
+>
+> to before parse_commit(). That's assuming 'parent' is never NULL, of 
+> course.
 
-Sorry, I think I was misleading.  I did not mean that "Also" change was a
-bad thing to do.  It just did not logically belong to this "is it coming
-from the tty?" issue.
-
-While you are looking at "am", I have a complaint about a very rough and
-dangerous edge around a relatively new "usability" feature.
-
-A scenario goes like this.
-
- (1) You have a patch, try to apply it to one existing topic branch
-
-	$ git checkout myTopic
-	$ git am some-patch
-
- (2) You see it does not apply, you realize that the patch is more suited
-     for another branch.
-
-	$ git checkout anotherTopic
-        $ git am
-
- (3) It still does not apply, you examine the patch, and find flaws in its
-     logic and decide not to apply it at all anywhere.
-
-	$ git am --abort
-
-After this, the tip of anotherTopic is updated to where the tip of myTopic
-was!
-
-Being able to remove the state directory $GIT_DIR/rebase-apply from the
-command line is very useful when you want to get a clean slate to run
-another git-am session, and often it is handy to abort the application of
-the whole series when you do so (the latter is done by resetting the
-original branch back to the original commit).  But being able to switch
-branches after starting application of patches from one mailbox is also
-useful in practice, so at least the latter should not be done blindly when
-the user asks for --abort.  We definitely need some safety here.
-
-Perhaps....
-
- (1) If --abort is asked for and you are on a branch different from where
-     you started your "git am" session from, error out without doing
-     anything.
-
- (2) Add --clean that does what the current --abort does, except for the
-     rewinding of the HEAD.
-
-The second one may be useful regardless of the "rough and dangerous edge"
-issue above.  The early parts of the series may be useful and you may want
-to keep the result from their application, while discarding the remainder
-of the series.
-
-Hmm?
+Ok, makes sense.  Will do.
