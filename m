@@ -1,110 +1,99 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: Vim's gitconfig filetype (and folding)
-Date: Wed, 28 Jan 2009 11:56:54 -0500
-Message-ID: <49808E56.3090300@tedpavlic.com>
-Reply-To: vim_use@googlegroups.com
+From: Kristian Amlie <kristian.amlie@trolltech.com>
+Subject: Re: Honoring a checked out gitattributes file
+Date: Wed, 28 Jan 2009 18:25:13 +0100
+Message-ID: <498094F9.5070201@trolltech.com>
+References: <498078F1.20807@trolltech.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------080807070007050500090604"
-To: git <git@vger.kernel.org>, vim_use <vim_use@googlegroups.com>
-X-From: grbounce-kKpDswUAAAD87BKvZoWWIqgvt2_Vg0cp=gev-vim-moved1=m.gmane.org@googlegroups.com Wed Jan 28 17:58:35 2009
-Return-path: <grbounce-kKpDswUAAAD87BKvZoWWIqgvt2_Vg0cp=gev-vim-moved1=m.gmane.org@googlegroups.com>
-Envelope-to: gev-vim-moved1@m.gmane.org
-Received: from yx-out-2122.google.com ([74.125.44.26])
+Content-Type: text/plain;
+	charset="US-ASCII"
+Cc: git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jan 28 18:27:05 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSDkB-0006Sn-Hm
-	for gev-vim-moved1@m.gmane.org; Wed, 28 Jan 2009 17:58:27 +0100
-Received: by yx-out-2122.google.com with SMTP id 22so2095342yxm.63
-        for <gev-vim-moved1@m.gmane.org>; Wed, 28 Jan 2009 08:57:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :x-virus-scanned:received:received:message-id:date:from:user-agent
-         :mime-version:content-type:to:subject:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=gwninZCaraDIa04QCye2gjeJg+Y+NmcSFvxrDip3u/g=;
-        b=TgoOrmUNiQGyBaJ/C8QczFY9BP3ft8JSVc3SP92GuVVD6LomLYcvKcxUq99UNWrRIj
-         1Y/JUY2oo/5uCRsueeQgPjy0bKzHmXYk4q+/CgggsLZXz4zJUtTDFj0W40GFe98u9me7
-         d2hfr59N6a8m2U6ff3NJJ5ZRK8i4MwVtgCtCE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :x-virus-scanned:message-id:date:from:user-agent:mime-version
-         :content-type:to:subject:reply-to:sender:precedence:x-google-loop
-         :mailing-list:list-id:list-post:list-help:list-unsubscribe
-         :x-beenthere-env:x-beenthere;
-        b=UpDoSDuVQXwlPqqeun5/TdWcuHFhncEmP9c8xw76icKwGUDjN5xgeQucmCz4Bg88BK
-         5YUU/UPPw95xy+cD/WZsgJTS2pkdJTZayH51K3icgib3WvVU9BZQuqtjUZFZmMlyZ2IQ
-         jOYmGtO3L5QnD3Ym2tflyunu0XfdwrFcZt4sQ=
-Received: by 10.100.136.15 with SMTP id j15mr2762610and.16.1233161823997;
-        Wed, 28 Jan 2009 08:57:03 -0800 (PST)
-Received: by 10.177.127.42 with SMTP id e42gr20261yqn.0;
-	Wed, 28 Jan 2009 08:57:01 -0800 (PST)
-X-Sender: ted@tedpavlic.com
-X-Apparently-To: vim_use@googlegroups.com
-Received: by 10.90.96.1 with SMTP id t1mr3488149agb.15.1233161820911; Wed, 28 Jan 2009 08:57:00 -0800 (PST)
-Received: from gallifrey.ece.ohio-state.edu (gallifrey.ece.ohio-state.edu [164.107.167.66]) by mx.google.com with ESMTP id 22si2702754yxr.10.2009.01.28.08.57.00; Wed, 28 Jan 2009 08:57:00 -0800 (PST)
-Received-SPF: neutral (google.com: 164.107.167.66 is neither permitted nor denied by best guess record for domain of ted@tedpavlic.com) client-ip=164.107.167.66;
-Authentication-Results: mx.google.com; spf=neutral (google.com: 164.107.167.66 is neither permitted nor denied by best guess record for domain of ted@tedpavlic.com) smtp.mail=ted@tedpavlic.com
-Received: from localhost (localhost.localdomain [127.0.0.1]) by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 662C180D804B; Wed, 28 Jan 2009 11:50:52 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1]) by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id snQV6Th3vylu; Wed, 28 Jan 2009 11:50:52 -0500 (EST)
-Received: from TedBook.local (cpe-76-181-62-78.columbus.res.rr.com [76.181.62.78]) by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 23DF780D8017; Wed, 28 Jan 2009 11:50:52 -0500 (EST)
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-Sender: vim_use@googlegroups.com
+	id 1LSEBh-0001Ah-UM
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 18:26:54 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751272AbZA1RZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 12:25:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbZA1RZ1
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 12:25:27 -0500
+Received: from hoat.troll.no ([62.70.27.150]:46865 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751240AbZA1RZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 12:25:26 -0500
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 134E020F7D;
+	Wed, 28 Jan 2009 18:25:21 +0100 (CET)
+Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 0822420F6C;
+	Wed, 28 Jan 2009 18:25:21 +0100 (CET)
+Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
+	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n0SHPJwo002070;
+	Wed, 28 Jan 2009 18:25:20 +0100
+Received: from [172.24.90.99] ( [172.24.90.99])
+    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
+    via ESMTP; Wed, 28 Jan 2009 18:25:17 +0100 (CET)
+In-Reply-To: <49808B53.6040907@drmicha.warpmail.net>
+References: <49808B53.6040907@drmicha.warpmail.net>
+x-scalix-Hops: 1
+User-Agent: Thunderbird 2.0.0.19 (X11/20090122)
+X-Enigmail-Version: 0.95.7
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list vim_use@googlegroups.com;
-	contact vim_use+owner@googlegroups.com
-List-Id: <vim_use.googlegroups.com>
-List-Post: <mailto:vim_use@googlegroups.com>
-List-Help: <mailto:vim_use+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/vim_use/subscribe>,
-	<mailto:vim_use+unsubscribe@googlegroups.com>
-X-BeenThere-Env: vim_use@googlegroups.com
-X-BeenThere: vim_use@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107551>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107552>
 
+Michael J Gruber wrote:
+> I think there's a general time ordering problem. Say you do the
+> following commits:
+> 
+> A: add a.txt
+> B: add a .gitattributes file covering *.txt (say with crlf or any filter)
+> C: add c.txt
+> 
+> Now, with an empty dir, you do either
+> 
+> 1) checkout A, B, C sequentially
+> 2) checkout C
+> 
+> The contents of the checkout will be different in cases 1) and 2):
+> 1) a.txt is checked out out as is, c.txt according to the attributes
+> 2) with current git: probably like 1), with your suggestion: both a.txt
+> and c.txt filtered according to the attributes.
+> 
+> If you add a file and .gitattributes covering it in the same commit
+> there is an ordering ambiguity which can be solved (patched away)
+> easily, but I think the difference between 1) and 2) is still
+> problematic, and would need to be dealt with.
 
---------------080807070007050500090604
-Content-Type: text/plain; charset=ISO-8859-1
+I agree.
 
-I don't know who is responsible for maintaining the git-related files 
-distributed with Vim, but it would be nice if folding was enable for the 
-gitconfig filetype.
+> 
+> The main problem seems to be that changing a file like gitattributes can
+> potentially change (by changing filters) the contents which should be
+> stored for a different file even if the checkout of that file doesn't
+> change.
 
-I've attached a sample set of folding rules that works well for me... 
-Right now I have the attached file in ~/.vim/ftplugin/gitconfig.vim.
+Yes, that is a problem. Ideally, the crlf attribute would be tied to the
+file entry itself rather than a separate file (so changing the attribute
+would mean a change to the file), but I guess we are stuck with what we
+have.
 
-I'll paste those rules here (but beware of word wrap):
+I still think that case 2) is the most common, and fixing it has the
+appealing property that if the repository line endings are broken for
+some reason (because of case 1 or something else), then recloning or
+checking out from scratch is guaranteed to bring the working tree into
+the "correct" state.
 
-:set 
-foldexpr=getline(v:lnum)=~'^[;#]\\s*\\(ex\\\|vi\\\|vim\\):'?\">1\":((getline(v:lnum)=~\"^#\\\\=[\")?\">1\":\"1\")
-:set fdm=expr
+Since fixing both cases is a pretty big task and fixing only case 2 is
+small, I propose that we go ahead with that.
 
---Ted
-
-
--- 
-Ted Pavlic <ted@tedpavlic.com>
-
-   Please visit my ALS association page:
-         http://web.alsa.org/goto/tedpavlic
-   My family appreciates your support in the fight to defeat ALS.
-
---~--~---------~--~----~------------~-------~--~----~
-You received this message from the "vim_use" maillist.
-For more information, visit http://www.vim.org/maillist.php
--~----------~----~----~----~------~----~------~--~---
-
-
---------------080807070007050500090604
-Content-Type: text/plain
-Content-Disposition: inline;
-	filename="gitconfig.vim"
-
-:set foldexpr=getline(v:lnum)=~'^[;#]\\s*\\(ex\\\|vi\\\|vim\\):'?\">1\":((getline(v:lnum)=~\"^#\\\\=[\")?\">1\":\"1\")
-:set fdm=expr
-
---------------080807070007050500090604--
+--
+Kristian Amlie
