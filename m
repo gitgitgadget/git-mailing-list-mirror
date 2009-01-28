@@ -1,86 +1,64 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv3] gitweb: make static files accessible with PATH_INFO
-Date: Wed, 28 Jan 2009 01:58:44 +0100
-Message-ID: <200901280158.44386.jnareb@gmail.com>
-References: <1233062946-22395-1-git-send-email-giuseppe.bilotta@gmail.com> <cb7bb73a0901271643g7c3a8c42qff6025187ab3c081@mail.gmail.com> <200901280155.26399.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Bad objects error since upgrading GitHub servers to 1.6.1
+Date: Tue, 27 Jan 2009 17:00:54 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0901271655090.3123@localhost.localdomain>
+References: <bab6a2ab0901271504j73dce7afjf8436c3c7c83b770@mail.gmail.com> <bab6a2ab0901271510y1e3e6912t82ff16e0f912d4b6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 02:00:12 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: PJ Hyett <pjhyett@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 28 02:03:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRymp-0003hg-Ao
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 02:00:11 +0100
+	id 1LRypY-0004TC-FF
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 02:03:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751779AbZA1A6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 19:58:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751696AbZA1A6q
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 19:58:46 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:17491 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751038AbZA1A6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 19:58:45 -0500
-Received: by fg-out-1718.google.com with SMTP id 13so347282fge.17
-        for <git@vger.kernel.org>; Tue, 27 Jan 2009 16:58:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=9qkfw8gExxdjkkVp/4vVzzQ32/3PiJDF4i5+MEoaJbk=;
-        b=qwt7IkJ57VyG5PiQCO7MhShir/x13s9noHvsfvMKDX8Os/5hpOS4tafU7jkfowOLUl
-         9fO2nMPRpVUmi3oTSIOL7tkquGVBGEU7RTpouPFzuZTXygkdlt0AOltf+yaHho2enW3e
-         oIPy6PKqwnBvm64ufuFOGsL6od1cN/NT/lKb4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=rgMeRLd3LUMRu4eprFFHLS/jqGNx/XZLxF4ZtbEhVMhFkk2Nflh2xSFCd4lAlkZKF2
-         1pOfHXbbeiCheEJ//wJ749I3LPByVxD+4D03wUI7awtxGNSiZRAWws+KhRFbIiau1D8R
-         spJQmv8n0PiUuTKjZ8nYxhCQQGUKEJr9zKhfo=
-Received: by 10.86.25.17 with SMTP id 17mr515626fgy.39.1233104323790;
-        Tue, 27 Jan 2009 16:58:43 -0800 (PST)
-Received: from ?192.168.1.15? (abvq8.neoplus.adsl.tpnet.pl [83.8.214.8])
-        by mx.google.com with ESMTPS id e11sm4486932fga.29.2009.01.27.16.58.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jan 2009 16:58:42 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200901280155.26399.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1752202AbZA1BB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 20:01:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752692AbZA1BB0
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 20:01:26 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:39549 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752482AbZA1BBZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2009 20:01:25 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0S10tBN012839
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 27 Jan 2009 17:00:56 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0S10s0A016106;
+	Tue, 27 Jan 2009 17:00:54 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <bab6a2ab0901271510y1e3e6912t82ff16e0f912d4b6@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.463 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107439>
 
-Jakub Narebski wrote:
-> On Wed, 28 Jan 2009, Giuseppe Bilotta wrote:
-> > On Wed, Jan 28, 2009 at 1:14 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> > > On Tue, 27 Jan 2009, Giuseppe Bilotta wrote:
+
+
+On Tue, 27 Jan 2009, PJ Hyett wrote:
 > 
-> > > > Of course, last time I forgot that the BASE href is supposed to be
-> > > > absolute. While Opera apparently has no problem with it being relative,
-> > > > other browsers such as Firefox are stricter about it.
-> > >
-> > > Errrr... I think you are talking about _full_ vs. _absolute_, not
-> > > _absolute_ vs. _relative_, see below.
-> > 
-> > No, I actually mean absolute vs relative in the URI sense, not in the
-> > Perl/CGI sense.
-> > 
-> > http://www.example.com/ is absolute, / is relative
-> 
-> No, "/" is not relative, it is absolute, because it begins with '/'.
+> ~/Development/github(jetty)$ git fsck --full
+> warning in tree 0d640d99b492b0c7db034e92d0460a7f84b22356: contains zero-padded file modes
+> ..
 
-Ooops, sorry, I mistook absolute _path_ for absolute _URL_. 
-Nevertheless path beginning with "/" inherits only net_loc (host).
+Ouch. This is unrelated to your issue, but I'm wondering what project 
+contains these invalid trees, and how they were created.
 
--- 
-Jakub Narebski
-Poland
+Zero-padded tree entries can cause "object aliases", ie two trees that 
+have logically the same contents end up with different data (due to 
+different amounts of padding) and thus different SHA1's. It shouldn't be 
+serious per se, but it's somethign that really shouldn't happen.
+
+What project does it come from, and how did such a tree get generated?
+
+			Linus
