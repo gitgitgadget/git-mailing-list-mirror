@@ -1,81 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bad objects error since upgrading GitHub servers to 1.6.1
-Date: Tue, 27 Jan 2009 19:09:13 -0800
-Message-ID: <7v3af4yvmu.fsf@gitster.siamese.dyndns.org>
-References: <bab6a2ab0901271504j73dce7afjf8436c3c7c83b770@mail.gmail.com>
- <bab6a2ab0901271510y1e3e6912t82ff16e0f912d4b6@mail.gmail.com>
- <alpine.DEB.1.00.0901280034310.3586@pacific.mpi-cbg.de>
- <20090127233939.GD1321@spearce.org>
- <7v1vuo1f6d.fsf@gitster.siamese.dyndns.org>
- <bab6a2ab0901271634x7201130bx4a565bd8bea6967b@mail.gmail.com>
- <7vvds0z1c1.fsf@gitster.siamese.dyndns.org>
- <7vk58gz04l.fsf@gitster.siamese.dyndns.org>
- <7vfxj4yzjj.fsf@gitster.siamese.dyndns.org>
- <bab6a2ab0901271757i4602774ahef1d881b7ed58097@mail.gmail.com>
- <20090128020220.GE1321@spearce.org>
+From: Alec Clews <alec.clews@gmail.com>
+Subject: How to install and use a custom merge driver
+Date: Wed, 28 Jan 2009 14:10:18 +1100
+Message-ID: <497FCC9A.9080008@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: PJ Hyett <pjhyett@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jan 28 04:11:05 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 28 04:11:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LS0pV-00057s-0R
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 04:11:05 +0100
+	id 1LS0qG-0005GH-Eu
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 04:11:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752132AbZA1DJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 22:09:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752009AbZA1DJ1
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 22:09:27 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35766 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751819AbZA1DJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 22:09:26 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AD17994D59;
-	Tue, 27 Jan 2009 22:09:25 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 610C894D4F; Tue,
- 27 Jan 2009 22:09:15 -0500 (EST)
-In-Reply-To: <20090128020220.GE1321@spearce.org> (Shawn O. Pearce's message
- of "Tue, 27 Jan 2009 18:02:20 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 118CDC34-ECE9-11DD-8134-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752138AbZA1DK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 22:10:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbZA1DK1
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 22:10:27 -0500
+Received: from rn-out-0910.google.com ([64.233.170.184]:11080 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752093AbZA1DK1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 22:10:27 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so2403219rnd.17
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 19:10:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=IBusZh6TmaklbsENl0NPJ4fqP/OVtmPC4Vv7Q7ARkLM=;
+        b=h66nWNdctCABwXWW9iMYeUFAY6f5qnIvf5G0q4YUz4rl1Zw/mtsSPnh0S9BhiSeTyS
+         JQtp/MusIGQRJAJiSje6lybDExrlQVXezLbxCKTp7D0s69WrDoG7UHOAyrbJBcq3lQyI
+         rZ+2gnk7SrcWuOq3fMxGHJrmkRTli5hv7ZZ0U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=lDRFqVpm+2plRYyGdppjHuLClhURs9uv0u7vbKXmy/P/gU7eaCpttuqsQBRKdR10rS
+         r9KyugOMMmtayLoyAzMUZR+4CYfAzdZBw497cL30mcrvEcUT+79dYqFww9Pe2kHZXQWP
+         S0xLijzEQm1Zjf2ez5eJ+abL7yyYdZVsOCKj4=
+Received: by 10.231.19.198 with SMTP id c6mr107798ibb.46.1233112225109;
+        Tue, 27 Jan 2009 19:10:25 -0800 (PST)
+Received: from ?120.16.235.97? ([120.16.235.97])
+        by mx.google.com with ESMTPS id s27sm235524qbs.31.2009.01.27.19.10.22
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 27 Jan 2009 19:10:24 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107459>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Background:
 
-> PJ Hyett <pjhyett@gmail.com> wrote:
->> 
->> Is there any possibility to have the server code in an upcoming
->> release account for clients running 1.6.1?
->
-> I can't think off-hand of a way for the server to know what version
-> the client is.  There's nothing really different in the protocol
-> between a 1.6.1 client and a v1.5.5-rc0~44^2 (introduction of
-> include-tag) or later client.
+I want to use git to track the delivery of patch files into existing 
+file trees. This means that new files will need to be copied over 
+existing files (especially in the case of binary files or textual conflicts)
 
-Hmm, I am puzzled.
+To this end I want to use a custom merge driver (actually the cp command)
 
-I do not know how 41fa7d2 (Teach git-fetch to exploit server side
-automatic tag following, 2008-03-03), which is about the conversation
-between fetch-pack and upload-pack, is relevant to the issue at hand,
-which is about the conversation between send-pack and receive-pack.
+Setup:
 
-In send-pack receive-pack protocol, the server talks first before
-listening to the client, and the .have data is in this first part of the
-conversation.
+I have set up my ..git/info/gitattributes as follows
 
-By the way, I think Documentation/technical/pack-protocol.txt needs to be
-updated.  send-pack receive-pack protocol uses C and S to mean receiver
-and sender respectively.  We should at least s/C/R/ that part, and
-possibly add description about ".have" thing.
+*      merge=overwrite
+
+I have defined in .git/config
+
+[merge "overwrite"]
+    name = overwrite using cp
+    driver = cp %B %A
+
+Problem:
+
+However when I perform a git merge the default merge is being called. Is 
+there something else needed to make git perform the copy operation?
+
+
+Many thanks
+
+-- 
+Alec Clews
+Personal <alec.clews@gmail.com>			Melbourne, Australia.
+Jabber:  alecclews@jabber.org.au		PGPKey ID: 0x9BBBFC7C
+Blog  http://alecthegeek.wordpress.com/
