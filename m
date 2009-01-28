@@ -1,137 +1,67 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCHv2 2/4] run_command: handle missing command errors more
-	gracefully
-Date: Wed, 28 Jan 2009 02:35:33 -0500
-Message-ID: <20090128073533.GB31884@coredump.intra.peff.net>
+Subject: [PATCHv2 3/4] run-command: help callers distinguish errors
+Date: Wed, 28 Jan 2009 02:36:39 -0500
+Message-ID: <20090128073639.GC31884@coredump.intra.peff.net>
 References: <20090128073059.GD19165@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 08:37:04 2009
+X-From: git-owner@vger.kernel.org Wed Jan 28 08:38:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LS4yr-0007ec-VQ
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 08:37:02 +0100
+	id 1LS4zv-0007tu-St
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 08:38:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077AbZA1Hfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 02:35:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751946AbZA1Hfg
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 02:35:36 -0500
-Received: from peff.net ([208.65.91.99]:57645 "EHLO peff.net"
+	id S1752182AbZA1Hgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 02:36:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752171AbZA1Hgm
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 02:36:42 -0500
+Received: from peff.net ([208.65.91.99]:57651 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751678AbZA1Hff (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 02:35:35 -0500
-Received: (qmail 19544 invoked by uid 107); 28 Jan 2009 07:35:44 -0000
+	id S1752157AbZA1Hgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 02:36:42 -0500
+Received: (qmail 19570 invoked by uid 107); 28 Jan 2009 07:36:50 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 02:35:44 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 02:35:33 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 02:36:50 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 02:36:39 -0500
 Content-Disposition: inline
 In-Reply-To: <20090128073059.GD19165@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107493>
 
-When run_command was asked to run a non-existant command,
-its behavior varied depending on the platform:
+run_command returns a single integer specifying either an
+error code or the exit status of the spawned program. The
+only way to tell the difference is that the error codes are
+outside of the allowed range of exit status values.
 
-  - on POSIX systems, we would fork, and then after the
-    execvp call failed, we could call die(), which prints a
-    message to stderr and exits with code 128.
-
-  - on Windows, we do a PATH lookup, realize the program
-    isn't there, and then return ERR_RUN_COMMAND_FORK
-
-The goal of this patch is to make it clear to callers that
-the specific error was a missing command. To do this, we
-will return the error code ERR_RUN_COMMAND_EXEC, which is
-already defined in run-command.h, checked for in several
-places, but never actually gets set.
-
-The new behavior is:
-
-  - on POSIX systems, we exit the forked process with code
-    127 (the same as the shell uses to report missing
-    commands). The parent process recognizes this code and
-    returns an EXEC error. The stderr message is silenced,
-    since the caller may be speculatively trying to run a
-    command. Instead, we use trace_printf so that somebody
-    interested in debugging can see the error that occured.
-
-  - on Windows, we check errno, which is already set
-    correctly by mingw_spawnvpe, and report an EXEC error
-    instead of a FORK error
-
-Thus it is safe to speculatively run a command:
-
-  int r = run_command_v_opt(argv, 0);
-  if (r == -ERR_RUN_COMMAND_EXEC)
-	  /* oops, it wasn't found; try something else */
-  else
-	  /* we failed for some other reason, error is in r */
+Rather than make each caller implement the test against a
+magic limit, let's provide a macro.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Incorporates JSixt's fix to retain errno across system calls.
+New since v1 of the series.
 
- run-command.c |   18 ++++++++++++++----
- 1 files changed, 14 insertions(+), 4 deletions(-)
+ run-command.h |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index db9ce59..b05c734 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -118,7 +118,9 @@ int start_command(struct child_process *cmd)
- 		} else {
- 			execvp(cmd->argv[0], (char *const*) cmd->argv);
- 		}
--		die("exec %s failed.", cmd->argv[0]);
-+		trace_printf("trace: exec '%s' failed: %s\n", cmd->argv[0],
-+				strerror(errno));
-+		exit(127);
- 	}
- #else
- 	int s0 = -1, s1 = -1, s2 = -1;	/* backups of stdin, stdout, stderr */
-@@ -187,6 +189,7 @@ int start_command(struct child_process *cmd)
- #endif
+diff --git a/run-command.h b/run-command.h
+index 0211e1d..a88b3cd 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -10,6 +10,7 @@ enum {
+ 	ERR_RUN_COMMAND_WAITPID_SIGNAL,
+ 	ERR_RUN_COMMAND_WAITPID_NOEXIT,
+ };
++#define IS_RUN_COMMAND_ERR(x) (x >= ERR_RUN_COMMAND_FORK)
  
- 	if (cmd->pid < 0) {
-+		int err = errno;
- 		if (need_in)
- 			close_pair(fdin);
- 		else if (cmd->in)
-@@ -197,7 +200,9 @@ int start_command(struct child_process *cmd)
- 			close(cmd->out);
- 		if (need_err)
- 			close_pair(fderr);
--		return -ERR_RUN_COMMAND_FORK;
-+		return err == ENOENT ?
-+			-ERR_RUN_COMMAND_EXEC :
-+			-ERR_RUN_COMMAND_FORK;
- 	}
- 
- 	if (need_in)
-@@ -236,9 +241,14 @@ static int wait_or_whine(pid_t pid)
- 		if (!WIFEXITED(status))
- 			return -ERR_RUN_COMMAND_WAITPID_NOEXIT;
- 		code = WEXITSTATUS(status);
--		if (code)
-+		switch (code) {
-+		case 127:
-+			return -ERR_RUN_COMMAND_EXEC;
-+		case 0:
-+			return 0;
-+		default:
- 			return -code;
--		return 0;
-+		}
- 	}
- }
- 
+ struct child_process {
+ 	const char **argv;
 -- 
 1.6.1.1.367.g30b36
