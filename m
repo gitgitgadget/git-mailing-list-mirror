@@ -1,58 +1,62 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Windows: Fix intermittent failures of t7701
-Date: Wed, 28 Jan 2009 08:26:50 +0100
-Message-ID: <498008BA.2000201@viscovery.net>
-References: <497F076F.8060509@viscovery.net> <alpine.DEB.1.00.0901271740320.3586@pacific.mpi-cbg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH 0/3] fix "Funny: git -p submodule summary"
+Date: Wed, 28 Jan 2009 02:30:59 -0500
+Message-ID: <20090128073059.GD19165@coredump.intra.peff.net>
+References: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de> <20090127062512.GA10487@coredump.intra.peff.net> <alpine.DEB.1.00.0901271728130.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 28 08:28:42 2009
+X-From: git-owner@vger.kernel.org Wed Jan 28 08:32:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LS4qb-0005m0-1r
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 08:28:29 +0100
+	id 1LS4uS-0006nQ-As
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 08:32:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751866AbZA1H07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 02:26:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751678AbZA1H07
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 02:26:59 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:56754 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751345AbZA1H06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 02:26:58 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LS4p0-0006PK-Uf; Wed, 28 Jan 2009 08:26:51 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 6956D6C4; Wed, 28 Jan 2009 08:26:50 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <alpine.DEB.1.00.0901271740320.3586@pacific.mpi-cbg.de>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1751946AbZA1HbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 02:31:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbZA1HbD
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 02:31:03 -0500
+Received: from peff.net ([208.65.91.99]:34772 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751714AbZA1HbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 02:31:03 -0500
+Received: (qmail 19483 invoked by uid 107); 28 Jan 2009 07:31:10 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 02:31:10 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 02:30:59 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0901271728130.3586@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107490>
 
-Johannes Schindelin schrieb:
-> I use this trick in my valgrind series:
+On Tue, Jan 27, 2009 at 05:31:02PM +0100, Johannes Schindelin wrote:
+
+> I like the patch series, well designed and concise (especially with the 
+> fixes Hannes proposed).
+
+Good. Response seems positive, so I will drop the RFC, then, and post a
+fixed-up series meant for inclusion.
+
+> > There are two potential downsides to the fix:
+> > 
+> >  1. There is an extra fork and a parent process sitting in memory for
+> >     dashed externals. This is pretty necessary to any fix, since
+> >     something has to wait to do pager cleanup, and we can't rely on the
+> >     child to do so.
 > 
-> 	($PROGRAM; echo $? > exit.code) | $OTHER_PROGRAM &&
-> 	test 0 = "$(cat exit.code)"
+> Actually, I think this is a good thing; that way, we can catch 
+> segmentation fault properly and display an error message in the pager.  
+> That was not possible previously.
 
-Ah, using a file as temporary storage? Why not simply
+True. On the other hand, most of our externals are shell scripts. It's
+the builtins that segfault, and we don't have a watcher process for
+that. :)
 
-	$PROGRAM > data &&
-	$OTHER_PROGRAM < data
-
-Hm? ;)
-
--- Hannes
+-Peff
