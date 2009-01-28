@@ -1,51 +1,56 @@
-From: "Edward Z. Yang" <edwardzyang@thewritingpot.com>
-Subject: Current git-svn and svn props state
-Date: Wed, 28 Jan 2009 04:19:24 -0500
-Message-ID: <glp7us$cai$1@ger.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bad objects error since upgrading GitHub servers to 1.6.1
+Date: Wed, 28 Jan 2009 04:24:25 -0500
+Message-ID: <20090128092425.GA2400@coredump.intra.peff.net>
+References: <bab6a2ab0901271757i4602774ahef1d881b7ed58097@mail.gmail.com> <20090128020220.GE1321@spearce.org> <7v3af4yvmu.fsf@gitster.siamese.dyndns.org> <20090128033020.GF1321@spearce.org> <7v1vuoxcxk.fsf@gitster.siamese.dyndns.org> <20090128044150.GI1321@spearce.org> <7vd4e7x5ov.fsf@gitster.siamese.dyndns.org> <20090128075515.GA1133@coredump.intra.peff.net> <7vfxj3vos2.fsf@gitster.siamese.dyndns.org> <7vbptrvo0m.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 28 10:21:10 2009
+Content-Type: text/plain; charset=utf-8
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	PJ Hyett <pjhyett@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 28 10:25:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LS6bZ-0001AI-3W
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 10:21:05 +0100
+	id 1LS6gC-0002ll-Iz
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 10:25:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752390AbZA1JTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 04:19:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbZA1JTl
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 04:19:41 -0500
-Received: from main.gmane.org ([80.91.229.2]:51476 "EHLO ciao.gmane.org"
+	id S1752621AbZA1JYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 04:24:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752171AbZA1JY3
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 04:24:29 -0500
+Received: from peff.net ([208.65.91.99]:47580 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751282AbZA1JTk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 04:19:40 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LS6a8-0001Ii-H9
-	for git@vger.kernel.org; Wed, 28 Jan 2009 09:19:36 +0000
-Received: from lily.mit.edu ([18.243.2.157])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Jan 2009 09:19:36 +0000
-Received: from edwardzyang by lily.mit.edu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Jan 2009 09:19:36 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: lily.mit.edu
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+	id S1751930AbZA1JY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 04:24:28 -0500
+Received: (qmail 20456 invoked by uid 107); 28 Jan 2009 09:24:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 04:24:36 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 04:24:25 -0500
+Content-Disposition: inline
+In-Reply-To: <7vbptrvo0m.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107513>
 
-Hello all,
+On Wed, Jan 28, 2009 at 12:22:01AM -0800, Junio C Hamano wrote:
 
-I was wondering what the current support by git-svn for Subversion
-properties was.
+> Nah, I take that back.
+> 
+> Even the original code does not consider this case an error.
+> 
+> If you really want that, the revision machinery needs major surgery, as I
+> already noted that the design of mark_parents_uninteresting() wants to
+> treat a missing uninteresting commit as a non-error event.
 
-Cheers,
-Edward
+Hrm. Never mind my concern, then. I was worried that we were losing some
+existing corruption checks, but it seems they are not there in the first
+place.
+
+-Peff
