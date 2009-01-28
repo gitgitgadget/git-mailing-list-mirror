@@ -1,116 +1,63 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: (beginner) git rm
-Date: Wed, 28 Jan 2009 23:13:55 +0100
-Message-ID: <20090128221355.GE7503@atjola.homenet>
-References: <1233137498146-2231416.post@n2.nabble.com> <Pine.LNX.4.64.0901281133380.645@ds9.cixit.se> <1233140751523-2231622.post@n2.nabble.com> <49804385.908@dbservice.com> <1233144045221-2231849.post@n2.nabble.com> <49804D41.3010801@dbservice.com> <1233166992184-2233892.post@n2.nabble.com> <20090128201727.GD7503@atjola.homenet> <1233175322729-2234796.post@n2.nabble.com> <7vab9bm85b.fsf@gitster.siamese.dyndns.org>
+From: Pau Garcia i Quiles <pgquiles@elpauer.org>
+Subject: Re: "malloc failed"
+Date: Wed, 28 Jan 2009 23:16:32 +0100
+Message-ID: <3af572ac0901281416x5adef0eak89bd4b40fda52c2b@mail.gmail.com>
+References: <878wow7pth.fsf@mcbain.luannocracy.com>
+	 <20090128050225.GA18546@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Zabre <427@free.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 23:17:03 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: David Abrahams <dave@boostpro.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 28 23:18:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSIi9-0002nx-NN
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 23:16:42 +0100
+	id 1LSIjg-0003Sm-An
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 23:18:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753330AbZA1WPB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jan 2009 17:15:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbZA1WPA
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 17:15:00 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51575 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751121AbZA1WO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 17:14:59 -0500
-Received: (qmail invoked by alias); 28 Jan 2009 22:14:57 -0000
-Received: from i577BB3F1.versanet.de (EHLO atjola.local) [87.123.179.241]
-  by mail.gmx.net (mp010) with SMTP; 28 Jan 2009 23:14:57 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18/OHJP9Lo/pHprxxjSYX6X5b9JYoFBXr4VYQKye1
-	7fhrLO16vVoXPf
-Content-Disposition: inline
-In-Reply-To: <7vab9bm85b.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1754380AbZA1WQh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 17:16:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754397AbZA1WQg
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 17:16:36 -0500
+Received: from mu-out-0910.google.com ([209.85.134.190]:55041 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756880AbZA1WQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 17:16:34 -0500
+Received: by mu-out-0910.google.com with SMTP id g7so5170566muf.1
+        for <git@vger.kernel.org>; Wed, 28 Jan 2009 14:16:33 -0800 (PST)
+Received: by 10.223.108.140 with SMTP id f12mr82038fap.23.1233180992331; Wed, 
+	28 Jan 2009 14:16:32 -0800 (PST)
+In-Reply-To: <20090128050225.GA18546@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107588>
 
-[Zabre, please keep the Cc: list when replying]
+On Wed, Jan 28, 2009 at 6:02 AM, Jeff King <peff@peff.net> wrote:
 
-On 2009.01.28 13:29:36 -0800, Junio C Hamano wrote:
-> Zabre <427@free.fr> writes:
-> > Bj=F6rn Steinbrink wrote:
-> >>=20
-> >> The "git checkout -- d.txt" is also a valid command, but that rest=
-ores
-> >> the file from the index.
-> >>=20
-> >> git checkout -- paths
-> >> 	=3D=3D> Copy "paths" from the index to the working tree
-> >>=20
-> >> git checkout <tree-ish> -- paths
-> >> 	=3D=3D> Copy "paths" from the tree-ish to the index and working t=
-ree
-> >>=20
-> >> So, for "rm d.txt", a plain "git checkout -- d.txt" would also do =
-the
-> >> trick, as d.txt is still in the index. But your "git rm d.txt" als=
-o
-> >> removed the file from the index, and thus that checkout does nothi=
-ng.
-> >> But "git checkout HEAD -- d.txt" works, as it gets the file from H=
-EAD
-> >> and puts it into the index and working tree.
-> >
-> > This is enlightening, thank you very much!
-> > (I knew I would love git more and more)
-> >
-> > Oh just one (probably stupid) thing : <tree-ish> does represent a d=
-irectory
-> > being the root of a tree of folders (which has been added to the in=
-dex),
-> > does it?
->=20
-> Yeah, it typically is a commit object.
->=20
-> Bj=F6rn said "Copy", but the operation really is like checking out a =
-book
-> from a library and "checkout" is a good word for it.  "I do not like =
-what
-> I have in my work tree, and I'd like to replace it with a fresh one t=
-aken
-> out of the index (or, out of that commit)".
+> How big is the repository? How big are the biggest files? I have a
+> 3.5G repo with files ranging from a few bytes to about 180M. I've never
+> run into malloc problems or gone into swap on my measly 1G box.
+> How does your dataset compare?
 
-With "checkout", I'm still a bit unsure about which term to use, becaus=
-e
-of the behaviour you get with, for example, "git checkout HEAD --
-directory". It always just adds or replaces files, but never removes
-them. So it's not really like taking the old directory out of the repo
-and using that instead. For example:
+I also have malloc problems but only on Windows, on Linux it works fine.
 
-git rm dir/old_file
-echo 123 > dir/new_file
-git add dir/new_file
-git checkout HEAD -- dir
+My case: I have a 500 MB repository with a 1GB working tree, with
+binary files ranging from 100KB to 50MB and a few thousand source
+files.
 
-That won't remove dir/new_file from the index (and of course it won't
-drop it from the working tree). That's the one thing where "git checkou=
-t
-HEAD -- dir" differs from "git reset HEAD -- dir && git checkout --
-dir". IIRC we've talked about that on #git a few months ago, but I don'=
-t
-recall what conclusions we came up with.
+I have two branches ('master' and 'cmake') and the latter has suffered
+a huge hierarchy reorganization.
 
-It would probably be better to say that checkout only works with the
-blobs (because the index doesn't have entries for trees, right?) that
-exist in the given tree-ish. And thus it doesn't remove entries from th=
-e
-index. But that feels a bit convoluted. :-/
+When I merge 'master' in 'cmake', if I use the 'subtree' strategy, it
+works fine. If I use any other strategy, after a couple of minutes I
+receive a "malloc failed" and the tree is all messed up. As I said, on
+Linux it works fine, so maybe it's a Windows-specific problem.
 
-Bj=F6rn
+-- 
+Pau Garcia i Quiles
+http://www.elpauer.org
+(Due to my workload, I may need 10 days to answer)
