@@ -1,65 +1,86 @@
-From: Alec Clews <alecclews@gmail.com>
-Subject: Re: How to install and use a custom merge driver
-Date: Wed, 28 Jan 2009 23:04:02 +0000 (UTC)
-Message-ID: <loom.20090128T230123-889@post.gmane.org>
-References: <497FCC9A.9080008@gmail.com> <20090128061848.GA19165@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Mark Adler <madler@alumni.caltech.edu>
+Subject: Re: Valgrind updates
+Date: Wed, 28 Jan 2009 15:06:44 -0800
+Message-ID: <69A01114-27BB-4239-8FD8-C35D1306CE25@alumni.caltech.edu>
+References: <alpine.DEB.1.00.0901210105470.19014@racer> <20090121001551.GB18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210119510.19014@racer> <20090121003739.GA18373@coredump.intra.peff.net> <alpine.DEB.1.00.0901210216440.19014@racer> <20090121190757.GB21686@coredump.intra.peff.net> <alpine.DEB.1.00.0901212259420.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901270327200.26199@intel-tinevez-2-302> <alpine.LFD.2.00.0901261934450.3123@localhost.localdomain> <alpine.DEB.1.00.0901270512171.14855@racer> <20090127131404.GA11870@sirena.org.uk> <alpine.DEB.1.00.0901271742430.3586@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901271006060.3123@localhost.localdomain>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 29 00:26:38 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jean-loup Gailly <jloup@gzip.org>,
+	Mark Brown <broonie@sirena.org.uk>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jan 29 00:26:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSJnl-00039j-BY
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 00:26:33 +0100
+	id 1LSJnx-0003EV-ME
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 00:26:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751965AbZA1XZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 18:25:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751826AbZA1XZH
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 18:25:07 -0500
-Received: from main.gmane.org ([80.91.229.2]:50409 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751240AbZA1XZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 18:25:05 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LSJmI-0003oO-DL
-	for git@vger.kernel.org; Wed, 28 Jan 2009 23:25:03 +0000
-Received: from 203.110.235.129 ([203.110.235.129])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Jan 2009 23:25:02 +0000
-Received: from alecclews by 203.110.235.129 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Jan 2009 23:25:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 203.110.235.129 (Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729))
+	id S1752384AbZA1XZV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 18:25:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752050AbZA1XZV
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 18:25:21 -0500
+Received: from quest.jpl.nasa.gov ([137.79.56.36]:52737 "EHLO
+	quest.jpl.nasa.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751826AbZA1XZT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 18:25:19 -0500
+X-Greylist: delayed 1114 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Jan 2009 18:25:19 EST
+Received: from dhcp-79-35-169.jpl.nasa.gov (dhcp-79-35-169.jpl.nasa.gov [137.79.35.169])
+	by quest.jpl.nasa.gov (Postfix) with ESMTP id DF32C3141876;
+	Wed, 28 Jan 2009 15:06:42 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.0901271006060.3123@localhost.localdomain>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107596>
 
-Jeff King <peff <at> peff.net> writes:
-> On Wed, Jan 28, 2009 at 02:10:18PM +1100, Alec Clews wrote:
-> 
-> > Setup:
-> >
-> > I have set up my ..git/info/gitattributes as follows
-> >
-> > *      merge=overwrite
-> 
-> Your setup looks right, except that the correct file is
-> ".git/info/attributes".
+On Jan 27, 2009, at 10:55 AM, Linus Torvalds wrote:
+> and valgrind complains that the "write_buffer()" call will touch an
+> uninitialized byte (just one byte, and in the _middle_ of the  
+> buffer, no
+> less):
 
-Thanks Jeff
+Linus,
 
-I fixed that problem -- however it did not make any difference.
+That is definitely not deflate's intentional use of uninitialized  
+bytes that is noted in the zlib FAQ.  This is something else.
 
-Is there someway to enable logging to see how git is making this choice?
+> Maybe the zlib people can tell us that we're idiots and the above is
+> buggy, but maybe there is a real bug in zlib.
 
-- Alec
+I can't speak to the idiot part, but your usage of deflate is not  
+buggy.  (At least assuming that NULL is all zeros for the compiler in  
+use.)
+
+If this is all correct, it sounds like a serious bug in deflate.  If  
+so, it would have to be a very sneaky bug to not have been discovered  
+over the last decade or so of deflate usage on who knows how many  
+zettabytes of data.  The deflate code has remained largely unchanged  
+in that time, and there really isn't anything unusual about your usage.
+
+I have some questions:
+
+1.  Is this problem reproducible on more than one machine?
+
+2.  Can someone send me the input and the 58 bytes of output from this  
+case?
+
+3.  Did you try decompressing the 58 bytes?
+
+4.  For the detection of an "uninitialized byte", if for example an  
+uninitialized byte is copied to another location, is that location  
+then also considered uninitialized?  Or does uninitialized mean that  
+that location has really never been written to?
+
+5.  Would the access of uninitialized bytes by deflate have been  
+detected?  Since I don't see a mention of uninitialized access before  
+the write_buffer(), does that mean that deflate never did such a thing  
+itself?
+
+Mark
