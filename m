@@ -1,71 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Heads up: rebase -i -p will be made sane again
-Date: Wed, 28 Jan 2009 05:01:56 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901280458590.3586@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0901271012550.14855@racer> <20090127085418.e113ad5a.stephen@exigencecorp.com> <alpine.DEB.1.00.0901280225240.3586@pacific.mpi-cbg.de> <20090127213950.3596ecf9.stephen@exigencecorp.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-pack: Filter unknown commits from alternates of the
+ remote
+Date: Tue, 27 Jan 2009 20:13:26 -0800
+Message-ID: <7vljswxe3d.fsf@gitster.siamese.dyndns.org>
+References: <7vk58gz04l.fsf@gitster.siamese.dyndns.org>
+ <20090128013840.GA7224@atjola.homenet>
+ <7vskn4xfyg.fsf@gitster.siamese.dyndns.org>
+ <20090128035804.GC7503@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Stephen Haberman <stephen@exigencecorp.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 05:03:10 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: PJ Hyett <pjhyett@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 28 05:15:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LS1dt-0006u8-N9
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 05:03:10 +0100
+	id 1LS1pQ-0000kn-OW
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 05:15:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752482AbZA1EBi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 23:01:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752436AbZA1EBi
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 23:01:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57374 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752269AbZA1EBh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 23:01:37 -0500
-Received: (qmail invoked by alias); 28 Jan 2009 04:01:36 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp062) with SMTP; 28 Jan 2009 05:01:36 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+dcwsz/9CdRxdEijz7D3OpCNXTdLNYIHum8jcjq7
-	heQPpom7H1kwHa
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090127213950.3596ecf9.stephen@exigencecorp.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1752305AbZA1ENj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jan 2009 23:13:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752275AbZA1ENj
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 23:13:39 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58645 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751019AbZA1ENi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jan 2009 23:13:38 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8E04B94275;
+	Tue, 27 Jan 2009 23:13:37 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7131594273; Tue,
+ 27 Jan 2009 23:13:29 -0500 (EST)
+In-Reply-To: <20090128035804.GC7503@atjola.homenet> (=?utf-8?Q?Bj=C3=B6rn?=
+ Steinbrink's message of "Wed, 28 Jan 2009 04:58:04 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0971FA12-ECF2-11DD-AF2E-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107469>
 
-Hi,
+Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 
-On Tue, 27 Jan 2009, Stephen Haberman wrote:
+> Uhm, it might be obvious, but what exactly could go wrong?
 
-> > So I adapted my code to find the "dropped" merges in 
-> > git-rebase--interactive, too, for now, but I guess the proper fix is 
-> > something like this:
-> 
-> So, if C, as a merge commit, doesn't get a patch id anymore (right?),
-> does that mean that C is included with A and D in the cherry-picking
-> on top of UPSTREAM (because with no patch id it cannot be recognized
-> as a duplicate)?
+Between the refs and your object store, there is a contract that
+guarantees that everything that is reachable from your refs are complet=
+e
+and you won't hit unreachable object while traversing the reachability
+chain from them.  But your object store can contain other garbage
+objects.  The contract is one of the things "git fsck" checks.
 
-Yep, it gets into the list.  But not with a "pick" command, as a merge it 
-will get a "merge" command.
+Imagine you have fetched from somewhere with a commit walker (e.g. fetc=
+h
+over http), that started fetching from the tip commit and its associate=
+d
+objects, and then got interrupted.  Such a transfer will leave the obje=
+cts
+in your local repository but it is safe because it won't update your re=
+fs.
 
-> So then C' is an empty-commit? This would be fine, I think, or can you 
-> detect that C is a noop somehow without patch ids?
+>> I'd prefer a small helper function to consolidate the duplicated cod=
+e,
+>> like the attached patch, though.  How about doing it like this?
+>
+> Yeah, that looks a lot nicer :-)
 
-Actually, there are three possible outcomes:
+But it was broken.  The initial check feed_object() does with
+has_sha1_file() and NEEDSWORK comment needs to be inside
 
-- it tries to merge an ancestor of HEAD or HEAD itself -> noop
+	if (negative) {
+		if (!has_sha1_file(theirs))
+			return 1;
+		/*
+		 * NEEDSWORK: we should not be satisfied by simply having
+		 * theirs, but should be making sure it is reachable from
+		 * some of our refs.
+		 */
+	}
 
-- it tries to merge which results in a fast-forward -> fine
-
-- it tries to merge and a proper merge is necessary -> may conflict
-
-Ciao,
-Dscho
+to make sure we won't trigger the availability or connectivity check fo=
+r
+positive refs.
