@@ -1,63 +1,59 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: (beginner) git rm
-Date: Wed, 28 Jan 2009 08:03:33 -0500
-Message-ID: <20090128130333.GA11160@mit.edu>
-References: <1233137498146-2231416.post@n2.nabble.com> <Pine.LNX.4.64.0901281133380.645@ds9.cixit.se> <1233140751523-2231622.post@n2.nabble.com> <49804385.908@dbservice.com> <1233144045221-2231849.post@n2.nabble.com> <49804D41.3010801@dbservice.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add --ff-only flag to git-merge
+Date: Wed, 28 Jan 2009 14:26:07 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901281425180.3586@pacific.mpi-cbg.de>
+References: <1233147238-30082-1-git-send-email-nothingmuch@woobling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Zabre <427@free.fr>, git@vger.kernel.org
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 14:05:56 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Yuval Kogman <nothingmuch@woobling.org>
+X-From: git-owner@vger.kernel.org Wed Jan 28 14:27:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSA6L-00045G-V3
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 14:05:48 +0100
+	id 1LSARn-0002z4-Eo
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 14:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752032AbZA1NDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 08:03:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751955AbZA1NDk
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 08:03:40 -0500
-Received: from THUNK.ORG ([69.25.196.29]:38114 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751696AbZA1NDj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 08:03:39 -0500
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1LSA4t-0002eH-8u; Wed, 28 Jan 2009 08:03:35 -0500
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1LSA4r-0003Du-7e; Wed, 28 Jan 2009 08:03:33 -0500
-Content-Disposition: inline
-In-Reply-To: <49804D41.3010801@dbservice.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1751625AbZA1NZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 08:25:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751541AbZA1NZt
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 08:25:49 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53142 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751037AbZA1NZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 08:25:49 -0500
+Received: (qmail invoked by alias); 28 Jan 2009 13:25:46 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp001) with SMTP; 28 Jan 2009 14:25:46 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19nRe0oAeZnOb+bSBJdMUWUMOc/qXn3qHNn5pGlUS
+	dtcmG7xUVI+Tkx
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1233147238-30082-1-git-send-email-nothingmuch@woobling.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107534>
 
-On Wed, Jan 28, 2009 at 01:19:13PM +0100, Tomas Carnecky wrote:
->
-> Oops, sorry. git checkout HEAD -- d.txt
-> You have to tell which version of d.txt you want. In your case the  
-> version in HEAD.
->
+Hi,
 
-I use this command enough that I have this defined as an alias in my
-~/.gitconfig file.  Try running this command:
+On Wed, 28 Jan 2009, Yuval Kogman wrote:
 
-	git config --global alias.revert-file "checkout HEAD --"
+> @@ -1012,6 +1015,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  		finish(o->sha1, msg.buf);
+>  		drop_save();
+>  		return 0;
+> +	} else if ( only_fast_forward ) {
+> +		printf("Merge is non fast forward, aborting.\n");
+> +		return 1;
+>  	} else if (!remoteheads->next && common->next)
 
-Now you will be able to do this:
+If you compare the two if() lines, you will see that you mixed style.
 
-	git revert-file d.txt
-
-This is also useful when I've edited d.txt, and decided that I didn't
-go about it the right away, and so I want to revert my edits.
-
-						- Ted
+Ciao,
+Dscho
