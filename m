@@ -1,59 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 0/3] fix "Funny: git -p submodule summary"
-Date: Wed, 28 Jan 2009 02:17:22 -0500
-Message-ID: <20090128071721.GC19165@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0901081601240.30769@pacific.mpi-cbg.de> <20090127062512.GA10487@coredump.intra.peff.net> <497EDCB0.8080806@kdbg.org> <20090127122315.GA22628@sigill.intra.peff.net> <497F021B.2050306@viscovery.net>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: feature needed imap-send pass as cli switch
+Date: Wed, 28 Jan 2009 02:18:52 -0500
+Message-ID: <81bfc67a0901272318i707b66a0ja20f97df6fe95c73@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Jan 28 08:18:50 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 28 08:20:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LS4hF-0003lw-9f
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 08:18:49 +0100
+	id 1LS4ii-00042B-Kz
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 08:20:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751714AbZA1HRZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 02:17:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbZA1HRY
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 02:17:24 -0500
-Received: from peff.net ([208.65.91.99]:38966 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751292AbZA1HRY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 02:17:24 -0500
-Received: (qmail 19396 invoked by uid 107); 28 Jan 2009 07:17:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 02:17:32 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 02:17:22 -0500
-Content-Disposition: inline
-In-Reply-To: <497F021B.2050306@viscovery.net>
+	id S1751866AbZA1HS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 02:18:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751798AbZA1HSz
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 02:18:55 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:25395 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751754AbZA1HSz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 02:18:55 -0500
+Received: by fg-out-1718.google.com with SMTP id 13so436571fge.17
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 23:18:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=CXaja9LsbHB+KZ743VidqBKF3CBi3bjz9oziCw+Ip6o=;
+        b=OIVL347qVsxYpnjSLfqZ9c+/f9KnM40Ot0PGY++ohTu6KK/8vtlBBFlYyb7PsYEVXb
+         zNz3O4NVLr/WMX++rURTnvJaBrsOFUTe46/Gnk8OtZnTdXKelPEgLoNE/UtXauT1Xy9Y
+         jkE2kPK7c215gfwYkI2ji+nURGmhPHA2n3b98=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=o6+wGyI5LX2sDH6hcd1mA6KI/eUGbPidgfgeZh8KoI7aoOtRGcVEAoAqr2NVW+NpQi
+         FK4uIZfcyuKsCrogxC527ysS6R/y73CW2BcbuDpkxOM4pj92/b83xHvC0aOQw1rFKnZB
+         3q0kjv3fk/UTP5hTQxg3ztNKQDKuzxpx6xR48=
+Received: by 10.223.108.74 with SMTP id e10mr1671978fap.35.1233127132910; Tue, 
+	27 Jan 2009 23:18:52 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107488>
 
-On Tue, Jan 27, 2009 at 01:46:19PM +0100, Johannes Sixt wrote:
+I tend to have my .gitconfig shared on github with a bunch of other
+config files and this has been ok, until submitting a patch here I
+needed to use imap-send, and the only way I see in the documentation
+is to put my email password in .gitconfig, obviously I can't push this
+up to my remote as I usually do. I'd like to see an option to pass the
+password on the cli, either as an input prompt or as just an argument
+to an option, or both. I think storing it in the config file is a
+security risk, storing passwords in plaintext is just bad practice.
 
-> Exit code and start_command/finish_command's return code handling is a
-> complete mess IMHO and deserves a clean-up series of its own. If the few
+if it's already possible could someone share how with me? and perhaps
+patch the documentation to include how.
+-- 
+Caleb Cushing
 
-Yes, the negation is a bit confusing, just for being allowed to say
-
-  if (run_command(foo) < 0)
-
-since you end up having to store and re-negate anyway to get the actual
-code. Plus the value of errno is untrustworthy, since we may have been
-doing cleanup calls.
-
-> codes at 10000 and above are truncated to 8 bits, then we get exit codes
-> 16 and higher; I think that's good enough for this series.
-
-I think it is nice to differentiate between an exit code from the
-sub-program and our own error, though. See my updated series for what I
-think is a reasonable one-liner fix.
-
--Peff
+http://xenoterracide.blogspot.com
