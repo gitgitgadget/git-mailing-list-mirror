@@ -1,149 +1,174 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Heads up: rebase -i -p will be made sane again
-Date: Wed, 28 Jan 2009 02:53:55 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901280225240.3586@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0901271012550.14855@racer> <20090127085418.e113ad5a.stephen@exigencecorp.com>
+From: PJ Hyett <pjhyett@gmail.com>
+Subject: Re: Bad objects error since upgrading GitHub servers to 1.6.1
+Date: Tue, 27 Jan 2009 17:57:49 -0800
+Message-ID: <bab6a2ab0901271757i4602774ahef1d881b7ed58097@mail.gmail.com>
+References: <bab6a2ab0901271504j73dce7afjf8436c3c7c83b770@mail.gmail.com>
+	 <bab6a2ab0901271510y1e3e6912t82ff16e0f912d4b6@mail.gmail.com>
+	 <alpine.DEB.1.00.0901280034310.3586@pacific.mpi-cbg.de>
+	 <20090127233939.GD1321@spearce.org>
+	 <7v1vuo1f6d.fsf@gitster.siamese.dyndns.org>
+	 <bab6a2ab0901271634x7201130bx4a565bd8bea6967b@mail.gmail.com>
+	 <7vvds0z1c1.fsf@gitster.siamese.dyndns.org>
+	 <7vk58gz04l.fsf@gitster.siamese.dyndns.org>
+	 <7vfxj4yzjj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1756046810-1233107636=:3586"
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Stephen Haberman <stephen@exigencecorp.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 02:55:04 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 28 02:59:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRzdu-0007T1-TY
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 02:55:03 +0100
+	id 1LRzi1-0008Q8-MZ
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 02:59:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752026AbZA1Bxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jan 2009 20:53:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbZA1Bxi
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 20:53:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48165 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751190AbZA1Bxh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 20:53:37 -0500
-Received: (qmail invoked by alias); 28 Jan 2009 01:53:35 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp015) with SMTP; 28 Jan 2009 02:53:35 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Ch5hDSt4CC/tqagqOv4ZbIQMjGvVOIvany+sN9r
-	MdaT/8P7e3Ccur
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090127085418.e113ad5a.stephen@exigencecorp.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+	id S1751969AbZA1B5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 20:57:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752065AbZA1B5w
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 20:57:52 -0500
+Received: from rv-out-0506.google.com ([209.85.198.229]:15197 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751598AbZA1B5v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 20:57:51 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so6705180rvb.1
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 17:57:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=rbtHoN0MXuDPskun7WpV9FJoLIPm48kU/1o+nX8WNE0=;
+        b=Nfz7L4YyCqQVRywymWO6Qs8ByE6ZNMwJ/CP6NSoWjK5wAQgz3oZVrspBY15VC1QnbT
+         2BRbrtpHggSGtGBU7sQKVuDPvOSRQ1RGIDBaHN/xSrPqxcGXtpiA/JgjZduBmjaPNh+L
+         FtFTSn2nFFxjtsn0HlmxmKHmOa3vKxb06rdtk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=CRvO4e5Rz+ZX6c3EYUMvE6ZoFchWA0s2uAyJI1ul8K4KzUB7sXKrXLPGuqVBXw6qvT
+         kZSdeoESKbhrCkNBnuv6zDPqbx4fYrJ8HHhkC8X4/BAU22WO4ufV++GCVZWzarG0eyPI
+         ezq/JbPEXe2SWcVZ7Z271/8TL4PSEagCAA3Qk=
+Received: by 10.141.201.1 with SMTP id d1mr1462295rvq.56.1233107869208; Tue, 
+	27 Jan 2009 17:57:49 -0800 (PST)
+In-Reply-To: <7vfxj4yzjj.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107450>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Jan 27, 2009 at 5:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The extra "we also have these" advertisement happened as a result of this
+>> discussion:
+>>
+>>     http://thread.gmane.org/gmane.comp.version-control.git/95072/focus=95256
+>>
+>> I think I know what is going on.
+>>
+>> Consider this sequence of events.
+>>
+>>  (0) Alice creates a project and pushes to public.
+>>
+>>     alice$ cd $HOME/existing-tarball-extract
+>>     alice$ git init
+>>     alice$ git add .
+>>     alice$ git push /pub/alice.git master
+>>
+>>
+>>  (1) Bob forks it.
+>>
+>>     bob$ git clone --bare --reference /pub/alice.git /pub/bob.git
+>
+> I need another /pub/alice.git here, I think, but I hope I got the point
+> across to people who are capable of helping us to resolve this issue.
+>
+>>
+>>  (2) Bob clones his.
+>>
+>>     bob$ cd $HOME && git clone /pub/bob.git bob
+>>
+>>  (3) Alice works more and pushes
+>>
+>>     alice$ edit foo
+>>     alice$ git add foo
+>>     alice$ git commit -a -m 'more'
+>>     alice$ git push /pub/alice.git master
+>>
+>>  (4) Bob works more and tries to push to his.
+>>
+>>     bob$ cd $HOME/bob
+>>     bob$ edit bar
+>>     bob$ git add bar
+>>     bob$ git commit -a -m 'yet more'
+>>     bob$ git push /pub/bob.git master
+>>
+>> Now, the new server advertises the objects reachable from alice's branch
+>> tips as usable cut-off points for pack-objects bob will run when sending.
+>>
+>> And new builtin-send-pack.c has new code that feeds "extra" refs as
+>>
+>>       ^SHA1\n
+>>
+>> to the pack-objects process.
+>>
+>> The latest commit Alice created and pushed into her repository is one such
+>> commit.
+>>
+>> But the problem is that Bob does *NOT* have it.  His "push" will run pack
+>> object telling it that objects reachable from Alice's top commit do not
+>> have to be sent, which was the whole point of doing this new "we also have
+>> these" advertisement, but instead of ignoring that unknown commit,
+>> pack-objects would say "Huh?  I do not even know that commit" and dies.
+>>
+>> This can and should be solved by client updates, as 1.6.1 server can work
+>> with older client just fine.
+>
+> Here is a *wrong* fix that should work most of the time.  It will
+> certainly appear to fix the issue in the above reproduction recipe.
+> You may want to ask your users to try this to see if it makes their
+> symptom disappear.
+>
+> When we receive ".have" advertisement, this wrong fix checks if that
+> object is available locally, and it ignores it otherwise.
+>
+> This won't be acceptable as the official fix.  We should be doing the
+> full connectivity check; in other words, not just "do we have it", but "do
+> we have it *and* is it reachable from any of our own refs".
+>
+>  connect.c |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
+>
+> diff --git c/connect.c w/connect.c
+> index 2f23ab3..8026850 100644
+> --- c/connect.c
+> +++ w/connect.c
+> @@ -43,6 +43,9 @@ int check_ref_type(const struct ref *ref, int flags)
+>
+>  static void add_extra_have(struct extra_have_objects *extra, unsigned char *sha1)
+>  {
+> +       if (!has_sha1_file(sha1))
+> +               return;
+> +
+>        ALLOC_GROW(extra->array, extra->nr + 1, extra->alloc);
+>        hashcpy(&(extra->array[extra->nr][0]), sha1);
+>        extra->nr++;
+>
 
---8323328-1756046810-1233107636=:3586
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+Thank you for your detailed response. To answer your previous
+question, all of the bug reports have been made by users running
+1.6.1.
 
-Hi,
+My concern is that we obviously have no control over what version of
+Git our 50k+ users are running, and we will be perpetually stuck
+running 1.5 on the servers to account for this issue.
 
-On Tue, 27 Jan 2009, Stephen Haberman wrote:
-> 
-> Dscho wroteÖ
-> 
-> > As for the design bug I want to fix: imagine this history:
-> > 
-> >   ------A
-> >  /     /
-> > /     /
-> > ---- B
-> > \     \
-> >  \     \
-> >   C-----D-----E = HEAD
-> > 
-> > A, C and D touch the same file, and A and D agree on the contents.
-> > 
-> > Now, rebase -p A does the following at the moment:
-> > 
-> >   ------A-----E' = HEAD
-> >  /     /
-> > /     /
-> > ---- B
-> > 
-> > In other words, C is truly forgotten, and it is pretended that D never 
-> > happened, either.  That is exactly what test case 2 in t3410 tests for 
-> > [*1*].
-> > 
-> > This is insane.
-> 
-> Agreed.
+Is there any possibility to have the server code in an upcoming
+release account for clients running 1.6.1?
 
-Actually, I misread t3410 a great deal.  The situation is as follows:
-
-    ... UPSTREAM
-           \
-... A - B - C -D
-
-A is a patch the upstream does not have, B is a patch UPSTREAM has,
-and "git diff C^!" (i.e. the diff of C to its first parent) is _also_ 
-identical to a diff of a merge that is in UPSTREAM.
-
-Basically, t3410 tests that after "git rebase -i -p UPSTREAM" and leaving 
-the rebase script as-is, essentially, A and D are cherry-picked on top of 
-UPSTREAM.
-
-> Does this mean you're just getting rid of the code that calls "rev list 
-> --cherry-pick"?
-
-Only now do I understand.
-
-I misread the code for --cherry-pick.  For merges, it adds the diff to the 
-first parent!
-
-I do not know if it really is desirable to have --cherry-pick handle 
-merges at all; I tend to think it is not.
-
-Unfortunately, a short blame session just points to 9c6efa36 done by a 
-sloppy programmer: yours truly.
-
-So I adapted my code to find the "dropped" merges in 
-git-rebase--interactive, too, for now, but I guess the proper fix is 
-something like this:
-
--- snipsnap --
-[PATCH] --cherry-pick: do not skip merges, ever
-
-Currently, --cherry-pick has no problem getting a patch id for merge 
-commits: it calculated as the patch id of the patch between the first 
-parent and the merge commit.
-
-Of course, this is bogus, as it completely misses the fact that the
-merge commit has other parents, too, and therefore a single patch id
-would be wrong.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- patch-ids.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/patch-ids.c b/patch-ids.c
-index 3be5d31..808a7f0 100644
---- a/patch-ids.c
-+++ b/patch-ids.c
-@@ -6,9 +6,12 @@
- static int commit_patch_id(struct commit *commit, struct diff_options *options,
- 		    unsigned char *sha1)
- {
--	if (commit->parents)
-+	if (commit->parents) {
-+		if (commit->parents->next)
-+			return 0; /* merges do not have a patch id */
- 		diff_tree_sha1(commit->parents->item->object.sha1,
- 		               commit->object.sha1, "", options);
-+	}
- 	else
- 		diff_root_tree_sha1(commit->object.sha1, "", options);
- 	diffcore_std(options);
---8323328-1756046810-1233107636=:3586--
+-PJ
