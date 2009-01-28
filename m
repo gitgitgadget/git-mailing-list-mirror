@@ -1,62 +1,68 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: Re: git clone ssh:// auth failiure
-Date: Wed, 28 Jan 2009 10:06:55 +0000 (UTC)
-Message-ID: <glpanv$fs5$1@ger.gmane.org>
-References: <197294.49807.qm@web35708.mail.mud.yahoo.com>
+From: Zabre <427@free.fr>
+Subject: (beginner) git rm
+Date: Wed, 28 Jan 2009 02:11:38 -0800 (PST)
+Message-ID: <1233137498146-2231416.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 28 11:08:34 2009
+X-From: git-owner@vger.kernel.org Wed Jan 28 11:13:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LS7LV-0006OJ-Pp
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 11:08:34 +0100
+	id 1LS7Ps-0007fM-13
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 11:13:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751282AbZA1KHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 05:07:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbZA1KHK
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 05:07:10 -0500
-Received: from main.gmane.org ([80.91.229.2]:33968 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750862AbZA1KHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 05:07:08 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LS7K5-00033c-UI
-	for git@vger.kernel.org; Wed, 28 Jan 2009 10:07:05 +0000
-Received: from u-4-010.vpn.rwth-aachen.de ([137.226.100.10])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Jan 2009 10:07:05 +0000
-Received: from heipei by u-4-010.vpn.rwth-aachen.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Jan 2009 10:07:05 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: u-4-010.vpn.rwth-aachen.de
-User-Agent: slrn/0.9.9p1 (Linux)
+	id S1751212AbZA1KLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 05:11:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751123AbZA1KLj
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 05:11:39 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:40876 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002AbZA1KLi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 05:11:38 -0500
+Received: from tervel.nabble.com ([192.168.236.150])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1LS7OU-00066P-4t
+	for git@vger.kernel.org; Wed, 28 Jan 2009 02:11:38 -0800
+X-Nabble-From: 427@free.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107521>
 
-On 2009-01-28, Arya, Manish Kumar <m.arya@yahoo.com> wrote:
-> root@dcb0:~# git clone ssh://localhost/~/testproject manish
-You are aware that youre calling ssh as root, and that ssh will try to 
-login to localhost as user "root"? A lot of sshd installations do not 
-allow this by default.
 
-> Permission denied 
-> (gssapi-keyex,gssapi-with-mic,publickey,keyboard-interactive).
-This is an ssh-error, has nothing to do with git
+Hi,
 
-Greetings, Jojo (from a Nokia N810, yuk)
+I am learning git and there is something I don't get : why a file deleted in
+a branch gets also deleted in my master?
+(For the moment I'm only working locally, no remote repository)
 
+I have a master branch containing 4 text files called a.txt , b.txt , c.txt
+, d.txt . (in HEAD)
+
+I create a new branch from there (masters HEAD) and go to this new branch.
+$ git branch new
+$ git checkout new
+
+I delete one file in the new branch
+$ git rm d.txt
+$ ls
+a.txt b.txt c.txt
+
+Then I go back to the master branch and list the files there
+$ git checkout master
+$ls
+a.txt b.txt c.txt
+
+I have not modified the master branch, why is d.txt deleted there also?
+
+There must be something I did not understand in git behaviour (something to
+do with the index?)
+Thank you for your help.
 -- 
-Johannes Gilger <heipei@hackvalue.de>
-http://hackvalue.de/heipei/
-GPG-Key: 0x42F6DE81
-GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
+View this message in context: http://n2.nabble.com/%28beginner%29-git-rm-tp2231416p2231416.html
+Sent from the git mailing list archive at Nabble.com.
