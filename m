@@ -1,48 +1,62 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/2] git-am: emit usage when called w/o arguments
-	and w/o patch on stdin
-Date: Wed, 28 Jan 2009 12:51:06 -0500
-Message-ID: <20090128175106.GD8863@coredump.intra.peff.net>
-References: <1233154990-19745-1-git-send-email-jaysoffian@gmail.com> <780A42F8-E27C-404A-945C-38C16378EF57@ai.rug.nl>
+Subject: Re: Honoring a checked out gitattributes file
+Date: Wed, 28 Jan 2009 12:55:45 -0500
+Message-ID: <20090128175545.GE8863@coredump.intra.peff.net>
+References: <498078F1.20807@trolltech.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, sverre@rabbelier.nl
-To: Pieter de Bie <pdebie@ai.rug.nl>
-X-From: git-owner@vger.kernel.org Wed Jan 28 18:52:53 2009
+Cc: git <git@vger.kernel.org>
+To: Kristian Amlie <kristian.amlie@trolltech.com>
+X-From: git-owner@vger.kernel.org Wed Jan 28 18:57:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSEaZ-00035a-Gj
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 18:52:36 +0100
+	id 1LSEfR-0005Dv-Cp
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 18:57:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285AbZA1RvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 12:51:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753187AbZA1RvJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 12:51:09 -0500
-Received: from peff.net ([208.65.91.99]:40348 "EHLO peff.net"
+	id S1751870AbZA1Rzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 12:55:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbZA1Rzs
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 12:55:48 -0500
+Received: from peff.net ([208.65.91.99]:52089 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752911AbZA1RvI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 12:51:08 -0500
-Received: (qmail 24247 invoked by uid 107); 28 Jan 2009 17:51:17 -0000
+	id S1750988AbZA1Rzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 12:55:47 -0500
+Received: (qmail 24290 invoked by uid 107); 28 Jan 2009 17:55:56 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 12:51:17 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 12:51:06 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 12:55:56 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 12:55:45 -0500
 Content-Disposition: inline
-In-Reply-To: <780A42F8-E27C-404A-945C-38C16378EF57@ai.rug.nl>
+In-Reply-To: <498078F1.20807@trolltech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107554>
 
-On Wed, Jan 28, 2009 at 04:18:30PM +0000, Pieter de Bie wrote:
+On Wed, Jan 28, 2009 at 04:25:37PM +0100, Kristian Amlie wrote:
 
-> FWIW, I sometimes like to run 'git am', paste in a patch and hit ctrl-d.
+> However, if the .gitattributes file is also checked in to the branch, it
+> will not always be honored. I browsed the code a bit, and it seems to
+> happen whenever there is an existing .gitattributes file, but the
+> checkout adds new files to it. These new files will not get the correct
+> line endings (although I'm not sure if it happens *every* time, it could
+> depend on the order they are checked out).
 
-I have to admit, I usually am opposed to this sort of terminal DWIMmery
-for exactly that reason. But I don't personally ever cut and paste into
-git-am, so I was trying not to raise a fuss. ;)
+This is a known limitation of gitattributes. There has been some
+discussion in the past on how it should work, but I don't recall the
+specifics; try searching the list archive. I think it is really just
+waiting for somebody to step up and write some patches.
+
+As a workaround, you might be able to do something like:
+
+  branch=master
+  git show $branch:.gitattributes >.git/info/attributes
+  git checkout $branch
+
+which is very hacky, but might work depending on your setup. Notably it
+will overwrite any actual use you were making of .git/info/attributes,
+and it will not respect any .gitattributes files in subdirectories.
 
 -Peff
