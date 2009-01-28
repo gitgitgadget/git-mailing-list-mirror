@@ -1,76 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git 1.6.1 on AIX 5.3
-Date: Wed, 28 Jan 2009 02:01:14 -0500
-Message-ID: <20090128070114.GB19165@coredump.intra.peff.net>
-References: <A8D76E61-4442-4640-BD0C-84085375E6F1@gmail.com> <20090126210027.GG27604@coredump.intra.peff.net> <e2b179460901261432r601fa006iaf04fc42487e7235@mail.gmail.com> <9E98493A-B17A-4905-8BEA-3E0B837961D6@gmail.com> <e2b179460901270210q69fe1e42xb801553e4e9005e9@mail.gmail.com> <BAD975AD-323D-4278-8405-0B57E7202797@gmail.com>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: Re: [PATCH] mergetool merge/skip/abort at prompt
+Date: Wed, 28 Jan 2009 02:01:45 -0500
+Message-ID: <81bfc67a0901272301y88162f6xc255195d59765ff@mail.gmail.com>
+References: <81bfc67a0901272256t726bf206k351bb6c8b2778bd5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Mike Ralphson <mike.ralphson@gmail.com>, git@vger.kernel.org
-To: Perry Smith <pedzsan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 08:02:47 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>,
+	Charles Bailey <charles@hashpling.org>, git@vger.kernel.org,
+	Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Jan 28 08:03:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LS4Rf-0000mR-0j
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 08:02:43 +0100
+	id 1LS4SO-0000uP-PW
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 08:03:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754616AbZA1HBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 02:01:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754514AbZA1HBR
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 02:01:17 -0500
-Received: from peff.net ([208.65.91.99]:56060 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753389AbZA1HBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 02:01:16 -0500
-Received: (qmail 19302 invoked by uid 107); 28 Jan 2009 07:01:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 02:01:25 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 02:01:14 -0500
-Content-Disposition: inline
-In-Reply-To: <BAD975AD-323D-4278-8405-0B57E7202797@gmail.com>
+	id S1752152AbZA1HBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 02:01:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752138AbZA1HBt
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 02:01:49 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:35383 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752026AbZA1HBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 02:01:48 -0500
+Received: by fg-out-1718.google.com with SMTP id 13so431414fge.17
+        for <git@vger.kernel.org>; Tue, 27 Jan 2009 23:01:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=Qn3hvwNqodtO8DVF/Pc7e5JtJuR1kyRffIbIaDme0Ek=;
+        b=TuBpbSe4uBWHY7JltlH5sJwI1I9wo08enxxSRutJp78x1ZliN3KPHGIQNu/hDQMofj
+         d3jJ8R8J8E/zG6IfZNbMGuyUL3S4bryhzZiRTXSXJH+YVKBG7jvXrf6JClYo41gO5Ecs
+         6c6CLJKHaq1JIXbjqWjEx0CaqolxghAvBFd1s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=ZWg9ES49jrUihgweFNV5iGd66+/siYttk7iGTow6hJ9FThbxPUyxaCFTa2zLZKwXM+
+         dd/8J4S5GoBcZQWMc0qGsaupEfEEGgS/vCadIIYVsvKlQmpx3AoL51Q9HgCia9WVLSkq
+         ci+Amx/3GCYs0VYApNgVTK9oGYi5St2qm+P7E=
+Received: by 10.223.120.197 with SMTP id e5mr2558009far.25.1233126106445; Tue, 
+	27 Jan 2009 23:01:46 -0800 (PST)
+In-Reply-To: <81bfc67a0901272256t726bf206k351bb6c8b2778bd5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107485>
 
-On Tue, Jan 27, 2009 at 07:35:00PM -0600, Perry Smith wrote:
-
-> Just to be sure we are on the same page.  My directory structure has a
-> top/src/git-1.6.1 and top/build/git.1.6.1.  The src/git-1.6.1 is the
-> tar ball.  The  build/git-1.6.1 starts out empty.  I cd into it and
-> then do: ../../src/git-1.6.1/configure <options>  After this
-> completes, you can do "make".
-
-I don't see how this would work without automake support, which git does
-not have. The configure script just generates a config.mak.autogen file,
-which is included by the Makefile. So you have no Makefile in your build
-directory.
-
-> About 90% of the open source configure / autoconf code out there can
-> do this with.  The other 10% you can not.  I like it because when
-> things die, its easier to grep around the source tree and I blow away
-> the build directory and start back over and I know that I'm starting
-> fresh.
-
-Another way of solving the same problem:
-
-  cd untarred-sources
-  git init
-  git add .
-  git commit -m 'pristine sources'
-
-Now you can use "git clean" to clean up cruft, not to mention the usual
-git stuff like tracking any changes you've made and submitting any
-patches upstream.
-
-> I get further.  But now test 10 of t0001.sh fails because test_cmp can
-> not be found.
->
-> Is that a GNU tool?  (I didn't see it in git or coreutils.)
-
-It's a shell function defined in test-lib.sh (which is sourced by all of
-the test scripts).
-
--Peff
+better? I think I got the formatting fixed... got the imap working...
+added a more descriptive commit message. hoping that everything looks
+good.
