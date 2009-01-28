@@ -1,88 +1,146 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: [PATCH] send-pack: Filter unknown commits from alternates of the
-	remote
-Date: Wed, 28 Jan 2009 02:38:40 +0100
-Message-ID: <20090128013840.GA7224@atjola.homenet>
-References: <7vk58gz04l.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bad objects error since upgrading GitHub servers to 1.6.1
+Date: Tue, 27 Jan 2009 17:44:48 -0800
+Message-ID: <7vfxj4yzjj.fsf@gitster.siamese.dyndns.org>
+References: <bab6a2ab0901271504j73dce7afjf8436c3c7c83b770@mail.gmail.com>
+ <bab6a2ab0901271510y1e3e6912t82ff16e0f912d4b6@mail.gmail.com>
+ <alpine.DEB.1.00.0901280034310.3586@pacific.mpi-cbg.de>
+ <20090127233939.GD1321@spearce.org>
+ <7v1vuo1f6d.fsf@gitster.siamese.dyndns.org>
+ <bab6a2ab0901271634x7201130bx4a565bd8bea6967b@mail.gmail.com>
+ <7vvds0z1c1.fsf@gitster.siamese.dyndns.org>
+ <7vk58gz04l.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: PJ Hyett <pjhyett@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 28 02:41:17 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, PJ Hyett <pjhyett@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 28 02:46:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LRzQO-0004Bo-80
-	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 02:41:04 +0100
+	id 1LRzVX-0005ed-QD
+	for gcvg-git-2@gmane.org; Wed, 28 Jan 2009 02:46:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887AbZA1Bjk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jan 2009 20:39:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751842AbZA1Bjj
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 20:39:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41808 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751708AbZA1Bjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jan 2009 20:39:39 -0500
-Received: (qmail invoked by alias); 28 Jan 2009 01:39:37 -0000
-Received: from i577BB3F1.versanet.de (EHLO atjola.local) [87.123.179.241]
-  by mail.gmx.net (mp041) with SMTP; 28 Jan 2009 02:39:37 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19rb0dRzCVrbynD7+0o7Q9lRelBaCxwKXz4YBwJIH
-	2bMkoqAJjJ8Fgj
-Content-Disposition: inline
-In-Reply-To: <7vk58gz04l.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1752002AbZA1Bo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jan 2009 20:44:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751987AbZA1Bo6
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Jan 2009 20:44:58 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57679 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751971AbZA1Bo5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jan 2009 20:44:57 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 63DF01D6C7;
+	Tue, 27 Jan 2009 20:44:56 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7A2611D6C2; Tue,
+ 27 Jan 2009 20:44:50 -0500 (EST)
+In-Reply-To: <7vk58gz04l.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 27 Jan 2009 17:32:10 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 4402FF7E-ECDD-11DD-A3CD-0372113D384A-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107446>
 
-Since 40c155ff14c, receive-pack on the remote also sends refs from its
-alternates. Unfortunately, we don't filter commits that don't exist in =
-the
-local repository from that list.  This made us pass those unknown commi=
-ts
-to pack-objects, causing it to fail with a "bad object" error.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
----
- builtin-send-pack.c |   14 +++++++++-----
- 1 files changed, 9 insertions(+), 5 deletions(-)
+> The extra "we also have these" advertisement happened as a result of this
+> discussion:
+>
+>     http://thread.gmane.org/gmane.comp.version-control.git/95072/focus=95256
+>
+> I think I know what is going on.
+>
+> Consider this sequence of events.
+>
+>  (0) Alice creates a project and pushes to public.
+>
+>     alice$ cd $HOME/existing-tarball-extract
+>     alice$ git init
+>     alice$ git add .
+>     alice$ git push /pub/alice.git master
+>     
+>
+>  (1) Bob forks it.
+>
+>     bob$ git clone --bare --reference /pub/alice.git /pub/bob.git
 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index a9fdbf9..10d7016 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -52,11 +52,15 @@ static int pack_objects(int fd, struct ref *refs, s=
-truct extra_have_objects *ext
- 	 * parameters by writing to the pipe.
- 	 */
- 	for (i =3D 0; i < extra->nr; i++) {
--		memcpy(buf + 1, sha1_to_hex(&extra->array[i][0]), 40);
--		buf[0] =3D '^';
--		buf[41] =3D '\n';
--		if (!write_or_whine(po.in, buf, 42, "send-pack: send refs"))
--			break;
-+		if (!is_null_sha1(&extra->array[i][0]) &&
-+		    has_sha1_file(&extra->array[i][0])) {
-+			memcpy(buf + 1, sha1_to_hex(&extra->array[i][0]), 40);
-+			buf[0] =3D '^';
-+			buf[41] =3D '\n';
-+			if (!write_or_whine(po.in, buf, 42,
-+						"send-pack: send refs"))
-+				break;
-+		}
- 	}
-=20
- 	while (refs) {
---=20
-1.6.1.284.g5dc13.dirty
+I need another /pub/alice.git here, I think, but I hope I got the point
+across to people who are capable of helping us to resolve this issue.
+
+>
+>  (2) Bob clones his.
+>
+>     bob$ cd $HOME && git clone /pub/bob.git bob
+>
+>  (3) Alice works more and pushes
+>
+>     alice$ edit foo
+>     alice$ git add foo
+>     alice$ git commit -a -m 'more'
+>     alice$ git push /pub/alice.git master
+>
+>  (4) Bob works more and tries to push to his.
+>
+>     bob$ cd $HOME/bob
+>     bob$ edit bar
+>     bob$ git add bar
+>     bob$ git commit -a -m 'yet more'
+>     bob$ git push /pub/bob.git master
+>
+> Now, the new server advertises the objects reachable from alice's branch
+> tips as usable cut-off points for pack-objects bob will run when sending.
+>
+> And new builtin-send-pack.c has new code that feeds "extra" refs as
+>
+> 	^SHA1\n
+>
+> to the pack-objects process.
+>
+> The latest commit Alice created and pushed into her repository is one such
+> commit.
+>
+> But the problem is that Bob does *NOT* have it.  His "push" will run pack
+> object telling it that objects reachable from Alice's top commit do not
+> have to be sent, which was the whole point of doing this new "we also have
+> these" advertisement, but instead of ignoring that unknown commit,
+> pack-objects would say "Huh?  I do not even know that commit" and dies.
+>
+> This can and should be solved by client updates, as 1.6.1 server can work
+> with older client just fine.
+
+Here is a *wrong* fix that should work most of the time.  It will
+certainly appear to fix the issue in the above reproduction recipe.
+You may want to ask your users to try this to see if it makes their
+symptom disappear.
+
+When we receive ".have" advertisement, this wrong fix checks if that
+object is available locally, and it ignores it otherwise.
+
+This won't be acceptable as the official fix.  We should be doing the
+full connectivity check; in other words, not just "do we have it", but "do
+we have it *and* is it reachable from any of our own refs".
+
+ connect.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git c/connect.c w/connect.c
+index 2f23ab3..8026850 100644
+--- c/connect.c
++++ w/connect.c
+@@ -43,6 +43,9 @@ int check_ref_type(const struct ref *ref, int flags)
+ 
+ static void add_extra_have(struct extra_have_objects *extra, unsigned char *sha1)
+ {
++	if (!has_sha1_file(sha1))
++		return;
++
+ 	ALLOC_GROW(extra->array, extra->nr + 1, extra->alloc);
+ 	hashcpy(&(extra->array[extra->nr][0]), sha1);
+ 	extra->nr++;
