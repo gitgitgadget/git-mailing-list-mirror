@@ -1,71 +1,64 @@
-From: Zabre <427@free.fr>
-Subject: Force commit date
-Date: Thu, 29 Jan 2009 10:30:17 -0800 (PST)
-Message-ID: <1233253817209-2240539.post@n2.nabble.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Force commit date
+Date: Thu, 29 Jan 2009 19:37:25 +0100
+Message-ID: <bd6139dc0901291037h46a75446occ3004d2ff58d889@mail.gmail.com>
+References: <1233253817209-2240539.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 29 19:31:57 2009
+Cc: git@vger.kernel.org
+To: Zabre <427@free.fr>
+X-From: git-owner@vger.kernel.org Thu Jan 29 19:38:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSbg1-0007MF-Kb
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 19:31:46 +0100
+	id 1LSbmv-0001VF-FI
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 19:38:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752340AbZA2SaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 13:30:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbZA2SaS
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 13:30:18 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:48479 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751769AbZA2SaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 13:30:18 -0500
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1LSbeb-0006Hy-70
-	for git@vger.kernel.org; Thu, 29 Jan 2009 10:30:17 -0800
-X-Nabble-From: 427@free.fr
+	id S1751375AbZA2Sh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 13:37:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbZA2Sh1
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 13:37:27 -0500
+Received: from yw-out-2324.google.com ([74.125.46.30]:40331 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751022AbZA2Sh0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 13:37:26 -0500
+Received: by yw-out-2324.google.com with SMTP id 9so29612ywe.1
+        for <git@vger.kernel.org>; Thu, 29 Jan 2009 10:37:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=eXYYC0XI39+vIdLnqF+uVY920pVkGIWyLUrmJSCj0gU=;
+        b=wm0924PaHTm5CulPSzKsBMosDF3s4z4zLlS8a+yH74tf9uOENzswshcMYf5bv9W6CY
+         LLLFGlayjIfgu94rZ/9oPD1unEOc+6uZxOaFyuqd+xckqQLeHbJ9f3GcdR++ksBETqQ3
+         BGlA5kKfbm1Wzjznwuy/f78P54Y41OzW9rVEQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=XMScVvAkxC9UajGVBw2XYGmJL8XRD6dQBC7t/dcC9B42xSZ20raREGOmkWGJJv8jOr
+         h6roN2EfHYYv6nUj5T1+0ShnAWJy9re6k06HBA/iOx9PNDZGyc2bfMxbX8qwWj/EdtCe
+         sG3f00QWMaCuN0f8DemlU8cwZWcFMOsINK4o8=
+Received: by 10.151.143.3 with SMTP id v3mr358553ybn.109.1233254245437; Thu, 
+	29 Jan 2009 10:37:25 -0800 (PST)
+In-Reply-To: <1233253817209-2240539.post@n2.nabble.com>
+X-Google-Sender-Auth: ecc251a1ed179559
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107709>
 
+On Thu, Jan 29, 2009 at 19:30, Zabre <427@free.fr> wrote:
+> There might be an option I am not aware of.
 
-Hi all,
+Indeed, try 'import-tars.perl' in the /contrib directory of git.git :).
 
-Some time ago, I used to make 7zip backups of my project directory to keep
-an history of my changes. (I've kept all of them in separated 7z files) I
-was then living in darkness. (Even though I tried svn but was somehow not
-happy with it) Now I've found the light, and git is the best tool around
-(along with Hg I guess).
-
-I am learning git at the moment and I would like to restore all my 7zipped
-backups one after the other, use meld to apply each change in the code +
-directory structure and then git to commit each of them, chronologically, to
-finally obtain a complete git history of my changes (I even have "commit
-commentaries" in a special text file, yes I tried to do things properly with
-basic tools.)
-
-This should be feasible, but what would be very cool in this very special
-case is if I could force the commit date to reflect the real date each
-"commit" (read : "zip") was done with my old method in last year, and not
-the date of my convertion to git.
-
-If it is not, that's not a big deal, but I'd really like to know how to do
-this, and have my different projects on a git history. (I even have one or
-two "secondary branches")
-
-There might be an option I am not aware of.
-(I have seen on this forum / mailing list some people playing with dates but
-it was the case of mailboxes and "git am")
-http://n2.nabble.com/how-to-force-a-commit-date-matching-info-from-a-mbox---td2200613.html
-Remember I'm a beginner trying to learn git, so please bear with me.
-
-Thank you!
 -- 
-View this message in context: http://n2.nabble.com/Force-commit-date-tp2240539p2240539.html
-Sent from the git mailing list archive at Nabble.com.
+Cheers,
+
+Sverre Rabbelier
