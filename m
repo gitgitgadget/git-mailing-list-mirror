@@ -1,75 +1,109 @@
-From: "Raimund Berger" <raimund.berger@gmail.com>
-Subject: Newbie question regarding 3way merge order.
-Date: Thu, 29 Jan 2009 23:25:00 +0100
-Message-ID: <871vulda2r.fsf@gigli.quasi.internal>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add --ff-only flag to git-merge
+Date: Thu, 29 Jan 2009 14:29:05 -0800
+Message-ID: <7vbptpeoge.fsf@gitster.siamese.dyndns.org>
+References: <1233147238-30082-1-git-send-email-nothingmuch@woobling.org>
+ <7vk58fm8x2.fsf@gitster.siamese.dyndns.org>
+ <a891e1bd0901291257t774af061s84497cde8f4bf61c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 29 23:27:28 2009
+Cc: git@vger.kernel.org
+To: Yuval Kogman <nothingmuch@woobling.org>
+X-From: git-owner@vger.kernel.org Thu Jan 29 23:32:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSfLF-0001XQ-Ub
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 23:26:34 +0100
+	id 1LSfPF-0003jK-1E
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 23:30:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754549AbZA2WZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 17:25:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754326AbZA2WZH
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 17:25:07 -0500
-Received: from ey-out-2122.google.com ([74.125.78.26]:47054 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752419AbZA2WZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 17:25:05 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so55351eya.37
-        for <git@vger.kernel.org>; Thu, 29 Jan 2009 14:25:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :message-id:user-agent:mime-version:content-type;
-        bh=9rujUO10NhauYllrtF3+h62egnUky8XqUSvIFsPOcLs=;
-        b=IeYXeWgOPIBpxJa5XkfIvzQFxoFchmqAXUKghnqBJ9gjir9uBcqyYIvNHLNpDKCHUM
-         w5lymk0qZq0Y2ENh1ET68g4RRatVsDk28xe5t/WB/J6ruHpwcIbstcPsdOID6k3/5LP6
-         W22xab3ZB9xmC82ah/j6WeIGjSNI3KWs3FGQ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:user-agent:mime-version
-         :content-type;
-        b=n7dC+dDuOcCIWPcZJ+xZzk2uaz9hXpO0CNEiARA1TCwMNXuxnwxOSWRscXuz1ODX/T
-         ZUJOPdJWJC3T/+kB8FEL3DYEWCgjyLx/Cx1pqmHo27SPc9Ch7Bp2VqO/KOpKiO8sjJE5
-         +HdNHCQwFsPNc1+QKypl+QvlsVarvTE0urEBE=
-Received: by 10.103.223.2 with SMTP id a2mr291845mur.4.1233267903041;
-        Thu, 29 Jan 2009 14:25:03 -0800 (PST)
-Received: from gigli.quasi.internal (p5DC32079.dip.t-dialin.net [93.195.32.121])
-        by mx.google.com with ESMTPS id 12sm322841muq.23.2009.01.29.14.25.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 29 Jan 2009 14:25:02 -0800 (PST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+	id S1755519AbZA2W3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 17:29:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755323AbZA2W3N
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 17:29:13 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64913 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754365AbZA2W3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 17:29:12 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0E4C62A090;
+	Thu, 29 Jan 2009 17:29:10 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3863D2A08F; Thu,
+ 29 Jan 2009 17:29:07 -0500 (EST)
+In-Reply-To: <a891e1bd0901291257t774af061s84497cde8f4bf61c@mail.gmail.com>
+ (Yuval Kogman's message of "Thu, 29 Jan 2009 22:57:43 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3F77D0BA-EE54-11DD-9D3D-F63E8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107738>
+
+Yuval Kogman <nothingmuch@woobling.org> writes:
+
+> I started incorperating your feedback but before I send a new patch I
+> have several questions about the trickier bits:
+>
+> 2009/1/28 Junio C Hamano <gitster@pobox.com>:
+>
+>>  * The placement of this misses the case where a merge of two unrelated
+>>   histories is attempted.  You would need to also have a check at "No
+>>   common ancestors found. We need a real merge." part.
+>
+> Won't that fall through? The if (!common) is above, and this is
+> eventually an else if for it (see line 978)
+
+When "if (!common)" is true, the empty statement ";" is executed, and all
+its "else if" conditional arms will be skipped.  Is that what you want to
+happen?
+
+>> The octopus
+>>   codepath could also end up with a fast forward or up-to-date.
+>
+> So this case is obviously more convoluted... If an octopus merge is
+> chosen should it just pass --ff-only to git-merge-octopus? Or maybe it
+> should always pass --ff-only and the various different strategies
+> would just die unconditionally?
+
+I was referring to this part:
+
+	} else {
+		/*
+		 * An octopus.  If we can reach all the remote we are up
+		 * to date.
+		 */
+		int up_to_date = 1;
+		...
+		if (up_to_date) {
+			finish_up_to_date("Already up-to-date. Yeeah!");
+			return 0;
+		}
+	}
+
+You do not want to fail this case, where you tried to merge others that
+have already been merged, when --ff-only is given, do you?  After all, all
+that you are interested in is "do not create a new merge commit".
+
+If you scroll down a bit from there, you will see:
 
 
-Hi guys
+	/* We are going to make a new commit. */
+	git_committer_info(IDENT_ERROR_ON_NO_NAME);
 
-I got a dumb question for you to wholeheartedly laugh at, and to which
-the answer seems to be so self evident. I'd still like a possibly
-authoritative statement though, just for the books.
+	/*
+	 * At this point, we need a real merge.  No matter what strategy
+	 * we use, it would operate on the index, possibly affecting the
 
-The question is whether a (3way) merge is commutative, purely in terms
-of content (i.e. disregarding commit history for now). Iow if no matter
-in which order I merge A and B, i.e. A into B or B into A, I'd be
-guaranteed to arrive at the same content.
+This is where "if (!common) ;" will fall through to.
 
-If yes, a followup question would be if the merge machinery sitting
-beneath rebase is exactly the same as that of a standard merge.
+If your goal is to prevent the user from creating a new merge commit,
+the logical place to do so would be immediately before that comment,
+independent from all the if..elseif..fi conditional arms that come before
+it, I think.
 
-The reason I ask is obvious I guess. What basically interests me is if I
-gave a bunch of topic branches exposure on a test branch and, after
-resolving issues, applied them to stable, that I could be 100% sure to
-not introduce new issues content wise just by applying merges in a
-different order or form (rebase, patch set).
-
-Thanks for feedback, Raimund.
+You also need to disable allow_trivial when ff-only is given, but I think
+that goes without saying.  If you do not want to allow creating a new
+merge commit, you do not want even a trivial merge to happen.
