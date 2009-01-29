@@ -1,55 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Johannes Gilger <heipei@hackvalue.de>
 Subject: Re: "git gc" removes ".git/refs/heads/master".
-Date: Thu, 29 Jan 2009 20:50:33 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901292050050.3586@pacific.mpi-cbg.de>
+Date: Thu, 29 Jan 2009 19:51:17 +0000 (UTC)
+Message-ID: <glt1bl$mal$1@ger.gmane.org>
 References: <83c97f59a5a5e59f908f3fc125d26adb@lunox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Bernd Lommerzheim <bernd@lommerzheim.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 20:51:50 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 29 20:52:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LScvO-00028B-BO
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 20:51:42 +0100
+	id 1LScwa-0002fR-Vx
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 20:52:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756153AbZA2TuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 14:50:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755832AbZA2TuS
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 14:50:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46737 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755041AbZA2TuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 14:50:17 -0500
-Received: (qmail invoked by alias); 29 Jan 2009 19:50:11 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp057) with SMTP; 29 Jan 2009 20:50:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19PMihuLpVPvg07yAtaS8+aVCPQFL2WvOEab2Wjnt
-	2UfnPjvR+xUEPt
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <83c97f59a5a5e59f908f3fc125d26adb@lunox.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1752511AbZA2Tvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 14:51:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752479AbZA2Tva
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 14:51:30 -0500
+Received: from main.gmane.org ([80.91.229.2]:55921 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751441AbZA2Tva (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 14:51:30 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LScv9-0006SW-AF
+	for git@vger.kernel.org; Thu, 29 Jan 2009 19:51:27 +0000
+Received: from u-4-224.vpn.rwth-aachen.de ([137.226.100.224])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Jan 2009 19:51:27 +0000
+Received: from heipei by u-4-224.vpn.rwth-aachen.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Jan 2009 19:51:27 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: u-4-224.vpn.rwth-aachen.de
+User-Agent: slrn/0.9.9p1 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107723>
 
-Hi,
+On 2009-01-29, Bernd Lommerzheim <bernd@lommerzheim.com> wrote:
+> maybe I found a bug in git. When I execute "git gc" in my local repository,
+> git removes the file ".git/refs/heads/master". Is this an intended behavior
+> (but why?) or is that a bug?
 
-On Thu, 29 Jan 2009, Bernd Lommerzheim wrote:
+Good question, and I just found that one out myself. The ref has been 
+"packed" (git help pack-refs) and can be found in .git/packed-refs. Hope 
+that answers your question.
 
-> maybe I found a bug in git. When I execute "git gc" in my local 
-> repository, git removes the file ".git/refs/heads/master". Is this an 
-> intended behavior (but why?) or is that a bug?
+Greetings,
+Jojo
 
-No, it packs the refs.  You have no business accessing files in .git/ 
-directly :-)
-
-Ciao,
-Dscho
+-- 
+Johannes Gilger <heipei@hackvalue.de>
+http://hackvalue.de/heipei/
+GPG-Key: 0x42F6DE81
+GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
