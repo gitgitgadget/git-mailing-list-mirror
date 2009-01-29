@@ -1,107 +1,93 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: how to clean up remote/ref
-Date: Thu, 29 Jan 2009 23:42:17 +0800
-Message-ID: <20090129154217.GA9435@b2j>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Appropriateness of git for digital video production versioning
+Date: Thu, 29 Jan 2009 07:45:36 -0800
+Message-ID: <20090129154536.GC26880@spearce.org>
+References: <8c4a72800901290736p4952e53byddca243f300dd8af@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 29 16:44:03 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Charles Earl <charles.cearl@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 16:47:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSZ3c-00087P-7r
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 16:43:56 +0100
+	id 1LSZ6f-0000zf-Ee
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 16:47:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135AbZA2Pm0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jan 2009 10:42:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbZA2Pm0
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 10:42:26 -0500
-Received: from po-out-1718.google.com ([72.14.252.152]:56232 "EHLO
-	po-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752622AbZA2PmZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 10:42:25 -0500
-Received: by po-out-1718.google.com with SMTP id c31so1893418poi.1
-        for <git@vger.kernel.org>; Thu, 29 Jan 2009 07:42:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mail-followup-to:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        bh=wWJTivxx3Xr0b+YMleyCariUyTmDUNMUk0fYoAonmLc=;
-        b=JiZadEGWwaAQqxVPvgvA/VyBbfPSVkorXWl4h3z/Smhyv/rUHpEhGBNptGBtGZCxuO
-         m4PsxEH3/201srFhayBNmE/9yM/g+J0hWKAk7JO0IA/DfVeFoCxWm+d7gfHqR+bllV29
-         9eVtDF9CbdCl8o/hYNjxpojcPb/SO11mtU1xU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mail-followup-to:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :user-agent;
-        b=DER8D3fePRb/vpqXYRSJYhh5H+2aRH55HZNUXn6LVl7t1b+Q9ZryAy9aEoxSzAVndt
-         smUPK9wtRu8C/d2xDfVkyhY2jkfdsRWMa66CxjMyxEuh5NiFBT4qVhRpL8GTX7ezYWb5
-         DdGUAUJLD7MuBBOzXOWRt0gF1mCTj0MBsV2Ac=
-Received: by 10.110.50.19 with SMTP id x19mr16415tix.12.1233243743666;
-        Thu, 29 Jan 2009 07:42:23 -0800 (PST)
-Received: from localhost (n219077019016.netvigator.com [219.77.19.16])
-        by mx.google.com with ESMTPS id u8sm3857283tia.28.2009.01.29.07.42.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 29 Jan 2009 07:42:22 -0800 (PST)
-Mail-Followup-To: git <git@vger.kernel.org>
+	id S1753117AbZA2Ppi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 10:45:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752118AbZA2Pph
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 10:45:37 -0500
+Received: from george.spearce.org ([209.20.77.23]:33800 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752117AbZA2Pph (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 10:45:37 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 80A0438210; Thu, 29 Jan 2009 15:45:36 +0000 (UTC)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-27)
+In-Reply-To: <8c4a72800901290736p4952e53byddca243f300dd8af@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107696>
 
-When I migrated from svn to git, I keep updating svn repo and also
-added a dummy git repo, Now the GIT_DIR/config look likes
+Charles Earl <charles.cearl@gmail.com> wrote:
+> Are there past instances of git having been adapted to support version
+> control of digital media production workflow?
 
-[core]
-	repositoryformatversion =3D 0
-	filemode =3D true
-	bare =3D false
-	logallrefupdates =3D true
-[svn-remote "svn"]
-  url =3D http://localhost/svn/project2/
-  fetch =3D :refs/remotes/trunk
-[remote "origin"]
-	url =3D http://bl@localhost/git-repo/project/
-	fetch =3D +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-	remote =3D origin
-	merge =3D refs/heads/master
+You are going to run into scaling problems.  Git works under the
+assumption that it can malloc() at least 2 complete copies of a
+file at once, in the same process.
 
-Now I feel I don't need update the svn repo (actually it was inactive
-for more than 1 year after a few updates).  Also I no longer want to
-use http protocol to remote git repo.  =20
+Last time I mucked around with digital media production, the volume
+of data in a video file was *huge*.  Its workable on modern systems
+with terabyte disk arrays and so forth, but modern systems still
+can't afford the 100 GB of RAM necessary to allow Git to malloc()
+up two blocks of a single 40 GB video file.
 
-It said the HEAD is different that orgin/master
+Also, since clients pretty much grab the entire repository when they
+clone it for working access, its going to suck down the entire media
+archive, *all* versions.  That could be well into the hundreds of
+TB range and may never complete.
 
-$ git checkout master
-Switched to branch "master"
-Your branch and 'origin/master' have diverged,
-and have 71 and 24 different commit(s) each, respectively.
+> The bulk of content stored is binary data -- there have been posts on
+> this about integration of various binary diff implemetations with git.
 
-How do it
-1. remove any reference to the svn repo [svn-remote "svn"]
-2. remove reference to the http [remote "origin"]
-3. setup a new empty git as the new remote repos
+You mention later about using S3 or BlockStore to hold the binary
+content.  Maybe the large binary data should be stored in S3, and
+the Git repository just holds the metadata and scripts, including
+scripts to perform downloads/uploads through S3.
 
-thanks
+> The versioning of metadata, scripts, project structure seems to argue
+> for applicability of system such as git -- these fit the paradigm of
+> traditional scm.
 
---=20
-regards,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
-=E5=94=90=E8=A9=A9277 =E6=9F=B3=E4=B8=AD=E5=BA=B8  =E5=BE=81=E4=BA=BA=E6=
-=80=A8
-    =E6=AD=B2=E6=AD=B2=E9=87=91=E6=B2=B3=E5=BE=A9=E7=8E=89=E9=97=9C  =E6=
-=9C=9D=E6=9C=9D=E9=A6=AC=E7=AD=96=E8=88=87=E5=88=80=E7=92=B0  =E4=B8=89=
-=E6=98=A5=E7=99=BD=E9=9B=AA=E6=AD=B8=E9=9D=92=E5=A1=9A  =E8=90=AC=E9=87=
-=8C=E9=BB=83=E6=B2=B3=E7=B9=9E=E9=BB=91=E5=B1=B1
+Yea, that's more typical of what Git was designed and built to store.
+
+> Example content is from media production suites such as Adobe After
+> Effects/Premier: video, compositions, etc.
+> I'd also like the object storage to be in S3/Amazon BlockStore or
+> similar remote stores.
+
+My suggestion?
+
+Use Git for your metadata and scripts.  Include a few scripts that
+can download the large media files from S3 when they are needed,
+and upload new versions when they are modified.
+
+If you want to store versions over time of the files, sha1sum
+the media file and use that as the key name in the S3 bucket,
+and store the output of sha1sum into a file within Git.  E.g. a
+".media" text file just listing out sha1sum and path names:
+
+  ceba7222551c722836564535697947e8a9b3e7ce big_file.mpg
+  75c8f5ecb97ec67c1ec949b16c72e6ba1361a528 other_file.mpg
+
+and use a simple script to edit/read that file, accessing S3 as
+necessary for the operations.
+
+-- 
+Shawn.
