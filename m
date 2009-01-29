@@ -1,79 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Valgrind updates
-Date: Thu, 29 Jan 2009 15:14:17 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901291510520.3586@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0901210105470.19014@racer> <20090121001551.GB18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210119510.19014@racer> <20090121003739.GA18373@coredump.intra.peff.net> <alpine.DEB.1.00.0901210216440.19014@racer>
- <20090121190757.GB21686@coredump.intra.peff.net> <alpine.DEB.1.00.0901212259420.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901270327200.26199@intel-tinevez-2-302> <alpine.LFD.2.00.0901261934450.3123@localhost.localdomain> <alpine.DEB.1.00.0901270512171.14855@racer>
- <20090127131404.GA11870@sirena.org.uk> <alpine.DEB.1.00.0901271742430.3586@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901271006060.3123@localhost.localdomain> <69A01114-27BB-4239-8FD8-C35D1306CE25@alumni.caltech.edu> <alpine.DEB.1.00.0901290024290.3586@pacific.mpi-cbg.de>
- <4D595705-7935-4AC2-91F4-1DAB3C6C7D27@alumni.caltech.edu>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: Re: ??? Re: [PATCH/RFC v1 1/6] symlinks.c: small cleanup and
+ optimisation
+Date: Thu, 29 Jan 2009 15:19:05 +0100
+Organization: private
+Message-ID: <86iqnygppi.fsf@broadpark.no>
+References: <1233004637-15112-1-git-send-email-barvik@broadpark.no>
+ <1233004637-15112-2-git-send-email-barvik@broadpark.no>
+ <7vskn3np6u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jean-loup Gailly <jloup@gzip.org>,
-	Mark Brown <broonie@sirena.org.uk>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mark Adler <madler@alumni.caltech.edu>
-X-From: git-owner@vger.kernel.org Thu Jan 29 15:15:26 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 15:20:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSXfw-0008Rp-G6
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:15:24 +0100
+	id 1LSXku-0001ky-SM
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:20:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752908AbZA2ON6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 09:13:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752789AbZA2ON6
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:13:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38860 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752767AbZA2ON5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 09:13:57 -0500
-Received: (qmail invoked by alias); 29 Jan 2009 14:13:55 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp013) with SMTP; 29 Jan 2009 15:13:55 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+njNsdHhynCFd5pJT0uWBH/TF6IGseAAb+mLhQOh
-	qyfBStp42RmHwu
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <4D595705-7935-4AC2-91F4-1DAB3C6C7D27@alumni.caltech.edu>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1753068AbZA2OTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 09:19:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbZA2OTI
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:19:08 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:59637 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752241AbZA2OTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 09:19:07 -0500
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KE8001WYL3UMC40@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Thu, 29 Jan 2009 15:19:06 +0100 (CET)
+Received: from localhost ([80.203.78.10]) by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KE800BAHL3TH590@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Thu, 29 Jan 2009 15:19:06 +0100 (CET)
+In-reply-to: <7vskn3np6u.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107682>
 
-Hi,
+* Kjetil Barvik <barvik@broadpark.no> writes:
+> +	/*
+> +	 * Is the cached path string a substring of 'name', is 'name'
+> +	 * a substring of the cached path string, or is 'name' and the
+> +	 * cached path string the exact same string?
+> +	 */
+> +	if (i >= max_len && ((i < len && name[i] == '/') ||
+> +			     (i < cache.len && cache.path[i] == '/') ||
+> +			     (len == cache.len))) {
 
-On Wed, 28 Jan 2009, Mark Adler wrote:
+* Junio C Hamano <gitster@pobox.com> writes:
+> As you described in your commit log message, what this really wants to
+> check is (i == max_len).  By saying (i >= max_len) you are losing
+> readability, optimizing for compilers (that do not notice this) 
 
-> On Jan 28, 2009, at 3:27 PM, Johannes Schindelin wrote:
-> >On Wed, 28 Jan 2009, Mark Adler wrote:
-> > >2.  Can someone send me the input and the 58 bytes of output from this
-> > >  case?
-> >
-> >I did better than that already...
-> >http://article.gmane.org/gmane.comp.version-control.git/107391
-> 
-> Johannes,
-> 
-> Thanks for the input and code.  When I run it, the byte in question at 
-> offset 51 is 0x2c.  The output decompresses fine and the result matches 
-> the input. If I change the 0x2c to anything else, decompression fails.  
-> The 58 bytes are below.
-> 
-> Can you also send me the 58 bytes of output that you get when you run it?
+  When the compiler see the source line:
 
-I get exactly the same 58 bytes.  Together with the fact that the 52nd 
-byte is actually required to be 0x2c, I think that maybe valgrind is 
-having problems to track that this byte was correctly initialized.
+    'while (i < max_len && name[i] == cache.path[i])'
 
-BTW did you have any chance to test the code with valgrind on your 
-machine?  It might be related to this here platform (x86_64).
+  it will, from what I know about compilers and machine instructions for
+  intel cpu's, generate the following pseudo instructions for this line
+  (before more compiler optimisation is done):
 
-Ciao,
-Dscho
+   1    test !(i < max_len)   /* which is (i >= max_len) */
+   2    jump-if-not-zero  first_instruction_address_outside_the_loop
+   3    "some instructions to retrieve some memory locations and test
+         name[i] == cache.path[i]"
+   4    jump-if-not-zero instruction-address-to-continue-to-loop
+
+  So, I thought that if I could use the exact same test as the compiler
+  have to generate for line 1, then I would maybe saved a test, and
+  maybe also a jump instruction.
+
+  Compiling with 'gcc -Os' (optimise for text segment size) I was able to
+  save 4 bytes for this file, which I think shows that gcc is able to
+  take advantage of this trick.
+
+> and pessimizing for human readers (like me, who had to spend a few
+> dozens of seconds to realize what you are doing, to speculate why you
+> might have thought this would be a good idea, and writing this
+> paragraph).  I do not know if it is a good trade-off.
+
+  But, it was not easy to come up with a real test which shows a
+  noticeable time difference from this trick, so, I guess this is only a
+  trick for the kernel people (at most), so I revert it and will use
+  '==' for version 2, such that we keep a little better readability.
+
+  -- kjetil
+
+  ps! Compiling with '-march=core2 -O2 -g0 -s -fomit-frame-pointer', the
+      difference in text segment was 64 bytes when using this trick.
