@@ -1,77 +1,56 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: Re: [PATCH] builtin-apply.c: do not set bogus mode in
-	check_preimage() for deleted path
-Date: Wed, 28 Jan 2009 20:46:20 -0500
-Message-ID: <20090129014620.GE13271@redhat.com>
-References: <7vocxrj9j9.fsf@gitster.siamese.dyndns.org>
+From: david@lang.hm
+Subject: Re: do you recommend "git" (over svn) for a 1-person team???
+Date: Wed, 28 Jan 2009 18:57:21 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0901281833280.22712@asgard.lang.hm>
+References: <d30068860901281718x363348caya2dc94e798cc8091@mail.gmail.com> <d30068860901281725t14d19c1vc0557182bca3eb8d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alexander Potashev <aspotashev@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 02:45:58 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Greg Hauptmann <greg.hauptmann.ruby@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 02:54:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSLye-0001T0-Gh
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 02:45:57 +0100
+	id 1LSM7K-0003Ru-Pq
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 02:54:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752922AbZA2BoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 20:44:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752835AbZA2BoW
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 20:44:22 -0500
-Received: from mx2.redhat.com ([66.187.237.31]:57202 "EHLO mx2.redhat.com"
+	id S1753152AbZA2Bx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 20:53:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753009AbZA2Bx3
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 20:53:29 -0500
+Received: from mail.lang.hm ([64.81.33.126]:44332 "EHLO bifrost.lang.hm"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751772AbZA2BoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 20:44:21 -0500
-Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
-	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n0T1iFBr023615;
-	Wed, 28 Jan 2009 20:44:15 -0500
-Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
-	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n0T1iEH9010071;
-	Wed, 28 Jan 2009 20:44:15 -0500
-Received: from redhat.com (dhcp-100-18-183.bos.redhat.com [10.16.18.183])
-	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n0T1iCLV016417;
-	Wed, 28 Jan 2009 20:44:15 -0500
-Content-Disposition: inline
-In-Reply-To: <7vocxrj9j9.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
+	id S1752621AbZA2Bx3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 20:53:29 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n0T1rP5N021437;
+	Wed, 28 Jan 2009 17:53:25 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <d30068860901281725t14d19c1vc0557182bca3eb8d@mail.gmail.com>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107610>
 
-On Wed, Jan 28, 2009 at 03:27:54PM -0800, Junio C Hamano wrote:
->    Also I suspect this codepath has been broken the use case 7a07841
->    (git-apply: handle a patch that touches the same path more than once
->    better, 2008-06-27) wanted to support, and if that is the case, this
->    would fix it.
+On Thu, 29 Jan 2009, Greg Hauptmann wrote:
 
-Actually deleting patches weren't that interesting to me, I deal more with
-patches modifying the same patch repeatedly.  Regardless the patch below
-seems ok to me.
+> Hi,
+>
+> Do you recommend "git" (over svn) for a 1-person team???   (the
+> ability to commit whilst offline on my laptop sounds potentially
+> enough reason)
 
-Acked-by: Don Zickus <dzickus@redhat.com>
+well, if you use svn just put the svn repository on your laptop.
 
-> 
->  builtin-apply.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/builtin-apply.c b/builtin-apply.c
-> index b415daf..1e7f917 100644
-> --- a/builtin-apply.c
-> +++ b/builtin-apply.c
-> @@ -2453,7 +2453,7 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
->  	if (st_mode != patch->old_mode)
->  		fprintf(stderr, "warning: %s has type %o, expected %o\n",
->  			old_name, st_mode, patch->old_mode);
-> -	if (!patch->new_mode)
-> +	if (!patch->new_mode && !patch->is_delete)
->  		patch->new_mode = st_mode;
->  	return 0;
->  
-> -- 
-> 1.6.1.1.278.g6a817
-> 
+but if you use multiple systems you aren't really a 1-person team, you 
+just happen to be one person working in different places.
+
+also the distributed nature of git will make doing (and maintaining) 
+backups easier, as well as recovering from the inevitable cases where you 
+do development seperatly on your different machines and then need to 
+combine them.
+
+David Lang
