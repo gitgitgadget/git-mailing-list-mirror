@@ -1,63 +1,108 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Something weird is happening...
-Date: Thu, 29 Jan 2009 18:01:16 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0901291731320.19665@iabervon.org>
-References: <49814BA4.6030705@zytor.com> <7vr62mha7a.fsf@gitster.siamese.dyndns.org> <20090129113846.GA10645@elte.hu> <20090129120539.GA26975@elte.hu> <49822B91.6070303@lsrfire.ath.cx>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] push: Learn to set up branch tracking with '--track'
+Date: Thu, 29 Jan 2009 18:17:15 -0500
+Message-ID: <20090129231715.GA17399@coredump.intra.peff.net>
+References: <cover.1233236267u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0901291438030.3586@pacific.mpi-cbg.de> <20090129223308.GB12871@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1541890049-1233270076=:19665"
-Cc: Ingo Molnar <mingo@elte.hu>, Junio C Hamano <gitster@pobox.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri Jan 30 00:02:45 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 30 00:19:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSfuF-0000xI-VA
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 00:02:44 +0100
+	id 1LSgA2-0007RC-L9
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 00:19:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752767AbZA2XBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 18:01:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752483AbZA2XBS
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 18:01:18 -0500
-Received: from iabervon.org ([66.92.72.58]:58757 "EHLO iabervon.org"
+	id S1758544AbZA2XRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 18:17:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756283AbZA2XRU
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 18:17:20 -0500
+Received: from peff.net ([208.65.91.99]:37473 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751573AbZA2XBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 18:01:18 -0500
-Received: (qmail 10411 invoked by uid 1000); 29 Jan 2009 23:01:16 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 29 Jan 2009 23:01:16 -0000
-In-Reply-To: <49822B91.6070303@lsrfire.ath.cx>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1759899AbZA2XRS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 18:17:18 -0500
+Received: (qmail 20173 invoked by uid 107); 29 Jan 2009 23:17:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 29 Jan 2009 18:17:27 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Jan 2009 18:17:15 -0500
+Content-Disposition: inline
+In-Reply-To: <20090129223308.GB12871@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107750>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, Jan 29, 2009 at 05:33:08PM -0500, Jeff King wrote:
 
---1547844168-1541890049-1233270076=:19665
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+> So I think this patch is going about it the wrong way. Instead of
+> parsing the refspec, I think you actually want to look at what we _do_
+> push (or at least try to push -- probably even uptodate refs should also
+> have tracking established), and use that. Then you will have wildcards
+> expanded, --all handled, etc. And I suspect all you have to do is
+> iterate over the result of match_refs (which we call later), which
+> should be even easier (because you don't have to parse the refspecs
+> yourself). But I haven't looked carefully.
 
-On Thu, 29 Jan 2009, René Scharfe wrote:
+Something like the patch below (which is obviously missing all of the
+infrastructure for doing this optionally, but is meant to illustrate
+what I'm talking about).
 
-> Current master (a34a9dbbc) with the following patch should not
-> segfault anymore (it doesn't here), but I don't know where the
-> magic number six is coming from. :-/
+The downside of this is that it only works for the git protocol
+transport, making dumb push even more of a second class citizen (it
+looks like this is already the case for updating tracking refs). But I
+think this is the right place to do it, since we have detailed
+information on the matched refs. If other transports want to do the same
+thing, we should abstract setup_tracking (and update_tracking_ref while
+we're at it) and call them from those transports.
 
-Looks like octopus is using multiple merge bases directly, rather than 
-combining them using merge-recursive. The merge-recursive concept turned 
-out to be superior, and we kind of left multiple merge base support 
-hanging. We should probably remove the old support and switch octopus to 
-the better way.
-
-My guess is that 6 is just that there happen to be 3 merge bases for this 
-particular merge (plus the merge results and the two sides).
-
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-1541890049-1233270076=:19665--
+---
+diff --git a/builtin-send-pack.c b/builtin-send-pack.c
+index d65d019..23b326a 100644
+--- a/builtin-send-pack.c
++++ b/builtin-send-pack.c
+@@ -247,6 +247,31 @@ static void update_tracking_ref(struct remote *remote, struct ref *ref)
+ 	}
+ }
+ 
++static void setup_tracking(const char *remote, struct ref *ref)
++{
++	const char *name;
++	struct strbuf key = STRBUF_INIT;
++
++	if (ref->status != REF_STATUS_OK && ref->status != REF_STATUS_UPTODATE)
++		return;
++	if (!ref->peer_ref)
++		return;
++
++	name = ref->peer_ref->name;
++	if (prefixcmp(name, "refs/heads/"))
++		return;
++	name += 11;
++
++	strbuf_addf(&key, "branch.%s.remote", name);
++	git_config_set(key.buf, remote);
++
++	strbuf_reset(&key);
++	strbuf_addf(&key, "branch.%s.merge", name);
++	git_config_set(key.buf, ref->name);
++
++	strbuf_release(&key);
++}
++
+ static const char *prettify_ref(const struct ref *ref)
+ {
+ 	const char *name = ref->name;
+@@ -523,6 +548,10 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
+ 		for (ref = remote_refs; ref; ref = ref->next)
+ 			update_tracking_ref(remote, ref);
+ 	}
++	if (/* args.track && */ !args.dry_run) {
++		for (ref = remote_refs; ref; ref = ref->next)
++			setup_tracking(remote ? remote->name : dest, ref);
++	}
+ 
+ 	if (!refs_pushed(remote_refs))
+ 		fprintf(stderr, "Everything up-to-date\n");
