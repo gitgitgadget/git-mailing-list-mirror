@@ -1,71 +1,64 @@
-From: jidanni@jidanni.org
-Subject: [PATCH,v2] git-bundle(1): add no references required simplest case
-Date: Thu, 29 Jan 2009 23:32:15 +0800
-Message-ID: <87tz7i6scg.fsf_-_@jidanni.org>
-References: <7vljsx6dzi.fsf@gitster.siamese.dyndns.org>
+From: Charles Earl <charles.cearl@gmail.com>
+Subject: Appropriateness of git for digital video production versioning
+Date: Thu, 29 Jan 2009 10:36:55 -0500
+Message-ID: <8c4a72800901290736p4952e53byddca243f300dd8af@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: mdl123@verizon.net, spearce@spearce.org, git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jan 29 16:33:50 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 29 16:38:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSYto-00049i-A2
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 16:33:48 +0100
+	id 1LSYyI-0005vL-9K
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 16:38:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753823AbZA2PcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 10:32:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753059AbZA2PcW
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 10:32:22 -0500
-Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:33481 "EHLO
-	homiemail-a3.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752553AbZA2PcV (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jan 2009 10:32:21 -0500
-Received: from jidanni.org (122-127-40-81.dynamic.hinet.net [122.127.40.81])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a3.dreamhost.com (Postfix) with ESMTP id 1AF50C485A;
-	Thu, 29 Jan 2009 07:32:18 -0800 (PST)
+	id S1753827AbZA2Pg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 10:36:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753117AbZA2Pg5
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 10:36:57 -0500
+Received: from mail-gx0-f21.google.com ([209.85.217.21]:55059 "EHLO
+	mail-gx0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752553AbZA2Pg4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 10:36:56 -0500
+Received: by gxk14 with SMTP id 14so6525438gxk.13
+        for <git@vger.kernel.org>; Thu, 29 Jan 2009 07:36:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=AbyZAOkr9e0WS4zTKp8voaNrkNKTVV0UI90A6X4BeV8=;
+        b=mfS9Nu0gS/PNfbuK/5ccYp7sXP7bmtQoZdmJamHlTMpr4OHt4NewhTQoUj0WCt6JKf
+         pAPpZ6DHI13KcQVSQcU662JxYdwuWTMNAHmAP8yFPHngYuu7vQZM9Ecs4SS+m9yrklEh
+         ewLnvoz5yEMp0k4SbJ50e0gaJXNYtLkWFaPoE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=vfll6lZ78waRQfQd5ZDNZiUGJjLOVkfVn9Yg2GFnclzUGRhBUL38cy2iq5fTv8xDDw
+         jXuTNWIEJz/GIzT2Pu2U1PBJ6Pc0ofNO6pvlCHlwIEDEcVb4WSnLhjN4YWHIcg/BbCyJ
+         oLcMOw3yCwYzFqtBYBHpKvsU5cYeuqyVVfVMM=
+Received: by 10.150.227.9 with SMTP id z9mr102516ybg.9.1233243415229; Thu, 29 
+	Jan 2009 07:36:55 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107694>
 
-Signed-off-by: jidanni <jidanni@jidanni.org>
----
-Words totally by Junio C Hamano.
- Documentation/git-bundle.txt |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 1b66ab7..42c2abc 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -164,6 +164,22 @@ $ git pull bundle
- would treat it as if it is talking with a remote side over the
- network.
- 
-+A complete bundle is one that does not require you to have any
-+prerequisite object for you to extract its contents.  Not only you
-+can fetch/pull from a bundle, you can clone from a complete bundle
-+as if it was a remote repository, like this:
-+
-+----------------
-+$ git clone /home/me/tmp/file.bdl mine.git
-+----------------
-+
-+This will define a remote called "origin" in the resulting
-+repository that lets you fetch and pull from the bundle, just
-+like the previous example lets you do with the remote called
-+"bundle", and from then on you can fetch/pull to update the
-+resulting mine.git repository after replacing the bundle you store
-+at /home/me/tmp/file.bdl with incremental updates.
-+
- Author
- ------
- Written by Mark Levedahl <mdl123@verizon.net>
--- 
-1.6.0.6
+Hi,
+Are there past instances of git having been adapted to support version
+control of digital media production workflow?
+I'm evaluating CMS and versioning systems for the backend of a SaaS
+for digital media production workflow.
+The bulk of content stored is binary data -- there have been posts on
+this about integration of various binary diff implemetations with git.
+The versioning of metadata, scripts, project structure seems to argue
+for applicability of system such as git -- these fit the paradigm of
+traditional scm.
+Example content is from media production suites such as Adobe After
+Effects/Premier: video, compositions, etc.
+I'd also like the object storage to be in S3/Amazon BlockStore or
+similar remote stores.
+Charles
