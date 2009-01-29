@@ -1,60 +1,68 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: What's cooking in git.git (Jan 2009, #07; Wed, 28)
-Date: Thu, 29 Jan 2009 08:14:38 +0000
-Message-ID: <20090129081438.GA10490@hashpling.org>
-References: <7vwscej26i.fsf@gitster.siamese.dyndns.org>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: Re: [PATCH/RFC v1 5/6] combine-diff.c: remove a call to fstat() inside
+ show_patch_diff()
+Date: Thu, 29 Jan 2009 09:20:49 +0100
+Organization: private
+Message-ID: <86y6wuh6am.fsf@broadpark.no>
+References: <1233004637-15112-1-git-send-email-barvik@broadpark.no>
+ <1233004637-15112-6-git-send-email-barvik@broadpark.no>
+ <7v63jznp58.fsf@gitster.siamese.dyndns.org>
+ <7vab9akj2p.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 09:16:13 2009
+X-From: git-owner@vger.kernel.org Thu Jan 29 09:22:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSS4G-0006me-3M
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 09:16:08 +0100
+	id 1LSSAN-0008Bn-2w
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 09:22:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787AbZA2IOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 03:14:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751508AbZA2IOl
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 03:14:41 -0500
-Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:43980 "EHLO
-	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751317AbZA2IOl (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jan 2009 03:14:41 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEAI/0gEnUnw6U/2dsb2JhbADKcIQOBg
-Received: from fhw-relay07.plus.net ([212.159.14.148])
-  by relay.ptn-ipout02.plus.net with ESMTP; 29 Jan 2009 08:14:39 +0000
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by fhw-relay07.plus.net with esmtp (Exim) id 1LSS2p-0007T0-KI; Thu, 29 Jan 2009 08:14:39 +0000
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n0T8Ecgv011151
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 29 Jan 2009 08:14:38 GMT
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n0T8EcAj011150;
-	Thu, 29 Jan 2009 08:14:38 GMT
-Content-Disposition: inline
-In-Reply-To: <7vwscej26i.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: 5e847454a0c7636e03e04fb587e4140c
+	id S1752098AbZA2IVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 03:21:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752009AbZA2IVB
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 03:21:01 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:33594 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751524AbZA2IVA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 03:21:00 -0500
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KE800FGS4IRB7D0@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Thu, 29 Jan 2009 09:20:51 +0100 (CET)
+Received: from localhost ([80.203.78.10]) by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KE800BE14IQH530@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Thu, 29 Jan 2009 09:20:51 +0100 (CET)
+In-reply-to: <7vab9akj2p.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107644>
 
-On Wed, Jan 28, 2009 at 06:06:45PM -0800, Junio C Hamano wrote:
-> * cb/mergetool (Wed Jan 21 22:57:48 2009 +0000) 1 commit
->  + mergetool: respect autocrlf by using checkout-index
-> 
+Junio C Hamano <gitster@pobox.com> writes:
 
-Can you hold off on merging this one? I now think that there's a
-cleaner way of doing this and I would like the opportunity for a
-rethink.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Kjetil Barvik <barvik@broadpark.no> writes:
+>>
+>>> Currently inside show_patch_diff() we have and fstat() call after an
+>>> ok lstat() call.  Since we before the call to fstat() have already
+>>> test for the link case with S_ISLNK() the fstat() can be removed.
+>>
+>> Good eyes.  Thanks.
+>
+> Heh, I noticed you will update the commit log message, so I'll dequeue
+> this and wait for an update.
 
--- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+  Yes, I am planing a v2 in 1 or 3 days (it takes some time to run long-
+  running tests).  And then hopefully I have addressed all comments so
+  far.  Thanks for comments!
+
+  -- kjetil
