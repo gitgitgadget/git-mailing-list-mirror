@@ -1,54 +1,57 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCH] contrib: add 'git bpush' to push to bundles
-Date: Thu, 29 Jan 2009 17:05:53 +0100
-Message-ID: <adf1fd3d0901290805s64161899u72905a31dfec2fc6@mail.gmail.com>
-References: <1232408791-16834-1-git-send-email-santi@agolina.net>
-	 <20090120064732.GA14580@glandium.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
+Date: Thu, 29 Jan 2009 17:13:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901291713140.3586@pacific.mpi-cbg.de>
+References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Jan 29 17:08:08 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 17:14:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSZQd-0000wH-R3
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 17:07:44 +0100
+	id 1LSZXR-0003q3-KL
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 17:14:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756912AbZA2QF5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jan 2009 11:05:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751875AbZA2QF5
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 11:05:57 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:50611 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756856AbZA2QF4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jan 2009 11:05:56 -0500
-Received: by ewy14 with SMTP id 14so4283484ewy.13
-        for <git@vger.kernel.org>; Thu, 29 Jan 2009 08:05:53 -0800 (PST)
-Received: by 10.103.228.19 with SMTP id f19mr115769mur.18.1233245153045; Thu, 
-	29 Jan 2009 08:05:53 -0800 (PST)
-In-Reply-To: <20090120064732.GA14580@glandium.org>
+	id S1752241AbZA2QNT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 11:13:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbZA2QNT
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 11:13:19 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59799 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751320AbZA2QNS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 11:13:18 -0500
+Received: (qmail invoked by alias); 29 Jan 2009 16:13:10 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp066) with SMTP; 29 Jan 2009 17:13:10 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/oEvY17VLoQuytNaBw4L6BDJB+8yA7KtLs3i/dP9
+	9t506v9K5uit1V
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1233244816-67565-1-git-send-email-benji@silverinsanity.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107700>
 
-2009/1/20 Mike Hommey <mh@glandium.org>:
-> On Tue, Jan 20, 2009 at 12:46:31AM +0100, Santi B=E9jar wrote:
->> 'git bpush' updates the branches in a bundle, while adding the objec=
-ts
->> necessary to complete the given branches. Basically, it is a 'git
->> push' for bundles.
->
-> I think it'd be better to improve git-push to support that, instead o=
-f
-> adding yet another git command.
+Hi,
 
-Yes, I also think it'd be better if git-push supports it, but this is
-not a trivial task, and my script works now. So I think it makes sense
-to add it to the *contrib* directory.
+On Thu, 29 Jan 2009, Brian Gernhardt wrote:
 
-Santi
+> The call to "git reset --hard B1" failed on case-insensitive file
+> systems (such as the default settings for HFS+) because there was both
+> a tag "B1" and a file "b1".  Adding "--" to the command makes it
+> clear that we mean commit B1.
+> 
+> Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+
+Sigh.
+
+ACK and thanks,
+Dscho
