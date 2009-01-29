@@ -1,76 +1,79 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Support various HTTP authentication methods
-Date: Thu, 29 Jan 2009 15:08:50 +0100
-Message-ID: <4981B872.4040701@viscovery.net>
-References: <1233221532.21518.1.camel@lena.gsc.riken.jp> <4981826D.507@viscovery.net> <4981B6E6.6020502@mozo.jp>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Valgrind updates
+Date: Thu, 29 Jan 2009 15:14:17 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901291510520.3586@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0901210105470.19014@racer> <20090121001551.GB18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210119510.19014@racer> <20090121003739.GA18373@coredump.intra.peff.net> <alpine.DEB.1.00.0901210216440.19014@racer>
+ <20090121190757.GB21686@coredump.intra.peff.net> <alpine.DEB.1.00.0901212259420.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901270327200.26199@intel-tinevez-2-302> <alpine.LFD.2.00.0901261934450.3123@localhost.localdomain> <alpine.DEB.1.00.0901270512171.14855@racer>
+ <20090127131404.GA11870@sirena.org.uk> <alpine.DEB.1.00.0901271742430.3586@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901271006060.3123@localhost.localdomain> <69A01114-27BB-4239-8FD8-C35D1306CE25@alumni.caltech.edu> <alpine.DEB.1.00.0901290024290.3586@pacific.mpi-cbg.de>
+ <4D595705-7935-4AC2-91F4-1DAB3C6C7D27@alumni.caltech.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Moriyoshi Koizumi <mozo@mozo.jp>
-X-From: git-owner@vger.kernel.org Thu Jan 29 15:10:35 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jean-loup Gailly <jloup@gzip.org>,
+	Mark Brown <broonie@sirena.org.uk>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mark Adler <madler@alumni.caltech.edu>
+X-From: git-owner@vger.kernel.org Thu Jan 29 15:15:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSXb3-0006dv-JR
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:10:22 +0100
+	id 1LSXfw-0008Rp-G6
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:15:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752663AbZA2OIz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 09:08:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752651AbZA2OIz
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:08:55 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:65013 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751601AbZA2OIy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 09:08:54 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LSXZa-0002FN-KO; Thu, 29 Jan 2009 15:08:50 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 5996B6EF; Thu, 29 Jan 2009 15:08:50 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <4981B6E6.6020502@mozo.jp>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1752908AbZA2ON6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 09:13:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752789AbZA2ON6
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:13:58 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38860 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752767AbZA2ON5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 09:13:57 -0500
+Received: (qmail invoked by alias); 29 Jan 2009 14:13:55 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp013) with SMTP; 29 Jan 2009 15:13:55 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+njNsdHhynCFd5pJT0uWBH/TF6IGseAAb+mLhQOh
+	qyfBStp42RmHwu
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4D595705-7935-4AC2-91F4-1DAB3C6C7D27@alumni.caltech.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107681>
 
-Moriyoshi Koizumi schrieb:
-> Johannes Sixt wrote:
->> Moriyoshi Koizumi schrieb:
->>> @@ -210,6 +272,20 @@ static CURL* get_curl_handle(void)
->>>  	if (curl_http_proxy)
->>>  		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
->> CURLOPT_PROXY is set here...
+Hi,
+
+On Wed, 28 Jan 2009, Mark Adler wrote:
+
+> On Jan 28, 2009, at 3:27 PM, Johannes Schindelin wrote:
+> >On Wed, 28 Jan 2009, Mark Adler wrote:
+> > >2.  Can someone send me the input and the 58 bytes of output from this
+> > >  case?
+> >
+> >I did better than that already...
+> >http://article.gmane.org/gmane.comp.version-control.git/107391
 > 
-> As I wrote in the previous post, this part was from the original.
+> Johannes,
 > 
->>>  
->>> +	if (curl_http_auth) {
->>> +		long n = get_curl_auth_bitmask(curl_http_auth);
->>> +		curl_easy_setopt(result, CURLOPT_HTTPAUTH, n);
->>> +	}
+> Thanks for the input and code.  When I run it, the byte in question at 
+> offset 51 is 0x2c.  The output decompresses fine and the result matches 
+> the input. If I change the 0x2c to anything else, decompression fails.  
+> The 58 bytes are below.
 > 
->> ... and here again. Is that necessary?
-> 
-> What part do you mean by that?
+> Can you also send me the 58 bytes of output that you get when you run it?
 
-Oops, sorry, I cut too much from your patch:
+I get exactly the same 58 bytes.  Together with the fact that the 52nd 
+byte is actually required to be 0x2c, I think that maybe valgrind is 
+having problems to track that this byte was correctly initialized.
 
-> +	if (curl_http_auth) {
-> +		long n = get_curl_auth_bitmask(curl_http_auth);
-> +		curl_easy_setopt(result, CURLOPT_HTTPAUTH, n);
-> +	}
-> +
-> +	if (curl_http_proxy) {
-> +		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+BTW did you have any chance to test the code with valgrind on your 
+machine?  It might be related to this here platform (x86_64).
 
-Here you set CURLOPT_PROXY again.
-
--- Hannes
+Ciao,
+Dscho
