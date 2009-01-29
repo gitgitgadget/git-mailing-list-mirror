@@ -1,50 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Security and permissions in git
-Date: Thu, 29 Jan 2009 18:23:58 -0500
-Message-ID: <20090129232358.GA12941@coredump.intra.peff.net>
-References: <loom.20090129T203050-865@post.gmane.org> <alpine.LNX.1.00.0901291645300.19665@iabervon.org>
+From: Stefan Karpinski <stefan.karpinski@gmail.com>
+Subject: Re: [PATCH] git-cvsserver: run post-update hook *after* update.
+Date: Thu, 29 Jan 2009 15:26:28 -0800
+Message-ID: <d4bc1a2a0901291526v48e61c1dtde35fa8b77c71560@mail.gmail.com>
+References: <7viqo61mfq.fsf@gitster.siamese.dyndns.org>
+	 <1233266282-8010-1-git-send-email-stefan.karpinski@gmail.com>
+	 <7v3af1enkq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jay Renbaum <jrenbaum@hcrest.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Jan 30 00:25:48 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Andy Parkins <andyparkins@gmail.com>,
+	Michael Witten <mfwitten@mit.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 30 00:27:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSgGM-0001Oi-3j
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 00:25:34 +0100
+	id 1LSgIb-0002BI-2N
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 00:27:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754387AbZA2XYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 18:24:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753445AbZA2XYB
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 18:24:01 -0500
-Received: from peff.net ([208.65.91.99]:46182 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751348AbZA2XYB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 18:24:01 -0500
-Received: (qmail 20259 invoked by uid 107); 29 Jan 2009 23:24:10 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 29 Jan 2009 18:24:10 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Jan 2009 18:23:58 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.00.0901291645300.19665@iabervon.org>
+	id S1756611AbZA2X0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 18:26:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756576AbZA2X0a
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 18:26:30 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:8079 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755750AbZA2X03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 18:26:29 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so82371wah.21
+        for <git@vger.kernel.org>; Thu, 29 Jan 2009 15:26:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9oEH6XRXFE6a9CZHDpbqjaOAx/vwOrZUGPPJu2pZMsg=;
+        b=NyrcgRnLV0TfsNk/LHETgVIAJSN8/5o88NHSeZFoMTvy+BCTXhDaglnJJaQ/lagIpt
+         Q52E+l9E99P6MAij821e/ikkPljyNqnt4KrIh3b+sVCLCEDQ/8EL+nuLwgiUOPNmU/9G
+         ftGjSVX7MtKFRfiIMJgrzywlFWK32j9218wCU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kfy7jFlqVOGfcvUKT6gCVltF8YNldfN/wkuMr/ShdQy2BNpErAbsKkI+RCnUQcRBUz
+         kro4Bo4eJttYHsTbTPW8SHI0olCSsWLKRPNr4M1i4qdaeKzTFbrrSmu/R8VMd7hZCN9N
+         mDniSHMPRTasq7Rqx0FtnMSb+zCrn/tHzHZsU=
+Received: by 10.115.91.11 with SMTP id t11mr344707wal.112.1233271588214; Thu, 
+	29 Jan 2009 15:26:28 -0800 (PST)
+In-Reply-To: <7v3af1enkq.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107753>
 
-On Thu, Jan 29, 2009 at 05:13:41PM -0500, Daniel Barkalow wrote:
+On Thu, Jan 29, 2009 at 2:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> I think I've seen this one before and I thought it was a sensible thing to
+> do (and perhaps I even said so here).
 
-> Every commit contains a version of the complete contents, so people have 
-> to be able to read the contents of all directories and write some 
-> directory contents. However, you can prohibit users from pushing content 
-> to the repository unless particular directories (or files) match what's 
-> there already. This is generally what people want when they have this 
-> requirement.
+You said it looked sane but that I should resend CCing knowledgable parties.
 
-If this is what you want, see Shawn's contrib/hooks/update-paranoid,
-which lets you specify ACLs in the config.
+> Is this a resend?  If so, let's queue it in at least 'next' and see if
+> anybody screams ;-).  For a program near the fringe like cvsserver, not
+> many people run it but the small number of people who run it gets hurt
+> rather quickly if the updated behaviour breaks their existing practice,
+> and sometimes breaking things for them would be the only way to extract
+> any response.  Yes, it is very unfortunate.
 
--Peff
+Yes, it is a resend, but I expanded on the commit message, including
+my analysis of the potential impact.
