@@ -1,112 +1,191 @@
-From: David Abrahams <dave@boostpro.com>
-Subject: Re: "malloc failed"
-Date: Thu, 29 Jan 2009 08:10:05 -0500
-Message-ID: <87pri6qmvm.fsf@mcbain.luannocracy.com>
-References: <878wow7pth.fsf@mcbain.luannocracy.com>
-	<20090128050225.GA18546@coredump.intra.peff.net>
-	<c26bbb3fe074f6f6e0634a4ae8611239@206.71.190.141>
-	<87skn3rn5n.fsf@mcbain.luannocracy.com>
-	<20090129052041.GB31507@coredump.intra.peff.net>
-	<20090129055633.GA32609@coredump.intra.peff.net>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] push: Learn to set up branch tracking with '--track'
+Date: Thu, 29 Jan 2009 14:38:43 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901291438030.3586@pacific.mpi-cbg.de>
+References: <cover.1233236267u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 29 14:11:41 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 29 14:39:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSWgC-0004Ys-6B
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 14:11:36 +0100
+	id 1LSX7X-0004by-2o
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 14:39:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752374AbZA2NKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 08:10:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752269AbZA2NKJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 08:10:09 -0500
-Received: from boost-consulting.com ([206.71.190.141]:52137 "EHLO
-	boost-consulting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752184AbZA2NKI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 08:10:08 -0500
-Received: from mcbain.luannocracy.com.boostpro.com (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
-	(Authenticated sender: dave)
-	by boost-consulting.com (Postfix) with ESMTPSA id 8E6451CC1E;
-	Thu, 29 Jan 2009 04:59:18 -0800 (PST)
-In-Reply-To: <20090129055633.GA32609@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 29 Jan 2009 00:56:34 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+	id S1753200AbZA2NiY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 08:38:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753093AbZA2NiX
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 08:38:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39442 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751644AbZA2NiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 08:38:22 -0500
+Received: (qmail invoked by alias); 29 Jan 2009 13:38:20 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp028) with SMTP; 29 Jan 2009 14:38:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18GNFNQm1IGcHXQOeFlLUBWhFClBO6+cQ0DjocwdT
+	Ra/tNT1KtByHJs
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <cover.1233236267u.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.42
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107671>
 
+When pushing a branch to a remote repository that the remote side did
+not know beforehand, it is often handy to set up the branch tracking
+such that
 
-on Thu Jan 29 2009, Jeff King <peff-AT-peff.net> wrote:
+	$ git checkout xyz
+	$ git push --track origin xyz:abc
+	$ git pull
 
-> On Thu, Jan 29, 2009 at 12:20:41AM -0500, Jeff King wrote:
->
->> Ok, that _is_ big. ;) I wouldn't be surprised if there is some corner of
->> the code that barfs on a single object that doesn't fit in a signed
->> 32-bit integer; I don't think we have any test coverage for stuff that
->> big.
->
-> Sure enough, that is the problem. With the patch below I was able to
-> "git add" and commit a 3 gigabyte file of random bytes (so even the
-> deflated object was 3G).
->
-> I think it might be worth applying as a general cleanup, but I have no
-> idea if other parts of the system might barf on such an object.
->
-> -- >8 --
-> Subject: [PATCH] avoid 31-bit truncation in write_loose_object
->
-> The size of the content we are adding may be larger than
-> 2.1G (i.e., "git add gigantic-file"). Most of the code-path
-> to do so uses size_t or unsigned long to record the size,
-> but write_loose_object uses a signed int.
->
-> On platforms where "int" is 32-bits (which includes x86_64
-> Linux platforms), we end up passing malloc a negative size.
+will pull the branch 'abc' from the remote 'origin' into the branch
+'xyz'.
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-Good work.  I don't know if this matters to you, but I think on a 32-bit
-platform you'll find that size_t, which is supposed to be able to hold
-the size of the largest representable *memory block*, is only 4 bytes
-large:
+	This is a companion patch to the one I sent earlier:
 
-  #include <limits.h>
-  #include <stdio.h>
+	http://article.gmane.org/gmane.comp.version-control.git/13735
 
-  int main()
-  {
-    printf("sizeof(size_t) = %d", sizeof(size_t));
-  }
+ Documentation/git-push.txt |    7 ++++++-
+ builtin-push.c             |   42 ++++++++++++++++++++++++++++++++++++++++++
+ t/t5516-fetch-push.sh      |   11 +++++++++++
+ 3 files changed, 59 insertions(+), 1 deletions(-)
 
-Prints "sizeof(size_t) = 4" on my core duo.
-
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  sha1_file.c |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
->
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 360f7e5..8868b80 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -2340,7 +2340,8 @@ static int create_tmpfile(char *buffer, size_t bufsiz, const
-> char *filename)
->  static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
->  			      void *buf, unsigned long len, time_t mtime)
->  {
-> -	int fd, size, ret;
-> +	int fd, ret;
-> +	size_t size;
->  	unsigned char *compressed;
->  	z_stream stream;
->  	char *filename;
-
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 7d1eced..fa1d54c 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git push' [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
+-	   [--repo=<repository>] [-f | --force] [-v | --verbose]
++	   [--repo=<repository>] [-f | --force] [-v | --verbose] [-t | --track]
+ 	   [<repository> <refspec>...]
+ 
+ DESCRIPTION
+@@ -126,6 +126,11 @@ useful if you write an alias or script around 'git-push'.
+ 	transfer spends extra cycles to minimize the number of
+ 	objects to be sent and meant to be used on slower connection.
+ 
++-t::
++--track::
++	Set up tracking information for the pushed branches, so that
++	'git pull' will remember the indicated mapping.
++
+ -v::
+ --verbose::
+ 	Run verbosely.
+diff --git a/builtin-push.c b/builtin-push.c
+index 122fdcf..9fd445d 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -16,6 +16,7 @@ static const char * const push_usage[] = {
+ 
+ static int thin;
+ static const char *receivepack;
++static int track;
+ 
+ static const char **refspec;
+ static int refspec_nr;
+@@ -48,6 +49,41 @@ static void set_refspecs(const char **refs, int nr)
+ 	}
+ }
+ 
++static void setup_tracking(const char *url)
++{
++	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
++	int i;
++
++	for (i = 0; i < refspec_nr; i++) {
++		const char *branch = refspec[i], *colon;
++
++		/* skip non-branches */
++		if (!prefixcmp("refs/", branch)) {
++			if (prefixcmp("refs/heads/", branch))
++				continue;
++			branch += strlen("refs/heads/");
++		}
++		colon = strchrnul(branch, ':');
++
++		strbuf_reset(&buf);
++		strbuf_addf(&buf, "branch.%.*s.remote",
++				(int)(colon - branch), branch);
++		git_config_set(buf.buf, url);
++
++		strbuf_reset(&buf);
++		strbuf_addf(&buf, "branch.%.*s.merge",
++				(int)(colon - branch), branch);
++		strbuf_reset(&buf2);
++		strbuf_addf(&buf2, "%s%s",
++			*colon && !prefixcmp("refs/heads/", colon + 1) ?
++			"" : "refs/heads/",
++			*colon ? colon + 1 : branch);
++		git_config_set(buf.buf, buf2.buf);
++	}
++	strbuf_release(&buf);
++	strbuf_release(&buf2);
++}
++
+ static int do_push(const char *repo, int flags)
+ {
+ 	int i, errs;
+@@ -96,6 +132,8 @@ static int do_push(const char *repo, int flags)
+ 		if (flags & TRANSPORT_PUSH_VERBOSE)
+ 			fprintf(stderr, "Pushing to %s\n", remote->url[i]);
+ 		err = transport_push(transport, refspec_nr, refspec, flags);
++		if (!err && track)
++			setup_tracking(transport->url);
+ 		err |= transport_disconnect(transport);
+ 
+ 		if (!err)
+@@ -126,11 +164,15 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
+ 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
+ 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", "receive pack program"),
++		OPT_BOOLEAN('t', "track", &track, "set up branch tracking information"),
+ 		OPT_END()
+ 	};
+ 
+ 	argc = parse_options(argc, argv, options, push_usage, 0);
+ 
++	if (track && !tags && !argc)
++		die ("Need explicit arguments for branch tracking");
++
+ 	if (tags)
+ 		add_refspec("refs/tags/*");
+ 
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 4426df9..e18b2f6 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -573,4 +573,15 @@ test_expect_success 'push with branches containing #' '
+ 	git checkout master
+ '
+ 
++test_expect_success 'push --track' '
++
++	git push --track testrepo master &&
++	test ! -z "$(git ls-remote testrepo master)" &&
++	test "testrepo" = $(git config branch.master.remote) &&
++	test "refs/heads/master" = $(git config branch.master.merge) &&
++	git push --track testrepo master:test &&
++	test "refs/heads/test" = $(git config branch.master.merge)
++
++'
++
+ test_done
 -- 
-Dave Abrahams
-BoostPro Computing
-http://www.boostpro.com
+1.6.1.1.506.gdbe181
