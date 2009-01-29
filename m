@@ -1,72 +1,104 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: git clone --bare doesn't create refs/heads/*?
-Date: Thu, 29 Jan 2009 22:48:01 +0800
-Message-ID: <be6fef0d0901290648g3e057255p2e69491edc3227e2@mail.gmail.com>
-References: <be6fef0d0901290606q25ad7c82ob250a5f89d4db0cf@mail.gmail.com>
-	 <20090129142657.GG21473@genesis.frugalware.org>
-	 <be6fef0d0901290636m5b472499mdf614841a06ec978@mail.gmail.com>
-	 <20090129144036.GH21473@genesis.frugalware.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Valgrind updates
+Date: Thu, 29 Jan 2009 15:54:11 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901291547510.3586@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0901210105470.19014@racer> <20090121001551.GB18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210119510.19014@racer> <20090121003739.GA18373@coredump.intra.peff.net> <alpine.DEB.1.00.0901210216440.19014@racer>
+ <20090121190757.GB21686@coredump.intra.peff.net> <alpine.DEB.1.00.0901212259420.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901270327200.26199@intel-tinevez-2-302> <alpine.LFD.2.00.0901261934450.3123@localhost.localdomain> <alpine.DEB.1.00.0901270512171.14855@racer>
+ <20090127131404.GA11870@sirena.org.uk> <alpine.DEB.1.00.0901271742430.3586@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901271006060.3123@localhost.localdomain> <69A01114-27BB-4239-8FD8-C35D1306CE25@alumni.caltech.edu> <alpine.DEB.1.00.0901290024290.3586@pacific.mpi-cbg.de>
+ <4D595705-7935-4AC2-91F4-1DAB3C6C7D27@alumni.caltech.edu> <alpine.DEB.1.00.0901291510520.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Jan 29 15:49:32 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jean-loup Gailly <jloup@gzip.org>,
+	Mark Brown <broonie@sirena.org.uk>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mark Adler <madler@alumni.caltech.edu>
+X-From: git-owner@vger.kernel.org Thu Jan 29 15:55:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSYCw-0003Tv-2q
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:49:30 +0100
+	id 1LSYIa-0005kq-0W
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:55:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753687AbZA2OsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 09:48:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753528AbZA2OsF
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:48:05 -0500
-Received: from wa-out-1112.google.com ([209.85.146.179]:3443 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752149AbZA2OsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 09:48:04 -0500
-Received: by wa-out-1112.google.com with SMTP id v33so1321595wah.21
-        for <git@vger.kernel.org>; Thu, 29 Jan 2009 06:48:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=M5A/rFyem1bE7gC8kIOtQFIPu7cILEj0CKa3ljcKibc=;
-        b=i41DHGTt1kQJBHldumvgVYcr+iuJTffNy+gW0gIrHbe+fd7zWpcGqNfKs2NvJeYlsM
-         ZZt8iOn5ANHWm01pLK+F1j7xv7gSxS723QfU8ig5cVw8soXMni2+OgXbIEh7kDYFEfUc
-         G8CsRLKtpVuCQUeDU9+gZ7A9i8xsTLpxJIcA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ICri/2A5M9uHW4H9OkuNpSHR4v0hSs1E76Jn0S7ri+H0RYl5zN91WMBwImf9PNn3pD
-         Gv13wIqJEb+O0ZLpsLAbnIiNKbccE9J7k4oij/nY3plckj9ezcaeKoejS3iYlCz7IdY6
-         /alhRo5wUO/VbYPQ+QXL637NtQL4l24AmpI9U=
-Received: by 10.114.72.1 with SMTP id u1mr70933waa.203.1233240481194; Thu, 29 
-	Jan 2009 06:48:01 -0800 (PST)
-In-Reply-To: <20090129144036.GH21473@genesis.frugalware.org>
+	id S1754238AbZA2Oxx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 09:53:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753844AbZA2Oxx
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:53:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57578 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753360AbZA2Oxw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 09:53:52 -0500
+Received: (qmail invoked by alias); 29 Jan 2009 14:53:49 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp063) with SMTP; 29 Jan 2009 15:53:49 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1997H0lwNB9oJKvsTUKsjx9X5Stj6wy0wpCczRDZS
+	GRrA7u/FoSglc2
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.DEB.1.00.0901291510520.3586@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107690>
 
-On Thu, Jan 29, 2009 at 10:40 PM, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> [ Please don't top-post. ]
+Hi,
 
-Oops.
+On Thu, 29 Jan 2009, Johannes Schindelin wrote:
 
-> Ah, packed refs. :)
->
-> See man git-pack-refs, git clone uses it to pack refs after a clone.
-> They are still in the 'packed-refs' file.
+> On Wed, 28 Jan 2009, Mark Adler wrote:
+> 
+> > On Jan 28, 2009, at 3:27 PM, Johannes Schindelin wrote:
+> > >On Wed, 28 Jan 2009, Mark Adler wrote:
+> > > >2.  Can someone send me the input and the 58 bytes of output from this
+> > > >  case?
+> > >
+> > >I did better than that already...
+> > >http://article.gmane.org/gmane.comp.version-control.git/107391
+> > 
+> > Johannes,
+> > 
+> > Thanks for the input and code.  When I run it, the byte in question at 
+> > offset 51 is 0x2c.  The output decompresses fine and the result matches 
+> > the input. If I change the 0x2c to anything else, decompression fails.  
+> > The 58 bytes are below.
+> > 
+> > Can you also send me the 58 bytes of output that you get when you run it?
+> 
+> I get exactly the same 58 bytes.  Together with the fact that the 52nd 
+> byte is actually required to be 0x2c, I think that maybe valgrind is 
+> having problems to track that this byte was correctly initialized.
+> 
+> BTW did you have any chance to test the code with valgrind on your 
+> machine?  It might be related to this here platform (x86_64).
 
-Thanks, that does clears things up.
+Now, things get interesting.
 
+Of course, I made sure that I had the newest zlib installed before 
+mentioning publically that I found a strange valgrind issue.
 
--- 
-Cheers,
-Ray Chuan
+But I did not build it from source myself; I installed what Ubuntu Gutsy 
+Gibbon had to offer me.
+
+Now that I tried to investigate further by compiling zlib from source, 
+instrumenting it with various valgrind-specific code to find out what is 
+actually happening, I cannot reproduce anymore!
+
+So I searched for the sources that Ubuntu provides, and I _still_ cannot 
+reproduce.
+
+So I'll just go for the easy solution, install plain straightforward 
+zlib-1.2.3 (as opposed to zlib_1.2.3.3.dfsg-12ubuntu1), and apologise to 
+y'all for all the bruhaha.
+
+Ciao,
+Dscho
+
+P.S.: Note that there is still something fishy going on, as Ubuntu's zlib 
+generates the deflated stream correctly.  But that will have to be 
+investigated by someone with substantially more time on her hands than me.
