@@ -1,92 +1,71 @@
-From: Manuel Woelker <manuel.woelker@gmail.com>
-Subject: [EGIT] Blame functionality update
-Date: Thu, 29 Jan 2009 18:35:28 +0100
-Message-ID: <3d045c7e0901290935l3bddac0emcbaee0b4b2c5695f@mail.gmail.com>
+From: Zabre <427@free.fr>
+Subject: Force commit date
+Date: Thu, 29 Jan 2009 10:30:17 -0800 (PST)
+Message-ID: <1233253817209-2240539.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 18:37:10 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 29 19:31:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSap1-000201-Ey
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 18:36:59 +0100
+	id 1LSbg1-0007MF-Kb
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 19:31:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753867AbZA2Rfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 12:35:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753759AbZA2Rfc
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 12:35:32 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:42603 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753632AbZA2Rfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 12:35:31 -0500
-Received: by ewy14 with SMTP id 14so45963ewy.13
-        for <git@vger.kernel.org>; Thu, 29 Jan 2009 09:35:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=7wItkc/NXXh4S556E6gpEsOJ1ZocactE63k9MlMemqE=;
-        b=xFRQcFZBtW1X+0bZUEQPDKZ/weAifIeVVLcjVq0sQt/vknrCfW+IvDT2bSfd/JFZ3Z
-         dSS89uSHGATHIc3zY23S8U74aOiO67kyKhwPAxhfjtuSg56UQhnaZ+GGIUjLZFBbsFB2
-         I7sC++5Csws9WMOqs8hTqZnoaOLrpTe1iLIc0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=ttNUarQkrstLziK7N+cKDYQ8gqcdfV9ICo1I88e+6SFW0NNNw6j5BohhRuFlHTQ0xV
-         iBZ6W2teFmnzAMhDGZqkPLCDl+1q6Ov0cILc9jBme4MG3W2xj4rJ/zEnRDYc9ln52OdE
-         I3VS1gNMpa1pfCVPUc44BrvZuxKkBKdvJrC3g=
-Received: by 10.103.171.6 with SMTP id y6mr157732muo.31.1233250528657; Thu, 29 
-	Jan 2009 09:35:28 -0800 (PST)
+	id S1752340AbZA2SaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 13:30:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbZA2SaS
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 13:30:18 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:48479 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751769AbZA2SaS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 13:30:18 -0500
+Received: from tervel.nabble.com ([192.168.236.150])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1LSbeb-0006Hy-70
+	for git@vger.kernel.org; Thu, 29 Jan 2009 10:30:17 -0800
+X-Nabble-From: 427@free.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107708>
 
-Hi folks,
 
-quick update about the state of blame functionality in my egit branch
-at http://github.com/manuel-woelker/egit/tree/blame
-Screen shot here: http://docs.google.com/View?docid=df5rvczr_3f46vd2ds
+Hi all,
 
-- Diff support: I changed the IDiff as suggested to work on raw bytes
-and IntList's. I also yanked the Diff implementation from wicket and
-adapted it for use in jgit. The diff stuff now lives in its own
-package. I also added some basic tests to see if plugged diff
-implementations conform to the required expectations.
+Some time ago, I used to make 7zip backups of my project directory to keep
+an history of my changes. (I've kept all of them in separated 7z files) I
+was then living in darkness. (Even though I tried svn but was somehow not
+happy with it) Now I've found the light, and git is the best tool around
+(along with Hg I guess).
 
-- log support: I added an OriginWalk in the new log package that
-traces ancestry of a file though history (including renames and
-copying). This might also be neat for the history page, which does not
-seem to follow renames at the moment (think "log -C -M"). This is just
-a rough sketch atm. Copies are disabled right now, cause the
-performance is abysmal, and the current implementation tries to trace
-the ancestry of empty lines back to the triassic period. So this could
-definitely be optimized. The OriginWalk itself uses RevObject (as
-suggested) so it should be a little faster. The implementation
-currently traces the different strands of ancestry quite naively,
-possibly parsing commits multiple times. This could be improved to a
-single pass walk, but this makes the algorithm a little less
-straight-forward and I haven't gotten around to that.
+I am learning git at the moment and I would like to restore all my 7zipped
+backups one after the other, use meld to apply each change in the code +
+directory structure and then git to commit each of them, chronologically, to
+finally obtain a complete git history of my changes (I even have "commit
+commentaries" in a special text file, yes I tried to do things properly with
+basic tools.)
 
-- As a result of the the OriginWalk mentioned above, the blame
-implementation has been refactored slightly, while still keeping the
-basic structure.
+This should be feasible, but what would be very cool in this very special
+case is if I could force the commit date to reflect the real date each
+"commit" (read : "zip") was done with my old method in last year, and not
+the date of my convertion to git.
 
-- I hooked up the blame functionality to the UI which was easier than
-anticipated. I am quite pleased with the result (see screen shot
-above). The only thing that proved a little tricky was history and
-annotation ruler selection listener notifying each other recursively.
-For now I stopped the stack overflow by detecting that recursive call.
-If anyone got a better solution just give me a shout.
+If it is not, that's not a big deal, but I'd really like to know how to do
+this, and have my different projects on a git history. (I even have one or
+two "secondary branches")
 
-Feedback, comments and criticism are welcome as always.
+There might be an option I am not aware of.
+(I have seen on this forum / mailing list some people playing with dates but
+it was the case of mailboxes and "git am")
+http://n2.nabble.com/how-to-force-a-commit-date-matching-info-from-a-mbox---td2200613.html
+Remember I'm a beginner trying to learn git, so please bear with me.
 
-Cheers
-  - Manuel
+Thank you!
+-- 
+View this message in context: http://n2.nabble.com/Force-commit-date-tp2240539p2240539.html
+Sent from the git mailing list archive at Nabble.com.
