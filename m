@@ -1,64 +1,54 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: [PATCH] t3411: Fix test 1 for case-insensitive file systems
-Date: Thu, 29 Jan 2009 11:00:16 -0500
-Message-ID: <1233244816-67565-1-git-send-email-benji@silverinsanity.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 29 17:02:05 2009
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCH] contrib: add 'git bpush' to push to bundles
+Date: Thu, 29 Jan 2009 17:05:53 +0100
+Message-ID: <adf1fd3d0901290805s64161899u72905a31dfec2fc6@mail.gmail.com>
+References: <1232408791-16834-1-git-send-email-santi@agolina.net>
+	 <20090120064732.GA14580@glandium.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Jan 29 17:08:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSZL3-00078T-Bu
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 17:01:57 +0100
+	id 1LSZQd-0000wH-R3
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 17:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751819AbZA2QAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 11:00:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751651AbZA2QAb
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 11:00:31 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:38121 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751358AbZA2QAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 11:00:30 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id DE9171FFC15B; Thu, 29 Jan 2009 16:00:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=4.0 tests=AWL,BAYES_00,
-	FORGED_RCVD_HELO autolearn=ham version=3.1.7-deb3
-Received: from localhost.localdomain (nmd.sbx07360.rocheny.wayport.net [98.98.50.102])
-	by silverinsanity.com (Postfix) with ESMTP id ABECD1FFC159;
-	Thu, 29 Jan 2009 16:00:17 +0000 (UTC)
-X-Mailer: git-send-email 1.6.1.2.418.gd79e6.dirty
+	id S1756912AbZA2QF5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jan 2009 11:05:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751875AbZA2QF5
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 11:05:57 -0500
+Received: from mail-ew0-f21.google.com ([209.85.219.21]:50611 "EHLO
+	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756856AbZA2QF4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jan 2009 11:05:56 -0500
+Received: by ewy14 with SMTP id 14so4283484ewy.13
+        for <git@vger.kernel.org>; Thu, 29 Jan 2009 08:05:53 -0800 (PST)
+Received: by 10.103.228.19 with SMTP id f19mr115769mur.18.1233245153045; Thu, 
+	29 Jan 2009 08:05:53 -0800 (PST)
+In-Reply-To: <20090120064732.GA14580@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107699>
 
-The call to "git reset --hard B1" failed on case-insensitive file
-systems (such as the default settings for HFS+) because there was both
-a tag "B1" and a file "b1".  Adding "--" to the command makes it
-clear that we mean commit B1.
+2009/1/20 Mike Hommey <mh@glandium.org>:
+> On Tue, Jan 20, 2009 at 12:46:31AM +0100, Santi B=E9jar wrote:
+>> 'git bpush' updates the branches in a bundle, while adding the objec=
+ts
+>> necessary to complete the given branches. Basically, it is a 'git
+>> push' for bundles.
+>
+> I think it'd be better to improve git-push to support that, instead o=
+f
+> adding yet another git command.
 
-Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
----
- t/t3411-rebase-preserve-around-merges.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Yes, I also think it'd be better if git-push supports it, but this is
+not a trivial task, and my script works now. So I think it makes sense
+to add it to the *contrib* directory.
 
-diff --git a/t/t3411-rebase-preserve-around-merges.sh b/t/t3411-rebase-preserve-around-merges.sh
-index 6533505..e544451 100755
---- a/t/t3411-rebase-preserve-around-merges.sh
-+++ b/t/t3411-rebase-preserve-around-merges.sh
-@@ -24,7 +24,7 @@ test_expect_success 'setup' '
- 	test_commit A1 &&
- 	test_commit B1 &&
- 	test_commit C1 &&
--	git reset --hard B1 &&
-+	git reset --hard B1 -- &&
- 	test_commit D1 &&
- 	test_merge E1 C1 &&
- 	test_commit F1
--- 
-1.6.1.2.418.gd79e6.dirty
+Santi
