@@ -1,72 +1,84 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Check for local changes with "goto"
-Date: Thu, 29 Jan 2009 04:45:12 +0100
-Message-ID: <20090129034512.GD24344@diana.vm.bytemark.co.uk>
-References: <20090128231305.16133.29214.stgit@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Jan 2009, #07; Wed, 28)
+Date: Wed, 28 Jan 2009 22:51:38 -0500
+Message-ID: <20090129035138.GC11836@coredump.intra.peff.net>
+References: <7vwscej26i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 04:46:43 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 04:53:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSNrW-0002bh-Pk
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 04:46:43 +0100
+	id 1LSNxk-0004Kv-L7
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 04:53:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753638AbZA2DpS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jan 2009 22:45:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753600AbZA2DpR
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 22:45:17 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2143 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753553AbZA2DpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 22:45:16 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1LSNq4-0006VZ-00; Thu, 29 Jan 2009 03:45:12 +0000
+	id S1753915AbZA2Dvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 22:51:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753823AbZA2Dvm
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 22:51:42 -0500
+Received: from peff.net ([208.65.91.99]:52296 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753456AbZA2Dvl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 22:51:41 -0500
+Received: (qmail 28461 invoked by uid 107); 29 Jan 2009 03:51:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 22:51:50 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 22:51:38 -0500
 Content-Disposition: inline
-In-Reply-To: <20090128231305.16133.29214.stgit@localhost.localdomain>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7vwscej26i.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107626>
 
-On 2009-01-28 23:13:05 +0000, Catalin Marinas wrote:
+On Wed, Jan 28, 2009 at 06:06:45PM -0800, Junio C Hamano wrote:
 
-> This is done by default, unless the --keep option is passed, for
-> consistency with the "pop" command. The index is checked in the
-> Transaction.run() function so that other commands could benefit from
-> this feature (off by default).
+> * sr/clone-empty (Fri Jan 23 01:07:32 2009 +0100) 1 commit
+>  + Allow cloning an empty repository
+> 
+> Has anybody actually tried this and made sure the resulting empty clone
+> works fine after the clone source gets updated with some contents?
 
-This looks good, except for ...
+Hmm. It sort of works:
 
-> +        # Check for not clean index
-> +        if check_clean and iw and not iw.index.is_clean():
-> +            self.__halt('Repository not clean. Use "refresh" or '
-> +                        '"status --reset"')
+  $ mkdir parent && (cd parent && git init)
+  Initialized empty Git repository in /home/peff/parent/.git/
 
-=2E.. this, which doesn't do what I think you think it does.
+  $ git clone parent child
+  Initialized empty Git repository in /home/peff/child/.git/
+  warning: You appear to have cloned an empty repository.
 
-Index.is_clean() calls "git update-index --refresh", which checks for
-changes in the worktree relative to the index. It's bad design to have
-it in Index rather than IndexAndWorktree, but that's my fault, not
-yours. ;-) But the point that breaks your patch is that it doesn't
-check for changes between index and HEAD -- try it and see.
+So far so good...
 
-The fix I'd suggest is to move the existing is_clean() method to
-IndexAndWorktree, and call it maybe worktree_clean(). And create a
-method in Index() called is_clean(tree) that checks whether the index
-is clean with respect to the given Tree (I think this method should
-just call "git diff-index --quiet --cached <tree>".). Then call both
-of these methods.
+  $ (cd parent && echo content >file && git add file && git commit -m one)
+  [normal commit output]
+  $ (cd child && git fetch)
+  [normal fetch output]
 
-Sorry if I just keep creating more work for you. :-/
+But:
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+  $ (cd child && git pull)
+  You asked me to pull without telling me which branch you
+  want to merge with, and 'branch.master.merge' in
+  ...
+
+So it's not quite seamless. The problem is that we're not setting up the
+branch.master.* config on the empty clone. Nor do we set up
+refs/remotes/origin/HEAD.
+
+On top of that, I get funniness between versions:
+
+  $ ssh peff.net 'git version && mkdir foo && cd foo && git init'
+  git version 1.5.6.5
+  Initialized empty Git repository in /mnt/data/home/peff/foo/.git/
+
+  $ git clone peff.net:foo
+  Initialized empty Git repository in /home/peff/foo/.git/
+  warning: You appear to have cloned an empty repository.
+  $ fatal: The remote end hung up unexpectedly
+
+-Peff
