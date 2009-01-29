@@ -1,49 +1,50 @@
-From: Keith Cascio <keith@CS.UCLA.EDU>
-Subject: Re: diff settings
-Date: Thu, 29 Jan 2009 10:46:12 -0800 (PST)
-Message-ID: <alpine.GSO.2.00.0901291044280.23065@kiwi.cs.ucla.edu>
-References: <alpine.GSO.2.00.0901240936080.23073@kiwi.cs.ucla.edu> <87ocxwv6qg.fsf@iki.fi> <alpine.GSO.2.00.0901241159050.23073@kiwi.cs.ucla.edu> <497CD352.2060402@tedpavlic.com> <alpine.GSO.2.00.0901251307030.12651@kiwi.cs.ucla.edu> <497D1AB7.7000208@tedpavlic.com>
- <4981D8AD.6000000@tedpavlic.com> <alpine.DEB.1.00.0901291731220.3586@pacific.mpi-cbg.de>
+From: Zabre <427@free.fr>
+Subject: Re: Force commit date
+Date: Thu, 29 Jan 2009 10:47:25 -0800 (PST)
+Message-ID: <1233254845678-2240620.post@n2.nabble.com>
+References: <1233253817209-2240539.post@n2.nabble.com> <bd6139dc0901291037h46a75446occ3004d2ff58d889@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ted Pavlic <ted@tedpavlic.com>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 29 19:47:52 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 29 19:48:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSbva-0004pc-03
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 19:47:50 +0100
+	id 1LSbwZ-00059v-Rh
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 19:48:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754251AbZA2SqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 13:46:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753844AbZA2SqX
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 13:46:23 -0500
-Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:54038 "EHLO kiwi.cs.ucla.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756946AbZA2SqW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 13:46:22 -0500
-Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n0TIkCZV025752;
-	Thu, 29 Jan 2009 10:46:12 -0800 (PST)
-Received: from localhost (keith@localhost)
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n0TIkCsf025749;
-	Thu, 29 Jan 2009 10:46:12 -0800 (PST)
-X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
-In-Reply-To: <alpine.DEB.1.00.0901291731220.3586@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
+	id S1751367AbZA2Sr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 13:47:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbZA2Sr0
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 13:47:26 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:49913 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751323AbZA2Sr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 13:47:26 -0500
+Received: from tervel.nabble.com ([192.168.236.150])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1LSbvB-00079H-M8
+	for git@vger.kernel.org; Thu, 29 Jan 2009 10:47:25 -0800
+In-Reply-To: <bd6139dc0901291037h46a75446occ3004d2ff58d889@mail.gmail.com>
+X-Nabble-From: 427@free.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107713>
 
-On Thu, 29 Jan 2009, Johannes Schindelin wrote:
 
-> we already have a distinction between what is called from scripts vs from 
-> humans: plumbing vs porcelain.  So you can set the defaults for porcelain as 
-> much as you want, but please leave plumbing alone.
 
-May we consider "git diff" Porcelain and "git diff-{files,index,tree}" plumbing?
+Sverre Rabbelier-2 wrote:
+> 
+> Indeed, try 'import-tars.perl' in the /contrib directory of git.git :).
+> 
+
+Thank you Sverre, I'll have a look at this!
+(sorry for my "wondering" post, I had not seen yours)
+-- 
+View this message in context: http://n2.nabble.com/Force-commit-date-tp2240539p2240620.html
+Sent from the git mailing list archive at Nabble.com.
