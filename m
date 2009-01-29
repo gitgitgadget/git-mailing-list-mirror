@@ -1,74 +1,112 @@
-From: John Chapman <thestar@fussycoder.id.au>
-Subject: Re: Sporadic BSOD with msys git?
-Date: Thu, 29 Jan 2009 23:27:07 +1100
-Message-ID: <1233232027.5816.1.camel@therock.nsw.bigpond.net.au>
-References: <20090129115442.6ce311f8@crow>
+From: David Abrahams <dave@boostpro.com>
+Subject: Re: "malloc failed"
+Date: Thu, 29 Jan 2009 08:10:05 -0500
+Message-ID: <87pri6qmvm.fsf@mcbain.luannocracy.com>
+References: <878wow7pth.fsf@mcbain.luannocracy.com>
+	<20090128050225.GA18546@coredump.intra.peff.net>
+	<c26bbb3fe074f6f6e0634a4ae8611239@206.71.190.141>
+	<87skn3rn5n.fsf@mcbain.luannocracy.com>
+	<20090129052041.GB31507@coredump.intra.peff.net>
+	<20090129055633.GA32609@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mark Burton <markb@ordern.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 14:07:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 29 14:11:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSWcE-0003HI-Rg
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 14:07:31 +0100
+	id 1LSWgC-0004Ys-6B
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 14:11:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524AbZA2NFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 08:05:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbZA2NFz
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 08:05:55 -0500
-Received: from nschwqsrv02p.mx.bigpond.com ([61.9.189.234]:37717 "EHLO
-	nschwqsrv02p.mx.bigpond.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751120AbZA2NFy (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jan 2009 08:05:54 -0500
-Received: from nschwotgx02p.mx.bigpond.com ([58.173.132.215])
-          by nschwmtas06p.mx.bigpond.com with ESMTP
-          id <20090129121431.WJGF3101.nschwmtas06p.mx.bigpond.com@nschwotgx02p.mx.bigpond.com>;
-          Thu, 29 Jan 2009 12:14:31 +0000
-Received: from therock.local ([58.173.132.215])
-          by nschwotgx02p.mx.bigpond.com with ESMTP
-          id <20090129121430.NYMS6144.nschwotgx02p.mx.bigpond.com@therock.local>;
-          Thu, 29 Jan 2009 12:14:30 +0000
-In-Reply-To: <20090129115442.6ce311f8@crow>
-X-Mailer: Evolution 2.6.3 
-X-RPD-ScanID: Class unknown; VirusThreatLevel unknown, RefID str=0001.0A150201.49819DA7.0032,ss=1,fgs=0
+	id S1752374AbZA2NKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 08:10:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752269AbZA2NKJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 08:10:09 -0500
+Received: from boost-consulting.com ([206.71.190.141]:52137 "EHLO
+	boost-consulting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752184AbZA2NKI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 08:10:08 -0500
+Received: from mcbain.luannocracy.com.boostpro.com (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
+	(Authenticated sender: dave)
+	by boost-consulting.com (Postfix) with ESMTPSA id 8E6451CC1E;
+	Thu, 29 Jan 2009 04:59:18 -0800 (PST)
+In-Reply-To: <20090129055633.GA32609@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 29 Jan 2009 00:56:34 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107670>
 
-Is that a clean windows XP system in VMware - with how much RAM?
- - I just find it strange, because I've had a similar setup, but never
-once got a crash like that.
 
-Additionally, the BSOD is in the guest, and not the host?
- - if it is the host that is BSOD'ing, then go check your memory,
-something's wierd there.
+on Thu Jan 29 2009, Jeff King <peff-AT-peff.net> wrote:
 
-On Thu, 2009-01-29 at 11:54 +0000, Mark Burton wrote:
-> Hi,
-> 
-> I occasionally have to use Windows (XP under VMWare) and thought I would try
-> out msysgit so I installed the recent version (1.6.1). For what I was
-> wanting to use it for, it worked OK.
-> 
-> However, I then started getting crashes when using the Windows explorer. I would
-> click on a folder to look at its contents and, whammo, Windows would crash. It
-> just happened every now and again, not all the time.
-> 
-> I uninstalled msysgit and now the crashes are not happening any more. Not
-> exactly conclusive evidence but, perhaps, there's an issue there?
-> 
-> Has anyone else seen this?
-> 
-> Cheers,
-> 
-> Mark
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> On Thu, Jan 29, 2009 at 12:20:41AM -0500, Jeff King wrote:
+>
+>> Ok, that _is_ big. ;) I wouldn't be surprised if there is some corner of
+>> the code that barfs on a single object that doesn't fit in a signed
+>> 32-bit integer; I don't think we have any test coverage for stuff that
+>> big.
+>
+> Sure enough, that is the problem. With the patch below I was able to
+> "git add" and commit a 3 gigabyte file of random bytes (so even the
+> deflated object was 3G).
+>
+> I think it might be worth applying as a general cleanup, but I have no
+> idea if other parts of the system might barf on such an object.
+>
+> -- >8 --
+> Subject: [PATCH] avoid 31-bit truncation in write_loose_object
+>
+> The size of the content we are adding may be larger than
+> 2.1G (i.e., "git add gigantic-file"). Most of the code-path
+> to do so uses size_t or unsigned long to record the size,
+> but write_loose_object uses a signed int.
+>
+> On platforms where "int" is 32-bits (which includes x86_64
+> Linux platforms), we end up passing malloc a negative size.
+
+
+Good work.  I don't know if this matters to you, but I think on a 32-bit
+platform you'll find that size_t, which is supposed to be able to hold
+the size of the largest representable *memory block*, is only 4 bytes
+large:
+
+  #include <limits.h>
+  #include <stdio.h>
+
+  int main()
+  {
+    printf("sizeof(size_t) = %d", sizeof(size_t));
+  }
+
+Prints "sizeof(size_t) = 4" on my core duo.
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  sha1_file.c |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+>
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 360f7e5..8868b80 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2340,7 +2340,8 @@ static int create_tmpfile(char *buffer, size_t bufsiz, const
+> char *filename)
+>  static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+>  			      void *buf, unsigned long len, time_t mtime)
+>  {
+> -	int fd, size, ret;
+> +	int fd, ret;
+> +	size_t size;
+>  	unsigned char *compressed;
+>  	z_stream stream;
+>  	char *filename;
+
+-- 
+Dave Abrahams
+BoostPro Computing
+http://www.boostpro.com
