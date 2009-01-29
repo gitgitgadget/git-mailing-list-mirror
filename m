@@ -1,77 +1,50 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Something weird is happening...
-Date: Thu, 29 Jan 2009 15:21:55 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0901291512260.3054@localhost.localdomain>
-References: <49814BA4.6030705@zytor.com> <7vfxj1eqh6.fsf@gitster.siamese.dyndns.org> <49822944.8000103@zytor.com> <20090129223529.GB1465@elte.hu> <20090129224357.GA18471@elte.hu> <498231EA.3030801@zytor.com> <7vvdrxd8jz.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Security and permissions in git
+Date: Thu, 29 Jan 2009 18:23:58 -0500
+Message-ID: <20090129232358.GA12941@coredump.intra.peff.net>
+References: <loom.20090129T203050-865@post.gmane.org> <alpine.LNX.1.00.0901291645300.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@elte.hu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 30 00:23:58 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Jay Renbaum <jrenbaum@hcrest.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Jan 30 00:25:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSgEn-0000pc-J1
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 00:23:58 +0100
+	id 1LSgGM-0001Oi-3j
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 00:25:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759022AbZA2XWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 18:22:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758757AbZA2XWe
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 18:22:34 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:38708 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758453AbZA2XWc (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jan 2009 18:22:32 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0TNLuNi019527
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 29 Jan 2009 15:21:57 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0TNLtBZ008057;
-	Thu, 29 Jan 2009 15:21:55 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vvdrxd8jz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.463 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754387AbZA2XYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 18:24:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753445AbZA2XYB
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 18:24:01 -0500
+Received: from peff.net ([208.65.91.99]:46182 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751348AbZA2XYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 18:24:01 -0500
+Received: (qmail 20259 invoked by uid 107); 29 Jan 2009 23:24:10 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 29 Jan 2009 18:24:10 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Jan 2009 18:23:58 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.1.00.0901291645300.19665@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107752>
 
+On Thu, Jan 29, 2009 at 05:13:41PM -0500, Daniel Barkalow wrote:
 
+> Every commit contains a version of the complete contents, so people have 
+> to be able to read the contents of all directories and write some 
+> directory contents. However, you can prohibit users from pushing content 
+> to the repository unless particular directories (or files) match what's 
+> there already. This is generally what people want when they have this 
+> requirement.
 
-On Thu, 29 Jan 2009, Junio C Hamano wrote:
-> 
-> I am not sure how old this bug is (nor if I can make Linus admit it is
-> even a bug---I suspect the code that is involved in this did not change
-> that much over time).
+If this is what you want, see Shawn's contrib/hooks/update-paranoid,
+which lets you specify ACLs in the config.
 
-I'll happily admit that it's a bug.
-
-I think our "fsck" logic kind of sucks - the default version really skips 
-too damn much in the name of being fast and only look at loose objects, 
-and --full is _so_ anal that it's silly and overkill for almost 
-everything.
-
-We probably should have a middle ground (that should be the default), 
-which does at least somewhat proper reachability analysis, checks 
-alternates, and make the current "only check local loose objects" be an 
-option like "git fsck --loose" (or "--local").
-
-Out current "git fsck --full" is even mis-documented. The built-in help 
-says that it means "also consider alternate objects", but that's just a 
-small part of what it does. It _also_ verifies the pack-files, and that's 
-actually the really expensive part.
-
-So "check_full" turns on _everything_, but some things that it turns on 
-should be turned on already by default (the "alternates" directory check), 
-while other parts of --full are just too expensive to ever be default (the 
-pack-file check).
-
-			Linus
+-Peff
