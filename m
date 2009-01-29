@@ -1,70 +1,67 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: Re: do you recommend "git" (over svn) for a 1-person team???
-Date: Wed, 28 Jan 2009 22:31:21 -0500
-Message-ID: <49812309.9010703@tedpavlic.com>
-References: <d30068860901281718x363348caya2dc94e798cc8091@mail.gmail.com>  <d30068860901281725t14d19c1vc0557182bca3eb8d@mail.gmail.com>  <885649360901281815q42199468v8658d864386efe2d@mail.gmail.com>  <46a038f90901281828t16ace3bdocc897eb5235d7c30@mail.gmail.com> <d30068860901281846v65baf431mdab5fe961ef9407d@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Jan 2009, #07; Wed, 28)
+Date: Wed, 28 Jan 2009 22:38:16 -0500
+Message-ID: <20090129033816.GB11836@coredump.intra.peff.net>
+References: <7vwscej26i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	James Pickens <jepicken@gmail.com>, git <git@vger.kernel.org>
-To: Greg Hauptmann <greg.hauptmann.ruby@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 04:33:24 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 04:39:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSNed-0007vp-KO
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 04:33:24 +0100
+	id 1LSNko-000189-V9
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 04:39:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758581AbZA2Dba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 22:31:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753685AbZA2Dba
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 22:31:30 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:39855 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754419AbZA2Db3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Jan 2009 22:31:29 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id E3FDC80D805A;
-	Wed, 28 Jan 2009 22:25:19 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vuvJoldXu5gb; Wed, 28 Jan 2009 22:25:19 -0500 (EST)
-Received: from TedBook.local (cpe-76-181-62-78.columbus.res.rr.com [76.181.62.78])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 7D7E880D8018;
-	Wed, 28 Jan 2009 22:25:19 -0500 (EST)
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <d30068860901281846v65baf431mdab5fe961ef9407d@mail.gmail.com>
+	id S1753946AbZA2DiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 22:38:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753867AbZA2DiT
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 22:38:19 -0500
+Received: from peff.net ([208.65.91.99]:46915 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753305AbZA2DiS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 22:38:18 -0500
+Received: (qmail 28326 invoked by uid 107); 29 Jan 2009 03:38:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 28 Jan 2009 22:38:27 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Jan 2009 22:38:16 -0500
+Content-Disposition: inline
+In-Reply-To: <7vwscej26i.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107623>
 
-> does the concept of me setting up my own central git server as well
-> make any sense from the point of view of a way to ensure I can (when
-> I'm not remote) "check-in" to the central git server&  thereby keep a
-> separate copy of my code (i.e. effectively a backup)
+On Wed, Jan 28, 2009 at 06:06:45PM -0800, Junio C Hamano wrote:
 
-You can always keep local clones that serve as "stable" backup repos. 
-However, I think most people would suggest you just create 
-stable/experimental branches and merge from one to the other as 
-appropriate.
+> * js/valgrind (Wed Jan 21 02:36:40 2009 +0100) 2 commits
+>  - valgrind: ignore ldso errors
+>  - Add valgrind support in test scripts
+> 
+> Dscho and Peff had further exchanges on the list; I am sort of waiting for
+> the conclusion before picking any intermediate version up.
 
-If you need some nice working examples of people using git for personal 
-projects, I recommend you search Google for the many ways of using git 
-to manage home directories. Applying git to home directory management 
-involves many of the same questions (and answers) as what you're 
-bringing up here, and it probably will give you some ideas about the 
-most effective git usage for your case.
+I think I gave an OK to the last version posted, but then the last thing
+I saw from Dscho was "I have a new patch, but I'm not posting it right
+this second":
 
---Ted
+  http://article.gmane.org/gmane.comp.version-control.git/107300
 
--- 
-Ted Pavlic <ted@tedpavlic.com>
+followed by much "is zlib broken" discussion which I think doesn't hold
+us up (either it is a bug in zlib, in which case it is not our problem,
+or it is a false positive, in which case we just add a suppression).
 
-   Please visit my ALS association page:
-         http://web.alsa.org/goto/tedpavlic
-   My family appreciates your support in the fight to defeat ALS.
+So I think we are waiting for the next round from Johannes.
+
+> * jk/valgrind (Thu Oct 23 04:30:45 2008 +0000) 2 commits
+>  . valgrind: ignore ldso errors
+>  . add valgrind support in test scripts
+
+I think it probably makes sense to drop these at this point. Dscho's
+more recent work should be the basis to which new patches are compared.
+
+-Peff
