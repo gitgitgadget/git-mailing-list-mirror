@@ -1,111 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Andy Parkins <andyparkins@gmail.com>
 Subject: Re: [PATCH] git-cvsserver: run post-update hook *after* update.
-Date: Thu, 29 Jan 2009 14:48:05 -0800
-Message-ID: <7v3af1enkq.fsf@gitster.siamese.dyndns.org>
-References: <7viqo61mfq.fsf@gitster.siamese.dyndns.org>
- <1233266282-8010-1-git-send-email-stefan.karpinski@gmail.com>
+Date: Thu, 29 Jan 2009 22:56:29 +0000
+Message-ID: <200901292256.30239.andyparkins@gmail.com>
+References: <7viqo61mfq.fsf@gitster.siamese.dyndns.org> <1233266282-8010-1-git-send-email-stefan.karpinski@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>,
-	Michael Witten <mfwitten@mit.edu>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Michael Witten <mfwitten@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Stefan Karpinski <stefan.karpinski@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 23:49:46 2009
+X-From: git-owner@vger.kernel.org Thu Jan 29 23:58:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSfhd-0003cP-Iy
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 23:49:42 +0100
+	id 1LSfpt-0007ks-H4
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 23:58:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753071AbZA2WsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 17:48:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751368AbZA2WsP
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 17:48:15 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58860 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751348AbZA2WsP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 17:48:15 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 53725943C7;
-	Thu, 29 Jan 2009 17:48:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9B322943C3; Thu,
- 29 Jan 2009 17:48:07 -0500 (EST)
+	id S1754326AbZA2W4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 17:56:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753983AbZA2W4r
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 17:56:47 -0500
+Received: from mail-ew0-f21.google.com ([209.85.219.21]:52663 "EHLO
+	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753732AbZA2W4r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 17:56:47 -0500
+Received: by ewy14 with SMTP id 14so417931ewy.13
+        for <git@vger.kernel.org>; Thu, 29 Jan 2009 14:56:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=03d6y7CdOrAvJ2SrIHPbRUzktpNiRTzuf+Lf8vV+ncI=;
+        b=KcFsL1B/oQZjpABggKmB1SUoUe7yL1Z6rIo6djTStdoewfRovh8r2UOIXNaZij3cKw
+         4Dx8L5Gp6eJEuoQjiN6gjpwspWavt51clZO/hzSJ5a65NmFhG+vrFAmFyqcuxmNF1s8q
+         zmGyRPVTKo2qBnd/c1EXquoK1ZLCG1mjekUeo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=OFUyRlmntBJhRdkKcBTOCSHq/HtjMwN8YATyk/RHGXPxKj4Somo6d5ZPe8XSeF5PUO
+         GgmiK+cg81qrtM2TVcnnOX1FaMxzW3Svmq+V31tUjvA8O70rnEqhR4cRrK0uqC2q0zh5
+         loSaUHMuM0mZhDu1ZpFFUm91hiLxUEgxCe6i0=
+Received: by 10.67.123.1 with SMTP id a1mr1323204ugn.42.1233269805247;
+        Thu, 29 Jan 2009 14:56:45 -0800 (PST)
+Received: from grissom.localnet ([91.84.15.31])
+        by mx.google.com with ESMTPS id 31sm16496ugg.8.2009.01.29.14.56.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 29 Jan 2009 14:56:44 -0800 (PST)
+User-Agent: KMail/1.11.0 (Linux/2.6.26-1-686; KDE/4.2.0; i686; ; )
 In-Reply-To: <1233266282-8010-1-git-send-email-stefan.karpinski@gmail.com>
- (Stefan Karpinski's message of "Thu, 29 Jan 2009 13:58:02 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E8EAED74-EE56-11DD-BF43-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107747>
 
-Stefan Karpinski <stefan.karpinski@gmail.com> writes:
+On Thursday 29 January 2009 21:58:02 Stefan Karpinski wrote:
 
-> CVS server was running the hook before the update action was
-> actually done. This performs the update before the hook is called.
->
-> The original commit that introduced the current incorrect behavior
-> was 394d66d "git-cvsserver runs hooks/post-update". The error in
-> ordering of the hook call appears to have gone unnoticed, but since
-> git-cvsserver is supposed to emulate receive-pack, it stands to
-> reason that the hook should be run *after* the update. Since this
-> behavior is inconsistent with recieve-pack, users are either:
->
->   1) not using post-update hooks with git-cvsserver;
->   2) using post-update hooks that don't care whether they are
->      called before or after the actual update occurs;
->   3) using post-update hooks *only* with git-cvsserver, and
->      relying on the hook being called just before the update.
->
 > This patch would affect only users in case 3. These users are
 > depending on fairly obviously wrong behavior, and moreover they can
 > simply change their current post-update into post-recieve hooks,
 > and their systems will work correctly again.
+
+Quite right.
+
 >
 > Signed-off-by: Stefan Karpinski <stefan.karpinski@gmail.com>
-> ---
-> I'm CCing Andy Parkins, Michael Witten, and Junio Hamano, who
-> authored the other three commits implementing or affecting hooks in
-> git-cvsserver (394d66d, cdf6328, b2741f6). If you could please take
-> a look at this patch and comment on if it's harmful or not, it
-> would be much appreciated.
+Acked-By: Andy Parkins <andyparkins@gmail.com>
 
-I think I've seen this one before and I thought it was a sensible thing to
-do (and perhaps I even said so here).
-
-Is this a resend?  If so, let's queue it in at least 'next' and see if
-anybody screams ;-).  For a program near the fringe like cvsserver, not
-many people run it but the small number of people who run it gets hurt
-rather quickly if the updated behaviour breaks their existing practice,
-and sometimes breaking things for them would be the only way to extract
-any response.  Yes, it is very unfortunate.
-
->  git-cvsserver.perl |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-> index c1e09ea..d2e6003 100755
-> --- a/git-cvsserver.perl
-> +++ b/git-cvsserver.perl
-> @@ -1413,14 +1413,14 @@ sub req_ci
->  		close $pipe || die "bad pipe: $! $?";
->  	}
->  
-> +    $updater->update();
-> +
->  	### Then hooks/post-update
->  	$hook = $ENV{GIT_DIR}.'hooks/post-update';
->  	if (-x $hook) {
->  		system($hook, "refs/heads/$state->{module}");
->  	}
->  
-> -    $updater->update();
-> -
->      # foreach file specified on the command line ...
->      foreach my $filename ( @committedfiles )
->      {
-> -- 
-> 1.6.0.3.3.g08dd8
+-- 
+Dr Andy Parkins
+andyparkins@gmail.com
