@@ -1,81 +1,63 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git clone --bare doesn't create refs/heads/*?
-Date: Thu, 29 Jan 2009 15:40:36 +0100
-Message-ID: <20090129144036.GH21473@genesis.frugalware.org>
-References: <be6fef0d0901290606q25ad7c82ob250a5f89d4db0cf@mail.gmail.com> <20090129142657.GG21473@genesis.frugalware.org> <be6fef0d0901290636m5b472499mdf614841a06ec978@mail.gmail.com>
+From: Mark Burton <markb@ordern.com>
+Subject: Re: Sporadic BSOD with msys git?
+Date: Thu, 29 Jan 2009 14:41:50 +0000
+Organization: Order N Ltd.
+Message-ID: <20090129144150.52bb0f67@crow>
+References: <20090129115442.6ce311f8@crow>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="SK3XQJ7YwHDQqAUa"
-Cc: git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 15:42:27 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 29 15:43:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSY5j-0000gF-Ky
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:42:04 +0100
+	id 1LSY6z-0001Ex-5k
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:43:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753387AbZA2Oki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 09:40:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbZA2Oki
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:40:38 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:48314 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753093AbZA2Okh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 09:40:37 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id B6A895812E;
-	Thu, 29 Jan 2009 15:40:37 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 0FC5D4465E;
-	Thu, 29 Jan 2009 15:40:36 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 2E1DF11B87A9; Thu, 29 Jan 2009 15:40:36 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <be6fef0d0901290636m5b472499mdf614841a06ec978@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754643AbZA2Oly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 09:41:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754367AbZA2Oly
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:41:54 -0500
+Received: from c2beaomr05.btconnect.com ([213.123.26.183]:6883 "EHLO
+	c2beaomr05.btconnect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754121AbZA2Olx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 09:41:53 -0500
+Received: from crow.ordern.com (host86-128-142-98.range86-128.btcentralplus.com [86.128.142.98])
+	by c2beaomr05.btconnect.com (MOS 3.8.6-GA)
+	with ESMTP id BSJ26637;
+	Thu, 29 Jan 2009 14:41:50 GMT
+Received: from crow (localhost [127.0.0.1])
+	by crow.ordern.com (Postfix) with ESMTP id 5B943190DC5
+	for <git@vger.kernel.org>; Thu, 29 Jan 2009 14:41:50 +0000 (GMT)
+In-Reply-To: <20090129115442.6ce311f8@crow>
+X-Mailer: Claws Mail 3.7.0 (GTK+ 2.12.9; x86_64-pc-linux-gnu)
+X-Junkmail-Status: score=10/50, host=c2beaomr05.btconnect.com
+X-Junkmail-SD-Raw: score=unknown,
+	refid=str=0001.0A0B0203.4981C02F.0210,ss=1,fgs=0,
+	ip=86.128.142.98,
+	so=2007-10-30 19:00:17,
+	dmn=5.7.1/2008-09-02
+X-Junkmail-IWF: false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107688>
 
 
---SK3XQJ7YwHDQqAUa
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-[ Please don't top-post. ]
+Thanks for the responses.
 
-On Thu, Jan 29, 2009 at 10:36:26PM +0800, Tay Ray Chuan <rctay89@gmail.com>=
- wrote:
-> Hmm, no, --mirror adds extra remote tracking information.
->=20
-> Quoting the git-clone man page:
->=20
-> "...the branch heads at the remote are copied directly..."
->=20
-> which is to say, git clone --bare isn't doing what it's supposed to do.
->=20
-> that said, i'm not too sure about this, hence this thread.
+The crash is in the XP guest, not the host (the host is a Linux box).
 
-Ah, packed refs. :)
+The XP image is quite old and has had quite a lot of stuff
+installed/un-installed over time so I will try again using a fresh XP VM
+updated with all the latest M$ fixes.
 
-See man git-pack-refs, git clone uses it to pack refs after a clone.
-They are still in the 'packed-refs' file.
+Cheers,
 
---SK3XQJ7YwHDQqAUa
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkmBv+QACgkQe81tAgORUJYtAwCfV2AD6/lfnNXyZ443cm7skDqm
-3dcAnRwjK2ky3/Z5z7csompyDixReTt8
-=Xoc5
------END PGP SIGNATURE-----
-
---SK3XQJ7YwHDQqAUa--
+Mark
+ 
