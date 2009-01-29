@@ -1,56 +1,75 @@
-From: david@lang.hm
-Subject: Re: do you recommend "git" (over svn) for a 1-person team???
-Date: Wed, 28 Jan 2009 18:57:21 -0800 (PST)
-Message-ID: <alpine.DEB.1.10.0901281833280.22712@asgard.lang.hm>
-References: <d30068860901281718x363348caya2dc94e798cc8091@mail.gmail.com> <d30068860901281725t14d19c1vc0557182bca3eb8d@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Valgrind updates
+Date: Wed, 28 Jan 2009 17:56:05 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0901281751580.3123@localhost.localdomain>
+References: <alpine.DEB.1.00.0901210105470.19014@racer> <20090121001551.GB18169@coredump.intra.peff.net> <alpine.DEB.1.00.0901210119510.19014@racer> <20090121003739.GA18373@coredump.intra.peff.net> <alpine.DEB.1.00.0901210216440.19014@racer>
+ <20090121190757.GB21686@coredump.intra.peff.net> <alpine.DEB.1.00.0901212259420.3586@pacific.mpi-cbg.de> <alpine.DEB.1.00.0901270327200.26199@intel-tinevez-2-302> <alpine.LFD.2.00.0901261934450.3123@localhost.localdomain> <alpine.DEB.1.00.0901270512171.14855@racer>
+ <20090127131404.GA11870@sirena.org.uk> <alpine.DEB.1.00.0901271742430.3586@pacific.mpi-cbg.de> <alpine.LFD.2.00.0901271006060.3123@localhost.localdomain> <alpine.DEB.1.00.0901272241250.14855@racer>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Greg Hauptmann <greg.hauptmann.ruby@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 02:54:56 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: zlib@gzip.org, valgrind-users@lists.sourceforge.net,
+	Mark Brown <broonie@sirena.org.uk>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 29 02:58:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSM7K-0003Ru-Pq
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 02:54:55 +0100
+	id 1LSMAs-0004HE-AT
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 02:58:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753152AbZA2Bx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 20:53:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753009AbZA2Bx3
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 20:53:29 -0500
-Received: from mail.lang.hm ([64.81.33.126]:44332 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752621AbZA2Bx3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 20:53:29 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n0T1rP5N021437;
-	Wed, 28 Jan 2009 17:53:25 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <d30068860901281725t14d19c1vc0557182bca3eb8d@mail.gmail.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1753358AbZA2B5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 20:57:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753351AbZA2B5H
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 20:57:07 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:51729 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753059AbZA2B5G (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jan 2009 20:57:06 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0T1u6eU000627
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 28 Jan 2009 17:56:07 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0T1u5bn025629;
+	Wed, 28 Jan 2009 17:56:05 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.DEB.1.00.0901272241250.14855@racer>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.462 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107611>
 
-On Thu, 29 Jan 2009, Greg Hauptmann wrote:
 
-> Hi,
->
-> Do you recommend "git" (over svn) for a 1-person team???   (the
-> ability to commit whilst offline on my laptop sounds potentially
-> enough reason)
 
-well, if you use svn just put the svn repository on your laptop.
+On Tue, 27 Jan 2009, Johannes Schindelin wrote:
+> 
+> To help ye Gods, I put together this almost minimal C program:
 
-but if you use multiple systems you aren't really a 1-person team, you 
-just happen to be one person working in different places.
+This one is buggy.
 
-also the distributed nature of git will make doing (and maintaining) 
-backups easier, as well as recovering from the inevitable cases where you 
-do development seperatly on your different machines and then need to 
-combine them.
+> 	out = fopen("/dev/null", "w");
+> 	fwrite(compressed + 51, 51, 1, out);
+> 	fwrite(compressed + 51, 1, 1, stderr);
+> 	fflush(out);
+> 	fclose(out);
 
-David Lang
+The problem is that the first argument to that first "fwrite()" is simply 
+wrong. It shouldn't be "compressed + 51", it should be just "compressed". 
+As it is, you're writing 51 bytes, starting at 51 bytes in, and that's 
+obviously not correct (you only got 58 bytes from deflate()).
+
+So valgrind does complain about it, but for a perfectly valid reason.
+
+So I think your minimal C program isn't actually showing what you wanted 
+to show, and isn't showing the behaviour you see in git.
+
+			Linus
