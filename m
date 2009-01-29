@@ -1,59 +1,67 @@
-From: Yuval Kogman <nothingmuch@woobling.org>
-Subject: Re: [PATCH] Add --ff-only flag to git-merge
-Date: Thu, 29 Jan 2009 22:57:43 +0200
-Message-ID: <a891e1bd0901291257t774af061s84497cde8f4bf61c@mail.gmail.com>
-References: <1233147238-30082-1-git-send-email-nothingmuch@woobling.org>
-	 <7vk58fm8x2.fsf@gitster.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: diff settings
+Date: Fri, 30 Jan 2009 06:07:42 +0900
+Message-ID: <20090130060742.6117@nanako3.lavabit.com>
+References: <alpine.GSO.2.00.0901240936080.23073@kiwi.cs.ucla.edu> <87ocxwv6qg.fsf@iki.fi> <alpine.GSO.2.00.0901241159050.23073@kiwi.cs.ucla.edu> <497CD352.2060402@tedpavlic.com> <alpine.GSO.2.00.0901251307030.12651@kiwi.cs.ucla.edu> <497D1AB7.7000208@tedpavlic.com>
+ <4981D8AD.6000000@tedpavlic.com> <alpine.DEB.1.00.0901291731220.3586@pacific.mpi-cbg.de> <alpine.GSO.2.00.0901291044280.23065@kiwi.cs.ucla.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 21:59:33 2009
+Content-Transfer-Encoding: 8bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ted Pavlic <ted@tedpavlic.com>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Keith Cascio <keith@CS.UCLA.EDU>
+X-From: git-owner@vger.kernel.org Thu Jan 29 22:10:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSdyh-0001ce-C0
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 21:59:11 +0100
+	id 1LSe8u-0006Ep-DO
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 22:09:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752483AbZA2U5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 15:57:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752419AbZA2U5q
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 15:57:46 -0500
-Received: from ey-out-2122.google.com ([74.125.78.25]:50388 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751688AbZA2U5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 15:57:45 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so42513eya.37
-        for <git@vger.kernel.org>; Thu, 29 Jan 2009 12:57:43 -0800 (PST)
-Received: by 10.86.92.4 with SMTP id p4mr289391fgb.36.1233262663167; Thu, 29 
-	Jan 2009 12:57:43 -0800 (PST)
-In-Reply-To: <7vk58fm8x2.fsf@gitster.siamese.dyndns.org>
+	id S1752553AbZA2VIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 16:08:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751678AbZA2VIS
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 16:08:18 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:57766 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751348AbZA2VIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 16:08:17 -0500
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id EF516C7B31;
+	Thu, 29 Jan 2009 15:08:14 -0600 (CST)
+Received: from 5700.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id CZZSKKO2BMF5; Thu, 29 Jan 2009 15:08:14 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=gnULXBl43lDXtZH6/wvdcYC92i+N7f45d3emsswMJYdifTB4H57mqe4xUeDdfdHafL4lAApcq6aJ6+Z+U8R0YGUk8WyoJ+dg+/7nVxOnE4UKpLnZeP50R1Csr2ncpyRiHEwKccLT4SXJ5Z00XJxYevnGJwo8qQWvqLditMnGwvU=;
+  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <alpine.GSO.2.00.0901291044280.23065@kiwi.cs.ucla.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107730>
 
-Hi,
+Quoting Keith Cascio <keith@CS.UCLA.EDU>:
 
-I started incorperating your feedback but before I send a new patch I
-have several questions about the trickier bits:
+> On Thu, 29 Jan 2009, Johannes Schindelin wrote:
+>
+>> we already have a distinction between what is called from scripts vs from 
+>> humans: plumbing vs porcelain.  So you can set the defaults for porcelain as 
+>> much as you want, but please leave plumbing alone.
+>
+> May we consider "git diff" Porcelain and "git diff-{files,index,tree}" plumbing?
 
-2009/1/28 Junio C Hamano <gitster@pobox.com>:
+Sure we may. To see the list of commands with categories, you can consult
 
->  * The placement of this misses the case where a merge of two unrelated
->   histories is attempted.  You would need to also have a check at "No
->   common ancestors found. We need a real merge." part.
+http://www.kernel.org/pub/software/scm/git/docs/
 
-Won't that fall through? The if (!common) is above, and this is
-eventually an else if for it (see line 978)
+Junio, I think you could have stated this a bit more clearly in your message
 
-> The octopus
->   codepath could also end up with a fast forward or up-to-date.
+http://thread.gmane.org/gmane.comp.version-control.git/107069/focus=107165
 
-So this case is obviously more convoluted... If an octopus merge is
-chosen should it just pass --ff-only to git-merge-octopus? Or maybe it
-should always pass --ff-only and the various different strategies
-would just die unconditionally?
+to avoid confusion, especially when you know you are talking to somebody new to git.
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
