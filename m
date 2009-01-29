@@ -1,50 +1,55 @@
-From: Zabre <427@free.fr>
-Subject: Re: Force commit date
-Date: Thu, 29 Jan 2009 10:47:25 -0800 (PST)
-Message-ID: <1233254845678-2240620.post@n2.nabble.com>
-References: <1233253817209-2240539.post@n2.nabble.com> <bd6139dc0901291037h46a75446occ3004d2ff58d889@mail.gmail.com>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: segfault when cloning over https
+Date: Thu, 29 Jan 2009 19:46:07 +0100 (CET)
+Message-ID: <alpine.DEB.1.10.0901291944030.5789@yvahk2.pbagnpgbe.fr>
+References: <20090129184523.GI23133@fi.muni.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 29 19:48:52 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Jan Kasprzak <kas@fi.muni.cz>
+X-From: git-owner@vger.kernel.org Thu Jan 29 19:52:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSbwZ-00059v-Rh
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 19:48:52 +0100
+	id 1LSbzT-0006FU-HP
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 19:51:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751367AbZA2Sr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 13:47:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbZA2Sr0
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 13:47:26 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:49913 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751323AbZA2Sr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 13:47:26 -0500
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1LSbvB-00079H-M8
-	for git@vger.kernel.org; Thu, 29 Jan 2009 10:47:25 -0800
-In-Reply-To: <bd6139dc0901291037h46a75446occ3004d2ff58d889@mail.gmail.com>
-X-Nabble-From: 427@free.fr
+	id S1753358AbZA2SuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 13:50:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbZA2SuM
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 13:50:12 -0500
+Received: from kluster1.contactor.se ([91.191.140.11]:32880 "EHLO
+	kluster1.contactor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752522AbZA2SuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 13:50:11 -0500
+Received: from linux2.contactor.se (linux2.contactor.se [91.191.140.14])
+	by kluster1.contactor.se (8.13.8/8.13.8/Debian-3) with ESMTP id n0TIntoq003391;
+	Thu, 29 Jan 2009 19:49:55 +0100
+X-X-Sender: dast@linux2.contactor.se
+In-Reply-To: <20090129184523.GI23133@fi.muni.cz>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107714>
 
+On Thu, 29 Jan 2009, Jan Kasprzak wrote:
 
+> without problems, but when I change http to https, it either segfaults or 
+> fails with heap corruption detected:
 
-Sverre Rabbelier-2 wrote:
-> 
-> Indeed, try 'import-tars.perl' in the /contrib directory of git.git :).
-> 
+> /lib64/libnsspem.so[0x7f845f3ee9c4]
+> /lib64/libnss3.so[0x7f846210dc4d]
+> /lib64/libnss3.so(PK11_CreateGenericObject+0x42)[0x7f846210ded2]
+> /usr/lib64/libcurl.so.4[0x14b129]
 
-Thank you Sverre, I'll have a look at this!
-(sorry for my "wondering" post, I had not seen yours)
+This is a libcurl built to use a Fedora-patched NSS library for the SSL stuff. 
+You could try to build your own libcurl with a different SSL library to see if 
+that works fine, as then we could narrow this down a bit...
+
 -- 
-View this message in context: http://n2.nabble.com/Force-commit-date-tp2240539p2240620.html
-Sent from the git mailing list archive at Nabble.com.
+
+  / daniel.haxx.se
