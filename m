@@ -1,59 +1,76 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: git clone --bare doesn't create refs/heads/*?
-Date: Thu, 29 Jan 2009 22:06:39 +0800
-Message-ID: <be6fef0d0901290606q25ad7c82ob250a5f89d4db0cf@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Support various HTTP authentication methods
+Date: Thu, 29 Jan 2009 15:08:50 +0100
+Message-ID: <4981B872.4040701@viscovery.net>
+References: <1233221532.21518.1.camel@lena.gsc.riken.jp> <4981826D.507@viscovery.net> <4981B6E6.6020502@mozo.jp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 29 15:08:33 2009
+Cc: git@vger.kernel.org
+To: Moriyoshi Koizumi <mozo@mozo.jp>
+X-From: git-owner@vger.kernel.org Thu Jan 29 15:10:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSXYu-0005eC-8W
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:08:08 +0100
+	id 1LSXb3-0006dv-JR
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:10:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753178AbZA2OGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 09:06:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752585AbZA2OGl
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:06:41 -0500
-Received: from wa-out-1112.google.com ([209.85.146.177]:56574 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752466AbZA2OGk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 09:06:40 -0500
-Received: by wa-out-1112.google.com with SMTP id v33so1313467wah.21
-        for <git@vger.kernel.org>; Thu, 29 Jan 2009 06:06:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=r72MSOOAMeKraSym/GtZ4NyV0oJ5RBG2yvLaf0XN3oQ=;
-        b=BNBxutycQTzPQ9Hf7f+tEd/zdx4Ogn6AX/AD2frS0hEGmbKnmyGFIMkzdSowgNUmIP
-         t7t4NwvJ/6LQg3nATNYydX1fEssXG6jrSPbcJwOgdBp4Wvorl6usC/uf4HcBL8Qu/hX8
-         sJgR4Wq7JAe04TABnRrISukN/LbRrGhk/KQJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=CfTUxu7tUHSFVfU0mWiThhIJMF5VwEYOWhh+zvKmHKBgWjntCqoBoljBIstJ20iwAB
-         dTd24c/Y3MABky1TTqbvM6mahlW8xhHgPF5GoDbSSlMiVCxbX770HyYc6X9/gNR0qlZM
-         K+YTVkVyUmhPLpqljRDDZFTX8rIm76Bf9rm3Q=
-Received: by 10.114.195.19 with SMTP id s19mr58380waf.123.1233237999547; Thu, 
-	29 Jan 2009 06:06:39 -0800 (PST)
+	id S1752663AbZA2OIz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 09:08:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752651AbZA2OIz
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:08:55 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:65013 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751601AbZA2OIy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 09:08:54 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LSXZa-0002FN-KO; Thu, 29 Jan 2009 15:08:50 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5996B6EF; Thu, 29 Jan 2009 15:08:50 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <4981B6E6.6020502@mozo.jp>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107680>
 
-Hi,
+Moriyoshi Koizumi schrieb:
+> Johannes Sixt wrote:
+>> Moriyoshi Koizumi schrieb:
+>>> @@ -210,6 +272,20 @@ static CURL* get_curl_handle(void)
+>>>  	if (curl_http_proxy)
+>>>  		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+>> CURLOPT_PROXY is set here...
+> 
+> As I wrote in the previous post, this part was from the original.
+> 
+>>>  
+>>> +	if (curl_http_auth) {
+>>> +		long n = get_curl_auth_bitmask(curl_http_auth);
+>>> +		curl_easy_setopt(result, CURLOPT_HTTPAUTH, n);
+>>> +	}
+> 
+>> ... and here again. Is that necessary?
+> 
+> What part do you mean by that?
 
-just like to clarify a doubt of mine.
+Oops, sorry, I cut too much from your patch:
 
-afaik, a bare repository is just a copy of the .git folder of the
-cloned repository. why isn't any of its branches copied too?
+> +	if (curl_http_auth) {
+> +		long n = get_curl_auth_bitmask(curl_http_auth);
+> +		curl_easy_setopt(result, CURLOPT_HTTPAUTH, n);
+> +	}
+> +
+> +	if (curl_http_proxy) {
+> +		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
 
--- 
-Cheers,
-Ray Chuan
+Here you set CURLOPT_PROXY again.
+
+-- Hannes
