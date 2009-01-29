@@ -1,128 +1,96 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: (beginner) git rm
-Date: Thu, 29 Jan 2009 03:34:32 +0100
-Message-ID: <20090129023432.GF7503@atjola.homenet>
-References: <49804385.908@dbservice.com> <1233144045221-2231849.post@n2.nabble.com> <49804D41.3010801@dbservice.com> <1233166992184-2233892.post@n2.nabble.com> <20090128201727.GD7503@atjola.homenet> <1233175322729-2234796.post@n2.nabble.com> <7vab9bm85b.fsf@gitster.siamese.dyndns.org> <20090128221355.GE7503@atjola.homenet> <7v7i4fkqmo.fsf@gitster.siamese.dyndns.org> <6bef44ba0901281711m2d05e70fj4dd3ae03d7fe1052@mail.gmail.com>
+From: Greg Hauptmann <greg.hauptmann.ruby@gmail.com>
+Subject: Re: do you recommend "git" (over svn) for a 1-person team???
+Date: Thu, 29 Jan 2009 12:46:56 +1000
+Message-ID: <d30068860901281846v65baf431mdab5fe961ef9407d@mail.gmail.com>
+References: <d30068860901281718x363348caya2dc94e798cc8091@mail.gmail.com>
+	 <d30068860901281725t14d19c1vc0557182bca3eb8d@mail.gmail.com>
+	 <885649360901281815q42199468v8658d864386efe2d@mail.gmail.com>
+	 <46a038f90901281828t16ace3bdocc897eb5235d7c30@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Zabre <427@free.fr>,
-	git@vger.kernel.org
-To: Jonathan Wills <runningwild@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 03:37:04 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: James Pickens <jepicken@gmail.com>, git@vger.kernel.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 03:49:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSMm7-0003Xx-5x
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 03:37:03 +0100
+	id 1LSMx9-0006Y3-0U
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 03:48:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756581AbZA2Cfj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jan 2009 21:35:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756568AbZA2Cfj
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 21:35:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39349 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756401AbZA2Cfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 21:35:38 -0500
-Received: (qmail invoked by alias); 29 Jan 2009 02:35:36 -0000
-Received: from i577B96EB.versanet.de (EHLO atjola.local) [87.123.150.235]
-  by mail.gmx.net (mp011) with SMTP; 29 Jan 2009 03:35:36 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+C1Y9nN9CCJYU47JgPUOS7NrAEE83HThvEbOsSlt
-	1bkacX0uM5YTSF
-Content-Disposition: inline
-In-Reply-To: <6bef44ba0901281711m2d05e70fj4dd3ae03d7fe1052@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1752057AbZA2Cq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jan 2009 21:46:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752018AbZA2Cq7
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 21:46:59 -0500
+Received: from ag-out-0708.google.com ([72.14.246.249]:40883 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751364AbZA2Cq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 21:46:58 -0500
+Received: by ag-out-0708.google.com with SMTP id 26so2598050agb.10
+        for <git@vger.kernel.org>; Wed, 28 Jan 2009 18:46:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=WIAXXM3brJP7PNfdC4k3Kda/QBdbhOsRn25nGjfPZhA=;
+        b=enTS07KW2Iq3F+XU614+2ZDJK1gpgMixTbyEriIls3aD+uWDOfQFL+efflg97IYHia
+         2U/x+2JTCYTEtJePbKrwPZx1yIid6hgb53BMAG0KzBXiNYIA0XlZ3djzFcE8cL+6tZa1
+         +r0j3qpvaQ1B3CzYra/uCnI7C1gZOPtCMMxWo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=BlNfUlLlY7UAvu4SQ6ITkVlmGvUHAMyE9g3JFJcdLF9ir5YmJ+lf8ilRJaT/ocGKvF
+         RRInEMuIfnT3sUy0xB54z/IDzyYtPNKqAo4IGF3ZWamc344dcTBZa+Yeoik+C95Ery/7
+         fQ3BOehrDLunDasvFp+RVK6cq8Hl6lK2+ltRA=
+Received: by 10.142.193.13 with SMTP id q13mr136683wff.277.1233197217045; Wed, 
+	28 Jan 2009 18:46:57 -0800 (PST)
+In-Reply-To: <46a038f90901281828t16ace3bdocc897eb5235d7c30@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107619>
 
-On 2009.01.28 17:11:07 -0800, Jonathan Wills wrote:
-> This seems like an appropriate thread to ask something I came across =
-today.
-> Either I am unclear about the precise semantics of git checkout <bran=
-ch>
-> <path>, or there is a bug in said command.  I noticed this when I wan=
-ted to
-> get a directory to match the same directory in another branch, so I d=
-id rm
-> -rf dir, followed by git checkout master dir.  Afterwards I noticed t=
-hat
-> files in that directory that had previously been in my branch but wer=
-e not
-> in the master branch had returned.  Earlier in this thread it was men=
-tioned
-> that git checkout will not remove files, but in this case I had alrea=
-dy
-> removed those files and git checkout actually replaced them (and not =
-from
-> the master branch like I asked, but from the current branch).
-
-This is exactly what I meant. Your "rm -rf dir" only removed the
-directory from the working tree, but _not_ from the index. And what
-"git checkout master -- dir" then does is that it puts all the stuff
-that is in master's "dir" into the index, in _addition_ to the stuff
-already in the index. And then it puts everything from the index's "dir=
-"
-into the working tree. This is really a two step process and in each
-step the pathspec is matched separately.
-
-So the working tree doesn't have "dir" at all.
-
-In the index you still have:
-whatever
-dir/file (index version)
-dir/other_file
-
-In master you have:
-whatever_2
-dir/file (master version)
-dir/yet_another_file
-
-Then you do "git checkout master -- dir".
-
-In the first step, that "dir" pathspec matches these files from master:
-dir/file
-dir/yet_another_file
-
-So those are added to the index, and the index will have:
-whatever
-dir/file (master version)
-dir/other_file
-dir/yet_another_file
-
-So "dir/file" was replaced, and "dir/yet_another_file" was added. But
-"dir/other_file" is still around.
-
-And then comes the index -> working tree step. The pathspec matches all
-three files in "dir" in the index, and so they appear in the working
-tree.
+does the concept of me setting up my own central git server as well
+make any sense from the point of view of a way to ensure I can (when
+I'm not remote) "check-in" to the central git server & thereby keep a
+separate copy of my code (i.e. effectively a backup)
 
 
-To get what you expected, you have several options:
-a)
-rm -rf dir
-git add -u dir (drops it from the index)
-git checkout master -- dir
+2009/1/29 Martin Langhoff <martin.langhoff@gmail.com>:
+> On Thu, Jan 29, 2009 at 3:15 PM, James Pickens <jepicken@gmail.com> wrote:
+>> Greg Hauptmann <greg.hauptmann.ruby@gmail.com> wrote:
+>>> Do you recommend "git" (over svn) for a 1-person team???
+>>
+>> Yes, emphatically.  I do it myself all the time.
+>
+> +1!
+>
+>  - offline work on your laptop
+>  - "git stash"
+>  - keep various branches (experimental, feature, stable...), with
+> untold flexibility for cherrypicking, merges, etc
+>  - bisect!
+>  - visualise things with gitk
+>  - search with gitk for specific bits of code, changes (pickaxe), etc
+>
+> once you start... it's a bit addictive...
+>
+>
+> m
+> --
+>  martin.langhoff@gmail.com
+>  martin@laptop.org -- School Server Architect
+>  - ask interesting questions
+>  - don't get distracted with shiny stuff  - working code first
+>  - http://wiki.laptop.org/go/User:Martinlanghoff
+>
 
-b)
-git rm -rf dir
-git checkout master -- dir
 
-Just saves the "git add -u" step.
 
-c)
-rm -rf dir
-git reset master -- dir
-git checkout -- dir
-
-The reset makes "dir" in the index equal to master's "dir" (ok,
-technically that's wrong, as the index doesn't even know about "dir" on
-its own, but my brain fails to produce a correct description).
-
-Bj=F6rn
+-- 
+Greg
+http://blog.gregnet.org/
