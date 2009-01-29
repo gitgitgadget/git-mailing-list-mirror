@@ -1,48 +1,58 @@
-From: Jay Renbaum <jrenbaum@hcrest.com>
-Subject: Security and permissions in git
-Date: Thu, 29 Jan 2009 20:34:38 +0000 (UTC)
-Message-ID: <loom.20090129T203050-865@post.gmane.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT] Blame functionality update
+Date: Thu, 29 Jan 2009 21:56:51 +0100
+Message-ID: <200901292156.51906.robin.rosenberg.lists@dewire.com>
+References: <3d045c7e0901290935l3bddac0emcbaee0b4b2c5695f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 29 21:41:33 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Manuel Woelker <manuel.woelker@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 21:58:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSdhc-0003a0-Nu
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 21:41:33 +0100
+	id 1LSdxy-0001M9-Ds
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 21:58:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753296AbZA2UkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 15:40:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752457AbZA2UkG
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 15:40:06 -0500
-Received: from main.gmane.org ([80.91.229.2]:50656 "EHLO ciao.gmane.org"
+	id S1752295AbZA2U5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 15:57:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752117AbZA2U5A
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 15:57:00 -0500
+Received: from mail.dewire.com ([83.140.172.130]:2677 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752117AbZA2UkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 15:40:05 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LSdgB-0008Lw-7Z
-	for git@vger.kernel.org; Thu, 29 Jan 2009 20:40:03 +0000
-Received: from 12.173.51.158 ([12.173.51.158])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Jan 2009 20:40:03 +0000
-Received: from jrenbaum by 12.173.51.158 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Jan 2009 20:40:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 12.173.51.158 (Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30))
+	id S1751344AbZA2U47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 15:56:59 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 25ED3147E717;
+	Thu, 29 Jan 2009 21:56:53 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id yW98KtcomgMz; Thu, 29 Jan 2009 21:56:52 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.7])
+	by dewire.com (Postfix) with ESMTP id 94BF7147E712;
+	Thu, 29 Jan 2009 21:56:52 +0100 (CET)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <3d045c7e0901290935l3bddac0emcbaee0b4b2c5695f@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107728>
 
-When setting up a public repository is there a way to control who has access 
-to various directories within the repository or is everything equal once you 
-are in?
+torsdag 29 januari 2009 18:35:28 skrev Manuel Woelker:
+> Hi folks,
+> 
+> quick update about the state of blame functionality in my egit branch
+> at http://github.com/manuel-woelker/egit/tree/blame
+> Screen shot here: http://docs.google.com/View?docid=df5rvczr_3f46vd2ds
+
+Impressive!. Someone's been busy :)
+
+I haven't looked at the code yet but did take it for a ride and it was nice. 
+
+-- robin
