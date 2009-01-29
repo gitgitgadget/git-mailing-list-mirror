@@ -1,59 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Force commit date
-Date: Thu, 29 Jan 2009 14:10:20 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0901291406000.19665@iabervon.org>
-References: <1233253817209-2240539.post@n2.nabble.com> <1233254709681-2240602.post@n2.nabble.com> <200901291955.10769.markus.heidelberg@web.de> <1233255759118-2240702.post@n2.nabble.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Zabre <427@free.fr>
-X-From: git-owner@vger.kernel.org Thu Jan 29 20:11:58 2009
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
+Date: Thu, 29 Jan 2009 14:10:41 -0500
+Message-ID: <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com>
+References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com> <7vocxqf2sf.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 20:12:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LScIn-00058L-DM
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 20:11:49 +0100
+	id 1LScJC-0005HO-7O
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 20:12:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753447AbZA2TKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 14:10:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753068AbZA2TKX
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 14:10:23 -0500
-Received: from iabervon.org ([66.92.72.58]:35394 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752663AbZA2TKW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 14:10:22 -0500
-Received: (qmail 30017 invoked by uid 1000); 29 Jan 2009 19:10:20 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 29 Jan 2009 19:10:20 -0000
-In-Reply-To: <1233255759118-2240702.post@n2.nabble.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752224AbZA2TKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 14:10:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752007AbZA2TKr
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 14:10:47 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:50244 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751824AbZA2TKq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 14:10:46 -0500
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id B19C91FFC15B; Thu, 29 Jan 2009 19:10:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
+	silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.6 required=4.0 tests=BAYES_00,RCVD_IN_PBL,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.1.7-deb3
+Received: from [192.168.1.115] (cpe-74-74-137-205.rochester.res.rr.com [74.74.137.205])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 1AEAA1FFC159;
+	Thu, 29 Jan 2009 19:10:38 +0000 (UTC)
+In-Reply-To: <7vocxqf2sf.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107719>
 
-On Thu, 29 Jan 2009, Zabre wrote:
 
-> Markus Heidelberg wrote:
-> > 
-> > man git-commit-tree
-> > -> GIT_COMMITTER_DATE
-> > 
-> > Though only in the git-commit-tree docs, it also works with git-commit.
-> > Maybe it should be added there, too.
-> > 
-> 
-> Thank you Markus, I'll have a look at this too !
+On Jan 29, 2009, at 12:19 PM, Junio C Hamano wrote:
 
-You may want to consider whether those dates make most sense as the date 
-of the commit, or the date the changes were done; git tracks both of 
-these separately, in part because it's easy to have some work done at one 
-time, and only make the commit that becomes part of the official project 
-history much later (and these may be done by different people).
+> If we really wanted to care about case-folding file systems,  
+> shouldn't we
+> make test_commit shell function a bit more than the downcasing?  How  
+> about
+> this patch instead?
 
-The date for the changes being done is set with GIT_AUTHOR_DATE
+That's a good point.  Always good to prevent future issues.
 
-	-Daniel
-*This .sig left intentionally blank*
+> test_commit () {
+> -	file=${2:-$(echo "$1" | tr 'A-Z' 'a-z')}
+> +	file=${2:-$(echo "$1" | tr 'A-Z' 'a-z').t}
+> 	echo "${3-$1}" > "$file" &&
+> 	git add "$file" &&
+> 	test_tick &&
+
+Added this and ran through the tests.  Works for me. :-D
+
+Tested-by: Brian Gernhardt <benji@silverinsanity.com> (HFS+ on Mac OS  
+10.5.6)
