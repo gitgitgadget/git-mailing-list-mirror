@@ -1,77 +1,81 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
 Subject: Re: git clone --bare doesn't create refs/heads/*?
-Date: Thu, 29 Jan 2009 22:36:26 +0800
-Message-ID: <be6fef0d0901290636m5b472499mdf614841a06ec978@mail.gmail.com>
-References: <be6fef0d0901290606q25ad7c82ob250a5f89d4db0cf@mail.gmail.com>
-	 <20090129142657.GG21473@genesis.frugalware.org>
+Date: Thu, 29 Jan 2009 15:40:36 +0100
+Message-ID: <20090129144036.GH21473@genesis.frugalware.org>
+References: <be6fef0d0901290606q25ad7c82ob250a5f89d4db0cf@mail.gmail.com> <20090129142657.GG21473@genesis.frugalware.org> <be6fef0d0901290636m5b472499mdf614841a06ec978@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SK3XQJ7YwHDQqAUa"
 Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Jan 29 15:38:02 2009
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 15:42:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSY1i-0007cV-VQ
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:37:55 +0100
+	id 1LSY5j-0000gF-Ky
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 15:42:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752832AbZA2Oga (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 09:36:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752700AbZA2Og3
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:36:29 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:62229 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752667AbZA2Og2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 09:36:28 -0500
-Received: by wa-out-1112.google.com with SMTP id v33so1319213wah.21
-        for <git@vger.kernel.org>; Thu, 29 Jan 2009 06:36:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KSotFqN/Xun739FomnwyAVjGttyGsdD7sLtmwOOkg3o=;
-        b=YuDRMB1J9Yy8xoXebnhrKIwCYUKwcsT9md4QXStEUmfBqFaPziWmyiu410b+wjqJ+c
-         0JwGoSUSZviltLv7KhKztgFBWgFlQOFISJFJ8/os6U8+VUYh2ZHvRkvVjLWQYaHXgQ+z
-         RM6waYefqJl3e4wJ42GuxERXZAw18LfTrdpWQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Jd9epkLyhaupJBZHt1UYZVk6rl0DrQF3To32/dwXNgnBEshc1E/1a1ZLUxDa2F2VcN
-         J3jrjmQjnt71Fmbxovo3ZPdaBHfRsuMkgSQouGB0vtIZnqG3yHVqYHpAfKgXx2pvoXM/
-         1xJ03+JJ5gYJUzZGheFLSxI+81TPOOTT43ZR0=
-Received: by 10.114.26.11 with SMTP id 11mr84383waz.38.1233239786955; Thu, 29 
-	Jan 2009 06:36:26 -0800 (PST)
-In-Reply-To: <20090129142657.GG21473@genesis.frugalware.org>
+	id S1753387AbZA2Oki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 09:40:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbZA2Oki
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 09:40:38 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:48314 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753093AbZA2Okh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 09:40:37 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id B6A895812E;
+	Thu, 29 Jan 2009 15:40:37 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 0FC5D4465E;
+	Thu, 29 Jan 2009 15:40:36 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 2E1DF11B87A9; Thu, 29 Jan 2009 15:40:36 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <be6fef0d0901290636m5b472499mdf614841a06ec978@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107686>
-
-Hmm, no, --mirror adds extra remote tracking information.
-
-Quoting the git-clone man page:
-
-"...the branch heads at the remote are copied directly..."
-
-which is to say, git clone --bare isn't doing what it's supposed to do.
-
-that said, i'm not too sure about this, hence this thread.
-
-On Thu, Jan 29, 2009 at 10:26 PM, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> On Thu, Jan 29, 2009 at 10:06:39PM +0800, Tay Ray Chuan <rctay89@gmail.com> wrote:
->> afaik, a bare repository is just a copy of the .git folder of the
->> cloned repository. why isn't any of its branches copied too?
->
-> Maybe you're searching for git clone --mirror and not git clone --bare?
->
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107687>
 
 
+--SK3XQJ7YwHDQqAUa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Cheers,
-Ray Chuan
+[ Please don't top-post. ]
+
+On Thu, Jan 29, 2009 at 10:36:26PM +0800, Tay Ray Chuan <rctay89@gmail.com>=
+ wrote:
+> Hmm, no, --mirror adds extra remote tracking information.
+>=20
+> Quoting the git-clone man page:
+>=20
+> "...the branch heads at the remote are copied directly..."
+>=20
+> which is to say, git clone --bare isn't doing what it's supposed to do.
+>=20
+> that said, i'm not too sure about this, hence this thread.
+
+Ah, packed refs. :)
+
+See man git-pack-refs, git clone uses it to pack refs after a clone.
+They are still in the 'packed-refs' file.
+
+--SK3XQJ7YwHDQqAUa
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmBv+QACgkQe81tAgORUJYtAwCfV2AD6/lfnNXyZ443cm7skDqm
+3dcAnRwjK2ky3/Z5z7csompyDixReTt8
+=Xoc5
+-----END PGP SIGNATURE-----
+
+--SK3XQJ7YwHDQqAUa--
