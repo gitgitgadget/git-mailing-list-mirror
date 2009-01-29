@@ -1,44 +1,73 @@
-From: Zabre <427@free.fr>
-Subject: Re: Force commit date
-Date: Thu, 29 Jan 2009 12:06:28 -0800 (PST)
-Message-ID: <1233259588952-2241010.post@n2.nabble.com>
-References: <1233253817209-2240539.post@n2.nabble.com> <1233254709681-2240602.post@n2.nabble.com> <200901291955.10769.markus.heidelberg@web.de> <1233255759118-2240702.post@n2.nabble.com> <alpine.LNX.1.00.0901291406000.19665@iabervon.org> <1233258537869-2240926.post@n2.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git gc" removes ".git/refs/heads/master".
+Date: Thu, 29 Jan 2009 12:07:05 -0800
+Message-ID: <7vy6wtev12.fsf@gitster.siamese.dyndns.org>
+References: <83c97f59a5a5e59f908f3fc125d26adb@lunox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 29 21:08:19 2009
+Cc: <git@vger.kernel.org>
+To: Bernd Lommerzheim <bernd@lommerzheim.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 21:08:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSdB8-0000AZ-Mg
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 21:07:59 +0100
+	id 1LSdBo-0000YH-NJ
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 21:08:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758932AbZA2UGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 15:06:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758905AbZA2UGb
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 15:06:31 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:38922 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758895AbZA2UGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 15:06:30 -0500
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1LSd9h-0002s6-1j
-	for git@vger.kernel.org; Thu, 29 Jan 2009 12:06:29 -0800
-In-Reply-To: <1233258537869-2240926.post@n2.nabble.com>
-X-Nabble-From: 427@free.fr
+	id S1752731AbZA2UHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 15:07:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752295AbZA2UHM
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 15:07:12 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54463 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751965AbZA2UHL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 15:07:11 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CDA942A076;
+	Thu, 29 Jan 2009 15:07:09 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0911A2A071; Thu,
+ 29 Jan 2009 15:07:06 -0500 (EST)
+In-Reply-To: <83c97f59a5a5e59f908f3fc125d26adb@lunox.net> (Bernd
+ Lommerzheim's message of "Thu, 29 Jan 2009 20:31:17 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6905FEB6-EE40-11DD-B312-F63E8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107726>
 
+Bernd Lommerzheim <bernd@lommerzheim.com> writes:
 
-For the record, this thread is similar to : 
-http://n2.nabble.com/Committing-with-past-date--td795326.html
--- 
-View this message in context: http://n2.nabble.com/Force-commit-date-tp2240539p2241010.html
-Sent from the git mailing list archive at Nabble.com.
+> Hi,
+>
+> maybe I found a bug in git. When I execute "git gc" in my local repository,
+> git removes the file ".git/refs/heads/master". Is this an intended behavior
+> (but why?) or is that a bug?
+>
+> Some commands to reproduce:
+> ~ $ mkdir tmp; cd tmp
+> ~/tmp $ git init
+> Initialized empty Git repository in /home/myuser/tmp/.git/
+> ~/tmp $ echo "content" > a
+> ~/tmp $ git add .
+> ~/tmp $ git commit -a -m "first commit"
+> Created initial commit 0b67f33: first commit
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 a
+> ~/tmp $ cat .git/refs/heads/master
+> 0b67f33fff4152a912fdbe8819480b8fc1f2e990
+> ~/tmp $ git gc
+> Counting objects: 3, done.
+> Writing objects: 100% (3/3), done.
+> Total 3 (delta 0), reused 0 (delta 0)
+> ~/tmp $ cat .git/refs/heads/master
+> cat: .git/refs/heads/master: No such file or directory
+> ~/tmp $ cat .git/HEAD
+> ref: refs/heads/master
+> ~/tmp $ 
+
+$ grep master .git/packed-refs
