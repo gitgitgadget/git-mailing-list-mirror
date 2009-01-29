@@ -1,81 +1,128 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: do you recommend "git" (over svn) for a 1-person team???
-Date: Thu, 29 Jan 2009 15:28:09 +1300
-Message-ID: <46a038f90901281828t16ace3bdocc897eb5235d7c30@mail.gmail.com>
-References: <d30068860901281718x363348caya2dc94e798cc8091@mail.gmail.com>
-	 <d30068860901281725t14d19c1vc0557182bca3eb8d@mail.gmail.com>
-	 <885649360901281815q42199468v8658d864386efe2d@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: (beginner) git rm
+Date: Thu, 29 Jan 2009 03:34:32 +0100
+Message-ID: <20090129023432.GF7503@atjola.homenet>
+References: <49804385.908@dbservice.com> <1233144045221-2231849.post@n2.nabble.com> <49804D41.3010801@dbservice.com> <1233166992184-2233892.post@n2.nabble.com> <20090128201727.GD7503@atjola.homenet> <1233175322729-2234796.post@n2.nabble.com> <7vab9bm85b.fsf@gitster.siamese.dyndns.org> <20090128221355.GE7503@atjola.homenet> <7v7i4fkqmo.fsf@gitster.siamese.dyndns.org> <6bef44ba0901281711m2d05e70fj4dd3ae03d7fe1052@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Greg Hauptmann <greg.hauptmann.ruby@gmail.com>, git@vger.kernel.org
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 29 03:29:38 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Zabre <427@free.fr>,
+	git@vger.kernel.org
+To: Jonathan Wills <runningwild@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 29 03:37:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSMev-00026n-Gf
-	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 03:29:38 +0100
+	id 1LSMm7-0003Xx-5x
+	for gcvg-git-2@gmane.org; Thu, 29 Jan 2009 03:37:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752002AbZA2C2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jan 2009 21:28:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751968AbZA2C2M
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 21:28:12 -0500
-Received: from rn-out-0910.google.com ([64.233.170.186]:42166 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751712AbZA2C2L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jan 2009 21:28:11 -0500
-Received: by rn-out-0910.google.com with SMTP id k40so2779764rnd.17
-        for <git@vger.kernel.org>; Wed, 28 Jan 2009 18:28:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VAjzFktQAGn/7C8LJJ6KXykOT3kvQWZe2rIM8veXCS4=;
-        b=T/6ThGGoNx5xBMqREeJoULUs39xtsj9TawdCwOIqMs0i0QAZSfvK5C0Vg6338JVLh3
-         nXscDO0CBrGnwvO14Gm8TBFdmHdA7WeMPAE4M44eB1jBk/7pAor4tnSU00pCaj6/cQJ1
-         g+gtwMqELkaRK2ho8xn6l7Y7+okmJa/UBIb7Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=P6P2Ic1Rpi1/E2VJDDul/HAjR4P8X6KqsxNenQ5Cosqu2BeZMUIT3lQw7rl85mkBDO
-         v2NCCrcamoK2rhMGxOWXNS3hafH3XgDgoUHev2N3R047ugsw+wI9xa1RYg4HpCzeehut
-         hxyN+Vts/hDsg4I7AvLVx+Nw94xmB8t8af3+Y=
-Received: by 10.100.14.2 with SMTP id 2mr1191571ann.13.1233196089117; Wed, 28 
-	Jan 2009 18:28:09 -0800 (PST)
-In-Reply-To: <885649360901281815q42199468v8658d864386efe2d@mail.gmail.com>
+	id S1756581AbZA2Cfj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jan 2009 21:35:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756568AbZA2Cfj
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Jan 2009 21:35:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39349 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756401AbZA2Cfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jan 2009 21:35:38 -0500
+Received: (qmail invoked by alias); 29 Jan 2009 02:35:36 -0000
+Received: from i577B96EB.versanet.de (EHLO atjola.local) [87.123.150.235]
+  by mail.gmx.net (mp011) with SMTP; 29 Jan 2009 03:35:36 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+C1Y9nN9CCJYU47JgPUOS7NrAEE83HThvEbOsSlt
+	1bkacX0uM5YTSF
+Content-Disposition: inline
+In-Reply-To: <6bef44ba0901281711m2d05e70fj4dd3ae03d7fe1052@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107618>
 
-On Thu, Jan 29, 2009 at 3:15 PM, James Pickens <jepicken@gmail.com> wrote:
-> Greg Hauptmann <greg.hauptmann.ruby@gmail.com> wrote:
->> Do you recommend "git" (over svn) for a 1-person team???
->
-> Yes, emphatically.  I do it myself all the time.
+On 2009.01.28 17:11:07 -0800, Jonathan Wills wrote:
+> This seems like an appropriate thread to ask something I came across =
+today.
+> Either I am unclear about the precise semantics of git checkout <bran=
+ch>
+> <path>, or there is a bug in said command.  I noticed this when I wan=
+ted to
+> get a directory to match the same directory in another branch, so I d=
+id rm
+> -rf dir, followed by git checkout master dir.  Afterwards I noticed t=
+hat
+> files in that directory that had previously been in my branch but wer=
+e not
+> in the master branch had returned.  Earlier in this thread it was men=
+tioned
+> that git checkout will not remove files, but in this case I had alrea=
+dy
+> removed those files and git checkout actually replaced them (and not =
+from
+> the master branch like I asked, but from the current branch).
 
-+1!
+This is exactly what I meant. Your "rm -rf dir" only removed the
+directory from the working tree, but _not_ from the index. And what
+"git checkout master -- dir" then does is that it puts all the stuff
+that is in master's "dir" into the index, in _addition_ to the stuff
+already in the index. And then it puts everything from the index's "dir=
+"
+into the working tree. This is really a two step process and in each
+step the pathspec is matched separately.
 
- - offline work on your laptop
- - "git stash"
- - keep various branches (experimental, feature, stable...), with
-untold flexibility for cherrypicking, merges, etc
- - bisect!
- - visualise things with gitk
- - search with gitk for specific bits of code, changes (pickaxe), etc
+So the working tree doesn't have "dir" at all.
 
-once you start... it's a bit addictive...
+In the index you still have:
+whatever
+dir/file (index version)
+dir/other_file
+
+In master you have:
+whatever_2
+dir/file (master version)
+dir/yet_another_file
+
+Then you do "git checkout master -- dir".
+
+In the first step, that "dir" pathspec matches these files from master:
+dir/file
+dir/yet_another_file
+
+So those are added to the index, and the index will have:
+whatever
+dir/file (master version)
+dir/other_file
+dir/yet_another_file
+
+So "dir/file" was replaced, and "dir/yet_another_file" was added. But
+"dir/other_file" is still around.
+
+And then comes the index -> working tree step. The pathspec matches all
+three files in "dir" in the index, and so they appear in the working
+tree.
 
 
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+To get what you expected, you have several options:
+a)
+rm -rf dir
+git add -u dir (drops it from the index)
+git checkout master -- dir
+
+b)
+git rm -rf dir
+git checkout master -- dir
+
+Just saves the "git add -u" step.
+
+c)
+rm -rf dir
+git reset master -- dir
+git checkout -- dir
+
+The reset makes "dir" in the index equal to master's "dir" (ok,
+technically that's wrong, as the index doesn't even know about "dir" on
+its own, but my brain fails to produce a correct description).
+
+Bj=F6rn
