@@ -1,62 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] push: Learn to set up branch tracking with '--track'
-Date: Fri, 30 Jan 2009 00:09:25 -0500
-Message-ID: <20090130050925.GA18809@coredump.intra.peff.net>
-References: <cover.1233236267u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0901291438030.3586@pacific.mpi-cbg.de> <20090129223308.GB12871@coredump.intra.peff.net> <20090129231715.GA17399@coredump.intra.peff.net> <alpine.DEB.1.00.0901300127450.3586@pacific.mpi-cbg.de>
+From: Matt Graham <mdg149@gmail.com>
+Subject: Re: gitk run from subdir and "find commit touching paths"
+Date: Fri, 30 Jan 2009 00:56:22 -0500
+Message-ID: <1c5969370901292156k2456b585r8e79889db516bc59@mail.gmail.com>
+References: <slrngnug78.877.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 30 06:10:53 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 30 06:57:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSleX-0000Sg-6E
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 06:10:53 +0100
+	id 1LSmNz-0001PP-Sd
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 06:57:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751117AbZA3FJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 00:09:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbZA3FJ2
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 00:09:28 -0500
-Received: from peff.net ([208.65.91.99]:42044 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751072AbZA3FJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 00:09:27 -0500
-Received: (qmail 27137 invoked by uid 107); 30 Jan 2009 05:09:37 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 30 Jan 2009 00:09:37 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Jan 2009 00:09:25 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901300127450.3586@pacific.mpi-cbg.de>
+	id S1751235AbZA3F40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 00:56:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbZA3F4Z
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 00:56:25 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:17100 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751025AbZA3F4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 00:56:25 -0500
+Received: by fg-out-1718.google.com with SMTP id 13so211760fge.17
+        for <git@vger.kernel.org>; Thu, 29 Jan 2009 21:56:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lJExbWGos7FcvZBVuNUidSCBhQvAOKPFoNNqReGZ1SE=;
+        b=asaNwFMnHPIpq8HWknKuTS+0N7Kob0a4rw4P4jasso3TY2At+Wzb/rjwxIhd2lE+9N
+         gYF+SeBCfRhbYZ0K4GUKPxOqzLRJ/aHEQ4CzoMSNmshgbnb346oh+y4w1VogwA4OxrdL
+         Wnu4NrqxRuJbf5ilaMhq1wJn8WHtSufcLJzHA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=UAWwExH+cSyLJmVrEe0Q+HM2LHPNYDEFD//qBO2bc1+dE6ctT+Vs2tAjmT3q8L5de2
+         6iXksSF8zyQExuPvXB5PSTJvMmx8rNM5kgS3aWKcM/l224iVbnrYJL68QGT47rwJ0TJS
+         fesUHHR/kdbVaM4f/Jgzoq8eGBDu5RhLP+cug=
+Received: by 10.223.114.2 with SMTP id c2mr710955faq.85.1233294982931; Thu, 29 
+	Jan 2009 21:56:22 -0800 (PST)
+In-Reply-To: <slrngnug78.877.sitaramc@sitaramc.homelinux.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107774>
 
-On Fri, Jan 30, 2009 at 01:28:38AM +0100, Johannes Schindelin wrote:
+On Tue, Jan 27, 2009 at 12:14, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+> If I run gitk from a subdirectory, and then try to find a
+> commit touching a path, it doesn't work.  No movement of
+> cursor on "Next/Prev".
+>
+> Running from the main project directory makes it work ok --
+> you can go "Next" or "Prev" finding other commits that
+> touched the same path.
+>
+> Is this a known problem?  I couldn't find it in the mailing
+> list archives.
 
-> > Something like the patch below (which is obviously missing all of the 
-> > infrastructure for doing this optionally, but is meant to illustrate 
-> > what I'm talking about).
-> 
-> Except that you miss http:// and rsync:// protocols.  Those were the 
-> reasons I did not touch send-pack.
-
-You didn't comment on the part of my email where I said exactly that,
-but that I think this is still the right path forward.
-
-Pushing through those protocols is sorely in need of update (actually,
-I thought rsync was all but dead at this point). But http push is
-missing the update of tracking refs, the usual status output (it still
-has the "Maybe you are not up-to-date and need to pull first?" message
-that was removed from send-pack a year and a half ago), and who knows
-what other tweaks made to do_send_pack (which it appears to have been
-copy-and-pasted from in 2006) in the last few years.
-
-So either we don't care about http-push being consistent with send-pack,
-and it is OK to have this feature in one but not the other. Or we do,
-and we really need to clean up the current divergence.
-
--Peff
+Hi,
+I get this too.  My repos are small enough that I'm usually able to
+just cd to the root dir and rerun gitk.
