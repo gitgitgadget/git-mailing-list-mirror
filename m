@@ -1,58 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Switch receive.denyCurrentBranch to "refuse"
-Date: Fri, 30 Jan 2009 09:35:21 -0500
-Message-ID: <20090130143521.GA31673@coredump.intra.peff.net>
-References: <cover.1233275583u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de> <4982A99C.6070301@viscovery.net> <20090130073415.GA27224@coredump.intra.peff.net> <alpine.DEB.1.00.0901301421170.3586@pacific.mpi-cbg.de>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] Don't try to reclose in command_close_bidi_pipe
+Date: Fri, 30 Jan 2009 22:35:54 +0800
+Message-ID: <be6fef0d0901300635v4e6009f1n7da405ebc4c8dd68@mail.gmail.com>
+References: <1233291570-23295-1-git-send-email-nothingmuch@woobling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 30 15:36:56 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Yuval Kogman <nothingmuch@woobling.org>
+X-From: git-owner@vger.kernel.org Fri Jan 30 15:37:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSuUH-0007gh-7y
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 15:36:53 +0100
+	id 1LSuUq-0007vy-Py
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 15:37:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753525AbZA3OfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 09:35:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753475AbZA3OfZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 09:35:25 -0500
-Received: from peff.net ([208.65.91.99]:53158 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752609AbZA3OfY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 09:35:24 -0500
-Received: (qmail 1978 invoked by uid 107); 30 Jan 2009 14:35:34 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 30 Jan 2009 09:35:34 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Jan 2009 09:35:21 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0901301421170.3586@pacific.mpi-cbg.de>
+	id S1753588AbZA3Of5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 09:35:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753475AbZA3Of4
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 09:35:56 -0500
+Received: from wa-out-1112.google.com ([209.85.146.183]:62768 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752475AbZA3Ofz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 09:35:55 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so224960wah.21
+        for <git@vger.kernel.org>; Fri, 30 Jan 2009 06:35:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OE8bCwhVIxHos243Pb8jTc63ug7SH9PIzjjwzFOTaNk=;
+        b=cC9JM7LmjttlxGwV0fo2/Hah7de0GhZbITGeyyfCcSCvokaNtlIYhnmgac5sEOI7ve
+         YoxDSwb+iyg5OzcvabbNPbCcSu0JBiFlWwnRgkJ8dsFo7yJBavwvodJcmikIZPLvy7Fe
+         TUvvyTz8XKO7D+z7BIDmoTM3OKtqygorElXw8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=YR3JpjZY6o+Naxx/wj+4r85pSxbXnlrqaS5WmN997UzKTeNVzXaiyvG6MX5Xcmyrf2
+         jQVw71Dl3f37cGDZVmRisTJTMlwkmrfUmGuB5IUqz1acPXH+JcdvyFucIpavmPwyTrl8
+         ybgTUS2g7/vBaBykOIZSENAuhFm5ZEZv3Rxu0=
+Received: by 10.115.54.7 with SMTP id g7mr824016wak.95.1233326154217; Fri, 30 
+	Jan 2009 06:35:54 -0800 (PST)
+In-Reply-To: <1233291570-23295-1-git-send-email-nothingmuch@woobling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107827>
 
-On Fri, Jan 30, 2009 at 02:23:02PM +0100, Johannes Schindelin wrote:
+Hi,
 
-> > On the other hand, you also missed the boat on receive.denyDeletes and
-> > receive.denyNonFastForwards.
-> 
-> The idea with these is that they are _booleans_, and therefore
-> 
-> 	[receive]
-> 		denyDeletes
-> 
-> is something natural to write, because "denyDeletes" is _not_ the default.
-> 
-> However, with denyCurrentBranch we wanted to change the default in the 
-> long run, so I agree it was a not-so-brilliant choice.
+On Fri, Jan 30, 2009 at 12:59 PM, Yuval Kogman <nothingmuch@woobling.org> wrote:
+> Some commands require their standard input to be closed (like
+> git-commit-tree). This patch changes command_close_bidi_pipe so no
+> longer tries to close already closed handles, resulting in an error.
 
-Good point. I do agree that allowCurrentBranch would have been a better
-name, but I don't know that it is worth the pain now of adding new
-config plus supporting the old name forever.
+>From this message, you seem to intend this as a fix. Can you tell us
+how one might go about to reproduce this issue?
 
--Peff
+> ---
+>  perl/Git.pm |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>
+> diff --git a/perl/Git.pm b/perl/Git.pm
+> index 7d7f2b1..283bba8 100644
+> --- a/perl/Git.pm
+> +++ b/perl/Git.pm
+> @@ -422,6 +422,7 @@ sub command_close_bidi_pipe {
+>        local $?;
+>        my ($pid, $in, $out, $ctx) = @_;
+>        foreach my $fh ($in, $out) {
+> +               next unless defined(fileno($fh));
+
+Quoting the perldoc for fileno at http://perldoc.perl.org/functions/fileno.html
+
+"(Filehandles connected to memory objects via new features of open may
+return undefined even though they are open.)"
+
+Is "unless defined(fileno($fh))" a reliable way to check if the handle
+is closed?
+
+-- 
+Cheers,
+Ray Chuan
