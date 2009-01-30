@@ -1,77 +1,77 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git log can not show history before rename
-Date: Fri, 30 Jan 2009 09:23:38 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0901300918010.3150@localhost.localdomain>
-References: <1976ea660901300323n384d3650s3bb5a575accb65d1@mail.gmail.com>  <adf1fd3d0901300329y53e46d91xda75799ce1244ddd@mail.gmail.com> <1976ea660901300429i6d9b3594m91222314c284d184@mail.gmail.com>
- <alpine.LFD.2.00.0901300910580.3150@localhost.localdomain>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Newbie question regarding 3way merge order.
+Date: Fri, 30 Jan 2009 17:31:09 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngo6eat.s1d.sitaramc@sitaramc.homelinux.net>
+References: <871vulda2r.fsf@gigli.quasi.internal>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 30 18:25:52 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 30 18:35:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSx7Z-0001od-Pn
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 18:25:38 +0100
+	id 1LSxEY-0004lE-GE
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 18:32:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315AbZA3RYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 12:24:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbZA3RYL
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 12:24:11 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:57369 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752309AbZA3RYK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jan 2009 12:24:10 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0UHNcHN022935
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 30 Jan 2009 09:23:39 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0UHNcgj019215;
-	Fri, 30 Jan 2009 09:23:38 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.00.0901300910580.3150@localhost.localdomain>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.463 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752530AbZA3RbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 12:31:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751896AbZA3RbY
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 12:31:24 -0500
+Received: from main.gmane.org ([80.91.229.2]:57973 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752478AbZA3RbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 12:31:24 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LSxD4-0006GS-Sw
+	for git@vger.kernel.org; Fri, 30 Jan 2009 17:31:18 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Jan 2009 17:31:18 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Jan 2009 17:31:18 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107857>
 
+[replying only because no one else did; caveat reader!]
 
+On 2009-01-29, Raimund Berger <raimund.berger@gmail.com> wrote:
 
-On Fri, 30 Jan 2009, Linus Torvalds wrote:
-> 
-> If somebody wants to do a more intelligent --follow, I can only applaud, 
-> but I'm personally not likely to look into it.
+> The question is whether a (3way) merge is commutative, purely in terms
+> of content (i.e. disregarding commit history for now). Iow if no matter
+> in which order I merge A and B, i.e. A into B or B into A, I'd be
+> guaranteed to arrive at the same content.
 
-Side note: you can probably get a _limited_ form of parent rewriting on 
-top of --follow by adding some more hacks. IOW, I think you can make 
---parents --follow work better in practice even with the hacky thing by 
-adding some more hacks on top. But you'll never get the _true_ answer (ie 
-get things right across renames in different branches) without totally 
-ripping out the current --follow logic.
+I'd say yes.  Finding the common ancestor and then applying
+the differences from both sides are operations that do not
+appear to be order dependent.
 
-Interestingly, I suspect that doing --follow "right" is really quite 
-complicated, but one sign of doing it right would be to allow multiple 
-files to be tracked at the same time.
+> If yes, a followup question would be if the merge machinery sitting
+> beneath rebase is exactly the same as that of a standard merge.
 
-Because in a "correct" implementation of --follow you'd literally have to 
-attach different filenames to different commits (rather than have one 
-global filename that you follow and then switch for everybody when you see 
-a rename), and also have the ability to track multiple files per commit 
-when you reach the same commit under two filenames.
+The merge "machinery" can be explicitly chosen using the
+"-s" (strategy) option, but for the same chosen strategy, I
+think yes it would be the same for a merge as for a rebase.
 
-I really never wanted the pain, and never cared enough for it, which is 
-why --follow is such a hack. It literally was designed as a "SVN noob" 
-pleaser, not as a "real git functionality" thing. The idea was that you'd 
-get away from the (broken) mindset of thinking that renames matter in the 
-big picture.
+> The reason I ask is obvious I guess. What basically interests me is if I
+> gave a bunch of topic branches exposure on a test branch and, after
+> resolving issues, applied them to stable, that I could be 100% sure to
+> not introduce new issues content wise just by applying merges in a
+> different order or form (rebase, patch set).
 
-			Linus
+That appears to be a different question than the one you
+started with.
+
+Reversing A and B is one thing, applying a sequence of
+merges in a different order is quite something else.
