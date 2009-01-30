@@ -1,94 +1,115 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: [PATCH 5/5] [squash] fsck: revert --quick to the default and
- introduce --medium
-Date: Fri, 30 Jan 2009 12:37:55 +0100
-Organization: private
-Message-ID: <861vulqb1o.fsf@broadpark.no>
-References: <1233313517-24208-1-git-send-email-gitster@pobox.com>
- <1233313517-24208-2-git-send-email-gitster@pobox.com>
- <1233313517-24208-3-git-send-email-gitster@pobox.com>
- <1233313517-24208-4-git-send-email-gitster@pobox.com>
- <1233313517-24208-5-git-send-email-gitster@pobox.com>
- <1233313517-24208-6-git-send-email-gitster@pobox.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git log can not show history before rename
+Date: Fri, 30 Jan 2009 04:25:43 -0800 (PST)
+Message-ID: <m33af1x9od.fsf@localhost.localdomain>
+References: <1976ea660901300323n384d3650s3bb5a575accb65d1@mail.gmail.com>
+	<adf1fd3d0901300329y53e46d91xda75799ce1244ddd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 30 12:39:32 2009
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org
+To: =?iso-8859-15?q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Fri Jan 30 13:28:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSriX-0007gN-Fl
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 12:39:25 +0100
+	id 1LSsTT-0006w0-Ma
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 13:27:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752425AbZA3LiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 06:38:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752497AbZA3Lh7
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 06:37:59 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:42883 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752403AbZA3Lh6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 06:37:58 -0500
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KEA00G9J8B8KH00@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Fri, 30 Jan 2009 12:37:56 +0100 (CET)
-Received: from localhost ([80.202.92.196]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KEA00FM88B72Z90@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Fri, 30 Jan 2009 12:37:56 +0100 (CET)
-In-reply-to: <1233313517-24208-6-git-send-email-gitster@pobox.com>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1751979AbZA3MZs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jan 2009 07:25:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751680AbZA3MZr
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 07:25:47 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:15618 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751462AbZA3MZr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jan 2009 07:25:47 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so118140eya.37
+        for <git@vger.kernel.org>; Fri, 30 Jan 2009 04:25:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=iELGY7pYKelfsVKrsf/okeCCbogtpYe3Lht8GygmLcA=;
+        b=i5AH+f7+WHN3XaeNZ1mEZvtCpXGfSTkJslm9vHzY++H9UvMkNvHBxtTQeM4xKPLAeZ
+         B6LQ5SESonPbtHB8p0RzIC7E6MpR5T01nXRpBWc9xMvSMp+9y5kfofWxPbB3vBHQhDi5
+         jF3+3igg8Mnzr0607TyBsaxHLfXOEWt53mrok=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=bNaunE4WrsFjqV2ucPLxHH888D9WYK7ezjaO0pK0+TJFs25D0D9pA1ZPrNrA2m46Ii
+         rQB6bQqOmi8IiEAZXRyiRhMLKDk23nklIWSsKpYHiAJiuP2WbsfSNcQ0sWmwcVqQzE9h
+         z8Nek+WFB9+Vb58eWg3UdnAj6oV6mNzdDtBIQ=
+Received: by 10.103.243.9 with SMTP id v9mr545708mur.91.1233318344937;
+        Fri, 30 Jan 2009 04:25:44 -0800 (PST)
+Received: from localhost.localdomain (abwh184.neoplus.adsl.tpnet.pl [83.8.231.184])
+        by mx.google.com with ESMTPS id e9sm1006847muf.21.2009.01.30.04.25.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 30 Jan 2009 04:25:43 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n0UCPf18022529;
+	Fri, 30 Jan 2009 13:25:41 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n0UCPdSB022526;
+	Fri, 30 Jan 2009 13:25:39 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <adf1fd3d0901300329y53e46d91xda75799ce1244ddd@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107802>
 
-Junio C Hamano <gitster@pobox.com> writes:
-<snipp>
-> diff --git a/builtin-fsck.c b/builtin-fsck.c
-> index 72bf33b..83faa98 100644
-> --- a/builtin-fsck.c
-> +++ b/builtin-fsck.c
-> @@ -20,7 +20,7 @@ static int show_tags;
->  static int show_unreachable;
->  static int include_reflogs = 1;
->  static int check_full;
-> -static int check_quick;
-> +static int check_medium;
->  static int check_strict;
->  static int keep_cache_objects;
->  static unsigned char head_sha1[20];
-> @@ -578,7 +578,7 @@ static struct option fsck_opts[] = {
->  	OPT_BOOLEAN(0, "cache", &keep_cache_objects, "make index objects head nodes"),
->  	OPT_BOOLEAN(0, "reflogs", &include_reflogs, "make reflogs head nodes (default)"),
->  	OPT_BOOLEAN(0, "full", &check_full, "fully check packs"),
-> -	OPT_BOOLEAN(0, "quick", &check_quick, "only check loose objects"),
-> +	OPT_BOOLEAN(0, "medium", &check_medium, "also check packs"),
->  	OPT_BOOLEAN(0, "strict", &check_strict, "enable more strict checking"),
->  	OPT_BOOLEAN(0, "lost-found", &write_lost_and_found,
->  				"write dangling objects in .git/lost-found"),
-> @@ -594,8 +594,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
->  	errors_found = 0;
->  
->  	argc = parse_options(argc, argv, fsck_opts, fsck_usage, 0);
-> -	if (check_full && check_quick)
-> -		die("--full and --quick?  which one do you want?");
-> +	if (check_full && check_medium)
-> +		die("--full and --medium?  which one do you want?");
->  
+Santi B=E9jar <santi@agolina.net> writes:
+> 2009/1/30 Frank Li <lznuaa@gmail.com>:
 
-  Would it not be better to have an "OPT_INT" argument named
-  "check_level" or similar?
+> > mkdir tt3
+> > cd tt3
+> > git init-db
+>=20
+> "git init"
+>=20
+> > touch a.c
+> > git add a.c
+> > git commit -a -m "test1"
+> >
+> > git mv a.c b.c
+> > git commit -a -m "rename"
+> >
+> > modify b.c
+> > git commit -a -m "test2"
+> >
+> > git log -C -M -- b.c
+> [...]
+> > I can't get history before rename.
+>=20
+> You asked to restrict the search to the b.c path.
+>=20
+> You want:
+>=20
+> git log --follow -- b.c
+>=20
+> Man git-log:
+>        --follow
+>            Continue listing the history of a file beyond renames.
 
-  Then you do not need those error checks, and people would maybe
-  better understand the differences between the different check's?
+Or use
 
-  The documentation could then say that (for example) "level 2
-  includes all check's that level 1 includes, in addition to ...".
+  $ git log -C -- b.c a.c
 
-  -- kjetil
+(you don't need '-M' option, as '-C' is superset of it).
+
+Note that '--follow' works for simple histories, but (as it is quite
+new invention) doesn't work yet for all cases, like for example
+subtree merge or equivalent.
+
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
