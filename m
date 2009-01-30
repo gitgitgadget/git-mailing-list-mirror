@@ -1,89 +1,128 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: git log --follow --parents can't rewrite history
-Date: Fri, 30 Jan 2009 21:16:11 +0800
-Message-ID: <1976ea660901300516x75205c6cifb32ca67c866768a@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: Finding the name of the parent branch?
+Date: Fri, 30 Jan 2009 14:16:50 +0100
+Message-ID: <adf1fd3d0901300516y3d1bf58dmda9c5172586d828@mail.gmail.com>
+References: <a2633edd0901300256k2ad7530elcaca5cdc30c17534@mail.gmail.com>
+	 <adf1fd3d0901300318s5a0e4c94gab5f31342643ea52@mail.gmail.com>
+	 <a2633edd0901300456y48e8d78fn199675f2ae105c8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 30 14:17:42 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Fri Jan 30 14:18:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LStFb-0006i1-Ne
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 14:17:40 +0100
+	id 1LStGF-0006x8-2j
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 14:18:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752425AbZA3NQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 08:16:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbZA3NQO
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 08:16:14 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:5253 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752083AbZA3NQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 08:16:13 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so165242yxm.1
-        for <git@vger.kernel.org>; Fri, 30 Jan 2009 05:16:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=b6h6hpJCPTchcXKP0ICKhIGQO7NlJgcWcoSXl2+p00E=;
-        b=EGN6yv9ghEwyi/6upD0S9HId6RdOxBvg4yag0vh1YkyuqWYfZwag5Z9O/QZbveOkgD
-         /8RPp04sWZgh3BmruoivRhCObYrOvNWwm/kfM1NmFGKFNJ+b58QqAfgZp519/cefFNSh
-         3DHrRw9C2sQMjaD3EtuO9GQG0IoEpb9YnrfMc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=i5I/XqzgXCalGvxp96sD8aBfBInd4M5aPhBuFMPrIC8cSI51MrdztC0h+UdVSBizXz
-         qOKTJRnzRrMY0DXWG9kUq5j2GEIsLIg1jMpYFa4ejl8Tpay1OrO8NwqZjTQrEycMJyrF
-         xZsIeEKgXlpuYorByDwDhPVXzXfMJKmzsNYSs=
-Received: by 10.150.212.14 with SMTP id k14mr1179023ybg.226.1233321371565; 
-	Fri, 30 Jan 2009 05:16:11 -0800 (PST)
+	id S1752583AbZA3NQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 08:16:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752586AbZA3NQy
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 08:16:54 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:37819 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752566AbZA3NQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 08:16:53 -0500
+Received: by fxm13 with SMTP id 13so169509fxm.13
+        for <git@vger.kernel.org>; Fri, 30 Jan 2009 05:16:51 -0800 (PST)
+Received: by 10.103.223.2 with SMTP id a2mr580797mur.4.1233321410754; Fri, 30 
+	Jan 2009 05:16:50 -0800 (PST)
+In-Reply-To: <a2633edd0901300456y48e8d78fn199675f2ae105c8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107811>
 
-use git.git repository.
+2009/1/30 Pascal Obry <pascal@obry.net>:
+> Santi,
+>
+> Thanks for you reply.
+>
+>> I think your definition is not well defined. A, B and C are just
+>> branches of you project, technically they are equivalent. Maybe you
+>
+> Right. Yet I want to know from which branch a branch as been started.
 
-git log --pretty=format:Commit:%H%nParent:%P%n%n --parents  -- alloc.c
+You can set it when you create the branch:
 
-Commit:100c5f3b0b27ec6617de1a785c4ff481e92636c1
-Parent:2c1cbec1e2f0bd7b15fe5e921d287babfd91c7d3
+git branch --track newbranch startpointbranch
 
+(maybe --track is the default these days for remote branches)
 
-Commit:2c1cbec1e2f0bd7b15fe5e921d287babfd91c7d3
-Parent:579d1fbfaf25550254014fa472faac95f88eb779
+And then the config keys:
 
+branch.newbranch.remote
+branch.newbranch.merge
 
-Commit:579d1fbfaf25550254014fa472faac95f88eb779
-Parent:855419f764a65e92f1d5dd1b3d50ee987db1d9de
+will tell you from which branch a branch was started. And it is used
+in "git pull" to merge from the tracking branch.
 
+> You need this to get the proper merge-base for example:
+>
+>   $ git merge-base C A
+>      1
+>
+>   $ git merge-base B C
+>      2
+>
+>   $ git merge-base B A
+>      1
 
-Commit:855419f764a65e92f1d5dd1b3d50ee987db1d9de
-Parent:
+1 and 2 are defined in the graph below...
 
-Parent will be rewritten correctly.
+> I always know on which topic branch I'm but, as shown above, depending on the
+> parent branch passed to merge-base you do not get the same branch-point. This
+> is fine.
+>
+> So, when I'm in a topic branch I want to find the name of the parent
+> branch. The one given
+> when creating the branch:
+>
+>   $ git branch B C
 
-But When I add --follow, it will be
-git log --pretty=format:Commit:%H%nParent:%P%n%n --parents --follow -- alloc.c
+See above.
 
-Commit:100c5f3b0b27ec6617de1a785c4ff481e92636c1
-Parent:2c1cbec1e2f0bd7b15fe5e921d287babfd91c7d3
+>
+> A "stupid" solution whould be to iterate over all branches. Looking
+> for the merge-base and
+> at the end output the branch having the youngest merge-base. I'm
+> looking for something
+> more efficient...
+>
 
+Maybe if you explain why you want it (a use case) instead of just this
+specific problem...
 
-Commit:2c1cbec1e2f0bd7b15fe5e921d287babfd91c7d3
-Parent:f948792990f82a35bf0c98510e7511ef8acb9cd3
+>> are thinking that the common commits of, say A and B, really belongs
+>> to A, but this is not the case they belong to both branches. In git a
+>> branch is really just a pointer to a commit and by extension the
+>> history, it is not a series of commits.
+>>
+>> Just a counterexample, just rearranging you graph:
+>>
+>>                        o---B
+>>                        /
+>>                   o---2---o---o---o---C
+>>                  /
+>>          ---o---1---o---o---o---A
+>>
+>> From you description: For B I would get C and for C I would get A.
 
+Please, if you quote text do not edit it (the 1 and the 2 in this case).
 
-Commit:579d1fbfaf25550254014fa472faac95f88eb779
-Parent:446c6faec69f7ac521b8b9fc2b1874731729032f
+> Don't see this as a counter-example as it is exactly my example.
+>
+> Did I missed something?
 
+Yes. Compare your sentence and mine:
 
-Commit:855419f764a65e92f1d5dd1b3d50ee987db1d9de
-Parent:64e86c57867593ba0ee77a7b0ff0eb8e9d4d8ed5
+For B I want to get A and for C I want to get B.
+For B I would get C and for C I would get A.
 
-parent will be not rewritten.
+So for B you get A while I get C, and the equivalent for C.
+
+Santi
