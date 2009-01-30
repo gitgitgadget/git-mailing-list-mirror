@@ -1,74 +1,79 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] Switch receive.denyCurrentBranch to "refuse"
-Date: Fri, 30 Jan 2009 03:30:40 +0100
-Message-ID: <20090130023040.GR21473@genesis.frugalware.org>
+Date: Thu, 29 Jan 2009 21:55:46 -0500
+Message-ID: <20090130025546.GA18257@coredump.intra.peff.net>
 References: <cover.1233275583u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Qxd4aqMUuikGjl19"
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, gitster@pobox.com
 To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 30 03:32:24 2009
+X-From: git-owner@vger.kernel.org Fri Jan 30 03:57:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSjB9-0005vd-6V
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 03:32:23 +0100
+	id 1LSjZD-00026E-Nq
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 03:57:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751489AbZA3Cap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 21:30:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbZA3Cap
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 21:30:45 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:51771 "EHLO virgo.iok.hu"
+	id S1752080AbZA3Czv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 21:55:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751656AbZA3Czu
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 21:55:50 -0500
+Received: from peff.net ([208.65.91.99]:43261 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750988AbZA3Cao (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 21:30:44 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 441505814B;
-	Fri, 30 Jan 2009 03:30:42 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 567994465E;
-	Fri, 30 Jan 2009 03:30:40 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 529D511B87A9; Fri, 30 Jan 2009 03:30:40 +0100 (CET)
+	id S1751256AbZA3Czu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 21:55:50 -0500
+Received: (qmail 26290 invoked by uid 107); 30 Jan 2009 02:55:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 29 Jan 2009 21:55:58 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Jan 2009 21:55:46 -0500
 Content-Disposition: inline
 In-Reply-To: <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107766>
 
+On Fri, Jan 30, 2009 at 01:34:28AM +0100, Johannes Schindelin wrote:
 
---Qxd4aqMUuikGjl19
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> 	Let's be honest here, I have not much respect for users who fail 
+> 	to read up enough to understand what they are doing.
+> 
+> 	But hearing from those users constantly is really unnerving.  And 
+> 	it would be a one-time cost to old-timers.
 
-On Fri, Jan 30, 2009 at 01:34:28AM +0100, Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
-> -		error("refusing to update checked out branch: %s", name);
-> +		error("refusing to update checked out branch: %s\n"
-> +			"if you know what you are doing, you can allow it by "
-> +			"setting\n\n"
-> +			"\tgit config receive.denyCurrentBranch true\n", name);
+I am not personally opposed to changing this default. I seem to
+recall some opposition when this was brought up initially, but I don't
+recall any specific reason besides "change is bad". Maybe those who
+oppose want to summarize their arguments here.
 
-Shouldn't this be
+I was hoping that introducing the warning would cause new users to "get
+it". But since this warning was put in place, I think we have still
+gotten a few questions on the list about this. I don't know if it simply
+because they are on older versions, or if the warning is insufficient.
+If the former, then perhaps that argues for leaving it a little longer.
 
-git config receive.denyCurrentBranch ignore
+>  	case DENY_REFUSE:
+> -		if (!is_ref_checked_out(name))
+> +		if (is_bare_repository() || !is_ref_checked_out(name))
 
-instead of "true"?
+Now what is this change about?
 
---Qxd4aqMUuikGjl19
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> --- a/t/t5701-clone-local.sh
+> +++ b/t/t5701-clone-local.sh
+> @@ -119,7 +119,7 @@ test_expect_success 'bundle clone with nonexistent HEAD' '
+>  test_expect_success 'clone empty repository' '
+>  	cd "$D" &&
+>  	mkdir empty &&
+> -	(cd empty && git init) &&
+> +	(cd empty && git init && git config receive.denyCurrentBranch false) &&
+>  	git clone empty empty-clone &&
+>  	test_tick &&
+>  	(cd empty-clone
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Perhaps some of these tests would do better to actually just use a bare
+repository. That would better match the expected workflow for cloning
+empty, anyway.
 
-iEYEARECAAYFAkmCZlAACgkQe81tAgORUJYRxQCaAkqvAzUtVltMOz+DVEkKTQSy
-0PsAnAzcpu007DKpiJsSN+iJQSAj3+SI
-=HdYq
------END PGP SIGNATURE-----
-
---Qxd4aqMUuikGjl19--
+-Peff
