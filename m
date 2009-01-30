@@ -1,59 +1,62 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH 1/2] Missing && in t/t7001.sh.
-Date: Fri, 30 Jan 2009 11:36:00 +0100
-Message-ID: <vpq7i4dulm7.fsf@bauges.imag.fr>
-References: =?ISO-8859-1?Q?=20<1233309819-777-?= =?ISO-8859-1?Q?1-git-send-email?=
-	=?ISO-8859-1?Q?-=0E=10>?=
+From: Pascal Obry <pascal@obry.net>
+Subject: Finding the name of the parent branch?
+Date: Fri, 30 Jan 2009 11:56:12 +0100
+Message-ID: <a2633edd0901300256k2ad7530elcaca5cdc30c17534@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 30 11:49:38 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 30 11:57:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSqwK-0000Eu-IF
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 11:49:37 +0100
+	id 1LSr4A-0002tG-2u
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 11:57:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752258AbZA3KsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 05:48:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751562AbZA3KsM
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 05:48:12 -0500
-Received: from imag.imag.fr ([129.88.30.1]:52156 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751407AbZA3KsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 05:48:11 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n0UAhs7h007454
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 30 Jan 2009 11:43:54 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LSqjB-0004VX-1Y; Fri, 30 Jan 2009 11:36:01 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LSqjA-00008m-VV; Fri, 30 Jan 2009 11:36:00 +0100
-In-Reply-To: =?ISO-8859-1?Q?=20<1233309819-777-?= =?ISO-8859-1?Q?1-git-send-email?=
-	=?ISO-8859-1?Q?-=0E=10>?= ( =?ISO-8859-1?Q?=0E=10@imag.fr's?= message of "Fri\, 30 Jan 2009 11\:03\:38 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 30 Jan 2009 11:43:55 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751500AbZA3K4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 05:56:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751025AbZA3K4Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 05:56:16 -0500
+Received: from fk-out-0910.google.com ([209.85.128.187]:43949 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751407AbZA3K4Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 05:56:16 -0500
+Received: by fk-out-0910.google.com with SMTP id f33so398963fkf.5
+        for <git@vger.kernel.org>; Fri, 30 Jan 2009 02:56:13 -0800 (PST)
+Received: by 10.223.116.77 with SMTP id l13mr896328faq.106.1233312972676; Fri, 
+	30 Jan 2009 02:56:12 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107790>
 
-^N^P@imag.fr writes:
-^^^^
+I want to find the name of the parent branch in a script. What is the best way?
 
-(Sorry for the bad From: header line. I must have typed something
-weird at the git send-email prompt, while I thought I had just typed
-"enter")
+                         o---o---o---C
+                         /
+                    o---o---o---B
+                   /
+           ---o---o---o---o---o---A
+
+For B I want to get A and for C I want to get B.
+
+All this can be found in gitk, but from a script I did not found a
+good solution.
+
+Any idea?
+
+Thanks.
+Pascal.
 
 -- 
-Matthieu
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
