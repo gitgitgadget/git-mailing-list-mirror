@@ -1,86 +1,90 @@
-From: Geoffrey Thomas <geofft@MIT.EDU>
-Subject: [PATCH] utf8: add utf8_strwidth()
-Date: Fri, 30 Jan 2009 04:41:28 -0500
-Message-ID: <1233308489-2656-1-git-send-email-geofft@mit.edu>
-Cc: Geoffrey Thomas <geofft@mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 30 10:45:39 2009
+From: Christian MICHON <christian.michon@gmail.com>
+Subject: Re: Appropriateness of git for digital video production versioning
+Date: Fri, 30 Jan 2009 11:13:54 +0100
+Message-ID: <46d6db660901300213q21ad099w2b49ceba8690d51a@mail.gmail.com>
+References: <8c4a72800901290736p4952e53byddca243f300dd8af@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Charles Earl <charles.cearl@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 30 11:15:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSpwQ-00078n-Le
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 10:45:39 +0100
+	id 1LSqPE-00078z-9I
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 11:15:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751601AbZA3JoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 04:44:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbZA3JoM
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 04:44:12 -0500
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:45036 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751368AbZA3JoL (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jan 2009 04:44:11 -0500
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n0U9fUwe003015;
-	Fri, 30 Jan 2009 04:41:30 -0500 (EST)
-Received: from localhost (VINEGAR-POT.MIT.EDU [18.181.0.51])
-	(authenticated bits=0)
-        (User authenticated as geofft@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n0U9fTv3005561;
-	Fri, 30 Jan 2009 04:41:29 -0500 (EST)
-X-Mailer: git-send-email 1.6.1.2.255.g2979d
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1751788AbZA3KN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 05:13:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751601AbZA3KN6
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 05:13:58 -0500
+Received: from mail-ew0-f21.google.com ([209.85.219.21]:41984 "EHLO
+	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751500AbZA3KN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 05:13:57 -0500
+Received: by ewy14 with SMTP id 14so631810ewy.13
+        for <git@vger.kernel.org>; Fri, 30 Jan 2009 02:13:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=RqeycW6wV4l30EOdiZL60GCDwRtiDS9J5Y3/UVtGMfA=;
+        b=aJ0m9mgxwPVRT0zZ375kb0wTbJDkSOgs6ldsXnsZsBfpGMbycd79oRP1CQCqH+TkFZ
+         eg7LA2LRMzWCgUtA+9gV37GBd8BX6voj0NKEtzG9GQeCQC5dZTqzIdqb8fBeKHAgSl52
+         8BZPoN9YnpDLpok41+NexD/09GFlj5mZeJWC8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=O93VWkpth5EbICyV3k2/BuRobA0njUMW6BWF8NU+L74mdbM5epictGRQ7eAquHk7kA
+         oqWxcz4GNU5InpNgSpzjEdeQubsAS+jP43/I5Uto4BTqslcoLrcf2jy7Z/IHPAKL0PjY
+         IF4aLPGSyId2s6UtomFFQvC0V0hgn1A+9f6KE=
+Received: by 10.103.119.19 with SMTP id w19mr499262mum.80.1233310434966; Fri, 
+	30 Jan 2009 02:13:54 -0800 (PST)
+In-Reply-To: <8c4a72800901290736p4952e53byddca243f300dd8af@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107786>
 
-From: Geoffrey Thomas <geofft@mit.edu>
-I'm about to use this pattern more than once, so make it a common function.
+On Thu, Jan 29, 2009 at 4:36 PM, Charles Earl <charles.cearl@gmail.com> wrote:
+> Hi,
+> Are there past instances of git having been adapted to support version
+> control of digital media production workflow?
+> I'm evaluating CMS and versioning systems for the backend of a SaaS
+> for digital media production workflow.
+> The bulk of content stored is binary data -- there have been posts on
+> this about integration of various binary diff implemetations with git.
+> The versioning of metadata, scripts, project structure seems to argue
+> for applicability of system such as git -- these fit the paradigm of
+> traditional scm.
+> Example content is from media production suites such as Adobe After
+> Effects/Premier: video, compositions, etc.
+> I'd also like the object storage to be in S3/Amazon BlockStore or
+> similar remote stores.
+> Charles
+> --
 
-Signed-off-by: Geoffrey Thomas <geofft@mit.edu>
----
- utf8.c |   12 ++++++++++++
- utf8.h |    1 +
- 2 files changed, 13 insertions(+), 0 deletions(-)
+for what it's worth (call me crazy, call me sick), I used msysgit only
+on the project files from Windows Movie Maker (not on the media files,
+but the timeline and my personal cuts, etc...).
 
-diff --git a/utf8.c b/utf8.c
-index dc37353..a2d888d 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -246,6 +246,18 @@ int utf8_width(const char **start, size_t *remainder_p)
- 	return git_wcwidth(ch);
- }
- 
-+/*
-+ * Returns the total number of columns required by a null-terminated
-+ * string.
-+ */
-+size_t utf8_strwidth(const char *string)
-+{
-+	size_t width = 0;
-+	while (string && *string)
-+		width += utf8_width(&string, NULL);
-+	return width;
-+}
-+
- int is_utf8(const char *text)
- {
- 	while (*text) {
-diff --git a/utf8.h b/utf8.h
-index 98cce1b..1ae3450 100644
---- a/utf8.h
-+++ b/utf8.h
-@@ -5,6 +5,7 @@ typedef unsigned int ucs_char_t;  /* assuming 32bit int */
- 
- ucs_char_t pick_one_utf8_char(const char **start, size_t *remainder_p);
- int utf8_width(const char **start, size_t *remainder_p);
-+size_t utf8_strwidth(const char *string);
- int is_utf8(const char *text);
- int is_encoding_utf8(const char *name);
- 
+it works perfectly, so (whatever system you're using) my advice would
+be identify the small files and formats saved by your video editing
+software (I see xml files are usually used there), only add these in
+the git repository and make sure the video inputs and outputs files
+are in .gitignore
+
+doing so, you have a fast and cheap tracker of your timeline edition,
+splitting and joining of video files.
+
+HIH
+
 -- 
-1.5.6.5
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
