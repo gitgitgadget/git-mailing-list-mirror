@@ -1,65 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-cvsserver: handle CVS 'noop' command.
-Date: Thu, 29 Jan 2009 15:46:17 -0800
-Message-ID: <7vhc3hd6ba.fsf@gitster.siamese.dyndns.org>
-References: <1232144521-21947-1-git-send-email-stefan.karpinski@gmail.com>
- <1233264914-7798-1-git-send-email-stefan.karpinski@gmail.com>
- <7v7i4denpg.fsf@gitster.siamese.dyndns.org>
- <d4bc1a2a0901291539m636f0fc8s5d9280ce9b7d22b2@mail.gmail.com>
+From: David Mann <mannd@epstudiossoftware.com>
+Subject: question re dcommit problem
+Date: Thu, 29 Jan 2009 19:14:08 -0500
+Message-ID: <49824650.2070209@epstudiossoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefan Karpinski <stefan.karpinski@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 30 00:47:51 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 30 01:15:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSgbu-00087q-Nc
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 00:47:51 +0100
+	id 1LSh2o-0008Iu-MS
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 01:15:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753279AbZA2XqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jan 2009 18:46:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752213AbZA2XqZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 18:46:25 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48112 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751348AbZA2XqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jan 2009 18:46:24 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CB6BF94996;
-	Thu, 29 Jan 2009 18:46:22 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C24C494987; Thu,
- 29 Jan 2009 18:46:19 -0500 (EST)
-In-Reply-To: <d4bc1a2a0901291539m636f0fc8s5d9280ce9b7d22b2@mail.gmail.com>
- (Stefan Karpinski's message of "Thu, 29 Jan 2009 15:39:23 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 08D11D18-EE5F-11DD-9893-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1758099AbZA3AOO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jan 2009 19:14:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757417AbZA3AOO
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Jan 2009 19:14:14 -0500
+Received: from mxsf04.insightbb.com ([74.128.0.74]:45716 "EHLO
+	mxsf04.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756599AbZA3AON (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jan 2009 19:14:13 -0500
+X-IronPort-AV: E=Sophos;i="4.37,347,1231131600"; 
+   d="scan'208";a="579339453"
+Received: from unknown (HELO asav00.insightbb.com) ([172.31.249.123])
+  by mxsf04.insightbb.com with ESMTP; 29 Jan 2009 19:14:09 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvQAAI/VgUlKgLqc/2dsb2JhbAAIy0SEEAY
+X-IronPort-AV: E=Sophos;i="4.37,347,1231131600"; 
+   d="scan'208";a="68991005"
+Received: from 74-128-186-156.dhcp.insightbb.com (HELO [192.168.1.33]) ([74.128.186.156])
+  by asav00.insightbb.com with ESMTP; 29 Jan 2009 19:14:09 -0500
+User-Agent: Thunderbird 2.0.0.19 (X11/20081227)
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107756>
 
-Stefan Karpinski <stefan.karpinski@gmail.com> writes:
+I created a git repository from my svn repository, later uploaded it to
+GitHub, and after some branching and merging, can no longer dcommit back
+to the svn repository.  I notice that somewhere along the way the
+git-svn-id: messages no longer appear on my master branch.  When I try
+to git svn dcommit I get weird messages like this:
 
-> So apparently a response *is* expected. I'm not really familiar enough
-> with CVS or git-cvsserver to determine what that means it should do,
-> but I suspect from perusing the code that req_EMPTY is the appropriate
-> action.
->
-> Moreover, I've moved on from using git-cvsserver myself, having
-> instead convinced my Windows-using compatriots to use msysgit instead.
-> So if you feel that this change is unwarranted, feel free to just drop
-> it.
+mannd@SuperSluggo:~/dev/git/epsimulator> git svn dcommit
+Committing to
+https://epsimulator.svn.sourceforge.net/svnroot/epsimulator/epsimulator/trunk
+...
+Filesystem has no item: File not found: transaction '435-24', path
+'/epsimulator/trunk/epsimulator.kdevses' at
+/home/mannd/libexec/git-core/git-svn line 480
 
-Because the issue currently has our attention, and we think we know that
-the code does not do the right thing currently, and that we are fairly
-sure that the right thing is to do req_EMPTY, I'd rather see a tested fix
-applied so that we can forget about it ;-)
+Any way to fix this?  If not, I will just abandon SVN and stick with
+git, which I really enjoy using.
 
-It's good that you moved your people to native git environment, but if you
-have an environment where you can test the fix still lying around, I'd
-appreciate a quick test and resubmit.
+Thanks,
+David Mann
