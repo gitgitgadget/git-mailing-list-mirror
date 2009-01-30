@@ -1,105 +1,80 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Check for local changes with "goto"
-Date: Fri, 30 Jan 2009 16:26:49 +0100
-Message-ID: <20090130152649.GA22044@diana.vm.bytemark.co.uk>
-References: <20090128231305.16133.29214.stgit@localhost.localdomain> <20090129034512.GD24344@diana.vm.bytemark.co.uk> <b0943d9e0901300601j27ab6ebdq4b38a9f7c0cbe261@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] push: Learn to set up branch tracking with '--track'
+Date: Fri, 30 Jan 2009 16:58:25 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901301656290.3586@pacific.mpi-cbg.de>
+References: <cover.1233236267u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0901291438030.3586@pacific.mpi-cbg.de> <20090129223308.GB12871@coredump.intra.peff.net> <20090129231715.GA17399@coredump.intra.peff.net> <alpine.DEB.1.00.0901300127450.3586@pacific.mpi-cbg.de>
+ <20090130050925.GA18809@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 30 16:28:50 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 30 16:59:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSvI5-0004iq-Pe
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 16:28:22 +0100
+	id 1LSvmG-00013e-Pr
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 16:59:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751AbZA3P0z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jan 2009 10:26:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751722AbZA3P0z
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 10:26:55 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3495 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751720AbZA3P0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 10:26:55 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1LSvGb-0005nB-00; Fri, 30 Jan 2009 15:26:49 +0000
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0901300601j27ab6ebdq4b38a9f7c0cbe261@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1751754AbZA3P6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 10:58:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbZA3P6G
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 10:58:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54543 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751384AbZA3P6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 10:58:05 -0500
+Received: (qmail invoked by alias); 30 Jan 2009 15:58:00 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp011) with SMTP; 30 Jan 2009 16:58:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX188VJhNByc8SCyOSNZs8sfiE8L0fQQrb41Hy+HxG9
+	oGuegyTyBFvj+a
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090130050925.GA18809@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107833>
 
-On 2009-01-30 14:01:20 +0000, Catalin Marinas wrote:
+Hi,
 
-> @@ -706,9 +706,15 @@ class Index(RunWithEnv):
->                      ).output_one_line())
->          except run.RunException:
->              raise MergeException('Conflicting merge')
-> -    def is_clean(self):
-> +    def is_clean(self, tree =3D None):
-> +        """Check whether the index is clean relative to the given tr=
-ee."""
-> +        if tree:
-> +            sha1 =3D tree.sha1
-> +        else:
-> +            sha1 =3D 'HEAD'
->          try:
-> -            self.run(['git', 'update-index', '--refresh']).discard_o=
-utput()
-> +            self.run(['git', 'diff-index', '--quiet', '--cached', sh=
-a1]
-> +                    ).discard_output()
->          except run.RunException:
->              return False
->          else:
+On Fri, 30 Jan 2009, Jeff King wrote:
 
-OK (though I personally would have allowed only Tree objects, with no
-defaulting to the current HEAD).
+> On Fri, Jan 30, 2009 at 01:28:38AM +0100, Johannes Schindelin wrote:
+> 
+> > > Something like the patch below (which is obviously missing all of the 
+> > > infrastructure for doing this optionally, but is meant to illustrate 
+> > > what I'm talking about).
+> > 
+> > Except that you miss http:// and rsync:// protocols.  Those were the 
+> > reasons I did not touch send-pack.
+> 
+> You didn't comment on the part of my email where I said exactly that,
+> but that I think this is still the right path forward.
+> 
+> Pushing through those protocols is sorely in need of update (actually,
+> I thought rsync was all but dead at this point). But http push is
+> missing the update of tracking refs, the usual status output (it still
+> has the "Maybe you are not up-to-date and need to pull first?" message
+> that was removed from send-pack a year and a half ago), and who knows
+> what other tweaks made to do_send_pack (which it appears to have been
+> copy-and-pasted from in 2006) in the last few years.
+> 
+> So either we don't care about http-push being consistent with send-pack,
+> and it is OK to have this feature in one but not the other. Or we do,
+> and we really need to clean up the current divergence.
 
-The docstring should say s/tree/treeish/.
+I do not see how your patch to send-pack makes that divergence any 
+better, or for that matter, keeps it as bad as it is.
 
-> @@ -858,6 +864,15 @@ class IndexAndWorktree(RunWithEnvCwd):
->          cmd =3D ['git', 'update-index', '--remove']
->          self.run(cmd + ['-z', '--stdin']
->                   ).input_nulterm(paths).discard_output()
-> +    def worktree_clean(self):
-> +        """Check whether the worktree is clean relative and no updat=
-es or
-> +        merges are needed."""
-> +        try:
-> +            self.run(['git', 'update-index', '--refresh']).discard_o=
-utput()
-> +        except run.RunException:
-> +            return False
-> +        else:
-> +            return True
+In other words, if you want to give the other protocols at least a 
+_chance_ to catch up, you definitely need the support for push --track in 
+builtin-push.c or at least in transport.c.
 
-Clean relative to the index.
-
-And what do merges have to do with it?
-
-> +        # Check for not clean index and worktree
-> +        if check_clean and iw:
-> +            if not iw.worktree_clean():
-> +                self.__halt('Repository not clean. Use "refresh" or =
-'
-> +                            '"status --reset"')
-> +            elif not iw.index.is_clean()):
-> +                self.__halt('Index and HEAD different. Use "repair" =
-to '
-> +                            'recover additional commits')
-
-The first message is good, but the second one is misleading -- you'd
-be much better off just reusing the same message as for the first
-case. (You could recommend refresh --index if you want to get fancy.)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Ciao,
+Dscho
