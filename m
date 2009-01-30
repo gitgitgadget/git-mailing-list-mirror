@@ -1,75 +1,63 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: Git log can not show history before rename
-Date: Fri, 30 Jan 2009 12:29:47 +0100
-Message-ID: <adf1fd3d0901300329y53e46d91xda75799ce1244ddd@mail.gmail.com>
-References: <1976ea660901300323n384d3650s3bb5a575accb65d1@mail.gmail.com>
+From: "Raimund Berger" <raimund.berger@gmail.com>
+Subject: Re: Newbie question regarding 3way merge order.
+Date: Fri, 30 Jan 2009 12:37:38 +0100
+Message-ID: <87wscdaut9.fsf@gigli.quasi.internal>
+References: <871vulda2r.fsf@gigli.quasi.internal>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 30 12:31:21 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 30 12:39:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSrad-0005B9-Ur
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 12:31:16 +0100
+	id 1LSriG-0007a6-6a
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 12:39:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752497AbZA3L3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 06:29:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752425AbZA3L3u
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 06:29:50 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:36969 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752050AbZA3L3u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 06:29:50 -0500
-Received: by ewy14 with SMTP id 14so688934ewy.13
-        for <git@vger.kernel.org>; Fri, 30 Jan 2009 03:29:48 -0800 (PST)
-Received: by 10.103.240.15 with SMTP id s15mr526472mur.82.1233314987866; Fri, 
-	30 Jan 2009 03:29:47 -0800 (PST)
-In-Reply-To: <1976ea660901300323n384d3650s3bb5a575accb65d1@mail.gmail.com>
+	id S1752443AbZA3Lhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 06:37:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752371AbZA3Lhn
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 06:37:43 -0500
+Received: from fg-out-1718.google.com ([72.14.220.158]:30584 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752215AbZA3Lhm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 06:37:42 -0500
+Received: by fg-out-1718.google.com with SMTP id d23so312796fga.27
+        for <git@vger.kernel.org>; Fri, 30 Jan 2009 03:37:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:references
+         :mail-followup-to:date:in-reply-to:message-id:user-agent
+         :mime-version:content-type;
+        bh=LFSux7ZvS0Ju49NJstnvZFOqSZfUVQ9JiMxWkeccFGA=;
+        b=TqOuecmwSd6iJlvVPDfplBboUamsksC1NvQJm0DR03FAyykpvtwoU7TR22EhZut4Cf
+         RzO7ig73pVLzWWzQFRyk7cOVCYQDXh90RlAKK93Sa54zoeZExu/S5H7ZZezWAjKmwFZa
+         prXzkD0gP9UgXjMHFQldjKWM0uHYjtGznTlTg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:references:mail-followup-to:date:in-reply-to
+         :message-id:user-agent:mime-version:content-type;
+        b=qnxhkl5m3ZDrd8sjfLAwbBspSla6ouND2z/J4QJ9gd+qSp/1Ge6Q1Nni/8tu1s2s55
+         YFfgnwNhar9qZpf57lZHodn90v2vvx1UFLjD9Pe7S7fTlLxl6BFp1PWinL0NXsK6RBNg
+         P1K2QoBwJtuDu5yMGCQI3Omi6wqoZhC6RfYS0=
+Received: by 10.86.3.4 with SMTP id 4mr600527fgc.66.1233315461223;
+        Fri, 30 Jan 2009 03:37:41 -0800 (PST)
+Received: from gigli.quasi.internal (p5DC33F84.dip.t-dialin.net [93.195.63.132])
+        by mx.google.com with ESMTPS id d4sm877879fga.41.2009.01.30.03.37.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 30 Jan 2009 03:37:40 -0800 (PST)
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <871vulda2r.fsf@gigli.quasi.internal> (Raimund Berger's message
+	of "Thu, 29 Jan 2009 23:25:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107800>
 
-2009/1/30 Frank Li <lznuaa@gmail.com>:
-> mkdir tt3
-> cd tt3
-> git init-db
 
-"git init"
+> The question is whether a (3way) merge is commutative, purely in terms
+> of content 
 
-> touch a.c
-> git add a.c
-> git commit -a -m "test1"
->
-> git mv a.c b.c
-> git commit -a -m "rename"
->
-> modify b.c
-> git commit -a -m "test2"
->
-> git log -C -M -- b.c
-[...]
-> I can't get history before rename.
-
-You asked to restrict the search to the b.c path.
-
-You want:
-
-git log --follow -- b.c
-
-Man git-log:
-       --follow
-           Continue listing the history of a file beyond renames.
-
-HTH,
-Santi
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Yes / No / Unknown ? 
