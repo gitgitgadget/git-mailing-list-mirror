@@ -1,67 +1,75 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: Finding the name of the parent branch?
-Date: Fri, 30 Jan 2009 12:18:39 +0100
-Message-ID: <adf1fd3d0901300318s5a0e4c94gab5f31342643ea52@mail.gmail.com>
-References: <a2633edd0901300256k2ad7530elcaca5cdc30c17534@mail.gmail.com>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Git log can not show history before rename
+Date: Fri, 30 Jan 2009 19:23:20 +0800
+Message-ID: <1976ea660901300323n384d3650s3bb5a575accb65d1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Fri Jan 30 12:20:08 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 30 12:24:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSrPs-0001JQ-2a
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 12:20:08 +0100
+	id 1LSrUM-0002u4-Qb
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 12:24:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173AbZA3LSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 06:18:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752048AbZA3LSm
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 06:18:42 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:64191 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751947AbZA3LSm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 06:18:42 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so109643eya.37
-        for <git@vger.kernel.org>; Fri, 30 Jan 2009 03:18:40 -0800 (PST)
-Received: by 10.103.172.7 with SMTP id z7mr514198muo.129.1233314319876; Fri, 
-	30 Jan 2009 03:18:39 -0800 (PST)
-In-Reply-To: <a2633edd0901300256k2ad7530elcaca5cdc30c17534@mail.gmail.com>
+	id S1752149AbZA3LXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 06:23:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752050AbZA3LXW
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 06:23:22 -0500
+Received: from yx-out-2324.google.com ([74.125.44.29]:50215 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752021AbZA3LXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 06:23:21 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so153267yxm.1
+        for <git@vger.kernel.org>; Fri, 30 Jan 2009 03:23:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=pNn5PJ5RscCBlkuLPiTcLjw6H9rxCQAgj+7HQ56HvOQ=;
+        b=jEJHfIQw3odcHXet6HdDvnV721bZ8ww2cXPX/vcr1unesOTlp7mTq9dDGJ1yB/gZgA
+         //RbMXlIWr+M/8wecb9Jsw5DjdXjKQgYKIMc3pbUx8f5Ej7IcwSS50ss06oF+JhSjoeo
+         HRz3+NXZJbrGX6320EyEsgts5vJ7DuY6OUqpk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=mYZ4WOpsd8DII0VWYv3AgBuraLm/wfbWDxPRpFbUr7UKqFHRbxMtBjWR3XOGv72IBV
+         xMyOiBbUC+Ws5bSH/HMMQ4uGVeOIcE1OsgmQ7+g0VnQ/XRj1RNDL/L+X9xyifzHEj/rV
+         vaFmmgmPctZq49Sf6sucavy/3NBNqX8Poz160=
+Received: by 10.150.146.14 with SMTP id t14mr372474ybd.98.1233314600142; Fri, 
+	30 Jan 2009 03:23:20 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107798>
 
-2009/1/30 Pascal Obry <pascal@obry.net>:
-> I want to find the name of the parent branch in a script. What is the best way?
->
->                         o---o---o---C
->                         /
->                    o---o---o---B
->                   /
->           ---o---o---o---o---o---A
->
-> For B I want to get A and for C I want to get B.
+mkdir tt3
+cd tt3
+git init-db
+touch a.c
+git add a.c
+git commit -a -m "test1"
 
-I think your definition is not well defined. A, B and C are just
-branches of you project, technically they are equivalent. Maybe you
-are thinking that the common commits of, say A and B, really belongs
-to A, but this is not the case they belong to both branches. In git a
-branch is really just a pointer to a commit and by extension the
-history, it is not a series of commits.
+git mv a.c b.c
+git commit -a -m "rename"
 
-Just a counterexample, just rearranging you graph:
+modify b.c
+git commit -a -m "test2"
 
-                        o---B
-                        /
-                   o---o---o---o---o---C
-                  /
-          ---o---o---o---o---o---A
+git log -C -M -- b.c
+========================================
+commit 8d55ed63d2048d41bde8c34dafc52c6a965d61ed
+Author: Frank Li <lznuaa@gmail.com>
+Date:   Fri Jan 30 19:20:10 2009 +0800
+    test2
+commit af0214f7d32cf97fda2743e7d906305e6de2e9a2
+Author: Frank Li <lznuaa@gmail.com>
+Date:   Fri Jan 30 19:19:15 2009 +0800
+    rename
+=========================================
 
->From you description: For B I would get C and for C I would get A.
-
-HTH,
-Santi
+I can't get history before rename.
