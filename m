@@ -1,119 +1,128 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/5] verify-pack: add --quick
-Date: Fri, 30 Jan 2009 03:05:15 -0800
-Message-ID: <1233313517-24208-4-git-send-email-gitster@pobox.com>
+Subject: [PATCH 4/5] fsck: three levels of validation
+Date: Fri, 30 Jan 2009 03:05:16 -0800
+Message-ID: <1233313517-24208-5-git-send-email-gitster@pobox.com>
 References: <1233313517-24208-1-git-send-email-gitster@pobox.com>
  <1233313517-24208-2-git-send-email-gitster@pobox.com>
  <1233313517-24208-3-git-send-email-gitster@pobox.com>
+ <1233313517-24208-4-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 30 12:07:28 2009
+X-From: git-owner@vger.kernel.org Fri Jan 30 12:07:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSrDW-0005ur-Dm
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 12:07:22 +0100
+	id 1LSrDY-0005ur-1M
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 12:07:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752475AbZA3LFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 06:05:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752464AbZA3LFf
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 06:05:35 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58811 "EHLO
+	id S1752507AbZA3LFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 06:05:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752464AbZA3LFi
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 06:05:38 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58822 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752439AbZA3LFe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 06:05:34 -0500
+	with ESMTP id S1752497AbZA3LFh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 06:05:37 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A3C279472B
-	for <git@vger.kernel.org>; Fri, 30 Jan 2009 06:05:33 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 61F8D9472F
+	for <git@vger.kernel.org>; Fri, 30 Jan 2009 06:05:36 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C1A379472A for
- <git@vger.kernel.org>; Fri, 30 Jan 2009 06:05:32 -0500 (EST)
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A028E9472D for
+ <git@vger.kernel.org>; Fri, 30 Jan 2009 06:05:34 -0500 (EST)
 X-Mailer: git-send-email 1.6.1.2.312.g5be3c
-In-Reply-To: <1233313517-24208-3-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: EA34F9F6-EEBD-11DD-85FB-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
+In-Reply-To: <1233313517-24208-4-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: EBD620F0-EEBD-11DD-84CB-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107796>
 
-This teaches "git verify-pack" a new option --quick, to trigger the
-VERIFY_PACK_QUICK option.
+Traditionally, "git fsck" only checked loose objects and "git fsck --full"
+checked both loose and packed objects fully.
 
-"git fsck" is a more familiar command, and it checks more things at once
-than "git verify-pack", and the case you do want to use the latter is when
-really want a deep verification of a single pack.  For this reason, I do
-not think anybody would want to actually use this option, but it was an
-easy way to benchmark the change.
+This introduces a new medium level of validation that checks loose objects
+and runs the quicker packfile validation introduced earlier (in other
+words, the individual objects in packfiles are not validated, but we still
+make sure that the packfiles themselves are sound and individual objects
+pass their own CRC checks when the pack has version 2 idx file), and makes
+this new mode the default.  The original "loose objects only" mode can be
+asked with --quick option.
 
-For a 32M packfile from the git repository on my AMD64X2:
+In my private git project repository (almost fully packed but with may
+dangling objects) on my AMD 64X2:
 
-    $ /usr/bin/time ./git-verify-pack $THE_PACKFILE
-    22.16user 0.18system 0:22.35elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
-    0inputs+0outputs (0major+44166minor)pagefaults 0swaps
+    $ /usr/bin/time ./git-fsck --quick
+    0.18user 0.02system 0:00.20elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
+    0inputs+0outputs (0major+3205minor)pagefaults 0swaps
 
-    $ /usr/bin/time ./git-verify-pack --quick $THE_PACKFILE
-    0.43user 0.02system 0:00.45elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-    0inputs+0outputs (0major+11569minor)pagefaults 0swaps
+    $ /usr/bin/time ./git-fsck
+    68.61user 0.43system 1:09.06elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+    0inputs+0outputs (0major+116707minor)pagefaults 0swaps
+
+    $ /usr/bin/time ./git-fsck --full
+    90.36user 0.61system 1:31.00elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+    0inputs+0outputs (0major+169641minor)pagefaults 0swaps
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin-verify-pack.c |   10 +++++++---
- 1 files changed, 7 insertions(+), 3 deletions(-)
+ builtin-fsck.c |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/builtin-verify-pack.c b/builtin-verify-pack.c
-index 42ae406..fdc04d1 100644
---- a/builtin-verify-pack.c
-+++ b/builtin-verify-pack.c
-@@ -54,12 +54,13 @@ static void show_pack_info(struct packed_git *p)
- 		       chain_histogram[0], chain_histogram[0] > 1 ? "s" : "");
- }
- 
--static int verify_one_pack(const char *path, int verbose)
-+static int verify_one_pack(const char *path, int verbose, int quick)
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index 8dc7881..72bf33b 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -20,6 +20,7 @@ static int show_tags;
+ static int show_unreachable;
+ static int include_reflogs = 1;
+ static int check_full;
++static int check_quick;
+ static int check_strict;
+ static int keep_cache_objects;
+ static unsigned char head_sha1[20];
+@@ -576,7 +577,8 @@ static struct option fsck_opts[] = {
+ 	OPT_BOOLEAN(0, "root", &show_root, "report root nodes"),
+ 	OPT_BOOLEAN(0, "cache", &keep_cache_objects, "make index objects head nodes"),
+ 	OPT_BOOLEAN(0, "reflogs", &include_reflogs, "make reflogs head nodes (default)"),
+-	OPT_BOOLEAN(0, "full", &check_full, "also consider alternate objects"),
++	OPT_BOOLEAN(0, "full", &check_full, "fully check packs"),
++	OPT_BOOLEAN(0, "quick", &check_quick, "only check loose objects"),
+ 	OPT_BOOLEAN(0, "strict", &check_strict, "enable more strict checking"),
+ 	OPT_BOOLEAN(0, "lost-found", &write_lost_and_found,
+ 				"write dangling objects in .git/lost-found"),
+@@ -587,10 +589,14 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
  {
- 	char arg[PATH_MAX];
- 	int len;
- 	struct packed_git *pack;
- 	int err;
-+	unsigned flag = (quick ? VERIFY_PACK_QUICK : 0);
+ 	int i, heads;
+ 	struct alternate_object_database *alt;
++	unsigned verify_pack_flag;
  
- 	len = strlcpy(arg, path, PATH_MAX);
- 	if (len >= PATH_MAX)
-@@ -93,7 +94,7 @@ static int verify_one_pack(const char *path, int verbose)
- 		return error("packfile %s not found.", arg);
+ 	errors_found = 0;
  
- 	install_packed_git(pack);
--	err = verify_pack(pack, 0);
-+	err = verify_pack(pack, flag);
+ 	argc = parse_options(argc, argv, fsck_opts, fsck_usage, 0);
++	if (check_full && check_quick)
++		die("--full and --quick?  which one do you want?");
++
+ 	if (write_lost_and_found) {
+ 		check_full = 1;
+ 		include_reflogs = 0;
+@@ -608,13 +614,14 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 		fsck_object_dir(namebuf);
+ 	}
  
- 	if (verbose) {
- 		if (err)
-@@ -112,6 +113,7 @@ static const char verify_pack_usage[] = "git-verify-pack [-v] <pack>...";
- int cmd_verify_pack(int argc, const char **argv, const char *prefix)
- {
- 	int err = 0;
-+	int quick = 0;
- 	int verbose = 0;
- 	int no_more_options = 0;
- 	int nothing_done = 1;
-@@ -121,13 +123,15 @@ int cmd_verify_pack(int argc, const char **argv, const char *prefix)
- 		if (!no_more_options && argv[1][0] == '-') {
- 			if (!strcmp("-v", argv[1]))
- 				verbose = 1;
-+			else if (!strcmp("--quick", argv[1]))
-+				quick = 1;
- 			else if (!strcmp("--", argv[1]))
- 				no_more_options = 1;
- 			else
- 				usage(verify_pack_usage);
- 		}
- 		else {
--			if (verify_one_pack(argv[1], verbose))
-+			if (verify_one_pack(argv[1], verbose, quick))
- 				err = 1;
- 			discard_revindex();
- 			nothing_done = 0;
+-	if (check_full) {
++	if (!check_quick) {
+ 		struct packed_git *p;
+ 
++		verify_pack_flag = check_full ? 0 : VERIFY_PACK_QUICK;
+ 		prepare_packed_git();
+ 		for (p = packed_git; p; p = p->next)
+ 			/* verify gives error messages itself */
+-			verify_pack(p, 0);
++			verify_pack(p, verify_pack_flag);
+ 
+ 		for (p = packed_git; p; p = p->next) {
+ 			uint32_t j, num;
 -- 
 1.6.1.2.312.g5be3c
