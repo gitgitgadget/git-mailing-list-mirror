@@ -1,87 +1,122 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Switch receive.denyCurrentBranch to "refuse"
-Date: Fri, 30 Jan 2009 20:03:22 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901301959300.3586@pacific.mpi-cbg.de>
-References: <cover.1233275583u.git.johannes.schindelin@gmx.de>  <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de>  <76718490901300817x3f31460k59b6fe75d136372d@mail.gmail.com>  <alpine.DEB.1.00.0901301756560.3586@pacific.mpi-cbg.de>
- <76718490901301050h1f0f5b2bq902de384d954d99b@mail.gmail.com>
+From: "Raimund Berger" <raimund.berger@gmail.com>
+Subject: Re: Newbie question regarding 3way merge order.
+Date: Fri, 30 Jan 2009 20:09:56 +0100
+Message-ID: <87vdrwbofv.fsf@gigli.quasi.internal>
+References: <871vulda2r.fsf@gigli.quasi.internal>
+	<slrngo6eat.s1d.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 30 20:04:46 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 30 20:12:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSyfB-0004xM-Ez
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 20:04:25 +0100
+	id 1LSymF-00085F-Oc
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 20:11:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906AbZA3TC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 14:02:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752640AbZA3TC7
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 14:02:59 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52354 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751618AbZA3TC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 14:02:58 -0500
-Received: (qmail invoked by alias); 30 Jan 2009 19:02:56 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp051) with SMTP; 30 Jan 2009 20:02:56 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18nqhcDP2wnkgSeb1V6nGnIiZ8y9pKJrSg6Q45baf
-	qEYJKbN/plvGog
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <76718490901301050h1f0f5b2bq902de384d954d99b@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1752470AbZA3TKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 14:10:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752381AbZA3TKT
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 14:10:19 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:52505 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752287AbZA3TKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 14:10:17 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so100942fgg.17
+        for <git@vger.kernel.org>; Fri, 30 Jan 2009 11:10:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:references
+         :mail-followup-to:date:in-reply-to:message-id:user-agent
+         :mime-version:content-type;
+        bh=9C0EgqGL4NpsGMvbKA79mDN8sV/LQuKcMIP9XHjUiBU=;
+        b=r77T9QHlf1JT2fxq99XD8UKFzsrt0gwwfBp6FALFpdpfzn/5oqSf/SbhL/2vNY16nH
+         o6Brmj5D/E79eB3ZZ9hTiLXLSRg7Ot//AoqUCc6qARdmr5zF5wQJ2bf+x082NRlwS70N
+         7xexwVDHTtUZe2mfaiHWZxJPdueGzQBSNFAms=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:references:mail-followup-to:date:in-reply-to
+         :message-id:user-agent:mime-version:content-type;
+        b=JUgYp4/mR9ws5cNokpgmFy7XkJG6W17N0yqcy2//9e8dh9S3DteElQ5FU6eyAumNdK
+         EcfY4h8VjGhbFx2rQszsTQ+/s6g7K1mNQNAUay34CVODLyVZc5K1jpZE8ChQQK//gdKK
+         f4C47Mo5rfBdO7yh3s16EWFX9ZP+xx4xP9DGM=
+Received: by 10.103.241.15 with SMTP id t15mr714599mur.85.1233342615839;
+        Fri, 30 Jan 2009 11:10:15 -0800 (PST)
+Received: from gigli.quasi.internal (p5DC33F84.dip.t-dialin.net [93.195.63.132])
+        by mx.google.com with ESMTPS id b9sm302298mug.56.2009.01.30.11.09.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 30 Jan 2009 11:09:59 -0800 (PST)
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <slrngo6eat.s1d.sitaramc@sitaramc.homelinux.net> (Sitaram
+	Chamarty's message of "Fri, 30 Jan 2009 17:31:09 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107865>
 
-Hi,
 
-On Fri, 30 Jan 2009, Jay Soffian wrote:
+Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-> On Fri, Jan 30, 2009 at 12:01 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > As Peff commented, this would be horribly wrong if the remote has a 
-> > different "origin" remote.  Not forcing the push does not help either, 
-> > it is still wrong.
-> 
-> Got it. Here was my impression of the work-flow we're trying to help 
-> beginners with:
-> 
-> machineA$ mkdir repo
-> machineA$ cd repo
-> machineA$ git init
-> machineA$ add, commit, add, commit...
-> 
-> machineB$ git clone ssh://machine1/repo
-> machineB$ add, commit, add, commit...
-> machineB$ git push
-> 
-> (And if my impression is wrong, then stop me right here and I'll
-> shut-up on this thread.)
+> [replying only because no one else did; caveat reader!]
+>
+> On 2009-01-29, Raimund Berger <raimund.berger@gmail.com> wrote:
+>
+>> The question is whether a (3way) merge is commutative, purely in terms
+>> of content (i.e. disregarding commit history for now). Iow if no matter
+>> in which order I merge A and B, i.e. A into B or B into A, I'd be
+>> guaranteed to arrive at the same content.
+>
+> I'd say yes.  Finding the common ancestor and then applying
+> the differences from both sides are operations that do not
+> appear to be order dependent.
 
-I think your impression is not wrong.
+That's exactly the point which I'd like to have clarified.
 
-BUT.
+E.g. with A, B and ancestor C, the merging and conflict resolution
+algorithm had to be completely symmetric if diff(A,C)+diff(B,C) applied
+to C should always be the same as diff(B,C)+diff(A,C) applied to C.
 
-You cannot just cater for one workflow and fsck the other workflows over.
+So I'm really asking if that is a fact upon which I can rely.
 
-You'll have to devise a method that helps the workflow you are interested 
-in, but leaves the others alone.
+>
+>> If yes, a followup question would be if the merge machinery sitting
+>> beneath rebase is exactly the same as that of a standard merge.
+>
+> The merge "machinery" can be explicitly chosen using the
+> "-s" (strategy) option, but for the same chosen strategy, I
+> think yes it would be the same for a merge as for a rebase.
 
-Example: the thing I heard most often was "I want to start this 
-repository, but there is nothing in there yet, yet I want other people to 
-clone it already so they'll see something when I do."
+An interesting hint. Up to now, I assumed that rebase would always
+perform implicit merging strategies. I mean what else would one expect
+in the above picture to happen when rebasing A on B? I'd assume it'd
+produce the same tree as a merge of A into B, by employing exactly the
+same machinery. E.g. fast forward of C to B, then merge A in. So that,
+effectively, the only difference between rebase and merge is just commit
+history but not (tree) content.
 
-I admit, it does not strike me sensible, but so does cloning an empty 
-repository.  As I could not understand how people would want to vote for 
-Bush.  Yet they did, so I guess I'll have to live with it.
+>From reading the rebase man page though it seems that merging machinery
+has to be explicitly requested via '-m'. Which makes me wonder how the
+default rebase actually works.
 
-Ciao,
-Dscho
+>
+>> The reason I ask is obvious I guess. What basically interests me is if I
+>> gave a bunch of topic branches exposure on a test branch and, after
+>> resolving issues, applied them to stable, that I could be 100% sure to
+>> not introduce new issues content wise just by applying merges in a
+>> different order or form (rebase, patch set).
+>
+> That appears to be a different question than the one you
+> started with.
+>
+> Reversing A and B is one thing, applying a sequence of
+> merges in a different order is quite something else.
+
+Mathematically speaking, if A1 and A2 commute with regard to a binary
+operation, A1 ... An do as well. So I'd still think the latter question
+boils down to the commutativity question above *iff* rebase actually
+does an implicit merge by default. Which I'm now led to question.
+
+Thanks for you answer, much appreciated.
