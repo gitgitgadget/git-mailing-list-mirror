@@ -1,52 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH --no-flowed] http-push: refactor request url creation
-Date: Fri, 30 Jan 2009 18:17:11 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901301816410.3586@pacific.mpi-cbg.de>
-References: <49831755.60405@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git log can not show history before rename
+Date: Fri, 30 Jan 2009 09:17:00 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0901300910580.3150@localhost.localdomain>
+References: <1976ea660901300323n384d3650s3bb5a575accb65d1@mail.gmail.com>  <adf1fd3d0901300329y53e46d91xda75799ce1244ddd@mail.gmail.com> <1976ea660901300429i6d9b3594m91222314c284d184@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 30 18:18:43 2009
+Cc: git@vger.kernel.org
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 30 18:19:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSx0R-0006qm-0T
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 18:18:15 +0100
+	id 1LSx18-0007AB-AJ
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 18:18:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071AbZA3RQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 12:16:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751772AbZA3RQt
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 12:16:49 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58793 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751100AbZA3RQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 12:16:48 -0500
-Received: (qmail invoked by alias); 30 Jan 2009 17:16:46 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp006) with SMTP; 30 Jan 2009 18:16:46 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX191kV98ddx1WaLSGPFXNsyhL+gHWQBjBvhiNObmBI
-	OavQLmaaZN1bXD
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <49831755.60405@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.74
+	id S1752255AbZA3RRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 12:17:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751772AbZA3RRd
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 12:17:33 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54939 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751090AbZA3RRc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jan 2009 12:17:32 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0UHH1Ws022385
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 30 Jan 2009 09:17:02 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n0UHH0EZ010899;
+	Fri, 30 Jan 2009 09:17:00 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1976ea660901300429i6d9b3594m91222314c284d184@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.463 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107855>
 
-Hi,
 
-On Fri, 30 Jan 2009, Tay Ray Chuan wrote:
 
-> +static void append_remote_object_url(struct strbuf *buf, const char *url, const char *hex, int only_two_digit_prefix)
+On Fri, 30 Jan 2009, Frank Li wrote:
+>
+> Does it conflict with --parents?
 
-I seem to remember that I mentioned that this line is too long.
+Yes. --follow and --parents do not play well together.
 
-Ciao,
-Dscho
+That's simply because --follow is a total hack, meant to just satisfy 
+ex-SVN users who never knew anything about things like parenthood or nice 
+revision graphs anyway.
+
+It's not totally fundamental, but the current implementation of "--follow" 
+is really a quick preprocessing thing bolted onto the revision walking 
+logic, rather than beign anything really integral.
+
+If you want --follow to really work together with --parents (and to do the 
+right thing wrt merges etc - different renames coming in through different 
+branches), you'd really have to rewrite the whole --follow logic.
+
+One approach is to use --follow as the quick hack it is - and then when 
+you see "oh, file X was renamed from file Y", and you want to see the nice 
+full history, you go back to the native git model (which is not --follow), 
+which is based on pathname pattherns, and then do
+
+	gitk -- X Y
+
+to see the history of _both_ names, and now the rename will show up 
+properly (and now you'll get proper parenthood because you're no longer 
+using the hackish --follow thing).
+
+If somebody wants to do a more intelligent --follow, I can only applaud, 
+but I'm personally not likely to look into it.
+
+			Linus
