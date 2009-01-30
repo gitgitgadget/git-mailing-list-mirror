@@ -1,84 +1,78 @@
-From: =?ISO-8859-1?Q?Jonas_Flod=E9n?= <jonas.floden@gmail.com>
-Subject: Re: [PATCH] Quick and dirty mergetool fix - take 2
-Date: Fri, 30 Jan 2009 17:22:22 +0100
-Message-ID: <4983293E.9070401@gmail.com>
-References: <4983241B.6020208@gmail.com> <1233332166-14300-1-git-send-email-charles@hashpling.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] push: Learn to set up branch tracking with '--track'
+Date: Fri, 30 Jan 2009 11:22:58 -0500
+Message-ID: <20090130162258.GA7065@sigill.intra.peff.net>
+References: <cover.1233236267u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0901291438030.3586@pacific.mpi-cbg.de> <20090129223308.GB12871@coredump.intra.peff.net> <20090129231715.GA17399@coredump.intra.peff.net> <alpine.DEB.1.00.0901300127450.3586@pacific.mpi-cbg.de> <20090130050925.GA18809@coredump.intra.peff.net> <alpine.DEB.1.00.0901301656290.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Fri Jan 30 17:24:13 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 30 17:24:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSwA7-0002Bs-HW
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 17:24:12 +0100
+	id 1LSwAR-0002JN-HF
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 17:24:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752383AbZA3QW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 11:22:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752309AbZA3QW2
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 11:22:28 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:46518 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752221AbZA3QW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 11:22:27 -0500
-Received: by ewy14 with SMTP id 14so855146ewy.13
-        for <git@vger.kernel.org>; Fri, 30 Jan 2009 08:22:25 -0800 (PST)
-Received: by 10.210.10.8 with SMTP id 8mr980791ebj.158.1233332545257;
-        Fri, 30 Jan 2009 08:22:25 -0800 (PST)
-Received: from ?192.168.0.40? (c-10a5e155.260-1-64736c10.cust.bredbandsbolaget.se [85.225.165.16])
-        by mx.google.com with ESMTPS id 5sm385119eyh.31.2009.01.30.08.22.23
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 Jan 2009 08:22:24 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
-In-Reply-To: <1233332166-14300-1-git-send-email-charles@hashpling.org>
+	id S1752048AbZA3QXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 11:23:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752069AbZA3QXD
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 11:23:03 -0500
+Received: from peff.net ([208.65.91.99]:41983 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751921AbZA3QXB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 11:23:01 -0500
+Received: (qmail 2849 invoked by uid 107); 30 Jan 2009 16:23:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 30 Jan 2009 11:23:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Jan 2009 11:22:58 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0901301656290.3586@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107842>
 
-Charles Bailey wrote:
-> ---
->  git-mergetool.sh |    8 ++++----
->  1 files changed, 4 insertions(+), 4 deletions(-)
+On Fri, Jan 30, 2009 at 04:58:25PM +0100, Johannes Schindelin wrote:
+
+> > So either we don't care about http-push being consistent with send-pack,
+> > and it is OK to have this feature in one but not the other. Or we do,
+> > and we really need to clean up the current divergence.
 > 
-> diff --git a/git-mergetool.sh b/git-mergetool.sh
-> index aefdca7..d495a6b 100755
-> --- a/git-mergetool.sh
-> +++ b/git-mergetool.sh
-> @@ -131,7 +131,7 @@ checkout_staged_file () {
->      tmpfile=$(expr "$(git checkout-index --temp --stage="$1" "$2")" : '\([^	]*\)	')
->  
->      if test $? -eq 0 -a -n "$tmpfile" ; then
-> -	mv -- "$tmpfile" "$3"
-> +	mv -- "$(git rev-parse --show-cdup)$tmpfile" "$3"
->      fi
->  }
->  
-> @@ -161,9 +161,9 @@ merge_file () {
->      local_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==2) print $1;}'`
->      remote_mode=`git ls-files -u -- "$MERGED" | awk '{if ($3==3) print $1;}'`
->  
-> -    base_present   && checkout_staged_file 1 "$prefix$MERGED" "$BASE"
-> -    local_present  && checkout_staged_file 2 "$prefix$MERGED" "$LOCAL"
-> -    remote_present && checkout_staged_file 3 "$prefix$MERGED" "$REMOTE"
-> +    base_present   && checkout_staged_file 1 "$MERGED" "$BASE"
-> +    local_present  && checkout_staged_file 2 "$MERGED" "$LOCAL"
-> +    remote_present && checkout_staged_file 3 "$MERGED" "$REMOTE"
->  
->      if test -z "$local_mode" -o -z "$remote_mode"; then
->  	echo "Deleted merge conflict for '$MERGED':"
+> I do not see how your patch to send-pack makes that divergence any 
+> better, or for that matter, keeps it as bad as it is.
 
-Yes, I was just about to propose a similar patch.
+No, it makes it worse. My point was that I am not sure people actually
+_care_ that much about the divergence.
 
-This solution works for me!
+> In other words, if you want to give the other protocols at least a 
+> _chance_ to catch up, you definitely need the support for push --track in 
+> builtin-push.c or at least in transport.c.
 
-You might want to remove $prefix from the top of the
-file since it's not used any more.
+But neither of those places has the information to do it _right_. I
+think the right thing to do is:
 
-Thanks!
+  1. factor out "generic" routines from send-pack, including status
+     output formatting and tracking ref updating
 
-// Jonas
+  2. refactor http-push to use those routines, bringing it in line with
+     send-pack
+
+  3. add --track support in the same generic way, and hook it from both
+     transports
+
+I can try to work on this, but I'm not excited about major surgery to
+http-push, which I don't have a working test setup for.  I can't bring
+myself to care about refactoring rsync, given the recent deprecation
+discussion.
+
+If it is going to be added to push or transport, then the transport API
+needs refactoring to actually pass out information on what happened
+(specifically, how we expanded the refspecs into matching ref pairs).
+And maybe that is a more sensible long-term solution, but it is going
+involve a lot of changes, too.
+
+-Peff
