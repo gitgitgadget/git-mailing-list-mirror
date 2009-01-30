@@ -1,63 +1,94 @@
-From: "Raimund Berger" <raimund.berger@gmail.com>
-Subject: Re: Newbie question regarding 3way merge order.
-Date: Fri, 30 Jan 2009 12:37:38 +0100
-Message-ID: <87wscdaut9.fsf@gigli.quasi.internal>
-References: <871vulda2r.fsf@gigli.quasi.internal>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: Re: [PATCH 5/5] [squash] fsck: revert --quick to the default and
+ introduce --medium
+Date: Fri, 30 Jan 2009 12:37:55 +0100
+Organization: private
+Message-ID: <861vulqb1o.fsf@broadpark.no>
+References: <1233313517-24208-1-git-send-email-gitster@pobox.com>
+ <1233313517-24208-2-git-send-email-gitster@pobox.com>
+ <1233313517-24208-3-git-send-email-gitster@pobox.com>
+ <1233313517-24208-4-git-send-email-gitster@pobox.com>
+ <1233313517-24208-5-git-send-email-gitster@pobox.com>
+ <1233313517-24208-6-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 30 12:39:08 2009
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 30 12:39:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSriG-0007a6-6a
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 12:39:08 +0100
+	id 1LSriX-0007gN-Fl
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 12:39:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752443AbZA3Lhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 06:37:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752371AbZA3Lhn
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 06:37:43 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:30584 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752215AbZA3Lhm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 06:37:42 -0500
-Received: by fg-out-1718.google.com with SMTP id d23so312796fga.27
-        for <git@vger.kernel.org>; Fri, 30 Jan 2009 03:37:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:references
-         :mail-followup-to:date:in-reply-to:message-id:user-agent
-         :mime-version:content-type;
-        bh=LFSux7ZvS0Ju49NJstnvZFOqSZfUVQ9JiMxWkeccFGA=;
-        b=TqOuecmwSd6iJlvVPDfplBboUamsksC1NvQJm0DR03FAyykpvtwoU7TR22EhZut4Cf
-         RzO7ig73pVLzWWzQFRyk7cOVCYQDXh90RlAKK93Sa54zoeZExu/S5H7ZZezWAjKmwFZa
-         prXzkD0gP9UgXjMHFQldjKWM0uHYjtGznTlTg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:references:mail-followup-to:date:in-reply-to
-         :message-id:user-agent:mime-version:content-type;
-        b=qnxhkl5m3ZDrd8sjfLAwbBspSla6ouND2z/J4QJ9gd+qSp/1Ge6Q1Nni/8tu1s2s55
-         YFfgnwNhar9qZpf57lZHodn90v2vvx1UFLjD9Pe7S7fTlLxl6BFp1PWinL0NXsK6RBNg
-         P1K2QoBwJtuDu5yMGCQI3Omi6wqoZhC6RfYS0=
-Received: by 10.86.3.4 with SMTP id 4mr600527fgc.66.1233315461223;
-        Fri, 30 Jan 2009 03:37:41 -0800 (PST)
-Received: from gigli.quasi.internal (p5DC33F84.dip.t-dialin.net [93.195.63.132])
-        by mx.google.com with ESMTPS id d4sm877879fga.41.2009.01.30.03.37.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 30 Jan 2009 03:37:40 -0800 (PST)
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <871vulda2r.fsf@gigli.quasi.internal> (Raimund Berger's message
-	of "Thu, 29 Jan 2009 23:25:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+	id S1752425AbZA3LiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 06:38:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752497AbZA3Lh7
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 06:37:59 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:42883 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752403AbZA3Lh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 06:37:58 -0500
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KEA00G9J8B8KH00@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Fri, 30 Jan 2009 12:37:56 +0100 (CET)
+Received: from localhost ([80.202.92.196]) by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KEA00FM88B72Z90@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Fri, 30 Jan 2009 12:37:56 +0100 (CET)
+In-reply-to: <1233313517-24208-6-git-send-email-gitster@pobox.com>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107801>
 
+Junio C Hamano <gitster@pobox.com> writes:
+<snipp>
+> diff --git a/builtin-fsck.c b/builtin-fsck.c
+> index 72bf33b..83faa98 100644
+> --- a/builtin-fsck.c
+> +++ b/builtin-fsck.c
+> @@ -20,7 +20,7 @@ static int show_tags;
+>  static int show_unreachable;
+>  static int include_reflogs = 1;
+>  static int check_full;
+> -static int check_quick;
+> +static int check_medium;
+>  static int check_strict;
+>  static int keep_cache_objects;
+>  static unsigned char head_sha1[20];
+> @@ -578,7 +578,7 @@ static struct option fsck_opts[] = {
+>  	OPT_BOOLEAN(0, "cache", &keep_cache_objects, "make index objects head nodes"),
+>  	OPT_BOOLEAN(0, "reflogs", &include_reflogs, "make reflogs head nodes (default)"),
+>  	OPT_BOOLEAN(0, "full", &check_full, "fully check packs"),
+> -	OPT_BOOLEAN(0, "quick", &check_quick, "only check loose objects"),
+> +	OPT_BOOLEAN(0, "medium", &check_medium, "also check packs"),
+>  	OPT_BOOLEAN(0, "strict", &check_strict, "enable more strict checking"),
+>  	OPT_BOOLEAN(0, "lost-found", &write_lost_and_found,
+>  				"write dangling objects in .git/lost-found"),
+> @@ -594,8 +594,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+>  	errors_found = 0;
+>  
+>  	argc = parse_options(argc, argv, fsck_opts, fsck_usage, 0);
+> -	if (check_full && check_quick)
+> -		die("--full and --quick?  which one do you want?");
+> +	if (check_full && check_medium)
+> +		die("--full and --medium?  which one do you want?");
+>  
 
-> The question is whether a (3way) merge is commutative, purely in terms
-> of content 
+  Would it not be better to have an "OPT_INT" argument named
+  "check_level" or similar?
 
-Yes / No / Unknown ? 
+  Then you do not need those error checks, and people would maybe
+  better understand the differences between the different check's?
+
+  The documentation could then say that (for example) "level 2
+  includes all check's that level 1 includes, in addition to ...".
+
+  -- kjetil
