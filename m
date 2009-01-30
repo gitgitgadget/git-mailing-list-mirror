@@ -1,70 +1,74 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+From: Thomas Koch <thomas.koch@ymc.ch>
 Subject: Re: Finding the name of the parent branch?
-Date: Fri, 30 Jan 2009 15:46:27 +0100
-Message-ID: <adf1fd3d0901300646h39e27f50pdb6510083284cf8a@mail.gmail.com>
+Date: Fri, 30 Jan 2009 15:26:24 +0100
+Organization: young media concepts
+Message-ID: <200901301526.24566.thomas.koch@ymc.ch>
 References: <a2633edd0901300256k2ad7530elcaca5cdc30c17534@mail.gmail.com>
-	 <adf1fd3d0901300318s5a0e4c94gab5f31342643ea52@mail.gmail.com>
-	 <a2633edd0901300456y48e8d78fn199675f2ae105c8@mail.gmail.com>
-	 <adf1fd3d0901300516y3d1bf58dmda9c5172586d828@mail.gmail.com>
-	 <a2633edd0901300535mf2d9ceemd9e9009e0aa18b40@mail.gmail.com>
-	 <adf1fd3d0901300557t19ca4bccn7fe24013a05d2d57@mail.gmail.com>
-	 <a2633edd0901300606ub4c507bocccb6747b436f01f@mail.gmail.com>
+Reply-To: thomas.koch@ymc.ch
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Fri Jan 30 15:49:31 2009
+X-From: git-owner@vger.kernel.org Fri Jan 30 15:53:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSuez-0004eh-Ee
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 15:47:57 +0100
+	id 1LSukV-00074N-Su
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 15:53:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753159AbZA3Oqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 09:46:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753117AbZA3Oqa
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 09:46:30 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:41018 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752945AbZA3Oq3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 09:46:29 -0500
-Received: by fxm13 with SMTP id 13so223888fxm.13
-        for <git@vger.kernel.org>; Fri, 30 Jan 2009 06:46:27 -0800 (PST)
-Received: by 10.103.223.2 with SMTP id a2mr609380mur.54.1233326787632; Fri, 30 
-	Jan 2009 06:46:27 -0800 (PST)
-In-Reply-To: <a2633edd0901300606ub4c507bocccb6747b436f01f@mail.gmail.com>
+	id S1754928AbZA3Ovx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 09:51:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754900AbZA3Ovx
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 09:51:53 -0500
+Received: from hera.ymc.ch ([217.113.37.19]:44118 "EHLO hera.ymc.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751756AbZA3Ovw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 09:51:52 -0500
+X-Greylist: delayed 1520 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Jan 2009 09:51:52 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by hera.ymc.ch (Postfix) with ESMTP id 0BA46105869;
+	Fri, 30 Jan 2009 15:26:30 +0100 (CET)
+Received: from hera.ymc.ch ([127.0.0.1])
+	by localhost (mail.volano.ch [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Oui3fANjFDIf; Fri, 30 Jan 2009 15:26:29 +0100 (CET)
+Received: from jona.local (67.Red-81-32-182.dynamicIP.rima-tde.net [81.32.182.67])
+	by hera.ymc.ch (Postfix) with ESMTP id B7314E5F65;
+	Fri, 30 Jan 2009 15:26:29 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <a2633edd0901300256k2ad7530elcaca5cdc30c17534@mail.gmail.com>
+X-Face: ##Diipbu!WHqpJ%Eb+k:m;]n%VcrM\f\MJ-:0\<0.r?ULf7g"kC!"Cg,o;D]
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107829>
 
-2009/1/30 Pascal Obry <pascal@obry.net>:
->> At least part of. You have to understand the branch model:
->>
->> git model:
->>  * a branch is just a pointer to a commit
->>  * you cannot say "this commit was done in that branch"
->>  * what you can say is "this commit is contained in that branch"
+Am Friday 30 January 2009 11:56:12 schrieb Pascal Obry:
+> I want to find the name of the parent branch in a script. What is the best
+> way?
 >
-> The second point wasn't clear to me.
+>                          o---o---o---C
+>                          /
+>                     o---o---o---B
+>                    /
+>            ---o---o---o---o---o---A
+>
+> For B I want to get A and for C I want to get B.
+>
+> All this can be found in gitk, but from a script I did not found a
+> good solution.
+>
+> Any idea?
+>
+> Thanks.
+> Pascal.
 
-A practical example:
+Isn't your problem solved by topgit?
 
-$ git clone path/to/project.git
-$ cd project
-$ git checkout -b bugfix-1234 origin/master
-$ # hack, hack, hack
-$ git commit -a -m "Fix for the Bug #1234"
-$ git push origin HEAD:master
-
-So, you've done a commit in a local branch named bugfix-1234 and once
-you push it to the master branch in origin there is nothing to tell
-you so. A commit is defined with the current state, the old commit(s)
-and some metadata (author and committer) but nothing about which
-branch it was made, and as a branch is a pointer to a commit there is
-nothing more.
-
-Santi
+-- 
+Thomas Koch, YMC AG, http://www.ymc.ch
+Phone: +41 (0)71 / 508 24 86
