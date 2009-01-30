@@ -1,106 +1,87 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Bus Error- git merge
-Date: Fri, 30 Jan 2009 19:57:15 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0901301950100.3586@pacific.mpi-cbg.de>
-References: <C5A883D0.E243%bmoran@onehub.com>
+Subject: Re: [PATCH] Switch receive.denyCurrentBranch to "refuse"
+Date: Fri, 30 Jan 2009 20:03:22 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0901301959300.3586@pacific.mpi-cbg.de>
+References: <cover.1233275583u.git.johannes.schindelin@gmx.de>  <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de>  <76718490901300817x3f31460k59b6fe75d136372d@mail.gmail.com>  <alpine.DEB.1.00.0901301756560.3586@pacific.mpi-cbg.de>
+ <76718490901301050h1f0f5b2bq902de384d954d99b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1285767731-1233341836=:3586"
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Brian Moran <bmoran@onehub.com>
-X-From: git-owner@vger.kernel.org Fri Jan 30 19:58:23 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 30 20:04:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LSyZH-0002h5-0O
-	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 19:58:19 +0100
+	id 1LSyfB-0004xM-Ez
+	for gcvg-git-2@gmane.org; Fri, 30 Jan 2009 20:04:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752382AbZA3S4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 13:56:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbZA3S4x
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 13:56:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49969 "HELO mail.gmx.net"
+	id S1752906AbZA3TC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 14:02:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752640AbZA3TC7
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 14:02:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52354 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751957AbZA3S4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 13:56:52 -0500
-Received: (qmail invoked by alias); 30 Jan 2009 18:56:50 -0000
+	id S1751618AbZA3TC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 14:02:58 -0500
+Received: (qmail invoked by alias); 30 Jan 2009 19:02:56 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp008) with SMTP; 30 Jan 2009 19:56:50 +0100
+  by mail.gmx.net (mp051) with SMTP; 30 Jan 2009 20:02:56 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19jxsVqeaFj3t1XhgFGbPUJQYLKnFs3xoaoo0H1f6
-	YKOafeYpEmuimB
+X-Provags-ID: V01U2FsdGVkX18nqhcDP2wnkgSeb1V6nGnIiZ8y9pKJrSg6Q45baf
+	qEYJKbN/plvGog
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <C5A883D0.E243%bmoran@onehub.com>
+In-Reply-To: <76718490901301050h1f0f5b2bq902de384d954d99b@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107863>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1285767731-1233341836=:3586
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107864>
 
 Hi,
 
-On Fri, 30 Jan 2009, Brian Moran wrote:
+On Fri, 30 Jan 2009, Jay Soffian wrote:
 
-> I am getting a bus error on a git merge, including the more recent versions.
-> Following the instructions from a bug August, I got the latest sources,
-> compiled them up, and executed the merge in the debugger to repro. Here¹s
-> what I found:
-
-Is it possible that your branch has submodules?
-
-> gdb ../git-1.6.1.2/git-merge
-> GNU gdb 6.3.50-20050815 (Apple version gdb-768) (Tue Oct  2 04:07:49 UTC
-> 2007)
-> Copyright 2004 Free Software Foundation, Inc.
-> GDB is free software, covered by the GNU General Public License, and you are
-> welcome to change it and/or distribute copies of it under certain
-> conditions.
-> Type "show copying" to see the conditions.
-> There is absolutely no warranty for GDB.  Type "show warranty" for details.
-> This GDB was configured as "i386-apple-darwin"...Reading symbols for shared
-> libraries ........ done
+> On Fri, Jan 30, 2009 at 12:01 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > As Peff commented, this would be horribly wrong if the remote has a 
+> > different "origin" remote.  Not forcing the push does not help either, 
+> > it is still wrong.
 > 
-> (gdb) set args -v v1-ftp-support
-> (gdb) run
-> Starting program: /Users/bmo/Documents/repo/git-1.6.1.2/git-merge -v
-> v1-ftp-support
-> Reading symbols for shared libraries +++++++. done
+> Got it. Here was my impression of the work-flow we're trying to help 
+> beginners with:
 > 
-> Program received signal EXC_BAD_ACCESS, Could not access memory.
-> Reason: KERN_PROTECTION_FAILURE at address: 0x00000004
-> 0x000863c3 in sha_eq (a=0x4 <Address 0x4 out of bounds>, b=0x7bf004 "<some
-> random chars>") at cache.h:575
-> 575        return memcmp(sha1, sha2, 20);
+> machineA$ mkdir repo
+> machineA$ cd repo
+> machineA$ git init
+> machineA$ add, commit, add, commit...
 > 
-> (gdb) backtrace
-> #0  0x000863c3 in sha_eq (a=0x4 <Address 0x4 out of bounds>, b=0x7bf004
-> "<some random chars>") at cache.h:575
-> #1  0x00086dc6 in merge_trees (o=0xbfffedd4, head=0x7bf020, merge=0x7bf000,
-> common=0x0, result=0xbfffed28) at merge-recursive.c:1164
+> machineB$ git clone ssh://machine1/repo
+> machineB$ add, commit, add, commit...
+> machineB$ git push
+> 
+> (And if my impression is wrong, then stop me right here and I'll
+> shut-up on this thread.)
 
-common=0x0, that's the issue.
+I think your impression is not wrong.
 
-> #2  0x00088960 in merge_recursive (o=0xbfffedd4, h1=0x4f4060, h2=0x4f4000,
-> ca=0x53cc20, result=0xbfffee2c) at merge-recursive.c:1294
+BUT.
 
-However, here I read in my version of merge-recursive.c that "common" is 
-the tree of merged_common_ancestor, which is either set to 
-"pop_commit(&ca)", i.e. to one of the common ancestors, or to a virtual 
-commit, that must have a tree.
+You cannot just cater for one workflow and fsck the other workflows over.
 
-So it would be good if you could debug this further, letting me know where 
-the merged_common_ancestor came from, and why it does not have a tree.
+You'll have to devise a method that helps the workflow you are interested 
+in, but leaves the others alone.
 
-Thanks,
+Example: the thing I heard most often was "I want to start this 
+repository, but there is nothing in there yet, yet I want other people to 
+clone it already so they'll see something when I do."
+
+I admit, it does not strike me sensible, but so does cloning an empty 
+repository.  As I could not understand how people would want to vote for 
+Bush.  Yet they did, so I guess I'll have to live with it.
+
+Ciao,
 Dscho
---8323328-1285767731-1233341836=:3586--
