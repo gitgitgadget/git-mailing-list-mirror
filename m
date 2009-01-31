@@ -1,67 +1,77 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: "git svn fetch" slow
-Date: Sat, 31 Jan 2009 18:31:45 +0100
-Message-ID: <bd6139dc0901310931l7ff5a3del35d51560fd04b3d5@mail.gmail.com>
-References: <200901311414.58205.markus.heidelberg@web.de>
-	 <bd6139dc0901310823lcced62frd61445cb80d56fca@mail.gmail.com>
-	 <200901311801.56130.markus.heidelberg@web.de>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: diff settings
+Date: Sat, 31 Jan 2009 14:47:25 -0500
+Message-ID: <4984AACD.20600@tedpavlic.com>
+References: <alpine.GSO.2.00.0901240936080.23073@kiwi.cs.ucla.edu> <87ocxwv6qg.fsf@iki.fi> <alpine.GSO.2.00.0901241159050.23073@kiwi.cs.ucla.edu> <497CD352.2060402@tedpavlic.com> <alpine.GSO.2.00.0901251307030.12651@kiwi.cs.ucla.edu> <497D1AB7.7000208@tedpavlic.com> <alpine.GSO.2.00.0901310750470.5437@kiwi.cs.ucla.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Sat Jan 31 18:33:16 2009
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Keith Cascio <keith@CS.UCLA.EDU>
+X-From: git-owner@vger.kernel.org Sat Jan 31 21:06:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTJiV-0000wD-5k
-	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 18:33:15 +0100
+	id 1LTM5a-0002v9-DO
+	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 21:05:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906AbZAaRbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 12:31:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbZAaRbt
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 12:31:49 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:53932 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752681AbZAaRbt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 12:31:49 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so259981fgg.17
-        for <git@vger.kernel.org>; Sat, 31 Jan 2009 09:31:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=TC9GOZ30Ml/DB74uytRa2LLbLqHUX7BoZGe5QjAo1CM=;
-        b=g6IeNMr5ynCIziVcYH7x2I3VHAg3kRcD8Ov5umcF7mM4LGydzNdqhC/yGUtWSZRyyW
-         VJyPoNpLgzwlykFpTGqnLNHUwIjCgYD1JPWeYJsCns3fbgrAUpJuBchjZsC1oQkR7SLI
-         NF4El3OzefPhJGDjZs763YVmI7hk2nDX3lhy0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=fobLq3zTW/zwcTiUGFmuYKWDKAl9csxvkm/iqmRfe67Rtevra2ynMOV5lRF2NorFl3
-         4DJw7I0NR1WRiBjy57wBJZm1hPD7F086LqDtOYKsPnkpVXq6rgc4M1AtxK5QdwiW89bl
-         mBB+nAGGZPG3zZe3RnTOyB2FL+8PYRETojx3M=
-Received: by 10.86.100.19 with SMTP id x19mr1344294fgb.29.1233423105876; Sat, 
-	31 Jan 2009 09:31:45 -0800 (PST)
-In-Reply-To: <200901311801.56130.markus.heidelberg@web.de>
-X-Google-Sender-Auth: 23a45cf32d45c6f1
+	id S1752096AbZAaUCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 15:02:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751950AbZAaUCm
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 15:02:42 -0500
+Received: from relay.wanderingwifi.com ([38.101.222.140]:56907 "EHLO
+	relay.wanderingwifi.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751797AbZAaUCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 15:02:42 -0500
+X-Greylist: delayed 909 seconds by postgrey-1.27 at vger.kernel.org; Sat, 31 Jan 2009 15:02:42 EST
+Received: from TedBook.local (ip-216-36-87-158.chi.megapath.net [216.36.87.158])
+	by relay.wanderingwifi.com (Spam Firewall) with ESMTP
+	id B31BC160DD6; Sat, 31 Jan 2009 14:47:31 -0500 (EST)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
+In-Reply-To: <alpine.GSO.2.00.0901310750470.5437@kiwi.cs.ucla.edu>
+X-Virus-Scanned: by Barracuda Spam Firewall at wanderingwifi.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107934>
 
-On Sat, Jan 31, 2009 at 18:01, Markus Heidelberg
-<markus.heidelberg@web.de> wrote:
-> The following should work around it:
+> Thank you for alerting us to the Hg design.  I can appreciate the elegance of
+> it, and I'm always in favor of the most general possible implementation.  But
+> there is a subtle difference between diff.primer and primer.diff.
 
-Awesome! I tested it and it does indeed work around the issue for me, thanks!
+As I already discussed, Mercurial has both "diff.primer" and 
+"primer.diff" precisely because "diff" settings affects so many Hg commands.
+
+In particular, in my .hgrc, I have:
+
+[diff]
+git = 1
+
+which causes all Mercurial commands that need to generate a diff to use 
+gitdiff rather than truediff. However, if I *wanted* to apply a set of 
+flags to a particular command, I could (using the equivalent "git" 
+commands)...
+
+[defaults]
+pull = --rebase
+commit = -a
+format-patch = -M
+
+So I see a purpose for both *.defaults and defaults.*. Of course, 
+aliases are also nice (IIRC, Mercurial doesn't have "aliases", but I 
+could be wrong). Mercurial users are very happy with having both 
+available. I imagine git people would be too.
+
+--Ted
+
 
 -- 
-Cheers,
+Ted Pavlic <ted@tedpavlic.com>
 
-Sverre Rabbelier
+   Please visit my ALS association page:
+         http://web.alsa.org/goto/tedpavlic
+   My family appreciates your support in the fight to defeat ALS.
