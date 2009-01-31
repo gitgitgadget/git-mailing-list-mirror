@@ -1,55 +1,55 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 3/5] chain kill signals for cleanup functions
-Date: Sat, 31 Jan 2009 01:50:49 -0500
-Message-ID: <20090131065049.GA3130@coredump.intra.peff.net>
-References: <20090122042643.GB31427@coredump.intra.peff.net> <20090122060235.GC30133@coredump.intra.peff.net> <20090130075552.GA27716@coredump.intra.peff.net> <4982B68C.2070207@viscovery.net> <20090130082101.GA28809@coredump.intra.peff.net> <7vd4e49v48.fsf@gitster.siamese.dyndns.org> <20090131014420.GA7696@sigill.intra.peff.net>
+Subject: Re: [RFC] Line diff fragments, custom colour markers and word
+	change highlighting
+Date: Sat, 31 Jan 2009 01:57:42 -0500
+Message-ID: <20090131065742.GA3033@coredump.intra.peff.net>
+References: <3f4fd2640901301244s34d94e0fka00ce2eb6f6bef48@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 31 07:52:20 2009
+Cc: Git List <git@vger.kernel.org>
+To: Reece Dunn <msclrhd@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 31 07:59:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LT9iF-0007d3-AV
-	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 07:52:19 +0100
+	id 1LT9ow-0000Dt-OX
+	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 07:59:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751502AbZAaGuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 01:50:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbZAaGux
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 01:50:53 -0500
-Received: from peff.net ([208.65.91.99]:35402 "EHLO peff.net"
+	id S1751502AbZAaG5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 01:57:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbZAaG5p
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 01:57:45 -0500
+Received: from peff.net ([208.65.91.99]:60967 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751265AbZAaGux (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 01:50:53 -0500
-Received: (qmail 10269 invoked by uid 107); 31 Jan 2009 06:51:01 -0000
+	id S1751111AbZAaG5o (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 01:57:44 -0500
+Received: (qmail 10307 invoked by uid 107); 31 Jan 2009 06:57:55 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 31 Jan 2009 01:51:01 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 31 Jan 2009 01:50:49 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 31 Jan 2009 01:57:55 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 31 Jan 2009 01:57:42 -0500
 Content-Disposition: inline
-In-Reply-To: <20090131014420.GA7696@sigill.intra.peff.net>
+In-Reply-To: <3f4fd2640901301244s34d94e0fka00ce2eb6f6bef48@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107907>
 
-On Fri, Jan 30, 2009 at 08:44:20PM -0500, Jeff King wrote:
+On Fri, Jan 30, 2009 at 08:44:26PM +0000, Reece Dunn wrote:
 
-> > Will do, but I've been sick today, haven't caught up with the list
-> > traffic, and I do not think I'll be reading my mails for the rest of the
-> > day either.  It may take some time for it to appear in the public
-> > repositories.
-> [...]
-> Now I'm off to go make fun of you, buried deep in a thread where you
-> won't see it.
+> At the moment, I am manually editing the output of git diff to produce
+> the desired output. I intend on modifying git to get it to produce the
+> output in a format that I am interested in so that I don't have to
+> edit it by hand.
 
-Hmm, reading that again, it sounds mean, and I didn't mean it that way.
-I should have put a ";P" at the end. What I meant was "while the cat is
-away, the mice will play" (i.e., make mischief while our benevolent
-dictator is out of commission).
+Have you considered writing an external diff driver (see the description
+of GIT_EXTERNAL_DIFF in git(1))? That would be a good starting point for
+experimenting if you want to use a totally different diff driver (but if
+you are just making tweaks to git's diff code, then obviously that isn't
+a good idea).
 
-Hope you feel better soon.
+Your RFCs look more like tweaks, but I wonder if there isn't already a
+good external tool for doing these sorts of non-line-oriented diffs.
 
 -Peff
