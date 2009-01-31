@@ -1,93 +1,88 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH] contrib/difftool: add support for Kompare
-Date: Sat, 31 Jan 2009 11:41:23 +0100
-Message-ID: <200901311141.23986.markus.heidelberg@web.de>
-References: <200901310019.30117.markus.heidelberg@web.de> <20090131063714.GA29621@gmail.com>
-Reply-To: markus.heidelberg@web.de
+From: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
+Subject: understanding index
+Date: Sat, 31 Jan 2009 12:10:11 +0100
+Message-ID: <20090131111011.GA29748@ultras>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 31 11:42:54 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 31 12:38:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTDJO-0001wm-1o
-	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 11:42:54 +0100
+	id 1LTEBP-0007R4-I4
+	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 12:38:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751824AbZAaKl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 05:41:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751361AbZAaKl2
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 05:41:28 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:51201 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751096AbZAaKl1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 05:41:27 -0500
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 19E37FC882C0;
-	Sat, 31 Jan 2009 11:41:25 +0100 (CET)
-Received: from [89.59.86.74] (helo=pluto)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LTDHw-0001i4-00; Sat, 31 Jan 2009 11:41:24 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090131063714.GA29621@gmail.com>
-Jabber-ID: markus.heidelberg@web.de
+	id S1751928AbZAaLhU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 06:37:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751896AbZAaLhS
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 06:37:18 -0500
+Received: from out3.laposte.net ([193.251.214.120]:12755 "EHLO
+	out4.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751880AbZAaLhR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 06:37:17 -0500
+X-Greylist: delayed 1290 seconds by postgrey-1.27 at vger.kernel.org; Sat, 31 Jan 2009 06:37:17 EST
+Received: from out3.laposte.net (lbao93aubmepnpf001-183-pip.meplus.info [10.98.50.10])
+	by mwinf8310.laposte.net (SMTP Server) with ESMTP id 824961C0018C
+	for <git@vger.kernel.org>; Sat, 31 Jan 2009 12:16:14 +0100 (CET)
+Received: from meplus.info (localhost [127.0.0.1])
+	by mwinf8312.laposte.net (SMTP Server) with ESMTP id 071F17000087
+	for <git@vger.kernel.org>; Sat, 31 Jan 2009 12:15:40 +0100 (CET)
+Received: from ? (91-164-156-12.rev.libertysurf.net [91.164.156.12])
+	by mwinf8312.laposte.net (SMTP Server) with ESMTP id BE67E7000084
+	for <git@vger.kernel.org>; Sat, 31 Jan 2009 12:15:39 +0100 (CET)
+X-ME-UUID: 20090131111539780.BE67E7000084@mwinf8312.laposte.net
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+R9ZnL234aNmnocC92pdztR0zOY8RxfqZV2VPo
-	yYDAfG8ZuzupO86+6Jn3vYFIsaKnApauyX7yOfiJKj7Jx9cUGj
-	piWIWifYdL/oJLrYQ1ng==
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-me-spamlevel: not-spam
+X-me-spamrating: 40.000000
+X-me-spamcause: OK, (0)(0000)gggruggvucftvghtrhhoucdtuddrvdektddrjeegucetggdotefuucfrrhhofhhilhgvmecuoehnohhnvgeqnecuuegrihhlohhuthemuceftddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107917>
 
-David Aguilar, 31.01.2009:
-> On  0, Markus Heidelberg <markus.heidelberg@web.de> wrote:
-> > 
-> > Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
-> > ---
-> >  contrib/difftool/git-difftool-helper |   16 ++++++++++------
-> >  contrib/difftool/git-difftool.txt    |    3 ++-
-> >  2 files changed, 12 insertions(+), 7 deletions(-)
-> 
-> 
-> Good stuff =)
-> Should we patch mergetool with the same change?
-> Kompare's pretty popular in KDE land.
 
-But Kompare cannot merge. It is kind of a diff/patch frontend, it takes
-only one or two files (or directories) as arguments.
+Hey list.
 
-> BTW git.git's next branch has:
-> 
-> commit fb700cb0679e22900f0d1435641e6cf7c652968b
-> Author: Johannes Gilger <heipei@hackvalue.de>
-> Date:   Sat Jan 24 00:12:45 2009 +0100
-> 
->     mergetool: Don't repeat merge tool candidates
->     
->     git mergetool listed some candidates for mergetools twice, depending on
->     the environment.
->     
->     This slightly changes the behavior when both KDE_FULL_SESSION and
->     GNOME_DESKTOP_SESSION_ID are set at the same time; in such a case
->     meld is used in favor of kdiff3 (the old code favored kdiff3 in such a
->     case), but it should not matter in practice.
->     
->     Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> 
-> 
-> difftool probably needs a similar patch.
-> I'll see if I can get to that this weekend if no one beats
-> me to it.
+I'm having some understanding trouble with git index. As I understand,
+'git rm --cached' is not strictly the opposite of 'git add'. It's a
+little embarrassing in this particular case : what if you want to
+commit and did a wrong 'git add -u' command ?
 
-Yes, the change would make sense here, too.
+Here's a minimalist sample :
 
-Markus
+% ls
+foo	bar
+
+[ hack, hack, hack on both files ]
+
+% git status
+[...]
+	modified: foo
+	modified: bar
+[...]
+% git add -u foo bar
+
+[ optional hack on foo ]
+[ damn, you realize you don't want to commit changes on foo at all ]
+
+% git rm --cached foo
+% git status
+[...]
+	deleted: foo
+	modified: bar
+[...]
+
+If committed as is, foo will be marked as deleted (in 'git log
+--name-status' at least, which is not wanted).
+
+How to retrieve the state before the wrong 'git add -u' command _and_
+keep the working tree as well (including last hacks) ? Is there any
+command which is the exact opposite of 'git add -u' ?
+
+Cheers,
+
+-- 
+Nicolas Sebrecht
