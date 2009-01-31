@@ -1,199 +1,84 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH] http-push: refactor request url creation
-Date: Sat, 31 Jan 2009 07:51:55 +0800
-Message-ID: <4983929B.2010901@gmail.com>
+Subject: Re: [PATCH] Don't try to reclose in command_close_bidi_pipe
+Date: Sat, 31 Jan 2009 08:03:21 +0800
+Message-ID: <be6fef0d0901301603m452b1579q509bdc997ecad7c4@mail.gmail.com>
+References: <1233291570-23295-1-git-send-email-nothingmuch@woobling.org>
+	 <be6fef0d0901300635v4e6009f1n7da405ebc4c8dd68@mail.gmail.com>
+	 <a891e1bd0901300706h4fdffe24m78c418f8c1ae7cd8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 31 00:54:13 2009
+Cc: git@vger.kernel.org
+To: Yuval Kogman <nothingmuch@woobling.org>
+X-From: git-owner@vger.kernel.org Sat Jan 31 01:04:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LT3Bb-00022T-N9
-	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 00:54:12 +0100
+	id 1LT3Ls-0004bi-Pl
+	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 01:04:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754098AbZA3XwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jan 2009 18:52:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753364AbZA3XwW
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 18:52:22 -0500
-Received: from ti-out-0910.google.com ([209.85.142.187]:16200 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754091AbZA3XwV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jan 2009 18:52:21 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so222968tic.23
-        for <git@vger.kernel.org>; Fri, 30 Jan 2009 15:52:18 -0800 (PST)
+	id S1754282AbZAaADX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 19:03:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754336AbZAaADX
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 19:03:23 -0500
+Received: from wa-out-1112.google.com ([209.85.146.176]:9859 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752943AbZAaADW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 19:03:22 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so331679wah.21
+        for <git@vger.kernel.org>; Fri, 30 Jan 2009 16:03:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=ZZSGZI5VhEcT7WK2rA+mrmmiaV3JALW1yFna79QRN4E=;
-        b=VkZvgJLS/m8e8SgG+Q15APmlPmv3Wfj83Ae2m8tYf98b9TOfjn5E05PI2B9uLNe5u3
-         RH0jAaYeIm13Iden3wE6wpjQpRB8meTwA5oL5/YEV0lBLi4Ai/jl2VzSVJKWaP3Zh3CR
-         AI5lEbHzRCQwV4yEvv5piaHXHp4Ea2d1AW3nA=
+        bh=lEyYNuB5L9jMLZeW6qAvPBbvjqlvnUNepg2QNTI1Vgc=;
+        b=yF9poSbxoYyQtqXQlqFORZYB/QzUuDh1baFf/8H0phuAC2KuwazWkGNuO6D+0gO1eY
+         EhuU0V9yROA4zGfvJOkgpeGfy2KMpUHLAWzEDc6bRIggJcMoV0XWqd3bRezjcRjQSn8E
+         4lERCRgzoSQm9CWY5D7KdaYiY75n+aueednZ8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=L6XUCS3I7EjJwobzON+O0ieW/373oZNuuY6TWfVSjttVPPchJMCBqvDePoolbyTA88
-         0EEFYtD1smP335i085SlSvSy/4YVjSsYITY5WJFkP9xUqTleKc6BF5xcmd2MVS5Uap1k
-         4SCkyO5IM2OJdmI1fPmiFvNclD39yWCtsdB/I=
-Received: by 10.110.73.19 with SMTP id v19mr1827120tia.33.1233359538733;
-        Fri, 30 Jan 2009 15:52:18 -0800 (PST)
-Received: from ?116.87.148.221? ([116.87.148.221])
-        by mx.google.com with ESMTPS id d1sm2338184tid.24.2009.01.30.15.52.16
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 Jan 2009 15:52:17 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Ier7FL51fY2W/R3ypf/G1pVorT7DUFkRXhVJz6enAj+UdjdEIMw/+VLYrQPpXppi8e
+         gRv/Opmw+W6j0IOpbA7loKJdaJGzQ5pUt9BPUrkgnpmD9oWwt94+cO7AcCPQXdoq2hbM
+         NwBWS+ojCHX6W2uvdfDWYoufeH7/iLaFfr06c=
+Received: by 10.115.49.11 with SMTP id b11mr1138829wak.114.1233360201148; Fri, 
+	30 Jan 2009 16:03:21 -0800 (PST)
+In-Reply-To: <a891e1bd0901300706h4fdffe24m78c418f8c1ae7cd8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107889>
 
-Currently, functions that deal with objects on the remote repository
-have to allocate and do strcpys to generate the URL.
+Hi,
 
-This patch saves them this trouble, by providing two functions,
-"append_remote_object_url" and "get_remote_object_url".
+On Fri, Jan 30, 2009 at 11:06 PM, Yuval Kogman <nothingmuch@woobling.org> wrote:
+> Here is an example:
+> http://github.com/yanick/git-cpan-patch/blob/ed67d3f86f371764935fd0da3e7f08536c95b606/git-cpan-import#L190
+>
+> Since git-commit-tree requires the message to be written before it can
+> write the sha1 of the new commit object, the handle has to be closed
+> already, which makes command_close_bidi_pipe die with an error.
+> The workaround in the linked code reopens a fake handle so that
+> close() will not error.
+> For what it's worth, I've been poking at t/t9700/test.pl but since
+> it's pretty sparse I figured I should contribute this fix
+> independently.
 
-Both generate a URL, with either the object's 2-digit hex directory
-(eg. /objects/a1/), or the complete object location (eg.
-/objects/a1/b2).
+Your usage seems to a very special case. You're closing the handle,
+and then invoking the method "command_close_bidi_pipe", whose job is
+to close the pipe handles passed to it (among other things). So, it
+doesn't seem very good to make "command_close_bidi_pipe" to take into
+account that you closed your handle independently.
 
-However, they differ in that "append_remote_object_url" appends this
-URL to a strbuf, while "get_remote_object_url" wraps around the former
-and returns the URL directly in char*. Users usually would use
-"get_remote_object_url", but may find "append_remote_object_url"
-useful if they require further string operations on the URL.
+Maybe you could write a pair of new functions for the commit-tree
+command in the Git package, something like the
+"_open_hash_and_insert_object_if_needed" and "hash_and_insert_object"
+pair.
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-Acked-by: Junio C Hamano <gitster@pobox.com>
----
-
-* renamed only_two_digit_postfix in original patch to only_two_digit_prefix
-* updated with Junio's changes (if (...) and fix memory leak)
-* updated with Junio's double interface
-* added back use of temporary string "url" in "start_fetch_loose"
-* rebased and generated on master (a34a9db)
-* split "append_remote_object_url" signature across 3 lines at Dscho's suggestion
-
- http-push.c |   62 +++++++++++++++++++++++-----------------------------------
- 1 files changed, 25 insertions(+), 37 deletions(-)
-
-diff --git a/http-push.c b/http-push.c
-index 59037df..ba217fc 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -209,6 +209,22 @@ static struct curl_slist *get_dav_token_headers(struct remote_lock *lock, enum d
- 	return dav_headers;
- }
-
-+static void append_remote_object_url(struct strbuf *buf, const char *url,
-+				     const char *hex,
-+				     int only_two_digit_prefix)
-+{
-+	strbuf_addf(buf, "%sobjects/%.*s/", url, 2, hex);
-+	if (!only_two_digit_prefix)
-+		strbuf_addf(buf, "%s", hex+2);
-+}
-+
-+static char *get_remote_object_url(const char *url, const char *hex, int only_two_digit_prefix)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	append_remote_object_url(&buf, url, hex, only_two_digit_prefix);
-+	return strbuf_detach(&buf, NULL);
-+}
-+
- static void finish_request(struct transfer_request *request);
- static void release_request(struct transfer_request *request);
-
-@@ -255,7 +271,6 @@ static void start_fetch_loose(struct transfer_request *request)
- 	char *filename;
- 	char prevfile[PATH_MAX];
- 	char *url;
--	char *posn;
- 	int prevlocal;
- 	unsigned char prev_buf[PREV_BUF_SIZE];
- 	ssize_t prev_read = 0;
-@@ -305,17 +320,8 @@ static void start_fetch_loose(struct transfer_request *request)
-
- 	git_SHA1_Init(&request->c);
-
--	url = xmalloc(strlen(remote->url) + 50);
--	request->url = xmalloc(strlen(remote->url) + 50);
--	strcpy(url, remote->url);
--	posn = url + strlen(remote->url);
--	strcpy(posn, "objects/");
--	posn += 8;
--	memcpy(posn, hex, 2);
--	posn += 2;
--	*(posn++) = '/';
--	strcpy(posn, hex + 2);
--	strcpy(request->url, url);
-+	url = get_remote_object_url(remote->url, hex, 0);
-+	request->url = xstrdup(url);
-
- 	/* If a previous temp file is present, process what was already
- 	   fetched. */
-@@ -388,16 +394,8 @@ static void start_mkcol(struct transfer_request *request)
- {
- 	char *hex = sha1_to_hex(request->obj->sha1);
- 	struct active_request_slot *slot;
--	char *posn;
-
--	request->url = xmalloc(strlen(remote->url) + 13);
--	strcpy(request->url, remote->url);
--	posn = request->url + strlen(remote->url);
--	strcpy(posn, "objects/");
--	posn += 8;
--	memcpy(posn, hex, 2);
--	posn += 2;
--	strcpy(posn, "/");
-+	request->url = get_remote_object_url(remote->url, hex, 1);
-
- 	slot = get_active_slot();
- 	slot->callback_func = process_response;
-@@ -512,7 +510,7 @@ static void start_put(struct transfer_request *request)
- {
- 	char *hex = sha1_to_hex(request->obj->sha1);
- 	struct active_request_slot *slot;
--	char *posn;
-+	struct strbuf buf = STRBUF_INIT;
- 	enum object_type type;
- 	char hdr[50];
- 	void *unpacked;
-@@ -551,21 +549,13 @@ static void start_put(struct transfer_request *request)
-
- 	request->buffer.buf.len = stream.total_out;
-
--	request->url = xmalloc(strlen(remote->url) +
--			       strlen(request->lock->token) + 51);
--	strcpy(request->url, remote->url);
--	posn = request->url + strlen(remote->url);
--	strcpy(posn, "objects/");
--	posn += 8;
--	memcpy(posn, hex, 2);
--	posn += 2;
--	*(posn++) = '/';
--	strcpy(posn, hex + 2);
--	request->dest = xmalloc(strlen(request->url) + 14);
--	sprintf(request->dest, "Destination: %s", request->url);
--	posn += 38;
--	*(posn++) = '_';
--	strcpy(posn, request->lock->token);
-+	strbuf_addstr(&buf, "Destination: ");
-+	append_remote_object_url(&buf, remote->url, hex, 0);
-+	request->dest = strbuf_detach(&buf, NULL);
-+
-+	append_remote_object_url(&buf, remote->url, hex, 0);
-+	strbuf_addstr(&buf, request->lock->token);
-+	request->url = strbuf_detach(&buf, NULL);
-
- 	slot = get_active_slot();
- 	slot->callback_func = process_response;
 -- 
-1.6.1.2.254.g2f9c7
+Cheers,
+Ray Chuan
