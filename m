@@ -1,82 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Jan 2009, #05; Wed, 21)
-Date: Sat, 31 Jan 2009 02:36:40 -0500
-Message-ID: <20090131073640.GF3033@coredump.intra.peff.net>
-References: <7vab9kataf.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0901220606040.3586@pacific.mpi-cbg.de> <1233384354.10045.170.camel@maia.lan>
+From: Geoffrey Thomas <geofft@MIT.EDU>
+Subject: Re: [PATCH] utf8: add utf8_strwidth()
+Date: Sat, 31 Jan 2009 03:51:48 -0500 (EST)
+Message-ID: <alpine.DEB.2.00.0901310348000.3373@vinegar-pot.mit.edu>
+References: <1233308489-2656-1-git-send-email-geofft@mit.edu> <20090131071711.GA3710@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sat Jan 31 08:38:12 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jan 31 09:54:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTAQd-0008KS-Mj
-	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 08:38:12 +0100
+	id 1LTBbM-0007rs-FO
+	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 09:53:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750856AbZAaHgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 02:36:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750842AbZAaHgo
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 02:36:44 -0500
-Received: from peff.net ([208.65.91.99]:58243 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750715AbZAaHgn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 02:36:43 -0500
-Received: (qmail 10591 invoked by uid 107); 31 Jan 2009 07:36:52 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 31 Jan 2009 02:36:52 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 31 Jan 2009 02:36:40 -0500
-Content-Disposition: inline
-In-Reply-To: <1233384354.10045.170.camel@maia.lan>
+	id S1751149AbZAaIvy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 03:51:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751085AbZAaIvy
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 03:51:54 -0500
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:52548 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750856AbZAaIvx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 Jan 2009 03:51:53 -0500
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n0V8pnRV006004;
+	Sat, 31 Jan 2009 03:51:49 -0500 (EST)
+Received: from localhost (VINEGAR-POT.MIT.EDU [18.181.0.51])
+	(authenticated bits=0)
+        (User authenticated as geofft@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n0V8pnV2006026;
+	Sat, 31 Jan 2009 03:51:49 -0500 (EST)
+In-Reply-To: <20090131071711.GA3710@coredump.intra.peff.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107914>
 
-On Sat, Jan 31, 2009 at 07:45:54PM +1300, Sam Vilain wrote:
+On Sat, 31 Jan 2009, Jeff King wrote:
+> I know next to nothing about our encoding functions, but this seems
+> suspiciously similar to utf8_width in utf8.c. There is also a
+> git_wcwidth, but I don't know how they relate.
 
-> Is there any reason why the split has to be cast in stone at all?
-> 
-> ie, the code could just scan the root tree of the branch, and
-> progressively descend into sub-trees based on a partial match of the
-> object for which the note is to be found.  If you find a partial name
-> then you expect that it is a tree and descend into it and scan for the
-> rest.  If you find a complete name then you expect that it is a blob and
-> open it.  If it turns out to be a tree then there are multiple notes for
-> that commit.  Then I think you get the best of both worlds; you can
-> start with a simple flat structure and then later someone can come along
-> and make it split it when there are more than N entries in the root tree
-> (where N is determined from profiling etc).
+git_wcwidth determines the screen columns of a single ucs_char_t. 
+utf8_width returns the git_wcwidth of the first character in a string. 
+utf8_strwidth (the function added by this patch) is a simple loop around 
+utf8_width, because writing the loop every time would be silly.
 
-Actually, lookup is even easier than that: we iterate through the entire
-tree recursively and add everything to a flat hash. So we really don't
-care there what the layout is like (just take the first 40 characters of
-any directory name as a hash).
+On that note, there are probably more cases in the code that ought to use 
+something like utf8_strwidth. I only noticed this one case because I'm 
+working on a project with someone with an accented letter in his last 
+name.
 
-But it violates the usual git principle of "content has a unique name".
-What happens when I add "a/b" and you add "ab"? A dumb merge will let
-both co-exist, but which one do you return for lookup?
-
-> One would be to allow grafts to be noted.  These might want to live in a
-> different place to refs/notes/commits, like refs/notes/grafts, to avoid
-> performance issues and to recognise they are a different type of data.
-> A second would be for commit header information - particularly the
-> author field and commit description - to be amended.  I think this all
-> belongs under refs/notes/commits.  These are in essence, historical
-> corrections that don't need to alter the tree.
-
-I agree that there should be multiple note hierarchies, and multiple
-keys within each hierarchy. I have posted some thoughts on that before
-(and you should be able to find them searching for "notes" in the list
-archive), but unfortunately I have not had time to sit down and really
-work out a notes implementation that matches what I posted (which I
-don't think is that far from Dscho's work in next).
-
-And I think what you are proposing (here and in the rest of your
-message) is that certain notes hierarchies may have particular formats
-and semantics. And that sounds reasonable to me.
-
--Peff
+-- 
+Geoffrey Thomas
+geofft@mit.edu
