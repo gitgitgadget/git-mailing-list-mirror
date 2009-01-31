@@ -1,105 +1,126 @@
 From: Yann Simon <yann.simon.fr@gmail.com>
-Subject: [PATCH JGIT] simplify loop with if and do while
-Date: Sat, 31 Jan 2009 15:25:09 +0100
-Message-ID: <1233411909.8213.0.camel@localhost>
+Subject: [PATCH JGIT] use switch to avoid multiple ifs
+Date: Sat, 31 Jan 2009 15:25:44 +0100
+Message-ID: <1233411944.8213.2.camel@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>,
 	Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Jan 31 15:26:51 2009
+X-From: git-owner@vger.kernel.org Sat Jan 31 15:27:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTGo0-0000oz-6N
-	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 15:26:44 +0100
+	id 1LTGoV-0000zO-9p
+	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 15:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752239AbZAaOZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 09:25:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbZAaOZT
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 09:25:19 -0500
-Received: from mu-out-0910.google.com ([209.85.134.191]:12455 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752142AbZAaOZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 09:25:18 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so647157muf.1
-        for <git@vger.kernel.org>; Sat, 31 Jan 2009 06:25:15 -0800 (PST)
+	id S1752246AbZAaOZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 09:25:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752167AbZAaOZu
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 09:25:50 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:16827 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752141AbZAaOZu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 09:25:50 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so237855fgg.17
+        for <git@vger.kernel.org>; Sat, 31 Jan 2009 06:25:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:subject:from:to:cc
          :content-type:date:message-id:mime-version:x-mailer
          :content-transfer-encoding;
-        bh=grTA51ynFS5nyF1cczehp+XazUnXdchqi5aUG4UKOn0=;
-        b=Y7YhxLLY1+sNIdNZbirLgjWDvROqG1kOZZGd14s7PzWtBlYX2Re77BzCu6H0+qayZs
-         XQR6jX2WFa7KLIzv1DYEvOSKoLIcdMmisuaTBB9McVcMCSuCAfAT0/gg3ksNkTVBrkAE
-         0N+SOAGvbeEE9vZdooD8+feC+bEobMIpWRPkI=
+        bh=I5Is2GnhJ2DIRPgXtPIJEuczkXXdh57uAlLwjrYrhlg=;
+        b=IAMwRaJp2/iDOjGcoWZ/Pohh8b208kAiV/+LRIbmLeL148dKKu6Or1SY8R3nW4MWjI
+         n73tCu+G56Z5xXOJmLGo7X3H4Ze62dprQhf7iwIfaD7NOfx9K6FZkbkBIY1mdOuJkcCc
+         zuf8kjyhUQfPlz0ljmDpQXTxYZ04viw/WI1Gk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=subject:from:to:cc:content-type:date:message-id:mime-version
          :x-mailer:content-transfer-encoding;
-        b=h2iiHF9cO+A59Zpr7tbxHKn4RVo8CGyLav2d2O8vKxXsYMvCfEW2WTSL0VZKeXfuac
-         hkx/K5p/YokdluMFTmhsGgLUtKKQPsJhPjG472zmEryQRb5w9XdCIwaEdzLxhihWqMKY
-         /U7nvH8jDD2sVFrPJUNBehsfA/XKKqyB4GMMQ=
-Received: by 10.103.214.13 with SMTP id r13mr1056859muq.37.1233411914989;
-        Sat, 31 Jan 2009 06:25:14 -0800 (PST)
+        b=Bhc9mGS+FMK4oZR3WaGPSybAyBcAzwP3yxB2DPDMbP23z0Hy+9/Yx8CjFUwgRiW4ET
+         Nt6n7GkUDdJX+zmD9kfDLGu6QbMO3k/ZFUZQPqgxT8P2JK7NkAr5Ftjo7LFzU67If75F
+         Fkv2EOqLjUeKeX+QkqRsbeYmwReMWtroHGbaA=
+Received: by 10.103.212.2 with SMTP id o2mr1050525muq.69.1233411948028;
+        Sat, 31 Jan 2009 06:25:48 -0800 (PST)
 Received: from ?85.178.76.63? (e178076063.adsl.alicedsl.de [85.178.76.63])
-        by mx.google.com with ESMTPS id e10sm527890muf.48.2009.01.31.06.25.13
+        by mx.google.com with ESMTPS id w5sm1813993mue.25.2009.01.31.06.25.46
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 31 Jan 2009 06:25:14 -0800 (PST)
+        Sat, 31 Jan 2009 06:25:47 -0800 (PST)
 X-Mailer: Evolution 2.22.3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107926>
 
-replace if(condition) { do { } while (condition) } by while (condition)
-{ }
+instead of using multiple ifs that will evaluate an expression x times,
+use a switch with cases to evaluate the
+expression only one time.
 Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
 ---
- .../src/org/spearce/jgit/lib/Repository.java       |   18
-+++++++-----------
- 1 files changed, 7 insertions(+), 11 deletions(-)
+ .../src/org/spearce/jgit/lib/Repository.java       |   29
++++++++++++++------
+ 1 files changed, 20 insertions(+), 9 deletions(-)
 
 diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
 b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-index 038a869..b6efac1 100644
+index b6efac1..f42bae5 100644
 --- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
 +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-@@ -247,11 +247,9 @@ public File toFile(final AnyObjectId objectId) {
- 	public boolean hasObject(final AnyObjectId objectId) {
- 		final PackFile[] packs = packs();
- 		int k = packs.length;
--		if (k > 0) {
--			do {
--				if (packs[--k].hasObject(objectId))
--					return true;
--			} while (k > 0);
-+		while (k > 0) {
-+			if (packs[--k].hasObject(objectId))
-+				return true;
- 		}
- 		return toFile(objectId).isFile();
+@@ -389,16 +389,23 @@ public Object mapObject(final ObjectId id, final
+String refName) throws IOExcept
+ 		if (or == null)
+ 			return null;
+ 		final byte[] raw = or.getBytes();
+-		if (or.getType() == Constants.OBJ_TREE)
++		switch (or.getType()) {
++		case Constants.OBJ_TREE:
+ 			return makeTree(id, raw);
+-		if (or.getType() == Constants.OBJ_COMMIT)
++			
++		case Constants.OBJ_COMMIT:
+ 			return makeCommit(id, raw);
+-		if (or.getType() == Constants.OBJ_TAG)
++			
++		case Constants.OBJ_TAG:
+ 			return makeTag(id, refName, raw);
+-		if (or.getType() == Constants.OBJ_BLOB)
++			
++		case Constants.OBJ_BLOB:
+ 			return raw;
+-		throw new IncorrectObjectTypeException(id,
++			
++		default:
++			throw new IncorrectObjectTypeException(id,
+ 				"COMMIT nor TREE nor BLOB nor TAG");
++		}
  	}
-@@ -288,12 +286,10 @@ public ObjectLoader openObject(final WindowCursor
-curs, final AnyObjectId id)
- 			throws IOException {
- 		final PackFile[] packs = packs();
- 		int k = packs.length;
--		if (k > 0) {
--			do {
--				final ObjectLoader ol = packs[--k].get(curs, id);
--				if (ol != null)
--					return ol;
--			} while (k > 0);
-+		while (k > 0) {
-+			final ObjectLoader ol = packs[--k].get(curs, id);
-+			if (ol != null)
-+				return ol;
- 		}
- 		try {
- 			return new UnpackedObjectLoader(this, id);
+ 
+ 	/**
+@@ -449,12 +456,16 @@ public Tree mapTree(final ObjectId id) throws
+IOException {
+ 		if (or == null)
+ 			return null;
+ 		final byte[] raw = or.getBytes();
+-		if (Constants.OBJ_TREE == or.getType()) {
++		switch (or.getType()) {
++		case Constants.OBJ_TREE:
+ 			return new Tree(this, id, raw);
+-		}
+-		if (Constants.OBJ_COMMIT == or.getType())
++
++		case Constants.OBJ_COMMIT:
+ 			return mapTree(ObjectId.fromString(raw, 5));
+-		throw new IncorrectObjectTypeException(id, Constants.TYPE_TREE);
++			
++		default:
++			throw new IncorrectObjectTypeException(id, Constants.TYPE_TREE);
++		}
+ 	}
+ 
+ 	private Tree makeTree(final ObjectId id, final byte[] raw) throws
+IOException {
 -- 
 1.6.0.6
