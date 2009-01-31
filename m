@@ -1,97 +1,69 @@
-From: "Raimund Berger" <raimund.berger@gmail.com>
-Subject: Re: Newbie question regarding 3way merge order.
-Date: Sat, 31 Jan 2009 14:14:02 +0100
-Message-ID: <87r62jboth.fsf@gigli.quasi.internal>
-References: <871vulda2r.fsf@gigli.quasi.internal>
-	<20090131095724.6117@nanako3.lavabit.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: "git svn fetch" slow
+Date: Sat, 31 Jan 2009 14:14:57 +0100
+Message-ID: <200901311414.58205.markus.heidelberg@web.de>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 31 14:15:38 2009
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Jan 31 14:16:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTFhB-0006cy-8j
-	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 14:15:37 +0100
+	id 1LTFi0-0006pM-HM
+	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 14:16:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbZAaNOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 08:14:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751989AbZAaNOJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 08:14:09 -0500
-Received: from mu-out-0910.google.com ([209.85.134.191]:6749 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750930AbZAaNOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 08:14:08 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so637378muf.1
-        for <git@vger.kernel.org>; Sat, 31 Jan 2009 05:14:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:references
-         :mail-followup-to:date:in-reply-to:message-id:user-agent
-         :mime-version:content-type;
-        bh=wdlpPmC9LWnkgKn/cTcmyCjw/1c3Ppmsi1FzzldEm/E=;
-        b=uy/8BIcv+u+otu6fsKFxDab4pgaLS9yH4458JHWNNUMq+xDTOkSidfT2L82TK7Lgko
-         HelWmqV2Hrip9TZ0oeqlbveRItsarSX9ebtCPA1ldlehnYJqhlwlx+vutXi5Ofj2pVmI
-         zSkFDFKNkSu7HLzLZbPMpbD8PBoDpoI5a1uEU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:references:mail-followup-to:date:in-reply-to
-         :message-id:user-agent:mime-version:content-type;
-        b=w+zW8naz/4xcGR+ygkagBSXdqYdlkzzBhJZKRo09H4pOHFkY4UnbvqL68B9TRbIRdk
-         bLC4ChAKc3sXZWYvPgnnyjzNQpOGTV9dpyK75NxFgsnNwTfobcMZFLC9clr0+lRKAPYE
-         UrZ7HMinWX/V+X/1sC8YKFHZqiF9FW/oQa78I=
-Received: by 10.103.218.9 with SMTP id v9mr1027060muq.78.1233407645233;
-        Sat, 31 Jan 2009 05:14:05 -0800 (PST)
-Received: from gigli.quasi.internal (p5DC329D3.dip.t-dialin.net [93.195.41.211])
-        by mx.google.com with ESMTPS id e8sm645835muf.30.2009.01.31.05.14.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 31 Jan 2009 05:14:04 -0800 (PST)
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <20090131095724.6117@nanako3.lavabit.com> (Nanako Shiraishi's
-	message of "Sat, 31 Jan 2009 09:57:24 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+	id S1752141AbZAaNPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 08:15:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752128AbZAaNPC
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 08:15:02 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:43168 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752096AbZAaNPA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 08:15:00 -0500
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 2E2F7F9BA4F9;
+	Sat, 31 Jan 2009 14:14:59 +0100 (CET)
+Received: from [89.59.86.74] (helo=pluto)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LTFgZ-0002PP-00; Sat, 31 Jan 2009 14:14:59 +0100
+User-Agent: KMail/1.9.9
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX189bLfxNQcJYTbLemtSdlwbWO5elqg0MDOp7gCB
+	ZsXg9vq9vx71u9cahOH6syXG+3KotxjwFkaw4hGeZAWx7cdeL7
+	4vHf+qTPiCk3lZ3C2PQw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107921>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+Hi,
 
-> Quoting "Raimund Berger" <raimund.berger@gmail.com>:
->
->> The question is whether a (3way) merge is commutative, purely in terms
->> of content (i.e. disregarding commit history for now). Iow if no matter
->> in which order I merge A and B, i.e. A into B or B into A, I'd be
->> guaranteed to arrive at the same content.
->
-> I think three-way merge of A into B and B into A will produce the same
-> result when the merge doesn't conflict (when it does, you will get the
-> conflict markers and text from A and B in a different order depending on
-> the direction of the merge).
->
->> The reason I ask is obvious I guess. What basically interests me is if I
->> gave a bunch of topic branches exposure on a test branch and, after
->> resolving issues, applied them to stable, that I could be 100% sure to
->> not introduce new issues content wise just by applying merges in a
->> different order or form (rebase, patch set).
->
-> I don't think you can make a blanket conclusion like that by only knowing
-> that merging A into B and merging B into A would produce the same result.
->
-> If you merge topics A, B, and C in this order into your current state O,
-> there may not be any conflict, but if you merge the same topics to the
-> same current state in different order, C, B and then A for example, you
-> may get conflicts that breaks the merge. The commutativeness only says
-> that merge of A into O will produce the same result as merge of O into A.
-> It doesn't say anything about what would happen when you merge B to O.
+since several days "git svn fetch" didn't seem to work any more. I
+bisected it down to
 
-That's correct. Strictly speaking one would also have to verify
-associativity. I.e. whether merge(merge(A,B),C) == merge(A,merge(B,C))
-for all A,B,C.
+    commit dbc6c74d0858d77e61e092a48d467e725211f8e9
+    git-svn: handle empty files marked as symlinks in SVN
+    2009-01-11
 
-Thanks for making an implicit point explicit. So a followup question
-would be: is git's 3way merge associative?
+In the new function _mark_empty_symlinks() there is a loop that takes
+about 36 seconds for me. That means each svn revision takes 36+x seconds
+for downloading. So it still works, but I aborted it before waiting so
+much time, so I thought, it didn't work any more.
 
->From my pov people seem to assume it.
+The loop loops over each blob ("git ls-tree -r git-svn | wc -l" times).
+The project I'm using git-svn with is Buildroot and it has currently
+3074 blobs in the tree. Printing a loop counter every time the loop is
+executed, I can see that it mostly goes really fast, but there are
+files, where it needs much time then.
+
+Could there be a way to avoid this time consuming step?
+
+Markus
