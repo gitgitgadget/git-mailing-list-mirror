@@ -1,68 +1,64 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: "git svn fetch" slow
-Date: Sat, 31 Jan 2009 17:23:34 +0100
-Message-ID: <bd6139dc0901310823lcced62frd61445cb80d56fca@mail.gmail.com>
-References: <200901311414.58205.markus.heidelberg@web.de>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH JGIT] fix typo
+Date: Sat, 31 Jan 2009 17:45:16 +0100
+Message-ID: <200901311745.16803.robin.rosenberg@dewire.com>
+References: <1233411967.8213.4.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, markus.heidelberg@web.de
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Jan 31 17:25:06 2009
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Yann Simon <yann.simon.fr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 31 17:46:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTIeW-0005zu-J4
-	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 17:25:05 +0100
+	id 1LTIzc-0004Ui-0M
+	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 17:46:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752548AbZAaQXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 11:23:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752512AbZAaQXg
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 11:23:36 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:41317 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752462AbZAaQXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 11:23:36 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so251213fgg.17
-        for <git@vger.kernel.org>; Sat, 31 Jan 2009 08:23:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=unjN9+2tF6dWcQAl+lbw51W+eA35oV4do+/b5trBL0M=;
-        b=ZyAuDBpcHQK2ET291BPbfij+EXmoL1Wa64dAwyFOkVQc7MYaJtB+RfqHOj6wGrLOpX
-         1VyaHScxqn4g191HzyAm9yFeZToh2aR8YIxm+bdaH2UurtPRVmsM4k3nH3JKKkJSUpGW
-         EnGaPGfvSIzZgNxfvc1dKIYwm6pNk3ofLCREE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=VVgku2R4v4ZW19J0RX6EEf4i2bFjjPufX4TTWtQyKpla1TDtnaSgxbh7N9XTTBk/cY
-         xjLKla/KJVCnFE647/KI7MChG5gQKkuIIRHrDMjszVnUZeBilZuk2BXGA7caAt4lD6Wm
-         6DmXwFN2PSbtEghGP+0DulyzP9/JTX937rNg8=
-Received: by 10.86.92.9 with SMTP id p9mr1289897fgb.15.1233419014156; Sat, 31 
-	Jan 2009 08:23:34 -0800 (PST)
-In-Reply-To: <200901311414.58205.markus.heidelberg@web.de>
-X-Google-Sender-Auth: cb969f18dc1d399d
+	id S1752839AbZAaQp0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Jan 2009 11:45:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752681AbZAaQpZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 11:45:25 -0500
+Received: from mail.dewire.com ([83.140.172.130]:17223 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752487AbZAaQpZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 Jan 2009 11:45:25 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id EB5C9802811;
+	Sat, 31 Jan 2009 17:45:18 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id am6z6vgvzfAv; Sat, 31 Jan 2009 17:45:18 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id 74E8F800271;
+	Sat, 31 Jan 2009 17:45:18 +0100 (CET)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <1233411967.8213.4.camel@localhost>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107931>
 
-On Sat, Jan 31, 2009 at 14:14, Markus Heidelberg
-<markus.heidelberg@web.de> wrote:
-> since several days "git svn fetch" didn't seem to work any more. I
-> bisected it down to
+l=F6rdag 31 januari 2009 15:26:07 skrev Yann Simon:
+> fix a little typo
+> Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
+> ---
+>  .../src/org/spearce/jgit/lib/WindowedFile.java     |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
 
-I noticed it too, it's horribly slow; I can't really revert the patch
-since it conflicts, and I'm not familiar with the code, so I don't
-know how to resolve the conflict :(.
+Cleanups are nice too, but please try to follow the existing
+style when it comes to comments. I don't think we have
+stated these implicit rules anywhere.
 
--- 
+- New sentences start with a capital letter.
+- Don't repeat yourself You do not need a body in the comment=20
+if the first line says it all, except the SOB line which technically
+is part of the body.
+- Make sure there is an empty line before the SOB line.
+
 Cheers,
-
-Sverre Rabbelier
+	-- robin
