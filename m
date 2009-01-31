@@ -1,83 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: 'git clone' doesn't use alternates automatically?
-Date: Sat, 31 Jan 2009 16:55:14 -0500
-Message-ID: <20090131215514.GB9415@coredump.intra.peff.net>
-References: <885649360901301412jd5c6b0dne1eff1ff00dd043e@mail.gmail.com> <20090131071238.GC3033@coredump.intra.peff.net> <885649360901311208s4bc17ae3me2062b07b302291e@mail.gmail.com>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: [PATCH 1/5] pack-check.c: minor formatting fix to match coding
+ style
+Date: Sat, 31 Jan 2009 23:00:44 +0100
+Message-ID: <4984CA0C.7010703@trolltech.com>
+References: <1233313517-24208-1-git-send-email-gitster@pobox.com> <1233313517-24208-2-git-send-email-gitster@pobox.com> <20090201064528.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git ML <git@vger.kernel.org>
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 31 22:57:04 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Sat Jan 31 23:02:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTNpl-0002ZX-L7
-	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 22:57:02 +0100
+	id 1LTNua-00041a-Po
+	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 23:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751720AbZAaVzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 16:55:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbZAaVzS
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 16:55:18 -0500
-Received: from peff.net ([208.65.91.99]:34016 "EHLO peff.net"
+	id S1754966AbZAaWAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 17:00:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754762AbZAaWA2
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 17:00:28 -0500
+Received: from hoat.troll.no ([62.70.27.150]:52801 "EHLO hoat.troll.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751211AbZAaVzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 16:55:17 -0500
-Received: (qmail 14178 invoked by uid 107); 31 Jan 2009 21:55:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 31 Jan 2009 16:55:27 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 31 Jan 2009 16:55:14 -0500
-Content-Disposition: inline
-In-Reply-To: <885649360901311208s4bc17ae3me2062b07b302291e@mail.gmail.com>
+	id S1754301AbZAaWA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 17:00:26 -0500
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 9784421029;
+	Sat, 31 Jan 2009 23:00:25 +0100 (CET)
+Received: from [172.20.1.78] (unknown [172.20.1.78])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 65D5021028;
+	Sat, 31 Jan 2009 23:00:25 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.19) Gecko/20081209 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
+In-Reply-To: <20090201064528.6117@nanako3.lavabit.com>
+X-Enigmail-Version: 0.95.7
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107951>
 
-On Sat, Jan 31, 2009 at 01:08:16PM -0700, James Pickens wrote:
+Nanako Shiraishi said the following on 31.01.2009 22:45:
+> Quoting Junio C Hamano <gitster@pobox.com>:
+> 
+>> Adjust misaligned columns and multi-line comments that violate our coding
+>> style before touching this file.
+>>
+>> Also fix an obvious typo.
+> 
+> What typo did you fix?
 
-> Well, the clone gets the alternates either way.  It just doesn't
-> use them to avoid copying the data unless I give -s.  More
+-		err = error("%s SHA1 does not match its inddex",
++		err = error("%s SHA1 does not match its index",
 
-The other key change is that you don't depend on the origin in your
-alternates when you don't use "-s".
-
-> So, is there any reason 'git clone' shouldn't automatically use
-> the alternates that it copied into the new repository?  I might
-> look into writing a patch if nobody objects.
-
-I think the reason "-s" isn't the default is that alternates are fragile
-(as Jakub mentioned), and we don't want ot set them up without the user
-asking to do so.
-
-So from what you've posted (but I haven't double checked or looked at
-the code), it sounds like the current behavior is:
-
-  - with "-s", add the origin as an alternate, and use alternates while
-    cloning
-
-  - "with --reference", add some other repo as an alternate, and use
-    alternates while cloning
-
-  - without either, copy alternates from origin, but _don't_ use
-    alternates while cloning
-
-The last one seems a little silly. Why bother setting up the alternates
-if you're not going to use them? I guess because we might not be able to
-get the objects at all, otherwise, and we need to know where to copy
-them from. But either:
-
-  - that is an implementation-specific detail of clone, and those
-    alternates should go away after we clone
-
-      or
-
-  - we should fully respect those alternates
-
-The only downside to the latter is that now somebody who has cloned a
-repository with alternates now has an alternates-based repository and
-might not know it (i.e., they might have been the one who set up
-alternates in the origin).
-
--Peff
+--
+.marius
