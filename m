@@ -1,82 +1,68 @@
-From: Brian Moran <bmoran@onehub.com>
-Subject: Re: Bus Error- git merge
-Date: Fri, 30 Jan 2009 16:05:52 -0800
-Message-ID: <C5A8D5E0.E29D%bmoran@onehub.com>
-References: <alpine.DEB.1.00.0901301950100.3586@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/5] chain kill signals for cleanup functions
+Date: Fri, 30 Jan 2009 16:28:39 -0800
+Message-ID: <7vd4e49v48.fsf@gitster.siamese.dyndns.org>
+References: <20090122042643.GB31427@coredump.intra.peff.net>
+ <20090122060235.GC30133@coredump.intra.peff.net>
+ <20090130075552.GA27716@coredump.intra.peff.net>
+ <4982B68C.2070207@viscovery.net>
+ <20090130082101.GA28809@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 31 01:07:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jan 31 01:30:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LT3OP-0005Lh-4e
-	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 01:07:25 +0100
+	id 1LT3kb-0002Nb-TB
+	for gcvg-git-2@gmane.org; Sat, 31 Jan 2009 01:30:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754016AbZAaAF7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jan 2009 19:05:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753949AbZAaAF7
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 19:05:59 -0500
-Received: from server515f.exghost.com ([72.32.253.82]:4823 "EHLO
-	server515.appriver.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752137AbZAaAF6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jan 2009 19:05:58 -0500
-Received: by server515.appriver.com (CommuniGate Pro PIPE 5.2.7)
-  with PIPE id 124060404; Fri, 30 Jan 2009 18:05:56 -0600
-Received: from FE3.exchange.rackspace.com ([72.32.49.36] verified)
-  by server515.appriver.com (CommuniGate Pro SMTP 5.2.7)
-  with ESMTP id 124060398; Fri, 30 Jan 2009 18:05:52 -0600
-Received: from 34093-C5-EVS1.exchange.rackspace.com ([192.168.1.96]) by FE3.exchange.rackspace.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 30 Jan 2009 18:05:53 -0600
-Received: from 69.84.249.99 ([69.84.249.99]) by 34093-C5-EVS1.exchange.rackspace.com ([192.168.1.105]) via Exchange Front-End Server owa.mailseat.com ([192.168.1.53]) with Microsoft Exchange Server HTTP-DAV ;
- Sat, 31 Jan 2009 00:05:53 +0000
-User-Agent: Microsoft-Entourage/12.12.0.080729
-Thread-Topic: Bus Error- git merge
-Thread-Index: AcmDN63avd7LSpzr6E+Y5rJ+qWRZcA==
-In-Reply-To: <alpine.DEB.1.00.0901301950100.3586@pacific.mpi-cbg.de>
-X-OriginalArrivalTime: 31 Jan 2009 00:05:54.0018 (UTC) FILETIME=[AF0E9C20:01C98337]
-X-Policy: GLOBAL - onehub.com
-X-Policy: GLOBAL - onehub.com
-X-Primary: bmoran@onehub.com
-X-Note: This Email was scanned by AppRiver SecureTide
-X-ALLOW: bmoran@onehub.com ALLOWED
-X-Virus-Scan: V-
-X-Note: Spam Tests Failed: 
-X-Country-Path: UNITED STATES->PRIVATE->UNITED STATES->UNITED STATES
-X-Note-Sending-IP: 72.32.49.36
-X-Note-Reverse-DNS: 
-X-Note-WHTLIST: bmoran@onehub.com
-X-Note: User Rule Hits: 
-X-Note: Global Rule Hits: 94 95 96 97 101 102 170 
-X-Note: Mail Class: ALLOWEDSENDER
+	id S1757084AbZAaA2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jan 2009 19:28:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757005AbZAaA2u
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Jan 2009 19:28:50 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35541 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756775AbZAaA2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jan 2009 19:28:49 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A4C4A2A1C5;
+	Fri, 30 Jan 2009 19:28:45 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8FE572A1C6; Fri,
+ 30 Jan 2009 19:28:41 -0500 (EST)
+In-Reply-To: <20090130082101.GA28809@coredump.intra.peff.net> (Jeff King's
+ message of "Fri, 30 Jan 2009 03:21:01 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1EE1A63E-EF2E-11DD-BBF7-F63E8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107891>
 
-With subsequent changes to the merged-to repository, the bug does not
-manifest. I will attempt to reproduce when we encounter it next.
-=20
+Jeff King <peff@peff.net> writes:
 
+> On Fri, Jan 30, 2009 at 09:13:00AM +0100, Johannes Sixt wrote:
+>
+>> Jeff King schrieb:
+>> > One fix would be to just "signal(SIGINT, SIG_DFL)" at the top. But I
+>> > think it makes the test cleaner to just switch to a more reliable
+>> > signal. The patch would look something like what is below. But I need to
+>> > know what exit code Windows generates for SIGTERM. Johannes?
+>> 
+>> The same as with SIGINT: 3.
+>
+> Hmm. Clever.
+>
+> Junio, can you apply this on top of the jk/signal-cleanup topic?
 
-On 1/30/09 10:57 AM, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-wrote:
+Will do, but I've been sick today, haven't caught up with the list
+traffic, and I do not think I'll be reading my mails for the rest of the
+day either.  It may take some time for it to appear in the public
+repositories.
 
-> Hi,
->=20
-> On Fri, 30 Jan 2009, Brian Moran wrote:
->=20
->> I am getting a bus error on a git merge, including the more recent v=
-ersions.
->> Following the instructions from a bug August, I got the latest sourc=
-es,
->> compiled them up, and executed the merge in the debugger to repro. H=
-ere=B9s
->> what I found:
->=20
-> Is it possible that your branch has submodules?
->=20
+Thanks.
