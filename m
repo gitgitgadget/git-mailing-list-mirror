@@ -1,7 +1,8 @@
 From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH/RFC v2 1/7] symlinks.c: small cleanup and optimisation
-Date: Sun, 01 Feb 2009 21:23:09 +0100
-Message-ID: <8f32b315490bb0c48263a0be34b9ea4f9d6fbbbb.1233499703.git.barvik@broadpark.no>
+Subject: [PATCH/RFC v2 2/7] remove some memcpy() and strchr() calls inside
+ create_directories()
+Date: Sun, 01 Feb 2009 21:23:10 +0100
+Message-ID: <f395c63c938c6be861614df6989a696a71599641.1233499703.git.barvik@broadpark.no>
 References: <cover.1233499703.git.barvik@broadpark.no>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -14,153 +15,132 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTis8-0001kb-GL
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 21:24:52 +0100
+	id 1LTis9-0001kb-7o
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 21:24:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753367AbZBAUXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Feb 2009 15:23:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752837AbZBAUXV
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 15:23:21 -0500
+	id S1753643AbZBAUXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Feb 2009 15:23:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753393AbZBAUXY
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 15:23:24 -0500
 Received: from osl1smout1.broadpark.no ([80.202.4.58]:55724 "EHLO
 	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751751AbZBAUXT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Feb 2009 15:23:19 -0500
+	with ESMTP id S1753188AbZBAUXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Feb 2009 15:23:21 -0500
 Received: from osl1sminn1.broadpark.no ([80.202.4.59])
  by osl1smout1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KEE00589LYTCP80@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Sun, 01 Feb 2009 21:23:17 +0100 (CET)
+ with ESMTP id <0KEE0058DLYVCP80@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Sun, 01 Feb 2009 21:23:19 +0100 (CET)
 Received: from localhost.localdomain ([80.203.78.229])
  by osl1sminn1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
  with ESMTPA id <0KEE00JWOLYRG920@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Sun, 01 Feb 2009 21:23:17 +0100 (CET)
+ git@vger.kernel.org; Sun, 01 Feb 2009 21:23:19 +0100 (CET)
 X-Mailer: git-send-email 1.6.1.349.g99fa5
 In-reply-to: <cover.1233499703.git.barvik@broadpark.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107994>
 
-Simplify the if-else test in longest_match_lstat_cache() such that we
-only have one simple if test.  Instead of testing for 'i == cache.len'
-or 'i == len', we transform this to a common test for 'i == max_len'.
+Remove the call to memcpy() and strchr() for each path component
+tested, and instead add each path component as we go forward inside
+the while-loop.
 
-And to further optimise we use 'i >= max_len' instead of 'i ==
-max_len', the reason is that it is now the exact opposite of one part
-inside the while-loop termination expression 'i < max_len && name[i]
-== cache.path[i]', and then the compiler can probably reuse a test
-instruction from it.
-
-We also throw away the arguments to reset_lstat_cache(), such that all
-the safeguard logic inside lstat_cache() is handled at one place.
+Impact: small optimisation
 
 Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
 ---
- symlinks.c |   44 ++++++++++++++++++++++++--------------------
- 1 files changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/symlinks.c b/symlinks.c
-index f262b7c..ae57e56 100644
---- a/symlinks.c
-+++ b/symlinks.c
-@@ -25,27 +25,30 @@ static inline int longest_match_lstat_cache(int len, const char *name,
- 		}
- 		i++;
- 	}
--	/* Is the cached path string a substring of 'name'? */
--	if (i == cache.len && cache.len < len && name[cache.len] == '/') {
--		match_len_prev = match_len;
--		match_len = cache.len;
--	/* Is 'name' a substring of the cached path string? */
--	} else if ((i == len && len < cache.len && cache.path[len] == '/') ||
--		   (i == len && len == cache.len)) {
-+	/*
-+	 * Is the cached path string a substring of 'name', is 'name'
-+	 * a substring of the cached path string, or is 'name' and the
-+	 * cached path string the exact same string?
-+	 */
-+	if (i >= max_len && ((len > cache.len && name[cache.len] == '/') ||
-+			     (len < cache.len && cache.path[len] == '/') ||
-+			     (len == cache.len))) {
- 		match_len_prev = match_len;
--		match_len = len;
-+		match_len = i;
- 	}
- 	*previous_slash = match_len_prev;
- 	return match_len;
- }
+* Kjetil Barvik <barvik@broadpark.no> writes:
+| OK, maybe I instead should have tried to merge the function
+| create_directories() with the safe_create_leading_directories() and
+| *_const() functions?  What do pepople think?
+  
+* Junio C Hamano <gitster@pobox.com> writes
+| Strictly speaking, the safe_create_leading_* functions are meant to
+| work on paths inside $GIT_DIR and are not meant for paths inside the
+| work tree, which is this function is about.  Their semantics are
+| different with respect to adjust_shared_perm().
+
+  Ok, I think I keep the create_directories() function as is.  Also
+  because I think a shared "create_directories()" function could maybe
+  make the calls to the lstat_cache() function less likely to be
+  sorted alphabetically, and therefore be less cache effective.
+
+| I see existing (mis)uses of the safe_create_leading_* in
+| builtin-apply.c, builtin-clone.c (the one that creates the
+| work_tree, the other one is Ok), merge-recursive.c (both call sites)
+| that are used to touch the work tree, but all places that create
+| regular files in the work tree do not run adjust_shared_perm() but
+| simply honor the user's umask.
+
+  Inside update_file_flags() in merge-recursive.c I see a call to
+  make_room_for_path() (if update_wd is non-zero) which calls
+  safe_create_leading_directories_const().  
+
+  If we get lots of calls to make_room_for_path() in some cases, maybe
+  we will also save some stat() calls if we fix the call to
+  safe_create_*() at this place?
+
+  Remember that safe_create_*() calls stat() on each path component to
+  make sure that the component exists, same as create_directories()
+  used to do before.
+
+
+
+
+ entry.c |   23 ++++++++++++++---------
+ 1 files changed, 14 insertions(+), 9 deletions(-)
+
+diff --git a/entry.c b/entry.c
+index 05aa58d..1879b83 100644
+--- a/entry.c
++++ b/entry.c
+@@ -2,15 +2,19 @@
+ #include "blob.h"
+ #include "dir.h"
  
--static inline void reset_lstat_cache(int track_flags, int prefix_len_stat_func)
-+static inline void reset_lstat_cache(void)
+-static void create_directories(const char *path, const struct checkout *state)
++static void create_directories(const char *path, int path_len,
++			       const struct checkout *state)
  {
- 	cache.path[0] = '\0';
- 	cache.len = 0;
- 	cache.flags = 0;
--	cache.track_flags = track_flags;
--	cache.prefix_len_stat_func = prefix_len_stat_func;
-+	/*
-+	 * The track_flags and prefix_len_stat_func members is only
-+	 * set by the safeguard rule inside lstat_cache()
-+	 */
- }
+-	int len = strlen(path);
+-	char *buf = xmalloc(len + 1);
+-	const char *slash = path;
+-
+-	while ((slash = strchr(slash+1, '/')) != NULL) {
+-		len = slash - path;
+-		memcpy(buf, path, len);
++	char *buf = xmalloc(path_len + 1);
++	int len = 0;
++
++	while (len < path_len) {
++		do {
++			buf[len] = path[len];
++			len++;
++		} while (len < path_len && path[len] != '/');
++		if (len >= path_len)
++			break;
+ 		buf[len] = 0;
  
- #define FL_DIR      (1 << 0)
-@@ -77,11 +80,13 @@ static int lstat_cache(int len, const char *name,
- 	if (cache.track_flags != track_flags ||
- 	    cache.prefix_len_stat_func != prefix_len_stat_func) {
  		/*
--		 * As a safeguard we clear the cache if the values of
--		 * track_flags and/or prefix_len_stat_func does not
--		 * match with the last supplied values.
-+		 * As a safeguard rule we clear the cache if the
-+		 * values of track_flags and/or prefix_len_stat_func
-+		 * does not match with the last supplied values.
- 		 */
--		reset_lstat_cache(track_flags, prefix_len_stat_func);
-+		reset_lstat_cache();
-+		cache.track_flags = track_flags;
-+		cache.prefix_len_stat_func = prefix_len_stat_func;
- 		match_len = last_slash = 0;
- 	} else {
- 		/*
-@@ -153,7 +158,7 @@ static int lstat_cache(int len, const char *name,
- 		cache.path[last_slash] = '\0';
- 		cache.len = last_slash;
- 		cache.flags = save_flags;
--	} else if (track_flags & FL_DIR &&
-+	} else if ((track_flags & FL_DIR) &&
- 		   last_slash_dir > 0 && last_slash_dir <= PATH_MAX) {
- 		/*
- 		 * We have a separate test for the directory case,
-@@ -170,7 +175,7 @@ static int lstat_cache(int len, const char *name,
- 		cache.len = last_slash_dir;
- 		cache.flags = FL_DIR;
- 	} else {
--		reset_lstat_cache(track_flags, prefix_len_stat_func);
-+		reset_lstat_cache();
- 	}
- 	return ret_flags;
- }
-@@ -190,8 +195,7 @@ void invalidate_lstat_cache(int len, const char *name)
- 			cache.len = previous_slash;
- 			cache.flags = FL_DIR;
- 		} else
--			reset_lstat_cache(cache.track_flags,
--					  cache.prefix_len_stat_func);
-+			reset_lstat_cache();
- 	}
- }
+@@ -190,6 +194,7 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
  
-@@ -200,7 +204,7 @@ void invalidate_lstat_cache(int len, const char *name)
-  */
- void clear_lstat_cache(void)
- {
--	reset_lstat_cache(0, 0);
-+	reset_lstat_cache();
- }
+ 	memcpy(path, state->base_dir, len);
+ 	strcpy(path + len, ce->name);
++	len += ce_namelen(ce);
  
- #define USE_ONLY_LSTAT  0
+ 	if (!lstat(path, &st)) {
+ 		unsigned changed = ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID);
+@@ -218,6 +223,6 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *t
+ 			return error("unable to unlink old '%s' (%s)", path, strerror(errno));
+ 	} else if (state->not_new)
+ 		return 0;
+-	create_directories(path, state);
++	create_directories(path, len, state);
+ 	return write_entry(ce, path, state, 0);
+ }
 -- 
 1.6.1.349.g99fa5
