@@ -1,77 +1,112 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] t3412: clean up GIT_EDITOR usage
-Date: Sun, 1 Feb 2009 23:24:13 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902012322490.3586@pacific.mpi-cbg.de>
-References: <200901302343.39921.trast@student.ethz.ch> <1233355621-4783-1-git-send-email-trast@student.ethz.ch>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH v2] bash: offer to show (un)staged changes
+Date: Sun, 1 Feb 2009 14:29:37 -0800
+Message-ID: <20090201222937.GP26880@spearce.org>
+References: <1232401089-27512-1-git-send-email-trast@student.ethz.ch> <1233526423-30694-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>
 To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Feb 01 23:25:17 2009
+X-From: git-owner@vger.kernel.org Sun Feb 01 23:31:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTkkb-0003Vc-Ox
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 23:25:14 +0100
+	id 1LTkqG-0005C6-MW
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 23:31:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752969AbZBAWXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Feb 2009 17:23:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbZBAWXr
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 17:23:47 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38226 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752480AbZBAWXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Feb 2009 17:23:46 -0500
-Received: (qmail invoked by alias); 01 Feb 2009 22:23:44 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp026) with SMTP; 01 Feb 2009 23:23:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX185PF5cj7E5OJUNS06QOIJvDMqf+3MjHXIr3Frx6B
-	CJOc9aGbkks4Z8
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1233355621-4783-1-git-send-email-trast@student.ethz.ch>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1752410AbZBAW3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Feb 2009 17:29:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbZBAW3j
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 17:29:39 -0500
+Received: from george.spearce.org ([209.20.77.23]:41594 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752218AbZBAW3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Feb 2009 17:29:38 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id DBA0938210; Sun,  1 Feb 2009 22:29:37 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1233526423-30694-1-git-send-email-trast@student.ethz.ch>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108014>
 
-Hi,
-
-On Fri, 30 Jan 2009, Thomas Rast wrote:
-
-> a6c7a27 (rebase -i: correctly remember --root flag across --continue,
-> 2009-01-26) introduced a more portable GIT_EDITOR usage, but left the
-> old tests unchanged.
+Thomas Rast <trast@student.ethz.ch> wrote:
+> Add a bit of code to __git_ps1 that lets it append '*' to the branch
+> name if there are any unstaged changes, and '+' if there are any
+> staged changes.
 > 
-> Since we never use the editor (all tests run the rebase script as
-> proposed by rebase -i), just disable it outright, which simplifies the
-> tests.
+> Since this is a rather expensive operation and will force a lot of
+> data into the cache whenever you first enter a repository, you have to
+> enable it manually by setting bash.showDirtyState to a true value.
 > 
 > Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 > ---
->  t/t3412-rebase-root.sh |   38 +++++++++++++-------------------------
->  1 files changed, 13 insertions(+), 25 deletions(-)
 > 
-> diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
-> index 9fc528f..8a9154a 100755
-> --- a/t/t3412-rebase-root.sh
-> +++ b/t/t3412-rebase-root.sh
-> @@ -6,6 +6,10 @@ Tests if git rebase --root --onto <newparent> can rebase the root commit.
->  '
->  . ./test-lib.sh
+> This got no replies... was there anything wrong with v2?
+
+Dropped on the floor by me.  Sorry.
+
+But I'm a bit worried about the config --bool test in the prompt.
+Its a new fork+exec we weren't doing before.  I wonder if we should
+use a shell variable to consider whether or not this should even
+be executed and try to shortcut out if not.  E.g.:
+
+  if test -n "$GIT_PS1_SHOWDIRTYSTATE"; then
+    ... your new code block ...
+  fi
+
+and ask that users at some point set GIT_PS1_SHOWDIRTYSTATE=1 in
+their shell startup scripts, and also set bash.showDirtyState true
+in any of the repositories they care about it in.
+
+
+ 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index f8b845a..7864ca7 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -34,6 +34,10 @@
+>  #       are currently in a git repository.  The %s token will be
+>  #       the name of the current branch.
+>  #
+> +#	In addition, if you set bash.showDirtyState to a true value,
+> +#	unstaged (*) and staged (+) changes will be shown next to the
+> +#	branch name.
+> +#
+>  # To submit patches:
+>  #
+>  #    *) Read Documentation/SubmittingPatches
+> @@ -116,10 +120,24 @@ __git_ps1 ()
+>  			fi
+>  		fi
 >  
-> +# we always run the interactive rebases unchanged, so just disable the editor
-> +GIT_EDITOR=:
-> +export GIT_EDITOR
+> +		local w
+> +		local i
 > +
+> +		if test "$(git config --bool bash.showDirtyState)" = "true"; then
+> +			git diff --no-ext-diff --ignore-submodules \
+> +				--quiet --exit-code || w="*"
+> +			if git rev-parse --quiet --verify HEAD >/dev/null; then
+> +				git diff-index --cached --quiet \
+> +					--ignore-submodules HEAD -- || i="+"
+> +			else
+> +				i="#"
+> +			fi
+> +		fi
+> +
+>  		if [ -n "${1-}" ]; then
+> -			printf "$1" "${b##refs/heads/}$r"
+> +			printf "$1" "${b##refs/heads/}$w$i$r"
+>  		else
+> -			printf " (%s)" "${b##refs/heads/}$r"
+> +			printf " (%s)" "${b##refs/heads/}$w$i$r"
+>  		fi
+>  	fi
+>  }
 
-According to my analysis, this is unneeded.  Just leave GIT_EDITOR alone 
-in the whole test.
-
-Ciao,
-Dscho
+-- 
+Shawn.
