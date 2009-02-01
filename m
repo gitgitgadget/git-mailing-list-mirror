@@ -1,132 +1,73 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: 026fa0d5ad Breaks installs with absolue $(gitexecdir) and $(template_dir)
- variables using older GNU makes
-Date: Sun, 01 Feb 2009 13:24:33 -0500
-Message-ID: <4985E8E1.90303@gmail.com>
-Reply-To: gitzilla@gmail.com
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: git monthly links: 2009-01
+Date: Sun, 1 Feb 2009 19:50:48 +0100
+Message-ID: <bd6139dc0902011050m585e4710mf9de95a04b36c135@mail.gmail.com>
+References: <94a0d4530902010901nf415723m86c88cccf51848ee@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Feb 01 19:30:24 2009
+Cc: git list <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 01 19:52:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTh53-00007X-N5
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 19:30:06 +0100
+	id 1LThQX-00071X-It
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 19:52:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752480AbZBASYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Feb 2009 13:24:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751736AbZBASYh
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 13:24:37 -0500
-Received: from yx-out-2324.google.com ([74.125.44.30]:10387 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751264AbZBASYg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Feb 2009 13:24:36 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so432443yxm.1
-        for <git@vger.kernel.org>; Sun, 01 Feb 2009 10:24:35 -0800 (PST)
+	id S1752682AbZBASuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Feb 2009 13:50:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbZBASuv
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 13:50:51 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:54888 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752323AbZBASuu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Feb 2009 13:50:50 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so421179fgg.17
+        for <git@vger.kernel.org>; Sun, 01 Feb 2009 10:50:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        bh=NgAlkkk4gR+DTHlHK/QkBcweQb6rO5hg1g+ByHWDaDs=;
-        b=Rx2+3WOybiPE+9HthNiFcL01aMFsCSSW3WrYq259bN9XobwDSyErd6CnnKIvy7hx6p
-         USoVHwCzJ/r8E3gWTwpPGw8tHYSUF1i57b9yNxt+trUKfgtAhdMC85keAu3+vPBvu3UF
-         FKwOVlg9pAuF9oKp8yHmeijHpc19sQZEcNTY0=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=qAsW/5Q/QCwCOR+AolorqNdkUTZljrny7qHRbdiJG5o=;
+        b=t4TcDG/6FSxO8UBbFluy8zHq+Y6uO5g2Qm5c1KwSYr3LaDezcdsgo9fGBkpbUopS6z
+         MMg+4xMlgnwrxp0AksOdCEBp3u95ofgIejMhNRfD8PfOsm3qzzPEC+CtT5IccynclE/q
+         81EqKQ3olRTH+YvgoqLWk9FLrDUAh4XXwYGhw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:content-type
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        b=a26bsjZ6+3T4s/zhEfkzz0Ak2EUDFaSs6UUnYk+AhuJCdzgM2RNoElAuSnauqlAjcT
-         wySYFV9poM4asmaklCR10XvYDoPgzTRvGwr/OJ5pKeOBLysANBNZDKODQhlqJfkRMuly
-         g+tK3TzB4dnQx5F3DDhLY/ym6rZlRGrDnM8bU=
-Received: by 10.100.168.18 with SMTP id q18mr137684ane.7.1233512675633;
-        Sun, 01 Feb 2009 10:24:35 -0800 (PST)
-Received: from ?10.0.0.6? (c-66-177-19-100.hsd1.fl.comcast.net [66.177.19.100])
-        by mx.google.com with ESMTPS id d35sm5693883and.58.2009.02.01.10.24.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 01 Feb 2009 10:24:35 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+        b=PiWa+ycKIB3cQOaMUhI37LO1/aaC1910ZGqlY0QZgV4e9hGb8OBEM1hnFh/0GONb9l
+         eSbpr0EYwBDX946vtyllXVznqSWX24slnt6Crdzz2MQWgY28ThaN+skH6+8tM3eFOZmB
+         akspTdPDqloNEzcSJrAP1B3gxqs5SuGAmx4kk=
+Received: by 10.86.84.5 with SMTP id h5mr1290814fgb.64.1233514248912; Sun, 01 
+	Feb 2009 10:50:48 -0800 (PST)
+In-Reply-To: <94a0d4530902010901nf415723m86c88cccf51848ee@mail.gmail.com>
+X-Google-Sender-Auth: af24eb4bea8ac29b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107987>
 
-In 026fa0d5ad9538ca76838070861531c037d7b9ba, "Move computation of 
-absolute paths from Makefile to runtime (in preparation for 
-RUNTIME_PREFIX)", the following change was made to the Makefile. The 
-problem is that $(abspath names...) is a relatively recent addition to 
-GNU make and when used in an older GNU make, the test always fails 
-resulting incorrect installation dirs for the templates and commands.
+Heya,
 
-The new test is also wrong; (for *nix systems) in that it really wants 
-to test if the first character is a '/' but GNU make doesn't have a way 
-to do that directly. Instead, it tests if the first character is a / 
-_AND_ the path string does not include . or .. components,
+On Sun, Feb 1, 2009 at 18:01, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Tracking an entire Windows system inside Git
+> Avery Pennarun explains his endeavor of tracking windows with git...
+> "If I get a virus, I can 'git revert' it."
+> http://alumnit.ca/~apenwarr/log/?m=200901#21
 
-The older test has problems itself but at least it allowed you to 
-specify absolute paths.
+Omg, this is so totally insane that I've been laughing the entire time
+while reading the post, and then for a minute after that :P. Johannes,
+I think we have a new contender for the UGFWIINI contest.
 
-@@ -1407,17 +1417,17 @@ remove-dashes:
+-- 
+Cheers,
 
-  ### Installation rules
-
--ifeq ($(firstword $(subst /, ,$(template_dir))),..)
--template_instdir = $(bindir)/$(template_dir)
--else
-+ifeq ($(abspath $(template_dir)),$(template_dir))
-  template_instdir = $(template_dir)
-+else
-+template_instdir = $(prefix)/$(template_dir)
-  endif
-  export template_instdir
-
--ifeq ($(firstword $(subst /, ,$(gitexecdir))),..)
--gitexec_instdir = $(bindir)/$(gitexecdir)
--else
-+ifeq ($(abspath $(gitexecdir)),$(gitexecdir))
-  gitexec_instdir = $(gitexecdir)
-+else
-+gitexec_instdir = $(prefix)/$(gitexecdir)
-  endif
-  gitexec_instdir_SQ = $(subst ','\'',$(gitexec_instdir))
-  export gitexec_instdir
-
-
-I see 3 ways to fix the problem:
-	1) go back to using the old test.
-	2) keep the new test but add a test that will break the build if
-		$(abspath names...) does not work.
-	3) something like the following (untested)
-
-
-  ### Installation rules
-
-
-  temp = $(subst " ",x,$(template_dir))
-  temp = $(subst //,/,$(temp))
-  temp = $(addsuffix x,$(temp))
-  temp = $(subst /, ,$(temp))
-  ifeq ($(strip $(temp)),$(temp))
-  template_instdir = $(template_dir)
-  else
-  template_instdir = $(prefix)/$(template_dir)
-  endif
-  export template_instdir
-
-  temp = $(subst " ",x,$(gitexecdir))
-  temp = $(subst //,/,$(temp))
-  temp = $(addsuffix x,$(temp))
-  temp = $(subst /, ,$(temp))
-  ifeq ($(strip $(temp)),$(temp))
-  gitexec_instdir = $(gitexecdir)
-  else
-  gitexec_instdir = $(prefix)/$(gitexecdir)
-  endif
-  gitexec_instdir_SQ = $(subst ','\'',$(gitexec_instdir))
-  export gitexec_instdir
+Sverre Rabbelier
