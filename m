@@ -1,65 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] fsck: HEAD is part of refs
-Date: Sat, 31 Jan 2009 16:57:10 -0800
-Message-ID: <7vhc3f2cux.fsf@gitster.siamese.dyndns.org>
-References: <49814BA4.6030705@zytor.com>
- <7vfxj1eqh6.fsf@gitster.siamese.dyndns.org> <49822944.8000103@zytor.com>
- <20090129223529.GB1465@elte.hu> <20090129224357.GA18471@elte.hu>
- <498231EA.3030801@zytor.com> <7vvdrxd8jz.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.2.00.0901291512260.3054@localhost.localdomain>
- <7veiylb1in.fsf_-_@gitster.siamese.dyndns.org>
- <20090201064520.6117@nanako3.lavabit.com>
+Subject: Re: 'git clone' doesn't use alternates automatically?
+Date: Sat, 31 Jan 2009 17:19:31 -0800
+Message-ID: <7v7i4b2bto.fsf@gitster.siamese.dyndns.org>
+References: <885649360901301412jd5c6b0dne1eff1ff00dd043e@mail.gmail.com>
+ <20090131071238.GC3033@coredump.intra.peff.net>
+ <885649360901311208s4bc17ae3me2062b07b302291e@mail.gmail.com>
+ <20090131215514.GB9415@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@elte.hu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Sun Feb 01 01:58:47 2009
+Cc: James Pickens <jepicken@gmail.com>, Git ML <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Feb 01 02:21:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTQfd-0004c0-NB
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 01:58:46 +0100
+	id 1LTR1d-0001GP-Vi
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 02:21:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752681AbZBAA5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 19:57:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752653AbZBAA5U
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 19:57:20 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44764 "EHLO
+	id S1751644AbZBABTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 20:19:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751571AbZBABTj
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 20:19:39 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37974 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751517AbZBAA5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 19:57:19 -0500
+	with ESMTP id S1750891AbZBABTj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 20:19:39 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0F77B2A2EF;
-	Sat, 31 Jan 2009 19:57:19 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DFF04957CB;
+	Sat, 31 Jan 2009 20:19:37 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1C5912A2ED; Sat,
- 31 Jan 2009 19:57:11 -0500 (EST)
-In-Reply-To: <20090201064520.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Sun, 01 Feb 2009 06:45:20 +0900")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9EE7D957C9; Sat,
+ 31 Jan 2009 20:19:33 -0500 (EST)
+In-Reply-To: <20090131215514.GB9415@coredump.intra.peff.net> (Jeff King's
+ message of "Sat, 31 Jan 2009 16:55:14 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 468DC42E-EFFB-11DD-A4ED-F63E8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6492A324-EFFE-11DD-92DE-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107959>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Quoting Junio C Hamano <gitster@pobox.com>:
->
->> By default we looked at all refs but not HEAD.  The only thing that
->> made fsck not lose sight of comments that are only reachable from a
->> detached HEAD was the reflog for the HEAD.
->>
->> This fixes it, with a new test.
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> I think you meant to say commits, not comments.
+>   - without either, copy alternates from origin, but _don't_ use
+>     alternates while cloning
 
-I'll amend when I fix the broken test J6t pointed out.
+Are you talking about a local clone optimization that does hardlink from
+the source repository?
+
+I am fairly certain that copying alternates from the source repository was
+not an intended behaviour but was a consequence of lazy coding of how we
+copy (or link) everything from it.  The original was literally the simple
+matter of:
+
+    find objects ! -type d -print | cpio $cpio_quiet_flag -pumd$l "$GIT_DIR/"
+
+whose intention was to copy objects/?? and objects/pack/. and it wasn't
+even part of the design consideration to worry about what would happen to
+the alternates the source repository might have in objects/info/.
