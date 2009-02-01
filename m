@@ -1,120 +1,87 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC PATCH 3/3] Support fetching from foreign VCSes
-Date: Sun, 01 Feb 2009 03:20:28 +0100
-Message-ID: <200902010320.28128.johan@herland.net>
-References: <alpine.LNX.1.00.0901110335520.19665@iabervon.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] Switch receive.denyCurrentBranch to "refuse"
+Date: Sun, 01 Feb 2009 16:37:55 +1300
+Message-ID: <1233459475.17688.128.camel@maia.lan>
+References: <cover.1233275583u.git.johannes.schindelin@gmx.de>
+	 <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de>
+	 <76718490901300817x3f31460k59b6fe75d136372d@mail.gmail.com>
+	 <alpine.DEB.1.00.0901301756560.3586@pacific.mpi-cbg.de>
+	 <76718490901301050h1f0f5b2bq902de384d954d99b@mail.gmail.com>
+	 <alpine.DEB.1.00.0901301959300.3586@pacific.mpi-cbg.de>
+	 <20090131095622.6117@nanako3.lavabit.com>
+	 <7v63juzz9m.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun Feb 01 04:22:21 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 01 04:44:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTSuZ-0005dK-9F
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 04:22:19 +0100
+	id 1LTTFc-0000R1-EP
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 04:44:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753104AbZBADUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 22:20:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752983AbZBADUu
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 22:20:50 -0500
-Received: from mx.getmail.no ([84.208.15.66]:60908 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752890AbZBADUt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 31 Jan 2009 22:20:49 -0500
-X-Greylist: delayed 3602 seconds by postgrey-1.27 at vger.kernel.org; Sat, 31 Jan 2009 22:20:49 EST
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KED00NUW7UK1D40@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Sun, 01 Feb 2009 03:20:46 +0100 (MET)
-Received: from alpha.herland ([84.215.102.95]) by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KED00IZE7U4HVB0@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Sun, 01 Feb 2009 03:20:44 +0100 (MET)
-X-PMX-Version: 5.5.0.356843, Antispam-Engine: 2.6.1.350677,
- Antispam-Data: 2009.2.1.20719
-User-Agent: KMail/1.9.9
-In-reply-to: <alpine.LNX.1.00.0901110335520.19665@iabervon.org>
+	id S1752042AbZBADiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 22:38:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751644AbZBADiS
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 22:38:18 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:33190 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751517AbZBADiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 22:38:17 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 65E1621D98A; Sun,  1 Feb 2009 16:38:00 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 906EE21C51D;
+	Sun,  1 Feb 2009 16:37:55 +1300 (NZDT)
+In-Reply-To: <7v63juzz9m.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.24.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107977>
 
-On Sunday 11 January 2009, Daniel Barkalow wrote:
-> This supports a useful subset of the usual fetch logic, mostly in the
-> config file.
+On Sat, 2009-01-31 at 18:06 -0800, Junio C Hamano wrote:
+> Nanako Shiraishi <nanako3@lavabit.com> writes:
+> 
+> > I assume that everybody, including the maintainer who is too heavyweight
+> > and has too much inertia to accept too sudden a change of the course,
+> > wants to eventually make the default to deny pushing to the current
+> > branch. But I think such a change should come at 1.7.0 release at the
+> > earliest, and a constructive thing to do is to put in a patch to 1.6.2
+> > that helps the users with the eventual transition.
+> 
+> I am not opposed to eventually change the default to refuse at some point,
+> but I have to say that now would not be the best time to do so.  Jeff's
+> 986e823 (receive-pack: detect push to current branch of non-bare repo,
+> 2008-11-08) that is v1.6.1-rc1~59^2 was the one we started warning about
+> this, and we only had one major release since then, and I'd love to see a
+> solid rc or even the final release by mid February.
 
-Hi,
+Personally I think it's worth fast tracking, because I think very few
+people are actually using push to a checked out branch whereas many
+people are confused by the behaviour.  I just can't understand the
+resistance to this safety feature.  People who encounter the bug can
+just change the setting and move on... it seems like an argument based
+on "principles", usually a sign that one has run out of actual
+arguments..
 
-I love the idea of this patch series, and have started working on a CVS 
-backend for this. I have a question though...
+> By the way, I do not appreciate other people who I have never met
+> speculate about my body mass very much.  I am on the skinner end of the
+> spectrum, if you need to know.
 
-> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-> ---
->  builtin-fetch.c |  135
-> +++++++++++++++++++++++++++++++++++++++++++++++++++++- 1 files changed,
-> 132 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin-fetch.c b/builtin-fetch.c
-> index 7b46f8f..14e037e 100644
-> --- a/builtin-fetch.c
-> +++ b/builtin-fetch.c
-> @@ -614,6 +614,136 @@ static void set_option(const char *name, const char
-> *value) name, transport->url);
->  }
->
-> +static struct ref *list_foreign(struct remote *remote)
-> +{
+lol.  It was a metaphorical use of the term from my reading ;-)
 
-[...]
-
-> +}
-> +
-> +static int import_foreign(struct remote *remote, struct ref *refs)
-> +{
-
-[...]
-
-> +}
-> +
-> +static int fetch_foreign(struct remote *remote)
-> +{
-> +	struct ref *remote_refs = list_foreign(remote);
-
-We retrieve a list of all refs available at the given remote...
-
-> +	struct ref *ref_map = NULL;
-> +	struct ref *rm;
-> +	struct ref **tail = &ref_map;
-> +	struct branch *branch;
-> +	int i;
-> +
-> +	int exit_code = import_foreign(remote, remote_refs);
-
-...and then we start fetching _all_ the refs returned by list_foreign().
-
-When I call "git fetch <vcs-remote> <ref>", I expect _only_ <ref> to be 
-fetched from the remote, but it seems the above code doesn't even concern 
-itself with the ref(s) specified on the "git fetch" command-line
-
-I'm not even sure why list_foreign() should be called in this case (except, 
-maybe, to verify the existence of <ref> before attempting to fetch it).
-
-AFAICS list_foreign() is only needed by "git fetch" if <ref> contains a 
-wildcard (like the default refspec: +refs/heads/*:refs/remotes/<remote>/*).
-
-...or have I misunderstood something fundamental about how this is going to 
-work?
-
-
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Sam.
