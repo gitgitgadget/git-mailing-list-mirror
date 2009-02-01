@@ -1,164 +1,154 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: allow disabling expensive broken symlink checks
-Date: Sat, 31 Jan 2009 18:18:44 -0800
-Message-ID: <20090201021844.GB18855@dcvr.yhbt.net>
-References: <200901311414.58205.markus.heidelberg@web.de>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC PATCH 3/3] Support fetching from foreign VCSes
+Date: Sat, 31 Jan 2009 21:35:42 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0901312122340.19665@iabervon.org>
+References: <alpine.LNX.1.00.0901110335520.19665@iabervon.org> <200902010320.28128.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 01 03:20:26 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sun Feb 01 03:37:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTRwf-0003sQ-2X
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 03:20:25 +0100
+	id 1LTSCy-0006bB-E2
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 03:37:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752572AbZBACSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 21:18:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752512AbZBACSq
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 21:18:46 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:52948 "EHLO dcvr.yhbt.net"
+	id S1752279AbZBACfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 21:35:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752068AbZBACfo
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 21:35:44 -0500
+Received: from iabervon.org ([66.92.72.58]:53830 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752503AbZBACSp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 21:18:45 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FE441F799;
-	Sun,  1 Feb 2009 02:18:44 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200901311414.58205.markus.heidelberg@web.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751797AbZBACfn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 21:35:43 -0500
+Received: (qmail 23786 invoked by uid 1000); 1 Feb 2009 02:35:42 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 1 Feb 2009 02:35:42 -0000
+In-Reply-To: <200902010320.28128.johan@herland.net>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107972>
 
-Since dbc6c74d0858d77e61e092a48d467e725211f8e9, git-svn has had
-an expensive check for broken symlinks that exist in some
-repositories.  This leads to a heavy performance hit on
-repositories with many empty blobs that are not supposed to be
-symlinks.
+On Sun, 1 Feb 2009, Johan Herland wrote:
 
-The workaround is enabled by default; and may be disabled via:
+> On Sunday 11 January 2009, Daniel Barkalow wrote:
+> > This supports a useful subset of the usual fetch logic, mostly in the
+> > config file.
+> 
+> Hi,
+> 
+> I love the idea of this patch series, and have started working on a CVS 
+> backend for this. I have a question though...
+> 
+> > Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> > ---
+> >  builtin-fetch.c |  135
+> > +++++++++++++++++++++++++++++++++++++++++++++++++++++- 1 files changed,
+> > 132 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/builtin-fetch.c b/builtin-fetch.c
+> > index 7b46f8f..14e037e 100644
+> > --- a/builtin-fetch.c
+> > +++ b/builtin-fetch.c
+> > @@ -614,6 +614,136 @@ static void set_option(const char *name, const char
+> > *value) name, transport->url);
+> >  }
+> >
+> > +static struct ref *list_foreign(struct remote *remote)
+> > +{
+> 
+> [...]
+> 
+> > +}
+> > +
+> > +static int import_foreign(struct remote *remote, struct ref *refs)
+> > +{
+> 
+> [...]
+> 
+> > +}
+> > +
+> > +static int fetch_foreign(struct remote *remote)
+> > +{
+> > +	struct ref *remote_refs = list_foreign(remote);
+> 
+> We retrieve a list of all refs available at the given remote...
+> 
+> > +	struct ref *ref_map = NULL;
+> > +	struct ref *rm;
+> > +	struct ref **tail = &ref_map;
+> > +	struct branch *branch;
+> > +	int i;
+> > +
+> > +	int exit_code = import_foreign(remote, remote_refs);
+> 
+> ...and then we start fetching _all_ the refs returned by list_foreign().
+> 
+> When I call "git fetch <vcs-remote> <ref>", I expect _only_ <ref> to be 
+> fetched from the remote, but it seems the above code doesn't even concern 
+> itself with the ref(s) specified on the "git fetch" command-line
+> 
+> I'm not even sure why list_foreign() should be called in this case (except, 
+> maybe, to verify the existence of <ref> before attempting to fetch it).
+> 
+> AFAICS list_foreign() is only needed by "git fetch" if <ref> contains a 
+> wildcard (like the default refspec: +refs/heads/*:refs/remotes/<remote>/*).
+> 
+> ...or have I misunderstood something fundamental about how this is going to 
+> work?
 
-  git config svn.brokenSymlinkWorkaround false
+Nope, I was just a bit lazy; I just didn't implement looking at the 
+command line (I just use "git fetch" when I'm using this), and my goal is 
+to use wildcards (although I haven't gotten wildcards implemented that can 
+match the branch names than come naturally out of the particular foreign 
+system I'm using).
 
-Reported by Markus Heidelberg.
+I was also staying as close as possible to the git design, where it always 
+fetches the complete list and then looks at what matches. It would 
+probably be a good optimization to only ask for the complete list if it's 
+needed to determine what specific refs to ask for.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
+Incidently, you probably want this patch so it doesn't crash if you don't 
+have a merge config:
 
-  Markus Heidelberg <markus.heidelberg@web.de> wrote:
-  > Hi,
-  > 
-  > since several days "git svn fetch" didn't seem to work any more. I
-  > bisected it down to
-  > 
-  >     commit dbc6c74d0858d77e61e092a48d467e725211f8e9
-  >     git-svn: handle empty files marked as symlinks in SVN
-  >     2009-01-11
-  > 
-  > In the new function _mark_empty_symlinks() there is a loop that takes
-  > about 36 seconds for me. That means each svn revision takes 36+x seconds
-  > for downloading. So it still works, but I aborted it before waiting so
-  > much time, so I thought, it didn't work any more.
-  > 
-  > The loop loops over each blob ("git ls-tree -r git-svn | wc -l" times).
-  > The project I'm using git-svn with is Buildroot and it has currently
-  > 3074 blobs in the tree. Printing a loop counter every time the loop is
-  > executed, I can see that it mostly goes really fast, but there are
-  > files, where it needs much time then.
-  > 
-  > Could there be a way to avoid this time consuming step?
-  > 
-  > Markus
+commit 71266fe87dae351c0f77b0ecf8802dab2909db05
+Author: Daniel Barkalow <barkalow@iabervon.org>
+Date:   Fri Jan 30 20:30:10 2009 -0500
 
- Documentation/git-svn.txt        |    8 ++++++++
- git-svn.perl                     |   20 ++++++++++++++++++++
- t/t9131-git-svn-empty-symlink.sh |   10 ++++++++++
- 3 files changed, 38 insertions(+), 0 deletions(-)
+    Fix bug with not having merge config
+    
+    Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 7b654f7..3d45654 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -499,6 +499,14 @@ svn-remote.<name>.rewriteRoot::
- 	the repository with a public http:// or svn:// URL in the
- 	metadata so users of it will see the public URL.
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index 14e037e..63e0637 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -710,6 +710,7 @@ static int fetch_foreign(struct remote *remote)
+ 	struct ref **tail = &ref_map;
+ 	struct branch *branch;
+ 	int i;
++	int has_merge;
  
-+svn.brokenSymlinkWorkaround::
-+This disables potentially expensive checks to workaround broken symlinks
-+checked into SVN by broken clients.  Set this option to "false" if you
-+track a SVN repository with many empty blobs that are not symlinks.
-+This option may be changed while "git-svn" is running and take effect on
-+the next revision fetched.  If unset, git-svn assumes this option to be
-+"true".
-+
- --
+ 	int exit_code = import_foreign(remote, remote_refs);
+ 	if (exit_code)
+@@ -729,9 +730,11 @@ static int fetch_foreign(struct remote *remote)
  
- Since the noMetadata, rewriteRoot, useSvnsyncProps and useSvmProps
-diff --git a/git-svn.perl b/git-svn.perl
-index 79888a0..bebcbde 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3271,10 +3271,18 @@ sub new {
- # do_{switch,update}
- sub _mark_empty_symlinks {
- 	my ($git_svn) = @_;
-+	my $bool = Git::config_bool('svn.brokenSymlinkWorkaround');
-+	return {} if (defined($bool) && ! $bool);
-+
- 	my %ret;
- 	my ($rev, $cmt) = $git_svn->last_rev_commit;
- 	return {} unless ($rev && $cmt);
+ 	branch = branch_get(NULL);
  
-+	# allow the warning to be printed for each revision we fetch to
-+	# ensure the user sees it.  The user can also disable the workaround
-+	# on the repository even while git svn is running and the next
-+	# revision fetched will skip this expensive function.
-+	my $printed_warning;
- 	chomp(my $empty_blob = `git hash-object -t blob --stdin < /dev/null`);
- 	my ($ls, $ctx) = command_output_pipe(qw/ls-tree -r -z/, $cmt);
- 	local $/ = "\0";
-@@ -3283,6 +3291,18 @@ sub _mark_empty_symlinks {
- 	while (<$ls>) {
- 		chomp;
- 		s/\A100644 blob $empty_blob\t//o or next;
-+		unless ($printed_warning) {
-+			print STDERR "Scanning for empty symlinks, ",
-+			             "this may take a while if you have ",
-+				     "many empty files\n",
-+				     "You may disable this with `",
-+				     "git config svn.brokenSymlinkWorkaround ",
-+				     "false'.\n",
-+				     "This may be done in a different ",
-+				     "terminal without restarting ",
-+				     "git svn\n";
-+			$printed_warning = 1;
-+		}
- 		my $path = $_;
- 		my (undef, $props) =
- 		               $git_svn->ra->get_file($pfx.$path, $rev, undef);
-diff --git a/t/t9131-git-svn-empty-symlink.sh b/t/t9131-git-svn-empty-symlink.sh
-index 704a4f8..c3c3e42 100755
---- a/t/t9131-git-svn-empty-symlink.sh
-+++ b/t/t9131-git-svn-empty-symlink.sh
-@@ -87,4 +87,14 @@ test_expect_success '"bar" is an empty file' 'test -f x/bar && ! test -s x/bar'
- test_expect_success 'get "bar" => symlink fix from svn' \
- 		'(cd x && git svn rebase)'
- test_expect_success '"bar" becomes a symlink' 'test -L x/bar'
++	has_merge = branch_has_merge_config(branch);
 +
-+
-+test_expect_success 'clone using git svn' 'git svn clone -r1 "$svnrepo" y'
-+test_expect_success 'disable broken symlink workaround' \
-+  '(cd y && git config svn.brokenSymlinkWorkaround false)'
-+test_expect_success '"bar" is an empty file' 'test -f y/bar && ! test -s y/bar'
-+test_expect_success 'get "bar" => symlink fix from svn' \
-+		'(cd y && git svn rebase)'
-+test_expect_success '"bar" becomes a symlink' '! test -L y/bar'
-+
- test_done
--- 
-Eric Wong
+ 	for (i = 0; i < remote->fetch_refspec_nr; i++) {
+ 		get_fetch_map(remote_refs, &remote->fetch[i], &tail, 0);
+-		if (!strcmp(branch->remote_name, remote->name))
++		if (has_merge && !strcmp(branch->remote_name, remote->name))
+ 			add_merge_config(&ref_map, remote_refs, branch, &tail);
+ 	}
+ 
+
+	-Daniel
+*This .sig left intentionally blank*
