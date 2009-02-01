@@ -1,167 +1,132 @@
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Re: What's cooking in git.git (Jan 2009, #07; Wed, 28)
-Date: Sun, 1 Feb 2009 20:45:05 +0300
-Organization: St.Petersburg State University
-Message-ID: <20090201174505.GA14181@roro3.zxlink>
-References: <7vwscej26i.fsf@gitster.siamese.dyndns.org>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: 026fa0d5ad Breaks installs with absolue $(gitexecdir) and $(template_dir)
+ variables using older GNU makes
+Date: Sun, 01 Feb 2009 13:24:33 -0500
+Message-ID: <4985E8E1.90303@gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 01 18:45:55 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Feb 01 19:30:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTgNa-0002Mc-Nk
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 18:45:11 +0100
+	id 1LTh53-00007X-N5
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 19:30:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752794AbZBARnn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Feb 2009 12:43:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752612AbZBARnn
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 12:43:43 -0500
-Received: from landau.phys.spbu.ru ([195.19.235.38]:1864 "EHLO
-	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752478AbZBARnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Feb 2009 12:43:42 -0500
-Received: by landau.phys.spbu.ru (Postfix, from userid 509)
-	id 9FCF717B65E; Sun,  1 Feb 2009 20:43:40 +0300 (MSK)
-Received: from kirr by landau.phys.spbu.ru with local (Exim 4.69)
-	(envelope-from <kirr@roro3.zxlink>)
-	id 1LTgNV-0002NZ-OU; Sun, 01 Feb 2009 20:45:05 +0300
-Content-Disposition: inline
-In-Reply-To: <7vwscej26i.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752480AbZBASYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Feb 2009 13:24:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751736AbZBASYh
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 13:24:37 -0500
+Received: from yx-out-2324.google.com ([74.125.44.30]:10387 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751264AbZBASYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Feb 2009 13:24:36 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so432443yxm.1
+        for <git@vger.kernel.org>; Sun, 01 Feb 2009 10:24:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        bh=NgAlkkk4gR+DTHlHK/QkBcweQb6rO5hg1g+ByHWDaDs=;
+        b=Rx2+3WOybiPE+9HthNiFcL01aMFsCSSW3WrYq259bN9XobwDSyErd6CnnKIvy7hx6p
+         USoVHwCzJ/r8E3gWTwpPGw8tHYSUF1i57b9yNxt+trUKfgtAhdMC85keAu3+vPBvu3UF
+         FKwOVlg9pAuF9oKp8yHmeijHpc19sQZEcNTY0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:content-type
+         :content-transfer-encoding;
+        b=a26bsjZ6+3T4s/zhEfkzz0Ak2EUDFaSs6UUnYk+AhuJCdzgM2RNoElAuSnauqlAjcT
+         wySYFV9poM4asmaklCR10XvYDoPgzTRvGwr/OJ5pKeOBLysANBNZDKODQhlqJfkRMuly
+         g+tK3TzB4dnQx5F3DDhLY/ym6rZlRGrDnM8bU=
+Received: by 10.100.168.18 with SMTP id q18mr137684ane.7.1233512675633;
+        Sun, 01 Feb 2009 10:24:35 -0800 (PST)
+Received: from ?10.0.0.6? (c-66-177-19-100.hsd1.fl.comcast.net [66.177.19.100])
+        by mx.google.com with ESMTPS id d35sm5693883and.58.2009.02.01.10.24.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 01 Feb 2009 10:24:35 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107986>
 
-On Wed, Jan 28, 2009 at 06:06:45PM -0800, Junio C Hamano wrote:
+In 026fa0d5ad9538ca76838070861531c037d7b9ba, "Move computation of 
+absolute paths from Makefile to runtime (in preparation for 
+RUNTIME_PREFIX)", the following change was made to the Makefile. The 
+problem is that $(abspath names...) is a relatively recent addition to 
+GNU make and when used in an older GNU make, the test always fails 
+resulting incorrect installation dirs for the templates and commands.
 
-[...]
+The new test is also wrong; (for *nix systems) in that it really wants 
+to test if the first character is a '/' but GNU make doesn't have a way 
+to do that directly. Instead, it tests if the first character is a / 
+_AND_ the path string does not include . or .. components,
 
-> * ks/maint-mailinfo-folded (Tue Jan 13 01:21:04 2009 +0300) 4 commits
->  + mailinfo: tests for RFC2047 examples
->  + mailinfo: add explicit test for mails like '<a.u.thor@example.com>
->    (A U Thor)'
->  + mailinfo: 'From:' header should be unfold as well
->  + mailinfo: correctly handle multiline 'Subject:' header
->=20
-> I just got tired of waiting and cleaned up the series myself.
+The older test has problems itself but at least it allowed you to 
+specify absolute paths.
 
-Sorry about that. Here is the missing bit (based on master)
+@@ -1407,17 +1417,17 @@ remove-dashes:
 
---- 8< ---
+  ### Installation rules
 
-Subject: [PATCH] mailinfo: cleanup extra spaces for complex 'From:'
+-ifeq ($(firstword $(subst /, ,$(template_dir))),..)
+-template_instdir = $(bindir)/$(template_dir)
+-else
++ifeq ($(abspath $(template_dir)),$(template_dir))
+  template_instdir = $(template_dir)
++else
++template_instdir = $(prefix)/$(template_dir)
+  endif
+  export template_instdir
 
-currently for cases like
-
-    From: A U Thor <a.u.thor@example.com> (Comment)
-
-mailinfo extracts the following 'Author:' field:
-
-    Author: A U Thor   (Comment)
-                     ^^
-which has two extra spaces left in there after removed email part.
-
-I think this is wrong so here is a fix.
-
-Signed-off-by: Kirill Smelkov <kirr@landau.phys.spbu.ru>
----
- builtin-mailinfo.c        |   19 +++++++++++++++----
- t/t5100/info0001          |    2 +-
- t/t5100/rfc2047-info-0004 |    2 +-
- t/t5100/sample.mbox       |    4 ++--
- 4 files changed, 19 insertions(+), 8 deletions(-)
-
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index d4dc23a..2789ccd 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -29,6 +29,9 @@ static struct strbuf **p_hdr_data, **s_hdr_data;
- #define MAX_HDR_PARSED 10
- #define MAX_BOUNDARIES 5
-=20
-+static void cleanup_space(struct strbuf *sb);
-+
-+
- static void get_sane_name(struct strbuf *out, struct strbuf *name, str=
-uct strbuf *email)
- {
- 	struct strbuf *src =3D name;
-@@ -109,11 +112,19 @@ static void handle_from(const struct strbuf *from=
-)
- 	strbuf_add(&email, at, el);
- 	strbuf_remove(&f, at - f.buf, el + (at[el] ? 1 : 0));
-=20
--	/* The remainder is name.  It could be "John Doe <john.doe@xz>"
--	 * or "john.doe@xz (John Doe)", but we have removed the
--	 * email part, so trim from both ends, possibly removing
--	 * the () pair at the end.
-+	/* The remainder is name.  It could be
-+	 *
-+	 * - "John Doe <john.doe@xz>"			(a), or
-+	 * - "john.doe@xz (John Doe)"			(b), or
-+	 * - "John (zzz) Doe <john.doe@xz> (Comment)"	(c)
-+	 *
-+	 * but we have removed the email part, so
-+	 *
-+	 * - remove extra spaces which could stay after email (case 'c'), and
-+	 * - trim from both ends, possibly removing the () pair at the end
-+	 *   (cases 'a' and 'b').
- 	 */
-+	cleanup_space(&f);
- 	strbuf_trim(&f);
- 	if (f.buf[0] =3D=3D '(' && f.len && f.buf[f.len - 1] =3D=3D ')') {
- 		strbuf_remove(&f, 0, 1);
-diff --git a/t/t5100/info0001 b/t/t5100/info0001
-index 8c05277..f951538 100644
---- a/t/t5100/info0001
-+++ b/t/t5100/info0001
-@@ -1,4 +1,4 @@
--Author: A U Thor
-+Author: A (zzz) U Thor (Comment)
- Email: a.u.thor@example.com
- Subject: a commit.
- Date: Fri, 9 Jun 2006 00:44:16 -0700
-diff --git a/t/t5100/rfc2047-info-0004 b/t/t5100/rfc2047-info-0004
-index 0ca7ff0..f67a90a 100644
---- a/t/t5100/rfc2047-info-0004
-+++ b/t/t5100/rfc2047-info-0004
-@@ -1,4 +1,4 @@
--Author: Nathaniel Borenstein   (=D7=9D=D7=95=D7=9C=D7=A9 =D7=9F=D7=91 =
-=D7=99=D7=9C=D7=98=D7=A4=D7=A0)
-+Author: Nathaniel Borenstein (=D7=9D=D7=95=D7=9C=D7=A9 =D7=9F=D7=91 =D7=
-=99=D7=9C=D7=98=D7=A4=D7=A0)
- Email: nsb@thumper.bellcore.com
- Subject: Test of new header generator
-=20
-diff --git a/t/t5100/sample.mbox b/t/t5100/sample.mbox
-index 85df55f..c5ad206 100644
---- a/t/t5100/sample.mbox
-+++ b/t/t5100/sample.mbox
-@@ -2,10 +2,10 @@
- =09
-    =20
- From nobody Mon Sep 17 00:00:00 2001
--From: A
-+From: A (zzz)
-       U
-       Thor
--      <a.u.thor@example.com>
-+      <a.u.thor@example.com> (Comment)
- Date: Fri, 9 Jun 2006 00:44:16 -0700
- Subject: [PATCH] a commit.
-=20
---=20
-1.6.1.284.g5dc13
-
---- 8< ---
+-ifeq ($(firstword $(subst /, ,$(gitexecdir))),..)
+-gitexec_instdir = $(bindir)/$(gitexecdir)
+-else
++ifeq ($(abspath $(gitexecdir)),$(gitexecdir))
+  gitexec_instdir = $(gitexecdir)
++else
++gitexec_instdir = $(prefix)/$(gitexecdir)
+  endif
+  gitexec_instdir_SQ = $(subst ','\'',$(gitexec_instdir))
+  export gitexec_instdir
 
 
-Thanks,
-Kirill
+I see 3 ways to fix the problem:
+	1) go back to using the old test.
+	2) keep the new test but add a test that will break the build if
+		$(abspath names...) does not work.
+	3) something like the following (untested)
+
+
+  ### Installation rules
+
+
+  temp = $(subst " ",x,$(template_dir))
+  temp = $(subst //,/,$(temp))
+  temp = $(addsuffix x,$(temp))
+  temp = $(subst /, ,$(temp))
+  ifeq ($(strip $(temp)),$(temp))
+  template_instdir = $(template_dir)
+  else
+  template_instdir = $(prefix)/$(template_dir)
+  endif
+  export template_instdir
+
+  temp = $(subst " ",x,$(gitexecdir))
+  temp = $(subst //,/,$(temp))
+  temp = $(addsuffix x,$(temp))
+  temp = $(subst /, ,$(temp))
+  ifeq ($(strip $(temp)),$(temp))
+  gitexec_instdir = $(gitexecdir)
+  else
+  gitexec_instdir = $(prefix)/$(gitexecdir)
+  endif
+  gitexec_instdir_SQ = $(subst ','\'',$(gitexec_instdir))
+  export gitexec_instdir
