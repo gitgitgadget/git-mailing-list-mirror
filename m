@@ -1,71 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] http-push: refactor request url creation
-Date: Sat, 31 Jan 2009 16:55:49 -0800
-Message-ID: <7vmyd72cx6.fsf@gitster.siamese.dyndns.org>
-References: <4983929B.2010901@gmail.com>
+Subject: Re: [PATCH 1/2] fsck: HEAD is part of refs
+Date: Sat, 31 Jan 2009 16:57:10 -0800
+Message-ID: <7vhc3f2cux.fsf@gitster.siamese.dyndns.org>
+References: <49814BA4.6030705@zytor.com>
+ <7vfxj1eqh6.fsf@gitster.siamese.dyndns.org> <49822944.8000103@zytor.com>
+ <20090129223529.GB1465@elte.hu> <20090129224357.GA18471@elte.hu>
+ <498231EA.3030801@zytor.com> <7vvdrxd8jz.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.2.00.0901291512260.3054@localhost.localdomain>
+ <7veiylb1in.fsf_-_@gitster.siamese.dyndns.org>
+ <20090201064520.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 01 01:57:24 2009
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@elte.hu>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Sun Feb 01 01:58:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTQeH-0004JF-CU
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 01:57:21 +0100
+	id 1LTQfd-0004c0-NB
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 01:58:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752676AbZBAAz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 19:55:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752653AbZBAAz4
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 19:55:56 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33795 "EHLO
+	id S1752681AbZBAA5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 19:57:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752653AbZBAA5U
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 19:57:20 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44764 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752619AbZBAAz4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 19:55:56 -0500
+	with ESMTP id S1751517AbZBAA5T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 19:57:19 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B9AD39564D;
-	Sat, 31 Jan 2009 19:55:55 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0F77B2A2EF;
+	Sat, 31 Jan 2009 19:57:19 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7083B9564C; Sat,
- 31 Jan 2009 19:55:51 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1C5912A2ED; Sat,
+ 31 Jan 2009 19:57:11 -0500 (EST)
+In-Reply-To: <20090201064520.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+ message of "Sun, 01 Feb 2009 06:45:20 +0900")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 14E69694-EFFB-11DD-A28B-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 468DC42E-EFFB-11DD-A4ED-F63E8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107958>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-> Currently, functions that deal with objects on the remote repository
-> have to allocate and do strcpys to generate the URL.
+> Quoting Junio C Hamano <gitster@pobox.com>:
 >
-> This patch saves them this trouble, by providing two functions,
-> "append_remote_object_url" and "get_remote_object_url".
+>> By default we looked at all refs but not HEAD.  The only thing that
+>> made fsck not lose sight of comments that are only reachable from a
+>> detached HEAD was the reflog for the HEAD.
+>>
+>> This fixes it, with a new test.
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 >
-> Both generate a URL, with either the object's 2-digit hex directory
-> (eg. /objects/a1/), or the complete object location (eg.
-> /objects/a1/b2).
->
-> However, they differ in that "append_remote_object_url" appends this
-> URL to a strbuf, while "get_remote_object_url" wraps around the former
-> and returns the URL directly in char*. Users usually would use
-> "get_remote_object_url", but may find "append_remote_object_url"
-> useful if they require further string operations on the URL.
->
-> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-> Acked-by: Junio C Hamano <gitster@pobox.com>
+> I think you meant to say commits, not comments.
 
-Thanks, I'll queue this to 'pu' for now, but please stop randomly adding
-"Acked-by" from other people, unless you conferred with them on the
-exact version of your patch you are submitting.
-
-If somebody said "The version that I reviewed looked sensible", it becomes
-irrelevant after you changed your patch in response to people's comments,
-exactly because what you are sending is different from what they reviewed.
-It is up to them, not you, to see if the issues raised in their comments
-are addressed in the new patch to their satisfaction.
+I'll amend when I fix the broken test J6t pointed out.
