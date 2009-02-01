@@ -1,65 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git monthly links: 2009-01
-Date: Mon, 2 Feb 2009 00:26:09 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902020025350.3586@pacific.mpi-cbg.de>
-References: <94a0d4530902010901nf415723m86c88cccf51848ee@mail.gmail.com> <bd6139dc0902011050m585e4710mf9de95a04b36c135@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bash: offer to show (un)staged changes
+Date: Sun, 01 Feb 2009 15:43:26 -0800
+Message-ID: <7vwsc9rae9.fsf@gitster.siamese.dyndns.org>
+References: <1232240184-10906-1-git-send-email-trast@student.ethz.ch>
+ <7vwsct2xd1.fsf@gitster.siamese.dyndns.org>
+ <20090119172939.GA14053@spearce.org>
+ <4ac8254d0902011448t242e7fcek3ae7fda609648ef0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	git list <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 02 00:27:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 02 00:48:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTliX-00038Q-65
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 00:27:09 +0100
+	id 1LTm32-00009i-VG
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 00:48:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751419AbZBAXZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Feb 2009 18:25:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbZBAXZm
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 18:25:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40397 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750715AbZBAXZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Feb 2009 18:25:41 -0500
-Received: (qmail invoked by alias); 01 Feb 2009 23:25:40 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp027) with SMTP; 02 Feb 2009 00:25:40 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19gZf8E4+RgWf2MuKfKMdzPgBbXVggWCnDPYyQUtf
-	RQ0OlkFvzZu8q8
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <bd6139dc0902011050m585e4710mf9de95a04b36c135@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1752287AbZBAXnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Feb 2009 18:43:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbZBAXni
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 18:43:38 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54112 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751631AbZBAXni (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Feb 2009 18:43:38 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 74B59953D6;
+	Sun,  1 Feb 2009 18:43:34 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D8C92953D5; Sun,
+  1 Feb 2009 18:43:28 -0500 (EST)
+In-Reply-To: <4ac8254d0902011448t242e7fcek3ae7fda609648ef0@mail.gmail.com>
+ (Tuncer Ayaz's message of "Sun, 1 Feb 2009 23:48:30 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 23B54C1E-F0BA-11DD-8773-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108025>
 
-Hi,
+Tuncer Ayaz <tuncer.ayaz@gmail.com> writes:
 
-On Sun, 1 Feb 2009, Sverre Rabbelier wrote:
+> On Mon, Jan 19, 2009 at 6:29 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+>> Junio C Hamano <gitster@pobox.com> wrote:
+>>> Thomas Rast <trast@student.ethz.ch> writes:
+>>>
+>>> > +           if test ! -z "$GIT_PS1_EXPENSIVE"; then
+>>> > +                   git update-index --refresh >/dev/null 2>&1 || w="*"
+>>>
+>>> This makes the feature unavailable for people who care about the stat
+>>> dirtiness and explicitly set diff.autorefreshindex to false, doesn't it?
+>>
+>> Yup, and I'm one of those people who sets autorefresindex to false
+>> in my ~/.gitconfig, usually before I even have user.{name,email} set.
+>>
+>> I do like the idea of what Thomas is trying to do here, but its
+>> so bloody expensive to compute dirty state on every prompt in
+>> some repositories that I'd shoot myself.  E.g. WebKit is huge,
+>
+> I've been thinking about this and wondered
+> whether implementing "status --mini" or
+> "status --short" which prints "+?*" in wt-status.c
+> could be made fast enough.
+>
+> Should we try to implement and profile this
+> or do we know it will be slow beforehand?
 
-> Heya,
-> 
-> On Sun, Feb 1, 2009 at 18:01, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> > Tracking an entire Windows system inside Git
-> > Avery Pennarun explains his endeavor of tracking windows with git...
-> > "If I get a virus, I can 'git revert' it."
-> > http://alumnit.ca/~apenwarr/log/?m=200901#21
-> 
-> Omg, this is so totally insane that I've been laughing the entire time
-> while reading the post, and then for a minute after that :P. Johannes,
-> I think we have a new contender for the UGFWIINI contest.
-
-Indeed.  It even beats the way we use Git to track the MSys installation 
-in msysgit.git...
-
-Ciao,
-Dscho
+I think I've seen a patch to do something like that, soon after Shawn
+announced his repo tool.
