@@ -1,201 +1,141 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH/RFC v2 7/7] unpack-trees.c: introduce schedule_dir_for_removal()
-Date: Sun, 01 Feb 2009 21:23:39 +0100
-Message-ID: <02194022d0e7bfaef7eb9d98be30292954090a2a.1233499703.git.barvik@broadpark.no>
-References: <cover.1233499703.git.barvik@broadpark.no>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kjetil Barvik <barvik@broadpark.no>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [RFC PATCH] add -p: prompt for single characters
+Date: Sun,  1 Feb 2009 21:35:11 +0100
+Message-ID: <1233520511-13061-1-git-send-email-trast@student.ethz.ch>
+Cc: Jeff King <peff@peff.net>, "Suraj N. Kurapati" <sunaku@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 01 21:25:27 2009
+X-From: git-owner@vger.kernel.org Sun Feb 01 21:37:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTisc-0001tK-Mw
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 21:25:23 +0100
+	id 1LTj4d-0005co-Js
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 21:37:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754290AbZBAUXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Feb 2009 15:23:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754154AbZBAUXp
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 15:23:45 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:55738 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754117AbZBAUXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Feb 2009 15:23:42 -0500
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KEE0059FLZICP80@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Sun, 01 Feb 2009 21:23:42 +0100 (CET)
-Received: from localhost.localdomain ([80.203.78.229])
- by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTPA id <0KEE00HXTLZFE140@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Sun, 01 Feb 2009 21:23:42 +0100 (CET)
-X-Mailer: git-send-email 1.6.1.349.g99fa5
-In-reply-to: <cover.1233499703.git.barvik@broadpark.no>
+	id S1752950AbZBAUfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Feb 2009 15:35:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbZBAUfd
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 15:35:33 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:14743 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751264AbZBAUfc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Feb 2009 15:35:32 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 1 Feb 2009 21:35:29 +0100
+Received: from localhost.localdomain ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 1 Feb 2009 21:35:29 +0100
+X-Mailer: git-send-email 1.6.1.2.495.g0175e
+X-OriginalArrivalTime: 01 Feb 2009 20:35:29.0963 (UTC) FILETIME=[9F5C2FB0:01C984AC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107999>
 
-Currently inside unlink_entry() if we get a successful removal of one
-file with unlink(), we try to remove the leading directories each and
-every time.  So if one directory containing 200 files is moved to an
-other location we get 199 failed calls to rmdir() and 1 successful
-call.
+Use Term::ReadKey, if available, to let the user answer add -p's
+prompts by pressing a single key.  The 'g' command is the only one
+that takes an argument, but can easily cope since it'll just offer a
+choice of chunks.  We're not doing the same in the main 'add -i'
+interface because file selection etc. may expect several characters.
 
-To fix this and to avoid some unnecessary calls to rmdir(), we only
-schedule each directory for removal and we wait much longer before we
-do the actually call to rmdir().
-
-Since the unlink_entry() function is called with alphabetically sorted
-names, this new function end up being very effective to avoid
-unnecessary calls to rmdir().  In some cases over 95% of all calls to
-rmdir() is removed with this patch.
-
-Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
 
-  I noticed that I had to copy-and-paste almost all lines from the
-  longest_match_lstat_cache() in symlinks.c into this new function, so
-  maybe I should do the following:
+I wrote this on the train today, but it turns out a similar idea was
+already around earlier:
 
-  Move the 3 new functions below inside the same file (dir.c?) as the
-  lstat_cache() functions, rename longest_match_lstat_cache() to
-  longest_dir_match(), do some cleanup/fix'es, and let it be called
-  from the 3 functions which currently need it.
+  http://thread.gmane.org/gmane.comp.version-control.git/100146
 
-  Good idea?
+I can't find the v4 promised there, so I assume Suraj dropped it.
+
+It would indeed be nice if we could apply the same to the main 'add
+-i' loop, and I played with the code to do so for a while.  Most of
+the mechanisms required seem to be in place; it already computes
+shortest unique prefixes for the inputs given, so we could just grab
+the one-character prefixes from there.
+
+However, what to do when the user entered a letter that is known to be
+part of several prefixes?  If we offer to enter the rest of the line,
+e.g., 'return $key.<STDIN>', the user can't backspace away the
+"existing" input if he decides to do something else instead.  Perhaps
+readline could prime the input line with the letter, but I can't find
+any such feature in the Term::ReadLine docs.  Implementation ideas are
+obviously very welcome.
 
 
- unpack-trees.c |   97 ++++++++++++++++++++++++++++++++++++++++++--------------
- 1 files changed, 73 insertions(+), 24 deletions(-)
+ git-add--interactive.perl |   35 ++++++++++++++++++++++++++++++++---
+ 1 files changed, 32 insertions(+), 3 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index e547282..5c12eca 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -52,36 +52,84 @@ static void add_entry(struct unpack_trees_options *o, struct cache_entry *ce,
- 	add_index_entry(&o->result, new, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE|ADD_CACHE_SKIP_DFCHECK);
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index ca60356..0633eca 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -33,6 +33,14 @@ my ($diff_new_color) =
+ 
+ my $normal_color = $repo->get_color("", "reset");
+ 
++my $use_readkey = 0;
++my %control_keys;
++eval {
++	use Term::ReadKey;
++	$use_readkey = 1;
++	%control_keys = GetControlChars;
++};
++
+ sub colored {
+ 	my $color = shift;
+ 	my $string = join("", @_);
+@@ -758,11 +766,32 @@ sub diff_applies {
+ 	return close $fh;
  }
  
--/* Unlink the last component and attempt to remove leading
-- * directories, in case this unlink is the removal of the
-- * last entry in the directory -- empty directories are removed.
-+static char path_buf[PATH_MAX];
-+static unsigned int path_len;
-+
-+static void do_remove_scheduled_dirs(unsigned int new_len)
-+{
-+	while (path_len > new_len) {
-+		path_buf[path_len] = '\0';
-+		if (rmdir(path_buf))
-+			break;
-+		do {
-+			path_len--;
-+		} while (path_len > new_len && path_buf[path_len] != '/');
-+	}
-+	path_len = new_len;
-+	return;
++sub _restore_terminal_and_die {
++	ReadMode 'restore';
++	print "\n";
++	exit 1;
 +}
 +
-+static void schedule_dir_for_removal(const char *name, unsigned int len)
-+{
-+	unsigned int i = 0, match_len = 0, max_len, last_slash;
-+
-+	/* Find longest dir-match between 'name' and 'path' */
-+	max_len = len < path_len ? len : path_len;
-+	while (i < max_len && name[i] == path_buf[i]) {
-+		if (name[i] == '/')
-+			match_len = i;
-+		i++;
++sub prompt_single_character {
++	if ($use_readkey) {
++		local $SIG{TERM} = \&_restore_terminal_and_die;
++		local $SIG{INT} = \&_restore_terminal_and_die;
++		ReadMode 'cbreak';
++		my $key = ReadKey 0;
++		ReadMode 'restore';
++		print "$key" if defined $key;
++		print "\n";
++		return $key;
++	} else {
++		return <STDIN>;
 +	}
-+	if (i >= max_len && ((len > path_len && name[path_len] == '/') ||
-+			     (len < path_len && path_buf[len] == '/') ||
-+			     (len == path_len)))
-+		match_len = i;
-+
-+	/* Find the last slash inside 'name' */
-+	last_slash = match_len;
-+	while (i < len) {
-+		if (name[i] == '/')
-+			last_slash = i;
-+		i++;
-+	}
-+
-+	/*
-+	 * If we are about to go down the directory tree, we check if
-+	 * we must first go upwards the tree, such that we then can
-+	 * remove possible empty directories as we go upwards.
-+	 */
-+	if (match_len < last_slash && match_len < path_len)
-+		do_remove_scheduled_dirs(match_len);
-+	/*
-+	 * If we go deeper down the directory tree, we only need to
-+	 * save the new path components as we go down.
-+	 */
-+	if (match_len < last_slash) {
-+		memmove(&path_buf[match_len], &name[match_len],
-+			last_slash - match_len);
-+		path_len = last_slash;
-+	}
-+	return;
 +}
 +
-+#define ALL_DIRS 0
-+static void remove_scheduled_dirs(void)
-+{
-+	do_remove_scheduled_dirs(ALL_DIRS);
-+	return;
-+}
-+
-+/*
-+ * Unlink the last component and schedule the leading directories for
-+ * removal, such that empty directories get removed.
-  */
- static void unlink_entry(struct cache_entry *ce)
- {
--	char *cp, *prev;
--	char *name = ce->name;
--
- 	if (has_symlink_or_noent_leading_path(ce_namelen(ce), ce->name))
- 		return;
--	if (unlink(name))
-+	if (unlink(ce->name))
- 		return;
--	prev = NULL;
--	while (1) {
--		int status;
--		cp = strrchr(name, '/');
--		if (prev)
--			*prev = '/';
--		if (!cp)
--			break;
--
--		*cp = 0;
--		status = rmdir(name);
--		if (status) {
--			*cp = '/';
--			break;
--		}
--		prev = cp;
--	}
-+	schedule_dir_for_removal(ce->name, ce_namelen(ce));
- }
- 
- static struct checkout state;
-@@ -117,6 +165,7 @@ static int check_updates(struct unpack_trees_options *o)
- 			continue;
- 		}
+ sub prompt_yesno {
+ 	my ($prompt) = @_;
+ 	while (1) {
+ 		print colored $prompt_color, $prompt;
+-		my $line = <STDIN>;
++		my $line = prompt_single_character;
+ 		return 0 if $line =~ /^n/i;
+ 		return 1 if $line =~ /^y/i;
  	}
-+	remove_scheduled_dirs();
- 
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
+@@ -892,7 +921,7 @@ sub patch_update_file {
+ 			print @{$mode->{DISPLAY}};
+ 			print colored $prompt_color,
+ 				"Stage mode change [y/n/a/d/?]? ";
+-			my $line = <STDIN>;
++			my $line = prompt_single_character;
+ 			if ($line =~ /^y/i) {
+ 				$mode->{USE} = 1;
+ 				last;
+@@ -965,7 +994,7 @@ sub patch_update_file {
+ 			print;
+ 		}
+ 		print colored $prompt_color, "Stage this hunk [y/n/a/d$other/?]? ";
+-		my $line = <STDIN>;
++		my $line = prompt_single_character;
+ 		if ($line) {
+ 			if ($line =~ /^y/i) {
+ 				$hunk[$ix]{USE} = 1;
 -- 
-1.6.1.349.g99fa5
+tg: (a34a9db..) t/add-p-readkey (depends on: origin/master)
