@@ -1,141 +1,196 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH] add -p: prompt for single characters
-Date: Sun,  1 Feb 2009 21:35:11 +0100
-Message-ID: <1233520511-13061-1-git-send-email-trast@student.ethz.ch>
-Cc: Jeff King <peff@peff.net>, "Suraj N. Kurapati" <sunaku@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 01 21:37:58 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH] Resurrect group filtering options in history pane
+Date: Sun,  1 Feb 2009 21:36:18 +0100
+Message-ID: <1233520578-10453-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sun Feb 01 21:38:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTj4d-0005co-Js
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 21:37:48 +0100
+	id 1LTj53-0005km-58
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 21:38:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752950AbZBAUfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Feb 2009 15:35:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbZBAUfd
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 15:35:33 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:14743 "EHLO XSMTP0.ethz.ch"
+	id S1753393AbZBAUg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Feb 2009 15:36:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753188AbZBAUg1
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 15:36:27 -0500
+Received: from mail.dewire.com ([83.140.172.130]:20651 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751264AbZBAUfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Feb 2009 15:35:32 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 1 Feb 2009 21:35:29 +0100
-Received: from localhost.localdomain ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 1 Feb 2009 21:35:29 +0100
-X-Mailer: git-send-email 1.6.1.2.495.g0175e
-X-OriginalArrivalTime: 01 Feb 2009 20:35:29.0963 (UTC) FILETIME=[9F5C2FB0:01C984AC]
+	id S1753266AbZBAUg0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Feb 2009 15:36:26 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id C423C1434D8B;
+	Sun,  1 Feb 2009 21:36:20 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Wn+tGoTigZXy; Sun,  1 Feb 2009 21:36:18 +0100 (CET)
+Received: from localhost.localdomain (unknown [10.9.0.5])
+	by dewire.com (Postfix) with ESMTP id BCE72800271;
+	Sun,  1 Feb 2009 21:36:18 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.285.g35d8b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108000>
 
-Use Term::ReadKey, if available, to let the user answer add -p's
-prompts by pressing a single key.  The 'g' command is the only one
-that takes an argument, but can easily cope since it'll just offer a
-choice of chunks.  We're not doing the same in the main 'add -i'
-interface because file selection etc. may expect several characters.
+This commit restores the ability to filter on not only the selected
+resource but instead all changes in the same folder, same project
+or same repository. The filtering levels supported are Resource (no button
+pessed), Folder, Project and Repository. Only the highest level has any
+effect. The flags are persistent between eclipse sessions in the same
+workspace.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 ---
+ .../egit/ui/internal/history/GitHistoryPage.java   |  108 +++++++++++++++++++-
+ 1 files changed, 104 insertions(+), 4 deletions(-)
 
-I wrote this on the train today, but it turns out a similar idea was
-already around earlier:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/100146
-
-I can't find the v4 promised there, so I assume Suraj dropped it.
-
-It would indeed be nice if we could apply the same to the main 'add
--i' loop, and I played with the code to do so for a while.  Most of
-the mechanisms required seem to be in place; it already computes
-shortest unique prefixes for the inputs given, so we could just grab
-the one-character prefixes from there.
-
-However, what to do when the user entered a letter that is known to be
-part of several prefixes?  If we offer to enter the rest of the line,
-e.g., 'return $key.<STDIN>', the user can't backspace away the
-"existing" input if he decides to do something else instead.  Perhaps
-readline could prime the input line with the letter, but I can't find
-any such feature in the Term::ReadLine docs.  Implementation ideas are
-obviously very welcome.
-
-
- git-add--interactive.perl |   35 ++++++++++++++++++++++++++++++++---
- 1 files changed, 32 insertions(+), 3 deletions(-)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index ca60356..0633eca 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -33,6 +33,14 @@ my ($diff_new_color) =
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GitHistoryPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GitHistoryPage.java
+index d718cd7..4e95df4 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GitHistoryPage.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/history/GitHistoryPage.java
+@@ -96,7 +96,7 @@
  
- my $normal_color = $repo->get_color("", "reset");
+ 	/**
+ 	 * Determine if the input can be shown in this viewer.
+-	 * 
++	 *
+ 	 * @param object
+ 	 *            an object that is hopefully of type ResourceList or IResource,
+ 	 *            but may be anything (including null).
+@@ -188,6 +188,18 @@ private static boolean typeOk(final IResource object) {
+ 	 */
+ 	private List<String> pathFilters;
  
-+my $use_readkey = 0;
-+my %control_keys;
-+eval {
-+	use Term::ReadKey;
-+	$use_readkey = 1;
-+	%control_keys = GetControlChars;
-+};
++	private static final String PREF_SHOWALLREPOVERSIONS = "org.spearce.egit.ui.githistorypage.showallrepoversions";
 +
- sub colored {
- 	my $color = shift;
- 	my $string = join("", @_);
-@@ -758,11 +766,32 @@ sub diff_applies {
- 	return close $fh;
- }
++	private static final String PREF_SHOWALLPROJECTVERSIONS = "org.spearce.egit.ui.githistorypage.showallprojectversions";
++
++	private static final String PREF_SHOWALLFOLDERVERSIONS = "org.spearce.egit.ui.githistorypage.showallfolderversions";
++
++	private boolean showAllProjectVersions;
++
++	private boolean showAllFolderVersions;
++
++	private boolean showAllRepoVersions;
++
+ 	/**
+ 	 * The selection provider tracks the selected revisions for the context menu
+ 	 */
+@@ -236,9 +248,85 @@ public void createControl(final Composite parent) {
+ 		attachContextMenu(fileViewer.getControl());
+ 		layout();
  
-+sub _restore_terminal_and_die {
-+	ReadMode 'restore';
-+	print "\n";
-+	exit 1;
-+}
++		showAllProjectVersions = Activator.getDefault().getPreferenceStore()
++				.getBoolean(PREF_SHOWALLPROJECTVERSIONS);
++		showAllFolderVersions = Activator.getDefault().getPreferenceStore()
++				.getBoolean(PREF_SHOWALLFOLDERVERSIONS);
++		showAllRepoVersions = Activator.getDefault().getPreferenceStore()
++				.getBoolean(PREF_SHOWALLREPOVERSIONS);
 +
-+sub prompt_single_character {
-+	if ($use_readkey) {
-+		local $SIG{TERM} = \&_restore_terminal_and_die;
-+		local $SIG{INT} = \&_restore_terminal_and_die;
-+		ReadMode 'cbreak';
-+		my $key = ReadKey 0;
-+		ReadMode 'restore';
-+		print "$key" if defined $key;
-+		print "\n";
-+		return $key;
-+	} else {
-+		return <STDIN>;
-+	}
-+}
++		Action showAllRepoVersionsAction = new Action("R") {
++			public void run() {
++				cancelRefreshJob();
++				setShowAllRepoVersions(isChecked());
++				cancelRefreshJob();
++			}
++		};
++		showAllRepoVersionsAction
++				.setToolTipText("Show all versions for the repository containing the resource");
++		showAllRepoVersionsAction.setChecked(isShowAllRepoVersions());
++		getSite().getActionBars().getToolBarManager().add(
++				showAllRepoVersionsAction);
 +
- sub prompt_yesno {
- 	my ($prompt) = @_;
- 	while (1) {
- 		print colored $prompt_color, $prompt;
--		my $line = <STDIN>;
-+		my $line = prompt_single_character;
- 		return 0 if $line =~ /^n/i;
- 		return 1 if $line =~ /^y/i;
++		Action showAllProjectVersionsAction = new Action("P") {
++			public void run() {
++				cancelRefreshJob();
++				setShowAllProjectVersions(isChecked());
++				inputSet();
++			}
++		};
++		showAllProjectVersionsAction
++				.setToolTipText("Show all versions for the project containing the resource");
++		showAllProjectVersionsAction.setChecked(isShowAllProjectVersions());
++		getSite().getActionBars().getToolBarManager().add(
++				showAllProjectVersionsAction);
++
++		Action showAllFolderVersionsAction = new Action("F") {
++			public void run() {
++				cancelRefreshJob();
++				setShowAllFolderVersion(isChecked());
++				inputSet();
++			}
++		};
++		showAllFolderVersionsAction
++				.setToolTipText("Show all versions for the folder containing the resource");
++		showAllFolderVersionsAction.setChecked(isShowAllFolderVersions());
++		getSite().getActionBars().getToolBarManager().add(
++				showAllFolderVersionsAction);
++
+ 		Repository.addAnyRepositoryChangedListener(this);
  	}
-@@ -892,7 +921,7 @@ sub patch_update_file {
- 			print @{$mode->{DISPLAY}};
- 			print colored $prompt_color,
- 				"Stage mode change [y/n/a/d/?]? ";
--			my $line = <STDIN>;
-+			my $line = prompt_single_character;
- 			if ($line =~ /^y/i) {
- 				$mode->{USE} = 1;
- 				last;
-@@ -965,7 +994,7 @@ sub patch_update_file {
- 			print;
+ 
++	/* private */boolean isShowAllRepoVersions() {
++		return showAllRepoVersions;
++	}
++
++	void setShowAllRepoVersions(boolean showAllRepoVersions) {
++		this.showAllRepoVersions = showAllRepoVersions;
++		Activator.getDefault().getPreferenceStore().setValue(
++				PREF_SHOWALLREPOVERSIONS, showAllRepoVersions);
++	}
++
++	/* private */boolean isShowAllProjectVersions() {
++		return showAllProjectVersions;
++	}
++
++	void setShowAllProjectVersions(boolean showAllProjectVersions) {
++		this.showAllProjectVersions = showAllProjectVersions;
++		Activator.getDefault().getPreferenceStore().setValue(
++				PREF_SHOWALLPROJECTVERSIONS, showAllProjectVersions);
++	}
++
++	/* private */boolean isShowAllFolderVersions() {
++		return showAllFolderVersions;
++	}
++
++	void setShowAllFolderVersion(boolean showAllFolderVersions) {
++		this.showAllFolderVersions = showAllFolderVersions;
++		Activator.getDefault().getPreferenceStore().setValue(
++				PREF_SHOWALLFOLDERVERSIONS, showAllFolderVersions);
++	}
++
+ 	private Runnable refschangedRunnable;
+ 
+ 	public void refsChanged(final RefsChangedEvent e) {
+@@ -566,9 +654,21 @@ public boolean inputSet() {
+ 			else if (db != map.getRepository())
+ 				return false;
+ 
+-			final String name = map.getRepoRelativePath(r);
+-			if (name != null && name.length() > 0)
+-				paths.add(name);
++			if (isShowAllFolderVersions()) {
++				final String name = map.getRepoRelativePath(r.getParent());
++				if (name != null && name.length() > 0)
++					paths.add(name);
++			} else if (isShowAllProjectVersions()) {
++				final String name = map.getRepoRelativePath(r.getProject());
++				if (name != null && name.length() > 0)
++					paths.add(name);
++			} else if (isShowAllRepoVersions()) {
++				// nothing
++			} else {
++				final String name = map.getRepoRelativePath(r);
++				if (name != null && name.length() > 0)
++					paths.add(name);
++			}
  		}
- 		print colored $prompt_color, "Stage this hunk [y/n/a/d$other/?]? ";
--		my $line = <STDIN>;
-+		my $line = prompt_single_character;
- 		if ($line) {
- 			if ($line =~ /^y/i) {
- 				$hunk[$ix]{USE} = 1;
+ 
+ 		if (db == null)
 -- 
-tg: (a34a9db..) t/add-p-readkey (depends on: origin/master)
+1.6.1.285.g35d8b
