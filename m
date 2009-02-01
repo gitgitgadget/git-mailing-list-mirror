@@ -1,112 +1,59 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH v2] bash: offer to show (un)staged changes
-Date: Sun, 1 Feb 2009 14:29:37 -0800
-Message-ID: <20090201222937.GP26880@spearce.org>
-References: <1232401089-27512-1-git-send-email-trast@student.ethz.ch> <1233526423-30694-1-git-send-email-trast@student.ethz.ch>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] builtin-blame.c: Use utf8_strwidth for author's names
+Date: Sun, 1 Feb 2009 23:34:21 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902012333060.3586@pacific.mpi-cbg.de>
+References: <1233308489-2656-1-git-send-email-geofft@mit.edu> <1233308489-2656-2-git-send-email-geofft@mit.edu> <alpine.DEB.1.00.0901301811180.3586@pacific.mpi-cbg.de> <alpine.DEB.2.00.0901301710130.1984@vinegar-pot.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junio@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Feb 01 23:31:05 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Geoffrey Thomas <geofft@MIT.EDU>
+X-From: git-owner@vger.kernel.org Sun Feb 01 23:35:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTkqG-0005C6-MW
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 23:31:05 +0100
+	id 1LTkuO-0006Lk-Jt
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 23:35:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752410AbZBAW3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Feb 2009 17:29:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbZBAW3j
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 17:29:39 -0500
-Received: from george.spearce.org ([209.20.77.23]:41594 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752218AbZBAW3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Feb 2009 17:29:38 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id DBA0938210; Sun,  1 Feb 2009 22:29:37 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1233526423-30694-1-git-send-email-trast@student.ethz.ch>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753141AbZBAWdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Feb 2009 17:33:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753104AbZBAWdy
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 17:33:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56212 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752410AbZBAWdx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Feb 2009 17:33:53 -0500
+Received: (qmail invoked by alias); 01 Feb 2009 22:33:51 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp031) with SMTP; 01 Feb 2009 23:33:51 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19ccpwvuiJc4hWpbe/peWTay03SP+4mdRcjLY/ZHx
+	m7quuOVE/g8fLA
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.DEB.2.00.0901301710130.1984@vinegar-pot.mit.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108015>
 
-Thomas Rast <trast@student.ethz.ch> wrote:
-> Add a bit of code to __git_ps1 that lets it append '*' to the branch
-> name if there are any unstaged changes, and '+' if there are any
-> staged changes.
-> 
-> Since this is a rather expensive operation and will force a lot of
-> data into the cache whenever you first enter a repository, you have to
-> enable it manually by setting bash.showDirtyState to a true value.
-> 
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
-> 
-> This got no replies... was there anything wrong with v2?
+Hi,
 
-Dropped on the floor by me.  Sorry.
+On Fri, 30 Jan 2009, Geoffrey Thomas wrote:
 
-But I'm a bit worried about the config --bool test in the prompt.
-Its a new fork+exec we weren't doing before.  I wonder if we should
-use a shell variable to consider whether or not this should even
-be executed and try to shortcut out if not.  E.g.:
+> Currently, however, printf("%*.*s", width, width, author) is simply 
+> wrong, because printf only cares about bytes, not screen columns. Do you 
+> think I should fall back on the old behavior if i18n.commitencoding is 
+> set, or if at least one of the author names isn't parseable as UTF-8, or 
+> something? Or should I be doing this with iconv and assuming all commits 
+> are encoded in the current encoding specified via $LANG or $LC_whatever?
 
-  if test -n "$GIT_PS1_SHOWDIRTYSTATE"; then
-    ... your new code block ...
-  fi
+I do not know what encoding the author is at that point, but if you cannot 
+be sure that it is UTF-8, using utf8_strwidth() is just as wrong as the 
+current code, IMHO.
 
-and ask that users at some point set GIT_PS1_SHOWDIRTYSTATE=1 in
-their shell startup scripts, and also set bash.showDirtyState true
-in any of the repositories they care about it in.
-
-
- 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index f8b845a..7864ca7 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -34,6 +34,10 @@
->  #       are currently in a git repository.  The %s token will be
->  #       the name of the current branch.
->  #
-> +#	In addition, if you set bash.showDirtyState to a true value,
-> +#	unstaged (*) and staged (+) changes will be shown next to the
-> +#	branch name.
-> +#
->  # To submit patches:
->  #
->  #    *) Read Documentation/SubmittingPatches
-> @@ -116,10 +120,24 @@ __git_ps1 ()
->  			fi
->  		fi
->  
-> +		local w
-> +		local i
-> +
-> +		if test "$(git config --bool bash.showDirtyState)" = "true"; then
-> +			git diff --no-ext-diff --ignore-submodules \
-> +				--quiet --exit-code || w="*"
-> +			if git rev-parse --quiet --verify HEAD >/dev/null; then
-> +				git diff-index --cached --quiet \
-> +					--ignore-submodules HEAD -- || i="+"
-> +			else
-> +				i="#"
-> +			fi
-> +		fi
-> +
->  		if [ -n "${1-}" ]; then
-> -			printf "$1" "${b##refs/heads/}$r"
-> +			printf "$1" "${b##refs/heads/}$w$i$r"
->  		else
-> -			printf " (%s)" "${b##refs/heads/}$r"
-> +			printf " (%s)" "${b##refs/heads/}$w$i$r"
->  		fi
->  	fi
->  }
-
--- 
-Shawn.
+Ciao,
+Dscho
