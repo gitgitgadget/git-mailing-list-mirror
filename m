@@ -1,9 +1,7 @@
 From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: [PATCH v2 2/4] Add find_insert_index, insert_at_index and clear_func functions to string_list
-Date: Sun,  1 Feb 2009 21:59:57 +0100
-Message-ID: <75a7d437c1b32600c509bdef5010e6ac30b6cb08.1233520945.git.marius@trolltech.com>
-References: <cover.1233520945.git.marius@trolltech.com>
- <ce94ea88e3182e97997c23f71e184e0db64fa708.1233520945.git.marius@trolltech.com>
+Subject: [PATCH v2 0/4] Extend mailmap functionality
+Date: Sun,  1 Feb 2009 21:59:55 +0100
+Message-ID: <cover.1233520945.git.marius@trolltech.com>
 Cc: Marius Storm-Olsen <marius@trolltech.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sun Feb 01 22:02:48 2009
@@ -11,144 +9,86 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTjSp-0005JH-7a
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 22:02:47 +0100
+	id 1LTjSo-0005JH-FJ
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 22:02:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755080AbZBAVBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Feb 2009 16:01:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754966AbZBAVBS
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 16:01:18 -0500
-Received: from hoat.troll.no ([62.70.27.150]:48413 "EHLO hoat.troll.no"
+	id S1754986AbZBAVBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Feb 2009 16:01:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754693AbZBAVBQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 16:01:16 -0500
+Received: from hoat.troll.no ([62.70.27.150]:48421 "EHLO hoat.troll.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754640AbZBAVBN (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754610AbZBAVBN (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 1 Feb 2009 16:01:13 -0500
 Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id C952D20F31;
-	Sun,  1 Feb 2009 22:01:07 +0100 (CET)
+	by hoat.troll.no (Postfix) with SMTP id 239E420F24;
+	Sun,  1 Feb 2009 22:01:10 +0100 (CET)
 Received: from localhost.localdomain (unknown [172.24.90.96])
-	by hoat.troll.no (Postfix) with ESMTP id ACED620F29;
+	by hoat.troll.no (Postfix) with ESMTP id 8FE8920F16;
 	Sun,  1 Feb 2009 22:01:07 +0100 (CET)
 X-Mailer: git-send-email 1.6.1.2.257.g34f62
-In-Reply-To: <ce94ea88e3182e97997c23f71e184e0db64fa708.1233520945.git.marius@trolltech.com>
-In-Reply-To: <cover.1233520945.git.marius@trolltech.com>
-References: <cover.1233520945.git.marius@trolltech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108003>
 
-string_list_find_insert_index() and string_list_insert_at_index() enables you to see if an item is in the string_list, and to insert at the appropriate index in the list, if not there.
-This is usefull if you need to manipulate an existing item, if present, and insert a new item if not.
+  v2: changes since v1
+  --------------------
+  * Folded in documentation fixup from patch 4 into patch 3.
 
-Future mailmap code will use this construct to enable complex (old_name, old_email) -> (new_name, new_email) lookups.
 
-The string_list_clear_func() allows to call a custom cleanup function on each item in a string_list, which is useful is the util member points to a complex structure.
+This patch series extends the mailmap functionality to:
+  1) Allow the mailmap file in any location (also outside repo)
+  2) Enable mailmap to match on both Name and Email
 
-Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
----
- string-list.c |   43 +++++++++++++++++++++++++++++++++++++++----
- string-list.h |    9 +++++++++
- 2 files changed, 48 insertions(+), 4 deletions(-)
+So, why would this be a good thing?
 
-diff --git a/string-list.c b/string-list.c
-index ddd83c8..15e14cf 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -26,10 +26,10 @@ static int get_entry_index(const struct string_list *list, const char *string,
- }
- 
- /* returns -1-index if already exists */
--static int add_entry(struct string_list *list, const char *string)
-+static int add_entry(int insert_at, struct string_list *list, const char *string)
- {
--	int exact_match;
--	int index = get_entry_index(list, string, &exact_match);
-+	int exact_match = 0;
-+	int index = insert_at != -1 ? insert_at : get_entry_index(list, string, &exact_match);
- 
- 	if (exact_match)
- 		return -1 - index;
-@@ -53,7 +53,13 @@ static int add_entry(struct string_list *list, const char *string)
- 
- struct string_list_item *string_list_insert(const char *string, struct string_list *list)
- {
--	int index = add_entry(list, string);
-+	return string_list_insert_at_index(-1, string, list);
-+}
-+
-+struct string_list_item *string_list_insert_at_index(int insert_at,
-+						     const char *string, struct string_list *list)
-+{
-+	int index = add_entry(insert_at, list, string);
- 
- 	if (index < 0)
- 		index = -1 - index;
-@@ -68,6 +74,16 @@ int string_list_has_string(const struct string_list *list, const char *string)
- 	return exact_match;
- }
- 
-+int string_list_find_insert_index(const struct string_list *list, const char *string,
-+				  int negative_existing_index)
-+{
-+	int exact_match;
-+	int index = get_entry_index(list, string, &exact_match);
-+	if (exact_match)
-+		index = -1 - (negative_existing_index ? index : 0);
-+	return index;
-+}
-+
- struct string_list_item *string_list_lookup(const char *string, struct string_list *list)
- {
- 	int exact_match, i = get_entry_index(list, string, &exact_match);
-@@ -94,6 +110,25 @@ void string_list_clear(struct string_list *list, int free_util)
- 	list->nr = list->alloc = 0;
- }
- 
-+void string_list_clear_func(struct string_list *list, string_list_clear_func_t clearfunc)
-+{
-+	if (list->items) {
-+		int i;
-+		if (clearfunc) {
-+			for (i = 0; i < list->nr; i++)
-+				clearfunc(list->items[i].util, list->items[i].string);
-+		}
-+		if (list->strdup_strings) {
-+			for (i = 0; i < list->nr; i++)
-+				free(list->items[i].string);
-+		}
-+		free(list->items);
-+	}
-+	list->items = NULL;
-+	list->nr = list->alloc = 0;
-+}
-+
-+
- void print_string_list(const char *text, const struct string_list *p)
- {
- 	int i;
-diff --git a/string-list.h b/string-list.h
-index 4d6a705..d32ba05 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -15,9 +15,18 @@ struct string_list
- void print_string_list(const char *text, const struct string_list *p);
- void string_list_clear(struct string_list *list, int free_util);
- 
-+/* Use this function to call a custom clear function on each util pointer */
-+/* The string associated with the util pointer is passed as the second argument */
-+typedef void (*string_list_clear_func_t)(void *p, const char *str);
-+void string_list_clear_func(struct string_list *list, string_list_clear_func_t clearfunc);
-+
- /* Use these functions only on sorted lists: */
- int string_list_has_string(const struct string_list *list, const char *string);
-+int string_list_find_insert_index(const struct string_list *list, const char *string,
-+				  int negative_existing_index);
- struct string_list_item *string_list_insert(const char *string, struct string_list *list);
-+struct string_list_item *string_list_insert_at_index(int insert_at,
-+						     const char *string, struct string_list *list);
- struct string_list_item *string_list_lookup(const char *string, struct string_list *list);
- 
- /* Use these functions only on unsorted lists: */
--- 
-1.6.1.2.257.g34f62
+2) Lets you replace both name and email of an author/committer, based
+on a name and/or email. So, should you have done commits with faulty
+address, or if an old email simply isn't valid anymore, you can add
+a mapping for that to replace it. So, the old style mapping is
+    Proper Name <commit@email.xx>
+
+while this patch series adds support for
+    Proper Name <proper@email.xx> <commit@email.xx>
+    Proper Name <proper@email.xx> Commit Name <commit@email.xx>
+
+1) Lets you keep a private mailmap file, which is not distributed with
+your repository.
+
+
+This extended mapping is necessary when a company wants to have their
+repositories open to the public, but needs to protect the identities
+of the developers. It enables you to only show nicks and standardized
+emails, like 'Dev123 <bugs@company.xx>' in the public repo, but by
+using an private mailmap file, map the name back to
+'John Doe <john.doe@company.xx>' inside the company.
+
+
+Patch serie applies cleanly on master branch, and test run shows no
+regressions.
+
+Marius Storm-Olsen (4):
+  Add log.mailmap as configurational option for mailmap location
+  Add find_insert_index, insert_at_index and clear_func functions to
+    string_list
+  Add map_user() and clear_mailmap() to mailmap
+  Change current mailmap usage to do matching on both name and email of
+    author/committer.
+
+ Documentation/config.txt         |    9 ++
+ Documentation/git-shortlog.txt   |   61 +++++++++---
+ Documentation/pretty-formats.txt |    2 +
+ builtin-blame.c                  |   52 ++++++----
+ builtin-shortlog.c               |   25 ++++-
+ cache.h                          |    1 +
+ config.c                         |   10 ++
+ mailmap.c                        |  207 ++++++++++++++++++++++++++++++++++----
+ mailmap.h                        |    4 +
+ pretty.c                         |   59 ++++++-----
+ string-list.c                    |   43 +++++++-
+ string-list.h                    |    9 ++
+ t/t4203-mailmap.sh               |  152 ++++++++++++++++++++++++++++
+ 13 files changed, 541 insertions(+), 93 deletions(-)
+ create mode 100755 t/t4203-mailmap.sh
