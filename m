@@ -1,68 +1,74 @@
-From: Keith Cascio <keith@CS.UCLA.EDU>
-Subject: Re: diff settings
-Date: Sat, 31 Jan 2009 15:10:16 -0800 (PST)
-Message-ID: <alpine.GSO.2.00.0901311507350.10805@kiwi.cs.ucla.edu>
-References: <alpine.GSO.2.00.0901240936080.23073@kiwi.cs.ucla.edu> <87ocxwv6qg.fsf@iki.fi> <alpine.GSO.2.00.0901241159050.23073@kiwi.cs.ucla.edu> <497CD352.2060402@tedpavlic.com> <alpine.GSO.2.00.0901251307030.12651@kiwi.cs.ucla.edu> <497D1AB7.7000208@tedpavlic.com>
- <alpine.GSO.2.00.0901310750470.5437@kiwi.cs.ucla.edu> <4984AACD.20600@tedpavlic.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] fsck: HEAD is part of refs
+Date: Sat, 31 Jan 2009 16:53:12 -0800
+Message-ID: <7v3aez3rlz.fsf@gitster.siamese.dyndns.org>
+References: <49814BA4.6030705@zytor.com>
+ <7vfxj1eqh6.fsf@gitster.siamese.dyndns.org> <49822944.8000103@zytor.com>
+ <20090129223529.GB1465@elte.hu> <20090129224357.GA18471@elte.hu>
+ <498231EA.3030801@zytor.com> <7vvdrxd8jz.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.2.00.0901291512260.3054@localhost.localdomain>
+ <7veiylb1in.fsf_-_@gitster.siamese.dyndns.org> <4982C7FA.20107@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git <git@vger.kernel.org>
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Sun Feb 01 00:11:56 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@elte.hu>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Sun Feb 01 01:54:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTP0F-0005X3-3e
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 00:11:55 +0100
+	id 1LTQbq-0003pk-0k
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 01:54:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752124AbZAaXK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 18:10:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751578AbZAaXK3
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 18:10:29 -0500
-Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:60610 "EHLO kiwi.cs.ucla.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751517AbZAaXK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 18:10:29 -0500
-Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n0VNAI2W014824;
-	Sat, 31 Jan 2009 15:10:18 -0800 (PST)
-Received: from localhost (keith@localhost)
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n0VNAHH7014817;
-	Sat, 31 Jan 2009 15:10:18 -0800 (PST)
-X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
-In-Reply-To: <4984AACD.20600@tedpavlic.com>
-User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
+	id S1752486AbZBAAxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 19:53:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbZBAAxX
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 19:53:23 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44704 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751773AbZBAAxX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 19:53:23 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7D5D72A2EE;
+	Sat, 31 Jan 2009 19:53:20 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 361F82A2EB; Sat,
+ 31 Jan 2009 19:53:14 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B85DEC1A-EFFA-11DD-A4ED-F63E8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107954>
 
-On Sat, 31 Jan 2009, Ted Pavlic wrote:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> As I already discussed, Mercurial has both "diff.primer" and "primer.diff" 
-> precisely because "diff" settings affects so many Hg commands.
+> Junio C Hamano schrieb:
+>> By default we looked at all refs but not HEAD.  The only thing that
+>> made fsck not lose sight of comments that are only reachable from a
+>> detached HEAD was the reflog for the HEAD.
+>> 
+>> This fixes it, with a new test.
+> [...]
+>> +test_expect_success setup '
+>> +	test_commit A &&
+>> +	git checkout HEAD^0 &&
+>> +	test_commit B &&
+>> +	git reflog expire --expire=now --all
+>> +'
+>> +
+>> +test_expect_success 'HEAD is part of refs' '
+>> +	test 0 = $(git fsck | wc -l)
+>
+> I'm scratching my head over this. This test succeeds even without the
+> change... (Tested with a34a9db.)
 
-Yes I remember you did mention that.
+You are right.  I forgot that test_commit creates an extra tag.  By adding
 
-> In particular, in my .hgrc, I have:
-> [diff]
-> git = 1
-> which causes all Mercurial commands that need to generate a diff to use
-> gitdiff rather than truediff. However, if I *wanted* to apply a set of flags
-> to a particular command, I could (using the equivalent "git" commands)...
-> [defaults]
-> pull = --rebase
-> commit = -a
-> format-patch = -M
-> So I see a purpose for both *.defaults and defaults.*. Of course, aliases are 
-> also nice (IIRC, Mercurial doesn't have "aliases", but I could be wrong). 
-> Mercurial users are very happy with having both available. I imagine git 
-> people would be too.
+	git tag -d B &&
 
-I like it!  I'm all for it.  Perfect opportunity for future work.  In fact, I 
-think I already glanced at the part of the code that's the right place to make 
-that stuff happen.
-
-                                      -- Keith
+after "test_commit B &&", you would expose the issue in the existing code.
