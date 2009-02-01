@@ -1,7 +1,7 @@
 From: Sam Vilain <sam@vilain.net>
 Subject: [PATCH] split notes [was: Re: What's cooking in git.git (Jan 2009, #05; Wed, 21)]
-Date: Sun, 01 Feb 2009 15:39:20 +1300
-Message-ID: <1233455960.17688.121.camel@maia.lan>
+Date: Sun, 01 Feb 2009 16:09:20 +1300
+Message-ID: <1233455960.17688.122.camel@maia.lan>
 References: <7vab9kataf.fsf@gitster.siamese.dyndns.org>
 	 <alpine.DEB.1.00.0901220606040.3586@pacific.mpi-cbg.de>
 	 <1233384354.10045.170.camel@maia.lan>
@@ -10,32 +10,34 @@ Mime-Version: 1.0
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Feb 01 03:59:10 2009
+X-From: git-owner@vger.kernel.org Sun Feb 01 04:11:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTSY7-0001fN-I6
-	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 03:59:08 +0100
+	id 1LTSkI-00043w-W8
+	for gcvg-git-2@gmane.org; Sun, 01 Feb 2009 04:11:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755757AbZBAC5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 Jan 2009 21:57:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752975AbZBAC5c
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 21:57:32 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:52526 "EHLO mail.utsl.gen.nz"
+	id S1752653AbZBADKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jan 2009 22:10:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752619AbZBADKP
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Jan 2009 22:10:15 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:48335 "EHLO mail.utsl.gen.nz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752890AbZBAC5a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jan 2009 21:57:30 -0500
-X-Greylist: delayed 410 seconds by postgrey-1.27 at vger.kernel.org; Sat, 31 Jan 2009 21:57:30 EST
+	id S1752484AbZBADKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jan 2009 22:10:14 -0500
 Received: by mail.utsl.gen.nz (Postfix, from userid 1003)
-	id 9433921D985; Sun,  1 Feb 2009 15:50:22 +1300 (NZDT)
+	id 51FF221D985; Sun,  1 Feb 2009 16:09:56 +1300 (NZDT)
 In-Reply-To: <20090131073640.GF3033@coredump.intra.peff.net>
 X-Mailer: Devolution 2.24.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/107975>
+
+[re-sent with correct envelope from so hopefully it will get to the
+list this time]
 
 On Sat, 2009-01-31 at 02:36 -0500, Jeff King wrote:
 > Actually, lookup is even easier than that: we iterate through the entire
