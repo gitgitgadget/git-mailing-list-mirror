@@ -1,146 +1,80 @@
-From: Moriyoshi Koizumi <mozo@mozo.jp>
-Subject: Re: [PATCH] Support various HTTP authentication methods
-Date: Mon, 2 Feb 2009 17:38:17 +0900
-Message-ID: <cd1fb7540902020038p4ea767c0rd01aecf62d20ff07@mail.gmail.com>
-References: <7v3af2h1b0.fsf@gitster.siamese.dyndns.org>
-	 <E1LTqDN-0003MF-DP@lena.gsc.riken.jp>
-	 <1233556274-1354-1-git-send-email-gitster@pobox.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 1/2] t3412: clean up GIT_EDITOR usage
+Date: Mon, 2 Feb 2009 09:39:21 +0100
+Message-ID: <200902020939.24131.trast@student.ethz.ch>
+References: <200901302343.39921.trast@student.ethz.ch> <1233355621-4783-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0902012322490.3586@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart1427885.DTtizNijLF";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 02 09:39:47 2009
+Cc: Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 02 09:41:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTuLJ-0000tF-Ku
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 09:39:46 +0100
+	id 1LTuML-0001Dm-RN
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 09:40:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751472AbZBBIiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2009 03:38:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751115AbZBBIiT
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 03:38:19 -0500
-Received: from rv-out-0506.google.com ([209.85.198.239]:10918 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751005AbZBBIiS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2009 03:38:18 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so1382389rvb.1
-        for <git@vger.kernel.org>; Mon, 02 Feb 2009 00:38:17 -0800 (PST)
-Received: by 10.141.86.4 with SMTP id o4mr2197985rvl.172.1233563897346; Mon, 
-	02 Feb 2009 00:38:17 -0800 (PST)
-In-Reply-To: <1233556274-1354-1-git-send-email-gitster@pobox.com>
+	id S1751797AbZBBIjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 03:39:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751631AbZBBIjY
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 03:39:24 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:38372 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751604AbZBBIjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 03:39:24 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 2 Feb 2009 09:39:23 +0100
+Received: from thomas.localnet ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 2 Feb 2009 09:39:22 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.25.20-0.1-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <alpine.DEB.1.00.0902012322490.3586@pacific.mpi-cbg.de>
+X-OriginalArrivalTime: 02 Feb 2009 08:39:22.0451 (UTC) FILETIME=[BF23EA30:01C98511]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108072>
 
-On Mon, Feb 2, 2009 at 3:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Applying style fixes to the existing code is very much appreciated, *but*
-> please make such a clean-up patch a separate one.  A two-patch series
-> whose [1/2] is such a pure clean-up without any feature change, with [2/2]
-> that adds code to the cleaned-up state would be much less distracting for
-> people who nitpick your changes.
+--nextPart1427885.DTtizNijLF
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Okay, I'll try to do so next time.
+Johannes Schindelin wrote:
+> On Fri, 30 Jan 2009, Thomas Rast wrote:
+> > +# we always run the interactive rebases unchanged, so just disable the=
+ editor
+> > +GIT_EDITOR=3D:
+> > +export GIT_EDITOR
+> > +
+>=20
+> According to my analysis, this is unneeded.  Just leave GIT_EDITOR alone=
+=20
+> in the whole test.
 
->> @@ -153,11 +159,69 @@ static int http_options(const char *var, const char *value, void *cb)
->>                       return git_config_string(&curl_http_proxy, var, value);
->>               return 0;
->>       }
->> +#if LIBCURL_VERSION_NUM >= 0x070a06
->> +     if (!strcmp("http.auth", var)) {
->> +             if (curl_http_auth == NULL)
->> +                     return git_config_string(&curl_http_auth, var, value);
->> +             return 0;
->> +     }
->> +#endif
->> +#if LIBCURL_VERSION_NUM >= 0x070a07
->> +     if (!strcmp("http.proxy_auth", var)) {
->> +             if (curl_http_proxy_auth == NULL)
->> +                     return git_config_string(&curl_http_proxy_auth, var, value);
->> +             return 0;
->> +     }
->> +#endif
->
-> If you follow config.c::git_config() you will notice that we read from
-> /etc/gitconfig, $HOME/.gitconfig and then finally $GIT_DIR/config.  By
-> implementing "if we already have read curl_http_auth already, we will
-> ignore the later setting" like above code does, you break the general
-> expectation that system-wide defaults is overridable by $HOME/.gitconfig
-> and that is in turn overridable by per-repository $GIT_DIR/config.
+You're right, test-lib.sh sets GIT_EDITOR=3D and EDITOR=3D:, so the above
+is unneeded (but harmless).
 
-But aren't the globals supposed to be set just here? I guessed you
-assume that these are set elsewhere and then it prevents the values
-provided later from being applied.
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
-> The preferred order would be:
->
->  - Use the value obtained from command line parameters, if any;
->
->  - Otherwise, if an environment variable is there, use it;
->
->  - Otherwise, the value obtained from git_config(), with "later one wins"
->    rule.
->
-> I think you are not adding any command line option, so favoring
-> environment and then using configuration is fine, but the configuration
-> parser must follow the usual "later one wins" rule to avoid dissapointing
-> the users.
+--nextPart1427885.DTtizNijLF
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-I just followed the way other options behave. I was just not sure how
-I was supposed to deal with them.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
->> +#if LIBCURL_VERSION_NUM >= 0x070a06
->> +static long get_curl_auth_bitmask(const char* auth_method)
->
-> In git codebase, asterisk that means "a pointer" sticks to the variable
-> name not to type name; "const char *auth_method" (I see this file is
-> already infested with such style violations, but if you are doing a
-> separate clean-up patch it would be appreciated to clean them up).
->
+iEYEABECAAYFAkmGsTwACgkQqUud07tmzP3/twCbBWigk39s28QiH59Qi3k7oynl
+QIcAnjIv3SkCpv5B3ZQ7Yn498Q9UO19C
+=kXng
+-----END PGP SIGNATURE-----
 
-I'm not willing to do it this time ;-)
-
->> +{
->> +     char buf[4096];
->
-> Do you need that much space?
-
-I think as long as we use fixed-size buffers, I should get them enough
-sized. If this is not preferrable, then it'd be better off using
-heap-allocated buffers.
-
->> +     const unsigned char *p = (const unsigned char *)auth_method;
->> +     long mask = CURLAUTH_NONE;
->> +
->> +    strlcpy(buf, auth_method, sizeof(buf));
->
-> A tab is 8-char wide.
-
-Sorry about this. I actually was careful but I just forgot to turn off
-the tab expansion for the second time.
-
-> What happens when auth_method is longer than 4kB?
->
->> +
->> +     for (;;) {
->> +             char *q = buf;
->> +             while (*p && isspace(*p))
->> +                     ++p;
->
-> If there is no particular reason to choose one over the other, please use
-> postincrement, p++, as other existing parts of the codebase.
->
-> I'll try to demonstrate what (I think) this patch should look like as a
-> pair of follow-up messages to this one, but I am not sure about my rewrite
-> of get_curl_auth_bitmask().  Please consider it as an easter-egg bughunt
-> ;-)
-
-I anyway appreciate this kind of knit-picking as I'd do so to newbies.
-Thanks very much for the advice.
-
-Regards,
-Moriyoshi
+--nextPart1427885.DTtizNijLF--
