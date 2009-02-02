@@ -1,44 +1,81 @@
-From: Sharib Khan <sak2109@columbia.edu>
-Subject: duplicate sign-off-by error
-Date: Mon, 2 Feb 2009 12:22:36 -0500
-Message-ID: <79FCCC4F-9C66-470E-AC32-8F3AE3C81EE9@columbia.edu>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 02 18:47:51 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git grep -I bug
+Date: Mon, 02 Feb 2009 09:54:31 -0800
+Message-ID: <7vwsc8hgh4.fsf@gitster.siamese.dyndns.org>
+References: <20090202174257.GA8259@Ambelina.erc-wireless.uc.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeremy O'Brien <obrien654j@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 02 18:56:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LU2tc-0000IR-Cz
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 18:47:44 +0100
+	id 1LU31j-0003zw-Tx
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 18:56:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752956AbZBBRqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2009 12:46:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752945AbZBBRqS
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 12:46:18 -0500
-Received: from serrano.cc.columbia.edu ([128.59.29.6]:64352 "EHLO
-	serrano.cc.columbia.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752900AbZBBRqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2009 12:46:17 -0500
-X-Greylist: delayed 1409 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Feb 2009 12:46:16 EST
-Received: from [172.16.17.173] (vpn-wireless-client-pool-245-96.cpmc.columbia.edu [156.111.245.96])
-	(user=sak2109 mech=PLAIN bits=0)
-	by serrano.cc.columbia.edu (8.14.1/8.14.1) with ESMTP id n12HMaFj009945
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 2 Feb 2009 12:22:38 -0500 (EST)
-X-Mailer: Apple Mail (2.930.3)
-X-No-Spam-Score: Local
-X-Scanned-By: MIMEDefang 2.65 on 128.59.29.6
+	id S1752890AbZBBRyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 12:54:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752725AbZBBRyk
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 12:54:40 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60694 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752596AbZBBRyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 12:54:39 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CBE2796DBF;
+	Mon,  2 Feb 2009 12:54:36 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BFE9696DBC; Mon,
+  2 Feb 2009 12:54:33 -0500 (EST)
+In-Reply-To: <20090202174257.GA8259@Ambelina.erc-wireless.uc.edu> (Jeremy
+ O'Brien's message of "Mon, 2 Feb 2009 12:42:57 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8E505B20-F152-11DD-A61C-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108101>
 
-I m getting a Duplicate Sign-off by error when trying to commit to the  
-repository.
-I am using git 1.5.6 on solaris
+Jeremy O'Brien <obrien654j@gmail.com> writes:
 
-what is this error related to and how can it be resolved.
+> I am running git version 1.6.1.2.309.g2ea3.
+>
+> When I use
+>
+> git grep -I "string_to_match"
+>
+> to ignore binary files in my grep, binary files are returned anyway.
+
+One sanity check.  What does 'git grep --cached -I "string_to_match"' do
+in that case?
+
+If it works as expected but without --cached it doesn't, then I think the
+following patch will fix it.
+
+-- >8 --
+Subject: grep: pass -I (ignore binary) down to external grep
+
+The external-grep codepath forgets to pass this option.  Fix it.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-grep.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git c/builtin-grep.c w/builtin-grep.c
+index bebf15c..c799fdd 100644
+--- c/builtin-grep.c
++++ w/builtin-grep.c
+@@ -297,6 +297,8 @@ static int external_grep(struct grep_opt *opt, const char **paths, int cached)
+ 		push_arg("-l");
+ 	if (opt->unmatch_name_only)
+ 		push_arg("-L");
++	if (opt->binary == GREP_BINARY_NOMATCH)
++		push_arg("-I");
+ 	if (opt->null_following_name)
+ 		/* in GNU grep git's "-z" translates to "-Z" */
+ 		push_arg("-Z");
