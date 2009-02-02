@@ -1,40 +1,41 @@
 From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH v2 0/4] Extend mailmap functionality
-Date: Mon, 02 Feb 2009 09:07:42 +0100
-Message-ID: <4986A9CE.9040009@trolltech.com>
-References: <cover.1233520945.git.marius@trolltech.com> <7vpri1o801.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH v2 1/4] Add log.mailmap as configurational option for
+ mailmap location
+Date: Mon, 02 Feb 2009 09:26:47 +0100
+Message-ID: <4986AE47.3010305@trolltech.com>
+References: <cover.1233520945.git.marius@trolltech.com> <ce94ea88e3182e97997c23f71e184e0db64fa708.1233520945.git.marius@trolltech.com> <7vwsc9o82r.fsf@gitster.siamese.dyndns.org> <4986A539.3080606@trolltech.com> <7vr62hl1a3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
  protocol="application/pgp-signature";
- boundary="------------enigDD074D9FE93AEB5C2F2FF0DB"
+ boundary="------------enig63101D2727C3471F1C836AD5"
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 02 09:09:12 2009
+X-From: git-owner@vger.kernel.org Mon Feb 02 09:28:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTtrh-000205-1R
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 09:09:09 +0100
+	id 1LTuAQ-0006Zz-Ja
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 09:28:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751900AbZBBIHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2009 03:07:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751888AbZBBIHn
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 03:07:43 -0500
-Received: from hoat.troll.no ([62.70.27.150]:59270 "EHLO hoat.troll.no"
+	id S1751602AbZBBI0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 03:26:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751384AbZBBI0v
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 03:26:51 -0500
+Received: from hoat.troll.no ([62.70.27.150]:55331 "EHLO hoat.troll.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751627AbZBBIHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2009 03:07:42 -0500
+	id S1750698AbZBBI0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 03:26:50 -0500
 Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 42E6420B11;
-	Mon,  2 Feb 2009 09:07:41 +0100 (CET)
+	by hoat.troll.no (Postfix) with SMTP id 93F6D20B76;
+	Mon,  2 Feb 2009 09:26:47 +0100 (CET)
 Received: from [172.24.90.95] (unknown [172.24.90.95])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id 335CA209F5;
-	Mon,  2 Feb 2009 09:07:41 +0100 (CET)
+	by hoat.troll.no (Postfix) with ESMTP id 7F29A20AF8;
+	Mon,  2 Feb 2009 09:26:46 +0100 (CET)
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.19) Gecko/20081209 Lightning/0.9 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
-In-Reply-To: <7vpri1o801.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7vr62hl1a3.fsf@gitster.siamese.dyndns.org>
 X-Enigmail-Version: 0.95.7
 Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
  hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
@@ -52,58 +53,72 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108068>
 
 This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigDD074D9FE93AEB5C2F2FF0DB
+--------------enig63101D2727C3471F1C836AD5
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano said the following on 02.02.2009 04:03:
->> This extended mapping is necessary when a company wants to have
->> their repositories open to the public, but needs to protect the
->> identities of the developers. It enables you to only show nicks
->> and standardized emails, like 'Dev123 <bugs@company.xx>' in the
->> public repo, but by using an private mailmap file, map the name
->> back to 'John Doe <john.doe@company.xx>' inside the company.
+Junio C Hamano said the following on 02.02.2009 08:56:
+> Marius Storm-Olsen <marius@trolltech.com> writes:
+>> Junio C Hamano said the following on 02.02.2009 04:01:
+>>> Should it always be a wholesale override, or should it also
+>>> support augmenting the repository version with a private copy?
+>> Sure, I can rewrite it to be augmenting, rather than overriding.=20
+>> I assume that the normal .mailmap file should be parsed first,
+>> then the log.mailmap one?
 >=20
-> I do not find the "necessary" argument very convincing nor I find
-> the particular use case sane.  You may want to do things that way,
-> but I do not know if it is the best way to go about it.
+> Augmenting one would behave that way.  I was more wondering if
+> people would want to be able to choose either, perhaps from the
+> command line option or something.
 
-Well, this is the use-case for my company. We have open-source repos,=20
-which are the exact same repos which the company's developers work on,=20
-not a modified mirror repo.
-However, laws in some countries requires that employees information be=20
-kept away from the public, should they so wish. So, for our developers=20
-to work on the exact same repo as the open-source community, we need a=20
-way to map both Names and Emails back to the original author, inside=20
-the company without using a different repo.
+Oh, I see. *ponder* maybe, though you could say that about any option=20
+in the .git/config file, right?
 
-Also, the company commit policy might be such that the email on the=20
-commit is always the companys <bugs@company.xx>. This might be so that=20
-if someone finds a bug to your commit, they send the bug report to the=20
-companys bug-tracker instead of the individual email address.
-However, that breaks the old mailmap system, since it requires unique=20
-email addresses to map to a name.
 
-> The new mapping however brings in more flexibility, and there may
-> be other use cases where people benefit from that flexibility.  I
-> am slightly in favor than neutral to this new feature.
+>> Sure, but I left it in to allow "old-style" usage. Just in case
+>> the were use-cases for not using the log.mailmap one. I can nuke
+>> the arguments if you don't want them anymore.
+>=20
+> What I think would be sensible, if we really want to make this
+> feature flexible, would be to introduce a command line option (and
+> perhaps environment variable) that takes the usual precidence (the
+> command line that specifies the mailmap file, then the environment
+> and then finally the log.mailmap config variable).  And if we go
+> that route, that "usuall NULL" parameter would be where the callers
+> pass the filename they got from their command line.
+>=20
+> But if you feel it is overengineering, I would not disagree.  In
+> such a case, however, I do not think there is a reason for one
+> particular caller to pass some custom value there, just to be
+> inconsistent from others.
 
-You could use this feature in git.git itself, where for example
-     Junio C Hamano <gitster@pobox.com>
-     Junio C Hamano <gitster@pobox.com> <junio@twinsun.com>
-(or any of the others in the .mailmap file with X number of different=20
-email addresses), to ensure that you are always associated with one=20
-specific email address.
+I'm not sure of the use case of the command line option. In which case=20
+would you want to only use the mailmap for that one command? It=20
+doesn't normally affect your git commands, so it doesn't hurt to just=20
+set the log.mailmap option. The environment use case would be just=20
+like setting it in your ~/.gitconfig, other than you can have a=20
+different one for each console, I guess.
+
+Now, if we extended the mailmap feature even further, to report the=20
+mappings from the rev-list code ((optional of course)), so that any=20
+log viewer would show the mapped information; _then_ I would consider=20
+the command-line and environment variables as mandatory. Since, then=20
+you might want the feature off by default, and only use the mappings=20
+when you need to figure out a breakage, thus need a quick way to=20
+enable it.
+
+So, unless anyone raises their hand that they need=20
+command-line/environment ways of setting the mailmap file used, I'll=20
+leave it as is for now. Ok?
 
 --=20
 =2Emarius [@trolltech.com]
 'if you know what you're doing, it's not research'
 
 
---------------enigDD074D9FE93AEB5C2F2FF0DB
+--------------enig63101D2727C3471F1C836AD5
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
@@ -111,9 +126,9 @@ Content-Disposition: attachment; filename="signature.asc"
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (MingW32)
 
-iD8DBQFJhqnOKzzXl/njVP8RAmAYAJ9tnpvEFXNo2MLayoTxc/NifMBGEgCbB6In
-oobKt2Ts+r/S8lvhMOTq8Ic=
-=MpIE
+iD8DBQFJhq5HKzzXl/njVP8RAo2jAJ4pYA4zooySDFQNd77GVhixXdvXSACghu4B
+rNKN+nyer4+8Y/b2xf4bk6E=
+=M5/0
 -----END PGP SIGNATURE-----
 
---------------enigDD074D9FE93AEB5C2F2FF0DB--
+--------------enig63101D2727C3471F1C836AD5--
