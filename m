@@ -1,75 +1,341 @@
-From: Rostislav Svoboda <rostislav.svoboda@gmail.com>
-Subject: cvs2git migration - cloning CVS repository
-Date: Mon, 2 Feb 2009 15:24:56 +0100
-Message-ID: <286817520902020624y7f4c2942l34fafc0fe0fa0b48@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: [PATCH v3 1/4] Add log.mailmap as configurational option for mailmap location
+Date: Mon,  2 Feb 2009 15:32:07 +0100
+Message-ID: <36adb0d2cc4c20c4efb3b03a912b27e67c166855.1233584536.git.marius@trolltech.com>
+References: <cover.1233584536.git.marius@trolltech.com>
+Cc: gitster@pobox.com, Marius Storm-Olsen <marius@trolltech.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 02 15:26:26 2009
+X-From: git-owner@vger.kernel.org Mon Feb 02 15:35:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTzko-0003bh-3r
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 15:26:26 +0100
+	id 1LTzt1-000779-A0
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 15:34:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600AbZBBOZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2009 09:25:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751729AbZBBOY7
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 09:24:59 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:49809 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751995AbZBBOY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2009 09:24:58 -0500
-Received: by ewy14 with SMTP id 14so1869330ewy.13
-        for <git@vger.kernel.org>; Mon, 02 Feb 2009 06:24:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=1Y+jsU0/MUqJ4abWG7D8+7/sdWv+riZ0hVAFrqJv5yk=;
-        b=AYbGbgmXuWxRHGK7XgjIS+quY3S5IACgftVfzex6vKnKlmvB1qBRmN3akfWvAnILix
-         PKUaSxXLoOE8kBkaQY/0gDNhfWRacEO9hLFupFlkanpgX1Mgz7SeUvhjfZiIevsq7SQE
-         krxMrqq+4p1WWd/fyHjkxeuzuO5t+Szqt4dAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=KlJIV7GXrAaJPQArDmRFawKLC8oOhIvckv/F2Nflyx8c3Sjk+KAuJb0jLchRM8WHQy
-         9PiY7XDUEfH+3bJOUTjZzbZc+b7afANN0NVHN/HR0FPLdXw81mmlka5v33FeGGQe9Emx
-         OooNIk1TKur24uPTrQnIkp9YZEGGt0uHroQpw=
-Received: by 10.210.43.11 with SMTP id q11mr4852967ebq.56.1233584696332; Mon, 
-	02 Feb 2009 06:24:56 -0800 (PST)
+	id S1752727AbZBBOde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 09:33:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752685AbZBBOdc
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 09:33:32 -0500
+Received: from hoat.troll.no ([62.70.27.150]:37587 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752537AbZBBOd1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 09:33:27 -0500
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 51CD420F4B;
+	Mon,  2 Feb 2009 15:33:21 +0100 (CET)
+Received: from localhost.localdomain (unknown [172.24.90.96])
+	by hoat.troll.no (Postfix) with ESMTP id 3D9A120F42;
+	Mon,  2 Feb 2009 15:33:21 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.2.257.g84fd75
+In-Reply-To: <cover.1233584536.git.marius@trolltech.com>
+In-Reply-To: <cover.1233584536.git.marius@trolltech.com>
+References: <cover.1233584536.git.marius@trolltech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108089>
 
-Hi everyone
+This allows us to augment the repo mailmap file, and to use
+mailmap files elsewhere than the repository root. Meaning
+that the entries in log.mailmap will override the entries
+in "./.mailmap", should they match the same.
 
-I'd like to clone a CVS repository to a local machine in order to
-prepare it for a migration to git. I tried:
+Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
+---
+ Documentation/config.txt       |    8 +++
+ Documentation/git-shortlog.txt |    3 +-
+ builtin-blame.c                |    2 +-
+ builtin-shortlog.c             |    3 +-
+ cache.h                        |    1 +
+ config.c                       |   10 ++++
+ mailmap.c                      |   12 ++++-
+ mailmap.h                      |    2 +-
+ pretty.c                       |    2 +-
+ t/t4203-mailmap.sh             |  109 ++++++++++++++++++++++++++++++++++++++++
+ 10 files changed, 145 insertions(+), 7 deletions(-)
+ create mode 100755 t/t4203-mailmap.sh
 
-$git cvsimport -p x -v -d
-:pserver:mylogin@cvs-server:/cvs/cvsrepository cvsmodule
-AuthReply: I HATE YOU
-$git cvsimport -p x -v -d
-:pserver:anonymous@cvs-server:/cvs/cvsrepository cvsmodule
-AuthReply: E Fatal error, aborting.
-
-I haven't found much info concerning the 'I HATE YOU'. So I'd like to
-ask you if I'm right:
-(I can't talk about this with my cvs-server administrator. He's a kind of dumb)
-
-- git cvsimport works only using 'anonymous' account. So my real login
-name won't work?
-- 'AuthReply: E Fatal error, aborting.' means that the cvs-server does
-not accept anonymous connections?
-
-Is there any other way how to get the cvs repository to my local machine?
-
-thx a lot
-
-Bost
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e2b8775..1334d36 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1012,6 +1012,14 @@ log.showroot::
+ 	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
+ 	normally hide the root commit will now show it. True by default.
+ 
++log.mailmap::
++	The location of an augmenting mailmap file. The default
++	mailmap, located in the root of the repository, is loaded
++	first, then the mailmap file pointed to by this variable.
++	The location of the mailmap file may be in a repository
++	subdirectory, or somewhere outside of the repository itself.
++	See linkgit:git-shortlog[1] and linkgit:git-blame[1].
++
+ man.viewer::
+ 	Specify the programs that may be used to display help in the
+ 	'man' format. See linkgit:git-help[1].
+diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
+index 8f7c0e2..cacbeea 100644
+--- a/Documentation/git-shortlog.txt
++++ b/Documentation/git-shortlog.txt
+@@ -48,7 +48,8 @@ OPTIONS
+ FILES
+ -----
+ 
+-If a file `.mailmap` exists at the toplevel of the repository,
++If a file `.mailmap` exists at the toplevel of the repository, or at the
++location pointed to by the log.mailmap configuration option,
+ it is used to map an author email address to a canonical real name. This
+ can be used to coalesce together commits by the same person where their
+ name was spelled differently (whether with the same email address or
+diff --git a/builtin-blame.c b/builtin-blame.c
+index aae14ef..19edcf3 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -2394,7 +2394,7 @@ parse_done:
+ 		die("reading graft file %s failed: %s",
+ 		    revs_file, strerror(errno));
+ 
+-	read_mailmap(&mailmap, ".mailmap", NULL);
++	read_mailmap(&mailmap, NULL);
+ 
+ 	if (!incremental)
+ 		setup_pager();
+diff --git a/builtin-shortlog.c b/builtin-shortlog.c
+index 5f9f3f0..314b6bc 100644
+--- a/builtin-shortlog.c
++++ b/builtin-shortlog.c
+@@ -219,7 +219,7 @@ void shortlog_init(struct shortlog *log)
+ {
+ 	memset(log, 0, sizeof(*log));
+ 
+-	read_mailmap(&log->mailmap, ".mailmap", &log->common_repo_prefix);
++	read_mailmap(&log->mailmap, &log->common_repo_prefix);
+ 
+ 	log->list.strdup_strings = 1;
+ 	log->wrap = DEFAULT_WRAPLEN;
+@@ -248,6 +248,7 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+ 	struct parse_opt_ctx_t ctx;
+ 
+ 	prefix = setup_git_directory_gently(&nongit);
++	git_config(git_default_config, NULL);
+ 	shortlog_init(&log);
+ 	init_revisions(&rev, prefix);
+ 	parse_options_start(&ctx, argc, argv, PARSE_OPT_KEEP_DASHDASH |
+diff --git a/cache.h b/cache.h
+index 45e713e..3eef7ea 100644
+--- a/cache.h
++++ b/cache.h
+@@ -867,6 +867,7 @@ extern int user_ident_explicitly_given;
+ 
+ extern const char *git_commit_encoding;
+ extern const char *git_log_output_encoding;
++extern const char *git_log_mailmap;
+ 
+ /* IO helper functions */
+ extern void maybe_flush_or_die(FILE *, const char *);
+diff --git a/config.c b/config.c
+index 790405a..9ebcbbe 100644
+--- a/config.c
++++ b/config.c
+@@ -565,6 +565,13 @@ static int git_default_branch_config(const char *var, const char *value)
+ 	return 0;
+ }
+ 
++static int git_default_log_config(const char *var, const char *value)
++{
++	if (!strcmp(var, "log.mailmap"))
++		return git_config_string(&git_log_mailmap, var, value);
++	return 0;
++}
++
+ int git_default_config(const char *var, const char *value, void *dummy)
+ {
+ 	if (!prefixcmp(var, "core."))
+@@ -579,6 +586,9 @@ int git_default_config(const char *var, const char *value, void *dummy)
+ 	if (!prefixcmp(var, "branch."))
+ 		return git_default_branch_config(var, value);
+ 
++	if (!prefixcmp(var, "log."))
++		return git_default_log_config(var, value);
++
+ 	if (!strcmp(var, "pager.color") || !strcmp(var, "color.pager")) {
+ 		pager_use_color = git_config_bool(var,value);
+ 		return 0;
+diff --git a/mailmap.c b/mailmap.c
+index 88fc6f3..5aaee91 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -2,10 +2,11 @@
+ #include "string-list.h"
+ #include "mailmap.h"
+ 
+-int read_mailmap(struct string_list *map, const char *filename, char **repo_abbrev)
++const char *git_log_mailmap;
++static int read_single_mailmap(struct string_list *map, const char *filename, char **repo_abbrev)
+ {
+ 	char buffer[1024];
+-	FILE *f = fopen(filename, "r");
++	FILE *f = (filename == NULL ? NULL : fopen(filename, "r"));
+ 
+ 	if (f == NULL)
+ 		return 1;
+@@ -60,6 +61,13 @@ int read_mailmap(struct string_list *map, const char *filename, char **repo_abbr
+ 	return 0;
+ }
+ 
++int read_mailmap(struct string_list *map, char **repo_abbrev)
++{
++	/* each failure returns 1, so >1 means both calls failed */
++	return read_single_mailmap(map, ".mailmap", repo_abbrev) +
++	       read_single_mailmap(map, git_log_mailmap, repo_abbrev) > 1;
++}
++
+ int map_email(struct string_list *map, const char *email, char *name, int maxlen)
+ {
+ 	char *p;
+diff --git a/mailmap.h b/mailmap.h
+index 6e48f83..ba2ee76 100644
+--- a/mailmap.h
++++ b/mailmap.h
+@@ -1,7 +1,7 @@
+ #ifndef MAILMAP_H
+ #define MAILMAP_H
+ 
+-int read_mailmap(struct string_list *map, const char *filename, char **repo_abbrev);
++int read_mailmap(struct string_list *map, char **repo_abbrev);
+ int map_email(struct string_list *mailmap, const char *email, char *name, int maxlen);
+ 
+ #endif
+diff --git a/pretty.c b/pretty.c
+index cc460b5..9e03d6a 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -312,7 +312,7 @@ static int mailmap_name(struct strbuf *sb, const char *email)
+ 
+ 	if (!mail_map) {
+ 		mail_map = xcalloc(1, sizeof(*mail_map));
+-		read_mailmap(mail_map, ".mailmap", NULL);
++		read_mailmap(mail_map, NULL);
+ 	}
+ 
+ 	if (!mail_map->nr)
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+new file mode 100755
+index 0000000..2eded8e
+--- /dev/null
++++ b/t/t4203-mailmap.sh
+@@ -0,0 +1,109 @@
++#!/bin/sh
++
++test_description='.mailmap configurations'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	echo one >one &&
++	git add one &&
++	test_tick &&
++	git commit -m initial &&
++	echo two >>one &&
++	git add one &&
++	git commit --author "nick1 <bugs@company.xx>" -m second
++'
++
++cat >expect <<\EOF
++A U Thor (1):
++      initial
++
++nick1 (1):
++      second
++
++EOF
++
++test_expect_success 'No mailmap' '
++	git shortlog >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<\EOF
++Repo Guy (1):
++      initial
++
++nick1 (1):
++      second
++
++EOF
++
++test_expect_success 'default .mailmap' '
++	echo "Repo Guy <author@example.com>" > .mailmap &&
++	git shortlog >actual &&
++	test_cmp expect actual
++'
++
++# Using a mailmap file in a subdirectory of the repo here, but
++# could just as well have been a file outside of the repository
++cat >expect <<\EOF
++Internal Guy (1):
++      second
++
++Repo Guy (1):
++      initial
++
++EOF
++test_expect_success 'log.mailmap set' '
++	mkdir internal_mailmap &&
++	echo "Internal Guy <bugs@company.xx>" > internal_mailmap/.mailmap &&
++	git config log.mailmap internal_mailmap/.mailmap &&
++	git shortlog >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<\EOF
++External Guy (1):
++      initial
++
++Internal Guy (1):
++      second
++
++EOF
++test_expect_success 'log.mailmap override' '
++	echo "External Guy <author@example.com>" >> internal_mailmap/.mailmap &&
++	git config log.mailmap internal_mailmap/.mailmap &&
++	git shortlog >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<\EOF
++Repo Guy (1):
++      initial
++
++nick1 (1):
++      second
++
++EOF
++
++test_expect_success 'log.mailmap file non-existant' '
++	rm internal_mailmap/.mailmap &&
++	rmdir internal_mailmap &&
++	git shortlog >actual &&
++	test_cmp expect actual
++'
++
++cat >expect <<\EOF
++A U Thor (1):
++      initial
++
++nick1 (1):
++      second
++
++EOF
++test_expect_success 'No mailmap files, but configured' '
++	rm .mailmap &&
++	git shortlog >actual &&
++	test_cmp expect actual
++'
++
++test_done
+-- 
+1.6.1.2.257.g84fd75
