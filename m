@@ -1,70 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] push: Learn to set up branch tracking with '--track'
-Date: Mon, 2 Feb 2009 14:52:26 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902021449370.3586@pacific.mpi-cbg.de>
-References: <cover.1233236267u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0901291438030.3586@pacific.mpi-cbg.de> <20090129223308.GB12871@coredump.intra.peff.net> <20090129231715.GA17399@coredump.intra.peff.net> <alpine.DEB.1.00.0901300127450.3586@pacific.mpi-cbg.de>
- <20090130050925.GA18809@coredump.intra.peff.net> <alpine.DEB.1.00.0901301656290.3586@pacific.mpi-cbg.de> <20090130162258.GA7065@sigill.intra.peff.net> <alpine.DEB.1.00.0901301804030.3586@pacific.mpi-cbg.de> <20090202131611.GB8487@sigio.peff.net>
+From: Rostislav Svoboda <rostislav.svoboda@gmail.com>
+Subject: cvs2git migration - cloning CVS repository
+Date: Mon, 2 Feb 2009 15:24:56 +0100
+Message-ID: <286817520902020624y7f4c2942l34fafc0fe0fa0b48@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 02 14:53:48 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 02 15:26:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTzEs-0008KL-TY
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 14:53:27 +0100
+	id 1LTzko-0003bh-3r
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 15:26:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752294AbZBBNv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2009 08:51:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752184AbZBBNv7
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 08:51:59 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45563 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752090AbZBBNv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2009 08:51:58 -0500
-Received: (qmail invoked by alias); 02 Feb 2009 13:51:56 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp037) with SMTP; 02 Feb 2009 14:51:56 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/yfSVri1HyERYOyaPWVkJU+GsC357tyrBH1NkLSu
-	t/qKovUPjsF5rX
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090202131611.GB8487@sigio.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1752600AbZBBOZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 09:25:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751729AbZBBOY7
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 09:24:59 -0500
+Received: from mail-ew0-f21.google.com ([209.85.219.21]:49809 "EHLO
+	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751995AbZBBOY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 09:24:58 -0500
+Received: by ewy14 with SMTP id 14so1869330ewy.13
+        for <git@vger.kernel.org>; Mon, 02 Feb 2009 06:24:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=1Y+jsU0/MUqJ4abWG7D8+7/sdWv+riZ0hVAFrqJv5yk=;
+        b=AYbGbgmXuWxRHGK7XgjIS+quY3S5IACgftVfzex6vKnKlmvB1qBRmN3akfWvAnILix
+         PKUaSxXLoOE8kBkaQY/0gDNhfWRacEO9hLFupFlkanpgX1Mgz7SeUvhjfZiIevsq7SQE
+         krxMrqq+4p1WWd/fyHjkxeuzuO5t+Szqt4dAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=KlJIV7GXrAaJPQArDmRFawKLC8oOhIvckv/F2Nflyx8c3Sjk+KAuJb0jLchRM8WHQy
+         9PiY7XDUEfH+3bJOUTjZzbZc+b7afANN0NVHN/HR0FPLdXw81mmlka5v33FeGGQe9Emx
+         OooNIk1TKur24uPTrQnIkp9YZEGGt0uHroQpw=
+Received: by 10.210.43.11 with SMTP id q11mr4852967ebq.56.1233584696332; Mon, 
+	02 Feb 2009 06:24:56 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108088>
 
-Hi,
+Hi everyone
 
-On Mon, 2 Feb 2009, Jeff King wrote:
+I'd like to clone a CVS repository to a local machine in order to
+prepare it for a migration to git. I tried:
 
-> It looks like the consensus is to add a branch.master config section 
-> even when cloning an empty repo. And that should address my concern in 
-> the 99% of cases where people use the default "master" setup. Which kind 
-> of takes away the main use case for this topic.
+$git cvsimport -p x -v -d
+:pserver:mylogin@cvs-server:/cvs/cvsrepository cvsmodule
+AuthReply: I HATE YOU
+$git cvsimport -p x -v -d
+:pserver:anonymous@cvs-server:/cvs/cvsrepository cvsmodule
+AuthReply: E Fatal error, aborting.
 
->From where I sit, the main use would have been:
+I haven't found much info concerning the 'I HATE YOU'. So I'd like to
+ask you if I'm right:
+(I can't talk about this with my cvs-server administrator. He's a kind of dumb)
 
-	# <hackhackhack>
-	$ git init
-	$ git add .
-	$ git commit -m initial\ revision
-	# <hackhackhack>
-	# <create a repository on repo.or.cz>
-	$ git remote add origin $URL
-	$ git push -t origin master
+- git cvsimport works only using 'anonymous' account. So my real login
+name won't work?
+- 'AuthReply: E Fatal error, aborting.' means that the cvs-server does
+not accept anonymous connections?
 
-BTW I always wondered if it would make sense to introduce "git commit 
---init" for the first 3 Git commands.  I use them way too often.
+Is there any other way how to get the cvs repository to my local machine?
 
-Ah, well, I will install an alias on all of my machines.
+thx a lot
 
-Ciao,
-Dscho
+Bost
