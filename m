@@ -1,136 +1,112 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Switch receive.denyCurrentBranch to "refuse"
-Date: Mon, 2 Feb 2009 07:41:48 -0500
-Message-ID: <20090202124148.GB8325@sigio.peff.net>
-References: <cover.1233275583u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de> <76718490901300817x3f31460k59b6fe75d136372d@mail.gmail.com> <alpine.DEB.1.00.0901301756560.3586@pacific.mpi-cbg.de> <76718490901301050h1f0f5b2bq902de384d954d99b@mail.gmail.com> <alpine.DEB.1.00.0901301959300.3586@pacific.mpi-cbg.de> <20090131095622.6117@nanako3.lavabit.com> <7vy6wr0wvi.fsf@gitster.siamese.dyndns.org>
+Subject: Re: 'git clone' doesn't use alternates automatically?
+Date: Mon, 2 Feb 2009 08:07:55 -0500
+Message-ID: <20090202130755.GA8487@sigio.peff.net>
+References: <885649360901301412jd5c6b0dne1eff1ff00dd043e@mail.gmail.com> <20090131071238.GC3033@coredump.intra.peff.net> <885649360901311208s4bc17ae3me2062b07b302291e@mail.gmail.com> <20090131215514.GB9415@coredump.intra.peff.net> <7v7i4b2bto.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+Cc: James Pickens <jepicken@gmail.com>, Git ML <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 02 13:43:13 2009
+X-From: git-owner@vger.kernel.org Mon Feb 02 14:09:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTy8m-0000dp-LD
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 13:43:05 +0100
+	id 1LTyYI-0000uq-Nm
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 14:09:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753300AbZBBMlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2009 07:41:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753290AbZBBMlh
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 07:41:37 -0500
-Received: from peff.net ([208.65.91.99]:42323 "EHLO peff.net"
+	id S1754248AbZBBNHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 08:07:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754225AbZBBNHp
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 08:07:45 -0500
+Received: from peff.net ([208.65.91.99]:52109 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753230AbZBBMlg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2009 07:41:36 -0500
-Received: (qmail 8362 invoked by uid 1000); 2 Feb 2009 12:41:48 -0000
+	id S1753493AbZBBNHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 08:07:44 -0500
+Received: (qmail 8500 invoked by uid 1000); 2 Feb 2009 13:07:55 -0000
 Content-Disposition: inline
-In-Reply-To: <7vy6wr0wvi.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7v7i4b2bto.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108081>
 
-On Sat, Jan 31, 2009 at 05:27:45PM -0800, Junio C Hamano wrote:
+On Sat, Jan 31, 2009 at 05:19:31PM -0800, Junio C Hamano wrote:
 
-> I haven't manged to convince myself about the "git init" change (I have
-> the code and also I've looked at the extent of damage the change causes to
-
-I think the "git init" change doesn't make sense. In fact, I don't think
-such a proposal ever really makes sense (and I have even proposed it in
-the past, but others arguments have changed my way of thinking).
-
-The reason is that you are just moving the breakage to a different point
-in their workflow. The claim is that it's not OK for this to break:
-
-  cd foo && git init
-  git push ;# ok
-  ... time passes, git upgrade ...
-  git push ;# broken
-
-but it somehow _is_ OK for this to break:
-
-  cd foo && git init
-  git push ;# ok
-  ... time passes, git upgrade ...
-  cd bar && git init
-  git push ;# broken
-
-In both cases, you have a sequence of commands that does one thing with
-one git version, and something else with another git version. The only
-difference is whether your sequence includes git init. So while you
-don't break people with existing repositories, you are still breaking
-anybody who creates a new one and gets confused when there is new
-behavior (or even has scripts which involve repository creation).
-
-So in my opinion either the breakage is serious enough not to allow the
-change, or minor enough (compared to the benefit) to allow it. But
-changing default config in git init is:
-
-  - a half-way solution that leaves some workflows broken and some not
-
-  - possibly even _worse_, since now we have sacrificed consistency. So
-    now users wonder why some of their repos show breakage and some
-    don't. Or why a particular behavior goes away when they try to write
-    a test case that involves creating a new test repo.
-
-And note that it doesn't matter whether you think the right path is to
-make the change or not: I am only arguing here against this sort of
-half-way technique.
-
-> -- >8 --
-> Subject: [PATCH] receive-pack: explain what to do when push updates the current branch
+> Jeff King <peff@peff.net> writes:
 > 
-> This makes "git push" issue a more detailed instruction when a user pushes
-> into the current branch of a non-bare repository without having an
-> explicit configuration set to receive.denycurrentbranch.  In such a case,
-> it will also tell the user that the default will change to refusal in a
-> future version of git.
+> >   - without either, copy alternates from origin, but _don't_ use
+> >     alternates while cloning
+> 
+> Are you talking about a local clone optimization that does hardlink from
+> the source repository?
 
-I think this is a definite improvement over the current behavior. As I
-said before, I am not sure what is the right path (though I think I am
-leaning towards leaving the warning longer based on the recent
-discussion), but if we are to leave the default to warn and not refuse,
-I think this should definitely be applied.
+Sorry, I was wrong about what was happening. From reading James' posts
+and not doing any experimenting or looking, I had the impression that
+doing this:
 
-A few comments on the specific message:
+  # plain repo
+  mkdir repo1 &&
+    (cd repo1 && git init &&
+     echo content >file && git add . && git commit -m one)
 
->  }
->  
-> +static char *warn_unconfigured_deny_msg[] = {
-> +	"Updating the currently checked out branch may cause confusion,",
-> +	"as the index and work tree do not reflect changes that are in HEAD."
-> +	"As a result, you may see the changes you just pushed into it",
+  # repo with alternates, but extra content
+  git clone -s repo1 repo2 &&
+    (cd repo2 &&
+     echo content >>file && git commit -a -m two)
 
-Missing comma between lines 2 and 3, which results in an overly long
-line in the output.
+  # clone of repo w/ alternates
+  git clone repo2 repo3
 
-> +	"You can set 'receive.denyCurrentBranch' configuration variable to",
-> +	"'refuse' in the repository to forbid pushing into the current branch",
-> +	"of it."
+would cause the final clone to set up the alternate to repo1, but still
+pull in the objects. But that isn't the case, of course. Either:
 
-Maybe this should specifically say "remote repository". If you
-understand how the feature works, it is obvious that you must do it that
-way, but for less advanced users it is not even clear that this text is
-being generated by the remote end.
+  1. It is a local hardlink clone, in which case we just pull in the
+     objects from repo2.
 
-> +	"To allow pushing into the current branch, you can set it to 'ignore';",
-> +	"but this is not recommended unless you really know what you are doing."
+  2. It isn't, in which case we don't copy over the alternates.
 
-I thought somebody (you?) argued against the phrase "unless you really
-know what you are doing". And it is better here in context explaining
-the general issue. But as a user, now I have to ask: do I know what I am
-doing, and if not, how do I find out?
+> I am fairly certain that copying alternates from the source repository was
+> not an intended behaviour but was a consequence of lazy coding of how we
+> copy (or link) everything from it.  The original was literally the simple
+> matter of:
+> 
+>     find objects ! -type d -print | cpio $cpio_quiet_flag -pumd$l "$GIT_DIR/"
+> 
+> whose intention was to copy objects/?? and objects/pack/. and it wasn't
+> even part of the design consideration to worry about what would happen to
+> the alternates the source repository might have in objects/info/.
 
-The two obvious solutions for people who "know what they are doing" are
-running "git reset --hard", and installing a hook that does something
-sensible. I don't know if it is worth mentioning them here (the former
-is mentioned earlier in the message, but that doesn't necessarily mean
-the user understands all the implications). Since there are so many
-subtleties to explain, maybe it make sense to simply put in a pointer to
-an expanded discussion in the "git push" manpage?
+Right, I think that is what is going on. And what I was suggesting in my
+other email is that it is actively harmful to have this behavior,
+because now repo3 depends on repo1, without the user having explicitly
+asked for such a relationship (and they might not even be aware of
+repo1).
+
+I was tempted to suggest avoiding copying the alternates from repo2
+to repo3. But you can't do that: repo2 is _missing_ objects that repo3
+won't have. Without the alternates file pointing to repo1, repo3 is
+corrupt. So simply avoiding copying the alternates file doesn't work;
+one would have to actually pull the missing objects in from the
+alternate before doing so.
+
+But actually, I think there is even more breakage in hardlinking the
+alternates file: alternates files can be relative paths. So if repo2
+points to "../../../repo1/.git/objects" (which it doesn't in the example
+above, as "clone -s" uses absolute paths -- but it is easy enough to
+construct a broken case), then repo3 will gain that alternate pointer,
+but may be in a totally different directory where that relative path is
+broken. And then repo3 is corrupt. So the alternates must be copied and
+any relative paths munged for it to work reliably.
+
+The hardlink code operates by default because it was thought to be a
+safe optimization that couldn't bite people. But it interacts badly with
+the concept of alternates. So I think a sane fix would be to disable
+hardlinking if the parent repo is using alternates at all. Then a
+vanilla "git clone repo2 repo3" will do the safe but more costly
+behavior of actually copying the objects. If the user wants to accept
+the risks of alternates, then he can give "-s" explicitly, and git will
+track the alternates recursively through repo2 to repo1 at runtime.
 
 -Peff
