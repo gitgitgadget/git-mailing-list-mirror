@@ -1,74 +1,149 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v2 0/4] Extend mailmap functionality
-Date: Mon, 2 Feb 2009 06:26:03 +0100
-Message-ID: <bd6139dc0902012126g605eb6d3v2a2d788a983dc65c@mail.gmail.com>
-References: <cover.1233520945.git.marius@trolltech.com>
-	 <7vpri1o801.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <marius@trolltech.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 02 06:27:42 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Support various HTTP authentication methods
+Date: Sun,  1 Feb 2009 22:31:11 -0800
+Message-ID: <1233556274-1354-1-git-send-email-gitster@pobox.com>
+References: <7v3af2h1b0.fsf@gitster.siamese.dyndns.org>
+ <E1LTqDN-0003MF-DP@lena.gsc.riken.jp>
+Cc: Moriyoshi Koizumi <mozo@mozo.jp>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 02 07:32:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTrLO-0008Fp-I2
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 06:27:39 +0100
+	id 1LTsMQ-0005rH-Q3
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 07:32:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751214AbZBBF0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2009 00:26:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751158AbZBBF0H
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 00:26:07 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:43788 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751050AbZBBF0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2009 00:26:05 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so489798fgg.17
-        for <git@vger.kernel.org>; Sun, 01 Feb 2009 21:26:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=43aTml/ReS8/8fVdS2L81goYkZB1yhKdp+2DuFhrKEs=;
-        b=bZSWZukvDRgC+1bbt4H/6QvXKOEz8d34YW+GtIzH05K3P9axGFICJyujgg+xpAkPVy
-         bDOml3P9SKpmTE+amtHo88he43HI3qSQndoqj3RklY5oVIZPeK9ZfZNA7NtRwGl5VYi4
-         SU12rHzYn4ZXN05n/eeSl3DYZvs8xZB05uVPw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=ay4VQ2raDFYs2Ye3jENQk9JlTd/zavSaWdEdijfMIDK0uftROSGHedLyK/DVPKQGcB
-         x4glyF9XVa6nar5aAhWGNjgUNXrQn7B5xYeU4FyOxOSNw/n9G5xI91eFccvBuOqirxLO
-         ZE6hwlFTr9GR6Fg808PunKAPw6w5bV6V2wRR8=
-Received: by 10.86.71.1 with SMTP id t1mr2037538fga.3.1233552363172; Sun, 01 
-	Feb 2009 21:26:03 -0800 (PST)
-In-Reply-To: <7vpri1o801.fsf@gitster.siamese.dyndns.org>
-X-Google-Sender-Auth: d210f0260ffd17de
+	id S1751099AbZBBGbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 01:31:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750874AbZBBGbV
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 01:31:21 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46377 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750715AbZBBGbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 01:31:20 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EC77194EA4;
+	Mon,  2 Feb 2009 01:31:18 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E9B2E94EA0; Mon,
+  2 Feb 2009 01:31:16 -0500 (EST)
+X-Mailer: git-send-email 1.6.1.2.333.ged98f
+In-Reply-To: <E1LTqDN-0003MF-DP@lena.gsc.riken.jp>
+X-Pobox-Relay-ID: 19AE40CA-F0F3-11DD-8FA5-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108051>
 
-On Mon, Feb 2, 2009 at 04:03, Junio C Hamano <gitster@pobox.com> wrote:
-> The new mapping however brings in more flexibility, and there may be other
-> use cases where people benefit from that flexibility.  I am slightly in
-> favor than neutral to this new feature.
+Moriyoshi Koizumi <mozo@mozo.jp> writes:
 
-It sure does, I use git-svn for a project hosted on Google Code, and
-the e-mail addresses are totally borked (e.g., "gmail-account-id"
-<gmail-account-id@the-svn-repo-uuid>). Not only that, but some
-developers (including me I must admit) have a rather obscure
-gmail-account-id, which is uses as the user's name for the commit
-message. It would be very nice if I could provide a mapping from
-"borked svn id's" to "normal, sensible e-mail addresses, including
-real names", a feature which this series seems to add :).
+> diff --git a/http.c b/http.c
+> index ee58799..41e8e8c 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -13,18 +13,24 @@ static CURL *curl_default;
+>  char curl_errorstr[CURL_ERROR_SIZE];
+>  
+>  static int curl_ssl_verify = -1;
+> -static const char *ssl_cert = NULL;
+> +static const char *ssl_cert;
+>  #if LIBCURL_VERSION_NUM >= 0x070902
+> -static const char *ssl_key = NULL;
+> +static const char *ssl_key;
+>  #endif
+>  #if LIBCURL_VERSION_NUM >= 0x070908
+> -static const char *ssl_capath = NULL;
+> +static const char *ssl_capath;
+>  #endif
+> -static const char *ssl_cainfo = NULL;
+> +static const char *ssl_cainfo;
+>  static long curl_low_speed_limit = -1;
+>  static long curl_low_speed_time = -1;
+>  static int curl_ftp_no_epsv = 0;
+> -static const char *curl_http_proxy = NULL;
+> +static const char *curl_http_proxy;
 
--- 
-Cheers,
+Applying style fixes to the existing code is very much appreciated, *but*
+please make such a clean-up patch a separate one.  A two-patch series
+whose [1/2] is such a pure clean-up without any feature change, with [2/2]
+that adds code to the cleaned-up state would be much less distracting for
+people who nitpick your changes.
 
-Sverre Rabbelier
+> @@ -153,11 +159,69 @@ static int http_options(const char *var, const char *value, void *cb)
+>  			return git_config_string(&curl_http_proxy, var, value);
+>  		return 0;
+>  	}
+> +#if LIBCURL_VERSION_NUM >= 0x070a06
+> +	if (!strcmp("http.auth", var)) {
+> +		if (curl_http_auth == NULL)
+> +			return git_config_string(&curl_http_auth, var, value);
+> +		return 0;
+> +	}
+> +#endif
+> +#if LIBCURL_VERSION_NUM >= 0x070a07
+> +	if (!strcmp("http.proxy_auth", var)) {
+> +		if (curl_http_proxy_auth == NULL)
+> +			return git_config_string(&curl_http_proxy_auth, var, value);
+> +		return 0;
+> +	}
+> +#endif
+
+If you follow config.c::git_config() you will notice that we read from
+/etc/gitconfig, $HOME/.gitconfig and then finally $GIT_DIR/config.  By
+implementing "if we already have read curl_http_auth already, we will
+ignore the later setting" like above code does, you break the general
+expectation that system-wide defaults is overridable by $HOME/.gitconfig
+and that is in turn overridable by per-repository $GIT_DIR/config.
+
+The preferred order would be:
+
+  - Use the value obtained from command line parameters, if any;
+
+  - Otherwise, if an environment variable is there, use it;
+
+  - Otherwise, the value obtained from git_config(), with "later one wins"
+    rule.
+  
+I think you are not adding any command line option, so favoring
+environment and then using configuration is fine, but the configuration
+parser must follow the usual "later one wins" rule to avoid dissapointing
+the users.
+
+> +#if LIBCURL_VERSION_NUM >= 0x070a06
+> +static long get_curl_auth_bitmask(const char* auth_method)
+
+In git codebase, asterisk that means "a pointer" sticks to the variable
+name not to type name; "const char *auth_method" (I see this file is
+already infested with such style violations, but if you are doing a
+separate clean-up patch it would be appreciated to clean them up).
+
+> +{
+> +	char buf[4096];
+
+Do you need that much space?
+
+> +	const unsigned char *p = (const unsigned char *)auth_method;
+> +	long mask = CURLAUTH_NONE;
+> +
+> +    strlcpy(buf, auth_method, sizeof(buf));
+
+A tab is 8-char wide.
+
+What happens when auth_method is longer than 4kB?
+
+> +
+> +	for (;;) {
+> +		char *q = buf;
+> +		while (*p && isspace(*p))
+> +			++p;
+
+If there is no particular reason to choose one over the other, please use
+postincrement, p++, as other existing parts of the codebase.
+
+I'll try to demonstrate what (I think) this patch should look like as a
+pair of follow-up messages to this one, but I am not sure about my rewrite
+of get_curl_auth_bitmask().  Please consider it as an easter-egg bughunt
+;-)
