@@ -1,246 +1,165 @@
-From: Moriyoshi Koizumi <mozo@mozo.jp>
-Subject: [PATCH] Support various HTTP authentication methods
-Date: Mon, 2 Feb 2009 13:09:24 +0900
-Message-ID: <E1LTqDN-0003MF-DP@lena.gsc.riken.jp>
-References: <7v3af2h1b0.fsf@gitster.siamese.dyndns.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Feb 02 05:47:03 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 2/4] builtin-replace: teach "git replace" to actually
+ replace
+Date: Mon, 2 Feb 2009 06:12:53 +0100
+Message-ID: <20090202061253.14305fad.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 02 06:14:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTqi7-0000QB-35
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 05:47:03 +0100
+	id 1LTr8s-0005cZ-AU
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 06:14:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754154AbZBBEpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Feb 2009 23:45:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753970AbZBBEpd
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Feb 2009 23:45:33 -0500
-Received: from postmanrt1.riken.jp ([134.160.33.65]:13780 "EHLO
-	postmanrt1.riken.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753917AbZBBEpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Feb 2009 23:45:32 -0500
-X-Greylist: delayed 1251 seconds by postgrey-1.27 at vger.kernel.org; Sun, 01 Feb 2009 23:45:32 EST
-Received: from postman1.riken.jp (postman1.riken.jp [134.160.33.61])
-	by postmanrt1.riken.jp (Postfix) with ESMTP id 35AC6402A9C
-	for <git@vger.kernel.org>; Mon,  2 Feb 2009 13:26:03 +0900 (JST)
-Received: from postman1.riken.jp (localhost.localdomain [127.0.0.1])
-	by localhost (Postfix) with SMTP id E9A6175C4F4
-	for <git@vger.kernel.org>; Mon,  2 Feb 2009 13:24:38 +0900 (JST)
-Received: from lena.gsc.riken.jp (ipm110.gsc.riken.go.jp [134.160.83.110])
-	by postman1.riken.jp (Postfix) with ESMTP id CE5E975C4A0
-	for <git@vger.kernel.org>; Mon,  2 Feb 2009 13:24:38 +0900 (JST)
-Received: from moriyoshi by lena.gsc.riken.jp with local (Exim 4.69)
-	(envelope-from <mozo@mozo.jp>)
-	id 1LTqMR-0003nf-Ig
-	for git@vger.kernel.org; Mon, 02 Feb 2009 13:24:39 +0900
-In-Reply-To: <7v3af2h1b0.fsf@gitster.siamese.dyndns.org>
-X-PMX-Version: 5.4.5.350696, Antispam-Engine: 2.6.0.325393, Antispam-Data: 2009.2.2.5526
+	id S1751099AbZBBFNK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 00:13:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750874AbZBBFNI
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 00:13:08 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:59534 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750715AbZBBFNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 00:13:07 -0500
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 3EACC81807C;
+	Mon,  2 Feb 2009 06:12:58 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with SMTP id 40585818073;
+	Mon,  2 Feb 2009 06:12:56 +0100 (CET)
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.11; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108046>
 
-Currently there is no way to specify the preferred authentication
-method for the HTTP backend and it always falls back to the CURL's default
-settings.
+Teach the syntax: "git replace <object> <replacement>", so that
+"git replace" can now create replace refs. These replace refs
+will be used by read_sha1_file to substitute <object> with
+<replacement> for most of the commands.
 
-This patch allows users to specify the authentication method if supported
-by CURL, adding a couple of new settings and environment variables
-listed below (the names within the parentheses indicate the environment
-variables.)
-
-- http.auth (GIT_HTTP_AUTH)
-  Specifies the preferred authentication method for HTTP.  This can
-  be a method name or the combination of those separated by comma. Valid
-  values are "basic", "digest", "gss" and "ntlm". You can also specify
-  "any" (all of the above), "anysafe" (all of the above except "basic").
-
-  Note that the strings are treated case-insensitive.
-
-- http.proxy_auth (GIT_HTTP_PROXY_AUTH)
-  Specifies the preferred authentication method method for HTTP proxy.
-  The same thing as above applies to this setting.
-
-Signed-off-by: Moriyoshi <mozo@mozo.jp>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- http.c |  120 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 files changed, 114 insertions(+), 6 deletions(-)
+ builtin-replace.c  |   50 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ t/t6050-replace.sh |   10 ++++++++++
+ 2 files changed, 59 insertions(+), 1 deletions(-)
 
-diff --git a/http.c b/http.c
-index ee58799..41e8e8c 100644
---- a/http.c
-+++ b/http.c
-@@ -13,18 +13,24 @@ static CURL *curl_default;
- char curl_errorstr[CURL_ERROR_SIZE];
+diff --git a/builtin-replace.c b/builtin-replace.c
+index b5c40aa..e3767b9 100644
+--- a/builtin-replace.c
++++ b/builtin-replace.c
+@@ -14,6 +14,7 @@
+ #include "parse-options.h"
  
- static int curl_ssl_verify = -1;
--static const char *ssl_cert = NULL;
-+static const char *ssl_cert;
- #if LIBCURL_VERSION_NUM >= 0x070902
--static const char *ssl_key = NULL;
-+static const char *ssl_key;
- #endif
- #if LIBCURL_VERSION_NUM >= 0x070908
--static const char *ssl_capath = NULL;
-+static const char *ssl_capath;
- #endif
--static const char *ssl_cainfo = NULL;
-+static const char *ssl_cainfo;
- static long curl_low_speed_limit = -1;
- static long curl_low_speed_time = -1;
- static int curl_ftp_no_epsv = 0;
--static const char *curl_http_proxy = NULL;
-+static const char *curl_http_proxy;
-+#if LIBCURL_VERSION_NUM >= 0x070a06
-+static const char *curl_http_auth;
-+#endif
-+#if LIBCURL_VERSION_NUM >= 0x070a07
-+static const char *curl_http_proxy_auth;
-+#endif
- 
- static struct curl_slist *pragma_header;
- 
-@@ -153,11 +159,69 @@ static int http_options(const char *var, const char *value, void *cb)
- 			return git_config_string(&curl_http_proxy, var, value);
- 		return 0;
- 	}
-+#if LIBCURL_VERSION_NUM >= 0x070a06
-+	if (!strcmp("http.auth", var)) {
-+		if (curl_http_auth == NULL)
-+			return git_config_string(&curl_http_auth, var, value);
-+		return 0;
-+	}
-+#endif
-+#if LIBCURL_VERSION_NUM >= 0x070a07
-+	if (!strcmp("http.proxy_auth", var)) {
-+		if (curl_http_proxy_auth == NULL)
-+			return git_config_string(&curl_http_proxy_auth, var, value);
-+		return 0;
-+	}
-+#endif
- 
- 	/* Fall back on the default ones */
- 	return git_default_config(var, value, cb);
+ static const char * const git_replace_usage[] = {
++	"git replace [-f] <object> <replacement>",
+ 	"git replace -d <object>...",
+ 	"git replace -l [<pattern>]",
+ 	NULL
+@@ -77,12 +78,46 @@ static int delete_replace_ref(const char *name, const char *ref,
+ 	return 0;
  }
  
-+#if LIBCURL_VERSION_NUM >= 0x070a06
-+static long get_curl_auth_bitmask(const char* auth_method)
++static int replace_object(const char *object_ref, const char *replace_ref,
++			  int force)
 +{
-+	char buf[4096];
-+	const unsigned char *p = (const unsigned char *)auth_method;
-+	long mask = CURLAUTH_NONE;
++	unsigned char object[20], prev[20], repl[20];
++	char ref[PATH_MAX];
++	struct ref_lock *lock;
 +
-+    strlcpy(buf, auth_method, sizeof(buf));
++	if (get_sha1(object_ref, object))
++		die("Failed to resolve '%s' as a valid ref.", object_ref);
++	if (get_sha1(replace_ref, repl))
++		die("Failed to resolve '%s' as a valid ref.", replace_ref);
 +
-+	for (;;) {
-+		char *q = buf;
-+		while (*p && isspace(*p))
-+			++p;
++	if (snprintf(ref, sizeof(ref),
++		     "refs/replace/%s",
++		     sha1_to_hex(object)) > sizeof(ref) - 1)
++		die("replace ref name too long: %.*s...", 50, ref);
++	if (check_ref_format(ref))
++		die("'%s' is not a valid ref name.", ref);
 +
-+		while (*p && *p != ',')
-+			*q++ = tolower(*p++);
++	if (!resolve_ref(ref, prev, 1, NULL))
++		hashclr(prev);
++	else if (!force)
++		die("replace ref '%s' already exists", ref);
 +
-+		while (--q >= buf && isspace(*q));
-+		++q;
++	lock = lock_any_ref_for_update(ref, prev, 0);
++	if (!lock)
++		die("%s: cannot lock the ref", ref);
++	if (write_ref_sha1(lock, repl, NULL) < 0)
++		die("%s: cannot update the ref", ref);
 +
-+		*q = '\0';
-+
-+		if (!strcmp(buf, "basic"))
-+			mask |= CURLAUTH_BASIC;
-+		else if (!strcmp(buf, "digest"))
-+			mask |= CURLAUTH_DIGEST;
-+		else if (!strcmp(buf, "gss"))
-+			mask |= CURLAUTH_GSSNEGOTIATE;
-+		else if (!strcmp(buf, "ntlm"))
-+			mask |= CURLAUTH_NTLM;
-+		else if (!strcmp(buf, "any"))
-+			mask |= CURLAUTH_ANY;
-+		else if (!strcmp(buf, "anysafe"))
-+			mask |= CURLAUTH_ANYSAFE;
-+
-+		if (!*p)
-+			break;
-+		++p;
-+	}
-+
-+	return mask;
++	return 0;
 +}
-+#endif
 +
- static CURL* get_curl_handle(void)
+ int cmd_replace(int argc, const char **argv, const char *prefix)
  {
- 	CURL* result = curl_easy_init();
-@@ -207,9 +271,24 @@ static CURL* get_curl_handle(void)
- 	if (curl_ftp_no_epsv)
- 		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
+-	int list = 0, delete = 0;
++	int list = 0, delete = 0, force = 0;
+ 	struct option options[] = {
+ 		OPT_BOOLEAN('l', NULL, &list, "list replace refs"),
+ 		OPT_BOOLEAN('d', NULL, &delete, "delete replace refs"),
++		OPT_BOOLEAN('f', NULL, &force, "replace the ref if it exists"),
+ 		OPT_END()
+ 	};
  
--	if (curl_http_proxy)
-+#if LIBCURL_VERSION_NUM >= 0x070a06
-+	if (curl_http_auth) {
-+		long n = get_curl_auth_bitmask(curl_http_auth);
-+		curl_easy_setopt(result, CURLOPT_HTTPAUTH, n);
-+	}
-+#endif
+@@ -91,15 +126,28 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 	if (list && delete)
+ 		usage_with_options(git_replace_usage, options);
+ 
++	if (force && (list || delete))
++		usage_with_options(git_replace_usage, options);
 +
-+	if (curl_http_proxy) {
- 		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
- 
-+#if LIBCURL_VERSION_NUM >= 0x070a07
-+		if (curl_http_proxy_auth) {
-+			long n = get_curl_auth_bitmask(curl_http_proxy_auth);
-+			curl_easy_setopt(result, CURLOPT_PROXYAUTH, n);
-+		}
-+#endif
-+	}
-+
- 	return result;
- }
- 
-@@ -258,6 +337,21 @@ void http_init(struct remote *remote)
- 	if (low_speed_time != NULL)
- 		curl_low_speed_time = strtol(low_speed_time, NULL, 10);
- 
-+#if LIBCURL_VERSION_NUM >= 0x070a06
-+	{
-+		char *http_auth = getenv("GIT_HTTP_AUTH");
-+		if (http_auth)
-+			curl_http_auth = xstrdup(http_auth);
-+	}
-+#endif
-+#if LIBCURL_VERSION_NUM >= 0x070a07
-+	{
-+		char *http_proxy_auth = getenv("GIT_HTTP_PROXY_AUTH");
-+		if (http_proxy_auth)
-+			curl_http_proxy_auth = xstrdup(http_proxy_auth);
-+	}
-+#endif
-+
- 	git_config(http_options, NULL);
- 
- 	if (curl_ssl_verify == -1)
-@@ -309,6 +403,20 @@ void http_cleanup(void)
- 		free((void *)curl_http_proxy);
- 		curl_http_proxy = NULL;
++	/* Delete refs */
+ 	if (delete) {
+ 		if (argc < 1)
+ 			usage_with_options(git_replace_usage, options);
+ 		return for_each_replace_name(argv, delete_replace_ref);
  	}
-+
-+#if LIBCURL_VERSION_NUM >= 0x070a06
-+	if (curl_http_auth) {
-+		free((void *)curl_http_auth);
-+		curl_http_auth = NULL;
-+	}
-+#endif
-+
-+#if LIBCURL_VERSION_NUM >= 0x070a07
-+	if (curl_http_proxy_auth) {
-+		free((void *)curl_http_proxy_auth);
-+		curl_http_proxy_auth = NULL;
-+	}
-+#endif
- }
  
- struct active_request_slot *get_active_slot(void)
++	/* Replace object */
++	if (!list && argc) {
++		if (argc != 2)
++			usage_with_options(git_replace_usage, options);
++		return replace_object(argv[0], argv[1], force);
++	}
++
+ 	/* List refs, even if "list" is not set */
+ 	if (argc > 1)
+ 		usage_with_options(git_replace_usage, options);
++	if (force)
++		usage_with_options(git_replace_usage, options);
+ 
+ 	return list_replace_refs(argv[0]);
+ }
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index bf4c93f..448a19a 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -114,9 +114,19 @@ test_expect_success '"git replace" listing and deleting' '
+      test_must_fail git replace -d &&
+      test_must_fail git replace -l -d $HASH2 &&
+      git replace -d $HASH2 &&
++     git show $HASH2 | grep "A U Thor" &&
+      test -z "$(git replace -l)"
+ '
+ 
++test_expect_success '"git replace" replacing' '
++     git replace $HASH2 $R &&
++     git show $HASH2 | grep "O Thor" &&
++     test_must_fail git replace $HASH2 $R &&
++     git replace -f $HASH2 $R &&
++     test_must_fail git replace -f &&
++     test "$HASH2" = "$(git replace)"
++'
++
+ #
+ #
+ test_done
 -- 
-1.5.6.3
+1.6.1.2.353.g99fdd.dirty
