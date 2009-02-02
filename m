@@ -1,177 +1,119 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: What's in git.git (Feb 2009, #01; Sun, 01)
-Date: Mon, 02 Feb 2009 00:05:10 -0800
-Message-ID: <7veiyhl0w9.fsf@gitster.siamese.dyndns.org>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: [PATCH v2 0/4] Extend mailmap functionality
+Date: Mon, 02 Feb 2009 09:07:42 +0100
+Message-ID: <4986A9CE.9040009@trolltech.com>
+References: <cover.1233520945.git.marius@trolltech.com> <7vpri1o801.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 02 09:06:59 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigDD074D9FE93AEB5C2F2FF0DB"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 02 09:09:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTtpL-0001RC-Py
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 09:06:44 +0100
+	id 1LTtrh-000205-1R
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 09:09:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751650AbZBBIFT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Feb 2009 03:05:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751437AbZBBIFS
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 03:05:18 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39110 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751424AbZBBIFQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Feb 2009 03:05:16 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 96EF395426;
-	Mon,  2 Feb 2009 03:05:15 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7944995424; Mon,
-  2 Feb 2009 03:05:13 -0500 (EST)
-X-maint-at: 6ac92294b30d7c8619cf15b531448f011dbdcdcc
-X-master-at: 2ea3c17189bf9ca459879129ca190792b5451f05
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3962EF9E-F100-11DD-A337-CC4CC92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751900AbZBBIHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 03:07:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751888AbZBBIHn
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 03:07:43 -0500
+Received: from hoat.troll.no ([62.70.27.150]:59270 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751627AbZBBIHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 03:07:42 -0500
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 42E6420B11;
+	Mon,  2 Feb 2009 09:07:41 +0100 (CET)
+Received: from [172.24.90.95] (unknown [172.24.90.95])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 335CA209F5;
+	Mon,  2 Feb 2009 09:07:41 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.19) Gecko/20081209 Lightning/0.9 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
+In-Reply-To: <7vpri1o801.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.7
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108067>
 
-There are yet more fixes that have been cooking in next and then master
-that have been merged to 'maint' in preparation for the next 1.6.1.X
-maintenance release.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigDD074D9FE93AEB5C2F2FF0DB
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-On the 'master' front, I think we are ready to plan for 1.6.2 release.
-Tonight's "What's cooking" should be a pretty good guide for estimating
-what will be in -rc0, in addition to what we already have in 'master'.
+Junio C Hamano said the following on 02.02.2009 04:03:
+>> This extended mapping is necessary when a company wants to have
+>> their repositories open to the public, but needs to protect the
+>> identities of the developers. It enables you to only show nicks
+>> and standardized emails, like 'Dev123 <bugs@company.xx>' in the
+>> public repo, but by using an private mailmap file, map the name
+>> back to 'John Doe <john.doe@company.xx>' inside the company.
+>=20
+> I do not find the "necessary" argument very convincing nor I find
+> the particular use case sane.  You may want to do things that way,
+> but I do not know if it is the best way to go about it.
+
+Well, this is the use-case for my company. We have open-source repos,=20
+which are the exact same repos which the company's developers work on,=20
+not a modified mirror repo.
+However, laws in some countries requires that employees information be=20
+kept away from the public, should they so wish. So, for our developers=20
+to work on the exact same repo as the open-source community, we need a=20
+way to map both Names and Emails back to the original author, inside=20
+the company without using a different repo.
+
+Also, the company commit policy might be such that the email on the=20
+commit is always the companys <bugs@company.xx>. This might be so that=20
+if someone finds a bug to your commit, they send the bug report to the=20
+companys bug-tracker instead of the individual email address.
+However, that breaks the old mailmap system, since it requires unique=20
+email addresses to map to a name.
+
+> The new mapping however brings in more flexibility, and there may
+> be other use cases where people benefit from that flexibility.  I
+> am slightly in favor than neutral to this new feature.
+
+You could use this feature in git.git itself, where for example
+     Junio C Hamano <gitster@pobox.com>
+     Junio C Hamano <gitster@pobox.com> <junio@twinsun.com>
+(or any of the others in the .mailmap file with X number of different=20
+email addresses), to ensure that you are always associated with one=20
+specific email address.
+
+--=20
+=2Emarius [@trolltech.com]
+'if you know what you're doing, it's not research'
 
 
-* The 'maint' branch has these fixes since the last announcement.
+--------------enigDD074D9FE93AEB5C2F2FF0DB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Bj=C3=B6rn Steinbrink (1):
-  Rename detection: Avoid repeated filespec population
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
 
-Jeff King (1):
-  avoid 31-bit truncation in write_loose_object
+iD8DBQFJhqnOKzzXl/njVP8RAmAYAJ9tnpvEFXNo2MLayoTxc/NifMBGEgCbB6In
+oobKt2Ts+r/S8lvhMOTq8Ic=
+=MpIE
+-----END PGP SIGNATURE-----
 
-Junio C Hamano (3):
-  ls-tree: add --full-tree option
-  Teach format-patch to handle output directory relative to cwd
-  GIT 1.6.1.2
-
-Marcel M. Cary (1):
-  git-sh-setup: Fix scripts whose PWD is a symlink to a work-dir on OS =
-X
-
-Markus Heidelberg (2):
-  git-commit: color status output when color.ui is set
-  git-status -v: color diff output when color.ui is set
-
-Nanako Shiraishi (1):
-  Document git-ls-tree --full-tree
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
-  grep: support --no-ext-grep to test builtin grep
-  grep: grep cache entries if they are "assume unchanged"
-
-Nicolas Pitre (1):
-  objects to be pruned immediately don't have to be loosened
-
-Ren=C3=A9 Scharfe (1):
-  merge: fix out-of-bounds memory access
-
-
-* The 'master' branch has these since the last announcement
-  in addition to the above.
-
-Anders Melchiorsen (2):
-  Documentation: more git push examples
-  Documentation: rework src/dst description in git push
-
-David Aguilar (1):
-  contrib/difftool: Don't repeat merge tool candidates
-
-Giuseppe Bilotta (3):
-  gitweb: make static files accessible with PATH_INFO
-  gitweb: webserver config for PATH_INFO
-  gitweb: align comments to code
-
-Jake Goulding (3):
-  Make opt_parse_with_commit() non-static
-  Make has_commit() non-static
-  git-tag: Add --contains option
-
-Jakub Narebski (1):
-  gitweb: Update README that gitweb works better with PATH_INFO
-
-Jeff King (5):
-  diff: refactor tempfile cleanup handling
-  chain kill signals for cleanup functions
-  refactor signal handling for cleanup functions
-  pager: do wait_for_pager on signal death
-  t0005: use SIGTERM for sigchain test
-
-Johannes Gilger (1):
-  mergetool: Don't repeat merge tool candidates
-
-Johannes Schindelin (8):
-  Fix submodule squashing into unrelated commit
-  t3404 & t3411: undo copy&paste
-  lib-rebase.sh: Document what set_fake_editor() does
-  test-lib.sh: introduce test_commit() and test_merge() helpers
-  Simplify t3410
-  Simplify t3411
-  Simplify t3412
-  Fix 'git diff --no-index' with a non-existing symlink target
-
-Johannes Sixt (1):
-  Windows: Fix signal numbers
-
-Junio C Hamano (6):
-  Documentation: simplify refspec format description
-  diff.c: output correct index lines for a split diff
-  revision traversal: allow UNINTERESTING objects to be missing
-  rebase -i squashes submodule changes into unrelated commit
-  builtin-apply.c: do not set bogus mode in check_preimage() for delete=
-d
-    path
-  Update draft release notes to 1.6.2
-
-Kirill Smelkov (5):
-  mailinfo: correctly handle multiline 'Subject:' header
-  mailinfo: 'From:' header should be unfold as well
-  mailinfo: add explicit test for mails like '<a.u.thor@example.com> (A=
- U
-    Thor)'
-  mailinfo: tests for RFC2047 examples
-  mailinfo: cleanup extra spaces for complex 'From:'
-
-Markus Heidelberg (1):
-  contrib/difftool: add support for Kompare
-
-Michele Ballabio (1):
-  git-shortlog.txt: fix example about .mailmap
-
-Stefan Karpinski (2):
-  git-cvsserver: handle CVS 'noop' command.
-  git-cvsserver: run post-update hook *after* update.
-
-Steffen Prohaska (6):
-  Move computation of absolute paths from Makefile to runtime (in
-    preparation for RUNTIME_PREFIX)
-  git_extract_argv0_path(): Move check for valid argv0 from caller to
-    callee
-  Add calls to git_extract_argv0_path() in programs that call git_confi=
-g_*
-  Modify setup_path() to only add git_exec_path() to PATH
-  Compute prefix at runtime if RUNTIME_PREFIX is set
-  Windows: Revert to default paths and convert them by RUNTIME_PREFIX
-
-Steve Haslam (1):
-  Refactor git_set_argv0_path() to git_extract_argv0_path()
-
-Thomas Rast (2):
-  t3412: clean up GIT_EDITOR usage
-  t3412: use log|name-rev instead of log --graph
+--------------enigDD074D9FE93AEB5C2F2FF0DB--
