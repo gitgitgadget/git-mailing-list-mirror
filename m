@@ -1,97 +1,114 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] Switch receive.denyCurrentBranch to "refuse"
-Date: Mon, 02 Feb 2009 23:50:05 +1300
-Message-ID: <1233571805.20131.358.camel@maia.lan>
-References: <cover.1233275583u.git.johannes.schindelin@gmx.de>
-	 <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de>
-	 <76718490901300817x3f31460k59b6fe75d136372d@mail.gmail.com>
-	 <alpine.DEB.1.00.0901301756560.3586@pacific.mpi-cbg.de>
-	 <76718490901301050h1f0f5b2bq902de384d954d99b@mail.gmail.com>
-	 <alpine.DEB.1.00.0901301959300.3586@pacific.mpi-cbg.de>
-	 <20090131095622.6117@nanako3.lavabit.com>
-	 <7v63juzz9m.fsf@gitster.siamese.dyndns.org>
-	 <1233459475.17688.128.camel@maia.lan>
-	 <7vbptlsuyv.fsf@gitster.siamese.dyndns.org>
-	 <1233558035.20131.72.camel@maia.lan>
-	 <7v1vuhkzmp.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] builtin-blame.c: Use utf8_strwidth for author's names
+Date: Mon, 2 Feb 2009 13:40:11 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902021326420.3586@pacific.mpi-cbg.de>
+References: <1233308489-2656-1-git-send-email-geofft@mit.edu> <1233308489-2656-2-git-send-email-geofft@mit.edu> <alpine.DEB.1.00.0901301811180.3586@pacific.mpi-cbg.de> <alpine.DEB.2.00.0901301710130.1984@vinegar-pot.mit.edu> <alpine.DEB.1.00.0902012333060.3586@pacific.mpi-cbg.de>
+ <7v8wopmizw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1012680076-1233578416=:3586"
+Cc: Geoffrey Thomas <geofft@MIT.EDU>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 02 11:53:44 2009
+X-From: git-owner@vger.kernel.org Mon Feb 02 13:41:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTwQy-0007Og-8P
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 11:53:44 +0100
+	id 1LTy73-0008Om-3M
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 13:41:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752617AbZBBKuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2009 05:50:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752551AbZBBKub
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 05:50:31 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:36874 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751437AbZBBKub (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2009 05:50:31 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 9852521D964; Mon,  2 Feb 2009 23:50:14 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 7F0F121D5DF;
-	Mon,  2 Feb 2009 23:50:03 +1300 (NZDT)
-In-Reply-To: <7v1vuhkzmp.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.24.1 
+	id S1753154AbZBBMjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 07:39:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753140AbZBBMjv
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 07:39:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57152 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752879AbZBBMju (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 07:39:50 -0500
+Received: (qmail invoked by alias); 02 Feb 2009 12:39:44 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp019) with SMTP; 02 Feb 2009 13:39:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX189Srdvrwo9wvVTdY7W9GXfs/YPEkPgwPYN5VYWmN
+	Kwhdn1qDvttlAk
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7v8wopmizw.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108078>
 
-On Mon, 2009-02-02 at 00:32 -0800, Junio C Hamano wrote:
-> > The other affects
-> > a small number of users who are doing something which is labeled in many
-> > places as a bad thing to want to do.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1012680076-1233578416=:3586
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Sun, 1 Feb 2009, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Sorry, but I do not agree with this.
+> > On Fri, 30 Jan 2009, Geoffrey Thomas wrote:
+> >
+> >> Currently, however, printf("%*.*s", width, width, author) is simply 
+> >> wrong, because printf only cares about bytes, not screen columns. Do 
+> >> you think I should fall back on the old behavior if 
+> >> i18n.commitencoding is set, or if at least one of the author names 
+> >> isn't parseable as UTF-8, or something? Or should I be doing this 
+> >> with iconv and assuming all commits are encoded in the current 
+> >> encoding specified via $LANG or $LC_whatever?
+> >
+> > I do not know what encoding the author is at that point, but if you 
+> > cannot be sure that it is UTF-8, using utf8_strwidth() is just as 
+> > wrong as the current code, IMHO.
 > 
-> What is bad is to push into a repository that is used for editing.  That
-> is labelled as a bad thing to want to do.
+> That is true, but then we are not losing anything.
 > 
-> It is often the easiest to push and then run "reset --hard" (perhaps from
-> the post-update script) to propagate your change to a repository that is
-> not usually used for editing.  E.g. that has always been the way I update
-> my private repository at k.org that I use for final testing before pushing
-> out the results that I built and tested on my personal machine.  People
-> who have live web pages served from a checkout do that, too.  It is not a
-> bad thing to do at all, and you can find many instructions with google
-> without spending a lot of time to do exactly that.
-> 
->     http://kerneltrap.org/mailarchive/git/2008/7/1/2315924
->     http://utsl.gen.nz/git/post-update
+> This codepath is not about the payload (the contents of the files) but 
+> the author name part of the commit log message, and UTF-8 would probably 
+> be the only sensible encoding to standardize on.
 
-Heh, thanks for referring me to my own script ;-)
+Almost agree, except for shops where you have an enforced encoding that 
+you cannot easily change.
 
-I think a "repository that is used for editing" can be practically
-defined as one which does not have any dirty local files.  Or, if there
-are dirty local files then they are none of the files which would be
-changed by the push, or none of them would be changed by the push.
-Similar to the check that 'git merge' does.
+And last time I checked, many more encodings used 1 character/byte (or for 
+that matter, 1 column / byte) than not; utf8_width would be "more wrong" 
+than strlen() here, because strlen() would "happen to work" here.
 
-With that definition, if receive.denyCurrentBranch is set to "update" it
-could be pretty much automagic, perhaps even good enough behaviour to
-consider making it the default.  This kind of behaviour is what my
-post-update hook tries to achieve, but it really needs a corresponding
-piece in the update hook, and I didn't code all of the conditions above
-into it.
+> If your project uses UTF-8 for everybody, great, we will align them 
+> better than we did before.  If not, sorry, you will get a different 
+> misaligned names.
 
-Sam.
+There _has_ to be a way to check if the current author string is encoded 
+in UTF-8.  All I am asking is that the original poster would put just a 
+_little_ more effort into the issue and make the thing dependent on the 
+knowledge -- as opposed to the assumption -- that the author is encoded in 
+UTF-8.
+
+> That assumes utf8_width() does not barf when fed an invalid byte 
+> sequence, but I did not think it is that fragile (I didn't actually 
+> audit the codepath, though).
+
+That is the code that barfs in wcwidth:
+
+        if (ch < 32 || (ch >= 0x7f && ch < 0xa0))
+                return -1;
+
+That is not a big problem, but Geoff's code does not handle that case 
+correctly.  For example, in Code-page 437, a name like "£ïñûç" would 
+result in a negative width.
+
+But hey, it is definitely not my itch, I will never suffer from the 
+fallout of this patch, as I am safely within US-ASCII.  I just thought I 
+saw a potential problem and a possible way out.  That's it.
+
+Ciao,
+Dscho
+
+--8323328-1012680076-1233578416=:3586--
