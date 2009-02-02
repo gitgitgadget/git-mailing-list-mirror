@@ -1,74 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-blame.c: Use utf8_strwidth for author's names
-Date: Sun, 01 Feb 2009 22:48:51 -0800
-Message-ID: <7v8wopmizw.fsf@gitster.siamese.dyndns.org>
-References: <1233308489-2656-1-git-send-email-geofft@mit.edu>
- <1233308489-2656-2-git-send-email-geofft@mit.edu>
- <alpine.DEB.1.00.0901301811180.3586@pacific.mpi-cbg.de>
- <alpine.DEB.2.00.0901301710130.1984@vinegar-pot.mit.edu>
- <alpine.DEB.1.00.0902012333060.3586@pacific.mpi-cbg.de>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] Switch receive.denyCurrentBranch to "refuse"
+Date: Mon, 02 Feb 2009 20:00:35 +1300
+Message-ID: <1233558035.20131.72.camel@maia.lan>
+References: <cover.1233275583u.git.johannes.schindelin@gmx.de>
+	 <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de>
+	 <76718490901300817x3f31460k59b6fe75d136372d@mail.gmail.com>
+	 <alpine.DEB.1.00.0901301756560.3586@pacific.mpi-cbg.de>
+	 <76718490901301050h1f0f5b2bq902de384d954d99b@mail.gmail.com>
+	 <alpine.DEB.1.00.0901301959300.3586@pacific.mpi-cbg.de>
+	 <20090131095622.6117@nanako3.lavabit.com>
+	 <7v63juzz9m.fsf@gitster.siamese.dyndns.org>
+	 <1233459475.17688.128.camel@maia.lan>
+	 <7vbptlsuyv.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Geoffrey Thomas <geofft@MIT.EDU>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 02 07:50:28 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 02 08:02:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LTsdX-0000le-So
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 07:50:28 +0100
+	id 1LTspB-00030p-Mw
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 08:02:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751593AbZBBGtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2009 01:49:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbZBBGtA
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 01:49:00 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38536 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751424AbZBBGs7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2009 01:48:59 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7AFB31D510;
-	Mon,  2 Feb 2009 01:48:58 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5861D2A453; Mon, 
- 2 Feb 2009 01:48:53 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0902012333060.3586@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Sun, 1 Feb 2009 23:34:21 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9136B2A6-F0F5-11DD-A80A-F63E8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1751888AbZBBHBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 02:01:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751800AbZBBHBE
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 02:01:04 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:39046 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751627AbZBBHBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 02:01:03 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 179FA21D97F; Mon,  2 Feb 2009 20:00:46 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 3118721D969;
+	Mon,  2 Feb 2009 20:00:35 +1300 (NZDT)
+In-Reply-To: <7vbptlsuyv.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.24.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108056>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Sun, 2009-02-01 at 13:33 -0800, Junio C Hamano wrote:
+> > I just can't understand the
+> > resistance to this safety feature.  People who encounter the bug can
+> > just change the setting and move on... it seems like an argument based
+> > on "principles", usually a sign that one has run out of actual
+> > arguments..
+> 
+> There is no resitance to any safety feature.  The resistance is to
+> something entirely different.
+  [...]
+> Perhaps you already forgot the fiasco after 1.6.0, which moved tons of
+> git-foo scripts out of the users' way.  It resulted in a better layout in
+> the end, but we knew it would break people's working setup from the
+> beginning.
+  [...]
 
-> On Fri, 30 Jan 2009, Geoffrey Thomas wrote:
->
->> Currently, however, printf("%*.*s", width, width, author) is simply 
->> wrong, because printf only cares about bytes, not screen columns. Do you 
->> think I should fall back on the old behavior if i18n.commitencoding is 
->> set, or if at least one of the author names isn't parseable as UTF-8, or 
->> something? Or should I be doing this with iconv and assuming all commits 
->> are encoded in the current encoding specified via $LANG or $LC_whatever?
->
-> I do not know what encoding the author is at that point, but if you cannot 
-> be sure that it is UTF-8, using utf8_strwidth() is just as wrong as the 
-> current code, IMHO.
+Yeah sure but the changes are a bit different aren't they.  One affected
+all users who used the previously documented way to access subcommands
+(and the names that the man pages all still retain).  The other affects
+a small number of users who are doing something which is labeled in many
+places as a bad thing to want to do.
 
-That is true, but then we are not losing anything.
+That being said, I think I like the copy and design of the patch you
+just posted.  If the path of caution is to be followed for this, then
+the way you propose seems a good way to do it.
 
-This codepath is not about the payload (the contents of the files) but the
-author name part of the commit log message, and UTF-8 would probably be
-the only sensible encoding to standardize on.
-
-If your project uses UTF-8 for everybody, great, we will align them better
-than we did before.  If not, sorry, you will get a different misaligned
-names.
-
-That assumes utf8_width() does not barf when fed an invalid byte sequence,
-but I did not think it is that fragile (I didn't actually audit the
-codepath, though).
+Sam
