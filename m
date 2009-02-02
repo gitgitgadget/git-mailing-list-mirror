@@ -1,52 +1,63 @@
-From: Toralf =?iso-8859-15?q?F=F6rster?= <toralf.foerster@gmx.de>
-Subject: webgit highlightes mem adresses as git versions
-Date: Mon, 2 Feb 2009 22:04:46 +0100
-Message-ID: <200902022204.46651.toralf.foerster@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH 1/4] add -p: change prompt separator for 'g'
+Date: Mon,  2 Feb 2009 22:46:28 +0100
+Message-ID: <1233611191-18590-2-git-send-email-trast@student.ethz.ch>
+References: <1233611191-18590-1-git-send-email-trast@student.ethz.ch>
+Cc: Junio C Hamano <junio@pobox.com>, Jeff King <peff@peff.net>,
+	Suraj Kurapati <sunaku@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 02 22:21:01 2009
+X-From: git-owner@vger.kernel.org Mon Feb 02 22:48:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LU6E0-0007cs-D5
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 22:21:00 +0100
+	id 1LU6eM-0001If-DY
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 22:48:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753564AbZBBVTc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Feb 2009 16:19:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbZBBVTc
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 16:19:32 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37584 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752554AbZBBVTc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Feb 2009 16:19:32 -0500
-Received: (qmail invoked by alias); 02 Feb 2009 21:04:48 -0000
-Received: from e177149184.adsl.alicedsl.de (EHLO e177149184.adsl.alicedsl.de) [85.177.149.184]
-  by mail.gmx.net (mp069) with SMTP; 02 Feb 2009 22:04:48 +0100
-X-Authenticated: #5108953
-X-Provags-ID: V01U2FsdGVkX19f4vcXjzxf5hdH0wAGDpzP2mMpd7fRB0bcIc4Poc
-	Fe7aeaqrPH95Jy
-User-Agent: KMail/1.9.10
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1759087AbZBBVqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 16:46:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756291AbZBBVqv
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 16:46:51 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:9370 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758895AbZBBVqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 16:46:47 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 2 Feb 2009 22:46:44 +0100
+Received: from localhost.localdomain ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 2 Feb 2009 22:46:44 +0100
+X-Mailer: git-send-email 1.6.1.2.513.g04677
+In-Reply-To: <1233611191-18590-1-git-send-email-trast@student.ethz.ch>
+In-Reply-To: <7vljspjk8n.fsf@gitster.siamese.dyndns.org>
+References: <7vljspjk8n.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 02 Feb 2009 21:46:44.0252 (UTC) FILETIME=[BD72ADC0:01C9857F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108125>
 
-As seen here=20
-http://git.kernel.org/?p=3Dlinux/kernel/git/stable/linux-2.6.27.y.git;a=
-=3Dcommit;h=3D8ca2918f99b5861359de1805f27b08023c82abd2=20
-the strings [<c043d0f3>] and firends shouldn't be recognized as git has=
-hes,=20
-isn't it ?
+57886bc (git-add -i/-p: Change prompt separater from slash to comma,
+2008-11-27) changed the prompt separator to ',', but forgot to adapt
+the 'g' (goto) command.
 
---=20
-MfG/Sincerely
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ git-add--interactive.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Toralf F=F6rster
-pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 30ddab2..551b447 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -948,7 +948,7 @@ sub patch_update_file {
+ 			$other .= ',J';
+ 		}
+ 		if ($num > 1) {
+-			$other .= '/g';
++			$other .= ',g';
+ 		}
+ 		for ($i = 0; $i < $num; $i++) {
+ 			if (!defined $hunk[$i]{USE}) {
+-- 
+1.6.1.2.513.g04677
