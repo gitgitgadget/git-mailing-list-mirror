@@ -1,239 +1,201 @@
-From: Keith Cascio <keith@cs.ucla.edu>
-Subject: [PATCH git-gui v2 2/2] Hooks for new config variable "diff.primer".
-Date: Mon,  2 Feb 2009 11:32:01 -0800
-Message-ID: <1233603121-1430-3-git-send-email-keith@cs.ucla.edu>
-References: <1233603121-1430-1-git-send-email-keith@cs.ucla.edu>
- <1233603121-1430-2-git-send-email-keith@cs.ucla.edu>
-Cc: git@vger.kernel.org
-To: Shawn O Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Feb 02 21:08:13 2009
+From: =?utf-8?q?Tor=20Arne=20Vestb=C3=B8?= <torarnv@gmail.com>
+Subject: [JGIT PATCH] Fix AbstractTreeIterator path comparion betwen 'a' and 'a/b'
+Date: Mon,  2 Feb 2009 21:13:37 +0100
+Message-ID: <1233605617-14513-1-git-send-email-torarnv@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 02 21:15:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LU554-0003MF-0C
-	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 21:07:42 +0100
+	id 1LU5C9-0006bK-1I
+	for gcvg-git-2@gmane.org; Mon, 02 Feb 2009 21:15:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753502AbZBBUGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2009 15:06:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753470AbZBBUGQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 15:06:16 -0500
-Received: from Sensitivity.CS.UCLA.EDU ([131.179.176.150]:43881 "EHLO
-	sensitivity.cs.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753011AbZBBUGQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2009 15:06:16 -0500
-Received: from sensitivity.cs.ucla.edu (localhost.localdomain [127.0.0.1])
-	by sensitivity.cs.ucla.edu (8.13.8/8.13.8) with ESMTP id n12K69wH001562;
-	Mon, 2 Feb 2009 12:06:09 -0800
-Received: (from keith@localhost)
-	by sensitivity.cs.ucla.edu (8.13.8/8.13.8/Submit) id n12K69kI001561;
-	Mon, 2 Feb 2009 12:06:09 -0800
-X-Mailer: git-send-email 1.6.1
-In-Reply-To: <1233603121-1430-2-git-send-email-keith@cs.ucla.edu>
+	id S1753502AbZBBUNf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Feb 2009 15:13:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbZBBUNf
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 15:13:35 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:50973 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753502AbZBBUNe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 15:13:34 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so701437fgg.17
+        for <git@vger.kernel.org>; Mon, 02 Feb 2009 12:13:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=TL8HQ+Pxj6I7RXJsRPBRjeum7CbPXXVSQCvP1RJYFdw=;
+        b=w1AXQwFhRgy3WQtJBybysza1JU4fk6INkwrk4Hg1excnJV4M7vY7axU0o9pP5LNtkJ
+         dsZanBfVrbzZATHGtdG75kEa4ZU45qVvBvE3IW80hSsoV0F32jvsV3OcwK2+IsUN/fYi
+         qDPOAfz9I158X4iEaDzkuP7jkM01hwRKcKWGg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=D/q8wh6Ga82aybBiygoVTf1x0/m4rEgzUpQEw9OE6IJ75gg+y1LjLh90xNkE8lcvu1
+         Jy3ewjgtCN8g4aJZaIv4r4/hwS9U7idZf6ub61QJZrZQ+J1C1osap09zkILRksvwBuHx
+         JiiJ3fuej9Rf2xotXbiKs1wfrZUcXkZGk3qSI=
+Received: by 10.103.252.17 with SMTP id e17mr2073517mus.14.1233605611461;
+        Mon, 02 Feb 2009 12:13:31 -0800 (PST)
+Received: from monstre.mystifistisk.net (212251244070.customer.cdi.no [212.251.244.70])
+        by mx.google.com with ESMTPS id i5sm5546571mue.46.2009.02.02.12.13.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 02 Feb 2009 12:13:30 -0800 (PST)
+Received: by monstre.mystifistisk.net (Postfix, from userid 1000)
+	id 4E36F468001; Mon,  2 Feb 2009 21:13:36 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.2.309.g2ea3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108115>
 
-Hooks for new config variable "diff.primer".
-Add three checkboxes to both sides of options panel (local/global).  Add a
-sub-menu named "White Space" to diff-panel right-click context menu, with
-three checkboxes.
+The occurance of a '/' as the next character in the longer path
+does not neccecarily mean the two paths are equal, for example
+when the longer path has more components following the '/'.
 
-Signed-off-by: Keith Cascio <keith@cs.ucla.edu>
+Signed-off-by: Tor Arne Vestb=C3=B8 <torarnv@gmail.com>
 ---
- git-gui.sh     |   51 ++++++++++++++++++++++++++++++++++++++++++++++++++
- lib/option.tcl |   57 +++++++++++++++++++++++++++++++++++++++++++++++++++----
- 2 files changed, 103 insertions(+), 5 deletions(-)
+ .../jgit/treewalk/AbstractTreeIteratorTest.java    |   93 ++++++++++++=
+++++++++
+ .../jgit/treewalk/AbstractTreeIterator.java        |    4 +-
+ 2 files changed, 95 insertions(+), 2 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/treewalk=
+/AbstractTreeIteratorTest.java
 
-diff --git a/git-gui.sh b/git-gui.sh
-index e018e07..5d93351 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3075,10 +3075,43 @@ $ui_diff tag conf d>>>>>>> \
- 
- $ui_diff tag raise sel
- 
-+proc mirror_diff_state {} {
-+	global  diff__ignore_space_at_eol diff__ignore_space_change diff__ignore_all_space
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/treewalk/Abstra=
+ctTreeIteratorTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/tr=
+eewalk/AbstractTreeIteratorTest.java
+new file mode 100644
+index 0000000..4c74094
+--- /dev/null
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/treewalk/AbstractTreeI=
+teratorTest.java
+@@ -0,0 +1,93 @@
++/*
++ * Copyright (C) 2009, Tor Arne Vestb=C3=B8 <torarnv@gmail.com>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
 +
-+	set key  "diff.primer"
-+	set ddo [git config --get $key]
-+	set diff__ignore_space_at_eol [expr {[string match "*--ignore-space-at-eol*" $ddo] ? "true" : "false"}]
-+	set diff__ignore_space_change [expr {[string match "*--ignore-space-change*" $ddo] ? "true" : "false"}]
-+	set diff__ignore_all_space    [expr {[string match "*--ignore-all-space*"    $ddo] ? "true" : "false"}]
-+}
++package org.spearce.jgit.treewalk;
 +
-+proc adjust_command_line { flag value str } {
-+	if {$value eq "true"} {
-+	  if { ! [string match "*$flag*" $str ] } {
-+	    set              str [concat $str $flag] }
-+	} else { regsub       -- $flag   $str "" str }
-+	return                           $str
-+}
++import java.io.IOException;
 +
-+proc record_diff_state {} {
-+	global  diff__ignore_space_at_eol diff__ignore_space_change diff__ignore_all_space
++import org.spearce.jgit.errors.IncorrectObjectTypeException;
++import org.spearce.jgit.lib.FileMode;
++import org.spearce.jgit.lib.Repository;
++import org.spearce.jgit.lib.RepositoryTestCase;
 +
-+	set key  "diff.primer"
-+	set ddo [git config --get $key]
-+	set ddo [adjust_command_line --ignore-space-at-eol $diff__ignore_space_at_eol $ddo]
-+	set ddo [adjust_command_line --ignore-space-change $diff__ignore_space_change $ddo]
-+	set ddo [adjust_command_line --ignore-all-space    $diff__ignore_all_space    $ddo]
 +
-+	git config $key $ddo
-+	reshow_diff
-+}
++public class AbstractTreeIteratorTest extends RepositoryTestCase {
 +
- # -- Diff Body Context Menu
- #
- 
- proc create_common_diff_popup {ctxm} {
-+	global  diff__ignore_space_at_eol diff__ignore_space_change diff__ignore_all_space
 +
- 	$ctxm add command \
- 		-label [mc "Show Less Context"] \
- 		-command show_less_context
-@@ -3087,6 +3120,24 @@ proc create_common_diff_popup {ctxm} {
- 		-label [mc "Show More Context"] \
- 		-command show_more_context
- 	lappend diff_actions [list $ctxm entryconf [$ctxm index last] -state]
-+	mirror_diff_state
-+	set whitespacemenu $ctxm.ws
-+	menu $whitespacemenu -postcommand mirror_diff_state
-+	$ctxm add cascade \
-+		-label [mc "White Space"] \
-+		-menu $whitespacemenu
-+	$whitespacemenu add checkbutton \
-+		-label [mc "--ignore-space-at-eol"] \
-+		-variable diff__ignore_space_at_eol -onvalue "true" -offvalue "false" \
-+		-command record_diff_state
-+	$whitespacemenu add checkbutton \
-+		-label [mc "--ignore-space-change"] \
-+		-variable diff__ignore_space_change -onvalue "true" -offvalue "false" \
-+		-command record_diff_state
-+	$whitespacemenu add checkbutton \
-+		-label [mc "--ignore-all-space"   ] \
-+		-variable diff__ignore_all_space    -onvalue "true" -offvalue "false" \
-+		-command record_diff_state
- 	$ctxm add separator
- 	$ctxm add command \
- 		-label [mc Refresh] \
-diff --git a/lib/option.tcl b/lib/option.tcl
-index 1d55b49..fbdf4e8 100644
---- a/lib/option.tcl
-+++ b/lib/option.tcl
-@@ -28,6 +28,7 @@ proc save_config {} {
- 	global repo_config global_config system_config
- 	global repo_config_new global_config_new
- 	global ui_comm_spell
-+	global ddo diff_primer_global diff_primer_repo pseudovariables
- 
- 	foreach option $font_descs {
- 		set name [lindex $option 0]
-@@ -46,17 +47,40 @@ proc save_config {} {
- 		unset global_config_new(gui.$font^^size)
- 	}
- 
-+	foreach name [get_diff_primer] {
-+		set diff_option [string range $name 8 [string length $name]]
-+		set ifound      [lsearch     $diff_primer_global $diff_option]
-+		if {$global_config_new($name) eq "true"} {
-+		  if {$ifound <  0} { lappend diff_primer_global $diff_option }
-+		} else {
-+		  if {$ifound >= 0} { set     diff_primer_global [lreplace $diff_primer_global $ifound $ifound]}
++	public class FakeTreeIterator extends WorkingTreeIterator {
++		public FakeTreeIterator(String path, FileMode fileMode) {
++			super(path);
++			mode =3D fileMode.getBits();
++			pathLen -=3D 1; // Get rid of extra '/'
 +		}
-+		set ifound      [lsearch     $diff_primer_repo   $diff_option]
-+		if {  $repo_config_new($name) eq "true"} {
-+		  if {$ifound <  0} { lappend diff_primer_repo   $diff_option }
-+		} else {
-+		  if {$ifound >= 0} { set     diff_primer_repo   [lreplace $diff_primer_repo   $ifound $ifound]}
++
++		@Override
++		public AbstractTreeIterator createSubtreeIterator(Repository repo)
++				throws IncorrectObjectTypeException, IOException {
++			return null;
 +		}
++
 +	}
-+	array unset default_config gui.diff--ignore-*
-+	set    default_config($ddo) ""
-+	set global_config_new($ddo) [join    $diff_primer_global]
-+	set   repo_config_new($ddo) [join    $diff_primer_repo  ]
 +
- 	foreach name [array names default_config] {
- 		set value $global_config_new($name)
--		if {$value ne $global_config($name)} {
--			if {$value eq $system_config($name)} {
-+		set value_global [expr {[info exists global_config($name)] ? $global_config($name) : ""}]
-+		set value_system [expr {[info exists system_config($name)] ? $system_config($name) : ""}]
-+		set value_repo   [expr {[info exists   repo_config($name)] ?   $repo_config($name) : ""}]
-+		if {$value ne $value_global} {
-+			if {$value eq $value_system} {
- 				catch {git config --global --unset $name}
- 			} else {
- 				regsub -all "\[{}\]" $value {"} value
- 				git config --global $name $value
- 			}
- 			set global_config($name) $value
--			if {$value eq $repo_config($name)} {
-+			if {$value eq $value_repo} {
- 				catch {git config --unset $name}
- 				set repo_config($name) $value
- 			}
-@@ -65,8 +89,10 @@ proc save_config {} {
- 
- 	foreach name [array names default_config] {
- 		set value $repo_config_new($name)
--		if {$value ne $repo_config($name)} {
--			if {$value eq $global_config($name)} {
-+		set value_global [expr {[info exists global_config($name)] ? $global_config($name) : ""}]
-+		set value_repo   [expr {[info exists   repo_config($name)] ?   $repo_config($name) : ""}]
-+		if {$value ne $value_repo} {
-+			if {$value eq $value_global} {
- 				catch {git config --unset $name}
- 			} else {
- 				regsub -all "\[{}\]" $value {"} value
-@@ -88,10 +114,23 @@ proc save_config {} {
- 	}
- }
- 
-+proc get_diff_primer {} {
-+	global repo_config global_config
-+	global ddo diff_primer_global diff_primer_repo pseudovariables
++	public void testPathCompare() throws Exception {
 +
-+	set ddo "diff.primer"
-+	set diff_primer_global [expr {[info exists global_config($ddo)] ? [split $global_config($ddo)] : [list]}]
-+	set diff_primer_repo   [expr {[info exists   repo_config($ddo)] ? [split   $repo_config($ddo)] : [list]}]
-+	set pseudovariables [list "gui.diff--ignore-space-at-eol" "gui.diff--ignore-space-change" "gui.diff--ignore-all-space"]
++		assertTrue(new FakeTreeIterator("a", FileMode.TREE).pathCompare(
++				new FakeTreeIterator("a/b", FileMode.REGULAR_FILE)) < 0);
 +
-+	return $pseudovariables
++		assertTrue(new FakeTreeIterator("a", FileMode.TREE).pathCompare(
++				new FakeTreeIterator("a//", FileMode.TREE)) =3D=3D 0);
++
++		assertTrue(new FakeTreeIterator("a/b", FileMode.REGULAR_FILE).pathCo=
+mpare(
++				new FakeTreeIterator("a", FileMode.TREE)) > 0);
++
++		assertTrue(new FakeTreeIterator("a//", FileMode.TREE).pathCompare(
++				new FakeTreeIterator("a", FileMode.TREE)) =3D=3D 0);
++
++		assertTrue(new FakeTreeIterator("a", FileMode.REGULAR_FILE).pathComp=
+are(
++				new FakeTreeIterator("a", FileMode.TREE)) < 0);
++
++		assertTrue(new FakeTreeIterator("a", FileMode.TREE).pathCompare(
++				new FakeTreeIterator("a", FileMode.REGULAR_FILE)) > 0);
++
++		assertTrue(new FakeTreeIterator("a", FileMode.REGULAR_FILE).pathComp=
+are(
++				new FakeTreeIterator("a", FileMode.REGULAR_FILE)) =3D=3D 0);
++
++		assertTrue(new FakeTreeIterator("a", FileMode.TREE).pathCompare(
++				new FakeTreeIterator("a", FileMode.TREE)) =3D=3D 0);
++	}
++
 +}
-+
- proc do_options {} {
- 	global repo_config global_config font_descs
- 	global repo_config_new global_config_new
- 	global ui_comm_spell
-+	global ddo diff_primer_global diff_primer_repo pseudovariables
- 
- 	array unset repo_config_new
- 	array unset global_config_new
-@@ -108,6 +147,11 @@ proc do_options {} {
- 	foreach name [array names global_config] {
- 		set global_config_new($name) $global_config($name)
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/AbstractTre=
+eIterator.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/Abstrac=
+tTreeIterator.java
+index 2ff3b99..7dd3f38 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/treewalk/AbstractTreeIterat=
+or.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/AbstractTreeIterat=
+or.java
+@@ -289,9 +289,9 @@ int pathCompare(final AbstractTreeIterator p, final=
+ int pMode) {
+ 		}
+=20
+ 		if (cPos < aLen)
+-			return (a[cPos] & 0xff) - lastPathChar(pMode);
++			return ((a[cPos] & 0xff) - lastPathChar(pMode)) + (aLen - cPos - 1)=
+;
+ 		if (cPos < bLen)
+-			return lastPathChar(mode) - (b[cPos] & 0xff);
++			return (lastPathChar(mode) - (b[cPos] & 0xff)) - (bLen - cPos - 1);
+ 		return lastPathChar(mode) - lastPathChar(pMode);
  	}
-+	foreach name [get_diff_primer] {
-+		set diff_option [string range $name 8 [string length $name]]
-+		set global_config_new($name) [expr {[lsearch $diff_primer_global $diff_option] < 0 ? "false" : "true"}]
-+		set   repo_config_new($name) [expr {[lsearch $diff_primer_repo   $diff_option] < 0 ? "false" : "true"}]
-+	}
- 
- 	set w .options_editor
- 	toplevel $w
-@@ -150,6 +194,9 @@ proc do_options {} {
- 		{i-20..200 gui.copyblamethreshold {mc "Minimum Letters To Blame Copy On"}}
- 		{i-0..300 gui.blamehistoryctx {mc "Blame History Context Radius (days)"}}
- 		{i-1..99 gui.diffcontext {mc "Number of Diff Context Lines"}}
-+		{b gui.diff--ignore-space-at-eol {mc "Diff Ignore Trailing White Space"            }}
-+		{b gui.diff--ignore-space-change {mc "Diff Ignore Changes In Amount Of White Space"}}
-+		{b gui.diff--ignore-all-space    {mc "Diff Ignore All White Space"                 }}
- 		{i-0..99 gui.commitmsgwidth {mc "Commit Message Text Width"}}
- 		{t gui.newbranchtemplate {mc "New Branch Name Template"}}
- 		{c gui.encoding {mc "Default File Contents Encoding"}}
--- 
-1.6.1
+=20
+--=20
+1.6.1.2.309.g2ea3
