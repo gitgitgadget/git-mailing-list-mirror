@@ -1,101 +1,52 @@
-From: "Bisani, Alok" <alok.bisani@credit-suisse.com>
-Subject: RE: git rebase -i onto HEAD~n
-Date: Tue, 3 Feb 2009 16:22:22 -0000
-Message-ID: <C5E2CAEE4A87D24DAB5334F62A72D1F43ADCA0@ELON17P32001A.csfb.cs-group.com>
-References: <C5E2CAEE4A87D24DAB5334F62A72D1F43ADC9D@ELON17P32001A.csfb.cs-group.com>
- <20090203154457.GA6859@atjola.homenet>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: Windows release
+Date: Tue, 3 Feb 2009 11:21:42 -0500
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70977F81A@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: "=?iso-8859-1?Q?Bj=F6rn_Steinbrink?=" <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 03 17:24:41 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 03 17:34:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUO4f-0002ue-PV
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 17:24:34 +0100
+	id 1LUOE8-0006uU-DO
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 17:34:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751986AbZBCQXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 11:23:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751577AbZBCQXI
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 11:23:08 -0500
-Received: from mail-gw18.credit-suisse.com ([198.240.130.183]:61556 "EHLO
-	nys17a-3003.corpny.csfb.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751234AbZBCQXH convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 Feb 2009 11:23:07 -0500
-Received: by nys17a-3003.corpny.csfb.com; Tue, 3 Feb 2009 11:22:39 -0500 (EST) 
-X-Server-Uuid: 13D18DBC-9E45-4B21-A894-493F5AF71AE6
+	id S1751986AbZBCQcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 11:32:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752023AbZBCQcy
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 11:32:54 -0500
+Received: from mail5.tradestation.com ([63.99.207.76]:2066 "EHLO
+	mail5.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751907AbZBCQcx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Feb 2009 11:32:53 -0500
+X-Greylist: delayed 924 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Feb 2009 11:32:53 EST
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 3 Feb 2009 11:21:48 -0500
 X-MimeOLE: Produced By Microsoft Exchange V6.5
+x-cr-hashedpuzzle: AWdo AaV5 BAQu B+Vj CE8w C39A DDjs ES4K GoL3 HADu HH1k H4qt JNp+ J3tp J+NQ LbDe;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{F80C993C-5FC1-44B9-AE03-F7974C6D8BC0};agBkAGwAdQBnAG8AcwB6AEAAdAByAGEAZABlAHMAdABhAHQAaQBvAG4ALgBjAG8AbQA=;Tue, 03 Feb 2009 16:21:42 GMT;VwBpAG4AZABvAHcAcwAgAHIAZQBsAGUAYQBzAGUA
+x-cr-puzzleid: {F80C993C-5FC1-44B9-AE03-F7974C6D8BC0}
 Content-class: urn:content-classes:message
-In-Reply-To: <20090203154457.GA6859@atjola.homenet>
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-Thread-Topic: git rebase -i onto HEAD~n
-thread-index: AcmGFnHC2wF1+V5ZQcmkiaZ/ktQBkwAA0E+Q
-X-OriginalArrivalTime: 03 Feb 2009 16:22:23.0345 (UTC)
- FILETIME=[9841AE10:01C9861B]
-X-WSS-ID: 6596B0B04E081190-06-05
+Thread-Topic: Windows release
+Thread-Index: AcmGG4AGflG4IlBERgiboGvHGofKJA==
+X-OriginalArrivalTime: 03 Feb 2009 16:21:48.0961 (UTC) FILETIME=[83C31910:01C9861B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108208>
 
->On 2009.02.03 15:32:35 -0000, Bisani, Alok wrote:
->> Hi,
->> 
->> Is it possible to use git rebase -i for the following use case, in a 
->> local branch?
->> 
->> $ git reset --soft HEAD~3
->> $ # magically squash HEAD~2 & HEAD, ignoring HEAD~1 (which should be
->> discarded)
->> $ git commit -m "new commit replacing current HEAD~2 HEAD, without the 
->> commit HEAD~1 (to be discarded)"
->> 
->> I get the error below.
->> 
->>     grep: /home/user/project/.git/rebase-merge/done: No such file or 
->> directory
->>     Cannot 'squash' without a previous commit
->
->It would be helpful if you told us what command you used, and what you changed in the editor.
->
->This should do:
->git rebase -i HEAD~3
->
->And in the editor:
->pick HEAD~2
->squash HEAD
+I want to update my git installation to the latest stable version, and
+I'm running Windows.  In your download page
+<http://git-scm.com/download> the link next to Cygwin is
+<http://www.cygwin.com/setup.exe> which would seem to be the installer
+for Cygwin itself, not for the Cygwin version of the git executables.
 
-Sure. Here is the sequence of commands.
+Am I missing something here?
 
-    mkdir gittest; cd gittest/
-    git init
-    echo "one" > one.txt; git add one.txt; git commit -m "one"
-    echo "two" > two.txt; git add two.txt; git commit -m "two"
-    echo "bad" > discard.txt; git add discard.txt; git commit -m "discard"
-    echo "three" > three.txt; git add three.txt; git commit -m "three"
-    git rebase -i HEAD~3
-
-    # Leave editor for ~/gittest/.git/rebase-merge/git-rebase-todo with
-    squash 8df4c33 two
-    # deleted line with discard
-    squash 91f8267 three
-
-    # And get this error
-    grep: /home/user/gittest/.git/rebase-merge/done: No such file or directory
-    Cannot 'squash' without a previous commit
-
-I guess the error could be introduced after commit -m "two" is first squashed, leaving commit -m "three" parentless, in the (no branch) branch?
-
-Best regards,
-Alok
-
-==============================================================================
-Please access the attached hyperlink for an important electronic communications disclaimer: 
-
-http://www.credit-suisse.com/legal/en/disclaimer_email_ib.html
-==============================================================================
+--John
