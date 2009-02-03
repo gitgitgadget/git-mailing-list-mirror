@@ -1,77 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn: allow disabling expensive broken symlink checks
-Date: Mon, 02 Feb 2009 22:52:22 -0800
-Message-ID: <7v4ozcdnbt.fsf@gitster.siamese.dyndns.org>
-References: <200901311414.58205.markus.heidelberg@web.de>
- <20090201021844.GB18855@dcvr.yhbt.net>
- <7vbptlo7zg.fsf@gitster.siamese.dyndns.org>
- <20090203044549.GA2483@dcvr.yhbt.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] http-push.c: get_remote_object_url() is only used
+	under USE_CURL_MULTI
+Date: Tue, 3 Feb 2009 07:54:57 +0100
+Organization: glandium.org
+Message-ID: <20090203065457.GA8466@glandium.org>
+References: <7v8woodnmj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Feb 03 07:53:56 2009
+Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 07:56:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUFAR-0007Wr-T8
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 07:53:56 +0100
+	id 1LUFD4-00082p-IJ
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 07:56:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023AbZBCGwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 01:52:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbZBCGw3
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 01:52:29 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43274 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751775AbZBCGw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 01:52:29 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 837492A533;
-	Tue,  3 Feb 2009 01:52:28 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AAFB72A543; Tue, 
- 3 Feb 2009 01:52:24 -0500 (EST)
-In-Reply-To: <20090203044549.GA2483@dcvr.yhbt.net> (Eric Wong's message of
- "Mon, 2 Feb 2009 20:45:49 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 38D0AB06-F1BF-11DD-BDCD-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1752042AbZBCGzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 01:55:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752041AbZBCGzM
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 01:55:12 -0500
+Received: from vuizook.err.no ([85.19.221.46]:39960 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751735AbZBCGzL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 01:55:11 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1LUFBV-0003Rx-68; Tue, 03 Feb 2009 07:55:03 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1LUFBR-0002Dx-2s; Tue, 03 Feb 2009 07:54:57 +0100
+Content-Disposition: inline
+In-Reply-To: <7v8woodnmj.fsf@gitster.siamese.dyndns.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108157>
 
-Eric Wong <normalperson@yhbt.net> writes:
+On Mon, Feb 02, 2009 at 10:45:56PM -0800, Junio C Hamano wrote:
+> Otherwise -Wunused-function (which is implied by -Wall) triggers.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> 
+> I think this patch is probably a bit on the wrong side of the borderline,
+> in that it *happens to be* that get_remote_object_url() is used by nobody
+> in non-multi codepath right now, but it is entirely possible that future
+> code clean-up can benefit from its use.  But without this patch,, the file
+> does not compile for me (I compile everything with "-Werror -Wall").
 
->> How common is this breakage in people's subversion repositories that
->> dbc6c74d (git-svn: handle empty files marked as symlinks in SVN,
->> 2009-01-11) works around?
->
-> It's not common at all.  Some broken Windows clients were able to
-> create it.
->
->> What's the way to recover from a broken import, when the subversion
->> repository does have such a breakage, and the user used git-svn that
->> predates dbc6c74?  Is it very involved, and it is much better to have the
->> safety by default than to force everybody else who interacts with
->> non-broken subversion repository suffer from this performance penalty?
->
-> Previously, git-svn would just stop importing and refuse to continue.
-> So allowing the user to enable it would be a problem; too.  I don't
-> recall the error being easy to distinguish from other errors.
->
->> Because the fix (that is broken from the performance angle) is relatively
->> recent, I am wondering if it makes more sense to turn it off by default,
->> and allow people with such a broken history to optionally turn it on.
->
-> I'm considering disabling it by default, too.
+If I recall correctly, http-push just doesn't work without curl-multi,
+so the correct fix would be to just disable http-push when
+USE_CURL_MULTI is undefined.
 
-I leave it entirely up to you to choose whichever default you find
-sensible (I do not think I have to say this).  I wasn't complaining your
-original choice to stay on the safer side, with an option to trigger a
-faster but potentially riskier behaviour.
-
-I was curious how black-and-white the deciding factor for a sensible
-default would be for this particular case.
+Mike
