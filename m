@@ -1,82 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2 1/2] Introduce config variable "diff.primer"
-Date: Tue, 03 Feb 2009 10:56:47 -0800 (PST)
-Message-ID: <m3d4dzwdr3.fsf@localhost.localdomain>
-References: <1233598855-1088-1-git-send-email-keith@cs.ucla.edu>
-	<1233598855-1088-2-git-send-email-keith@cs.ucla.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
+Date: Tue, 03 Feb 2009 11:02:48 -0800
+Message-ID: <7vy6wn9wdj.fsf@gitster.siamese.dyndns.org>
+References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com>
+ <7vocxqf2sf.fsf@gitster.siamese.dyndns.org>
+ <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com>
+ <1E104E1B-BFCC-4CFC-9D53-CE89299C9600@silverinsanity.com>
+ <alpine.DEB.1.00.0902031752230.6573@intel-tinevez-2-302>
+ <2D4586A6-ADAC-4B6E-8B42-2CBD76E0304C@silverinsanity.com>
+ <alpine.DEB.1.00.0902031817260.6573@intel-tinevez-2-302>
+ <5FE034E8-422F-4692-AD37-5633C91A4B98@silverinsanity.com>
+ <alpine.DEB.1.00.0902031918520.9822@pacific.mpi-cbg.de>
+ <34FE2049-0A81-4615-AE3D-46DE35A44011@silverinsanity.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Keith Cascio <keith@cs.ucla.edu>
-X-From: git-owner@vger.kernel.org Tue Feb 03 19:58:40 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 20:04:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUQTn-0006Nb-5q
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 19:58:39 +0100
+	id 1LUQZL-0008Rd-Mt
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 20:04:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752916AbZBCS4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 13:56:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751525AbZBCS4v
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 13:56:51 -0500
-Received: from ti-out-0910.google.com ([209.85.142.189]:32386 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751387AbZBCS4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 13:56:50 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so1114700tic.23
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 10:56:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=qVDxMeRTz30pHZN9IZhyl6AvaRo0Y7tLyTid2jfdsPw=;
-        b=iB0cTkhjXvIl1/8jh0yKtu4yg6y81LdOxXrNQHbmc+dedjCwyqLfJYIT9tqs1VXTjC
-         C2dN1xS7nct1x9RLHkE8nSBFJ65T1JhPKlgkXxckeaiAd7rbhEMSO4t1IzKsLu0eMMts
-         b/12+h7r9CtQkrhBgl2VWQC2v+f0gexCNOI60=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=YKcHd+KlER2iJr5xocYZC8xpHX+AAz89LoQrmCJPyKnUrXw2OF5pKtuOuijQ/FrOVI
-         /B9QvMFQ198/DWUMP45qmkl/j2A8rz12vFktmp6PMvgYGht/ZsA01WJfaUP1jsVfYTey
-         8Y33OyPMn1CReCVgmCOk6m+mBxSGRP4dWrWaA=
-Received: by 10.110.43.16 with SMTP id q16mr8711503tiq.7.1233687408695;
-        Tue, 03 Feb 2009 10:56:48 -0800 (PST)
-Received: from localhost.localdomain (abvf78.neoplus.adsl.tpnet.pl [83.8.203.78])
-        by mx.google.com with ESMTPS id 22sm540997tim.35.2009.02.03.10.56.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Feb 2009 10:56:47 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n13IubJT024612;
-	Tue, 3 Feb 2009 19:56:37 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n13IuXvm024609;
-	Tue, 3 Feb 2009 19:56:33 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1233598855-1088-2-git-send-email-keith@cs.ucla.edu>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751804AbZBCTC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 14:02:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751525AbZBCTC5
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 14:02:57 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54702 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751387AbZBCTC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 14:02:57 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8F3AE96725;
+	Tue,  3 Feb 2009 14:02:55 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2094996724; Tue,
+  3 Feb 2009 14:02:50 -0500 (EST)
+In-Reply-To: <34FE2049-0A81-4615-AE3D-46DE35A44011@silverinsanity.com> (Brian
+ Gernhardt's message of "Tue, 3 Feb 2009 13:42:03 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 43C448D6-F225-11DD-9EAF-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108240>
 
-Keith Cascio <keith@cs.ucla.edu> writes:
+Brian Gernhardt <benji@silverinsanity.com> writes:
 
-> Introduce config variable "diff.primer".
+> I was irritated by your statement that I "did not look far" because _I
+> read all those files_.  I gave you the result of reading them which
+> you seem to have completely ignored, as it was the part of my last e-
+> mail that you did not quote.
+>
+> If you want to double-check me, fine.  But do not claim I did not do
+> the work.
 
-I still think that naming this configuration variable (or
-configuration section in the reverse primer.diff) 'primer' is not a
-good idea, because it is quite obscure and not well known word.  In
-computer related context I have seen it only when talking about
-introductory / novice / basic level documentation ('primer (textbook)'
-meaning).  Git user, who might be not a native English speaker,
-shouldn't have to look up in dictionary what it is about...
+Thanks, both, and let's not be unnecessarily un-nice to each other.
 
-I think that 'defaults' or 'options' would be a much better name.
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+I agree that Dscho's "far enough" comment was not the best way to say "I
+really want to make sure you did verify the way I would myself", but
+please just let it pass, pretend that he just expressed frustration on his
+lack of time to do the verification himself with that comment.  Ok?
+
+The thing is, nobody active in git land is paid to work on git.  You
+don't, Dscho doesn't and I neither.
+
+I'll try to find time myself to triple check if you two want to, even
+though it is known that I often get tripped by the same kind of
+brain-slippage as Dscho when Dscho does get tripped, so my auditing might
+not add much to the collective confidence level ;-).
