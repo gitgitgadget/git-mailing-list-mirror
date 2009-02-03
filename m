@@ -1,67 +1,76 @@
-From: Jesse van den Kieboom <jesse@icecrew.nl>
-Subject: git gtk+/GNOME gui application: gitg
-Date: Sat, 31 Jan 2009 21:05:17 +0100
-Message-ID: <1233432317.26364.5.camel@wren>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: Git vc-git.el versus Emacs vc-git.el versus Gits git.el
+Date: Tue, 03 Feb 2009 11:34:42 +0100
+Message-ID: <87ab93yfjx.fsf@wine.dyndns.org>
+References: <18823.47791.359047.560149@hungover.brentg.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 03 11:35:19 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Brent Goodrick <bgoodr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 11:36:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUIcf-0001Wm-SC
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 11:35:18 +0100
+	id 1LUIde-0001pX-Sg
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 11:36:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751729AbZBCKds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 05:33:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751565AbZBCKds
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 05:33:48 -0500
-Received: from novowork.com ([87.230.85.62]:43109 "EHLO novowork.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750998AbZBCKds (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 05:33:48 -0500
-X-Greylist: delayed 4733 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Feb 2009 05:33:47 EST
-Received: from [192.168.3.101] (217-162-71-67.dclient.hispeed.ch [217.162.71.67])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by novowork.com (Postfix) with ESMTPSA id DB7F7367064C
-	for <git@vger.kernel.org>; Sat, 31 Jan 2009 21:05:18 +0100 (CET)
-X-Mailer: Evolution 2.24.2 
+	id S1751932AbZBCKey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 05:34:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbZBCKex
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 05:34:53 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:55056 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751755AbZBCKew (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 05:34:52 -0500
+Received: from adsl-84-226-106-21.adslplus.ch ([84.226.106.21] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1LUIc8-0006YP-TL; Tue, 03 Feb 2009 04:34:51 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 937511E728C; Tue,  3 Feb 2009 11:34:42 +0100 (CET)
+In-Reply-To: <18823.47791.359047.560149@hungover.brentg.com> (Brent Goodrick's
+	message of "Mon, 2 Feb 2009 19:31:59 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
+X-Spam-Score: -3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108175>
 
-Hi,
+Brent Goodrick <bgoodr@gmail.com> writes:
 
-I have been developing a gui application for git for gtk+/GNOME based on
-GitX (which in turn is based on gitk). I feel that it's reaching the
-point where it might potentially be useful for other people to use. It
-currently features:
+> Hi,
+>
+> I have some questions concerning the Emacs Git integration:
+>
+>  1. What is the difference between git.el and vc-git.el in the
+>     git/contrib/emacs directory?
 
-- Loading large repositories very fast
-- Show/browse repository history
-- Show highlighted revision diff
-- Browse file tree of a revision and export by drag and drop
-- Search in the revision history on subject, author or hash
-- Switch between history view of branches easily
-- Commit view providing per hunk stage/unstage and commit
+vc-git.el is a backend for the Emacs VC mode, which supports the
+standard C-x v commands. The advantage is that you can use the same
+commands for all VCS.
 
-The project is currently hosted on github:
-http://github.com/jessevdk/gitg
+git.el is a project-wide status manager equivalent to pcl-cvs, but
+specialized for git. Its advantage is that by not trying to be generic
+it can offer more git-specific functionality that isn't available with
+VC mode.
 
-clone: git://github.com/jessevdk/gitg.git
+They are not exclusive, you can use both at the same time, depending on
+what operations you are doing.
 
-Please let me know what you think,
+>  2. There is a vc-git.el in the Emacs top-of-trunk sources, and
+>     another one in the git/contrib/emacs directory in the Git
+>     sources. Which one should I use?  If I should use the one in
+>     Emacs, then why is there one in the Git source tree?
 
-
-With kind regards,
+The most recent one is the one in the Emacs trunk, so you should use
+this if possible. The one in the Git tree is an older version that's no
+longer maintained, though it can still be useful if you are running an
+old Emacs version.
 
 -- 
-Jesse van den Kieboom
-
-Personal: http://www.icecrew.nl
-Professional: http://www.novowork.com
+Alexandre Julliard
+julliard@winehq.org
