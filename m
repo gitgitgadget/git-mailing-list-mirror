@@ -1,77 +1,77 @@
-From: Stefan Karpinski <stefan.karpinski@gmail.com>
-Subject: Re: git gtk+/GNOME gui application: gitg
-Date: Tue, 3 Feb 2009 11:43:10 -0800
-Message-ID: <d4bc1a2a0902031143u2f4beadek507910fe3a6052f@mail.gmail.com>
-References: <1233432317.26364.5.camel@wren>
-	 <498877A7.3050308@drmicha.warpmail.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
+Date: Tue, 3 Feb 2009 21:16:13 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902032115570.9822@pacific.mpi-cbg.de>
+References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com> <7vocxqf2sf.fsf@gitster.siamese.dyndns.org> <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com> <1E104E1B-BFCC-4CFC-9D53-CE89299C9600@silverinsanity.com>
+ <alpine.DEB.1.00.0902031752230.6573@intel-tinevez-2-302> <2D4586A6-ADAC-4B6E-8B42-2CBD76E0304C@silverinsanity.com> <alpine.DEB.1.00.0902031817260.6573@intel-tinevez-2-302> <5FE034E8-422F-4692-AD37-5633C91A4B98@silverinsanity.com>
+ <alpine.DEB.1.00.0902031918520.9822@pacific.mpi-cbg.de> <34FE2049-0A81-4615-AE3D-46DE35A44011@silverinsanity.com> <7vy6wn9wdj.fsf@gitster.siamese.dyndns.org> <DB993E35-9F82-4451-B681-D1BFE3E9BD45@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jesse van den Kieboom <jesse@icecrew.nl>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Feb 03 20:44:47 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 21:17:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LURCP-0007sO-Kr
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 20:44:46 +0100
+	id 1LURhm-0003Z8-Cd
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 21:17:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752463AbZBCTnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 14:43:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752334AbZBCTnM
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 14:43:12 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:49840 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752133AbZBCTnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 14:43:11 -0500
-Received: by wa-out-1112.google.com with SMTP id v33so1052067wah.21
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 11:43:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vDIfp0mqSQQ7pb8SOad8aZ1wFpmm3Khq+lDgjdjQqlE=;
-        b=GQMEPerm8xXYfmVaOS8PbY7ZBlGOowarmpkt7kPfN3VUm6lsxjTq/IU+387d1FwpIA
-         4OIUGtPKJPHu6VOcEMdVlGfn57SdyjgUy8Ae7bbpZL2tCQwqeEm/tb6ugEuKoC4/hjHw
-         9Qu/Fb6zZtP4QfHWDRnLy++rgOZfsDQwDrCKc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZYMicyXzV0dYxA2kmupcjFHBt9XBORRAS6hWEDPWt4+i9oCotSpGXe0VyejYFHKHA3
-         OPkVhsYfVIz6KK6ZKiWTPFzfezlBpE7s03d/f/8E5Q6Nn5FMx+5hRI4V3S1Jhu+AZZvm
-         XQSYgwSCSlIzOp5tIpZ1tVQrIhUznjSjqnb8k=
-Received: by 10.115.111.3 with SMTP id o3mr2738015wam.210.1233690190310; Tue, 
-	03 Feb 2009 11:43:10 -0800 (PST)
-In-Reply-To: <498877A7.3050308@drmicha.warpmail.net>
+	id S1751204AbZBCUPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 15:15:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbZBCUPn
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 15:15:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42474 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751012AbZBCUPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 15:15:42 -0500
+Received: (qmail invoked by alias); 03 Feb 2009 20:15:40 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp019) with SMTP; 03 Feb 2009 21:15:40 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+2QkAku8e2AgFC38rpPIwW+T7NYpTPKRoGFJax07
+	8BjTDK6/aAZJnw
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <DB993E35-9F82-4451-B681-D1BFE3E9BD45@silverinsanity.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108247>
 
-On Tue, Feb 3, 2009 at 8:58 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
->
-> Not yet another one, please!
->
-> I'm sorry, but that was my first thought. I lost count of how many
-> half-finished GUIs we have, using tcl/tk, gtk, qt, you-name-it-tk. I
-> still don't see any which provide a consistent, "modern", stable GUI for
-> viewing *and* committing, i.e. a replacement for gitk and git-gui.
->
-> The latter two still seem to be the most feature rich choices, but they
-> suffer somewhat from their implementation language. Just look at the git
-> survey and you know why nobody wants to work on them.
+Hi,
 
-For what it's worth, GitX (OS X only) does both history viewing and
-committing, and seems to be rapidly approaching the feature set of
-gitk and git-gui combined. Unfortunately, I seem to inevitably hate
-cross-platform GUI's---they never feel right or work slickly enough.
-Sad, but true.
+On Tue, 3 Feb 2009, Brian Gernhardt wrote:
 
-If GitX and this newer project could share a lot of code base, then
-maybe their co-development would be accelerated and both would end up
-being slick, native, full-fledged GUIs for git.
+> On Feb 3, 2009, at 2:02 PM, Junio C Hamano wrote:
+> 
+> >Brian Gernhardt <benji@silverinsanity.com> writes:
+> >
+> > >I was irritated by your statement that I "did not look far" because _I
+> > >read all those files_.  I gave you the result of reading them which
+> > >you seem to have completely ignored, as it was the part of my last e-
+> > >mail that you did not quote.
+> > >
+> > >If you want to double-check me, fine.  But do not claim I did not do
+> > >the work.
+> >
+> >Thanks, both, and let's not be unnecessarily un-nice to each other.
+> >
+> >I agree that Dscho's "far enough" comment was not the best way to say "I
+> >really want to make sure you did verify the way I would myself", but
+> >please just let it pass, pretend that he just expressed frustration on his
+> >lack of time to do the verification himself with that comment.  Ok?
+> 
+> Fair enough.  My own word choice wasn't exactly wise, either.  This has been
+> an especially frustrating day for me in many other respects and it's affected
+> my commentary here.
+> 
+> Dscho, my apologies.
+
+Accepted, and mine to you.
+
+Ciao,
+Dscho
