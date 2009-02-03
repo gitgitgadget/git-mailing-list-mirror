@@ -1,75 +1,72 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
-Date: Tue, 3 Feb 2009 12:11:01 -0500
-Message-ID: <2D4586A6-ADAC-4B6E-8B42-2CBD76E0304C@silverinsanity.com>
-References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com> <7vocxqf2sf.fsf@gitster.siamese.dyndns.org> <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com> <1E104E1B-BFCC-4CFC-9D53-CE89299C9600@silverinsanity.com> <alpine.DEB.1.00.0902031752230.6573@intel-tinevez-2-302>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: git rebase -i onto HEAD~n
+Date: Tue, 3 Feb 2009 17:18:39 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngogv3e.nak.sitaramc@sitaramc.homelinux.net>
+References: <C5E2CAEE4A87D24DAB5334F62A72D1F43ADC9D@ELON17P32001A.csfb.cs-group.com>
+ <20090203154457.GA6859@atjola.homenet>
+ <C5E2CAEE4A87D24DAB5334F62A72D1F43ADCA0@ELON17P32001A.csfb.cs-group.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 03 18:12:35 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 03 18:20:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUOp6-0006GD-OY
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 18:12:33 +0100
+	id 1LUOwg-0000lA-J5
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 18:20:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754347AbZBCRLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 12:11:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754168AbZBCRLG
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 12:11:06 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:50451 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753965AbZBCRLE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 12:11:04 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id E698F1FFC27F; Tue,  3 Feb 2009 17:10:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=4.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.7-deb3
-Received: from [192.168.5.44] (nmd.sbx07360.rocheny.wayport.net [98.98.50.102])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 514EB1FFC271;
-	Tue,  3 Feb 2009 17:10:58 +0000 (UTC)
-In-Reply-To: <alpine.DEB.1.00.0902031752230.6573@intel-tinevez-2-302>
-X-Mailer: Apple Mail (2.930.3)
+	id S1752042AbZBCRS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 12:18:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbZBCRS4
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 12:18:56 -0500
+Received: from main.gmane.org ([80.91.229.2]:60970 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751234AbZBCRS4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 12:18:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LUOvC-0001gc-4S
+	for git@vger.kernel.org; Tue, 03 Feb 2009 17:18:50 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Feb 2009 17:18:50 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Feb 2009 17:18:50 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108220>
 
-
-On Feb 3, 2009, at 11:53 AM, Johannes Schindelin wrote:
-
-> On Tue, 3 Feb 2009, Brian Gernhardt wrote:
+On 2009-02-03, Bisani, Alok <alok.bisani@credit-suisse.com> wrote:
+>     # Leave editor for ~/gittest/.git/rebase-merge/git-rebase-todo with
+>     squash 8df4c33 two
+>     # deleted line with discard
+>     squash 91f8267 three
 >
->> This change appears to have been forgotten, but does fix the  
->> problems I
->> was having.  Junio, can this make it into the official repo instead  
->> of
->> floating around in my local?  I'd send in a patch, but it was your  
->> code
->> and I don't want to take credit for it.
->
-> Top-poster!
+>     # And get this error
+>     grep: /home/user/gittest/.git/rebase-merge/done: No such file or directory
+>     Cannot 'squash' without a previous commit
 
-Well, yes.  I wasn't replying to anything in the e-mail, I just wanted  
-to bring it back to attention.
+Quoting from "git help rebase"'s interactive mode section:
 
-> Besides, I think that my latest comment still stands there: testing  
-> is not
-> good enough, code inspection is required if something expects the file
-> names as they used to be.
+    If you want to fold two or more commits into one,
+    replace the command "pick" with "squash" for the second
+    and subsequent commit.
 
-As far as I can tell, no test relies on the auto-generated name of the  
-test file.  In fact, only t3411 uses that feature at all and it only  
-performs operations on commits.  All other uses of test_commit give a  
-filename (even though many of them don't appear to use the file).
+Keep the first one as "pick", don't make both of them
+squash.
 
-~~ Brian
+-- 
+Sitaram
+
+We've long needed a filesystem named after a vegetable --
+Andrew Morton
