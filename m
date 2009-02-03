@@ -1,74 +1,57 @@
-From: Massimo Manca <massimo.manca@micronengineering.it>
-Subject: Backup/sync files using git
-Date: Tue, 03 Feb 2009 09:57:41 +0100
-Organization: Micron Engineering
-Message-ID: <49880705.1020000@micronengineering.it>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Illustration PATCH] add -i: accept single-keypress input
+Date: Tue, 03 Feb 2009 01:05:49 -0800
+Message-ID: <7vbptjdh5e.fsf@gitster.siamese.dyndns.org>
+References: <20090203062437.GB21367@sigill.intra.peff.net>
+ <1233651248-26717-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------040700000203050803020807"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 03 10:06:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Suraj Kurapati <sunaku@gmail.com>,
+	git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 03 10:08:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUHE5-00066B-4e
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 10:05:52 +0100
+	id 1LUHFl-0006zi-2B
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 10:07:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212AbZBCJEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 04:04:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751088AbZBCJEY
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 04:04:24 -0500
-Received: from smtpd4.aruba.it ([62.149.128.209]:43147 "HELO smtp3.aruba.it"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751010AbZBCJEX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 04:04:23 -0500
-X-Greylist: delayed 390 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Feb 2009 04:04:22 EST
-Received: (qmail 15266 invoked by uid 89); 3 Feb 2009 08:57:41 -0000
-Received: from unknown (HELO ?127.0.0.1?) (massimo.manca@micronengineering.it@213.136.147.160)
-  by smtp3.aruba.it with SMTP; 3 Feb 2009 08:57:41 -0000
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-X-Antivirus: avast! (VPS 090202-1, 02/02/2009), Outbound message
-X-Antivirus-Status: Clean
-X-Spam-Rating: smtp3.aruba.it 1.6.2 0/1000/N
+	id S1752221AbZBCJGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 04:06:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbZBCJGG
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 04:06:06 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56307 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752109AbZBCJGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 04:06:04 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D2B8B95219;
+	Tue,  3 Feb 2009 04:06:02 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6111C95216; Tue,
+  3 Feb 2009 04:05:57 -0500 (EST)
+In-Reply-To: <1233651248-26717-1-git-send-email-trast@student.ethz.ch>
+ (Thomas Rast's message of "Tue, 3 Feb 2009 09:54:08 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E1B85400-F1D1-11DD-ABAF-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108168>
 
-This is a multi-part message in MIME format.
---------------040700000203050803020807
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Thomas Rast <trast@student.ethz.ch> writes:
 
-Hi folks,
-for my personal work I need to have an application to manage
-file/directory backups and syncronization form e PCs and a shared
-network disk. On the net disk I would have a git repository so I can
-have an history of the backups.
-Anybody knows if exist an application like that?
-Best regards,
+> Demonstrate how to add Term::ReadKey functionality to the main add -i
+> prompt function list_and_choose().
+>
+> Not really great because if several input choices share a common first
+> character, it prompts for the _rest_ of the line, meaning the choice
+> of the first character cannot be undone again.
 
---------------040700000203050803020807
-Content-Type: text/x-vcard; charset=utf-8;
- name="massimo_manca.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="massimo_manca.vcf"
-
-begin:vcard
-fn:Massimo Manca
-n:Manca;Massimo
-org:Micron Engineering di Massimo Manca
-adr:;;via della Ferriera, 48;Pordenone;PN;33170;ITALIA
-email;internet:massimo.manca@micronengineering.it
-tel;work:+39 0434 1856131
-tel;fax:+39 0434 1851032 / 178 273 3543
-tel;cell:+39 349 4504979
-url:http://www.micronengineering.it
-version:2.1
-end:vcard
-
-
---------------040700000203050803020807--
+Hmm, you could trigger the action immediately after seeing _enough_ number
+of characters to disambiguate instead of stop-and-prompt, I guess?  That
+way, you would get a single-key merely as a degenerate case when the
+choices are all distinct.
