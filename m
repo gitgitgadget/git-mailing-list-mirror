@@ -1,72 +1,78 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: git rebase -i onto HEAD~n
-Date: Tue, 3 Feb 2009 17:18:39 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngogv3e.nak.sitaramc@sitaramc.homelinux.net>
-References: <C5E2CAEE4A87D24DAB5334F62A72D1F43ADC9D@ELON17P32001A.csfb.cs-group.com>
- <20090203154457.GA6859@atjola.homenet>
- <C5E2CAEE4A87D24DAB5334F62A72D1F43ADCA0@ELON17P32001A.csfb.cs-group.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
+Date: Tue, 3 Feb 2009 18:18:50 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902031817260.6573@intel-tinevez-2-302>
+References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com> <7vocxqf2sf.fsf@gitster.siamese.dyndns.org> <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com> <1E104E1B-BFCC-4CFC-9D53-CE89299C9600@silverinsanity.com>
+ <alpine.DEB.1.00.0902031752230.6573@intel-tinevez-2-302> <2D4586A6-ADAC-4B6E-8B42-2CBD76E0304C@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 03 18:20:23 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 18:20:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUOwg-0000lA-J5
+	id 1LUOwh-0000lA-As
 	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 18:20:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752042AbZBCRS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 12:18:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbZBCRS4
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 12:18:56 -0500
-Received: from main.gmane.org ([80.91.229.2]:60970 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751234AbZBCRS4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 12:18:56 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LUOvC-0001gc-4S
-	for git@vger.kernel.org; Tue, 03 Feb 2009 17:18:50 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 17:18:50 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 17:18:50 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1752142AbZBCRS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 12:18:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbZBCRS6
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 12:18:58 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47393 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752095AbZBCRS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 12:18:57 -0500
+Received: (qmail invoked by alias); 03 Feb 2009 17:18:51 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp006) with SMTP; 03 Feb 2009 18:18:51 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/9P85y1n79J8dhV3TTj+GumWMMc2m7XrqnDhj0hO
+	7qeCJVlYwb5is0
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <2D4586A6-ADAC-4B6E-8B42-2CBD76E0304C@silverinsanity.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108221>
 
-On 2009-02-03, Bisani, Alok <alok.bisani@credit-suisse.com> wrote:
->     # Leave editor for ~/gittest/.git/rebase-merge/git-rebase-todo with
->     squash 8df4c33 two
->     # deleted line with discard
->     squash 91f8267 three
->
->     # And get this error
->     grep: /home/user/gittest/.git/rebase-merge/done: No such file or directory
->     Cannot 'squash' without a previous commit
+Hi,
 
-Quoting from "git help rebase"'s interactive mode section:
+On Tue, 3 Feb 2009, Brian Gernhardt wrote:
 
-    If you want to fold two or more commits into one,
-    replace the command "pick" with "squash" for the second
-    and subsequent commit.
+> 
+> On Feb 3, 2009, at 11:53 AM, Johannes Schindelin wrote:
+> 
+> >On Tue, 3 Feb 2009, Brian Gernhardt wrote:
+> >
+> > >This change appears to have been forgotten, but does fix the problems 
+> > >I was having.  Junio, can this make it into the official repo instead 
+> > >of floating around in my local?  I'd send in a patch, but it was your 
+> > >code and I don't want to take credit for it.
+> >
+> >Top-poster!
+> 
+> Well, yes.  I wasn't replying to anything in the e-mail, I just wanted to
+> bring it back to attention.
 
-Keep the first one as "pick", don't make both of them
-squash.
+You did, in fact, refer a little bit to the content of the thread you were 
+replying to.
 
--- 
-Sitaram
+> >Besides, I think that my latest comment still stands there: testing is not
+> >good enough, code inspection is required if something expects the file
+> >names as they used to be.
+> 
+> As far as I can tell, no test relies on the auto-generated name of the test
+> file.  In fact, only t3411 uses that feature at all and it only performs
+> operations on commits.  All other uses of test_commit give a filename (even
+> though many of them don't appear to use the file).
 
-We've long needed a filesystem named after a vegetable --
-Andrew Morton
+You did not look far.
+
+Ciao,
+Dscho
