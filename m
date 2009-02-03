@@ -1,117 +1,85 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] config: Add new option to open an editor.
-Date: Wed,  4 Feb 2009 01:26:37 +0200
-Message-ID: <1233703597-14532-1-git-send-email-felipe.contreras@gmail.com>
-References: <94a0d4530902031525o11e512barfc2f50c33a520474@mail.gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 04 00:28:31 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] config: Add new option to open an editor.
+Date: Wed, 4 Feb 2009 00:31:15 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902040029040.9822@pacific.mpi-cbg.de>
+References: <1233700826-11763-1-git-send-email-felipe.contreras@gmail.com>  <alpine.DEB.1.00.0902032350130.9822@pacific.mpi-cbg.de>  <94a0d4530902031456u1e1753e2rc34786ebdce6e774@mail.gmail.com>  <alpine.DEB.1.00.0902040002360.9822@pacific.mpi-cbg.de>
+ <94a0d4530902031525o11e512barfc2f50c33a520474@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 00:32:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUUgw-0007cY-7D
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 00:28:30 +0100
+	id 1LUUkm-0000Pi-UX
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 00:32:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752384AbZBCX0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 18:26:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752375AbZBCX0m
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 18:26:42 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:50570 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752254AbZBCX0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 18:26:41 -0500
-Received: by fxm13 with SMTP id 13so2668974fxm.13
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 15:26:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=zecV/HXpW8LNkSySvCstWq+AAUpKpt7E+DIFDax5Mh4=;
-        b=p13aIroXjtvhI511WMmiMDkLkyUqQz8gvAJsR4niZDwKqrMorNm/3MAh96jLl39bbn
-         ly8vrAh42415nH9AMz1hFG2iAcgtL9VALumGmmxYwDIYg5qVTmWX60T+WKQA4aIT9/ma
-         4p8xH3vVXM9x2o52ue6KSdM09koSxMEY2cw2Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=XmD5Qdpf5ODCBc3EAs3OL6l1Pry2CgDYVyMwLc8+Lhv7Y2x886tWfZDs312f/imLY0
-         xPSDXV/BXtBI3/03Yv+iYcChAjHqHHBjdpZI53ozIwV7nXFQeb3cJKCvlU9bRI4eP3cb
-         4SWNSH/r/4NodmF2PXOEB3h4CpLw2HDVc/ShI=
-Received: by 10.180.221.13 with SMTP id t13mr965334bkg.55.1233703599263;
-        Tue, 03 Feb 2009 15:26:39 -0800 (PST)
-Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
-        by mx.google.com with ESMTPS id 31sm6940127fkt.22.2009.02.03.15.26.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Feb 2009 15:26:38 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.2
+	id S1754904AbZBCXao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 18:30:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753032AbZBCXao
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 18:30:44 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59669 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754883AbZBCXan (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 18:30:43 -0500
+Received: (qmail invoked by alias); 03 Feb 2009 23:30:41 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp060) with SMTP; 04 Feb 2009 00:30:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/JrTh0tATJ9dQeGPSqxjLdGanj23sHUozVpcOFte
+	QdTAUJoMLf/SjX
+X-X-Sender: schindelin@pacific.mpi-cbg.de
 In-Reply-To: <94a0d4530902031525o11e512barfc2f50c33a520474@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108277>
 
-The idea was originated by discussion about usability of manually
-editing the config file in 'special needs' systems such as Windows. Now
-the user can forget a bit about where the config files actually are.
+Hi,
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/git-config.txt |    6 ++++++
- builtin-config.c             |   10 +++++++++-
- 2 files changed, 15 insertions(+), 1 deletions(-)
+On Wed, 4 Feb 2009, Felipe Contreras wrote:
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 19a8917..7d14007 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -22,6 +22,7 @@ SYNOPSIS
- 'git config' [<file-option>] [-z|--null] -l | --list
- 'git config' [<file-option>] --get-color name [default]
- 'git config' [<file-option>] --get-colorbool name [stdout-is-tty]
-+'git config' [<file-option>] -e | --edit
- 
- DESCRIPTION
- -----------
-@@ -157,6 +158,11 @@ See also <<FILES>>.
- 	output.  The optional `default` parameter is used instead, if
- 	there is no color configured for `name`.
- 
-+-e::
-+--edit::
-+	Opens an editor to modify the specified config file; either
-+	'--system', '--global', or repository (default).
-+
- [[FILES]]
- FILES
- -----
-diff --git a/builtin-config.c b/builtin-config.c
-index 1582673..0405242 100644
---- a/builtin-config.c
-+++ b/builtin-config.c
-@@ -3,7 +3,7 @@
- #include "color.h"
- 
- static const char git_config_set_usage[] =
--"git config [ --global | --system | [ -f | --file ] config-file ] [ --bool | --int | --bool-or-int ] [ -z | --null ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list | --get-color var [default] | --get-colorbool name [stdout-is-tty]";
-+"git config [ --global | --system | [ -f | --file ] config-file ] [ --bool | --int | --bool-or-int ] [ -z | --null ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list | --get-color var [default] | --get-colorbool name [stdout-is-tty] | --edit | -e ]";
- 
- static char *key;
- static regex_t *key_regexp;
-@@ -362,6 +362,14 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			return get_color(argc-2, argv+2);
- 		} else if (!strcmp(argv[1], "--get-colorbool")) {
- 			return get_colorbool(argc-2, argv+2);
-+		} else if (!strcmp(argv[1], "--edit") || !strcmp(argv[1], "-e")) {
-+			const char *config_filename;
-+			if (config_exclusive_filename)
-+				config_filename = config_exclusive_filename;
-+			else
-+				config_filename = git_path("config");
-+			launch_editor(config_filename, NULL, NULL);
-+			return 0;
- 		} else
- 			break;
- 		argc--;
--- 
-1.6.1.2
+> On Wed, Feb 4, 2009 at 1:05 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Wed, 4 Feb 2009, Felipe Contreras wrote:
+> >
+> >> On Wed, Feb 4, 2009 at 12:53 AM, Johannes Schindelin
+> >> <Johannes.Schindelin@gmx.de> wrote:
+> >>
+> >> > However, a test case would be nice...
+> >>
+> >> What would the the test case check?
+> >
+> > That 'GIT_CONFIG=bla GIT_EDITOR=echo git config -e' and 'GIT_DIR=blub 
+> > GIT_EDITOR=echo git config -e' do the right thing.  Maybe even 
+> > --global, but that would also be a good test that "git config --global 
+> > -e" does not fail when there is no original file.
+> 
+> Hmm, I'm not sure what issues this test case would find. If there's a 
+> problem with launch_editor that's something other test case should find.
+
+The purpose of the test case is not to find problems now, but ensure that 
+what the patch is intended to do does not get broken by subsequent 
+patches.
+
+> If there's no original file it's up to the editor to create one, if for 
+> some reason the editor fails at doing that it's a problem of the editor, 
+> and there's not much 'git config -e' could do except show an error, and 
+> that's what launch_editor would do. Same thing if the editor is wrong 
+> (GIT_EDITOR=blah).
+
+I was more thinking about 'git config --global -e' complaining that it 
+could not find a non-existant file _before_ launching the editor.
+
+Likewise, GIT_EDITOR=echo was meant to output the filename, not to edit 
+the file.
+
+Ciao,
+Dscho
