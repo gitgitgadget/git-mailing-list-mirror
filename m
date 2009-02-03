@@ -1,66 +1,89 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
-Date: Tue, 3 Feb 2009 19:19:58 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902031918520.9822@pacific.mpi-cbg.de>
-References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com> <7vocxqf2sf.fsf@gitster.siamese.dyndns.org> <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com> <1E104E1B-BFCC-4CFC-9D53-CE89299C9600@silverinsanity.com>
- <alpine.DEB.1.00.0902031752230.6573@intel-tinevez-2-302> <2D4586A6-ADAC-4B6E-8B42-2CBD76E0304C@silverinsanity.com> <alpine.DEB.1.00.0902031817260.6573@intel-tinevez-2-302> <5FE034E8-422F-4692-AD37-5633C91A4B98@silverinsanity.com>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: problems with http://git-scm.com/
+Date: Tue, 3 Feb 2009 10:38:28 -0800
+Message-ID: <d411cc4a0902031038h123c34ces45134e5455f37df0@mail.gmail.com>
+References: <20090124173756.GU6683@cs-wsok.swansea.ac.uk>
+	 <87skn8v906.fsf@iki.fi>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 19:20:58 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Oliver Kullmann <O.Kullmann@swansea.ac.uk>, git@vger.kernel.org,
+	Adam Cooke <adam@atechmedia.com>
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Feb 03 19:40:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUPtJ-0008Ku-Lm
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 19:20:58 +0100
+	id 1LUQBh-0007Sl-BS
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 19:39:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752407AbZBCSTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 13:19:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752358AbZBCSTc
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 13:19:32 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44957 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752205AbZBCSTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 13:19:31 -0500
-Received: (qmail invoked by alias); 03 Feb 2009 18:19:28 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp070) with SMTP; 03 Feb 2009 19:19:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Xqk5YT3ZXotNFPRqh+pQk43jbOjDRSxuN8b95ix
-	YTB2cN8roV8alS
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <5FE034E8-422F-4692-AD37-5633C91A4B98@silverinsanity.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1752092AbZBCSia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 13:38:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbZBCSia
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 13:38:30 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:54539 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751472AbZBCSi3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 13:38:29 -0500
+Received: by qyk4 with SMTP id 4so2794089qyk.13
+        for <git@vger.kernel.org>; Tue, 03 Feb 2009 10:38:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FYg5ZEEikPDUiqyRarc7adTwPZ7d8ufBmx3utYeJ8Uc=;
+        b=R207dcbP4C1egkRo5dts9aSOWp5aW/e4ZvzPy+6YRPaqehpTOCcCx/UHPNn41qFBKX
+         1gMSH11ZbEmzqH7tOFxj1SB3oOnv7H8kcUJWHFMtr6rCdSPJd6qo2NzzYekQ0tbQ6j2A
+         HTmCuuvSYM3x9vfxY4dCZopks71Tz7AzfVDhs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=TqEoweXP+3T/GOYmjiMD/SrTsIkW2HZLcGh9U7EQvWmr/TZRywiqwfDvpnMstpwc93
+         +FQl1wBbvPDuJNyVZcStRMmV1aCvMzXpojxMbOQyHzsjgpa6MHKD5B84gNcxXnmqBcqc
+         agoY09Vnj06YIj4FsCNzGj5EZqWBj6PTKAACA=
+Received: by 10.214.113.1 with SMTP id l1mr4117603qac.259.1233686308115; Tue, 
+	03 Feb 2009 10:38:28 -0800 (PST)
+In-Reply-To: <87skn8v906.fsf@iki.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108236>
 
-Hi,
+Will push out this and a few more fixes soon.
 
-On Tue, 3 Feb 2009, Brian Gernhardt wrote:
+Thanks,
+Scott
 
-> On Feb 3, 2009, at 12:18 PM, Johannes Schindelin wrote:
-> 
-> >You did not look far.
-> 
-> If there's something I missed, could you perhaps say what it is instead 
-> of being cryptic?
-
-$ git grep -l test_commit junio/next -- t/
-junio/next:t/README
-junio/next:t/t1450-fsck.sh
-junio/next:t/t3410-rebase-preserve-dropped-merges.sh
-junio/next:t/t3411-rebase-preserve-around-merges.sh
-junio/next:t/t3412-rebase-root.sh
-junio/next:t/test-lib.sh
-
-But I understood.  I will audit the code myself later this evening.
-
-Ciao,
-Dscho
+On Sat, Jan 24, 2009 at 10:44 AM, Teemu Likonen <tlikonen@iki.fi> wrote:
+> [Adding some CCs.]
+>
+>
+> Oliver Kullmann (2009-01-24 17:37 +0000) wrote:
+>
+>> since a few docs my (somewhat rusty) Konqueror can't load
+>> http://git-scm.com/
+>> anymore.
+>>
+>> Now checking at
+>> http://validator.w3.org/
+>> we get one error:
+>>
+>>  Line 174, Column 14: there is no attribute "clear".
+>>     <br clear="all"/>
+>>
+>> And that shouldn't be (since http://git-scm.com/ claims to be strict
+>> xhtml). Don't know whether this is the problem, but that attribute
+>> clearly should be removed anyway.
+>
+> It seems that the attribute has already been changed to
+> style="clear:both;" in the web site's git repository[1]. It's the commit
+> cea494929e (2009-01-08). But www.git-scm.com is still serving an old
+> version.
+>
+> ---------------
+>  1. git://github.com/schacon/gitscm.git
+>
