@@ -1,98 +1,75 @@
-From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
-Subject: Re: [JGIT PATCH] Fix AbstractTreeIterator path comparion betwen 'a'
- and 'a/b'
-Date: Tue, 03 Feb 2009 18:10:30 +0100
-Message-ID: <49887A86.2040602@gmail.com>
-References: <1233605617-14513-1-git-send-email-torarnv@gmail.com> <20090203161539.GV26880@spearce.org> <49887274.8040601@gmail.com> <20090203170337.GX26880@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
+Date: Tue, 3 Feb 2009 12:11:01 -0500
+Message-ID: <2D4586A6-ADAC-4B6E-8B42-2CBD76E0304C@silverinsanity.com>
+References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com> <7vocxqf2sf.fsf@gitster.siamese.dyndns.org> <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com> <1E104E1B-BFCC-4CFC-9D53-CE89299C9600@silverinsanity.com> <alpine.DEB.1.00.0902031752230.6573@intel-tinevez-2-302>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 03 18:12:11 2009
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 03 18:12:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUOok-000677-S9
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 18:12:11 +0100
+	id 1LUOp6-0006GD-OY
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 18:12:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752933AbZBCRKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 12:10:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752494AbZBCRKp
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 12:10:45 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:57238 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751922AbZBCRKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 12:10:45 -0500
-Received: by ewy14 with SMTP id 14so2605514ewy.13
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 09:10:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=XVaF5j58sX+sWqFMzXP5ksA1yAFupqLdkjrgbwwaijE=;
-        b=U4CXyzj4U7+IMLYhh2vSfxFGLxvWAh6LDuyQtjxM0Dp6TyZyq2SISx1AYMiEFCL/5I
-         jmFh6K/lvlhI5YVYhMSTyBfb6xPtKCWSUnaQDexGVMtBFBrjs+vlGa8vfPVaCG1Xogfa
-         SiE9I+za9TswDlRH7Gtpsm3xqOVDGAqjad4Ec=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=Wg3ZWd0DgElJDdGBSj6DRDxl5heJFFnqqNjV4nag6mSSKdPQ2pZTTX/7Z0l2hIBm6G
-         0lHKm0Jk3K9UF4afEdujc7B6PPs0DqAgnBAsrzccvllKfWZ17/a5nIoBmAvF+L3YSU01
-         GvnFRwdoTe2uF1kqdeTablkCpxSjbgWrYm4qk=
-Received: by 10.103.225.11 with SMTP id c11mr2543692mur.24.1233681041228;
-        Tue, 03 Feb 2009 09:10:41 -0800 (PST)
-Received: from ?192.168.1.226? (212251244070.customer.cdi.no [212.251.244.70])
-        by mx.google.com with ESMTPS id w5sm390841mue.3.2009.02.03.09.10.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 03 Feb 2009 09:10:37 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <20090203170337.GX26880@spearce.org>
+	id S1754347AbZBCRLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 12:11:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754168AbZBCRLG
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 12:11:06 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:50451 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753965AbZBCRLE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 12:11:04 -0500
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id E698F1FFC27F; Tue,  3 Feb 2009 17:10:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
+	silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=4.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.1.7-deb3
+Received: from [192.168.5.44] (nmd.sbx07360.rocheny.wayport.net [98.98.50.102])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 514EB1FFC271;
+	Tue,  3 Feb 2009 17:10:58 +0000 (UTC)
+In-Reply-To: <alpine.DEB.1.00.0902031752230.6573@intel-tinevez-2-302>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108218>
-
-Shawn O. Pearce wrote:
-> OK, so I think this is a valid test case, and as it turns out,
-> it passes with the library unmodified:
-> 
-> --8<--
-> +	public void testPathCompare() throws Exception {
-> +		assertTrue(new FakeTreeIterator("a", FileMode.TREE).pathCompare(
-> +				new FakeTreeIterator("a", FileMode.TREE)) == 0);
-> +
-> +		assertTrue(new FakeTreeIterator("a", FileMode.REGULAR_FILE).pathCompare(
-> +				new FakeTreeIterator("a", FileMode.REGULAR_FILE)) == 0);
-> +
-> +		assertTrue(new FakeTreeIterator("a", FileMode.REGULAR_FILE).pathCompare(
-> +				new FakeTreeIterator("a", FileMode.TREE)) < 0);
-> +
-> +		assertTrue(new FakeTreeIterator("a", FileMode.TREE).pathCompare(
-> +				new FakeTreeIterator("a", FileMode.REGULAR_FILE)) > 0);
-> +	}
-> ----
-
-Okey, I'll post a new patch with just those test cases, no changes to
-the pathCompare, so we at least have those tests.
-
-> Which means whatever problem you have been seeing in the decorator
-> code is different than what we were originally thinking.  Perhaps you
-> are trying to use the tree iterator APIs in a way that they aren't
-> meant to be used (like passing in full paths where only a path name
-> component is expected?), or there is something else lurking that
-> we don't understand.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108219>
 
 
-Ahh, I see. My patch was based on the assumption that 'a/b' was a valid
-comparison, since I was seeing similar comparisons in live code. But as
-you say, that's probably due to how I use the iterators. I will go back
-and investigate how I ended up with 'a/b' paths in the first place.
+On Feb 3, 2009, at 11:53 AM, Johannes Schindelin wrote:
 
-Thanks :)
+> On Tue, 3 Feb 2009, Brian Gernhardt wrote:
+>
+>> This change appears to have been forgotten, but does fix the  
+>> problems I
+>> was having.  Junio, can this make it into the official repo instead  
+>> of
+>> floating around in my local?  I'd send in a patch, but it was your  
+>> code
+>> and I don't want to take credit for it.
+>
+> Top-poster!
 
-Tor Arne
+Well, yes.  I wasn't replying to anything in the e-mail, I just wanted  
+to bring it back to attention.
+
+> Besides, I think that my latest comment still stands there: testing  
+> is not
+> good enough, code inspection is required if something expects the file
+> names as they used to be.
+
+As far as I can tell, no test relies on the auto-generated name of the  
+test file.  In fact, only t3411 uses that feature at all and it only  
+performs operations on commits.  All other uses of test_commit give a  
+filename (even though many of them don't appear to use the file).
+
+~~ Brian
