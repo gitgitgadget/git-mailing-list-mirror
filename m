@@ -1,200 +1,350 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 2/2] builtin-remote: make rm operation safer in mirrored repository
-Date: Tue,  3 Feb 2009 12:51:13 -0500
-Message-ID: <1233683473-87893-2-git-send-email-jaysoffian@gmail.com>
-References: <1233683473-87893-1-git-send-email-jaysoffian@gmail.com>
+From: Keith Cascio <keith@CS.UCLA.EDU>
+Subject: Re: [PATCH v2 1/2] Introduce config variable "diff.primer"
+Date: Tue, 3 Feb 2009 09:55:08 -0800 (PST)
+Message-ID: <alpine.GSO.2.00.0902030833250.5994@kiwi.cs.ucla.edu>
+References: <1233598855-1088-1-git-send-email-keith@cs.ucla.edu> <1233598855-1088-2-git-send-email-keith@cs.ucla.edu> <20090203071516.GC21367@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 03 18:52:55 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 03 18:57:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUPS6-00053L-RO
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 18:52:51 +0100
+	id 1LUPW8-0006ef-3f
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 18:57:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753085AbZBCRvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 12:51:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753051AbZBCRvV
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 12:51:21 -0500
-Received: from qw-out-2122.google.com ([74.125.92.26]:37381 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752096AbZBCRvU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 12:51:20 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so1168459qwe.37
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 09:51:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=OryLzA3NLkp1I0RnuJ6ZM5RlpRo7x80jWSmCnHQ2HQg=;
-        b=MVx6JbmhizVZW1CggmXtACU1Y8g5nzW7UgNprsd4kZyXwH2/d37UXrxJq8BNeqb9x2
-         VsbTGH4nb0vINviKdvG/WIKXFfcA+2oo7cId8e5iUR38gWj2wx/i0Ub1T9rIQx4odn/u
-         DobEUD1cVyGdvHBYkPu4hPmsOE5FS0Zv+viGI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=uFP/DtyI/Ivqv166sH5di5Izes7WaNSUTCe7NlP+voydiAKDas1O1eXODFBb0fcBvg
-         rNGrV0rgAwmvT52JoBP2y4WhajrGRvs+ewCAmr+tuXbWK1uwgN7GStdgEWI5AooCVbPw
-         gpHdNP2rCOD0z2ohnoK7dpWB+nfdObR2luaZk=
-Received: by 10.214.150.9 with SMTP id x9mr4417622qad.139.1233683478814;
-        Tue, 03 Feb 2009 09:51:18 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id 5sm3106920qwg.45.2009.02.03.09.51.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Feb 2009 09:51:18 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.2.311.g2d7f3
-In-Reply-To: <1233683473-87893-1-git-send-email-jaysoffian@gmail.com>
-In-Reply-To: <76718490902030638y36299191i1fcc2ab8646b9593@mail.gmail.com>
-References: <76718490902030638y36299191i1fcc2ab8646b9593@mail.gmail.com>
+	id S1756326AbZBCRzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 12:55:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756103AbZBCRza
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 12:55:30 -0500
+Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:41428 "EHLO kiwi.cs.ucla.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753197AbZBCRz2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 12:55:28 -0500
+Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n13Ht9fI008860;
+	Tue, 3 Feb 2009 09:55:09 -0800 (PST)
+Received: from localhost (keith@localhost)
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n13Ht8Fb008857;
+	Tue, 3 Feb 2009 09:55:08 -0800 (PST)
+X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
+In-Reply-To: <20090203071516.GC21367@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108230>
 
-"git remote rm <repo>" is happy to remove non-remote branches (and their
-reflogs). This may be okay if the repository truely is a mirror, but if the
-user had done "git remote add --mirror <repo>" by accident and was just
-undoing their mistake, then they are left in a situation that is difficult to
-recover from.
+Peff,
+First of all, thanks for the tips!
 
-After this commit, "git remote rm" skips over non-remote branches and instead
-advises the user on how to remove such branches using "git branch -d", which
-itself has nice safety checks wrt to branch removal lacking from "git remote
-rm".
+On Tue, 3 Feb 2009, Jeff King wrote:
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
+> You don't need to repeat the subject in the body.
 
-On Tue, Feb 3, 2009 at 2:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->> However, I have one small nit. The output produces long lines with a lot
->> of repeated text (assuming you have multiple matched branches, which is
->> likely if you have a mirrored setup). So maybe it would be nicer to have
->> something like:
->>
->>   warning: non-remote branches were not removed; you can delete them with:
->>           git branch -d master
->>           git branch -d next
->>           git branch -d topic
->>
->> which is a little more obvious (to me, anyway), and allows you to cut
->> and paste if you really did want to delete them.
->
-> Thanks for a review, and I actually shared that exact nit when I first
-> read the patch.  It would be a very good change to collect them in a list
-> and show a single warning at the end (I do not have particular preference
-> about the cut & paste-ability either way myself).
+OK.
 
-So much work for what seemed such a minor change. :) I hope this version is
-well-polished enough.
+> Paragraph breaks might have made this a bit easier to read.
 
- builtin-remote.c  |   27 +++++++++++++++++++++++++--
- t/t5505-remote.sh |   26 ++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 2 deletions(-)
+How about:
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 21885fb..ae1eed4 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -298,7 +298,7 @@ static int add_known_remote(struct remote *remote, void *cb_data)
- 
- struct branches_for_remote {
- 	struct remote *remote;
--	struct string_list *branches;
-+	struct string_list *branches, *skipped;
- 	struct known_remotes *keep;
- };
- 
-@@ -323,6 +323,14 @@ static int add_branch_for_removal(const char *refname,
- 			return 0;
- 	}
- 
-+	/* don't delete non-remote branches */
-+	if (prefixcmp(refname, "refs/remotes")) {
-+		if (!prefixcmp(refname, "refs/heads/"))
-+			string_list_append(abbrev_branch(refname),
-+					   branches->skipped);
-+		return 0;
-+	}
-+
- 	/* make sure that symrefs are deleted */
- 	if (flags & REF_ISSYMREF)
- 		return unlink(git_path("%s", refname));
-@@ -542,7 +550,10 @@ static int rm(int argc, const char **argv)
- 	struct strbuf buf = STRBUF_INIT;
- 	struct known_remotes known_remotes = { NULL, NULL };
- 	struct string_list branches = { NULL, 0, 0, 1 };
--	struct branches_for_remote cb_data = { NULL, &branches, &known_remotes };
-+	struct string_list skipped = { NULL, 0, 0, 1 };
-+	struct branches_for_remote cb_data = {
-+		NULL, &branches, &skipped, &known_remotes
-+	};
- 	int i, result;
- 
- 	if (argc != 2)
-@@ -590,6 +601,18 @@ static int rm(int argc, const char **argv)
- 		result = remove_branches(&branches);
- 	string_list_clear(&branches, 1);
- 
-+	if (skipped.nr) {
-+		fprintf(stderr, skipped.nr == 1 ?
-+			"Note: A non-remote branch was not removed; "
-+			"to delete it, use:\n" :
-+			"Note: Non-remote branches were not removed; "
-+			"to delete them, use:\n");
-+		for (i = 0; i < skipped.nr; i++)
-+			fprintf(stderr, "  git branch -d %s\n",
-+				skipped.items[i].string);
-+	}
-+	string_list_clear(&skipped, 0);
-+
- 	return result;
- }
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 1f59960..bc5b7ce 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -107,6 +107,32 @@ test_expect_success 'remove remote' '
- )
- '
- 
-+test_expect_success 'remove remote protects non-remote branches' '
-+(
-+	cd test &&
-+	(cat >expect1 <<EOF
-+Note: A non-remote branch was not removed; to delete it, use:
-+  git branch -d master
-+EOF
-+    cat >expect2 <<EOF
-+Note: Non-remote branches were not removed; to delete them, use:
-+  git branch -d foobranch
-+  git branch -d master
-+EOF
-+) &&
-+	git tag footag
-+	git config --add remote.oops.fetch "+refs/*:refs/*" &&
-+	git remote rm oops 2>actual1 &&
-+	git branch foobranch &&
-+	git config --add remote.oops.fetch "+refs/*:refs/*" &&
-+	git remote rm oops 2>actual2 &&
-+	git branch -d foobranch &&
-+	git tag -d footag &&
-+	test_cmp expect1 actual1 &&
-+	test_cmp expect2 actual2
-+)
-+'
-+
- cat > test/expect << EOF
- * remote origin
-   URL: $(pwd)/one
--- 
-1.6.1.2.311.g2d7f3
+Improve porcelain diff's accommodation of user preference by allowing
+some settings to (a) persist over all invocations and (b) stay consistent
+over multiple tools (e.g. command-line and gui).  The approach taken here
+is good because it delivers the consistency a user expects without breaking
+any plumbing.  It works by allowing the user, via git-config, to specify
+arbitrary options to pass to porcelain diff on every invocation, including
+internal invocations from other programs, e.g. git-gui.
+
+Introduce diff command-line options --primer and --no-primer.
+
+Affect only porcelain diff: we suppress primer options for plumbing 
+diff-{files,index,tree}, format-patch, and all other commands unless explicitly 
+requested using --primer (opt-in).
+
+Teach gitk to use --primer, but protect it from inapplicable options like 
+--color.
+
+> > +diff.primer::
+> > +	Whitespace-separated list of options to pass to 'git-diff'
+> > +	on every invocation, including internal invocations from
+> > +	linkgit:git-gui[1] and linkgit:gitk[1],
+> > +	e.g. `"--patience --color --ignore-space-at-eol --exit-code"`.
+> > +	See linkgit:git-diff[1]. You can suppress these at run time with
+> > +	option `--no-primer`.  Supports a subset of
+> > +	'git-diff'\'s many options, at least:
+> > +	`-b --binary --color --color-words --cumulative --dirstat-by-file
+> > +--exit-code --ext-diff --find-copies-harder --follow --full-index
+> > +--ignore-all-space --ignore-space-at-eol --ignore-space-change
+> > +--ignore-submodules --no-color --no-ext-diff --no-textconv --patience -q
+> > +--quiet -R -r --relative -t --text --textconv -w`
+> 
+> Funny indentation?
+
+The last part is a backtick-quoted list, I think it either must occur on one 
+line or as is.
+
+> This seems really clunky to list all of the options here. I thought the
+> point was to respect _all_ of them, but do it from porcelain so that it
+> is up to the user what they want to put in.
+> 
+> How was this list chosen?
+
+The current version does not try to support all diff options.  It only supports 
+those that are recorded in struct diff_options.flags and .xdl_opts - that is the 
+present list.
+
+> Some of the manpages use a more terse form for negatable options, like:
+> 
+>   --[no-]primer::
+> 
+> which often helps focus the text a bit. Something like:
+> 
+>   --[no-]primer::
+>     Respect (or ignore) options specifed in the diff.primer
+>     configuration variable. By default, porcelain commands (such as `git
+>     diff` and `git log`) respect this variable, but plumbing commands
+>     (such as `git diff-{files,index,tree}`) do not.
+
+Agree.
+
+> Also, don't mention ".git/config" by name: configuration can come from
+> ~/.gitconfig, a system-wide gitconfig, or .git/config.
+
+OK.
+
+> > @@ -284,6 +284,8 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+> > [...]
+> > +	DIFF_OPT_SET(&rev.diffopt, PRIMER);
+> 
+> Probably ALLOW_PRIMER is a more sensible name, to match ALLOW_EXTERNAL
+> and ALLOW_TEXTCONV.
+
+Agree.
+
+> > +static const char blank[] = " \t\r\n";
+> > +
+> > +void parse_diff_primer(struct diff_options *options)
+> > +{
+> > +	char *str1, *token, *saveptr;
+> > +	int len;
+> > +
+> > +	if ((! diff_primer) || ((len = (strlen(diff_primer)+1)) < 3))
+> > +		return;
+> > +
+> > +	token = str1 = strncpy((char*) malloc(len), diff_primer, len);
+> > +	if ((saveptr = strpbrk(token += strspn(token, blank), blank)))
+> > +		*(saveptr++) = '\0';
+> > +	while (token) {
+> > +		if (*token == '-')
+> > +			diff_opt_parse(options, (const char **) &token, -1);
+> > +		if ((token = saveptr))
+> > +			if ((saveptr = strpbrk(token += strspn(token, blank), blank)))
+> > +				*(saveptr++) = '\0';
+> > +	}
+> > +
+> > +	free( str1 );
+> > +}
+> 
+> This doesn't appear to have any quoting mechanism. Is it impossible to have an 
+> option with spaces (e.g., --relative='foo bar')? I guess that is probably 
+> uncommon, but I would expect normal shell quoting rules to apply.
+
+The current version only supports the flags listed above in 
+Documentation/config.txt.
+
+> Style: long lines.
+
+OK.
+
+> Style: no C99/C++ comments.
+
+OK.
+
+> > +	master->flags = (~x1&x2&x3)|(x0&~x3)|(x0&x1);
+> 
+> Style: whitespace between operands and operators.
+> 
+> I have to admit that this particular line is pretty dense to read. You have 
+> eliminated any meaning from the variable names (like the fact that you have a 
+> master/slave pair of flag/mask pairs). Yes, you point to the Quine-McCluskey 
+> algorithm in the comment above, but I think something like this would be 
+> easier to see what is going on:
+> 
+>   /*
+>    * Our desired flags are:
+>    *
+>    *   1. Anything the master hasn't explicitly set, we can take from
+>    *      the slave.
+>    *   2. Anything the slave didn't explicitly, we can take whether or
+>    *      not the master set it explicitly.
+>    *   3. Anything the master explicitly set, we take.
+>    */
+>   master->flags =
+>      /* (1) */ (~master->flags & slave->flags & slave->mask) |
+>      /* (2) */ (master->flags & ~slave->mask) |
+>      /* (3) */ (master->flags & master->mask);
+
+Your version is much better.
+
+> > @@ -2326,14 +2369,15 @@ void diff_setup(struct diff_options *options)
+> >  	options->break_opt = -1;
+> >  	options->rename_limit = -1;
+> >  	options->dirstat_percent = 3;
+> > -	DIFF_OPT_CLR(options, DIRSTAT_CUMULATIVE);
+> > +	if (DIFF_OPT_TST(options, DIRSTAT_CUMULATIVE))
+> > +		DIFF_OPT_CLR(options, DIRSTAT_CUMULATIVE);
+> 
+> Hmm. I haven't gotten to any changes to DIFF_OPT_{SET,CLR} yet. But it is a 
+> little worrisome that this patch is so invasive as to require a change like 
+> this.
+
+My proposal is to make DIFF_OPT_{SET,CLR} more meaningful.  Instead of just 
+flipping a bit, they mean "{un}set this bit and honor my intention in the 
+future".
+
+> I wouldn't be surprised to find other spots outside of diff.c where the 
+> options are munged by various programs. Did you audit for all such spots?
+
+Yes I believe I did.  The only danger zones are spots that use struct 
+diff_options member "flags" or "xdl_opts" along with assignment and bitwise 
+operators.  The following recursive grep call (output included) satisfies me 
+that no such spots exist after my patch.
+
+grep -EHnr '--include=*.[ch]' '(flags|xdl_opts).*=.*(DIFF_OPT_|\b)(RECURSIVE|TREE_IN_RECURSIVE|BINARY|TEXT|FULL_INDEX|SILENT_ON_REMOVE|FIND_COPIES_HARDER|FOLLOW_RENAMES|COLOR_DIFF|COLOR_DIFF_WORDS|HAS_CHANGES|QUIET|NO_INDEX|ALLOW_EXTERNAL|EXIT_WITH_STATUS|REVERSE_DIFF|CHECK_FAILED|RELATIVE_NAME|IGNORE_SUBMODULES|DIRSTAT_CUMULATIVE|DIRSTAT_BY_FILE|ALLOW_TEXTCONV|PRIMER|XDF_NEED_MINIMAL|XDF_IGNORE_WHITESPACE|XDF_IGNORE_WHITESPACE_CHANGE|XDF_IGNORE_WHITESPACE_AT_EOL|XDF_PATIENCE_DIFF|XDF_WHITESPACE_FLAGS)\b' . | grep -Ev TST | less -S
+
+merge-tree.c:109:     xpp.flags = XDF_NEED_MINIMAL;
+merge-file.c:65:      xpp.flags = XDF_NEED_MINIMAL;
+xdiff/xpatience.c:308:        xpp.flags = map->xpp->flags & ~XDF_PATIENCE_DIFF;
+builtin-blame.c:41:static int xdl_opts = XDF_NEED_MINIMAL;
+combine-diff.c:217:   xpp.flags = XDF_NEED_MINIMAL;
+builtin-rerere.c:101: xpp.flags = XDF_NEED_MINIMAL;
+diff.c:517:   xpp.flags = XDF_NEED_MINIMAL;
+diff.c:1570:          xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
+diff.c:1658:          xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
+diff.c:1706:          xpp.flags = XDF_NEED_MINIMAL;
+diff.c:3238:          xpp.flags = XDF_NEED_MINIMAL;
+
+> > +	if (DIFF_OPT_TST(options, PRIMER)) {
+> > +		if (! primer) {
+> > +			diff_setup(primer = (struct diff_options *) malloc(sizeof(struct diff_options)));
+> 
+> First, don't use malloc. Use the xmalloc wrapper that will try to free pack 
+> memory and/or die if it fails.
+
+OK.
+
+> Secondly, don't cast the result of malloc. At best it is pointless and 
+> verbose, and at worst it can hide errors caused by a missing function 
+> declaration.
+
+OK.
+
+> >  	/* xdiff options */
+> >  	else if (!strcmp(arg, "-w") || !strcmp(arg, "--ignore-all-space"))
+> > -		options->xdl_opts |= XDF_IGNORE_WHITESPACE;
+> > +		DIFF_XDL_SET(options, IGNORE_WHITESPACE);
+> 
+> It often makes the patch easier to review if you split changes like this
+> out into a separate patch. Then your series is
+> 
+>   1/2: use DIFF_XDL_SET instead of raw bit-masking
+> 
+>        This is a cleanup in preparation for option-setting doing
+>        something more complex than just setting a bit-mask. The code
+>        should behave exactly the same.
+> 
+>   2/2: primer patch
+> 
+>        ... DIFF_XDL_SET tracks not only the set options, but which ones
+>        were set explicitly via a mask ...
+> 
+> Then we can all see pretty easily that patch 1/2 doesn't change the behavior, 
+> and each patch is a much smaller, succint chunk to review.
+
+Agree.
+
+> Ditto here with DIFF_OPT_SET.
+
+OK.
+
+> > +#define DIFF_OPT_TST(opts, flag)    ((opts)->flags &   DIFF_OPT_##flag)
+> > +#define DIFF_OPT_SET(opts, flag)    ((opts)->flags |=  DIFF_OPT_##flag), ((opts)->mask |= DIFF_OPT_##flag)
+> > +#define DIFF_OPT_CLR(opts, flag)    ((opts)->flags &= ~DIFF_OPT_##flag), ((opts)->mask |= DIFF_OPT_##flag)
+> > +#define DIFF_OPT_DRT(opts, flag)    ((opts)->mask  &   DIFF_OPT_##flag)
+> 
+> OK, I see what it is supposed to do, but what does DRT stand for? Also,
+> what practical use does it have? I don't see anybody _calling_ it.
+
+DRT means "dirty".  The masks here are dirty bits.  You're right, I never called 
+it.  But it seemed so meaningful to me, I felt it was right to include it while 
+introducing the concept of dirty bits.
+
+> > --- a/gitk-git/gitk
+> > +++ b/gitk-git/gitk
+> > @@ -4259,7 +4259,7 @@ proc do_file_hl {serial} {
+> >  	# must be "containing:", i.e. we're searching commit info
+> >  	return
+> >      }
+> > -    set cmd [concat | git diff-tree -r -s --stdin $gdtargs]
+> > +    set cmd [concat | git diff-tree --primer --no-color -r -s --stdin $gdtargs]
+> 
+> Does gitk really want to respect --primer? Might it not make more sense for 
+> it, as a porcelain, to respect the diff.primer variable itself, and prepend it 
+> to the list of diff args? Then it has the power to veto any options which it 
+> doesn't handle.
+
+The point of --primer was for scripts like gitk and git-gui.  I wouldn't say 
+"respect --primer" so much as "pass --primer" (which causes diff-tree to respect 
+diff.primer, which it normally wouldn't).  Reviewing the options that 
+diff.primer currently supports, except for --color which I specifically guarded 
+against, I don't see a scenario that would break gitk as is.
+
+> Also, any gitk changes should almost certainly be split into a different
+> patch.
+
+OK.
+
+> All in all, this was a lot more complicated than I was expecting. Why isn't 
+> the behavior of "diff.primer" simply "pretend as if the options in diff.primer 
+> were prepended to the command line"? That is easy to explain, and easy to 
+> implement (the only trick is that you have to do an extra pass to find 
+> --[no-]primer). Is there some drawback to such a simple scheme that I am 
+> missing?
+
+I think we could call that simple scheme the linear walk, and it was my first 
+impulse as well.  We walk through all the places where diff options live, in 
+order from lowest precedence to highest precedence, accumulating/overriding 
+options as we go along.  When we're done, we know the user's intention.
+
+But as you say, we need that extra pass.  Once I noticed we need that extra 
+pass, the software engineer in me saw the concept of linear walk as too weak for 
+this feature.  These options occur in precedence layers and we need to combine 
+those layers the right way.  The right way means: honor the intuitive semantics 
+the user expects.  Hence the function name flatten_diff_options().
+
+A multi-pass walk is one possible implementation of such semantics, but in my 
+opinion not the best.  My implementation is much more explicit, meaningful, and 
+declarative.  It's not at all hard to understand looking at the code.  In fact, 
+it positively declares itself to you and annouces exactly what it is doing.  It 
+"underlines the intent" and also "eases further extensions" in Samuel Tardieu's 
+words:
+http://article.gmane.org/gmane.comp.version-control.git/105654
+
+That's a desirability I believe you agree with :)
+http://article.gmane.org/gmane.comp.version-control.git/105657
+
+I think introducing explicit dirty masks and explicit layer flattening is the 
+right way to go forward, but I agree it would be better to split this up into 
+smaller patches.  My design would require a lot more lines of code if we wanted 
+to support more diff options than are represented by struct diff_options.flags 
+and .xdl_opts.  That would mean introducing more masks and more CPP macros.  
+But I have faith in declarative programming.  100 lines of clear-as-day 
+meaningful code don't scare me nearly as much as 10 lines of secret obfuscation.  
+Also, I'm not convinced it is necessary for diff.primer to support all diff 
+options under the sun.  Thoughts?
+
+                                   -- Keith
