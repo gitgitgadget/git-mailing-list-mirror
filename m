@@ -1,75 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] builtin-remote: make rm operation safer in mirrored 
- repository
-Date: Tue, 3 Feb 2009 15:53:54 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902031553310.6573@intel-tinevez-2-302>
-References: <76718490902020536g6f4bcee2i76ee046a8dc7d46@mail.gmail.com>  <1233600014-82346-1-git-send-email-jaysoffian@gmail.com>  <20090203072418.GD21367@sigill.intra.peff.net>  <7vy6woc5vv.fsf@gitster.siamese.dyndns.org>
- <76718490902030638y36299191i1fcc2ab8646b9593@mail.gmail.com>
+From: Hinko Kocevar <hinko.kocevar@cetrtapot.si>
+Subject: revert committed and pushed tag
+Date: Tue, 03 Feb 2009 15:45:01 +0100
+Message-ID: <4988586D.603@cetrtapot.si>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 15:55:58 2009
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 03 15:56:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUMgO-0000GT-Bo
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 15:55:24 +0100
+	id 1LUMhJ-0000iV-5b
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 15:56:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752583AbZBCOx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 09:53:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752496AbZBCOx6
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 09:53:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51194 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751134AbZBCOx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 09:53:58 -0500
-Received: (qmail invoked by alias); 03 Feb 2009 14:53:55 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp068) with SMTP; 03 Feb 2009 15:53:55 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/biEBvflrbeA23KQ1XgatGebQzYiwdwqnsln0gHX
-	tL88ZtKlSDKUGC
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <76718490902030638y36299191i1fcc2ab8646b9593@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1755424AbZBCOy6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Feb 2009 09:54:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755286AbZBCOy6
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 09:54:58 -0500
+Received: from zimbra-mta.cetrtapot.si ([89.212.80.172]:60457 "EHLO
+	zimbra-mta.cetrtapot.si" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754922AbZBCOy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 09:54:56 -0500
+X-Greylist: delayed 555 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Feb 2009 09:54:56 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id 79CA819FA22
+	for <git@vger.kernel.org>; Tue,  3 Feb 2009 15:45:40 +0100 (CET)
+X-Virus-Scanned: amavisd-new at zimbra-mta.cetrtapot.si
+Received: from zimbra-mta.cetrtapot.si ([127.0.0.1])
+	by localhost (zimbra-mta.cetrtapot.si [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id aV3y1mKgBOjM for <git@vger.kernel.org>;
+	Tue,  3 Feb 2009 15:45:40 +0100 (CET)
+Received: from [172.31.65.135] (unknown [192.168.66.2])
+	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id 2C75419F9BE
+	for <git@vger.kernel.org>; Tue,  3 Feb 2009 15:45:40 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108195>
 
 Hi,
 
-On Tue, 3 Feb 2009, Jay Soffian wrote:
+Is there a way to 'revert' committed and pushed tag?
+I've noticed that some files were not included in the commit (new files=
+)
+and I would like to squeeze them in before the tag was
+created/committed/pushed to the remote server.
 
-> On Tue, Feb 3, 2009 at 2:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Jeff King <peff@peff.net> writes:
-> >> However, I have one small nit. The output produces long lines with a lot
-> >> of repeated text (assuming you have multiple matched branches, which is
-> >> likely if you have a mirrored setup). So maybe it would be nicer to have
-> >> something like:
-> >>
-> >>   warning: non-remote branches were not removed; you can delete them with:
-> >>           git branch -d master
-> >>           git branch -d next
-> >>           git branch -d topic
-> >>
-> >> which is a little more obvious (to me, anyway), and allows you to cut
-> >> and paste if you really did want to delete them.
-> >
-> > Thanks for a review, and I actually shared that exact nit when I first
-> > read the patch.  It would be a very good change to collect them in a list
-> > and show a single warning at the end (I do not have particular preference
-> > about the cut & paste-ability either way myself).
-> 
-> This is a tough crowd. I'll see what I can do.
+I did:
+$ git add ..files..
+$ git commit
+$ git push
+$ git tag rc3
+$ git push --tags
 
-We polish it until it shines! :-)
-
-Thank you for you efforts,
-Dscho
+Thank you,
+Hinko
+--=20
+Hinko Ko=E8evar, OSS developer
+=C8ETRTA POT, d.o.o.
+Planina 3, 4000 Kranj, SI EU
+tel     ++386 (0) 4 280 66 03
+e-mail  hinko.kocevar@cetrtapot.si
+http    www.cetrtapot.si
