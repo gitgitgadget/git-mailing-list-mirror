@@ -1,71 +1,69 @@
-From: Tommi Virtanen <tv@eagain.net>
-Subject: Re: is gitosis secure?
-Date: Tue, 3 Feb 2009 13:41:43 -0800
-Message-ID: <20090203214143.GB1970@eagain.net>
-References: <200812090956.48613.thomas@koch.ro> <1228813620.18611.41.camel@starfruit.local>
+From: Matt Pearson <404emailnotfound@gmail.com>
+Subject: Re: revert committed and pushed tag
+Date: Tue, 3 Feb 2009 17:17:25 -0500
+Message-ID: <706b4240902031417p1a98f3fdtb2240ea5ae5b31a5@mail.gmail.com>
+References: <4988586D.603@cetrtapot.si>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Koch <thomas@koch.ro>,
-	Git Mailing List <git@vger.kernel.org>, dabe@ymc.ch
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 22:43:31 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Hinko Kocevar <hinko.kocevar@cetrtapot.si>
+X-From: git-owner@vger.kernel.org Tue Feb 03 23:18:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUT32-0005G4-Cy
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 22:43:12 +0100
+	id 1LUTbW-00019Q-3D
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 23:18:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751870AbZBCVlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 16:41:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbZBCVlq
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 16:41:46 -0500
-Received: from eagain.net ([208.78.102.120]:54267 "EHLO eagain.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751500AbZBCVlp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 16:41:45 -0500
-Received: from musti.eagain.net (unknown [69.84.6.92])
-	by eagain.net (Postfix) with ESMTPS id 55EE256602;
-	Tue,  3 Feb 2009 21:41:45 +0000 (UTC)
-Received: by musti.eagain.net (Postfix, from userid 1000)
-	id C9B61870013; Tue,  3 Feb 2009 13:41:43 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1228813620.18611.41.camel@starfruit.local>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755833AbZBCWR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 17:17:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbZBCWR1
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 17:17:27 -0500
+Received: from qw-out-2122.google.com ([74.125.92.25]:8199 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751302AbZBCWR0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 17:17:26 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so1234960qwe.37
+        for <git@vger.kernel.org>; Tue, 03 Feb 2009 14:17:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=iZ59hFSK5GAR5eSQ4G3H0xR7bpvxm6H12YhnXuVLZNM=;
+        b=Io0Sa+RAxwOoVcPSDZ7CtBhwEeamiwutVcj09V3cf/gjLTP70EN6fQonzC8fVQGAN4
+         t6dvIoKo262Hf2QMe8nZ4ngkXAbfLVCmhSXtEyznAk/g7YHXoLvlJoMICoBsEKeLsZ0/
+         y2bWcbkMIvvaNC616xK1rXBBgjY/1kwlp5yLg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SjiRlENjMZf+XRw5Kz2rZNWvSH7MPS43VUlm9dgTtxh6jsYwdxVjYK51V9FGKSZtnz
+         qx0FcjL6yqqOwAsRObagH8nYLvDcKFsq9qv9HF2SSNfGkeG2ElxkNoHiKaIPnxdpId9m
+         j43SV9rpX2/XuUz6ea7KJrnaEGFN+VXCv6lQ0=
+Received: by 10.214.80.18 with SMTP id d18mr9295857qab.8.1233699445141; Tue, 
+	03 Feb 2009 14:17:25 -0800 (PST)
+In-Reply-To: <4988586D.603@cetrtapot.si>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108255>
 
-On Tue, Dec 09, 2008 at 01:07:00AM -0800, R. Tyler Ballance wrote:
-> Accounts set up with keys for Gitosis are given restricted accounts
-> (from my understanding similar to how CVS or SVN operate over SSH
-> tunnels).
+2009/2/3 Hinko Kocevar <hinko.kocevar@cetrtapot.si>:
+> Hi,
+>
+> Is there a way to 'revert' committed and pushed tag?
+> I've noticed that some files were not included in the commit (new files)
+> and I would like to squeeze them in before the tag was
+> created/committed/pushed to the remote server.
 
-I don't think I've ever seen a CVS used with "virtual"
-restricted-shell accounts.
+You do it the same way you delete a branch (see git-push(1)):
+git push origin :refs/tags/rc3
 
-The svnserve --tunnel-user= support for that mode of operation was
-written by me, and is basically exactly the same trick as the one used
-by gitosis.
+Note that anybody that has fetched from your public repository will
+_not_ have their current 'rc3' tag overwritten with the new version
+without them deleting it first and letting fetch recreate it.
 
-Before gitosis, I had my old SVN setup pretty much reproduced with
-git, but then I got bored administering it and wrote gitosis to
-automate account and access management.
-
-
-I am not aware of anyone ever finding a way to get around an svnserve
---tunnel-user= setup. I'm not losing my sleep over the security of
-this concept.
-
-Use an SSH gateway if you want tighter control on who gets where,
-network-wise. Then you won't get non-git login attempts from the
-external net.
-
-Or run an extra SSH service, e.g. using Conch. As long as it respects
-~ssh and is interoperable with OpenSSH, gitosis should work just fine.
-It can even run as the git user 100% of the time.
-
--- 
-:(){ :|:&};:
+Matt
