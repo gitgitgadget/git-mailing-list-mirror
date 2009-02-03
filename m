@@ -1,66 +1,80 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: cvs2git migration - cloning CVS repository
-Date: Tue, 03 Feb 2009 15:18:48 +0100
-Message-ID: <49885248.6020805@alum.mit.edu>
-References: <286817520902020624y7f4c2942l34fafc0fe0fa0b48@mail.gmail.com> <49883C52.3060102@alum.mit.edu> <alpine.DEB.1.00.0902031348570.6573@intel-tinevez-2-302>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] builtin-remote: make rm operation safer in mirrored 
+	repository
+Date: Tue, 3 Feb 2009 09:38:55 -0500
+Message-ID: <76718490902030638y36299191i1fcc2ab8646b9593@mail.gmail.com>
+References: <76718490902020536g6f4bcee2i76ee046a8dc7d46@mail.gmail.com>
+	 <1233600014-82346-1-git-send-email-jaysoffian@gmail.com>
+	 <20090203072418.GD21367@sigill.intra.peff.net>
+	 <7vy6woc5vv.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Rostislav Svoboda <rostislav.svoboda@gmail.com>,
-	git@vger.kernel.org, cvs2svn users <users@cvs2svn.tigris.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 03 15:20:38 2009
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 15:40:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUM8W-0003Wa-Ec
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 15:20:24 +0100
+	id 1LUMRy-0002oh-Gh
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 15:40:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752417AbZBCOS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 09:18:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752256AbZBCOS5
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 09:18:57 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:52995 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752166AbZBCOS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 09:18:57 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n13EIoKI008513
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 3 Feb 2009 15:18:51 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.19) Gecko/20090105 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
-In-Reply-To: <alpine.DEB.1.00.0902031348570.6573@intel-tinevez-2-302>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1753690AbZBCOi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 09:38:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753638AbZBCOi5
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 09:38:57 -0500
+Received: from rv-out-0506.google.com ([209.85.198.224]:27848 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752254AbZBCOi4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 09:38:56 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so2028346rvb.1
+        for <git@vger.kernel.org>; Tue, 03 Feb 2009 06:38:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=V5OQocypMa1EVvjB02xDETpOR+teGDT7B8G/bA2Yv1I=;
+        b=Z9uOSElt2gX6/ivJ7QP60BxdB/Yhl8MCqHAw66tkqpbR6rGNU14zNXqRnrUBNfjwk6
+         TmzNxAMKzLHA5IxtY5puUrdpeS55SIpO9SDCFTeSJ+EsO31vOSrwODoW6QsqSHOnlJYe
+         IVV96mmGYHLOtOPps5UTUVYXXianiXutf8Uag=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LZ5EOrAUvXixYL0DlJioDezYaYrpwkarWhWeYgOfJyo4GTJjOcoU3D2/wKrN0zv8av
+         WJKWDp9xqM6orxMX8flTEEFkvLWzGqWFSIBdb+MtOpgsPOlyUHWHpORaCNLDmd+I7ull
+         YM4QO+TwtH0QtvgW4b2VNTOCOp8dnoPQ+apNE=
+Received: by 10.141.69.12 with SMTP id w12mr3001070rvk.151.1233671935595; Tue, 
+	03 Feb 2009 06:38:55 -0800 (PST)
+In-Reply-To: <7vy6woc5vv.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108192>
 
-Johannes Schindelin wrote:
-> On Tue, 3 Feb 2009, Michael Haggerty wrote:
->> If you do not have filesystem access to your CVS repository, you might 
->> be able to clone it using CVSSuck [2,3].
-> 
-> A substantially faster option would be to go with cvsclone:
-> 
-> 	http://samba.org/ftp/tridge/rtc/cvsclone.l
-> 
-> (in my case, cvsclone was not only faster, but it actually worked, too, 
-> which is more than I could say of CVSSuck).
-> 
-> Note: it only works for anonymous access so far.
-> 
-> Note also: for my use case, it was necessary to edit the rlog, as those 
-> brilliant geniuses included verbatim cvs logs for files they moved. *sigh*
-> If you need something like that, I can give you my patched version.
+On Tue, Feb 3, 2009 at 2:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>> However, I have one small nit. The output produces long lines with a lot
+>> of repeated text (assuming you have multiple matched branches, which is
+>> likely if you have a mirrored setup). So maybe it would be nicer to have
+>> something like:
+>>
+>>   warning: non-remote branches were not removed; you can delete them with:
+>>           git branch -d master
+>>           git branch -d next
+>>           git branch -d topic
+>>
+>> which is a little more obvious (to me, anyway), and allows you to cut
+>> and paste if you really did want to delete them.
+>
+> Thanks for a review, and I actually shared that exact nit when I first
+> read the patch.  It would be a very good change to collect them in a list
+> and show a single warning at the end (I do not have particular preference
+> about the cut & paste-ability either way myself).
 
-Thanks for the pointer.  I just added it to the cvs2svn/cvs2git FAQ [1].
+This is a tough crowd. I'll see what I can do.
 
-Michael
-
-[1] http://cvs2svn.tigris.org/faq.html
+j.
