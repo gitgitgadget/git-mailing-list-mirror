@@ -1,78 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Switch receive.denyCurrentBranch to "refuse"
-Date: Tue, 03 Feb 2009 01:22:05 -0800
-Message-ID: <7v4ozbdgea.fsf@gitster.siamese.dyndns.org>
-References: <cover.1233275583u.git.johannes.schindelin@gmx.de>
- <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de>
- <76718490901300817x3f31460k59b6fe75d136372d@mail.gmail.com>
- <alpine.DEB.1.00.0901301756560.3586@pacific.mpi-cbg.de>
- <76718490901301050h1f0f5b2bq902de384d954d99b@mail.gmail.com>
- <alpine.DEB.1.00.0901301959300.3586@pacific.mpi-cbg.de>
- <20090131095622.6117@nanako3.lavabit.com>
- <7vy6wr0wvi.fsf@gitster.siamese.dyndns.org>
- <20090202124148.GB8325@sigio.peff.net>
- <7vskmwc5js.fsf@gitster.siamese.dyndns.org>
- <20090203080734.GA27251@sigill.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [Illustration PATCH] add -i: accept single-keypress input
+Date: Tue, 3 Feb 2009 10:35:00 +0100
+Message-ID: <200902031035.04978.trast@student.ethz.ch>
+References: <20090203062437.GB21367@sigill.intra.peff.net> <1233651248-26717-1-git-send-email-trast@student.ethz.ch> <7vbptjdh5e.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 03 10:23:45 2009
+Content-Type: multipart/signed;
+  boundary="nextPart2988810.ipSNgHPmj1";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Suraj Kurapati <sunaku@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 10:36:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUHVN-0003sR-II
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 10:23:42 +0100
+	id 1LUHht-0008E4-1N
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 10:36:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472AbZBCJWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 04:22:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753653AbZBCJWQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 04:22:16 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59234 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753637AbZBCJWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 04:22:15 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 56FD395325;
-	Tue,  3 Feb 2009 04:22:14 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1A13695323; Tue,
-  3 Feb 2009 04:22:06 -0500 (EST)
-In-Reply-To: <20090203080734.GA27251@sigill.intra.peff.net> (Jeff King's
- message of "Tue, 3 Feb 2009 03:07:34 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 24C639A4-F1D4-11DD-817D-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751645AbZBCJfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 04:35:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751565AbZBCJfJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 04:35:09 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:38119 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750998AbZBCJfI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 04:35:08 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 3 Feb 2009 10:35:06 +0100
+Received: from thomas.localnet ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 3 Feb 2009 10:35:06 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.25.20-0.1-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <7vbptjdh5e.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 03 Feb 2009 09:35:06.0616 (UTC) FILETIME=[B2D4BF80:01C985E2]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108171>
 
-Jeff King <peff@peff.net> writes:
+--nextPart2988810.ipSNgHPmj1
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> On Tue, Feb 03, 2009 at 12:01:43AM -0800, Junio C Hamano wrote:
->
->>  	"To allow pushing into the current branch, you can set it to 'ignore';",
->> -	"but this is not recommended unless you really know what you are doing.",
->> +	"but this is not recommended unless you arranged its work tree to get",
->> +	"updated to match what you pushed in some other way.",
->
-> This is much better, but I believe it needs to be "...arranged _for_
-> its work tree to get updated..." to be grammatically correct.
->
-> And as a nit (which I seem to be full of tonight), you can get rid of
-> the passive voice by saying:
->
->  but this is not recommended unless you arranged to update its work
->  tree to match what you pushed in some other way.
->
-> which is slightly more clear, IMHO.
+Junio C Hamano wrote:
+> Hmm, you could trigger the action immediately after seeing _enough_ number
+> of characters to disambiguate instead of stop-and-prompt, I guess?  That
+> way, you would get a single-key merely as a degenerate case when the
+> choices are all distinct.
 
-Much more clear.  I overuse the passive voice, I know it is a bad habit I
-somehow cannot shake off.
+I don't think that's very nice.  On the one hand, you'd really want to
+allow the user to delete some of the input again if he decides to do
+something else instead, and we'd either need readline or need to
+reinvent it for that.  On the other hand, some possible choices might
+be a valid prefix of some _other_ choices, at which point you need a
+terminator (such as the <enter>) anyway.  I expect this to be fairly
+common since many of the list_and_choose() prompts are numbered, so
+that 1 and 10 run into this problem.
 
-Thanks.
+Then again I don't use add -i, so someone else should say what to do.
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart2988810.ipSNgHPmj1
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkmID8gACgkQqUud07tmzP3r8QCgnWbpN6yXw8vPUDhwbz+KCnM5
+we8An26Hv5NxzZR7HjARBGezsA0J3SlW
+=0RZ/
+-----END PGP SIGNATURE-----
+
+--nextPart2988810.ipSNgHPmj1--
