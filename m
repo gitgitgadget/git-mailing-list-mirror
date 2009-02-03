@@ -1,76 +1,70 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: Git vc-git.el versus Emacs vc-git.el versus Gits git.el
-Date: Tue, 03 Feb 2009 11:34:42 +0100
-Message-ID: <87ab93yfjx.fsf@wine.dyndns.org>
-References: <18823.47791.359047.560149@hungover.brentg.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] http-push.c: get_remote_object_url() is only used under 
+	USE_CURL_MULTI
+Date: Tue, 3 Feb 2009 18:40:16 +0800
+Message-ID: <be6fef0d0902030240g13672ef4uda2f70443ecfabf7@mail.gmail.com>
+References: <7v8woodnmj.fsf@gitster.siamese.dyndns.org>
+	 <20090203065457.GA8466@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brent Goodrick <bgoodr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 11:36:19 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Tue Feb 03 11:42:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUIde-0001pX-Sg
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 11:36:19 +0100
+	id 1LUIiv-0003Rz-Um
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 11:41:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932AbZBCKey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 05:34:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbZBCKex
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 05:34:53 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:55056 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751755AbZBCKew (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 05:34:52 -0500
-Received: from adsl-84-226-106-21.adslplus.ch ([84.226.106.21] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1LUIc8-0006YP-TL; Tue, 03 Feb 2009 04:34:51 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 937511E728C; Tue,  3 Feb 2009 11:34:42 +0100 (CET)
-In-Reply-To: <18823.47791.359047.560149@hungover.brentg.com> (Brent Goodrick's
-	message of "Mon, 2 Feb 2009 19:31:59 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-X-Spam-Score: -3.4
+	id S1752023AbZBCKkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 05:40:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752018AbZBCKkT
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 05:40:19 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:40339 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751891AbZBCKkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 05:40:17 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so948829wah.21
+        for <git@vger.kernel.org>; Tue, 03 Feb 2009 02:40:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=vBy1aPKqRGEuQDeuFO5DwjDWz7UzfdMAWiJyNQiM4bs=;
+        b=FQJiCkPQ4knNPO5bsHqyFNvMuHGjiNsbo6NsBour2Ubcvr+2Y0W+ZqCk5qxtRvB5MU
+         BCrC6X+VZbDHogRYNgH9TJMiwb5CViNlYrlxkljCd+5I0GWFoqkTnj0ZdB6EQbmTqLBZ
+         //MhIFPAmDJpGZ1kIfHg/+P2SrpejB9r7XjjQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WZUfDDtiBK2WzmF66Af7GP4GJ4boY94whNBQBy2M7KvPyM1QFaGzEJG79s4/NbzD3x
+         Qj1gWi2IeOZOUCQKNExkdi3MJfDFRsPYt4PqODy0jhgUU8vk2FptA1q/XpxE8m6eXi6I
+         hb7axJ+pCedDPP0AQpHXbyOUoc1o9THMlTdsc=
+Received: by 10.114.182.1 with SMTP id e1mr3071007waf.22.1233657616518; Tue, 
+	03 Feb 2009 02:40:16 -0800 (PST)
+In-Reply-To: <20090203065457.GA8466@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108176>
 
-Brent Goodrick <bgoodr@gmail.com> writes:
+On Tue, Feb 3, 2009 at 2:54 PM, Mike Hommey <mh@glandium.org> wrote:
+> If I recall correctly, http-push just doesn't work without curl-multi,
+> so the correct fix would be to just disable http-push when
+> USE_CURL_MULTI is undefined.
 
-> Hi,
->
-> I have some questions concerning the Emacs Git integration:
->
->  1. What is the difference between git.el and vc-git.el in the
->     git/contrib/emacs directory?
+Indeed, it dies on line 2253 (18d81a).
 
-vc-git.el is a backend for the Emacs VC mode, which supports the
-standard C-x v commands. The advantage is that you can use the same
-commands for all VCS.
-
-git.el is a project-wide status manager equivalent to pcl-cvs, but
-specialized for git. Its advantage is that by not trying to be generic
-it can offer more git-specific functionality that isn't available with
-VC mode.
-
-They are not exclusive, you can use both at the same time, depending on
-what operations you are doing.
-
->  2. There is a vc-git.el in the Emacs top-of-trunk sources, and
->     another one in the git/contrib/emacs directory in the Git
->     sources. Which one should I use?  If I should use the one in
->     Emacs, then why is there one in the Git source tree?
-
-The most recent one is the one in the Emacs trunk, so you should use
-this if possible. The one in the Git tree is an older version that's no
-longer maintained, though it can still be useful if you are running an
-old Emacs version.
+2252 #ifndef USE_CURL_MULTI
+2253         die("git-push is not available for http/https repository
+when not compiled with USE_CURL_MULTI");
+2254 #endif
 
 -- 
-Alexandre Julliard
-julliard@winehq.org
+Cheers,
+Ray Chuan
