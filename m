@@ -1,74 +1,62 @@
-From: Geoffrey Lee <geoffreyj.lee@gmail.com>
-Subject: Re: Windows release
-Date: Tue, 3 Feb 2009 08:51:04 -0800
-Message-ID: <83d7aaa40902030851l1ddec73fv4f054ef939a8936@mail.gmail.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70977F81A@EXCHANGE.trad.tradestation.com>
-	 <f488382f0902030842x6e7466ffm4668abde23e67bea@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
+Date: Tue, 3 Feb 2009 17:53:55 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902031752230.6573@intel-tinevez-2-302>
+References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com> <7vocxqf2sf.fsf@gitster.siamese.dyndns.org> <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com> <1E104E1B-BFCC-4CFC-9D53-CE89299C9600@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 03 17:52:42 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 17:55:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUOVk-0006IF-QO
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 17:52:33 +0100
+	id 1LUOYZ-0007Pc-Gd
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 17:55:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752530AbZBCQvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 11:51:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752485AbZBCQvH
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 11:51:07 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:47811 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751572AbZBCQvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 11:51:06 -0500
-Received: by qyk4 with SMTP id 4so2717146qyk.13
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 08:51:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=QXYf8Mh5LXlaVfPcxrimncuvF0Nro2pL0nIXMygnVak=;
-        b=FwRgRRDURULxG7CzlI4xcUm4e0bUWCEKQP5vw9EnoH63KxROkZeha9okpqY59n3++y
-         LAaGIxTsQf/JC0+00lD/mTvS6BakXvJfTsmuyEB9eJYlE99Ving/DoldQrhTsiCZC3Dt
-         ojlwcdJcCxVteWveBXsghiMucjFKtGDyzAios=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=Wz2Zn4rBJ8P98GIZY+l7eQkQOkxEamTUYSa0L1mNFG6HJiYwfhtLwFYGfE/BZyPLiV
-         PyAwp3obYeFZ5mOSvRiC2ijqkpmsamc9YEz+yEXvXslufx5Sseko7DQs64XvNn9u5HyQ
-         K7BGfGe4c2Ecj8a2oslaREOLM56WXwsKv3znM=
-Received: by 10.214.217.5 with SMTP id p5mr8619640qag.342.1233679864844; Tue, 
-	03 Feb 2009 08:51:04 -0800 (PST)
-In-Reply-To: <f488382f0902030842x6e7466ffm4668abde23e67bea@mail.gmail.com>
+	id S1752358AbZBCQyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 11:54:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751936AbZBCQx7
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 11:53:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38626 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751981AbZBCQx6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 11:53:58 -0500
+Received: (qmail invoked by alias); 03 Feb 2009 16:53:55 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp046) with SMTP; 03 Feb 2009 17:53:55 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX182YSUFHr02SZZzejbjRTzEgW9Pt0CnJLn3L8JDb8
+	7jqyikBEuZU+gq
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <1E104E1B-BFCC-4CFC-9D53-CE89299C9600@silverinsanity.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.75
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108212>
 
-On Tue, Feb 3, 2009 at 8:42 AM, Steven Noonan <steven@uplinklabs.net> wrote:
->> I want to update my git installation to the latest stable version, and
->> I'm running Windows.  In your download page
->> <http://git-scm.com/download> the link next to Cygwin is
->> <http://www.cygwin.com/setup.exe> which would seem to be the installer
->> for Cygwin itself, not for the Cygwin version of the git executables.
->>
->> Am I missing something here?
->>
->> --John
->
-> Cygwin doesn't have a binary package system (i.e. rpm, deb, etc), so
-> you either have to run the Cygwin installer to get the latest one they
-> support or compile it yourself via Cygwin.
->
-> - Steven
+Hi,
 
-There is also msysGit if you don't want to deal with Cygwin.
-http://code.google.com/p/msysgit/
+On Tue, 3 Feb 2009, Brian Gernhardt wrote:
 
--Geoffrey Lee
+> This change appears to have been forgotten, but does fix the problems I 
+> was having.  Junio, can this make it into the official repo instead of 
+> floating around in my local?  I'd send in a patch, but it was your code 
+> and I don't want to take credit for it.
+
+
+
+Top-poster!
+
+
+Besides, I think that my latest comment still stands there: testing is not 
+good enough, code inspection is required if something expects the file 
+names as they used to be.
+
+Ciao,
+Dscho
