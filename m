@@ -1,67 +1,73 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
-Date: Tue, 3 Feb 2009 21:38:45 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902032132130.9822@pacific.mpi-cbg.de>
-References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com> <7vocxqf2sf.fsf@gitster.siamese.dyndns.org> <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com> <1E104E1B-BFCC-4CFC-9D53-CE89299C9600@silverinsanity.com>
- <alpine.DEB.1.00.0902031752230.6573@intel-tinevez-2-302> <2D4586A6-ADAC-4B6E-8B42-2CBD76E0304C@silverinsanity.com> <alpine.DEB.1.00.0902031817260.6573@intel-tinevez-2-302> <5FE034E8-422F-4692-AD37-5633C91A4B98@silverinsanity.com>
- <alpine.DEB.1.00.0902031918520.9822@pacific.mpi-cbg.de> <34FE2049-0A81-4615-AE3D-46DE35A44011@silverinsanity.com> <7vy6wn9wdj.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] filter-branch: really allow running in a bare
+ repository
+Date: Tue, 3 Feb 2009 21:46:43 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902032145250.9822@pacific.mpi-cbg.de>
+References: <cover.1233684552u.git.johannes.schindelin@gmx.de>  <alpine.DEB.1.00.0902031910001.9822@pacific.mpi-cbg.de> <431341160902031131s63f34665ne9db25d8a4d1f0f9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 21:40:08 2009
+Cc: git@vger.kernel.org
+To: Eric Kidd <emk.lists@randomhacks.net>
+X-From: git-owner@vger.kernel.org Tue Feb 03 21:48:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUS3a-0003vu-TL
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 21:39:43 +0100
+	id 1LUSBM-0007uj-Ed
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 21:47:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751501AbZBCUiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 15:38:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbZBCUiQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 15:38:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59185 "HELO mail.gmx.net"
+	id S1751840AbZBCUqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 15:46:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751664AbZBCUqQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 15:46:16 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41124 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751050AbZBCUiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 15:38:15 -0500
-Received: (qmail invoked by alias); 03 Feb 2009 20:38:13 -0000
+	id S1750845AbZBCUqP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 15:46:15 -0500
+Received: (qmail invoked by alias); 03 Feb 2009 20:46:10 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp068) with SMTP; 03 Feb 2009 21:38:13 +0100
+  by mail.gmx.net (mp041) with SMTP; 03 Feb 2009 21:46:10 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19By5U1WCBBG/v7cHfNwTApVV8NgNkwuGrqQzRBWh
-	QSr0FcSaGhrs3j
+X-Provags-ID: V01U2FsdGVkX1+JrZkdmb2JhXv8c7yDpiuuNMBEMgzpDV5o2AFDh1
+	nE9rZrdhNCLAoH
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vy6wn9wdj.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <431341160902031131s63f34665ne9db25d8a4d1f0f9@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108249>
 
 Hi,
 
-On Tue, 3 Feb 2009, Junio C Hamano wrote:
+On Tue, 3 Feb 2009, Eric Kidd wrote:
 
-> I'll try to find time myself to triple check if you two want to, even 
-> though it is known that I often get tripped by the same kind of 
-> brain-slippage as Dscho when Dscho does get tripped, so my auditing 
-> might not add much to the collective confidence level ;-).
+> On Tue, Feb 3, 2009 at 1:10 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > When checking if running in a bare repository, the work tree has to be
+> > reset, otherwise we will be checking the temporary state, which is
+> > always non-bare.
+> 
+> Just a few minutes after you posted this patch, I posted a
+> nearly-identical fix for the same issue:
+> 
+>   http://marc.info/?l=git&m=123368695831812&w=2
+> 
+> (My patch includes a test case, too, but it's not very important.)
 
-Thanks ;-)
+So clearly yours is superior.
 
-I inspected all files that git grep -p showed me, and I see that t3412 
-uses the file names, but passes explicit parameters to test_commit for 
-them.  So that is fine, too.
+> This raises another interesting question: Why doesn't 'git
+> filter-branch' actually check whether subcommands succeed?
 
-Just as a matter of preference, I'd not downcase, but instead append a 
-".file" in test_commit, but that's not a strong preference.  (I'd not 
-downcase, because that was done only to prevent the tag to have the same 
-name as the file, but that did not work...)
+That's unintentional; AFAIR there was a "set -e" in cg-admin-rewritehist 
+that I tried to do away with by introducing explicit '&&' conjunctions 
+where needed.
 
-Ciao,
+So all those unchecked subcommands are bugs.
+
+Thanks,
 Dscho
