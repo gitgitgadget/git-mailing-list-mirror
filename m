@@ -1,73 +1,89 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git rebase -i onto HEAD~n
-Date: Tue, 3 Feb 2009 16:44:57 +0100
-Message-ID: <20090203154457.GA6859@atjola.homenet>
-References: <C5E2CAEE4A87D24DAB5334F62A72D1F43ADC9D@ELON17P32001A.csfb.cs-group.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT] help needed to create a siimple commit
+Date: Tue, 3 Feb 2009 07:51:07 -0800
+Message-ID: <20090203155107.GU26880@spearce.org>
+References: <551f769b0902030307s2a9204cch7967df17c1f2c8a6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Bisani, Alok" <alok.bisani@credit-suisse.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 16:47:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: Yann Simon <yann.simon.fr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 16:52:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUNTr-0004Fq-FH
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 16:46:31 +0100
+	id 1LUNZi-00073x-I6
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 16:52:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752620AbZBCPpE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Feb 2009 10:45:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752260AbZBCPpE
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 10:45:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57752 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752485AbZBCPpC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 10:45:02 -0500
-Received: (qmail invoked by alias); 03 Feb 2009 15:44:59 -0000
-Received: from i577B9B17.versanet.de (EHLO atjola.local) [87.123.155.23]
-  by mail.gmx.net (mp043) with SMTP; 03 Feb 2009 16:44:59 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/FKflG1vDFWbTrd+uQ/NJYXLd2MGCAUzUFevM8KY
-	e8qiKP+4oRLW0W
+	id S1753145AbZBCPvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 10:51:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752398AbZBCPvJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 10:51:09 -0500
+Received: from george.spearce.org ([209.20.77.23]:39221 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751724AbZBCPvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 10:51:08 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id D8A9F38210; Tue,  3 Feb 2009 15:51:07 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <C5E2CAEE4A87D24DAB5334F62A72D1F43ADC9D@ELON17P32001A.csfb.cs-group.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+In-Reply-To: <551f769b0902030307s2a9204cch7967df17c1f2c8a6@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108203>
 
-On 2009.02.03 15:32:35 -0000, Bisani, Alok wrote:
-> Hi,
->=20
-> Is it possible to use git rebase -i for the following use case, in a
-> local branch?
->=20
-> $ git reset --soft HEAD~3
-> $ # magically squash HEAD~2 & HEAD, ignoring HEAD~1 (which should be
-> discarded)
-> $ git commit -m "new commit replacing current HEAD~2 HEAD, without th=
-e
-> commit HEAD~1 (to be discarded)"
->=20
-> I get the error below.
->=20
->     grep: /home/user/project/.git/rebase-merge/done: No such file or
-> directory
->     Cannot 'squash' without a previous commit
+Yann Simon <yann.simon.fr@gmail.com> wrote:
+> I wrote the following unit test to learn how to make a commit
+> with JGIT:
+> 
+> 	public void testASimpleCommit() throws IOException {
+> 		
+> 		GitIndex index = new GitIndex(db);
+> 		index.filemode = Boolean.TRUE;
+> 		
+> 		File file;
+> 		file = writeTrashFile("file1", "file1");
+> 		
+> 		index.add(trash, file);
+> 		index.write();
+> 		ObjectId objectId = index.writeTree();
+> 		Tree tree = db.mapTree(objectId);
+> 		tree.accept(new WriteTree(trash, db), TreeEntry.MODIFIED_ONLY);
+> 		
+> 		final Commit c1 = new Commit(db);
+> 		c1.setAuthor(new PersonIdent(jauthor, 1154236443000L, -4 * 60));
+> 		c1.setCommitter(new PersonIdent(jcommitter, 1154236443000L, -4 * 60));
+> 		c1.setMessage("A Commit\n");
+> 		c1.setTree(tree);
+> 		assertEquals(tree.getTreeId(), c1.getTreeId());
+> 		c1.commit();
 
-It would be helpful if you told us what command you used, and what you
-changed in the editor.
+You are missing the final step of updating the HEAD ref with the
+commit.  Calling commit() on the Commit object only writes it to
+the object database, this is similar to git-commit-tree.
 
-This should do:
-git rebase -i HEAD~3
+Try adding on the end:
 
-And in the editor:
-pick HEAD~2
-squash HEAD
+	RefUpdate ru = db.updateRef(Constants.HEAD);
+	ru.setRefLogMessage("commit");
+	ru.setNewObjectId(c1.getCommitId());
+	assertSame(RefUpdate.Result.NEW, ru.update());
 
-Bj=F6rn
+If your commit had parents, you might want to do instead:
+
+	ru.setExpectedOldObjectId(oldHEAD);
+	assertSame(RefUpdate.Result.FAST_FORWARD, ru.update());
+
+where oldHEAD is the value of HEAD you read and used as the first
+parent of the commit.  This ensures that the update method fails
+if someone else has updated HEAD since you last read it.
+
+The update method returns a number of different states, usually we
+check its result with a switch statement as a number of states are
+sometimes permissible in a context.  Sometimes though, you know it
+has to be exactly one state, and everything else is a failure.
+
+-- 
+Shawn.
