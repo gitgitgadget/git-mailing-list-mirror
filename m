@@ -1,59 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Switch receive.denyCurrentBranch to "refuse"
-Date: Tue, 3 Feb 2009 03:07:34 -0500
-Message-ID: <20090203080734.GA27251@sigill.intra.peff.net>
-References: <cover.1233275583u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de> <76718490901300817x3f31460k59b6fe75d136372d@mail.gmail.com> <alpine.DEB.1.00.0901301756560.3586@pacific.mpi-cbg.de> <76718490901301050h1f0f5b2bq902de384d954d99b@mail.gmail.com> <alpine.DEB.1.00.0901301959300.3586@pacific.mpi-cbg.de> <20090131095622.6117@nanako3.lavabit.com> <7vy6wr0wvi.fsf@gitster.siamese.dyndns.org> <20090202124148.GB8325@sigio.peff.net> <7vskmwc5js.fsf@gitster.siamese.dyndns.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [wishlist] git-archive -L
+Date: Tue, 03 Feb 2009 09:10:43 +0100
+Message-ID: <4987FC03.60607@lsrfire.ath.cx>
+References: <20090202143425.GA30667@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 09:09:06 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Pierre Habouzit <madcoder@madism.org>
+X-From: git-owner@vger.kernel.org Tue Feb 03 09:12:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUGLC-00070O-DT
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 09:09:06 +0100
+	id 1LUGOG-0007yh-CM
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 09:12:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751312AbZBCIHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 03:07:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbZBCIHk
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 03:07:40 -0500
-Received: from peff.net ([208.65.91.99]:57957 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750963AbZBCIHj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 03:07:39 -0500
-Received: (qmail 17739 invoked by uid 107); 3 Feb 2009 08:07:50 -0000
-Received: from c-75-75-4-229.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (75.75.4.229)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 03 Feb 2009 03:07:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Feb 2009 03:07:34 -0500
-Content-Disposition: inline
-In-Reply-To: <7vskmwc5js.fsf@gitster.siamese.dyndns.org>
+	id S1751500AbZBCIKu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Feb 2009 03:10:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751344AbZBCIKu
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 03:10:50 -0500
+Received: from india601.server4you.de ([85.25.151.105]:44256 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751234AbZBCIKt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 03:10:49 -0500
+Received: from [10.0.1.101] (p57B7FC97.dip.t-dialin.net [87.183.252.151])
+	by india601.server4you.de (Postfix) with ESMTPSA id 855422F8056;
+	Tue,  3 Feb 2009 09:10:47 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <20090202143425.GA30667@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108165>
 
-On Tue, Feb 03, 2009 at 12:01:43AM -0800, Junio C Hamano wrote:
+Pierre Habouzit schrieb:
+> Hi Rene,
+>=20
+> I wanted to do that myself, but I sadly miss the time right now, so I
+> wonder if you'd know how to do the following.
+>=20
+> We have in our repository a kind of modular system (for a family of w=
+eb
+> sites) where each web-site uses a (versionned) symlink farm. IOW it
+> works basically that way:
+>=20
+>     www/module1
+>     www/module2
+>     product_A/www/module1 -> ../../www/module1
+>     product_A/www/module_A
+>     product_B/www/module1 -> ../../www/module1
+>     product_B/www/module2 -> ../../www/module2
+>     product_B/www/module_B
+>=20
+> Though product_A and _B even if they share a fair amount of code, are
+> separate products and when we release, we'd like to be able to perfor=
+m
+> from inside:
+>=20
+>     git archive --format=3Dtar -L product_$A
+>=20
+> where -L basically does what it does in cp: dereference symlinks.  To
+> make the thing hairier, we also have symlinks _inside_ www/ (pointing
+> into the same subtree) that we'd like to keep if possible (even if it=
+'s
+> not a big deal).
+>=20
+> So I'd suggest something where -L only dereferences the symlink if it
+> goes outside of the list of paths passed to git-archive, and -LL (or =
+-L
+> -L) dereferences anything. Of course this would only make sense if th=
+e
+> symlinks resolve to something that is tracked :)
 
->  	"To allow pushing into the current branch, you can set it to 'ignore';",
-> -	"but this is not recommended unless you really know what you are doing.",
-> +	"but this is not recommended unless you arranged its work tree to get",
-> +	"updated to match what you pushed in some other way.",
+Last April, I was working on making archive follow all symlinks pointin=
+g
+to internal files.  The goal was a bit different, namely to create
+archives for platforms without symlink support (i.e. it would resolve
+all symlinks pointing to tracked objects).
 
-This is much better, but I believe it needs to be "...arranged _for_
-its work tree to get updated..." to be grammatically correct.
+IIRC the code had some limitations, e.g. it couldn't follow a symlink t=
+o
+a path containing symlinked directories.  I'll need to rebase it to
+master first, though, as the surrounding code has changed a bit in the
+meantime.
 
-And as a nit (which I seem to be full of tonight), you can get rid of
-the passive voice by saying:
+To follow only symlinks that point outside of the specified paths sound=
+s
+like a sensible mode of operation, but I'm not sure that it's worth a
+one letter option.
 
- but this is not recommended unless you arranged to update its work
- tree to match what you pushed in some other way.
+Given your setup you also might want to take a look at submodules and
+the recent submodule archival support patches by Lars Hjelmi.
 
-which is slightly more clear, IMHO.
+Anyway, I'll try to resurrect my old, incomplete symlink following code=
+,
+but I don't have much time, either. :-/
 
--Peff
+Ren=E9
