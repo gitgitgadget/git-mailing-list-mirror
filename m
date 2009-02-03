@@ -1,80 +1,66 @@
-From: Matt Graham <mdg149@gmail.com>
-Subject: Re: how to diff versions of a file
-Date: Tue, 3 Feb 2009 08:48:46 -0500
-Message-ID: <1c5969370902030548g284e8ae2i7dc3a866c4337a5f@mail.gmail.com>
-References: <1c5969370902022100h7c03bbb6h2d9f443f877d89ec@mail.gmail.com>
-	 <alpine.DEB.1.10.0902022206060.28633@asgard.lang.hm>
-	 <7vk588do5q.fsf@gitster.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: cvs2git migration - cloning CVS repository
+Date: Tue, 03 Feb 2009 15:18:48 +0100
+Message-ID: <49885248.6020805@alum.mit.edu>
+References: <286817520902020624y7f4c2942l34fafc0fe0fa0b48@mail.gmail.com> <49883C52.3060102@alum.mit.edu> <alpine.DEB.1.00.0902031348570.6573@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: david@lang.hm, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 14:51:50 2009
+Cc: Rostislav Svoboda <rostislav.svoboda@gmail.com>,
+	git@vger.kernel.org, cvs2svn users <users@cvs2svn.tigris.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 03 15:20:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LULfL-0000eL-V0
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 14:50:16 +0100
+	id 1LUM8W-0003Wa-Ec
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 15:20:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751936AbZBCNsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 08:48:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751583AbZBCNsu
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 08:48:50 -0500
-Received: from fk-out-0910.google.com ([209.85.128.189]:4723 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751088AbZBCNst (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 08:48:49 -0500
-Received: by fk-out-0910.google.com with SMTP id f33so1619168fkf.5
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 05:48:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QJe/QZAMTmTWjlBOkk0PxXthvFSRj8XXRJvztpGYO6s=;
-        b=FK78yBqayAmS1Qv2UJK3FKWR6utdGwymf/csHC9qPM2QjIaqrNlc1cOnH1WKuJuUyu
-         djTXcV/YZTmodRE9rrcGuyjQSGV920XankX8/D5O19lPPhc3kWW4sN1mynA50aNa3CQV
-         O59B2bwGkS/3Wzj31nxr5wkp1EchZFouzFDHU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=D0B0tZn8pVGXsZf+xzoYTJ8DrzXryHfOYx2E2GcLqEbWeuX4jXud8X3ywI92Bzph/w
-         Hx733zePWSsaKP05xUpFaj9OX6ereljuiHHyuOYvhv1ZgoAjN5faG1K3tZ1qlMgjy5M3
-         6vHLwlWNn7IoSFb5bPGi5+yLq/eLa74etaSb4=
-Received: by 10.223.122.15 with SMTP id j15mr197072far.10.1233668926325; Tue, 
-	03 Feb 2009 05:48:46 -0800 (PST)
-In-Reply-To: <7vk588do5q.fsf@gitster.siamese.dyndns.org>
+	id S1752417AbZBCOS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 09:18:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752256AbZBCOS5
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 09:18:57 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:52995 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752166AbZBCOS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 09:18:57 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n13EIoKI008513
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 3 Feb 2009 15:18:51 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.19) Gecko/20090105 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
+In-Reply-To: <alpine.DEB.1.00.0902031348570.6573@intel-tinevez-2-302>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108191>
 
-On Tue, Feb 3, 2009 at 01:34, Junio C Hamano <gitster@pobox.com> wrote:
-> david@lang.hm writes:
->
->> I don't think it's trivial
->
-> I think you meant to say it _is_ trivial.
->
->> If you just wanted three commits ago you could do
->>
->> git diff HEAD..HEAD^^^ tree.c
->
-> That would give you a reverse diff; I think you probably meant the other
-> way around, "git diff HEAD~3 HEAD tree.c".
->
->> but three changes to tree.c ago I think you need to do multiple
->> iterations of git blame to find out what commit was three edits ago.
->
-> git diff $(git rev-list -3 HEAD -- tree.c | sed -n -e '$p') HEAD -- tree.c
->
-> This assumes that the history is linear but your statement "three edits
-> ago" already assumes that, so...
+Johannes Schindelin wrote:
+> On Tue, 3 Feb 2009, Michael Haggerty wrote:
+>> If you do not have filesystem access to your CVS repository, you might 
+>> be able to clone it using CVSSuck [2,3].
+> 
+> A substantially faster option would be to go with cvsclone:
+> 
+> 	http://samba.org/ftp/tridge/rtc/cvsclone.l
+> 
+> (in my case, cvsclone was not only faster, but it actually worked, too, 
+> which is more than I could say of CVSSuck).
+> 
+> Note: it only works for anonymous access so far.
+> 
+> Note also: for my use case, it was necessary to edit the rlog, as those 
+> brilliant geniuses included verbatim cvs logs for files they moved. *sigh*
+> If you need something like that, I can give you my patched version.
 
-Thanks Junio, this is exactly what I was asking for.
+Thanks for the pointer.  I just added it to the cvs2svn/cvs2git FAQ [1].
 
-And thanks for the tip about it depending on the history being linear.
+Michael
+
+[1] http://cvs2svn.tigris.org/faq.html
