@@ -1,67 +1,79 @@
-From: Hinko Kocevar <hinko.kocevar@cetrtapot.si>
-Subject: revert committed and pushed tag
-Date: Tue, 03 Feb 2009 15:45:01 +0100
-Message-ID: <4988586D.603@cetrtapot.si>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 03 15:56:45 2009
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
+Date: Tue, 3 Feb 2009 10:07:03 -0500
+Message-ID: <1E104E1B-BFCC-4CFC-9D53-CE89299C9600@silverinsanity.com>
+References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com> <7vocxqf2sf.fsf@gitster.siamese.dyndns.org> <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 16:12:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUMhJ-0000iV-5b
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 15:56:21 +0100
+	id 1LUMt9-0005d8-47
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 16:08:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755424AbZBCOy6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Feb 2009 09:54:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755286AbZBCOy6
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 09:54:58 -0500
-Received: from zimbra-mta.cetrtapot.si ([89.212.80.172]:60457 "EHLO
-	zimbra-mta.cetrtapot.si" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754922AbZBCOy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 09:54:56 -0500
-X-Greylist: delayed 555 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Feb 2009 09:54:56 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id 79CA819FA22
-	for <git@vger.kernel.org>; Tue,  3 Feb 2009 15:45:40 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zimbra-mta.cetrtapot.si
-Received: from zimbra-mta.cetrtapot.si ([127.0.0.1])
-	by localhost (zimbra-mta.cetrtapot.si [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aV3y1mKgBOjM for <git@vger.kernel.org>;
-	Tue,  3 Feb 2009 15:45:40 +0100 (CET)
-Received: from [172.31.65.135] (unknown [192.168.66.2])
-	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id 2C75419F9BE
-	for <git@vger.kernel.org>; Tue,  3 Feb 2009 15:45:40 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
+	id S1752929AbZBCPHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 10:07:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752770AbZBCPHK
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 10:07:10 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:49124 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752725AbZBCPHI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 10:07:08 -0500
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 7EE581FFC27F; Tue,  3 Feb 2009 15:07:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
+	silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=4.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.1.7-deb3
+Received: from [192.168.5.44] (nmd.sbx07360.rocheny.wayport.net [98.98.50.102])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 520E21FFC271;
+	Tue,  3 Feb 2009 15:07:03 +0000 (UTC)
+In-Reply-To: <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108196>
 
-Hi,
+This change appears to have been forgotten, but does fix the problems  
+I was having.  Junio, can this make it into the official repo instead  
+of floating around in my local?  I'd send in a patch, but it was your  
+code and I don't want to take credit for it.
 
-Is there a way to 'revert' committed and pushed tag?
-I've noticed that some files were not included in the commit (new files=
-)
-and I would like to squeeze them in before the tag was
-created/committed/pushed to the remote server.
+~~ Brian
 
-I did:
-$ git add ..files..
-$ git commit
-$ git push
-$ git tag rc3
-$ git push --tags
+On Jan 29, 2009, at 2:10 PM, Brian Gernhardt wrote:
 
-Thank you,
-Hinko
---=20
-Hinko Ko=E8evar, OSS developer
-=C8ETRTA POT, d.o.o.
-Planina 3, 4000 Kranj, SI EU
-tel     ++386 (0) 4 280 66 03
-e-mail  hinko.kocevar@cetrtapot.si
-http    www.cetrtapot.si
+>
+> On Jan 29, 2009, at 12:19 PM, Junio C Hamano wrote:
+>
+>> If we really wanted to care about case-folding file systems,  
+>> shouldn't we
+>> make test_commit shell function a bit more than the downcasing?   
+>> How about
+>> this patch instead?
+>
+> That's a good point.  Always good to prevent future issues.
+>
+>> test_commit () {
+>> -	file=${2:-$(echo "$1" | tr 'A-Z' 'a-z')}
+>> +	file=${2:-$(echo "$1" | tr 'A-Z' 'a-z').t}
+>> 	echo "${3-$1}" > "$file" &&
+>> 	git add "$file" &&
+>> 	test_tick &&
+>
+> Added this and ran through the tests.  Works for me. :-D
+>
+> Tested-by: Brian Gernhardt <benji@silverinsanity.com> (HFS+ on Mac  
+> OS 10.5.6)
