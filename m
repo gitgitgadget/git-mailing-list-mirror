@@ -1,75 +1,53 @@
-From: "Bisani, Alok" <alok.bisani@credit-suisse.com>
-Subject: git rebase -i onto HEAD~n
-Date: Tue, 3 Feb 2009 15:32:35 -0000
-Message-ID: <C5E2CAEE4A87D24DAB5334F62A72D1F43ADC9D@ELON17P32001A.csfb.cs-group.com>
+From: Bruce Stephens <bruce.stephens@isode.com>
+Subject: Re: Git -> SVN importing
+Date: Tue, 03 Feb 2009 15:38:43 +0000
+Message-ID: <80k5871qf0.fsf@tiny.isode.net>
+References: <c115fd3c0902030717u6a8f3bbck3027cf74715c79a4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 03 16:34:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 16:40:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUNIF-0007ix-8X
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 16:34:31 +0100
+	id 1LUNNW-0001Hj-Gx
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 16:39:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753157AbZBCPdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 10:33:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752024AbZBCPdD
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 10:33:03 -0500
-Received: from mail-gw18.credit-suisse.com ([198.240.130.183]:43067 "EHLO
-	nys17a-3003.corpny.csfb.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751907AbZBCPdB convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 Feb 2009 10:33:01 -0500
-Received: by nys17a-3003.corpny.csfb.com; Tue, 3 Feb 2009 10:32:55 -0500 (EST) 
-X-Server-Uuid: 4EAC7D12-E00D-46D7-91F2-2C1B0FAC6618
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git rebase -i onto HEAD~n
-thread-index: AcmGFJvSEZJUgf20TqmNgI9uRTrf2g==
-X-OriginalArrivalTime: 03 Feb 2009 15:32:36.0363 (UTC)
- FILETIME=[A3E065B0:01C98614]
-X-WSS-ID: 6596BC130ZK46514-07-05
+	id S1752024AbZBCPiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 10:38:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752278AbZBCPiU
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 10:38:20 -0500
+Received: from rufus.isode.com ([62.3.217.251]:35794 "EHLO rufus.isode.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752024AbZBCPiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 10:38:20 -0500
+Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
+          by rufus.isode.com (smtp internal) via TCP with SMTP 
+          id <SYhk6QB0lBb7@rufus.isode.com>; Tue, 3 Feb 2009 15:38:17 +0000
+Received: by tiny.isode.net (sSMTP sendmail emulation);
+          Tue, 03 Feb 2009 15:38:43 +0000
+X-Hashcash: 1:20:090203:tim.visher@gmail.com::Z9KcI3yY3aWuVXy8:000000000000000000000000000000000000000009C4V
+X-Hashcash: 1:20:090203:git@vger.kernel.org::XMtqx2gaspPrCIxb:0000000000000000000000000000000000000000003ndo
+In-Reply-To: <c115fd3c0902030717u6a8f3bbck3027cf74715c79a4@mail.gmail.com> (Tim Visher's message of "Tue\, 3 Feb 2009 10\:17\:17 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108200>
 
-Hi,
+Tim Visher <tim.visher@gmail.com> writes:
 
-Is it possible to use git rebase -i for the following use case, in a
-local branch?
+[...]
 
-$ git reset --soft HEAD~3
-$ # magically squash HEAD~2 & HEAD, ignoring HEAD~1 (which should be
-discarded)
-$ git commit -m "new commit replacing current HEAD~2 HEAD, without the
-commit HEAD~1 (to be discarded)"
+> I figured that someone would have to have done this before since
+> git-svn is so magical.  However, I thought I'd ask.
+>
+> What's the story?
 
-I get the error below.
+My guess is there aren't many people who've migrated from git to svn.
+(And fewer who'd admit to it on this mailing list.)
 
-    grep: /home/user/project/.git/rebase-merge/done: No such file or
-directory
-    Cannot 'squash' without a previous commit
-
-Or could you please suggest another command which is meant to this.
-
-I must mention, that HEAD~3, in my case is the first commit, but I don't
-think that makes any difference.
-
-$ git --version
-git version 1.6.0
-
-Best regards,
-Alok
-
-==============================================================================
-Please access the attached hyperlink for an important electronic communications disclaimer: 
-
-http://www.credit-suisse.com/legal/en/disclaimer_email_ib.html
-==============================================================================
+[...]
