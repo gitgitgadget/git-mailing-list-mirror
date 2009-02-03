@@ -1,83 +1,64 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH] http-push: wrap signature of get_remote_object_url
-Date: Tue, 03 Feb 2009 20:39:00 +0800
-Message-ID: <49883AE4.90709@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: cvs2git migration - cloning CVS repository
+Date: Tue, 03 Feb 2009 13:45:06 +0100
+Message-ID: <49883C52.3060102@alum.mit.edu>
+References: <286817520902020624y7f4c2942l34fafc0fe0fa0b48@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 13:40:58 2009
+Cc: git@vger.kernel.org
+To: Rostislav Svoboda <rostislav.svoboda@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 13:46:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUKaI-0001iV-7v
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 13:40:58 +0100
+	id 1LUKfl-0003SM-5F
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 13:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752389AbZBCMjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 07:39:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752239AbZBCMjc
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 07:39:32 -0500
-Received: from ti-out-0910.google.com ([209.85.142.188]:60233 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752132AbZBCMjb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 07:39:31 -0500
-Received: by ti-out-0910.google.com with SMTP id b6so1041914tic.23
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 04:39:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=E09o2X6YMlSrGiduJ887V5n1azz0iOtSn8Gi66h3GKM=;
-        b=TdYhYiah8Bg4k16jbqgoQYdZm5NaUUeA8EmDgzy7FWIItiYm0X2AtZq81AsATzMyNW
-         qkN5zovyS8K3Mvv3cc6UFTR9Bu1dXGPug9IT9BQbheym1Rxp0BEcUi/CQqWBs83sY5fo
-         eYiWDV9jhYspEhqigomGgLYghi/Fz44AwhdJM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=wkmQcXtRsxmXJzuQ1Oozjm3LWnjjKGl/xIfiBaLpB4ysFH2oiiivhwbK8xz5toSPh4
-         GQI/3XLo9peawXpgzraXmFNuInCvi9CMbM/E0CWBbSvm4vzglaGC2gVjKMzfnKpaKoe7
-         725qbG/Zx+39w3+rPOqYBHrxonndlVCjFMtsI=
-Received: by 10.110.17.14 with SMTP id 14mr8270562tiq.19.1233664767523;
-        Tue, 03 Feb 2009 04:39:27 -0800 (PST)
-Received: from ?116.87.149.30? ([116.87.149.30])
-        by mx.google.com with ESMTPS id a4sm439632tib.27.2009.02.03.04.39.24
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 03 Feb 2009 04:39:25 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+	id S1752239AbZBCMpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 07:45:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752151AbZBCMpL
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 07:45:11 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:50480 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751869AbZBCMpJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 07:45:09 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n13Cj602000947
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 3 Feb 2009 13:45:06 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.19) Gecko/20090105 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
+In-Reply-To: <286817520902020624y7f4c2942l34fafc0fe0fa0b48@mail.gmail.com>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108182>
 
-The signature of get_remote_object_url stands at 96 characters (as
-pointed out by Dscho); this patch wraps it so that it conforms to the
-80 characters guideline.
+Rostislav Svoboda wrote:
+> I'd like to clone a CVS repository to a local machine in order to
+> prepare it for a migration to git. I tried:
+> 
+> $git cvsimport -p x -v -d
+> [...]
 
----
+If your goal is a high-quality one-time conversion from CVS to git, then
+you would be better off getting a filesystem copy of the CVS repository
+then converting with cvs2git [1].  "git cvsimport" does not convert a
+CVS repository faithfully to git, though it might barely be adequate if
+you absolutely need to keep git and CVS in sync.
 
-This patch applies on top of Junio's patch "http-push.c:
-get_remote_object_url() is only used under USE_CURL_MULTI"
+If you do not have filesystem access to your CVS repository, you might
+be able to clone it using CVSSuck [2,3].
 
- http-push.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+Michael
+the cvs2svn/cvs2git maintainer
 
-diff --git a/http-push.c b/http-push.c
-index 3e75cf3..54c62d4 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -232,7 +232,8 @@ static void process_response(void *callback_data)
-
- #ifdef USE_CURL_MULTI
-
--static char *get_remote_object_url(const char *url, const char *hex, int only_two_digit_prefix)
-+static char *get_remote_object_url(const char *url, const char *hex,
-+				   int only_two_digit_prefix)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	append_remote_object_url(&buf, url, hex, only_two_digit_prefix);
--- 
-1.6.1.2.278.g9a9e.dirty
+[1] http://cvs2svn.tigris.org/cvs2git.html
+[2] http://cvs.m17n.org/~akr/cvssuck/
+[3] http://cvs2svn.tigris.org/faq.html#repoaccess
