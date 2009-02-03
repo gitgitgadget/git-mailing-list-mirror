@@ -1,78 +1,164 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] t3411: Fix test 1 for case-insensitive file systems
-Date: Tue, 3 Feb 2009 18:18:50 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902031817260.6573@intel-tinevez-2-302>
-References: <1233244816-67565-1-git-send-email-benji@silverinsanity.com> <7vocxqf2sf.fsf@gitster.siamese.dyndns.org> <673CE949-5DF9-4970-A739-AA09FCD26D24@silverinsanity.com> <1E104E1B-BFCC-4CFC-9D53-CE89299C9600@silverinsanity.com>
- <alpine.DEB.1.00.0902031752230.6573@intel-tinevez-2-302> <2D4586A6-ADAC-4B6E-8B42-2CBD76E0304C@silverinsanity.com>
+From: =?utf-8?q?Tor=20Arne=20Vestb=C3=B8?= <torarnv@gmail.com>
+Subject: [JGIT PATCH v2] Add a few test cases for AbstractTreeIterator's pathCompare
+Date: Tue,  3 Feb 2009 18:20:23 +0100
+Message-ID: <1233681623-22011-1-git-send-email-torarnv@gmail.com>
+References: <49887A86.2040602@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 18:20:33 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 03 18:21:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUOwh-0000lA-As
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 18:20:23 +0100
+	id 1LUOxy-0001Ig-A1
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 18:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752142AbZBCRS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 12:18:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbZBCRS6
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 12:18:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47393 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752095AbZBCRS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 12:18:57 -0500
-Received: (qmail invoked by alias); 03 Feb 2009 17:18:51 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp006) with SMTP; 03 Feb 2009 18:18:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/9P85y1n79J8dhV3TTj+GumWMMc2m7XrqnDhj0hO
-	7qeCJVlYwb5is0
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <2D4586A6-ADAC-4B6E-8B42-2CBD76E0304C@silverinsanity.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1752429AbZBCRUR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Feb 2009 12:20:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752341AbZBCRUP
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 12:20:15 -0500
+Received: from mail-ew0-f21.google.com ([209.85.219.21]:48845 "EHLO
+	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752322AbZBCRUN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 12:20:13 -0500
+Received: by ewy14 with SMTP id 14so2614973ewy.13
+        for <git@vger.kernel.org>; Tue, 03 Feb 2009 09:20:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=P8g3P4hOLoNsNbNPORHATBpBibyWGR8Z/sFkYeyWNcA=;
+        b=X35kpSQSOzOkuvN//HH2fsgmTgJ6/R7fT67nyrj939Cd2rF6GPRdJ/2lXIPtUMGThW
+         X2pPrn+1EbnuvR3G/7ifbSn4k2LGWAV8ZCG8o3RLQa3PZYzivnuqIEvVKEnyiW53WgfG
+         D0oyuxCm+4GPZZ6EnRor0bBwnJy217TJXuZLg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=jCryFf6KXogIp+njoQZSGDDSlfAOuPppJuFlb4o9RjJkcdBJo2M3HmsXqx/zooQIlY
+         edEfggf5b1RhK4CVjUxhAv8C0UDiVNb5Y2de0JzGjXf7AKe9ihBhiBqD0cfnQ9PRR5pN
+         fVCGTnf8E8ka0f3Kc1JRzUgsPhPXtv//n1ZBM=
+Received: by 10.103.160.10 with SMTP id m10mr2542725muo.50.1233681609379;
+        Tue, 03 Feb 2009 09:20:09 -0800 (PST)
+Received: from monstre.mystifistisk.net (212251244070.customer.cdi.no [212.251.244.70])
+        by mx.google.com with ESMTPS id u9sm370084muf.55.2009.02.03.09.20.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 03 Feb 2009 09:20:08 -0800 (PST)
+Received: by monstre.mystifistisk.net (Postfix, from userid 1000)
+	id A8EF1468001; Tue,  3 Feb 2009 18:20:23 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.2.309.g2ea3
+In-Reply-To: <49887A86.2040602@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108222>
 
-Hi,
+Tests that files sort before trees if the path is the same, and
+that if both path and mode is the same, they are considered equal.
 
-On Tue, 3 Feb 2009, Brian Gernhardt wrote:
+Signed-off-by: Tor Arne Vestb=C3=B8 <torarnv@gmail.com>
+---
+ .../jgit/treewalk/AbstractTreeIteratorTest.java    |   80 ++++++++++++=
+++++++++
+ 1 files changed, 80 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/treewalk=
+/AbstractTreeIteratorTest.java
 
-> 
-> On Feb 3, 2009, at 11:53 AM, Johannes Schindelin wrote:
-> 
-> >On Tue, 3 Feb 2009, Brian Gernhardt wrote:
-> >
-> > >This change appears to have been forgotten, but does fix the problems 
-> > >I was having.  Junio, can this make it into the official repo instead 
-> > >of floating around in my local?  I'd send in a patch, but it was your 
-> > >code and I don't want to take credit for it.
-> >
-> >Top-poster!
-> 
-> Well, yes.  I wasn't replying to anything in the e-mail, I just wanted to
-> bring it back to attention.
-
-You did, in fact, refer a little bit to the content of the thread you were 
-replying to.
-
-> >Besides, I think that my latest comment still stands there: testing is not
-> >good enough, code inspection is required if something expects the file
-> >names as they used to be.
-> 
-> As far as I can tell, no test relies on the auto-generated name of the test
-> file.  In fact, only t3411 uses that feature at all and it only performs
-> operations on commits.  All other uses of test_commit give a filename (even
-> though many of them don't appear to use the file).
-
-You did not look far.
-
-Ciao,
-Dscho
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/treewalk/Abstra=
+ctTreeIteratorTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/tr=
+eewalk/AbstractTreeIteratorTest.java
+new file mode 100644
+index 0000000..d45e22c
+--- /dev/null
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/treewalk/AbstractTreeI=
+teratorTest.java
+@@ -0,0 +1,80 @@
++/*
++ * Copyright (C) 2009, Tor Arne Vestb=C3=B8 <torarnv@gmail.com>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.treewalk;
++
++import java.io.IOException;
++
++import org.spearce.jgit.errors.IncorrectObjectTypeException;
++import org.spearce.jgit.lib.FileMode;
++import org.spearce.jgit.lib.Repository;
++import org.spearce.jgit.lib.RepositoryTestCase;
++
++
++public class AbstractTreeIteratorTest extends RepositoryTestCase {
++
++
++	public class FakeTreeIterator extends WorkingTreeIterator {
++		public FakeTreeIterator(String path, FileMode fileMode) {
++			super(path);
++			mode =3D fileMode.getBits();
++			pathLen -=3D 1; // Get rid of extra '/'
++		}
++
++		@Override
++		public AbstractTreeIterator createSubtreeIterator(Repository repo)
++				throws IncorrectObjectTypeException, IOException {
++			return null;
++		}
++
++	}
++
++	public void testPathCompare() throws Exception {
++		assertTrue(new FakeTreeIterator("a", FileMode.REGULAR_FILE).pathComp=
+are(
++				new FakeTreeIterator("a", FileMode.TREE)) < 0);
++
++		assertTrue(new FakeTreeIterator("a", FileMode.TREE).pathCompare(
++				new FakeTreeIterator("a", FileMode.REGULAR_FILE)) > 0);
++
++		assertTrue(new FakeTreeIterator("a", FileMode.REGULAR_FILE).pathComp=
+are(
++				new FakeTreeIterator("a", FileMode.REGULAR_FILE)) =3D=3D 0);
++
++		assertTrue(new FakeTreeIterator("a", FileMode.TREE).pathCompare(
++				new FakeTreeIterator("a", FileMode.TREE)) =3D=3D 0);
++	}
++
++}
+--=20
+1.6.1.2.309.g2ea3
