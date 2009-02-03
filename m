@@ -1,83 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: webgit highlightes mem adresses as git versions
-Date: Tue, 3 Feb 2009 13:31:44 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902031327340.6573@intel-tinevez-2-302>
-References: <200902022204.46651.toralf.foerster@gmx.de> <m3ljsowisv.fsf@localhost.localdomain> <200902031204.21435.toralf.foerster@gmx.de>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH] http-push: wrap signature of get_remote_object_url
+Date: Tue, 03 Feb 2009 20:39:00 +0800
+Message-ID: <49883AE4.90709@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-656757664-1233664305=:6573"
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: =?ISO-8859-15?Q?Toralf_F=F6rster?= <toralf.foerster@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 03 13:33:21 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 13:40:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUKSo-0007if-32
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 13:33:14 +0100
+	id 1LUKaI-0001iV-7v
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 13:40:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752407AbZBCMbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 07:31:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752006AbZBCMbr
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 07:31:47 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38243 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751572AbZBCMbr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 07:31:47 -0500
-Received: (qmail invoked by alias); 03 Feb 2009 12:31:45 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp069) with SMTP; 03 Feb 2009 13:31:45 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19BlzhVhJNBG6cZUV41jm/G/AyEI/p6YfE6jizOW4
-	EHRTR+5s0Apkdn
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <200902031204.21435.toralf.foerster@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+	id S1752389AbZBCMjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 07:39:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752239AbZBCMjc
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 07:39:32 -0500
+Received: from ti-out-0910.google.com ([209.85.142.188]:60233 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752132AbZBCMjb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 07:39:31 -0500
+Received: by ti-out-0910.google.com with SMTP id b6so1041914tic.23
+        for <git@vger.kernel.org>; Tue, 03 Feb 2009 04:39:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=E09o2X6YMlSrGiduJ887V5n1azz0iOtSn8Gi66h3GKM=;
+        b=TdYhYiah8Bg4k16jbqgoQYdZm5NaUUeA8EmDgzy7FWIItiYm0X2AtZq81AsATzMyNW
+         qkN5zovyS8K3Mvv3cc6UFTR9Bu1dXGPug9IT9BQbheym1Rxp0BEcUi/CQqWBs83sY5fo
+         eYiWDV9jhYspEhqigomGgLYghi/Fz44AwhdJM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=wkmQcXtRsxmXJzuQ1Oozjm3LWnjjKGl/xIfiBaLpB4ysFH2oiiivhwbK8xz5toSPh4
+         GQI/3XLo9peawXpgzraXmFNuInCvi9CMbM/E0CWBbSvm4vzglaGC2gVjKMzfnKpaKoe7
+         725qbG/Zx+39w3+rPOqYBHrxonndlVCjFMtsI=
+Received: by 10.110.17.14 with SMTP id 14mr8270562tiq.19.1233664767523;
+        Tue, 03 Feb 2009 04:39:27 -0800 (PST)
+Received: from ?116.87.149.30? ([116.87.149.30])
+        by mx.google.com with ESMTPS id a4sm439632tib.27.2009.02.03.04.39.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 03 Feb 2009 04:39:25 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108181>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The signature of get_remote_object_url stands at 96 characters (as
+pointed out by Dscho); this patch wraps it so that it conforms to the
+80 characters guideline.
 
---8323329-656757664-1233664305=:6573
-Content-Type: TEXT/PLAIN; charset=iso-8859-14
-Content-Transfer-Encoding: 8BIT
+---
 
-Hi,
+This patch applies on top of Junio's patch "http-push.c:
+get_remote_object_url() is only used under USE_CURL_MULTI"
 
-On Tue, 3 Feb 2009, Toralf Förster wrote:
+ http-push.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-> At Monday 02 February 2009 23:54:20 Jakub Narebski wrote :
-> > Toralf Förster <toralf.foerster@gmx.de> writes:
-> > > As seen here
-> > > http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.27.y.git;a=com
-> > >mit;h=8ca2918f99b5861359de1805f27b08023c82abd2 the strings [<c043d0f3>]
-> > > and firends shouldn't be recognized as git hashes, isn't it ?
-> >
-> > Gitweb, not webgit.  And gitweb considers ([0-9a-fA-F]{8,40}) i.e.
-> > from 8 to 40 hexadecimal characters to be (shortened) SHA-1.  It
-> > simply cannot afford checking if such object exists when displaying
-> > commit message (for example in 'log' view).
-> 
-> Ah - ok, what's about expecting spaces around such SHA-1 keys ?
+diff --git a/http-push.c b/http-push.c
+index 3e75cf3..54c62d4 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -232,7 +232,8 @@ static void process_response(void *callback_data)
 
-Won't fly: there was a recommendation at some point that you should refer 
-to commits in such a form:
+ #ifdef USE_CURL_MULTI
 
-	2819075(Merge branch 'maint-1.6.0' into maint)
-
-However, gitweb being written in Perl, I think a lookbehind like (?<!0x), 
-i.e. that a 0x in front of the hexadecimal characters means it is no 
-SHA-1.
-
-Even better would be using word boundaries, I guess, but all that fails 
-when you have a hexdump in the commit message.
-
-Ciao,
-Dscho
-
---8323329-656757664-1233664305=:6573--
+-static char *get_remote_object_url(const char *url, const char *hex, int only_two_digit_prefix)
++static char *get_remote_object_url(const char *url, const char *hex,
++				   int only_two_digit_prefix)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	append_remote_object_url(&buf, url, hex, only_two_digit_prefix);
+-- 
+1.6.1.2.278.g9a9e.dirty
