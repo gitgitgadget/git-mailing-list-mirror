@@ -1,89 +1,77 @@
-From: Jeremy O'Brien <obrien654j@gmail.com>
-Subject: Re: git grep -I bug
-Date: Tue, 3 Feb 2009 14:42:58 -0500
-Message-ID: <20090203194258.GA1354@Ambelina.snd-wireless.uc.edu>
-References: <20090202174257.GA8259@Ambelina.erc-wireless.uc.edu> <7vwsc8hgh4.fsf@gitster.siamese.dyndns.org> <20090202182601.GA173@Ambelina.local> <7v1vugf8gc.fsf@gitster.siamese.dyndns.org>
+From: Stefan Karpinski <stefan.karpinski@gmail.com>
+Subject: Re: git gtk+/GNOME gui application: gitg
+Date: Tue, 3 Feb 2009 11:43:10 -0800
+Message-ID: <d4bc1a2a0902031143u2f4beadek507910fe3a6052f@mail.gmail.com>
+References: <1233432317.26364.5.camel@wren>
+	 <498877A7.3050308@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 20:44:40 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jesse van den Kieboom <jesse@icecrew.nl>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Feb 03 20:44:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LURCC-0007ng-GO
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 20:44:32 +0100
+	id 1LURCP-0007sO-Kr
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 20:44:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752142AbZBCTnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 14:43:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbZBCTnF
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 14:43:05 -0500
-Received: from mail-gx0-f21.google.com ([209.85.217.21]:62501 "EHLO
-	mail-gx0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752099AbZBCTnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 14:43:04 -0500
-Received: by gxk14 with SMTP id 14so1770966gxk.13
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 11:43:01 -0800 (PST)
+	id S1752463AbZBCTnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 14:43:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752334AbZBCTnM
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 14:43:12 -0500
+Received: from wa-out-1112.google.com ([209.85.146.178]:49840 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752133AbZBCTnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 14:43:11 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so1052067wah.21
+        for <git@vger.kernel.org>; Tue, 03 Feb 2009 11:43:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mail-followup-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=UQDTX8DaINi6F2wSif0Z9+ooWEDTCTdYGrbZdmXQDZM=;
-        b=iX8tAVGObwKVd7ZKjTgHZ1QvMmhwMgQO7ObEDTIL3n4FHEtT4vIJ1GnxsAhGmm+h5H
-         M2ISa7UFeyMLvbbzCM2/rM/g7ehrE2VaedFrjnK8ufcEtgbWrV1hjwp9FNMUDI/t8km1
-         H9prGvAL37a+TQFRJ/CyCYu53bVvz9704b8tU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=vDIfp0mqSQQ7pb8SOad8aZ1wFpmm3Khq+lDgjdjQqlE=;
+        b=GQMEPerm8xXYfmVaOS8PbY7ZBlGOowarmpkt7kPfN3VUm6lsxjTq/IU+387d1FwpIA
+         4OIUGtPKJPHu6VOcEMdVlGfn57SdyjgUy8Ae7bbpZL2tCQwqeEm/tb6ugEuKoC4/hjHw
+         9Qu/Fb6zZtP4QfHWDRnLy++rgOZfsDQwDrCKc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=H4sWa8XU3JwV8MVXG95UI4XZOGux/H0ppvwuu/bvE7BZj+kXaC9a2qkeJk2+/Kcrcd
-         PnQetl6EEHrkxGBRB4CZy3bWZ77oGwm6Jlb6f04+w/p23YtYe11To/GpVI5kbFrKo5f9
-         B5DuetkekkGrcXjdOf58RktGYOOc+xyGn7LRc=
-Received: by 10.65.197.16 with SMTP id z16mr3473616qbp.25.1233690181109;
-        Tue, 03 Feb 2009 11:43:01 -0800 (PST)
-Received: from Ambelina.snd-wireless.uc.edu (dynamic-164-198.natpool.uc.edu [129.137.164.198])
-        by mx.google.com with ESMTPS id p30sm362170qbp.22.2009.02.03.11.43.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Feb 2009 11:43:00 -0800 (PST)
-Mail-Followup-To: Jeremy O'Brien <obrien654j@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v1vugf8gc.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ZYMicyXzV0dYxA2kmupcjFHBt9XBORRAS6hWEDPWt4+i9oCotSpGXe0VyejYFHKHA3
+         OPkVhsYfVIz6KK6ZKiWTPFzfezlBpE7s03d/f/8E5Q6Nn5FMx+5hRI4V3S1Jhu+AZZvm
+         XQSYgwSCSlIzOp5tIpZ1tVQrIhUznjSjqnb8k=
+Received: by 10.115.111.3 with SMTP id o3mr2738015wam.210.1233690190310; Tue, 
+	03 Feb 2009 11:43:10 -0800 (PST)
+In-Reply-To: <498877A7.3050308@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108246>
 
-On Mon, Feb 02, 2009 at 08:30:43PM -0800, Junio C Hamano wrote:
-> Jeremy O'Brien <obrien654j@gmail.com> writes:
-> 
-> > On Mon, Feb 02, 2009 at 09:54:31AM -0800, Junio C Hamano wrote:
-> >> Jeremy O'Brien <obrien654j@gmail.com> writes:
-> >> 
-> >> > I am running git version 1.6.1.2.309.g2ea3.
-> >> >
-> >> > When I use
-> >> >
-> >> > git grep -I "string_to_match"
-> >> >
-> >> > to ignore binary files in my grep, binary files are returned anyway.
-> >> 
-> >> One sanity check.  What does 'git grep --cached -I "string_to_match"' do
-> >> in that case?
-> >> 
-> >
-> > It works as expected. It is interesting that while my Linux install was
-> > affected by this bug, my Mac OS X install did not seem to be affected by
-> > it, while running the same version of git.
-> 
-> Perhaps your Mac OSX binary was built without external grep support.
-> 
-> Did the patch fix the issue, by the way?
+On Tue, Feb 3, 2009 at 8:58 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+>
+> Not yet another one, please!
+>
+> I'm sorry, but that was my first thought. I lost count of how many
+> half-finished GUIs we have, using tcl/tk, gtk, qt, you-name-it-tk. I
+> still don't see any which provide a consistent, "modern", stable GUI for
+> viewing *and* committing, i.e. a replacement for gitk and git-gui.
+>
+> The latter two still seem to be the most feature rich choices, but they
+> suffer somewhat from their implementation language. Just look at the git
+> survey and you know why nobody wants to work on them.
 
-I'm assuming that was the problem. And yes, the patch fixed it just
-fine, thank you.
+For what it's worth, GitX (OS X only) does both history viewing and
+committing, and seems to be rapidly approaching the feature set of
+gitk and git-gui combined. Unfortunately, I seem to inevitably hate
+cross-platform GUI's---they never feel right or work slickly enough.
+Sad, but true.
+
+If GitX and this newer project could share a lot of code base, then
+maybe their co-development would be accelerated and both would end up
+being slick, native, full-fledged GUIs for git.
