@@ -1,74 +1,89 @@
-From: Eric Kidd <emk.lists@randomhacks.net>
-Subject: Re: [PATCH] filter-branch: really allow running in a bare repository
-Date: Tue, 3 Feb 2009 14:31:32 -0500
-Message-ID: <431341160902031131s63f34665ne9db25d8a4d1f0f9@mail.gmail.com>
-References: <cover.1233684552u.git.johannes.schindelin@gmx.de>
-	 <alpine.DEB.1.00.0902031910001.9822@pacific.mpi-cbg.de>
+From: Jeremy O'Brien <obrien654j@gmail.com>
+Subject: Re: git grep -I bug
+Date: Tue, 3 Feb 2009 14:42:58 -0500
+Message-ID: <20090203194258.GA1354@Ambelina.snd-wireless.uc.edu>
+References: <20090202174257.GA8259@Ambelina.erc-wireless.uc.edu> <7vwsc8hgh4.fsf@gitster.siamese.dyndns.org> <20090202182601.GA173@Ambelina.local> <7v1vugf8gc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 03 20:33:10 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 20:44:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUR14-0003LC-Dk
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 20:33:02 +0100
+	id 1LURCC-0007ng-GO
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 20:44:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752239AbZBCTbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 14:31:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161AbZBCTbf
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 14:31:35 -0500
-Received: from an-out-0708.google.com ([209.85.132.250]:18016 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751738AbZBCTbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 14:31:34 -0500
-Received: by an-out-0708.google.com with SMTP id c2so856724anc.1
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 11:31:33 -0800 (PST)
+	id S1752142AbZBCTnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 14:43:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbZBCTnF
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 14:43:05 -0500
+Received: from mail-gx0-f21.google.com ([209.85.217.21]:62501 "EHLO
+	mail-gx0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752099AbZBCTnE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 14:43:04 -0500
+Received: by gxk14 with SMTP id 14so1770966gxk.13
+        for <git@vger.kernel.org>; Tue, 03 Feb 2009 11:43:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=qZ5MWLlomUwLazQmWgvrSJW4olHvJSZLN9wYOSZzE+8=;
-        b=FKl2dghlH62uAGFWNDhfBkXAh0IF5e31YZOcRyUvKPAZr7Rs+VJBsvkZRJ2+wR5IuR
-         9FxgQ9wyZwG+i89nb8+cYn/ZU2wupHp4eNgJflUwfOBzjp18Wf7s0WihF9Wt0ftddXqY
-         Oce28tzJUsyuCQgzIEerceimJBxhkJ4dV1Phg=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=UQDTX8DaINi6F2wSif0Z9+ooWEDTCTdYGrbZdmXQDZM=;
+        b=iX8tAVGObwKVd7ZKjTgHZ1QvMmhwMgQO7ObEDTIL3n4FHEtT4vIJ1GnxsAhGmm+h5H
+         M2ISa7UFeyMLvbbzCM2/rM/g7ehrE2VaedFrjnK8ufcEtgbWrV1hjwp9FNMUDI/t8km1
+         H9prGvAL37a+TQFRJ/CyCYu53bVvz9704b8tU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=w1nbw3zAQITLTKjFLA+VKl5wGHSlgk9Tyh6OBsO5NlmkwuDIvSfbg95OYXoiaFX7Ek
-         nhXcvUQni0zdrvBQ1FI5fqduPRaQOC8uQ3HWVvIXkh5DP7bGL5oHFkQi4NgFqGyuBVX0
-         lYcO4SD8W/yu1EiSCYiI+gOfk+2E1l4WqAllE=
-Received: by 10.100.227.6 with SMTP id z6mr2412045ang.120.1233689493143; Tue, 
-	03 Feb 2009 11:31:33 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902031910001.9822@pacific.mpi-cbg.de>
-X-Google-Sender-Auth: 59b8efe7c11ed1c6
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=H4sWa8XU3JwV8MVXG95UI4XZOGux/H0ppvwuu/bvE7BZj+kXaC9a2qkeJk2+/Kcrcd
+         PnQetl6EEHrkxGBRB4CZy3bWZ77oGwm6Jlb6f04+w/p23YtYe11To/GpVI5kbFrKo5f9
+         B5DuetkekkGrcXjdOf58RktGYOOc+xyGn7LRc=
+Received: by 10.65.197.16 with SMTP id z16mr3473616qbp.25.1233690181109;
+        Tue, 03 Feb 2009 11:43:01 -0800 (PST)
+Received: from Ambelina.snd-wireless.uc.edu (dynamic-164-198.natpool.uc.edu [129.137.164.198])
+        by mx.google.com with ESMTPS id p30sm362170qbp.22.2009.02.03.11.43.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 03 Feb 2009 11:43:00 -0800 (PST)
+Mail-Followup-To: Jeremy O'Brien <obrien654j@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v1vugf8gc.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108245>
 
-On Tue, Feb 3, 2009 at 1:10 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> When checking if running in a bare repository, the work tree has to be
-> reset, otherwise we will be checking the temporary state, which is
-> always non-bare.
+On Mon, Feb 02, 2009 at 08:30:43PM -0800, Junio C Hamano wrote:
+> Jeremy O'Brien <obrien654j@gmail.com> writes:
+> 
+> > On Mon, Feb 02, 2009 at 09:54:31AM -0800, Junio C Hamano wrote:
+> >> Jeremy O'Brien <obrien654j@gmail.com> writes:
+> >> 
+> >> > I am running git version 1.6.1.2.309.g2ea3.
+> >> >
+> >> > When I use
+> >> >
+> >> > git grep -I "string_to_match"
+> >> >
+> >> > to ignore binary files in my grep, binary files are returned anyway.
+> >> 
+> >> One sanity check.  What does 'git grep --cached -I "string_to_match"' do
+> >> in that case?
+> >> 
+> >
+> > It works as expected. It is interesting that while my Linux install was
+> > affected by this bug, my Mac OS X install did not seem to be affected by
+> > it, while running the same version of git.
+> 
+> Perhaps your Mac OSX binary was built without external grep support.
+> 
+> Did the patch fix the issue, by the way?
 
-Just a few minutes after you posted this patch, I posted a
-nearly-identical fix for the same issue:
-
-  http://marc.info/?l=git&m=123368695831812&w=2
-
-(My patch includes a test case, too, but it's not very important.)
-
-This raises another interesting question: Why doesn't 'git
-filter-branch' actually check whether subcommands succeed?
-
-Cheers,
-Eric
+I'm assuming that was the problem. And yes, the patch fixed it just
+fine, thank you.
