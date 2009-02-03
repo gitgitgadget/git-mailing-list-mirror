@@ -1,66 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git grep -I bug
-Date: Mon, 02 Feb 2009 20:30:43 -0800
-Message-ID: <7v1vugf8gc.fsf@gitster.siamese.dyndns.org>
-References: <20090202174257.GA8259@Ambelina.erc-wireless.uc.edu>
- <7vwsc8hgh4.fsf@gitster.siamese.dyndns.org>
- <20090202182601.GA173@Ambelina.local>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: allow disabling expensive broken symlink
+	checks
+Date: Mon, 2 Feb 2009 20:45:49 -0800
+Message-ID: <20090203044549.GA2483@dcvr.yhbt.net>
+References: <200901311414.58205.markus.heidelberg@web.de> <20090201021844.GB18855@dcvr.yhbt.net> <7vbptlo7zg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeremy O'Brien <obrien654j@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 03 05:32:34 2009
+Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 03 05:47:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUCxd-0005Vc-0m
-	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 05:32:33 +0100
+	id 1LUDBt-00088M-0d
+	for gcvg-git-2@gmane.org; Tue, 03 Feb 2009 05:47:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752551AbZBCEax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Feb 2009 23:30:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752475AbZBCEav
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 23:30:51 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63105 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752018AbZBCEat (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Feb 2009 23:30:49 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 77BF596328;
-	Mon,  2 Feb 2009 23:30:48 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6364C96327; Mon,
-  2 Feb 2009 23:30:45 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6E6333B0-F1AB-11DD-84ED-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751641AbZBCEpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Feb 2009 23:45:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751500AbZBCEpv
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Feb 2009 23:45:51 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:37802 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751384AbZBCEpu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Feb 2009 23:45:50 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id E25AD1F5F3;
+	Tue,  3 Feb 2009 04:45:49 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7vbptlo7zg.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108144>
 
-Jeremy O'Brien <obrien654j@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+> 
+> > Since dbc6c74d0858d77e61e092a48d467e725211f8e9, git-svn has had
+> > an expensive check for broken symlinks that exist in some
+> > repositories.  This leads to a heavy performance hit on
+> > repositories with many empty blobs that are not supposed to be
+> > symlinks.
+> >
+> > The workaround is enabled by default; and may be disabled via:
+> >
+> >   git config svn.brokenSymlinkWorkaround false
+> >
+> > Reported by Markus Heidelberg.
+> >
+> > Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> 
+> How common is this breakage in people's subversion repositories that
+> dbc6c74d (git-svn: handle empty files marked as symlinks in SVN,
+> 2009-01-11) works around?
 
-> On Mon, Feb 02, 2009 at 09:54:31AM -0800, Junio C Hamano wrote:
->> Jeremy O'Brien <obrien654j@gmail.com> writes:
->> 
->> > I am running git version 1.6.1.2.309.g2ea3.
->> >
->> > When I use
->> >
->> > git grep -I "string_to_match"
->> >
->> > to ignore binary files in my grep, binary files are returned anyway.
->> 
->> One sanity check.  What does 'git grep --cached -I "string_to_match"' do
->> in that case?
->> 
->
-> It works as expected. It is interesting that while my Linux install was
-> affected by this bug, my Mac OS X install did not seem to be affected by
-> it, while running the same version of git.
+It's not common at all.  Some broken Windows clients were able to
+create it.
 
-Perhaps your Mac OSX binary was built without external grep support.
+> What's the way to recover from a broken import, when the subversion
+> repository does have such a breakage, and the user used git-svn that
+> predates dbc6c74?  Is it very involved, and it is much better to have the
+> safety by default than to force everybody else who interacts with
+> non-broken subversion repository suffer from this performance penalty?
 
-Did the patch fix the issue, by the way?
+Previously, git-svn would just stop importing and refuse to continue.
+So allowing the user to enable it would be a problem; too.  I don't
+recall the error being easy to distinguish from other errors.
+
+> Because the fix (that is broken from the performance angle) is relatively
+> recent, I am wondering if it makes more sense to turn it off by default,
+> and allow people with such a broken history to optionally turn it on.
+
+I'm considering disabling it by default, too.  It only gets triggered if
+there are any empty blobs at all in the repository (which are fairly
+rare, but not as rare as broken symlinks in SVN).  So for a "normal"
+repository it would just be the (low) overhead of calling ls-files for
+every revision we fetch (and the hash-object </dev/null, which could
+even be hard-coded).
+
+Perhaps just having a "try enabling this ..." type option on any
+fetch failure would be better...
+
+-- 
+Eric Wong
