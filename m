@@ -1,62 +1,59 @@
-From: Tommi Virtanen <tv@eagain.net>
-Subject: Re: is gitosis secure?
-Date: Wed, 4 Feb 2009 10:26:50 -0800
-Message-ID: <20090204182650.GC1970@eagain.net>
-References: <200812090956.48613.thomas@koch.ro> <1228813453.28186.73.camel@maia.lan> <873afgsul8.fsf@mid.deneb.enyo.de> <200901180650.06605.bss@iguanasuicide.net> <20090203213135.GA1970@eagain.net> <20090204121204.GA12393@cuci.nl>
+From: Adam Thorsen <adam.thorsen@gmail.com>
+Subject: Re: segfault during clone via http
+Date: Wed, 4 Feb 2009 18:35:39 +0000 (UTC)
+Message-ID: <loom.20090204T183407-350@post.gmane.org>
+References: <loom.20090204T160827-822@post.gmane.org> <76718490902041000x3cda2390t25254e8372c9af50@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Wed Feb 04 19:28:21 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 04 19:37:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUmTz-0000bJ-B5
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 19:28:19 +0100
+	id 1LUmcf-00040i-Ej
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 19:37:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753093AbZBDS0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 13:26:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752700AbZBDS0w
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 13:26:52 -0500
-Received: from eagain.net ([208.78.102.120]:53617 "EHLO eagain.net"
+	id S1753528AbZBDSfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 13:35:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753224AbZBDSfv
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 13:35:51 -0500
+Received: from main.gmane.org ([80.91.229.2]:59333 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752261AbZBDS0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 13:26:52 -0500
-Received: from musti.eagain.net (unknown [208.79.94.252])
-	by eagain.net (Postfix) with ESMTPS id 786CE56688;
-	Wed,  4 Feb 2009 18:26:51 +0000 (UTC)
-Received: by musti.eagain.net (Postfix, from userid 1000)
-	id 7AC6D508013; Wed,  4 Feb 2009 10:26:50 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20090204121204.GA12393@cuci.nl>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753469AbZBDSfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 13:35:50 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LUmbE-0006RG-9g
+	for git@vger.kernel.org; Wed, 04 Feb 2009 18:35:49 +0000
+Received: from c-71-204-175-47.hsd1.ca.comcast.net ([71.204.175.47])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 18:35:48 +0000
+Received: from adam.thorsen by c-71-204-175-47.hsd1.ca.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 18:35:48 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 71.204.175.47 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.6) Gecko/2009011912 Firefox/3.0.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108407>
 
-On Wed, Feb 04, 2009 at 01:12:04PM +0100, Stephen R. van den Berg wrote:
-> I installed gitosis a year ago.
-> Then I tried to audit the code.
-> I couldn't, the whole thing is too much spaghetti code.
 
-Huh. It's about 1000 lines of python, with about 2000 lines of unit
-tests. It has 3 top-level operations: init, serve, run_hook. That
-still counts as "tiny" in my mind. I'm sorry if following the code was
-too hard. I guess there's no accounting for taste.
+Here is the stack trace:
 
-> Auditing gitosis turned out to be too painful to be worth the trouble,
-> so I reverted to a manually maintained git-shell solution which is so
-> simple that I can actually audit it, and therefore is provably secure
-> (which gitosis is not).
-
-This word, "provably", tends to mean something else than what you use
-it for. Definitely a simple audit doesn't prove anything. Most
-real-world software is complex enough to be practically unprovable for
-anything.
-
--- 
-:(){ :|:&};:
+Program received signal EXC_BAD_ACCESS, Could not access memory.
+Reason: KERN_INVALID_ADDRESS at address: 0x00494000
+0x0015bb04 in multi_runsingle ()
+(gdb) bt
+#0  0x0015bb04 in multi_runsingle ()
+#1  0x0015d5af in curl_multi_perform ()
+#2  0x000b8782 in step_active_slots () at http.c:450
+#3  0x000b881c in run_active_slot (slot=0x50a450) at http.c:474
+#4  0x000bac5c in fetch (walker=0x5008d0, 
+sha1=0x4a791c "?u^?9l?\003?5??#??X\"?XL") at http-walker.c:846
