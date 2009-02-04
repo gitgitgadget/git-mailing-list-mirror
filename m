@@ -1,62 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GIT over ssh with identity file
-Date: Wed, 04 Feb 2009 00:41:10 -0800
-Message-ID: <7vbpti1tnd.fsf@gitster.siamese.dyndns.org>
-References: <21826348.post@talk.nabble.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Recovering the index after a git crash?
+Date: Wed, 04 Feb 2009 09:36:30 +0100
+Message-ID: <vpqljsma99t.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: oliverw <oliver@weichhold.com>
-X-From: git-owner@vger.kernel.org Wed Feb 04 09:42:54 2009
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 04 09:43:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUdLH-0001Dm-25
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 09:42:43 +0100
+	id 1LUdLs-0001Py-Q3
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 09:43:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752095AbZBDIlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 03:41:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752066AbZBDIlQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 03:41:16 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59198 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751655AbZBDIlQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 03:41:16 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5F45F2A68B;
-	Wed,  4 Feb 2009 03:41:15 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A71012A682; Wed, 
- 4 Feb 2009 03:41:12 -0500 (EST)
-In-Reply-To: <21826348.post@talk.nabble.com> (oliver@weichhold.com's message
- of "Wed, 4 Feb 2009 00:37:18 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9588D7A0-F297-11DD-BEA4-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1752131AbZBDIl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 03:41:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbZBDIlz
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 03:41:55 -0500
+Received: from imag.imag.fr ([129.88.30.1]:62778 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751604AbZBDIly (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 03:41:54 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n148aU58029627
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 4 Feb 2009 09:36:30 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LUdFG-0004HT-7C; Wed, 04 Feb 2009 09:36:30 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LUdFG-0006iT-3z; Wed, 04 Feb 2009 09:36:30 +0100
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 04 Feb 2009 09:36:30 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108312>
 
-oliverw <oliver@weichhold.com> writes:
+Hi,
 
-> Forgive me if this has been answered before. I've searched everywhere but
-> couldn't find a solution.
->
-> Is it somehow possible to pass your private key file to git when working
-> over ssh. What I have in mind would be something like this:
->
-> git -i /path/to/private/key clone ssh://homer@foo.bar.com/var/git/repos.git 
+I'm debugging a git assertion failure, which leaves a .git/index.lock
+in the way. After running the failed command, git refuses to do
+anything in this directory, complaining with:
 
-I think the standard way people use for things like this is something
-along the lines of...
+  fatal: unable to create '.git/index.lock': File exists
 
-    $ cat >>$HOME/.ssh/config <<\EOF
-    Host homer-at-foo
-      Hostname foo.bar.com
-      User homer
-      IdentityFile ~/.ssh/homer-at-foo.pub
-    EOF
-    $ git clone homer-at-foo:/var/git/repos.git
+What I'm doing then is just "rm .git/index.lock". Is it safe to do it?
+I guess I should just make sure there's no git process running, but is
+there anything else to check?
+
+I'll write a FAQ entry on the wiki with answers, and that would
+probably be a good idea to give indication to the user directly in the
+error message too, otherwise, the problem can be blocking for
+beginners.
+
+Thanks,
+
+<my life>
+I had to support students using SVN for a month in January, and even
+when SVN says:
+
+  svn: run 'svn cleanup' to remove locks (type 'svn help cleanup' for details)
+
+it's still hard for many students to understand that they have to run
+"svn cleanup" and prefer sending me a mail saying "it doesn't work
+anymore" :-(.
+</my life>
+
+-- 
+Matthieu
