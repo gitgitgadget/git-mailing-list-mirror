@@ -1,560 +1,119 @@
-From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-Subject: Re: [RFC/PATCH] shortstatus v0
-Date: Wed, 4 Feb 2009 23:17:47 +0100
-Message-ID: <4ac8254d0902041417v7f8c264cgf6044e91e27bd4f1@mail.gmail.com>
-References: <747EF6E2-39BB-4076-AF34-90571B2D70D9@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3] config: Add new option to open an editor.
+Date: Thu,  5 Feb 2009 00:34:16 +0200
+Message-ID: <1233786856-6571-1-git-send-email-felipe.contreras@gmail.com>
+References: <94a0d4530902040741t4333b132v886d7057353ed52a@mail.gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 04 23:19:50 2009
+X-From: git-owner@vger.kernel.org Wed Feb 04 23:35:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUq5g-00071K-Tx
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 23:19:29 +0100
+	id 1LUqLV-0005RB-LU
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 23:35:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756840AbZBDWRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 17:17:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756807AbZBDWRv
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 17:17:51 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:41764 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756514AbZBDWRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 17:17:49 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so1366775fgg.17
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 14:17:47 -0800 (PST)
+	id S1756688AbZBDWeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 17:34:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756142AbZBDWeW
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 17:34:22 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:34554 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755849AbZBDWeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 17:34:21 -0500
+Received: by fxm13 with SMTP id 13so3403589fxm.13
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 14:34:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SibV9O3NLkisxrfwbWRGuoOt7Ap6ju4VWf61OQ7ZubQ=;
-        b=s/ohtcPNH558XP3YixBe4YTIudgF2L30agG5QfR0Rj0De41ugqxD3wT3E6pQIA2B+P
-         Q2oVY6tB8MjvKWnOGbsdgWq5tptByic+vkPlpTaYsIX+hTpFIjPcpfae8vPfeFVF36mm
-         GKj3GsUNltZbNv3xphd97X/7M1PMYc1kmoSFI=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=Zye8faNM+LzUiM7uIejR/3b1JzKaIqY/4pgaFiNd37U=;
+        b=rfs2g/6V3cS0X3XExKg1lA0ldTNznXmQOy2QhR99BkmWONhHK1cUByHx3CoGRP5w61
+         GOjvYf5TDnjZgUUzekFSezqafkPkp15d7xIs68FherYeDN/JQI/IVzNn+CXhCYjKVx2E
+         M4MGVTvJUwbj3mgXAcgL7HL/HldqJugBXmc7Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=foOtNxsouGkjgmDLZOzIdvDhjkzwjDVt/bN31WTl8jXzqDzUI2YacZsTLg+Vfy/RKW
-         Vj+VfBO6VuyjP4ajXzSFHCrpzdN1AI7tqq+GxKnZQk/DTm3tSjMesapHxDXZABxDTFTt
-         QID1JKnTEcM+WMAvokcf7EkmJihrmAfRuNrd0=
-Received: by 10.223.124.137 with SMTP id u9mr4173815far.61.1233785867230; Wed, 
-	04 Feb 2009 14:17:47 -0800 (PST)
-In-Reply-To: <747EF6E2-39BB-4076-AF34-90571B2D70D9@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=X2V8n6TuInl/q8AtCQsdvlxaAsMtQiimV5HgD77yQAa4/smtWgybw0irP+N09VUCyd
+         OCRd/O9c6CQ4CSr/qKwW35kKnLG7mGN4JdP8gAZUgY4e/FyS30idxU0Nh977AVLLE/3q
+         AcxIDPQLzWgK0RBPMIWwwOrRMxiq8nuj2RO2s=
+Received: by 10.223.121.6 with SMTP id f6mr616301far.77.1233786858971;
+        Wed, 04 Feb 2009 14:34:18 -0800 (PST)
+Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
+        by mx.google.com with ESMTPS id z15sm6889014fkz.31.2009.02.04.14.34.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 04 Feb 2009 14:34:18 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.2
+In-Reply-To: <94a0d4530902040741t4333b132v886d7057353ed52a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108446>
 
-On Wed, Feb 4, 2009 at 11:05 PM, Tuncer Ayaz <tuncer.ayaz@gmail.com> wrote:
->
+The idea was originated by discussion about usability of manually
+editing the config file in 'special needs' systems such as Windows. Now
+the user can forget a bit about where the config files actually are.
 
-Linebreaks got garbled.
-I had problems with Perl on this particular machine and didn't
-use send-email. It looks like that was a bad decision :).
-I believe it's still readable and as it's just an RFC this
-shouldn't pose a difficulty for review.
-Next revisions will return to using a working git-send-email
-instead of a MUA with interesting automagics.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Documentation/git-config.txt |    6 ++++++
+ builtin-config.c             |   12 +++++++++++-
+ 2 files changed, 17 insertions(+), 1 deletions(-)
 
-> As discussed recently I started taking Junio's shortstatus patch
-> from October 25th 2008 and integrated it into current master.
->
-> The following patch revision does work but does not print the
-> 'M ' prefixes yet due to either a patching error on my side or
-> missing code in the forward port of the patch. I still have
-> to analyze that.
->
-> What this patch still needs to implement is something like
-> 'shortstatus --mini' which prints:
->  anything modified          -> *
->  anything added             -> +
->  anything untracked/unknown -> ?
->
-> So if you have a repo where one file is modified,
-> a new file is added and an unknown file exists and
-> is not ignored 'shortstatus --mini' shall print:
-> +*?.
->
-> This is really useful for enhancing a Git enabled
-> shell prompt with small but important information.
->
-> Right now this is basically Junio's shortstatus
-> from Oct 25th 2008 with no substantial change
-> except a line or two.
->
->
-> Signed-off-by: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-> ---
->
->  .gitignore       |    1 +
->  Makefile         |    1 +
->  builtin-commit.c |   45 +++++++++++-
->  builtin-revert.c |    1 +
->  builtin.h        |    1 +
->  git.c            |    1 +
->  wt-status.c      |  213 +++++++++++++++++++++++++++++++++++++++++++-----------
->  wt-status.h      |    9 +++
->  8 files changed, 227 insertions(+), 45 deletions(-)
->
-> diff --git a/.gitignore b/.gitignore
-> index 1c57d4c..5666325 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -114,6 +114,7 @@ git-send-pack
->  git-sh-setup
->  git-shell
->  git-shortlog
-> +git-shortstatus
->  git-show
->  git-show-branch
->  git-show-index
-> diff --git a/Makefile b/Makefile
-> index 9f3a8ab..304f15d 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -329,6 +329,7 @@ BUILT_INS += git-repo-config$X
->  BUILT_INS += git-show$X
->  BUILT_INS += git-stage$X
->  BUILT_INS += git-status$X
-> +BUILT_INS += git-shortstatus$X
->  BUILT_INS += git-whatchanged$X
->
->  # what 'all' will build and 'install' will install, in gitexecdir
-> diff --git a/builtin-commit.c b/builtin-commit.c
-> index d6a3a62..624568c 100644
-> --- a/builtin-commit.c
-> +++ b/builtin-commit.c
-> @@ -14,6 +14,7 @@
->  #include "diffcore.h"
->  #include "commit.h"
->  #include "revision.h"
-> +#include "string-list.h"
->  #include "wt-status.h"
->  #include "run-command.h"
->  #include "refs.h"
-> @@ -21,7 +22,6 @@
->  #include "strbuf.h"
->  #include "utf8.h"
->  #include "parse-options.h"
-> -#include "string-list.h"
->  #include "rerere.h"
->  #include "unpack-trees.h"
->
-> @@ -821,6 +821,49 @@ static int parse_and_validate_options(int argc, const char *argv[],
->        return argc;
->  }
->
-> +int cmd_shortstatus(int argc, const char **argv, const char *prefix)
-> +{
-> +       struct wt_status s;
-> +       int i;
-> +
-> +       read_cache();
-> +       refresh_cache(REFRESH_QUIET);
-> +       wt_status_prepare(&s);
-> +       wt_status_collect_changes(&s);
-> +       for (i = 0; i < s.change.nr; i++) {
-> +               struct wt_status_change_data *d;
-> +               struct string_list_item *it;
-> +               char pfx[1 + 3 + 1 + 1];
-> +
-> +               it = &(s.change.items[i]);
-> +               d = it->util;
-> +               switch (d->index_status) {
-> +                       case DIFF_STATUS_COPIED:
-> +                       case DIFF_STATUS_RENAMED:
-> +                               sprintf(pfx, "%c%3d",
-> +                                               d->index_status,
-> +                                               (int)(d->index_score * 100 / MAX_SCORE));
-> +                               break;
-> +                       case 0:
-> +                               memcpy(pfx, "   ", 4);
-> +                               break;
-> +                       default:
-> +                               sprintf(pfx, "%c          ", d->index_status);
-> +                               break;
-> +               }
-> +               if (!d->worktree_status)
-> +                       pfx[4] = ' ';
-> +               else
-> +                       pfx[4] = d->worktree_status;
-> +               pfx[5] = '\0';
-> +               printf("%s ", pfx);
-> +               if (d->head_path)
-> +                       printf("%s -> ", d->head_path);
-> +               printf("%s\n", it->string);
-> +       }
-> +       return 0;
-> +}
-> +
->  int cmd_status(int argc, const char **argv, const char *prefix)
->  {
->        const char *index_file;
-> diff --git a/builtin-revert.c b/builtin-revert.c
-> index d48313c..7dd7646 100644
-> --- a/builtin-revert.c
-> +++ b/builtin-revert.c
-> @@ -3,6 +3,7 @@
->  #include "object.h"
->  #include "commit.h"
->  #include "tag.h"
-> +#include "string-list.h"
->  #include "wt-status.h"
->  #include "run-command.h"
->  #include "exec_cmd.h"
-> diff --git a/builtin.h b/builtin.h
-> index 1495cf6..f054fc7 100644
-> --- a/builtin.h
-> +++ b/builtin.h
-> @@ -94,6 +94,7 @@ extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
->  extern int cmd_show(int argc, const char **argv, const char *prefix);
->  extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
->  extern int cmd_status(int argc, const char **argv, const char *prefix);
-> +extern int cmd_shortstatus(int argc, const char **argv, const char *prefix);
->  extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
->  extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
->  extern int cmd_tag(int argc, const char **argv, const char *prefix);
-> diff --git a/git.c b/git.c
-> index c2b181e..4c0fa44 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -344,6 +344,7 @@ static void handle_internal_command(int argc, const char **argv)
->                { "rm", cmd_rm, RUN_SETUP },
->                { "send-pack", cmd_send_pack, RUN_SETUP },
->                { "shortlog", cmd_shortlog, USE_PAGER },
-> +               { "shortstatus", cmd_shortstatus, RUN_SETUP | NEED_WORK_TREE },
->                { "show-branch", cmd_show_branch, RUN_SETUP },
->                { "show", cmd_show, RUN_SETUP | USE_PAGER },
->                { "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
-> diff --git a/wt-status.c b/wt-status.c
-> index 96ff2f8..18042dc 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -1,4 +1,5 @@
->  #include "cache.h"
-> +#include "string-list.h"
->  #include "wt-status.h"
->  #include "color.h"
->  #include "object.h"
-> @@ -56,6 +57,7 @@ void wt_status_prepare(struct wt_status *s)
->        s->reference = "HEAD";
->        s->fp = stdout;
->        s->index_file = get_index_file();
-> +       s->change.strdup_strings = 1;
->  }
->
->  static void wt_status_print_cached_header(struct wt_status *s)
-> @@ -98,18 +100,23 @@ static void wt_status_print_trailer(struct wt_status *s)
->
->  #define quote_path quote_path_relative
->
-> -static void wt_status_print_filepair(struct wt_status *s,
-> -                                    int t, struct diff_filepair *p)
-> +static void wt_status_print_change_data(struct wt_status *s,
-> +                                               int t,
-> +                                               int status,
-> +                                               char *one_name,
-> +                                               char *two_name,
-> +                                               int score)
->  {
->        const char *c = color(t);
->        const char *one, *two;
->        struct strbuf onebuf = STRBUF_INIT, twobuf = STRBUF_INIT;
->
-> -       one = quote_path(p->one->path, -1, &onebuf, s->prefix);
-> -       two = quote_path(p->two->path, -1, &twobuf, s->prefix);
-> +       one = quote_path(one_name, -1, &onebuf, s->prefix);
-> +       two = quote_path(two_name, -1, &twobuf, s->prefix);
-> +
->
->        color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
-> -       switch (p->status) {
-> +       switch (status) {
->        case DIFF_STATUS_ADDED:
->                color_fprintf(s->fp, c, "new file:   %s", one);
->                break;
-> @@ -135,64 +142,88 @@ static void wt_status_print_filepair(struct wt_status *s,
->                color_fprintf(s->fp, c, "unmerged:   %s", one);
->                break;
->        default:
-> -               die("bug: unhandled diff status %c", p->status);
-> +               die("bug: unhandled diff status %c", status);
->        }
->        fprintf(s->fp, "\n");
->        strbuf_release(&onebuf);
->        strbuf_release(&twobuf);
->  }
->
-> -static void wt_status_print_updated_cb(struct diff_queue_struct *q,
-> -               struct diff_options *options,
-> -               void *data)
-> +static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
-> +                                                       struct diff_options *options,
-> +                                                       void *data)
->  {
->        struct wt_status *s = data;
-> -       int shown_header = 0;
->        int i;
-> +
-> +       if (!q->nr)
-> +               return;
-> +       s->workdir_dirty = 1;
->        for (i = 0; i < q->nr; i++) {
-> -               if (q->queue[i]->status == 'U')
-> -                       continue;
-> -               if (!shown_header) {
-> -                       wt_status_print_cached_header(s);
-> -                       s->commitable = 1;
-> -                       shown_header = 1;
-> -               }
-> -               wt_status_print_filepair(s, WT_STATUS_UPDATED, q->queue[i]);
-> +               struct diff_filepair *p;
-> +               struct string_list_item *it;
-> +               struct wt_status_change_data *d;
-> +
-> +               p = q->queue[i];
-> +
-> +               d = xcalloc(1, sizeof(*d));
-> +               d->worktree_status = p->status;
-> +               it = string_list_insert(p->one->path, &s->change);
-> +               it->util = d;
->        }
-> -       if (shown_header)
-> -               wt_status_print_trailer(s);
->  }
->
-> -static void wt_status_print_changed_cb(struct diff_queue_struct *q,
-> -                        struct diff_options *options,
-> -                        void *data)
-> +static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
-> +                                                       struct diff_options *options,
-> +                                                       void *data)
->  {
->        struct wt_status *s = data;
->        int i;
-> -       if (q->nr) {
-> -               int has_deleted = 0;
-> -               s->workdir_dirty = 1;
-> -               for (i = 0; i < q->nr; i++)
-> -                       if (q->queue[i]->status == DIFF_STATUS_DELETED) {
-> -                               has_deleted = 1;
-> +
-> +       for (i = 0; i < q->nr; i++) {
-> +               struct diff_filepair *p;
-> +               struct string_list_item *it;
-> +               struct wt_status_change_data *d;
-> +
-> +               p = q->queue[i];
-> +               it = string_list_insert(p->two->path, &s->change);
-> +               d = it->util;
-> +               if (!d) {
-> +                       d = xcalloc(1, sizeof(*d));
-> +                       it->util = d;
-> +               }
-> +               d->index_status = p->status;
-> +               switch (p->status) {
-> +                       case DIFF_STATUS_COPIED:
-> +                       case DIFF_STATUS_RENAMED:
-> +                               d->head_path = xstrdup(p->one->path);
-> +                               d->index_score = p->score;
->                                break;
-> -                       }
-> -               wt_status_print_dirty_header(s, has_deleted);
-> +               }
->        }
-> -       for (i = 0; i < q->nr; i++)
-> -               wt_status_print_filepair(s, WT_STATUS_CHANGED, q->queue[i]);
-> -       if (q->nr)
-> -               wt_status_print_trailer(s);
->  }
->
-> -static void wt_status_print_updated(struct wt_status *s)
-> +static void wt_status_collect_changes_worktree(struct wt_status *s)
->  {
->        struct rev_info rev;
-> +
-> +       init_revisions(&rev, NULL);
-> +       setup_revisions(0, NULL, &rev, NULL);
-> +       rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
-> +       rev.diffopt.format_callback = wt_status_collect_changed_cb;
-> +       rev.diffopt.format_callback_data = s;
-> +       run_diff_files(&rev, 0);
-> +}
-> +
-> +static void wt_status_collect_changes_index(struct wt_status *s)
-> +{
-> +       struct rev_info rev;
-> +
->        init_revisions(&rev, NULL);
->        setup_revisions(0, NULL, &rev,
->                s->is_initial ? EMPTY_TREE_SHA1_HEX : s->reference);
->        rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
-> -       rev.diffopt.format_callback = wt_status_print_updated_cb;
-> +       rev.diffopt.format_callback = wt_status_collect_updated_cb;
->        rev.diffopt.format_callback_data = s;
->        rev.diffopt.detect_rename = 1;
->        rev.diffopt.rename_limit = 200;
-> @@ -200,15 +231,107 @@ static void wt_status_print_updated(struct wt_status *s)
->        run_diff_index(&rev, 1);
->  }
->
-> +static void wt_status_collect_changes_initial(struct wt_status *s)
-> +{
-> +       int i;
-> +
-> +       for (i = 0; i < active_nr; i++) {
-> +               struct string_list_item *it;
-> +               struct wt_status_change_data *d;
-> +
-> +               it = string_list_insert(active_cache[i]->name, &s->change);
-> +               d = it->util;
-> +               if (!d) {
-> +                       d = xcalloc(1, sizeof(*d));
-> +                       it->util = d;
-> +               }
-> +               d->index_status = DIFF_STATUS_ADDED;
-> +       }
-> +}
-> +
-> +void wt_status_collect_changes(struct wt_status *s)
-> +{
-> +       wt_status_collect_changes_worktree(s);
-> +
-> +       if (s->is_initial)
-> +               wt_status_collect_changes_initial(s);
-> +       else
-> +               wt_status_collect_changes_index(s);
-> +}
-> +
-> +static void wt_status_print_updated(struct wt_status *s)
-> +{
-> +       int shown_header = 0;
-> +       int i;
-> +
-> +       for (i = 0; i < s->change.nr; i++) {
-> +               struct wt_status_change_data *d;
-> +               struct string_list_item *it;
-> +               it = &(s->change.items[i]);
-> +               d = it->util;
-> +               if (!d->index_status)
-> +                       continue;
-> +               if (!shown_header) {
-> +                       wt_status_print_cached_header(s);
-> +                       s->commitable = 1;
-> +                       shown_header = 1;
-> +               }
-> +               wt_status_print_change_data(s, WT_STATUS_UPDATED,
-> +                               d->index_status,
-> +                               d->head_path ? d->head_path : it->string,
-> +                               it->string,
-> +                               d->index_score);
-> +       }
-> +       if (shown_header)
-> +               wt_status_print_trailer(s);
-> +}
-> +
-> +/*
-> + * -1 : has delete
-> + *  0 : no change
-> + *  1 : some change but no delete
-> + */
-> +static int wt_status_check_worktree_changes(struct wt_status *s)
-> +{
-> +       int i;
-> +       int changes = 0;
-> +
-> +       for (i = 0; i < s->change.nr; i++) {
-> +               struct wt_status_change_data *d;
-> +               d = s->change.items[i].util;
-> +               if (!d->worktree_status)
-> +                       continue;
-> +               changes = 1;
-> +               if (d->worktree_status == DIFF_STATUS_DELETED)
-> +                       return -1;
-> +       }
-> +       return changes;
-> +}
-> +
->  static void wt_status_print_changed(struct wt_status *s)
->  {
-> -       struct rev_info rev;
-> -       init_revisions(&rev, "");
-> -       setup_revisions(0, NULL, &rev, NULL);
-> -       rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
-> -       rev.diffopt.format_callback = wt_status_print_changed_cb;
-> -       rev.diffopt.format_callback_data = s;
-> -       run_diff_files(&rev, 0);
-> +       int i;
-> +       int worktree_changes = wt_status_check_worktree_changes(s);
-> +
-> +       if (!worktree_changes)
-> +               return;
-> +
-> +       wt_status_print_dirty_header(s, worktree_changes < 0);
-> +
-> +       for (i = 0; i < s->change.nr; i++) {
-> +               struct wt_status_change_data *d;
-> +               struct string_list_item *it;
-> +               it = &(s->change.items[i]);
-> +               d = it->util;
-> +               if (!d->worktree_status)
-> +                       continue;
-> +               wt_status_print_change_data(s, WT_STATUS_CHANGED,
-> +                               d->worktree_status,
-> +                               it->string,
-> +                               it->string,
-> +                               0);
-> +       }
-> +       wt_status_print_trailer(s);
->  }
->
->  static void wt_status_print_submodule_summary(struct wt_status *s)
-> @@ -338,6 +461,8 @@ void wt_status_print(struct wt_status *s)
->                        wt_status_print_tracking(s);
->        }
->
-> +       wt_status_collect_changes(s);
-> +
->        if (s->is_initial) {
->                color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "#");
->                color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "# Initial commit");
-> diff --git a/wt-status.h b/wt-status.h
-> index 78add09..00508c3 100644
-> --- a/wt-status.h
-> +++ b/wt-status.h
-> @@ -18,6 +18,13 @@ enum untracked_status_type {
->  };
->  extern enum untracked_status_type show_untracked_files;
->
-> +struct wt_status_change_data {
-> +       int worktree_status;
-> +       int index_status;
-> +       int index_score;
-> +       char *head_path;
-> +};
-> +
->  struct wt_status {
->        int is_initial;
->        char *branch;
-> @@ -33,6 +40,7 @@ struct wt_status {
->        const char *index_file;
->        FILE *fp;
->        const char *prefix;
-> +       struct string_list change;
->  };
->
->  int git_status_config(const char *var, const char *value, void *cb);
-> @@ -40,5 +48,6 @@ extern int wt_status_use_color;
->  extern int wt_status_relative_paths;
->  void wt_status_prepare(struct wt_status *s);
->  void wt_status_print(struct wt_status *s);
-> +void wt_status_collect_changes(struct wt_status *s);
->
->  #endif /* STATUS_H */
->
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 19a8917..7d14007 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -22,6 +22,7 @@ SYNOPSIS
+ 'git config' [<file-option>] [-z|--null] -l | --list
+ 'git config' [<file-option>] --get-color name [default]
+ 'git config' [<file-option>] --get-colorbool name [stdout-is-tty]
++'git config' [<file-option>] -e | --edit
+ 
+ DESCRIPTION
+ -----------
+@@ -157,6 +158,11 @@ See also <<FILES>>.
+ 	output.  The optional `default` parameter is used instead, if
+ 	there is no color configured for `name`.
+ 
++-e::
++--edit::
++	Opens an editor to modify the specified config file; either
++	'--system', '--global', or repository (default).
++
+ [[FILES]]
+ FILES
+ -----
+diff --git a/builtin-config.c b/builtin-config.c
+index 1582673..4457b34 100644
+--- a/builtin-config.c
++++ b/builtin-config.c
+@@ -3,7 +3,7 @@
+ #include "color.h"
+ 
+ static const char git_config_set_usage[] =
+-"git config [ --global | --system | [ -f | --file ] config-file ] [ --bool | --int | --bool-or-int ] [ -z | --null ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list | --get-color var [default] | --get-colorbool name [stdout-is-tty]";
++"git config [ --global | --system | [ -f | --file ] config-file ] [ --bool | --int | --bool-or-int ] [ -z | --null ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list | --get-color var [default] | --get-colorbool name [stdout-is-tty] | --edit | -e ]";
+ 
+ static char *key;
+ static regex_t *key_regexp;
+@@ -362,6 +362,16 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 			return get_color(argc-2, argv+2);
+ 		} else if (!strcmp(argv[1], "--get-colorbool")) {
+ 			return get_colorbool(argc-2, argv+2);
++		} else if (!strcmp(argv[1], "--edit") || !strcmp(argv[1], "-e")) {
++			const char *config_filename;
++			if (argc != 2)
++				usage(git_config_set_usage);
++			if (config_exclusive_filename)
++				config_filename = config_exclusive_filename;
++			else
++				config_filename = git_path("config");
++			launch_editor(config_filename, NULL, NULL);
++			return 0;
+ 		} else
+ 			break;
+ 		argc--;
+-- 
+1.6.1.2
