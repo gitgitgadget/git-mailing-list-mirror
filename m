@@ -1,78 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH/RFC v3 7/9] write_entry(): use fstat() instead of lstat()
- when   file is open
-Date: Wed, 04 Feb 2009 15:01:08 +0100
-Message-ID: <49899FA4.2020003@viscovery.net>
-References: <cover.1233751281.git.barvik@broadpark.no> <21073c1f3f6c2c81b26a632f495325f5e7a7de5a.1233751281.git.barvik@broadpark.no>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] config: Add new option to open an editor.
+Date: Wed, 4 Feb 2009 09:53:17 -0500
+Message-ID: <20090204145317.GA5712@sigill.intra.peff.net>
+References: <1233700826-11763-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Kjetil Barvik <barvik@broadpark.no>
-X-From: git-owner@vger.kernel.org Wed Feb 04 15:51:42 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 15:54:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUj6C-0008V0-Md
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 15:51:33 +0100
+	id 1LUj9N-0001Or-Si
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 15:54:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173AbZBDOt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 09:49:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbZBDOtz
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 09:49:55 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:3677 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751338AbZBDOtx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 09:49:53 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LUj4T-00017B-SH; Wed, 04 Feb 2009 15:49:46 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id BFCE06D9; Wed,  4 Feb 2009 15:01:08 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <21073c1f3f6c2c81b26a632f495325f5e7a7de5a.1233751281.git.barvik@broadpark.no>
-X-Spam-Score: -1.4 (-)
+	id S1752360AbZBDOxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 09:53:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752277AbZBDOxW
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 09:53:22 -0500
+Received: from peff.net ([208.65.91.99]:55288 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751577AbZBDOxW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 09:53:22 -0500
+Received: (qmail 29323 invoked by uid 107); 4 Feb 2009 14:53:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 04 Feb 2009 09:53:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Feb 2009 09:53:17 -0500
+Content-Disposition: inline
+In-Reply-To: <1233700826-11763-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108372>
 
-Kjetil Barvik schrieb:
-> Currently inside write_entry() we do an lstat(path, &st) call on a
-> file which have just been opened inside the exact same function.  It
-> should be better to call fstat(fd, &st) on the file while it is open,
-> and it should be at least as fast as the lstat() method.
-...
-> @@ -145,6 +146,11 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
->  		}
->  
->  		wrote = write_in_full(fd, new, size);
-> +		/* use fstat() only when path == ce->name */
-> +		if (state->refresh_cache && !to_tempfile && !state->base_dir_len) {
-> +			fstat(fd, &st);
-> +			fstat_done = 1;
-> +		}
->  		close(fd);
+On Wed, Feb 04, 2009 at 12:40:26AM +0200, Felipe Contreras wrote:
 
-I've a bad gut feeling about this: It may not work as expected on Windows
-because there is this statement in the documentation:
+> +		} else if (!strcmp(argv[1], "--edit") || !strcmp(argv[1], "-e")) {
+> +			char *config_filename;
+> +			if (config_exclusive_filename)
+> +				config_filename = xstrdup(config_exclusive_filename);
+> +			else
+> +				config_filename = git_pathdup("config");
+> +			launch_editor(config_filename, NULL, NULL);
+> +			free(config_filename);
+> +			return 0;
+>  		} else
 
-  "The only guarantee about a file timestamp is that the file time is
-   correctly reflected when the handle that makes the change is closed."
+With this patch, won't I get different behavior from:
 
-(http://msdn.microsoft.com/en-us/library/ms724290(VS.85).aspx)
+  git config -e --global
 
-We are operating on a temporary file. It could happen that the fstat()
-returns the time when the file was created, as opposed to when the
-write_in_full() was completed successfully. The fstat()ed time ends up in
-the index, but it can be different from what later lstat() calls report
-(and the file would be regarded as modified).
+versus
 
-I have the suspicion that the gain from this patch is minimal. Would you
-mind playing it safe and drop this patch?
+  git config --global -e
 
--- Hannes
+?
+
+Other than that, I like the concept of this patch.
+
+-Peff
