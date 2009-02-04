@@ -1,114 +1,139 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Re: Question about --tree-filter
-Date: Wed, 04 Feb 2009 21:42:46 +0100
-Message-ID: <4989FDC6.2080404@gmail.com>
-References: <loom.20090204T155824-858@post.gmane.org> <4989C437.4070401@viscovery.net>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: What is not in git.git
+Date: Thu, 05 Feb 2009 05:49:18 +0900
+Message-ID: <20090205054918.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 04 21:44:36 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, ecashin@coraid.com, arjen@yaph.org,
+	joey@kitenet.net, benny.kra@googlemail.com, pw@padd.com,
+	simon@lst.de, jidanni@jidanni.org, dirker@gmail.com,
+	hoxu@users.sf.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 21:51:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUobn-0003my-GP
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 21:44:31 +0100
+	id 1LUoi7-0006Kq-5E
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 21:51:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752948AbZBDUmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 15:42:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752280AbZBDUmu
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 15:42:50 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:45276 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752207AbZBDUms (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 15:42:48 -0500
-Received: by ewy14 with SMTP id 14so3877944ewy.13
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 12:42:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=hbx7jxyuKbRga8zC7MnGeWO0Gm/uf56bHEgkcDTJYPM=;
-        b=Xbin0nIqis2o13IcKyeEOCZWAOpPG7dqkfkTgJogo/IHqv7ynL1kqc2JkeZydn8kEc
-         3/OgVmRXhe1hT2D+Ps/Dac4+wYfQf1BpC8lQh+Su+YfioPUOa/wKMD6Nq68SLOuXpyMt
-         3n7jOaLOQQFAOvqqh63GbBG4BdV5HaFPHE6wM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        b=PzCVFLA1xDjl3Qr0+xz2Uy2zjW6l0AZ8nMaTqZZzEuPvCj2AsZ7EEnHLVVCziRE4Fa
-         xChoiInPLyFU+1sA2cJNkzErSigsjdiTXoha/fr6bmX4jtw4+HYCoD7Ca8X/aaGIeTus
-         dTWYF19zzjv6tLv7tp/NSFjgn2fCRtbE3MaDc=
-Received: by 10.103.251.3 with SMTP id d3mr3175604mus.72.1233780166428;
-        Wed, 04 Feb 2009 12:42:46 -0800 (PST)
-Received: from ?10.143.20.193? (mars-fw.arces.unibo.it [137.204.143.2])
-        by mx.google.com with ESMTPS id 23sm2770537mum.7.2009.02.04.12.42.45
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 04 Feb 2009 12:42:45 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <4989C437.4070401@viscovery.net>
+	id S1756848AbZBDUtg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Feb 2009 15:49:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758095AbZBDUtf
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 15:49:35 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:55904 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758036AbZBDUtd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 15:49:33 -0500
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id F31AAC86BB;
+	Wed,  4 Feb 2009 14:49:32 -0600 (CST)
+Received: from 7071.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id DD1BYAB2RYFB; Wed, 04 Feb 2009 14:49:32 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=oSrotxoA0M0RbSaui9J1jYDdrPJtOTrc8ORn/LB0g/Bc5uHeGe7e+CuFi7tcEwtM1njxtPZJMSkwpM0BbvMFPYBdrjiJ8w9AbDS9YubBeuVGxNLGnb38dXKg+ngE+/IK/MyLli/zODZIVxw6vAfH5jDAxOQ7y54DUwJiEXu8Y80=;
+  h=From:To:cc:Subject:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108430>
 
-Johannes Sixt wrote:
-> Sergio Callegari schrieb:
->   
->> in working with the "rezip" filter for the efficient git management of
->> openoffice, zip and docx files, I am encountering the following problem.
->>
->> Suppose that you have an existing repository and that you want to convert it
->> into a repository using the rezip filters: git filter-branch should be the tool
->> to do the conversion.
->>
->> Initially I believed that once set up the appropriate .git/config filter entries
->> and a .git/info/attributes file tying the filter to the appropriate file types,
->> it would have been enough to
->>
->> git filter-branch --tree-filter true tag-name-filter cat
->>
->> to do the conversion.
->> This is also what I suggested in my original post about the rezip script.
->>
->> Unfortunately, this does not seem to work as expected.  Not all files get
->> rewritten as filtered blobs.
->>     
->
-> Before the tree-filter runs, the files are checked out (and smudged by
-> rezip). But they are marked as unchanged (because they were checked out
-> moments ago). Since your tree-filter doesn't do anything, no new blobs are
-> added to the index, and none of your files are cleaned by rezip.
->
-> I think your brute-force tree-filter should be
->
->    rm -f "$GIT_INDEX_FILE"
->
-> assuming that a .gitattributes file is already in all revisions.
->
-> -- Hannes
->   
-Sorry, it still is not completely clear to me... I would be very glad if
-you could detail better what happens when I tree-filter.  From what you
-say I get the impression that no file should get a new blob.  As a
-matter of fact, most do (and that is why at the very beginning I thought
-that --tree-filter true would have been sufficient)... only a few do not
-get the new blob.
+You keep mentioning 1.6.2 and I take it as a hint that the project is
+approaching the pre release freeze. There are some patches sent to the
+list that are not in git.git, and I am wondering what their statuses ar=
+e.
 
-And if I experiment filter-branch again, with exactly the same
-parameters, apparently some of the files that did not get the new blob
-in the beginning do...  which looks completely weird.
+ 1. From: ecashin@coraid.com
+    Subject: [PATCH] git-describe documentation: --match pattern is glo=
+b
+    Date: Thu, 22 Jan 2009 11:21:53 -0500
+    Message-ID: <dfa634dbd8def9e205bbe219217179ca@coraid.com>
 
-The attributes are in the info subdir of .git, so the brute force
-approach should be fine.  I guess that it does not make any difference
-wrt to a
+    I thought this was correct, but was missing a sign-off. Perhaps it =
+was
+    dropped on the floor because it was sent in a wrong format that is
+    harder to apply?
 
-    find ./ -type f -exec touch \{\} \;
+ 2. From: Arjen Laarhoven <arjen@yaph.org>
+    Subject: [PATCH 2/2] git-log: Follow file copies with 'git log --fo=
+llow -C -C'
+    Date: Thu, 22 Jan 2009 17:37:25 +0100
+    Message-ID: <1232642245-94405-2-git-send-email-arjen@yaph.org>
 
-apart from looking slightly more aggressive to the index (and faster) or
-does it?
+    Junio seemed to like the patch but asked a question; I did not see =
+a
+    response nor updated patch (sorry, I do not read C and cannot comme=
+nt
+    on the correctness of the patch).
 
-Sergio
+ 3. From: Joey Hess <joey@kitenet.net>
+    Subject: [PATCH] gitweb: support the rel=3Dvcs microformat
+    Date: Tue, 6 Jan 2009 23:25:18 -0500
+    Message-ID: <20090107042518.GB24735@gnu.kitenet.net>
+
+    A few exchanges of review comments and responses, and then this top=
+ic
+    went dark.
+
+    From: Benjamin Kramer <benny.kra@googlemail.com>
+    Subject: [PATCH] Makefile: Use libc strlcpy on OSX
+    Date: Sat, 24 Jan 2009 16:41:30 +0100
+    Message-ID: <7f978c810901240741k201f954dx1c0470186094ae24@mail.gmai=
+l.com>
+
+    My reading of the thread is that the only remaining issue was to li=
+mit
+    the change to specific versions, and I think people who use OSX can=
+ help
+    polish this topic to completion.
+
+ 4. From: Pete Wyckoff <pw@padd.com>
+    Subject: [PATCH] git-p4: avoid syncing duplicate changes
+    Date: Wed, 28 Jan 2009 08:45:40 -0800
+    Message-ID: <20090128164540.GA2137@padd.com>
+
+    Nobody commented on this as far as I can tell. Do people not care
+    about p4? Simon Hausmann seem to be the most recent active contribu=
+tor
+    and perhaps he can comment on this patch.
+
+ 5. From: jidanni@jidanni.org
+    Subject: [PATCH] Documentation/git-show-branch.txt: compact -g
+    Date: Tue,  6 Jan 2009 11:14:02 +0800
+    Message-Id: <1231211642-14463-1-git-send-email-jidanni@jidanni.org>
+
+    I couldn't figure out what "compact -g" meant but other than that I
+    think this patch is correct. Perhaps Junio has the author in his ma=
+il
+    ignore list?
+
+ 6. From: Alexander Potashev <aspotashev@gmail.com>
+    Subject: [PATCH] Replace deprecated dashed git commands in usage
+    Date: Sun,  4 Jan 2009 21:39:27 +0300
+    Message-ID: <1231094367-8831-1-git-send-email-aspotashev@gmail.com>
+
+    This should have been in 1.6.0 already but it is still not.
+    Forgotten?
+
+ 7. From: Dirk H=C3=B6rner <dirker@gmail.com>
+    Subject: [PATCH] git-cvsimport: add support for cvs pserver passwor=
+d scrambling.
+    Date: Fri, 28 Nov 2008 20:06:40 +0200
+    Message-ID: <5794AED2-43FF-4441-8292-0C9BFB3139A2@gmail.com>
+
+    I think Johannes Schindelin commented but then nothing happened to
+    this patch. Is there any more work necessary for its inclusion?
+
+ 8. From: Heikki Hokkanen <hoxu@users.sf.net>
+    Subject: [PATCH] git show-ref: add --remotes option.
+    Date: Mon, 13 Oct 2008 22:23:47 +0300
+    Message-ID: <48F3A043.5070406@users.sf.net>
+
+    I saw no comments but it is consistent with how git-rev-list allows
+    you say branches and tags. Is there anything wrong with the patch?
+
+--=20
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
