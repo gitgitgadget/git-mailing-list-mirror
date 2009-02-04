@@ -1,63 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] filter-branch: do not consider diverging submodules a
- 'dirty worktree'
-Date: Wed, 04 Feb 2009 10:00:11 -0800
-Message-ID: <7vvdrqt74k.fsf@gitster.siamese.dyndns.org>
-References: <cover.1233758410u.git.johannes.schindelin@gmx.de>
- <alpine.DEB.1.00.0902041540130.10279@pacific.mpi-cbg.de>
- <7vvdrqunog.fsf@gitster.siamese.dyndns.org> <4989CF79.2070209@viscovery.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: segfault during clone via http
+Date: Wed, 4 Feb 2009 13:00:28 -0500
+Message-ID: <76718490902041000x3cda2390t25254e8372c9af50@mail.gmail.com>
+References: <loom.20090204T160827-822@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Feb 04 19:01:50 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Adam Thorsen <adam.thorsen@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 19:02:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUm4I-0006qj-Ju
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 19:01:47 +0100
+	id 1LUm4U-0006x2-Lz
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 19:01:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752419AbZBDSAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 13:00:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752121AbZBDSAU
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 13:00:20 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64739 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752009AbZBDSAT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 13:00:19 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1103C96C7A;
-	Wed,  4 Feb 2009 13:00:18 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2571B96C75; Wed,
-  4 Feb 2009 13:00:12 -0500 (EST)
-In-Reply-To: <4989CF79.2070209@viscovery.net> (Johannes Sixt's message of
- "Wed, 04 Feb 2009 18:25:13 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: AE866AB2-F2E5-11DD-A0C5-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752776AbZBDSAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 13:00:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752392AbZBDSAa
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 13:00:30 -0500
+Received: from rv-out-0506.google.com ([209.85.198.237]:28860 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751876AbZBDSA3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 13:00:29 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so2663326rvb.1
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 10:00:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=YcDqi+YqTo5gQ28Y31dMD0toC3/1f2XrxV4CYnXSY0I=;
+        b=jm9z7PaIn6PC2rIv8yb26GsuGCDz9sQNeS1OXlDQY+7lHGQoKI0B7temHtFN6bie3e
+         OBezC6ONZEUPuqyo3XLkK+CMP2iwV8Ik/tzaZFXp09l/xVVKUgTPSqjM6r0vvW+7THCg
+         JKArYUQV+W3yTg1SLxuEpJ0bIw9vW/QpljFpw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=U0BF8ODMcKj4CZU/CHO8LYO392AC68MEExACOIB8kGW2JgnxZ20jkJQTLTT5cEnm5t
+         R/jJoM+1vZ9mxIE0b8XRx/PTUHTaesqGl+/Zy9LGqsSfoLwqfRzSxQ/MxTHBHGK8r3uf
+         4LBDObVpAUKw7Pu/iVDUdz3jliC6qe5ENsEjU=
+Received: by 10.140.144.1 with SMTP id r1mr152453rvd.209.1233770428638; Wed, 
+	04 Feb 2009 10:00:28 -0800 (PST)
+In-Reply-To: <loom.20090204T160827-822@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108403>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On Wed, Feb 4, 2009 at 11:10 AM, Adam Thorsen <adam.thorsen@gmail.com> wrote:
+> Git is segfaulting when downloading from a repo via http.  Here's what the
+> output looks like: http://gist.github.com/58167.  Anybody seen this before or
+> know how I can debug it?  I've made sure my git (1.6.1) is compiled with libcurl.
 
-> Because if the repository is non-bare, then filter-branch updates the
-> work-tree at the end of the run; we don't want to overwrite uncommitted
-> work in this case.
->
-> This behavior is a relic from cg-admin-rewritehist, I think. I've never
-> found it useful.
+Please run git under gdb so that there is a stacktrace to work from. Here is an
+example of running git under gdb and providing a trace:
 
-Ok, I think "read-tree -m -u HEAD" at the end sort of makes sense, if you
-filtered the branch you are currently sitting on.  Does that mean we do
-not have to barf on dirtyness if we can tell if the filter-branch will not
-touch the current branch at all?  Again, I am not suggesting it as an
-improvement, but I am trying to see if I am talking a total nonsense.
+http://article.gmane.org/gmane.comp.version-control.git/107860
 
-Is the reason why you haven't found it is useful is because you never
-filter the current branch?
+j.
