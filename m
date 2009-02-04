@@ -1,67 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] urls.txt: document optional port specification in git
- URLS
-Date: Wed, 04 Feb 2009 10:09:27 -0800
-Message-ID: <7vr62et6p4.fsf@gitster.siamese.dyndns.org>
-References: <1233748295-4554-1-git-send-email-stefan.naewe@atlas-elektronik.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] filter-branch: do not consider diverging submodules a
+ 'dirty worktree'
+Date: Wed, 4 Feb 2009 19:15:53 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902041915070.22763@intel-tinevez-2-302>
+References: <cover.1233758410u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0902041540130.10279@pacific.mpi-cbg.de> <7vvdrqunog.fsf@gitster.siamese.dyndns.org> <4989CF79.2070209@viscovery.net> <7vvdrqt74k.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-X-From: git-owner@vger.kernel.org Wed Feb 04 19:11:03 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 19:17:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUmDF-0002R4-9a
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 19:11:01 +0100
+	id 1LUmJa-0004uz-7x
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 19:17:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752478AbZBDSJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 13:09:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752338AbZBDSJe
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 13:09:34 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64701 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751535AbZBDSJe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 13:09:34 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2F7782A6E9;
-	Wed,  4 Feb 2009 13:09:33 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 615552A6E5; Wed, 
- 4 Feb 2009 13:09:29 -0500 (EST)
-In-Reply-To: <1233748295-4554-1-git-send-email-stefan.naewe@atlas-elektronik.com> (Stefan
- Naewe's message of "Wed, 4 Feb 2009 12:51:35 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F968E70C-F2E6-11DD-9731-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1753706AbZBDSP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 13:15:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753528AbZBDSP5
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 13:15:57 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50400 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753511AbZBDSP5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 13:15:57 -0500
+Received: (qmail invoked by alias); 04 Feb 2009 18:15:55 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp040) with SMTP; 04 Feb 2009 19:15:55 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18CxqM+NhMCflMG6ny8QQe+dG4zMWA0mc5al3HLPw
+	gYk8nRSd1a2xsU
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <7vvdrqt74k.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108405>
 
-Stefan Naewe <stefan.naewe@atlas-elektronik.com> writes:
+Hi,
 
-> Signed-off-by: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-> ---
->  Documentation/urls.txt |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/urls.txt b/Documentation/urls.txt
-> index fa34c67..c74f00b 100644
-> --- a/Documentation/urls.txt
-> +++ b/Documentation/urls.txt
-> @@ -8,8 +8,8 @@ to name the remote repository:
->  - rsync://host.xz/path/to/repo.git/
->  - http://host.xz/path/to/repo.git/
->  - https://host.xz/path/to/repo.git/
-> -- git://host.xz/path/to/repo.git/
-> -- git://host.xz/~user/path/to/repo.git/
-> +- git://host.xz{startsb}:port{endsb}/path/to/repo.git/
-> +- git://host.xz{startsb}:port{endsb}/~user/path/to/repo.git/
->  - ssh://{startsb}user@{endsb}host.xz{startsb}:port{endsb}/path/to/repo.git/
->  - ssh://{startsb}user@{endsb}host.xz/path/to/repo.git/
->  - ssh://{startsb}user@{endsb}host.xz/~user/path/to/repo.git/
+On Wed, 4 Feb 2009, Junio C Hamano wrote:
 
-Hmph, I wonder if we want that for http:// and https://, too.
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+> > Because if the repository is non-bare, then filter-branch updates the
+> > work-tree at the end of the run; we don't want to overwrite uncommitted
+> > work in this case.
+> >
+> > This behavior is a relic from cg-admin-rewritehist, I think. I've never
+> > found it useful.
+> 
+> Ok, I think "read-tree -m -u HEAD" at the end sort of makes sense, if you
+> filtered the branch you are currently sitting on.  Does that mean we do
+> not have to barf on dirtyness if we can tell if the filter-branch will not
+> touch the current branch at all?  Again, I am not suggesting it as an
+> improvement, but I am trying to see if I am talking a total nonsense.
+
+That's correct.  Checking if we would touch the current branch is too 
+expensive here, that's why we don't do it.
+
+> Is the reason why you haven't found it is useful is because you never 
+> filter the current branch?
+
+Well, _I_ certainly do, and I find it very useful.
+
+Ciao,
+Dscho
