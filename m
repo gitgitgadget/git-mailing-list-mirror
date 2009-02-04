@@ -1,273 +1,560 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Tests for "Understanding Version Control" by Eric S. Raymond
-Date: Wed, 4 Feb 2009 23:14:49 +0100
-Message-ID: <200902042314.50690.jnareb@gmail.com>
-References: <200902021948.54700.jnareb@gmail.com>
+From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+Subject: Re: [RFC/PATCH] shortstatus v0
+Date: Wed, 4 Feb 2009 23:17:47 +0100
+Message-ID: <4ac8254d0902041417v7f8c264cgf6044e91e27bd4f1@mail.gmail.com>
+References: <747EF6E2-39BB-4076-AF34-90571B2D70D9@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Eric S. Raymond" <esr@thyrsus.com>, Theodore Tso <tytso@mit.edu>
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 04 23:16:41 2009
+X-From: git-owner@vger.kernel.org Wed Feb 04 23:19:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUq2u-0005nc-EK
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 23:16:36 +0100
+	id 1LUq5g-00071K-Tx
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 23:19:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758704AbZBDWO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 17:14:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756610AbZBDWO4
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 17:14:56 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:41142 "EHLO
+	id S1756840AbZBDWRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 17:17:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756807AbZBDWRv
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 17:17:51 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:41764 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758704AbZBDWOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 17:14:54 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so1365959fgg.17
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 14:14:51 -0800 (PST)
+	with ESMTP id S1756514AbZBDWRt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 17:17:49 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so1366775fgg.17
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 14:17:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=1GECWg8s2fkLwKj1UCbEtdaFhzDQHKO1mu23KfVT+8k=;
-        b=f8JVxyXiU+i8Tu98RifBU0n1lXLOkrB2yCuAd5hv0T8uRcYYlQeAbpmAwMeLtrPlLq
-         GQBKzvTUW2HioOs0Dy0OBAFGy7iAFG3H6XqTVSqXk9dMEFwYPUgoJtZzCXhNHfmLQH30
-         jqhQus5dBZOMQ+TkDLtE/LruBnuouT+T+yl/Y=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=SibV9O3NLkisxrfwbWRGuoOt7Ap6ju4VWf61OQ7ZubQ=;
+        b=s/ohtcPNH558XP3YixBe4YTIudgF2L30agG5QfR0Rj0De41ugqxD3wT3E6pQIA2B+P
+         Q2oVY6tB8MjvKWnOGbsdgWq5tptByic+vkPlpTaYsIX+hTpFIjPcpfae8vPfeFVF36mm
+         GKj3GsUNltZbNv3xphd97X/7M1PMYc1kmoSFI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=r67v80mZUfxKpRhbpynW30NPQAYW88A+5+2v9Fh3Ac/k6lWENkBEYc6L2+aFkI7jCi
-         Kti2AvlxWQVtfVRNjBhtc/rjaPGHF204Fv5C+CqlVn78efBBjIc95YhCRiSuXwZPs/Zl
-         upco+ciqBR9uv1acV1HynR6hzX6++niTJAyNQ=
-Received: by 10.86.76.20 with SMTP id y20mr1388975fga.37.1233785691597;
-        Wed, 04 Feb 2009 14:14:51 -0800 (PST)
-Received: from ?192.168.1.13? (abwq247.neoplus.adsl.tpnet.pl [83.8.240.247])
-        by mx.google.com with ESMTPS id 4sm3515239fge.4.2009.02.04.14.14.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Feb 2009 14:14:50 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200902021948.54700.jnareb@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=foOtNxsouGkjgmDLZOzIdvDhjkzwjDVt/bN31WTl8jXzqDzUI2YacZsTLg+Vfy/RKW
+         Vj+VfBO6VuyjP4ajXzSFHCrpzdN1AI7tqq+GxKnZQk/DTm3tSjMesapHxDXZABxDTFTt
+         QID1JKnTEcM+WMAvokcf7EkmJihrmAfRuNrd0=
+Received: by 10.223.124.137 with SMTP id u9mr4173815far.61.1233785867230; Wed, 
+	04 Feb 2009 14:17:47 -0800 (PST)
+In-Reply-To: <747EF6E2-39BB-4076-AF34-90571B2D70D9@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108445>
 
-Sometimes code speaks louder than words. I think it is the case in
-understanding how intelligent merge should deal with the presence
-of renames; well commented examples (use cases) are (might be?) better
-than talking about it.
+On Wed, Feb 4, 2009 at 11:05 PM, Tuncer Ayaz <tuncer.ayaz@gmail.com> wrote:
+>
 
-Instead of talking about 'container identities' it would be, in my
-opinion, to examine what challenges version control system has to
-overcome if it wants to tell that it supports renames.  Example tests,
-example use cases might be a good choice.  With those examples we
-can check what are the limitations, strong and weak sides of different
-ways of dealing with renames: container identities (or 'file-ids'),
-tracking rename information, and heuristic rename detection.
+Linebreaks got garbled.
+I had problems with Perl on this particular machine and didn't
+use send-email. It looks like that was a bad decision :).
+I believe it's still readable and as it's just an RFC this
+shouldn't pose a difficulty for review.
+Next revisions will return to using a working git-send-email
+instead of a MUA with interesting automagics.
 
-
-Below there are proposed tests which are meant to check how good merge
-algorithm (strategy) used by given SCM supports renames.  In all cases
-we have two branch: branch 'a' (ours) and branch 'b' (theirs), and we
-usually would be merging branch 'b' into (ours) branch 'a'.
-
-Note that for Git we want example files be large enough that
-similarity based heuristic rename detection works.  At the bottom
-there are proposed files, taken from t/t6022-merge-rename.sh test
-from git.git repository (which, along with t/t6032-merge-large-rename.sh,
-might be a good start for more comprehensive test suite for SCMs).
-
- * merging renames: if one side renamed file you should get rename
-   on merge; renaming a file and then merging that rename.
-
-     <switch to branch b>
-     [on branch b]$ scm mv foo bar
-     [on branch b]$ scm commit ... # to commit file rename
-
-     <switch to branch a>
-     [on branch a]$ scm commit ... # to not have fast-forward case
-     [on branch a]$ scm merge b    # merge branch b (with rename)
-
-   expected result:
-     you have file 'bar', and do not have file 'foo'
-
- * applying change to correct file: if our side renamed a file (or
-   rename directory it is in, which does rename full pathname of a
-   file indirectly), and possibly change it, and the other side
-   changed file, we would want merge to bring changes to file after
-   rename.
-
-     <switch to branch a>
-     [on branch a]$ scm mv foo bar
-     [on branch a]$ edit bar && scm commit # optionally
-
-     <switch to branch b>
-     [on branch b]$ edit foo
-     [on branch b]$ scm commit -m 'FOO'    # commit changes
-
-     <switch to branch a>
-     [on branch a]$ scm merge b
-
-   expected result: 
-     you have changes made on branch 'b' to file 'foo'
-     (commit 'FOO') in file 'bar'
-
-   Note that like in example in previous item all operations take place
-   _after_ branching point (after creation of branch b off branch a).
-
-   This is I guess what most people think when talking about
-   rename-aware (intelligent) merging.
-
- * renamed directories bring another complication (described for example
-   on Mark Shuttleworth blog in articles about DVCS, promoting Bazaar-NG),
-   namely how to deal with merging changes where other side creates
-   _new files_ in renamed directory.
-
-     <switch to branch a>
-     [on branch a]$ scm mv subdir-foo/ subdir-bar/
-
-     <switch to branch b>
-     [on branch b]$ scm add subdir-foo/baz   # add new file in old dir
-
-     <switch to branch b>
-     [on branch a]$ scm merge b
-
-   expected result:
-     New file subdir-bar/baz
-     Either automatic merge, or a conflict (no commit)
-
-   There is a bit of controversy about this feature, as for example in
-   some programming languages (e.g. Java) or in some project build tool
-   info it is not posible to simply move a file (or create new file in
-   different directory) without changing file contents.  Some say that
-   is better to fail than to do wrongly clean merge.
-
- * independent adding of a file: this is the case where both sides add
-   the same (or nearly the same) file independently, so the file in
-   question doesn't have common ancestor in per-file history.  It
-   might happen because of applying patch independently, for example.
-   I _suspect_ that 'file-id' based solutions would have problems...
-
-   Below there is table of cases that might happen:
-
-              |  1  |  2  |  3  |  4  |  5  |
-     ---------|-----|-----|-----|-----|-----|
-     filename |  =  |  =  | !=  |  =  | !=  |
-     contents |  =  | !=  |  =  | ~=  | ~=  |
-
-   where 
-     '=' means that both sides use the same filename, 
-         or exactly the same contents; 
-    '!=' means files have different contents,
-         or files _started_ with different names
-    '~=' means that sides have slightly different contents,
-         but similarity score is high enough for rename detection.
-
-   Let us examine most complicated case 5 in above table; one can
-   simply omit some commends to get cases 1, 3 and 4.  Note that
-   COPYING file is GNU GPL text.
-
-     <switch to branch a>
-     [on branch a]$ cp ../COPYING COPYING
-     [on branch a]$ scm add COPYING
-     [on branch a]$ scm commit -m 'Added COPYING'
-
-     <switch to branch b>
-     [on branch b]$ cp ../COPYING LICENSE   # optional rename
-     [on branch b]$ sed -e 's/HOWEVER/However/' <LICENSE >LICENSE.1 &&
-                    mv -f LICENSE.1 LICENSE # optional change
-     [on branch b]$ scm add LICENSE
-     [on branch b]$ scm commit -m 'Added LICENSE'
-     [on branch b]$ scm mv LICENSE COPYING
-     [on branch b]$ scm commit -m 'Renamed LICENSE to COPYING'
-
-     <switch to branch a>
-     [on branch a]$ scm merge b
-
-   expected result: 
-     Either clean merging changes from branch 'b', or cleanly
-     marked conflict, e.g. CONFLICT (add/add).  What we do not
-     want is one side vanishing.
-
-   But that series of commands was only a preparation.  We now
-   want to repeat merging from branch 'b' into branch 'a', or
-   do reverse merging 'a' into 'b'.
-
-     <switch to branch b>
-     [on branch b]$ sed -e 's/GPL/G.P.L/g' <COPYING >COPYING1 &&
-                    mv -f COPYING COPYING
-     [on branch b]$ scm commit COPYING -m 'Changed COPYING'
-
-     <switch to branch a>
-     [on branch a]$ scm commit ... # to not have fast-forward case
-     [on branch a]$ scm merge b    # merge branch b
-
-   expected result:
-     Clean merge of changes done on branch 'b' into COPYING
-
-
-==================================================
-##################################################
-==================================================
-
-Files for testing rename detection in Git
-
-........................................
-
-t/t6022-merge-rename.sh
-t/t6022-merge-rename-nocruft.sh
-
-cat >A <<\EOF &&
-a aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-b bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-c cccccccccccccccccccccccccccccccccccccccccccccccc
-d dddddddddddddddddddddddddddddddddddddddddddddddd
-e eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-f ffffffffffffffffffffffffffffffffffffffffffffffff
-g gggggggggggggggggggggggggggggggggggggggggggggggg
-h hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-i iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-j jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-k kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-l llllllllllllllllllllllllllllllllllllllllllllllll
-m mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-n nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-o oooooooooooooooooooooooooooooooooooooooooooooooo
-EOF
-
-cat >M <<\EOF &&
-A AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-B BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-C CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-D DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-E EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-F FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-G GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-H HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-I IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-J JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
-K KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
-L LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-M MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-N NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-O OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-EOF
-
-sed -e "/^g /s/.*/g : master changes a line/" <A >A+
-sed -e "/^g /s/.*/g : white changes a line/" <A >B
-sed -e "/^G /s/.*/G : colored branch changes a line/" <M >N
-sed -e "/^g /s/.*/g : red changes a line/" <A >B
-sed -e "/^G /s/.*/G : colored branch changes a line/" <M >N
-[...]
-
-
--- 
-Jakub Narebski
-Poland
+> As discussed recently I started taking Junio's shortstatus patch
+> from October 25th 2008 and integrated it into current master.
+>
+> The following patch revision does work but does not print the
+> 'M ' prefixes yet due to either a patching error on my side or
+> missing code in the forward port of the patch. I still have
+> to analyze that.
+>
+> What this patch still needs to implement is something like
+> 'shortstatus --mini' which prints:
+>  anything modified          -> *
+>  anything added             -> +
+>  anything untracked/unknown -> ?
+>
+> So if you have a repo where one file is modified,
+> a new file is added and an unknown file exists and
+> is not ignored 'shortstatus --mini' shall print:
+> +*?.
+>
+> This is really useful for enhancing a Git enabled
+> shell prompt with small but important information.
+>
+> Right now this is basically Junio's shortstatus
+> from Oct 25th 2008 with no substantial change
+> except a line or two.
+>
+>
+> Signed-off-by: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+> ---
+>
+>  .gitignore       |    1 +
+>  Makefile         |    1 +
+>  builtin-commit.c |   45 +++++++++++-
+>  builtin-revert.c |    1 +
+>  builtin.h        |    1 +
+>  git.c            |    1 +
+>  wt-status.c      |  213 +++++++++++++++++++++++++++++++++++++++++++-----------
+>  wt-status.h      |    9 +++
+>  8 files changed, 227 insertions(+), 45 deletions(-)
+>
+> diff --git a/.gitignore b/.gitignore
+> index 1c57d4c..5666325 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -114,6 +114,7 @@ git-send-pack
+>  git-sh-setup
+>  git-shell
+>  git-shortlog
+> +git-shortstatus
+>  git-show
+>  git-show-branch
+>  git-show-index
+> diff --git a/Makefile b/Makefile
+> index 9f3a8ab..304f15d 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -329,6 +329,7 @@ BUILT_INS += git-repo-config$X
+>  BUILT_INS += git-show$X
+>  BUILT_INS += git-stage$X
+>  BUILT_INS += git-status$X
+> +BUILT_INS += git-shortstatus$X
+>  BUILT_INS += git-whatchanged$X
+>
+>  # what 'all' will build and 'install' will install, in gitexecdir
+> diff --git a/builtin-commit.c b/builtin-commit.c
+> index d6a3a62..624568c 100644
+> --- a/builtin-commit.c
+> +++ b/builtin-commit.c
+> @@ -14,6 +14,7 @@
+>  #include "diffcore.h"
+>  #include "commit.h"
+>  #include "revision.h"
+> +#include "string-list.h"
+>  #include "wt-status.h"
+>  #include "run-command.h"
+>  #include "refs.h"
+> @@ -21,7 +22,6 @@
+>  #include "strbuf.h"
+>  #include "utf8.h"
+>  #include "parse-options.h"
+> -#include "string-list.h"
+>  #include "rerere.h"
+>  #include "unpack-trees.h"
+>
+> @@ -821,6 +821,49 @@ static int parse_and_validate_options(int argc, const char *argv[],
+>        return argc;
+>  }
+>
+> +int cmd_shortstatus(int argc, const char **argv, const char *prefix)
+> +{
+> +       struct wt_status s;
+> +       int i;
+> +
+> +       read_cache();
+> +       refresh_cache(REFRESH_QUIET);
+> +       wt_status_prepare(&s);
+> +       wt_status_collect_changes(&s);
+> +       for (i = 0; i < s.change.nr; i++) {
+> +               struct wt_status_change_data *d;
+> +               struct string_list_item *it;
+> +               char pfx[1 + 3 + 1 + 1];
+> +
+> +               it = &(s.change.items[i]);
+> +               d = it->util;
+> +               switch (d->index_status) {
+> +                       case DIFF_STATUS_COPIED:
+> +                       case DIFF_STATUS_RENAMED:
+> +                               sprintf(pfx, "%c%3d",
+> +                                               d->index_status,
+> +                                               (int)(d->index_score * 100 / MAX_SCORE));
+> +                               break;
+> +                       case 0:
+> +                               memcpy(pfx, "   ", 4);
+> +                               break;
+> +                       default:
+> +                               sprintf(pfx, "%c          ", d->index_status);
+> +                               break;
+> +               }
+> +               if (!d->worktree_status)
+> +                       pfx[4] = ' ';
+> +               else
+> +                       pfx[4] = d->worktree_status;
+> +               pfx[5] = '\0';
+> +               printf("%s ", pfx);
+> +               if (d->head_path)
+> +                       printf("%s -> ", d->head_path);
+> +               printf("%s\n", it->string);
+> +       }
+> +       return 0;
+> +}
+> +
+>  int cmd_status(int argc, const char **argv, const char *prefix)
+>  {
+>        const char *index_file;
+> diff --git a/builtin-revert.c b/builtin-revert.c
+> index d48313c..7dd7646 100644
+> --- a/builtin-revert.c
+> +++ b/builtin-revert.c
+> @@ -3,6 +3,7 @@
+>  #include "object.h"
+>  #include "commit.h"
+>  #include "tag.h"
+> +#include "string-list.h"
+>  #include "wt-status.h"
+>  #include "run-command.h"
+>  #include "exec_cmd.h"
+> diff --git a/builtin.h b/builtin.h
+> index 1495cf6..f054fc7 100644
+> --- a/builtin.h
+> +++ b/builtin.h
+> @@ -94,6 +94,7 @@ extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
+>  extern int cmd_show(int argc, const char **argv, const char *prefix);
+>  extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
+>  extern int cmd_status(int argc, const char **argv, const char *prefix);
+> +extern int cmd_shortstatus(int argc, const char **argv, const char *prefix);
+>  extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
+>  extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
+>  extern int cmd_tag(int argc, const char **argv, const char *prefix);
+> diff --git a/git.c b/git.c
+> index c2b181e..4c0fa44 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -344,6 +344,7 @@ static void handle_internal_command(int argc, const char **argv)
+>                { "rm", cmd_rm, RUN_SETUP },
+>                { "send-pack", cmd_send_pack, RUN_SETUP },
+>                { "shortlog", cmd_shortlog, USE_PAGER },
+> +               { "shortstatus", cmd_shortstatus, RUN_SETUP | NEED_WORK_TREE },
+>                { "show-branch", cmd_show_branch, RUN_SETUP },
+>                { "show", cmd_show, RUN_SETUP | USE_PAGER },
+>                { "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+> diff --git a/wt-status.c b/wt-status.c
+> index 96ff2f8..18042dc 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1,4 +1,5 @@
+>  #include "cache.h"
+> +#include "string-list.h"
+>  #include "wt-status.h"
+>  #include "color.h"
+>  #include "object.h"
+> @@ -56,6 +57,7 @@ void wt_status_prepare(struct wt_status *s)
+>        s->reference = "HEAD";
+>        s->fp = stdout;
+>        s->index_file = get_index_file();
+> +       s->change.strdup_strings = 1;
+>  }
+>
+>  static void wt_status_print_cached_header(struct wt_status *s)
+> @@ -98,18 +100,23 @@ static void wt_status_print_trailer(struct wt_status *s)
+>
+>  #define quote_path quote_path_relative
+>
+> -static void wt_status_print_filepair(struct wt_status *s,
+> -                                    int t, struct diff_filepair *p)
+> +static void wt_status_print_change_data(struct wt_status *s,
+> +                                               int t,
+> +                                               int status,
+> +                                               char *one_name,
+> +                                               char *two_name,
+> +                                               int score)
+>  {
+>        const char *c = color(t);
+>        const char *one, *two;
+>        struct strbuf onebuf = STRBUF_INIT, twobuf = STRBUF_INIT;
+>
+> -       one = quote_path(p->one->path, -1, &onebuf, s->prefix);
+> -       two = quote_path(p->two->path, -1, &twobuf, s->prefix);
+> +       one = quote_path(one_name, -1, &onebuf, s->prefix);
+> +       two = quote_path(two_name, -1, &twobuf, s->prefix);
+> +
+>
+>        color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
+> -       switch (p->status) {
+> +       switch (status) {
+>        case DIFF_STATUS_ADDED:
+>                color_fprintf(s->fp, c, "new file:   %s", one);
+>                break;
+> @@ -135,64 +142,88 @@ static void wt_status_print_filepair(struct wt_status *s,
+>                color_fprintf(s->fp, c, "unmerged:   %s", one);
+>                break;
+>        default:
+> -               die("bug: unhandled diff status %c", p->status);
+> +               die("bug: unhandled diff status %c", status);
+>        }
+>        fprintf(s->fp, "\n");
+>        strbuf_release(&onebuf);
+>        strbuf_release(&twobuf);
+>  }
+>
+> -static void wt_status_print_updated_cb(struct diff_queue_struct *q,
+> -               struct diff_options *options,
+> -               void *data)
+> +static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+> +                                                       struct diff_options *options,
+> +                                                       void *data)
+>  {
+>        struct wt_status *s = data;
+> -       int shown_header = 0;
+>        int i;
+> +
+> +       if (!q->nr)
+> +               return;
+> +       s->workdir_dirty = 1;
+>        for (i = 0; i < q->nr; i++) {
+> -               if (q->queue[i]->status == 'U')
+> -                       continue;
+> -               if (!shown_header) {
+> -                       wt_status_print_cached_header(s);
+> -                       s->commitable = 1;
+> -                       shown_header = 1;
+> -               }
+> -               wt_status_print_filepair(s, WT_STATUS_UPDATED, q->queue[i]);
+> +               struct diff_filepair *p;
+> +               struct string_list_item *it;
+> +               struct wt_status_change_data *d;
+> +
+> +               p = q->queue[i];
+> +
+> +               d = xcalloc(1, sizeof(*d));
+> +               d->worktree_status = p->status;
+> +               it = string_list_insert(p->one->path, &s->change);
+> +               it->util = d;
+>        }
+> -       if (shown_header)
+> -               wt_status_print_trailer(s);
+>  }
+>
+> -static void wt_status_print_changed_cb(struct diff_queue_struct *q,
+> -                        struct diff_options *options,
+> -                        void *data)
+> +static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
+> +                                                       struct diff_options *options,
+> +                                                       void *data)
+>  {
+>        struct wt_status *s = data;
+>        int i;
+> -       if (q->nr) {
+> -               int has_deleted = 0;
+> -               s->workdir_dirty = 1;
+> -               for (i = 0; i < q->nr; i++)
+> -                       if (q->queue[i]->status == DIFF_STATUS_DELETED) {
+> -                               has_deleted = 1;
+> +
+> +       for (i = 0; i < q->nr; i++) {
+> +               struct diff_filepair *p;
+> +               struct string_list_item *it;
+> +               struct wt_status_change_data *d;
+> +
+> +               p = q->queue[i];
+> +               it = string_list_insert(p->two->path, &s->change);
+> +               d = it->util;
+> +               if (!d) {
+> +                       d = xcalloc(1, sizeof(*d));
+> +                       it->util = d;
+> +               }
+> +               d->index_status = p->status;
+> +               switch (p->status) {
+> +                       case DIFF_STATUS_COPIED:
+> +                       case DIFF_STATUS_RENAMED:
+> +                               d->head_path = xstrdup(p->one->path);
+> +                               d->index_score = p->score;
+>                                break;
+> -                       }
+> -               wt_status_print_dirty_header(s, has_deleted);
+> +               }
+>        }
+> -       for (i = 0; i < q->nr; i++)
+> -               wt_status_print_filepair(s, WT_STATUS_CHANGED, q->queue[i]);
+> -       if (q->nr)
+> -               wt_status_print_trailer(s);
+>  }
+>
+> -static void wt_status_print_updated(struct wt_status *s)
+> +static void wt_status_collect_changes_worktree(struct wt_status *s)
+>  {
+>        struct rev_info rev;
+> +
+> +       init_revisions(&rev, NULL);
+> +       setup_revisions(0, NULL, &rev, NULL);
+> +       rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+> +       rev.diffopt.format_callback = wt_status_collect_changed_cb;
+> +       rev.diffopt.format_callback_data = s;
+> +       run_diff_files(&rev, 0);
+> +}
+> +
+> +static void wt_status_collect_changes_index(struct wt_status *s)
+> +{
+> +       struct rev_info rev;
+> +
+>        init_revisions(&rev, NULL);
+>        setup_revisions(0, NULL, &rev,
+>                s->is_initial ? EMPTY_TREE_SHA1_HEX : s->reference);
+>        rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+> -       rev.diffopt.format_callback = wt_status_print_updated_cb;
+> +       rev.diffopt.format_callback = wt_status_collect_updated_cb;
+>        rev.diffopt.format_callback_data = s;
+>        rev.diffopt.detect_rename = 1;
+>        rev.diffopt.rename_limit = 200;
+> @@ -200,15 +231,107 @@ static void wt_status_print_updated(struct wt_status *s)
+>        run_diff_index(&rev, 1);
+>  }
+>
+> +static void wt_status_collect_changes_initial(struct wt_status *s)
+> +{
+> +       int i;
+> +
+> +       for (i = 0; i < active_nr; i++) {
+> +               struct string_list_item *it;
+> +               struct wt_status_change_data *d;
+> +
+> +               it = string_list_insert(active_cache[i]->name, &s->change);
+> +               d = it->util;
+> +               if (!d) {
+> +                       d = xcalloc(1, sizeof(*d));
+> +                       it->util = d;
+> +               }
+> +               d->index_status = DIFF_STATUS_ADDED;
+> +       }
+> +}
+> +
+> +void wt_status_collect_changes(struct wt_status *s)
+> +{
+> +       wt_status_collect_changes_worktree(s);
+> +
+> +       if (s->is_initial)
+> +               wt_status_collect_changes_initial(s);
+> +       else
+> +               wt_status_collect_changes_index(s);
+> +}
+> +
+> +static void wt_status_print_updated(struct wt_status *s)
+> +{
+> +       int shown_header = 0;
+> +       int i;
+> +
+> +       for (i = 0; i < s->change.nr; i++) {
+> +               struct wt_status_change_data *d;
+> +               struct string_list_item *it;
+> +               it = &(s->change.items[i]);
+> +               d = it->util;
+> +               if (!d->index_status)
+> +                       continue;
+> +               if (!shown_header) {
+> +                       wt_status_print_cached_header(s);
+> +                       s->commitable = 1;
+> +                       shown_header = 1;
+> +               }
+> +               wt_status_print_change_data(s, WT_STATUS_UPDATED,
+> +                               d->index_status,
+> +                               d->head_path ? d->head_path : it->string,
+> +                               it->string,
+> +                               d->index_score);
+> +       }
+> +       if (shown_header)
+> +               wt_status_print_trailer(s);
+> +}
+> +
+> +/*
+> + * -1 : has delete
+> + *  0 : no change
+> + *  1 : some change but no delete
+> + */
+> +static int wt_status_check_worktree_changes(struct wt_status *s)
+> +{
+> +       int i;
+> +       int changes = 0;
+> +
+> +       for (i = 0; i < s->change.nr; i++) {
+> +               struct wt_status_change_data *d;
+> +               d = s->change.items[i].util;
+> +               if (!d->worktree_status)
+> +                       continue;
+> +               changes = 1;
+> +               if (d->worktree_status == DIFF_STATUS_DELETED)
+> +                       return -1;
+> +       }
+> +       return changes;
+> +}
+> +
+>  static void wt_status_print_changed(struct wt_status *s)
+>  {
+> -       struct rev_info rev;
+> -       init_revisions(&rev, "");
+> -       setup_revisions(0, NULL, &rev, NULL);
+> -       rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+> -       rev.diffopt.format_callback = wt_status_print_changed_cb;
+> -       rev.diffopt.format_callback_data = s;
+> -       run_diff_files(&rev, 0);
+> +       int i;
+> +       int worktree_changes = wt_status_check_worktree_changes(s);
+> +
+> +       if (!worktree_changes)
+> +               return;
+> +
+> +       wt_status_print_dirty_header(s, worktree_changes < 0);
+> +
+> +       for (i = 0; i < s->change.nr; i++) {
+> +               struct wt_status_change_data *d;
+> +               struct string_list_item *it;
+> +               it = &(s->change.items[i]);
+> +               d = it->util;
+> +               if (!d->worktree_status)
+> +                       continue;
+> +               wt_status_print_change_data(s, WT_STATUS_CHANGED,
+> +                               d->worktree_status,
+> +                               it->string,
+> +                               it->string,
+> +                               0);
+> +       }
+> +       wt_status_print_trailer(s);
+>  }
+>
+>  static void wt_status_print_submodule_summary(struct wt_status *s)
+> @@ -338,6 +461,8 @@ void wt_status_print(struct wt_status *s)
+>                        wt_status_print_tracking(s);
+>        }
+>
+> +       wt_status_collect_changes(s);
+> +
+>        if (s->is_initial) {
+>                color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "#");
+>                color_fprintf_ln(s->fp, color(WT_STATUS_HEADER), "# Initial commit");
+> diff --git a/wt-status.h b/wt-status.h
+> index 78add09..00508c3 100644
+> --- a/wt-status.h
+> +++ b/wt-status.h
+> @@ -18,6 +18,13 @@ enum untracked_status_type {
+>  };
+>  extern enum untracked_status_type show_untracked_files;
+>
+> +struct wt_status_change_data {
+> +       int worktree_status;
+> +       int index_status;
+> +       int index_score;
+> +       char *head_path;
+> +};
+> +
+>  struct wt_status {
+>        int is_initial;
+>        char *branch;
+> @@ -33,6 +40,7 @@ struct wt_status {
+>        const char *index_file;
+>        FILE *fp;
+>        const char *prefix;
+> +       struct string_list change;
+>  };
+>
+>  int git_status_config(const char *var, const char *value, void *cb);
+> @@ -40,5 +48,6 @@ extern int wt_status_use_color;
+>  extern int wt_status_relative_paths;
+>  void wt_status_prepare(struct wt_status *s);
+>  void wt_status_print(struct wt_status *s);
+> +void wt_status_collect_changes(struct wt_status *s);
+>
+>  #endif /* STATUS_H */
+>
