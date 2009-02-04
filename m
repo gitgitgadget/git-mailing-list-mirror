@@ -1,86 +1,71 @@
-From: Aristotle Pagaltzis <pagaltzis@gmx.de>
-Subject: Re: Support various HTTP authentication methods
-Date: Thu, 5 Feb 2009 00:25:55 +0100
-Message-ID: <20090204232555.GA2358@klangraum.plasmasturm.org>
-References: <1233556274-1354-1-git-send-email-gitster@pobox.com> <1233556274-1354-2-git-send-email-gitster@pobox.com> <1233556274-1354-3-git-send-email-gitster@pobox.com> <1233556274-1354-4-git-send-email-gitster@pobox.com> <20090204185109.GA31250@klangraum.plasmasturm.org> <alpine.DEB.1.10.0902042307540.3383@yvahk2.pbagnpgbe.fr>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: What is not in git.git
+Date: Thu, 05 Feb 2009 08:35:45 +0900
+Message-ID: <20090205083545.6117@nanako3.lavabit.com>
+References: <20090205054918.6117@nanako3.lavabit.com> <7vy6wllswz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 05 00:27:42 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, ecashin@coraid.com, arjen@yaph.org,
+	joey@kitenet.net, benny.kra@googlemail.com, pw@padd.com,
+	simon@lst.de, jidanni@jidanni.org, dirker@gmail.com,
+	hoxu@users.sf.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 00:38:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUr9g-0007Dq-6W
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 00:27:40 +0100
+	id 1LUrK7-0002Cz-R2
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 00:38:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752275AbZBDX0N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Feb 2009 18:26:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752240AbZBDX0N
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 18:26:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33223 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752131AbZBDX0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 18:26:12 -0500
-Received: (qmail invoked by alias); 04 Feb 2009 23:26:10 -0000
-Received: from static-87-79-236-202.netcologne.de (EHLO klangraum) [87.79.236.202]
-  by mail.gmx.net (mp008) with SMTP; 05 Feb 2009 00:26:10 +0100
-X-Authenticated: #163624
-X-Provags-ID: V01U2FsdGVkX1/2bLprmeD2tLfcdGHVaAMMp8UKY47Uc6ea0u1bl/
-	ACJcBsAuXtuVwd
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.10.0902042307540.3383@yvahk2.pbagnpgbe.fr>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+	id S1752163AbZBDXgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 18:36:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756616AbZBDXgf
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 18:36:35 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:60767 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752275AbZBDXge (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 18:36:34 -0500
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id BDA54C86B2;
+	Wed,  4 Feb 2009 17:36:33 -0600 (CST)
+Received: from 2653.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id O3QD0ZPJ87ZE; Wed, 04 Feb 2009 17:36:33 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=g4OMOaz8tdqoQpwvtJHkrwoKCk2kqvYEBPL9GbJYUgF86CYAj8+tJ4Y44iU9zIJK7pPDP/VfvOrRgbfLL/6Ij/ZdDsNtAWoblDNykVC7HceKs2I6EuAgF34QxF+BAKSdcV6eflJYmuYW/r31pd/lIQMSUyXfntRENaL+aNoiGKQ=;
+  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7vy6wllswz.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108465>
 
-* Daniel Stenberg <daniel@haxx.se> [2009-02-04 23:15]:
-> On Wed, 4 Feb 2009, Aristotle Pagaltzis wrote:
->> Does that have to do with something being missing in the
->> Digest support or is that operator error? If the latter, what
->> might be the culprit =E2=80=93 how do I diagnose it?
+Quoting Junio C Hamano <gitster@pobox.com> writes:
+
+> Nanako Shiraishi <nanako3@lavabit.com> writes:
 >
-> Can you use curl the command line tool with Digest successfully
-> against some of those URLs?
+>>  5. From: jidanni@jidanni.org
+>>     Subject: [PATCH] Documentation/git-show-branch.txt: compact -g
+>>     Date: Tue,  6 Jan 2009 11:14:02 +0800
+>>     Message-Id: <1231211642-14463-1-git-send-email-jidanni@jidanni.org>
+>>
+>>     I couldn't figure out what "compact -g" meant but other than that I
+>>     think this patch is correct. Perhaps Junio has the author in his mail
+>>     ignore list?
+>
+> I do not have anybody in my killfile.  I think this patch is Ok with a
+> minor fix to log as you say.  How about
+>
+> 	git-show-branch doc: show -g as synonym to --reflog in the list
 
-Yes, that works.
+That is very readable.
 
-I have cross-checked the error and access log and here is what
-happens =E2=80=93 I have marked the requests that are sent with correct
-credentials with a `@` and those which are sent with mismatched
-credentials with a `#`:
+> Thanks.  I wish there were more like you.
 
-GET   /x.git/info/refs                                         : 401
-GET @ /x.git/info/refs                                         : 200
-GET # /x.git/HEAD                                              : 400
-GET   /x.git/objects/7e/c6910c4d1733d575f955063fd52b2b0ae7ca5b : 401
-GET @ /x.git/objects/7e/c6910c4d1733d575f955063fd52b2b0ae7ca5b : 404
-GET @ /x.git/objects/info/http-alternates                      : 404
-GET @ /x.git/objects/info/alternates                           : 404
-GET   /x.git/objects/info/packs                                : 401
-GET @ /x.git/objects/info/packs                                : 200
-GET # /x.git/objects/pack/pack-a9bed5817173acdf0a2dc86ddaf36c4f0c7f9ea3=
-=2Eidx : 400
+You're welcome.
 
-Repeating the clone always yiels this exact sequence.
-
-If I use `curl` manually to fetch those URIs, they work just fine.
-
-> What libcurl version are you using?
-
-    $ curl --version
-    curl 7.16.2 (i686-pc-linux-gnu) libcurl/7.16.2 OpenSSL/0.9.8g
-    zlib/1.2.3 libidn/1.5
-    Protocols: tftp ftp telnet dict ldap http file https ftps
-    Features: IDN IPv6 Largefile NTLM SSL libz
-
-Regards,
---=20
-Aristotle Pagaltzis // <http://plasmasturm.org/>
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
