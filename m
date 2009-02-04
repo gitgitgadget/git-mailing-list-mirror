@@ -1,72 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] filter-branch: do not consider diverging submodules a
- 'dirty worktree'
-Date: Wed, 4 Feb 2009 19:15:53 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902041915070.22763@intel-tinevez-2-302>
-References: <cover.1233758410u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0902041540130.10279@pacific.mpi-cbg.de> <7vvdrqunog.fsf@gitster.siamese.dyndns.org> <4989CF79.2070209@viscovery.net> <7vvdrqt74k.fsf@gitster.siamese.dyndns.org>
+From: Tommi Virtanen <tv@eagain.net>
+Subject: Re: is gitosis secure?
+Date: Wed, 4 Feb 2009 10:26:50 -0800
+Message-ID: <20090204182650.GC1970@eagain.net>
+References: <200812090956.48613.thomas@koch.ro> <1228813453.28186.73.camel@maia.lan> <873afgsul8.fsf@mid.deneb.enyo.de> <200901180650.06605.bss@iguanasuicide.net> <20090203213135.GA1970@eagain.net> <20090204121204.GA12393@cuci.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 04 19:17:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Wed Feb 04 19:28:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUmJa-0004uz-7x
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 19:17:34 +0100
+	id 1LUmTz-0000bJ-B5
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 19:28:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753706AbZBDSP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 13:15:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753528AbZBDSP5
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 13:15:57 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50400 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753511AbZBDSP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 13:15:57 -0500
-Received: (qmail invoked by alias); 04 Feb 2009 18:15:55 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp040) with SMTP; 04 Feb 2009 19:15:55 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18CxqM+NhMCflMG6ny8QQe+dG4zMWA0mc5al3HLPw
-	gYk8nRSd1a2xsU
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7vvdrqt74k.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1753093AbZBDS0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 13:26:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752700AbZBDS0w
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 13:26:52 -0500
+Received: from eagain.net ([208.78.102.120]:53617 "EHLO eagain.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752261AbZBDS0w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 13:26:52 -0500
+Received: from musti.eagain.net (unknown [208.79.94.252])
+	by eagain.net (Postfix) with ESMTPS id 786CE56688;
+	Wed,  4 Feb 2009 18:26:51 +0000 (UTC)
+Received: by musti.eagain.net (Postfix, from userid 1000)
+	id 7AC6D508013; Wed,  4 Feb 2009 10:26:50 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20090204121204.GA12393@cuci.nl>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108406>
 
-Hi,
+On Wed, Feb 04, 2009 at 01:12:04PM +0100, Stephen R. van den Berg wrote:
+> I installed gitosis a year ago.
+> Then I tried to audit the code.
+> I couldn't, the whole thing is too much spaghetti code.
 
-On Wed, 4 Feb 2009, Junio C Hamano wrote:
+Huh. It's about 1000 lines of python, with about 2000 lines of unit
+tests. It has 3 top-level operations: init, serve, run_hook. That
+still counts as "tiny" in my mind. I'm sorry if following the code was
+too hard. I guess there's no accounting for taste.
 
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
-> > Because if the repository is non-bare, then filter-branch updates the
-> > work-tree at the end of the run; we don't want to overwrite uncommitted
-> > work in this case.
-> >
-> > This behavior is a relic from cg-admin-rewritehist, I think. I've never
-> > found it useful.
-> 
-> Ok, I think "read-tree -m -u HEAD" at the end sort of makes sense, if you
-> filtered the branch you are currently sitting on.  Does that mean we do
-> not have to barf on dirtyness if we can tell if the filter-branch will not
-> touch the current branch at all?  Again, I am not suggesting it as an
-> improvement, but I am trying to see if I am talking a total nonsense.
+> Auditing gitosis turned out to be too painful to be worth the trouble,
+> so I reverted to a manually maintained git-shell solution which is so
+> simple that I can actually audit it, and therefore is provably secure
+> (which gitosis is not).
 
-That's correct.  Checking if we would touch the current branch is too 
-expensive here, that's why we don't do it.
+This word, "provably", tends to mean something else than what you use
+it for. Definitely a simple audit doesn't prove anything. Most
+real-world software is complex enough to be practically unprovable for
+anything.
 
-> Is the reason why you haven't found it is useful is because you never 
-> filter the current branch?
-
-Well, _I_ certainly do, and I find it very useful.
-
-Ciao,
-Dscho
+-- 
+:(){ :|:&};:
