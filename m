@@ -1,66 +1,54 @@
-From: Jeremy O'Brien <obrien654j@gmail.com>
-Subject: [BUG] git tab-completion gives error when "config" file exists in
-	current directory
-Date: Tue, 3 Feb 2009 22:24:31 -0500
-Message-ID: <20090204032431.GA25244@newo.ZoomTown.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: git gtk+/GNOME gui application: gitg
+Date: Wed, 04 Feb 2009 12:38:34 +0900
+Message-ID: <buohc3aooqt.fsf@dhlpc061.dev.necel.com>
+References: <1233432317.26364.5.camel@wren>
+	<498877A7.3050308@drmicha.warpmail.net>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 04 04:25:49 2009
+Cc: Jesse van den Kieboom <jesse@icecrew.nl>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Feb 04 04:40:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUYOa-0006pv-UW
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 04:25:49 +0100
+	id 1LUYce-00017F-5r
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 04:40:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751761AbZBDDYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Feb 2009 22:24:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751476AbZBDDYV
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 22:24:21 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:36106 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751358AbZBDDYV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Feb 2009 22:24:21 -0500
-Received: by qyk4 with SMTP id 4so3125743qyk.13
-        for <git@vger.kernel.org>; Tue, 03 Feb 2009 19:24:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mail-followup-to:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=F6zOxTIA0GZ0VZdRvBksuzSSlJ6I/iUPbEr02Z/Qm5c=;
-        b=qGDuCU6HLjx/kqksK52SH1HvWGX/vByUL8AeSsfM7LE2HzXYKo0WHDWcwDyJmOtML4
-         dFaCpYRSmGJAb1PPjPHJPW1AeRD49ZMicNyafznVo/YcaIvGy0/FQNVLCw4l06s42YFQ
-         O3NeHdeYBgtHoKZn7lwuZUBO0pwtQgHx7QexM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mail-followup-to:mime-version
-         :content-type:content-disposition:user-agent;
-        b=F6y447Ifr7XVxlYO3Clya/lCGrBQcATfcSAFVXAnumUEGgaOmOCWKQThZrVGLbjxxY
-         DbTDKOSBgxY3Ko7vPnh4p+XjHZV76JHYvZ7psXbrzK+e0q1pSDcJjWi0ttET8A8PjJ23
-         OlQ0z8AL0GCoDqiWHiLfb5nmNCxo3ws9EXxjM=
-Received: by 10.214.116.20 with SMTP id o20mr1374290qac.260.1233717857707;
-        Tue, 03 Feb 2009 19:24:17 -0800 (PST)
-Received: from newo.ZoomTown.com (WS1-DSL-208-102-255-127.fuse.net [208.102.255.127])
-        by mx.google.com with ESMTPS id 6sm1558549ywc.49.2009.02.03.19.24.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Feb 2009 19:24:17 -0800 (PST)
-Mail-Followup-To: Jeremy O'Brien <obrien654j@gmail.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752287AbZBDDix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Feb 2009 22:38:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752239AbZBDDiw
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Feb 2009 22:38:52 -0500
+Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:63733 "EHLO
+	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752175AbZBDDiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Feb 2009 22:38:52 -0500
+Received: from relay11.aps.necel.com ([10.29.19.46])
+	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n143cZDJ024088;
+	Wed, 4 Feb 2009 12:38:35 +0900 (JST)
+Received: from relay11.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay11.aps.necel.com with ESMTP; Wed, 4 Feb 2009 12:38:35 +0900
+Received: from dhlpc061 ([10.114.112.240] [10.114.112.240]) by relay11.aps.necel.com with ESMTP; Wed, 4 Feb 2009 12:38:35 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 06D6052E27C; Wed,  4 Feb 2009 12:38:34 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <498877A7.3050308@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Tue, 03 Feb 2009 17:58:15 +0100")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108291>
 
-If a file "config" is present in the current directory, and no
-.git/config or .gitconfig file exists, typing "git" and attempting tab
-completion of any of its commands will yield an odd error like
-"fatal: bad config file line 7 in config",
-as git tries to use this file as a git config file.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+> The current tk high score list according to git.or.cz, including yours:
 
-Cheers,
-Jeremy O'Brien
+"tk high score list"?
+
+-Miles
+
+-- 
+"I distrust a research person who is always obviously busy on a task."
+   --Robert Frosch, VP, GM Research
