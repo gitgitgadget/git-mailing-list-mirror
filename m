@@ -1,76 +1,61 @@
-From: Jesse van den Kieboom <jesse@icecrew.nl>
-Subject: Re: [PATCH 1/3] Fix "multi-character character constant" compile
- warning
-Date: Wed, 04 Feb 2009 12:50:56 +0100
-Message-ID: <1233748256.7594.3.camel@wren>
-References: <20090203130818.GA20359@neumann>
-	 <1233666531-21589-1-git-send-email-szeder@ira.uka.de>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: is gitosis secure?
+Date: Wed, 4 Feb 2009 13:12:04 +0100
+Message-ID: <20090204121204.GA12393@cuci.nl>
+References: <200812090956.48613.thomas@koch.ro> <1228813453.28186.73.camel@maia.lan> <873afgsul8.fsf@mid.deneb.enyo.de> <200901180650.06605.bss@iguanasuicide.net> <20090203213135.GA1970@eagain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder@fzi.de>
-To: SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed Feb 04 12:52:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	Florian Weimer <fw@deneb.enyo.de>, git@vger.kernel.org
+To: Tommi Virtanen <tv@eagain.net>
+X-From: git-owner@vger.kernel.org Wed Feb 04 13:13:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUgIt-0001qi-Ei
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 12:52:27 +0100
+	id 1LUgdP-0000CP-25
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 13:13:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752415AbZBDLvB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Feb 2009 06:51:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752264AbZBDLvA
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 06:51:00 -0500
-Received: from novowork.com ([87.230.85.62]:43925 "EHLO novowork.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752041AbZBDLu7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 06:50:59 -0500
-Received: from [128.178.246.242] (ls-in-242.epfl.ch [128.178.246.242])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by novowork.com (Postfix) with ESMTPSA id 8F4E436709FC;
-	Wed,  4 Feb 2009 12:50:57 +0100 (CET)
-In-Reply-To: <1233666531-21589-1-git-send-email-szeder@ira.uka.de>
-X-Mailer: Evolution 2.24.2 
+	id S1752605AbZBDMMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 07:12:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750892AbZBDMMK
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 07:12:10 -0500
+Received: from aristoteles.cuci.nl ([212.125.128.18]:48890 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750782AbZBDMMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 07:12:09 -0500
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 4EB9E542D; Wed,  4 Feb 2009 13:12:04 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20090203213135.GA1970@eagain.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108340>
 
-Op dinsdag 03-02-2009 om 14:08 uur [tijdzone +0100], schreef SZEDER
-G=C3=A1bor:
-> From: SZEDER G=C3=A1bor <szeder@fzi.de>
->=20
-> ... that was caused by a short command line option.
->=20
-> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
-> ---
->  gitg/gitg.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->=20
-> diff --git a/gitg/gitg.c b/gitg/gitg.c
-> index 1b33294..69c5b56 100644
-> --- a/gitg/gitg.c
-> +++ b/gitg/gitg.c
-> @@ -15,7 +15,7 @@ static gboolean commit_mode =3D FALSE;
-> =20
->  static GOptionEntry entries[] =3D=20
->  {
-> -	{ "commit", '-c', 0, G_OPTION_ARG_NONE, &commit_mode, N_("Start git=
-g in commit mode") },=20
-> +	{ "commit", 'c', 0, G_OPTION_ARG_NONE, &commit_mode, N_("Start gitg=
- in commit mode") },
->  	{ NULL }
->  };
+Tommi Virtanen wrote:
+>Summary: I fully expect gitosis to be more secure than a manually
+>maintained git-shell over SSH setup, mostly because it can make
+>human errors more rare.
 
-This has already been fixed.
+I installed gitosis a year ago.
+Then I tried to audit the code.
+I couldn't, the whole thing is too much spaghetti code.
+I.e. the individual python routines might be well written, but there
+is no concise overview in 10 lines max which can explain to me what
+happens which might or might not open up security holes.  There are too
+many pieces of code depending on each other.
 
-
---=20
-Jesse van den Kieboom
-
-Personal: http://www.icecrew.nl
-Professional: http://www.novowork.com
+I.e. if you trust the author not to have made any mistakes, then it
+is probably secure.
+Auditing gitosis turned out to be too painful to be worth the trouble,
+so I reverted to a manually maintained git-shell solution which is so
+simple that I can actually audit it, and therefore is provably secure
+(which gitosis is not).
+-- 
+Sincerely,
+           Stephen R. van den Berg.
+Humor in the Court:  Q: What happened then?  A: He told me, he says,
+"I have to kill you because you can identify me."  Q: Did he kill you?  A: No.
