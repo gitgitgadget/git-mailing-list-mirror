@@ -1,58 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: GIT over ssh with identity file
-Date: Wed, 04 Feb 2009 01:25:06 -0800
-Message-ID: <7veiyezh8t.fsf@gitster.siamese.dyndns.org>
-References: <21826348.post@talk.nabble.com>
- <7vbpti1tnd.fsf@gitster.siamese.dyndns.org> <vpqhc3aa8m0.fsf@bauges.imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/2] fix typo in Documentation
+Date: Wed, 04 Feb 2009 01:26:09 -0800 (PST)
+Message-ID: <m38womwo2b.fsf@localhost.localdomain>
+References: <1233781241-721-1-git-send-email-guanqun.lu@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: oliverw <oliver@weichhold.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 04 10:26:56 2009
+Cc: git@vger.kernel.org
+To: Guanqun Lu <guanqun.lu@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 10:27:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUe1z-0006d4-QQ
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 10:26:52 +0100
+	id 1LUe2m-0006wT-0j
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 10:27:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752175AbZBDJZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 04:25:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbZBDJZP
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 04:25:15 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60882 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751604AbZBDJZO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 04:25:14 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B40AC2A68A;
-	Wed,  4 Feb 2009 04:25:11 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DC53F2A667; Wed, 
- 4 Feb 2009 04:25:07 -0500 (EST)
-In-Reply-To: <vpqhc3aa8m0.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Wed, 04 Feb 2009 09:50:47 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B8E4A958-F29D-11DD-9259-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1752144AbZBDJ0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 04:26:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752061AbZBDJ0N
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 04:26:13 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:60961 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751698AbZBDJ0L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 04:26:11 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so1157697fgg.17
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 01:26:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=atkBEyIBfAPfHh/Dqb2VrHufteIzgciyiGZAZDbd3KM=;
+        b=EkazYSnNB43LJa7pLe0a3ItR+twPb7pdkgfOKt+qAjCuj9ABIlhzjRxqJo7GV9ijmT
+         8yoVfrM298RM5PG3OTVXePmWnQbQUIygBWGwFUU9QSo5yd9xh6fiflq2/bOBWazIDpBE
+         SHhgpxBnlDUjO1JIiFYnIdzfRovDDcsUTNr4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=c+QdRNO3X3RUjR2OaoeZkgjM9ec5QUt8VDdKg0BHFmpEgecf/12/3JcRB0FPyTS4q7
+         mqDJT7RrymLOOqCjOb0d0r82Vuc2D9KJpLGRXkFFK9mAoX4rGedht+PGL2GChDeHsEZa
+         r2+Q56x18dYAS68TnRwryDhoyvdpo3vHtSYLY=
+Received: by 10.86.97.7 with SMTP id u7mr1701041fgb.34.1233739570059;
+        Wed, 04 Feb 2009 01:26:10 -0800 (PST)
+Received: from localhost.localdomain (abvm245.neoplus.adsl.tpnet.pl [83.8.210.245])
+        by mx.google.com with ESMTPS id d6sm6397079fga.59.2009.02.04.01.26.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 04 Feb 2009 01:26:09 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n149Q6u2029880;
+	Wed, 4 Feb 2009 10:26:06 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n149Q4Lf029876;
+	Wed, 4 Feb 2009 10:26:04 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1233781241-721-1-git-send-email-guanqun.lu@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108324>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Guanqun Lu <guanqun.lu@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>     $ cat >>$HOME/.ssh/config <<\EOF
->>     Host homer-at-foo
->>       Hostname foo.bar.com
->>       User homer
->>       IdentityFile ~/.ssh/homer-at-foo.pub
->
-> (I think you have an extra .pub here, the identity file should be the
-> private key).
+> Signed-off-by: Guanqun Lu <guanqun.lu@gmail.com>
+> ---
+>  Documentation/technical/api-strbuf.txt |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
 
-Yeah, you are right.  I am too tired and should have gone to bed 90
-minutes ago.
+Minor nit: I would add _where_ did you fix typy, i.e. instead of just
+  fix typo in Documentation
+I'd use
+  fix typo in strbuf API documentation
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
