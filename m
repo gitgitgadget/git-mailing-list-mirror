@@ -1,8 +1,8 @@
 From: Thomas Koch <thomas@koch.ro>
-Subject: see commit messages on git pull
-Date: Wed, 4 Feb 2009 12:45:10 +0100
+Subject: jabber notifications for git commits
+Date: Wed, 4 Feb 2009 12:43:36 +0100
 Organization: Young Media Concepts
-Message-ID: <200902041245.11242.thomas@koch.ro>
+Message-ID: <200902041243.36507.thomas@koch.ro>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="us-ascii"
@@ -13,24 +13,23 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUgrn-0004lj-KO
+	id 1LUgro-0004lj-BR
 	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 13:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752026AbZBDM0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 07:26:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751572AbZBDM0r
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 07:26:47 -0500
-Received: from koch.ro ([195.34.83.107]:47585 "EHLO
+	id S1752150AbZBDM0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 07:26:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752075AbZBDM0w
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 07:26:52 -0500
+Received: from koch.ro ([195.34.83.107]:47616 "EHLO
 	ve825703057.providerbox.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751274AbZBDM0q (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Feb 2009 07:26:46 -0500
-X-Greylist: delayed 2584 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Feb 2009 07:26:46 EST
+	by vger.kernel.org with ESMTP id S1751274AbZBDM0t (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Feb 2009 07:26:49 -0500
 Received: from 80-218-105-106.dclient.hispeed.ch ([80.218.105.106] helo=jona.localnet)
 	by ve825703057.providerbox.net with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <thomas@koch.ro>)
-	id 1LUgBq-0007vU-7f
-	for git@vger.kernel.org; Wed, 04 Feb 2009 12:45:10 +0100
+	id 1LUgAK-0005dX-BU
+	for git@vger.kernel.org; Wed, 04 Feb 2009 12:43:36 +0100
 User-Agent: KMail/1.11.0 (Linux/2.6.26-1-amd64; KDE/4.2.0; x86_64; ; )
 X-Face: ##Diipbu!WHqpJ%Eb+k:m;]n%VcrM\f\MJ-:0\<0.r?ULf7g"kC!"Cg,o;D]
 Content-Disposition: inline
@@ -38,12 +37,13 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108343>
 
-I'd like to see the commit messages of the fetched commits, when I do
-git pull. Is that possible?
+Is it possible to integrate jabber and git so that I get notified when
+new commits are available on our central git repo host?
+I need to install some hook on the git server, of course.
 
-It would also be fine to have sth. like git log --since-last-pull ?
+We use gitosis.
 
 Best regards,
 -- 
