@@ -1,89 +1,120 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git gtk+/GNOME gui application: gitg
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: retrospective move
 Date: Wed, 4 Feb 2009 13:33:38 +0100
-Message-ID: <200902041333.40563.jnareb@gmail.com>
-References: <1233432317.26364.5.camel@wren> <m3hc3bwj5b.fsf@localhost.localdomain> <1233748909.7594.14.camel@wren>
+Message-ID: <200902041333.40776.trast@student.ethz.ch>
+References: <21826423.post@talk.nabble.com> <200902041017.47564.trast@student.ethz.ch> <adf1fd3d0902040231h2fb6f199oee143e36a7501a2a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jesse van den Kieboom <jesse@icecrew.nl>
-X-From: git-owner@vger.kernel.org Wed Feb 04 13:35:30 2009
+Content-Type: multipart/signed;
+  boundary="nextPart3089923.KFsOVQloF8";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: jemmyw <jeremy@boost.co.nz>, git@vger.kernel.org
+To: Santi =?utf-8?q?B=C3=A9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Wed Feb 04 13:36:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUgyM-0007HI-39
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 13:35:18 +0100
+	id 1LUgyW-0007L4-Jc
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 13:35:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752684AbZBDMdw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Feb 2009 07:33:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752656AbZBDMdw
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 07:33:52 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:14824 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752605AbZBDMdv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 07:33:51 -0500
-Received: by ug-out-1314.google.com with SMTP id 39so76964ugf.37
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 04:33:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=hipUCTcFyyx8E9+4REp+Gq4+egfORePhR+OtMPo7NZk=;
-        b=mSgClthd1oIfd9Nk8ew1PjUvHskW/cYhp1DLQutUmJCXeJ4R84OVmjl+NMa6zevPbM
-         jC74q5mHsMfTxPMw7rLH5rpbSMyXe7fKTjmoN6/t9kNV5q7O6+275V0hU2aXyUvKxiQp
-         MMDsDmezVFRFAwvr3pakWbjQsS9/yLNzWN/7c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=vLwGV83jJEV1gmMlndrcVQAv9p7i+oeDbN0LOt01XZ1hChe9a+hs3j0bHWPjTB7NuY
-         0+p0EQBU+qhFqQUsBDEmZBN9iXkLr6E93PcNr4NqyrDI6dSUU1CcwKNYVfuleRjD9Vox
-         mWoXXopSCxfyPZUc49H5RpIKKhhUWgRzGpwrI=
-Received: by 10.66.232.10 with SMTP id e10mr3311757ugh.70.1233750829641;
-        Wed, 04 Feb 2009 04:33:49 -0800 (PST)
-Received: from ?192.168.1.13? (abvm245.neoplus.adsl.tpnet.pl [83.8.210.245])
-        by mx.google.com with ESMTPS id j27sm2546009ugc.12.2009.02.04.04.33.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Feb 2009 04:33:49 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1233748909.7594.14.camel@wren>
-Content-Disposition: inline
+	id S1752730AbZBDMeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 07:34:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752698AbZBDMeA
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 07:34:00 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:16561 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752656AbZBDMd7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 07:33:59 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 4 Feb 2009 13:33:57 +0100
+Received: from thomas.localnet ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 4 Feb 2009 13:33:57 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.25.20-0.1-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <adf1fd3d0902040231h2fb6f199oee143e36a7501a2a@mail.gmail.com>
+X-OriginalArrivalTime: 04 Feb 2009 12:33:57.0636 (UTC) FILETIME=[D96E3440:01C986C4]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108346>
 
-Dnia =B6roda 4. lutego 2009 13:01, Jesse van den Kieboom napisa=B3:
-> Op dinsdag 03-02-2009 om 09:00 uur [tijdzone -0800], schreef Jakub
-> Narebski:
-> > Jesse van den Kieboom <jesse@icecrew.nl> writes:
-> >=20
-> > > I have been developing a gui application for git for gtk+/GNOME b=
-ased on
-> > > GitX (which in turn is based on gitk). I feel that it's reaching =
-the
-> > > point where it might potentially be useful for other people to us=
-e.
-> > [...]
+--nextPart3089923.KFsOVQloF8
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> > If you feel it is ready to be used (or at least tested), could you =
-add
-> > short information about this project in "Graphical Interfaces" sect=
-ion
-> > of http://git.or.cz/gitwiki/InterfacesFrontendsAndTools (preferable
-> > not using GUI edit, as it screws up formatting, unfortunately)?
+Santi B=E9jar wrote:
+> 2009/2/4 Thomas Rast <trast@student.ethz.ch>:
+> > jemmyw wrote:
+> >>
+> >> Hi. Awhile ago I copied some files in my local repo then commited. In =
+another
+> >> commit I deleted the original files, so essentially I did a mv that git
+> >> doesn't know about. Now I'm trying to merge from another branch where
+> >> changes have happened to the files in their original locations, and it=
+'s
+> >> making the merge somewhat difficult. Is there a way to ease this?
+> >
+> > Git never "knows" about a move, it only detects them after the fact.
+> > A corollary of this is that 'git mv a b' is more or less the same as
+> > 'cp a b; git rm a; git add b'.
+> >
+> > Now since you have a copy followed by a removal in two separate
+> > commits, the merge logic won't treat this as a rename.
 >=20
-> Done.
+> I don't think it holds. Git only sees the endpoints and the bases, it
+> does not matter if the "move" was actually two commits. Maybe they
+> have changed dramatically and git is not able to detect the rename (or
+> the files are small). Another possible cause could be that you have a
+> lot of renames (see config merge.renamelimit).
 
-Thanks a lot.
+Hmm, you're right.  I stand corrected.
 
-P.S. A reminder: as you would not do a commit without commit message,
-please remember to enter 'comment' field when editing wiki.  TIA.
---=20
-Jakub Narebski
-Poland
+Here's a sequence of commands that makes a test case:
+
+  git init
+  seq 1 10 > A
+  git add A
+  git commit -m initial
+  seq 11 15 >> A
+  git commit -m second A
+  seq 16 20 >> A
+  git commit -m third
+  git checkout -b side HEAD~2
+  cp A B
+  git add B
+  git commit -m copy
+  seq 3 10 > B               # <--
+  git commit -m edit B
+  git rm A
+  git commit -m delete
+
+Then running
+
+  git merge master
+
+goes through cleanly, but changing the line indicated above to 'seq 5
+10' makes it less similar, falling through the detection and causing a
+conflict.  The minimum required similarity for merges does not seem to
+be configurable unfortunately.
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart3089923.KFsOVQloF8
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkmJiyQACgkQqUud07tmzP0XagCfZ5xOx02WVNTeDfLfh2onkBOJ
++PcAmwUfd0sfihNs7IxLRK8SW0wccTC8
+=wA4U
+-----END PGP SIGNATURE-----
+
+--nextPart3089923.KFsOVQloF8--
