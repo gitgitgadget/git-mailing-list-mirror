@@ -1,192 +1,79 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] builtin-remote: make rm operation safer in mirrored repository
-Date: Wed,  4 Feb 2009 11:06:07 -0500
-Message-ID: <1233763567-6155-1-git-send-email-jaysoffian@gmail.com>
-References: <76718490902040756m1f5c6f37o45865c51ad1a2e6d@mail.gmail.com>
+From: Sergio Callegari <sergio.callegari@gmail.com>
+Subject: Question about --tree-filter
+Date: Wed, 4 Feb 2009 16:08:05 +0000 (UTC)
+Message-ID: <loom.20090204T155824-858@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 04 17:09:19 2009
+X-From: git-owner@vger.kernel.org Wed Feb 04 17:11:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUkHv-0007oQ-35
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 17:07:43 +0100
+	id 1LUkJy-0000Wr-OR
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 17:09:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754554AbZBDQGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 11:06:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753926AbZBDQGS
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 11:06:18 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:37460 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752885AbZBDQGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 11:06:17 -0500
-Received: by qyk4 with SMTP id 4so3455535qyk.13
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 08:06:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=zAnzSf9gf1GwtrVmqBoIszYLLziPG9doAKjeUAKJ/qw=;
-        b=U9Cbz2zSGdQq9ucrqBDNWxT5xuoHOLWSuV9yUyfyuA1FiuMWy1H0cP4ncgBrPjjtNv
-         boQluLLONK0nYc0cJTcbyrmmnZDbei/Rh30gJNo0TsY3cWQj/xKO0x9/pLpuoJaAudGp
-         rBCxYpVvkWo3i4ctWJp12YGUb9tzim0GmxHiM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=Ps6H/RsBFNyPY6uCXBCjnjk/Wdymk2E/d4PgRBzpU1FpLNet69ynqeLUwLQKqMwsCn
-         +aDaLmbi52v+prOIsJdGEGgK46MwUe9RcnCQQwKEYCVrsEmWDufnzf27FjFrQuYBwB+w
-         NIWFrTa/IMDQioXyw7gRBGaDK/F7qU3SvbiCo=
-Received: by 10.214.242.13 with SMTP id p13mr10713994qah.75.1233763570553;
-        Wed, 04 Feb 2009 08:06:10 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id 7sm234795qwf.9.2009.02.04.08.06.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Feb 2009 08:06:09 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.2.322.g9a647
-In-Reply-To: <76718490902040756m1f5c6f37o45865c51ad1a2e6d@mail.gmail.com>
+	id S1754832AbZBDQIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 11:08:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752389AbZBDQIW
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 11:08:22 -0500
+Received: from main.gmane.org ([80.91.229.2]:40555 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751920AbZBDQIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 11:08:22 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LUkIT-0000CY-C7
+	for git@vger.kernel.org; Wed, 04 Feb 2009 16:08:17 +0000
+Received: from mars-fw.arces.unibo.it ([137.204.143.2])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 16:08:17 +0000
+Received: from sergio.callegari by mars-fw.arces.unibo.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 16:08:17 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 137.204.143.2 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.5) Gecko/2008121621 Ubuntu/8.04 (hardy) Firefox/3.0.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108388>
 
-"git remote rm <repo>" is happy to remove non-remote refs (and their
-reflogs in the case of branches). This may be okay if the repository truely is a mirror, but if the
-user had done "git remote add --mirror <repo>" by accident and was just
-undoing their mistake, then they are left in a situation that is difficult to
-recover from.
+Hi,
 
-After this commit, "git remote rm" skips over non-remote refs. The user is
-advised on how remove branches using "git branch -d", which itself has nice
-safety checks wrt to branch removal lacking from "git remote rm". Non-remote
-non-branch refs are skipped silently.
+in working with the "rezip" filter for the efficient git management of
+openoffice, zip and docx files, I am encountering the following problem.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
-On Wed, Feb 4, 2009 at 10:56 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> In particular though, I noticed that w/o this check, I was emitting an
-> incorrect message about anything under refs/tags. I thought about
-> saying "and you can clean up these ignored tags like so", but that is
-> likely to emit a huge number of messages, so I thought it best just to
-> silently ignore non-remote non-branch refs. Perhaps I should better
-> explain that in a code comment.
+Suppose that you have an existing repository and that you want to convert it
+into a repository using the rezip filters: git filter-branch should be the tool
+to do the conversion.
 
-I think I made what's going on clearer, assuming this is what we want to do.
-Slightly revised the commit message.
+Initially I believed that once set up the appropriate .git/config filter entries
+and a .git/info/attributes file tying the filter to the appropriate file types,
+it would have been enough to
 
-This thread is getting sotra long, so here's the gmane threaded view for
-easier following:
+git filter-branch --tree-filter true tag-name-filter cat
 
-http://thread.gmane.org/gmane.comp.version-control.git/107982/
+to do the conversion.
+This is also what I suggested in my original post about the rezip script.
 
- builtin-remote.c  |   29 +++++++++++++++++++++++++++--
- t/t5505-remote.sh |   26 ++++++++++++++++++++++++++
- 2 files changed, 53 insertions(+), 2 deletions(-)
+Unfortunately, this does not seem to work as expected.  Not all files get
+rewritten as filtered blobs.  The only way to do the right job seems to use a
+tree-filter that touches every single file in the project.
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 21885fb..db18bcf 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -298,7 +298,7 @@ static int add_known_remote(struct remote *remote, void *cb_data)
- 
- struct branches_for_remote {
- 	struct remote *remote;
--	struct string_list *branches;
-+	struct string_list *branches, *skipped;
- 	struct known_remotes *keep;
- };
- 
-@@ -323,6 +323,16 @@ static int add_branch_for_removal(const char *refname,
- 			return 0;
- 	}
- 
-+	/* don't delete non-remote refs */
-+	if (prefixcmp(refname, "refs/remotes")) {
-+		/* advise user how to delete local branches */
-+		if (!prefixcmp(refname, "refs/heads/"))
-+			string_list_append(abbrev_branch(refname),
-+					   branches->skipped);
-+		/* silently skip over other non-remote refs */
-+		return 0;
-+	}
-+
- 	/* make sure that symrefs are deleted */
- 	if (flags & REF_ISSYMREF)
- 		return unlink(git_path("%s", refname));
-@@ -542,7 +552,10 @@ static int rm(int argc, const char **argv)
- 	struct strbuf buf = STRBUF_INIT;
- 	struct known_remotes known_remotes = { NULL, NULL };
- 	struct string_list branches = { NULL, 0, 0, 1 };
--	struct branches_for_remote cb_data = { NULL, &branches, &known_remotes };
-+	struct string_list skipped = { NULL, 0, 0, 1 };
-+	struct branches_for_remote cb_data = {
-+		NULL, &branches, &skipped, &known_remotes
-+	};
- 	int i, result;
- 
- 	if (argc != 2)
-@@ -590,6 +603,18 @@ static int rm(int argc, const char **argv)
- 		result = remove_branches(&branches);
- 	string_list_clear(&branches, 1);
- 
-+	if (skipped.nr) {
-+		fprintf(stderr, skipped.nr == 1 ?
-+			"Note: A non-remote branch was not removed; "
-+			"to delete it, use:\n" :
-+			"Note: Non-remote branches were not removed; "
-+			"to delete them, use:\n");
-+		for (i = 0; i < skipped.nr; i++)
-+			fprintf(stderr, "  git branch -d %s\n",
-+				skipped.items[i].string);
-+	}
-+	string_list_clear(&skipped, 0);
-+
- 	return result;
- }
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 1f59960..bc5b7ce 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -107,6 +107,32 @@ test_expect_success 'remove remote' '
- )
- '
- 
-+test_expect_success 'remove remote protects non-remote branches' '
-+(
-+	cd test &&
-+	(cat >expect1 <<EOF
-+Note: A non-remote branch was not removed; to delete it, use:
-+  git branch -d master
-+EOF
-+    cat >expect2 <<EOF
-+Note: Non-remote branches were not removed; to delete them, use:
-+  git branch -d foobranch
-+  git branch -d master
-+EOF
-+) &&
-+	git tag footag
-+	git config --add remote.oops.fetch "+refs/*:refs/*" &&
-+	git remote rm oops 2>actual1 &&
-+	git branch foobranch &&
-+	git config --add remote.oops.fetch "+refs/*:refs/*" &&
-+	git remote rm oops 2>actual2 &&
-+	git branch -d foobranch &&
-+	git tag -d footag &&
-+	test_cmp expect1 actual1 &&
-+	test_cmp expect2 actual2
-+)
-+'
-+
- cat > test/expect << EOF
- * remote origin
-   URL: $(pwd)/one
--- 
-1.6.1.2.322.g9a647
+Any idea why it is so?
+
+Also this is not very nice, because it makes the filter-branch result in a huge
+amount of work. In other terms, the rezip blob rewriting gets called many many
+times more than needed with this technique.
+
+Does anybody have some suggestion of a tree filter that would be both "safe" and
+"efficient" ?
+
+Thanks
+
+Sergio 
