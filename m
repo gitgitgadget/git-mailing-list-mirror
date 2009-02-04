@@ -1,71 +1,76 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH/RFC] More friendly message when locking the index fails.
-Date: Wed, 4 Feb 2009 12:50:06 +0100
-Message-ID: <bd6139dc0902040350n3af5d37ctc6976fd77671fb82@mail.gmail.com>
-References: <vpqljsma99t.fsf@bauges.imag.fr>
-	 <1233741505-24020-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Jesse van den Kieboom <jesse@icecrew.nl>
+Subject: Re: git gtk+/GNOME gui application: gitg
+Date: Wed, 04 Feb 2009 12:48:34 +0100
+Message-ID: <1233748114.7594.0.camel@wren>
+References: <1233432317.26364.5.camel@wren>
+	 <94a0d4530902032339p365df42i2b8f235430a68fd5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 04 12:51:54 2009
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 12:52:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUgIA-0001dv-Ob
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 12:51:43 +0100
+	id 1LUgIQ-0001iG-Dc
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 12:51:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459AbZBDLuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 06:50:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751057AbZBDLuJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 06:50:09 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:26448 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750837AbZBDLuI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 06:50:08 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so1202468fgg.17
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 03:50:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=2o6g4JNk3T42Js8/QuP3A0QUYT03yu3DXQSyC5vGbN0=;
-        b=uh9CW6/+g3ng21jlNdvTUxBVfKN+u4IeaWxX987DgjgD62QqoMVRSMW40FR6Xufo/6
-         fNl/CK3Z8oRGHp+kcgudr4j33gTQ/rjPx2yB0M6Ck02M7mJQgP3fsTgYyM/WzI6Wqhi1
-         zQhbrahvdl7wnjRrz1y4GEl4e2/nLYSuLDxyE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=J0fkJAuHWegNS0NBl0gZiacnAiwZz93Ih6uX0/578AuPvEdoRAjEJpJb5AIBrozns4
-         ZVdjvcrMNOMt9G2A0DKNY5vK0arPxmgnJpL6M5za8lVSgqjUoHDc1fx32sSUew1MYlvr
-         QGrlKEOm8ot5ynkGB0mEEMfmcEEVNTmdLpyKY=
-Received: by 10.86.94.11 with SMTP id r11mr1767917fgb.11.1233748206114; Wed, 
-	04 Feb 2009 03:50:06 -0800 (PST)
-In-Reply-To: <1233741505-24020-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Google-Sender-Auth: 04983dde9a938866
+	id S1751583AbZBDLuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 06:50:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751485AbZBDLuV
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 06:50:21 -0500
+Received: from novowork.com ([87.230.85.62]:43831 "EHLO novowork.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751057AbZBDLuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 06:50:20 -0500
+Received: from [128.178.246.242] (ls-in-242.epfl.ch [128.178.246.242])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by novowork.com (Postfix) with ESMTPSA id 4939836709FC;
+	Wed,  4 Feb 2009 12:48:36 +0100 (CET)
+In-Reply-To: <94a0d4530902032339p365df42i2b8f235430a68fd5@mail.gmail.com>
+X-Mailer: Evolution 2.24.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108337>
 
-On Wed, Feb 4, 2009 at 10:58, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> +                                   "This probably means a git process crashed in this repository earlier.\n"
-> +                                   "Make sure no other git process is running and remove the file manually.",
-> +                                   get_index_file(), strerror(lock_error));
+Op woensdag 04-02-2009 om 09:39 uur [tijdzone +0200], schreef Felipe
+Contreras:
+> On Sat, Jan 31, 2009 at 10:05 PM, Jesse van den Kieboom
+> <jesse@icecrew.nl> wrote:
+> > Hi,
+> >
+> > I have been developing a gui application for git for gtk+/GNOME based on
+> > GitX (which in turn is based on gitk). I feel that it's reaching the
+> > point where it might potentially be useful for other people to use. It
+> > currently features:
+> >
+> > - Loading large repositories very fast
+> > - Show/browse repository history
+> > - Show highlighted revision diff
+> > - Browse file tree of a revision and export by drag and drop
+> > - Search in the revision history on subject, author or hash
+> > - Switch between history view of branches easily
+> > - Commit view providing per hunk stage/unstage and commit
+> >
+> > The project is currently hosted on github:
+> > http://github.com/jessevdk/gitg
+> >
+> > clone: git://github.com/jessevdk/gitg.git
+> >
+> > Please let me know what you think,
+> 
+> And the obligatory screenshots?
 
-How about "If no other git process is currently running, this probably
-means...." instead? E.g., sometimes I run 'git commit' in one terminal
-window, and then switch to another before committing (to review the
-diff for example), which would cause an index.lock file to be present
-validly.
+The screenshots are on the website
+
 
 -- 
-Cheers,
+Jesse van den Kieboom
 
-Sverre Rabbelier
+Personal: http://www.icecrew.nl
+Professional: http://www.novowork.com
