@@ -1,112 +1,82 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] fix crash in path.c on Windows
-Date: Thu, 05 Feb 2009 00:00:46 +0100
-Message-ID: <498A1E1E.8010901@lsrfire.ath.cx>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: What is not in git.git
+Date: Wed, 4 Feb 2009 18:06:40 -0500
+Message-ID: <20090204230640.GA2924@gnu.kitenet.net>
+References: <20090205054918.6117@nanako3.lavabit.com> <7vy6wllswz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 05 00:02:17 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="uAKRQypu60I7Lcqm"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 05 00:08:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUql6-00070w-58
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 00:02:16 +0100
+	id 1LUqqq-0000iG-6T
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 00:08:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752095AbZBDXAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 18:00:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbZBDXAt
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 18:00:49 -0500
-Received: from india601.server4you.de ([85.25.151.105]:38222 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752041AbZBDXAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 18:00:49 -0500
-Received: from [10.0.1.101] (p57B7F3CC.dip.t-dialin.net [87.183.243.204])
-	by india601.server4you.de (Postfix) with ESMTPSA id A28DD2F8056;
-	Thu,  5 Feb 2009 00:00:47 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+	id S1753175AbZBDXGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 18:06:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752095AbZBDXGo
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 18:06:44 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:42518 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753111AbZBDXGn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 18:06:43 -0500
+Received: from gnu.kitenet.net (fttu-67-223-5-142.btes.tv [67.223.5.142])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 05F0B31428A
+	for <git@vger.kernel.org>; Wed,  4 Feb 2009 18:06:42 -0500 (EST)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 6479BA8548; Wed,  4 Feb 2009 18:06:40 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vy6wllswz.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108455>
 
-Use PATH_SEP and is_absolute_path() instead of using Unix conventions
-to enhance portability.  On Windows, the assert() fails almost always
-without this change.
 
-Also convert all backslashes in DOS-style paths to slashes, as that's
-what git uses internally.
+--uAKRQypu60I7Lcqm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
-The patch doesn't fix t1504 on Windows, but it allows one to at least
-run this test without git crashing multiple times due to the failed
-assertion.  The test case "first_of_two" still fails, due to the
-weird translation applied to environment variables like
-$GIT_CEILING_DIRECTORIES.  Is there a method to it?  Here some
-experiments:
+Junio C Hamano wrote:
+> >  3. From: Joey Hess <joey@kitenet.net>
+> >     Subject: [PATCH] gitweb: support the rel=3Dvcs microformat
+> >     Date: Tue, 6 Jan 2009 23:25:18 -0500
+> >     Message-ID: <20090107042518.GB24735@gnu.kitenet.net>
+> >
+> >     A few exchanges of review comments and responses, and then this top=
+ic
+> >     went dark.
+>=20
+> This is in "The author will come back if he feels strongly enough, so I
+> can safely forget about it. I am not qualified to take over as the primary
+> promoter of the topic if the author abandones it anyway" (aka "not mine")
+> category.
 
-	set a=	getenv("a")
-	======= ===========
-	c	c
-	/c	c:/
-	c/	c/
-	/c/	c:/
-	c:c	c:c
-	/c:c	c:c
-	c:/c	c:/c
-	/c:/c	c:/c
-	c/:/c	c\;c:\
-	/c:c/	c:c/
-	/c/:c	/c/:c
-	/c/:/c	c:\;c:\
-	/c:/c/	c:/c/
-	/c/:/c/	c:\;c:\
+Indeed. I've been meaning to get back to it and do a patch series
+addressing Jakub's feedback, but have not yet.
+=20
+--=20
+see shy jo
 
-The test case can be convinced to pass by replacing "bar" with
-"/bar", but I'm not sure that's the right fix.  Shouldn't we warn on
-invalid paths in $GIT_CEILING_DIRECTORIES?
+--uAKRQypu60I7Lcqm
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
- path.c |   13 +++++++++++--
- 1 files changed, 11 insertions(+), 2 deletions(-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-diff --git a/path.c b/path.c
-index a074aea..4cae7f6 100644
---- a/path.c
-+++ b/path.c
-@@ -387,7 +387,7 @@ int normalize_absolute_path(char *buf, const char *path)
- 	assert(path);
- 
- 	while (*comp_start) {
--		assert(*comp_start == '/');
-+		assert(is_absolute_path(comp_start));
- 		while (*++comp_end && *comp_end != '/')
- 			; /* nothing */
- 		comp_len = comp_end - comp_start;
-@@ -438,11 +438,20 @@ int longest_ancestor_length(const char *path, const char *prefix_list)
- 		return -1;
- 
- 	for (colon = ceil = prefix_list; *colon; ceil = colon+1) {
--		for (colon = ceil; *colon && *colon != ':'; colon++);
-+		for (colon = ceil; *colon && *colon != PATH_SEP; colon++);
- 		len = colon - ceil;
- 		if (len == 0 || len > PATH_MAX || !is_absolute_path(ceil))
- 			continue;
- 		strlcpy(buf, ceil, len+1);
-+
-+		if (has_dos_drive_prefix(buf)) {
-+			char *p;
-+			for (p = buf; *p; p++) {
-+				if (*p == '\\')
-+					*p = '/';
-+			}
-+		}
-+
- 		len = normalize_absolute_path(buf, buf);
- 		/* Strip "trailing slashes" from "/". */
- 		if (len == 1)
--- 
-1.6.1.2
+iD8DBQFJih99d8HHehbQuO8RAjSsAJ9ExOX68BW4tWd2WkXyIAyd19wJEQCg5qGx
+29KxQtm0GBX/BPUJk7qlEpU=
+=y/33
+-----END PGP SIGNATURE-----
+
+--uAKRQypu60I7Lcqm--
