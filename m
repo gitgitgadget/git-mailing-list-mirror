@@ -1,69 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: [PATCH] filter-branch: do not consider diverging submodules a
- 'dirty worktree'
-Date: Wed, 4 Feb 2009 18:24:44 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902041823330.22763@intel-tinevez-2-302>
+   'dirty worktree'
+Date: Wed, 04 Feb 2009 18:25:13 +0100
+Message-ID: <4989CF79.2070209@viscovery.net>
 References: <cover.1233758410u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0902041540130.10279@pacific.mpi-cbg.de> <7vvdrqunog.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 04 18:26:23 2009
+X-From: git-owner@vger.kernel.org Wed Feb 04 18:27:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUlVw-0008WD-3m
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 18:26:16 +0100
+	id 1LUlWW-0000N6-Ca
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 18:26:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752484AbZBDRYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 12:24:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbZBDRYs
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 12:24:48 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40611 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752023AbZBDRYs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 12:24:48 -0500
-Received: (qmail invoked by alias); 04 Feb 2009 17:24:46 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp068) with SMTP; 04 Feb 2009 18:24:46 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+icgZZVc2iGmjdGwiGKg0p09l4olZ01S7x3a/BTr
-	xFgtzbeMWk3R9K
-X-X-Sender: schindel@intel-tinevez-2-302
+	id S1753266AbZBDRZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 12:25:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752975AbZBDRZ0
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 12:25:26 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:65259 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752776AbZBDRZZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 12:25:25 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LUlUv-0004y5-KW; Wed, 04 Feb 2009 18:25:22 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5E7006D9; Wed,  4 Feb 2009 18:25:13 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
 In-Reply-To: <7vvdrqunog.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108399>
 
-Hi,
-
-On Wed, 4 Feb 2009, Junio C Hamano wrote:
-
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > As filter-branch could not care less about submodules' actual 
-> > contents, it does not make sense to check if the checked-out 
-> > submodules are up-to-date before running filter-branch.  So do not do 
-> > it.
-> 
-> Sorry, but I am confused.  Is that because even the tree-filter does not 
-> use the actual work tree but works in the temporary area .git-rewrite, 
-> and a diverged submodule cannot possibly matter (and index-filter works 
-> solely on the index anyway)?
-> 
+Junio C Hamano schrieb:
 > If so, why do we even check dirtiness of anything at all?
+> 
+> This is not a "wouldn't this better?" proposal patch, but a "why isn't the
+> patch like this?" question patch.
+> 
+>  git-filter-branch.sh |    6 ------
+>  1 files changed, 0 insertions(+), 6 deletions(-)
+> 
+> diff --git i/git-filter-branch.sh w/git-filter-branch.sh
+> index eb62f71..dda32e0 100755
+> --- i/git-filter-branch.sh
+> +++ w/git-filter-branch.sh
+> @@ -107,12 +107,6 @@ USAGE="[--env-filter <command>] [--tree-filter <command>] \
+>  OPTIONS_SPEC=
+>  . git-sh-setup
+>  
+> -if [ "$(is_bare_repository)" = false ]; then
+> -	git diff-files --quiet &&
+> -	git diff-index --cached --quiet HEAD -- ||
+> -	die "Cannot rewrite branch(es) with a dirty working directory."
+> -fi
+> -
+>  tempdir=.git-rewrite
+>  filter_env=
+>  filter_tree=
 
-I guess it is because we could update the working directory with read-tree 
--u -m HEAD at the end.  Actually, that is exactly what we do.
+Because if the repository is non-bare, then filter-branch updates the
+work-tree at the end of the run; we don't want to overwrite uncommitted
+work in this case.
 
-Submodules do not matter much here, as nothing will be overwritten, 
-really, but a dirty working directory matters.
+This behavior is a relic from cg-admin-rewritehist, I think. I've never
+found it useful.
 
-Ciao,
-Dscho
+-- Hannes
