@@ -1,75 +1,87 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 2/3] [BUG] Add a testcase for "git mv -f" on untracked files.
-Date: Wed,  4 Feb 2009 10:32:07 +0100
-Message-ID: <1233739928-19895-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <1233739928-19895-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Feb 04 10:37:50 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] delete_ref(): fix uninitialized value, found by
+ valgrind
+Date: Wed, 4 Feb 2009 10:57:32 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902041056200.22763@intel-tinevez-2-302>
+References: <cover.1233684745u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0902031912290.9822@pacific.mpi-cbg.de> <7v7i467ndd.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 10:59:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUeCW-0001sn-QQ
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 10:37:45 +0100
+	id 1LUeX9-0008QP-Bl
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 10:59:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752392AbZBDJgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 04:36:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752320AbZBDJgQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 04:36:16 -0500
-Received: from harmonie.imag.fr ([147.171.130.40]:37586 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752126AbZBDJgO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 04:36:14 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n149WMle025105;
-	Wed, 4 Feb 2009 10:32:22 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LUe77-0006SY-0y; Wed, 04 Feb 2009 10:32:09 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LUe76-0005BW-Un; Wed, 04 Feb 2009 10:32:08 +0100
-X-Mailer: git-send-email 1.6.1.2.321.g68da9
-In-Reply-To: <1233739928-19895-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Wed, 04 Feb 2009 10:32:22 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752023AbZBDJ5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 04:57:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbZBDJ5h
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 04:57:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44790 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751978AbZBDJ5g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 04:57:36 -0500
+Received: (qmail invoked by alias); 04 Feb 2009 09:57:34 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp026) with SMTP; 04 Feb 2009 10:57:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/PE0tJRfLPn5pBr7bo0d3ekAXMEuywsMohD70/qR
+	SEm3o36/ZpsxrX
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <7v7i467ndd.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108329>
 
-This currently fails with:
-git: builtin-mv.c:217: cmd_mv: Assertion `pos >= 0' failed.
+Hi,
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- t/t7001-mv.sh |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+On Tue, 3 Feb 2009, Junio C Hamano wrote:
 
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index e4dfe95..52a47b5 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -58,6 +58,14 @@ test_expect_success \
-      test ! -f path0/untracked1 &&
-      test ! -f path0/untracked2'
- 
-+test_expect_failure \
-+    'checking -f on untracked file with existing target' \
-+    'touch path0/untracked1 &&
-+     git mv -f untracked1 path0
-+     test ! -f .git/index.lock &&
-+     test -f untracked1 &&
-+     test -f path0/untracked1'
-+
- # clean up the mess in case bad things happen
- rm -f idontexist untracked1 untracked2 \
-      path0/idontexist path0/untracked1 path0/untracked2 \
--- 
-1.6.1.2.321.g68da9
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > The variable 'err' was not necessarily initialized before it was used.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  refs.c |    2 +-
+> >  1 files changed, 1 insertions(+), 1 deletions(-)
+> >
+> > diff --git a/refs.c b/refs.c
+> > index b13e01b..ded7ec4 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -929,7 +929,7 @@ static int log_ref_write(const char *ref_name, const unsigned char *old_sha1,
+> >  int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+> >  {
+> >  	struct ref_lock *lock;
+> > -	int err, i = 0, ret = 0, flag = 0;
+> > +	int err = 0, i = 0, ret = 0, flag = 0;
+> >  	struct stat loginfo;
+> >  	int log = !lstat(git_path("logs/%s", refname), &loginfo);
+> 
+> Sorry, I do not see it.
+> 
+> There are two uses of "err" in this function, both of which looks like:
+> 
+> 	if (err && errno != ENOENT)
+> 
+> but both of these places have
+> 
+> 	err = unlink(...)
+> 
+> immediately before it.
+
+I should know better by now than to base my work on the tip of my Git 
+tree.  Sure enough I have an attempt at resolving the "deleting a branch 
+deletes its reflog, too" issue, which has that bug.
+
+Sorry for the noise,
+Dscho
