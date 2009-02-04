@@ -1,7 +1,8 @@
 From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH/RFC v3 4/9] unlink_entry(): introduce schedule_dir_for_removal()
-Date: Wed, 04 Feb 2009 13:52:49 +0100
-Message-ID: <5e00462034e14b628ad6744edc1fad7daee78c5c.1233751281.git.barvik@broadpark.no>
+Subject: [PATCH/RFC v3 3/9] lstat_cache(): swap func(length,
+ string) into func(string, length)
+Date: Wed, 04 Feb 2009 13:52:48 +0100
+Message-ID: <f19eb192deeb73865d91ddb3643378751173f655.1233751281.git.barvik@broadpark.no>
 References: <cover.1233751281.git.barvik@broadpark.no>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -14,191 +15,241 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUhHR-0006OR-Ll
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 13:55:02 +0100
+	id 1LUhHQ-0006OR-OB
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 13:55:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757358AbZBDMxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 07:53:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756460AbZBDMxN
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 07:53:13 -0500
+	id S1756320AbZBDMxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 07:53:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756047AbZBDMxK
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 07:53:10 -0500
 Received: from osl1smout1.broadpark.no ([80.202.4.58]:45423 "EHLO
 	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756660AbZBDMxJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 07:53:09 -0500
+	with ESMTP id S1757354AbZBDMxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 07:53:04 -0500
 Received: from osl1sminn1.broadpark.no ([80.202.4.59])
  by osl1smout1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KEJ003J6L4HHW70@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Wed, 04 Feb 2009 13:53:05 +0100 (CET)
+ with ESMTP id <0KEJ003J0L4FHW70@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Wed, 04 Feb 2009 13:53:03 +0100 (CET)
 Received: from localhost.localdomain ([80.203.29.216])
  by osl1sminn1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
  with ESMTPA id <0KEJ004C6L47S210@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Wed, 04 Feb 2009 13:53:05 +0100 (CET)
+ git@vger.kernel.org; Wed, 04 Feb 2009 13:53:02 +0100 (CET)
 X-Mailer: git-send-email 1.6.1.349.g99fa5
 In-reply-to: <cover.1233751281.git.barvik@broadpark.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108350>
 
-Currently inside unlink_entry() if we get a successful removal of one
-file with unlink(), we try to remove the leading directories each and
-every time.  So if one directory containing 200 files is moved to an
-other location we get 199 failed calls to rmdir() and 1 successful
-call.
+Swap function argument pair (length, string) into (string, length) to
+conform with the commonly used order inside the GIT source code.
 
-To fix this and avoid some unnecessary calls to rmdir(), we schedule
-each directory for removal and wait much longer before we do the real
-call to rmdir().
-
-Since the unlink_entry() function is called with alphabetically sorted
-names, this new function end up being very effective to avoid
-unnecessary calls to rmdir().  In some cases over 95% of all calls to
-rmdir() is removed with this patch.
+Also, add a note about this fact into the coding guidelines.
 
 Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
 ---
- cache.h        |    2 +
- symlinks.c     |   60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- unpack-trees.c |   30 +++++----------------------
- 3 files changed, 68 insertions(+), 24 deletions(-)
+ Documentation/CodingGuidelines |    3 +++
+ builtin-add.c                  |    2 +-
+ builtin-apply.c                |    2 +-
+ builtin-update-index.c         |    2 +-
+ cache.h                        |    8 ++++----
+ diff-lib.c                     |    2 +-
+ dir.c                          |    2 +-
+ entry.c                        |    2 +-
+ symlinks.c                     |   16 ++++++++--------
+ unpack-trees.c                 |    4 ++--
+ 10 files changed, 23 insertions(+), 20 deletions(-)
 
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 0d7fa9c..b8bf618 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -129,3 +129,6 @@ For C programs:
+    used in the git core command set (unless your command is clearly
+    separate from it, such as an importer to convert random-scm-X
+    repositories to git).
++
++ - When we pass <string, length> pair to functions, we should try to
++   pass them in that order.
+diff --git a/builtin-add.c b/builtin-add.c
+index ac98c83..a23ad96 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -148,7 +148,7 @@ static const char **validate_pathspec(int argc, const char **argv, const char *p
+ 	if (pathspec) {
+ 		const char **p;
+ 		for (p = pathspec; *p; p++) {
+-			if (has_symlink_leading_path(strlen(*p), *p)) {
++			if (has_symlink_leading_path(*p, strlen(*p))) {
+ 				int len = prefix ? strlen(prefix) : 0;
+ 				die("'%s' is beyond a symbolic link", *p + len);
+ 			}
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 1e7f917..a1de3cb 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -2360,7 +2360,7 @@ static int check_to_create_blob(const char *new_name, int ok_if_exists)
+ 		 * In such a case, path "new_name" does not exist as
+ 		 * far as git is concerned.
+ 		 */
+-		if (has_symlink_leading_path(strlen(new_name), new_name))
++		if (has_symlink_leading_path(new_name, strlen(new_name)))
+ 			return 0;
+ 
+ 		return error("%s: already exists in working directory", new_name);
+diff --git a/builtin-update-index.c b/builtin-update-index.c
+index 5604977..6c55527 100644
+--- a/builtin-update-index.c
++++ b/builtin-update-index.c
+@@ -195,7 +195,7 @@ static int process_path(const char *path)
+ 	struct stat st;
+ 
+ 	len = strlen(path);
+-	if (has_symlink_leading_path(len, path))
++	if (has_symlink_leading_path(path, len))
+ 		return error("'%s' is beyond a symbolic link", path);
+ 
+ 	/*
 diff --git a/cache.h b/cache.h
-index 30039ac..717dd84 100644
+index 45e713e..30039ac 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -726,6 +726,8 @@ extern int has_symlink_or_noent_leading_path(const char *name, int len);
- extern int has_dirs_only_path(const char *name, int len, int prefix_len);
- extern void invalidate_lstat_cache(const char *name, int len);
+@@ -721,10 +721,10 @@ struct checkout {
+ };
+ 
+ extern int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath);
+-extern int has_symlink_leading_path(int len, const char *name);
+-extern int has_symlink_or_noent_leading_path(int len, const char *name);
+-extern int has_dirs_only_path(int len, const char *name, int prefix_len);
+-extern void invalidate_lstat_cache(int len, const char *name);
++extern int has_symlink_leading_path(const char *name, int len);
++extern int has_symlink_or_noent_leading_path(const char *name, int len);
++extern int has_dirs_only_path(const char *name, int len, int prefix_len);
++extern void invalidate_lstat_cache(const char *name, int len);
  extern void clear_lstat_cache(void);
-+extern void schedule_dir_for_removal(const char *name, int len);
-+extern void remove_scheduled_dirs(void);
  
  extern struct alternate_object_database {
- 	struct alternate_object_database *next;
+diff --git a/diff-lib.c b/diff-lib.c
+index a41e1ec..a3ba20e 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -31,7 +31,7 @@ static int check_removed(const struct cache_entry *ce, struct stat *st)
+ 			return -1;
+ 		return 1;
+ 	}
+-	if (has_symlink_leading_path(ce_namelen(ce), ce->name))
++	if (has_symlink_leading_path(ce->name, ce_namelen(ce)))
+ 		return 1;
+ 	if (S_ISDIR(st->st_mode)) {
+ 		unsigned char sub[20];
+diff --git a/dir.c b/dir.c
+index cfd1ea5..8fb5226 100644
+--- a/dir.c
++++ b/dir.c
+@@ -720,7 +720,7 @@ int read_directory(struct dir_struct *dir, const char *path, const char *base, i
+ {
+ 	struct path_simplify *simplify;
+ 
+-	if (has_symlink_leading_path(strlen(path), path))
++	if (has_symlink_leading_path(path, strlen(path)))
+ 		return dir->nr;
+ 
+ 	simplify = create_simplify(pathspec);
+diff --git a/entry.c b/entry.c
+index 05aa58d..bb6bdb9 100644
+--- a/entry.c
++++ b/entry.c
+@@ -20,7 +20,7 @@ static void create_directories(const char *path, const struct checkout *state)
+ 		 * we test the path components of the prefix with the
+ 		 * stat() function instead of the lstat() function.
+ 		 */
+-		if (has_dirs_only_path(len, buf, state->base_dir_len))
++		if (has_dirs_only_path(buf, len, state->base_dir_len))
+ 			continue; /* ok, it is already a directory. */
+ 
+ 		/*
 diff --git a/symlinks.c b/symlinks.c
-index 5167286..215d049 100644
+index 4596aee..5167286 100644
 --- a/symlinks.c
 +++ b/symlinks.c
-@@ -245,3 +245,63 @@ int has_dirs_only_path(const char *name, int len, int prefix_len)
+@@ -70,7 +70,7 @@ static inline void reset_lstat_cache(void)
+  * of the prefix, where the cache should use the stat() function
+  * instead of the lstat() function to test each path component.
+  */
+-static int lstat_cache(int len, const char *name,
++static int lstat_cache(const char *name, int len,
+ 		       int track_flags, int prefix_len_stat_func)
+ {
+ 	int match_len, last_slash, last_slash_dir, previous_slash;
+@@ -185,7 +185,7 @@ static int lstat_cache(int len, const char *name,
+  * Invalidate the given 'name' from the cache, if 'name' matches
+  * completely with the cache.
+  */
+-void invalidate_lstat_cache(int len, const char *name)
++void invalidate_lstat_cache(const char *name, int len)
+ {
+ 	int match_len, previous_slash;
+ 
+@@ -214,9 +214,9 @@ void clear_lstat_cache(void)
+ /*
+  * Return non-zero if path 'name' has a leading symlink component
+  */
+-int has_symlink_leading_path(int len, const char *name)
++int has_symlink_leading_path(const char *name, int len)
+ {
+-	return lstat_cache(len, name,
++	return lstat_cache(name, len,
+ 			   FL_SYMLINK|FL_DIR, USE_ONLY_LSTAT) &
+ 		FL_SYMLINK;
+ }
+@@ -225,9 +225,9 @@ int has_symlink_leading_path(int len, const char *name)
+  * Return non-zero if path 'name' has a leading symlink component or
+  * if some leading path component does not exists.
+  */
+-int has_symlink_or_noent_leading_path(int len, const char *name)
++int has_symlink_or_noent_leading_path(const char *name, int len)
+ {
+-	return lstat_cache(len, name,
++	return lstat_cache(name, len,
+ 			   FL_SYMLINK|FL_NOENT|FL_DIR, USE_ONLY_LSTAT) &
+ 		(FL_SYMLINK|FL_NOENT);
+ }
+@@ -239,9 +239,9 @@ int has_symlink_or_noent_leading_path(int len, const char *name)
+  * 'prefix_len', thus we then allow for symlinks in the prefix part as
+  * long as those points to real existing directories.
+  */
+-int has_dirs_only_path(int len, const char *name, int prefix_len)
++int has_dirs_only_path(const char *name, int len, int prefix_len)
+ {
+-	return lstat_cache(len, name,
++	return lstat_cache(name, len,
  			   FL_DIR|FL_FULLPATH, prefix_len) &
  		FL_DIR;
  }
-+
-+static struct removal_def {
-+	char path[PATH_MAX];
-+	int len;
-+} removal;
-+
-+static void do_remove_scheduled_dirs(int new_len)
-+{
-+	while (removal.len > new_len) {
-+		removal.path[removal.len] = '\0';
-+		if (rmdir(removal.path))
-+			break;
-+		do {
-+			removal.len--;
-+		} while (removal.len > new_len &&
-+			 removal.path[removal.len] != '/');
-+	}
-+	removal.len = new_len;
-+	return;
-+}
-+
-+void schedule_dir_for_removal(const char *name, int len)
-+{
-+	int match_len, last_slash, i, previous_slash;
-+
-+	match_len = last_slash = i =
-+		longest_path_match(name, len, removal.path, removal.len,
-+				   &previous_slash);
-+	/* Find last slash inside 'name' */
-+	while (i < len) {
-+		if (name[i] == '/')
-+			last_slash = i;
-+		i++;
-+	}
-+
-+	/*
-+	 * If we are about to go down the directory tree, we check if
-+	 * we must first go upwards the tree, such that we then can
-+	 * remove possible empty directories as we go upwards.
-+	 */
-+	if (match_len < last_slash && match_len < removal.len)
-+		do_remove_scheduled_dirs(match_len);
-+	/*
-+	 * If we go deeper down the directory tree, we only need to
-+	 * save the new path components as we go down.
-+	 */
-+	if (match_len < last_slash) {
-+		memmove(&removal.path[match_len], &name[match_len],
-+			last_slash - match_len);
-+		removal.len = last_slash;
-+	}
-+	return;
-+}
-+
-+#define ALL_DIRS 0
-+void remove_scheduled_dirs(void)
-+{
-+	do_remove_scheduled_dirs(ALL_DIRS);
-+	return;
-+}
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 2293158..e3c3fa1 100644
+index e547282..2293158 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -52,36 +52,17 @@ static void add_entry(struct unpack_trees_options *o, struct cache_entry *ce,
- 	add_index_entry(&o->result, new, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE|ADD_CACHE_SKIP_DFCHECK);
- }
+@@ -61,7 +61,7 @@ static void unlink_entry(struct cache_entry *ce)
+ 	char *cp, *prev;
+ 	char *name = ce->name;
  
--/* Unlink the last component and attempt to remove leading
-- * directories, in case this unlink is the removal of the
-- * last entry in the directory -- empty directories are removed.
-+/*
-+ * Unlink the last component and schedule the leading directories for
-+ * removal, such that empty directories get removed.
-  */
- static void unlink_entry(struct cache_entry *ce)
- {
--	char *cp, *prev;
--	char *name = ce->name;
--
- 	if (has_symlink_or_noent_leading_path(ce->name, ce_namelen(ce)))
+-	if (has_symlink_or_noent_leading_path(ce_namelen(ce), ce->name))
++	if (has_symlink_or_noent_leading_path(ce->name, ce_namelen(ce)))
  		return;
--	if (unlink(name))
-+	if (unlink(ce->name))
+ 	if (unlink(name))
  		return;
--	prev = NULL;
--	while (1) {
--		int status;
--		cp = strrchr(name, '/');
--		if (prev)
--			*prev = '/';
--		if (!cp)
--			break;
--
--		*cp = 0;
--		status = rmdir(name);
--		if (status) {
--			*cp = '/';
--			break;
--		}
--		prev = cp;
--	}
-+	schedule_dir_for_removal(ce->name, ce_namelen(ce));
- }
+@@ -583,7 +583,7 @@ static int verify_absent(struct cache_entry *ce, const char *action,
+ 	if (o->index_only || o->reset || !o->update)
+ 		return 0;
  
- static struct checkout state;
-@@ -117,6 +98,7 @@ static int check_updates(struct unpack_trees_options *o)
- 			continue;
- 		}
- 	}
-+	remove_scheduled_dirs();
+-	if (has_symlink_or_noent_leading_path(ce_namelen(ce), ce->name))
++	if (has_symlink_or_noent_leading_path(ce->name, ce_namelen(ce)))
+ 		return 0;
  
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
+ 	if (!lstat(ce->name, &st)) {
 -- 
 1.6.1.349.g99fa5
