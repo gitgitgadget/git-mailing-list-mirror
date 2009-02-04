@@ -1,78 +1,148 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Recovering the index after a git crash?
-Date: Wed, 04 Feb 2009 09:36:30 +0100
-Message-ID: <vpqljsma99t.fsf@bauges.imag.fr>
+From: Yann Simon <yann.simon.fr@gmail.com>
+Subject: Re: [PATCH JGIT] Compute the author/commiter name and email from the 
+	git configuration
+Date: Wed, 4 Feb 2009 09:42:09 +0100
+Message-ID: <551f769b0902040042j23238581ia248c949ee395ff7@mail.gmail.com>
+References: <1233695594.8042.6.camel@localhost>
+	 <20090203231357.GZ26880@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 04 09:43:28 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 04 09:43:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUdLs-0001Py-Q3
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 09:43:21 +0100
+	id 1LUdMA-0001VV-9G
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 09:43:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131AbZBDIl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 03:41:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbZBDIlz
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 03:41:55 -0500
-Received: from imag.imag.fr ([129.88.30.1]:62778 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751604AbZBDIly (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 03:41:54 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n148aU58029627
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 4 Feb 2009 09:36:30 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LUdFG-0004HT-7C; Wed, 04 Feb 2009 09:36:30 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LUdFG-0006iT-3z; Wed, 04 Feb 2009 09:36:30 +0100
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 04 Feb 2009 09:36:30 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752175AbZBDImN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 03:42:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752170AbZBDImM
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 03:42:12 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:63897 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752167AbZBDImL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 03:42:11 -0500
+Received: by fxm13 with SMTP id 13so2894412fxm.13
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 00:42:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=s7ODcDV+xOZFsv4XovE7RckoVAJ0WL4qBChercloOG0=;
+        b=w8S121jIZs8B+uNRW7s9qwlob4XeH3jEGuFquYhUg1MFO1sGafwOEO3mF6zNWVkmDJ
+         DPuCvRzw7R+mRxILtkhS1SO8uAirkJqtb4QqSfENCBsCl2ZPB/9RvyLHs6EvbrkXKsMG
+         vendSSAfg1G1v2aPwhFWHweF1xA2KTsu+sUXo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HOzVgyc9BU3X5RDo69xIQpWzxMxnkpMK2xa2dBXf64gnpSsaxokoBg7zdSTdkC68Zu
+         TuJztkUgAbkuaifRP/ELOtG7D6BXZiIZmAyr7f5TW9caogU0uWy3YACMF+cZ6gqilyb5
+         kuupyOsl/rj/BOv07wzP8gTX3fVflim0GSBmc=
+Received: by 10.181.135.12 with SMTP id m12mr720026bkn.34.1233736929853; Wed, 
+	04 Feb 2009 00:42:09 -0800 (PST)
+In-Reply-To: <20090203231357.GZ26880@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108313>
 
-Hi,
+2009/2/4 Shawn O. Pearce <spearce@spearce.org>:
+> Yann Simon <yann.simon.fr@gmail.com> wrote:
+>> index 7df90cd..5821f83 100644
+>> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
+>> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
+>> @@ -50,6 +50,8 @@
+>>  import java.io.InputStreamReader;
+>>  import java.io.OutputStreamWriter;
+>>  import java.io.PrintWriter;
+>> +import java.net.InetAddress;
+>> +import java.net.UnknownHostException;
+>>  import java.util.ArrayList;
+>>  import java.util.Collections;
+>>  import java.util.HashMap;
+>> @@ -98,6 +100,8 @@ public static RepositoryConfig openUserConfig() {
+>>
+>>       private Map<String, Object> byName;
+>>
+>> +     private String hostname;
+>> +
+>>       private static final String MAGIC_EMPTY_VALUE = "%%magic%%empty%%";
+>>
+>>       RepositoryConfig(final Repository repo) {
+>> @@ -308,6 +312,83 @@ public String getString(final String section, String subsection, final String na
+>>               return result;
+>>       }
+>>
+>> +     /**
+>> +      * @return the author name as defined in the git variables
+>> +      *         and configurations. If no name could be found, try
+>> +      *         to use the system user name instead.
+>> +      */
+>> +     public String getAuthorName() {
+>> +             return getUsernameInternal(Constants.GIT_AUTHOR_NAME_KEY);
+>> +     }
+>> +
+>> +     /**
+>> +      * @return the commiter name as defined in the git variables
+>> +      *         and configurations. If no name could be found, try
+>> +      *         to use the system user name instead.
+>> +      */
+>> +     public String getCommiterName() {
+>> +             return getUsernameInternal(Constants.GIT_COMMITER_NAME_KEY);
+>> +     }
+>> +
+>> +     private String getUsernameInternal(String gitVariableKey) {
+>> +             // try to get the user name from the local and global configurations.
+>> +             String username = getString("user", null, "name");
+>> +
+>> +             if (username == null) {
+>> +                     // try to get the user name for the system property GIT_XXX_NAME
+>> +                     username = System.getProperty(gitVariableKey);
+>
+> Shouldn't that be System.getenv()?
+>
+>> +     private String getUserEmailInternal(String gitVariableKey, boolean author) {
+>> +             // try to get the email from the local and global configs.
+>> +             String email = getString("user", null, "email");
+>> +
+>> +             if (email == null) {
+>> +                     // try to get the email for the system property GIT_XXX_EMAIL
+>> +                     email = System.getProperty(gitVariableKey);
+>
+> Again, System.getenv()?
 
-I'm debugging a git assertion failure, which leaves a .git/index.lock
-in the way. After running the failed command, git refuses to do
-anything in this directory, complaining with:
+Just a precision:
+One of the consequences of using System.getenv() is that it does not
+let java programs to define the value of the variable.
+System.getProperty(), on the other hand, offers a System.setProperty()
 
-  fatal: unable to create '.git/index.lock': File exists
+If we use System.getenv(), we cannot overwrite the value before.
 
-What I'm doing then is just "rm .git/index.lock". Is it safe to do it?
-I guess I should just make sure there's no git process running, but is
-there anything else to check?
+But we maybe do not need to overwrite system variables (except for
+unit test... :) )
 
-I'll write a FAQ entry on the wiki with answers, and that would
-probably be a good idea to give indication to the user directly in the
-error message too, otherwise, the problem can be blocking for
-beginners.
+In that case, we can live with System.getenv().
 
-Thanks,
+A workaround would be to use a method like:
+	private static String readEnvironmentVariable(String key) {
+		String result = System.getProperty(key);
+		if (result == null || result.length() == 0) {
+			result = System.getenv(key);
+		}
+		return result;
+	}
 
-<my life>
-I had to support students using SVN for a month in January, and even
-when SVN says:
+but I really dislike it. This is much more complex and make the
+results less predictable.
 
-  svn: run 'svn cleanup' to remove locks (type 'svn help cleanup' for details)
+I change my code to use System.getenv() unless you got other ideas.
 
-it's still hard for many students to understand that they have to run
-"svn cleanup" and prefer sending me a mail saying "it doesn't work
-anymore" :-(.
-</my life>
-
--- 
-Matthieu
+Yann
