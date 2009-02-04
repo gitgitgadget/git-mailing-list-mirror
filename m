@@ -1,8 +1,8 @@
 From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH/RFC v3 9/9] lstat_cache(): print a warning if doing ping-pong
- between cache types
-Date: Wed, 04 Feb 2009 13:53:20 +0100
-Message-ID: <4f1c56791fb6b40ce54a3b6a5ad873ab78c0d194.1233751281.git.barvik@broadpark.no>
+Subject: [PATCH/RFC v3 2/9] lstat_cache(): generalise
+ longest_match_lstat_cache()
+Date: Wed, 04 Feb 2009 13:52:47 +0100
+Message-ID: <677cba5ee9c7a89afcc5326251f980109326dfda.1233751281.git.barvik@broadpark.no>
 References: <cover.1233751281.git.barvik@broadpark.no>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -15,127 +15,132 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUhHV-0006OR-Oc
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 13:55:06 +0100
+	id 1LUhHQ-0006OR-0n
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 13:55:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756772AbZBDMxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 07:53:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756783AbZBDMxf
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 07:53:35 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:45438 "EHLO
+	id S1756687AbZBDMxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 07:53:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757096AbZBDMxD
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 07:53:03 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:45415 "EHLO
 	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756830AbZBDMx3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 07:53:29 -0500
+	with ESMTP id S1757357AbZBDMxA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 07:53:00 -0500
 Received: from osl1sminn1.broadpark.no ([80.202.4.59])
  by osl1smout1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KEJ003KNL4ZHW70@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Wed, 04 Feb 2009 13:53:23 +0100 (CET)
+ with ESMTP id <0KEJ003ISL4BHW70@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Wed, 04 Feb 2009 13:52:59 +0100 (CET)
 Received: from localhost.localdomain ([80.203.29.216])
  by osl1sminn1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTPA id <0KEJ004VFL4WRB00@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Wed, 04 Feb 2009 13:53:23 +0100 (CET)
+ with ESMTPA id <0KEJ004C6L47S210@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Wed, 04 Feb 2009 13:52:59 +0100 (CET)
 X-Mailer: git-send-email 1.6.1.349.g99fa5
 In-reply-to: <cover.1233751281.git.barvik@broadpark.no>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108353>
 
-This is a debug patch which is only to be used while the lstat_cache()
-is in the test stage, and should be removed/reverted before the final
-relase.
-
-I think it should be useful to catch these warnings, as I it could be
-an indication of that the cache would not be very effective if it is
-doing ping-pong by switching between different cache types too many
-times.
-
-Also, if someone is experimenting with the lstat_cache(), this patch
-will maybe be useful while debugging.
-
-If someone is able to trigger the warning, then send a mail to the GIT
-mailing list, containing the first 15 lines of the warning, and a
-short description of the GIT commands to trigger the warnings.
-
-I hope someone is willing to use this patch for a while, to be able to
-catch possible ping-pong's.
+Rename the function to longst_path_match() and generalise it such that
+it can also be used by other functions.
 
 Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
 ---
- symlinks.c |   23 +++++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
+ symlinks.c |   46 ++++++++++++++++++++++++----------------------
+ 1 files changed, 24 insertions(+), 22 deletions(-)
 
 diff --git a/symlinks.c b/symlinks.c
-index 215d049..0ad8e39 100644
+index ae57e56..4596aee 100644
 --- a/symlinks.c
 +++ b/symlinks.c
-@@ -51,6 +51,11 @@ static inline void reset_lstat_cache(void)
+@@ -1,38 +1,30 @@
+ #include "cache.h"
+ 
+-static struct cache_def {
+-	char path[PATH_MAX + 1];
+-	int len;
+-	int flags;
+-	int track_flags;
+-	int prefix_len_stat_func;
+-} cache;
+-
+ /*
+  * Returns the length (on a path component basis) of the longest
+- * common prefix match of 'name' and the cached path string.
++ * common prefix match of 'name_a' and 'name_b'.
+  */
+-static inline int longest_match_lstat_cache(int len, const char *name,
+-					    int *previous_slash)
++static int longest_path_match(const char *name_a, int len_a,
++			      const char *name_b, int len_b,
++			      int *previous_slash)
+ {
+ 	int max_len, match_len = 0, match_len_prev = 0, i = 0;
+ 
+-	max_len = len < cache.len ? len : cache.len;
+-	while (i < max_len && name[i] == cache.path[i]) {
+-		if (name[i] == '/') {
++	max_len = len_a < len_b ? len_a : len_b;
++	while (i < max_len && name_a[i] == name_b[i]) {
++		if (name_a[i] == '/') {
+ 			match_len_prev = match_len;
+ 			match_len = i;
+ 		}
+ 		i++;
+ 	}
+ 	/*
+-	 * Is the cached path string a substring of 'name', is 'name'
+-	 * a substring of the cached path string, or is 'name' and the
+-	 * cached path string the exact same string?
++	 * Is 'name_b' a substring of 'name_a', the other way around,
++	 * or is 'name_a' and 'name_b' the exact same string?
  	 */
+-	if (i >= max_len && ((len > cache.len && name[cache.len] == '/') ||
+-			     (len < cache.len && cache.path[len] == '/') ||
+-			     (len == cache.len))) {
++	if (i >= max_len && ((len_a > len_b && name_a[len_b] == '/') ||
++			     (len_a < len_b && name_b[len_a] == '/') ||
++			     (len_a == len_b))) {
+ 		match_len_prev = match_len;
+ 		match_len = i;
+ 	}
+@@ -40,6 +32,14 @@ static inline int longest_match_lstat_cache(int len, const char *name,
+ 	return match_len;
  }
  
-+#define SWITCHES_BEFORE_WARNING 10
-+static unsigned int cache_switches, number_of_warnings;
-+static unsigned int current_cache_func, last_cache_func;
-+static unsigned int total_calls;
++static struct cache_def {
++	char path[PATH_MAX + 1];
++	int len;
++	int flags;
++	int track_flags;
++	int prefix_len_stat_func;
++} cache;
 +
- #define FL_DIR      (1 << 0)
- #define FL_NOENT    (1 << 1)
- #define FL_SYMLINK  (1 << 2)
-@@ -77,6 +82,7 @@ static int lstat_cache(const char *name, int len,
- 	int match_flags, ret_flags, save_flags, max_len, ret;
- 	struct stat st;
+ static inline void reset_lstat_cache(void)
+ {
+ 	cache.path[0] = '\0';
+@@ -94,7 +94,8 @@ static int lstat_cache(int len, const char *name,
+ 		 * the 2 "excluding" path types.
+ 		 */
+ 		match_len = last_slash =
+-			longest_match_lstat_cache(len, name, &previous_slash);
++			longest_path_match(name, len, cache.path, cache.len,
++					   &previous_slash);
+ 		match_flags = cache.flags & track_flags & (FL_NOENT|FL_SYMLINK);
+ 		if (match_flags && match_len == cache.len)
+ 			return match_flags;
+@@ -188,7 +189,8 @@ void invalidate_lstat_cache(int len, const char *name)
+ {
+ 	int match_len, previous_slash;
  
-+	total_calls++;
- 	if (cache.track_flags != track_flags ||
- 	    cache.prefix_len_stat_func != prefix_len_stat_func) {
- 		/*
-@@ -88,6 +94,17 @@ static int lstat_cache(const char *name, int len,
- 		cache.track_flags = track_flags;
- 		cache.prefix_len_stat_func = prefix_len_stat_func;
- 		match_len = last_slash = 0;
-+		cache_switches++;
-+		if (cache_switches > SWITCHES_BEFORE_WARNING) {
-+			if (number_of_warnings < 10 || number_of_warnings % 1000 == 0)
-+				printf("warning from %s:%d cache_switches:%u > %u "\
-+				       "(current:%u last:%u total:%u)\n",
-+				       __FILE__, __LINE__,
-+				       cache_switches, SWITCHES_BEFORE_WARNING,
-+				       current_cache_func, last_cache_func,
-+				       total_calls);
-+			number_of_warnings++;
-+		}
- 	} else {
- 		/*
- 		 * Check to see if we have a match from the cache for
-@@ -216,6 +233,8 @@ void clear_lstat_cache(void)
-  */
- int has_symlink_leading_path(const char *name, int len)
- {
-+	last_cache_func = current_cache_func;
-+	current_cache_func = 1;
- 	return lstat_cache(name, len,
- 			   FL_SYMLINK|FL_DIR, USE_ONLY_LSTAT) &
- 		FL_SYMLINK;
-@@ -227,6 +246,8 @@ int has_symlink_leading_path(const char *name, int len)
-  */
- int has_symlink_or_noent_leading_path(const char *name, int len)
- {
-+	last_cache_func = current_cache_func;
-+	current_cache_func = 2;
- 	return lstat_cache(name, len,
- 			   FL_SYMLINK|FL_NOENT|FL_DIR, USE_ONLY_LSTAT) &
- 		(FL_SYMLINK|FL_NOENT);
-@@ -241,6 +262,8 @@ int has_symlink_or_noent_leading_path(const char *name, int len)
-  */
- int has_dirs_only_path(const char *name, int len, int prefix_len)
- {
-+	last_cache_func = current_cache_func;
-+	current_cache_func = 3;
- 	return lstat_cache(name, len,
- 			   FL_DIR|FL_FULLPATH, prefix_len) &
- 		FL_DIR;
+-	match_len = longest_match_lstat_cache(len, name, &previous_slash);
++	match_len = longest_path_match(name, len, cache.path, cache.len,
++				       &previous_slash);
+ 	if (len == match_len) {
+ 		if ((cache.track_flags & FL_DIR) && previous_slash > 0) {
+ 			cache.path[previous_slash] = '\0';
 -- 
 1.6.1.349.g99fa5
