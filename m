@@ -1,64 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v3 4/9] unlink_entry(): introduce
- schedule_dir_for_removal()
-Date: Wed, 04 Feb 2009 12:55:24 -0800
-Message-ID: <7vfxitorb7.fsf@gitster.siamese.dyndns.org>
-References: <cover.1233751281.git.barvik@broadpark.no>
- <5e00462034e14b628ad6744edc1fad7daee78c5c.1233751281.git.barvik@broadpark.no>
+From: Stefan =?utf-8?b?TsOkd2U=?= <stefan.naewe+git@gmail.com>
+Subject: Re: [PATCH v2] urls.txt: document optional port specification in git URLS
+Date: Wed, 4 Feb 2009 21:02:55 +0000 (UTC)
+Message-ID: <loom.20090204T205910-325@post.gmane.org>
+References: <7vr62et6p4.fsf@gitster.siamese.dyndns.org> <1233780575-20125-1-git-send-email-stefan.naewe+git@gmail.com> <7vvdrpore9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kjetil Barvik <barvik@broadpark.no>
-X-From: git-owner@vger.kernel.org Wed Feb 04 21:57:10 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 04 22:04:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUons-0000BL-Sw
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 21:57:01 +0100
+	id 1LUovC-0002xR-Q1
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 22:04:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755053AbZBDUzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 15:55:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754510AbZBDUzb
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 15:55:31 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51251 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754975AbZBDUza (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 15:55:30 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A91C09600C;
-	Wed,  4 Feb 2009 15:55:29 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9B8F296001; Wed,
-  4 Feb 2009 15:55:26 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 27F0D92E-F2FE-11DD-B2C1-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1754912AbZBDVDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 16:03:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752023AbZBDVDH
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 16:03:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:40913 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751699AbZBDVDE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 16:03:04 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LUotj-0003uM-R4
+	for git@vger.kernel.org; Wed, 04 Feb 2009 21:03:03 +0000
+Received: from dyndsl-095-033-043-081.ewe-ip-backbone.de ([95.33.43.81])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 21:03:03 +0000
+Received: from stefan.naewe+git by dyndsl-095-033-043-081.ewe-ip-backbone.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 21:03:03 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 95.33.43.81 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.19) Gecko/20081202 Firefox/2.0.0.6 (Debian-2.0.0.19-0etch1))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108436>
 
-Kjetil Barvik <barvik@broadpark.no> writes:
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-> Since the unlink_entry() function is called with alphabetically sorted
-> names, this new function end up being very effective to avoid
-> unnecessary calls to rmdir().  In some cases over 95% of all calls to
-> rmdir() is removed with this patch.
+> 
+> Stefan Naewe <stefan.naewe <at> googlemail.com> writes:
+> 
+> >  ===============================================================
+> >  - rsync://host.xz/path/to/repo.git/
+> > -- http://host.xz/path/to/repo.git/
+> > -- https://host.xz/path/to/repo.git/
+> > -- git://host.xz/path/to/repo.git/
+> > -- git://host.xz/~user/path/to/repo.git/
+> > +- http://host.xz{startsb}:port{endsb}/path/to/repo.git/
+> > +- https://host.xz{startsb}:port{endsb}/path/to/repo.git/
+> > +- git://host.xz{startsb}:port{endsb}/path/to/repo.git/
+> > +- git://host.xz{startsb}:port{endsb}/~user/path/to/repo.git/
+> >  - ssh://{startsb}user@{endsb}host.xz{startsb}:port{endsb}/path/to/repo.git/
+> >  - ssh://{startsb}user@{endsb}host.xz/path/to/repo.git/
+> >  - ssh://{startsb}user@{endsb}host.xz/~user/path/to/repo.git/
+> 
+> Do you know if these port specifications do actually work?  Just double
+> checking.
+> 
 
-I first feared that this will badly break D/F conflicting cases where we
-remove a file D/F that is the last remaining file in directory D and rely
-on the successful removal of the directory to create a file D, but the
-check_updates() function already is structured to allow this late removal
-easily.
+A quick test with 'netcat':
 
-I think the patch is sensible modulo minor nits.
+In xterm 1:
 
- * The new global path_buf/path_len in unpack-trees.c are named too
-   generic.  It is not just a buffer anybody can use for anything, but
-   is used to keep track for a specific purpose of doing something, so
-   please name them after that something.
+$ nc -l -p 8080
 
- * "#define ALL_DIRS 0" is useless, given the way how the parameter to
-   do_remove_scheduled_dirs() is named;
+
+In xterm 2:
+
+$ git clone http://localhost:8080/foo/bar/baz.git
+
+Back in xterm 1 I get:
+
+GET /foo/bar/baz.git/info/refs HTTP/1.1
+User-Agent: git/1.6.1.2
+Host: localhost:8080
+Accept: */*
+
+
+More testing needed ?
+
+Regards,
+Stefan
