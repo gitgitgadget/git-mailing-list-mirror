@@ -1,102 +1,88 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Confused about diff-tree --cc output
-Date: Wed, 4 Feb 2009 16:13:39 -0500
-Message-ID: <76718490902041313y44eeb99bya33513bc9818aeb0@mail.gmail.com>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: Re: [PATCH/RFC v3 4/9] unlink_entry(): introduce
+ schedule_dir_for_removal()
+Date: Wed, 04 Feb 2009 22:32:30 +0100
+Organization: private
+Message-ID: <86myd1zy4x.fsf@broadpark.no>
+References: <cover.1233751281.git.barvik@broadpark.no>
+ <5e00462034e14b628ad6744edc1fad7daee78c5c.1233751281.git.barvik@broadpark.no>
+ <7vfxitorb7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 04 22:15:21 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 22:34:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUp5V-000768-IT
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 22:15:14 +0100
+	id 1LUpO5-0006DY-Dc
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 22:34:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756745AbZBDVNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 16:13:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756437AbZBDVNl
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 16:13:41 -0500
-Received: from rv-out-0506.google.com ([209.85.198.235]:46402 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755884AbZBDVNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 16:13:40 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so2738017rvb.1
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 13:13:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=rW5D3LNlJuqY2cnWmFRWRNN/2A9ri8AlGLxrAhoM6YA=;
-        b=rbsm3KyN7I5m0fvR5HQVi7v9IMoGJ6UZwhIpTbMKIrHgJNbKPgry39trOXdZ3zE1re
-         XhgF0I1Hdi/OKVntXobUyEFBPT5FCxSFY0pEdUuXAav0hq173Q0m+OKPFCGXX8yP7Pr5
-         rFAepfuGIGHyI7CmWzmR0Y/x0XOdKRPtyBGcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=X1z5JUU5gCu/Hnq4ZGYl4byCEIXZrssUDLWLJiQz4jcSIM9i0F8YAj7A8cCmEdWD/m
-         X1+ic4YubCJADJd2dkcjfdGOhDDrgN41+Drb6D4vesccCNGqthvFvLWhM6KXyAjlm7N0
-         /EuxUAv2EW85ITKk2QoDQb7qiImM/9w7irZ/I=
-Received: by 10.140.201.8 with SMTP id y8mr3891372rvf.12.1233782019577; Wed, 
-	04 Feb 2009 13:13:39 -0800 (PST)
+	id S1760564AbZBDVcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 16:32:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760639AbZBDVce
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 16:32:34 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:37202 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760622AbZBDVcd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 16:32:33 -0500
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KEK0089M96715A0@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Wed, 04 Feb 2009 22:32:31 +0100 (CET)
+Received: from localhost ([80.203.29.216]) by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KEK0047R966S270@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Wed, 04 Feb 2009 22:32:31 +0100 (CET)
+In-reply-to: <7vfxitorb7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108439>
 
-I'm a bit confused about the output of "git show 8554af" (i.e. git
-diff-tree --cc 8554af) on the git tree.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This is a merge of a topic branch of two patches I submitted. If I
-understand what Junio did, he branched js/maint-remote-remove-mirror
-from maint, applied the two patches I sent via email, then merged that
-to next. (Given the topic name he chose, after cooking for a while, I
-guess it will eventually merge to maint.)
+> Kjetil Barvik <barvik@broadpark.no> writes:
+>
+>> Since the unlink_entry() function is called with alphabetically sorted
+>> names, this new function end up being very effective to avoid
+>> unnecessary calls to rmdir().  In some cases over 95% of all calls to
+>> rmdir() is removed with this patch.
+>
+> I first feared that this will badly break D/F conflicting cases where we
+> remove a file D/F that is the last remaining file in directory D and rely
+> on the successful removal of the directory to create a file D, but the
+> check_updates() function already is structured to allow this late removal
+> easily.
+>
+> I think the patch is sensible modulo minor nits.
 
-My understanding of "git show <merge commit>" is that it should only
-show changes if the merge resulted in a conflict that needed to be
-touched up (ignoring the possibility of an evil merge). Yet git show
-on this commit shows this diff:
+  Yes, if the 2 for-loop's inside check_updates() is rewritten into 1
+  for-loop, then you could end up with such a conflict.  Should I add a
+  comment about this inside check_updates()?
 
-diff --cc builtin-remote.c
-index abc8dd8,07cfdac..db18bcf
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@@ -539,11 -362,14 +549,14 @@@ static int rm(int argc, const char **ar
-  		OPT_END()
-  	};
-  	struct remote *remote;
- -	struct strbuf buf;
- +	struct strbuf buf = STRBUF_INIT;
-  	struct known_remotes known_remotes = { NULL, NULL };
-  	struct string_list branches = { NULL, 0, 0, 1 };
-- 	struct branches_for_remote cb_data = { NULL, &branches, &known_remotes };
-- 	int i;
-+ 	struct string_list skipped = { NULL, 0, 0, 1 };
-+ 	struct branches_for_remote cb_data = {
-+ 		NULL, &branches, &skipped, &known_remotes
-+ 	};
-+ 	int i, result;
+>  * The new global path_buf/path_len in unpack-trees.c are named too
+>    generic.  It is not just a buffer anybody can use for anything, but
+>    is used to keep track for a specific purpose of doing something, so
+>    please name them after that something.
 
-  	if (argc != 2)
-  		usage_with_options(builtin_remote_usage, options);
+   Already done in v3 (this version), since the functions
+   schedule_dir_for_removal() and remove_scheduled_dirs() is now
+   implemented in the symlinks.c file, where I have made the following:
 
-This is the same output shown here:
+static struct removal_def {
+	char path[PATH_MAX];
+	int len;
+} removal;
 
-  http://repo.or.cz/w/git.git?a=commitdiff;h=8554af
+>  * "#define ALL_DIRS 0" is useless, given the way how the parameter to
+>    do_remove_scheduled_dirs() is named;
 
-However, kernel.org's git shows something different (and more what I
-would expect, if any output is to be shown):
+  Ok, I can do a rebase of this patch (4/9) and resend the patches.
 
-  http://git.kernel.org/?p=git/git.git;a=commitdiff;h=8554af
-
-(I guess kernel.org is using something like diff-tree -p 3613d1 8554af
---, but I'm not sure why.)
-
-I don't see any other changes to builtin-remote.c that would have
-caused a merge conflict, so, color me confused.
-
-j.
+  -- kjetil
