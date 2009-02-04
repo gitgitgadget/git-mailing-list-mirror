@@ -1,68 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] apply: fix access to an uninitialized mode variable,
- found by valgrind
-Date: Wed, 4 Feb 2009 17:44:35 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902041743530.22763@intel-tinevez-2-302>
-References: <cover.1233712140u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0902040249030.9822@pacific.mpi-cbg.de> <20090204153150.GC6896@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Don Zickus <dzickus@redhat.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 04 17:46:10 2009
+From: Marius Seritan <mseritan@decodeideas.com>
+Subject: hot to fix git svn import or just discard 'branches' folder
+Date: Wed, 4 Feb 2009 09:03:07 -0800
+Message-ID: <7E976223-6794-4E87-94A5-DEA224759700@decodeideas.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 04 18:04:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUkt8-0000GR-0n
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 17:46:10 +0100
+	id 1LUlB2-00082r-JI
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 18:04:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752478AbZBDQom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 11:44:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbZBDQom
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 11:44:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40855 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751863AbZBDQom (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 11:44:42 -0500
-Received: (qmail invoked by alias); 04 Feb 2009 16:44:39 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp008) with SMTP; 04 Feb 2009 17:44:39 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19pCEtggoNp/GTFx2uLlOa2vy9/S5LjHTclvmjOlU
-	I4wH5ope5tJB2b
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090204153150.GC6896@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1753666AbZBDRDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 12:03:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752728AbZBDRDN
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 12:03:13 -0500
+Received: from el-out-1112.google.com ([209.85.162.182]:44584 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753363AbZBDRDM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 12:03:12 -0500
+Received: by el-out-1112.google.com with SMTP id b25so1111004elf.1
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 09:03:10 -0800 (PST)
+Received: by 10.142.162.9 with SMTP id k9mr686309wfe.159.1233766988996;
+        Wed, 04 Feb 2009 09:03:08 -0800 (PST)
+Received: from ?192.168.12.2? (adsl-69-108-12-168.dsl.scrm01.pacbell.net [69.108.12.168])
+        by mx.google.com with ESMTPS id 30sm11801523wfa.41.2009.02.04.09.03.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 04 Feb 2009 09:03:08 -0800 (PST)
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108394>
 
-Hi,
+I imported over night an svn repository with the command:
 
-On Wed, 4 Feb 2009, Jeff King wrote:
+git svn clone --prefix svn/ -r 860  http://svn.some.com/svn/someproject
 
-> On Wed, Feb 04, 2009 at 02:50:15AM +0100, Johannes Schindelin wrote:
-> 
-> > When 'tpatch' was initialized successfully, st_mode was already taken
-> > from the previous diff.  We should not try to override it with data
-> > from an lstat() that was never called.
-> 
-> Yay. Valgrind For The Win, as the kids are saying these days.
+The svn repository uses the usual trunk, branches, tag so I (wrongly?)  
+assumed I do not need to pass any command switches regarding the  
+structure of the repo.
 
-Yes, indeed.
+I obviously did something wrong because now I have a git repository  
+with just one remote branch and it contains the folders trunk,  
+branches and tag. I do not want to reimport because it is taking lots  
+of time and bandwidth.
 
-> Was this being triggered by t4121 and t4127? If so, then I think it 
-> solves the mystery valgrind errors I reported in the last paragraph 
-> here:
-> 
->   http://article.gmane.org/gmane.comp.version-control.git/98898
+How can I fix this? I do not really need the old branches and tags, I  
+want to be able to track new branches and I just want to have the  
+trunk history.
 
-Yep, t4121 and t4127.  But I did not have time to follow the link.
 
-Ciao,
-Dscho
+Thanks for any pointers.
+
+Marius
