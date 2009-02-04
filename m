@@ -1,120 +1,78 @@
-From: Jesse van den Kieboom <jesse@icecrew.nl>
-Subject: Re: git gtk+/GNOME gui application: gitg
-Date: Wed, 04 Feb 2009 15:46:08 +0100
-Message-ID: <1233758768.7594.27.camel@wren>
-References: <1233432317.26364.5.camel@wren>
-	 <4989A63B.4030103@drmicha.warpmail.net> <1233758025.7594.23.camel@wren>
-	 <4989A8E7.6080109@drmicha.warpmail.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH/RFC v3 7/9] write_entry(): use fstat() instead of lstat()
+ when   file is open
+Date: Wed, 04 Feb 2009 15:01:08 +0100
+Message-ID: <49899FA4.2020003@viscovery.net>
+References: <cover.1233751281.git.barvik@broadpark.no> <21073c1f3f6c2c81b26a632f495325f5e7a7de5a.1233751281.git.barvik@broadpark.no>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Feb 04 15:48:14 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Kjetil Barvik <barvik@broadpark.no>
+X-From: git-owner@vger.kernel.org Wed Feb 04 15:51:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUj2r-00076w-Op
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 15:48:06 +0100
+	id 1LUj6C-0008V0-Md
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 15:51:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752055AbZBDOqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 09:46:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751423AbZBDOqj
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 09:46:39 -0500
-Received: from novowork.com ([87.230.85.62]:59032 "EHLO novowork.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751338AbZBDOqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 09:46:39 -0500
-Received: from [128.178.246.242] (ls-in-242.epfl.ch [128.178.246.242])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by novowork.com (Postfix) with ESMTPSA id 9FC853670068;
-	Wed,  4 Feb 2009 15:46:09 +0100 (CET)
-In-Reply-To: <4989A8E7.6080109@drmicha.warpmail.net>
-X-Mailer: Evolution 2.24.2 
+	id S1752173AbZBDOt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 09:49:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbZBDOtz
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 09:49:55 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:3677 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751338AbZBDOtx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 09:49:53 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LUj4T-00017B-SH; Wed, 04 Feb 2009 15:49:46 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id BFCE06D9; Wed,  4 Feb 2009 15:01:08 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <21073c1f3f6c2c81b26a632f495325f5e7a7de5a.1233751281.git.barvik@broadpark.no>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108371>
 
-Op woensdag 04-02-2009 om 15:40 uur [tijdzone +0100], schreef Michael J
-Gruber:
-> Jesse van den Kieboom venit, vidit, dixit 04.02.2009 15:33:
-> > Op woensdag 04-02-2009 om 15:29 uur [tijdzone +0100], schreef Michael J
-> > Gruber:
-> >> Jesse van den Kieboom venit, vidit, dixit 31.01.2009 21:05:
-> >>> Hi,
-> >>>
-> >>> I have been developing a gui application for git for gtk+/GNOME based on
-> >>> GitX (which in turn is based on gitk). I feel that it's reaching the
-> >>> point where it might potentially be useful for other people to use. It
-> >>> currently features:
-> >>>
-> >>> - Loading large repositories very fast
-> >>> - Show/browse repository history
-> >>> - Show highlighted revision diff
-> >>> - Browse file tree of a revision and export by drag and drop
-> >>> - Search in the revision history on subject, author or hash
-> >>> - Switch between history view of branches easily
-> >>> - Commit view providing per hunk stage/unstage and commit
-> >>>
-> >>> The project is currently hosted on github:
-> >>> http://github.com/jessevdk/gitg
-> >>>
-> >>> clone: git://github.com/jessevdk/gitg.git
-> >>>
-> >>> Please let me know what you think,
-> >> OK, played with it, looks nice. Some feedback:
-> >>
-> >> Bug:?
-> >> After unstaged a staged file it does not reappear under "unstaged". It
-> >> appears nowhere.
-> > 
-> > Hmm this _should_ happen, if it doesn't it's certainly a bug.
-> 
-> I just compared with staging/reverting the single hunk I had in there,
-> that works perfectly. The bug occurs only when unstaging from the list
-> of staged files.
-> 
-> >> Build:
-> >> gitg can't run from the build dir, it needs to be installed.
-> >> Reconfiguring with different --prefix does not rebuild (one needs to
-> >> make clean manually).
-> > 
-> > This is true, I got a patch to fix this, but I'm not sure it should go
-> > in (e.g. read data files from current working directory). It's not
-> > common to be able to run C/gtk+ apps from the build directory, you
-> > should install them in a local prefix.
-> 
-> Sure, but just to try it out? Imagine me poor soul, going through all
-> these GUIs and cloning, running
-> autogen.sh/qmake-qt4/configure/make/setup.py depending on the tk, and
-> finding I have to install in order to try it out (not to mention
-> dependencies)? ;)
+Kjetil Barvik schrieb:
+> Currently inside write_entry() we do an lstat(path, &st) call on a
+> file which have just been opened inside the exact same function.  It
+> should be better to call fstat(fd, &st) on the file while it is open,
+> and it should be at least as fast as the lstat() method.
+...
+> @@ -145,6 +146,11 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
+>  		}
+>  
+>  		wrote = write_in_full(fd, new, size);
+> +		/* use fstat() only when path == ce->name */
+> +		if (state->refresh_cache && !to_tempfile && !state->base_dir_len) {
+> +			fstat(fd, &st);
+> +			fstat_done = 1;
+> +		}
+>  		close(fd);
 
-Yeah I know, it's a hassle. But fixing this would involve quite some
-hacks in the code (it's not just the ui xml files, also icons and other
-installed data) to find this data. Unfortunately, autotools is not
-really friendly in this way. It might be possible to build binaries
-which have local resources (like OS X bundles) so it can be tried out
-without installing, but I'm not sure it's worth the effort.
+I've a bad gut feeling about this: It may not work as expected on Windows
+because there is this statement in the documentation:
 
-> >> Can one stage hunks somehow?
-> > 
-> > Yes, you can click on the hunk header @@...@@ when viewing the diff in
-> > the commit view. You can also rightclick on this header and revert a
-> > hunk (or stage/unstage it from the context menu).
-> 
-> Uh, thanks, works like a charm. I had tried selecting and right-clicking
-> the hunk itself...
-> 
-> Cheers,
-> Michael
-> 
--- 
-Jesse van den Kieboom
+  "The only guarantee about a file timestamp is that the file time is
+   correctly reflected when the handle that makes the change is closed."
 
-Personal: http://www.icecrew.nl
-Professional: http://www.novowork.com
+(http://msdn.microsoft.com/en-us/library/ms724290(VS.85).aspx)
+
+We are operating on a temporary file. It could happen that the fstat()
+returns the time when the file was created, as opposed to when the
+write_in_full() was completed successfully. The fstat()ed time ends up in
+the index, but it can be different from what later lstat() calls report
+(and the file would be regarded as modified).
+
+I have the suspicion that the gain from this patch is minimal. Would you
+mind playing it safe and drop this patch?
+
+-- Hannes
