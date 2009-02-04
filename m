@@ -1,108 +1,69 @@
-From: Jesse van den Kieboom <jesse@icecrew.nl>
-Subject: Re: git gtk+/GNOME gui application: gitg
-Date: Wed, 04 Feb 2009 15:33:45 +0100
-Message-ID: <1233758025.7594.23.camel@wren>
-References: <1233432317.26364.5.camel@wren>
-	 <4989A63B.4030103@drmicha.warpmail.net>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] filter-branch: do not consider diverging submodules a 'dirty
+ worktree'
+Date: Wed, 4 Feb 2009 15:40:58 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902041540130.10279@pacific.mpi-cbg.de>
+References: <cover.1233758410u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Feb 04 15:37:24 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 04 15:42:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUisW-0002uR-8D
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 15:37:24 +0100
+	id 1LUiwt-0004hG-8v
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 15:41:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173AbZBDOf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 09:35:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752065AbZBDOfz
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 09:35:55 -0500
-Received: from novowork.com ([87.230.85.62]:58149 "EHLO novowork.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752023AbZBDOfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 09:35:54 -0500
-Received: from [128.178.246.242] (ls-in-242.epfl.ch [128.178.246.242])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by novowork.com (Postfix) with ESMTPSA id 104B3367055E;
-	Wed,  4 Feb 2009 15:33:48 +0100 (CET)
-In-Reply-To: <4989A63B.4030103@drmicha.warpmail.net>
-X-Mailer: Evolution 2.24.2 
+	id S1752341AbZBDOk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 09:40:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751655AbZBDOk2
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 09:40:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44810 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751518AbZBDOk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 09:40:27 -0500
+Received: (qmail invoked by alias); 04 Feb 2009 14:40:23 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp034) with SMTP; 04 Feb 2009 15:40:23 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Rxotl4mtRrtOeuma3qePzW6L9ygEle3zON4nlbN
+	D26LiCZVMLrLMU
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <cover.1233758410u.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108368>
 
-Op woensdag 04-02-2009 om 15:29 uur [tijdzone +0100], schreef Michael J
-Gruber:
-> Jesse van den Kieboom venit, vidit, dixit 31.01.2009 21:05:
-> > Hi,
-> > 
-> > I have been developing a gui application for git for gtk+/GNOME based on
-> > GitX (which in turn is based on gitk). I feel that it's reaching the
-> > point where it might potentially be useful for other people to use. It
-> > currently features:
-> > 
-> > - Loading large repositories very fast
-> > - Show/browse repository history
-> > - Show highlighted revision diff
-> > - Browse file tree of a revision and export by drag and drop
-> > - Search in the revision history on subject, author or hash
-> > - Switch between history view of branches easily
-> > - Commit view providing per hunk stage/unstage and commit
-> > 
-> > The project is currently hosted on github:
-> > http://github.com/jessevdk/gitg
-> > 
-> > clone: git://github.com/jessevdk/gitg.git
-> > 
-> > Please let me know what you think,
-> 
-> OK, played with it, looks nice. Some feedback:
-> 
-> Bug:?
-> After unstaged a staged file it does not reappear under "unstaged". It
-> appears nowhere.
+As filter-branch could not care less about submodules' actual contents,
+it does not make sense to check if the checked-out submodules are
+up-to-date before running filter-branch.  So do not do it.
 
-Hmm this _should_ happen, if it doesn't it's certainly a bug.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git-filter-branch.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-> 
-> Build:
-> gitg can't run from the build dir, it needs to be installed.
-> Reconfiguring with different --prefix does not rebuild (one needs to
-> make clean manually).
-
-This is true, I got a patch to fix this, but I'm not sure it should go
-in (e.g. read data files from current working directory). It's not
-common to be able to run C/gtk+ apps from the build directory, you
-should install them in a local prefix.
-
-> Features:
-> Displaying the subject after the parent shas etc would be nice.
-> Maybe forward/back buttons for taking you forward/back in your *browsing
-> history*? Say, you click on a parent, and then you want to get back.
-
-Showing the parent subject should be fairly easy to fix, I'll see if I
-can get that in. I have thought about a history-history, but I haven't
-felt the need to use it yet (also I don't think GitX has this), but it
-might be worth implementing.
-
-> Can one stage hunks somehow?
-
-Yes, you can click on the hunk header @@...@@ when viewing the diff in
-the commit view. You can also rightclick on this header and revert a
-hunk (or stage/unstage it from the context menu).
-
-> Cheers,
-> Michael
-> 
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 8cbce4e..066f9c3 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -108,8 +108,8 @@ OPTIONS_SPEC=
+ . git-sh-setup
+ 
+ if [ "$(is_bare_repository)" = false ]; then
+-	git diff-files --quiet &&
+-	git diff-index --cached --quiet HEAD -- ||
++	git diff-files --ignore-submodules --quiet &&
++	git diff-index --ignore-submodules --cached --quiet HEAD -- ||
+ 	die "Cannot rewrite branch(es) with a dirty working directory."
+ fi
+ 
 -- 
-Jesse van den Kieboom
-
-Personal: http://www.icecrew.nl
-Professional: http://www.novowork.com
+1.6.1.2.582.g3fdd5
