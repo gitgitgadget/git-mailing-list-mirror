@@ -1,71 +1,54 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: segfault during clone via http
-Date: Wed, 4 Feb 2009 22:39:13 +0100
-Organization: glandium.org
-Message-ID: <20090204213913.GA7806@glandium.org>
-References: <loom.20090204T160827-822@post.gmane.org> <76718490902041000x3cda2390t25254e8372c9af50@mail.gmail.com> <loom.20090204T183407-350@post.gmane.org> <alpine.DEB.1.00.0902042132110.10279@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Confused about diff-tree --cc output
+Date: Wed, 04 Feb 2009 13:56:19 -0800
+Message-ID: <7vk585n9x8.fsf@gitster.siamese.dyndns.org>
+References: <76718490902041313y44eeb99bya33513bc9818aeb0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Adam Thorsen <adam.thorsen@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 04 22:41:57 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 22:57:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUpUK-0000At-SK
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 22:40:53 +0100
+	id 1LUpkm-0006lz-BQ
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 22:57:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754668AbZBDVj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 16:39:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754495AbZBDVj0
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 16:39:26 -0500
-Received: from vuizook.err.no ([85.19.221.46]:51430 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753489AbZBDVj0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 16:39:26 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1LUpSn-0001AI-FK; Wed, 04 Feb 2009 22:39:20 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1LUpSj-00023A-3K; Wed, 04 Feb 2009 22:39:13 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0902042132110.10279@pacific.mpi-cbg.de>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1756238AbZBDV4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 16:56:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754007AbZBDV4Z
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 16:56:25 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48922 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756223AbZBDV4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 16:56:25 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B508A2A721;
+	Wed,  4 Feb 2009 16:56:23 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D42B72A71D; Wed, 
+ 4 Feb 2009 16:56:20 -0500 (EST)
+In-Reply-To: <76718490902041313y44eeb99bya33513bc9818aeb0@mail.gmail.com>
+ (Jay Soffian's message of "Wed, 4 Feb 2009 16:13:39 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A9ED87D0-F306-11DD-B42F-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108441>
 
-On Wed, Feb 04, 2009 at 09:34:36PM +0100, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Wed, 4 Feb 2009, Adam Thorsen wrote:
-> 
-> > 
-> > Here is the stack trace:
-> > 
-> > Program received signal EXC_BAD_ACCESS, Could not access memory.
-> > Reason: KERN_INVALID_ADDRESS at address: 0x00494000
-> > 0x0015bb04 in multi_runsingle ()
-> > (gdb) bt
-> > #0  0x0015bb04 in multi_runsingle ()
-> > #1  0x0015d5af in curl_multi_perform ()
-> > #2  0x000b8782 in step_active_slots () at http.c:450
-> > #3  0x000b881c in run_active_slot (slot=0x50a450) at http.c:474
-> > #4  0x000bac5c in fetch (walker=0x5008d0, 
-> > sha1=0x4a791c "?u^?9l?\003?5??#??X\"?XL") at http-walker.c:846
-> 
-> FWIW I think the issue is related to the double cleanup I mentioned to 
-> Mike Hommey earlier.  At least when I undo the double cleanup, I do not 
-> get any segfaults anymore.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-I thought it was not applied, in the end ?
+> My understanding of "git show <merge commit>" is that it should only
+> show changes if the merge resulted in a conflict that needed to be
+> touched up (ignoring the possibility of an evil merge). Yet git show
+> on this commit shows this diff:
 
-Mike
+I think this is "more than two versions", in
+
+    http://thread.gmane.org/gmane.comp.version-control.git/15486/focus=15491
+
+Nothing new to see here, I think.
