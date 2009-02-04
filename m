@@ -1,97 +1,92 @@
-From: Marius Seritan <mseritan@decodeideas.com>
-Subject: Re: hot to fix git svn import or just discard 'branches' folder
-Date: Wed, 4 Feb 2009 11:05:21 -0800
-Message-ID: <5713EFD1-E6E7-4FD5-BF17-FDA5FF6F7C6B@decodeideas.com>
-References: <7E976223-6794-4E87-94A5-DEA224759700@decodeideas.com> <D92EB2AE-392D-4F05-8DF3-999BE78C80FF@silverinsanity.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Re: Best CI Server for Git?
+Date: Wed, 4 Feb 2009 14:23:13 -0500
+Message-ID: <c115fd3c0902041123j4a16d666r6d1fbb9917184b2a@mail.gmail.com>
+References: <c115fd3c0902021258i61a04f74u481ba66c645fe8f5@mail.gmail.com>
+	 <1c5969370902021642v4e8d93djd22d5caa4aa9d1a9@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Wed Feb 04 20:08:21 2009
+To: Matt Graham <mdg149@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 20:24:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUn64-000865-Mk
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 20:07:41 +0100
+	id 1LUnMa-0006Ps-VX
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 20:24:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762357AbZBDTFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 14:05:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762298AbZBDTFc
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 14:05:32 -0500
-Received: from an-out-0708.google.com ([209.85.132.243]:56107 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762304AbZBDTF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 14:05:28 -0500
-Received: by an-out-0708.google.com with SMTP id c2so1084266anc.1
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 11:05:25 -0800 (PST)
-Received: by 10.64.153.7 with SMTP id a7mr1798872qbe.110.1233774324565;
-        Wed, 04 Feb 2009 11:05:24 -0800 (PST)
-Received: from ?192.168.2.201? ([72.14.241.159])
-        by mx.google.com with ESMTPS id s30sm3227735qbs.20.2009.02.04.11.05.23
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Feb 2009 11:05:23 -0800 (PST)
-In-Reply-To: <D92EB2AE-392D-4F05-8DF3-999BE78C80FF@silverinsanity.com>
-X-Mailer: Apple Mail (2.930.3)
+	id S1757232AbZBDTXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 14:23:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751849AbZBDTXP
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 14:23:15 -0500
+Received: from yx-out-2324.google.com ([74.125.44.30]:19392 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755942AbZBDTXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 14:23:15 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so1000438yxm.1
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 11:23:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=eKqvhJxiLh8k/Sbl7Ysf2tHTFscPolebuxKI+0tFewA=;
+        b=gV5yi+7u7UA45HtSuBVNoDtOyaEe3R6OfzDELKcNVIE/Sv+wi51fC422QWjMy6ESpr
+         t1zPACtJALB+XtIb5RJ2xX7vrHcau85Uqel07T3QEdoGtnhfJTYl/S37evGZSEnVCRRm
+         W8I97dTyP6/8NMHo77Q6VSH623Go7v2tHZH5E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=O8k+8HBxcNqLHBkiEdSYJGa3FgDAKyRYnmkpCju15CS8Q/2gZBLqzusRm+oYuzFR5c
+         WLD/fzZ5yC4GEdJmglg0wyqYwDfVFr31PS3Ls6XOVKuo0JuFXaBZD0BL+dMn2Oi8qDqb
+         8Z4bE8g3FXcyRN4WMfe6KbgsaqH3bGa8UITWI=
+Received: by 10.100.139.20 with SMTP id m20mr412595and.147.1233775393551; Wed, 
+	04 Feb 2009 11:23:13 -0800 (PST)
+In-Reply-To: <1c5969370902021642v4e8d93djd22d5caa4aa9d1a9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108413>
 
-Thanks Brian,
+On Mon, Feb 2, 2009 at 7:42 PM, Matt Graham <mdg149@gmail.com> wrote:
 
+> Hudson leaves a fair amount to be implemented by plug-ins, so not
+> being installed out of the box doesn't really imply bad.  I would say
+> that there are more significant differences between Hudson and Cruise
+> Control than how they integrate with Git.
 
-On Feb 4, 2009, at 10:39 AM, Brian Gernhardt wrote:
+Makes sense.
 
->
-> On Feb 4, 2009, at 12:03 PM, Marius Seritan wrote:
->
->> I imported over night an svn repository with the command:
->>
->> git svn clone --prefix svn/ -r 860  http://svn.some.com/svn/someproject
->>
->> The svn repository uses the usual trunk, branches, tag so I  
->> (wrongly?) assumed I do not need to pass any command switches  
->> regarding the structure of the repo.
->
-> "git svn clone URL" attempts to act like "svn co URL", but with  
-> history.  If you only want to download the trunk, then you should  
-> add "/trunk" to the end of the URL.  If you want to capture all the  
-> branches, tags, etc you should use "--stdlayout" (also spelled "-s").
+> We are currently switching from Cruise Control to Hudson for reasons
+> related to ease of use.
 
-I want to capture the current trunk and any new branches. It seems the  
--s is required if I do a reimport.
+Would you mind being a little more specific?  The basics of what I've
+heard is that Cruise Control is ultimately much more flexible and
+capable, but that Hudson beats it hands down regarding usability and
+UI.  What specific issues had your team come up against?
 
+> Here is another hudson/git plugin.  It may not be quite as official
+> but addresses issues people have had with the more official one:
+> http://github.com/stephenh/hudson-git2
 
->
->
->> I obviously did something wrong because now I have a git repository  
->> with just one remote branch and it contains the folders trunk,  
->> branches and tag. I do not want to reimport because it is taking  
->> lots of time and bandwidth.
->
-> I believe fixing this without reimporting requires using "git filter- 
-> branch".  I'm unfamiliar with it, so I can't help you with that part.
+I remember when this was announced.  Unfortunately, I can't find a
+clear comparison of the two.  I heard in a recent thread on here that
+at least some of the problems being answered by hudson-git2 have been
+cleaned up in the latest version of the official plug-in.  Is it still
+the case that there are problems in the official one that are fixed in
+Stephen's?
 
-Thanks, I will look into it. From the first read this seems to be  
-pretty advanced.
+Thanks so much for your help! :)
 
->
->
-> However, I'm curious as to why this took a lot of time because the "- 
-> r 860" on the command line should tell git-svn to only download a  
-> single revision.  Is it a particularly repository?
+-- 
 
-All of the repository was imported including branches in spite of the - 
-r. This is private repository for a company's web site, it has your  
-usual assortment of jars and the history has a dozen branches and a  
-couple of tags.  The size on the disk is about 3GB, I was a bit  
-surprised by it.
+In Christ,
 
-Marius
+Timmy V.
 
->
->
-> ~~ Brian
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
