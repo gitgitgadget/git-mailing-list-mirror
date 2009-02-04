@@ -1,96 +1,63 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [Illustration PATCH] add -i: accept single-keypress input
-Date: Wed, 4 Feb 2009 09:51:44 +0100
-Message-ID: <200902040951.50018.trast@student.ethz.ch>
-References: <20090203062437.GB21367@sigill.intra.peff.net> <200902031035.04978.trast@student.ethz.ch> <7vljsm9492.fsf@gitster.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: GIT over ssh with identity file
+Date: Wed, 04 Feb 2009 09:50:47 +0100
+Message-ID: <vpqhc3aa8m0.fsf@bauges.imag.fr>
+References: <21826348.post@talk.nabble.com>
+	<7vbpti1tnd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3813377.g2HbkvW7NZ";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Suraj Kurapati <sunaku@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: oliverw <oliver@weichhold.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 04 09:53:40 2009
+X-From: git-owner@vger.kernel.org Wed Feb 04 09:58:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUdVp-0004p4-3e
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 09:53:37 +0100
+	id 1LUdaF-00068r-Td
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 09:58:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654AbZBDIwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 03:52:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbZBDIwK
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 03:52:10 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:2547 "EHLO xsmtp1.ethz.ch"
+	id S1751781AbZBDI4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 03:56:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbZBDI4p
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 03:56:45 -0500
+Received: from imag.imag.fr ([129.88.30.1]:33442 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750990AbZBDIwJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 03:52:09 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 4 Feb 2009 09:52:07 +0100
-Received: from thomas.localnet ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 4 Feb 2009 09:52:06 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.25.20-0.1-default; KDE/4.2.0; x86_64; ; )
-In-Reply-To: <7vljsm9492.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 04 Feb 2009 08:52:07.0027 (UTC) FILETIME=[DBB07430:01C986A5]
+	id S1750845AbZBDI4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 03:56:44 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n148ol4u002197
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 4 Feb 2009 09:50:47 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LUdT5-0004gA-7a; Wed, 04 Feb 2009 09:50:47 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LUdT5-0007B5-5J; Wed, 04 Feb 2009 09:50:47 +0100
+In-Reply-To: <7vbpti1tnd.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 04 Feb 2009 00\:41\:10 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 04 Feb 2009 09:50:48 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108317>
 
---nextPart3813377.g2HbkvW7NZ
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Junio C Hamano <gitster@pobox.com> writes:
 
-Junio C Hamano wrote:
-> Thomas Rast <trast@student.ethz.ch> writes:
->=20
-> > Junio C Hamano wrote:
-> >
-> >> Hmm, you could trigger the action immediately after seeing _enough_ nu=
-mber
-> >> of characters to disambiguate instead of stop-and-prompt, I guess?  Th=
-at
-> >> way, you would get a single-key merely as a degenerate case when the
-> >> choices are all distinct.
-> >
-> > I don't think that's very nice.  On the one hand, you'd really want to
-> > allow the user to delete some of the input again if he decides to do
-> > something else instead, and we'd either need readline or need to
-> > reinvent it for that....
->=20
-> But doesn't the original "single-keypress" theme shares that problem
-> anyway?  It trades the ability to "delete some of the it again if he
-> decides to" away, in exchange for something else (probably "quicker input"
-> or "perceived ease of use").
+>     $ cat >>$HOME/.ssh/config <<\EOF
+>     Host homer-at-foo
+>       Hostname foo.bar.com
+>       User homer
+>       IdentityFile ~/.ssh/homer-at-foo.pub
 
-I don't think so: With the single-key input, you _know_ that whatever
-key you press will be executed immediately.  In a prefix scheme, the
-prompt might (you don't even know; you'll have to look and check) wait
-for more input, but you cannot undo the choice even though it has not
-been executed yet.
+(I think you have an extra .pub here, the identity file should be the
+private key).
 
-*shrug*
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart3813377.g2HbkvW7NZ
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkmJVyUACgkQqUud07tmzP1LygCghQPE3AHE2FQ0AfnFihVQNgUn
-nCIAn0NTDAvZcnjlGDB445ECmImd/Jkk
-=xQRP
------END PGP SIGNATURE-----
-
---nextPart3813377.g2HbkvW7NZ--
+-- 
+Matthieu
