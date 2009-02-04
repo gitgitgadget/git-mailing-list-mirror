@@ -1,173 +1,125 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH JGIT] Compute the author/commiter name and email from
-	the git configuration
-Date: Wed, 4 Feb 2009 09:36:03 -0800
-Message-ID: <20090204173603.GC26880@spearce.org>
-References: <49898A06.5040603@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 1/1] git-tag: Add --regex option
+Date: Wed, 04 Feb 2009 09:53:27 -0800
+Message-ID: <7v4ozaum08.fsf@gitster.siamese.dyndns.org>
+References: <1233677512-1846-1-git-send-email-goulding@vivisimo.com>
+ <7vljsm3aow.fsf@gitster.siamese.dyndns.org> <4989A34C.4080104@vivisimo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git <git@vger.kernel.org>
-To: Yann Simon <yann.simon.fr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 04 18:37:57 2009
+Cc: git@vger.kernel.org
+To: Jake Goulding <goulding@vivisimo.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 18:55:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUlgt-0004uA-IN
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 18:37:36 +0100
+	id 1LUlxl-0004Bp-V6
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 18:55:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752728AbZBDRgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 12:36:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752459AbZBDRgH
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 12:36:07 -0500
-Received: from george.spearce.org ([209.20.77.23]:45828 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752584AbZBDRgG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 12:36:06 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id DFCBB38210; Wed,  4 Feb 2009 17:36:03 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <49898A06.5040603@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752700AbZBDRxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 12:53:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbZBDRxf
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 12:53:35 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62636 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751677AbZBDRxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 12:53:35 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9BC332A6F9;
+	Wed,  4 Feb 2009 12:53:32 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A30E92A6F0; Wed, 
+ 4 Feb 2009 12:53:29 -0500 (EST)
+In-Reply-To: <4989A34C.4080104@vivisimo.com> (Jake Goulding's message of
+ "Wed, 04 Feb 2009 09:16:44 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: BCDFA69C-F2E4-11DD-8AB3-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108401>
 
-Yann Simon <yann.simon.fr@gmail.com> wrote:
-> diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryConfigTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryConfigTest.java
-> index 34ce04a..113eb1c 100644
-> --- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryConfigTest.java
-> +++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryConfigTest.java
-> @@ -116,4 +120,70 @@ public void test006_readCaseInsensitive() throws IOException {
->  		assertEquals(true, repositoryConfig.getBoolean("foo", null, "bar", false));
->  		assertEquals("", repositoryConfig.getString("foo", null, "bar"));
->  	}
-> +
-> +	private class FakeSystemReader implements SystemReader {
-> +		Map<String, String> values = new HashMap<String, String>();
-> +		public String getEnvironmentVariable(String variable) {
-> +			return values.get(variable);
-> +		}
-> +		public String getProperty(String key) {
-> +			return values.get(key);
-> +		}
-> +	}
+Jake Goulding <goulding@vivisimo.com> writes:
 
-I like this approach.  Perhaps this should simply be done in
-RepositoryTestCase so all of our unit tests have a stable default
-identity, no matter what.  They could change it on a test-by-test
-basis if needed, especially if the reader is created and populated
-with default values during the setUp() method.
+> Junio C Hamano wrote:
+>> Jake Goulding <goulding@vivisimo.com> writes:
+>> 
+>>> Allows the tag pattern to be expressed as a regular expression.
+>> 
+>> We use shell globs for refname throughout the system (not just tags).  Why
+>> is this a good thing, other than "because we can"?
+>
+> I'll give the particular use-case that we are using it for:
+>
+> In preparation for a release, we have a nightly tagging/building
+> process. We start by tagging something as 1.0.0-build1. We then do that
+> series for a while, then decide it is time to shift to a more thorough
+> QA cycle. We branch a QA branch, then start tagging at 1.0-0-rc1.
+> Eventually, a rc passes all QA tests and we tag that rc again as 1.0-0.
+>
+> Thus, our tags look like something of the form:
+>
+> 1.0.0-build1
+> 1.0.0-rc1
+> 1.0.0
+>
+> As we fix bugs, a hook automatically adds the commit hash is as a
+> comment to the appropriate bugzilla bug.
+>
+> We whipped up a dinky little web application that takes a hash and a
+> branch, and shows which tags contain that particular hash (which is the
+> reason for my previous commit for --contains support in git tag). We
+> hacked bugzilla to match on git hashes, and provide a link to this webapp.
+>
+> I wanted to be able to limit the search space to (builds, rcs,
+> releases), but globs don't allow that amount of flexibility.
+>
+> Is that a complete enough description for a rational use-case?
 
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java
-> index 8f093d6..372fba5 100644
-> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java
-> +
-> +	/** The environment variable that contains the commiter's name */
-> +	public static final String GIT_COMMITER_NAME_KEY = "GIT_COMMITER_NAME";
+It certainly describes what you are trying to use it for much better than
+a patch that does not say anything other than "because we can".  A patch
+marked as RFC could have been written with such an explanation from the
+beginning to save everybody's time.
 
-There are 2 't's in GIT_COMMITTER_NAME.  Both the variable name
-and the value are wrong.
+I still do not like the patch, and it is not entirely your fault.
 
-> +	/** The environment variable that contains the commiter's email */
-> +	public static final String GIT_COMMITER_EMAIL_KEY = "GIT_COMMITER_EMAIL";
+Imagine we are not discussing git nor tags, but doing something similar on
+the filesystem (e.g. you have files that store release-notes for key
+versions) and would want to have a way to limit the filename arguments you
+give to the commands, e.g. "wc -l 1.0.0*".  You most likely would not
+patch your shell to accept "set regexpglob; wc -l 1\.0\.0.*".  Instead you
+would arrange your naming convention to make it easy to limit to what you
+are interested in by globbing.
 
-Again, 2 't's.
+In that sense, the above explanation does not change the fact at all that
+your patch is "because we can".
 
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
-> index 7df90cd..0fa4b1f 100644
-> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
-> @@ -308,6 +323,83 @@ public String getString(final String section, String subsection, final String na
-...
-> +	public String getCommiterName() {
+But that is minor.
 
-2 't's in comitter.
+I liked the "git-tag --contains" patch, because the ref filters git-branch
+has are really ref filters, not branch filters, and should not belong only
+to git-branch.  But now that you revealed that you are using the Porcelain
+for scripting, it made me realize that these features should be accessible
+from the plumbing, perhaps for-each-ref, and your little web application
+should be using that, not "git-branch" nor "git-tag".
 
-> +	public String getCommiterEmail() {
+Currently it cannot, because these useful ref filters are implemented
+first at the Porcelain level.  Because the plumbing _is_ meant for people
+writing scripts, that is the issue we should be fixing first.
 
-There are 2 't's in Committer.
+I would have liked the patch if it were a series to refactor the code to
+filter refs based on their relationships from "git branch" (one of which
+you did with the --contains patch, but --merged, --no-merged should be
+addressed, too, I think), and make them available to for-each-ref, branch
+and tag.  If done right, adding regexp support or other fancier filtering
+can be done by enhancing the shared ref filtering logic once and both
+Porcelain and plumbing will benefit.
 
-> +	private String getUserEmailInternal(String gitVariableKey, boolean author) {
-...
-> +			// try to construct an email
-> +			String userName = author ? getAuthorName() : getCommiterName();
-> +			if (userName != null && userName.length() != 0) {
-> +				String hostnameTmp = getHostname();
-> +				if (hostnameTmp != null && hostnameTmp.length() != 0) {
-> +					email = userName + "@" + hostnameTmp;
-> +				}
-
-If you do what I suggest below, getHostname() will never return
-null, so this logic will simplify out and we'll always be able to
-set email if we have a userName.
-
-Also, I think this should be defaulting to the Java "user.name"
-property and not to the GIT_AUTHOR_NAME environment variable.  So if
-the user.email isn't set, and the *_EMAIL env var isn't set, use the
-"user.name" property and the hostname to form the email address.
-
-I don't think this should ever produce null.  If we don't have a
-username from user.name, use some generic string like "unknown-user".
-Then we at least still have some identity data.  Its very unlikely
-the JVM won't have a "user.name" property for us, so its very
-likely we won't get good tests in application level code for null
-return values.
-
-> @@ -957,4 +1049,28 @@ private static boolean eq(final String a, final String b) {
-> +
-> +	/**
-> +	 * @return the canonical hostname
-> +	 */
-> +	public static String getHostname() {
-
-I don't see a reason for this to be public.  Please make it private.
-
-> +		if (hostname == null) {
-> +			try {
-> +				InetAddress localMachine = InetAddress.getLocalHost();
-> +				hostname = localMachine.getCanonicalHostName();
-> +			} catch (UnknownHostException e) {
-> +				// we do nothing
-
-Set hostname = "localhost" so we don't incur an UHE on every attempt
-to get the hostname.  If it failed once, its very likely to fail
-again, and again, and again.
-
-> +	/**
-> +	 * Overrides the default system reader by a custom one.
-> +	 * @param systemReader new system reader
-> +	 */
-> +	public void setSystemReader(SystemReader systemReader) {
-
-Method should be static.
-
-> +		RepositoryConfig.systemReader = systemReader;
-
-There is no need for RepositoryConfig here.  Rename the parameter
-so it doesn't hide the field.
-
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/SystemReader.java b/org.spearce.jgit/src/org/spearce/jgit/util/SystemReader.java
-> new file mode 100644
-> index 0000000..89b4021
-> --- /dev/null
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/util/SystemReader.java
-> @@ -0,0 +1,24 @@
-> +package org.spearce.jgit.util;
-
-Missing copyright header.
-
-> +	/**
-> +	 * @param variable system variable to read
-> +	 * @return value of the system variable
-> +	 */
-> +	String getEnvironmentVariable(String variable);
-
-Maybe just emulate the System class and call this getenv() ?
-
--- 
-Shawn.
+Adding --regexp only to "git-tag" is going backwards, as you would have to
+then sideport that to "git-branch", and the new feature is still not
+available to the plumbing.  Seeing such a patch from somebody who improved
+the world by freeing --contains from the grip of "git-branch" makes me
+moderately unhappy.  It shows that you did not understand why your earlier
+patch was a good thing to begin with.
