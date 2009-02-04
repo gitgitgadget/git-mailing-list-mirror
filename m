@@ -1,53 +1,82 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: see commit messages on git pull
-Date: Wed, 4 Feb 2009 13:39:41 +0100
-Message-ID: <adf1fd3d0902040439g47bdfd60s3c365efb221cab72@mail.gmail.com>
-References: <200902041245.11242.thomas@koch.ro>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git gtk+/GNOME gui application: gitg
+Date: Wed, 04 Feb 2009 13:46:34 +0100
+Message-ID: <49898E2A.7070005@drmicha.warpmail.net>
+References: <1233432317.26364.5.camel@wren>	 <94a0d4530902032339p365df42i2b8f235430a68fd5@mail.gmail.com> <1233748114.7594.0.camel@wren>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Thomas Koch <thomas@koch.ro>
-X-From: git-owner@vger.kernel.org Wed Feb 04 13:41:29 2009
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Jesse van den Kieboom <jesse@icecrew.nl>
+X-From: git-owner@vger.kernel.org Wed Feb 04 13:48:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUh43-0001a0-Tt
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 13:41:12 +0100
+	id 1LUhBM-0004Cv-4C
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 13:48:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752066AbZBDMjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 07:39:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751655AbZBDMjo
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 07:39:44 -0500
-Received: from mu-out-0910.google.com ([209.85.134.188]:38692 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751341AbZBDMjo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 07:39:44 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so386400mue.1
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 04:39:42 -0800 (PST)
-Received: by 10.103.102.17 with SMTP id e17mr296073mum.119.1233751181754; Wed, 
-	04 Feb 2009 04:39:41 -0800 (PST)
-In-Reply-To: <200902041245.11242.thomas@koch.ro>
+	id S1755909AbZBDMqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 07:46:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755906AbZBDMqm
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 07:46:42 -0500
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:43937 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755899AbZBDMql (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Feb 2009 07:46:41 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id ACE8A27CC59;
+	Wed,  4 Feb 2009 07:46:39 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Wed, 04 Feb 2009 07:46:39 -0500
+X-Sasl-enc: Ag3joMpW56MlKV1/CwoieRrHEln121hLBJkrIjqLm6xQ 1233751599
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D7DC31F317;
+	Wed,  4 Feb 2009 07:46:38 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <1233748114.7594.0.camel@wren>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108348>
 
-2009/2/4 Thomas Koch <thomas@koch.ro>:
-> I'd like to see the commit messages of the fetched commits, when I do
-> git pull. Is that possible?
->
-> It would also be fine to have sth. like git log --since-last-pull ?
+Jesse van den Kieboom venit, vidit, dixit 04.02.2009 12:48:
+> Op woensdag 04-02-2009 om 09:39 uur [tijdzone +0200], schreef Felipe
+> Contreras:
+>> On Sat, Jan 31, 2009 at 10:05 PM, Jesse van den Kieboom
+>> <jesse@icecrew.nl> wrote:
+>>> Hi,
+>>>
+>>> I have been developing a gui application for git for gtk+/GNOME based on
+>>> GitX (which in turn is based on gitk). I feel that it's reaching the
+>>> point where it might potentially be useful for other people to use. It
+>>> currently features:
+>>>
+>>> - Loading large repositories very fast
+>>> - Show/browse repository history
+>>> - Show highlighted revision diff
+>>> - Browse file tree of a revision and export by drag and drop
+>>> - Search in the revision history on subject, author or hash
+>>> - Switch between history view of branches easily
+>>> - Commit view providing per hunk stage/unstage and commit
+>>>
+>>> The project is currently hosted on github:
+>>> http://github.com/jessevdk/gitg
+>>>
+>>> clone: git://github.com/jessevdk/gitg.git
+>>>
+>>> Please let me know what you think,
+>> And the obligatory screenshots?
+> 
+> The screenshots are on the website
 
-I have this alias:
+Grin ;) At least I'm not the only one who didn't how to navigate the
+github page...
 
-alias.last=log @{1}.. --decorate --reverse --stat -C --no-merges
+In fact, reading the top line there in the first place would have made
+me hopeful that this is a unifying rather than splitting project. So, my
+best wishes (I'll try and compile)!
 
-It uses the reflog to show the commits between the old HEAD (@{1}) and
-the current HEAD. You can also specify the branch that you want to see
-with branch@{1}..branch@{0}.
-
-HTH,
-Santi
+Cheers,
+Michael
