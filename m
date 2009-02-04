@@ -1,79 +1,150 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Question about --tree-filter
-Date: Wed, 4 Feb 2009 16:08:05 +0000 (UTC)
-Message-ID: <loom.20090204T155824-858@post.gmane.org>
+From: Yann Simon <yann.simon.fr@gmail.com>
+Subject: Re: [JGIT] help needed to create a siimple commit
+Date: Wed, 4 Feb 2009 17:10:48 +0100
+Message-ID: <551f769b0902040810o6b45008fgcc1ef70108b3d90@mail.gmail.com>
+References: <551f769b0902030307s2a9204cch7967df17c1f2c8a6@mail.gmail.com>
+	 <20090203155107.GU26880@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 04 17:11:09 2009
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 04 17:12:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUkJy-0000Wr-OR
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 17:09:51 +0100
+	id 1LUkMM-0001i0-7t
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 17:12:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754832AbZBDQIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 11:08:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752389AbZBDQIW
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 11:08:22 -0500
-Received: from main.gmane.org ([80.91.229.2]:40555 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751920AbZBDQIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 11:08:22 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LUkIT-0000CY-C7
-	for git@vger.kernel.org; Wed, 04 Feb 2009 16:08:17 +0000
-Received: from mars-fw.arces.unibo.it ([137.204.143.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 16:08:17 +0000
-Received: from sergio.callegari by mars-fw.arces.unibo.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 16:08:17 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.143.2 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.5) Gecko/2008121621 Ubuntu/8.04 (hardy) Firefox/3.0.5)
+	id S1755021AbZBDQKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 11:10:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755006AbZBDQKw
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 11:10:52 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:44300 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754998AbZBDQKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 11:10:50 -0500
+Received: by fxm13 with SMTP id 13so3187557fxm.13
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 08:10:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6C4C+CXrqyRWIWBeKV8oQS6CjyVWYbtdr/zC6QUo88M=;
+        b=ojAHZNdOBvXr43BVI8YW5bGFYUShUzWUJnUcCKZII3xp6+wgsluTpF+2xqUfZXaA2b
+         ZFVqlFQ2JE8IaJszZyL6vz1wVmA+2z3tb/n+sww/ciskRwXyMR95TFtCu9ZMlYdDuWU0
+         Rl7OUahydmoSSwU2MK4ot/5ye+hk4645cqGiA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=cC5UBGKG/O479fmqTaOnJV2jiYaeBdAFuFkaGU+fXqHCyoKZI+3xPDV4aCMhn5oblg
+         xoSdXCqv/kipAGQwhAcfXaOSbGBT+flk31+0SitZlG2wnxsjsRTxfUXPTOcf0ejlBQNI
+         47s7tL+jA7BqIFgWmI+OvLNMiDsGcg5vZIP4k=
+Received: by 10.181.153.12 with SMTP id f12mr516741bko.132.1233763848691; Wed, 
+	04 Feb 2009 08:10:48 -0800 (PST)
+In-Reply-To: <20090203155107.GU26880@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108389>
 
-Hi,
+2009/2/3 Shawn O. Pearce <spearce@spearce.org>:
+> You are missing the final step of updating the HEAD ref with the
+> commit.  Calling commit() on the Commit object only writes it to
+> the object database, this is similar to git-commit-tree.
+>
+> Try adding on the end:
+>
+>        RefUpdate ru = db.updateRef(Constants.HEAD);
+>        ru.setRefLogMessage("commit");
+>        ru.setNewObjectId(c1.getCommitId());
+>        assertSame(RefUpdate.Result.NEW, ru.update());
+>
+> If your commit had parents, you might want to do instead:
+>
+>        ru.setExpectedOldObjectId(oldHEAD);
+>        assertSame(RefUpdate.Result.FAST_FORWARD, ru.update());
+>
+> where oldHEAD is the value of HEAD you read and used as the first
+> parent of the commit.  This ensures that the update method fails
+> if someone else has updated HEAD since you last read it.
+>
+> The update method returns a number of different states, usually we
+> check its result with a switch statement as a number of states are
+> sometimes permissible in a context.  Sometimes though, you know it
+> has to be exactly one state, and everything else is a failure.
+>
+I updated my simple test like this:
 
-in working with the "rezip" filter for the efficient git management of
-openoffice, zip and docx files, I am encountering the following problem.
+package org.spearce.jgit.lib;
 
-Suppose that you have an existing repository and that you want to convert it
-into a repository using the rezip filters: git filter-branch should be the tool
-to do the conversion.
+import java.io.File;
+import java.io.IOException;
 
-Initially I believed that once set up the appropriate .git/config filter entries
-and a .git/info/attributes file tying the filter to the appropriate file types,
-it would have been enough to
+public class CommitTest extends RepositoryTestCase {
 
-git filter-branch --tree-filter true tag-name-filter cat
+	public void testASimpleCommit() throws IOException {
+		
+		recursiveDelete(trash_git, false, null, true);
+		db = new Repository(trash_git);
+		db.create();
 
-to do the conversion.
-This is also what I suggested in my original post about the rezip script.
+		GitIndex index = new GitIndex(db);
+		index.filemode = Boolean.TRUE;
+		
+		commitIndex(index, "commit 1");
 
-Unfortunately, this does not seem to work as expected.  Not all files get
-rewritten as filtered blobs.  The only way to do the right job seems to use a
-tree-filter that touches every single file in the project.
+		File file1 = writeTrashFile("file1", "file1");
+		index.add(trash, file1);
+		
+		commitIndex(index, "commit 2");
 
-Any idea why it is so?
+	}
+	
+	private void commitIndex(GitIndex index, String commitMessage) throws
+IOException {
+		index.write();
+		ObjectId objectId = index.writeTree();
+		Tree tree = db.mapTree(objectId);
+		final Commit commit = new Commit(db);
+		commit.setAuthor(new PersonIdent(jauthor, 1154236443000L, -4 * 60));
+		commit.setCommitter(new PersonIdent(jcommitter, 1154236443000L, -4 * 60));
+		commit.setMessage(commitMessage);
+		commit.setTree(tree);
+		assertEquals(tree.getTreeId(), commit.getTreeId());
+		commit.commit();
+		
+		ObjectWriter writer = new ObjectWriter(db);
+		commit.setCommitId(writer.writeCommit(commit));
 
-Also this is not very nice, because it makes the filter-branch result in a huge
-amount of work. In other terms, the rezip blob rewriting gets called many many
-times more than needed with this technique.
+		Ref oldHEAD = db.getAllRefs().get(Constants.HEAD);
+		final RefUpdate ru = db.updateRef(Constants.HEAD);
+		ru.setNewObjectId(commit.getCommitId());
+		ru.setRefLogMessage(commitMessage, false);
 
-Does anybody have some suggestion of a tree filter that would be both "safe" and
-"efficient" ?
+		if (oldHEAD != null) {
+			// commit has parents
+			ru.setExpectedOldObjectId(oldHEAD.getObjectId());
+			assertSame(RefUpdate.Result.FAST_FORWARD, ru.update());
+		} else {
+			// commit has no parents
+			assertSame(RefUpdate.Result.NEW, ru.update());
+		}
+		
 
-Thanks
+	}
+}
 
-Sergio 
+The first commit "with an empty workspace" is ok. I can see the commit
+in the log.
+The second commit fails, with ru.update() = REJECTED.
+
+I tried different combination, without success.
+
+If someone could tell me, what I am doing wrong...
+
+Yann
