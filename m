@@ -1,103 +1,85 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: git gtk+/GNOME gui application: gitg
-Date: Wed, 4 Feb 2009 16:12:59 +0200
-Message-ID: <94a0d4530902040612v30df6ea8ifcf3e3244cf1c027@mail.gmail.com>
-References: <1233432317.26364.5.camel@wren>
-	 <94a0d4530902032339p365df42i2b8f235430a68fd5@mail.gmail.com>
-	 <1233748114.7594.0.camel@wren> <49898E2A.7070005@drmicha.warpmail.net>
+From: Jake Goulding <goulding@vivisimo.com>
+Subject: Re: [RFC PATCH 1/1] git-tag: Add --regex option
+Date: Wed, 04 Feb 2009 09:16:44 -0500
+Message-ID: <4989A34C.4080104@vivisimo.com>
+References: <1233677512-1846-1-git-send-email-goulding@vivisimo.com> <7vljsm3aow.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jesse van den Kieboom <jesse@icecrew.nl>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Feb 04 15:14:41 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 04 15:18:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUiWN-0002IW-Kf
-	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 15:14:32 +0100
+	id 1LUia7-0003in-8Q
+	for gcvg-git-2@gmane.org; Wed, 04 Feb 2009 15:18:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751482AbZBDONG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Feb 2009 09:13:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbZBDONE
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 09:13:04 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:38878 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751025AbZBDONC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 09:13:02 -0500
-Received: by ewy14 with SMTP id 14so3325856ewy.13
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 06:13:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Du7lmhYbKjbuI6ILg+N9fntxbed6pH55Q9lp/EDMZeU=;
-        b=I/JC0m2jHbLx0VWjkm/VPEYTf9xM0+fXDPtqnHODqBq5U03nhrXU+KNbuzatBDAu7x
-         4FayZ/iOE7NnqX0zdRy9uGRs60aHFWXpr0fpjCEdVsOCMJkt7MHmRQPYRLRnEcwkIzHP
-         BxDQlInGShpFwoLbD54vdC0RCzBbYRGcR1/WQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZW+NvcGwQM7uP+hBGy9nJPL+4X/FTiFYPrXxexw3NBmrUoxl2AlojON08zeDpTxvFQ
-         gxjwZl6uY9IFhXsd1vQacsYBFnTCbf3X48y43SQyPkbTPaU9O7eYRfrCukFgo0dXhG36
-         XebfD34F8FLgU0Zrk2O7LeqpttLW9i3/JF0UA=
-Received: by 10.86.95.20 with SMTP id s20mr1133118fgb.40.1233756779979; Wed, 
-	04 Feb 2009 06:12:59 -0800 (PST)
-In-Reply-To: <49898E2A.7070005@drmicha.warpmail.net>
+	id S1751880AbZBDOQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Feb 2009 09:16:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbZBDOQ5
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 09:16:57 -0500
+Received: from scalix.vivisimo.com ([207.97.211.28]:39702 "EHLO
+	mail.vivisimo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751683AbZBDOQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 09:16:56 -0500
+Received: from mail.office.vivisimo.com (mail.office.vivisimo.com [206.210.75.84])
+	by mail.vivisimo.com (Postfix) with ESMTP id EDBAD851A58;
+	Wed,  4 Feb 2009 09:16:55 -0500 (EST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.office.vivisimo.com (Postfix) with ESMTP id CDD982E68CF;
+	Wed,  4 Feb 2009 09:16:55 -0500 (EST)
+X-Virus-Scanned: amavisd-new at vivisimo.com
+Received: from mail.office.vivisimo.com ([127.0.0.1])
+	by localhost (mail.office.vivisimo.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id IfzeIzpsVkfM; Wed,  4 Feb 2009 09:16:45 -0500 (EST)
+Received: from [192.168.0.20] (jpg-melchior.vivisimo.com [192.168.0.20])
+	by mail.office.vivisimo.com (Postfix) with ESMTP id 29A9C2E68D0;
+	Wed,  4 Feb 2009 09:16:45 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <7vljsm3aow.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108363>
 
-On Wed, Feb 4, 2009 at 2:46 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Jesse van den Kieboom venit, vidit, dixit 04.02.2009 12:48:
->> Op woensdag 04-02-2009 om 09:39 uur [tijdzone +0200], schreef Felipe
->> Contreras:
->>> On Sat, Jan 31, 2009 at 10:05 PM, Jesse van den Kieboom
->>> <jesse@icecrew.nl> wrote:
->>>> Hi,
->>>>
->>>> I have been developing a gui application for git for gtk+/GNOME based on
->>>> GitX (which in turn is based on gitk). I feel that it's reaching the
->>>> point where it might potentially be useful for other people to use. It
->>>> currently features:
->>>>
->>>> - Loading large repositories very fast
->>>> - Show/browse repository history
->>>> - Show highlighted revision diff
->>>> - Browse file tree of a revision and export by drag and drop
->>>> - Search in the revision history on subject, author or hash
->>>> - Switch between history view of branches easily
->>>> - Commit view providing per hunk stage/unstage and commit
->>>>
->>>> The project is currently hosted on github:
->>>> http://github.com/jessevdk/gitg
->>>>
->>>> clone: git://github.com/jessevdk/gitg.git
->>>>
->>>> Please let me know what you think,
->>> And the obligatory screenshots?
->>
->> The screenshots are on the website
->
-> Grin ;) At least I'm not the only one who didn't how to navigate the
-> github page...
->
-> In fact, reading the top line there in the first place would have made
-> me hopeful that this is a unifying rather than splitting project. So, my
-> best wishes (I'll try and compile)!
 
-I have several projects there, but I only use github for the vcs
-stuff, I never actually clicked the 'wiki' tab before.
+Junio C Hamano wrote:
+> Jake Goulding <goulding@vivisimo.com> writes:
+> 
+>> Allows the tag pattern to be expressed as a regular expression.
+> 
+> We use shell globs for refname throughout the system (not just tags).  Why
+> is this a good thing, other than "because we can"?
+> 
 
-Anyway, I tried gitg and the history view looks very nice (like GitX),
-definitely much better than Giggle, but unfortunately it's still not
-usable for me (gitk addict). Keep up the good work :)
+I'll give the particular use-case that we are using it for:
 
--- 
-Felipe Contreras
+In preparation for a release, we have a nightly tagging/building
+process. We start by tagging something as 1.0.0-build1. We then do that
+series for a while, then decide it is time to shift to a more thorough
+QA cycle. We branch a QA branch, then start tagging at 1.0-0-rc1.
+Eventually, a rc passes all QA tests and we tag that rc again as 1.0-0.
+
+Thus, our tags look like something of the form:
+
+1.0.0-build1
+1.0.0-rc1
+1.0.0
+
+As we fix bugs, a hook automatically adds the commit hash is as a
+comment to the appropriate bugzilla bug.
+
+We whipped up a dinky little web application that takes a hash and a
+branch, and shows which tags contain that particular hash (which is the
+reason for my previous commit for --contains support in git tag). We
+hacked bugzilla to match on git hashes, and provide a link to this webapp.
+
+I wanted to be able to limit the search space to (builds, rcs,
+releases), but globs don't allow that amount of flexibility.
+
+Is that a complete enough description for a rational use-case?
+
+-Jake
