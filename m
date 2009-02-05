@@ -1,67 +1,56 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: 026fa0d5ad Breaks installs with absolue $(gitexecdir) and $(template_dir) variables using older GNU makes
-Date: Thu, 5 Feb 2009 08:13:30 +0100
-Message-ID: <54B6E81F-FCC5-453D-9F38-9F29C41F5613@zib.de>
-References: <4985E8E1.90303@gmail.com> <7vab91icu0.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: gitzilla@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 05 08:17:26 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 026fa0d5ad Breaks installs with absolue $(gitexecdir) and
+ $(template_dir) variables using older GNU makes
+Date: Wed, 04 Feb 2009 23:35:43 -0800
+Message-ID: <7v63jpibe8.fsf@gitster.siamese.dyndns.org>
+References: <4985E8E1.90303@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
+To: gitzilla@gmail.com
+X-From: git-owner@vger.kernel.org Thu Feb 05 08:37:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUyUG-0006UI-K9
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 08:17:25 +0100
+	id 1LUynW-0002fA-WF
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 08:37:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752443AbZBEHNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 02:13:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752417AbZBEHNu
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 02:13:50 -0500
-Received: from mailer.zib.de ([130.73.108.11]:65006 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752332AbZBEHNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 02:13:50 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n157Deqd028968;
-	Thu, 5 Feb 2009 08:13:45 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db95056.pool.einsundeins.de [77.185.80.86])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n157DZ9b025667
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 5 Feb 2009 08:13:40 +0100 (MET)
-In-Reply-To: <7vab91icu0.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.930.3)
+	id S1752459AbZBEHfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 02:35:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbZBEHfv
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 02:35:51 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59266 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752057AbZBEHfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 02:35:51 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id F1CC12A78F;
+	Thu,  5 Feb 2009 02:35:48 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 292B92A78B; Thu, 
+ 5 Feb 2009 02:35:44 -0500 (EST)
+In-Reply-To: <4985E8E1.90303@gmail.com> (A. Large Angry's message of "Sun, 01
+ Feb 2009 13:24:33 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9BA17ECE-F357-11DD-B5D5-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108510>
 
+A Large Angry SCM <gitzilla@gmail.com> writes:
 
-On Feb 5, 2009, at 8:04 AM, Junio C Hamano wrote:
+> The new test is also wrong; (for *nix systems) in that it really wants
+> to test if the first character is a '/' but GNU make doesn't have a
+> way to do that directly.
 
-> A Large Angry SCM <gitzilla@gmail.com> writes:
->
->> In 026fa0d5ad9538ca76838070861531c037d7b9ba, "Move computation of
->> absolute paths from Makefile to runtime (in preparation for
->> RUNTIME_PREFIX)", the following change was made to the Makefile. The
->> problem is that $(abspath names...) is a relatively recent addition  
->> to
->> GNU make and when used in an older GNU make, the test always fails
->> resulting incorrect installation dirs for the templates and commands.
->
-> Is there anything being done on this issue?
+Hmph.  Isn't it just the matter of doing something silly like this?
 
-Not yet.  I haven't had time.
-
-
-> I could revert ed096c4 (Merge branch 'sp/runtime-prefix',  
-> 2009-01-31), but
-> I'd rather not if we can avoid it.
-
-I'll propose a fix on Saturday.
-
-	Steffen
+ifeq ($(filter /%,$(template_dir)),)
+	... it does not start with a slash
+else
+	... it does
+endif
