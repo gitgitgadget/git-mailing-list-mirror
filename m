@@ -1,69 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] valgrind: do not require valgrind 3.4.0 or newer
-Date: Thu, 5 Feb 2009 21:51:23 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902052150230.7491@intel-tinevez-2-302>
-References: <cover.1233858507u.git.johannes.schindelin@gmx.de> <b204f01577584835f1c0252c77ffbfab33442a79.1233858507u.git.johannes.schindelin@gmx.de> <7vzlh0bp6f.fsf@gitster.siamese.dyndns.org>
+From: Randy Dunlap <rdunlap@xenotime.net>
+Subject: Re: "git revert" feature suggestion: revert the last commit to a
+ file
+Date: Thu, 05 Feb 2009 12:54:00 -0800
+Organization: YPO4
+Message-ID: <498B51E8.8030801@xenotime.net>
+References: <20090205202104.GA11267@elte.hu> <7vvdrobobc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, peff@peff.net
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 05 21:52:55 2009
+X-From: git-owner@vger.kernel.org Thu Feb 05 21:55:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVBDS-0000cP-Pz
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 21:52:55 +0100
+	id 1LVBFn-0001U5-Eh
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 21:55:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997AbZBEUv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 15:51:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751983AbZBEUv1
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 15:51:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36267 "HELO mail.gmx.net"
+	id S1752268AbZBEUxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 15:53:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751783AbZBEUxw
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 15:53:52 -0500
+Received: from xenotime.net ([72.52.64.118]:43081 "HELO xenotime.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751937AbZBEUv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 15:51:27 -0500
-Received: (qmail invoked by alias); 05 Feb 2009 20:51:24 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp058) with SMTP; 05 Feb 2009 21:51:24 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19UAOx9m3JUqBUWDu/xkNafSHmcnwZS9UUyk8DYh2
-	yF3vBLSVAwDcM0
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7vzlh0bp6f.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1752089AbZBEUxv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 15:53:51 -0500
+Received: from ::ffff:71.117.247.66 ([71.117.247.66]) by xenotime.net for <git@vger.kernel.org>; Thu, 5 Feb 2009 12:53:49 -0800
+User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
+In-Reply-To: <7vvdrobobc.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108617>
 
-Hi,
-
-On Thu, 5 Feb 2009, Junio C Hamano wrote:
-
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Junio C Hamano wrote:
+> Ingo Molnar <mingo@elte.hu> writes:
 > 
-> > Valgrind 3.4.0 is pretty new, and even if --track-origins is a nice
-> > feature, it is not the end of the world if that is not available.  So
-> > play nice and use that option only when only an older version of
-> > valgrind is available.
+>> So i have to do something like:
+>>
+>>    git revert $(git log -1 --pretty=format:"%h" kernel/softlockup.c)
+>>
+>> (tucked away in a tip-revert-file helper script.)
+>>
+>> But it would be so much nicer if i could do the intuitive:
+>>
+>>    git revert kernel/softlockup.c
+>>
+>> Or at least, to separate it from revision names cleanly, something like:
+>>
+>>    git revert -- kernel/softlockup.c
 > 
-> s/older/newer/?
-
-s/only an older/a newer/  even.
-
-> > +TRACK_ORIGINS=
-> > +case "$(valgrind --version)" in
-> > +valgrind-{3.[4-9],3.[1-3][0-9],[4-9],[1-3][0-9]}*)
-> > +	TRACK_ORIGINS=--track-origins=yes
-> > +esac
+> All three shares one issue.  Does the syntax offer you a way to give
+> enough information so that you can confidently say that it will find the
+> commit that touched the path most recently?  How is the "most recently"
+> defined?
 > 
-> What kind of case pattern is that?
+> At least you can restate the first one to:
+> 
+>     git revert $(git log -1 --pretty=format:"%h" core/softlockup -- kernel/softlockup.c)
+> 
+> to limit to "the one that touched this file _on this topic_".
+> 
+>> Would something like this be possible in generic Git? It would sure be a 
+>> nice little touch that i would make use of frequently.
+>>
+>> Or is it a bad idea perhaps? Or have i, out of sheer ignorance, failed to 
+>> discover some nice little shortcut that can give me all of this already?
+> 
+> The closest I can think of is
+> 
+> 	git revert ':/the title of the commit'
+> 
+> but it shares the exact same issue of "how would I limit the search space
+> to make sure it finds the right commit".
 
-A non-working one.
+And it should revert whatever commit is the last/most recent to the currently
+used file, i.e., not always revert the same commit.
 
-Grumbles,
-Dscho
+IMO.
+
+~Randy
