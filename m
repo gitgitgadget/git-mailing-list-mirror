@@ -1,117 +1,117 @@
-From: Deskin Miller <deskinm@umich.edu>
-Subject: [PATCH] git-svn: Print revision while searching for earliest use of path
-Date: Thu,  5 Feb 2009 00:09:30 -0500
-Message-ID: <1233810570-30765-1-git-send-email-deskinm@umich.edu>
-Cc: gitster@pobox.com, normalperson@yhbt.net,
-	Deskin Miller <deskinm@umich.edu>
+From: Erik Iverson <iverson@biostat.wisc.edu>
+Subject: simple git use case
+Date: Wed, 04 Feb 2009 22:52:03 -0600
+Message-ID: <498A7073.4060206@biostat.wisc.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 05 06:11:29 2009
+X-From: git-owner@vger.kernel.org Thu Feb 05 06:20:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUwWO-0006Yi-WB
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 06:11:29 +0100
+	id 1LUwes-0008Cw-E1
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 06:20:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752878AbZBEFJm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 00:09:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752710AbZBEFJm
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 00:09:42 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:35058 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752120AbZBEFJl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 00:09:41 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so23280yxm.1
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 21:09:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=kJUQBBSFcg6Vgw2BoZAc8ImnwxxMIL28Mvsu9218OjY=;
-        b=YTUmV3eSLY5qTxdZjCCBnpYIHKDRyeN/jw8Z2gqUCmBX4WK7VYN8LTaxkOWxlsh9rM
-         sccuPu0xR6FwN6pkcIFaW/67GXE3SexDT6U4Iz37sMHNqT7/JxNsthaxo8P4+lS2nEAB
-         a3DbKX7MEeB9ARdNGp2v8Xc2aOozojldT+tf0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        b=OYQFJvdCUt99HM4M1Ygq811hMgCmvPVyCKn9X5TjwTNQvdUPBa08+jUfTikevSDo7d
-         ELN8TK46HqCjRFOwgf2TVM2WivqXMzCEleFrR0qjH/DsJnDp2s2rtqLHYutJn/P5y9b7
-         TH97d3SA2bsXCIBc/qtjvKmWXiTb8BntKV6s0=
-Received: by 10.65.200.13 with SMTP id c13mr85317qbq.35.1233810579483;
-        Wed, 04 Feb 2009 21:09:39 -0800 (PST)
-Received: from localhost.localdomain ([68.40.49.130])
-        by mx.google.com with ESMTPS id k8sm393714qba.13.2009.02.04.21.09.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Feb 2009 21:09:38 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.399.g0d272
+	id S1753052AbZBEFRl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 00:17:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752499AbZBEFRl
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 00:17:41 -0500
+Received: from pegasus.biostat.wisc.edu ([144.92.73.35]:53163 "EHLO
+	pegasus.biostat.wisc.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752753AbZBEFRk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 00:17:40 -0500
+X-Greylist: delayed 1532 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Feb 2009 00:17:40 EST
+Received: from [192.168.1.117] (c-24-118-170-198.hsd1.mn.comcast.net [24.118.170.198])
+	(authenticated bits=0)
+	by pegasus.biostat.wisc.edu (8.13.6/8.13.6) with ESMTP id n154pxCH010072
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 4 Feb 2009 22:52:00 -0600 (CST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+X-BCG-MailScanner-Information: BCG: sysreq@biostat.wisc.edu
+X-BCG-MailScanner: Found to be clean
+X-BCG-MailScanner-From: iverson@biostat.wisc.edu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108498>
 
-When initializing a git-svn repository from a Subversion repository, it
-is common to be interested in a path which did not exist in the initial
-commit to Subversion.  In a large repository like e.g. Apache, this may
-take some time while the user receives no additional feedback.  Print
-the highest revision number scanned thus far to let the user know
-something is still happening.
+Dear all,
 
-Signed-off-by: Deskin Miller <deskinm@umich.edu>
----
-This came about on account of patmaddox asking on #git why git-svn
-seemed to be hung on clone.  Despite the admonition that this might take
-a long time, I also like to have some indication that progress is being
-made.  My first version of this printed using '\rChecked through
-r$revision' but the subsequent output line when the path is found ends
-up clobbered on the same line, and I'm not skilled enough at the
-terminal or Perl to address this cleanly.  If the current version is
-felt to be too verbose since it is printing a new line, I'd be up for
-squelching the output to e.g. every 1000 revisions or so.
+I sincerely hope this is not an annoying question, I promise I have tried to do 
+my homework here, but am stuck.  My use case is simple.  I have a desktop and a 
+laptop.  When I go on the trips, I'd love to be able to bring my "git-test" 
+directory with me on the laptop, code some, and then get the new revisions back 
+on the desktop when I get home (bonus if I can get the revisions back to my 
+desktop over the internet while still on the road, in case, for example, my 
+laptop gets stolen).  No one else will be working on this stuff, it's strictly 
+for me.
 
-Anecdotally, it looks like Subversion looks for the path in blocks of
-100 revisions, so we get the nice whole revision number for free.  I
-couldn't find any documentation on the proper format of the error
-message, so I just came up with the regular expressions to parse the
-revision myself; if they need to be more explicit to avoid really
-egregious path names, I can make an effort.
+OK, so here's what I do.
 
-I tested on both http:// and file:// transport, to come up with the
-different error strings; since the error number for file is the same as
-svn:// I'm hoping that the error string is the same too.  If someone can
-bounce this off a svn:// repo I'd appreciate it, otherwise I'll dig out
-the documentation and set up a network-served svn repository myself
-(which is really my job as the patch author anyway).
+Desktop (dt):
 
-Deskin Miller
+dt> cd git-test
+dt> git-init
+Initialized empty Git repository in /home/erik/projects/git-test/.git/
+dt> git add .
+dt> git-commit -am 'initial commit'
+Created initial commit c150815: initial commit
+  3 files changed, 14 insertions(+), 0 deletions(-)
+  create mode 100644 test.R
+  create mode 100644 test.sas
+  create mode 100644 test.tex
 
- git-svn.perl |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+Looks good...
+Now over to the laptop (lt)!
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 79888a0..60b56be 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -4542,6 +4542,12 @@ sub skip_unknown_revs {
- 	#   More codes may be discovered later...
- 	if ($errno == 175007 || $errno == 175002 || $errno == 160013) {
- 		my $err_key = $err->expanded_message;
-+		my $revision = $err_key;
-+		if ($errno == 175007 || $errno == 175002 ) {
-+			$revision =~ s/.*!svn\/bc\/(\d+).*/$1/;
-+		} elsif ($errno == 160013) {
-+			$revision =~ s/.*File not found: revision (\d+).*/$1/;
-+		}
- 		# revision numbers change every time, filter them out
- 		$err_key =~ s/\d+/\0/g;
- 		$err_key = "$errno\0$err_key";
-@@ -4555,6 +4561,7 @@ sub skip_unknown_revs {
- 			     "This may take a while on large repositories\n";
- 			$ignored_err{$err_key} = 1;
- 		}
-+		print "Checked through r$revision\n";
- 		return;
- 	}
- 	die "Error from SVN, ($errno): ", $err->expanded_message,"\n";
--- 
-1.6.1.399.g0d272
+lt> git-clone ssh://myip/path/to/project
+
+And great, I have the three test.* files, looks good!
+So I make some changes to test.R on laptop, like I'm on the road. Then, on laptop:
+
+lt> git-commit -am 'an update'
+
+Looks good.
+
+Now I become a mouth-breather...and need some help :).
+
+My instinct was to git-push from the laptop,
+
+lt> git-push
+
+which succeeds, but then a git-pull
+from desktop says:
+
+dt> git-pull
+fatal: 'origin': unable to chdir or not a git archive
+fatal: The remote end hung up unexpectedly
+
+OK, so look around mailing list archives...I try, without knowing what it means 
+at all:
+
+dt> git-config branch.master.remote .
+dt> git-pull
+ From .
+  * branch            HEAD       -> FETCH_HEAD
+Already up-to-date.
+
+Hmmm, so it did something, but not what I'd expect.  How about:
+
+dt> git-checkout
+M	test.R
+
+So it realizes that file has been modified...
+
+dt> git-checkout -f
+
+This gives no message of any type, and now I see my modified test.R file on my 
+desktop, so good! I'm happy with this, but I must know, it this the Right Way to 
+use git for my use case, or am I doing something silly?
+
+Thank you for providing this software.
+
+Best Regards,
+Erik Iverson
