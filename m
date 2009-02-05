@@ -1,100 +1,97 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: "git revert" feature suggestion: revert the last commit to a
-	file
-Date: Thu, 5 Feb 2009 22:00:55 +0100
-Message-ID: <20090205210055.GC21500@elte.hu>
-References: <20090205202104.GA11267@elte.hu> <7vvdrobobc.fsf@gitster.siamese.dyndns.org> <498B51E8.8030801@xenotime.net>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] valgrind: do not require valgrind 3.4.0 or newer
+Date: Thu, 5 Feb 2009 22:03:00 +0100 (CET)
+Message-ID: <349b2bb9b8f5a6762cccb7834d82125ee4382436.1233867737u.git.johannes.schindelin@gmx.de>
+References: <7vzlh0bp6f.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Randy Dunlap <rdunlap@xenotime.net>
-X-From: git-owner@vger.kernel.org Thu Feb 05 22:02:32 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Feb 05 22:05:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVBMl-0004KW-JP
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 22:02:32 +0100
+	id 1LVBPC-0005DK-6f
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 22:05:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752205AbZBEVBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 16:01:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbZBEVBD
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 16:01:03 -0500
-Received: from mx3.mail.elte.hu ([157.181.1.138]:53453 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751731AbZBEVBC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 16:01:02 -0500
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1LVBLI-00018p-SE
-	from <mingo@elte.hu>; Thu, 05 Feb 2009 22:01:01 +0100
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 0FCC23E21B0; Thu,  5 Feb 2009 22:00:57 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <498B51E8.8030801@xenotime.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1752350AbZBEVDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 16:03:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753551AbZBEVDF
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 16:03:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54934 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753547AbZBEVDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 16:03:03 -0500
+Received: (qmail invoked by alias); 05 Feb 2009 21:03:01 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp061) with SMTP; 05 Feb 2009 22:03:01 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+r2q5MaDurfgRDcFNnLDPJ1QG34yTN/7/N0HHpcm
+	uvM919Yi8N648m
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <7vzlh0bp6f.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108622>
 
+Valgrind 3.4.0 is pretty new, and even if --track-origins is a nice
+feature, it is not the end of the world if that is not available.  So
+play nice and use that option only when only an older version of
+valgrind is available.
 
-* Randy Dunlap <rdunlap@xenotime.net> wrote:
+In the same spirit, refrain from the use of '...' in suppression
+files, which is also a feature only valgrind 3.4 and newer understand.
 
-> Junio C Hamano wrote:
-> > Ingo Molnar <mingo@elte.hu> writes:
-> > 
-> >> So i have to do something like:
-> >>
-> >>    git revert $(git log -1 --pretty=format:"%h" kernel/softlockup.c)
-> >>
-> >> (tucked away in a tip-revert-file helper script.)
-> >>
-> >> But it would be so much nicer if i could do the intuitive:
-> >>
-> >>    git revert kernel/softlockup.c
-> >>
-> >> Or at least, to separate it from revision names cleanly, something like:
-> >>
-> >>    git revert -- kernel/softlockup.c
-> > 
-> > All three shares one issue.  Does the syntax offer you a way to give
-> > enough information so that you can confidently say that it will find the
-> > commit that touched the path most recently?  How is the "most recently"
-> > defined?
-> > 
-> > At least you can restate the first one to:
-> > 
-> >     git revert $(git log -1 --pretty=format:"%h" core/softlockup -- kernel/softlockup.c)
-> > 
-> > to limit to "the one that touched this file _on this topic_".
-> > 
-> >> Would something like this be possible in generic Git? It would sure be a 
-> >> nice little touch that i would make use of frequently.
-> >>
-> >> Or is it a bad idea perhaps? Or have i, out of sheer ignorance, failed to 
-> >> discover some nice little shortcut that can give me all of this already?
-> > 
-> > The closest I can think of is
-> > 
-> > 	git revert ':/the title of the commit'
-> > 
-> > but it shares the exact same issue of "how would I limit the search space
-> > to make sure it finds the right commit".
-> 
-> And it should revert whatever commit is the last/most recent to the 
-> currently used file, i.e., not always revert the same commit.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/valgrind/default.supp |    4 +++-
+ t/valgrind/valgrind.sh  |   11 ++++++++++-
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-i'm not sure i understand, what do you mean precisely?
-
-	Ingo
+diff --git a/t/valgrind/default.supp b/t/valgrind/default.supp
+index 5f341b8..9e013fa 100644
+--- a/t/valgrind/default.supp
++++ b/t/valgrind/default.supp
+@@ -38,6 +38,8 @@
+ 	writing-data-from-zlib-triggers-even-more-errors
+ 	Memcheck:Param
+ 	write(buf)
+-	...
++	obj:/lib/ld-*.so
++	fun:write_in_full
++	fun:write_buffer
+ 	fun:write_loose_object
+ }
+diff --git a/t/valgrind/valgrind.sh b/t/valgrind/valgrind.sh
+index dc92612..582b4dc 100755
+--- a/t/valgrind/valgrind.sh
++++ b/t/valgrind/valgrind.sh
+@@ -2,11 +2,20 @@
+ 
+ base=$(basename "$0")
+ 
++TRACK_ORIGINS=
++
++VALGRIND_VERSION=$(valgrind --version)
++VALGRIND_MAJOR=$(expr "$VALGRIND_VERSION" : '[^0-9]*\([0-9]*\)')
++VALGRIND_MINOR=$(expr "$VALGRIND_VERSION" : '[^0-9]*[0-9]*\.\([0-9]*\)')
++test 3 -gt "$VALGRIND_MAJOR" ||
++test 3 -eq "$VALGRIND_MAJOR" -a 4 -gt "$VALGRIND_MINOR" ||
++TRACK_ORIGINS=--track-origins=yes
++
+ exec valgrind -q --error-exitcode=126 \
+ 	--leak-check=no \
+ 	--suppressions="$GIT_VALGRIND/default.supp" \
+ 	--gen-suppressions=all \
+-	--track-origins=yes \
++	$TRACK_ORIGINS \
+ 	--log-fd=4 \
+ 	--input-fd=4 \
+ 	$GIT_VALGRIND_OPTIONS \
+-- 
+1.6.1.1.636.gf819e
