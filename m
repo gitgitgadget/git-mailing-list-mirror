@@ -1,15 +1,12 @@
 From: =?utf-8?q?Tor=20Arne=20Vestb=C3=B8?= <torarnv@gmail.com>
-Subject: [EGIT PATCH 08/11] Add icon decoration for tracked and untracked resources
-Date: Thu,  5 Feb 2009 02:00:15 +0100
-Message-ID: <1233795618-20249-9-git-send-email-torarnv@gmail.com>
+Subject: [EGIT PATCH 05/11] Add new class SWTUtils with helper-methods for creating controls
+Date: Thu,  5 Feb 2009 02:00:12 +0100
+Message-ID: <1233795618-20249-6-git-send-email-torarnv@gmail.com>
 References: <1233795618-20249-1-git-send-email-torarnv@gmail.com>
  <1233795618-20249-2-git-send-email-torarnv@gmail.com>
  <1233795618-20249-3-git-send-email-torarnv@gmail.com>
  <1233795618-20249-4-git-send-email-torarnv@gmail.com>
  <1233795618-20249-5-git-send-email-torarnv@gmail.com>
- <1233795618-20249-6-git-send-email-torarnv@gmail.com>
- <1233795618-20249-7-git-send-email-torarnv@gmail.com>
- <1233795618-20249-8-git-send-email-torarnv@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -21,710 +18,698 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUsdP-0000xt-M5
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 02:02:28 +0100
+	id 1LUsdL-0000xt-Hw
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 02:02:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756672AbZBEBAh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Feb 2009 20:00:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755694AbZBEBAe
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 20:00:34 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:6774 "EHLO
+	id S1756494AbZBEBAP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Feb 2009 20:00:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756443AbZBEBAN
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Feb 2009 20:00:13 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:6769 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753919AbZBEA74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Feb 2009 19:59:56 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so1593fgg.17
+	with ESMTP id S1755464AbZBEA7y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Feb 2009 19:59:54 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so1586fgg.17
         for <git@vger.kernel.org>; Wed, 04 Feb 2009 16:59:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=Sn6tLuggXr5ypBwKNLtq7+tZT58iFtAzVbBy/CEx5oA=;
-        b=Qs57f7aOYbV+eOzrQF5t05PFG1BdjrUfCCSH1zGVWOc8N0eDWhkmZ77i5pPNcHGhTu
-         S0yuhncreSBz47wBxAV45LdF29SJxYc102UtC/yloYViCYgJecQT6J02/3vjjLI37axy
-         yeSHGiCyIJDTIQBZLMSzwyjEB5R+wKfQ4GFKM=
+        bh=WSRyAjCJIlorFdGm5Y9OIxsKJf2p4LyAg4xz8VRxkuU=;
+        b=jjRca8nEqC/KDl0AUGSsEiz1S308cW4pOx81FNRFoNPvUwx/1hllGQWtlznrJ+8hjp
+         26lh5xcC1JdipIK6Gd7FfpgP0SNZC9z5acXJ26PFI3TpqRgnEdAQ3CVRMX7RWvCV2nMG
+         ihteV6SrxODByI64Vf755BoKnrrOuMqEVrjpI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=k+GymbwYrdlgmTb1lxTZ5H5wKp4z02cWVpqPoPxkDVuehLLw17mAVNb6gRSLYl8AZs
-         HKu1xqfJoVgl7zt2u/a3YZ3bjk/lGqQwBqbBp8TQjsKEZWcZw/yhB9maWeQuA1lk9+d/
-         +9gmQfw8tdwxWBwH7KH6VQ2fcwW3Xl2wNumVU=
-Received: by 10.86.59.2 with SMTP id h2mr902157fga.30.1233795592751;
-        Wed, 04 Feb 2009 16:59:52 -0800 (PST)
+        b=bT/lKJqHNTEaztv03BDVDSTUs52wjZYDiIZmamsc3uNLdL+UUweTzaj06XX0N5f2nK
+         T8go4zQzoQkCrexk+5s+8CWe61hcytfv+qH/+9M65pR4KZ+vKm2YOaduJ2oIdf51u/DT
+         thYCCmz7Tdo1G0zukdpaV+yeeKbUCjrxygksk=
+Received: by 10.86.92.7 with SMTP id p7mr798155fgb.24.1233795591992;
+        Wed, 04 Feb 2009 16:59:51 -0800 (PST)
 Received: from monstre.mystifistisk.net (212251244070.customer.cdi.no [212.251.244.70])
-        by mx.google.com with ESMTPS id 12sm19696fgg.43.2009.02.04.16.59.51
+        by mx.google.com with ESMTPS id 4sm26207fge.54.2009.02.04.16.59.51
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Feb 2009 16:59:52 -0800 (PST)
+        Wed, 04 Feb 2009 16:59:51 -0800 (PST)
 Received: by monstre.mystifistisk.net (Postfix, from userid 1000)
-	id B3CEE468005; Thu,  5 Feb 2009 02:00:19 +0100 (CET)
+	id 9A09617800B; Thu,  5 Feb 2009 02:00:19 +0100 (CET)
 X-Mailer: git-send-email 1.6.1.2.309.g2ea3
-In-Reply-To: <1233795618-20249-8-git-send-email-torarnv@gmail.com>
+In-Reply-To: <1233795618-20249-5-git-send-email-torarnv@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108486>
 
-Can be enabled/disabled in the preferences
+Copied verbatim from org.eclipse.team.internal.ui and documented
 
 Signed-off-by: Tor Arne Vestb=C3=B8 <torarnv@gmail.com>
 ---
- org.spearce.egit.ui/icons/ovr/shared.gif           |  Bin 106 -> 0 byt=
-es
- org.spearce.egit.ui/icons/ovr/untracked.gif        |  Bin 0 -> 79 byte=
-s
- .../egit/ui/PluginPreferenceInitializer.java       |    4 +-
- .../src/org/spearce/egit/ui/UIIcons.java           |    6 +-
- .../src/org/spearce/egit/ui/UIPreferences.java     |    4 +
- .../src/org/spearce/egit/ui/UIText.java            |    6 +
- .../decorators/GitLightweightDecorator.java        |  162 ++++++++++++=
-++++++--
- .../internal/decorators/IDecoratableResource.java  |   15 ++
- .../preferences/GitDecoratorPreferencePage.java    |   89 +++++++++--
- .../src/org/spearce/egit/ui/uitext.properties      |    2 +
- 10 files changed, 259 insertions(+), 29 deletions(-)
- delete mode 100644 org.spearce.egit.ui/icons/ovr/shared.gif
- create mode 100644 org.spearce.egit.ui/icons/ovr/untracked.gif
+ .../src/org/spearce/egit/ui/internal/SWTUtils.java |  595 ++++++++++++=
+++++++++
+ 1 files changed, 595 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.egit.ui/src/org/spearce/egit/ui/interna=
+l/SWTUtils.java
 
-diff --git a/org.spearce.egit.ui/icons/ovr/shared.gif b/org.spearce.egi=
-t.ui/icons/ovr/shared.gif
-deleted file mode 100644
-index eb71a3c742e133c2ed61c958e237c71e0f7cb6aa..00000000000000000000000=
-00000000000000000
-GIT binary patch
-literal 0
-HcmV?d00001
-
-literal 106
-zcmZ?wbhEHbWM|-D*v!E2|KHF5k5c|0Q~7_){{ITmE8U{M-dx?8EBgQce+Fzo@h1x-
-p15m3DND^cQ1B<x8$xa82iYrMhmeJo^<v0pdEtw8K%o1d<1^~aoAP)cl
-
-diff --git a/org.spearce.egit.ui/icons/ovr/untracked.gif b/org.spearce.=
-egit.ui/icons/ovr/untracked.gif
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/SWTUt=
+ils.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/SWTUtil=
+s.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..45ca32060700d71abcb88bb=
-cdb1000d503fe11cf
-GIT binary patch
-literal 79
-zcmZ?wbhEHbWM|-DSj51<z}U+mGMhnsAy57};pVIV!2l?%_>+Z^fq{)d2gqgssbydm
-biP#m!(lAAgdxkboj%vJ&f(EaJDuXouU6m8v
-
-literal 0
-HcmV?d00001
-
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/PluginPreferen=
-ceInitializer.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/Plugin=
-PreferenceInitializer.java
-index 79c2665..7465444 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/PluginPreferenceIniti=
-alizer.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/PluginPreferenceIniti=
-alizer.java
-@@ -35,13 +35,15 @@ public void initializeDefaultPreferences() {
- 		prefs.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT, tru=
-e);
- 		prefs.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_TOOLTIPS, false)=
-;
-=20
-+		prefs.setDefault(UIPreferences.DECORATOR_CALCULATE_DIRTY, true);
- 		prefs.setDefault(UIPreferences.DECORATOR_FILETEXT_DECORATION,
- 				UIText.DecoratorPreferencesPage_fileFormatDefault);
- 		prefs.setDefault(UIPreferences.DECORATOR_FOLDERTEXT_DECORATION,
- 				UIText.DecoratorPreferencesPage_folderFormatDefault);
- 		prefs.setDefault(UIPreferences.DECORATOR_PROJECTTEXT_DECORATION,
- 				UIText.DecoratorPreferencesPage_projectFormatDefault);
--		prefs.setDefault(UIPreferences.DECORATOR_CALCULATE_DIRTY, true);
-+		prefs.setDefault(UIPreferences.DECORATOR_SHOW_TRACKED_ICON, true);
-+		prefs.setDefault(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON, true);
-=20
- 		w =3D new int[] { 500, 500 };
- 		UIPreferences.setDefault(prefs,
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIIcons.java b=
-/org.spearce.egit.ui/src/org/spearce/egit/ui/UIIcons.java
-index 1697542..0cead29 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIIcons.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/UIIcons.java
-@@ -24,8 +24,8 @@
- 	/** Decoration for resource removed from the index but not commit. */
- 	public static final ImageDescriptor OVR_PENDING_REMOVE;
-=20
--	/** Decoration for resource tracked and committed in git. */
--	public static final ImageDescriptor OVR_SHARED;
-+	/** Decoration for resource not being tracked by Git */
-+	public static final ImageDescriptor OVR_UNTRACKED;
-=20
- 	/** Decoration for tracked resource with a merge conflict.  */
- 	public static final ImageDescriptor OVR_CONFLICT;
-@@ -77,7 +77,7 @@
- 		base =3D init();
- 		OVR_PENDING_ADD =3D map("ovr/pending_add.gif");
- 		OVR_PENDING_REMOVE =3D map("ovr/pending_remove.gif");
--		OVR_SHARED =3D map("ovr/shared.gif");
-+		OVR_UNTRACKED =3D map("ovr/untracked.gif");
- 		OVR_CONFLICT =3D map("ovr/conflict.gif");
- 		OVR_ASSUMEVALID =3D map("ovr/assumevalid.gif");
- 		ELCL16_FIND =3D map("elcl16/find.gif");
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIPreferences.=
-java b/org.spearce.egit.ui/src/org/spearce/egit/ui/UIPreferences.java
-index a6168a0..7916cea 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIPreferences.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/UIPreferences.java
-@@ -60,6 +60,10 @@
- 	public final static String DECORATOR_FOLDERTEXT_DECORATION =3D "decor=
-ator_foldertext_decoration";
- 	/** */
- 	public final static String DECORATOR_PROJECTTEXT_DECORATION =3D "deco=
-rator_projecttext_decoration";
-+	/** */
-+	public final static String DECORATOR_SHOW_TRACKED_ICON =3D "decorator=
-_show_tracked_icon";
-+	/** */
-+	public final static String DECORATOR_SHOW_UNTRACKED_ICON =3D "decorat=
-or_show_untracked_icon";
-=20
- 	/**
- 	 * Get the preference values associated with a fixed integer array.
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java b/=
-org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java
-index f939558..fe62d0a 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java
-@@ -973,6 +973,12 @@
- 	/** */
- 	public static String DecoratorPreferencesPage_labelDecorationsLink;
-=20
-+	/** */
-+	public static String DecoratorPreferencesPage_iconsShowTracked;
-+
-+	/** */
-+	public static String DecoratorPreferencesPage_iconsShowUntracked;
-+
- 	static {
- 		initializeMessages(UIText.class.getPackage().getName() + ".uitext",
- 				UIText.class);
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decor=
-ators/GitLightweightDecorator.java b/org.spearce.egit.ui/src/org/spearc=
-e/egit/ui/internal/decorators/GitLightweightDecorator.java
-index 265d5a3..b20070a 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/G=
-itLightweightDecorator.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/G=
-itLightweightDecorator.java
-@@ -15,6 +15,7 @@
-=20
- import java.io.IOException;
- import java.util.ArrayList;
-+import java.util.Collections;
- import java.util.HashMap;
- import java.util.HashSet;
- import java.util.List;
-@@ -34,6 +35,7 @@
- import org.eclipse.core.runtime.IAdaptable;
- import org.eclipse.core.runtime.IStatus;
- import org.eclipse.jface.preference.IPreferenceStore;
-+import org.eclipse.jface.resource.ImageDescriptor;
- import org.eclipse.jface.util.IPropertyChangeListener;
- import org.eclipse.jface.util.PropertyChangeEvent;
- import org.eclipse.jface.viewers.IDecoration;
-@@ -41,7 +43,11 @@
- import org.eclipse.jface.viewers.LabelProvider;
- import org.eclipse.jface.viewers.LabelProviderChangedEvent;
- import org.eclipse.osgi.util.TextProcessor;
-+import org.eclipse.swt.graphics.ImageData;
- import org.eclipse.swt.widgets.Display;
-+import org.eclipse.team.core.Team;
-+import org.eclipse.team.ui.ISharedImages;
-+import org.eclipse.team.ui.TeamImages;
- import org.eclipse.team.ui.TeamUI;
- import org.eclipse.ui.IContributorResourceAdapter;
- import org.eclipse.ui.PlatformUI;
-@@ -51,13 +57,22 @@
- import org.spearce.egit.core.project.RepositoryChangeListener;
- import org.spearce.egit.core.project.RepositoryMapping;
- import org.spearce.egit.ui.Activator;
-+import org.spearce.egit.ui.UIIcons;
- import org.spearce.egit.ui.UIPreferences;
- import org.spearce.egit.ui.UIText;
-+import org.spearce.jgit.dircache.DirCache;
-+import org.spearce.jgit.dircache.DirCacheIterator;
-+import org.spearce.jgit.lib.Constants;
- import org.spearce.jgit.lib.IndexChangedEvent;
-+import org.spearce.jgit.lib.ObjectId;
- import org.spearce.jgit.lib.RefsChangedEvent;
- import org.spearce.jgit.lib.Repository;
- import org.spearce.jgit.lib.RepositoryChangedEvent;
- import org.spearce.jgit.lib.RepositoryListener;
-+import org.spearce.jgit.revwalk.RevWalk;
-+import org.spearce.jgit.treewalk.EmptyTreeIterator;
-+import org.spearce.jgit.treewalk.TreeWalk;
-+import org.spearce.jgit.treewalk.filter.PathFilterGroup;
-=20
- /**
-  * Supplies annotations for displayed resources
-@@ -144,7 +159,7 @@ public void decorate(Object element, IDecoration de=
-coration) {
- 		if (!resource.exists() && !resource.isPhantom())
- 			return;
-=20
--		// Make sure we're dealing with a Git project
-+		// Make sure we're dealing with a project under Git revision control
- 		final RepositoryMapping mapping =3D RepositoryMapping
- 				.getMapping(resource);
- 		if (mapping =3D=3D null)
-@@ -171,14 +186,80 @@ public void decorate(Object element, IDecoration =
-decoration) {
-=20
- 	private class DecoratableResourceAdapter implements IDecoratableResou=
-rce {
-=20
--		private IResource resource;
--		private String branch;
-+		private final IResource resource;
-=20
--		public DecoratableResourceAdapter(IResource resourceToWrap) throws I=
-OException {
-+		private final RepositoryMapping mapping;
-+
-+		private final Repository repository;
-+
-+		private final ObjectId headId;
-+
-+		private String branch =3D "";
-+
-+		private boolean tracked =3D false;
-+
-+		private boolean ignored =3D false;
-+
-+		public DecoratableResourceAdapter(IResource resourceToWrap)
-+				throws IOException {
- 			resource =3D resourceToWrap;
--			RepositoryMapping mapping =3D RepositoryMapping.getMapping(resource=
-);
--			Repository repository =3D mapping.getRepository();
-+			mapping =3D RepositoryMapping.getMapping(resource);
-+			repository =3D mapping.getRepository();
-+			headId =3D repository.resolve(Constants.HEAD);
-+
-+			initializeValues();
-+		}
-+
-+		/**
-+		 * Initialize the various values that are used for making decoration
-+		 * decisions later on.
-+		 *=20
-+		 * We might as well pre-load these now, instead of using lazy
-+		 * initialization, because they are all read by the decorator when
-+		 * building variable bindings and computing the preferred overlay.
-+		 *=20
-+		 * @throws IOException
-+		 */
-+		private void initializeValues() throws IOException {
-+
-+			// Resolve current branch
- 			branch =3D repository.getBranch();
-+
-+			// Resolve tracked state
-+			if (getType() =3D=3D IResource.PROJECT) {
-+				tracked =3D true;
-+			} else {
-+				final TreeWalk treeWalk =3D new TreeWalk(repository);
-+
-+				Set<String> repositoryPaths =3D Collections.singleton(mapping
-+						.getRepoRelativePath(resource));
-+				if (!(repositoryPaths.isEmpty() || repositoryPaths.contains(""))) =
-{
-+					treeWalk.setFilter(PathFilterGroup
-+							.createFromStrings(repositoryPaths));
-+					treeWalk.setRecursive(treeWalk.getFilter()
-+							.shouldBeRecursive());
-+					treeWalk.reset();
-+
-+					if (headId !=3D null)
-+						treeWalk.addTree(new RevWalk(repository)
-+								.parseTree(headId));
-+					else
-+						treeWalk.addTree(new EmptyTreeIterator());
-+
-+					treeWalk.addTree(new DirCacheIterator(DirCache
-+							.read(repository)));
-+					if (treeWalk.next()) {
-+						tracked =3D true;
-+					}
-+				}
-+			}
-+
-+			// Resolve ignored state (currently only reads the global Eclipse
-+			// ignores)
-+			// TODO: Also read ignores from .git/info/excludes et al.
-+			if (Team.isIgnoredHint(resource)) {
-+				ignored =3D true;
-+			}
- 		}
-=20
- 		public String getName() {
-@@ -192,6 +273,14 @@ public int getType() {
- 		public String getBranch() {
- 			return branch;
- 		}
-+
-+		public boolean isTracked() {
-+			return tracked;
-+		}
-+
-+		public boolean isIgnored() {
-+			return ignored;
-+		}
- 	}
-=20
- 	/**
-@@ -203,13 +292,45 @@ public String getBranch() {
- 	 */
- 	public static class DecorationHelper {
-=20
--		private IPreferenceStore store;
--
- 		/** */
- 		public static final String BINDING_RESOURCE_NAME =3D "name"; //$NON-=
-NLS-1$
-+
- 		/** */
- 		public static final String BINDING_BRANCH_NAME =3D "branch"; //$NON-=
-NLS-1$
-=20
-+		private IPreferenceStore store;
-+
-+		/**
-+		 * Define a cached image descriptor which only creates the image dat=
+index 0000000..fe65bbb
+--- /dev/null
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/SWTUtils.jav=
 a
-+		 * once
-+		 */
-+		private static class CachedImageDescriptor extends ImageDescriptor {
-+			ImageDescriptor descriptor;
+@@ -0,0 +1,595 @@
++/*********************************************************************=
+**********
++ * Copyright (c) 2000, 2005 IBM Corporation and others.
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1=
+=2E0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
++ *
++ * Contributors:
++ *	 IBM Corporation - initial API and implementation
++ *********************************************************************=
+**********/
 +
-+			ImageData data;
++package org.spearce.egit.ui.internal;
 +
-+			public CachedImageDescriptor(ImageDescriptor descriptor) {
-+				this.descriptor =3D descriptor;
-+			}
++import org.eclipse.core.runtime.Assert;
++import org.eclipse.jface.dialogs.Dialog;
++import org.eclipse.jface.dialogs.IDialogConstants;
++import org.eclipse.swt.SWT;
++import org.eclipse.swt.graphics.FontMetrics;
++import org.eclipse.swt.graphics.GC;
++import org.eclipse.swt.layout.GridData;
++import org.eclipse.swt.layout.GridLayout;
++import org.eclipse.swt.widgets.*;
++import org.eclipse.ui.dialogs.PreferenceLinkArea;
++import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
 +
-+			public ImageData getImageData() {
-+				if (data =3D=3D null) {
-+					data =3D descriptor.getImageData();
-+				}
-+				return data;
-+			}
-+		}
++/**
++ * A collection of factory methods for creating common SWT controls
++ */
++public class SWTUtils {
 +
-+		private static ImageDescriptor trackedImage;
++	/** */
++	public static final int MARGINS_DEFAULT =3D -1;
 +
-+		private static ImageDescriptor untrackedImage;
++	/** */
++	public static final int MARGINS_NONE =3D 0;
 +
-+		static {
-+			trackedImage =3D new CachedImageDescriptor(TeamImages
-+					.getImageDescriptor(ISharedImages.IMG_CHECKEDIN_OVR));
-+			untrackedImage =3D new CachedImageDescriptor(UIIcons.OVR_UNTRACKED)=
-;
-+		}
-+
- 		/**
- 		 * Constructs a decorator using the rules from the given
- 		 * <code>preferencesStore</code>
-@@ -233,6 +354,12 @@ public DecorationHelper(IPreferenceStore preferenc=
-esStore) {
- 		 */
- 		public void decorate(IDecoration decoration,
- 				IDecoratableResource resource) {
-+			decorateText(decoration, resource);
-+			decorateIcons(decoration, resource);
-+		}
-+
-+		private void decorateText(IDecoration decoration,
-+				IDecoratableResource resource) {
- 			String format =3D "";
- 			switch (resource.getType()) {
- 			case IResource.FILE:
-@@ -256,9 +383,24 @@ public void decorate(IDecoration decoration,
- 			decorate(decoration, format, bindings);
- 		}
-=20
-+		private void decorateIcons(IDecoration decoration,
-+				IDecoratableResource resource) {
-+			if (resource.isIgnored())
-+				return;
-+
-+			if (resource.isTracked()) {
-+				if (store.getBoolean(UIPreferences.DECORATOR_SHOW_TRACKED_ICON))
-+					decoration.addOverlay(trackedImage);
-+			} else if (store
-+					.getBoolean(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON)) {
-+				decoration.addOverlay(untrackedImage);
-+			}
-+		}
-+
- 		/**
--		 * Decorates the given <code>decoration</code>, using the given
--		 * <code>format</code>, and mapped using <code>bindings</code>
-+		 * Decorates the given <code>decoration</code>, using the specified =
-text
-+		 * <code>format</code>, and mapped using the variable bindings from
-+		 * <code>bindings</code>
- 		 *=20
- 		 * @param decoration
- 		 *            the decoration to decorate
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decor=
-ators/IDecoratableResource.java b/org.spearce.egit.ui/src/org/spearce/e=
-git/ui/internal/decorators/IDecoratableResource.java
-index 6b36e0e..f144214 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/I=
-DecoratableResource.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/I=
-DecoratableResource.java
-@@ -36,4 +36,19 @@
- 	 *         applicable
- 	 */
- 	String getBranch();
++	/** */
++	public static final int MARGINS_DIALOG =3D 1;
 +
 +	/**
-+	 * Returns whether or not the resource is tracked by Git
++	 * Creates a preference link which will open in the specified contain=
+er
 +	 *=20
-+	 * @return whether or not the resource is tracked by Git
++	 * @param container
++	 * @param parent
++	 * @param pageId
++	 * @param text
++	 *=20
++	 * @return the created link
 +	 */
-+	boolean isTracked();
++	public static PreferenceLinkArea createPreferenceLink(
++			IWorkbenchPreferenceContainer container, Composite parent,
++			String pageId, String text) {
++		final PreferenceLinkArea area =3D new PreferenceLinkArea(parent,
++				SWT.NONE, pageId, text, container, null);
++		return area;
++	}
 +
 +	/**
-+	 * Returns whether or not the resource is ignored, either by a global=
- team
-+	 * ignore in Eclipse, or by .git/info/exclude et al.
++	 * Creates a grid data with the specified metrics
 +	 *=20
-+	 * @return whether or not the resource is ignored
++	 * @param width
++	 * @param height
++	 * @param hFill
++	 * @param vFill
++	 *=20
++	 * @return the created grid data
 +	 */
-+	boolean isIgnored();
- }
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/prefe=
-rences/GitDecoratorPreferencePage.java b/org.spearce.egit.ui/src/org/sp=
-earce/egit/ui/internal/preferences/GitDecoratorPreferencePage.java
-index 2a1a3a8..2cbf07a 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/preferences/=
-GitDecoratorPreferencePage.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/preferences/=
-GitDecoratorPreferencePage.java
-@@ -44,6 +44,9 @@
- import org.eclipse.swt.SWT;
- import org.eclipse.swt.events.ModifyEvent;
- import org.eclipse.swt.events.ModifyListener;
-+import org.eclipse.swt.events.SelectionAdapter;
-+import org.eclipse.swt.events.SelectionEvent;
-+import org.eclipse.swt.events.SelectionListener;
- import org.eclipse.swt.graphics.Color;
- import org.eclipse.swt.graphics.Font;
- import org.eclipse.swt.graphics.Image;
-@@ -84,7 +87,11 @@
-=20
- 	private Text projectTextFormat;
-=20
--	private Button showDirty;
-+	private Button computeDeepDirtyState;
++	public static GridData createGridData(int width, int height, boolean =
+hFill,
++			boolean vFill) {
++		return createGridData(width, height, hFill ? SWT.FILL : SWT.BEGINNIN=
+G,
++				vFill ? SWT.FILL : SWT.CENTER, hFill, vFill);
++	}
 +
-+	private Button showTracked;
++	/**
++	 * Creates a grid data with the specified metrics
++	 *=20
++	 * @param width
++	 * @param height
++	 * @param hAlign
++	 * @param vAlign
++	 * @param hGrab
++	 * @param vGrab
++	 *=20
++	 * @return the created grid data
++	 */
++	public static GridData createGridData(int width, int height, int hAli=
+gn,
++			int vAlign, boolean hGrab, boolean vGrab) {
++		final GridData gd =3D new GridData(hAlign, vAlign, hGrab, vGrab);
++		gd.widthHint =3D width;
++		gd.heightHint =3D height;
++		return gd;
++	}
 +
-+	private Button showUntracked;
-=20
- 	private Preview fPreview;
-=20
-@@ -94,10 +101,16 @@
-=20
- 	static {
- 		final PreviewResource project =3D new PreviewResource(
--				"Project", IResource.PROJECT, "master"); //$NON-NLS-1$1
-+				"Project", IResource.PROJECT, "master", true, false); //$NON-NLS-1=
-$1
- 		final ArrayList<PreviewResource> children =3D new ArrayList<PreviewR=
-esource>();
--		children.add(new PreviewResource("folder", IResource.FOLDER, null));=
- //$NON-NLS-1$
--		children.add(new PreviewResource("file.txt", IResource.FILE, null));=
- //$NON-NLS-1$
-+		children.add(new PreviewResource(
-+				"folder", IResource.FOLDER, null, true, false)); //$NON-NLS-1$
-+		children.add(new PreviewResource(
-+				"file.txt", IResource.FILE, null, true, false)); //$NON-NLS-1$
-+		children.add(new PreviewResource(
-+				"untracked.txt", IResource.FILE, null, false, false)); //$NON-NLS-=
-1$
-+		children.add(new PreviewResource(
-+				"ignored.txt", IResource.FILE, null, false, true)); //$NON-NLS-1$
- 		project.children =3D children;
- 		PREVIEW_FILESYSTEM_ROOT =3D Collections.singleton(project);
- 	}
-@@ -171,7 +184,7 @@ private Control createGeneralDecoratorPage(Composit=
-e parent) {
- 		data.horizontalAlignment =3D GridData.FILL;
- 		composite.setLayoutData(data);
-=20
--		showDirty =3D SWTUtils.createCheckBox(composite,
-+		computeDeepDirtyState =3D SWTUtils.createCheckBox(composite,
- 				UIText.DecoratorPreferencesPage_computeDeep);
-=20
- 		return composite;
-@@ -222,6 +235,11 @@ private Control createIconDecoratorPage(Composite =
-parent) {
- 		data.horizontalAlignment =3D GridData.FILL;
- 		imageGroup.setLayoutData(data);
-=20
-+		showTracked =3D SWTUtils.createCheckBox(imageGroup,
-+				UIText.DecoratorPreferencesPage_iconsShowTracked);
-+		showUntracked =3D SWTUtils.createCheckBox(imageGroup,
-+				UIText.DecoratorPreferencesPage_iconsShowUntracked);
++	/**
++	 * Creates a horizontal grid data with the default metrics
++	 *=20
++	 * @return the created grid data
++	 */
++	public static GridData createHFillGridData() {
++		return createHFillGridData(1);
++	}
 +
- 		return imageGroup;
- 	}
-=20
-@@ -261,6 +279,9 @@ public void handleEvent(Event event) {
- 	private void initializeValues() {
- 		final IPreferenceStore store =3D getPreferenceStore();
-=20
-+		computeDeepDirtyState.setSelection(store
-+				.getBoolean(UIPreferences.DECORATOR_CALCULATE_DIRTY));
++	/**
++	 * Creates a horizontal grid data with the specified span
++	 *=20
++	 * @param span
++	 *=20
++	 * @return the created grid data
++	 */
++	public static GridData createHFillGridData(int span) {
++		final GridData gd =3D createGridData(0, SWT.DEFAULT, SWT.FILL,
++				SWT.CENTER, true, false);
++		gd.horizontalSpan =3D span;
++		return gd;
++	}
 +
- 		fileTextFormat.setText(store
- 				.getString(UIPreferences.DECORATOR_FILETEXT_DECORATION));
- 		folderTextFormat.setText(store
-@@ -268,8 +289,20 @@ private void initializeValues() {
- 		projectTextFormat.setText(store
- 				.getString(UIPreferences.DECORATOR_PROJECTTEXT_DECORATION));
-=20
--		showDirty.setSelection(store
--				.getBoolean(UIPreferences.DECORATOR_CALCULATE_DIRTY));
-+		showTracked.setSelection(store
-+				.getBoolean(UIPreferences.DECORATOR_SHOW_TRACKED_ICON));
-+		showUntracked.setSelection(store
-+				.getBoolean(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON));
++	/**
++	 * Creates a horizontal fill composite with the specified margins
++	 *=20
++	 * @param parent
++	 * @param margins
++	 *=20
++	 * @return the created composite
++	 */
++	public static Composite createHFillComposite(Composite parent, int ma=
+rgins) {
++		return createHFillComposite(parent, margins, 1);
++	}
 +
-+		SelectionListener selectionListener =3D new SelectionAdapter() {
-+			public void widgetSelected(SelectionEvent e) {
-+				fPreview.refresh();
++	/**
++	 * Creates a horizontal fill composite with the specified margins and
++	 * columns
++	 *=20
++	 * @param parent
++	 * @param margins
++	 * @param columns
++	 *=20
++	 * @return the created composite
++	 */
++	public static Composite createHFillComposite(Composite parent, int ma=
+rgins,
++			int columns) {
++		final Composite composite =3D new Composite(parent, SWT.NONE);
++		composite.setFont(parent.getFont());
++		composite.setLayoutData(createHFillGridData());
++		composite.setLayout(createGridLayout(columns,
++				new PixelConverter(parent), margins));
++		return composite;
++	}
++
++	/**
++	 * Creates a horizontal/vertical fill composite with the specified ma=
+rgins
++	 *=20
++	 * @param parent
++	 * @param margins
++	 *=20
++	 * @return the created composite
++	 */
++	public static Composite createHVFillComposite(Composite parent, int m=
+argins) {
++		return createHVFillComposite(parent, margins, 1);
++	}
++
++	/**
++	 * Creates a horizontal/vertical fill composite with the specified ma=
+rgins
++	 * and columns
++	 *=20
++	 * @param parent
++	 * @param margins
++	 * @param columns
++	 *=20
++	 * @return the created composite
++	 */
++	public static Composite createHVFillComposite(Composite parent,
++			int margins, int columns) {
++		final Composite composite =3D new Composite(parent, SWT.NONE);
++		composite.setFont(parent.getFont());
++		composite.setLayoutData(createHVFillGridData());
++		composite.setLayout(createGridLayout(columns,
++				new PixelConverter(parent), margins));
++		return composite;
++	}
++
++	/**
++	 * Creates a horizontal fill group with the specified text and margin=
+s
++	 *=20
++	 * @param parent
++	 * @param text
++	 * @param margins
++	 * @return the created group
++	 */
++	public static Group createHFillGroup(Composite parent, String text,
++			int margins) {
++		return createHFillGroup(parent, text, margins, 1);
++	}
++
++	/**
++	 * Creates a horizontal fill group with the specified text, margins a=
+nd rows
++	 *=20
++	 * @param parent
++	 * @param text
++	 * @param margins
++	 * @param rows
++	 *=20
++	 * @return the created group
++	 */
++	public static Group createHFillGroup(Composite parent, String text,
++			int margins, int rows) {
++		final Group group =3D new Group(parent, SWT.NONE);
++		group.setFont(parent.getFont());
++		group.setLayoutData(createHFillGridData());
++		if (text !=3D null)
++			group.setText(text);
++		group.setLayout(createGridLayout(rows, new PixelConverter(parent),
++				margins));
++		return group;
++	}
++
++	/**
++	 * Creates a horizontal/vertical fill group with the specified text a=
+nd
++	 * margins
++	 *=20
++	 * @param parent
++	 * @param text
++	 * @param margins
++	 *=20
++	 * @return the created group
++	 */
++	public static Group createHVFillGroup(Composite parent, String text,
++			int margins) {
++		return createHVFillGroup(parent, text, margins, 1);
++	}
++
++	/**
++	 * Creates a horizontal/vertical fill group with the specified text, =
+margins
++	 * and rows
++	 *=20
++	 * @param parent
++	 * @param text
++	 * @param margins
++	 * @param rows
++	 *=20
++	 * @return the created group
++	 */
++	public static Group createHVFillGroup(Composite parent, String text,
++			int margins, int rows) {
++		final Group group =3D new Group(parent, SWT.NONE);
++		group.setFont(parent.getFont());
++		group.setLayoutData(createHVFillGridData());
++		if (text !=3D null)
++			group.setText(text);
++		group.setLayout(createGridLayout(rows, new PixelConverter(parent),
++				margins));
++		return group;
++	}
++
++	/**
++	 * Creates a horizontal/vertical fill grid data with the default metr=
+ics
++	 *=20
++	 * @return the created grid data
++	 */
++	public static GridData createHVFillGridData() {
++		return createHVFillGridData(1);
++	}
++
++	/**
++	 * Creates a horizontal/vertical fill grid data with the specified sp=
+an
++	 *=20
++	 * @param span
++	 *=20
++	 * @return the created grid data
++	 */
++	public static GridData createHVFillGridData(int span) {
++		final GridData gd =3D createGridData(0, 0, true, true);
++		gd.horizontalSpan =3D span;
++		return gd;
++	}
++
++	/**
++	 * Creates a grid layout with the specified number of columns and the
++	 * standard spacings.
++	 *=20
++	 * @param numColumns
++	 *            the number of columns
++	 * @param converter
++	 *            the pixel converter
++	 * @param margins
++	 *            one of <code>MARGINS_DEFAULT</code>, <code>MARGINS_NONE=
+</code>
++	 *            or <code>MARGINS_DIALOG</code>.
++	 *=20
++	 * @return the created grid layout
++	 */
++	public static GridLayout createGridLayout(int numColumns,
++			PixelConverter converter, int margins) {
++		Assert.isTrue(margins =3D=3D MARGINS_DEFAULT || margins =3D=3D MARGI=
+NS_NONE
++				|| margins =3D=3D MARGINS_DIALOG);
++
++		final GridLayout layout =3D new GridLayout(numColumns, false);
++		layout.horizontalSpacing =3D converter
++				.convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING=
+);
++		layout.verticalSpacing =3D converter
++				.convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_SPACING);
++
++		switch (margins) {
++		case MARGINS_NONE:
++			layout.marginLeft =3D layout.marginRight =3D 0;
++			layout.marginTop =3D layout.marginBottom =3D 0;
++			break;
++		case MARGINS_DIALOG:
++			layout.marginLeft =3D layout.marginRight =3D converter
++					.convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_MARGIN=
+);
++			layout.marginTop =3D layout.marginBottom =3D converter
++					.convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_MARGIN);
++			break;
++		case MARGINS_DEFAULT:
++			layout.marginLeft =3D layout.marginRight =3D layout.marginWidth;
++			layout.marginTop =3D layout.marginBottom =3D layout.marginHeight;
++		}
++		layout.marginWidth =3D layout.marginHeight =3D 0;
++		return layout;
++	}
++
++	/**
++	 * Creates a label with the specified message
++	 *=20
++	 * @param parent
++	 * @param message
++	 *=20
++	 * @return the created label
++	 */
++	public static Label createLabel(Composite parent, String message) {
++		return createLabel(parent, message, 1);
++	}
++
++	/**
++	 * Creates a label with the specified message and span
++	 *=20
++	 * @param parent
++	 * @param message
++	 * @param span
++	 *=20
++	 * @return the created label
++	 */
++	public static Label createLabel(Composite parent, String message, int=
+ span) {
++		final Label label =3D new Label(parent, SWT.WRAP);
++		if (message !=3D null)
++			label.setText(message);
++		label.setLayoutData(createHFillGridData(span));
++		return label;
++	}
++
++	/**
++	 * Creates a check box with the specified message
++	 *=20
++	 * @param parent
++	 * @param message
++	 *=20
++	 * @return the created check box
++	 */
++	public static Button createCheckBox(Composite parent, String message)=
+ {
++		return createCheckBox(parent, message, 1);
++	}
++
++	/**
++	 * Creates a check box with the specified message and span
++	 *=20
++	 * @param parent
++	 * @param message
++	 * @param span
++	 *=20
++	 * @return the created check box
++	 */
++	public static Button createCheckBox(Composite parent, String message,
++			int span) {
++		final Button button =3D new Button(parent, SWT.CHECK);
++		button.setText(message);
++		button.setLayoutData(createHFillGridData(span));
++		return button;
++	}
++
++	/**
++	 * Creates a radio button with the specified message
++	 *=20
++	 * @param parent
++	 * @param message
++	 *=20
++	 * @return the created radio button
++	 */
++	public static Button createRadioButton(Composite parent, String messa=
+ge) {
++		return createRadioButton(parent, message, 1);
++	}
++
++	/**
++	 * Creates a radio button with the specified message and span
++	 *=20
++	 * @param parent
++	 * @param message
++	 * @param span
++	 *=20
++	 * @return the created radio button
++	 */
++	public static Button createRadioButton(Composite parent, String messa=
+ge,
++			int span) {
++		final Button button =3D new Button(parent, SWT.RADIO);
++		button.setText(message);
++		button.setLayoutData(createHFillGridData(span));
++		return button;
++	}
++
++	/**
++	 * Creates a text control
++	 *=20
++	 * @param parent
++	 *=20
++	 * @return the created text control
++	 */
++	public static Text createText(Composite parent) {
++		return createText(parent, 1);
++	}
++
++	/**
++	 * Creates a text control with the specified span
++	 *=20
++	 * @param parent
++	 * @param span
++	 *=20
++	 * @return the created text control
++	 */
++	public static Text createText(Composite parent, int span) {
++		final Text text =3D new Text(parent, SWT.SINGLE | SWT.BORDER);
++		text.setLayoutData(createHFillGridData(span));
++		return text;
++	}
++
++	/**
++	 * Creates a place holder with the specified height and span
++	 *=20
++	 * @param parent
++	 * @param heightInChars
++	 * @param span
++	 *=20
++	 * @return the created place holder
++	 */
++	public static Control createPlaceholder(Composite parent,
++			int heightInChars, int span) {
++		Assert.isTrue(heightInChars > 0);
++		final Control placeHolder =3D new Composite(parent, SWT.NONE);
++		final GridData gd =3D new GridData(SWT.BEGINNING, SWT.TOP, false, fa=
+lse);
++		gd.heightHint =3D new PixelConverter(parent)
++				.convertHeightInCharsToPixels(heightInChars);
++		gd.horizontalSpan =3D span;
++		placeHolder.setLayoutData(gd);
++		return placeHolder;
++	}
++
++	/**
++	 * Creates a place holder with the specified height
++	 *=20
++	 * @param parent
++	 * @param heightInChars
++	 * @return the created place holder
++	 */
++	public static Control createPlaceholder(Composite parent, int heightI=
+nChars) {
++		return createPlaceholder(parent, heightInChars, 1);
++	}
++
++	/**
++	 * Creates a pixel converter
++	 *=20
++	 * @param control
++	 *=20
++	 * @return the created pixel converter
++	 */
++	public static PixelConverter createDialogPixelConverter(Control contr=
+ol) {
++		Dialog.applyDialogFont(control);
++		return new PixelConverter(control);
++	}
++
++	/**
++	 * Calculates the size of the specified controls, using the specified
++	 * converter
++	 *=20
++	 * @param converter
++	 * @param controls
++	 *=20
++	 * @return the size of the control(s)
++	 */
++	public static int calculateControlSize(PixelConverter converter,
++			Control[] controls) {
++		return calculateControlSize(converter, controls, 0, controls.length =
+- 1);
++	}
++
++	/**
++	 * Calculates the size of the specified subset of controls, using the
++	 * specified converter
++	 *=20
++	 * @param converter
++	 * @param controls
++	 * @param start
++	 * @param end
++	 *=20
++	 * @return the created control
++	 */
++	public static int calculateControlSize(PixelConverter converter,
++			Control[] controls, int start, int end) {
++		int minimum =3D converter
++				.convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
++		for (int i =3D start; i <=3D end; i++) {
++			final int length =3D controls[i]
++					.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
++			if (minimum < length)
++				minimum =3D length;
++		}
++		return minimum;
++	}
++
++	/**
++	 * Equalizes the specified controls using the specified converter
++	 *=20
++	 * @param converter
++	 * @param controls
++	 */
++	public static void equalizeControls(PixelConverter converter,
++			Control[] controls) {
++		equalizeControls(converter, controls, 0, controls.length - 1);
++	}
++
++	/**
++	 * Equalizes the specified subset of controls using the specified con=
+verter
++	 *=20
++	 * @param converter
++	 * @param controls
++	 * @param start
++	 * @param end
++	 */
++	public static void equalizeControls(PixelConverter converter,
++			Control[] controls, int start, int end) {
++		final int size =3D calculateControlSize(converter, controls, start, =
+end);
++		for (int i =3D start; i <=3D end; i++) {
++			final Control button =3D controls[i];
++			if (button.getLayoutData() instanceof GridData) {
++				((GridData) button.getLayoutData()).widthHint =3D size;
 +			}
-+		};
++		}
++	}
 +
-+		computeDeepDirtyState.addSelectionListener(selectionListener);
-+		showTracked.addSelectionListener(selectionListener);
-+		showUntracked.addSelectionListener(selectionListener);
-=20
- 		setValid(true);
- 	}
-@@ -307,6 +340,9 @@ public boolean performOk() {
- 	 */
- 	private boolean performOk(IPreferenceStore store) {
-=20
-+		store.setValue(UIPreferences.DECORATOR_CALCULATE_DIRTY,
-+				computeDeepDirtyState.getSelection());
++	/**
++	 * Gets the width of the longest string in <code>strings</code>, usin=
+g the
++	 * specified pixel converter
++	 *=20
++	 * @param converter
++	 * @param strings
++	 *=20
++	 * @return the width of the longest string
++	 */
++	public static int getWidthInCharsForLongest(PixelConverter converter,
++			String[] strings) {
++		int minimum =3D 0;
++		for (int i =3D 0; i < strings.length; i++) {
++			final int length =3D converter.convertWidthInCharsToPixels(strings[=
+i]
++					.length());
++			if (minimum < length)
++				minimum =3D length;
++		}
++		return minimum;
++	}
 +
- 		store.setValue(UIPreferences.DECORATOR_FILETEXT_DECORATION,
- 				fileTextFormat.getText());
- 		store.setValue(UIPreferences.DECORATOR_FOLDERTEXT_DECORATION,
-@@ -314,8 +350,10 @@ private boolean performOk(IPreferenceStore store) =
-{
- 		store.setValue(UIPreferences.DECORATOR_PROJECTTEXT_DECORATION,
- 				projectTextFormat.getText());
-=20
--		store.setValue(UIPreferences.DECORATOR_CALCULATE_DIRTY, showDirty
-+		store.setValue(UIPreferences.DECORATOR_SHOW_TRACKED_ICON, showTracke=
-d
- 				.getSelection());
-+		store.setValue(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON,
-+				showUntracked.getSelection());
-=20
- 		return true;
- 	}
-@@ -328,6 +366,9 @@ protected void performDefaults() {
- 		super.performDefaults();
- 		IPreferenceStore store =3D getPreferenceStore();
-=20
-+		computeDeepDirtyState.setSelection(store
-+				.getDefaultBoolean(UIPreferences.DECORATOR_CALCULATE_DIRTY));
++	private static class PixelConverter {
 +
- 		fileTextFormat.setText(store
- 				.getDefaultString(UIPreferences.DECORATOR_FILETEXT_DECORATION));
- 		folderTextFormat
-@@ -337,8 +378,11 @@ protected void performDefaults() {
- 				.setText(store
- 						.getDefaultString(UIPreferences.DECORATOR_PROJECTTEXT_DECORATION=
-));
-=20
--		showDirty.setSelection(store
--				.getDefaultBoolean(UIPreferences.DECORATOR_CALCULATE_DIRTY));
-+		showTracked.setSelection(store
-+				.getDefaultBoolean(UIPreferences.DECORATOR_SHOW_TRACKED_ICON));
-+		showUntracked
-+				.setSelection(store
-+						.getDefaultBoolean(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON))=
-;
- 	}
-=20
- 	/**
-@@ -635,19 +679,26 @@ private PreviewDecoration getDecoration(Object el=
-ement) {
- 	}
-=20
- 	private static class PreviewResource implements IDecoratableResource =
-{
--		public final String name;
-+		private final String name;
++		private final FontMetrics fFontMetrics;
 +
-+		private final String branch;
-=20
--		public final String branch;
-+		private final int type;
-=20
--		public final int type;
-+		private Collection children;
-=20
--		public Collection children;
-+		private boolean tracked;
-=20
--		public PreviewResource(String name, int type, String branch) {
-+		private boolean ignored;
-+
-+		public PreviewResource(String name, int type, String branch,
-+				boolean tracked, boolean ignored) {
- 			this.name =3D name;
- 			this.branch =3D branch;
- 			this.type =3D type;
- 			this.children =3D Collections.EMPTY_LIST;
-+			this.tracked =3D tracked;
-+			this.ignored =3D ignored;
- 		}
-=20
- 		public String getName() {
-@@ -661,6 +712,14 @@ public int getType() {
- 		public String getBranch() {
- 			return branch;
- 		}
-+
-+		public boolean isTracked() {
-+			return tracked;
++		public PixelConverter(Control control) {
++			GC gc =3D new GC(control);
++			try {
++				gc.setFont(control.getFont());
++				fFontMetrics =3D gc.getFontMetrics();
++			} finally {
++				gc.dispose();
++			}
 +		}
 +
-+		public boolean isIgnored() {
-+			return ignored;
++		public int convertHeightInCharsToPixels(int chars) {
++			return Dialog.convertHeightInCharsToPixels(fFontMetrics, chars);
 +		}
- 	}
-=20
- 	private class PreviewDecoration implements IDecoration {
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.propert=
-ies b/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.properties
-index 58cb9e6..05fdba9 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.properties
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.properties
-@@ -363,4 +363,6 @@ DecoratorPreferencesPage_selectFormats=3DSelect the=
- format for file, folders, and
- DecoratorPreferencesPage_selectVariablesToAdd=3DSelect the &variables =
-to add to the decoration format:
- DecoratorPreferencesPage_textLabel=3DT&ext Decorations
- DecoratorPreferencesPage_iconLabel=3D&Icon Decorations
-+DecoratorPreferencesPage_iconsShowTracked=3DTracked resources
-+DecoratorPreferencesPage_iconsShowUntracked=3DUntracked resources
-=20
++
++		public int convertHorizontalDLUsToPixels(int dlus) {
++			return Dialog.convertHorizontalDLUsToPixels(fFontMetrics, dlus);
++		}
++
++		public int convertVerticalDLUsToPixels(int dlus) {
++			return Dialog.convertVerticalDLUsToPixels(fFontMetrics, dlus);
++		}
++
++		public int convertWidthInCharsToPixels(int chars) {
++			return Dialog.convertWidthInCharsToPixels(fFontMetrics, chars);
++		}
++	}
++}
 --=20
 1.6.1.2.309.g2ea3
