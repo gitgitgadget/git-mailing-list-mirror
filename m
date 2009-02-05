@@ -1,65 +1,63 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: Comments on "Understanding Version Control" by Eric S. Raymond
-Date: Thu, 5 Feb 2009 04:34:15 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20090205093415.GC20844@thyrsus.com>
-References: <200902021948.54700.jnareb@gmail.com> <20090202202424.GG14762@mit.edu> <200902040304.05028.jnareb@gmail.com> <20090204235436.GA8945@mit.edu> <buo63jpo21o.fsf@dhlpc061.dev.necel.com>
-Reply-To: esr@thyrsus.com
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [fsck] What's cooking in git.git (Feb 2009, #02; Wed, 04)
+Date: Thu, 05 Feb 2009 10:42:09 +0100
+Message-ID: <498AB471.1000609@viscovery.net>
+References: <7vr62dk6ru.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Feb 05 10:35:59 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 10:43:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LV0eM-0001gc-ID
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 10:35:59 +0100
+	id 1LV0lw-0003ve-8n
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 10:43:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756290AbZBEJee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 04:34:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756198AbZBEJec
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 04:34:32 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:33695
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755005AbZBEJeb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 04:34:31 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 23)
-	id 0F1AB830011; Thu,  5 Feb 2009 04:34:15 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <buo63jpo21o.fsf@dhlpc061.dev.necel.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755023AbZBEJmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 04:42:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753229AbZBEJmT
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 04:42:19 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:56730 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753222AbZBEJmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 04:42:18 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LV0kM-0004cy-74; Thu, 05 Feb 2009 10:42:10 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id F053D69F; Thu,  5 Feb 2009 10:42:09 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7vr62dk6ru.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108547>
 
-Miles Bader <miles@gnu.org>:
-> Theodore Tso <tytso@mit.edu> writes:
-> > I suspect Eric will disagree with me, but regardless of how he
-> > completes his paper, it will almost certainly end up taking sides one
-> > way or another on this controversy, at which point one side or the
-> > other of this particular disagreement will argue that Eric is really
-> > writing an advocacy paper pushing Bzr, Mercurial, or Git (depending on
-> > how he comes out on this issue).
+Junio C Hamano schrieb:
+> * jc/fsck (Fri Jan 30 02:44:13 2009 -0800) 5 commits
+>  - fsck: revert --quick to the default and introduce --medium
+>  - fsck: three levels of validation
+>  - verify-pack: add --quick
+>  - verify_pack(): allow a quicker verification for a pack with
+>    version 2 idx
+>  - pack-check.c: minor formatting fix to match coding style
 > 
-> That was pretty clear from his comments on the emacs-devel mailing list
-> (2008-05 roughly).
-> 
-> He spent a lot of time trying to sound impartial (and that he was "still
-> doing research"), but strongly gave the impression that he had already
-> made up his mind.
+> I haven't heard anything positive nor negative about this series.  I think
+> the tip two commits should be squashed (and perhaps the option parser
+> cleaned up as suggested on the list).
 
-At the time, I leaned slightly towards Mercurial, but my reasons had
-nothing to do with the cluster of issues Ted is pointing at; rather, I
-liked hg for its interface simplicity.
+If you *do* squash the top two commits due to the surprisingly expensive
+--medium check level, what is the whole point of the series?
 
-I remain agnostic about the deep issues around renaming and user
-intentions - in part because I'm by no means sure I completely
-understand them yet.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+That is, if I can have a reasonably thorough check only by passing an
+option to 'git fsck', then why would I want to choose --medium when I can
+have --full for only a 30% higher price (according to the timings you gave)?
+
+-- Hannes
