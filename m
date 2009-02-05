@@ -1,89 +1,68 @@
-From: Harry Vangberg <ichverstehe@gmail.com>
-Subject: Re: git-svn doesn't fetch anything
-Date: Thu, 5 Feb 2009 09:54:53 +0100
-Message-ID: <941ff7dd0902050054v51853a4bgad1dca9211bcd75a@mail.gmail.com>
-References: <941ff7dd0902041549y238f8460m3e1173cee6f44328@mail.gmail.com>
-	 <20090205033638.GD28280@atjola.homenet>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: Confused about diff-tree --cc output
+Date: Thu, 5 Feb 2009 03:57:16 -0500
+Message-ID: <76718490902050057u1edb1cffu8f0f8d7cd33f4d42@mail.gmail.com>
+References: <76718490902041313y44eeb99bya33513bc9818aeb0@mail.gmail.com>
+	 <7vk585n9x8.fsf@gitster.siamese.dyndns.org>
+	 <76718490902041949v8fffd17l7cb19d836a3e1887@mail.gmail.com>
+	 <7vmyd1ffcv.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 05 09:56:45 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 09:58:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LV02J-0006AE-FJ
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 09:56:39 +0100
+	id 1LV04K-0006jm-6B
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 09:58:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751367AbZBEIy6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Feb 2009 03:54:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbZBEIy5
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 03:54:57 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:48354 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751049AbZBEIy5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Feb 2009 03:54:57 -0500
-Received: by fxm13 with SMTP id 13so177725fxm.13
-        for <git@vger.kernel.org>; Thu, 05 Feb 2009 00:54:55 -0800 (PST)
+	id S1751661AbZBEI5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 03:57:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbZBEI5R
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 03:57:17 -0500
+Received: from rv-out-0506.google.com ([209.85.198.237]:35055 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751568AbZBEI5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 03:57:16 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so158428rvb.1
+        for <git@vger.kernel.org>; Thu, 05 Feb 2009 00:57:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Id0DlGT2W2NSpT7xn+Gs07eMwtJQSI/UHfKo66XMO9g=;
-        b=Zdv2jpGyy/QXamFr/TiN3tYGGBk1IDpe+kCqqivVJu2ZbHl/8+NIDpMNoV4WpUEoBh
-         Mw04DahEh/gqRea+tHHJ+a6DTMGH/DMYa8f4MF7eALGk6y2uYZ7t8BoFwhc0h6mD63nn
-         MylzNC6TfhogjNfJA8dTtNc4RV8ZuIUye9zSs=
+        bh=zo7gmz7UB6nKkhxuplvLLHneGzc6fPGpX3DHHlo3F3A=;
+        b=r6YMxwIeWOxWctNuQcIQTHtBlD022kYcvXd+bFOtoyRgvyhuB84osk5WCF5rDqD5aQ
+         zIADQJ2XqUI4iX7psNSbi8Sk6bIRsaGN65Csqk7s7wBaGQGxISgg6z4DJaiDQU+0I8Yn
+         92QbXDTRy3fueUtroJmazXyl9BecwXRwyaSoQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=k/gpYfhSAU5dL1euE9wWtVYCF13oImETEzzA0LmBTvcPDkBYsxcOu8cigAnCAas1eJ
-         Hd30Y5u/g7MlDdPlTsnr8S4f1IkiPQytO3uwjzWc5l4X6j8X2Cjec5Sg4TrlyQlqubxa
-         AJfuXs239aY+tXYcS8vQqshz1YoLLAy1UnFmk=
-Received: by 10.181.135.12 with SMTP id m12mr91425bkn.88.1233824093614; Thu, 
-	05 Feb 2009 00:54:53 -0800 (PST)
-In-Reply-To: <20090205033638.GD28280@atjola.homenet>
+         :cc:content-type:content-transfer-encoding;
+        b=o1051ZoQR98WDiu3ZuVkIQOfVSXl4hYiuNog0X1XYWPAKDRoiFYNHzz8+LU+Po3s1G
+         tqyzxrCuvK+AojDIZUCCTjzIqgt3G+ZiOKJqQD+X7CopjBYiZb3QnFqgiuQ6gEOmHg1M
+         QLvHZ35e8Kij0DrBTc60Dt754VsqAVmiqoMFo=
+Received: by 10.141.142.1 with SMTP id u1mr179744rvn.129.1233824236094; Thu, 
+	05 Feb 2009 00:57:16 -0800 (PST)
+In-Reply-To: <7vmyd1ffcv.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108542>
 
-2009/2/5 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
-> Hm, the branches and tags config looks weird to me. Is the path to th=
-em
-> really ".../turntool/plantool/plantool/branches"?
+On Thu, Feb 5, 2009 at 3:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jay Soffian <jaysoffian@gmail.com> writes:
+>
+>> Is that about right?
+>
+> Yes, not just about right but it is how it works.
 
-I tried doing this:
+Got it. I did read the thread you pointed me to earlier, but I had to
+work through it w/my example to make sure I understood completely. I
+appreciate your patience.
 
-$ git svn init https://svn.turntool.com/svn/turntool/plantool -s
---username=3Dharry
-Initialized empty Git repository in /Users/h/work/projsvn/.git/
-$
-
-Then I changed .git/config to look like this:
-
-$ cat .git/config
-[core]
-        repositoryformatversion =3D 0
-        filemode =3D true
-        bare =3D false
-        logallrefupdates =3D true
-        ignorecase =3D true
-[svn-remote "svn"]
-        url =3D https://svn.turntool.com/svn/turntool/plantool
-        fetch =3D trunk:refs/remotes/trunk
-        branches =3D branches/*:refs/remotes/*
-        tags =3D tags/*:refs/remotes/tags/*
-$
-
-And finally tried to fetch it all
-
-$ git svn fetch --all
-$
-
-It simply exists quietly, still without fetching *anything* and
-leaving me in no branch, in an empty dir. :/
+j.
