@@ -1,63 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] valgrind: do not require valgrind 3.4.0 or newer
-Date: Thu, 5 Feb 2009 21:20:24 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902052120130.7491@intel-tinevez-2-302>
-References: <cover.1233858507u.git.johannes.schindelin@gmx.de> <b204f01577584835f1c0252c77ffbfab33442a79.1233858507u.git.johannes.schindelin@gmx.de> <20090205190059.GA16216@m62s10.vlinux.de>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: "git revert" feature suggestion: revert the last commit to a file
+Date: Thu, 5 Feb 2009 21:21:04 +0100
+Message-ID: <20090205202104.GA11267@elte.hu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 05 21:22:01 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 05 21:22:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVAjV-0005ux-Bb
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 21:21:57 +0100
+	id 1LVAkE-0006FI-CQ
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 21:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755579AbZBEUU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 15:20:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755011AbZBEUU3
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 15:20:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36537 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755545AbZBEUU2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 15:20:28 -0500
-Received: (qmail invoked by alias); 05 Feb 2009 20:20:25 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp023) with SMTP; 05 Feb 2009 21:20:25 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19D4zBNPBxDl/wFAypDnjEOPuSIEdPb+pes25pw3B
-	xWAgGogLZIsvXQ
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090205190059.GA16216@m62s10.vlinux.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1755840AbZBEUVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 15:21:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755484AbZBEUVP
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 15:21:15 -0500
+Received: from mx3.mail.elte.hu ([157.181.1.138]:46817 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752584AbZBEUVP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 15:21:15 -0500
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1LVAif-0006v8-Pm
+	from <mingo@elte.hu>
+	for <git@vger.kernel.org>; Thu, 05 Feb 2009 21:21:12 +0100
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id B56573E21B0; Thu,  5 Feb 2009 21:21:05 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108607>
 
-Hi,
 
-On Thu, 5 Feb 2009, Peter Baumann wrote:
+I frequently come across this workflow pattern: i queue up some new change 
+in a topic brach, and there's a test failure within the next 60 minutes or 
+so. I know which file causes the breakage - say kernel/softlockup.c - but i 
+dont know the precise commit ID. I want to revert the change in the 
+integration branch as quickly as possible via a command - without having to 
+wade through 'git log' info and cut&paste-ing commit IDs.
 
-> On Thu, Feb 05, 2009 at 07:34:27PM +0100, Johannes Schindelin wrote:
-> > Valgrind 3.4.0 is pretty new, and even if --track-origins is a nice
-> > feature, it is not the end of the world if that is not available.  So
-> > play nice and use that option only when only an older version of
-> > valgrind is available.
-> 
-> Reading the patch/the sentence above suggests that you actuallly ment: 
-> 
-> "So play nice and don't use that option when only an older version of
->  valgrind is available."
+I usually know the topic branch name where the breakage originates from, so 
+i can do this in the integration branch:
 
-Yes.  How did you guess?
+   git revert core/softlockup
 
-:-)
+and it does the right thing and the tests can continue while i take more 
+time in the topic branch to repair the damage there. (at which point i can 
+integrate the fixed/updated commit on top of the reverted commit in the 
+integration branch.)
 
-Ciao,
-Dscho
+But often i have other changes queued up in that topic branch as well - and 
+the best, most finegrained information i have about the identity of the 
+commit is the filename it went into.
+
+So i have to do something like:
+
+   git revert $(git log -1 --pretty=format:"%h" kernel/softlockup.c)
+
+(tucked away in a tip-revert-file helper script.)
+
+But it would be so much nicer if i could do the intuitive:
+
+   git revert kernel/softlockup.c
+
+Or at least, to separate it from revision names cleanly, something like:
+
+   git revert -- kernel/softlockup.c
+
+Would something like this be possible in generic Git? It would sure be a 
+nice little touch that i would make use of frequently.
+
+Or is it a bad idea perhaps? Or have i, out of sheer ignorance, failed to 
+discover some nice little shortcut that can give me all of this already?
+
+Thanks,
+
+	Ingo
