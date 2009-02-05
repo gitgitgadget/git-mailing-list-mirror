@@ -1,93 +1,84 @@
-From: Yann Simon <yann.simon.fr@gmail.com>
-Subject: [JGIT] Questions about binary right shifting
-Date: Thu, 05 Feb 2009 15:37:37 +0100
-Message-ID: <498AF9B1.1060200@gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: simple git use case
+Date: Thu, 5 Feb 2009 14:57:28 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngolvio.sjl.sitaramc@sitaramc.homelinux.net>
+References: <498A7073.4060206@biostat.wisc.edu>
+ <76718490902050021u5f53c94aq2f1c20c871c98f9c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Feb 05 15:39:10 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 05 15:59:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LV5Nl-0002Ko-PQ
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 15:39:10 +0100
+	id 1LV5h9-0001zy-4E
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 15:59:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752043AbZBEOhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 09:37:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751699AbZBEOhl
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 09:37:41 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:60045 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751423AbZBEOhk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 09:37:40 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so190756fgg.17
-        for <git@vger.kernel.org>; Thu, 05 Feb 2009 06:37:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=DeKFOf2nXzrZM6AystRjOQPleQP6tcV3S/uPEIgRvHs=;
-        b=jUTGdrOHa1YNDoAaPngWq6hC0Fj0vV4DDQhfOvm1kVuS9MWJYSzvTkMlLYXi6VjutL
-         yzXSX18JjJllKqh1YmVnmwtoqNapdNBOccUlzHEIRg+KCfR6zxOIO34oft0u0Pk7vcRd
-         ls+YLKvSJdWof/DPJ9CfoJJiiIL0olQT5ZkL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=ZpNttSIFvbBNbwydK5V3kyeLGKFI82DevBE9NNUw0DRqo2ldmv3yyEXkFTJGjYVmsu
-         H8OvFLScyNEcdXT9/VuMN5SvjMNMZouXDiSTqnPSM9o53rp6peo99E54WcM8a53gZjwH
-         hobvB7fGvzXfDMFrxvL+c9MYb4gA+MjvB5l0s=
-Received: by 10.86.93.19 with SMTP id q19mr355921fgb.62.1233844658735;
-        Thu, 05 Feb 2009 06:37:38 -0800 (PST)
-Received: from ?10.11.2.21? (port-87-193-216-74.static.qsc.de [87.193.216.74])
-        by mx.google.com with ESMTPS id 4sm1447095fgg.55.2009.02.05.06.37.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 05 Feb 2009 06:37:38 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+	id S1752418AbZBEO5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 09:57:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbZBEO5o
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 09:57:44 -0500
+Received: from main.gmane.org ([80.91.229.2]:39890 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751367AbZBEO5n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 09:57:43 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LV5fd-0007sS-LR
+	for git@vger.kernel.org; Thu, 05 Feb 2009 14:57:37 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 05 Feb 2009 14:57:37 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 05 Feb 2009 14:57:37 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108567>
 
-Hi,
+On 2009-02-05, Jay Soffian <jaysoffian@gmail.com> wrote:
+> On Wed, Feb 4, 2009 at 11:52 PM, Erik Iverson
+> <iverson@biostat.wisc.edu> wrote:
+>> and a laptop.  When I go on the trips, I'd love to be able to bring my
+>> "git-test" directory with me on the laptop, code some, and then get the new
+>> revisions back on the desktop when I get home (bonus if I can get the
+>> revisions back to my desktop over the internet while still on the road, in
+>> case, for example, my laptop gets stolen).  No one else will be working on
+>> this stuff, it's strictly for me.
 
-I can see in the code that the signed right shifting is used.
-Could it be a problem? Or do we manipulate only positive numbers?
+Erik: I have the exact same situation, and I simply use a
+bare repository on the same desktop as a go-between.  I
+think this is a better way of doing things -- gives you a
+lot of flexibility for all sorts of future situations
+(someone else joining the project, you having to temporarily
+use a *third* machine, etc).
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-index 8eb4022..d70eca0 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-@@ -577,7 +577,7 @@ int findEntry(final byte[] p, final int pLen) {
- 		int low = 0;
- 		int high = entryCnt;
- 		do {
--			int mid = (low + high) >> 1;
-+			int mid = (low + high) >>> 1;
- 			final int cmp = cmp(p, pLen, sortedEntries[mid]);
- 			if (cmp < 0)
- 				high = mid;
+> Now, whenever you do a "push" on the laptop, it is *not* a symmetrical
+> operation to fetch/merge. Rather, the push updates master on the
+> desktop to match master from the laptop. However, the working copy on
+> the desktop is not touched. So when you login to the desktop, you need
+> to manually refresh the working copy from what was pushed. You do this
+> with "git reset --hard master". But be careful, if you have made
+> changes on the desktop and not committed them, these changes will be
+> lost when you do the reset.
 
-And could we used right shifting to optimize a division per 2?
+If you have a couple of minutes you may also want to take a
+look at
+http://sitaramc.github.com/concepts-and-tips/0-terminology.html#a5
+, where I have explained *why* all this is necessary.  It
+doesn't (but probably should) talk about how to set up a
+bare repo etc...
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
-index 0ecd04d..ff9e666 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
-@@ -136,7 +136,7 @@ private static final int binarySearch(final TreeEntry[] entries,
- 		int high = entries.length;
- 		int low = 0;
- 		do {
--			final int mid = (low + high) / 2;
-+			final int mid = (low + high) >>> 1;
- 			final int cmp = compareNames(entries[mid].getNameUTF8(), nameUTF8,
- 					nameStart, nameEnd, TreeEntry.lastChar(entries[mid]), nameUTF8last);
- 			if (cmp < 0)
-
-Yann
+[Git experts: be kind :-)  The site itself is a work in
+progress, as is my knowledge of git.  However, that
+particular page was written after that explanation and demo
+actually helped someone]
