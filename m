@@ -1,73 +1,116 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Comments on "Understanding Version Control" by Eric S. Raymond
-Date: Thu, 5 Feb 2009 16:45:36 -0500
-Message-ID: <20090205214536.GB9814@mit.edu>
-References: <200902021948.54700.jnareb@gmail.com> <200902051223.38992.jnareb@gmail.com> <20090205131611.GJ8945@mit.edu> <200902051836.44973.jnareb@gmail.com>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: "git revert" feature suggestion: revert the last commit to a
+	file
+Date: Thu, 5 Feb 2009 22:46:30 +0100
+Message-ID: <20090205214630.GA28097@elte.hu>
+References: <20090205202104.GA11267@elte.hu> <7vvdrobobc.fsf@gitster.siamese.dyndns.org> <498B51E8.8030801@xenotime.net> <20090205210055.GC21500@elte.hu> <498B5418.4050103@xenotime.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 05 22:47:21 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Randy Dunlap <rdunlap@xenotime.net>
+X-From: git-owner@vger.kernel.org Thu Feb 05 22:48:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVC47-00046k-Ri
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 22:47:20 +0100
+	id 1LVC4w-0004Nc-OJ
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 22:48:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752537AbZBEVpk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 16:45:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752309AbZBEVpj
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 16:45:39 -0500
-Received: from THUNK.ORG ([69.25.196.29]:48676 "EHLO thunker.thunk.org"
+	id S1752309AbZBEVqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 16:46:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752268AbZBEVqo
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 16:46:44 -0500
+Received: from mx3.mail.elte.hu ([157.181.1.138]:42240 "EHLO mx3.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751983AbZBEVpj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 16:45:39 -0500
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1LVC2T-00005P-SY; Thu, 05 Feb 2009 16:45:38 -0500
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1LVC2S-0003MB-Eh; Thu, 05 Feb 2009 16:45:36 -0500
+	id S1752244AbZBEVqn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 16:46:43 -0500
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1LVC3P-0004nM-M9
+	from <mingo@elte.hu>; Thu, 05 Feb 2009 22:46:42 +0100
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 0DFE83E21B0; Thu,  5 Feb 2009 22:46:28 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <200902051836.44973.jnareb@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <498B5418.4050103@xenotime.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108627>
 
-On Thu, Feb 05, 2009 at 06:36:42PM +0100, Jakub Narebski wrote:
-> What I wonder is how directory-id solution deals with situation
-> where (for example die to some reorganization) where once was single
-> directory (e.g. lib/) now there are two (include/ and src/); how it
-> would deal with the new file at old directory, hmmm...?
 
-In that case, it wouldn't be a directory rename, it would be a series
-of file moves.  So in a hypothetical scm that recorded all of these
-sorts of things, you'd have something like this:
+* Randy Dunlap <rdunlap@xenotime.net> wrote:
 
-scm mv lib/*.c src
-scm mv lib/*.h include
-scm rmdir lib
+> Ingo Molnar wrote:
+> > * Randy Dunlap <rdunlap@xenotime.net> wrote:
+> > 
+> >> Junio C Hamano wrote:
+> >>> Ingo Molnar <mingo@elte.hu> writes:
+> >>>
+> >>>> So i have to do something like:
+> >>>>
+> >>>>    git revert $(git log -1 --pretty=format:"%h" kernel/softlockup.c)
+> >>>>
+> >>>> (tucked away in a tip-revert-file helper script.)
+> >>>>
+> >>>> But it would be so much nicer if i could do the intuitive:
+> >>>>
+> >>>>    git revert kernel/softlockup.c
+> >>>>
+> >>>> Or at least, to separate it from revision names cleanly, something like:
+> >>>>
+> >>>>    git revert -- kernel/softlockup.c
+> >>> All three shares one issue.  Does the syntax offer you a way to give
+> >>> enough information so that you can confidently say that it will find the
+> >>> commit that touched the path most recently?  How is the "most recently"
+> >>> defined?
+> >>>
+> >>> At least you can restate the first one to:
+> >>>
+> >>>     git revert $(git log -1 --pretty=format:"%h" core/softlockup -- kernel/softlockup.c)
+> >>>
+> >>> to limit to "the one that touched this file _on this topic_".
+> >>>
+> >>>> Would something like this be possible in generic Git? It would sure be a 
+> >>>> nice little touch that i would make use of frequently.
+> >>>>
+> >>>> Or is it a bad idea perhaps? Or have i, out of sheer ignorance, failed to 
+> >>>> discover some nice little shortcut that can give me all of this already?
+> >>> The closest I can think of is
+> >>>
+> >>> 	git revert ':/the title of the commit'
+> >>>
+> >>> but it shares the exact same issue of "how would I limit the search space
+> >>> to make sure it finds the right commit".
+> >> And it should revert whatever commit is the last/most recent to the 
+> >> currently used file, i.e., not always revert the same commit.
+> > 
+> > i'm not sure i understand, what do you mean precisely?
+> 
+> Just that someone should be able to use "git revert <filename>" on the
+> same file more than one time and git will revert <last> then <last-1> then
+> <last-2> etc...
+> 
+> Or it will always revert <last>, where <last> is relative to the currently
+> used version of the file.
+> 
+> Does that help?
 
-Now if you try merging in a commit that creates a files in lib (e.g.,
-creates lib/foo.c and lib/foo.h and modifies lib/Makefile), presumably
-either a super smart hueristic algorith might be able to figure out
-the pattern and drop the new files in src and include --- or, more
-likely, it would flag a merge conflict and ask the user to figure it
-out by hand.
+ah, i understand. No, the second time it should revert the revert.
 
-So yes, there will always be cases where directory-id won't be able to
-handle a hypothetical source tree reorganization.  It really only
-helps in the case where you are doing a true, full move of the
-directory, i.e.:
+Last commit means last commit - and a revert is just a normal commit. (it 
+just happens to be generated as an inverse of an existing commit - but that 
+relationship is not actually relied on and a revert can be edited, amended, 
+etc.)
 
-scm mvdir src/plugin/innodb src/plugin/innodb-legacy
-scm mvdir src/plugin/innodb-experimental src/plugin/innodb
-
-							- Ted
+	Ingo
