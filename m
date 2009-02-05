@@ -1,450 +1,71 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: [PATCH v4 4/4] Change current mailmap usage to do matching on both name and email of author/committer.
-Date: Thu,  5 Feb 2009 09:06:41 +0100
-Message-ID: <200fb05bec65ad122e9ee60cc3f377907637dbf3.1233819451.git.marius@trolltech.com>
-References: <cover.1233819451.git.marius@trolltech.com>
- <565c86bdbc8d6303d7d468fa196fb54ff7bd2352.1233819451.git.marius@trolltech.com>
- <803ecf6830a5e87aab5ffc8f47a3fcf68064aef5.1233819451.git.marius@trolltech.com>
- <3bba5671ad66bd3dbb59da2f0435569eae366a73.1233819451.git.marius@trolltech.com>
-Cc: gitster@pobox.com, Marius Storm-Olsen <marius@trolltech.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 05 09:10:12 2009
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH/RFC v3 7/9] write_entry(): use fstat() instead of lstat()
+ when file is open
+Date: Thu, 05 Feb 2009 09:14:11 +0100
+Message-ID: <498A9FD3.2020601@viscovery.net>
+References: <cover.1233751281.git.barvik@broadpark.no> <21073c1f3f6c2c81b26a632f495325f5e7a7de5a.1233751281.git.barvik@broadpark.no> <49899FA4.2020003@viscovery.net> <7vfxiut57t.fsf@gitster.siamese.dyndns.org> <86tz7ayo51.fsf_-_@broadpark.no>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kjetil Barvik <barvik@broadpark.no>
+X-From: git-owner@vger.kernel.org Thu Feb 05 09:15:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUzJH-0002UM-6u
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 09:10:07 +0100
+	id 1LUzOg-0003vT-Tf
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 09:15:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755821AbZBEIIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 03:08:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755769AbZBEIIU
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 03:08:20 -0500
-Received: from hoat.troll.no ([62.70.27.150]:58567 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755167AbZBEIIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 03:08:09 -0500
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id AE41820F77;
-	Thu,  5 Feb 2009 09:08:01 +0100 (CET)
-Received: from localhost.localdomain (unknown [172.24.90.96])
-	by hoat.troll.no (Postfix) with ESMTP id 983C620F6F;
-	Thu,  5 Feb 2009 09:08:01 +0100 (CET)
-X-Mailer: git-send-email 1.6.1.2.354.g200fb
-In-Reply-To: <3bba5671ad66bd3dbb59da2f0435569eae366a73.1233819451.git.marius@trolltech.com>
-In-Reply-To: <cover.1233819451.git.marius@trolltech.com>
-References: <cover.1233819451.git.marius@trolltech.com>
+	id S1754385AbZBEIOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 03:14:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754330AbZBEIOP
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 03:14:15 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:31374 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753628AbZBEIOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 03:14:15 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LUzNE-0003bI-7r; Thu, 05 Feb 2009 09:14:12 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id F235869F; Thu,  5 Feb 2009 09:14:11 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <86tz7ayo51.fsf_-_@broadpark.no>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108530>
 
+Kjetil Barvik schrieb:
+>   And, yes, since each lstat() call cost approximately 44 microseconds
+>   compared to 12-16 for each lstat() on my Linux box, there was a little
+                               ^^^^^^^ fstat()?
+>   performance gain from this patch.
 
-Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
----
- Documentation/pretty-formats.txt |    2 +
- builtin-blame.c                  |   50 +++++++++++-------
- builtin-shortlog.c               |   22 ++++++--
- pretty.c                         |   57 +++++++++++----------
- t/t4203-mailmap.sh               |  106 ++++++++++++++++++++++++++++++++++++++
- 5 files changed, 186 insertions(+), 51 deletions(-)
+This does look like a good gain. But do you have hard numbers that back
+the claim?
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 3d87d3e..28808b7 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -103,6 +103,7 @@ The placeholders are:
- - '%an': author name
- - '%aN': author name (respecting .mailmap)
- - '%ae': author email
-+- '%aE': author email (respecting .mailmap)
- - '%ad': author date (format respects --date= option)
- - '%aD': author date, RFC2822 style
- - '%ar': author date, relative
-@@ -111,6 +112,7 @@ The placeholders are:
- - '%cn': committer name
- - '%cN': committer name (respecting .mailmap)
- - '%ce': committer email
-+- '%cE': committer email (respecting .mailmap)
- - '%cd': committer date
- - '%cD': committer date, RFC2822 style
- - '%cr': committer date, relative
-diff --git a/builtin-blame.c b/builtin-blame.c
-index 19edcf3..f3be9fa 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -1263,11 +1263,12 @@ struct commit_info
-  * Parse author/committer line in the commit object buffer
-  */
- static void get_ac_line(const char *inbuf, const char *what,
--			int bufsz, char *person, const char **mail,
-+			int person_len, char *person,
-+			int mail_len, char *mail,
- 			unsigned long *time, const char **tz)
- {
- 	int len, tzlen, maillen;
--	char *tmp, *endp, *timepos;
-+	char *tmp, *endp, *timepos, *mailpos;
- 
- 	tmp = strstr(inbuf, what);
- 	if (!tmp)
-@@ -1278,10 +1279,11 @@ static void get_ac_line(const char *inbuf, const char *what,
- 		len = strlen(tmp);
- 	else
- 		len = endp - tmp;
--	if (bufsz <= len) {
-+	if (person_len <= len) {
- 	error_out:
- 		/* Ugh */
--		*mail = *tz = "(unknown)";
-+		*tz = "(unknown)";
-+		strcpy(mail, *tz);
- 		*time = 0;
- 		return;
- 	}
-@@ -1304,9 +1306,10 @@ static void get_ac_line(const char *inbuf, const char *what,
- 	*tmp = 0;
- 	while (*tmp != ' ')
- 		tmp--;
--	*mail = tmp + 1;
-+	mailpos = tmp + 1;
- 	*tmp = 0;
- 	maillen = timepos - tmp;
-+	memcpy(mail, mailpos, maillen);
- 
- 	if (!mailmap.nr)
- 		return;
-@@ -1315,20 +1318,23 @@ static void get_ac_line(const char *inbuf, const char *what,
- 	 * mailmap expansion may make the name longer.
- 	 * make room by pushing stuff down.
- 	 */
--	tmp = person + bufsz - (tzlen + 1);
-+	tmp = person + person_len - (tzlen + 1);
- 	memmove(tmp, *tz, tzlen);
- 	tmp[tzlen] = 0;
- 	*tz = tmp;
- 
--	tmp = tmp - (maillen + 1);
--	memmove(tmp, *mail, maillen);
--	tmp[maillen] = 0;
--	*mail = tmp;
--
- 	/*
--	 * Now, convert e-mail using mailmap
-+	 * Now, convert both name and e-mail using mailmap
- 	 */
--	map_email(&mailmap, tmp + 1, person, tmp-person-1);
-+	if(map_user(&mailmap, mail+1, mail_len-1, person, tmp-person-1)) {
-+		/* Add a trailing '>' to email, since map_user returns plain emails
-+		   Note: It already has '<', since we replace from mail+1 */
-+		mailpos = memchr(mail, '\0', mail_len);
-+		if (mailpos && mailpos-mail < mail_len - 1) {
-+			*mailpos = '>';
-+			*(mailpos+1) = '\0';
-+		}
-+	}
- }
- 
- static void get_commit_info(struct commit *commit,
-@@ -1337,8 +1343,10 @@ static void get_commit_info(struct commit *commit,
- {
- 	int len;
- 	char *tmp, *endp, *reencoded, *message;
--	static char author_buf[1024];
--	static char committer_buf[1024];
-+	static char author_name[1024];
-+	static char author_mail[1024];
-+	static char committer_name[1024];
-+	static char committer_mail[1024];
- 	static char summary_buf[1024];
- 
- 	/*
-@@ -1356,9 +1364,11 @@ static void get_commit_info(struct commit *commit,
- 	}
- 	reencoded = reencode_commit_message(commit, NULL);
- 	message   = reencoded ? reencoded : commit->buffer;
--	ret->author = author_buf;
-+	ret->author = author_name;
-+	ret->author_mail = author_mail;
- 	get_ac_line(message, "\nauthor ",
--		    sizeof(author_buf), author_buf, &ret->author_mail,
-+		    sizeof(author_name), author_name,
-+		    sizeof(author_mail), author_mail,
- 		    &ret->author_time, &ret->author_tz);
- 
- 	if (!detailed) {
-@@ -1366,9 +1376,11 @@ static void get_commit_info(struct commit *commit,
- 		return;
- 	}
- 
--	ret->committer = committer_buf;
-+	ret->committer = committer_name;
-+	ret->committer_mail = committer_mail;
- 	get_ac_line(message, "\ncommitter ",
--		    sizeof(committer_buf), committer_buf, &ret->committer_mail,
-+		    sizeof(committer_name), committer_name,
-+		    sizeof(committer_mail), committer_mail,
- 		    &ret->committer_time, &ret->committer_tz);
- 
- 	ret->summary = summary_buf;
-diff --git a/builtin-shortlog.c b/builtin-shortlog.c
-index 314b6bc..badd912 100644
---- a/builtin-shortlog.c
-+++ b/builtin-shortlog.c
-@@ -40,6 +40,7 @@ static void insert_one_record(struct shortlog *log,
- 	char *buffer, *p;
- 	struct string_list_item *item;
- 	char namebuf[1024];
-+	char emailbuf[1024];
- 	size_t len;
- 	const char *eol;
- 	const char *boemail, *eoemail;
-@@ -51,7 +52,19 @@ static void insert_one_record(struct shortlog *log,
- 	eoemail = strchr(boemail, '>');
- 	if (!eoemail)
- 		return;
--	if (!map_email(&log->mailmap, boemail+1, namebuf, sizeof(namebuf))) {
-+
-+	/* copy author name to namebuf, to support matching on both name and email */
-+	memcpy(namebuf, author, boemail - author);
-+	len = boemail - author;
-+	while(len > 0 && isspace(namebuf[len-1]))
-+		len--;
-+	namebuf[len] = 0;
-+
-+	/* copy email name to emailbuf, to allow email replacement as well */
-+	memcpy(emailbuf, boemail+1, eoemail - boemail);
-+	emailbuf[eoemail - boemail - 1] = 0;
-+
-+	if (!map_user(&log->mailmap, emailbuf, sizeof(emailbuf), namebuf, sizeof(namebuf))) {
- 		while (author < boemail && isspace(*author))
- 			author++;
- 		for (len = 0;
-@@ -67,8 +80,8 @@ static void insert_one_record(struct shortlog *log,
- 
- 	if (log->email) {
- 		size_t room = sizeof(namebuf) - len - 1;
--		int maillen = eoemail - boemail + 1;
--		snprintf(namebuf + len, room, " %.*s", maillen, boemail);
-+		int maillen = strlen(emailbuf);
-+		snprintf(namebuf + len, room, " <%.*s>", maillen, emailbuf);
- 	}
- 
- 	item = string_list_insert(namebuf, &log->list);
-@@ -321,6 +334,5 @@ void shortlog_output(struct shortlog *log)
- 
- 	log->list.strdup_strings = 1;
- 	string_list_clear(&log->list, 1);
--	log->mailmap.strdup_strings = 1;
--	string_list_clear(&log->mailmap, 1);
-+	clear_mailmap(&log->mailmap);
- }
-diff --git a/pretty.c b/pretty.c
-index 9e03d6a..29f81c3 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -305,23 +305,14 @@ static char *logmsg_reencode(const struct commit *commit,
- 	return out;
- }
- 
--static int mailmap_name(struct strbuf *sb, const char *email)
-+static int mailmap_name(char *email, int email_len, char *name, int name_len)
- {
- 	static struct string_list *mail_map;
--	char buffer[1024];
--
- 	if (!mail_map) {
- 		mail_map = xcalloc(1, sizeof(*mail_map));
- 		read_mailmap(mail_map, NULL);
- 	}
--
--	if (!mail_map->nr)
--		return -1;
--
--	if (!map_email(mail_map, email, buffer, sizeof(buffer)))
--		return -1;
--	strbuf_addstr(sb, buffer);
--	return 0;
-+	return mail_map->nr && map_user(mail_map, email, email_len, name, name_len);
- }
- 
- static size_t format_person_part(struct strbuf *sb, char part,
-@@ -332,6 +323,9 @@ static size_t format_person_part(struct strbuf *sb, char part,
- 	int start, end, tz = 0;
- 	unsigned long date = 0;
- 	char *ep;
-+	const char *name_start, *name_end, *mail_start, *mail_end, *msg_end = msg+len;
-+	char person_name[1024];
-+	char person_mail[1024];
- 
- 	/* advance 'end' to point to email start delimiter */
- 	for (end = 0; end < len && msg[end] != '<'; end++)
-@@ -345,25 +339,34 @@ static size_t format_person_part(struct strbuf *sb, char part,
- 	if (end >= len - 2)
- 		goto skip;
- 
-+	/* Seek for both name and email part */
-+	name_start = msg;
-+	name_end = msg+end;
-+	while (name_end > name_start && isspace(*(name_end-1)))
-+		name_end--;
-+	mail_start = msg+end+1;
-+	mail_end = mail_start;
-+	while (mail_end < msg_end && *mail_end != '>')
-+		mail_end++;
-+	if (mail_end == msg_end)
-+		goto skip;
-+	end = mail_end-msg;
-+
-+	if (part == 'N' || part == 'E') { /* mailmap lookup */
-+		strlcpy(person_name, name_start, name_end-name_start+1);
-+		strlcpy(person_mail, mail_start, mail_end-mail_start+1);
-+		mailmap_name(person_mail, sizeof(person_mail), person_name, sizeof(person_name));
-+		name_start = person_name;
-+		name_end = name_start + strlen(person_name);
-+		mail_start = person_mail;
-+		mail_end = mail_start +  strlen(person_mail);
-+	}
- 	if (part == 'n' || part == 'N') {	/* name */
--		while (end > 0 && isspace(msg[end - 1]))
--			end--;
--		if (part != 'N' || !msg[end] || !msg[end + 1] ||
--		    mailmap_name(sb, msg + end + 2) < 0)
--			strbuf_add(sb, msg, end);
-+		strbuf_add(sb, name_start, name_end-name_start);
- 		return placeholder_len;
- 	}
--	start = ++end; /* save email start position */
--
--	/* advance 'end' to point to email end delimiter */
--	for ( ; end < len && msg[end] != '>'; end++)
--		; /* do nothing */
--
--	if (end >= len)
--		goto skip;
--
--	if (part == 'e') {	/* email */
--		strbuf_add(sb, msg + start, end - start);
-+	if (part == 'e' || part == 'E') {	/* email */
-+		strbuf_add(sb, mail_start, mail_end-mail_start);
- 		return placeholder_len;
- 	}
- 
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index 2eded8e..c7a1238 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -106,4 +106,110 @@ test_expect_success 'No mailmap files, but configured' '
- 	test_cmp expect actual
- '
- 
-+# Extended mailmap configurations should give us the following output for shortlog
-+cat >expect <<\EOF
-+A U Thor <author@example.com> (1):
-+      initial
-+
-+CTO <cto@company.xx> (1):
-+      seventh
-+
-+Other Author <other@author.xx> (2):
-+      third
-+      fourth
-+
-+Santa Claus <santa.claus@northpole.xx> (2):
-+      fifth
-+      sixth
-+
-+Some Dude <some@dude.xx> (1):
-+      second
-+
-+EOF
-+
-+test_expect_success 'Shortlog output (complex mapping)' '
-+	echo three >>one &&
-+	git add one &&
-+	test_tick &&
-+	git commit --author "nick2 <bugs@company.xx>" -m third &&
-+
-+	echo four >>one &&
-+	git add one &&
-+	test_tick &&
-+	git commit --author "nick2 <nick2@company.xx>" -m fourth &&
-+
-+	echo five >>one &&
-+	git add one &&
-+	test_tick &&
-+	git commit --author "santa <me@company.xx>" -m fifth &&
-+
-+	echo six >>one &&
-+	git add one &&
-+	test_tick &&
-+	git commit --author "claus <me@company.xx>" -m sixth &&
-+
-+	echo seven >>one &&
-+	git add one &&
-+	test_tick &&
-+	git commit --author "CTO <cto@coompany.xx>" -m seventh &&
-+
-+	mkdir internal_mailmap &&
-+	echo "Committed <committer@example.com>" > internal_mailmap/.mailmap &&
-+	echo "<cto@company.xx>                       <cto@coompany.xx>" >> internal_mailmap/.mailmap &&
-+	echo "Some Dude <some@dude.xx>         nick1 <bugs@company.xx>" >> internal_mailmap/.mailmap &&
-+	echo "Other Author <other@author.xx>   nick2 <bugs@company.xx>" >> internal_mailmap/.mailmap &&
-+	echo "Other Author <other@author.xx>         <nick2@company.xx>" >> internal_mailmap/.mailmap &&
-+	echo "Santa Claus <santa.claus@northpole.xx> <me@company.xx>" >> internal_mailmap/.mailmap &&
-+	echo "Santa Claus <santa.claus@northpole.xx> <me@company.xx>" >> internal_mailmap/.mailmap &&
-+
-+	git shortlog -e >actual &&
-+	test_cmp expect actual
-+
-+'
-+
-+# git log with --pretty format which uses the name and email mailmap placemarkers
-+cat >expect <<\EOF
-+Author CTO <cto@coompany.xx> maps to CTO <cto@company.xx>
-+Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
-+
-+Author claus <me@company.xx> maps to Santa Claus <santa.claus@northpole.xx>
-+Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
-+
-+Author santa <me@company.xx> maps to Santa Claus <santa.claus@northpole.xx>
-+Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
-+
-+Author nick2 <nick2@company.xx> maps to Other Author <other@author.xx>
-+Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
-+
-+Author nick2 <bugs@company.xx> maps to Other Author <other@author.xx>
-+Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
-+
-+Author nick1 <bugs@company.xx> maps to Some Dude <some@dude.xx>
-+Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
-+
-+Author A U Thor <author@example.com> maps to A U Thor <author@example.com>
-+Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
-+EOF
-+
-+test_expect_success 'Log output (complex mapping)' '
-+	git log --pretty=format:"Author %an <%ae> maps to %aN <%aE>%nCommitter %cn <%ce> maps to %cN <%cE>%n" >actual &&
-+	test_cmp expect actual
-+'
-+
-+# git blame
-+cat >expect <<\EOF
-+^3a2fdcb (A U Thor     2005-04-07 15:13:13 -0700 1) one
-+7de6f99b (Some Dude    2005-04-07 15:13:13 -0700 2) two
-+5815879d (Other Author 2005-04-07 15:14:13 -0700 3) three
-+ff859d96 (Other Author 2005-04-07 15:15:13 -0700 4) four
-+5ab6d4fa (Santa Claus  2005-04-07 15:16:13 -0700 5) five
-+38a42d8b (Santa Claus  2005-04-07 15:17:13 -0700 6) six
-+8ddc0386 (CTO          2005-04-07 15:18:13 -0700 7) seven
-+EOF
-+
-+test_expect_success 'Blame output (complex mapping)' '
-+	git blame one >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-1.6.1.2.323.g37255
+If you can squeeze out a 10% improvement on Linux with this patch, we
+should take it, and if it turns out that it doesn't work on Windows, we
+could trivially throw in an #ifdef MINGW (or even #ifdef WIN32 if Cygwin
+is affected, too) that skips the fstat() optimization.
+
+But we really should have numbers that justify this effort.
+
+BTW, the statement from the Windows documentation was:
+
+  "The only guarantee about a file timestamp is that the file time is
+   correctly reflected when the handle that makes the change is closed."
+
+In the case of this patch, the timestamp is queried via the handle that
+made the change, and in this case special case the timestamp could be
+correct nevertheless. The guarantee doesn't cover this case, but it would
+be natural, and perhaps it Just Works?
+
+-- Hannes
