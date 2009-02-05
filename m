@@ -1,135 +1,150 @@
-From: Fabian Franz <git@fabian-franz.de>
-Subject: [PATCH] submodule: add --no-fetch parameter to update command
-Date: Thu,  5 Feb 2009 20:18:32 -0200
-Message-ID: <1233872312-17781-1-git-send-email-git@fabian-franz.de>
-Cc: hjemli@gmail.com, Fabian Franz <git@fabian-franz.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 05 23:23:57 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Comments on "Understanding Version Control" by Eric S. Raymond
+Date: Thu, 05 Feb 2009 15:06:16 -0800
+Message-ID: <7v63jobi1j.fsf@gitster.siamese.dyndns.org>
+References: <200902021948.54700.jnareb@gmail.com>
+ <20090202202424.GG14762@mit.edu> <200902040304.05028.jnareb@gmail.com>
+ <20090204235436.GA8945@mit.edu> <7v4oz9lpes.fsf@gitster.siamese.dyndns.org>
+ <20090205024333.GH8945@mit.edu> <7vmyd1ieo6.fsf@gitster.siamese.dyndns.org>
+ <20090205132814.GK8945@mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	"Eric S. Raymond" <esr@thyrsus.com>
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Fri Feb 06 00:07:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVCdU-0000IA-2V
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 23:23:52 +0100
+	id 1LVDK9-0007va-Nn
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 00:07:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752723AbZBEWW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 17:22:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752547AbZBEWWZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 17:22:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:61000 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751761AbZBEWWY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 17:22:24 -0500
-Received: (qmail invoked by alias); 05 Feb 2009 22:22:22 -0000
-Received: from unknown (EHLO localhost.localdomain) [200.142.84.36]
-  by mail.gmx.net (mp038) with SMTP; 05 Feb 2009 23:22:22 +0100
-X-Authenticated: #590723
-X-Provags-ID: V01U2FsdGVkX18VATddlb0VIX1x8/vBwahqJ/S/BjMTb9ZJJeS39q
-	V/KFaz7m0KaCSm
-X-Mailer: git-send-email 1.6.1.2.351.gccea
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.47
+	id S1752960AbZBEXGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 18:06:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752919AbZBEXG3
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 18:06:29 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62428 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752816AbZBEXG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 18:06:29 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 35BFA97A9F;
+	Thu,  5 Feb 2009 18:06:25 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E5F8897A9D; Thu,
+  5 Feb 2009 18:06:18 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9C9A9DBA-F3D9-11DD-9419-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108632>
 
-git submodule update --no-fetch makes it possible to use git submodule
-update in complete offline mode by not fetching new revisions.
+Theodore Tso <tytso@mit.edu> writes:
 
-This does make sense in the following setup:
+> The argument would be that for SCM that properly tracked user
+> intentions, you did the wrong thing.  If the SCM properly understood
+> directory renames, there is a big differene between this:
+>
+> 	scm mvdir db innodb
+>
+> and this
+>
+> 	scm mv db/* innodb
+>
+> You see?  The first moves the *directory* db to innodb.  The second
 
-* There is an unstable and a stable branch in the super/master repository.
-* The submodules might be at different revisions in the branches.
-* You are at some place without internet connection ;)
+Then please s/scm mv/scm mvdir/ before reading my example.  The
+hypothetical "scm mv" command in my example just knew it was fed an
+directory and interpreted it as an intention to move the directory, not
+all its contents.
 
-With this patch it is now possible to change branches and update
-the submodules to be at the recorded revision without online access.
+> Of course, this distinction does not exist in git, because we track
+> content only.  And a number of other SCM's like Hg, which only track
+> file renames, wouldn't get this right either.  In order to get this
+> right, you need to treat directory renames as separate and distinct
+> operations from file renames, because they have different merge
+> implications.
+> ...
+>> See how that argument is flawed?  The point of my example is that the line
+>> between your example (1) and (2) in the previous message is blurry.
+>
+> It's blurry if you don't properly make the distinction between file
+> and directory renames, yes.
 
-Another advantage is that with -N the update operation is faster, because fetch is checking for new updates even if there was no fetch/pull on the super/master repository since the last update.
+My point was even if you (in the example, who said "I want to move db
+directory to innodb directory") had two different operations, it is not
+enough, because you cannot capture that "I want to move db directory to
+innodb directory" was contingent on "because I know everything in my db
+directory should belong to innodb -- in fact in my history of db/, there
+is nothing but innodb support".  The other person you will eventually be
+merging with may not share that precondition, as the project started out
+to hold anything databasey in db/ and between the two branches being
+merged, only you changed the semantics of what each directory means.
 
-Signed-off-by: Fabian Franz <git@fabian-franz.de>
----
- Documentation/git-submodule.txt |    7 ++++++-
- git-submodule.sh                |   19 ++++++++++++++++---
- 2 files changed, 22 insertions(+), 4 deletions(-)
+> However, your argument that it's not possible to determine whether the
+> new file should appear as db/gdbm.c or innodb/gdm.c is an argument
+> content-tracking alone isn't enough. 
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 2f207fb..3b8df44 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git submodule' [--quiet] add [-b branch] [--] <repository> <path>
- 'git submodule' [--quiet] status [--cached] [--] [<path>...]
- 'git submodule' [--quiet] init [--] [<path>...]
--'git submodule' [--quiet] update [--init] [--] [<path>...]
-+'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--] [<path>...]
- 'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
- 'git submodule' [--quiet] foreach <command>
- 'git submodule' [--quiet] sync [--] [<path>...]
-@@ -172,6 +172,11 @@ OPTIONS
- 	(the default). This limit only applies to modified submodules. The
- 	size is always limited to 1 for added/deleted/typechanged submodules.
- 
-+-N::
-+--no-fetch::
-+	This option is only valid for the update command.
-+	Don't fetch new objects from the remote site.
-+
- <path>...::
- 	Paths to submodule(s). When specified this will restrict the command
- 	to only operate on the submodules found at the specified paths.
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 2f47e06..af8d10c 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -5,7 +5,7 @@
- # Copyright (c) 2007 Lars Hjemli
- 
- USAGE="[--quiet] [--cached] \
--[add <repo> [-b branch] <path>]|[status|init|update [-i|--init]|summary [-n|--summary-limit <n>] [<commit>]] \
-+[add <repo> [-b branch] <path>]|[status|init|update [-i|--init] [-N|--no-fetch]|summary [-n|--summary-limit <n>] [<commit>]] \
- [--] [<path>...]|[foreach <command>]|[sync [--] [<path>...]]"
- OPTIONS_SPEC=
- . git-sh-setup
-@@ -16,6 +16,7 @@ command=
- branch=
- quiet=
- cached=
-+nofetch=
- 
- #
- # print stuff on stdout unless -q was specified
-@@ -300,6 +301,10 @@ cmd_update()
- 			shift
- 			cmd_init "$@" || return
- 			;;
-+		-N|--no-fetch)
-+			shift
-+			nofetch=1
-+			;;
- 		--)
- 			shift
- 			break
-@@ -345,8 +350,16 @@ cmd_update()
- 			then
- 				force="-f"
- 			fi
--			(unset GIT_DIR; cd "$path" && git-fetch &&
--				git-checkout $force -q "$sha1") ||
-+
-+			if test -z "$nofetch"
-+			then
-+				(unset GIT_DIR; cd "$path" &&
-+					git-fetch) ||
-+				die "Unable to fetch in submodule path '$path'"
-+			fi
-+
-+			(unset GIT_DIR; cd "$path" &&
-+				  git-checkout $force -q "$sha1") ||
- 			die "Unable to checkout '$sha1' in submodule path '$path'"
- 
- 			say "Submodule path '$path': checked out '$sha1'"
--- 
-1.6.1.2.351.gccea
+Yes, but it is stronger than that. It is not just "content-tracking alone"
+is not enough.  Even systems that have distinction between "scm mv" and
+"scm mvdir" are not enough.  That is what I was trying to illustrate.
+
+Your plug-in example differentiates two cases, one of which is that the
+renaming branch would move the directory and the other is the branch moved
+files under one directory to a new directory while keeping the original
+directory, and two cases should produce different results.  If I
+understand your argument correctly, it is that in the latter case the
+outcome may be ambiguous, but in the former case, it is clear that the
+intention of the remaning branch is to rename the directory itself and the
+addition to the directory done in the other branch being merged should
+automatically be done to the renamed directory while merging.  Most
+importantly, the argument makes the assumption that the intention of the
+non-renaming branch (iow, why he added the new files in the directory)
+does not matter and does not affect the outcome.
+
+The source tree restructuring example I brought in questions that
+assumption.  It illustrates that the intention of the side that added the
+new file matters.  Is it an innodb support enhancement?  Then it should
+follow the renamer's intention to move rename db/ to innodb/.  Is it
+adding something unrelated to the new meaning of "innodb" directory given
+by the renaming side?  Then it is very likely that it should not go to the
+renamed innodb/ directory, even though we may not be able to decide where
+it *should* go automatically.  The point to consider is that recording the
+renamer's intention to rename the directory and not just its contents is
+not enough and does not help the merge.
+
+> Personally, I think the scenario I used of renaming plugins is more
+> likely that the sort of source reorganization which you've posited,
+> but I agree they are both possible scenarios.  The question for git
+> development is whether these sorts of issues ar ones that we should
+> try to handle or not?
+
+That entirely depends on your definition of "handle", I think.
+
+I personally think that it is better for the tool to make its best effort
+but stop and let the human inspect the result if the validitly of the
+result is not so cut-and-dried, than blindly saying "the user said move
+the directory, so I'll move the directory and move any and all new files
+to it" and produce a potentially wrong result.  My comment in the previous
+message about <db/gdbm.c> was not that it is 100% correct to leave it
+there, nor it is 100% correct to move it elsewhere.  The point was it is a
+case you cannot say what is correct even with help from "scm mvdir", and
+the tool should stop and ask for confirmation.
+
+Boasting that "unlike git that does not record renames, we correctly
+resolve this case automatically, because our superiour design records the
+user's intention to rename directory" is simply embarrassing yourself.
+You may be silently producing a wrong result, which is nothing to boast
+about.
+
+I think it is Ok to assume that most of the time it is correct to move the
+new file if the other branch "renamed" the directory in the situation the
+example depicts, and I do not mind if the "best effort" the tool makes is
+to move it to make it easy for the user to say "Yup, that is the right
+outcome" and conclude the merge, but I think a tool is broken if it does
+not give the user an opportunity to examine the situation and say "Oh, no,
+that is not correct in *this* case" and fix it up.
