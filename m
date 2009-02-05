@@ -1,78 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFH: git show HEAD:$SUBMODULE
-Date: Thu, 05 Feb 2009 09:35:53 -0800
-Message-ID: <7vwsc4eqh2.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0902051744520.7491@intel-tinevez-2-302>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Comments on "Understanding Version Control" by Eric S. Raymond
+Date: Thu, 5 Feb 2009 18:36:42 +0100
+Message-ID: <200902051836.44973.jnareb@gmail.com>
+References: <200902021948.54700.jnareb@gmail.com> <200902051223.38992.jnareb@gmail.com> <20090205131611.GJ8945@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 05 18:37:42 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Feb 05 18:38:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LV8AM-0007nv-8U
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 18:37:30 +0100
+	id 1LV8B8-0008Bp-Di
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 18:38:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228AbZBERgB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 12:36:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbZBERgB
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 12:36:01 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49474 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752079AbZBERgA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 12:36:00 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E59399792D;
-	Thu,  5 Feb 2009 12:35:58 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CC2A79792B; Thu,
-  5 Feb 2009 12:35:55 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0902051744520.7491@intel-tinevez-2-302>
- (Johannes Schindelin's message of "Thu, 5 Feb 2009 17:46:51 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 733AB85C-F3AB-11DD-9395-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752268AbZBERgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 12:36:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbZBERgw
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 12:36:52 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:60301 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752061AbZBERgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 12:36:51 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so99659eya.37
+        for <git@vger.kernel.org>; Thu, 05 Feb 2009 09:36:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=VCBsKTP55ywqPIOk+0auBQ+AeY/aR7XKSS9kxOXbyTI=;
+        b=JPL8p1Mn1yhJtLcbBFE4XUNzDYXhNb3/0wc+qS3yR8hrRqkLOo499nHe/YynxTTsuW
+         jZvaXfVKuiM0tNbEpv8xM+FGHfEy7hPocb4hotbmGREfRD/zEFkbteOU/L1X1gdd+Hnb
+         doijdWwl/a6F+NtfTg3gnVGWY7PWZtO1N7rQg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=ufGOQmuk+QE3aNUVzkINTXibWFKH+czSrLq2HdEA26oWhLumgvlf5w3u5c+gWuIZ3y
+         tOzkbgEWL6ca+myrchwUfeoVYYEE/eE4HwXpDK/enTHuI1ND08CjryWusZavvynSiZdc
+         bpVHbRfAtRz2y1cKjtNw+XDLy3uaqUKuYWXkA=
+Received: by 10.86.92.7 with SMTP id p7mr463520fgb.24.1233855409135;
+        Thu, 05 Feb 2009 09:36:49 -0800 (PST)
+Received: from ?192.168.1.13? (abwq247.neoplus.adsl.tpnet.pl [83.8.240.247])
+        by mx.google.com with ESMTPS id 12sm1852751fgg.53.2009.02.05.09.36.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 05 Feb 2009 09:36:47 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20090205131611.GJ8945@mit.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108586>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Thu, Feb 05, 2009, Theodore Tso wrote:
+> On Thu, Feb 05, 2009 at 12:23:37PM +0100, Jakub Narebski wrote:
+> > > 
+> > > 2) And does the right thing happen if the situation is as described
+> > >    above, but in, branch C, which is descended from branch B, a new
+> > >    directory, src/plugin/innodb-experimental is created, such that
+> > >    src/plugin/innodb and src/plugin/innodb-experimental both exist.
+> > >    Now the same commit from branch A is pulled into branch C.  Will
+> > >    the correct thing happen in that the correct files in
+> > >    src/plugin/innodb are modified and created, even though there is a
+> > >    new directory containing a completely unrelated plugin that happens
+> > >    to have the name, "innodb-experimental"?
+> > 
+> > Errr... I think that you confused branch 'B' (with innodb-experimental)
+> > with branch 'A' (with innodb only) here.
+> > 
+> 
+> No, I didn't.   Let me try again.
+> 
+> At time T:	Project grows a plugin in directory src/plugins/foo-new
+> 
+> At time T+1:	Project releases a stable release, and branches off "maint"
+> 
+> At time T+2:	Project renames the plugin to be src/plugins/foo, using
+> 		"scm mvdir src/plugins/foo-new src/plugins/foo" on the 
+> 		devel branch:
 
-> at the moment, 'show HEAD:$SUBMODULE' fails horribly, as git-show abuses 
-> the revision walker to parse the command line parameters, and the revision 
-> walker does not like a non-existing commit.
->
-> Instead, it would be nicer to show the user something like
->
-> 	HEAD:$SUBMODULE
-> 	submodule at commit $COMMIT_NAME
->
-> However, I have no clue how to go about getting that.  I want to avoid 
-> having to parse the parameters twice, but I also do not want to fsck up 
-> the revision walker...
->
-> Ideas?
+And it is on branch 'A' that it happens.  But it doesn't matter...
+The example is of 'independent add' in the same filename, different
+contents case that I put in "Tests for...", but for directory not
+for a filename.  Well, slightly more complicated than that...
 
-This is not an idea but it falls into the same category as handling this
-in a way different from the current code.
+What I wonder is how directory-id solution deals with situation
+where (for example die to some reorganization) where once was single
+directory (e.g. lib/) now there are two (include/ and src/); how it
+would deal with the new file at old directory, hmmm...?
 
-	$ cd Documentation
-        $ git show HEAD:git.txt
-
-You really shouldn't letting revision machinery to parse it if you want to
-see these work in the way you want, because both in your example and in
-the often asked-for "relative to cwd" example, what you are *asking for*
-is not just an object name, but you are using the mechanism that is meant
-to be used for one.
-
-I personally think reusing the "object name" syntax for either of the
-above usages is a mistake, though.  If HEAD:$submodule_path is a notation
-for naming an object (which happens to resolve to a commit) and HEAD:git.txt
-is a notation for naming a blob object that is found at the top level of
-the tree-ish that can be called HEAD, they should retain the same meaning
-throughout the system and "git show" shouldn't be messing with the
-semantics of the notation.
+-- 
+Jakub Narebski
+Poland
