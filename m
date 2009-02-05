@@ -1,95 +1,95 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] Makefile: minor improvements for Mac OS X (Darwin)
-Date: Thu,  5 Feb 2009 01:09:08 -0500
-Message-ID: <1233814148-67700-1-git-send-email-jaysoffian@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Comments on "Understanding Version Control" by Eric S. Raymond
+Date: Wed, 04 Feb 2009 22:24:57 -0800
+Message-ID: <7vmyd1ieo6.fsf@gitster.siamese.dyndns.org>
+References: <200902021948.54700.jnareb@gmail.com>
+ <20090202202424.GG14762@mit.edu> <200902040304.05028.jnareb@gmail.com>
+ <20090204235436.GA8945@mit.edu> <7v4oz9lpes.fsf@gitster.siamese.dyndns.org>
+ <20090205024333.GH8945@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, gitster@pobox.com,
-	benny.kra@googlemail.com, nanako3@lavabit.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 05 07:15:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	"Eric S. Raymond" <esr@thyrsus.com>
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Feb 05 07:26:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUxWg-00028m-DN
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 07:15:50 +0100
+	id 1LUxh8-0004I2-0j
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 07:26:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753568AbZBEGJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 01:09:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753530AbZBEGJN
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 01:09:13 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:58865 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752330AbZBEGJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 01:09:13 -0500
-Received: by qyk4 with SMTP id 4so112221qyk.13
-        for <git@vger.kernel.org>; Wed, 04 Feb 2009 22:09:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=2L8bvlT4V6rDYL84H0hMRMLY255a53t+u9jyYeik2I8=;
-        b=dho0meUcKSgzyMPsm1EEf4Iio0Wqq6JU7mzKkvrldCfqdwg8+7N0FOxjJxZDBgqS++
-         8RIfJ9Q8KAdOP+KHrCFG25WmjDeIcT+Vem+sagXPXQSXb7MmnumVMounfi6GoncHtobx
-         W2KpkzZ0qSF9dwNYhfVltC4Ye6FDedAj4Qlj4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=HuW+c95VGebExkOPV7ldNNfJf20+vOS5sDbCBnEzFzpoFp5Wu3aoKAPL5lCl/7oYHb
-         zZlnLclPpay5YBZafvsYax9UsEn06qbJUoFePO02vK5kF5pApqVHLyAdclBERmwYx6KQ
-         xXzdp00L+54rDYfn2OMRRp1Q3oed48LEkVec4=
-Received: by 10.214.218.16 with SMTP id q16mr182112qag.78.1233814151421;
-        Wed, 04 Feb 2009 22:09:11 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id 6sm150756ywi.26.2009.02.04.22.09.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Feb 2009 22:09:10 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.2.331.g6c1bc
+	id S1753982AbZBEGZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 01:25:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753612AbZBEGZI
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 01:25:08 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54915 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752675AbZBEGZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 01:25:07 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B7FF92A77B;
+	Thu,  5 Feb 2009 01:25:05 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 436E32A761; Thu, 
+ 5 Feb 2009 01:24:59 -0500 (EST)
+In-Reply-To: <20090205024333.GH8945@mit.edu> (Theodore Tso's message of "Wed,
+ 4 Feb 2009 21:43:33 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: BA770594-F34D-11DD-BA49-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108502>
 
-1) Instead of requesting OLD_ICONV on all Mac OS X versions except for 10.5
-(which will break when 10.6 is released), exlicitly request it for versions
-older than 10.5.
+Theodore Tso <tytso@mit.edu> writes:
 
-2) NO_STRLCPY is not needed since Mac OS X 10.2. Noticed by Benjamin Kramer.
+> Careful; that's actually an argument for recording the directory
+> rename.
 
-Note that uname -r returns the underlying Darwin version, which can be mapped
-to Mac OS X version at http://www.opensource.apple.com/darwinsource/
+I do not think so.  More precisely, I can see people could make that
+argument, but I think that argument is weak.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
-This patch incorporates gmane 106991. Hopefully it was okay to squash in the
-other minor change as well.
+Suppose the original project's implementor only knew about innodb
+interface, so he had the "database interface" directory and innodb access
+method file in the source tree, perhaps at <db/inno.c>.
 
- Makefile |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+I forked the project, and added gdbm support at <db/gdbm.c>.
 
-diff --git a/Makefile b/Makefile
-index 830143e..77f1083 100644
---- a/Makefile
-+++ b/Makefile
-@@ -652,10 +652,12 @@ endif
- ifeq ($(uname_S),Darwin)
- 	NEEDS_SSL_WITH_CRYPTO = YesPlease
- 	NEEDS_LIBICONV = YesPlease
--	ifneq ($(shell expr "$(uname_R)" : '9\.'),2)
-+	ifeq ($(shell expr "$(uname_R)" : '[15678]\.'),2)
- 		OLD_ICONV = UnfortunatelyYes
- 	endif
--	NO_STRLCPY = YesPlease
-+	ifeq ($(shell expr "$(uname_R)" : '[15]\.'),2)
-+		NO_STRLCPY = YesPlease
-+	endif
- 	NO_MEMMEM = YesPlease
- 	THREADED_DELTA_SEARCH = YesPlease
- endif
--- 
-1.6.1.2.331.g6c1bc
+You also forked the project without knowing what I was working on, and you
+started working on refining the innodb support.
+
+All the while, the development community started discussing how the source
+tree should be organized to support multiple backends, and you learned
+that the plan is to have one directory per larger backend, while keeping
+single file ones in <db/*.c>.  Specifically, you learned that innodb
+related code will be stored in <innodb/*.c>, and there may be other
+<somedb/*.c> and <someotherdb/*.c> groups added, but you are not
+interested in anything but enhancing innodb support.
+
+You rename "scm mv db innodb" and then add <innodb/enhanced.c>, or perhaps
+you may have done it the other way, i.e. added <db/enhanced.c> and then
+renamed "scm mv db innodb".
+
+Suppose you would want to merge my changes, but the upstream's plan hasn't
+happened yet.  Neither of us merged from the upstream in the meantime.
+
+Recording your "scm mv db innodb" as "the user's intention to rename
+directory" does not help when you want to merge with me to handle the new
+file <db/gdbm.c> I added.  You not only need to record the "intent to
+rename db to innodb", but need to know that the validity of that "intent
+to rename" is contingent on the absense of anything unrelated to innodb in
+db/ directory, in order to merge the two branches correctly.  Otherwise
+you will end up moving my <db/gdbm.c> to <innodb/gdbm.c>.  The correct
+outcome in this case would probably be to leave it as it is.
+
+> In other cases, maybe the right thing *is* to drop the new file in the
+> original directory.  So as the Hg and Bzr apologists might say, if the
+> SCM actually records whether the user intention was a *directory*
+> rename, versus a series of *file* rename/moves, then it becomes
+> obvious what the right thing to do.
+
+See how that argument is flawed?  The point of my example is that the line
+between your example (1) and (2) in the previous message is blurry.
