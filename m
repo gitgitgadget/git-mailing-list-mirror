@@ -1,186 +1,93 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: Article about "git bisect run" on LWN
-Date: Thu, 5 Feb 2009 15:13:36 +0100
-Message-ID: <20090205141336.GA28443@elte.hu>
-References: <200902050747.50100.chriscool@tuxfamily.org>
+From: Yann Simon <yann.simon.fr@gmail.com>
+Subject: [JGIT] Questions about binary right shifting
+Date: Thu, 05 Feb 2009 15:37:37 +0100
+Message-ID: <498AF9B1.1060200@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Andreas Ericsson <ae@op5.se>, Jeff Garzik <jeff@garzik.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Bill Lear <rael@zopyra.com>,
-	Jon Seymour <jon.seymour@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Feb 05 15:16:20 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Feb 05 15:39:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LV51a-0000c5-6O
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 15:16:14 +0100
+	id 1LV5Nl-0002Ko-PQ
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 15:39:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752287AbZBEOOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 09:14:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbZBEOOn
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 09:14:43 -0500
-Received: from mx2.mail.elte.hu ([157.181.151.9]:33594 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751890AbZBEOOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 09:14:42 -0500
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1LV4zA-0002Sq-MI
-	from <mingo@elte.hu>; Thu, 05 Feb 2009 15:13:48 +0100
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 3BC973E21B0; Thu,  5 Feb 2009 15:13:36 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <200902050747.50100.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1752043AbZBEOhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 09:37:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751699AbZBEOhl
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 09:37:41 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:60045 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751423AbZBEOhk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 09:37:40 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so190756fgg.17
+        for <git@vger.kernel.org>; Thu, 05 Feb 2009 06:37:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
+         :content-transfer-encoding;
+        bh=DeKFOf2nXzrZM6AystRjOQPleQP6tcV3S/uPEIgRvHs=;
+        b=jUTGdrOHa1YNDoAaPngWq6hC0Fj0vV4DDQhfOvm1kVuS9MWJYSzvTkMlLYXi6VjutL
+         yzXSX18JjJllKqh1YmVnmwtoqNapdNBOccUlzHEIRg+KCfR6zxOIO34oft0u0Pk7vcRd
+         ls+YLKvSJdWof/DPJ9CfoJJiiIL0olQT5ZkL4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=ZpNttSIFvbBNbwydK5V3kyeLGKFI82DevBE9NNUw0DRqo2ldmv3yyEXkFTJGjYVmsu
+         H8OvFLScyNEcdXT9/VuMN5SvjMNMZouXDiSTqnPSM9o53rp6peo99E54WcM8a53gZjwH
+         hobvB7fGvzXfDMFrxvL+c9MYb4gA+MjvB5l0s=
+Received: by 10.86.93.19 with SMTP id q19mr355921fgb.62.1233844658735;
+        Thu, 05 Feb 2009 06:37:38 -0800 (PST)
+Received: from ?10.11.2.21? (port-87-193-216-74.static.qsc.de [87.193.216.74])
+        by mx.google.com with ESMTPS id 4sm1447095fgg.55.2009.02.05.06.37.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 05 Feb 2009 06:37:38 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108566>
 
+Hi,
 
-* Christian Couder <chriscool@tuxfamily.org> wrote:
+I can see in the code that the signed right shifting is used.
+Could it be a problem? Or do we manipulate only positive numbers?
 
-> Hi,
-> 
-> For information, an article from me, 'Fully automated bisecting with "git 
-> bisect run"' has been published in today's edition of LWN on the 
-> development page:
-> 
-> http://lwn.net/Articles/317154/
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
+index 8eb4022..d70eca0 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
+@@ -577,7 +577,7 @@ int findEntry(final byte[] p, final int pLen) {
+ 		int low = 0;
+ 		int high = entryCnt;
+ 		do {
+-			int mid = (low + high) >> 1;
++			int mid = (low + high) >>> 1;
+ 			final int cmp = cmp(p, pLen, sortedEntries[mid]);
+ 			if (cmp < 0)
+ 				high = mid;
 
-Nice article!
+And could we used right shifting to optimize a division per 2?
 
-In terms of possible future enhancements of git bisect, here's a couple of 
-random ideas that would help my auto-bisection efforts:
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
+index 0ecd04d..ff9e666 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
+@@ -136,7 +136,7 @@ private static final int binarySearch(final TreeEntry[] entries,
+ 		int high = entries.length;
+ 		int low = 0;
+ 		do {
+-			final int mid = (low + high) / 2;
++			final int mid = (low + high) >>> 1;
+ 			final int cmp = compareNames(entries[mid].getNameUTF8(), nameUTF8,
+ 					nameStart, nameEnd, TreeEntry.lastChar(entries[mid]), nameUTF8last);
+ 			if (cmp < 0)
 
- - Feature: support "Bisection Redundancy"
-
-   This feature helps developers realize if a bug is sporadic. This happens 
-   quite often in the kernel space: a bug looks deterministic, but down the 
-   line it becomes sporadic. Sometimes a boot crash only occurs with a 75% 
-   probability - and if one is unlucky it can cause a _lot_ of wasted 
-   bisection time. The wrong commit gets blamed and the wrong set of 
-   developers start scratching their heads. It's a reoccuring theme on lkml.
-
-   What git could do here is to allow testers to inject a bit of extra 
-   "redundancy" automatically, and use the redundant test-points to detect 
-   conflicts in good/bad constraints.
-
-   It would work like this:
-
-      git bisect start --redundancy=33%
-
-   It would mean that for every third bisection points, Git would
-   _not_ chose the ideal (estimated) 'middle point' from the set of "unknown 
-   quality" changes that are still outstanding - but would intentionally 
-   "weer outside" and select one commit from the _known_ set of commits.
-
-   If such a redundant re-test of the known-good or known-bad set yields a 
-   nonsensical result then Git aborts the bisection with a "logic
-   inconsistency detected" kind of message - and people could at this point
-   realize the non-determinism of the test.
-
-   ( Git can do this when a "redundant" test point is marked as 'bad' - 
-     despite an earlier bisection already categorizing that test point as 
-     'good' - or if it's the other way around. Git will only continue with 
-     the bisection if the test point has the expected quality. )
-
-   This essentially means an automated re-test - but it's much better than 
-   just a repeated bisection - i've often met non-deterministic bugs that 
-   yield the _exact same_ nonsensical commit even on repeat bisections. That 
-   happens when a timing bug depends on the exact kernel layout, or a 
-   miscompilation or linker bug depends on the exact kernel layout, etc.
-
-   It's also faster than a re-done bisection: 33% more testpoints is better 
-   than twice as many test-points. Also, auto-bisection can deal with 
-   redundancy just fine - it does not really matter whether i have to wait 
-   20 or 30 minutes for a test result since there's no manual intervention 
-   needed - but it _very_ much matters whether i can trust the validity of 
-   the bisection result.
-
-- Feature: better "git bisect next" support.
-
-  Sometimes a commit wont build. In that case we have "git bisect next", but 
-  last i checked that only jumps a single commit - and build breakages 
-  often have a large scope - full trees that got merged upstream, etc. Most 
-  of the time those build breakages are uninteresting and the build-broken 
-  window does not contain the bad commit.
-
-  So it would be nice to have a "git bisect next --left=20%" type of 
-  feature. This would jump 20% commits to the "left" from the bisection 
-  point, towards the 'known bad' set of commits, but still within the 
-  bisection window.
-
-  Similarly, "git bisect next --right=20%" would jump towards the known-good 
-  edge of the bisection window (but still within the bisection window).
-
-  Currently when i hit a build error during auto-bisection, it aborts and i 
-  have to intervene manually. But with a bigger jump distance i could use
-  git-bisect-next reliably in scripts too.
-
-  Likewise, users too hit build breakages often, and find it hard to get out 
-  of the window of breakage. With the high-order tree structure of the 
-  kernel repository that is rather non-intuitive to do as well, and often 
-  people make mistakes and test the wrong commit.
-
-- Feature: detect "redundant" and "inconsistent" test points
-
-  This is a variation of the redunant testing theme, but from a different 
-  angle: often newbies when they bisect the kernel weer outside of the 
-  bisection window without realizing it. It would be nice if Git printed a 
-  friendly notifier that:
-
-     git bisect good 12341234
-     info: bisection point 12341234 was already in the 'good' range
-
-  Or, if the redunant test point is conflicting, print:
-
-     git bisect good 12341234
-     fatal: bisection point 12341234 was already in the 'bad' range!
-
-  And give an error return as well, so that scripts can abort.
-
-  Currently Git seems to be very forgiving and accepts all bisection points 
-  that we feed it, without checking them for consistency. (this might have 
-  changed in current development versions, i dont know.)
-
-- User friendliness: give an estimation about how many steps are remaining
-
-  Right now git prints this when a bisection session begins:
-
-     aldebaran:~/tip> git bisect start
-     aldebaran:~/tip> git bisect bad linus
-     aldebaran:~/tip> git bisect good v2.6.28
-     Bisecting: 5449 revisions left to test after this
-     [e0b685d39a0404e7f87fb7b7808c3b37a115fe11] Updated contact info for CREDITS file
-
-  It would be nice if Git estimated the expected number of bisection points. 
-  Something like this would be helpful:
-
-     aldebaran:~/tip> git bisect good v2.6.28
-     Bisecting: 5449 revisions left to test after this
-                About ~16 test steps left [approximated]
-     [e0b685d39a0404e7f87fb7b7808c3b37a115fe11] Updated contact info for CREDITS file
-
-  The real number of test points might be higher than this, if the tree 
-  layout is unlucky, or it might be less than this if the user manually 
-  narrows the bisection window to a suspected set of commits - but that's 
-  OK - most kernel testers use the default variant and the message is clear 
-  enough that it's only an estimation.
-
-	Ingo
+Yann
