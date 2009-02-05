@@ -1,68 +1,79 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Confused about diff-tree --cc output
-Date: Thu, 5 Feb 2009 03:57:16 -0500
-Message-ID: <76718490902050057u1edb1cffu8f0f8d7cd33f4d42@mail.gmail.com>
-References: <76718490902041313y44eeb99bya33513bc9818aeb0@mail.gmail.com>
-	 <7vk585n9x8.fsf@gitster.siamese.dyndns.org>
-	 <76718490902041949v8fffd17l7cb19d836a3e1887@mail.gmail.com>
-	 <7vmyd1ffcv.fsf@gitster.siamese.dyndns.org>
+From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+Subject: Re: [PATCH] urls.txt: document optional port specification in git
+ URLS
+Date: Thu, 05 Feb 2009 09:41:42 +0100
+Organization: ATLAS Elektronik GmbH
+Message-ID: <498AA646.4040009@atlas-elektronik.com>
+References: <1233748295-4554-1-git-send-email-stefan.naewe@atlas-elektronik.com> <20090205080913.GB27983@ultras>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 05 09:58:49 2009
+Cc: git@vger.kernel.org
+To: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
+X-From: git-owner@vger.kernel.org Thu Feb 05 10:10:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LV04K-0006jm-6B
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 09:58:44 +0100
+	id 1LV0G5-0002O1-WB
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 10:10:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751661AbZBEI5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 03:57:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbZBEI5R
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 03:57:17 -0500
-Received: from rv-out-0506.google.com ([209.85.198.237]:35055 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751568AbZBEI5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 03:57:16 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so158428rvb.1
-        for <git@vger.kernel.org>; Thu, 05 Feb 2009 00:57:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zo7gmz7UB6nKkhxuplvLLHneGzc6fPGpX3DHHlo3F3A=;
-        b=r6YMxwIeWOxWctNuQcIQTHtBlD022kYcvXd+bFOtoyRgvyhuB84osk5WCF5rDqD5aQ
-         zIADQJ2XqUI4iX7psNSbi8Sk6bIRsaGN65Csqk7s7wBaGQGxISgg6z4DJaiDQU+0I8Yn
-         92QbXDTRy3fueUtroJmazXyl9BecwXRwyaSoQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=o1051ZoQR98WDiu3ZuVkIQOfVSXl4hYiuNog0X1XYWPAKDRoiFYNHzz8+LU+Po3s1G
-         tqyzxrCuvK+AojDIZUCCTjzIqgt3G+ZiOKJqQD+X7CopjBYiZb3QnFqgiuQ6gEOmHg1M
-         QLvHZ35e8Kij0DrBTc60Dt754VsqAVmiqoMFo=
-Received: by 10.141.142.1 with SMTP id u1mr179744rvn.129.1233824236094; Thu, 
-	05 Feb 2009 00:57:16 -0800 (PST)
-In-Reply-To: <7vmyd1ffcv.fsf@gitster.siamese.dyndns.org>
+	id S1759218AbZBEJJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 04:09:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758927AbZBEJJ1
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 04:09:27 -0500
+Received: from lxsrv96.atlas.de ([194.156.172.86]:40499 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759150AbZBEJJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 04:09:24 -0500
+X-Greylist: delayed 1650 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Feb 2009 04:09:24 EST
+Received: from vssrv01.atlas.de (vssrv01.atlas.de [10.200.101.18])
+	by mail96.atlas.de (Postfix) with SMTP id 66CE4138AB;
+	Thu,  5 Feb 2009 09:41:50 +0100 (CET)
+Received: from mgsrv01.atlas.de ([10.200.101.16])
+ by vssrv01.atlas.de (SMSSMTP 4.1.9.35) with SMTP id M2009020509420603031
+ ; Thu, 05 Feb 2009 09:42:06 +0100
+Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
+	by mail01-int.atlas.de (Postfix) with ESMTP id 304B02716C;
+	Thu,  5 Feb 2009 09:41:50 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,BAYES_50
+	autolearn=disabled version=3.2.5
+Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
+	by mail01.atlas.de (Postfix) with ESMTP id 086FE2716A;
+	Thu,  5 Feb 2009 09:41:50 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
+In-Reply-To: <20090205080913.GB27983@ultras>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108543>
 
-On Thu, Feb 5, 2009 at 3:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jay Soffian <jaysoffian@gmail.com> writes:
->
->> Is that about right?
->
-> Yes, not just about right but it is how it works.
+(Please don't reply to me only, CC the mailing list)
 
-Got it. I did read the thread you pointed me to earlier, but I had to
-work through it w/my example to make sure I understood completely. I
-appreciate your patience.
+On 2/5/2009 9:09 AM, Nicolas Sebrecht wrote:
+> On Wed, Feb 04, 2009 at 12:51:35PM +0100, Stefan Naewe wrote:
+> 
+>>  Documentation/urls.txt |    4 ++--
+>>  1 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> [...]
+> 
+>> +- git://host.xz{startsb}:port{endsb}/path/to/repo.git/
+>> +- git://host.xz{startsb}:port{endsb}/~user/path/to/repo.git/
+>>  - ssh://{startsb}user@{endsb}host.xz{startsb}:port{endsb}/path/to/repo.git/
+>>  - ssh://{startsb}user@{endsb}host.xz/path/to/repo.git/
+>>  - ssh://{startsb}user@{endsb}host.xz/~user/path/to/repo.git/
+> 
+> I did not understood. To what does '{startsb}' and '{endsb}' refer ?
 
-j.
+Look at the generated documentation.
+
+Regards,
+Stefan
+-- 
+----------------------------------------------------------------
+/dev/random says: Useless Invention: Fireproof kindling.
