@@ -1,95 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Comments on "Understanding Version Control" by Eric S. Raymond
-Date: Wed, 04 Feb 2009 22:24:57 -0800
-Message-ID: <7vmyd1ieo6.fsf@gitster.siamese.dyndns.org>
-References: <200902021948.54700.jnareb@gmail.com>
- <20090202202424.GG14762@mit.edu> <200902040304.05028.jnareb@gmail.com>
- <20090204235436.GA8945@mit.edu> <7v4oz9lpes.fsf@gitster.siamese.dyndns.org>
- <20090205024333.GH8945@mit.edu>
+From: Guanqun Lu <guanqun.lu@gmail.com>
+Subject: Re: [PATCH 1/2] fix typo in Documentation
+Date: Thu, 5 Feb 2009 14:27:41 +0800
+Message-ID: <e57070790902042227r2d571b94h9b3a997d826a80d2@mail.gmail.com>
+References: <1233781241-721-1-git-send-email-guanqun.lu@gmail.com>
+	 <m38womwo2b.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	"Eric S. Raymond" <esr@thyrsus.com>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Feb 05 07:26:41 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 07:29:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUxh8-0004I2-0j
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 07:26:38 +0100
+	id 1LUxjg-0004qk-Az
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 07:29:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753982AbZBEGZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 01:25:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753612AbZBEGZI
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 01:25:08 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54915 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752675AbZBEGZH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 01:25:07 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B7FF92A77B;
-	Thu,  5 Feb 2009 01:25:05 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 436E32A761; Thu, 
- 5 Feb 2009 01:24:59 -0500 (EST)
-In-Reply-To: <20090205024333.GH8945@mit.edu> (Theodore Tso's message of "Wed,
- 4 Feb 2009 21:43:33 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BA770594-F34D-11DD-BA49-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1754185AbZBEG1n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 01:27:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754126AbZBEG1n
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 01:27:43 -0500
+Received: from rv-out-0506.google.com ([209.85.198.237]:23476 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753908AbZBEG1m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 01:27:42 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so100061rvb.1
+        for <git@vger.kernel.org>; Wed, 04 Feb 2009 22:27:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xeAIjL0D8ekAEXBTlX9r/k+9enq5moV67oz+pMjbg6w=;
+        b=NUwxl2cCYpux1O5pisA4Cg22ndtCjYF8OE7MVoVhkMaxGVnVEM7yofyBwdKQ2mbADb
+         7uJUIO7uQPWhp4DK4Umpk8y24FpDjLGPBOle90GeCgnpMc+gTv3ilt01WziRsF+7kLpK
+         Gy0r8qhlZqHaUB2PltWfUH9NISSVY598mmx14=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=f3WvN71iDiiFRmGyygfyRRESXbcCmiUWfTo4RoJXKhvVHYBvMVRob4Yk88gZOvH8XB
+         ztddGVjYtbASLrDdbgqDrwKnXZyJ9KH/pRxs1Zxp6ZSiyzQlqd7wmUOfwLUaJf7w/B90
+         ADk/g+LqNSJ3EmGoe2LEXFloDnP9oo6YTplvg=
+Received: by 10.141.116.17 with SMTP id t17mr79503rvm.268.1233815261660; Wed, 
+	04 Feb 2009 22:27:41 -0800 (PST)
+In-Reply-To: <m38womwo2b.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108503>
 
-Theodore Tso <tytso@mit.edu> writes:
+On Wed, Feb 4, 2009 at 5:26 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> Guanqun Lu <guanqun.lu@gmail.com> writes:
+>
+>> Signed-off-by: Guanqun Lu <guanqun.lu@gmail.com>
+>> ---
+>>  Documentation/technical/api-strbuf.txt |    2 +-
+>>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> Minor nit: I would add _where_ did you fix typy, i.e. instead of just
+>  fix typo in Documentation
+> I'd use
+>  fix typo in strbuf API documentation
 
-> Careful; that's actually an argument for recording the directory
-> rename.
+OK. I'll keep an eye next time. And thanks for your advice.
 
-I do not think so.  More precisely, I can see people could make that
-argument, but I think that argument is weak.
+>
+> --
+> Jakub Narebski
+> Poland
+> ShadeHawk on #git
+>
 
-Suppose the original project's implementor only knew about innodb
-interface, so he had the "database interface" directory and innodb access
-method file in the source tree, perhaps at <db/inno.c>.
 
-I forked the project, and added gdbm support at <db/gdbm.c>.
 
-You also forked the project without knowing what I was working on, and you
-started working on refining the innodb support.
-
-All the while, the development community started discussing how the source
-tree should be organized to support multiple backends, and you learned
-that the plan is to have one directory per larger backend, while keeping
-single file ones in <db/*.c>.  Specifically, you learned that innodb
-related code will be stored in <innodb/*.c>, and there may be other
-<somedb/*.c> and <someotherdb/*.c> groups added, but you are not
-interested in anything but enhancing innodb support.
-
-You rename "scm mv db innodb" and then add <innodb/enhanced.c>, or perhaps
-you may have done it the other way, i.e. added <db/enhanced.c> and then
-renamed "scm mv db innodb".
-
-Suppose you would want to merge my changes, but the upstream's plan hasn't
-happened yet.  Neither of us merged from the upstream in the meantime.
-
-Recording your "scm mv db innodb" as "the user's intention to rename
-directory" does not help when you want to merge with me to handle the new
-file <db/gdbm.c> I added.  You not only need to record the "intent to
-rename db to innodb", but need to know that the validity of that "intent
-to rename" is contingent on the absense of anything unrelated to innodb in
-db/ directory, in order to merge the two branches correctly.  Otherwise
-you will end up moving my <db/gdbm.c> to <innodb/gdbm.c>.  The correct
-outcome in this case would probably be to leave it as it is.
-
-> In other cases, maybe the right thing *is* to drop the new file in the
-> original directory.  So as the Hg and Bzr apologists might say, if the
-> SCM actually records whether the user intention was a *directory*
-> rename, versus a series of *file* rename/moves, then it becomes
-> obvious what the right thing to do.
-
-See how that argument is flawed?  The point of my example is that the line
-between your example (1) and (2) in the previous message is blurry.
+-- 
+Guanqun
