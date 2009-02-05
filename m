@@ -1,121 +1,131 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH v4 1/4] Add log.mailmap as configurational option for
- mailmap location
-Date: Thu, 05 Feb 2009 20:33:56 +0100
-Message-ID: <498B3F24.6080305@trolltech.com>
-References: <cover.1233819451.git.marius@trolltech.com> <cover.1233819451.git.marius@trolltech.com> <565c86bdbc8d6303d7d468fa196fb54ff7bd2352.1233819451.git.marius@trolltech.com> <7vljskeq21.fsf@gitster.siamese.dyndns.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] fix t1504 on Windows
+Date: Thu, 05 Feb 2009 20:35:07 +0100
+Message-ID: <498B3F6B.5080002@lsrfire.ath.cx>
+References: <498A1E1E.8010901@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 05 20:35:43 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 05 20:37:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVA0d-0000Cq-JS
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 20:35:36 +0100
+	id 1LVA1w-0000th-EK
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 20:36:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760784AbZBETdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 14:33:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760779AbZBETdi
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 14:33:38 -0500
-Received: from hoat.troll.no ([62.70.27.150]:40232 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760750AbZBETdh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 14:33:37 -0500
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 17E0020FBF;
-	Thu,  5 Feb 2009 20:33:31 +0100 (CET)
-Received: from [172.20.1.78] (unknown [172.20.1.78])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id D62992044F;
-	Thu,  5 Feb 2009 20:33:30 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.19) Gecko/20081209 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
-In-Reply-To: <7vljskeq21.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.7
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1759934AbZBETfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 14:35:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760749AbZBETfO
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 14:35:14 -0500
+Received: from india601.server4you.de ([85.25.151.105]:58834 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760630AbZBETfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 14:35:10 -0500
+Received: from [10.0.1.101] (p57B7D5B1.dip.t-dialin.net [87.183.213.177])
+	by india601.server4you.de (Postfix) with ESMTPSA id 5A0B42F8056;
+	Thu,  5 Feb 2009 20:35:08 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <498A1E1E.8010901@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108602>
 
-Junio C Hamano said the following on 05.02.2009 18:44:
-> Marius Storm-Olsen <marius@trolltech.com> writes:
-> 
->> diff --git a/config.c b/config.c
->> index 790405a..9ebcbbe 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -565,6 +565,13 @@ static int git_default_branch_config(const char *var, const char *value)
->>  	return 0;
->>  }
->>  
->> +static int git_default_log_config(const char *var, const char *value)
->> +{
->> +	if (!strcmp(var, "log.mailmap"))
->> +		return git_config_string(&git_log_mailmap, var, value);
->> +	return 0;
->> +}
->> +
->>  int git_default_config(const char *var, const char *value, void *dummy)
->>  {
->>  	if (!prefixcmp(var, "core."))
->> @@ -579,6 +586,9 @@ int git_default_config(const char *var, const char *value, void *dummy)
->>  	if (!prefixcmp(var, "branch."))
->>  		return git_default_branch_config(var, value);
->>  
->> +	if (!prefixcmp(var, "log."))
->> +		return git_default_log_config(var, value);
->> +
-> 
-> The placement of this looked *really* wrong, as mailmap is not
-> *that* important to most of the commands.
-> 
-> Initially I wondered if this should be better done inside existing 
-> git_log_config().  I suspect that the reason you didn't do so is
-> because you would want to use this also in blame, which is not part
-> of the log family, and does not use git_log_config() (nor it
-> should).
-> 
-> Which probably means that the code can stay here (it is just two
-> strcmp and assignment to a pointer variable), but also suggests
-> that log.mailmap is perhaps misnamed.
+The test t1504 crashes on Windows due to a failed assertion in
+normalize_absolute_path() because this function expects absolute paths to
+start with a slash, while on Windows they can start with a drive letter
+or a backslash.
 
+As suggested by Johannes, fix it by using sanitary_path_copy() instead,
+which can handle Windows-style paths just fine.  This patch just exports
+it for usage; a later patch may move it from setup.c to path.c where it
+fits better.
 
-Correct, that was my reasoning behind it. Since shortlog is the only 
-place in the documentation where mailmap is *directly* mentioned, it 
-feels slightly tied to log. But, since blame and pretty.c also 
-reference it, I needed the configuration option to be read as default.
+Secondly, use the portability macro PATH_SEP instead of expecting colons
+to be used as path list delimiter.  On Windows, semicolons are used,
+while colons separate drive letter and path.
 
-Given that in total shortlog, blame, log, diff-tree, rev-list, show 
-and whatchanged use it (the latter 5 through the pretty option), I'm 
-tempted to say that it justifies its own option (mailmap.file?); but 
-it would still have to be handled by git_default_config(). Renaming it 
-would give it stronger reason to *be there* though.
+Also change the test script to help bash recognize the path list variable
+for test case "first_of_two" as needing path conversion.  git expects
+Windows-style paths, which bash happily creates if we turn the second
+path of the list into an absolute one.
 
-I'm fine either way, really. Though, I think if we rename the option, 
-it also justifies pulling the mailmap documentation out of 
-git-shortlog.txt, into its own file, and link to it from shortlog, and 
-the other commands which use it (git-blame.txt and pretty-format.txt)
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ cache.h                 |    1 +
+ path.c                  |   11 ++++++-----
+ setup.c                 |    2 +-
+ t/t1504-ceiling-dirs.sh |    2 +-
+ 4 files changed, 9 insertions(+), 7 deletions(-)
 
-I'll happily do the job, if "yay", or leave it as is if "nay".
-Either way, feel free to rename log.mailmap to something else.
-
---
-.marius
+diff --git a/cache.h b/cache.h
+index 45e713e..eeb774a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -626,6 +626,7 @@ const char *make_nonrelative_path(const char *path);
+ const char *make_relative_path(const char *abs, const char *base);
+ int normalize_absolute_path(char *buf, const char *path);
+ int longest_ancestor_length(const char *path, const char *prefix_list);
++int sanitary_path_copy(char *dst, const char *src);
+ 
+ /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
+ extern int sha1_object_info(const unsigned char *, unsigned long *);
+diff --git a/path.c b/path.c
+index a074aea..ea1913a 100644
+--- a/path.c
++++ b/path.c
+@@ -438,15 +438,16 @@ int longest_ancestor_length(const char *path, const char *prefix_list)
+ 		return -1;
+ 
+ 	for (colon = ceil = prefix_list; *colon; ceil = colon+1) {
+-		for (colon = ceil; *colon && *colon != ':'; colon++);
++		for (colon = ceil; *colon && *colon != PATH_SEP; colon++);
+ 		len = colon - ceil;
+ 		if (len == 0 || len > PATH_MAX || !is_absolute_path(ceil))
+ 			continue;
+ 		strlcpy(buf, ceil, len+1);
+-		len = normalize_absolute_path(buf, buf);
+-		/* Strip "trailing slashes" from "/". */
+-		if (len == 1)
+-			len = 0;
++		if (sanitary_path_copy(buf, buf) < 0)
++			continue;
++		len = strlen(buf);
++		if (buf[len - 1] == '/')
++			buf[--len] = '\0';
+ 
+ 		if (!strncmp(path, buf, len) &&
+ 		    path[len] == '/' &&
+diff --git a/setup.c b/setup.c
+index dfda532..4fe438c 100644
+--- a/setup.c
++++ b/setup.c
+@@ -4,7 +4,7 @@
+ static int inside_git_dir = -1;
+ static int inside_work_tree = -1;
+ 
+-static int sanitary_path_copy(char *dst, const char *src)
++int sanitary_path_copy(char *dst, const char *src)
+ {
+ 	char *dst0;
+ 
+diff --git a/t/t1504-ceiling-dirs.sh b/t/t1504-ceiling-dirs.sh
+index 91b704a..9c9c4c9 100755
+--- a/t/t1504-ceiling-dirs.sh
++++ b/t/t1504-ceiling-dirs.sh
+@@ -96,7 +96,7 @@ test_prefix subdir_ceil_at_subdi_slash "sub/dir/"
+ GIT_CEILING_DIRECTORIES="foo:$TRASH_ROOT/sub"
+ test_fail second_of_two
+ 
+-GIT_CEILING_DIRECTORIES="$TRASH_ROOT/sub:bar"
++GIT_CEILING_DIRECTORIES="$TRASH_ROOT/sub:/bar"
+ test_fail first_of_two
+ 
+ GIT_CEILING_DIRECTORIES="foo:$TRASH_ROOT/sub:bar"
+-- 
+1.6.1.2
