@@ -1,93 +1,70 @@
-From: Randy Dunlap <rdunlap@xenotime.net>
-Subject: Re: "git revert" feature suggestion: revert the last commit to a
- file
-Date: Thu, 05 Feb 2009 13:03:20 -0800
-Organization: YPO4
-Message-ID: <498B5418.4050103@xenotime.net>
-References: <20090205202104.GA11267@elte.hu> <7vvdrobobc.fsf@gitster.siamese.dyndns.org> <498B51E8.8030801@xenotime.net> <20090205210055.GC21500@elte.hu>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [EGIT PATCH 06/11] Implement basic customizable label decorations with preferences
+Date: Thu, 5 Feb 2009 22:36:01 +0100
+Message-ID: <200902052236.01478.robin.rosenberg@dewire.com>
+References: <1233795618-20249-1-git-send-email-torarnv@gmail.com> <498B4A66.9020108@gmail.com> <498B5374.1030305@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Thu Feb 05 22:05:50 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Tor Arne =?iso-8859-1?q?Vestb=F8?= <torarnv@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 22:37:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVBPD-0005DK-0c
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 22:05:05 +0100
+	id 1LVBuv-0000iS-2F
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 22:37:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752402AbZBEVDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 16:03:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753562AbZBEVDO
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 16:03:14 -0500
-Received: from xenotime.net ([72.52.64.118]:33512 "HELO xenotime.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752268AbZBEVDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 16:03:13 -0500
-Received: from ::ffff:71.117.247.66 ([71.117.247.66]) by xenotime.net for <git@vger.kernel.org>; Thu, 5 Feb 2009 13:03:09 -0800
-User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
-In-Reply-To: <20090205210055.GC21500@elte.hu>
+	id S1751661AbZBEVgJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Feb 2009 16:36:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752244AbZBEVgH
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 16:36:07 -0500
+Received: from mail.dewire.com ([83.140.172.130]:3140 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752024AbZBEVgG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Feb 2009 16:36:06 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id CAB00147E888;
+	Thu,  5 Feb 2009 22:36:02 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id shQSP4kBwCJ1; Thu,  5 Feb 2009 22:36:02 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 4CB04147E7FF;
+	Thu,  5 Feb 2009 22:36:02 +0100 (CET)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <498B5374.1030305@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108624>
 
-Ingo Molnar wrote:
-> * Randy Dunlap <rdunlap@xenotime.net> wrote:
-> 
->> Junio C Hamano wrote:
->>> Ingo Molnar <mingo@elte.hu> writes:
->>>
->>>> So i have to do something like:
->>>>
->>>>    git revert $(git log -1 --pretty=format:"%h" kernel/softlockup.c)
->>>>
->>>> (tucked away in a tip-revert-file helper script.)
->>>>
->>>> But it would be so much nicer if i could do the intuitive:
->>>>
->>>>    git revert kernel/softlockup.c
->>>>
->>>> Or at least, to separate it from revision names cleanly, something like:
->>>>
->>>>    git revert -- kernel/softlockup.c
->>> All three shares one issue.  Does the syntax offer you a way to give
->>> enough information so that you can confidently say that it will find the
->>> commit that touched the path most recently?  How is the "most recently"
->>> defined?
->>>
->>> At least you can restate the first one to:
->>>
->>>     git revert $(git log -1 --pretty=format:"%h" core/softlockup -- kernel/softlockup.c)
->>>
->>> to limit to "the one that touched this file _on this topic_".
->>>
->>>> Would something like this be possible in generic Git? It would sure be a 
->>>> nice little touch that i would make use of frequently.
->>>>
->>>> Or is it a bad idea perhaps? Or have i, out of sheer ignorance, failed to 
->>>> discover some nice little shortcut that can give me all of this already?
->>> The closest I can think of is
->>>
->>> 	git revert ':/the title of the commit'
->>>
->>> but it shares the exact same issue of "how would I limit the search space
->>> to make sure it finds the right commit".
->> And it should revert whatever commit is the last/most recent to the 
->> currently used file, i.e., not always revert the same commit.
-> 
-> i'm not sure i understand, what do you mean precisely?
+torsdag 05 februari 2009 22:00:36 skrev Tor Arne Vestb=F8:
+> Here are two alternatives. The first one (A) uses the same icons as
+> before, but adds red and green shading. The second one (B) uses the
+> green plus sign for added (which is used all over the place in Eclips=
+e
+> to mean 'added'), and the gray x for removed (which is also used all
+> over the place in Eclipse for that same concept).
+>=20
+> http://img443.imageshack.us/img443/5138/egitmockupmm7.png
+>=20
+> I favor solution B, as it uses recognizable concepts from the existin=
+g
+> Eclipse UI, plus that having a red removed-icon conflicts too much wi=
+th
+> the conflict-icon (pun intended). There's also a very similar red ico=
+n
+> in JDT that indicates that something needs fixing (a red medic kit),
+> which is another reason to go with solution B.
 
-Just that someone should be able to use "git revert <filename>" on the
-same file more than one time and git will revert <last> then <last-1> then
-<last-2> etc...
+I go with B.
 
-Or it will always revert <last>, where <last> is relative to the currently
-used version of the file.
+Btw, shouldn't staged, added and removed also count as outgoing, i.e. "=
+>" ?
 
-Does that help?
-
-~Randy
+-- robin
