@@ -1,195 +1,177 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: simple git use case
-Date: Thu, 5 Feb 2009 03:21:46 -0500
-Message-ID: <76718490902050021u5f53c94aq2f1c20c871c98f9c@mail.gmail.com>
-References: <498A7073.4060206@biostat.wisc.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Erik Iverson <iverson@biostat.wisc.edu>
-X-From: git-owner@vger.kernel.org Thu Feb 05 09:23:16 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v4 4/4] add -p: print errors in separate color
+Date: Thu,  5 Feb 2009 09:28:27 +0100
+Message-ID: <1233822507-9612-2-git-send-email-trast@student.ethz.ch>
+References: <1233822507-9612-1-git-send-email-trast@student.ethz.ch>
+Cc: Jeff King <peff@peff.net>, Suraj Kurapati <sunaku@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 09:30:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUzVz-0005r2-7j
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 09:23:15 +0100
+	id 1LUzdP-0007tF-OK
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 09:30:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756359AbZBEIVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 03:21:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756094AbZBEIVt
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 03:21:49 -0500
-Received: from rv-out-0506.google.com ([209.85.198.224]:35520 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754267AbZBEIVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 03:21:48 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so144542rvb.1
-        for <git@vger.kernel.org>; Thu, 05 Feb 2009 00:21:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4Skh3RFGDZlfuoFfZttNvsPvv1yjSSMSMptepr/DA1g=;
-        b=mXhS3VG9IoaR2xp+sjw45nqlKqILj3mMnPOkQwmycPNw4blpwJEEmIgcJyrVMpfOLk
-         8FmvAkJc4GVZIs/VwrvjphVjQXCq6TkKPsDz85uM/ytoRFzuG57RRox3e3D6q2FRtqkx
-         91SOGMyNZO6440TPEXlyAx7oWz2qSiYcKTjUA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=dVgALAMPOuvlmxbyCwRIMCscu0orEkKBRJvEBhP10ZysAe4GBM7V/w/WChAGUT3ltt
-         8Cp942vsK/mPZ4PGRSxh2jyUKqJQdswr7znDPgr03Khc8kROR40WsZH5DoYXBKHjnqbb
-         hWvUx2gI1YF2DTjZ02x9nAR0yAVAJDvFdIF7Y=
-Received: by 10.141.175.5 with SMTP id c5mr156142rvp.162.1233822106756; Thu, 
-	05 Feb 2009 00:21:46 -0800 (PST)
-In-Reply-To: <498A7073.4060206@biostat.wisc.edu>
+	id S1757228AbZBEI3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 03:29:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758247AbZBEI3I
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 03:29:08 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:10466 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758143AbZBEI3F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 03:29:05 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 5 Feb 2009 09:29:02 +0100
+Received: from localhost.localdomain ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 5 Feb 2009 09:29:02 +0100
+X-Mailer: git-send-email 1.6.1.2.573.g45906
+In-Reply-To: <1233822507-9612-1-git-send-email-trast@student.ethz.ch>
+In-Reply-To: <7v63jqorza.fsf@gitster.siamese.dyndns.org>
+References: <7v63jqorza.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 05 Feb 2009 08:29:02.0028 (UTC) FILETIME=[CC9420C0:01C9876B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108534>
 
-On Wed, Feb 4, 2009 at 11:52 PM, Erik Iverson <iverson@biostat.wisc.edu> wrote:
-> Dear all,
->
-> I sincerely hope this is not an annoying question, I promise I have tried to
-> do my homework here, but am stuck.  My use case is simple.  I have a desktop
-> and a laptop.  When I go on the trips, I'd love to be able to bring my
-> "git-test" directory with me on the laptop, code some, and then get the new
-> revisions back on the desktop when I get home (bonus if I can get the
-> revisions back to my desktop over the internet while still on the road, in
-> case, for example, my laptop gets stolen).  No one else will be working on
-> this stuff, it's strictly for me.
+Print interaction error messages in color.interactive.error, which
+defaults to the value of color.interactive.help.
 
-You may wish to read:
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-  http://git.or.cz/gitwiki/GitFaq#head-b96f48bc9c925074be9f95c0fce69bcece5f6e73
-  (Why won't I see changes...)
+Same patch as v3.
 
-and:
+ Documentation/config.txt  |    4 ++--
+ git-add--interactive.perl |   30 ++++++++++++++++++++----------
+ 2 files changed, 22 insertions(+), 12 deletions(-)
 
-  http://git.or.cz/gitwiki/GitFaq#push-is-reverse-of-fetch
-  (How would I use "git push"...)
-
-
-> OK, so here's what I do.
->
-> Desktop (dt):
->
-> dt> cd git-test
-> dt> git-init
-> Initialized empty Git repository in /home/erik/projects/git-test/.git/
-> dt> git add .
-> dt> git-commit -am 'initial commit'
-> Created initial commit c150815: initial commit
->  3 files changed, 14 insertions(+), 0 deletions(-)
->  create mode 100644 test.R
->  create mode 100644 test.sas
->  create mode 100644 test.tex
->
-> Looks good...
-> Now over to the laptop (lt)!
->
-> lt> git-clone ssh://myip/path/to/project
->
-> And great, I have the three test.* files, looks good!
-> So I make some changes to test.R on laptop, like I'm on the road. Then, on
-> laptop:
->
-> lt> git-commit -am 'an update'
->
-> Looks good.
->
-> Now I become a mouth-breather...and need some help :).
->
-> My instinct was to git-push from the laptop,
->
-> lt> git-push
->
-> which succeeds
-
-When you did the clone operation, you set things up such that the
-branch called "master" on the desktop is replicated to a branch called
-"origin/master" on the laptop. Whenever you do a "pull" on the laptop
-(which clone did for you initially), it will do two things:
-
-1) Fetch the latest master from desktop and store it as origin/master
-on the laptop.
-2) Merge origin/master (on the laptop) with master (again on the
-laptop) and update your working copy with the result.
-
-Now, whenever you do a "push" on the laptop, it is *not* a symmetrical
-operation to fetch/merge. Rather, the push updates master on the
-desktop to match master from the laptop. However, the working copy on
-the desktop is not touched. So when you login to the desktop, you need
-to manually refresh the working copy from what was pushed. You do this
-with "git reset --hard master". But be careful, if you have made
-changes on the desktop and not committed them, these changes will be
-lost when you do the reset.
-
-The FAQ entries above discuss two alternatives to make this safer. One
-alternative updates the working copy automatically and mostly safely
-via a hook, while the other alternative discusses making the "push"
-from the laptop symmetrical to the "fetch".
-
-I'll elaborate on the later alternative slightly. You could do your
-clone like this:
-
-lt> git-clone -o desktop ssh://myip/path/to/project
-lt> git branch -a
-* master
-  desktop/HEAD
-  desktop/master
-
-The only difference is we've used "-o" so that we have a more
-descriptive name for the desktop than "origin".
-
-To make the push operation on the laptop symmetrical to the fetch
-(remember, pull = fetch + merge), do this:
-
-lt> git config remote.desktop.push "+refs/heads/*:refs/remotes/laptop/*"
-
-Now take a look at .git/config and notice the fetch and push are symmetric:
-
-[remote "desktop"]
-	url = ssh://myip/path/to/project
-	fetch = +refs/heads/*:refs/remotes/desktop/*
-	push = +refs/heads/*:refs/remotes/laptop/*
-
-Let's do a commit and push it:
-
-lt> echo bar > bar && git add bar && git commit -m "added bar"
-lt> git push
-To ssh://myip/path/to/project
- * [new branch]      master -> laptop/master
-
-Back on the desktop:
-
-dt> git branch -a
-* master
-  laptop/master
-
-Ah hah. So the changes have been pushed to laptop/master, but of
-course, the working copy is not up-to-date. When can fix that with:
-
-dt> git merge laptop/master
-Updating 785a74b..09ab37d
-Fast forward
- bar |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 bar
-
-This merges laptop/master into master, then updates the working copy
-with the result. If you'd like "git pull" to be an alias for "git
-merge laptop/master", you can:
-
-dt> git config branch.master.remote .
-dt> git config branch.master.merge refs/remotes/laptop/master
-dt> git pull
-From .
- * remote branch     laptop/master -> FETCH_HEAD
-Already up-to-date.
-
-j.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3c65b81..1dd18c9 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -569,8 +569,8 @@ color.interactive::
+ 
+ color.interactive.<slot>::
+ 	Use customized color for 'git-add --interactive'
+-	output. `<slot>` may be `prompt`, `header`, or `help`, for
+-	three distinct types of normal output from interactive
++	output. `<slot>` may be `prompt`, `header`, `help` or `error`, for
++	four distinct types of normal output from interactive
+ 	programs.  The values of these variables may be specified as
+ 	in color.branch.<slot>.
+ 
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 1813f9e..be8ca8e 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -12,6 +12,12 @@ my ($prompt_color, $header_color, $help_color) =
+ 		$repo->get_color('color.interactive.header', 'bold'),
+ 		$repo->get_color('color.interactive.help', 'red bold'),
+ 	) : ();
++my $error_color = ();
++if ($menu_use_color) {
++	my $help_color_spec = $repo->config('color.interactive.help');
++	$error_color = $repo->get_color('color.interactive.error',
++					$help_color_spec);
++}
+ 
+ my $diff_use_color = $repo->get_colorbool('color.diff');
+ my ($fraginfo_color) =
+@@ -333,6 +339,10 @@ sub highlight_prefix {
+ 	return "$prompt_color$prefix$normal_color$remainder";
+ }
+ 
++sub error_msg {
++	print STDERR colored $error_color, @_;
++}
++
+ sub list_and_choose {
+ 	my ($opts, @stuff) = @_;
+ 	my (@chosen, @return);
+@@ -428,12 +438,12 @@ sub list_and_choose {
+ 			else {
+ 				$bottom = $top = find_unique($choice, @stuff);
+ 				if (!defined $bottom) {
+-					print "Huh ($choice)?\n";
++					error_msg "Huh ($choice)?\n";
+ 					next TOPLOOP;
+ 				}
+ 			}
+ 			if ($opts->{SINGLETON} && $bottom != $top) {
+-				print "Huh ($choice)?\n";
++				error_msg "Huh ($choice)?\n";
+ 				next TOPLOOP;
+ 			}
+ 			for ($i = $bottom-1; $i <= $top-1; $i++) {
+@@ -1029,11 +1039,11 @@ sub patch_update_file {
+ 					chomp $response;
+ 				}
+ 				if ($response !~ /^\s*\d+\s*$/) {
+-					print STDERR "Invalid number: '$response'\n";
++					error_msg "Invalid number: '$response'\n";
+ 				} elsif (0 < $response && $response <= $num) {
+ 					$ix = $response - 1;
+ 				} else {
+-					print STDERR "Sorry, only $num hunks available.\n";
++					error_msg "Sorry, only $num hunks available.\n";
+ 				}
+ 				next;
+ 			}
+@@ -1062,7 +1072,7 @@ sub patch_update_file {
+ 				if ($@) {
+ 					my ($err,$exp) = ($@, $1);
+ 					$err =~ s/ at .*git-add--interactive line \d+, <STDIN> line \d+.*$//;
+-					print STDERR "Malformed search regexp $exp: $err\n";
++					error_msg "Malformed search regexp $exp: $err\n";
+ 					next;
+ 				}
+ 				my $iy = $ix;
+@@ -1072,7 +1082,7 @@ sub patch_update_file {
+ 					$iy++;
+ 					$iy = 0 if ($iy >= $num);
+ 					if ($ix == $iy) {
+-						print STDERR "No hunk matches the given pattern\n";
++						error_msg "No hunk matches the given pattern\n";
+ 						last;
+ 					}
+ 				}
+@@ -1084,7 +1094,7 @@ sub patch_update_file {
+ 					$ix--;
+ 				}
+ 				else {
+-					print STDERR "No previous hunk\n";
++					error_msg "No previous hunk\n";
+ 				}
+ 				next;
+ 			}
+@@ -1093,7 +1103,7 @@ sub patch_update_file {
+ 					$ix++;
+ 				}
+ 				else {
+-					print STDERR "No next hunk\n";
++					error_msg "No next hunk\n";
+ 				}
+ 				next;
+ 			}
+@@ -1106,13 +1116,13 @@ sub patch_update_file {
+ 					}
+ 				}
+ 				else {
+-					print STDERR "No previous hunk\n";
++					error_msg "No previous hunk\n";
+ 				}
+ 				next;
+ 			}
+ 			elsif ($line =~ /^j/) {
+ 				if ($other !~ /j/) {
+-					print STDERR "No next hunk\n";
++					error_msg "No next hunk\n";
+ 					next;
+ 				}
+ 			}
+-- 
+1.6.1.2.574.g928b8
