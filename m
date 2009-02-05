@@ -1,97 +1,104 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Re: Question about --tree-filter
-Date: Thu, 5 Feb 2009 13:13:54 +0000 (UTC)
-Message-ID: <loom.20090205T123832-998@post.gmane.org>
-References: <loom.20090204T155824-858@post.gmane.org> <4989C437.4070401@viscovery.net> <4989FDC6.2080404@gmail.com> <498AA41D.3000609@viscovery.net>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Comments on "Understanding Version Control" by Eric S. Raymond
+Date: Thu, 5 Feb 2009 08:16:11 -0500
+Message-ID: <20090205131611.GJ8945@mit.edu>
+References: <200902021948.54700.jnareb@gmail.com> <200902040304.05028.jnareb@gmail.com> <20090204235436.GA8945@mit.edu> <200902051223.38992.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 05 14:16:04 2009
+Cc: git@vger.kernel.org, "Eric S. Raymond" <esr@thyrsus.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 14:17:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LV45B-0003sl-NZ
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 14:15:54 +0100
+	id 1LV471-0004Zs-Ry
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 14:17:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754813AbZBENOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 08:14:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754691AbZBENOV
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 08:14:21 -0500
-Received: from main.gmane.org ([80.91.229.2]:51574 "EHLO ciao.gmane.org"
+	id S1754691AbZBENQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 08:16:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754869AbZBENQO
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 08:16:14 -0500
+Received: from thunk.org ([69.25.196.29]:42727 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754515AbZBENOV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 08:14:21 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LV43Y-0004UP-UR
-	for git@vger.kernel.org; Thu, 05 Feb 2009 13:14:13 +0000
-Received: from 137.204.16.135 ([137.204.16.135])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 05 Feb 2009 13:14:12 +0000
-Received: from sergio.callegari by 137.204.16.135 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 05 Feb 2009 13:14:12 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.16.135 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.5) Gecko/2008121622 Ubuntu/8.10 (intrepid) Firefox/3.0.5)
+	id S1751540AbZBENQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 08:16:14 -0500
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1LV45U-0007Z9-64; Thu, 05 Feb 2009 08:16:12 -0500
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1LV45T-0005W3-Be; Thu, 05 Feb 2009 08:16:11 -0500
+Content-Disposition: inline
+In-Reply-To: <200902051223.38992.jnareb@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108557>
 
-Johannes Sixt <j.sixt <at> viscovery.net> writes:
+On Thu, Feb 05, 2009 at 12:23:37PM +0100, Jakub Narebski wrote:
+> > 
+> > 2) And does the right thing happen if the situation is as described
+> >    above, but in, branch C, which is descended from branch B, a new
+> >    directory, src/plugin/innodb-experimental is created, such that
+> >    src/plugin/innodb and src/plugin/innodb-experimental both exist.
+> >    Now the same commit from branch A is pulled into branch C.  Will
+> >    the correct thing happen in that the correct files in
+> >    src/plugin/innodb are modified and created, even though there is a
+> >    new directory containing a completely unrelated plugin that happens
+> >    to have the name, "innodb-experimental"?
+> 
+> Errr... I think that you confused branch 'B' (with innodb-experimental)
+> with branch 'A' (with innodb only) here.
+> 
 
-> 
-> [ Don't cull Cc list, please! ]
+No, I didn't.   Let me try again.
 
-Sorry... first made a reply ignoring the list and then tried to
-fix!
- 
-> I think I know what's going on. filter-branch has this code where the
-> tree-filter is applied:
-> 
-> 	git checkout-index -f -u -a ||
-> 		die "Could not checkout the index"
-> 
-> This command may take a while to complete, and at the end it writes the
-> index file. At this point:
-> 
-> (=) Some files may have the same timestamp as the index file.
-> 
-> (<) Others have an earlier timestamp.
-> 
-> Later we have this code:
-> 
-> 	(
-> 		git diff-index -r --name-only $commit
-> 		git ls-files --others
-> 	) |
-> 	git update-index --add --replace --remove --stdin
-> 
-> The files (=) are racily-clean, and are added to the database; they pass
-> through the clean filter (rezip). The files (<) are regarded as unchanged,
-> and are not added again, and are not rezipped.
+At time T:	Project grows a plugin in directory src/plugins/foo-new
 
-Ok it is because of a race... now I start understanding the non-consistent
-behaviour between different runs!  Thanks a lot for the explanation.
+At time T+1:	Project releases a stable release, and branches off "maint"
 
-When you say "at the end it updates the index file" do you mean the effect of
-the -u switch?
+At time T+2:	Project renames the plugin to be src/plugins/foo, using
+		"scm mvdir src/plugins/foo-new src/plugins/foo" on the 
+		devel branch:
 
-And when you say "Some files have the same timestamp as the index file" do you
-mean that diff-index uses the stat info inside the index only if a file is "<"
-than the index otherwise it is directly assumed that the file is changed wrt the
-index content? If so, would it make sense to re-touch the index after the
-checkout -u so that after the checkout the index is always > than every file it
-contains and one always starts at a non-racy situation? With this, one could
-only explicitly touch those files that need to get (re)filtered and gain in
-efficiency... or am I still missing something?
+At time T+3:	A developer wants to implement a new experimental
+		'foo-new' plug in so she creates a completely new
+		src/plugins/foo-new directory.  At this point the
+		devel branch has 'src/plugins/foo' and
+		'src/plugins/foo-new', where src/plugins/foo contains
+		the plugin which is in the directory
+		src/plugins/foo-new on the maint branch (since the
+		maint branch branched off
+   		before the directory renames started happening.
 
-Sergio
+At time T+4:	A fix goes into the maint branch that modifies
+   		src/plugins/foo-new/interface.c.    The fix needs to be
+   		pulled into the devel branch.    Does the right thing
+   		happen?   (Suppose "interface.c" is a commonly used 
+		filename in all plugins and exists in both the 'foo'
+   		and 'foo-new' directories on the devel branch.   Does
+   		the SCM figure out what is the correct file to
+   		modify?)
 
- 
+At Time T+5:	A commit goes into the maint branch which creates a
+   		new file, src/plugins/foo-new/table.c, and modifies
+		src/plugins/foo-new/Makefile to compile table.c.
+   		Which directory does the SCM drop table.c into?
+
+Thie point is if the project is organized around plugins, which are
+considered bundles of code written in a modular way, and there is a
+desire to rename directories which are the top-level modules, an SCM
+that can easily deal with directory renames is important.  In practice
+this doesn't come up in the Linux kernel, and many other OSS projects,
+and if the project's developent style doesn't do directory
+reorganizations often, then this isn't an issue.  If an OSS project
+does do this type of reorganization more frequently, then the argument
+"don't do that", would seem to be an unnecessary restriction.
+
+		      		     	     	  - Ted
