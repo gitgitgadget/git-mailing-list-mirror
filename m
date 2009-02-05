@@ -1,92 +1,104 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: "git revert" feature suggestion: revert the last commit to a file
-Date: Thu, 5 Feb 2009 21:21:04 +0100
-Message-ID: <20090205202104.GA11267@elte.hu>
+From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
+Subject: Re: [EGIT PATCH 06/11] Implement basic customizable label decorations
+ with preferences
+Date: Thu, 05 Feb 2009 21:21:58 +0100
+Message-ID: <498B4A66.9020108@gmail.com>
+References: <1233795618-20249-1-git-send-email-torarnv@gmail.com> <1233795618-20249-6-git-send-email-torarnv@gmail.com> <1233795618-20249-7-git-send-email-torarnv@gmail.com> <200902052102.00409.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 05 21:22:45 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 21:23:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVAkE-0006FI-CQ
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 21:22:42 +0100
+	id 1LVAl5-0006Y8-UI
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 21:23:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755840AbZBEUVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 15:21:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755484AbZBEUVP
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 15:21:15 -0500
-Received: from mx3.mail.elte.hu ([157.181.1.138]:46817 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752584AbZBEUVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 15:21:15 -0500
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1LVAif-0006v8-Pm
-	from <mingo@elte.hu>
-	for <git@vger.kernel.org>; Thu, 05 Feb 2009 21:21:12 +0100
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id B56573E21B0; Thu,  5 Feb 2009 21:21:05 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1756052AbZBEUWJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Feb 2009 15:22:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756083AbZBEUWH
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 15:22:07 -0500
+Received: from qb-out-0506.google.com ([72.14.204.227]:12674 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755851AbZBEUWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 15:22:04 -0500
+Received: by qb-out-0506.google.com with SMTP id q18so282256qba.17
+        for <git@vger.kernel.org>; Thu, 05 Feb 2009 12:22:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=24To0zpLEsafs4qKJVd8kpl2q/Eao5cZowTrn0XkxVI=;
+        b=RYx9OpmzpI3bDOjUgrS07MNVCoqNpTKvykVzP5Y/uLTcl74fr07QKVkJy2iQe/UQZg
+         e5Kyj/22x++ndhKbdJKQRcr/PHWlegZJZI7ntrflRXwpcrDtQbIsvdFgq5xCKUCew0ty
+         Cjm7ArjUtvto6aENloPj2fRX9DPCkCKKiru4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=PwVx4HusAsdIDG7sftoH24DvnzD5UPVkRNTJ18X+zxn2/I/hetxZmDQF7mxS4innQB
+         Yn3bzHzocuZxQ0tXwLyRwPZIxWBhNpTuOoMJa8IRekx932PaJCv2EKVG5feckuGdrKPt
+         y2lRfOLoDrbZ9HhYjwyeV0u2dWhP5dyYowrI4=
+Received: by 10.103.160.3 with SMTP id m3mr386188muo.25.1233865322583;
+        Thu, 05 Feb 2009 12:22:02 -0800 (PST)
+Received: from ?192.168.1.226? (212251244070.customer.cdi.no [212.251.244.70])
+        by mx.google.com with ESMTPS id y6sm1189586mug.27.2009.02.05.12.22.01
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 05 Feb 2009 12:22:02 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <200902052102.00409.robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108608>
 
+Robin Rosenberg wrote:
+> torsdag 05 februari 2009 02:00:13 skrev Tor Arne Vestb=F8:
+>> Currently the only binding available is the resource name, but
+>> this commit enables a framework for adding more bindings.
+>=20
+> The size of the components of the page is wrong forcing unnecessary s=
+crollbars.
 
-I frequently come across this workflow pattern: i queue up some new change 
-in a topic brach, and there's a test failure within the next 60 minutes or 
-so. I know which file causes the breakage - say kernel/softlockup.c - but i 
-dont know the precise commit ID. I want to revert the change in the 
-integration branch as quickly as possible via a command - without having to 
-wade through 'git log' info and cut&paste-ing commit IDs.
+Argh, I've been battling those layouts on Linux, but though it was
+finally fixed. On Windows the dialog looks fine. I'll investigate furth=
+er.
 
-I usually know the topic branch name where the breakage originates from, so 
-i can do this in the integration branch:
+> The terms use should probably have a cleared explanation/definition=20
+> and the same terms used for the flags/icons. The explanation could
+> probably be done using longer tooltips.
 
-   git revert core/softlockup
+Noted.
 
-and it does the right thing and the tests can continue while i take more 
-time in the topic branch to repair the damage there. (at which point i can 
-integrate the fixed/updated commit on top of the reverted commit in the 
-integration branch.)
+> I miss the red attention-gathering red conflict icon we had.
 
-But often i have other changes queued up in that topic branch as well - and 
-the best, most finegrained information i have about the identity of the 
-commit is the filename it went into.
+Happy to replace. If I remember correctly that's the symbol used by
+other plugins to indicate conflicts, so I was aiming for consistency an=
+d
+recognizability.
 
-So i have to do something like:
+> I also have a hard time distinguishing the staged/added/removed icons
+> without reading glasses. The decorations are only 1.3 mm on my=20
+> screen (150 dpi), so I think the icons should have different colors
+> and different shapes instead of a few different pixels withing a
+> square box.>
 
-   git revert $(git log -1 --pretty=format:"%h" kernel/softlockup.c)
+Noted, I'll try to make some mocukups of variations to the icons.
 
-(tucked away in a tip-revert-file helper script.)
+> I'd also like to see the conflict state for files inherited by parent
+> folder and projects.
 
-But it would be so much nicer if i could do the intuitive:
+Good idea, like the synchronize view shows it. Noted.
 
-   git revert kernel/softlockup.c
+> The checkboxes in the general tab have no effect on the preview.
 
-Or at least, to separate it from revision names cleanly, something like:
+True. Should be easy to fix.
 
-   git revert -- kernel/softlockup.c
+Thanks for the feedback!
 
-Would something like this be possible in generic Git? It would sure be a 
-nice little touch that i would make use of frequently.
-
-Or is it a bad idea perhaps? Or have i, out of sheer ignorance, failed to 
-discover some nice little shortcut that can give me all of this already?
-
-Thanks,
-
-	Ingo
+Tor Arne
