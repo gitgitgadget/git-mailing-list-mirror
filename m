@@ -1,104 +1,58 @@
-From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
-Subject: Re: [EGIT PATCH 06/11] Implement basic customizable label decorations
- with preferences
-Date: Thu, 05 Feb 2009 21:21:58 +0100
-Message-ID: <498B4A66.9020108@gmail.com>
-References: <1233795618-20249-1-git-send-email-torarnv@gmail.com> <1233795618-20249-6-git-send-email-torarnv@gmail.com> <1233795618-20249-7-git-send-email-torarnv@gmail.com> <200902052102.00409.robin.rosenberg@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 1/4] Add log.mailmap as configurational option for
+ mailmap location
+Date: Thu, 05 Feb 2009 12:22:22 -0800
+Message-ID: <7v63jod475.fsf@gitster.siamese.dyndns.org>
+References: <cover.1233819451.git.marius@trolltech.com>
+ <cover.1233819451.git.marius@trolltech.com>
+ <565c86bdbc8d6303d7d468fa196fb54ff7bd2352.1233819451.git.marius@trolltech.com> <7vljskeq21.fsf@gitster.siamese.dyndns.org> <498B3F24.6080305@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Feb 05 21:23:46 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 21:24:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVAl5-0006Y8-UI
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 21:23:36 +0100
+	id 1LVAlQ-0006gU-Aj
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 21:23:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756052AbZBEUWJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Feb 2009 15:22:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756083AbZBEUWH
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 15:22:07 -0500
-Received: from qb-out-0506.google.com ([72.14.204.227]:12674 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755851AbZBEUWE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 15:22:04 -0500
-Received: by qb-out-0506.google.com with SMTP id q18so282256qba.17
-        for <git@vger.kernel.org>; Thu, 05 Feb 2009 12:22:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=24To0zpLEsafs4qKJVd8kpl2q/Eao5cZowTrn0XkxVI=;
-        b=RYx9OpmzpI3bDOjUgrS07MNVCoqNpTKvykVzP5Y/uLTcl74fr07QKVkJy2iQe/UQZg
-         e5Kyj/22x++ndhKbdJKQRcr/PHWlegZJZI7ntrflRXwpcrDtQbIsvdFgq5xCKUCew0ty
-         Cjm7ArjUtvto6aENloPj2fRX9DPCkCKKiru4k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=PwVx4HusAsdIDG7sftoH24DvnzD5UPVkRNTJ18X+zxn2/I/hetxZmDQF7mxS4innQB
-         Yn3bzHzocuZxQ0tXwLyRwPZIxWBhNpTuOoMJa8IRekx932PaJCv2EKVG5feckuGdrKPt
-         y2lRfOLoDrbZ9HhYjwyeV0u2dWhP5dyYowrI4=
-Received: by 10.103.160.3 with SMTP id m3mr386188muo.25.1233865322583;
-        Thu, 05 Feb 2009 12:22:02 -0800 (PST)
-Received: from ?192.168.1.226? (212251244070.customer.cdi.no [212.251.244.70])
-        by mx.google.com with ESMTPS id y6sm1189586mug.27.2009.02.05.12.22.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 05 Feb 2009 12:22:02 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <200902052102.00409.robin.rosenberg@dewire.com>
+	id S1756090AbZBEUWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 15:22:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756083AbZBEUWa
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 15:22:30 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40723 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755251AbZBEUW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 15:22:29 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9777B2A81B;
+	Thu,  5 Feb 2009 15:22:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BDFE52A818; Thu, 
+ 5 Feb 2009 15:22:24 -0500 (EST)
+In-Reply-To: <498B3F24.6080305@trolltech.com> (Marius Storm-Olsen's message
+ of "Thu, 05 Feb 2009 20:33:56 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B4EE84B0-F3C2-11DD-947A-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108609>
 
-Robin Rosenberg wrote:
-> torsdag 05 februari 2009 02:00:13 skrev Tor Arne Vestb=F8:
->> Currently the only binding available is the resource name, but
->> this commit enables a framework for adding more bindings.
->=20
-> The size of the components of the page is wrong forcing unnecessary s=
-crollbars.
+Marius Storm-Olsen <marius@trolltech.com> writes:
 
-Argh, I've been battling those layouts on Linux, but though it was
-finally fixed. On Windows the dialog looks fine. I'll investigate furth=
-er.
+> Given that in total shortlog, blame, log, diff-tree, rev-list, show
+> and whatchanged use it (the latter 5 through the pretty option), I'm
+> tempted to say that it justifies its own option (mailmap.file?); but
+> it would still have to be handled by git_default_config(). Renaming it
+> would give it stronger reason to *be there* though.
 
-> The terms use should probably have a cleared explanation/definition=20
-> and the same terms used for the flags/icons. The explanation could
-> probably be done using longer tooltips.
+We are in total agreement then ;-)
 
-Noted.
-
-> I miss the red attention-gathering red conflict icon we had.
-
-Happy to replace. If I remember correctly that's the symbol used by
-other plugins to indicate conflicts, so I was aiming for consistency an=
-d
-recognizability.
-
-> I also have a hard time distinguishing the staged/added/removed icons
-> without reading glasses. The decorations are only 1.3 mm on my=20
-> screen (150 dpi), so I think the icons should have different colors
-> and different shapes instead of a few different pixels withing a
-> square box.>
-
-Noted, I'll try to make some mocukups of variations to the icons.
-
-> I'd also like to see the conflict state for files inherited by parent
-> folder and projects.
-
-Good idea, like the synchronize view shows it. Noted.
-
-> The checkboxes in the general tab have no effect on the preview.
-
-True. Should be easy to fix.
-
-Thanks for the feedback!
-
-Tor Arne
+I also agree that it would be a good idea to introduce a shared
+documentlet similar to pretty-format.txt that can be included in the
+documentation pages of commands that use this name-rewriting mechanism.
