@@ -1,62 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn: allow disabling expensive broken symlink checks
-Date: Thu, 05 Feb 2009 00:02:40 -0800
-Message-ID: <7vljslgvkv.fsf@gitster.siamese.dyndns.org>
-References: <200901311414.58205.markus.heidelberg@web.de>
- <20090201021844.GB18855@dcvr.yhbt.net>
- <7vbptlo7zg.fsf@gitster.siamese.dyndns.org>
- <20090203044549.GA2483@dcvr.yhbt.net>
- <7v4ozcdnbt.fsf@gitster.siamese.dyndns.org>
- <20090203191021.GB2077@dcvr.yhbt.net> <20090205074215.GA24887@dcvr.yhbt.net>
+From: Hinko Kocevar <hinko.kocevar@cetrtapot.si>
+Subject: Re: revert committed and pushed tag
+Date: Thu, 05 Feb 2009 09:02:33 +0100
+Message-ID: <498A9D19.7070902@cetrtapot.si>
+References: <4988586D.603@cetrtapot.si> <706b4240902031417p1a98f3fdtb2240ea5ae5b31a5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Feb 05 09:04:16 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Matt Pearson <404emailnotfound@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 05 09:04:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LUzDb-0000jI-Am
-	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 09:04:15 +0100
+	id 1LUzEA-0000q7-VG
+	for gcvg-git-2@gmane.org; Thu, 05 Feb 2009 09:04:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410AbZBEICs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 03:02:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754380AbZBEICs
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 03:02:48 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64345 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753744AbZBEICs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 03:02:48 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B0B892A780;
-	Thu,  5 Feb 2009 03:02:46 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D6EDB2A77E; Thu, 
- 5 Feb 2009 03:02:41 -0500 (EST)
-In-Reply-To: <20090205074215.GA24887@dcvr.yhbt.net> (Eric Wong's message of
- "Wed, 4 Feb 2009 23:42:15 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5FE01EFA-F35B-11DD-B2AE-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1754568AbZBEIDZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Feb 2009 03:03:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754514AbZBEIDY
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 03:03:24 -0500
+Received: from zimbra-mta.cetrtapot.si ([89.212.80.172]:57252 "EHLO
+	zimbra-mta.cetrtapot.si" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753962AbZBEIDX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 03:03:23 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id 48C7A19FA2D;
+	Thu,  5 Feb 2009 09:03:22 +0100 (CET)
+X-Virus-Scanned: amavisd-new at zimbra-mta.cetrtapot.si
+Received: from zimbra-mta.cetrtapot.si ([127.0.0.1])
+	by localhost (zimbra-mta.cetrtapot.si [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8blbl8U-CQQf; Thu,  5 Feb 2009 09:03:21 +0100 (CET)
+Received: from [172.31.65.135] (unknown [192.168.66.2])
+	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id CF57419FA20;
+	Thu,  5 Feb 2009 09:03:21 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
+In-Reply-To: <706b4240902031417p1a98f3fdtb2240ea5ae5b31a5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108522>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Matt Pearson wrote:
+> 2009/2/3 Hinko Kocevar <hinko.kocevar@cetrtapot.si>:
+>> Hi,
+>>
+>> Is there a way to 'revert' committed and pushed tag?
+>> I've noticed that some files were not included in the commit (new fi=
+les)
+>> and I would like to squeeze them in before the tag was
+>> created/committed/pushed to the remote server.
+>=20
+> You do it the same way you delete a branch (see git-push(1)):
+> git push origin :refs/tags/rc3
+>=20
+> Note that anybody that has fetched from your public repository will
+> _not_ have their current 'rc3' tag overwritten with the new version
+> without them deleting it first and letting fetch recreate it.
+>=20
 
-> Eric Wong <normalperson@yhbt.net> wrote:
->
->> > > Previously, git-svn would just stop importing and refuse to continue.
->> > > So allowing the user to enable it would be a problem; too.  I don't
->> > > recall the error being easy to distinguish from other errors.
->
-> Actually I was wrong on git-svn refusing to continue.  git-svn will
-> create a regular 100644 file with "link path/to/dest" as its contents.
-> git-svn only croaks on checksum differences with the blob itself; it
-> does not have an easy way to verify the mode change => 120000 if it
-> happened previously.
+Thank you, that worked just the way I wanted!
 
-Thanks for being thorough.
+Regards,
+Hinko
+
+--=20
+Hinko Ko=C4=8Devar, OSS developer
+=C4=8CETRTA POT, d.o.o.
+Planina 3, 4000 Kranj, SI EU
+tel     ++386 (0) 4 280 66 03
+e-mail  hinko.kocevar@cetrtapot.si
+http    www.cetrtapot.si
