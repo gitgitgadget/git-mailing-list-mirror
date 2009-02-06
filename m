@@ -1,135 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: (warning) Tonight's 'pu' may fail its tests
-Date: Fri, 06 Feb 2009 03:32:11 -0800
-Message-ID: <7v3aer7qdg.fsf@gitster.siamese.dyndns.org>
-References: <7v7i437rqk.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Chicken/egg problem building from a 'git clone'
+Date: Fri, 6 Feb 2009 12:34:07 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902061232000.7377@intel-tinevez-2-302>
+References: <Pine.LNX.4.44.0902052238510.4851-100000@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Marius Storm-Olsen" <mstormo_git@storm-olsen.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 06 12:34:18 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Joi Ellis <gyles19@visi.com>
+X-From: git-owner@vger.kernel.org Fri Feb 06 12:35:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVOxu-0002XW-3M
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 12:33:46 +0100
+	id 1LVOzk-0003LR-L6
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 12:35:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752619AbZBFLcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 06:32:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752584AbZBFLcT
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 06:32:19 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58590 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752502AbZBFLcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 06:32:18 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C75B497AB1;
-	Fri,  6 Feb 2009 06:32:16 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7061597AB0; Fri,
-  6 Feb 2009 06:32:13 -0500 (EST)
-In-Reply-To: <7v7i437rqk.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 06 Feb 2009 03:02:43 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CEA4903C-F441-11DD-A779-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752921AbZBFLeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 06:34:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752584AbZBFLeO
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 06:34:14 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59356 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752051AbZBFLeN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 06:34:13 -0500
+Received: (qmail invoked by alias); 06 Feb 2009 11:34:09 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp028) with SMTP; 06 Feb 2009 12:34:09 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+n0uoVhOanxgPSpJ3wMjjjMI6M9q4AV5aN955/IF
+	1fmZeCJPmH8J60
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <Pine.LNX.4.44.0902052238510.4851-100000@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108690>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> The frustrating thing is that
->
->     GIT_SKIP_TESTS='t[0-35-9]??? t4[01]??' \
->     GIT_TEST_OPTS='-i -v' \
->     make -j4 test
->
-> fails very reliably with the above log, but:
->
->  (1) running the same "../../git-shortlog" in  "t/trash directory.t4203-mailmap/"
->      immediately after the test failed does emit the expected result;
->
->  (2) going down to t/ and manually running t4203-mailmap.sh alone succeeds;
->
->  (3) running the tests serially (i.e. without -j4) allows the test to succeed.
+On Thu, 5 Feb 2009, Joi Ellis wrote:
 
-The test is broken and here is a fix I'll be squashing into the series.
+> On Fri, 6 Feb 2009, Johannes Schindelin wrote:
+> 
+> > On Fri, 6 Feb 2009, Joi Ellis wrote:
+> > 
+> > > "make all" fails becuase my libaries are old:
+> > > 
+> > >     LINK git-fast-import
+> > > fast-import.o: In function `store_object':
+> > > /usr/local/src/git/git/fast-import.c:1086: undefined reference to `deflateBound'
+> > > /usr/local/src/git/git/fast-import.c:1109: undefined reference to `deflateBound'
+> > 
+> > You need to install a newer libz.  (And this is not a chicken & egg 
+> > problem.)
+> 
+> Yes, this *is* a chicken & egg problem.
 
-The mystery was simply that it failed when the test was run in the
-background (i.e. !isatty(0)) because it used "git shortlog" without saying
-that it wants a shortlog from HEAD down to root explicitly.
+No it is _not_.
 
- t/t4203-mailmap.sh |   14 +++++++-------
- 1 files changed, 7 insertions(+), 7 deletions(-)
+A chicken and egg problem would be if your problem would go away if Git 
+compiled cleanly.  But it does not.
 
-diff --git i/t/t4203-mailmap.sh w/t/t4203-mailmap.sh
-index c7a1238..094d905 100755
---- i/t/t4203-mailmap.sh
-+++ w/t/t4203-mailmap.sh
-@@ -24,7 +24,7 @@ nick1 (1):
- EOF
- 
- test_expect_success 'No mailmap' '
--	git shortlog >actual &&
-+	git shortlog HEAD >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -39,7 +39,7 @@ EOF
- 
- test_expect_success 'default .mailmap' '
- 	echo "Repo Guy <author@example.com>" > .mailmap &&
--	git shortlog >actual &&
-+	git shortlog HEAD >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -57,7 +57,7 @@ test_expect_success 'log.mailmap set' '
- 	mkdir internal_mailmap &&
- 	echo "Internal Guy <bugs@company.xx>" > internal_mailmap/.mailmap &&
- 	git config log.mailmap internal_mailmap/.mailmap &&
--	git shortlog >actual &&
-+	git shortlog HEAD >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -72,7 +72,7 @@ EOF
- test_expect_success 'log.mailmap override' '
- 	echo "External Guy <author@example.com>" >> internal_mailmap/.mailmap &&
- 	git config log.mailmap internal_mailmap/.mailmap &&
--	git shortlog >actual &&
-+	git shortlog HEAD >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -88,7 +88,7 @@ EOF
- test_expect_success 'log.mailmap file non-existant' '
- 	rm internal_mailmap/.mailmap &&
- 	rmdir internal_mailmap &&
--	git shortlog >actual &&
-+	git shortlog HEAD >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -102,7 +102,7 @@ nick1 (1):
- EOF
- test_expect_success 'No mailmap files, but configured' '
- 	rm .mailmap &&
--	git shortlog >actual &&
-+	git shortlog HEAD >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -162,7 +162,7 @@ test_expect_success 'Shortlog output (complex mapping)' '
- 	echo "Santa Claus <santa.claus@northpole.xx> <me@company.xx>" >> internal_mailmap/.mailmap &&
- 	echo "Santa Claus <santa.claus@northpole.xx> <me@company.xx>" >> internal_mailmap/.mailmap &&
- 
--	git shortlog -e >actual &&
-+	git shortlog -e HEAD >actual &&
- 	test_cmp expect actual
- 
- '
+> As I said in my original post, git will build on this machine if I have 
+> a configure script to run first.  The configure script explicitly checks 
+> for the version of libz and sets a DEFINE appropriately.
+
+So why don't you DEFINE the thing explicitely?  From reading the Makefile, 
+it appears as if
+
+	$ make NO_DEFLATE_BOUND=YesPlease
+
+should make it compile.  Of course, the documentation in the first part of 
+the Makefile could be better, maybe you have suggestions?
+
+Hth,
+Dscho
