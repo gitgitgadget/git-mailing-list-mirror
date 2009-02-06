@@ -1,124 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv2 2/6] gitweb: feed generator metadata
-Date: Fri, 6 Feb 2009 12:21:38 +0100
-Message-ID: <200902061221.39607.jnareb@gmail.com>
-References: <1232970616-21167-1-git-send-email-giuseppe.bilotta@gmail.com> <200902050015.20170.jnareb@gmail.com> <cb7bb73a0902060301s2a2f81e2t1762377177fb550e@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC v3 7/9] write_entry(): use fstat() instead of lstat()
+ when file is open
+Date: Fri, 6 Feb 2009 12:26:09 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902061221150.7377@intel-tinevez-2-302>
+References: <cover.1233751281.git.barvik@broadpark.no> <21073c1f3f6c2c81b26a632f495325f5e7a7de5a.1233751281.git.barvik@broadpark.no> <49899FA4.2020003@viscovery.net> <7vfxiut57t.fsf@gitster.siamese.dyndns.org> <86tz7ayo51.fsf_-_@broadpark.no>
+ <498A9FD3.2020601@viscovery.net> <alpine.DEB.1.00.0902051202440.7491@intel-tinevez-2-302> <868wojq0xa.fsf@broadpark.no>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 06 12:23:16 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kjetil Barvik <barvik@broadpark.no>
+X-From: git-owner@vger.kernel.org Fri Feb 06 12:27:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVOni-00076s-A6
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 12:23:14 +0100
+	id 1LVOs0-0000AO-DK
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 12:27:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752268AbZBFLVr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 06:21:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbZBFLVr
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 06:21:47 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:55071 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751937AbZBFLVq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 06:21:46 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so461028fgg.17
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 03:21:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=ro65SFJ6KSDfXSuMB+K67dyMyNS+ysqjHWeibVIX1hw=;
-        b=V7hIWyjJ6bqyJFl81we2J0Oi9NV7HL1THvThYHC62ab2WJUfd8OtzuWc19FuUlxkjC
-         +E3qq2eG1dyer+ZkpyftONrFQZq/FT/y0+gQZcaz+c2VFnnxaAVJJA9OvACFlw9AJdHm
-         qG/sL1Xevp4w0r9f+rv9NYInexGmeVgYMMgZk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=huOFnONlrLQ0QS8Cp0kFcNB9uebRH9NLT0r9vnj5MuDsXSfMBt+9w4Y6TaalmOykWq
-         0qBSp6hUwu2Wy5XyQHBMA7vPsJ0caZN9h1236Z2JFs6R6ZwjPe8S92mIhmSCRU3PAtxO
-         BH51C1xaq5C6mLBT7IdwYRX71kkhJyC1uaJR4=
-Received: by 10.86.95.20 with SMTP id s20mr61616fgb.4.1233919304612;
-        Fri, 06 Feb 2009 03:21:44 -0800 (PST)
-Received: from ?192.168.1.13? (abuz248.neoplus.adsl.tpnet.pl [83.8.197.248])
-        by mx.google.com with ESMTPS id d6sm2871619fga.49.2009.02.06.03.21.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Feb 2009 03:21:43 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0902060301s2a2f81e2t1762377177fb550e@mail.gmail.com>
-Content-Disposition: inline
+	id S1752372AbZBFL0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 06:26:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752110AbZBFL0N
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 06:26:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56187 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751245AbZBFL0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 06:26:12 -0500
+Received: (qmail invoked by alias); 06 Feb 2009 11:26:10 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp025) with SMTP; 06 Feb 2009 12:26:10 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19j1yF12c9jWzoTy2wJFrYw1regIx2p+GNLALyRKW
+	Rw00o2k34JCPLC
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <868wojq0xa.fsf@broadpark.no>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108688>
 
-On Fri, 6 Feb 2009, Giuseppe Bilotta wrote:
-> On Thu, Feb 5, 2009 at 12:15 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->> On Mon, 26 Jan 2009, Giuseppe Bilotta wrote:
->>
->>> Add <generator> tag to RSS and Atom feed. Versioning info (gitweb/git
->>> core versions, separated by a literal slash) is stored in the
->>> appropriate attribute for the Atom feed, and in the tag content for the
->>> RSS feed.
->>
->> Very good idea. I haven't examined either specification, so I don't
->> know what conventions are used, though... and what conventions _should_
->> be used.
->>
->> By the way, gitweb uses in HTML header the following (see
->> git_header_html subroutine):
->>
->>  <meta name="generator" content="gitweb/$version git/$git_version$mod_perl_version"/>
->>
->> which tries to follow convention how _web servers_ like Apache return
->> version information in the 'Server:' HTTP response header (product
->> tokens). Because it was used on only one place, it was not put into
->> separate subroutine; should it now?
+Hi,
+
+On Fri, 6 Feb 2009, Kjetil Barvik wrote:
+
+> * Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> | Of course, what we _really_ would do is to provide a flag, say, 
+> | FSTAT_UNRELIABLE and test for _that_ (after defining it in the Makefile 
+> | for the appropriate platforms).
 > 
-> RSS 2.0 spec for generator @
-> http://cyber.law.harvard.edu/rss/rss.html#optionalChannelElements
-> seems to suggest that the content for the tag in RSS feeds is pretty
-> much free-form and we might use the same string we have in HTML pages.
-> Requirements for Atom (see
-> http://www.atomenabled.org/developers/syndication/atom-format-spec.php#element.generator
-> ) are rather more stringent, so it needs its own code anyway.
+>   Or, maybe
+> 
+>      #define FSTAT_RELIABLE 1
+> 
+>   for Linux only?
 
-I don't see there in given above Atom spec _how_ 'version' attribute
-should be formatted. Here is relevant excerpt from mentioned page:
+No, I think that would be wrong.  Especially after Junio's remarks that 
+fstat() is actually required to behave as you expected it, and only 
+Windows (surprise, surprise) has problems following the standard.
 
-  4.2.4 The "atom:generator" Element
+> Then we can change the if-test inside this patch to the following:
+> 
+> -  if (state->refresh_cache && !to_tempfile && !state->base_dir_len) {
+> +  if (state->refresh_cache && !to_tempfile && !state->base_dir_len && 
+> +      FSTAT_RELIABLE) {
+> 
+>   Then we do not have to have #if-defines inside the source code, only
+>   in one header file.
 
-  The "atom:generator" element's content identifies the agent used
-  to generate a feed, for debugging and other purposes.
-  [...]
+In the spirit of consistency, I would not do that.
 
-  The content of this element, when present, MUST be a string that
-  is a human-readable name for the generating agent.
-  [...]
+>   But, question: is this patch worth the extra lines added to the source
+>   code?
 
-  The atom:generator element MAY have a "version" attribute that
-  indicates the version of the generating agent.
+You seemed to get a nice speedup on Linux.  If Windows cannot follow suit, 
+too bad.  But I do not want to be punished because other people's OS is 
+not as good as mine, so I _want_ fstat().
 
-So why not use something like:
+And those few lines will not hurt, they'll be readable enough.
 
-  <generator version="gitweb/$version git/$git_version$mod_perl_version">
-  gitweb v$version</generator>
- 
-for Atom? Perhaps with 'Server:'-like version generation refactored
-to its own subroutine?
-
->>> +             print "<generator>gitweb v.$version/$git_version</generator>\n";
->>>       } elsif ($format eq 'atom') {
-
->>> +             print "<generator version='$version/$git_version'>gitweb</generator>\n";
-
--- 
-Jakub Narebski
-Poland
+Ciao,
+Dscho
