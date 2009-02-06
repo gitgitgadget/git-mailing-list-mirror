@@ -1,80 +1,66 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: can git reset or checkout be reverted?
-Date: Fri, 6 Feb 2009 22:19:40 +0800
-Message-ID: <20090206141940.GB7231@b2j>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [ANNOUNCE] tig-0.14
+Date: Fri, 6 Feb 2009 15:29:04 +0100
+Message-ID: <2c6b72b30902060629i2539ddds48ab858e83d4bb4@mail.gmail.com>
+References: <20090205204436.GA6072@diku.dk> <20090206104946.GE7259@b2j>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 06 15:21:19 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 06 15:30:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVRZy-00028b-Nn
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 15:21:15 +0100
+	id 1LVRj2-0005kD-IA
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 15:30:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757050AbZBFOTr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Feb 2009 09:19:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756949AbZBFOTr
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 09:19:47 -0500
-Received: from ti-out-0910.google.com ([209.85.142.189]:26937 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756654AbZBFOTq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 09:19:46 -0500
-Received: by ti-out-0910.google.com with SMTP id d10so1009760tib.23
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 06:19:44 -0800 (PST)
+	id S1753014AbZBFO3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 09:29:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752301AbZBFO3I
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 09:29:08 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:49932 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750885AbZBFO3H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 09:29:07 -0500
+Received: by fxm13 with SMTP id 13so1205860fxm.13
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 06:29:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mail-followup-to:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        bh=lEOCrkRc7hXpiCD2fmRZ1XP0XfCHE9xzZI+K5qxFqeU=;
-        b=HAH+i8hv0h/qf2QqzO+J9QuaIOIgWlA5hchQF+BeG8R4oceCt+9YBvRCoKLK5bSzBQ
-         iHV6oWNf6qKTyezxQKPyVzW3BhM5yu0IHGmZFwOjfpHHFqqPl3G/nh1uMuB5FhmSGNp6
-         RSArQ7I8HB46qQT6DI9TUzLOISzPtvwRtjxrs=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=2KwQz41Y3kA+eFQMLui5pXYxCA77nhLOgp1A0foD47g=;
+        b=gzNE1PBL6DSHThF/xyzZg0l6G7wEB+ziqLv8ZTMXqTfMvzMJROHtTGgF4x0S6wEw6h
+         cYH0E4d/QJ5buY6dTiKzKkgFqZiwJm+zXm6m/5XWiWbZQ6L/HiRIwHABmO1cxpYifjUd
+         wj+hWig9h1skPud6/xlZlRf5DXB1gDx3KqEaI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mail-followup-to:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :user-agent;
-        b=Wmp+fOuj9Rd0Ay6CNcjEwb+n/nJ30nBM81UVarEe3q69ojcwb65jQdKyC97VFCMPi4
-         nj4Qx5IUVTzjPV74Fd9t9m4pqFtXyVsX/QZhlHo6ADFNwqRHcUnu3o/N7AtS6JMRm+aD
-         7j6NWpR8OvweQw508RF5xaTHH9mzxQ/s1FPKY=
-Received: by 10.110.17.14 with SMTP id 14mr2818113tiq.19.1233929984056;
-        Fri, 06 Feb 2009 06:19:44 -0800 (PST)
-Received: from localhost (n219079102072.netvigator.com [219.79.102.72])
-        by mx.google.com with ESMTPS id i6sm998979tid.23.2009.02.06.06.19.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Feb 2009 06:19:43 -0800 (PST)
-Mail-Followup-To: git <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-27)
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=bSsPjbdWUjaP9T9jt1fUBfuWpelUKUJ+PEbHiSgc0NEdZsqxnt5/fF9n1PekgKAIxK
+         h3LvINEV/j9wQ8LJFimb9PZg7li5kjiGLuFVfgPc7IqfqHEMXYnEW4quoOpTolA++vpE
+         /6RAuhgNjWkjr7YPfXPDwKh3xSf7LY/thYyQo=
+Received: by 10.181.28.15 with SMTP id f15mr605495bkj.75.1233930544741; Fri, 
+	06 Feb 2009 06:29:04 -0800 (PST)
+In-Reply-To: <20090206104946.GE7259@b2j>
+X-Google-Sender-Auth: 9b64944b011f05dd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108716>
 
-If I want to recall a old version of testing by
+2009/2/6 bill lam <cbill.lam@gmail.com>:
+> There is a choice in "git add -i" call patch/hunks.  Is this the same
+> as the update/chunks as described in tig manual?
 
-git reset --hard sha1
-or
-git checkout sha1
+Yes, you can stage individual path hunks (I should probably use the
+git terminology) using 'u' in the stage view. Use '@' to navigate to
+the next path hunk.
 
-then git log does not show anything beyond that commit. It does give
-some warning and recommend -b switch next time.  If I only do that by
-accident or ignorance.  How to revert to the original HEAD?
+Two things tig does not (yet) support is splitting and editing a hunk.
 
---=20
-regards,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
-=E5=94=90=E8=A9=A9274 =E9=9F=93=E7=BF=83  =E5=AF=92=E9=A3=9F
-    =E6=98=A5=E5=9F=8E=E7=84=A1=E8=99=95=E4=B8=8D=E9=A3=9B=E8=8A=B1  =E5=
-=AF=92=E9=A3=9F=E6=9D=B1=E9=A2=A8=E5=BE=A1=E6=9F=B3=E6=96=9C  =E6=97=A5=
-=E6=9A=AE=E6=BC=A2=E5=AE=AE=E5=82=B3=E8=A0=9F=E7=87=AD  =E8=BC=95=E7=85=
-=99=E6=95=A3=E5=85=A5=E4=BA=94=E4=BE=AF=E5=AE=B6
+-- 
+Jonas Fonseca
