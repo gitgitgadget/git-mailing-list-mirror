@@ -1,81 +1,88 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: Article about "git bisect run" on LWN
-Date: Fri, 6 Feb 2009 02:52:15 +0100
-Message-ID: <20090206015215.GA6261@elte.hu>
-References: <200902050747.50100.chriscool@tuxfamily.org> <20090205141336.GA28443@elte.hu> <alpine.DEB.1.10.0902051838180.5340@asgard.lang.hm> <20090206014655.GA26807@elte.hu>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] submodule: handle trailing slash, warn about
+ non-submodules
+Date: Fri, 6 Feb 2009 05:00:22 +0100 (CET)
+Message-ID: <b14e34d2529721c24437ec9da3f8f15c916d4051.1233892769u.git.johannes.schindelin@gmx.de>
+References: <cover.1233892769u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Andreas Ericsson <ae@op5.se>, Jeff Garzik <jeff@garzik.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Bill Lear <rael@zopyra.com>,
-	Jon Seymour <jon.seymour@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Fri Feb 06 02:53:58 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Feb 06 05:01:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVFun-0002Sy-AW
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 02:53:57 +0100
+	id 1LVHty-0004yI-VG
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 05:01:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752659AbZBFBwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 20:52:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752650AbZBFBwb
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 20:52:31 -0500
-Received: from mx2.mail.elte.hu ([157.181.151.9]:48435 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750885AbZBFBwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 20:52:30 -0500
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1LVFtC-0000xN-Ov
-	from <mingo@elte.hu>; Fri, 06 Feb 2009 02:52:21 +0100
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 360263E21B0; Fri,  6 Feb 2009 02:52:16 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20090206014655.GA26807@elte.hu>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1752795AbZBFD7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 22:59:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752743AbZBFD7s
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 22:59:48 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46732 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752650AbZBFD7r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 22:59:47 -0500
+Received: (qmail invoked by alias); 06 Feb 2009 03:59:44 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp056) with SMTP; 06 Feb 2009 04:59:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18oV4t/T90o9/40hev3SQyn4/I83uiskxgIzKWJk/
+	GKOTHBcrSnyevJ
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <cover.1233892769u.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108649>
 
+Earlier, when you called
 
-* Ingo Molnar <mingo@elte.hu> wrote:
+	git submodule path/to/submodule/
 
-> The idea would be to insert 30% redunancy into my bisections automatically 
-> - so that i could trust _all_ bisections more - not just the ones i 
-> suspect to be non-deterministic. Hence the suggestion to enable lower 
-> levels of redundancy like 30%. (but even 10% or 20% might be enough to 
-> weed out the most obvious cases)
+(which happens easily if you are a heavy user of tab-completion), Git
+would silently ignore the given path, as "git ls-files path/to/submodule/"
+does not return anything due to the trailing slash.
 
-the other advantage of redundancy that i forgot to mention:
+Git would also silently ignore paths that do not point to submodules at
+all, without warning the user about the likely mistake.
 
-- Sometimes the non-determinism is inserted by a _human_. It happened not
-  once that i accidentally mis-judged a testpoint, and the bisection ran
-  afoul. Only 4-5 steps later do i suspect that something is wrong: that i 
-  get an unlikely series of good,good,good,good,good or bad,bad,bad,bad,bad 
-  testpoint qualities.
+Now, "git submodule" strips trailing slashes, and it warns about parameters
+that are no submodules.
 
-So for manual bisection, redundancy can be a big time-saver. If i mess up a 
-bisection point then say 50% redundancy can still point out my stupidity 
-with a high likelyhood.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git-submodule.sh |   14 +++++++++++++-
+ 1 files changed, 13 insertions(+), 1 deletions(-)
 
-In fact if Git sees an unlikely series of same-quality bisection points, it 
-could artificially insert a test to around the last-different test point, to 
-test the theory of a messed up bisection.
-
-	Ingo
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 2f47e06..b878909 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -59,7 +59,19 @@ resolve_relative_url ()
+ #
+ module_list()
+ {
+-	git ls-files --stage -- "$@" | grep '^160000 '
++	while test $# -gt 0
++	do
++		line=$(git ls-files --stage ${1%/} | grep '^160000 ')
++		case "$line" in
++		'')
++			echo "Warning: ignoring non-submodule '$1'" >&2
++			;;
++		*)
++			echo "$line"
++			;;
++		esac
++		shift
++	done
+ }
+ 
+ #
+-- 
+1.6.1.2.630.g01a7e
