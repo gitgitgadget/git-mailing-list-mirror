@@ -1,59 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] Introduce config variable "diff.primer"
-Date: Fri, 6 Feb 2009 11:54:53 -0500
-Message-ID: <20090206165453.GA19026@coredump.intra.peff.net>
-References: <1233598855-1088-1-git-send-email-keith@cs.ucla.edu> <1233598855-1088-2-git-send-email-keith@cs.ucla.edu> <20090203071516.GC21367@sigill.intra.peff.net> <alpine.GSO.2.00.0902030833250.5994@kiwi.cs.ucla.edu> <7v7i4692p4.fsf@gitster.siamese.dyndns.org> <alpine.GSO.2.00.0902032217380.25760@kiwi.cs.ucla.edu>
+From: =?utf-8?b?QmlzYW5pLA==?= Alok <alok.bisani@credit-suisse.com>
+Subject: Re: git checkout effect on ls-files --others, how to merge partially?
+Date: Fri, 6 Feb 2009 16:37:38 +0000 (UTC)
+Message-ID: <loom.20090206T163626-457@post.gmane.org>
+References: <C5E2CAEE4A87D24DAB5334F62A72D1F43ADCBD@ELON17P32001A.csfb.cs-group.com> <slrngooent.om3.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Keith Cascio <keith@CS.UCLA.EDU>
-X-From: git-owner@vger.kernel.org Fri Feb 06 17:56:27 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 06 18:06:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVU09-0000VB-Pg
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 17:56:26 +0100
+	id 1LVUA0-0004Mi-OU
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 18:06:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752224AbZBFQy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 11:54:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752051AbZBFQy5
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 11:54:57 -0500
-Received: from peff.net ([208.65.91.99]:55285 "EHLO peff.net"
+	id S1753371AbZBFRFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 12:05:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbZBFRFG
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 12:05:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:47217 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751046AbZBFQy5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 11:54:57 -0500
-Received: (qmail 23397 invoked by uid 107); 6 Feb 2009 16:55:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 06 Feb 2009 11:55:09 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Feb 2009 11:54:53 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.GSO.2.00.0902032217380.25760@kiwi.cs.ucla.edu>
+	id S1752109AbZBFRFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 12:05:04 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LVU8U-0007dD-9y
+	for git@vger.kernel.org; Fri, 06 Feb 2009 17:05:02 +0000
+Received: from ln-bas00.csfb.com ([198.240.128.75])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 17:05:02 +0000
+Received: from alok.bisani by ln-bas00.csfb.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 17:05:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 198.240.128.75 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.6) Gecko/2009011913 Firefox/3.0.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108761>
 
-On Tue, Feb 03, 2009 at 10:36:48PM -0800, Keith Cascio wrote:
+Sitaram Chamarty <sitaramc <at> gmail.com> writes:
 
-> There are indeed two layers of masks (and there can be as many as
-> needed).  In my current patch, the shell command line becomes "master"
-> and primer becomes "slave".  Both layers exist independently of each
-> other, in two separate diff_option structs, until just before "go
-> time", when I flatten them (but that does not destroy the slave, it is
-> reused).
+> 
+> On 2009-02-06, Bisani, Alok <alok.bisani <at> credit-suisse.com> wrote:
+>
+> > 	Is there a way to pull in changes from a branch but only limited
+> > to a file/files? I ended up doing a manual restore using git-cat-file
+> ><branch>@{0}:/file. And checked in.
+> 
+> git checkout branch -- filename
+> 
+> 
 
-We have had trouble in the past figuring out exactly when "go time" is
-(not specifically for diff options, but for things like color config).
-That is, there is code which wants to munge the options based on some
-other input much later than the setting of most options, and so any
-finalizing work you do ends up happening too early. And maybe you can
-argue that such code is wrong or bad, but it does get written and it
-does cause problems.
-
-So as I mentioned in another mail I just sent, I think you are best to
-stop thinking of it as a general flattening, and think of it more as a
-set of accessors that do the flattening Just In Time.
-
--Peff
+This is exactly what I was looking for, thank you! I wonder why it is the
+checkout command which does this, rather than the pull/merge. What is the reason
+that we cannot pull/merge a specific file from a branch?
