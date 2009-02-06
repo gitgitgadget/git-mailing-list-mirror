@@ -1,111 +1,63 @@
-From: Yann Simon <yann.simon.fr@gmail.com>
-Subject: [PATCH JGIT] New PersonIdent of a repository is the default committer
-Date: Fri, 06 Feb 2009 17:04:18 +0100
-Message-ID: <498C5F82.2040205@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Feb 06 17:06:27 2009
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: [PATCH 1/2] completion: Fix GIT_PS1_SHOWDIRTYSTATE to prevent unbound variable errors.
+Date: Fri,  6 Feb 2009 11:05:37 -0500
+Message-ID: <1233936338-10679-1-git-send-email-ted@tedpavlic.com>
+References: <20090206155823.GO26880@spearce.org>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Ted Pavlic <ted@tedpavlic.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Fri Feb 06 17:07:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVTDH-0002s7-L5
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 17:05:56 +0100
+	id 1LVTEb-0003ig-Tm
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 17:07:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759553AbZBFQEX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 11:04:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753713AbZBFQEX
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 11:04:23 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:62380 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759551AbZBFQEW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 11:04:22 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so547060fgg.17
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 08:04:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=q4IDERMV+/yEawFewk9ZV45eiFG5xPtK1WBQJ4z6Nis=;
-        b=R9cLiRS55nNGoVv1sT9RqsKh6kVRvW+I40abHvOvtSEWL8uQZhtNCva3eCnAsI+a7q
-         V2IAv1AfO1xauscqO5ZN7zMcVtlEq09tfiXH7kc/bsXZL1ZXD49LaewzJ175prh1i0QD
-         oFx6csdaoVEEITqBGl6UXcAvmzCi90sUedojM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=Af8kagIpDupcwuQHYQwQB8bDqgvUKEHrX3sq7VWQuJagZOhm8I9Ot8z9/vDxcaSd6z
-         7ezGsQVLSkluxKrUfcCkd3vyDmkKRVfBrtr3hqAK2T833+hbaszd5jtrTVgNXOqwXM7R
-         FDaV1ckr6VXLyKLdTAKmTMZisw+X8fgW6tdto=
-Received: by 10.86.57.9 with SMTP id f9mr1054517fga.38.1233936260112;
-        Fri, 06 Feb 2009 08:04:20 -0800 (PST)
-Received: from ?10.11.2.21? (port-87-193-216-74.static.qsc.de [87.193.216.74])
-        by mx.google.com with ESMTPS id 3sm524801fge.42.2009.02.06.08.04.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Feb 2009 08:04:19 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+	id S1753437AbZBFQFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 11:05:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752461AbZBFQFu
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 11:05:50 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:41524 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751341AbZBFQFu (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Feb 2009 11:05:50 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 062F880D8067;
+	Fri,  6 Feb 2009 10:59:27 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id QphnFtgNj1rY; Fri,  6 Feb 2009 10:59:26 -0500 (EST)
+Received: from localhost.localdomain (tedpc.ece.ohio-state.edu [164.107.164.122])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id DC26180D8063;
+	Fri,  6 Feb 2009 10:59:26 -0500 (EST)
+X-Mailer: git-send-email 1.6.1.2.390.gba743
+In-Reply-To: <20090206155823.GO26880@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108750>
 
-The constructor PersonIdent(Repository) uses the default values
-from the configuration of the repository.
-
-The new instance gets the name and the email of the default committer.
-
-Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
+Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../src/org/spearce/jgit/lib/PersonIdent.java      |   26 ++++----------------
- 1 files changed, 5 insertions(+), 21 deletions(-)
+ contrib/completion/git-completion.bash |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java
-index bc5479a..fb4ab20 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java
-@@ -57,33 +57,17 @@
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 307bf5d..6e04985 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -125,7 +125,7 @@ __git_ps1 ()
+ 		local w
+ 		local i
  
- 	private final int tzOffset;
- 
--	private static String getHostName() {
--		try {
--			java.net.InetAddress addr = java.net.InetAddress.getLocalHost();
--			String hostname = addr.getCanonicalHostName();
--			return hostname;
--		} catch (java.net.UnknownHostException e) {
--			return "localhost";
--		}
--	}
--
- 	/**
--	 * Creates new PersonIdent from config info in repository, with current time
-+	 * Creates new PersonIdent from config info in repository, with current time.
-+	 * This new PersonIdent gets the info from the default committer as available
-+	 * from the configuration.
- 	 * 
- 	 * @param repo
- 	 */
- 	public PersonIdent(final Repository repo) {
- 		RepositoryConfig config = repo.getConfig();
--		String username = config.getString("user", null, "name");
--		if (username == null)
--			username = System.getProperty("user.name");
--
--		String email = config.getString("user", null, "email");
--		if (email == null)
--			email = System.getProperty("user.name") + "@" + getHostName();
--
--		name = username;
--		emailAddress = email;
-+		name = config.getCommitterName();
-+		emailAddress = config.getCommitterEmail();
- 		when = System.currentTimeMillis();
- 		tzOffset = TimeZone.getDefault().getOffset(when) / (60 * 1000);
- 	}
+-		if test -n "$GIT_PS1_SHOWDIRTYSTATE"; then
++		if test -n "${GIT_PS1_SHOWDIRTYSTATE-}"; then
+ 			if test "$(git config --bool bash.showDirtyState)" != "false"; then
+ 				git diff --no-ext-diff --ignore-submodules \
+ 					--quiet --exit-code || w="*"
 -- 
-1.6.0.4
+1.6.1.2.390.gba743
