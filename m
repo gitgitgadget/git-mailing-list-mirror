@@ -1,63 +1,97 @@
-From: Greg Hauptmann <greg.hauptmann.ruby@gmail.com>
-Subject: how do I install "git" on Redhat linux? (getting confused)
-Date: Fri, 6 Feb 2009 10:23:17 +1000
-Message-ID: <d30068860902051623w758bbfccrb1acca0adaf4a59@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] valgrind: do not require valgrind 3.4.0 or newer
+Date: Fri, 6 Feb 2009 01:40:02 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902060139490.10279@pacific.mpi-cbg.de>
+References: <7vzlh0bp6f.fsf@gitster.siamese.dyndns.org> <349b2bb9b8f5a6762cccb7834d82125ee4382436.1233867737u.git.johannes.schindelin@gmx.de> <7vljska0ep.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 06 01:24:50 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 06 01:40:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVEWW-0005i4-N2
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 01:24:49 +0100
+	id 1LVEm6-0001jD-Dv
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 01:40:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753548AbZBFAXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 19:23:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753315AbZBFAXT
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 19:23:19 -0500
-Received: from wf-out-1314.google.com ([209.85.200.168]:5190 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753178AbZBFAXS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 19:23:18 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so590212wfa.4
-        for <git@vger.kernel.org>; Thu, 05 Feb 2009 16:23:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=Wykbz/e1PAgKvUhkJ5xRV8gSSfhYGPqMwv2iQlmMxpI=;
-        b=QingNsK/0fkEJuJc1ntE3qypSCGKNdOgefB1dQVQji2T/EHNY7WkphjOgI5J4UatId
-         8a/EiLXvN2+IB9KxSCSeq2pDFOYNDvck47wBIiIoQZnMIMKeHAhEjE4hJyHL0bf8G7oS
-         ATALc7WwF7CXAywIHQ8yJI5i/HQ3ZN//jGoRg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=sPPLUoBUEEj2EbFXNHhzFvKuzmZEQZXgwPptepBQAtcztg7mV3OYaOdzOoQiJg+mGT
-         1Zerp47pLjBngTq5Gw4ARGsQEqrdbuxBknffrZHXNaKNr2iPM8M4UTM7pcPTtTMQfGXn
-         LmpAZ4TMgkroqraBrXHnb4uJRDLeyJmZ52AZ4=
-Received: by 10.142.128.15 with SMTP id a15mr623544wfd.84.1233879797947; Thu, 
-	05 Feb 2009 16:23:17 -0800 (PST)
+	id S1753325AbZBFAj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 19:39:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbZBFAj1
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 19:39:27 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38930 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752121AbZBFAj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 19:39:27 -0500
+Received: (qmail invoked by alias); 06 Feb 2009 00:39:25 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp048) with SMTP; 06 Feb 2009 01:39:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/m+0pqgDfmZySeotvb1Za6gA9VhGMh9USyf8vIYh
+	yBH2A9UajxtVjs
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vljska0ep.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108639>
 
 Hi,
 
-Can someone give me a pointer re how to install "git" on Redhat linux?
- I'm getting a bit confused with all the different approaches I'm
-seeing. The linux box I'm targetting is running clarkconnect
-(www.clarkconnect.com) and underlying system details are;
+On Thu, 5 Feb 2009, Junio C Hamano wrote:
 
-[root@home ~]# cat /proc/version
-Linux version 2.6.18-8.1.14.3.cc (devel@cc4devel.lan) (gcc version
-3.4.6 20060404 (Red Hat 3.4.6-8)) #1 SMP Mon Oct 22 17:57:16 EDT 2007
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > Valgrind 3.4.0 is pretty new, and even if --track-origins is a nice
+> > feature, it is not the end of the world if that is not available.  So
+> > play nice and use that option only when only an older version of
+> > valgrind is available.
+> >
+> > In the same spirit, refrain from the use of '...' in suppression
+> > files, which is also a feature only valgrind 3.4 and newer understand.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> Thanks.
+> 
+> > +TRACK_ORIGINS=
+> > +
+> > +VALGRIND_VERSION=$(valgrind --version)
+> > +VALGRIND_MAJOR=$(expr "$VALGRIND_VERSION" : '[^0-9]*\([0-9]*\)')
+> > +VALGRIND_MINOR=$(expr "$VALGRIND_VERSION" : '[^0-9]*[0-9]*\.\([0-9]*\)')
+> > +test 3 -gt "$VALGRIND_MAJOR" ||
+> > +test 3 -eq "$VALGRIND_MAJOR" -a 4 -gt "$VALGRIND_MINOR" ||
+> > +TRACK_ORIGINS=--track-origins=yes
+> 
+> It took me a while to convince myself that
+> 
+> 	"3 > major || (3 == major && 4 > minor) || do-this"
+> 
+> is equivalent to
+> 
+> 	"if (3 < major || (3 == major && 4 <= minor)) { do-this }"
+> 
+> which would be:
+> 
+> 	if test 3 -lt "$VALGRIND_MAJOR" ||
+>            test 3 -eq "$VALGRIND_MAJOR" -a 4 -le "$VALGRIND_MINOR"
+>         then
+> 		TRACK_ORIGINS=--track-origins=yes
+> 	fi
+>         
+> or more commonly:
+> 
+> 	if test "$VALGRIND_MAJOR" -gt 3 ||
+>            test "$VALGRIND_MAJOR" -eq 3 -a "$VALGRIND_MINOR" -ge 4
+>         then
+> 		TRACK_ORIGINS=--track-origins=yes
+> 	fi
 
+Okay.  Want me to resubmit?
 
-Thanks
-Greg
+Ciao,
+Dscho
