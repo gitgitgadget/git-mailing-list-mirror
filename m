@@ -1,115 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv2 5/6] gitweb: last-modified time should be commiter, not  author
-Date: Fri, 6 Feb 2009 22:12:05 +0100
-Message-ID: <200902062212.08857.jnareb@gmail.com>
-References: <1232970616-21167-1-git-send-email-giuseppe.bilotta@gmail.com> <200902050038.57999.jnareb@gmail.com> <cb7bb73a0902060314u4741528bs196a43d45ff7f283@mail.gmail.com>
+From: Nigel Magnay <nigel.magnay@gmail.com>
+Subject: Re: [JGIT] maven build fails on OS X
+Date: Fri, 6 Feb 2009 21:12:29 +0000
+Message-ID: <320075ff0902061312i1b2d960ax34bb992d8ba85fc5@mail.gmail.com>
+References: <320075ff0902060708m5ec566b9g755829c25c7727d8@mail.gmail.com>
+	 <20090206153155.GL26880@spearce.org>
+	 <200902062154.34997.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 06 22:13:53 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git ML <git@vger.kernel.org>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Feb 06 22:14:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVY1D-0004a1-9g
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 22:13:47 +0100
+	id 1LVY1Q-0004g7-Ic
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 22:14:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753110AbZBFVMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 16:12:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753091AbZBFVMT
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 16:12:19 -0500
+	id S1753210AbZBFVMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 16:12:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753150AbZBFVMb
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 16:12:31 -0500
 Received: from fg-out-1718.google.com ([72.14.220.156]:56640 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753017AbZBFVMT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 16:12:19 -0500
+	with ESMTP id S1753145AbZBFVMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 16:12:30 -0500
 Received: by fg-out-1718.google.com with SMTP id 16so620861fgg.17
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 13:12:16 -0800 (PST)
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 13:12:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=6RLMlMMYlG2b896cR2p4RAZLhbtqPJTTZrcx5R60G0U=;
-        b=MnnGd9x5B2oQlQnGpfIbbDeXn0vRrczang/Rlo0phAT4hgJrn7hYqZ8LP5WkzxiSub
-         Vx+ewo7LNrBYZXh4dMSiPyKwetwNd/hga42BNMRXevoXyHdc4gu29Wa28ZHo3hKyAG0r
-         LlUFv9yNzcmUmxL8n7fLcFNguaxC3qRVPFfJQ=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=agt0qT+a5hw3JyWSuFx1qsaLoK93i2YfyDFdgJv7wbg=;
+        b=hcFPRi8LE/9P8hlA/DpjKO9kheyX63e3gOuc3V1kPf610b1ZYdZVWrALYu80Inwu+I
+         4cNz5tg+K78arc29bxf13+wbH+ZfFnrixwbneh1GuKZrRQY8i2v3Ay8DwlDdMc/NG7io
+         m4BbT/U5gmknDblMULPCx7+dND6DV8Nw5PuqE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Uw1G9l5V7WjVN0Vf/5v6/Fz8qg1SNszZYPlSvt9XAsJOZjuax4mrCXYcQszUQOfxz6
-         m1o4p+DMgI1UuuNTJa5DMnbH2jMTUDvFGjqVONLyofzyYJFVMuc+Bt1cErrgPDXwwsfr
-         jPo83+v0NGHHp2kjEpcc53jeBcHgqkEBARjz0=
-Received: by 10.223.124.209 with SMTP id v17mr1112384far.6.1233954736520;
-        Fri, 06 Feb 2009 13:12:16 -0800 (PST)
-Received: from ?192.168.1.13? (abwn77.neoplus.adsl.tpnet.pl [83.8.237.77])
-        by mx.google.com with ESMTPS id e17sm1641466fke.8.2009.02.06.13.12.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Feb 2009 13:12:15 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0902060314u4741528bs196a43d45ff7f283@mail.gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Ns1Jsn5+qoL76huofEFqibUZUM4mVRDqpda03eo8hGRZ/2CbarKz5o01ZifgQkTKwf
+         xChscUaQZVoOaTHvWzUKzsR1XBnECwTkaGzSafa152JITjYxwIhhFdy+XskKx1wXSQRj
+         Fm7WIBSQOXxKI3e18Xt53ePcirHYoc5ImcUjw=
+Received: by 10.103.161.16 with SMTP id n16mr944601muo.79.1233954750139; Fri, 
+	06 Feb 2009 13:12:30 -0800 (PST)
+In-Reply-To: <200902062154.34997.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108786>
 
-On Fri, 06 Feb 2009, Giuseppe Bilotta wrote:
-> On Thu, Feb 5, 2009 at 12:38 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->> On Mon, 26 Jan 2009, Giuseppe Bilotta wrote:
->>
->>> The last-modified time header added by RSS to increase cache hits from
->>> readers should be set to the date the repository was last modified. The
->>> author time in this respect is not a good guess because the last commit
->>> might come from a oldish patch.
->>>
->>> Use the committer time for the last-modified header to ensure a more
->>> correct guess of the last time the repository was modified.
+> Here we intend to feed the dequote an ISO-Latin encoded string. Our decoder
+> will first try to decode it as UTF-8, which should fail, then we try to decode it
+> as the platform default (Linear A, Hieroglyphs, MacRoman or something not
+> known to living mankind). A problem is that Git *forces* us to guess the encoding,
+> and in some situations you'd need human intelligence to figure it out. Software
+> with a little more hindsight recognize this and declare UTF-8 to be the one
+> and only encoding. JGit always encodes things as UTF-8 for this reason, but
+> we cannot trust the input. These test cases are supposed to prove that we
+> can guess things correctly at least some of the time.. Using "platform
+> default" may be the wrong thing if it does not match what a C Git user on
+> this platform would encounter.
+>
 
-[...]
->> Second, author time reflects when change (commit) was made, according
->> to authors (perhaps skewed) clock.  Committer time reflects when given
->> commit (version of a commit) was entered into repository, or to be more
->> exact into some clone of given project.  But there is also an issue of
->> when changes got into given instance of repository (given clone): that
->> I guess might be found by stat-ing HEAD (if it arrived by commit),
->> FETCH_HEAD (if it arrived by fetch or pull) and ??? (if it arrived by
->> push)... err... it looks like it wouldn't work in most common case,
->> sorry, unless we want to stat all refs and packed-refs file. But while
->> this date might be better for Last-Modified, I'm not sure if it is good
->> at all for publication date.
->>
->> So committer time is better than author time, and looks like good
->> middle ground.
-> 
-> Oops should have finished reading your comments before my previous
-> reply. The solution would be to introduce a way to determine robustly
-> when a branch was last _physically_ updated. Checking the
-> corresponding entry in refs/ would work for non-packed refs, and maybe
-> one would hope that if the ref got packed, it means it hasn't updated
-> in a long time ... but I'm not enough of an expert on git's internal
-> to really know about this. Suggestions?
+I got your reply exaclty as I found the same thing :-). I'm not sure
+that this is the common cause of all test failures, but it is for
+testGetText_DiffCc :-
 
-The point is I am not that sure if the date branch was _physically_
-updated (it was updated in given clone of repository) is a good
-choice for publish date in feed (RSS or Atom), whether it is good
-choice for Last-Modified (and If-Modified-Since), and whether publish
-date can be different from Last-Modified.  
+When it parses the first string in extractFileLines, it passes to
+RawParseUtils.decode which, as you outlined, does a "Try UTF-8, Try
+caller suggestion, try Charset.defaultCharset(), then finally back out
+to ISO-8859-1.
 
-Using committime doesn't ensure that it is monotonical (but it is
-highly probable, much more than authortime), but it is the same for
-every clone of repository, and for every gitweb installation that
-hosts given repository.
+On most platforms, this is Try UTF-8 (fail), caller suggestion (also
+UTF-8, skip), try default (UTF-8, skip) - finally parse ISO-8859-1.
 
-Using update time does ensure that it is monotonical, and it
-wouldn't ever be earlier than the time repository started to be
-available, but it changes from clone to clone.
+On the mac, this is Try UTF-8 (fail), caller suggestion (UTF-8, skip),
+try default (MacRoman) --> succeed.
 
--- 
-Jakub Narebski
-Poland
+I'm less clear on what the right way to fix it is (or if it's just the
+tests that need to somehow force the system file.encoding?
