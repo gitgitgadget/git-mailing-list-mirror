@@ -1,109 +1,90 @@
-From: Nigel Magnay <nigel.magnay@gmail.com>
-Subject: [PATCH JGIT] Minor : Make ObjectId, RemoteConfig Serializable
-Date: Fri, 6 Feb 2009 21:15:29 +0000
-Message-ID: <320075ff0902061315g3f8b9c9bj92f528e700d59c50@mail.gmail.com>
-References: <320075ff0902060702n7573aaecu9054626ee9a6991@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] fix t1504 on Windows
+Date: Fri, 06 Feb 2009 22:45:23 +0100
+Message-ID: <498CAF73.6050409@lsrfire.ath.cx>
+References: <498A1E1E.8010901@lsrfire.ath.cx> <498B3F6B.5080002@lsrfire.ath.cx> <498C3328.70804@viscovery.net> <498C70C8.1080009@lsrfire.ath.cx> <498C8E43.8010108@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 06 22:17:29 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Feb 06 22:47:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVY4k-0005j8-JB
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 22:17:27 +0100
+	id 1LVYXl-0006sv-CO
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 22:47:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756346AbZBFVPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 16:15:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756338AbZBFVPd
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 16:15:33 -0500
-Received: from mu-out-0910.google.com ([209.85.134.191]:51085 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756335AbZBFVPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 16:15:32 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so684273mue.1
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 13:15:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=wyt6Y7AZxPzPo4UdwjAFtw5LFKymji1L+iArlp8EuAA=;
-        b=xgbP1RK/zwjWPr/a4SY06MBRQc5BVuw2j4Talt2VAaxqGsxnD3nBPmTaHCuSayiz6h
-         k/NjWastLHfTK5MRWp8w+S3yOakuQhWzxtVUfiqScThPQhVlIfcnCzuJWklUirPgmi6Q
-         gz5Vda++o/M8m3iXNY2imP6MLPLb/J8rW4Mdw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=UcGYWS92aN35/xbDlgkxpYjtu0jIJw+O3fCCO9oI2+yLr/4DKv1uVa3RPZ36BlCB02
-         UDfJWV/Te/Em2uRSLx3ZqGtRF/0sctLjG0dg4k5WVBo8zxtLo8rqidwAEcPsjp1RG6oh
-         tHfoKj4iJHOrbZMUSJh9NHsCEDYzXvXv5MIMU=
-Received: by 10.103.92.8 with SMTP id u8mr952382mul.34.1233954929758; Fri, 06 
-	Feb 2009 13:15:29 -0800 (PST)
-In-Reply-To: <320075ff0902060702n7573aaecu9054626ee9a6991@mail.gmail.com>
+	id S1753767AbZBFVpc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Feb 2009 16:45:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753593AbZBFVpb
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 16:45:31 -0500
+Received: from india601.server4you.de ([85.25.151.105]:59949 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757276AbZBFVpZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 16:45:25 -0500
+Received: from [10.0.1.101] (p57B7E1CE.dip.t-dialin.net [87.183.225.206])
+	by india601.server4you.de (Postfix) with ESMTPSA id A1F1D2F8056;
+	Fri,  6 Feb 2009 22:45:23 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <498C8E43.8010108@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108790>
 
-Make AnyObjectId and RemoteConfig Serializable.
-When using jgit as a library in other tools, it's helpful to be able
-to use the nice, tested bits of jgit rather than String, but need to
-be able to serialize them.
+Johannes Sixt schrieb:
+> Ren=C3=A9 Scharfe schrieb:
+>> Johannes Sixt schrieb:
+>>> -GIT_CEILING_DIRECTORIES=3D"foo:$TRASH_ROOT/sub"
+>>> +GIT_CEILING_DIRECTORIES=3D"/foo:$TRASH_ROOT/sub"
+>>>  test_fail second_of_two
+>>>
+>>>  GIT_CEILING_DIRECTORIES=3D"$TRASH_ROOT/sub:/bar"
+>>>  test_fail first_of_two
+>>>
+>>> -GIT_CEILING_DIRECTORIES=3D"foo:$TRASH_ROOT/sub:bar"
+>>> +GIT_CEILING_DIRECTORIES=3D"/foo:$TRASH_ROOT/sub:/bar"
+>>>  test_fail second_of_three
+>>
+>> I don't, which makes me uneasy -- the tests shouldn't depend on deta=
+ils
+>> in our setup. :-/
+>=20
+> I updated my msysgit to the current master this moment, and I still n=
+eed
+> these two changes. Do you use an older msysgit? With 31d5dfeb0
+> (2008-06-08) Steffen changed path mangling so that a text without a
+> leading / or . is not converted. That's exactly what we see here.
 
-Signed-off-by: Nigel Magnay <nigel.magnay@gmail.com>
----
- .../src/org/spearce/jgit/lib/AnyObjectId.java      |    3 ++-
- .../org/spearce/jgit/transport/RemoteConfig.java   |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+Oh, yes, good idea.  I never updated the msys part of my installation.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
-b/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
-index e2f70ca..532174b 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
-@@ -39,6 +39,7 @@
+My "uneasiness" doesn't mean that I'm against your changes above, in an=
+y
+case.
 
- import java.io.IOException;
- import java.io.OutputStream;
-+import java.io.Serializable;
- import java.io.Writer;
- import java.nio.ByteBuffer;
- import java.util.Arrays;
-@@ -52,7 +53,7 @@
-  * with this instance can alter at any time, if this instance is modified to
-  * represent a different object name.
-  */
--public abstract class AnyObjectId implements Comparable {
-+public abstract class AnyObjectId implements Comparable, Serializable {
-     static final int RAW_LEN = Constants.OBJECT_ID_LENGTH;
+>>> That said, I'm in the process of preparing a series that includes y=
+our
+>>> patch and that does the proper cleanup and code moving that you aga=
+in
+>>> didn't do :-/ But it turns out that this is non-trivial because of
+>>> bash's
+>>> (MSYS's) I-know-better-what-is-a-path-and-what-not behavior. It wil=
+l
+>>> take
+>>> some time...
 
-     static final int STR_LEN = RAW_LEN * 2;
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-index 5bbf664..7949612 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-@@ -38,6 +38,7 @@
+> Johannes Sixt (4):
+>       Make test-path-utils more robust against incorrect use
+>       Move sanitary_path_copy to path.c (and rename to
+>         normalize_path_copy)
+>       Test and fix normalize_path_copy()
+>       Remove unused normalize_absolute_path()
 
- package org.spearce.jgit.transport;
+Yeah, OK.  I was aiming for a quick short fix, deferring cleanups to
+when I have more time.  I wonder what patches one and three do, though.
 
-+import java.io.Serializable;
- import java.net.URISyntaxException;
- import java.util.ArrayList;
- import java.util.Collections;
-@@ -53,7 +54,7 @@
-  * describing how refs should be transferred between this repository and the
-  * remote repository.
-  */
--public class RemoteConfig {
-+public class RemoteConfig implements Serializable {
-     private static final String SECTION = "remote";
-
-     private static final String KEY_URL = "url";
---
-1.6.0.2
+Ren=C3=A9
