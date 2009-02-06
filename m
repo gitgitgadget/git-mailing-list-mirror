@@ -1,82 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git revert" feature suggestion: revert the last commit to a
- file
-Date: Thu, 05 Feb 2009 16:15:33 -0800
-Message-ID: <7vhc38a09m.fsf@gitster.siamese.dyndns.org>
-References: <20090205202104.GA11267@elte.hu>
- <7vvdrobobc.fsf@gitster.siamese.dyndns.org> <20090205210018.GB21500@elte.hu>
+From: Greg Hauptmann <greg.hauptmann.ruby@gmail.com>
+Subject: how do I install "git" on Redhat linux? (getting confused)
+Date: Fri, 6 Feb 2009 10:23:17 +1000
+Message-ID: <d30068860902051623w758bbfccrb1acca0adaf4a59@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Fri Feb 06 01:17:19 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 06 01:24:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVEPG-0003j5-PQ
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 01:17:19 +0100
+	id 1LVEWW-0005i4-N2
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 01:24:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755369AbZBFAPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Feb 2009 19:15:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753994AbZBFAPl
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 19:15:41 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58445 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754919AbZBFAPk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Feb 2009 19:15:40 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 781B52A84D;
-	Thu,  5 Feb 2009 19:15:39 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A2B6C2A84C; Thu, 
- 5 Feb 2009 19:15:35 -0500 (EST)
-In-Reply-To: <20090205210018.GB21500@elte.hu> (Ingo Molnar's message of "Thu,
- 5 Feb 2009 22:00:18 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 48C1A38C-F3E3-11DD-AFC8-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1753548AbZBFAXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Feb 2009 19:23:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753315AbZBFAXT
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Feb 2009 19:23:19 -0500
+Received: from wf-out-1314.google.com ([209.85.200.168]:5190 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753178AbZBFAXS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Feb 2009 19:23:18 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so590212wfa.4
+        for <git@vger.kernel.org>; Thu, 05 Feb 2009 16:23:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=Wykbz/e1PAgKvUhkJ5xRV8gSSfhYGPqMwv2iQlmMxpI=;
+        b=QingNsK/0fkEJuJc1ntE3qypSCGKNdOgefB1dQVQji2T/EHNY7WkphjOgI5J4UatId
+         8a/EiLXvN2+IB9KxSCSeq2pDFOYNDvck47wBIiIoQZnMIMKeHAhEjE4hJyHL0bf8G7oS
+         ATALc7WwF7CXAywIHQ8yJI5i/HQ3ZN//jGoRg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=sPPLUoBUEEj2EbFXNHhzFvKuzmZEQZXgwPptepBQAtcztg7mV3OYaOdzOoQiJg+mGT
+         1Zerp47pLjBngTq5Gw4ARGsQEqrdbuxBknffrZHXNaKNr2iPM8M4UTM7pcPTtTMQfGXn
+         LmpAZ4TMgkroqraBrXHnb4uJRDLeyJmZ52AZ4=
+Received: by 10.142.128.15 with SMTP id a15mr623544wfd.84.1233879797947; Thu, 
+	05 Feb 2009 16:23:17 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108638>
 
-Ingo Molnar <mingo@elte.hu> writes:
+Hi,
 
-> * Junio C Hamano <gitster@pobox.com> wrote:
->
->> Ingo Molnar <mingo@elte.hu> writes:
->> 
->> > So i have to do something like:
->> >
->> >    git revert $(git log -1 --pretty=format:"%h" kernel/softlockup.c)
->> >
->> > (tucked away in a tip-revert-file helper script.)
->> >
->> > But it would be so much nicer if i could do the intuitive:
->> >
->> >    git revert kernel/softlockup.c
->> >
->> > Or at least, to separate it from revision names cleanly, something like:
->> >
->> >    git revert -- kernel/softlockup.c
->> 
->> All three shares one issue.  Does the syntax offer you a way to give
->> enough information so that you can confidently say that it will find the
->> commit that touched the path most recently?  How is the "most recently"
->> defined?
->> 
->> At least you can restate the first one to:
->> 
->>     git revert $(git log -1 --pretty=format:"%h" core/softlockup -- kernel/softlockup.c)
->> 
->> to limit to "the one that touched this file _on this topic_".
->
-> All in the current scope of the integration branch, sure. I.e. the same 
-> scope of commits that "git log kernel/softlockup.c" uses.
+Can someone give me a pointer re how to install "git" on Redhat linux?
+ I'm getting a bit confused with all the different approaches I'm
+seeing. The linux box I'm targetting is running clarkconnect
+(www.clarkconnect.com) and underlying system details are;
 
-But that is not how ":/syntax" works, at least right now.  It traverses
-from tips of all refs and finds the newest one.  It might make sense to
-make the discovery start from the current branch not from all tips.
+[root@home ~]# cat /proc/version
+Linux version 2.6.18-8.1.14.3.cc (devel@cc4devel.lan) (gcc version
+3.4.6 20060404 (Red Hat 3.4.6-8)) #1 SMP Mon Oct 22 17:57:16 EDT 2007
+
+
+Thanks
+Greg
