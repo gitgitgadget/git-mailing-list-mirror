@@ -1,95 +1,74 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH JGIT] Propose author and committer in the commit dialog
-Date: Fri, 6 Feb 2009 07:38:49 -0800
-Message-ID: <20090206153849.GN26880@spearce.org>
-References: <498C2BE5.3010602@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 1/2] git notes show: test empty notes
+Date: Fri, 06 Feb 2009 16:42:51 +0100
+Message-ID: <498C5A7B.3030506@drmicha.warpmail.net>
+References: <1233933543-28407-1-git-send-email-git@drmicha.warpmail.net> <1233933543-28407-2-git-send-email-git@drmicha.warpmail.net> <alpine.DEB.1.00.0902061635560.7377@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git <git@vger.kernel.org>
-To: Yann Simon <yann.simon.fr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 06 16:40:21 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 06 16:44:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVSoS-00010B-UB
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 16:40:17 +0100
+	id 1LVSsT-0002i3-Pm
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 16:44:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753674AbZBFPiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 10:38:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753174AbZBFPiu
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 10:38:50 -0500
-Received: from george.spearce.org ([209.20.77.23]:38978 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752938AbZBFPit (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 10:38:49 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 3520738210; Fri,  6 Feb 2009 15:38:49 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <498C2BE5.3010602@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752920AbZBFPm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 10:42:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753651AbZBFPm5
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 10:42:57 -0500
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:34485 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752920AbZBFPm4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Feb 2009 10:42:56 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id AC987283C25;
+	Fri,  6 Feb 2009 10:42:55 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Fri, 06 Feb 2009 10:42:55 -0500
+X-Sasl-enc: hOFORBlQntrZ2TRZzUlY7DtlUMxNVuquQyy6JhhAM039 1233934975
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id A33AC14902;
+	Fri,  6 Feb 2009 10:42:54 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <alpine.DEB.1.00.0902061635560.7377@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108740>
 
-Yann Simon <yann.simon.fr@gmail.com> wrote:
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java
-> index bc5479a..8438683 100644
-> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PersonIdent.java
-> @@ -57,16 +57,6 @@
->  
->  	private final int tzOffset;
->  
-> -	private static String getHostName() {
-> -		try {
-> -			java.net.InetAddress addr = java.net.InetAddress.getLocalHost();
-> -			String hostname = addr.getCanonicalHostName();
-> -			return hostname;
-> -		} catch (java.net.UnknownHostException e) {
-> -			return "localhost";
-> -		}
-> -	}
-> -
->  	/**
->  	 * Creates new PersonIdent from config info in repository, with current time
->  	 * 
-> @@ -74,14 +64,8 @@ private static String getHostName() {
->  	 */
->  	public PersonIdent(final Repository repo) {
->  		RepositoryConfig config = repo.getConfig();
-> -		String username = config.getString("user", null, "name");
-> -		if (username == null)
-> -			username = System.getProperty("user.name");
-> -
-> -		String email = config.getString("user", null, "email");
-> -		if (email == null)
-> -			email = System.getProperty("user.name") + "@" + getHostName();
-> -
-> +		String username = config.getAuthorName();
-> +		String email = config.getAuthorEmail();
->  		name = username;
->  		emailAddress = email;
->  		when = System.currentTimeMillis();
+Johannes Schindelin venit, vidit, dixit 06.02.2009 16:36:
+> Hi,
+> 
+> On Fri, 6 Feb 2009, Michael J Gruber wrote:
+> 
+>> Add a test for the handling of empty notes by "git notes show".
+>> ---
+>>  t/t3301-notes.sh |    5 +++++
+>>  1 files changed, 5 insertions(+), 0 deletions(-)
+>>
+>> diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+>> index 9393a25..4900dca 100755
+>> --- a/t/t3301-notes.sh
+>> +++ b/t/t3301-notes.sh
+>> @@ -35,6 +35,11 @@ test_expect_success 'need valid notes ref' '
+>>  	! MSG=2 GIT_NOTES_REF='/' git notes show
+>>  '
+>>  
+>> +# 1 indicates caught gracefully by die, 128 means git-show barfed
+>> +test_expect_failure 'handle empty notes gracefully' '
+>> +	git notes show || test 1 = $?
+>> +'
+> 
+> That test would succeed if the exit status is 0.
 
-Heh.  I meant to write this patch myself yesterday but got
-sidetracked and forgot.  Thanks.
+Yes. If "git notes show" returns 0 then even better. It does neither
+before nor after the patch. Or should we always expect 1 and test for
+that? I thought about grepping the output for "fatal" (which appears
+now) but that seemed ugly.
 
-Its unrelated to the other changes you were making.  Please submit
-it as its own patch.
-
-Aren't the local "username" and "email" variables now redundant?
-Can't we just assign directly to the fields in the object?
-
-Also, I think you should be using getCommitter{Name,Email} here
-by default.  Sometimes people override the GIT_AUTHOR_* variables
-in order to apply patches from others, but they almost never set the
-GIT_COMMITTER_* variables.  We're using this constructor to create an
-identity for use in commit objects, tag objects, or for the reflog.
-All three prefer the committer name over the author name.
-
--- 
-Shawn.
+Michael
