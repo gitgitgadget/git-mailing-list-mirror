@@ -1,56 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Eclipse Plugin install issue
-Date: Fri, 6 Feb 2009 07:34:18 -0800
-Message-ID: <20090206153418.GM26880@spearce.org>
-References: <b0a3bf780902060717l653cc6dcx385aa147f606a520@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] git notes show: test empty notes
+Date: Fri, 6 Feb 2009 16:36:14 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902061635560.7377@intel-tinevez-2-302>
+References: <1233933543-28407-1-git-send-email-git@drmicha.warpmail.net> <1233933543-28407-2-git-send-email-git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Chris Velevitch <chris.velevitch@gmail.com>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Feb 06 16:36:05 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Feb 06 16:38:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVSkG-0007dM-Dk
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 16:35:56 +0100
+	id 1LVSmT-0000A2-1Z
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 16:38:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753080AbZBFPeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 10:34:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753174AbZBFPeU
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 10:34:20 -0500
-Received: from george.spearce.org ([209.20.77.23]:39629 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751368AbZBFPeT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 10:34:19 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id D62C238210; Fri,  6 Feb 2009 15:34:18 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <b0a3bf780902060717l653cc6dcx385aa147f606a520@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753135AbZBFPgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 10:36:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753208AbZBFPgS
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 10:36:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42237 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752721AbZBFPgS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 10:36:18 -0500
+Received: (qmail invoked by alias); 06 Feb 2009 15:36:15 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp053) with SMTP; 06 Feb 2009 16:36:15 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19BqUQ72oxBpTi6mGYnyWPygIaAj6bBX+lTnTfHea
+	GuAO9XtirAGoPM
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <1233933543-28407-2-git-send-email-git@drmicha.warpmail.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108736>
 
-Chris Velevitch <chris.velevitch@gmail.com> wrote:
-> I've pointed the Eclipse update manager to
-> http://www.jgit.org/update-site and when try to install it, it get:-
+Hi,
+
+On Fri, 6 Feb 2009, Michael J Gruber wrote:
+
+> Add a test for the handling of empty notes by "git notes show".
+> ---
+>  t/t3301-notes.sh |    5 +++++
+>  1 files changed, 5 insertions(+), 0 deletions(-)
 > 
-> Cannot complete the request.  See the details.
-> Cannot find a solution satisfying the following requirements
-> Match[requiredCapability:
-> org.eclipse.equinox.p2.iu/org.spearce.egit.feature.group/[0.4.0.200901290136,0.4.0.200901290136]].
-...
-> The instructions didn't say there were any prerequisites.
+> diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+> index 9393a25..4900dca 100755
+> --- a/t/t3301-notes.sh
+> +++ b/t/t3301-notes.sh
+> @@ -35,6 +35,11 @@ test_expect_success 'need valid notes ref' '
+>  	! MSG=2 GIT_NOTES_REF='/' git notes show
+>  '
+>  
+> +# 1 indicates caught gracefully by die, 128 means git-show barfed
+> +test_expect_failure 'handle empty notes gracefully' '
+> +	git notes show || test 1 = $?
+> +'
 
-There aren't any prerequisites beyond the base Eclipse 3.4 and
-any Java 5 or later runtime.  Its very odd that the update manager
-can't install EGit.
- 
-Robin, is there a missing JAR file on the jgit.org update site?
+That test would succeed if the exit status is 0.
 
--- 
-Shawn.
+Ciao,
+Dscho
