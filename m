@@ -1,81 +1,63 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git maintenance bug tracker sooner better than later
-Date: Fri, 06 Feb 2009 13:56:02 +0100
-Message-ID: <498C3362.9080105@op5.se>
-References: <alpine.DEB.1.00.0902031541100.6573@intel-tinevez-2-302> <87tz7bniyk.fsf@jidanni.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCHv2] gitweb: Better regexp for SHA-1 committag match
+Date: Fri, 6 Feb 2009 14:03:39 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902061403130.7377@intel-tinevez-2-302>
+References: <200902022204.46651.toralf.foerster@gmx.de> <200902061126.18418.jnareb@gmail.com> <b77c1dce0902060231u358587d5o940eb322fde52a68@mail.gmail.com> <200902061149.16210.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: johannes.schindelin@gmx.de, tlikonen@iki.fi, nanako3@lavabit.com,
-	git@vger.kernel.org
-To: jidanni@jidanni.org
-X-From: git-owner@vger.kernel.org Fri Feb 06 13:57:47 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
+	git@vger.kernel.org,
+	=?ISO-8859-15?Q?Toralf_F=F6rster?= <toralf.foerster@gmx.de>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 06 14:06:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVQH5-0005Lz-5T
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 13:57:39 +0100
+	id 1LVQOL-0007uH-Tu
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 14:05:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932AbZBFM4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 07:56:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbZBFM4I
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 07:56:08 -0500
-Received: from mail.op5.se ([193.201.96.20]:46070 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751200AbZBFM4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 07:56:07 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 6B2EA1B80060;
-	Fri,  6 Feb 2009 13:56:52 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Wt0g2ASwXvmu; Fri,  6 Feb 2009 13:56:50 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 5C8641B80053;
-	Fri,  6 Feb 2009 13:56:50 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <87tz7bniyk.fsf@jidanni.org>
+	id S1752514AbZBFNDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 08:03:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751997AbZBFNDm
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 08:03:42 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40483 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751878AbZBFNDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 08:03:42 -0500
+Received: (qmail invoked by alias); 06 Feb 2009 13:03:39 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp052) with SMTP; 06 Feb 2009 14:03:39 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18wPHYyRlMwFGJUNHnHDMgZfFiztVxx6vCF2uDrpb
+	0a56uxv41M7iCt
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <200902061149.16210.jnareb@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108698>
 
-jidanni@jidanni.org wrote:
-> Anyway, I have this file
->   -rw-r--r--  1   19561 2009-01-13 03:26 DietCherries17
-> where I have 17 tiny documentation patches that sent to
-> git@vger.kernel.org but nothing happened.
-> Perhaps I could send them to a volunteer who could see if any of them
-> are useful and then do something with them. Thanks.
+Hi,
 
-That's really not how things work around here, or on any OSS project
-I've ever been engaged in. It's your itch to scratch, so before you
-have a chance of getting anyone else to scratch it for you, you have
-to either make those others interested enough to volunteer to do it
-for you, or you get to scratch away as much as you like yourself.
+On Fri, 6 Feb 2009, Jakub Narebski wrote:
 
-The longer and more difficult way is to scratch the itches of so
-many others that people want to help you out because the chance
-you'll do something else which is *also* productive is high enough
-to warrant it. So far, you seem more interested in shooting from
-the hip, sending patches at random that have little or no impact
-on anything and that nobody else is genuinely interested in. That's
-fine if you also pick up the pieces of your poor aim and actually
-follow through but when it really just causes more work for others
-than the end-result would have been worth to start with, the net
-result is counter-productive and you have to work harder when you
-have ideas/patches that are actually good than you would have been
-forced to with a better overall signal-to-noise ratio.
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index f27dbb6..5dcc108 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1364,7 +1364,7 @@ sub format_log_line_html {
+>  	my $line = shift;
+>  
+>  	$line = esc_html($line, -nbsp=>1);
+> -	if ($line =~ m/([0-9a-fA-F]{8,40})/) {
+> +	if ($line =~ m/\b([0-9a-fA-F]{8,40})\b(!?\@)/) {
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Looks good to me!
+
+Thanks,
+Dscho
