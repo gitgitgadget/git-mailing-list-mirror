@@ -1,66 +1,86 @@
-From: Nigel Magnay <nigel.magnay@gmail.com>
-Subject: [JGIT] maven build fails on OS X
-Date: Fri, 6 Feb 2009 15:08:15 +0000
-Message-ID: <320075ff0902060708m5ec566b9g755829c25c7727d8@mail.gmail.com>
+From: Chris Velevitch <chris.velevitch@gmail.com>
+Subject: Eclipse Plugin install issue
+Date: Sat, 7 Feb 2009 02:17:29 +1100
+Message-ID: <b0a3bf780902060717l653cc6dcx385aa147f606a520@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 06 16:09:49 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 06 16:19:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVSKv-0004pb-Gq
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 16:09:45 +0100
+	id 1LVSTw-0000fy-C7
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 16:19:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752066AbZBFPIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 10:08:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751898AbZBFPIR
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 10:08:17 -0500
-Received: from ey-out-2122.google.com ([74.125.78.27]:36628 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751212AbZBFPIQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 10:08:16 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so231262eya.37
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 07:08:15 -0800 (PST)
+	id S1752310AbZBFPRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 10:17:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752254AbZBFPRc
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 10:17:32 -0500
+Received: from rv-out-0506.google.com ([209.85.198.228]:48636 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751259AbZBFPRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 10:17:32 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so831814rvb.1
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 07:17:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:date:message-id:subject
          :from:to:content-type:content-transfer-encoding;
-        bh=xQmsW33MD9XJ4yvpnSEANf40PLWE/TrA3d00dXglIoc=;
-        b=PdRcSs14UJwgg5dh7O7xxJiWwz3hxXDBOXQBCppnlQoy9xamcRho6+F7QGW9VHaEzW
-         lUh2133usx2WZnPOsIOhq+vYC7+5GL9KSmWnPKL76VdPi1VHFWQqz97qpEacJbA7Xo5Q
-         4ecwjuvwWivH2vi0mfXoOXlGVWD3+VVCsmDAo=
+        bh=XTTZu10Yd99gagdx6+GLs49mKaDxs2nCdD9TDGB5qKM=;
+        b=mtsdGR6Dy0EenVfipaedFTR79olKHywMqV4eKiIsxGGvB2L1Ezw1naXUFjDvjCqqx2
+         Ij/0ItZZSBr/dbmuwbmzDZtd0rqOEOGS0T2Vf7u67qhvqVAaWkCj7033v9rqTeK8oxEa
+         TFYMsPt04IWZyJ2hqrvOOkEtzsC4AyLJiSAco=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:date:message-id:subject:from:to:content-type
          :content-transfer-encoding;
-        b=HqWF4iGWNQOBXYzZ2j49Sqn6kF8gAJTnuVCJEy5AkbrlUqaNAVYaby1PzAGzWqNvyO
-         eNvg4qR3y0D7iigSyz1FtPza1KA5pb+0URI9HyWrGu95STLHb5taqsyshd8eAPz4QR6p
-         awHPSk1ZLKoFJ+aEvKX2S169nJA7kxZ0/g638=
-Received: by 10.103.172.7 with SMTP id z7mr760134muo.129.1233932895157; Fri, 
-	06 Feb 2009 07:08:15 -0800 (PST)
+        b=hO7ucKesxrBElCceD2K7sJbTWWa+WGxYxaWbAbYH65BP1u2gXSZfTbsF7sxtePdRqw
+         giat2p+kqnZz4fqILkKychU2YvVNQOLoa8uG4uzklfnUPVPPxCbuKkN1pKZlTcwmFD++
+         YVsxXjitWijzGP6GfMvJap1ZXqzk+a1hjBdmY=
+Received: by 10.141.53.4 with SMTP id f4mr881453rvk.155.1233933449575; Fri, 06 
+	Feb 2009 07:17:29 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108726>
 
-I don't know if this is known about - I get failures running the m2
-build for jgit:
+I've pointed the Eclipse update manager to
+http://www.jgit.org/update-site and when try to install it, it get:-
 
-Failed tests:
-  testParse_implicit_mixed_encoded(org.spearce.jgit.revwalk.RevCommitParseTest)
-  testParse_explicit_bad_encoded(org.spearce.jgit.revwalk.RevCommitParseTest)
-  testParse_implicit_mixed_encoded(org.spearce.jgit.revwalk.RevTagParseTest)
-  testParse_explicit_bad_encoded(org.spearce.jgit.revwalk.RevTagParseTest)
-  testDequote_OctalAll(org.spearce.jgit.util.QuotedStringGitPathStyleTest)
-  testDequote_Latin1(org.spearce.jgit.util.QuotedStringGitPathStyleTest)
-  testDequote_RawLatin1(org.spearce.jgit.util.QuotedStringGitPathStyleTest)
-  testGetText_DiffCc(org.spearce.jgit.patch.GetTextTest)
+Cannot complete the request.  See the details.
+Cannot find a solution satisfying the following requirements
+Match[requiredCapability:
+org.eclipse.equinox.p2.iu/org.spearce.egit.feature.group/[0.4.0.200901290136,0.4.0.200901290136]].
 
-Curiously, the tests work in eclipse and from ./make_jgit.sh - I
-suspect some environment setting with the mac's charset.
+in the log I see:-
 
-I can try and fix it if it's new, but I wanted to check first..
+!ENTRY org.eclipse.equinox.p2.ui 4 10005 2009-02-07 01:55:41.561
+!MESSAGE Cannot complete the request.  See the details.
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 4 10005 2009-02-07 01:55:41.561
+!MESSAGE Cannot complete the request.  See the details.
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 1 2009-02-07 01:55:41.561
+!MESSAGE Cannot find a solution satisfying the following requirements
+Match[requiredCapability:
+org.eclipse.equinox.p2.iu/org.spearce.egit.feature.group/[0.4.0.200901290136,0.4.0.200901290136]].
+
+The instructions didn't say there were any prerequisites.
+
+Where do I find these?
+
+Using running Eclipse 3.4.1 on Intel Mac OSX Leopard with JRE 1.5.0_16-b06-284
+
+
+Chris
+--
+Chris Velevitch
+Manager - Adobe Platform Users Group, Sydney
+m: 0415 469 095
+www.apugs.org.au
+
+Adobe Platform Users Group, Sydney
+Feb '09 meeting: TBA
+Date: Mon 23rd Feb January 6pm for 6:30 start
+Details and RSVP coming soon
