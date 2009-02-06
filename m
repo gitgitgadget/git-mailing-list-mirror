@@ -1,63 +1,67 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Chicken/egg problem building from a 'git clone'
-Date: Fri, 6 Feb 2009 14:06:50 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0902061357520.19665@iabervon.org>
-References: <loom.20090206T035001-370@post.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 7/8] Tests: let --valgrind imply --verbose and --tee
+Date: Fri, 6 Feb 2009 14:08:15 -0500
+Message-ID: <20090206190815.GB19494@coredump.intra.peff.net>
+References: <cover.1233702893u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0902040026250.9822@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Joi Ellis <gyles19@visi.com>
-X-From: git-owner@vger.kernel.org Fri Feb 06 20:08:20 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 06 20:09:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVW3n-0001Jb-Pz
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 20:08:20 +0100
+	id 1LVW5A-0001tD-QK
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 20:09:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754552AbZBFTGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 14:06:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754214AbZBFTGw
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 14:06:52 -0500
-Received: from iabervon.org ([66.92.72.58]:54141 "EHLO iabervon.org"
+	id S1753034AbZBFTIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 14:08:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750864AbZBFTIS
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 14:08:18 -0500
+Received: from peff.net ([208.65.91.99]:55712 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753580AbZBFTGv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 14:06:51 -0500
-Received: (qmail 2062 invoked by uid 1000); 6 Feb 2009 19:06:50 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 6 Feb 2009 19:06:50 -0000
-In-Reply-To: <loom.20090206T035001-370@post.gmane.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1750782AbZBFTIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 14:08:17 -0500
+Received: (qmail 24142 invoked by uid 107); 6 Feb 2009 19:08:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 06 Feb 2009 14:08:31 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Feb 2009 14:08:15 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0902040026250.9822@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108771>
 
-On Fri, 6 Feb 2009, Joi Ellis wrote:
+On Wed, Feb 04, 2009 at 12:26:26AM +0100, Johannes Schindelin wrote:
 
-> I have an elderly laptop.  I can build and install git using a tarball.  I 
-> original installed git 1.6.0.  This evening I noticed 1.6.1 was availble, and I 
-> decided to try building from the git repository using 'git clone' as described 
-> in the git home page.   And to jump ahead of myself, I want to point out that 
-> 1.6.1 will build from the tarball.  However...
+> It does not make much sense to run the (expensive) valgrind tests and
+> not look at the output.
 > 
-> The workspace I get using 'git clone' does not provide a configure file.  And 
-> because my laptop isn't running a bleeding edge distribution, my build tools 
-> are older than you'd expect, so...
-> 
-> "make all" fails becuase my libaries are old:
-> 
->     LINK git-fast-import
-> fast-import.o: In function `store_object':
-> /usr/local/src/git/git/fast-import.c:1086: undefined reference to `deflateBound'
-> /usr/local/src/git/git/fast-import.c:1109: undefined reference to `deflateBound'
+> To prevent output from scrolling out of reach, the parameter --tee is
+> implied, too.
 
-What zlib version do you have? If your libraries are old enough, git's 
-cache.h header file should effectively enable NO_DEFLATE_BOUND. Maybe you 
-have skew between your header files and the libraries the linker finds by 
-default? Or maybe we should consider any zlib without a version in the 
-header file old enough not to have deflateBound()?
+Might it not make sense to want to send the output to a file, but _not_
+show it on the terminal (e.g., running from a cron job)? But if I
+understand correctly, that is not actually possible with any combination
+of "--verbose" and "--tee".
 
-	-Daniel
-*This .sig left intentionally blank*
+So perhaps it would make more sense to have, rather than "--tee", simply
+"--verbose" to output to the terminal and "--save-output" (or similar)
+to save the output. If both are requested, it is equivalent to what
+"--tee" does now.
+
+On the other hand, I think "--verbose --tee >/dev/null" would probably
+accomplish the same thing, so it probably isn't worth too much effort.
+
+Other than that, this series looks pretty reasonable. I am a bit late to
+ack, but thank you for following through on it. It looks like it has
+caught some bugs already, which is always a good sign. :)
+
+I have access to a decent quad-core box, so I'll try to periodically run
+the test suite with valgrind on it. Daily is probably too much, but
+maybe whenever we go into rc-freeze is a good time.
+
+-Peff
