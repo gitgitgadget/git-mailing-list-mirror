@@ -1,72 +1,67 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: [PATCH 2/2] completion: Get rid of tabbed indentation in comments. Replace with spaces.
-Date: Fri,  6 Feb 2009 11:05:38 -0500
-Message-ID: <1233936338-10679-2-git-send-email-ted@tedpavlic.com>
-References: <20090206155823.GO26880@spearce.org>
- <1233936338-10679-1-git-send-email-ted@tedpavlic.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Ted Pavlic <ted@tedpavlic.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Fri Feb 06 17:07:52 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: Eclipse Plugin install issue
+Date: Fri, 6 Feb 2009 17:10:33 +0100
+Message-ID: <200902061710.34337.robin.rosenberg@dewire.com>
+References: <b0a3bf780902060717l653cc6dcx385aa147f606a520@mail.gmail.com> <20090206153418.GM26880@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Chris Velevitch <chris.velevitch@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Feb 06 17:12:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVTEc-0003ig-Kr
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 17:07:19 +0100
+	id 1LVTJL-0005yh-Or
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 17:12:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753458AbZBFQFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 11:05:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbZBFQFv
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 11:05:51 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:41523 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752150AbZBFQFu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Feb 2009 11:05:50 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 0EBB380D8063;
-	Fri,  6 Feb 2009 10:59:27 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DwOTUgqsag+a; Fri,  6 Feb 2009 10:59:26 -0500 (EST)
-Received: from localhost.localdomain (tedpc.ece.ohio-state.edu [164.107.164.122])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id EC22D80D8066;
-	Fri,  6 Feb 2009 10:59:26 -0500 (EST)
-X-Mailer: git-send-email 1.6.1.2.390.gba743
-In-Reply-To: <1233936338-10679-1-git-send-email-ted@tedpavlic.com>
+	id S1759744AbZBFQKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 11:10:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759731AbZBFQKm
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 11:10:42 -0500
+Received: from mail.dewire.com ([83.140.172.130]:10209 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759657AbZBFQKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 11:10:41 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id E50B6147E896;
+	Fri,  6 Feb 2009 17:10:35 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id NHmxMrEVErfz; Fri,  6 Feb 2009 17:10:35 +0100 (CET)
+Received: from sleipner.localnet (sleipner.dewire.com [10.1.2.197])
+	by dewire.com (Postfix) with ESMTP id 399C9147E88F;
+	Fri,  6 Feb 2009 17:10:35 +0100 (CET)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <20090206153418.GM26880@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108752>
 
-Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+fredag 06 februari 2009 16:34:18 skrev Shawn O. Pearce:
+> Chris Velevitch <chris.velevitch@gmail.com> wrote:
+> > I've pointed the Eclipse update manager to
+> > http://www.jgit.org/update-site and when try to install it, it get:-
+> > 
+> > Cannot complete the request.  See the details.
+> > Cannot find a solution satisfying the following requirements
+> > Match[requiredCapability:
+> > org.eclipse.equinox.p2.iu/org.spearce.egit.feature.group/[0.4.0.200901290136,0.4.0.200901290136]].
+> ...
+> > The instructions didn't say there were any prerequisites.
+> 
+> There aren't any prerequisites beyond the base Eclipse 3.4 and
+> any Java 5 or later runtime.  Its very odd that the update manager
+> can't install EGit.
+>  
+> Robin, is there a missing JAR file on the jgit.org update site?
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 6e04985..f44f63c 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -34,11 +34,11 @@
- #       are currently in a git repository.  The %s token will be
- #       the name of the current branch.
- #
--#	In addition, if you set GIT_PS1_SHOWDIRTYSTATE to a nonempty
--#	value, unstaged (*) and staged (+) changes will be shown next
--#	to the branch name.  You can configure this per-repository
--#	with the bash.showDirtyState variable, which defaults to true
--#	once GIT_PS1_SHOWDIRTYSTATE is enabled.
-+#       In addition, if you set GIT_PS1_SHOWDIRTYSTATE to a nonempty
-+#       value, unstaged (*) and staged (+) changes will be shown next
-+#       to the branch name.  You can configure this per-repository
-+#       with the bash.showDirtyState variable, which defaults to true
-+#       once GIT_PS1_SHOWDIRTYSTATE is enabled.
- #
- # To submit patches:
- #
--- 
-1.6.1.2.390.gba743
+I installed the latest version yesterday myself in both  the SDK edition and JEE editions of Ganymed 3.4.0. Just checked that it worked in 3.4.1 too and from another location. That was a later version though 200902052244, but I try every version unless I get interrupted and forget about it.
+
+-- robin
