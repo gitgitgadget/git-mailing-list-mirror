@@ -1,57 +1,62 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] completion: Get rid of tabbed indentation in
-	comments. Replace with spaces.
-Date: Fri, 6 Feb 2009 08:13:03 -0800
-Message-ID: <20090206161303.GP26880@spearce.org>
-References: <20090206155823.GO26880@spearce.org> <1233936338-10679-1-git-send-email-ted@tedpavlic.com> <1233936338-10679-2-git-send-email-ted@tedpavlic.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Fri Feb 06 17:14:39 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH v2 0/2] git notes show: handle empty notes gracefully
+Date: Fri,  6 Feb 2009 17:17:53 +0100
+Message-ID: <1233937075-31194-1-git-send-email-git@drmicha.warpmail.net>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 06 17:19:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVTLf-000733-1t
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 17:14:35 +0100
+	id 1LVTQR-0000jm-6n
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 17:19:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754117AbZBFQNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 11:13:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753476AbZBFQNG
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 11:13:06 -0500
-Received: from george.spearce.org ([209.20.77.23]:53311 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754117AbZBFQNE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 11:13:04 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 2481C38210; Fri,  6 Feb 2009 16:13:03 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1233936338-10679-2-git-send-email-ted@tedpavlic.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753476AbZBFQSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 11:18:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbZBFQSE
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 11:18:04 -0500
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:59487 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752183AbZBFQSD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Feb 2009 11:18:03 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 4C175287C56;
+	Fri,  6 Feb 2009 11:18:01 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 06 Feb 2009 11:18:01 -0500
+X-Sasl-enc: wrLRPU6Lksg+7wwKPUhIyGbDKC0FY7ZyyMdc3m+ZVGn3 1233937080
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 79A5114902;
+	Fri,  6 Feb 2009 11:18:00 -0500 (EST)
+X-Mailer: git-send-email 1.6.1.2.253.ga34a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108754>
 
-Ted Pavlic <ted@tedpavlic.com> wrote:
-> Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
-> Acked-by: Shawn O. Pearce <spearce@spearce.org>
+"git notes show" barks when there is no note to show. This introduces a
+test (yes, a test!) and, in a second round, reacts more gracefully to
+empty notes and adjust the expected test output accordingly.
 
-Heh.
+Note that in both cases (before/after the patch) the return code is
+non-zero: It's 128 in the ungraceful case, 1 when "dieing gracefully",
+uhm...
 
-I expected Junio to use my TAB line as-is.  I find them amusing.
-Plus, I didn't actually apply your patches and test them.  They
-just looked right to me.  Usually Acked-by is applied only if you
-actually ran the code and verified it does what the message claims.
-Trivially-acked-by is a bit less strict.
+The main achivement in v2 is the correction of typos in the commit
+messages and comments, as well as the addition of proper s-o-b (son of
+a...) lines.
 
-Whatever.  These are really trivial patches.  Whatever Junio
-applies here is fine.
+Additionally, v2 incorporates input from the two J's. We test explicitly
+for return code 1 now.
 
-Thanks for fixing that ${X-} thing.  I clearly missed it on the
-review of the ps1 stuff.
+Michael J Gruber (2):
+  git notes show: test empty notes
+  handle empty notes gracefully
 
--- 
-Shawn.
+ git-notes.sh     |    2 ++
+ t/t3301-notes.sh |    5 +++++
+ 2 files changed, 7 insertions(+), 0 deletions(-)
