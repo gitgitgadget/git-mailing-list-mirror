@@ -1,67 +1,57 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: Eclipse Plugin install issue
-Date: Fri, 6 Feb 2009 17:10:33 +0100
-Message-ID: <200902061710.34337.robin.rosenberg@dewire.com>
-References: <b0a3bf780902060717l653cc6dcx385aa147f606a520@mail.gmail.com> <20090206153418.GM26880@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/2] completion: Get rid of tabbed indentation in
+	comments. Replace with spaces.
+Date: Fri, 6 Feb 2009 08:13:03 -0800
+Message-ID: <20090206161303.GP26880@spearce.org>
+References: <20090206155823.GO26880@spearce.org> <1233936338-10679-1-git-send-email-ted@tedpavlic.com> <1233936338-10679-2-git-send-email-ted@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Chris Velevitch <chris.velevitch@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Feb 06 17:12:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Fri Feb 06 17:14:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVTJL-0005yh-Or
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 17:12:12 +0100
+	id 1LVTLf-000733-1t
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 17:14:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759744AbZBFQKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 11:10:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759731AbZBFQKm
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 11:10:42 -0500
-Received: from mail.dewire.com ([83.140.172.130]:10209 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759657AbZBFQKl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 11:10:41 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id E50B6147E896;
-	Fri,  6 Feb 2009 17:10:35 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NHmxMrEVErfz; Fri,  6 Feb 2009 17:10:35 +0100 (CET)
-Received: from sleipner.localnet (sleipner.dewire.com [10.1.2.197])
-	by dewire.com (Postfix) with ESMTP id 399C9147E88F;
-	Fri,  6 Feb 2009 17:10:35 +0100 (CET)
-User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
-In-Reply-To: <20090206153418.GM26880@spearce.org>
+	id S1754117AbZBFQNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 11:13:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753476AbZBFQNG
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 11:13:06 -0500
+Received: from george.spearce.org ([209.20.77.23]:53311 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754117AbZBFQNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 11:13:04 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 2481C38210; Fri,  6 Feb 2009 16:13:03 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <1233936338-10679-2-git-send-email-ted@tedpavlic.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108753>
 
-fredag 06 februari 2009 16:34:18 skrev Shawn O. Pearce:
-> Chris Velevitch <chris.velevitch@gmail.com> wrote:
-> > I've pointed the Eclipse update manager to
-> > http://www.jgit.org/update-site and when try to install it, it get:-
-> > 
-> > Cannot complete the request.  See the details.
-> > Cannot find a solution satisfying the following requirements
-> > Match[requiredCapability:
-> > org.eclipse.equinox.p2.iu/org.spearce.egit.feature.group/[0.4.0.200901290136,0.4.0.200901290136]].
-> ...
-> > The instructions didn't say there were any prerequisites.
-> 
-> There aren't any prerequisites beyond the base Eclipse 3.4 and
-> any Java 5 or later runtime.  Its very odd that the update manager
-> can't install EGit.
->  
-> Robin, is there a missing JAR file on the jgit.org update site?
+Ted Pavlic <ted@tedpavlic.com> wrote:
+> Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
+> Acked-by: Shawn O. Pearce <spearce@spearce.org>
 
-I installed the latest version yesterday myself in both  the SDK edition and JEE editions of Ganymed 3.4.0. Just checked that it worked in 3.4.1 too and from another location. That was a later version though 200902052244, but I try every version unless I get interrupted and forget about it.
+Heh.
 
--- robin
+I expected Junio to use my TAB line as-is.  I find them amusing.
+Plus, I didn't actually apply your patches and test them.  They
+just looked right to me.  Usually Acked-by is applied only if you
+actually ran the code and verified it does what the message claims.
+Trivially-acked-by is a bit less strict.
+
+Whatever.  These are really trivial patches.  Whatever Junio
+applies here is fine.
+
+Thanks for fixing that ${X-} thing.  I clearly missed it on the
+review of the ps1 stuff.
+
+-- 
+Shawn.
