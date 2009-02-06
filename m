@@ -1,69 +1,59 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: Re: git maintenance bug tracker sooner better than later
-Date: Fri, 6 Feb 2009 16:30:16 +0000 (UTC)
-Message-ID: <slrngoopcn.14u8.heipei@macbook.lan>
-References: <498C3362.9080105@op5.se> <87skmrhf5i.fsf@jidanni.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/2] Introduce config variable "diff.primer"
+Date: Fri, 6 Feb 2009 11:54:53 -0500
+Message-ID: <20090206165453.GA19026@coredump.intra.peff.net>
+References: <1233598855-1088-1-git-send-email-keith@cs.ucla.edu> <1233598855-1088-2-git-send-email-keith@cs.ucla.edu> <20090203071516.GC21367@sigill.intra.peff.net> <alpine.GSO.2.00.0902030833250.5994@kiwi.cs.ucla.edu> <7v7i4692p4.fsf@gitster.siamese.dyndns.org> <alpine.GSO.2.00.0902032217380.25760@kiwi.cs.ucla.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 06 17:31:59 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Keith Cascio <keith@CS.UCLA.EDU>
+X-From: git-owner@vger.kernel.org Fri Feb 06 17:56:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVTcR-0006Ao-RA
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 17:31:56 +0100
+	id 1LVU09-0000VB-Pg
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 17:56:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752606AbZBFQa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 11:30:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752467AbZBFQa2
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 11:30:28 -0500
-Received: from main.gmane.org ([80.91.229.2]:43505 "EHLO ciao.gmane.org"
+	id S1752224AbZBFQy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 11:54:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752051AbZBFQy5
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 11:54:57 -0500
+Received: from peff.net ([208.65.91.99]:55285 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751690AbZBFQa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 11:30:27 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LVTb0-0006Ee-Bw
-	for git@vger.kernel.org; Fri, 06 Feb 2009 16:30:26 +0000
-Received: from p5082fbda.dip.t-dialin.net ([80.130.251.218])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 16:30:26 +0000
-Received: from heipei by p5082fbda.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 16:30:26 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p5082fbda.dip.t-dialin.net
-User-Agent: slrn/0.9.9p1 (Darwin)
+	id S1751046AbZBFQy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 11:54:57 -0500
+Received: (qmail 23397 invoked by uid 107); 6 Feb 2009 16:55:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 06 Feb 2009 11:55:09 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Feb 2009 11:54:53 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.GSO.2.00.0902032217380.25760@kiwi.cs.ucla.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108760>
 
-On 2009-02-06, jidanni@jidanni.org <jidanni@jidanni.org> wrote:
-> With a bug tracker, at least one knows somebody saw something for
-> sure, and it didn't just float by. That way one could register items
-> into it on one's good days, and then take a break, which I am going to
-> do now. Thanks.
+On Tue, Feb 03, 2009 at 10:36:48PM -0800, Keith Cascio wrote:
 
-And what "bugs" would you file? If I look at your patch-series which 
-consists of oneliner documentation nitpicking, I don't even want to 
-imagine how much these would get blown up by a web-based bug-tracker.
+> There are indeed two layers of masks (and there can be as many as
+> needed).  In my current patch, the shell command line becomes "master"
+> and primer becomes "slave".  Both layers exist independently of each
+> other, in two separate diff_option structs, until just before "go
+> time", when I flatten them (but that does not destroy the slave, it is
+> reused).
 
-The web-based is the second part: When working on/with *git*, a 
-command-line tool, I naturally work in a terminal, and I *don't* want to 
-fire up a webbrowser to communicate something as simple as a bug. Also 
-bug-trackers tend to attract all sorts of people who don't really think 
-or try to find bugs before submitting them. Those sorts of people 
-probably already file bugs for git and the distribution-maintainers then 
-tell them to report the problem upstream (i.e.: here) or do it 
-themselves.
+We have had trouble in the past figuring out exactly when "go time" is
+(not specifically for diff options, but for things like color config).
+That is, there is code which wants to munge the options based on some
+other input much later than the setting of most options, and so any
+finalizing work you do ends up happening too early. And maybe you can
+argue that such code is wrong or bad, but it does get written and it
+does cause problems.
 
--- 
-Johannes Gilger <heipei@hackvalue.de>
-http://hackvalue.de/heipei/
-GPG-Key: 0x42F6DE81
-GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
+So as I mentioned in another mail I just sent, I think you are best to
+stop thinking of it as a general flattening, and think of it more as a
+set of accessors that do the flattening Just In Time.
+
+-Peff
