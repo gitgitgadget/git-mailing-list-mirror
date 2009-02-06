@@ -1,75 +1,93 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv2 5/6] gitweb: last-modified time should be commiter, not 
-	author
-Date: Sat, 7 Feb 2009 00:00:11 +0100
-Message-ID: <cb7bb73a0902061500x12105a13la78703918937fe4b@mail.gmail.com>
-References: <1232970616-21167-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200902050038.57999.jnareb@gmail.com>
-	 <cb7bb73a0902060314u4741528bs196a43d45ff7f283@mail.gmail.com>
-	 <200902062212.08857.jnareb@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] add -p: import Term::ReadKey with 'require'
+Date: Sat, 7 Feb 2009 00:21:13 +0100
+Message-ID: <200902070021.18928.trast@student.ethz.ch>
+References: <20090206140126.GA18364@coredump.intra.peff.net> <1233948601-4828-1-git-send-email-trast@student.ethz.ch> <20090206203037.GB19959@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart19592128.kLzIV2HmK1";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 07 00:01:44 2009
+Cc: Junio C Hamano <junio@pobox.com>,
+	Suraj Kurapati <sunaku@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 07 00:22:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVZhe-0005oV-4L
-	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 00:01:42 +0100
+	id 1LVa28-0003oH-Ld
+	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 00:22:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752795AbZBFXAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 18:00:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751309AbZBFXAO
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 18:00:14 -0500
-Received: from ey-out-2122.google.com ([74.125.78.25]:54243 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752660AbZBFXAN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 18:00:13 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so281846eya.37
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 15:00:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MRK+V/alne9u2j97lpFbE2NSA0ZrVw7YtwqzapB3B0M=;
-        b=s0/wIVfyEC9wp02nvDrivK4zVaKiU5lIkxKAk3he6TmqlWc4yOgrI0evyv0ldrp47f
-         x0LmGLw0xywQtmTi1xKcPB8Rxmwk4Lz9JJyR/ryvEGWsOF3puS54BefyJoWixkTXvrp8
-         XjGf+GthZi4FgSjIysvU+Ol8r7EpYpyE9Wpk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PEkQT9p4yxRm31suOwt1XvYxK8yHfbN8cMXMBoc5e+cV+DYb/RbWE9n/PUbZJcxB8q
-         avCsHBgmRzUt1e6r6dhnEFSk6r0tbP+XgxZcVSRu98WYTnpjlBiNUIl6emh/RftN0be3
-         oGvMzZlWlPXadkQXVjO3H7gBZdtSDFh609KZ8=
-Received: by 10.210.137.17 with SMTP id k17mr1685947ebd.138.1233961211649; 
-	Fri, 06 Feb 2009 15:00:11 -0800 (PST)
-In-Reply-To: <200902062212.08857.jnareb@gmail.com>
+	id S1752638AbZBFXV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 18:21:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752462AbZBFXV0
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 18:21:26 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:40489 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752399AbZBFXVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 18:21:25 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 7 Feb 2009 00:21:23 +0100
+Received: from thomas.localnet ([77.56.223.244]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 7 Feb 2009 00:21:23 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <20090206203037.GB19959@coredump.intra.peff.net>
+X-OriginalArrivalTime: 06 Feb 2009 23:21:23.0708 (UTC) FILETIME=[A051E3C0:01C988B1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108799>
 
-On Fri, Feb 6, 2009 at 10:12 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Using update time does ensure that it is monotonical, and it
-> wouldn't ever be earlier than the time repository started to be
-> available, but it changes from clone to clone.
+--nextPart19592128.kLzIV2HmK1
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I don't think it changing from clone to clone is a problem. Monotony
-and the ability to properly catch when the underlying data really
-changed are much more important factors. After all, there is no
-_requirement_ that Last-Modified be used for If-modified-since headers
-(although it is recommented, and clients that don't follow the
-recommendation are warned to be aware of all possible odd problems
-arising from not using it).
+Jeff King wrote:
+> I believe it is fine. The tricky thing is that perl's parsing is
+> dependent on what functions have been defined. So it is OK to say
+>=20
+>   ReadKey 0;
+>=20
+> if a subroutine ReadKey has been defined, but otherwise it generates a
+> warning about using the bareword as a function. However
+>=20
+>   ReadKey(0);
+>=20
+> parses unambiguously, so it is always OK, even if no subroutine has yet
+> been defined.
 
-The real question is: _how_ do you get the (branch) update time?
+Ok, that explains a lot.  I always thought Perl had a syntax
+influenced somewhat by the functional programming languages, where the
+parentheses are usually optional.  Clearly not so.
 
+> (note that you could also skip the import and just call
+> Term::ReadKey::ReadKey by its full name).
 
--- 
-Giuseppe "Oblomov" Bilotta
+I tried that but couldn't get either Term::ReadKey::ReadKey or
+Term::ReadKey->ReadKey to work.  In retrospect, I suppose it requires
+parentheses too.
+
+Thanks for the review!
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart19592128.kLzIV2HmK1
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkmMxe4ACgkQqUud07tmzP02SwCffdpcESvXqvI1Ax0XM/LJ2uJ9
+JegAoIIq89vTxLLDASeHtizf2vplom3L
+=gpY5
+-----END PGP SIGNATURE-----
+
+--nextPart19592128.kLzIV2HmK1--
