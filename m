@@ -1,113 +1,145 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] More friendly message when locking the index fails.
-Date: Fri,  6 Feb 2009 15:36:06 +0100
-Message-ID: <1233930966-17022-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqljsma99t.fsf@bauges.imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Feb 06 15:43:45 2009
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH] Check for local changes with "goto"
+Date: Fri, 6 Feb 2009 14:46:19 +0000
+Message-ID: <b0943d9e0902060646hd779681x821e74d9a155d97b@mail.gmail.com>
+References: <20090128231305.16133.29214.stgit@localhost.localdomain>
+	 <20090129034512.GD24344@diana.vm.bytemark.co.uk>
+	 <b0943d9e0901300601j27ab6ebdq4b38a9f7c0cbe261@mail.gmail.com>
+	 <20090130152649.GA22044@diana.vm.bytemark.co.uk>
+	 <b0943d9e0901300936t4a6e0a37x1968a6949fb7bdda@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri Feb 06 15:47:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVRvI-0001zE-Ic
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 15:43:17 +0100
+	id 1LVRzi-0003zs-Db
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 15:47:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752372AbZBFOly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 09:41:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752268AbZBFOlx
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 09:41:53 -0500
-Received: from imag.imag.fr ([129.88.30.1]:50819 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752241AbZBFOlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 09:41:52 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n16Ea7v9004633
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 6 Feb 2009 15:36:07 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LVRoM-0000qp-LR; Fri, 06 Feb 2009 15:36:06 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LVRoM-0004R5-JB; Fri, 06 Feb 2009 15:36:06 +0100
-X-Mailer: git-send-email 1.6.1.2.351.g032a4.dirty
-In-Reply-To: <vpqljsma99t.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 06 Feb 2009 15:36:07 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752537AbZBFOqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 09:46:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752358AbZBFOqX
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 09:46:23 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:64139 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750945AbZBFOqW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 09:46:22 -0500
+Received: by fxm13 with SMTP id 13so1220285fxm.13
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 06:46:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ax0dG6VK4aRwKYJurQJ6saeY+70wFKk9VcZ+3ENmjQQ=;
+        b=diy67tmY9473CMW1p/llC0vEod9W629pOlwilOl0oUq5hIw5mt/fhq6ibj6Lon6M9l
+         8yoDBedjL2UVpXwH3vKcBkEnPGS0aVBZbu/cIVXBXwGO1evLCkMaVpnQBRDPsuwsJ2Nb
+         AzUgPPZnno/JKYa7wFHgJ7jFBuc1o5q6C7f8g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XAxKo2qnLZSK62yGvGu9MnAmpQuJX2BMXLdsazv+oJHGCVp+INpEABmRz0NaNPWvLv
+         r/UuoOIDX7KNmFSgFIDhn5pBOyrFqHeHkoSOi5et8tUNzQSxEJBVXKZc4rNw6OTiFbB4
+         d8T+SHzpNdTml6b8WRk6feKjNykoILeeXh4Xc=
+Received: by 10.223.107.9 with SMTP id z9mr1526811fao.1.1233931579918; Fri, 06 
+	Feb 2009 06:46:19 -0800 (PST)
+In-Reply-To: <b0943d9e0901300936t4a6e0a37x1968a6949fb7bdda@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108720>
 
-Just saying that index.lock exists doesn't tell the user _what_ to do
-to fix the problem. We should give an indication that it's normally
-safe to delete index.lock after making sure git isn't running here.
+2009/1/30 Catalin Marinas <catalin.marinas@gmail.com>:
+> Now, should we add the check_clean argument to Transaction.__init__()
+> rather than run() as we do for the allow_bad_head case?
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+It looks like this may be a better option. The previous patch fails if
+"goto" pushes a patch with standard git-apply followed by another
+patch with a three-way merge. When Transaction.run() is called, even
+if the patch pushing succeeded, the function complains about local
+changes because of the "iw.index.is_clean(self.stack.head)" check.
 
-> How about "If no other git process is currently running, this probably
-> means...." instead? E.g., sometimes I run 'git commit' in one terminal
-> window, and then switch to another before committing (to review the
-> diff for example), which would cause an index.lock file to be present
-> validly.
+It is also a bit weird to push/pop patches and only complain at the
+end of local changes. Below is an updated patch which does the
+checking in Transaction.__init__ (only the relevant parts of the
+patch):
 
-Right, here's an updated version.
+diff --git a/stgit/lib/git.py b/stgit/lib/git.py
+index e2b4266..07079b8 100644
+--- a/stgit/lib/git.py
++++ b/stgit/lib/git.py
+@@ -706,9 +706,11 @@ class Index(RunWithEnv):
+                     ).output_one_line())
+         except run.RunException:
+             raise MergeException('Conflicting merge')
+-    def is_clean(self):
++    def is_clean(self, tree):
++        """Check whether the index is clean relative to the given treeish."""
+         try:
+-            self.run(['git', 'update-index', '--refresh']).discard_output()
++            self.run(['git', 'diff-index', '--quiet', '--cached', tree.sha1]
++                    ).discard_output()
+         except run.RunException:
+             return False
+         else:
+@@ -858,6 +860,14 @@ class IndexAndWorktree(RunWithEnvCwd):
+         cmd = ['git', 'update-index', '--remove']
+         self.run(cmd + ['-z', '--stdin']
+                  ).input_nulterm(paths).discard_output()
++    def worktree_clean(self):
++        """Check whether the worktree is clean relative to index."""
++        try:
++            self.run(['git', 'update-index', '--refresh']).discard_output()
++        except run.RunException:
++            return False
++        else:
++            return True
 
- builtin-update-index.c |   12 ++++++++++--
- lockfile.c             |   10 +++++++++-
- 2 files changed, 19 insertions(+), 3 deletions(-)
+ class Branch(object):
+     """Represents a Git branch."""
+diff --git a/stgit/lib/transaction.py b/stgit/lib/transaction.py
+index 54de127..e1bd38d 100644
+--- a/stgit/lib/transaction.py
++++ b/stgit/lib/transaction.py
+@@ -75,7 +75,8 @@ class StackTransaction(object):
+       your refs and index+worktree, or fail without having done
+       anything."""
+     def __init__(self, stack, msg, discard_changes = False,
+-                 allow_conflicts = False, allow_bad_head = False):
++                 allow_conflicts = False, allow_bad_head = False,
++                 check_clean = False):
+         """Create a new L{StackTransaction}.
 
-diff --git a/builtin-update-index.c b/builtin-update-index.c
-index 5604977..23b97db 100644
---- a/builtin-update-index.c
-+++ b/builtin-update-index.c
-@@ -742,8 +742,16 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		if (newfd < 0) {
- 			if (refresh_flags & REFRESH_QUIET)
- 				exit(128);
--			die("unable to create '%s.lock': %s",
--			    get_index_file(), strerror(lock_error));
-+			if (lock_error == EEXIST) {
-+				die("Unable to create '%s.lock': %s.\n\n"
-+				    "If no other git process is currently running, this probably means a\n"
-+				    "git process crashed in this repository earlier. Make sure no other git\n"
-+				    "process is running and remove the file manually to continue.",
-+				    get_index_file(), strerror(lock_error));
-+			} else {
-+				die("Unable to create '%s.lock': %s",
-+				    get_index_file(), strerror(lock_error));
-+			}
- 		}
- 		if (write_cache(newfd, active_cache, active_nr) ||
- 		    commit_locked_index(lock_file))
-diff --git a/lockfile.c b/lockfile.c
-index 021c337..9bde859 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -159,7 +159,15 @@ int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
- {
- 	int fd = lock_file(lk, path, flags);
- 	if (fd < 0 && (flags & LOCK_DIE_ON_ERROR))
--		die("unable to create '%s.lock': %s", path, strerror(errno));
-+		if (errno == EEXIST) {
-+			die("Unable to create '%s.lock': %s.\n\n"
-+			    "If no other git process is currently running, this probably means a\n"
-+			    "git process crashed in this repository earlier. Make sure no other git\n"
-+			    "process is running and remove the file manually to continue.",
-+			    path, strerror(errno));
-+		} else {
-+			die("Unable to create '%s.lock': %s", path, strerror(errno));
-+		}
- 	return fd;
- }
- 
+         @param discard_changes: Discard any changes in index+worktree
+@@ -102,6 +103,8 @@ class StackTransaction(object):
+         self.__temp_index = self.temp_index_tree = None
+         if not allow_bad_head:
+             self.__assert_head_top_equal()
++        if check_clean:
++            self.__assert_index_worktree_clean()
+     stack = property(lambda self: self.__stack)
+     patches = property(lambda self: self.__patches)
+     def __set_applied(self, val):
+@@ -147,6 +150,12 @@ class StackTransaction(object):
+                 'This can happen if you modify a branch with git.',
+                 '"stg repair --help" explains more about what to do next.')
+             self.__abort()
++    def __assert_index_worktree_clean(self):
++        iw = self.__stack.repository.default_iw
++        if not iw.worktree_clean() or \
++           not iw.index.is_clean(self.stack.head):
++            self.__halt('Repository not clean. Use "refresh" or '
++                        '"status --reset"')
+     def __checkout(self, tree, iw, allow_bad_head):
+         if not allow_bad_head:
+             self.__assert_head_top_equal()
+
+
 -- 
-1.6.1.2.351.g032a4.dirty
+Catalin
