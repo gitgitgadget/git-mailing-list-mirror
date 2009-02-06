@@ -1,85 +1,123 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: Re: git maintenance bug tracker sooner better than later
-Date: Fri, 6 Feb 2009 12:33:07 +0000 (UTC)
-Message-ID: <gmham3$209$1@ger.gmane.org>
-References: <alpine.DEB.1.00.0902031541100.6573@intel-tinevez-2-302>
- <87tz7bniyk.fsf@jidanni.org>
+From: "Bisani, Alok" <alok.bisani@credit-suisse.com>
+Subject: git checkout effect on ls-files --others, how to merge
+ partially?
+Date: Fri, 6 Feb 2009 12:36:56 -0000
+Message-ID: <C5E2CAEE4A87D24DAB5334F62A72D1F43ADCBD@ELON17P32001A.csfb.cs-group.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+ charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 06 13:34:47 2009
+X-From: git-owner@vger.kernel.org Fri Feb 06 13:38:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVPuw-0006Ae-V4
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 13:34:47 +0100
+	id 1LVPyl-0007LY-Jh
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 13:38:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753288AbZBFMdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 07:33:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751775AbZBFMdT
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 07:33:19 -0500
-Received: from main.gmane.org ([80.91.229.2]:59697 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753129AbZBFMdS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 07:33:18 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LVPtU-0005I4-Oo
-	for git@vger.kernel.org; Fri, 06 Feb 2009 12:33:17 +0000
-Received: from u-4-171.vpn.rwth-aachen.de ([137.226.100.171])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 12:33:16 +0000
-Received: from heipei by u-4-171.vpn.rwth-aachen.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 12:33:16 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: u-4-171.vpn.rwth-aachen.de
-User-Agent: slrn/0.9.9p1 (Linux)
+	id S1753129AbZBFMhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 07:37:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbZBFMhR
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 07:37:17 -0500
+Received: from mail-gw18.credit-suisse.com ([198.240.130.183]:42005 "EHLO
+	nys17a-3003.corpny.csfb.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753095AbZBFMhQ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 6 Feb 2009 07:37:16 -0500
+Received: by nys17a-3003.corpny.csfb.com; Fri, 6 Feb 2009 07:37:09 -0500 (EST) 
+X-Server-Uuid: 4EAC7D12-E00D-46D7-91F2-2C1B0FAC6618
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git checkout effect on ls-files --others, how to merge
+ partially?
+thread-index: AcmIV5iO11dGnEFJSFeaZfzf+QVnFw==
+X-OriginalArrivalTime: 06 Feb 2009 12:36:57.0117 (UTC)
+ FILETIME=[993C54D0:01C98857]
+X-WSS-ID: 6592F1630ZK270140-02-05
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108694>
 
-On 2009-02-04, jidanni@jidanni.org <jidanni@jidanni.org> wrote:
-> Anyway, I have this file
->   -rw-r--r--  1   19561 2009-01-13 03:26 DietCherries17
-> where I have 17 tiny documentation patches that sent to
-> git@vger.kernel.org but nothing happened.
+Hi,
 
-As I recall a lot of those things were replied to (at least for the 
-first few patches) as being not quite right (or plain wrong). Once you 
-even said "oh, if you could fix this for me before applying it". At some 
-point the time it takes to review patches and to write a quick fix for 
-the bugs/typos yourself stands in no relation whatsoever.
+	I found a feature that was a bit surprising. Basically, a file
+exist on master as untracked (git-ls-files --others). It is git-add'ed
+on a branch. Now switching back to master, removes the file from
+master's working directory as well.
 
-> Perhaps I could send them to a volunteer who could see if any of them
-> are useful and then do something with them. Thanks.
+	Whereas, I was expecting it to simply be present as an untracked
+file on master as before. This maybe be unreasonable expectation, but
+still. To bring the file back on the master branch I had to $ git merge
+<branch>. This, however, would pull in all the changes from the branch.
+Whereas, I want to limit the merge only to the file.
 
-Or you could make one big "typo-fix"-patch out of them and one 
-"i-didnt-understand-the-manpage-there"-patch. Then these patches could 
-be reviewed and you could revise them.
+	Is there a way to pull in changes from a branch but only limited
+to a file/files? I ended up doing a manual restore using git-cat-file
+<branch>@{0}:/file. And checked in.
 
-A second solution would be to tackle real problems, earn the respect of 
-the maintainer and those close to him, have your patches merged and 
-_then_ when you come up with nitpicks about documentation, those people 
-would be sure of your abilities and would put more trust in you to not 
-mess up when writing documentation.
+    $ git init
 
-About the bug-tracker-thing: I am quite happy that git is one of those 
-projects where everything happens in one spot: Development, 
-bug-reporting and general discussion. It makes it a lot easier than 
-disconnected systems where information is easily duplicated and becomes 
-stale at other ends.
+    $ echo first > first
 
-But that's just my oppinion,
-Greetings, Jojo
+    $ echo second > second
 
--- 
-Johannes Gilger <heipei@hackvalue.de>
-http://hackvalue.de/heipei/
-GPG-Key: 0x42F6DE81
-GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
+    $ git add second
+
+    $ git commit
+
+    $ git ls-files
+    first
+
+    $ git ls-files --all
+
+    $ git ls-files --others
+    second
+
+    $ git ls-files --others --cached
+    first
+    second
+
+    $ git checkout -b test_branch HEAD
+
+    $ git branch
+      master
+    * test_branch
+
+    $ git ls-files --cached
+    second
+
+    $ git ls-files --others
+    first
+
+    $ git add first
+
+    $ git commit -m "first"
+
+    $ git ls-files --cached
+    first
+    second
+
+    $ git ls-files --others
+
+    $ git checkout master
+
+    $ git ls-files --others
+    # the file "first" which was --others before, has now been removed
+upon checking out master
+
+    $ git cat-file blob test_branch@{0}:first > first
+    # To bring the file first back on the master branch as an untracked
+file
+
+Best regards,
+Alok
+
+==============================================================================
+Please access the attached hyperlink for an important electronic communications disclaimer: 
+
+http://www.credit-suisse.com/legal/en/disclaimer_email_ib.html
+==============================================================================
