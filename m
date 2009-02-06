@@ -1,102 +1,95 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv2 6/6] gitweb: check if-modified-since for feeds
-Date: Fri, 6 Feb 2009 12:19:29 +0100
-Message-ID: <cb7bb73a0902060319q474f3daeu5f67ea859cfa97b1@mail.gmail.com>
-References: <1232970616-21167-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1232970616-21167-6-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1232970616-21167-7-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200902050303.43356.jnareb@gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: showing unstaged, etc., changes at the bash prompt
+Date: Fri, 6 Feb 2009 11:20:01 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngoo771.6pi.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 06 12:21:13 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 06 12:21:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVOle-0006Nh-8q
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 12:21:06 +0100
+	id 1LVOmE-0006Zg-Cx
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 12:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754230AbZBFLTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 06:19:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751622AbZBFLTb
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 06:19:31 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:44156 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751491AbZBFLTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 06:19:31 -0500
-Received: by ewy14 with SMTP id 14so1231067ewy.13
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 03:19:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=M2cLLzZQZN0PPabFpjQpcw96+Il0OuDd2HIEeSWw9BY=;
-        b=BHvmkAXyk00t3FNvW/7j6zshqmAwGQI1df2tXMZXdDuJOgQPacX96r4ZFUZKCOhuAU
-         h+wJ4NzBkfPxBA2W5W3Bksbj4bf2vTJWTFXATahJ0kHC2rfxCEr7wgl21bp7JciqHi3n
-         PTGvyKhtrWWA/Dgqebut0yT924RRZz1sSNGec=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=v+f7yiJYOXT2cOa+5fYba/doklolg026vSGIIEITfkV4QpWy5YJLgaCcc/akCNBUTV
-         FsvtLd6x5WtYChrTlZCtLyVvX0XWHw+EuIWb5aFHTS/HRxdnuh25VScRQ4fowQL4qtB0
-         xefQ8MqC1sRCuJ5b6T+SnxfLWpEj+hF2LTeB8=
-Received: by 10.210.104.20 with SMTP id b20mr1254578ebc.8.1233919169068; Fri, 
-	06 Feb 2009 03:19:29 -0800 (PST)
-In-Reply-To: <200902050303.43356.jnareb@gmail.com>
+	id S1751622AbZBFLUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 06:20:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751384AbZBFLUP
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 06:20:15 -0500
+Received: from main.gmane.org ([80.91.229.2]:33242 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751245AbZBFLUN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 06:20:13 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LVOkk-0002cu-Q1
+	for git@vger.kernel.org; Fri, 06 Feb 2009 11:20:10 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 11:20:10 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 11:20:10 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108686>
 
-On Thu, Feb 5, 2009 at 3:03 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Mon, 26 Jan 2009, Giuseppe Bilotta wrote:
+In a thread on "[PATCH v2] bash: offer to show (un)staged changes",
+on 2009-02-01, Thomas Rast <trast@student.ethz.ch> wrote:
+
+> Add a bit of code to __git_ps1 that lets it append '*' to the branch
+> name if there are any unstaged changes, and '+' if there are any
+> staged changes.
 >
->> Offering Last-modified header for feeds is only half the work, even if
->> we bail out early on HEAD requests. We should also check that same date
->> against If-modified-since, and bail out early with 304 Not Modified if
->> that's the case.
->
-> It looks now quite nice, but I'd like to see information about
-> dependencies for this feature in the commit message, something like:
->
->   This feature (terminating early with '304 Not Modified' in response
->   to 'If-Modified-Since' conditional request) requires having either
->   HTTP::Date module (from libwww-perl) or Time::ParseDate module.
->   If neither is present gitweb falls back to earlier behaviour of not
->   reacting to 'If-Modified-Since'.
+> Since this is a rather expensive operation and will force a lot of
+> data into the cache whenever you first enter a repository, you have to
+> enable it manually by setting bash.showDirtyState to a true value.
 
-Good idea.
+I'd been doing something a little crazy-sounding that I
+thought I should share (for what it is worth).  My problem
+was that this expense Thomas mentioned was not just on first
+entering a repo, but on *each* command, for some of my users
+(long story...  old hardware, wrong kind of "corporate
+mandated" software, Windows...  please don't ask <sigh>)
 
-> Note also (although I'm not sure if it is worth mentioning in commit
-> message) that it doesn't save gitweb as much work as one could think,
-> because at this place the whole list of commits is already generated
-> and parsed.  What we save is cost of running git-diff-tree for each
-> commit (we could do better here, I think), and of course bandwidth.
+Also, instead of just a symbol, I wanted a *count* of how
+many files are staged (git added), modified, untracked,
+unmerged, etc.  A color-coded number for each type would be
+great.
 
-If it's possible to get the first commit without generating and
-parsing the entire commit list, this can probably be optimized
-further.
+But I couldn't run this extra stuff at every prompt.  I
+wanted it to kick in only when
 
-> I wonder if it would be possible to separate this code into subroutine,
-> to make it possible to have support for "cache control" conditional
-> requests also in other cases where it might help (for the future of
-> course, not in this commit).
+    * I change directories, or
+    * I switch branches, or the branch state (according to
+      __git_ps1) changes, or
+    * when I want it to, but I won't type a command (huh?)
 
-Yes, I thought about it too.
+The idea is that it should be as convenient and accessible
+as the current __git_ps1, but it shouldn't really happen on
+every prompt.
 
->
-> Perhaps if we run gitweb from Apache mod_perl in compatibility mode
-> (ModPerl::Registry) to use Apache Perl API to respond to
-> 'If-Modified-Since' ($r->is_fresh or something). But that is also
-> just idea for the future improvement.
+That last part is a bit of a hack, but basically, if you hit
+enter twice in a row quickly at the bash prompt, you get the
+more detailed stuff added to __git_ps1's output :-)
 
-Also, it's way beyond my current knowledge of Apache, CGI and Perl 8-D
+Sounds crazy but if you try it, you might just like it...
+The link to the shell script is toward the end of
+http://sitaramc.github.com/2-command-line-usage/souped-up-bash-prompt.html
 
--- 
-Giuseppe "Oblomov" Bilotta
+Comments welcome but please be kind.  I'm still learning
+git, compared to most of you lot :-)
+
+Sitaram
+
+PS: A lot of the color stuff is from
+git://github.com/lvv/git-prompt.git
