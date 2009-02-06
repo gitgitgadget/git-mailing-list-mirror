@@ -1,98 +1,50 @@
-From: Nigel Magnay <nigel.magnay@gmail.com>
-Subject: Re: [JGIT] maven build fails on OS X
-Date: Fri, 6 Feb 2009 20:08:18 +0000
-Message-ID: <320075ff0902061208l6671c2a0m3d4b07b97025b53a@mail.gmail.com>
-References: <320075ff0902060708m5ec566b9g755829c25c7727d8@mail.gmail.com>
-	 <20090206153155.GL26880@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 7/8] Tests: let --valgrind imply --verbose and --tee
+Date: Fri, 6 Feb 2009 15:24:26 -0500
+Message-ID: <20090206202425.GA19959@coredump.intra.peff.net>
+References: <cover.1233702893u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0902040026250.9822@pacific.mpi-cbg.de> <20090206190815.GB19494@coredump.intra.peff.net> <alpine.DEB.1.00.0902062038420.7377@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git ML <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Feb 06 21:09:53 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 06 21:26:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVX1L-000833-EO
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 21:09:51 +0100
+	id 1LVXH2-0005Gj-MO
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 21:26:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753864AbZBFUIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 15:08:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753643AbZBFUIW
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 15:08:22 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:38968 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753399AbZBFUIV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 15:08:21 -0500
-Received: by ewy14 with SMTP id 14so1568266ewy.13
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 12:08:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sB8t/dXqZEshYvs5375ntV4NcXmcWvpU7rWpLW/4kcA=;
-        b=LpYjtEXioozwVy8Z2+FiXdePmvsBZ+PB+0FD8JDPGFLCdisUwOuEEUAHPKH712hGwY
-         G9jtYtk4J7kt+2FrNhBA69c3Fwn9n2q88qYnK2cQ+TYHp3cCSsHLA+ot2NCOPjb9rcF6
-         Hix/zbFpwQlXotJeM7XrIGV6YNBPIV9FMJLDM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jY31e1vz8E7f7hhb+VemQ04z/EYTwHb70cckJTlJFOgOgmrreyDS8uVu0IRDTWH7+N
-         oaOAC9egd0mTUAvB0D+tbXThw3PiQEL4kFmUO5RTE0uA9v3GJJMqE5OVFYwc9e8kOgHt
-         FxDGdtDdOErD8wNyWUkepc3fQYaScnAvqFIek=
-Received: by 10.103.92.8 with SMTP id u8mr919912mul.34.1233950898434; Fri, 06 
-	Feb 2009 12:08:18 -0800 (PST)
-In-Reply-To: <20090206153155.GL26880@spearce.org>
+	id S1753379AbZBFUYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 15:24:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753332AbZBFUYa
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 15:24:30 -0500
+Received: from peff.net ([208.65.91.99]:50252 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753048AbZBFUY3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 15:24:29 -0500
+Received: (qmail 24606 invoked by uid 107); 6 Feb 2009 20:24:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 06 Feb 2009 15:24:42 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Feb 2009 15:24:26 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0902062038420.7377@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108781>
 
-> I've looked at it and gave up.  I don't know what Maven is doing here
-> on the Mac.  Maybe fresh eyes will have a better chance at fixing it.
->
-> My experience with Maven is it works about 5% of the time, and the
-> other 95% of the time you have to work around it by skipping tests,
-> or by writing massive blocks of XML in your pom.xml file, or by
-> redesigning your entire project directory structure and revision
-> control system to use SVN instead of Git.
+On Fri, Feb 06, 2009 at 08:40:59PM +0100, Johannes Schindelin wrote:
 
-Ok. It's not (just) a Maven problem as I can get the same tests to
-fail in Eclipse by setting the Console Encoding to MacRoman (which is
-the default Charset.defaultCharset() when running a java app on OS X).
+> > On the other hand, I think "--verbose --tee >/dev/null" would probably 
+> > accomplish the same thing, so it probably isn't worth too much effort.
+> 
+> No.  Why would I want 'make test' to hide the fact from me that something 
+> did not work, and how it happened to fail?
 
-Doing some digging, just on testGetText_DiffCc :- where it fails, I
-look at the output of each doing getBytes() - so will be in MacRoman -
-(cols are byte no, exp before the replace, after the replace and the
-result of fh.getScriptText. I get :
+Because "make test" with "--verbose" generates megabytes of output which
+you don't want mailed to you by cron, and that information is already
+being saved in a file by "--tee"?
 
-94 32 32,32
-95 43 43,43 ++
-96 116 116,116 tt
-97 101 101,101 ee
-98 115 115,115 ss
-99 116 116,116 tt
-100 32 32,32
-101 -127 -127,-59 !!!!!!!!!!!!!!!!!!!!!!!!!!!! ??
-102 110 110,110 nn
-103 103 103,103 gg
-104 115 115,115 ss
-105 116 116,116 tt
-106 114 114,114 rr
-107 -102 -102,-10 !!!!!!!!!!!!!!!!!!!!!!!!!!!! ??
-108 109 109,109 mm
-109 10 10,10
-
--10 (F6) is ^, and -59 (C5) is some wavy lines..
-
-However, I'm slightly confused - possibly because I don't know what
-/should/ be the case. In
-
- exp.replace("\303\205ngstr\303\266m", "\u00c5ngstr\u00f6m")
-
-is \303\205 really meant to represent U+00C3 and U+0085 ? Shouldn't
-the replace be being done on bytes rather than strings?
+-Peff
