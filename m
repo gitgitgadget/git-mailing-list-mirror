@@ -1,70 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] push: Learn to set up branch tracking with '--track'
-Date: Fri, 6 Feb 2009 09:10:00 -0500
-Message-ID: <20090206141000.GC18364@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0901291438030.3586@pacific.mpi-cbg.de> <20090129223308.GB12871@coredump.intra.peff.net> <20090129231715.GA17399@coredump.intra.peff.net> <alpine.DEB.1.00.0901300127450.3586@pacific.mpi-cbg.de> <20090130050925.GA18809@coredump.intra.peff.net> <alpine.DEB.1.00.0901301656290.3586@pacific.mpi-cbg.de> <20090130162258.GA7065@sigill.intra.peff.net> <alpine.DEB.1.00.0901301804030.3586@pacific.mpi-cbg.de> <20090202131611.GB8487@sigio.peff.net> <alpine.DEB.1.00.0902021449370.3586@pacific.mpi-cbg.de>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Question about removing changes from the index
+Date: Fri, 6 Feb 2009 14:14:17 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngoohdp.rak.sitaramc@sitaramc.homelinux.net>
+References: <a1e915350902060557m5a67eba0q819c2ba2a0a49c21@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 06 15:12:05 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 06 15:16:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVRR7-0006vy-89
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 15:12:05 +0100
+	id 1LVRUq-0008TL-Mc
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 15:15:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753888AbZBFOKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 09:10:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753651AbZBFOKE
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 09:10:04 -0500
-Received: from peff.net ([208.65.91.99]:35879 "EHLO peff.net"
+	id S1753317AbZBFOO3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Feb 2009 09:14:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753297AbZBFOO3
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 09:14:29 -0500
+Received: from main.gmane.org ([80.91.229.2]:55415 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752885AbZBFOKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 09:10:03 -0500
-Received: (qmail 22056 invoked by uid 107); 6 Feb 2009 14:10:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 06 Feb 2009 09:10:16 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Feb 2009 09:10:00 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0902021449370.3586@pacific.mpi-cbg.de>
+	id S1752245AbZBFOO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 09:14:28 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LVRTQ-0000pg-3J
+	for git@vger.kernel.org; Fri, 06 Feb 2009 14:14:28 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 14:14:28 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 14:14:28 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108713>
 
-On Mon, Feb 02, 2009 at 02:52:26PM +0100, Johannes Schindelin wrote:
+On 2009-02-06, Gustav H=E5llberg <gustav@gmail.com> wrote:
+> I'm wondering if there's anyone who can recommend a smart way to
+> "reset" the index entry for individual files to the contents of HEAD,
+> in effect, removing any previous change between HEAD and the index
+> (for those files).
 
-> > It looks like the consensus is to add a branch.master config section 
-> > even when cloning an empty repo. And that should address my concern in 
-> > the 99% of cases where people use the default "master" setup. Which kind 
-> > of takes away the main use case for this topic.
-> 
-> From where I sit, the main use would have been:
-> 
-> 	# <hackhackhack>
-> 	$ git init
-> 	$ git add .
-> 	$ git commit -m initial\ revision
-> 	# <hackhackhack>
-> 	# <create a repository on repo.or.cz>
-> 	$ git remote add origin $URL
-> 	$ git push -t origin master
-
-Hmm. True. The "clone empty" fix only affects people who use the "init;
-clone empty; push" method. Push-tracking would work for the
-"traditional" method you outline above.
-
-So probably it is worth doing the steps I described earlier. I'll throw
-it on my todo list, but the priority is not especially high.
-
-> BTW I always wondered if it would make sense to introduce "git commit 
-> --init" for the first 3 Git commands.  I use them way too often.
-
-I have noticed that, too, but I think it is because I am constantly
-creating test repos to debug git. Regular users don't have the same
-problem. :)
-
--Peff
+err.. 'git reset HEAD -- file'?  The man page says "The
+second form with paths is used to revert selected paths in
+the index from a given commit, without moving HEAD."
