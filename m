@@ -1,97 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv2] gitweb: Better regexp for SHA-1 committag match
-Date: Fri, 6 Feb 2009 11:49:14 +0100
-Message-ID: <200902061149.16210.jnareb@gmail.com>
-References: <200902022204.46651.toralf.foerster@gmx.de> <200902061126.18418.jnareb@gmail.com> <b77c1dce0902060231u358587d5o940eb322fde52a68@mail.gmail.com>
+From: bill lam <cbill.lam@gmail.com>
+Subject: Re: [ANNOUNCE] tig-0.14
+Date: Fri, 6 Feb 2009 18:49:46 +0800
+Message-ID: <20090206104946.GE7259@b2j>
+References: <20090205204436.GA6072@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Toralf =?iso-8859-2?q?F=F6rster?= <toralf.foerster@gmx.de>
-To: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 06 11:50:50 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Fri Feb 06 11:55:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVOIL-0005Tb-4X
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 11:50:49 +0100
+	id 1LVOMw-0006yp-Ov
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 11:55:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753813AbZBFKt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 05:49:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753818AbZBFKtY
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 05:49:24 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:45605 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753765AbZBFKtX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 05:49:23 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so450631fgg.17
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 02:49:21 -0800 (PST)
+	id S1754174AbZBFKyJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Feb 2009 05:54:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754054AbZBFKyG
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 05:54:06 -0500
+Received: from ti-out-0910.google.com ([209.85.142.188]:2276 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753823AbZBFKyD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 05:54:03 -0500
+Received: by ti-out-0910.google.com with SMTP id d10so940230tib.23
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 02:54:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=tuROhVuxuSwHj6/aERPuadQh/STNZoICl+gO1wtLWx8=;
-        b=u7lMBNFJS9GxHjphjIYwVYdBTnwHFjhGo8FWBuBo8D1PkV8zE0+Cn9xmRuCIFCvSKo
-         IQaWoM1W8TQJA4JQfnFXwysJqtlplCnzJpnz54R6PvOg4QsKah7hd7upLZIMwEbGjYPx
-         2nwWZxcNtCvPIE/NaxHa8Tt7yLmBHwmKwq5oc=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:references:mime-version:content-type
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=dBUuuovxX5MAglBB8uhMVxgPQb3Fd0IbvYikoVe2fmg=;
+        b=twOz+a9vf5nCWYsVRPSdQ9W1navKRlQAT9pWLMOo56aZ9VWlcqHxN84rj8ROT0wj56
+         vsQGwy7+mqAd0QhSFvTUeWgUJGu7GJh20liUmZi9K+3FqPnUeXvsmVO3seDU3tNOtKbQ
+         pnLP17+KXkXXAYUa4eZ0YL5BUS0KWdIncHnfg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=ca+Inp0JxWYyqU/PslJ4aEFUzwlE4s3BrKMNOIYgBV6ZDhmFJutlF0Jsvct8rDfxdG
-         9Zt61OTgPt2s+9nXAONsG1Awl+Z4rb2gtkhfCWMZIpSYgZnSLYZKqchLbohLQLSZW9B6
-         v8rN8ufsafgjl5Am3BuHhssVtQvhxrAoyitGs=
-Received: by 10.86.29.8 with SMTP id c8mr875789fgc.19.1233917361454;
-        Fri, 06 Feb 2009 02:49:21 -0800 (PST)
-Received: from ?192.168.1.13? (abuz248.neoplus.adsl.tpnet.pl [83.8.197.248])
-        by mx.google.com with ESMTPS id 4sm1564342fge.54.2009.02.06.02.49.20
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        b=PB3urBZEEbjKhhv41AX+AnsFu6TxMmUqAXLhkhZIYyttF9aunNhXsWLMwj4n/Ia6J9
+         ybIgL3dAcug2deVZ93NqfZijfkV4lgf/E2C3EinG7VbpU8SSjGZcLle80RGTtTjR3XOi
+         wTgvFwPmxnrySIoyCMPeNq/ZHum4R/ka3IXDY=
+Received: by 10.110.53.14 with SMTP id b14mr2378875tia.52.1233917641245;
+        Fri, 06 Feb 2009 02:54:01 -0800 (PST)
+Received: from localhost (n219079102072.netvigator.com [219.79.102.72])
+        by mx.google.com with ESMTPS id b7sm369970tic.35.2009.02.06.02.53.59
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Feb 2009 02:49:20 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <b77c1dce0902060231u358587d5o940eb322fde52a68@mail.gmail.com>
+        Fri, 06 Feb 2009 02:54:00 -0800 (PST)
+Mail-Followup-To: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20090205204436.GA6072@diku.dk>
+User-Agent: Mutt/1.5.19 (2009-01-27)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108677>
 
-Make SHA-1 regexp to be turned into hyperlink (SHA-1 committag)
-to match word boundary at beginning and end.  This way we limit
-false matches, for example 0x74a5cd01 which is hex decimal (for
-example memory address) but not SHA-1.
+Thank you for the update!
 
-Also make sure that it is not Message-ID, which fragment just
-looks like SHA-1 (e.g. "Message-ID: <46A0F335@example.com>"),
-by using zero-width negative look-ahead assertion to _not_
-match '@' after.
+There is a choice in "git add -i" call patch/hunks.  Is this the same
+as the update/chunks as described in tig manual?
 
-Suggested-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Suggested-by: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-v2: Added protection against matching Message-IDs fragments.
-
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index f27dbb6..5dcc108 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1364,7 +1364,7 @@ sub format_log_line_html {
- 	my $line = shift;
- 
- 	$line = esc_html($line, -nbsp=>1);
--	if ($line =~ m/([0-9a-fA-F]{8,40})/) {
-+	if ($line =~ m/\b([0-9a-fA-F]{8,40})\b(!?\@)/) {
- 		my $hash_text = $1;
- 		my $link =
- 			$cgi->a({-href => href(action=>"object", hash=>$hash_text),
--- 
-1.6.1
+--=20
+regards,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+=E5=94=90=E8=A9=A9110 =E6=9D=9C=E7=94=AB  =E5=A4=A9=E6=9C=AB=E6=87=B7=E6=
+=9D=8E=E7=99=BD
+    =E6=B6=BC=E9=A2=A8=E8=B5=B7=E5=A4=A9=E6=9C=AB  =E5=90=9B=E5=AD=90=E6=
+=84=8F=E5=A6=82=E4=BD=95  =E9=B4=BB=E9=9B=81=E5=B9=BE=E6=99=82=E5=88=B0=
+  =E6=B1=9F=E6=B9=96=E7=A7=8B=E6=B0=B4=E5=A4=9A
+    =E6=96=87=E7=AB=A0=E6=86=8E=E5=91=BD=E9=81=94  =E9=AD=91=E9=AD=85=E5=
+=96=9C=E4=BA=BA=E9=81=8E  =E6=87=89=E5=85=B1=E5=86=A4=E9=AD=82=E8=AA=9E=
+  =E6=8A=95=E8=A9=A9=E8=B4=88=E6=B1=A8=E7=BE=85
