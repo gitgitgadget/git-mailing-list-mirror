@@ -1,52 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [ANNOUNCE] tig-0.14
-Date: Fri, 6 Feb 2009 14:15:11 -0500
-Message-ID: <20090206191511.GD19494@coredump.intra.peff.net>
-References: <20090205204436.GA6072@diku.dk>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] fix t1504 on Windows
+Date: Fri, 06 Feb 2009 20:23:47 +0100
+Message-ID: <498C8E43.8010108@kdbg.org>
+References: <498A1E1E.8010901@lsrfire.ath.cx> <498B3F6B.5080002@lsrfire.ath.cx> <498C3328.70804@viscovery.net> <498C70C8.1080009@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Fri Feb 06 20:16:44 2009
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Feb 06 20:25:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVWBv-0004US-41
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 20:16:43 +0100
+	id 1LVWKE-0007cJ-8b
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 20:25:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753730AbZBFTPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 14:15:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753642AbZBFTPP
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 14:15:15 -0500
-Received: from peff.net ([208.65.91.99]:56934 "EHLO peff.net"
+	id S1752939AbZBFTXv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Feb 2009 14:23:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752380AbZBFTXv
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 14:23:51 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:49172 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753501AbZBFTPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 14:15:14 -0500
-Received: (qmail 24215 invoked by uid 107); 6 Feb 2009 19:15:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 06 Feb 2009 14:15:27 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Feb 2009 14:15:11 -0500
-Content-Disposition: inline
-In-Reply-To: <20090205204436.GA6072@diku.dk>
+	id S1751690AbZBFTXv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 14:23:51 -0500
+Received: from [192.168.1.200] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 96EC51000B;
+	Fri,  6 Feb 2009 20:23:46 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <498C70C8.1080009@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108775>
 
-On Thu, Feb 05, 2009 at 09:44:36PM +0100, Jonas Fonseca wrote:
+Ren=C3=A9 Scharfe schrieb:
+> Johannes Sixt schrieb:
+>> I also need this to complete this test:
+>>
+>> diff --git a/t/t1504-ceiling-dirs.sh b/t/t1504-ceiling-dirs.sh
+>> index 9c9c4c9..e377d48 100755
+>> --- a/t/t1504-ceiling-dirs.sh
+>> +++ b/t/t1504-ceiling-dirs.sh
+>> @@ -93,13 +93,13 @@ GIT_CEILING_DIRECTORIES=3D"$TRASH_ROOT/subdi"
+>>  test_prefix subdir_ceil_at_subdi_slash "sub/dir/"
+>>
+>>
+>> -GIT_CEILING_DIRECTORIES=3D"foo:$TRASH_ROOT/sub"
+>> +GIT_CEILING_DIRECTORIES=3D"/foo:$TRASH_ROOT/sub"
+>>  test_fail second_of_two
+>>
+>>  GIT_CEILING_DIRECTORIES=3D"$TRASH_ROOT/sub:/bar"
+>>  test_fail first_of_two
+>>
+>> -GIT_CEILING_DIRECTORIES=3D"foo:$TRASH_ROOT/sub:bar"
+>> +GIT_CEILING_DIRECTORIES=3D"/foo:$TRASH_ROOT/sub:/bar"
+>>  test_fail second_of_three
+>=20
+> I don't, which makes me uneasy -- the tests shouldn't depend on detai=
+ls
+> in our setup. :-/
 
->  - Blame view: load blame for parent commit. For merge commits the parent
->    is queried. Bound to ',' by default via the existing "parent" action.
+I updated my msysgit to the current master this moment, and I still nee=
+d=20
+these two changes. Do you use an older msysgit? With 31d5dfeb0=20
+(2008-06-08) Steffen changed path mangling so that a text without a=20
+leading / or . is not converted. That's exactly what we see here.
 
-Thanks for this, btw. I've already used it at least half a dozen times
-in the past week or so.
+>> That said, I'm in the process of preparing a series that includes yo=
+ur
+>> patch and that does the proper cleanup and code moving that you agai=
+n
+>> didn't do :-/ But it turns out that this is non-trivial because of b=
+ash's
+>> (MSYS's) I-know-better-what-is-a-path-and-what-not behavior. It will=
+ take
+>> some time...
+>=20
+> Glad to hear the first part, but what code moving do you mean?  Somet=
+hing
+> like the following?
+>=20
+> -- snip! --
+> Remove the unused function normalize_absolute_path() and its tests.
 
-It looks like you just keep the view on the same line number when moving
-to the new blame output. In practice, this has very mixed results. Most
-of the time it does exactly what I want, but if the file changes
-significantly, you get dumped at a totally unrelated part of the file.
-I'm not sure if there is a more clever solution, though.
+No, that's not enough. I mean something more like this (but I'll not=20
+include the diff itself):
 
--Peff
+Johannes Sixt (4):
+       Make test-path-utils more robust against incorrect use
+       Move sanitary_path_copy to path.c (and rename to
+         normalize_path_copy)
+       Test and fix normalize_path_copy()
+       Remove unused normalize_absolute_path()
+
+Ren=C3=A9 Scharfe (1):
+       Fix t1504 on Windows
+
+  cache.h                 |    2 +-
+  path.c                  |  124 +++++++++++++++++++++++++------------
+  setup.c                 |   88 +--------------------------
+  t/t0060-path-utils.sh   |   26 ++++----
+  t/t1504-ceiling-dirs.sh |    2 +-
+  test-path-utils.c       |   12 +++-
+  6 files changed, 107 insertions(+), 147 deletions(-)
+
+-- Hannes
