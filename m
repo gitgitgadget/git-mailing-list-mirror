@@ -1,68 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] push: Learn to set up branch tracking with '--track'
-Date: Fri, 6 Feb 2009 15:54:32 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902061552320.7377@intel-tinevez-2-302>
-References: <alpine.DEB.1.00.0901291438030.3586@pacific.mpi-cbg.de> <20090129223308.GB12871@coredump.intra.peff.net> <20090129231715.GA17399@coredump.intra.peff.net> <alpine.DEB.1.00.0901300127450.3586@pacific.mpi-cbg.de> <20090130050925.GA18809@coredump.intra.peff.net>
- <alpine.DEB.1.00.0901301656290.3586@pacific.mpi-cbg.de> <20090130162258.GA7065@sigill.intra.peff.net> <alpine.DEB.1.00.0901301804030.3586@pacific.mpi-cbg.de> <20090202131611.GB8487@sigio.peff.net> <alpine.DEB.1.00.0902021449370.3586@pacific.mpi-cbg.de>
- <20090206141000.GC18364@coredump.intra.peff.net>
+From: Nigel Magnay <nigel.magnay@gmail.com>
+Subject: [JGIT] maven build fails on OS X
+Date: Fri, 6 Feb 2009 15:08:15 +0000
+Message-ID: <320075ff0902060708m5ec566b9g755829c25c7727d8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 06 15:56:07 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 06 16:09:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVS7f-0007ae-Be
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 15:56:03 +0100
+	id 1LVSKv-0004pb-Gq
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 16:09:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753227AbZBFOyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 09:54:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752938AbZBFOyf
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 09:54:35 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42745 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750945AbZBFOyf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 09:54:35 -0500
-Received: (qmail invoked by alias); 06 Feb 2009 14:54:32 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp028) with SMTP; 06 Feb 2009 15:54:32 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/hW8UcJ3/hV6Z2o6+HP/YpiEl66zJ/1REKvsXfqi
-	uN1ed+XexVF4YM
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090206141000.GC18364@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1752066AbZBFPIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 10:08:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751898AbZBFPIR
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 10:08:17 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:36628 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751212AbZBFPIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 10:08:16 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so231262eya.37
+        for <git@vger.kernel.org>; Fri, 06 Feb 2009 07:08:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=xQmsW33MD9XJ4yvpnSEANf40PLWE/TrA3d00dXglIoc=;
+        b=PdRcSs14UJwgg5dh7O7xxJiWwz3hxXDBOXQBCppnlQoy9xamcRho6+F7QGW9VHaEzW
+         lUh2133usx2WZnPOsIOhq+vYC7+5GL9KSmWnPKL76VdPi1VHFWQqz97qpEacJbA7Xo5Q
+         4ecwjuvwWivH2vi0mfXoOXlGVWD3+VVCsmDAo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=HqWF4iGWNQOBXYzZ2j49Sqn6kF8gAJTnuVCJEy5AkbrlUqaNAVYaby1PzAGzWqNvyO
+         eNvg4qR3y0D7iigSyz1FtPza1KA5pb+0URI9HyWrGu95STLHb5taqsyshd8eAPz4QR6p
+         awHPSk1ZLKoFJ+aEvKX2S169nJA7kxZ0/g638=
+Received: by 10.103.172.7 with SMTP id z7mr760134muo.129.1233932895157; Fri, 
+	06 Feb 2009 07:08:15 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108725>
 
-Hi,
+I don't know if this is known about - I get failures running the m2
+build for jgit:
 
-On Fri, 6 Feb 2009, Jeff King wrote:
+Failed tests:
+  testParse_implicit_mixed_encoded(org.spearce.jgit.revwalk.RevCommitParseTest)
+  testParse_explicit_bad_encoded(org.spearce.jgit.revwalk.RevCommitParseTest)
+  testParse_implicit_mixed_encoded(org.spearce.jgit.revwalk.RevTagParseTest)
+  testParse_explicit_bad_encoded(org.spearce.jgit.revwalk.RevTagParseTest)
+  testDequote_OctalAll(org.spearce.jgit.util.QuotedStringGitPathStyleTest)
+  testDequote_Latin1(org.spearce.jgit.util.QuotedStringGitPathStyleTest)
+  testDequote_RawLatin1(org.spearce.jgit.util.QuotedStringGitPathStyleTest)
+  testGetText_DiffCc(org.spearce.jgit.patch.GetTextTest)
 
-> > BTW I always wondered if it would make sense to introduce "git commit 
-> > --init" for the first 3 Git commands.  I use them way too often.
-> 
-> I have noticed that, too, but I think it is because I am constantly
-> creating test repos to debug git. Regular users don't have the same
-> problem. :)
+Curiously, the tests work in eclipse and from ./make_jgit.sh - I
+suspect some environment setting with the mac's charset.
 
-I do not do that for test repositories, but for untarred 3rd party 
-projects, such as zlib.
-
-	$ tar xvf $TAR
-	$ cd $DIR
-	$ git init
-	$ git add .
-	$ git commit -m initial
-	<start hacking>
-	<provide nice patches that everybody envies me for>
-
-Ciao,
-Dscho
+I can try and fix it if it's new, but I wanted to check first..
