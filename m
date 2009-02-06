@@ -1,75 +1,66 @@
-From: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
-Subject: Re: [PATCH] gitweb: Better regexp for SHA-1 committag match
-Date: Fri, 6 Feb 2009 11:31:39 +0100
-Message-ID: <b77c1dce0902060231u358587d5o940eb322fde52a68@mail.gmail.com>
-References: <200902022204.46651.toralf.foerster@gmx.de>
-	 <200902061012.42943.jnareb@gmail.com>
-	 <b77c1dce0902060149j25e76250q76c2368bd3ca5857@mail.gmail.com>
-	 <200902061126.18418.jnareb@gmail.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Chicken/egg problem building from a 'git clone'
+Date: Fri, 06 Feb 2009 19:35:50 +0900
+Message-ID: <buoy6wj3la1.fsf@dhlpc061.dev.necel.com>
+References: <alpine.DEB.1.00.0902060530450.10279@pacific.mpi-cbg.de>
+	<Pine.LNX.4.44.0902052238510.4851-100000@localhost.localdomain>
+	<buobptg6tek.fsf@dhlpc061.dev.necel.com>
+	<7vfxis86tp.fsf@gitster.siamese.dyndns.org>
+	<buor62c3yin.fsf@dhlpc061.dev.necel.com>
+	<7vprhw6l1i.fsf@gitster.siamese.dyndns.org>
+	<buoab8z52te.fsf@dhlpc061.dev.necel.com>
+	<7vd4dv7tb3.fsf@gitster.siamese.dyndns.org>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?ISO-8859-1?Q?Toralf_F=F6rster?= <toralf.foerster@gmx.de>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 06 11:33:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: gyles19@visi.com, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 06 11:37:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVO1D-0008P3-OR
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 11:33:08 +0100
+	id 1LVO5T-0001KW-ME
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 11:37:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753394AbZBFKbl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Feb 2009 05:31:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753311AbZBFKbl
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 05:31:41 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:65131 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752921AbZBFKbk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Feb 2009 05:31:40 -0500
-Received: by fxm13 with SMTP id 13so1018305fxm.13
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 02:31:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=At5yAoJM/FrQb6qGkWL+/wBnkdEI90PpJhUs0EWr7a0=;
-        b=P6+mgUQrczv7xThNC2HkLAilYrRdTddIOk6jYtR91msDN9LTC5zM6NlBeR40J4gKbs
-         fmoKZ92hB3tkdDMpgPXeIqDwvzrVyK6ZPHk5CfACI3PvlKV81GWwWGG/RM0Oo9XoYK+d
-         4zOvceKPwjF8Qh9yp68UV031gpH5IjuSop9LY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ABfMrP7x6N3K4Fc85fW2OW0vL15t9QPiWK+NK5BbM7/oaTkj/9IK8F2ZD+rh3yT4ZJ
-         KZDZNtzcHgTBoPYIx2VYVLxLHA+LHW0uq/GWHkVvGmPtx7qE3YsjNhjK69rGhPcr3Fjj
-         xcYv7Fdqqiwz9QME0poIkAGUnfLf5Q5ispZt4=
-Received: by 10.181.141.18 with SMTP id t18mr527228bkn.203.1233916299051; Fri, 
-	06 Feb 2009 02:31:39 -0800 (PST)
-In-Reply-To: <200902061126.18418.jnareb@gmail.com>
+	id S1753161AbZBFKgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 05:36:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753363AbZBFKgF
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 05:36:05 -0500
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:46216 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752372AbZBFKgD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 05:36:03 -0500
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n16AZik8011606;
+	Fri, 6 Feb 2009 19:35:50 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay21.aps.necel.com with ESMTP; Fri, 6 Feb 2009 19:35:50 +0900
+Received: from dhlpc061 ([10.114.112.240] [10.114.112.240]) by relay31.aps.necel.com with ESMTP; Fri, 6 Feb 2009 19:35:50 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 3863D52E27C; Fri,  6 Feb 2009 19:35:50 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <7vd4dv7tb3.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 06 Feb 2009 02:28:48 -0800")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108675>
 
-2009/2/6 Jakub Narebski <jnareb@gmail.com>:
-> Dnia pi=B1tek 6. lutego 2009 10:49, Rafael Garcia-Suarez napisa=B3:
->> 2009/2/6 Jakub Narebski <jnareb@gmail.com>:
+Junio C Hamano <gitster@pobox.com> writes:
+>> Er ... I was not doing so.  I was saying that if one is going to use
+>> autoconf with git, one should use a non-ancient version.
 >
->> > Make SHA-1 regexp to be turned into hyperlink (the SHA-1 committag=
-)
->> > to match word boundary at the beginning and the end.  This way we
->> > reduce number of false matches, for example we now don't match
->> > 0x74a5cd01 which is hex decimal (for example memory address),
->> > but is not SHA-1.
->>
->> Further suggestion: you could also turn the final \b into (\b|\@),
->
-> You meant \b -> \b(?!\@), didn't you?  Word boundary _not_ followed
-> by '@', and not word boundary _OR_ '@' as you wrote...
+> That is nice but the statement is only half-truth, and should be followed
+> by ", but why bother?  You do not even need to use configure to build
+> git, and insn is all here...".
 
-Ah right, shame on me.
+You've got to be kidding...
+
+-Miles
+
+-- 
+Freebooter, n. A conqueror in a small way of business, whose annexations lack
+of the sanctifying merit of magnitude.
