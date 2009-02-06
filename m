@@ -1,57 +1,68 @@
-From: =?ISO-8859-1?Q?Gustav_H=E5llberg?= <gustav@gmail.com>
-Subject: Re: Question about removing changes from the index
-Date: Fri, 6 Feb 2009 15:51:23 +0100
-Message-ID: <a1e915350902060651r142e8d87gd013376a866e5158@mail.gmail.com>
-References: <a1e915350902060557m5a67eba0q819c2ba2a0a49c21@mail.gmail.com>
-	 <20090206140911.GC31491@atjola.homenet>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] push: Learn to set up branch tracking with '--track'
+Date: Fri, 6 Feb 2009 15:54:32 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902061552320.7377@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0901291438030.3586@pacific.mpi-cbg.de> <20090129223308.GB12871@coredump.intra.peff.net> <20090129231715.GA17399@coredump.intra.peff.net> <alpine.DEB.1.00.0901300127450.3586@pacific.mpi-cbg.de> <20090130050925.GA18809@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0901301656290.3586@pacific.mpi-cbg.de> <20090130162258.GA7065@sigill.intra.peff.net> <alpine.DEB.1.00.0901301804030.3586@pacific.mpi-cbg.de> <20090202131611.GB8487@sigio.peff.net> <alpine.DEB.1.00.0902021449370.3586@pacific.mpi-cbg.de>
+ <20090206141000.GC18364@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 06 15:53:09 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 06 15:56:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVS4c-0006IA-0W
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 15:52:54 +0100
+	id 1LVS7f-0007ae-Be
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 15:56:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752828AbZBFOv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 09:51:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbZBFOv0
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 09:51:26 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:49337 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751149AbZBFOv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 09:51:26 -0500
-Received: by fxm13 with SMTP id 13so1224614fxm.13
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 06:51:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2QoOZAnuLAVKB+e7uFOgONKI65fUaw+5l0GABZNLHxc=;
-        b=r6RyJGg9qNCkHrjhCBEf41u7YELFrqxBUT8OmOCPBhr3mtDz+Ag3pIzwQmnzL+jOx/
-         lwYUhCN9Hz3DZDpoPXvcwDbsm/k///e3aZkQedCHa3kRob2CEZ+q/O+23gxNf274d7I7
-         6afPZeyZGShtFM/rALW4RNrpBsj7f3L0jASSs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sQJtCvuLEAcYLi+ayVqlDgbPUdgei2G1WfHYQk3qiuLIOAWm8BMMGlmtzXpydquqCK
-         HNnIC1KH+LuSiu9pFZN7ZqZP7WfrZgAnP3ziPNlxWU7Eez4VDc2DKmZ4GoFMW7m7r2Pe
-         ztFLqobSorQe6NmAzTKt8wNLNQPf07gC84+Qk=
-Received: by 10.181.134.11 with SMTP id l11mr612823bkn.73.1233931883251; Fri, 
-	06 Feb 2009 06:51:23 -0800 (PST)
-In-Reply-To: <20090206140911.GC31491@atjola.homenet>
+	id S1753227AbZBFOyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 09:54:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752938AbZBFOyf
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 09:54:35 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42745 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750945AbZBFOyf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 09:54:35 -0500
+Received: (qmail invoked by alias); 06 Feb 2009 14:54:32 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp028) with SMTP; 06 Feb 2009 15:54:32 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/hW8UcJ3/hV6Z2o6+HP/YpiEl66zJ/1REKvsXfqi
+	uN1ed+XexVF4YM
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090206141000.GC18364@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108724>
 
-Thanks everyone; I feel appropriately silly now :-)
+Hi,
 
-- Gustav
+On Fri, 6 Feb 2009, Jeff King wrote:
+
+> > BTW I always wondered if it would make sense to introduce "git commit 
+> > --init" for the first 3 Git commands.  I use them way too often.
+> 
+> I have noticed that, too, but I think it is because I am constantly
+> creating test repos to debug git. Regular users don't have the same
+> problem. :)
+
+I do not do that for test repositories, but for untarred 3rd party 
+projects, such as zlib.
+
+	$ tar xvf $TAR
+	$ cd $DIR
+	$ git init
+	$ git add .
+	$ git commit -m initial
+	<start hacking>
+	<provide nice patches that everybody envies me for>
+
+Ciao,
+Dscho
