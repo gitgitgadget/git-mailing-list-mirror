@@ -1,63 +1,79 @@
-From: =?utf-8?b?QmlzYW5pLA==?= Alok <alok.bisani@credit-suisse.com>
-Subject: Re: How to find out which gitignore blocks my git-add
-Date: Fri, 6 Feb 2009 22:00:12 +0000 (UTC)
-Message-ID: <loom.20090206T215836-960@post.gmane.org>
-References: <498C0525.5040100@gonsolo.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Chicken/egg problem building from a 'git clone'
+Date: Fri, 06 Feb 2009 14:12:29 -0800
+Message-ID: <7vskmr43le.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0902060530450.10279@pacific.mpi-cbg.de>
+ <Pine.LNX.4.44.0902052238510.4851-100000@localhost.localdomain>
+ <buobptg6tek.fsf@dhlpc061.dev.necel.com>
+ <7vfxis86tp.fsf@gitster.siamese.dyndns.org>
+ <buor62c3yin.fsf@dhlpc061.dev.necel.com>
+ <7vprhw6l1i.fsf@gitster.siamese.dyndns.org>
+ <buoab8z52te.fsf@dhlpc061.dev.necel.com>
+ <7vd4dv7tb3.fsf@gitster.siamese.dyndns.org>
+ <20090206192505.GE19494@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 06 23:02:01 2009
+Cc: Miles Bader <miles@gnu.org>, gyles19@visi.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 06 23:14:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVYll-0003FD-2C
-	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 23:01:53 +0100
+	id 1LVYxc-0007Nz-2e
+	for gcvg-git-2@gmane.org; Fri, 06 Feb 2009 23:14:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753967AbZBFWA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Feb 2009 17:00:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753948AbZBFWAZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 17:00:25 -0500
-Received: from main.gmane.org ([80.91.229.2]:33023 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753913AbZBFWAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Feb 2009 17:00:24 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LVYkJ-0001Qs-6f
-	for git@vger.kernel.org; Fri, 06 Feb 2009 22:00:23 +0000
-Received: from 79-77-150-192.dynamic.dsl.as9105.com ([79.77.150.192])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 22:00:23 +0000
-Received: from alok.bisani by 79-77-150-192.dynamic.dsl.as9105.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 22:00:23 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 79.77.150.192 (Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.46 Safari/525.19)
+	id S1753966AbZBFWMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 17:12:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753254AbZBFWMk
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 17:12:40 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46573 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753150AbZBFWMk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 17:12:40 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DD6FD9705C;
+	Fri,  6 Feb 2009 17:12:38 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F37389705B; Fri,
+  6 Feb 2009 17:12:31 -0500 (EST)
+In-Reply-To: <20090206192505.GE19494@coredump.intra.peff.net> (Jeff King's
+ message of "Fri, 6 Feb 2009 14:25:05 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 43FDF59A-F49B-11DD-8FBE-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108794>
 
-Gonzo <gonzo <at> gonsolo.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> 
-> After doing a "git add file" I get the message:
-> 
-> "The following paths are ignored by one of your .gitignore files:
-> ..."
-> 
-> Is there an easy way to find out which line in which gitignore file 
-> blocks this add?
-> Would this be a viable addition to "git add -v"?
-> 
-> g
-> 
+> Now, in this case, it was only one tweak and other responders have
+> already pointed him in the right direction. So just making that tweak
+> manually is probably the sane thing to do in this situation.
+>
+> But I wanted to point out that autoconf is not totally without value
+> here.
 
-It would be nice if a -v option also lists which pattern caused
- it to exclude.
+I am not saying something that strong, either.  If autoconf generated
+configure works _for you_ without hassle, great.  Keep using it.
+
+The original message that started this thread was what to do when it does
+NOT work for you, and my point was in general it is much nicer to point at
+the knob to tweak from the make invocation command line (or in config.mak)
+than having you spend time on upgrade autoconf, generate configure and run
+it.
+
+Fanboys may say that autoconf generated configure is the greatest thing
+since sliced bread.  But let's face it.  Honestly, the track record of
+those people in keeping autoconf part in this project up-to-date has not
+been all that great.  There are things that the generated configure file
+does not detect nor configure correctly (we had --with-expat patch, and we
+also saw "the trailing slash in template_dir definition in config.mak.in"
+discussed fairly recently).  You are much better off tweaking known
+peculiarity of your platform in config.mak, when configure does not work
+out of box for you.
