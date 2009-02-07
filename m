@@ -1,85 +1,74 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/2] submodule: warn about non-submodules
-Date: Sat, 7 Feb 2009 14:43:15 +0100 (CET)
-Message-ID: <4392cb2a9f5f3283d6505e17ddcb36a6b427fbcf.1234013924u.git.johannes.schindelin@gmx.de>
-References: <7vfxiqy76k.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2] gitweb: Better regexp for SHA-1 committag match
+Date: Sat, 7 Feb 2009 15:01:31 +0100
+Message-ID: <200902071501.34312.jnareb@gmail.com>
+References: <200902022204.46651.toralf.foerster@gmx.de> <b77c1dce0902060231u358587d5o940eb322fde52a68@mail.gmail.com> <200902061149.16210.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Feb 07 14:44:10 2009
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Toralf =?iso-8859-2?q?F=F6rster?= <toralf.foerster@gmx.de>
+To: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 07 15:02:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVnTa-0000i5-Cl
-	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 14:44:06 +0100
+	id 1LVnl7-0000MA-QN
+	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 15:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285AbZBGNmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2009 08:42:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753254AbZBGNmi
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 08:42:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59268 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753243AbZBGNmh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 08:42:37 -0500
-Received: (qmail invoked by alias); 07 Feb 2009 13:42:35 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp065) with SMTP; 07 Feb 2009 14:42:35 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Si49RZubSU8BBA1Uhm5kITqJ5VtK6rXIdUWea44
-	FLoE2x7gV1+f/7
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vfxiqy76k.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1751837AbZBGOAo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Feb 2009 09:00:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750832AbZBGOAo
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 09:00:44 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:53823 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751646AbZBGOAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2009 09:00:44 -0500
+Received: by fxm13 with SMTP id 13so1779491fxm.13
+        for <git@vger.kernel.org>; Sat, 07 Feb 2009 06:00:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=lRAexLAHdrzo08Oei7utLOh46U5MY3V0Ct1qGyYrJN4=;
+        b=cCXnjGtHSCPlqbW89SAydwIBdUl6oYoO+PjoOvxLBYGpxCsr8edRI942GZo1BKWsNP
+         f2yN71lheiQjXxTfKdeEMsRY6h8ohsF0ApDa/4q9UXUYyV/BEfbEqiV8myZctaenJTpP
+         9Dvi72D7cDdzu6SMZx8xUowgPZeHwxP2j/ZqU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=VhEyih2HOeSSWVKjxxKXZBam8R0XAEaM0P6x0Weq8VvcUsBAZTrjZWt5eccswW75v/
+         SgpEZ4ylU6ysX8JODoIhOFhikMt8FH4P3Ls2/60C9L0ZOr/hUc6cWuVUbjOO/oTybCRz
+         ebLiGm7dNfOLTjjsqgfgOnsvFEomO1gI9lBpc=
+Received: by 10.223.106.69 with SMTP id w5mr150002fao.17.1234015241815;
+        Sat, 07 Feb 2009 06:00:41 -0800 (PST)
+Received: from ?192.168.1.13? (abwn77.neoplus.adsl.tpnet.pl [83.8.237.77])
+        by mx.google.com with ESMTPS id k29sm434893fkk.36.2009.02.07.06.00.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 07 Feb 2009 06:00:41 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200902061149.16210.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108853>
 
-Earlier, when you called
+Dnia pi=B1tek 6. lutego 2009 11:49, Jakub Narebski napisa=B3:
 
-        git submodule some/bogus/path
+> +	if ($line =3D~ m/\b([0-9a-fA-F]{8,40})\b(!?\@)/) {
 
-Git would silently ignore the path, without warning the user about the
-likely mistake.  Now it does.
++	if ($line =3D~ m/\b([0-9a-fA-F]{8,40})\b(?!\@)/) {
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-submodule.sh           |    2 +-
- t/t7400-submodule-basic.sh |    7 +++++++
- 2 files changed, 8 insertions(+), 1 deletions(-)
+Not that it matters, because adding such single-case exceptions
+is not a good idea, so it is v1 which would be (I hope) in git.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 2f47e06..6cc2d33 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -59,7 +59,7 @@ resolve_relative_url ()
- #
- module_list()
- {
--	git ls-files --stage -- "$@" | grep '^160000 '
-+	git ls-files --error-unmatch --stage -- "$@" | grep '^160000 '
- }
- 
- #
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index a74f24c..b8cb2df 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -240,4 +240,11 @@ test_expect_success 'ls-files gracefully handles trailing slash' '
- 
- '
- 
-+test_expect_success 'submodule <invalid-path> warns' '
-+
-+	git submodule no-such-submodule 2> output.err &&
-+	grep "^error: .*no-such-submodule" output.err
-+
-+'
-+
- test_done
--- 
-1.6.1.2.630.g01a7e
+--=20
+Jakub Narebski
+Poland
