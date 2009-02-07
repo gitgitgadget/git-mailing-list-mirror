@@ -1,105 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] git-show.txt: mention that object path must be relative in EXAMPLES.
-Date: Sat, 07 Feb 2009 15:31:47 -0800 (PST)
-Message-ID: <m3mycxvn55.fsf@localhost.localdomain>
-References: <87zlgxzydw.fsf@jondo.cante.net>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] rebase: do not fail silently when the HEAD could not
+	be detached
+Date: Sun, 8 Feb 2009 00:35:24 +0100
+Message-ID: <20090207233524.GD11623@atjola.homenet>
+References: <cover.1234027102u.git.johannes.schindelin@gmx.de> <679be9321b4cf4f694917cb9eebba70376a43a0a.1234027102u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Sun Feb 08 00:34:13 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 08 00:37:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVwgd-0003jk-NN
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 00:34:12 +0100
+	id 1LVwjT-0004TS-Ge
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 00:37:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753547AbZBGXbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2009 18:31:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753388AbZBGXbv
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 18:31:51 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:28577 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753191AbZBGXbu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 18:31:50 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so812764fgg.17
-        for <git@vger.kernel.org>; Sat, 07 Feb 2009 15:31:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=xnlgxyScaM3boBs66YWKusLUACOOAlcC15IeNkuz4XI=;
-        b=vjxEB5D38oBhWlhHGqw/kQ++wDaU5I5cuolA415rcP/XfiEpY/0v2ERBUNqkGwPaut
-         LJxpMxqRD8OiXV3n7OSMfHTJf49iNqumVqalc9yiabjwnM36+ri5kVyicPgi/9+Mz4RJ
-         MYku3jxRmphk2i6HvlLEaXsy4bOKP9WqJzns8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=DRRFrX+uPBVwybuxb97ej7C1UEeLEJniXfoeWlaCQX9TxqhTv7+uy4H9dxmYLp+924
-         0uOSdV6NMXPH3VyyjKzRCWHIVlrmUmwDqytGTs3ZkdqBk/c1zpnULJIA6SWxCtoiJCnP
-         /vWSTPWme092iQ+dsy1Agy+ohnfK8FmRRKFRg=
-Received: by 10.86.100.19 with SMTP id x19mr1887180fgb.29.1234049508438;
-        Sat, 07 Feb 2009 15:31:48 -0800 (PST)
-Received: from localhost.localdomain (abwm89.neoplus.adsl.tpnet.pl [83.8.236.89])
-        by mx.google.com with ESMTPS id d4sm2866305fga.58.2009.02.07.15.31.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 07 Feb 2009 15:31:47 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n17NWqen031825;
-	Sun, 8 Feb 2009 00:32:53 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n17NWdup031821;
-	Sun, 8 Feb 2009 00:32:39 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <87zlgxzydw.fsf@jondo.cante.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753860AbZBGXfk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Feb 2009 18:35:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753813AbZBGXfj
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 18:35:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42260 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753791AbZBGXfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2009 18:35:39 -0500
+Received: (qmail invoked by alias); 07 Feb 2009 23:35:37 -0000
+Received: from i577B935D.versanet.de (EHLO atjola.local) [87.123.147.93]
+  by mail.gmx.net (mp067) with SMTP; 08 Feb 2009 00:35:37 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19NzAFi/LNNmAwuU4n8wgPVnVux3uBmarEDN2mHnr
+	+bkllVh7f0ryca
+Content-Disposition: inline
+In-Reply-To: <679be9321b4cf4f694917cb9eebba70376a43a0a.1234027102u.git.johannes.schindelin@gmx.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108901>
 
-Jari Aalto <jari.aalto@cante.net> writes:
+On 2009.02.07 18:20:09 +0100, Johannes Schindelin wrote:
+> Since 6fd2f5e(rebase: operate on a detached HEAD), rebase operates on=
+ a
+> detached HEAD.  However, it used "checkout -q" to detach the HEAD, wh=
+ich
+> hid an error message when, say, an untracked file would have to be
+> overwritten to detach the HEAD.
 
-> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
-> ---
->  Documentation/git-show.txt |    6 +++++-
->  1 files changed, 5 insertions(+), 1 deletions(-)
-> 
-> diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-> index 48b612e..2a014cc 100644
-> --- a/Documentation/git-show.txt
-> +++ b/Documentation/git-show.txt
-> @@ -57,7 +57,11 @@ git show v1.0.0^\{tree\}::
->  git show next~10:Documentation/README::
->  	Shows the contents of the file `Documentation/README` as
->  	they were current in the 10th last commit of the branch
-> -	`next`.
-> +	`next`. *Note:* the 'object' path must always be relative to git
-> +	project root. This wouldn't have worked:
-> +
-> +	$ cd Documentation
-> +	$ git show next~10:README
+Hm, in 324c2c317 "git-rebase: report checkout failure", that was
+switched from a stdout/stderr redirect to -q, so that those error
+messages are shown. And with a quick test, rebase/checkout complains
+just fine:
 
-Actually that is not exactly true.  In the <tree-ish>:<path> the
-'object' path must be always relative to <tree-ish), in this case
-to "next~10", which means relative to project root at given commit
-(important in case of subtree merge).
+doener@atjola:g (master) $ git checkout -q bar
+error: Untracked working tree file 'file' would be overwritten by merge=
+=2E
+doener@atjola:g (master) $ git rebase bar
+=46irst, rewinding head to replay your work on top of it...
+error: Untracked working tree file 'file' would be overwritten by merge=
+=2E
+could not detach HEAD
 
-Although in practice <tree-ish> is always commit.
+doener@atjola:g (master) $ git --version=20
+git version 1.6.2.rc0
 
->  
->  git show master:Makefile master:t/Makefile::
->  	Concatenates the contents of said Makefiles in the head
-> -- 
-> 1.5.6.5
-> 
-> 
+Same with next and pu.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Bj=F6rn
