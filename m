@@ -1,72 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Article about "git bisect run" on LWN
-Date: Sat, 07 Feb 2009 10:16:27 -0800
-Message-ID: <7vskmqw1s4.fsf@gitster.siamese.dyndns.org>
-References: <200902050747.50100.chriscool@tuxfamily.org>
- <20090205141336.GA28443@elte.hu> <200902060623.16046.chriscool@tuxfamily.org>
- <200902070541.29955.chriscool@tuxfamily.org>
- <ee77f5c20902070455h360d8476re76294735673b4ca@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] don't append 'opaquelocktoken:' in PUT and MOVE
+Date: Sun, 8 Feb 2009 02:38:39 +0800
+Message-ID: <be6fef0d0902071038y3e6de33es33a73ab6a068f9ac@mail.gmail.com>
+References: <498DA4F9.20104@gmail.com>
+	 <alpine.DEB.1.00.0902071801570.10279@pacific.mpi-cbg.de>
+	 <be6fef0d0902070952l5818e4b7x3048c667661ce31@mail.gmail.com>
+	 <alpine.DEB.1.00.0902071903020.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org,
-	Andreas Ericsson <ae@op5.se>, Jeff Garzik <jeff@garzik.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Bill Lear <rael@zopyra.com>,
-	Jon Seymour <jon.seymour@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 07 19:18:17 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 07 19:43:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVrks-0006DO-3N
-	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 19:18:14 +0100
+	id 1LVs9D-0005Ta-Sl
+	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 19:43:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752573AbZBGSQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2009 13:16:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbZBGSQq
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 13:16:46 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46321 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752286AbZBGSQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 13:16:46 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6DFD4972CE;
-	Sat,  7 Feb 2009 13:16:43 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 553B8972C7; Sat,
-  7 Feb 2009 13:16:30 -0500 (EST)
-In-Reply-To: <ee77f5c20902070455h360d8476re76294735673b4ca@mail.gmail.com>
- (David Symonds's message of "Sat, 7 Feb 2009 23:55:34 +1100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7918DC56-F543-11DD-A021-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752645AbZBGSil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Feb 2009 13:38:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752443AbZBGSil
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 13:38:41 -0500
+Received: from wa-out-1112.google.com ([209.85.146.176]:10381 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752242AbZBGSik (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2009 13:38:40 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so625603wah.21
+        for <git@vger.kernel.org>; Sat, 07 Feb 2009 10:38:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1ZmrOhUIu7Jxd0uQgmSDusQOKrFDfg4AJ/HNrkC3Jzk=;
+        b=ZpfzUvz8K5+zFyQ6iETtnluuVpmryNrmfl++BsbzvL+A0jv1a0r+ibOT8fD+lapTjm
+         QR8VJHrZngj+Tmy78PvSAx4xg8H0M8R7cI86dkj+6IqFbRjMNuKy5EFMDURczbJ61ABE
+         Qk9a+3Jv7aHN4RgSAbl/qT2uiVa4jG9/jtZfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VK8+pIwQNJP1kFaaKEwn/hR3WL9EXw/UUTy3Bv+wOcj49X0u4matBUHib2T0jds8Ci
+         ye5sEVcvjNRtpO/MEq5LP9ufkQohxqbaatjJuJe+G9bFnD18HyRon9qudrrS2djAkTRz
+         Ag3BxAYfsGPaf/Yc3gSPMeizifou8SveVzJt8=
+Received: by 10.115.16.1 with SMTP id t1mr2217180wai.58.1234031919369; Sat, 07 
+	Feb 2009 10:38:39 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902071903020.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108873>
 
-David Symonds <dsymonds@gmail.com> writes:
+Hi,
 
-> On Sat, Feb 7, 2009 at 3:41 PM, Christian Couder
-> <chriscool@tuxfamily.org> wrote:
->
->> It might be useful to have a list of always good commits too, and use it
->> like this:
->>
->> $ git bisect start <bad> <good> $(cat always_good.txt)
->> $ git bisect skip $(cat always_skipped.txt)
->> $ git bisect run ./my_test_script.sh
->
-> Your test script could just do this at its start instead:
->
->   if cat always_good.txt | grep $(rev-parse HEAD); then
->     exit 0
->   elif cat always_skipped.txt | grep $(rev-parse HEAD); then
->     exit 125
->   fi
+On Sun, Feb 8, 2009 at 2:04 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Why does request->lock->token have the prefix at all?
 
-Don't cat a file into grep, please.
+While typing my reply, I realise it is unwarranted.
+
+Thanks for taking the time to look through this.
+
+-- 
+Cheers,
+Ray Chuan
