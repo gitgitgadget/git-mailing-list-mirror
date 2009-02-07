@@ -1,65 +1,62 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule: add --no-fetch parameter to update command
-Date: Sat, 07 Feb 2009 00:44:39 -0800
-Message-ID: <7vbptey6tk.fsf@gitster.siamese.dyndns.org>
-References: <1233872312-17781-1-git-send-email-git@fabian-franz.de>
+Subject: Re: [PATCHv2] gitweb: Better regexp for SHA-1 committag match
+Date: Sat, 07 Feb 2009 00:48:43 -0800
+Message-ID: <7v7i42y6ms.fsf@gitster.siamese.dyndns.org>
+References: <200902022204.46651.toralf.foerster@gmx.de>
+ <200902061149.16210.jnareb@gmail.com>
+ <7vd4duzo07.fsf@gitster.siamese.dyndns.org>
+ <200902070934.50555.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, hjemli@gmail.com
-To: Fabian Franz <git@fabian-franz.de>
-X-From: git-owner@vger.kernel.org Sat Feb 07 09:46:26 2009
+Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Toralf =?utf-8?Q?F?= =?utf-8?Q?=C3=B6rster?= 
+	<toralf.foerster@gmx.de>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 07 09:50:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVipV-0001TE-27
-	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 09:46:25 +0100
+	id 1LVitI-0002LS-J7
+	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 09:50:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335AbZBGIor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2009 03:44:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbZBGIoq
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 03:44:46 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53018 "EHLO
+	id S1751589AbZBGIsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Feb 2009 03:48:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751335AbZBGIsw
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 03:48:52 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53678 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750946AbZBGIoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 03:44:46 -0500
+	with ESMTP id S1751112AbZBGIsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2009 03:48:52 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id ABD652A9CA;
-	Sat,  7 Feb 2009 03:44:44 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4F7812A9C0;
+	Sat,  7 Feb 2009 03:48:51 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AEB542A9BE; Sat, 
- 7 Feb 2009 03:44:40 -0500 (EST)
-In-Reply-To: <1233872312-17781-1-git-send-email-git@fabian-franz.de> (Fabian
- Franz's message of "Thu, 5 Feb 2009 20:18:32 -0200")
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 53A6C2A9BE; Sat, 
+ 7 Feb 2009 03:48:45 -0500 (EST)
+In-Reply-To: <200902070934.50555.jnareb@gmail.com> (Jakub Narebski's message
+ of "Sat, 7 Feb 2009 09:34:48 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9188C698-F4F3-11DD-8EB8-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2488517A-F4F4-11DD-8EB8-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108833>
 
-Fabian Franz <git@fabian-franz.de> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> git submodule update --no-fetch makes it possible to use git submodule
-> update in complete offline mode by not fetching new revisions.
+> It would unfortunately falsely match... but we cannot eliminate this
+> case (well, at least not checking if hexnumber is followed by dot),
+> because of totally legitimate
 >
-> This does make sense in the following setup:
+>    ... at commit 8457bb9e.
 >
-> * There is an unstable and a stable branch in the super/master repository.
-> * The submodules might be at different revisions in the branches.
-> * You are at some place without internet connection ;)
->
-> With this patch it is now possible to change branches and update
-> the submodules to be at the recorded revision without online access.
+> So even with that we would have still false matches...
 
-How is this better than "cd submodule/path && git checkout whatever"?
-
-> Another advantage is that with -N the update operation is faster,
-> because fetch is checking for new updates even if there was no
-> fetch/pull on the super/master repository since the last update.
-
-Do we know this is common enough to deserve a shortopt -N?
-
-The logic of the patch itself looks sane to me.
+Yeah, so what's the value in v2 over v1?  It is still wrong but it is less
+wrong than it used to be?  I think the word-boundary one made a good
+sense.  I do not see the @lookahead adding much value at all.
