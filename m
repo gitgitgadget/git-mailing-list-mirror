@@ -1,66 +1,85 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] 'git log --quiet' doesn't suppress the output
-Date: Sat, 7 Feb 2009 01:56:02 -0500
-Message-ID: <20090207065602.GA14995@coredump.intra.peff.net>
-References: <885649360902041819k4a168407wc57017e6a1c7d00a@mail.gmail.com> <20090206191146.GC19494@coredump.intra.peff.net> <885649360902062244v715a61b7nf32003c97cc4f707@mail.gmail.com>
+Subject: Re: [ANNOUNCE] tig-0.14
+Date: Sat, 7 Feb 2009 02:10:56 -0500
+Message-ID: <20090207071056.GB14856@coredump.intra.peff.net>
+References: <20090205204436.GA6072@diku.dk> <20090206191511.GD19494@coredump.intra.peff.net> <2c6b72b30902061410l64c98c33g19b97f656d347c83@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git ML <git@vger.kernel.org>
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 07 07:58:29 2009
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Sat Feb 07 08:17:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVh93-0005el-AM
-	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 07:58:29 +0100
+	id 1LVhRU-00017C-IN
+	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 08:17:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753113AbZBGG4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2009 01:56:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752898AbZBGG4H
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 01:56:07 -0500
-Received: from peff.net ([208.65.91.99]:35331 "EHLO peff.net"
+	id S1753161AbZBGHLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Feb 2009 02:11:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752898AbZBGHLi
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 02:11:38 -0500
+Received: from peff.net ([208.65.91.99]:49907 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752869AbZBGG4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 01:56:06 -0500
-Received: (qmail 19081 invoked by uid 107); 7 Feb 2009 06:56:18 -0000
+	id S1752430AbZBGHLg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2009 02:11:36 -0500
+Received: (qmail 19142 invoked by uid 107); 7 Feb 2009 07:11:13 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 07 Feb 2009 01:56:18 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 07 Feb 2009 01:56:02 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 07 Feb 2009 02:11:13 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 07 Feb 2009 02:10:56 -0500
 Content-Disposition: inline
-In-Reply-To: <885649360902062244v715a61b7nf32003c97cc4f707@mail.gmail.com>
+In-Reply-To: <2c6b72b30902061410l64c98c33g19b97f656d347c83@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108819>
 
-On Fri, Feb 06, 2009 at 11:44:59PM -0700, James Pickens wrote:
+On Fri, Feb 06, 2009 at 11:10:23PM +0100, Jonas Fonseca wrote:
 
-> I was writing a script, and looking for a way to figure out
-> whether there were any commits in origin/master that aren't in
-> master (i.e., whether I need to pull before I can push), and 'git
-> log --quiet origin/master..master' was the first thing I thought
-> of.
+> > It looks like you just keep the view on the same line number when moving
+> > to the new blame output. In practice, this has very mixed results. Most
+> > of the time it does exactly what I want, but if the file changes
+> > significantly, you get dumped at a totally unrelated part of the file.
+> > I'm not sure if there is a more clever solution, though.
+> 
+> Yes, it is a bit easy to get lost. It should be possible to find the
+> original line number either by making git-blame also honor
+> --show-number for the --incremental output or by using the "porcelain"
+> version:
+> 
+>   git blame --show-number -L <line>,<line> <rev> <file>
 
-OK, that does make sense.
+I'm not sure that will always work. You know that in some version of the
+file, line number X is of interest to you. You want to find the "same"
+spot in the parent commit. So you can:
 
-In this case, though, you should be using the "git rev-list" plumbing
-instead of the "git log" porcelain for a script. And "git rev-list" does
-support "--quiet", but it doesn't quite do what you want. It silences
-the output, but the exit code does not depend on whether or not there
-were any commits in range.
+  1. use the line number in the blamed file; this doesn't work because
+     the re-blamed file may have much more or less content before X,
+     which is going to shift the content of interest.
 
-So you would need a patch for rev-list to support --exit-code to mean
-"did we see anything?".
+  2. use the line number that the content was introduced on in the blamed
+     commit. This has the same problem as above, but may be more
+     accurate because you are only jumping _one_ revision to the parent
+     of the blamed commit (instead of from wherever you started
+     blaming).
 
-In the past I have accomplished something similar through:
+My impression is that tig is currently doing (1).  I think (2) will
+suffer from the same problem, but in practice the margin of error will
+be much smaller because your are rewinding through fewer changes. So if
+that is what you were suggesting, I think it is probably worth trying.
 
-  git rev-list origin/master..master | wc -l
+It would require a "reload and jump to this arbitrary line" function,
+which I remember being problematic when I did my original patch a long
+time ago.  But I haven't looked at the new code to see if it is easier
+now (it looks like you have been doing quite a bit of refactoring in
+that area lately).
 
-and checking the result for "0" (I think you could even speed things up
-by using "git rev-list -1", because you only care about whether there
-are 0 or more than 0 commits, so parsing and writing the other N is
-pointless).
+You could also try matching up content, but that is equally error-prone.
+You can't find the same line in the parent, for the obvious reason that
+you've just blamed it, so by definition it doesn't exist in the parent.
+You could try doing a fuzzy match on the surrounding blamed lines, but
+there is no guarantee that they exist in the parent commit, either. So I
+think the line number guess is probably our best bet.
 
 -Peff
