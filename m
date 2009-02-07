@@ -1,58 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Tay Ray Chuan <rctay89@gmail.com>
 Subject: Re: [PATCH] don't append 'opaquelocktoken:' in PUT and MOVE
-Date: Sat, 7 Feb 2009 19:57:18 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902071956480.10279@pacific.mpi-cbg.de>
-References: <498DA4F9.20104@gmail.com>  <alpine.DEB.1.00.0902071801570.10279@pacific.mpi-cbg.de>  <be6fef0d0902070952l5818e4b7x3048c667661ce31@mail.gmail.com>  <alpine.DEB.1.00.0902071903020.10279@pacific.mpi-cbg.de>
- <be6fef0d0902071038y3e6de33es33a73ab6a068f9ac@mail.gmail.com>
+Date: Sun, 8 Feb 2009 03:00:58 +0800
+Message-ID: <be6fef0d0902071100o68cf0f81m2e666bb1dac9977a@mail.gmail.com>
+References: <498DA4F9.20104@gmail.com>
+	 <alpine.DEB.1.00.0902071801570.10279@pacific.mpi-cbg.de>
+	 <be6fef0d0902070952l5818e4b7x3048c667661ce31@mail.gmail.com>
+	 <alpine.DEB.1.00.0902071903020.10279@pacific.mpi-cbg.de>
+	 <be6fef0d0902071038y3e6de33es33a73ab6a068f9ac@mail.gmail.com>
+	 <alpine.DEB.1.00.0902071956480.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 07 19:58:17 2009
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 07 20:02:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVsNZ-0001j9-I5
-	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 19:58:14 +0100
+	id 1LVsRk-0002uV-BA
+	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 20:02:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753008AbZBGS4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2009 13:56:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752912AbZBGS4j
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 13:56:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60847 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752827AbZBGS4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 13:56:39 -0500
-Received: (qmail invoked by alias); 07 Feb 2009 18:56:37 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp061) with SMTP; 07 Feb 2009 19:56:37 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19G7g4sSAhGesX+dvTMCM85a78C/Tg/ikEU3bCi3y
-	rUa5HxLspDPlU8
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <be6fef0d0902071038y3e6de33es33a73ab6a068f9ac@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1753075AbZBGTA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Feb 2009 14:00:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752946AbZBGTA7
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 14:00:59 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:15729 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752368AbZBGTA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2009 14:00:58 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so628149wah.21
+        for <git@vger.kernel.org>; Sat, 07 Feb 2009 11:00:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hl9xIjLU+pLLZQdyOIfk5oKJX3OhtrLtiPVbe9sLYOo=;
+        b=OcdnIb8E1whcLF+xwahfEcuVW++K1vvY3zGN+II3Ct9rIIRPbJH1kIhvf9Z4eNrl9P
+         goNkM3uQB2Q+D3EL8h8Y1d2/iTt91cfl85Y+dOSOrkT9HC/jWJEWL5fgUii/MMx1sVVi
+         9ue8uztDjDtuvhsALBF3t7rkpt6dxjX9uO8ec=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=U8T0jHdb5qsS8JbcOoPbA4ZnUaadwmf3kHjJNf8/dKqCdUpNaEOUfaDmWQ6HwpPGnE
+         Z9FTzTup4jiAvI0uUrwK+doZMO7s5hVndGDM31QT6mVEe+b20eCL+8SeXbdrA0OmViH2
+         +elm5iYMwrxDAuBMJttk7m2B2uWMwATBtvLzU=
+Received: by 10.114.169.20 with SMTP id r20mr2219314wae.110.1234033258067; 
+	Sat, 07 Feb 2009 11:00:58 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902071956480.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108875>
 
 Hi,
 
-On Sun, 8 Feb 2009, Tay Ray Chuan wrote:
+On Sun, Feb 8, 2009 at 2:57 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Huh?  What does that mean?  Does lock->token have that prefix (including
+> the colon) or not?
 
-> On Sun, Feb 8, 2009 at 2:04 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Why does request->lock->token have the prefix at all?
-> 
-> While typing my reply, I realise it is unwarranted.
+Yes, it does have the prefix with colon, but it is not true that it is
+always "opaquelocktoken:" -- it could be some other URI scheme.
 
-Huh?  What does that mean?  Does lock->token have that prefix (including 
-the colon) or not?
+I submitting a new patch that accounts for this (other URI schemes).
 
-Ciao,
-Dscho
+-- 
+Cheers,
+Ray Chuan
