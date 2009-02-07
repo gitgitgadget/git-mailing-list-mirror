@@ -1,114 +1,78 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH] don't append 'opaquelocktoken:' in PUT and MOVE
-Date: Sat, 07 Feb 2009 23:12:57 +0800
-Message-ID: <498DA4F9.20104@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 07 16:14:56 2009
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 1/5] Make test-path-utils more robust against incorrect use
+Date: Sat,  7 Feb 2009 16:08:27 +0100
+Message-ID: <1234019311-6449-2-git-send-email-j6t@kdbg.org>
+References: <498CAF73.6050409@lsrfire.ath.cx>
+ <1234019311-6449-1-git-send-email-j6t@kdbg.org>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: rene.scharfe@lsrfire.ath.cx
+X-From: git-owner@vger.kernel.org Sat Feb 07 16:17:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVotS-0005lx-Oe
-	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 16:14:55 +0100
+	id 1LVovW-0006PA-AC
+	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 16:17:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752458AbZBGPN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2009 10:13:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285AbZBGPN2
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 10:13:28 -0500
-Received: from ti-out-0910.google.com ([209.85.142.187]:7520 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023AbZBGPN1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 10:13:27 -0500
-Received: by ti-out-0910.google.com with SMTP id d10so1317246tib.23
-        for <git@vger.kernel.org>; Sat, 07 Feb 2009 07:13:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=2CmgWH2Gz7LQy9fLtW2vqPJ58GlfZY3PcTJT5g+Rzzg=;
-        b=rK1yq4MpghXuL/f19xzZlCO9Ixk6C4mw+LZ9zkGgekW+t63wgx3237y+pPn0/J16tD
-         b209TgZiwJkHjxfTvex8FO4Du2F+og48NLrCLExpfMuS1xtXsKw5nLKfTczZv/Ey8a0C
-         JiHKmIw4sAdto64uI1o9dkgG6TeufobOVVjuk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=CFA1GaMh2LGXfOoUmHh3WY3uIKipYzSFXCBvzPH59lNhGzuekLaj7jB349hHdy7MR1
-         UHvZv/d1VpD1+dOwvA3+0R1V97HryHzFN4WqHx0EeNB0MAQ540W6HBZZ9FGvifAHtsF/
-         w+knA7AaI1tPKQRPeUDXiuJ3bUhQCItQcgcok=
-Received: by 10.110.40.8 with SMTP id n8mr4874632tin.28.1234019604292;
-        Sat, 07 Feb 2009 07:13:24 -0800 (PST)
-Received: from ?116.87.149.30? ([116.87.149.30])
-        by mx.google.com with ESMTPS id b7sm4867295tic.35.2009.02.07.07.13.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 07 Feb 2009 07:13:23 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+	id S1752705AbZBGPPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Feb 2009 10:15:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752358AbZBGPPf
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 10:15:35 -0500
+Received: from smtp3.srv.eunet.at ([193.154.160.89]:39643 "EHLO
+	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752614AbZBGPPd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2009 10:15:33 -0500
+Received: from localhost.localdomain (unknown [93.83.142.38])
+	by smtp3.srv.eunet.at (Postfix) with ESMTP id 58E4310A715;
+	Sat,  7 Feb 2009 16:08:32 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.297.g9b01e
+In-Reply-To: <1234019311-6449-1-git-send-email-j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108856>
 
-In 753bc91 ("Remove the requirement opaquelocktoken uri scheme"), the
-lock token is guaranteed to be prefixed with the string
-'opaquelocktoken:', which propagated down to file path creation
-operations in the remote repository, namely, in start_put (and
-consequently start_move).
+Previously, this test utility happily returned with exit code 0 if garbage
+was thrown at it. Now it reports failure if an unknown function name was
+given on the command line.
 
-These file operations may not be successful, due to the colon ':'
-character in the file path (specifically, in Windows).
-
-This patch ensures that the lock token sans 'opaquelocktoken:' is used
-instead in start_put.
-
-Note on tests: In the second grep, we check that Apache returns status
-20* (ie. the request was successful), but in the first we do not do
-so, since file creation by PUSH/MOVE is not guaranteed to succeed (see
-above).
-
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
+ test-path-utils.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
- http-push.c          |    2 +-
- t/t5540-http-push.sh |    9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletions(-)
-
-diff --git a/http-push.c b/http-push.c
-index eefd64c..10df94a 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -558,7 +558,7 @@ static void start_put(struct transfer_request *request)
-
- 	append_remote_object_url(&buf, remote->url, hex, 0);
- 	strbuf_addstr(&buf, "_");
--	strbuf_addstr(&buf, request->lock->token);
-+	strbuf_addstr(&buf, request->lock->token + 16);
- 	request->url = strbuf_detach(&buf, NULL);
-
- 	slot = get_active_slot();
-diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-index c236b5e..544dea8 100755
---- a/t/t5540-http-push.sh
-+++ b/t/t5540-http-push.sh
-@@ -94,6 +94,15 @@ test_expect_success 'MKCOL sends directory names with trailing slashes' '
-
- '
-
-+test_expect_success 'PUT and MOVE sends object to URLs without "opaquelocktoken:"' '
-+
-+	!(grep -P "\"(?:PUT|MOVE) .+objects/[\da-z]{2}/[\da-z]{38}_opaquelocktoken:[\da-z\-]{36} HTTP/[0-9.]+\"" \
-+	< "$HTTPD_ROOT_PATH"/access.log) &&
-+	grep -P "\"(?:PUT|MOVE) .+objects/[\da-z]{2}/[\da-z]{38}_[\da-z\-]{36} HTTP/[0-9.]+\" 20\d" \
-+	< "$HTTPD_ROOT_PATH"/access.log
-+
-+'
-+
- stop_httpd
-
- test_done
+diff --git a/test-path-utils.c b/test-path-utils.c
+index 2c0f5a3..7e6fc8d 100644
+--- a/test-path-utils.c
++++ b/test-path-utils.c
+@@ -7,6 +7,7 @@ int main(int argc, char **argv)
+ 		int rv = normalize_absolute_path(buf, argv[2]);
+ 		assert(strlen(buf) == rv);
+ 		puts(buf);
++		return 0;
+ 	}
+ 
+ 	if (argc >= 2 && !strcmp(argv[1], "make_absolute_path")) {
+@@ -15,12 +16,16 @@ int main(int argc, char **argv)
+ 			argc--;
+ 			argv++;
+ 		}
++		return 0;
+ 	}
+ 
+ 	if (argc == 4 && !strcmp(argv[1], "longest_ancestor_length")) {
+ 		int len = longest_ancestor_length(argv[2], argv[3]);
+ 		printf("%d\n", len);
++		return 0;
+ 	}
+ 
+-	return 0;
++	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
++		argv[1] ? argv[1] : "(there was none)");
++	return 1;
+ }
 -- 
-1.6.1.2.278.g9a9e.dirty
+1.6.1.297.g9b01e
