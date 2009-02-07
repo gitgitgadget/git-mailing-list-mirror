@@ -1,94 +1,96 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv2] gitweb: Better regexp for SHA-1 committag match
-Date: Sat, 7 Feb 2009 09:34:48 +0100
-Message-ID: <200902070934.50555.jnareb@gmail.com>
-References: <200902022204.46651.toralf.foerster@gmx.de> <200902061149.16210.jnareb@gmail.com> <7vd4duzo07.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] submodule: handle trailing slash, warn about
+ non-submodules
+Date: Sat, 07 Feb 2009 00:36:51 -0800
+Message-ID: <7vfxiqy76k.fsf@gitster.siamese.dyndns.org>
+References: <cover.1233892769u.git.johannes.schindelin@gmx.de>
+ <b14e34d2529721c24437ec9da3f8f15c916d4051.1233892769u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Toralf =?iso-8859-1?q?F=F6rster?= <toralf.foerster@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 07 09:35:32 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 07 09:38:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LViex-0007tH-2X
-	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 09:35:31 +0100
+	id 1LVihp-0008O0-HE
+	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 09:38:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751112AbZBGId7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2009 03:33:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbZBGId7
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 03:33:59 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:48906 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750886AbZBGId7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 03:33:59 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so698553fgg.17
-        for <git@vger.kernel.org>; Sat, 07 Feb 2009 00:33:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=AF/zh/9dnMbpD1pELCFKwEbiOfc0s++Xr80baQYoKgs=;
-        b=DDvYgP/pZC1BrBg6avhsYkMFyYSxvXHg0M/RVB7jIVIT6Z87i3Kn1gRlnWtjMk2scr
-         mMi2zoYRu0AlgY2vyFvyEp0eXX4OjKXkNRjX2z9W57SU1BcC+oenAznZnfyLJmPpfGo8
-         fbJR9QS5B79I9R7UAStjqdZz49Nb++naD7+9M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=kLMEWSM6w1MOXyeFolJcO82Qbuzn9ZyrVHykzySEJ7k9B8XN0QUdTNAxulj20kXL+/
-         +vJorrd+GZdyiGjyOKtknAXi/9L4x+4fOGsgHuAytr3sszSPzQirtrzFfvVjZ2DDeqIa
-         k2vTUVpyLxUD/Inrhh+VC6R0vpJ3SAKo0Pi04=
-Received: by 10.223.113.3 with SMTP id y3mr2124442fap.71.1233995637124;
-        Sat, 07 Feb 2009 00:33:57 -0800 (PST)
-Received: from ?192.168.1.13? (abwn77.neoplus.adsl.tpnet.pl [83.8.237.77])
-        by mx.google.com with ESMTPS id p9sm563561fkb.1.2009.02.07.00.33.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 07 Feb 2009 00:33:56 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vd4duzo07.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751936AbZBGIhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Feb 2009 03:37:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751589AbZBGIhB
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 03:37:01 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40598 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751423AbZBGIhA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2009 03:37:00 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6D31D973D9;
+	Sat,  7 Feb 2009 03:36:57 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EC832973D6; Sat,
+  7 Feb 2009 03:36:53 -0500 (EST)
+In-Reply-To: <b14e34d2529721c24437ec9da3f8f15c916d4051.1233892769u.git.johannes.schindelin@gmx.de> (Johannes Schindelin's message of "Fri, 6 Feb 2009 05:00:22 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7AFB0978-F4F2-11DD-9AFB-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108831>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > Make SHA-1 regexp to be turned into hyperlink (SHA-1 committag)
-> > to match word boundary at beginning and end.  This way we limit
-> > false matches, for example 0x74a5cd01 which is hex decimal (for
-> > example memory address) but not SHA-1.
-> >
-> > Also make sure that it is not Message-ID, which fragment just
-> > looks like SHA-1 (e.g. "Message-ID: <46A0F335@example.com>"),
-> > by using zero-width negative look-ahead assertion to _not_
-> > match '@' after.
-> 
-> Your message I am responding to is:
-> 
->     Message-ID: <200902061149.16210.jnareb@gmail.com>
-> 
-> Does your description mean that "200902061149" would match, because the
-> LAA will say "Ah, dot is not an at-sign"?
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-It would unfortunately falsely match... but we cannot eliminate this
-case (well, at least not checking if hexnumber is followed by dot),
-because of totally legitimate
+> Earlier, when you called
+>
+> 	git submodule path/to/submodule/
+>
+> (which happens easily if you are a heavy user of tab-completion), Git
+> would silently ignore the given path, as "git ls-files path/to/submodule/"
+> does not return anything due to the trailing slash.
 
-   ... at commit 8457bb9e.
+I see a sign of concentrating too much on the topic you were interested in
+to blind yourself here in this patch.
 
-So even with that we would have still false matches...
--- 
-Jakub Narebski
-Poland
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 2f47e06..b878909 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -59,7 +59,19 @@ resolve_relative_url ()
+>  #
+>  module_list()
+>  {
+> -	git ls-files --stage -- "$@" | grep '^160000 '
+> +	while test $# -gt 0
+> +	do
+> +		line=$(git ls-files --stage "${1%/}" | grep '^160000 ')
+> +		case "$line" in
+> +		'')
+> +			echo "Warning: ignoring non-submodule '$1'" >&2
+> +			;;
+> +		*)
+> +			echo "$line"
+> +			;;
+> +		esac
+> +		shift
+> +	done
+
+Almost everybody seems to call module_list with the arguments it received
+from the caller, but that "$@" could be none.  Worse, cmd_foreach always
+calls module_list with no argument.  Earlier you got all submodules, now
+you get none.
+
+So you would need:
+
+        case $# in
+        0)
+                git ls-files --stage -- | grep '^160000 '
+                ;;
+        *)
+                your while loop
+                ;;
+        esac
+
+or something, I think.
