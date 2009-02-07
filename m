@@ -1,194 +1,137 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.6.2-rc0
-Date: Sat, 07 Feb 2009 13:54:37 -0800
-Message-ID: <7vvdrlsyjm.fsf@gitster.siamese.dyndns.org>
+Subject: [ANNOUNCE] GIT 1.6.1.3
+Date: Sat, 07 Feb 2009 13:54:51 -0800
+Message-ID: <7vprhtsyj8.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: linux-kernel@vger.kernel.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 07 22:56:13 2009
+X-From: git-owner@vger.kernel.org Sat Feb 07 22:56:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVv9o-0001ou-Em
-	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 22:56:12 +0100
+	id 1LVvA7-0001uS-HR
+	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 22:56:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752542AbZBGVyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2009 16:54:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752089AbZBGVyq
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 16:54:46 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64521 "EHLO
+	id S1755121AbZBGVzD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Feb 2009 16:55:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755014AbZBGVzA
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 16:55:00 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64575 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750915AbZBGVyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 16:54:45 -0500
+	with ESMTP id S1754770AbZBGVy6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Feb 2009 16:54:58 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 91A6C2AA6F;
-	Sat,  7 Feb 2009 16:54:43 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 42C7D2AA73;
+	Sat,  7 Feb 2009 16:54:58 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 686A62AA3C; Sat, 
- 7 Feb 2009 16:54:39 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 188B52AA6F; Sat, 
+ 7 Feb 2009 16:54:53 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: ED79E694-F561-11DD-8504-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F6354A8A-F561-11DD-AAB5-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108893>
 
-The 0th release candidate for 1.6.2 is available at the usual places:
+The latest maintenance release GIT 1.6.1.3 is available at the
+usual places:
 
   http://www.kernel.org/pub/software/scm/git/
 
-  git-1.6.2-rc0.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.6.2-rc0.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.6.2-rc0.tar.{gz,bz2}		(preformatted docs)
+  git-1.6.1.3.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.6.1.3.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.6.1.3.tar.{gz,bz2}		(preformatted docs)
 
 The RPM binary packages for a few architectures are also provided
 as courtesy.
 
-  testing/git-*-1.6.2-rc0-1.fc9.$arch.rpm	(RPM)
+  RPMS/$arch/git-*-1.6.1.3-1.fc9.$arch.rpm	(RPM)
+
+GIT v1.6.1.3 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+
+=46ixes since v1.6.1.2
+--------------------
+
+* "git diff --binary | git apply" pipeline did not work well when
+  a binary blob is changed to a symbolic link.
+
+* Some combinations of -b/-w/--ignore-space-at-eol to "git diff" did
+  not work as expected.
+
+* "git grep" did not pass the -I (ignore binary) option when
+  calling out an external grep program.
+
+* "git log" and friends include HEAD to the set of starting points
+  when --all is given.  This makes a difference when you are not
+  on any branch.
+
+* "git mv" to move an untracked file to overwrite a tracked
+  contents misbehaved.
+
+* "git merge -s octopus" with many potential merge bases did not
+  work correctly.
+
+* RPM binary package installed the html manpages in a wrong place.
+
+Also includes minor documentation fixes and updates.
 
 ----------------------------------------------------------------
 
-GIT v1.6.2 Release Notes (draft)
-================================
+Changes since v1.6.1.2 are as follows:
 
-With the next major release, "git push" into a branch that is
-currently checked out will be refused by default.  You can choose
-what should happen upon such a push by setting the configuration
-variable receive.denyCurrentBranch in the receiving repository.
+Anders Melchiorsen (2):
+      Documentation: more git push examples
+      Documentation: rework src/dst description in git push
 
-To ease the transition plan, the receiving repository of such a
-push running this release will issue a big warning when the
-configuration variable is missing.  Please refer to:
+David J. Mellor (1):
+      Fixed broken git help -w when installing from RPM
 
-  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
+Guanqun Lu (2):
+      fix typo in Documentation
+      add test-dump-cache-tree in Makefile
 
-for more details on the transition plan.
+Johannes Schindelin (2):
+      revision walker: include a detached HEAD in --all
+      apply: fix access to an uninitialized mode variable, found by val=
+grind
 
+Junio C Hamano (6):
+      bundle: allow the same ref to be given more than once
+      Documentation: simplify refspec format description
+      diff.c: output correct index lines for a split diff
+      builtin-apply.c: do not set bogus mode in check_preimage() for de=
+leted path
+      grep: pass -I (ignore binary) down to external grep
+      GIT 1.6.1.3
 
-Updates since v1.6.1
---------------------
+Keith Cascio (2):
+      test more combinations of ignore-whitespace options to diff
+      Fix combined use of whitespace ignore options to diff
 
-(subsystems)
+Linus Torvalds (1):
+      Wrap inflate and other zlib routines for better error reporting
 
-* git-svn updates.
+Matthieu Moy (3):
+      Missing && in t/t7001.sh.
+      Add a testcase for "git mv -f" on untracked files.
+      builtin-mv.c: check for unversionned files before looking at the =
+destination.
 
-* gitweb updates, including a new patch view and RSS/Atom feed
-  improvements.
+Ren=C3=A9 Scharfe (1):
+      merge: fix out-of-bounds memory access
 
-* (contrib) git.el updates for better XEmacs compatibility; vc-git.el
-  is not shiped with git anymore (it is part of official Emacs)
+SZEDER G=C3=A1bor (1):
+      Fix gitdir detection when in subdir of gitdir
 
-(performance)
+Stefan Naewe (1):
+      urls.txt: document optional port specification in git URLS
 
-* pack-objects autodetects the number of CPUs available and uses threaded
-  version.
-
-(usability, bells and whistles)
-
-* automatic typo correction works on aliases as well
-
-* Initial support for "git notes" implemented.
-
-* @{-1} is a way to refer to the last branch you were on.  This is
-  accepted not only where an object name is expected, but anywhere
-  a branch name is expected.  E.g. "git branch --track mybranch @{-1}"
-  "git rev-parse --symbolic-full-name @{-1}".
-
-* "git add -p" learned 'g'oto action to jump directly to a hunk.
-
-* "git add -p" learned to find a hunk with given text with '/'.
-
-* "git add -p" optionally can be told to work with just the command letter
-  without Enter.
-
-* when "git am" stops upon a patch that does not apply, it shows the
-  title of the offending patch.
-
-* "git am --directory=<dir>" and "git am --reject" passes these options
-  to underlying "git apply".
-
-* "git am" learned --ignore-date option.
-
-* "git blame" aligns author names better when they are spelled in
-  non US-ASCII encoding.
-
-* "git clone" now makes its best effort when cloning from an empty
-  repository to set up configuration variables to refer to the remote
-  repository.
-
-* "git checkout -" is a shorthand for "git checkout @{-1}".
-
-* "git cherry" defaults to whatever the current branch is tracking (if
-  exists) when the <upstream> argument is not given.
-
-* "git cvsserver" can be told not to add extra "via git-CVS emulator" to
-  the commit log message it serves via gitcvs.commitmsgannotation
-  configuration.
-
-* "git cvsserver" learned to handle 'noop' command some CVS clients seem
-  to expect to work.
-
-* "git diff" learned a new option --inter-hunk-context to coalesce close
-  hunks together and show context between them.
-
-* The definition of what constitutes a word for "git diff --color-words"
-  can be customized via gitattributes, command line or a configuration.
-
-* "git diff" learned --patience to run "patience diff" algorithm.
-
-* "git filter-branch" learned --prune-empty option that discards commits
-  that do not change the contents.
-
-* "git fsck" now checks loose objects in alternate object stores, instead
-  of misreporting them as missing.
-
-* "git grep -w" and "git grep" for fixed strings have been optimized.
-
-* "git mergetool" learned -y(--no-prompt) option to disable prompting.
-
-* "git rebase -i" can transplant a history down to root to elsewhere
-  with --root option.
-
-* "git reset --merge" is a new mode that works similar to the way
-  "git checkout" switches branches, taking the local changes while
-  switching to another commit.
-
-* "git tag" learned --contains that works the same way as the same option
-  from "git branch".
-
-
-Fixes since v1.6.1
-------------------
-
-All of the fixes in v1.6.1.X maintenance series are included in this
-release, unless otherwise noted.
-
-Here are fixes that this release has, but have not been backported to
-v1.6.1.X series.
-
-* "git-add sub/file" when sub is a submodule incorrectly added the path to
-  the superproject.
-
-* "git bundle" did not exclude annotated tags even when a range given
-  from the command line wanted to.
-
-* "git filter-branch" unnecessarily refused to work when you had
-  checked out a different commit from what is recorded in the superproject
-  index in a submodule.
-
-* "git filter-branch" incorrectly tried to update a nonexistent work tree
-  at the end when it is run in a bare repository.
-
-* "git mergetool" used to ignore autocrlf and other attributes
-  based content rewriting.
-
-* branch switching and merges had a silly bug that did not validate
-  the correct directory when making sure an existing subdirectory is
-  clean.
-
-* "git -p cmd" when cmd is not a built-in one left the display in funny state
-  when killed in the middle.
+William Pursell (1):
+      User-manual: "git stash <comment>" form is long gone
