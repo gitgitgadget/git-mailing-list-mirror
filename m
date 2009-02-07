@@ -1,135 +1,67 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: Article about "git bisect run" on LWN
-Date: Sat, 7 Feb 2009 05:41:29 +0100
-Message-ID: <200902070541.29955.chriscool@tuxfamily.org>
-References: <200902050747.50100.chriscool@tuxfamily.org> <20090205141336.GA28443@elte.hu> <200902060623.16046.chriscool@tuxfamily.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] add -p: import Term::ReadKey with 'require'
+Date: Fri, 6 Feb 2009 23:54:02 -0500
+Message-ID: <20090207045401.GA21135@sigill.intra.peff.net>
+References: <20090206140126.GA18364@coredump.intra.peff.net> <1233948601-4828-1-git-send-email-trast@student.ethz.ch> <20090206203037.GB19959@coredump.intra.peff.net> <200902070021.18928.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Andreas Ericsson <ae@op5.se>, Jeff Garzik <jeff@garzik.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Bill Lear <rael@zopyra.com>,
-	Jon Seymour <jon.seymour@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Sat Feb 07 05:43:40 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <junio@pobox.com>,
+	Suraj Kurapati <sunaku@gmail.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Feb 07 06:03:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVf2Y-0005xH-Di
-	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 05:43:38 +0100
+	id 1LVfLd-0000sA-TN
+	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 06:03:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753308AbZBGEmL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Feb 2009 23:42:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878AbZBGEmJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 23:42:09 -0500
-Received: from smtp2-g21.free.fr ([212.27.42.2]:45625 "EHLO smtp2-g21.free.fr"
+	id S1753325AbZBGEyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Feb 2009 23:54:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753319AbZBGEyK
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Feb 2009 23:54:10 -0500
+Received: from peff.net ([208.65.91.99]:37109 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752813AbZBGEmH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Feb 2009 23:42:07 -0500
-Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id EB2A64B0032;
-	Sat,  7 Feb 2009 05:41:54 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id C842F4B0080;
-	Sat,  7 Feb 2009 05:41:50 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <200902060623.16046.chriscool@tuxfamily.org>
+	id S1752878AbZBGEyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Feb 2009 23:54:09 -0500
+Received: (qmail 15127 invoked by uid 107); 7 Feb 2009 04:54:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 06 Feb 2009 23:54:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 06 Feb 2009 23:54:02 -0500
 Content-Disposition: inline
+In-Reply-To: <200902070021.18928.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108811>
 
-Le vendredi 6 f=E9vrier 2009, Christian Couder a =E9crit :
-> Le jeudi 5 f=E9vrier 2009, Ingo Molnar a =E9crit :
->
-> > - Feature: better "git bisect next" support.
->
-> You probably mean "git bisect skip" here.
->
-> >   Sometimes a commit wont build. In that case we have "git bisect
-> > next", but last i checked that only jumps a single commit - and bui=
-ld
-> > breakages often have a large scope - full trees that got merged
-> > upstream, etc. Most of the time those build breakages are uninteres=
-ting
-> > and the build-broken window does not contain the bad commit.
-> >
-> >   So it would be nice to have a "git bisect next --left=3D20%" type=
- of
-> >   feature. This would jump 20% commits to the "left" from the bisec=
-tion
-> >   point, towards the 'known bad' set of commits, but still within t=
-he
-> >   bisection window.
-> >
-> >   Similarly, "git bisect next --right=3D20%" would jump towards the
-> > known-good edge of the bisection window (but still within the bisec=
-tion
-> > window).
->
-> In the following thread, H. Peter Anvin suggested an algorithm to dea=
-l
-> with this kind of problem:
->
-> http://thread.gmane.org/gmane.comp.version-control.git/98164/
->
-> And I suggested a simpler one, that might be implemented without havi=
-ng
-> to port "git bisect skip" code to C first, but I did not work on it y=
-et.
->
-> >   Currently when i hit a build error during auto-bisection, it abor=
-ts
-> > and i have to intervene manually. But with a bigger jump distance i
-> > could use git-bisect-next reliably in scripts too.
-> >
-> >   Likewise, users too hit build breakages often, and find it hard t=
-o
-> > get out of the window of breakage. With the high-order tree structu=
-re
-> > of the kernel repository that is rather non-intuitive to do as well=
-,
-> > and often people make mistakes and test the wrong commit.
->
-> I am working slowly on "git replace" these days and, if everything go=
-es
-> well, it should make it possible to use "replace" refs when bisecting=
-, so
-> that people could bisect on commit trees where many breakages have be=
-en
-> removed. And as refs can be shared, this means that users and develop=
-ers
-> should be able to easily share these improved trees.
->
-> Another way to work around breakages could be to have a list of commi=
-ts
-> and ranges of commits that should always be skipped and always pass t=
-hem
-> to "git bisect skip" before using "git bisect run". Something like th=
-at
-> perhaps:
->
-> $ git bisect start <bad> <good>
-> $ git bisect skip $(cat always_skipped.txt)
-> $ git bisect run ./my_test_script.sh
+On Sat, Feb 07, 2009 at 12:21:13AM +0100, Thomas Rast wrote:
 
-It might be useful to have a list of always good commits too, and use i=
-t=20
-like this:
+> > (note that you could also skip the import and just call
+> > Term::ReadKey::ReadKey by its full name).
+> 
+> I tried that but couldn't get either Term::ReadKey::ReadKey or
+> Term::ReadKey->ReadKey to work.  In retrospect, I suppose it requires
+> parentheses too.
 
-$ git bisect start <bad> <good> $(cat always_good.txt)
-$ git bisect skip $(cat always_skipped.txt)
-$ git bisect run ./my_test_script.sh
+Right, you would still need the parentheses. But note that the second
+syntax (with the "->") would always be wrong. The "::" syntax just says
+"find this name not in the current namespace, but in this absolute
+namespace I am giving you". But "X->Y" is actually a syntactic shorthand
+for "look up X::Y (or Z::Y, where Z is the blessed package of X), and
+then call X::Y(X, @_)".
 
-or you may want to use grafts in your bisection repository. See the=20
-following thread about bisection breakage in the btrfs history:
+Which makes sense for object-oriented stuff. You get the object or the
+classname as the first parameter to a method. But for a regular package
+function, you would be calling
 
-http://thread.gmane.org/gmane.comp.version-control.git/105186/
+  Term::ReadKey::ReadKey('Term::ReadKey', 0)
 
-Regards,
-Christian.
+which of course makes no sense.
+
+But I think doing the import makes more sense (and is how Term::ReadKey
+is intended to be used), so the patch you posted is best.
+
+-Peff
