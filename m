@@ -1,79 +1,62 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: Re: can git reset or checkout be reverted?
-Date: Sat, 7 Feb 2009 13:31:38 +0800
-Message-ID: <20090207053137.GA7240@b2j>
-References: <20090206141940.GB7231@b2j> <slrngoonqk.urh.sitaramc@sitaramc.homelinux.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: How to find out which gitignore blocks my git-add
+Date: Sat, 7 Feb 2009 01:42:21 -0500
+Message-ID: <20090207064221.GA14856@coredump.intra.peff.net>
+References: <498C0525.5040100@gonsolo.de> <20090206193359.GF19494@coredump.intra.peff.net> <slrngopp7n.his.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 07 06:37:24 2009
+X-From: git-owner@vger.kernel.org Sat Feb 07 07:44:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVfsX-000875-Bx
-	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 06:37:21 +0100
+	id 1LVguy-0002iS-FN
+	for gcvg-git-2@gmane.org; Sat, 07 Feb 2009 07:43:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752064AbZBGFbp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Feb 2009 00:31:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751415AbZBGFbp
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 00:31:45 -0500
-Received: from ti-out-0910.google.com ([209.85.142.191]:24461 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751351AbZBGFbo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 00:31:44 -0500
-Received: by ti-out-0910.google.com with SMTP id d10so1195049tib.23
-        for <git@vger.kernel.org>; Fri, 06 Feb 2009 21:31:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mail-followup-to:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=dw4ysWM9RMq8yYyhUNwt/+Tk6qrQiIFJ8bJvnYoSKNk=;
-        b=bBfCK4DHTzjvUtgdNuF1MD0NRNH0SsofBPLvbtrk9jTgOZKNsMWabbcOcrThowwie2
-         AfIZ9dvprDWh+5YUGGmJOWK/kBmXAPC4v5KRLd/bxeNiAGSA4aIEa37ueLH9UGv3R6Br
-         7w65gN8gNLusTLybvhZalygATMLBAVh+F3dIc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        b=rncQrghhXenBhALrxrIM+T4/9YZlWn5vp5ZF8cAY23ihKOkMjiMJBeV5t4n4zJ8Bcn
-         Kgv7OP+EIaNKvOxuXVat9SKx8EfDncGguaN4TwBcvFK0kMfEHTH/QVQDZ1IfkxVrrwio
-         y7zzLVKiFqR7znzNZdIUMJPb9Z0VVNVo+1ky8=
-Received: by 10.110.33.15 with SMTP id g15mr3931264tig.58.1233984701562;
-        Fri, 06 Feb 2009 21:31:41 -0800 (PST)
-Received: from localhost (n219079102072.netvigator.com [219.79.102.72])
-        by mx.google.com with ESMTPS id b4sm62193tic.16.2009.02.06.21.31.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Feb 2009 21:31:40 -0800 (PST)
-Mail-Followup-To: Sitaram Chamarty <sitaramc@gmail.com>,
-	git@vger.kernel.org
+	id S1752838AbZBGGm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Feb 2009 01:42:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752458AbZBGGmZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 01:42:25 -0500
+Received: from peff.net ([208.65.91.99]:57587 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752830AbZBGGmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2009 01:42:24 -0500
+Received: (qmail 18951 invoked by uid 107); 7 Feb 2009 06:42:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 07 Feb 2009 01:42:37 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 07 Feb 2009 01:42:21 -0500
 Content-Disposition: inline
-In-Reply-To: <slrngoonqk.urh.sitaramc@sitaramc.homelinux.net>
-User-Agent: Mutt/1.5.19 (2009-01-27)
+In-Reply-To: <slrngopp7n.his.sitaramc@sitaramc.homelinux.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108814>
 
-Sitaram Matthieu Jakub
+On Sat, Feb 07, 2009 at 01:33:43AM +0000, Sitaram Chamarty wrote:
 
-Many thanks for help!
+> > I think it might be useful to be able to get this information. However,
+> > rather than coupling it with "git add", it might make more sense to have
+> > a separate way to query "is this being ignored, and if so, by what
+> > pattern". Then you could use that tool to generally debug your
+> > .gitignore patterns.
+> 
+> maybe GIT_TRACE could print that as well, in some way?
 
---=20
-regards,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
-=E5=94=90=E8=A9=A9281 =E5=8A=89=E7=A6=B9=E9=8C=AB  =E6=98=A5=E8=A9=9E
-    =E6=96=B0=E5=A6=9D=E5=AE=9C=E9=9D=A2=E4=B8=8B=E6=9C=B1=E6=A8=93  =E6=
-=B7=B1=E9=8E=96=E6=98=A5=E5=85=89=E4=B8=80=E9=99=A2=E6=84=81  =E8=A1=8C=
-=E5=88=B0=E4=B8=AD=E5=BA=AD=E6=95=B8=E8=8A=B1=E6=9C=B5  =E8=9C=BB=E8=9C=
-=93=E9=A3=9B=E4=B8=8A=E7=8E=89=E6=90=94=E9=A0=AD
+It could, but I think reusing GIT_TRACE isn't a good idea. Currently it
+traces _just_ exec information, so I wouldn't want to pollute that with
+this information. But yes, you could trigger it through an environment
+variable, which would let us dump at the lowest level.
+
+I spent a few minutes checking this out, and it looks to be a little
+more complex than I had hoped, just because we don't have all of the
+information in the same place at the same time.
+
+A toy patch series follows; see 2/2 for a description of why it doesn't
+work like you might hope. I'm not too interested in trying to deal with
+the refactoring that would be required to do it right. But maybe
+somebody else is.
+
+-Peff
