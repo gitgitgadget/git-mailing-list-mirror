@@ -1,107 +1,66 @@
-From: Jeremy White <jwhite@codeweavers.com>
-Subject: [PATCH v3] Enable setting attach as the default in .gitconfig for
- git-format-patch.
-Date: Sun, 08 Feb 2009 13:24:52 -0600
-Message-ID: <498F3184.30809@codeweavers.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: gc considered dangerous
+Date: Sun, 8 Feb 2009 20:37:53 +0100
+Message-ID: <200902082037.54042.robin.rosenberg.lists@dewire.com>
+References: <200902080347.25970.robin.rosenberg.lists@dewire.com> <200902081704.59439.robin.rosenberg.lists@dewire.com> <BD926B5C-60C2-4A62-9BBC-E31CB26B9BAC@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 08 20:27:40 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git ML <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Feb 08 20:39:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWFJS-0004to-FD
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 20:27:30 +0100
+	id 1LWFVD-0008Co-Jx
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 20:39:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753275AbZBHT0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 14:26:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753266AbZBHT0A
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 14:26:00 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:49119 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753206AbZBHTZ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 14:25:59 -0500
-Received: from localhost
-	([127.0.0.1] helo=[10.0.0.16] ident=stunnel4)
-	by mail.codeweavers.com with esmtp (Exim 4.63)
-	(envelope-from <jwhite@codeweavers.com>)
-	id 1LWFHy-0004kz-Vc
-	for git@vger.kernel.org; Sun, 08 Feb 2009 13:25:59 -0600
-User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
+	id S1753435AbZBHTiF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2009 14:38:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753128AbZBHTiB
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 14:38:01 -0500
+Received: from mail.dewire.com ([83.140.172.130]:20288 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754000AbZBHTiA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Feb 2009 14:38:00 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id BE9D1147E880;
+	Sun,  8 Feb 2009 20:37:56 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8CBFkYnEu23S; Sun,  8 Feb 2009 20:37:56 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 3CA13147E7FE;
+	Sun,  8 Feb 2009 20:37:56 +0100 (CET)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <BD926B5C-60C2-4A62-9BBC-E31CB26B9BAC@zib.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109003>
 
----
- Documentation/git-format-patch.txt |    4 +++-
- builtin-log.c                      |   15 +++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletions(-)
+s=F6ndag 08 februari 2009 19:24:33 skrev Steffen Prohaska:
+> If you have a backup of the corrupted repository right after it got
+> corrupted, you can create an index by running "git index-pack" on
+> the pack that is lacking an index.  This might rescue the lost
+> branches.
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 11a7d77..2e8e94e 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -174,7 +174,8 @@ CONFIGURATION
- -------------
- You can specify extra mail header lines to be added to each message
- in the repository configuration, new defaults for the subject prefix
--and file suffix, and number patches when outputting more than one.
-+and file suffix, control attachements, and number patches when outputting
-+more than one.
- 
- ------------
- [format]
-@@ -183,6 +184,7 @@ and file suffix, and number patches when outputting more than one.
- 	suffix = .txt
- 	numbered = auto
- 	cc = <email>
-+	attach [ = mime-boundary-string ]
- ------------
- 
- 
-diff --git a/builtin-log.c b/builtin-log.c
-index 2ae39af..dac0dfd 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -428,6 +428,8 @@ static const char *fmt_patch_suffix = ".patch";
- static int numbered = 0;
- static int auto_number = 1;
- 
-+static char *default_attach;
-+
- static char **extra_hdr;
- static int extra_hdr_nr;
- static int extra_hdr_alloc;
-@@ -488,6 +490,14 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 		auto_number = auto_number && numbered;
- 		return 0;
- 	}
-+	if (!strcmp(var, "format.attach")) {
-+		if (value && *value)
-+			default_attach = xstrdup(value);
-+		else
-+			default_attach = xstrdup(git_version_string);
-+		return 0;
-+	}
-+
- 
- 	return git_log_config(var, value, cb);
- }
-@@ -787,6 +797,11 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 
- 	rev.subject_prefix = fmt_patch_subject_prefix;
- 
-+	if (default_attach) {
-+		rev.mime_boundary = default_attach;
-+		rev.no_inline = 1;
-+	}
-+
- 	/*
- 	 * Parse the arguments before setup_revisions(), or something
- 	 * like "git format-patch -o a123 HEAD^.." may fail; a123 is
--- 
-1.6.1.2.390.gba743.dirty
+Yep, but the problem was that git gc was run again on the corrupted rep=
+o
+so there was only the idx left. (L)Users...
+
+Couldn't we make repack refuse to repack if it discovered left-overs fr=
+om
+a failed repack, or at least make it use the old pack files as referenc=
+e instead
+of ignoring them? Leaving too many objects is, after all, much better t=
+han
+destroying the repo.
+
+-- robin
