@@ -1,58 +1,73 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Eclipse Plugin install issue
-Date: Sun, 8 Feb 2009 01:20:06 +0100
-Message-ID: <200902080120.06894.robin.rosenberg.lists@dewire.com>
-References: <b0a3bf780902060717l653cc6dcx385aa147f606a520@mail.gmail.com> <200902061710.34337.robin.rosenberg@dewire.com> <1234007463339-2288907.post@n2.nabble.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [PATCH] Documentation: clarify commits affected by gitk --merge
+Date: Sun, 8 Feb 2009 01:15:05 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngoscgp.qdh.sitaramc@sitaramc.homelinux.net>
+References: <20090206044053.GA6831@atcmail.atc.tcs.com>
+ <7vtz75udj6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tim Schofield <tim.schofield1960@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 08 01:21:46 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 08 02:16:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVxQb-0006EF-Jy
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 01:21:42 +0100
+	id 1LVyHv-0001E6-Eu
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 02:16:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755719AbZBHAUO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Feb 2009 19:20:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755485AbZBHAUN
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 19:20:13 -0500
-Received: from mail.dewire.com ([83.140.172.130]:14922 "EHLO dewire.com"
+	id S1752388AbZBHBPT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Feb 2009 20:15:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752228AbZBHBPT
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 20:15:19 -0500
+Received: from main.gmane.org ([80.91.229.2]:48841 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755409AbZBHAUM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Feb 2009 19:20:12 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 0E00D147E89B;
-	Sun,  8 Feb 2009 01:20:11 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VFbeEnKBv847; Sun,  8 Feb 2009 01:20:08 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 1150F800258;
-	Sun,  8 Feb 2009 01:20:08 +0100 (CET)
-User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
-In-Reply-To: <1234007463339-2288907.post@n2.nabble.com>
-Content-Disposition: inline
+	id S1752178AbZBHBPS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2009 20:15:18 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LVyGS-0000gv-Rz
+	for git@vger.kernel.org; Sun, 08 Feb 2009 01:15:16 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 08 Feb 2009 01:15:16 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 08 Feb 2009 01:15:16 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108907>
 
-l=F6rdag 07 februari 2009 12:51:03 skrev Tim Schofield:
-> I am getting this identical error. I am using 200902052244 and eclips=
-e
-> Version: 3.4.1 Build id: M20080911-1700.
+On 2009-02-07, Junio C Hamano <gitster@pobox.com> wrote:
+> Sitaram Chamarty <sitaramc@gmail.com> writes:
+>
+>>  	After an attempt to merge stops with conflicts, show the commits o=
+n
+>>  	the history between two branches (i.e. the HEAD and the MERGE_HEAD=
+)
+>> -	that modify the conflicted files.
+>> +	that modify the conflicted files and do not exist on all the heads
+>> +	being merged.
+>
+> I do not understand what you are trying to add here, sorry.
 
-Was that a pristine version of that build or did you have other plugins=
- too?
-I know Eclipse can give very confusing error messages sometimes when
-things don't match up. It might be that we have a dependency requiremen=
-t
-that is too strict and collides with another plugin.
+It's basically the same thing as the explanation for --merge
+in 'git help log':
+   --merge
+       After a failed merge, show refs that touch files
+       having a conflict and don=C2=B4t exist on all heads to
+       merge.
 
--- robin
+I'm pretty sure gitk is doing the same thing, so I thought
+the extra text should be added.
+
+Regards,
+
+Sitaram
