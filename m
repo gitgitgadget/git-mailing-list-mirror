@@ -1,122 +1,113 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] git-show.txt: mention that object path must be relative in EXAMPLES.
-Date: Sun, 08 Feb 2009 09:52:11 +0200
-Message-ID: <87skmpxt5g.fsf@jondo.cante.net>
-References: <87zlgxzydw.fsf@jondo.cante.net>
-	<m3mycxvn55.fsf@localhost.localdomain>
-	<200902072259.29121.bss@iguanasuicide.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Deleting the "current" branch in remote bare repositories
+Date: Sun, 8 Feb 2009 03:44:53 -0500
+Message-ID: <20090208084453.GA4392@coredump.intra.peff.net>
+References: <20090207162754.5fb8b63f@perceptron> <94a0d4530902071405m33a0804er8030e14bea205898@mail.gmail.com> <20090208011802.2b7b9e74@perceptron>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-X-From: git-owner@vger.kernel.org Sun Feb 08 09:09:43 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Git ML <git@vger.kernel.org>, obrien654j@gmail.com
+To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
+X-From: git-owner@vger.kernel.org Sun Feb 08 09:50:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LW4jS-0002o3-4t
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 09:09:38 +0100
+	id 1LW5Mi-0001HS-Fe
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 09:50:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752467AbZBHIDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 03:03:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752461AbZBHIDl
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 03:03:41 -0500
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:49194 "EHLO
-	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752300AbZBHIDk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 03:03:40 -0500
-X-Greylist: delayed 682 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Feb 2009 03:03:40 EST
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id 15EDDEBD44;
-	Sun,  8 Feb 2009 09:52:16 +0200 (EET)
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A047A615ED5; Sun, 08 Feb 2009 09:52:16 +0200
-Received: from jondo.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
-	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 2EAD91C638C;
-	Sun,  8 Feb 2009 09:52:11 +0200 (EET)
-In-Reply-To: <200902072259.29121.bss@iguanasuicide.net> (Boyd Stephen Smith,
-	Jr.'s message of "Sat, 7 Feb 2009 22:59:28 -0600")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
-X-Antivirus: VAMS
+	id S1752593AbZBHIo4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2009 03:44:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752549AbZBHIo4
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 03:44:56 -0500
+Received: from peff.net ([208.65.91.99]:34456 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752461AbZBHIo4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 03:44:56 -0500
+Received: (qmail 25850 invoked by uid 107); 8 Feb 2009 08:45:10 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 08 Feb 2009 03:45:10 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Feb 2009 03:44:53 -0500
+Content-Disposition: inline
+In-Reply-To: <20090208011802.2b7b9e74@perceptron>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108929>
 
-"Boyd Stephen Smith Jr." <bss@iguanasuicide.net> writes:
+On Sun, Feb 08, 2009 at 01:18:02AM +0100, Jan Kr=C3=BCger wrote:
 
-> On Saturday 07 February 2009 17:31:47 Jakub Narebski wrote:
->
->> Jari Aalto <jari.aalto@cante.net> writes:
->> > +	`next`. *Note:* the 'object' path must always be relative to git
->> > +	project root. This wouldn't have worked:
->> > +
->> > +	$ cd Documentation
->> > +	$ git show next~10:README
->>
->> Actually that is not exactly true.  In the <tree-ish>:<path> the
->> 'object' path must be always relative to <tree-ish), in this case
->> to "next~10", which means relative to project root at given commit
->> (important in case of subtree merge).
->
-> Also important if one of your commits moves everything into a subdirectory in 
-> preparation for adding new top-level directories.  Sure, everyone on this list 
-> always knows exactly what their project tree should look like from the first 
-> commit, but there may be users of git that aren't that sophisticated.  ;)
->
-> So, I think better additional text would simply be:
-> *Note:* the path is interpreted relative to the tree-ish.
+> Okay, somehow I missed that. To reiterate the things from that
+> discussion that I think are most reasonable:
+>=20
+> 1) a local broken symref should generally be ignored unless we actual=
+ly
+>    need the symref.
 
-Changed, See below.
+I think this is almost as easy as:
 
-> A example of what not to do is probably not useful in this case.
+diff --git a/refs.c b/refs.c
+index 024211d..9601101 100644
+--- a/refs.c
++++ b/refs.c
+@@ -276,7 +276,6 @@ static struct ref_list *get_ref_dir(const char *bas=
+e, struct ref_list *list)
+ 				continue;
+ 			}
+ 			if (!resolve_ref(ref, sha1, 1, &flag)) {
+-				error("%s points nowhere!", ref);
+ 				continue;
+ 			}
+ 			list =3D add_ref(ref, sha1, flag, list, NULL);
 
-It is important to give examples. This is a common mistake:
+Since this is just called when enumerating all of the loose refs (via
+get_loose_refs(), which is generally called from for_each_ref).
 
-    $ cd todir
-    $ ls file.txt
-    file.txt
+However, there is one other complication. rename_ref uses get_loose_ref=
+s
+to check whether the destination space is available:
 
-    $ git show 8b2de93:file.txt
+  if (!is_refname_available(newref, oldref, get_loose_refs(), 0))
+        return 1;
 
-    fatal: ambiguous argument '8b2de93:file.txt':
-    unknown revision or path not in the working tree.
+so you can get funny behavior through:
 
-The path is in working tree from user's point of view but Git expects
-it from project root. Not intuitive if you're deep/in/the/directory/hierarchy
+  git branch -m foo bar
 
-Jari
+when "bar" is a symref pointing to a non-existent ref. Of course, we ar=
+e
+not _changing_ that behavior, since we always just ignored that symref.
+But we are removing the warning message that might clue the user that
+something confusing is about to happen.
 
->From 9de53447e456aaf5ab64f616df76f05888cc0d76 Mon Sep 17 00:00:00 2001
-From: Jari Aalto <jari.aalto@cante.net>
-Date: Sun, 8 Feb 2009 09:43:57 +0200
-Subject: [PATCH] git-show.txt: mention that object path must be relative in EXAMPLES.
+> 2) there should be a more convenient (porcelain) way to change a
+>    refs/remotes/foo/HEAD symref, e.g. git remote set-default, possibl=
+y
+>    with an option to re-sync from the remote head (we could even make
+>    that an option for git remote update).
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- Documentation/git-show.txt |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+Yes, I think that is a good idea (optionally with a switch to just
+re-grab the information from the remote).
 
-diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-index 48b612e..27f771b 100644
---- a/Documentation/git-show.txt
-+++ b/Documentation/git-show.txt
-@@ -57,7 +57,13 @@ git show v1.0.0^\{tree\}::
- git show next~10:Documentation/README::
- 	Shows the contents of the file `Documentation/README` as
- 	they were current in the 10th last commit of the branch
--	`next`.
-+	`next`. *Note:* the path is interpreted relative to the tree-ish.
-+	A typical mistake is that after changing to a subdirectory from
-+	project root, the current' directory's filename is used:
-+
-+	$ cd Documentation
-+	$ git show next~10:README		 # Error, needs path
-+	$ git show next~10:Documentation/README  # Ok, relative to tree-ish
- 
- git show master:Makefile master:t/Makefile::
- 	Concatenates the contents of said Makefiles in the head
--- 
-1.5.6.5
+> Regarding 2): if we managed to add an option to that to change the
+> remote HEAD, we could disallow deleting a remote branch that HEAD
+> points to, and refer to this command. I think the problem is that we
+> would have to add symref updating logic for all types of remote
+> protocols.
+
+Yes, the protocol support would make this a much bigger patch (and you
+would have to handle the case where the remote side didn't support it).
+But bear in mind that deleting the remote HEAD breaks things not just
+for you, but for other people who are cloning that remote. Maybe we
+should refuse such updates unless "-f" is given (similar to
+non-fast-forward updates); I haven't looked to see if we even have the
+remote's HEAD information during push, though.
+
+> If people agree with these ideas I think I'll write up a couple of
+> patches to implement these changes. So, any protests?
+
+I say go for it.
+
+-Peff
