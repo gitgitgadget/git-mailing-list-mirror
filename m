@@ -1,71 +1,129 @@
-From: Jeremy White <jwhite@codeweavers.com>
-Subject: Re: [PATCH v2] Enable setting attach as the default in .gitconfig
- for git-format-patch.
-Date: Sun, 08 Feb 2009 10:01:06 -0600
-Message-ID: <498F01C2.5080105@codeweavers.com>
-References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net>
+From: Alex Bennee <kernel-hacker@bennee.com>
+Subject: Re: [PATCH] rpm2git (was RPM to GIT tree integration?)
+Date: Sun, 8 Feb 2009 16:51:04 +0000
+Message-ID: <b2cdc9f30902080851j724e9fa9s35ff159b775ad614@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-X-From: git-owner@vger.kernel.org Sun Feb 08 17:30:33 2009
+Content-Type: multipart/mixed; boundary=0016361e891e45f89804626b0fff
+To: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org,
+	federico@gnome.org
+X-From: git-owner@vger.kernel.org Sun Feb 08 17:52:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWCYD-0005Jb-6M
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 17:30:33 +0100
+	id 1LWCtV-0002pm-8Z
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 17:52:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752203AbZBHQ2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 11:28:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752116AbZBHQ2Z
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 11:28:25 -0500
-Received: from jwhite-home.codeweavers.com ([209.240.253.22]:43744 "EHLO
-	via.whitesen.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751717AbZBHQ2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 11:28:25 -0500
-X-Greylist: delayed 1636 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Feb 2009 11:28:24 EST
-Received: from myth.whitesen.org ([10.0.0.10])
-	by via.whitesen.org with esmtp (Exim 4.69)
-	(envelope-from <jwhite@codeweavers.com>)
-	id 1LWC5i-0005VW-Ea; Sun, 08 Feb 2009 10:01:06 -0600
-User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
-In-Reply-To: <200902072310.12764.bss@iguanasuicide.net>
-X-SA-Exim-Connect-IP: 10.0.0.10
-X-SA-Exim-Mail-From: jwhite@codeweavers.com
-X-SA-Exim-Scanned: No (on via.whitesen.org); SAEximRunCond expanded to false
+	id S1753481AbZBHQvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 11:51:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753359AbZBHQvH
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 11:51:07 -0500
+Received: from rn-out-0910.google.com ([64.233.170.188]:5336 "EHLO
+	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752344AbZBHQvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 11:51:06 -0500
+Received: by rn-out-0910.google.com with SMTP id k40so1100287rnd.17
+        for <git@vger.kernel.org>; Sun, 08 Feb 2009 08:51:04 -0800 (PST)
+Received: by 10.90.97.16 with SMTP id u16mr154298agb.63.1234111864108; Sun, 08 
+	Feb 2009 08:51:04 -0800 (PST)
+X-Google-Sender-Auth: 563ece1a41b4c326
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108991>
 
-Boyd Stephen Smith Jr. wrote:
-> For a minor style issue, see my reply to your original patch.
+--0016361e891e45f89804626b0fff
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-Sure, thanks.
+2009/2/7 James Davidson <james@greycastle.net>:
+> On Fri Feb 06, 2009 at 05:05:49PM +0000, Alex Bennee <kernel-hacker@bennee.com> wrote:
+>> This is a wild shot in the dark but I thought I'd better ask in case
+>> some one has. Has anyone created a script/tool that can take a src RPM and
+>> apply it's patches (in sequence) to an existing GIT tree?
+>
+> This may be what you are looking for:
+> http://www.gnome.org/~federico/news-2008-07.html#rpm2git
 
-> 
-> Also, please read Documentation/SubmittingPatches.  Particularly, the third 
-> point under the "Patch" heading on the first page.  Also, since you appear to 
-> sympathize with Thunderbird users you might want to read the "Thunderbird" 
-> section, and either improve it or petition the developers to make the 
-> application more amenable to users needs in this case.
+Pretty much what I wanted although the script breaks on fancy SPEC's
+that use variables to evaluate version (like Fedora Core's kernel).
+The attached patch allows the specification of the branch by hand.
+CC'd to federico.
 
-Sorry about that; I allowed my pleasure at the cuteness of using my own
-patch to send the patch override the requested courtesy of this list.
+--
+Alex, homepage: http://www.bennee.com/~alex/
+CV: http://www.bennee.com/~alex/cv.php
 
-As an aside, there is a long (and discouraging) read about the issue
-with Thunderbird here:
-  https://bugzilla.mozilla.org/show_bug.cgi?id=141983
+--0016361e891e45f89804626b0fff
+Content-Type: application/octet-stream; 
+	name="0001-Allow-the-specification-of-an-exact-branch.patch"
+Content-Disposition: attachment; 
+	filename="0001-Allow-the-specification-of-an-exact-branch.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fqxya8uo0
 
-Essentially, the problem is well understood - Thunderbird uses
-format=flowed by default, which is what mangles the patches.  The author
-of the relevant code is unmoved by arguments that the default should
-switch, and no one has yet been willing to create a simpler UI for
-switching the setting.
-
-Cheers,
-
-Jeremy
+RnJvbSBkZDFiNjliYWNiMzc2ODgyZGEzZjgyMGMwOTQ1MWZiNzY0YjQ0MTE2IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IEJlbm5lZSA8YWxleEBiZW5uZWUuY29tPgpEYXRlOiBT
+dW4sIDggRmViIDIwMDkgMTY6NDU6MzQgKzAwMDAKU3ViamVjdDogW1BBVENIXSBBbGxvdyB0aGUg
+c3BlY2lmaWNhdGlvbiBvZiBhbiBleGFjdCBicmFuY2guCgpDb21wbGV4IFJQTXMgbGlrZSB0aGUg
+RmVkb3JhIENvcmUga2VybmVsIGV2YWx1bGF0ZSB2ZXJzaW9uIG9uIHRoZSBmbHkuIEFsbG93CnRo
+ZSB1c2VyIHRvIG92ZXJpZGUgdGhlIHNpbXBsZSBncmVwIG9mIHRoZSBzcGVjIGZpbGUKLS0tCiBN
+YWtlZmlsZSAgICAgICAgICAgICB8ICAgIDIgKy0KIHJwbTJnaXQuaW4gICAgICAgICAgIHwgICAx
+OSArKysrKysrKysrKystLS0tLS0tCiAyIGZpbGVzIGNoYW5nZWQsIDEzIGluc2VydGlvbnMoKyks
+IDggZGVsZXRpb25zKC0pCiBtb2RlIGNoYW5nZSAxMDA2NDQgPT4gMTAwNzU1IHJwbTJnaXQtcGF0
+Y2gtaGVscGVyCiBtb2RlIGNoYW5nZSAxMDA2NDQgPT4gMTAwNzU1IHJwbTJnaXQuaW4KCmRpZmYg
+LS1naXQgYS9NYWtlZmlsZSBiL01ha2VmaWxlCmluZGV4IDM4ZTgzNmUuLmQwOGYyMGEgMTAwNjQ0
+Ci0tLSBhL01ha2VmaWxlCisrKyBiL01ha2VmaWxlCkBAIC0xLDQgKzEsNCBAQAotUFJFRklYPS91
+c3IvbG9jYWwKK1BSRUZJWD0ke0hPTUV9LwogTElCRElSPSQoUFJFRklYKS9saWIKIEJJTkRJUj0k
+KFBSRUZJWCkvYmluCiAKZGlmZiAtLWdpdCBhL3JwbTJnaXQtcGF0Y2gtaGVscGVyIGIvcnBtMmdp
+dC1wYXRjaC1oZWxwZXIKb2xkIG1vZGUgMTAwNjQ0Cm5ldyBtb2RlIDEwMDc1NQpkaWZmIC0tZ2l0
+IGEvcnBtMmdpdC5pbiBiL3JwbTJnaXQuaW4Kb2xkIG1vZGUgMTAwNjQ0Cm5ldyBtb2RlIDEwMDc1
+NQppbmRleCBlODM0Mzk4Li40NDk2YzM2Ci0tLSBhL3JwbTJnaXQuaW4KKysrIGIvcnBtMmdpdC5p
+bgpAQCAtMjQxLDggKzI0MSw4IEBAIGRlZiBycG0yZ2l0IChmcm9tX3JlZiwgc3BlY2ZpbGUsIGRl
+c3RfYnJhbmNoX25hbWUpOgogZGVmIG1haW4gKGFyZ3MpOgogICAgIG9wdGlvbl9wYXJzZXIgPSBv
+cHRwYXJzZS5PcHRpb25QYXJzZXIgKAogICAgICAgICB1c2FnZT0KLSIiInVzYWdlOiAlcHJvZyAt
+LWZyb20tcmVmPTxyZWZuYW1lPiAtLXNwZWM9PHNwZWNmaWxlPiAtLWRlc3QtYnJhbmNoLXByZWZp
+eD08bmFtZT4KLWV4YW1wbGU6ICVwcm9nIC0tZnJvbS1yZWY9TkFVVElMVVNfMl8yM18xIC0tc3Bl
+Yz0vdXNyL3NyYy9wYWNrYWdlcy9TUEVDUy9uYXV0aWx1cy5zcGVjIC0tZGVzdC1icmFuY2gtcHJl
+Zml4PW9wZW5zdXNlIiIiKQorIiIidXNhZ2U6ICVwcm9nIC0tZnJvbS1yZWY9PHJleGZuYW1lPiAt
+LXNwZWM9PHNwZWNmaWxlPiAtLWRlc3QtYnJhbmNoLXByZWZpeD08bmFtZT4KK2V4YW1wbGU6ICVw
+cm9nIC0tZnJvbS1yZWY9TkFVVElMVVNfMl8yM18xIC0tc3BlYz0vdXNyL3NyYy9wYWNrYWdlcy9T
+UEVDUy9uYXV0aWx1cy5zcGVjIFstLWRlc3QtYnJhbmNoLXByZWZpeD1vcGVuc3VzZXwtLWRlc3Qt
+YnJhbmNoPW5hbWVdIiIiKQogCiAgICAgb3B0aW9uX3BhcnNlci5hZGRfb3B0aW9uICgiIiwKICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICItLWZyb20tcmVmIiwgZGVzdD0iZnJvbV9yZWYi
+LApAQCAtMjUzLDYgKzI1MywxMCBAQCBleGFtcGxlOiAlcHJvZyAtLWZyb20tcmVmPU5BVVRJTFVT
+XzJfMjNfMSAtLXNwZWM9L3Vzci9zcmMvcGFja2FnZXMvU1BFQ1MvbmF1dGlsdQogICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgbWV0YXZhcj0iRklMRSIsCiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICBoZWxwPSJTcGVjZmlsZSB0byB1c2UgdG8gZXh0cmFjdCBwYXRjaGVzIGFuZCB2
+ZXJzaW9uL3JlbGVhc2UgaW5mbyIpCiAgICAgb3B0aW9uX3BhcnNlci5hZGRfb3B0aW9uICgiIiwK
+KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICItLWRlc3QtYnJhbmNoIiwgZGVzdD0iZGVz
+dF9icmFuY2hfbmFtZSIsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZXRhdmFyPSJz
+dHJpbmciLAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaGVscD0ibmFtZSBvZiBicmFu
+Y2ggdGhhdCB3aWxsIGJlIGdlbmVyYXRlZCIpCisgICAgb3B0aW9uX3BhcnNlci5hZGRfb3B0aW9u
+ICgiIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICItLWRlc3QtYnJhbmNoLXByZWZp
+eCIsIGRlc3Q9ImRlc3RfYnJhbmNoX3ByZWZpeCIsCiAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBtZXRhdmFyPSJzdHJpbmciLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaGVs
+cD0iUHJlZml4IHRvIHVzZSBmb3IgdGhlIGJyYW5jaCBuYW1lIHRoYXQgd2lsbCBiZSBnZW5lcmF0
+ZWQiKQpAQCAtMjY5LDcgKzI3Myw4IEBAIGV4YW1wbGU6ICVwcm9nIC0tZnJvbS1yZWY9TkFVVElM
+VVNfMl8yM18xIC0tc3BlYz0vdXNyL3NyYy9wYWNrYWdlcy9TUEVDUy9uYXV0aWx1CiAKICAgICAo
+b3B0aW9ucywgYXJncykgPSBvcHRpb25fcGFyc2VyLnBhcnNlX2FyZ3MgKGFyZ3MpCiAKLSAgICBp
+ZiBub3QgKG9wdGlvbnMuZnJvbV9yZWYgYW5kIG9wdGlvbnMuc3BlYyBhbmQgb3B0aW9ucy5kZXN0
+X2JyYW5jaF9wcmVmaXgpIG9yIGxlbiAoYXJncykgIT0gMToKKyAgICBpZiBub3QgKG9wdGlvbnMu
+ZnJvbV9yZWYgYW5kIG9wdGlvbnMuc3BlYyBhbmQKKyAgICAgICAgICAgIChvcHRpb25zLmRlc3Rf
+YnJhbmNoX3ByZWZpeCBvciBvcHRpb25zLmRlc3RfYnJhbmNoX25hbWUpKToKICAgICAgICAgcHJp
+bnRfZXJyICgiSW52YWxpZCB1c2FnZTsgdHlwZSAnJXMgLS1oZWxwJyBmb3IgaW5zdHJ1Y3Rpb25z
+IiAlIHN5cy5hcmd2WzBdKQogICAgICAgICByZXR1cm4gMQogCkBAIC0yODUsMTAgKzI5MCwxMCBA
+QCBleGFtcGxlOiAlcHJvZyAtLWZyb20tcmVmPU5BVVRJTFVTXzJfMjNfMSAtLXNwZWM9L3Vzci9z
+cmMvcGFja2FnZXMvU1BFQ1MvbmF1dGlsdQogCiAgICAgbG9nICgiLS0tLS0gcnBtMmdpdCBzdGFy
+dCAtLS0tLSIpCiAKLSAgICBkZXN0X2JyYW5jaF9uYW1lID0gbWFrZV9kZXN0X2JyYW5jaF9uYW1l
+X2Zyb21fc3BlY2ZpbGUgKG9wdGlvbnMuc3BlYywgb3B0aW9ucy5kZXN0X2JyYW5jaF9wcmVmaXgp
+Ci0gICAgaWYgZGVzdF9icmFuY2hfbmFtZSA9PSBOb25lOgotICAgICAgICBsb2cgKCJjb3VsZCBu
+b3QgZ2VuZXJhdGUgZGVzdGluYXRpb24gYnJhbmNoIG5hbWU7IGFib3J0aW5nIikKLSAgICAgICAg
+cmV0dXJuIDEKKyAgICBpZiBvcHRpb25zLmRlc3RfYnJhbmNoX25hbWU6CisgICAgICAgIGRlc3Rf
+YnJhbmNoX25hbWUgPSBvcHRpb25zLmRlc3RfYnJhbmNoX25hbWUKKyAgICBlbHNlIDoKKyAgICAg
+ICAgZGVzdF9icmFuY2hfbmFtZSA9IG1ha2VfZGVzdF9icmFuY2hfbmFtZV9mcm9tX3NwZWNmaWxl
+IChvcHRpb25zLnNwZWMsIG9wdGlvbnMuZGVzdF9icmFuY2hfcHJlZml4KQogCiAgICAgbG9nICgi
+V2lsbCB1c2UgZGVzdGluYXRpb24gYnJhbmNoIG5hbWUgPSAlcyIsIGRlc3RfYnJhbmNoX25hbWUp
+CiAgICAgCi0tIAoxLjYuMC42Cgo=
+--0016361e891e45f89804626b0fff--
