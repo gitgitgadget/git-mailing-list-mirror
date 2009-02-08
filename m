@@ -1,113 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Deleting the "current" branch in remote bare repositories
-Date: Sun, 8 Feb 2009 03:44:53 -0500
-Message-ID: <20090208084453.GA4392@coredump.intra.peff.net>
-References: <20090207162754.5fb8b63f@perceptron> <94a0d4530902071405m33a0804er8030e14bea205898@mail.gmail.com> <20090208011802.2b7b9e74@perceptron>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [ANNOUNCE] GIT 1.6.2-rc0
+Date: Sun, 08 Feb 2009 09:23:03 +0100
+Message-ID: <vpqprhte3rs.fsf@bauges.imag.fr>
+References: <7vvdrlsyjm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git ML <git@vger.kernel.org>, obrien654j@gmail.com
-To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Sun Feb 08 09:50:13 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 08 09:50:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LW5Mi-0001HS-Fe
+	id 1LW5Mh-0001HS-Qf
 	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 09:50:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593AbZBHIo4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2009 03:44:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752549AbZBHIo4
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 03:44:56 -0500
-Received: from peff.net ([208.65.91.99]:34456 "EHLO peff.net"
+	id S1752519AbZBHIZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 03:25:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752461AbZBHIZy
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 03:25:54 -0500
+Received: from imag.imag.fr ([129.88.30.1]:46763 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752461AbZBHIo4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 03:44:56 -0500
-Received: (qmail 25850 invoked by uid 107); 8 Feb 2009 08:45:10 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 08 Feb 2009 03:45:10 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Feb 2009 03:44:53 -0500
-Content-Disposition: inline
-In-Reply-To: <20090208011802.2b7b9e74@perceptron>
+	id S1752452AbZBHIZx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 03:25:53 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n188N3HR029481
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 8 Feb 2009 09:23:04 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LW4wR-0001hu-UU; Sun, 08 Feb 2009 09:23:03 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LW4wR-0000Ex-QO; Sun, 08 Feb 2009 09:23:03 +0100
+In-Reply-To: <7vvdrlsyjm.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Sat\, 07 Feb 2009 13\:54\:37 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 08 Feb 2009 09:23:04 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108930>
 
-On Sun, Feb 08, 2009 at 01:18:02AM +0100, Jan Kr=C3=BCger wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Okay, somehow I missed that. To reiterate the things from that
-> discussion that I think are most reasonable:
->=20
-> 1) a local broken symref should generally be ignored unless we actual=
-ly
->    need the symref.
+> GIT v1.6.2 Release Notes (draft)
+> ================================
+>
+> With the next major release, "git push" into a branch that is
+> currently checked out will be refused by default.  You can choose
+> what should happen upon such a push by setting the configuration
+> variable receive.denyCurrentBranch in the receiving repository.
 
-I think this is almost as easy as:
+Perhaps this paragraph should tell _why_ this is a dangerous
+operation. There's probably a better wording, but what about
 
-diff --git a/refs.c b/refs.c
-index 024211d..9601101 100644
---- a/refs.c
-+++ b/refs.c
-@@ -276,7 +276,6 @@ static struct ref_list *get_ref_dir(const char *bas=
-e, struct ref_list *list)
- 				continue;
- 			}
- 			if (!resolve_ref(ref, sha1, 1, &flag)) {
--				error("%s points nowhere!", ref);
- 				continue;
- 			}
- 			list =3D add_ref(ref, sha1, flag, list, NULL);
+---- 8< ---
+With the next major release, "git push" into a branch that is
+currently checked out will be refused by default: Pushing to a
+checked-out branch changes the HEAD for this branch, and would confuse
+further local operations in the target repository.
 
-Since this is just called when enumerating all of the loose refs (via
-get_loose_refs(), which is generally called from for_each_ref).
+You can choose what should happen [...]
+---- 8< ---
 
-However, there is one other complication. rename_ref uses get_loose_ref=
-s
-to check whether the destination space is available:
+?
 
-  if (!is_refname_available(newref, oldref, get_loose_refs(), 0))
-        return 1;
-
-so you can get funny behavior through:
-
-  git branch -m foo bar
-
-when "bar" is a symref pointing to a non-existent ref. Of course, we ar=
-e
-not _changing_ that behavior, since we always just ignored that symref.
-But we are removing the warning message that might clue the user that
-something confusing is about to happen.
-
-> 2) there should be a more convenient (porcelain) way to change a
->    refs/remotes/foo/HEAD symref, e.g. git remote set-default, possibl=
-y
->    with an option to re-sync from the remote head (we could even make
->    that an option for git remote update).
-
-Yes, I think that is a good idea (optionally with a switch to just
-re-grab the information from the remote).
-
-> Regarding 2): if we managed to add an option to that to change the
-> remote HEAD, we could disallow deleting a remote branch that HEAD
-> points to, and refer to this command. I think the problem is that we
-> would have to add symref updating logic for all types of remote
-> protocols.
-
-Yes, the protocol support would make this a much bigger patch (and you
-would have to handle the case where the remote side didn't support it).
-But bear in mind that deleting the remote HEAD breaks things not just
-for you, but for other people who are cloning that remote. Maybe we
-should refuse such updates unless "-f" is given (similar to
-non-fast-forward updates); I haven't looked to see if we even have the
-remote's HEAD information during push, though.
-
-> If people agree with these ideas I think I'll write up a couple of
-> patches to implement these changes. So, any protests?
-
-I say go for it.
-
--Peff
+-- 
+Matthieu
