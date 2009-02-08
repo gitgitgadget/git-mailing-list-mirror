@@ -1,129 +1,113 @@
-From: Alex Bennee <kernel-hacker@bennee.com>
-Subject: Re: [PATCH] rpm2git (was RPM to GIT tree integration?)
-Date: Sun, 8 Feb 2009 16:51:04 +0000
-Message-ID: <b2cdc9f30902080851j724e9fa9s35ff159b775ad614@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: gc considered dangerous
+Date: Sun, 8 Feb 2009 18:18:26 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902081815170.10279@pacific.mpi-cbg.de>
+References: <200902080347.25970.robin.rosenberg.lists@dewire.com> <alpine.DEB.1.00.0902081551290.10279@pacific.mpi-cbg.de> <200902081704.59439.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0016361e891e45f89804626b0fff
-To: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org,
-	federico@gnome.org
-X-From: git-owner@vger.kernel.org Sun Feb 08 17:52:36 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1826537183-1234113507=:10279"
+Cc: Git ML <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Sun Feb 08 18:19:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWCtV-0002pm-8Z
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 17:52:33 +0100
+	id 1LWDJh-0002R8-6T
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 18:19:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753481AbZBHQvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 11:51:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753359AbZBHQvH
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 11:51:07 -0500
-Received: from rn-out-0910.google.com ([64.233.170.188]:5336 "EHLO
-	rn-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752344AbZBHQvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 11:51:06 -0500
-Received: by rn-out-0910.google.com with SMTP id k40so1100287rnd.17
-        for <git@vger.kernel.org>; Sun, 08 Feb 2009 08:51:04 -0800 (PST)
-Received: by 10.90.97.16 with SMTP id u16mr154298agb.63.1234111864108; Sun, 08 
-	Feb 2009 08:51:04 -0800 (PST)
-X-Google-Sender-Auth: 563ece1a41b4c326
+	id S1752706AbZBHRRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 12:17:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751668AbZBHRRr
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 12:17:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51717 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750787AbZBHRRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 12:17:46 -0500
+Received: (qmail invoked by alias); 08 Feb 2009 17:17:44 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp033) with SMTP; 08 Feb 2009 18:17:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+AXN8j9ziAXDVseStzWYo9KsUKUijS24ugXue+xv
+	IAMZaC/VIri8Fv
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200902081704.59439.robin.rosenberg.lists@dewire.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108992>
 
---0016361e891e45f89804626b0fff
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-2009/2/7 James Davidson <james@greycastle.net>:
-> On Fri Feb 06, 2009 at 05:05:49PM +0000, Alex Bennee <kernel-hacker@bennee.com> wrote:
->> This is a wild shot in the dark but I thought I'd better ask in case
->> some one has. Has anyone created a script/tool that can take a src RPM and
->> apply it's patches (in sequence) to an existing GIT tree?
+--8323328-1826537183-1234113507=:10279
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Sun, 8 Feb 2009, Robin Rosenberg wrote:
+
+> söndag 08 februari 2009 15:56:38 skrev Johannes Schindelin:
+> 
+> > On Sun, 8 Feb 2009, Robin Rosenberg wrote:
+> > 
+> > > I've seen this. Running git gc on Windows, while having Elipse open 
+> > > can kill your object database.
+> > 
+> > You had me really scared with the mail subject!
+> 
+> Losing a repo *is* scary., especially if your boss is the one losing it. 
+> That should simply not happen unless there is a disk failure. 
+> Fortunately I believe the two lost branches did not contain anything 
+> useful.
+
+If you care about your data, you don't use Windows, IMHO.
+
+> > > if gc doesn't find a new optimal pack it tries to rewrite a new pack 
+> > > with the same id. So it rm's the idx file (fine) and the the pack 
+> > > file (not ok) and gives up,
+> > 
+> > I disagree with your notion that it is fine to kill the existing idx 
+> > file until the new one has been written successfully.
 >
-> This may be what you are looking for:
-> http://www.gnome.org/~federico/news-2008-07.html#rpm2git
+> Then you misunderstood me. I meant that the repack script thought it was 
+> fine.
+> 
+> > My preliminary guess is that this code in pack-write.c needs to use the 
+> > lock file paradigm:
+> 
+> > 
+> >         if (!index_name) {
+> > 		[...]
+> >         } else {
+> >                 unlink(index_name);
+> >                 fd = open(index_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
+> >         }
+> 
+> Yeah, it needs to check that it can actually delete both files before 
+> actually doing it.
 
-Pretty much what I wanted although the script breaks on fancy SPEC's
-that use variables to evaluate version (like Fedora Core's kernel).
-The attached patch allows the specification of the branch by hand.
-CC'd to federico.
+Nope.  It needs to avoid unlinking until it knows what it did was fine.
 
---
-Alex, homepage: http://www.bennee.com/~alex/
-CV: http://www.bennee.com/~alex/cv.php
+> Then again if it wants to replace a file with a new one just like it, 
 
---0016361e891e45f89804626b0fff
-Content-Type: application/octet-stream; 
-	name="0001-Allow-the-specification-of-an-exact-branch.patch"
-Content-Disposition: attachment; 
-	filename="0001-Allow-the-specification-of-an-exact-branch.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fqxya8uo0
+It might have the same name, but that does not mean that it is bytewise 
+identical.  The name depends on the uncompressed objects.
 
-RnJvbSBkZDFiNjliYWNiMzc2ODgyZGEzZjgyMGMwOTQ1MWZiNzY0YjQ0MTE2IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IEJlbm5lZSA8YWxleEBiZW5uZWUuY29tPgpEYXRlOiBT
-dW4sIDggRmViIDIwMDkgMTY6NDU6MzQgKzAwMDAKU3ViamVjdDogW1BBVENIXSBBbGxvdyB0aGUg
-c3BlY2lmaWNhdGlvbiBvZiBhbiBleGFjdCBicmFuY2guCgpDb21wbGV4IFJQTXMgbGlrZSB0aGUg
-RmVkb3JhIENvcmUga2VybmVsIGV2YWx1bGF0ZSB2ZXJzaW9uIG9uIHRoZSBmbHkuIEFsbG93CnRo
-ZSB1c2VyIHRvIG92ZXJpZGUgdGhlIHNpbXBsZSBncmVwIG9mIHRoZSBzcGVjIGZpbGUKLS0tCiBN
-YWtlZmlsZSAgICAgICAgICAgICB8ICAgIDIgKy0KIHJwbTJnaXQuaW4gICAgICAgICAgIHwgICAx
-OSArKysrKysrKysrKystLS0tLS0tCiAyIGZpbGVzIGNoYW5nZWQsIDEzIGluc2VydGlvbnMoKyks
-IDggZGVsZXRpb25zKC0pCiBtb2RlIGNoYW5nZSAxMDA2NDQgPT4gMTAwNzU1IHJwbTJnaXQtcGF0
-Y2gtaGVscGVyCiBtb2RlIGNoYW5nZSAxMDA2NDQgPT4gMTAwNzU1IHJwbTJnaXQuaW4KCmRpZmYg
-LS1naXQgYS9NYWtlZmlsZSBiL01ha2VmaWxlCmluZGV4IDM4ZTgzNmUuLmQwOGYyMGEgMTAwNjQ0
-Ci0tLSBhL01ha2VmaWxlCisrKyBiL01ha2VmaWxlCkBAIC0xLDQgKzEsNCBAQAotUFJFRklYPS91
-c3IvbG9jYWwKK1BSRUZJWD0ke0hPTUV9LwogTElCRElSPSQoUFJFRklYKS9saWIKIEJJTkRJUj0k
-KFBSRUZJWCkvYmluCiAKZGlmZiAtLWdpdCBhL3JwbTJnaXQtcGF0Y2gtaGVscGVyIGIvcnBtMmdp
-dC1wYXRjaC1oZWxwZXIKb2xkIG1vZGUgMTAwNjQ0Cm5ldyBtb2RlIDEwMDc1NQpkaWZmIC0tZ2l0
-IGEvcnBtMmdpdC5pbiBiL3JwbTJnaXQuaW4Kb2xkIG1vZGUgMTAwNjQ0Cm5ldyBtb2RlIDEwMDc1
-NQppbmRleCBlODM0Mzk4Li40NDk2YzM2Ci0tLSBhL3JwbTJnaXQuaW4KKysrIGIvcnBtMmdpdC5p
-bgpAQCAtMjQxLDggKzI0MSw4IEBAIGRlZiBycG0yZ2l0IChmcm9tX3JlZiwgc3BlY2ZpbGUsIGRl
-c3RfYnJhbmNoX25hbWUpOgogZGVmIG1haW4gKGFyZ3MpOgogICAgIG9wdGlvbl9wYXJzZXIgPSBv
-cHRwYXJzZS5PcHRpb25QYXJzZXIgKAogICAgICAgICB1c2FnZT0KLSIiInVzYWdlOiAlcHJvZyAt
-LWZyb20tcmVmPTxyZWZuYW1lPiAtLXNwZWM9PHNwZWNmaWxlPiAtLWRlc3QtYnJhbmNoLXByZWZp
-eD08bmFtZT4KLWV4YW1wbGU6ICVwcm9nIC0tZnJvbS1yZWY9TkFVVElMVVNfMl8yM18xIC0tc3Bl
-Yz0vdXNyL3NyYy9wYWNrYWdlcy9TUEVDUy9uYXV0aWx1cy5zcGVjIC0tZGVzdC1icmFuY2gtcHJl
-Zml4PW9wZW5zdXNlIiIiKQorIiIidXNhZ2U6ICVwcm9nIC0tZnJvbS1yZWY9PHJleGZuYW1lPiAt
-LXNwZWM9PHNwZWNmaWxlPiAtLWRlc3QtYnJhbmNoLXByZWZpeD08bmFtZT4KK2V4YW1wbGU6ICVw
-cm9nIC0tZnJvbS1yZWY9TkFVVElMVVNfMl8yM18xIC0tc3BlYz0vdXNyL3NyYy9wYWNrYWdlcy9T
-UEVDUy9uYXV0aWx1cy5zcGVjIFstLWRlc3QtYnJhbmNoLXByZWZpeD1vcGVuc3VzZXwtLWRlc3Qt
-YnJhbmNoPW5hbWVdIiIiKQogCiAgICAgb3B0aW9uX3BhcnNlci5hZGRfb3B0aW9uICgiIiwKICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICItLWZyb20tcmVmIiwgZGVzdD0iZnJvbV9yZWYi
-LApAQCAtMjUzLDYgKzI1MywxMCBAQCBleGFtcGxlOiAlcHJvZyAtLWZyb20tcmVmPU5BVVRJTFVT
-XzJfMjNfMSAtLXNwZWM9L3Vzci9zcmMvcGFja2FnZXMvU1BFQ1MvbmF1dGlsdQogICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgbWV0YXZhcj0iRklMRSIsCiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICBoZWxwPSJTcGVjZmlsZSB0byB1c2UgdG8gZXh0cmFjdCBwYXRjaGVzIGFuZCB2
-ZXJzaW9uL3JlbGVhc2UgaW5mbyIpCiAgICAgb3B0aW9uX3BhcnNlci5hZGRfb3B0aW9uICgiIiwK
-KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICItLWRlc3QtYnJhbmNoIiwgZGVzdD0iZGVz
-dF9icmFuY2hfbmFtZSIsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZXRhdmFyPSJz
-dHJpbmciLAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaGVscD0ibmFtZSBvZiBicmFu
-Y2ggdGhhdCB3aWxsIGJlIGdlbmVyYXRlZCIpCisgICAgb3B0aW9uX3BhcnNlci5hZGRfb3B0aW9u
-ICgiIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICItLWRlc3QtYnJhbmNoLXByZWZp
-eCIsIGRlc3Q9ImRlc3RfYnJhbmNoX3ByZWZpeCIsCiAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICBtZXRhdmFyPSJzdHJpbmciLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaGVs
-cD0iUHJlZml4IHRvIHVzZSBmb3IgdGhlIGJyYW5jaCBuYW1lIHRoYXQgd2lsbCBiZSBnZW5lcmF0
-ZWQiKQpAQCAtMjY5LDcgKzI3Myw4IEBAIGV4YW1wbGU6ICVwcm9nIC0tZnJvbS1yZWY9TkFVVElM
-VVNfMl8yM18xIC0tc3BlYz0vdXNyL3NyYy9wYWNrYWdlcy9TUEVDUy9uYXV0aWx1CiAKICAgICAo
-b3B0aW9ucywgYXJncykgPSBvcHRpb25fcGFyc2VyLnBhcnNlX2FyZ3MgKGFyZ3MpCiAKLSAgICBp
-ZiBub3QgKG9wdGlvbnMuZnJvbV9yZWYgYW5kIG9wdGlvbnMuc3BlYyBhbmQgb3B0aW9ucy5kZXN0
-X2JyYW5jaF9wcmVmaXgpIG9yIGxlbiAoYXJncykgIT0gMToKKyAgICBpZiBub3QgKG9wdGlvbnMu
-ZnJvbV9yZWYgYW5kIG9wdGlvbnMuc3BlYyBhbmQKKyAgICAgICAgICAgIChvcHRpb25zLmRlc3Rf
-YnJhbmNoX3ByZWZpeCBvciBvcHRpb25zLmRlc3RfYnJhbmNoX25hbWUpKToKICAgICAgICAgcHJp
-bnRfZXJyICgiSW52YWxpZCB1c2FnZTsgdHlwZSAnJXMgLS1oZWxwJyBmb3IgaW5zdHJ1Y3Rpb25z
-IiAlIHN5cy5hcmd2WzBdKQogICAgICAgICByZXR1cm4gMQogCkBAIC0yODUsMTAgKzI5MCwxMCBA
-QCBleGFtcGxlOiAlcHJvZyAtLWZyb20tcmVmPU5BVVRJTFVTXzJfMjNfMSAtLXNwZWM9L3Vzci9z
-cmMvcGFja2FnZXMvU1BFQ1MvbmF1dGlsdQogCiAgICAgbG9nICgiLS0tLS0gcnBtMmdpdCBzdGFy
-dCAtLS0tLSIpCiAKLSAgICBkZXN0X2JyYW5jaF9uYW1lID0gbWFrZV9kZXN0X2JyYW5jaF9uYW1l
-X2Zyb21fc3BlY2ZpbGUgKG9wdGlvbnMuc3BlYywgb3B0aW9ucy5kZXN0X2JyYW5jaF9wcmVmaXgp
-Ci0gICAgaWYgZGVzdF9icmFuY2hfbmFtZSA9PSBOb25lOgotICAgICAgICBsb2cgKCJjb3VsZCBu
-b3QgZ2VuZXJhdGUgZGVzdGluYXRpb24gYnJhbmNoIG5hbWU7IGFib3J0aW5nIikKLSAgICAgICAg
-cmV0dXJuIDEKKyAgICBpZiBvcHRpb25zLmRlc3RfYnJhbmNoX25hbWU6CisgICAgICAgIGRlc3Rf
-YnJhbmNoX25hbWUgPSBvcHRpb25zLmRlc3RfYnJhbmNoX25hbWUKKyAgICBlbHNlIDoKKyAgICAg
-ICAgZGVzdF9icmFuY2hfbmFtZSA9IG1ha2VfZGVzdF9icmFuY2hfbmFtZV9mcm9tX3NwZWNmaWxl
-IChvcHRpb25zLnNwZWMsIG9wdGlvbnMuZGVzdF9icmFuY2hfcHJlZml4KQogCiAgICAgbG9nICgi
-V2lsbCB1c2UgZGVzdGluYXRpb24gYnJhbmNoIG5hbWUgPSAlcyIsIGRlc3RfYnJhbmNoX25hbWUp
-CiAgICAgCi0tIAoxLjYuMC42Cgo=
---0016361e891e45f89804626b0fff--
+> Isn't that the only case I see where we can lose data?
+
+No, you said so yourself: Eclipse prevents the pack from being deleted.  
+There are a gazillion idiotic programs on Windows who think they should 
+lock random files.
+
+So you could hit the very same issue even if your repository has twenty 
+packs, and therefore could do with some gc'ing.
+
+Ciao,
+Dscho
+--8323328-1826537183-1234113507=:10279--
