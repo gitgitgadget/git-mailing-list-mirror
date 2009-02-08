@@ -1,96 +1,65 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: understanding merge history
-Date: Mon, 09 Feb 2009 11:16:06 +1300
-Message-ID: <498F59A6.4000402@vilain.net>
-References: <20090127223926.GO3503@iabyn.com> <b77c1dce0901280053r28b9f02cjd7151377e6e9a30a@mail.gmail.com> <1233179416.29266.1.camel@maia.lan> <20090202171556.GG3558@iabyn.com> <1233602444.6439.3.camel@maia.lan> <20090204212808.GS3558@iabyn.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: receive.denyCurrentBranch
+Date: Sun, 8 Feb 2009 17:16:24 -0500
+Message-ID: <76718490902081416n47299227wd4087bf3f3eeba45@mail.gmail.com>
+References: <20090208042910.19079.qmail@science.horizon.com>
+	 <alpine.DEB.1.00.0902081128420.10279@pacific.mpi-cbg.de>
+	 <76718490902080950r798ca02es4e560da35e499046@mail.gmail.com>
+	 <alpine.DEB.1.00.0902082149380.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>,
-	perl5-porters@perl.org, git@vger.kernel.org
-To: Dave Mitchell <davem@iabyn.com>
-X-From: git-owner@vger.kernel.org Sun Feb 08 23:17:52 2009
+Cc: George Spelvin <linux@horizon.com>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 08 23:17:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWHyD-0002qD-Ky
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 23:17:46 +0100
+	id 1LWHyQ-0002vO-5o
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 23:17:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753245AbZBHWQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 17:16:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753147AbZBHWQS
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 17:16:18 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:34567 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752884AbZBHWQS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 17:16:18 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 8A05621C6D2; Mon,  9 Feb 2009 11:16:12 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id A21AE21C5C0;
-	Mon,  9 Feb 2009 11:16:07 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <20090204212808.GS3558@iabyn.com>
-X-Enigmail-Version: 0.94.2.0
+	id S1753386AbZBHWQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 17:16:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753368AbZBHWQ1
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 17:16:27 -0500
+Received: from rv-out-0506.google.com ([209.85.198.232]:27870 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753351AbZBHWQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 17:16:26 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so1529631rvb.1
+        for <git@vger.kernel.org>; Sun, 08 Feb 2009 14:16:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5QXrgwrqPg8Qnj2lpvIq/kPl022qKav8lAeaWeyDJ7w=;
+        b=gD9LTs8S9lDyENNLfePt6ArOucPBlPd/0DmFajo38p33vwO6ANSt64zV/LMcvYq5Ph
+         QR5SLIlqY1+AIJCreoVpVUNhqKcvAF9C1E5UvVP+47WymaJDWqIcpwITCnzAO2eicS9I
+         mdAEOXFrUhr5m1XELpkfPTVZYXIredsMAKNOY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=PlNpJP1E09DagstyH9XLgA7UFIiaE43+wksmClGoRLx7PM6ei7xkchwqJeWNZFvrEy
+         a5fpBEN6X7cBrebrMinvhgzltSN9k3aIuk80l5RN2sLyNPfmbFn/XbKil7J0Yz7feOMX
+         4sHSSbeyqJCu+MVd9kcMWe5fNcMVNCH8sNsiI=
+Received: by 10.141.210.21 with SMTP id m21mr3267818rvq.204.1234131385034; 
+	Sun, 08 Feb 2009 14:16:25 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902082149380.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109020>
 
-Dave Mitchell wrote:
-> Perhaps I was misunderstanding rerere. I assumed it would only replay
-> identical resolves on the same branch, rather than being able to cope with
-> slightly different resolves on a different branch.
->
-> However, after playing with it just now I can't seem to get it to work in
-> the initial phase of recording a resolve that has previously taken place.
->
-> Given three commits A,B M, where M is a previous merge of A,B:
->
->     A-M
->      /  
->     B
->
-> I tried the following:
->
-> git checkout A
-> git merge B		# replay the initial conflict
-> git rerere clear
-> git rerere		# record the initial conflict state
->
-> git reset --hard M	# simulate the post-resolve state
-> git rerere		# and record it
->
->
-> But then
->
->     git rerere diff
-> and
->     git rerere status
->
-> both show nothing, so I'm assuming it didn't manage to capture anything.
->   
+On Sun, Feb 8, 2009 at 3:54 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> I do not know how Mercurial handles this (I am sure you will send a
+> page-long mail illustrating it)
 
-[cross-posted to the git list so that people will answer who use this
-command a bit more than myself and to help provide the use case for
-making the interface better]
+No, I will not. Sorry for trying to help. Over and out.
 
-I think the problem is that you want to run something like 'git checkout
-M \*' or 'git read-tree M' instead of 'git reset --hard M'. ie, change
-the index only and not the HEAD reference. Once this is done then 'git
-commit' (this will be a dummy commit you'll throw away) or perhaps just
-'git rerere' should be enough to update the rerere cache.
-
-But perhaps someone else will have tried this before and knows how to do
-it..
-
-Sam.
+j.
