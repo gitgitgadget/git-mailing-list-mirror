@@ -1,84 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Deleting the "current" branch in remote bare repositories
-Date: Sun, 08 Feb 2009 11:05:40 -0800
-Message-ID: <7v8wogzr3v.fsf@gitster.siamese.dyndns.org>
-References: <20090207162754.5fb8b63f@perceptron>
- <94a0d4530902071405m33a0804er8030e14bea205898@mail.gmail.com>
- <20090208011802.2b7b9e74@perceptron>
- <7v1vu91d00.fsf@gitster.siamese.dyndns.org>
- <20090208111838.GD14359@coredump.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH JGIT] Minor : Make ObjectId, RemoteConfig Serializable
+Date: Sun, 8 Feb 2009 11:10:24 -0800
+Message-ID: <20090208191024.GA30557@spearce.org>
+References: <320075ff0902060702n7573aaecu9054626ee9a6991@mail.gmail.com> <320075ff0902061315g3f8b9c9bj92f528e700d59c50@mail.gmail.com> <200902080313.21785.robin.rosenberg.lists@dewire.com> <320075ff0902080526g2bee8188g395397b06a0c80ee@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Git ML <git@vger.kernel.org>, obrien654j@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Feb 08 20:07:20 2009
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Git ML <git@vger.kernel.org>
+To: Nigel Magnay <nigel.magnay@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 08 20:11:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWEzu-00086u-4e
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 20:07:18 +0100
+	id 1LWF4K-0000w8-Ny
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 20:11:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753124AbZBHTFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 14:05:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753122AbZBHTFv
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 14:05:51 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61003 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753081AbZBHTFv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 14:05:51 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EEACD98225;
-	Sun,  8 Feb 2009 14:05:49 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0555598224; Sun,
-  8 Feb 2009 14:05:42 -0500 (EST)
-In-Reply-To: <20090208111838.GD14359@coredump.intra.peff.net> (Jeff King's
- message of "Sun, 8 Feb 2009 06:18:39 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7FC70598-F613-11DD-9EA2-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753193AbZBHTK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 14:10:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbZBHTK0
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 14:10:26 -0500
+Received: from george.spearce.org ([209.20.77.23]:45117 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753154AbZBHTKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 14:10:25 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id ABE7238210; Sun,  8 Feb 2009 19:10:24 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <320075ff0902080526g2bee8188g395397b06a0c80ee@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109000>
 
-Jeff King <peff@peff.net> writes:
+Nigel Magnay <nigel.magnay@gmail.com> wrote:
+> > A problem (big problem) with serialization is that it often leads to
+> > fragile interfaces. One might want to have precise control over
+> > the serialization so a change in the implementation doesn't affect
+> > compatibility. Serializing AnyObjectId should not depend on the
+> > implementation de jour. Second, how do we handle subclasses?
+> >
+> > But maybe leaving it this way would be our way of saying that
+> > the interface may break at any time, promise.
+> 
+> Well, we can of course implement writeObject / readObject (or do so
+> if/when compatibility breaks, and it's cared about)
+> 
+> That's how I tend to view it anyway (may break at any time) - you
+> can't just update a jar library to a significantly new version and
+> expect it all to stay compatible. Also for half my use, it's not for
+> persistence, it's for transferring over the wire to a slave process.
+> 
+> Thinking a bit more clearly, I probably don't need AnyObjectId, just
+> ObjectId - but I've also missed RefSpec and URIish as they're used in
+> RemoteConfig..
 
-> On Sun, Feb 08, 2009 at 01:42:07AM -0800, Junio C Hamano wrote:
->
->> I think forbidding the removal of the current branch falls into the same
->> category as forbidding the updating of the current branch.  It is what you
->> would want to avoid in many workflows, and receive.denyDeleteCurrent that
->> defaults to refuse may eventually be a good way to do this, but we need a
->> transition plan for that escape hatch.  Most people may not see why they
->> would want to do such a thing, and many people may perceive that in *their
->> own* workflow such an operation can only be a mistake, but that is not a
->> good enough reason to suddenly start forbidding something other people
->> were allowed to do so far.
->
-> I thought of that, too, but note that receive.denyDeleteCurrent is about
-> preventing mistakes in a _non-bare_ repo. But deleting the HEAD branch
-> is also annoying in a bare repo (but not _as_ annoying; the real impact
-> is that cloners get a "could not checkout" message, but you don't have
-> the weird index-and-HEAD don't sync issue that non-bare repos get).
-> Should such a safety valve apply to both?
+Here's my two cents... we can do this, but only if we implement
+Externalizable and do the read and write ourselves so we have a
+stable format.
 
-If you remove the current branch from a repository, the impact that
-operation causes the remote users of the repository would be the same
-whether the repository has or does not have a work tree.  And in that
-sense, I think it should apply equally.  The criteria is not "is it bare",
-but "is it used by people remotely".  IOW, you refuse deletion of the
-current branch if other people may fetch from it.
+In the case of any of the types you are discussing there is an easy
+canonical form for them to be written on the wire, or to read back:
 
-In addition, removing the current branch will affect local operations in
-the repository --- the person who were working in the work tree to prepare
-for the _next_ commit will now end up creating a root commit.  The effect
-is similar, as you correctly point out, to the issue of the HEAD and the
-work tree going out of sync that ends up creating a commit with a lot of
-reverts.  They both cause the user on the work tree to create an undesired
-commit.  Here, the criteria is "does this have a work tree".  I think the
-current receive.denyCurrentBranch should also trigger in this case.
+  ObjectId     - the 20 byte SHA-1
+  RefSpec      - the string form as it appears in the config file
+  URIish       - the string form as it appears in the config file
+  RemoteConfig - a map of keys/values as it appears in the config
+
+-- 
+Shawn.
