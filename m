@@ -1,75 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use lock token in non-URI form in start_put
-Date: Sat, 07 Feb 2009 18:28:06 -0800
-Message-ID: <7vzlgx3bnt.fsf@gitster.siamese.dyndns.org>
-References: <498DE0B9.6080603@gmail.com>
- <alpine.DEB.1.00.0902072114360.10279@pacific.mpi-cbg.de>
- <7v1vuavv4l.fsf@gitster.siamese.dyndns.org>
- <be6fef0d0902071745r355309c2o76622b3af8df53bc@mail.gmail.com>
+From: Jeremy White <jwhite@codeweavers.com>
+Subject: [PATCH v2] Enable setting attach as the default in .gitconfig for
+ git-format-patch.
+Date: Sat, 07 Feb 2009 21:26:26 -0600
+Message-ID: <498E50E2.8050309@codeweavers.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 08 03:29:40 2009
+Content-Type: multipart/mixed;
+ boundary="------------070904060205020007070608"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 08 04:32:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVzQR-0006KH-Bx
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 03:29:39 +0100
+	id 1LW0P2-0001Nw-LI
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 04:32:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbZBHC2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2009 21:28:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752536AbZBHC2N
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 21:28:13 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39943 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752460AbZBHC2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 21:28:12 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1ACA62AA9D;
-	Sat,  7 Feb 2009 21:28:12 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4E72A2A4FE; Sat, 
- 7 Feb 2009 21:28:08 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 21B64E18-F588-11DD-B443-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1752580AbZBHD1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Feb 2009 22:27:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752565AbZBHD1c
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 22:27:32 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:54546 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752510AbZBHD1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Feb 2009 22:27:32 -0500
+Received: from localhost
+	([127.0.0.1] helo=[10.0.0.16] ident=stunnel4)
+	by mail.codeweavers.com with esmtp (Exim 4.63)
+	(envelope-from <jwhite@codeweavers.com>)
+	id 1LW0KR-0004M8-Di
+	for git@vger.kernel.org; Sat, 07 Feb 2009 21:27:31 -0600
+User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108914>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+This is a multi-part message in MIME format.
+--------------070904060205020007070608
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> In section 6.5 which you cite below, the token is unique, and we hold
-> the server's word for it.
 
-Are you sure you are not reading too much into that guarantee?
+Signed-off-by: Jeremy White <jwhite@codeweavers.com>
+---
+  Documentation/git-format-patch.txt |    4 +++-
+  builtin-log.c                      |   15 +++++++++++++++
+  2 files changed, 18 insertions(+), 1 deletions(-)
 
-I somehow thought that the natural reading of the guarantee is *not* that
-the tokens are unique over the lifetime of the server installation (iow, a
-lock token you obtained today will never be used in the future, and it is
-a token that the server never has used before), but it merely guarantees
-that there are no any two outstanding locks that share the same URI, lest
-one client's unlock request breaks the wrong lock.  But I may be wrong here.
 
->> That is why I asked in my previous question what in the codepath protects
->> ourselves from using problematic characters.
->
-> You're right, section 6.5 doesn't enforce that lock tokens are UUIDs.
->
-> Any solutions to this? Perhaps one could have a function, say,
-> get_unique_remote_postfix, and the function would check for URI
-> schemes which we know are safe for use in file names, namely,
-> "urn:uuid:" and "opaqulocktoken:". However, if its a URI we are unsure
-> of, then it would generate a random string.
 
-Let me show even more ignorance of mine with this codepath.
+--------------070904060205020007070608
+Content-Type: text/x-patch;
+ name="7ed4bdd60ca12e71e1438defefbf83075b39a60b.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="7ed4bdd60ca12e71e1438defefbf83075b39a60b.diff"
 
-What breaks and how, if we do not even use a random string but a fixed
-suffix ".temp" here?  I am not suggesting we actually do that, but I'd
-like to see how important the uniqueness is here to better understand the
-issue.
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 11a7d77..2e8e94e 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -174,7 +174,8 @@ CONFIGURATION
+ -------------
+ You can specify extra mail header lines to be added to each message
+ in the repository configuration, new defaults for the subject prefix
+-and file suffix, and number patches when outputting more than one.
++and file suffix, control attachements, and number patches when outputting
++more than one.
+ 
+ ------------
+ [format]
+@@ -183,6 +184,7 @@ and file suffix, and number patches when outputting more than one.
+ 	suffix = .txt
+ 	numbered = auto
+ 	cc = <email>
++	attach [ = mime-boundary-string ]
+ ------------
+ 
+ 
+diff --git a/builtin-log.c b/builtin-log.c
+index 2ae39af..c79895c 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -428,6 +428,8 @@ static const char *fmt_patch_suffix = ".patch";
+ static int numbered = 0;
+ static int auto_number = 1;
+ 
++static char *default_attach = NULL;
++
+ static char **extra_hdr;
+ static int extra_hdr_nr;
+ static int extra_hdr_alloc;
+@@ -488,6 +490,14 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 		auto_number = auto_number && numbered;
+ 		return 0;
+ 	}
++	if (!strcmp(var, "format.attach")) {
++		if (value && *value)
++			default_attach = xstrdup(value);
++		else
++			default_attach = xstrdup(git_version_string);
++		return 0;
++	}
++
+ 
+ 	return git_log_config(var, value, cb);
+ }
+@@ -787,6 +797,11 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 
+ 	rev.subject_prefix = fmt_patch_subject_prefix;
+ 
++	if (default_attach) {
++		rev.mime_boundary = default_attach;
++		rev.no_inline = 1;
++	}
++
+ 	/*
+ 	 * Parse the arguments before setup_revisions(), or something
+ 	 * like "git format-patch -o a123 HEAD^.." may fail; a123 is
+
+
+--------------070904060205020007070608--
