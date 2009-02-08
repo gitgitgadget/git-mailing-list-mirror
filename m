@@ -1,63 +1,93 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: Re: TortoiseGit
-Date: Sun, 8 Feb 2009 15:39:08 +0800
-Message-ID: <1976ea660902072339y95e3835oeab381268ec0893b@mail.gmail.com>
-References: <4d5bc4bb0901101446j29d147c3pb885824e8d0d484f@mail.gmail.com>
-	 <1976ea660901101757n3f18c0e4m2fa275ab7b961a2c@mail.gmail.com>
-	 <4d5bc4bb0901101906g4f64100dyc140ebd62d51fdf1@mail.gmail.com>
-	 <1976ea660901101909k23814aa4p43d180db4a934201@mail.gmail.com>
+From: Mikael Magnusson <mikachu@gmail.com>
+Subject: [PATCH] Make tig call the correct git config command
+Date: Sun, 8 Feb 2009 08:46:55 +0100
+Message-ID: <237967ef0902072346x4537f70dua37ba897fac99361@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Victor Westmann <victor.westmann@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 08 08:40:52 2009
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Sun Feb 08 08:54:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LW4Hc-0006Hi-Ap
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 08:40:52 +0100
+	id 1LW4Ub-0008TQ-VY
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 08:54:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752209AbZBHHjM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 02:39:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751490AbZBHHjK
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 02:39:10 -0500
-Received: from el-out-1112.google.com ([209.85.162.177]:8584 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751591AbZBHHjJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 02:39:09 -0500
-Received: by el-out-1112.google.com with SMTP id b25so699635elf.1
-        for <git@vger.kernel.org>; Sat, 07 Feb 2009 23:39:08 -0800 (PST)
+	id S1752347AbZBHHq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 02:46:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752300AbZBHHq6
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 02:46:58 -0500
+Received: from mail-ew0-f21.google.com ([209.85.219.21]:33465 "EHLO
+	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751490AbZBHHq5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 02:46:57 -0500
+Received: by ewy14 with SMTP id 14so2039644ewy.13
+        for <git@vger.kernel.org>; Sat, 07 Feb 2009 23:46:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VbSIlFn4smnif5jbvyx89WDeC18rKle0Vqi/ulLByL8=;
-        b=OyfLTSUUNi5GIyU43kSFuNtNQXfwV25ddXWSsvmila7VcyPY4VJKnf1uB9Ksd6JPvN
-         H6OWEicbq3i0X0gtHxpuNa7MVS6Jh4Hx5w40Sa+4I/bluQ/Kndv59H2+aJvpEnaPn4fb
-         pl+t90e9p8dkVKO6neLd1quncoVEQ/3hs96JE=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=FpM5yQA0kmse/yq5moOdPdf4F0tyrWpCIZDc2KEixnU=;
+        b=IYUhDH94uQ7pOL6+VcUK1ZzDDfWPgickSjw1LGvSM8D8ppTuKm2hVZ+Gty8dhE5bci
+         hLmRo9SE9+H++N/t1O8bTHbEd8iNJlAxyJ6ntlw5HXhSNvlwPnljpttzl4Y/tFsN2tLk
+         l5EcPf5GoFXrR+CiRctCxMuoViKoGdR95yRh4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=EOam8sSD5h1bl72JHP8QAviIskbXRLvnEwcI294f4BgZ3A4wGedWQTf6vclxe/TLnj
-         VXxABJ4eazDrCjRA+f0dnHK1DfgqAa7nMsQcL+qz0Vnyle4m4aRt774NV3r331huygSU
-         ld2gWAMPBZhwoxdArn60TELxmJdKZVdKLUZOo=
-Received: by 10.150.12.5 with SMTP id 5mr3537708ybl.223.1234078748343; Sat, 07 
-	Feb 2009 23:39:08 -0800 (PST)
-In-Reply-To: <1976ea660901101909k23814aa4p43d180db4a934201@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=coHs6GowF4RgZ39aL/r63ZPblLZjhq1edlY4gDkjVKWUDXKnyVP7Cey9WE2rUQ3GXM
+         v3Mt3bzK1GzXyRf2g4i/0UhjJbNvYDYTZyvUBRp/fhT3LnwAamwSW3i9QuWPz6TbIRpE
+         EgAhr0RuHyNbUxHynAzDX2hrBGvcv+jSsvQks=
+Received: by 10.210.133.19 with SMTP id g19mr2842722ebd.52.1234079215649; Sat, 
+	07 Feb 2009 23:46:55 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108926>
 
-I have added po file to TortoiseGit Repository.
-I think you can start translation.
-
-2009/1/11 Frank Li <lznuaa@gmail.com>:
-> Absolutely yes!
-> Welcome translation!
+2009/2/7 Mikael Magnusson <mikachu@gmail.com>:
+> 2009/2/5 Jonas Fonseca <fonseca@diku.dk>:
+>> Hello,
+>>
+>> Here is a much needed update fixing multiple regressions from the
+>> introduction of the IO API in 0.13. Among improvements is the much
+>> requested ability to restore the position in the stage view when staging
+>> diff hunks. Also noteworthy is the many optimizations of the screen
+>> updating to make it work better across slow links. Finally, beware that
+>> a handful of incompatibilities can cause problems.
 >
+> I'm having a problem with tig taking 2 seconds to start up, which
+> seems to be related to the 'typo checking' feature of git. After
+> figuring out how to stop strace from helpfully saying
+> write(2, "WARNING: You called a Git program"..., 137) = 137
+> I got this (with -s 100):
+> [pid 29708] write(2, "WARNING: You called a Git program named 'git
+> config', which does not exist.\nContinuing under the assu"..., 137) =
+> 137
+> [pid 29708] write(2, "in 2.0 seconds automatically...\n"..., 32) = 32
+>
+> The output however also contains lots of git config strings, which is
+> confusing. Is tig running git config twice and failing one of the
+> times? (Running git config from the cmdline works fine).
+
+Turns out it was as simple as this:
+
+diff --git a/configure.ac b/configure.ac
+index b179389..bdea8de 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -28,7 +28,7 @@ AC_MSG_CHECKING([which config
+ GIT_CONFIG="repo-config"
+ git config --list >/dev/null && GIT_CONFIG="config"
+ AC_MSG_RESULT([$GIT_CONFIG])
+-AC_DEFINE_UNQUOTED(GIT_CONFIG,"$GIT_CONFIG",[git config subcommand])
++AC_DEFINE_UNQUOTED(GIT_CONFIG,"$GIT_CONFIG",[config subcommand])
+
+ AC_CHECK_PROGS(ASCIIDOC, [asciidoc false])
+ AC_CHECK_PROGS(XMLTO, [xmlto false])
+
+-- 
+Mikael Magnusson
