@@ -1,94 +1,78 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: receive.denyCurrentBranch
-Date: Sun, 8 Feb 2009 17:51:16 -0500
-Message-ID: <76718490902081451xd953e84y33de64cc82c1da42@mail.gmail.com>
-References: <20090208042910.19079.qmail@science.horizon.com>
-	 <alpine.DEB.1.00.0902081128420.10279@pacific.mpi-cbg.de>
-	 <76718490902080950r798ca02es4e560da35e499046@mail.gmail.com>
-	 <alpine.DEB.1.00.0902082149380.10279@pacific.mpi-cbg.de>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: [PATCH 1/2] git-web--browse: Fix check for /bin/start
+Date: Sun, 8 Feb 2009 18:12:43 -0500
+Message-ID: <e44161a223e7ec2cfb1f1b71399b995626c2d208.1234127422.git.tmz@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: George Spelvin <linux@horizon.com>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 08 23:52:45 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Feb 09 00:14:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWIW5-0003z3-Dz
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 23:52:45 +0100
+	id 1LWIqu-0001cr-L4
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 00:14:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753380AbZBHWvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 17:51:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbZBHWvS
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 17:51:18 -0500
-Received: from rv-out-0506.google.com ([209.85.198.235]:25949 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751221AbZBHWvR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 17:51:17 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so1536743rvb.1
-        for <git@vger.kernel.org>; Sun, 08 Feb 2009 14:51:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=OefwZxl82RY3DadR6I4BOouhH9T2LY8/KADGb/FWS30=;
-        b=ITYoLnzflASsjANyfaKOhSgr2FW88QuXW0I1x61jFL7/i8xJUiCdrgG4pYvSuWZnYy
-         zSt6oMFkbGdQBxZRtROl1D37gXxuvi3VFOkJMbm8JzRb1eF7XR+hgrihnX7X4VCEtE+E
-         182tc3IWFYJyklh14AspjzOC5jdY3SltmD+5Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=TLdgUaBpOjfQndQRCVPnAQ+laQjtX4bEO4RW3kmGLR8RUBx49XMpi8xrbVDzklzPfU
-         MDH1XjPYG50f/CY5eH7bxUp8huGrmQNK0BabXwIdRE44NaGx1o8gzYfoCzMgno+HIIfj
-         mAzO6hpWl7xBrBBLCg50VerUkDPpYfYCJVuac=
-Received: by 10.141.37.8 with SMTP id p8mr1720373rvj.18.1234133476744; Sun, 08 
-	Feb 2009 14:51:16 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902082149380.10279@pacific.mpi-cbg.de>
+	id S1753400AbZBHXMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 18:12:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753394AbZBHXMt
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 18:12:49 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56228 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753128AbZBHXMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 18:12:48 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 78CBE98F15;
+	Sun,  8 Feb 2009 18:12:46 -0500 (EST)
+Received: from inocybe.teonanacatl.org (unknown [71.173.205.56]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E096C98F14; Sun,
+  8 Feb 2009 18:12:44 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Pobox-Relay-ID: FF194A14-F635-11DD-BB61-8B21C92D7133-09356542!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109024>
 
-On Sun, Feb 8, 2009 at 3:54 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Just to make it clear: if you have merge conflicts on the remote end, you
-> will get into trouble.
->
-> I do not know how Mercurial handles this (I am sure you will send a
-> page-long mail illustrating it), but in my humble opinion, there is _no_
-> way to handle this except if you have shell access to the remote
-> repository/working directory.
+The previous check in git-web--browse for /bin/start used test -n
+/bin/start, which was always true.  This lead to "start" being tried
+first in the browser list.  On systems with upstart installed, "start"
+exists and might be in the PATH, but it makes a poor choice for a web
+browser.  Instead, test that /bin/start exists and is executable.
 
-I apologize for my prior reply. I understand you find any mention of
-Mercurial offensive. But if you had paid attention, you would have
-noticed that Mercurial did not attempt to merge. Rather, it created a
-new branch head in the remote repository.
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
 
-The equivalent in git would be for the user to do something like this:
+This test is still a bit fragile, as it relies on the start from
+upstart not being installed in /bin.  I don't know if that's something
+we can count on or not.  If not, the test needs to be extended to
+differentiate between the MingW's start and upstart's start.  Does the
+MingW start have a --version string or something we could check before
+adding start to the list?
 
-satellite:~/repo (master)$ git push origin
-! [remote rejected] master -> master (branch is currently checked out)
-satellite:~/repo (master)$ git push origin master:satellite-master
- * [new branch]      master -> satellite-master
-satellite:~/repo (master)$ ssh origin
-origin$ cd repo
-origin:~/repo (master)$ git merge satellite-master
+ git-web--browse.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> No matter if you suggest leaving merge conflict, a detached HEAD, or
-> "read-tree -u -m HEAD" (i.e. trying a simple merge with the working
-> directory): _all_ of them are unsafe.
+diff --git a/git-web--browse.sh b/git-web--browse.sh
+index 78d236b..7ed0fad 100755
+--- a/git-web--browse.sh
++++ b/git-web--browse.sh
+@@ -115,7 +115,7 @@ if test -z "$browser" ; then
+ 	browser_candidates="open $browser_candidates"
+     fi
+     # /bin/start indicates MinGW
+-    if test -n /bin/start; then
++    if test -x /bin/start; then
+ 	browser_candidates="start $browser_candidates"
+     fi
 
-I'm not suggesting any of those things. I was just illustrating what
-another DVCS does to see if there was anything that might be learned
-from it.
+-- 
+1.6.1.3
 
-Clearly users are confused about pushing into a checked-out branch.
-Maybe making that impossible by default will be enough.
-
-j.
+-- 
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Honesty is the best policy, but insanity is a better defense.
