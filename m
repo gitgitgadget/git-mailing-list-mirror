@@ -1,83 +1,71 @@
-From: Caleb Cushing <xenoterracide@gmail.com>
-Subject: checking sha1's of files
-Date: Sun, 8 Feb 2009 04:39:19 -0500
-Message-ID: <81bfc67a0902080139j1331d967g34bfc18f4068e443@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCH] doc/bundle: Use the more conventional suffix '.bundle'
+Date: Sun, 8 Feb 2009 10:41:04 +0100
+Message-ID: <adf1fd3d0902080141s11b53127ufa83918c00b4579b@mail.gmail.com>
+References: <1234045309-3626-1-git-send-email-santi@agolina.net>
+	 <200902072302.36991.bss@iguanasuicide.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 08 10:40:50 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+X-From: git-owner@vger.kernel.org Sun Feb 08 10:42:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LW69h-0002q4-GD
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 10:40:49 +0100
+	id 1LW6BP-00039a-4B
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 10:42:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752728AbZBHJjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 04:39:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752707AbZBHJjW
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 04:39:22 -0500
-Received: from qw-out-2122.google.com ([74.125.92.25]:4194 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752703AbZBHJjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 04:39:21 -0500
-Received: by qw-out-2122.google.com with SMTP id 3so861091qwe.37
-        for <git@vger.kernel.org>; Sun, 08 Feb 2009 01:39:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=olVELeSxKVMEU1CNY6ip7ppzsu/4f84sEk7qGmcEG8s=;
-        b=nwwTfKrvs8RbtLZETzLW2GuZ7g2QbJhY/uC0+Cf//SEQQDb4FIoQwvC1chOty2mgA2
-         dVjuh/P7+ViLsUnmBg2ncblIob4GLhFDIW0E4A48uvq9oJck+GjKzyOewVppSlObc6P9
-         CXtb4Hh9ZWsTAuyu6f/hU8h3NQLOv6OeflApM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=a8KCeK6gNeErmBdQerZ921uyfOWuAm68LS/prSz2wgm4eIlao7vdlqkuHgaFGTaAGv
-         7AthRaV0xv9R+8N8GlVpEdYcwEYbCjMHxlfGCjBBqLl38c7M3CFZhEc8h69vXlc4Ic6W
-         u8jCLS/gkXn0UlQ9+RSHYWCT+gsmutoXhq0Ik=
-Received: by 10.229.74.8 with SMTP id s8mr993752qcj.40.1234085959404; Sun, 08 
-	Feb 2009 01:39:19 -0800 (PST)
+	id S1752743AbZBHJlK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2009 04:41:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752738AbZBHJlJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 04:41:09 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:36592 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752707AbZBHJlH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Feb 2009 04:41:07 -0500
+Received: by bwz5 with SMTP id 5so455423bwz.13
+        for <git@vger.kernel.org>; Sun, 08 Feb 2009 01:41:04 -0800 (PST)
+Received: by 10.102.218.5 with SMTP id q5mr1560432mug.99.1234086064075; Sun, 
+	08 Feb 2009 01:41:04 -0800 (PST)
+In-Reply-To: <200902072302.36991.bss@iguanasuicide.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108935>
 
-I need to check the hashes of specific files in the repo in an
-automated fashion, in another tool.
+2009/2/8 Boyd Stephen Smith Jr. <bss@iguanasuicide.net>:
+> On Saturday 07 February 2009 16:21:49 Santi B=E9jar wrote:
+>> Although it does not matter in general it is handled different by
+>> "git clone", as it removes it to make the "humanish" name of the
+>> new repository.
+>
+> I'm mixed on this, particularly with the increasing numbers of MySysG=
+it users
+> we attract.  Perhaps it would be better to teach clone to remove .bdl=
+ as well.
 
-to be less vague currently gentoo's portage tree has manifests for
-each file in the tree, on funtoo and regen2 (forks) we've imported the
-tree into git. Git has all the manifesting that's needed (most of it,
-still doesn't help with files outside the tree) in it. I'd like to be
-able to remove manifests from the tree, however I still want to check
-that the ebuilds (package format) are consistent at run time. Checking
-the entire tree is not sane.
+I don't have an opinion as I don't know exactly the situation for
+MSysGit users, but I don't think it is a good idea to have two
+suffixes.
 
-I figure the best way to do this is to first check stat against the
-index, then, if that passes check the sha1, if that passes continue to
-the next step.
+>
+> General Query:
+> Is the bundle format stable enough to register a MIME-type (and assoc=
+iated
+> extensions)?
 
-I don't want to do anything like determine the output of a git command
-in my code, I'd rather check to see if the check passed or failed
-using return codes or some such. If it is capable of checking these
-but would require me to parse output I'd still like to know, as it may
-let me get the fix in faster, and I can do better later.
+At least the signature yes:
 
-I know git may not be currently capable of this behavior, which means
-I should extend it, or even write a new program to deal with it. If
-this is the case, is there any documentation on how git does this?
-aside from the source? could someone point me in the general direction
-of source files I should be looking at? maybe even specific functions?
+static const char bundle_signature[] =3D "# v2 git bundle\n";
 
-any help with this endeavor of any kind would be appreciated as the
-manifests 'cause the repo to balloon, not to mention are just a pain
-to manage as they can't actually be merged.
--- 
-Caleb Cushing
 
-http://xenoterracide.blogspot.com
+> --
+> Boyd Stephen Smith Jr.                   ,=3D ,-_-. =3D.
+> bss@iguanasuicide.net                   ((_/)o o(\_))
+> ICQ: 514984 YM/AIM: DaTwinkDaddy         `-'(. .)`-'
+> http://iguanasuicide.net/                    \_/
+>
+>
