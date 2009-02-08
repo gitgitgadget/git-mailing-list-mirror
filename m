@@ -1,123 +1,133 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH JGIT] Propose author and committer in the commit dialog
-Date: Sun, 8 Feb 2009 12:24:05 -0800
-Message-ID: <20090208202405.GB30949@spearce.org>
-References: <498C5F4E.1040200@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git <git@vger.kernel.org>
-To: Yann Simon <yann.simon.fr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 08 21:26:50 2009
+Subject: [JGIT PATCH] Don't keep an empty pack uploaded through receive-pack
+Date: Sun,  8 Feb 2009 12:43:17 -0800
+Message-ID: <1234125797-14820-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sun Feb 08 21:45:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWGEk-0004vg-Ls
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 21:26:43 +0100
+	id 1LWGWr-0001RM-P7
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 21:45:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752991AbZBHUYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 15:24:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752228AbZBHUYK
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 15:24:10 -0500
-Received: from george.spearce.org ([209.20.77.23]:42655 "EHLO
+	id S1753063AbZBHUnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 15:43:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752884AbZBHUnT
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 15:43:19 -0500
+Received: from george.spearce.org ([209.20.77.23]:35151 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751387AbZBHUYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 15:24:09 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id F3F6A38210; Sun,  8 Feb 2009 20:24:05 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <498C5F4E.1040200@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	with ESMTP id S1752851AbZBHUnS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 15:43:18 -0500
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 1850438211; Sun,  8 Feb 2009 20:43:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 861753819E;
+	Sun,  8 Feb 2009 20:43:17 +0000 (UTC)
+X-Mailer: git-send-email 1.6.2.rc0.173.g5e148
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109011>
 
-Yann Simon <yann.simon.fr@gmail.com> wrote:
-> Add a field 'committer'.
-> The fields 'author' and 'committer' are populated with the values
-> found in the configuration.
-> 
-> Validate the author and the committer.
-> 
-> Add the signed-off line in the comment text box when the user clicks
-> on the signed-off checkbox.
-> 
-> Use Text.DELIMITER as line break for plateform independance.
+The receive-pack protocol sometimes gets an empty pack file if
+there are commands to process but no data was needed to be sent.
+In such cases we shouldn't create an empty 32 byte pack on disk,
+but instead should discard it.
 
-Far too many things in one change.  Please break these apart into
-multiple commits so they are easier to review and test in isolation.
+Since ReceivePack doesn't read the pack header, we only know
+the empty state inside of IndexPack.  So we fix it here, to
+avoid duplicating the header parsing code into ReceivePack.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../src/org/spearce/jgit/transport/IndexPack.java  |   34 ++++++++++++++++---
+ 1 files changed, 28 insertions(+), 6 deletions(-)
+
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/IndexPack.java b/org.spearce.jgit/src/org/spearce/jgit/transport/IndexPack.java
+index 82cd615..bd7bfd0 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/IndexPack.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/IndexPack.java
+@@ -143,6 +143,8 @@ public static IndexPack create(final Repository db, final InputStream is)
  
-> I remove the modifications of PersonIdent and send them in another patch.
-
-Thanks, that one is now applied.
+ 	private boolean fixThin;
  
-> diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
-> index ae26770..9a9d494 100644
-> --- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
-> +++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
-> @@ -99,15 +99,16 @@ public void run(IAction act) {
->  		}
->  
->  		String author = null;
-> +		String committer = null;
->  		if (repository != null) {
->  			final RepositoryConfig config = repository.getConfig();
->  			author = config.getAuthorName();
-> -			if (author != null && author.length() != 0) {
-> -				final String email = config.getAuthorEmail();
-> -				if (email != null && email.length() != 0) {
-> -					author = author + " <" + email + ">";
-> -				}
-> -			}
-> +			final String authorEmail = config.getAuthorEmail();
-> +			author = author + " <" + authorEmail + ">";
-> +
-> +			committer = config.getCommitterName();
-> +			final String committerEmail = config.getAuthorEmail();
-> +			committer = committer + " <" + committerEmail + ">";
-
-Don't you mean getCommitterEmail() here?
-
-> @@ -117,9 +118,13 @@ public void run(IAction act) {
->  		commitDialog.setAmendAllowed(amendAllowed);
->  		commitDialog.setFileList(files);
->  		commitDialog.setAuthor(author);
-> +		commitDialog.setCommitter(committer);
->  
-> -		if (previousCommit != null)
-> +		if (previousCommit != null) {
->  			commitDialog.setPreviousCommitMessage(previousCommit.getMessage());
-> +			PersonIdent previousAuthor = previousCommit.getAuthor();
-> +			commitDialog.setPreviousAuthor(previousAuthor.getName() + " <" + previousAuthor.getEmailAddress() + ">");
-
-Isn't this a bug fix for "amend" so that the original author is
-reused when amending the prior commit?  Please mention it in the
-commit message; and ideally this should be its own change.
-
-> @@ -312,6 +352,7 @@ private static String getFileStatus(IFile file) {
->  			}
->  
->  		} catch (Exception e) {
-> +			e.printStackTrace();
-
-Would it be better to log this through an Activator so it shows
-up in the Error Log view?
-
-> @@ -321,6 +362,7 @@ private static String getFileStatus(IFile file) {
->  	 * @return The message the user entered
->  	 */
->  	public String getCommitMessage() {
-> +		commitMessage.replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$
->  		return commitMessage;
-
-String is immutable.  This replaceAll is a noop.  You probably
-meant to return the return value of the replaceAll method.
-
-There may be other comments for these changes; it would be easier
-to review if they were more broken up into independent commits.
-
++	private boolean keepEmpty;
++
+ 	private int outputVersion;
+ 
+ 	private final File dstPack;
+@@ -239,6 +241,19 @@ public void setFixThin(final boolean fix) {
+ 	}
+ 
+ 	/**
++	 * Configure this index pack instance to keep an empty pack.
++	 * <p>
++	 * By default an empty pack (a pack with no objects) is not kept, as doing
++	 * so is completely pointless. With no objects in the pack there is no data
++	 * stored by it, so the pack is unnecessary.
++	 * 
++	 * @param empty true to enable keeping an empty pack.
++	 */
++	public void setKeepEmpty(final boolean empty) {
++		keepEmpty = empty;
++	}
++
++	/**
+ 	 * Configure the checker used to validate received objects.
+ 	 * <p>
+ 	 * Usually object checking isn't necessary, as Git implementations only
+@@ -313,14 +328,14 @@ public void index(final ProgressMonitor progress) throws IOException {
+ 						fixThinPack(progress);
+ 					}
+ 				}
+-				if (packOut != null)
++				if (packOut != null && (keepEmpty || entryCount > 0))
+ 					packOut.getChannel().force(true);
+ 
+ 				packDigest = null;
+ 				baseById = null;
+ 				baseByPos = null;
+ 
+-				if (dstIdx != null)
++				if (dstIdx != null && (keepEmpty || entryCount > 0))
+ 					writeIdx();
+ 
+ 			} finally {
+@@ -336,10 +351,12 @@ public void index(final ProgressMonitor progress) throws IOException {
+ 					packOut.close();
+ 			}
+ 
+-			if (dstPack != null)
+-				dstPack.setReadOnly();
+-			if (dstIdx != null)
+-				dstIdx.setReadOnly();
++			if (keepEmpty || entryCount > 0) {
++				if (dstPack != null)
++					dstPack.setReadOnly();
++				if (dstIdx != null)
++					dstIdx.setReadOnly();
++			}
+ 		} catch (IOException err) {
+ 			if (dstPack != null)
+ 				dstPack.delete();
+@@ -946,6 +963,11 @@ UnresolvedDelta(final long headerOffset, final int crc32) {
+ 	 *             removed prior to throwing the exception to the caller.
+ 	 */
+ 	public void renameAndOpenPack() throws IOException {
++		if (!keepEmpty && entryCount == 0) {
++			cleanupTemporaryFiles();
++			return;
++		}
++
+ 		final MessageDigest d = Constants.newMessageDigest();
+ 		final byte[] oeBytes = new byte[Constants.OBJECT_ID_LENGTH];
+ 		for (int i = 0; i < entryCount; i++) {
 -- 
-Shawn.
+1.6.2.rc0.173.g5e148
