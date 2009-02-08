@@ -1,82 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv3 1/3 (resend)] gitweb: Modularized git_get_project_description to be more generic
-Date: Sun, 8 Feb 2009 13:34:42 +0100
-Message-ID: <200902081334.42780.jnareb@gmail.com>
-References: <87zlgxp595.wl%seb@cine7.net> <200902081210.49328.jnareb@gmail.com> <87tz75p3ej.wl%seb@cine7.net>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH] Offer to print changes while running git-mergetool
+Date: Sun, 08 Feb 2009 12:38:55 +0000
+Message-ID: <498ED25F.3020401@hashpling.org>
+References: <1233930745-77930-1-git-send-email-jon.delStrother@bestbefore.tv>	 <7vr62ay8dh.fsf@gitster.siamese.dyndns.org>	 <57518fd10902070401x14cc7cacrfb8bc88bbf2999cd@mail.gmail.com>	 <498E3456.1080509@hashpling.org> <57518fd10902080343p47e30330ufdf2ece909ea0bd9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-2?q?S=E9bastien_Cevey?= <seb@cine7.net>
-X-From: git-owner@vger.kernel.org Sun Feb 08 13:36:36 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+X-From: git-owner@vger.kernel.org Sun Feb 08 13:40:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LW8tm-00046T-LP
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 13:36:35 +0100
+	id 1LW8xW-00056W-1Y
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 13:40:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752536AbZBHMez convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2009 07:34:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752509AbZBHMez
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 07:34:55 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:41051 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752418AbZBHMey (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 07:34:54 -0500
-Received: by bwz5 with SMTP id 5so493616bwz.13
-        for <git@vger.kernel.org>; Sun, 08 Feb 2009 04:34:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=fWH2ncys6kbJXUg9XWtoJTcPkh2PccIotc4cS0QfBzQ=;
-        b=lqlhXGbFwiyscxg6+xwYrHPdnE2J3HIRdnrLONx7VKV8aUAk9+zHl0iC0U3B6RMt9l
-         q9cJhbHNdggucl6IHvqJdwhDNGz40DKSb/zlH7IPaex+AkvBjUvUwynYuNocXSniYXai
-         6X3JmooZC3tZmz8aDvGOdD3LelQVn1EkMZQdw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=MGQQA4l2fWxmD7+7Sz/P7NlVVFrcZvD8HXDWJxj2VaoTS9/A42RuF6HtWt+T6EP9fe
-         Vtb1/UsjWtDqcZr/RxXBjg2NaUHJrcibYF/eZiM1VWSsurwpLshKbRtexkcBX3JZ4ahY
-         PuOcGoUBiYcflA8AiWK7w3+wP34dC0mIgpWRc=
-Received: by 10.223.105.208 with SMTP id u16mr947565fao.14.1234096491759;
-        Sun, 08 Feb 2009 04:34:51 -0800 (PST)
-Received: from ?192.168.1.13? (abwm89.neoplus.adsl.tpnet.pl [83.8.236.89])
-        by mx.google.com with ESMTPS id z10sm2864423fka.33.2009.02.08.04.34.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 08 Feb 2009 04:34:51 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <87tz75p3ej.wl%seb@cine7.net>
-Content-Disposition: inline
+	id S1751843AbZBHMi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 07:38:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752140AbZBHMi7
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 07:38:59 -0500
+Received: from relay.pcl-ipout01.plus.net ([212.159.7.99]:27839 "EHLO
+	relay.pcl-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751603AbZBHMi6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Feb 2009 07:38:58 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEADNhjknUnw4U/2dsb2JhbADMRIQaBg
+Received: from pih-relay08.plus.net ([212.159.14.20])
+  by relay.pcl-ipout01.plus.net with ESMTP; 08 Feb 2009 12:38:57 +0000
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay08.plus.net with esmtp (Exim) id 1LW8w4-0004Nj-K5; Sun, 08 Feb 2009 12:38:56 +0000
+Received: from [192.168.76.29] (heisenberg2.hashpling.org [192.168.76.29])
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n18CctWB019126;
+	Sun, 8 Feb 2009 12:38:56 GMT
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <57518fd10902080343p47e30330ufdf2ece909ea0bd9@mail.gmail.com>
+X-Plusnet-Relay: e917abafffd8d37a0ceebcbb6ffde459
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108970>
 
-Dnia niedziela 8. lutego 2009 12:35, S=E9bastien Cevey napisa=B3:
-> At Sun, 8 Feb 2009 12:10:48 +0100, Jakub Narebski wrote:
->=20
-> > Due to changes to gitweb, while first patch in (earlier version of)=
-=20
-> > series applies cleanly, second patch didn't, and git could not find
-> > base to fall back to 3-way merge (because second patch is based on
-> > state after first patch, and situation after first patch changed).
-> > It is much easier to rebase series if youhave them as commits, and
-> > not as series of emails.
->=20
-> Sure, I'll make sure of being rebased onto git master HEAD (or should
-> I rebase onto another development branch?) next time.  But is this
-> resend properly merging and working for you?
+Jonathan del Strother wrote:
+>> Given that mergetool picks up from where it left off when run a second
+>> time, what does this patch offer over Ctrl-c, run log tool of your
+>> choice, re-run mergetool? Or just running git log in a different
+>> terminal instance?
+>>
+> 
+> A large part of my motivation behind this patch was basically
+> education - my team (and myself) have made poor merge decisions in the
+> past, largely due to not being aware of a tool like "git log --merge".
+> The patch was attempting to get inexperienced users to make better use
+> of such tools. I certainly wouldn't be averse to using gitk instead.
 
-They got imported correctly, at least.
+My point wasn't that we should use gitk instead, I was just trying to
+illustrate that there may be a whole raft of other commands or
+activities that a user might want to run to help them with a merge so
+why should we hard wire any one of them into mergetool?
 
-Thanks again!
+The other doubt that I've since had about this patch is this. Is just
+before running the merge tool the best place to offer to show the log?
 
---=20
-Jakub Narebski
-Poland
+In my usual workflows (not necessarily the best!), I usually want to
+fire up the merge tool as quickly as possible to get the merge
+resolutions done.
+
+Only once I'm in the mergetool do I realise that this one's a bit
+complex and I might need to consult the logs to help me resolve this one.
+
+But now, mergetool is blocked waiting for the merge tool to finish. If I
+abort the merge it's going to offer me the option to abort completely or
+carry on with the next file. (Perhaps "try again" could be a future
+direction that mergetool might offer, but it doesn't at the moment.)
+
+I'm far more likely to want to consult the logs in a different terminal
+(or gui) with the merge tool still running, especially if I've already
+merged some of the easy chunks and have only hit difficulties later on
+in the merge.
+
+Charles.
