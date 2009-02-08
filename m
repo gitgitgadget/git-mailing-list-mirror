@@ -1,64 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] give exclude mechanism a debug option
-Date: Sun, 8 Feb 2009 03:59:33 -0500
-Message-ID: <20090208085933.GB4392@coredump.intra.peff.net>
-References: <20090207064221.GA14856@coredump.intra.peff.net> <20090207064454.GB14906@coredump.intra.peff.net> <7vljsizog1.fsf@gitster.siamese.dyndns.org> <20090207114444.GB18079@coredump.intra.peff.net> <7viqnludiv.fsf@gitster.siamese.dyndns.org>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: checking sha1's of files
+Date: Sun, 8 Feb 2009 04:39:19 -0500
+Message-ID: <81bfc67a0902080139j1331d967g34bfc18f4068e443@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 08 10:01:06 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 08 10:40:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LW5XE-0003DO-2f
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 10:01:04 +0100
+	id 1LW69h-0002q4-GD
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 10:40:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654AbZBHI7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 03:59:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752650AbZBHI7g
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 03:59:36 -0500
-Received: from peff.net ([208.65.91.99]:53543 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752295AbZBHI7g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 03:59:36 -0500
-Received: (qmail 25935 invoked by uid 107); 8 Feb 2009 08:59:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 08 Feb 2009 03:59:50 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 08 Feb 2009 03:59:33 -0500
-Content-Disposition: inline
-In-Reply-To: <7viqnludiv.fsf@gitster.siamese.dyndns.org>
+	id S1752728AbZBHJjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 04:39:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752707AbZBHJjW
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 04:39:22 -0500
+Received: from qw-out-2122.google.com ([74.125.92.25]:4194 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752703AbZBHJjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 04:39:21 -0500
+Received: by qw-out-2122.google.com with SMTP id 3so861091qwe.37
+        for <git@vger.kernel.org>; Sun, 08 Feb 2009 01:39:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=olVELeSxKVMEU1CNY6ip7ppzsu/4f84sEk7qGmcEG8s=;
+        b=nwwTfKrvs8RbtLZETzLW2GuZ7g2QbJhY/uC0+Cf//SEQQDb4FIoQwvC1chOty2mgA2
+         dVjuh/P7+ViLsUnmBg2ncblIob4GLhFDIW0E4A48uvq9oJck+GjKzyOewVppSlObc6P9
+         CXtb4Hh9ZWsTAuyu6f/hU8h3NQLOv6OeflApM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=a8KCeK6gNeErmBdQerZ921uyfOWuAm68LS/prSz2wgm4eIlao7vdlqkuHgaFGTaAGv
+         7AthRaV0xv9R+8N8GlVpEdYcwEYbCjMHxlfGCjBBqLl38c7M3CFZhEc8h69vXlc4Ic6W
+         u8jCLS/gkXn0UlQ9+RSHYWCT+gsmutoXhq0Ik=
+Received: by 10.229.74.8 with SMTP id s8mr993752qcj.40.1234085959404; Sun, 08 
+	Feb 2009 01:39:19 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108934>
 
-On Sat, Feb 07, 2009 at 01:45:44PM -0800, Junio C Hamano wrote:
+I need to check the hashes of specific files in the repo in an
+automated fashion, in another tool.
 
-> > Because I would expect "git check-ignore foo/bar | grep ^foo/bar:" to
-> > tell me if and how foo/bar is being excluded. But I have to instead
-> > check for ^foo and ^foo/bar.
-> 
-> Sorry, I do not understand why you need the downstream pipe that filters
-> using grep to begin with.
+to be less vague currently gentoo's portage tree has manifests for
+each file in the tree, on funtoo and regen2 (forks) we've imported the
+tree into git. Git has all the manifesting that's needed (most of it,
+still doesn't help with files outside the tree) in it. I'd like to be
+able to remove manifests from the tree, however I still want to check
+that the ebuilds (package format) are consistent at run time. Checking
+the entire tree is not sane.
 
-Sorry, I should have been more clear. The grep was meant to simulate
-what my eyes and brain are doing. That is, if I ask "what are patterns
-affecting foo/bar?", I expect to see "foo/bar" in the output.
+I figure the best way to do this is to first check stat against the
+index, then, if that passes check the sha1, if that passes continue to
+the next step.
 
-For asking about one path, it may not be that big a deal to see that the
-output matches to the input. But if I feed a hundred paths to
-check-ignore, I expect to be able to scan the output for the input I put
-in.
+I don't want to do anything like determine the output of a git command
+in my code, I'd rather check to see if the check passed or failed
+using return codes or some such. If it is capable of checking these
+but would require me to parse output I'd still like to know, as it may
+let me get the fix in faster, and I can do better later.
 
-> Shouldn't "git check-ignore dir/path" talk about the exclude entries that
-> caused dir/path to be excluded and no other patterns?  And if the reason
+I know git may not be currently capable of this behavior, which means
+I should extend it, or even write a new program to deal with it. If
+this is the case, is there any documentation on how git does this?
+aside from the source? could someone point me in the general direction
+of source files I should be looking at? maybe even specific functions?
 
-Yes, I would think so. Which maybe means using the current "exclude"
-code is not appropriate. Because it is really about traversing the
-directory structure, excluding as we go. I don't know that you can
-directly ask it about a particular path.
+any help with this endeavor of any kind would be appreciated as the
+manifests 'cause the repo to balloon, not to mention are just a pain
+to manage as they can't actually be merged.
+-- 
+Caleb Cushing
 
--Peff
+http://xenoterracide.blogspot.com
