@@ -1,67 +1,58 @@
-From: "Jan =?UTF-8?B?S3LDvGdlcg==?=" <jk@jk.gs>
-Subject: Re: Deleting the "current" branch in remote bare repositories
-Date: Sun, 8 Feb 2009 01:18:02 +0100
-Message-ID: <20090208011802.2b7b9e74@perceptron>
-References: <20090207162754.5fb8b63f@perceptron>
-	<94a0d4530902071405m33a0804er8030e14bea205898@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Eclipse Plugin install issue
+Date: Sun, 8 Feb 2009 01:20:06 +0100
+Message-ID: <200902080120.06894.robin.rosenberg.lists@dewire.com>
+References: <b0a3bf780902060717l653cc6dcx385aa147f606a520@mail.gmail.com> <200902061710.34337.robin.rosenberg@dewire.com> <1234007463339-2288907.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git ML <git@vger.kernel.org>, obrien654j@gmail.com
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 08 01:19:39 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Tim Schofield <tim.schofield1960@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 08 01:21:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LVxOY-0005qb-Q9
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 01:19:35 +0100
+	id 1LVxQb-0006EF-Jy
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 01:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754488AbZBHASI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Feb 2009 19:18:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753970AbZBHASH
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 19:18:07 -0500
-Received: from zoidberg.org ([88.198.6.61]:60408 "EHLO cthulhu.zoidberg.org"
+	id S1755719AbZBHAUO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Feb 2009 19:20:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755485AbZBHAUN
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Feb 2009 19:20:13 -0500
+Received: from mail.dewire.com ([83.140.172.130]:14922 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753966AbZBHASH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Feb 2009 19:18:07 -0500
-Received: from perceptron (xdsl-78-34-149-97.netcologne.de [::ffff:78.34.149.97])
-  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
-  by cthulhu.zoidberg.org with esmtp; Sun, 08 Feb 2009 01:18:48 +0100
-  id 0042C632.498E24E8.000008F3
-In-Reply-To: <94a0d4530902071405m33a0804er8030e14bea205898@mail.gmail.com>
-X-Mailer: Claws Mail 3.5.0 (GTK+ 2.14.4; i486-pc-linux-gnu)
+	id S1755409AbZBHAUM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Feb 2009 19:20:12 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 0E00D147E89B;
+	Sun,  8 Feb 2009 01:20:11 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id VFbeEnKBv847; Sun,  8 Feb 2009 01:20:08 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 1150F800258;
+	Sun,  8 Feb 2009 01:20:08 +0100 (CET)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <1234007463339-2288907.post@n2.nabble.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108906>
 
-On Sun, 8 Feb 2009 00:05:05 +0200, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> This was brought up before:
-> http://marc.info/?l=git&m=123254293910829&w=2
-> 
-> But I don't think it reached any conclusion.
+l=F6rdag 07 februari 2009 12:51:03 skrev Tim Schofield:
+> I am getting this identical error. I am using 200902052244 and eclips=
+e
+> Version: 3.4.1 Build id: M20080911-1700.
 
-Okay, somehow I missed that. To reiterate the things from that
-discussion that I think are most reasonable:
+Was that a pristine version of that build or did you have other plugins=
+ too?
+I know Eclipse can give very confusing error messages sometimes when
+things don't match up. It might be that we have a dependency requiremen=
+t
+that is too strict and collides with another plugin.
 
-1) a local broken symref should generally be ignored unless we actually
-   need the symref.
-
-2) there should be a more convenient (porcelain) way to change a
-   refs/remotes/foo/HEAD symref, e.g. git remote set-default, possibly
-   with an option to re-sync from the remote head (we could even make
-   that an option for git remote update).
-
-Regarding 2): if we managed to add an option to that to change the
-remote HEAD, we could disallow deleting a remote branch that HEAD
-points to, and refer to this command. I think the problem is that we
-would have to add symref updating logic for all types of remote
-protocols.
-
-If people agree with these ideas I think I'll write up a couple of
-patches to implement these changes. So, any protests?
-
--Jan
+-- robin
