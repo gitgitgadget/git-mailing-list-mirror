@@ -1,73 +1,70 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH JGIT] Minor : Make ObjectId, RemoteConfig Serializable
-Date: Sun, 8 Feb 2009 11:10:24 -0800
-Message-ID: <20090208191024.GA30557@spearce.org>
-References: <320075ff0902060702n7573aaecu9054626ee9a6991@mail.gmail.com> <320075ff0902061315g3f8b9c9bj92f528e700d59c50@mail.gmail.com> <200902080313.21785.robin.rosenberg.lists@dewire.com> <320075ff0902080526g2bee8188g395397b06a0c80ee@mail.gmail.com>
+Subject: Re: tool and worktree
+Date: Sun, 8 Feb 2009 11:25:28 -0800
+Message-ID: <20090208192528.GC30557@spearce.org>
+References: <20090208034406.GB7230@b2j>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Git ML <git@vger.kernel.org>
-To: Nigel Magnay <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 08 20:11:53 2009
+Cc: git <git@vger.kernel.org>
+To: bill lam <cbill.lam@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 08 20:27:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWF4K-0000w8-Ny
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 20:11:53 +0100
+	id 1LWFJ4-0004oB-Hb
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 20:27:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753193AbZBHTK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 14:10:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbZBHTK0
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 14:10:26 -0500
-Received: from george.spearce.org ([209.20.77.23]:45117 "EHLO
+	id S1753265AbZBHTZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 14:25:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753220AbZBHTZ3
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 14:25:29 -0500
+Received: from george.spearce.org ([209.20.77.23]:59970 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753154AbZBHTKZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 14:10:25 -0500
+	with ESMTP id S1753074AbZBHTZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 14:25:28 -0500
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id ABE7238210; Sun,  8 Feb 2009 19:10:24 +0000 (UTC)
+	id 441DB38210; Sun,  8 Feb 2009 19:25:28 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <320075ff0902080526g2bee8188g395397b06a0c80ee@mail.gmail.com>
+In-Reply-To: <20090208034406.GB7230@b2j>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109001>
 
-Nigel Magnay <nigel.magnay@gmail.com> wrote:
-> > A problem (big problem) with serialization is that it often leads to
-> > fragile interfaces. One might want to have precise control over
-> > the serialization so a change in the implementation doesn't affect
-> > compatibility. Serializing AnyObjectId should not depend on the
-> > implementation de jour. Second, how do we handle subclasses?
-> >
-> > But maybe leaving it this way would be our way of saying that
-> > the interface may break at any time, promise.
+bill lam <cbill.lam@gmail.com> wrote:
+> I track /etc using a config
 > 
-> Well, we can of course implement writeObject / readObject (or do so
-> if/when compatibility breaks, and it's cared about)
+> [core]
+> 	repositoryformatversion = 0
+> 	filemode = true
+> 	bare = false
+> 	worktree = /etc
+> 	logAllRefUpdates = true
+> 	excludesfile =
 > 
-> That's how I tend to view it anyway (may break at any time) - you
-> can't just update a jar library to a significantly new version and
-> expect it all to stay compatible. Also for half my use, it's not for
-> persistence, it's for transferring over the wire to a slave process.
+> But that can not be handled by tools,
 > 
-> Thinking a bit more clearly, I probably don't need AnyObjectId, just
-> ObjectId - but I've also missed RefSpec and URIish as they're used in
-> RemoteConfig..
+> git gui : cannot use funny .git directory .
 
-Here's my two cents... we can do this, but only if we implement
-Externalizable and do the read and write ourselves so we have a
-stable format.
+If someone sends patches for git-gui, maybe.  This use case of
+different repository and worktree isn't very common for git-gui
+so it doesn't support it.
 
-In the case of any of the types you are discussing there is an easy
-canonical form for them to be written on the wire, or to read back:
+On Windows with some versions of Tcl/Tk I've had trouble in the
+past with Git finding the repository when forked out of the wish
+process.  To work around it I just required that the repository
+be in ".git".
 
-  ObjectId     - the 20 byte SHA-1
-  RefSpec      - the string form as it appears in the config file
-  URIish       - the string form as it appears in the config file
-  RemoteConfig - a map of keys/values as it appears in the config
+Have you tried making /etc/.git a symlink to the real repository?
+
+BTW, tracking /etc/ in git won't track permissions and ownership
+so restoring /etc from git isn't enough on its own.  Usually I
+use some sort of shell script to copy /etc to another location
+and check it into git, and a different script to go the other way,
+with that script handling mode and ownership as it goes.
 
 -- 
 Shawn.
