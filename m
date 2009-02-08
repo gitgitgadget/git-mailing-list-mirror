@@ -1,75 +1,76 @@
-From: Jonas Fonseca <jonas.fonseca@gmail.com>
-Subject: Re: tool and worktree
-Date: Sun, 8 Feb 2009 10:47:48 +0100
-Message-ID: <2c6b72b30902080147u61412b04w24baa0e5fdc29584@mail.gmail.com>
-References: <20090208034406.GB7230@b2j>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] give exclude mechanism a debug option
+Date: Sun, 08 Feb 2009 01:50:27 -0800
+Message-ID: <7vmycxz28s.fsf@gitster.siamese.dyndns.org>
+References: <20090207064221.GA14856@coredump.intra.peff.net>
+ <20090207064454.GB14906@coredump.intra.peff.net>
+ <7vljsizog1.fsf@gitster.siamese.dyndns.org>
+ <20090207114444.GB18079@coredump.intra.peff.net>
+ <7viqnludiv.fsf@gitster.siamese.dyndns.org>
+ <20090208085933.GB4392@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Feb 08 10:50:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Feb 08 10:53:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LW6Hv-0004e2-Nr
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 10:49:20 +0100
+	id 1LW6KX-0005sF-CG
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 10:52:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752799AbZBHJrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 04:47:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752774AbZBHJrx
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 04:47:53 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:61825 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752799AbZBHJrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 04:47:51 -0500
-Received: by fxm13 with SMTP id 13so2059975fxm.13
-        for <git@vger.kernel.org>; Sun, 08 Feb 2009 01:47:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=Z8LTQfSc3IwVs4AMRQwqvs9ipKDe6bmCJFoNx91x4NY=;
-        b=pG3cpJLh57t6XoTMTc2KqSM6SNmvYZZqrijireX9pFfS4bfIi/vdNOi050nYpCcdkB
-         iBD9Z0k6/ZPBVfEA+vCr9/MtrNG6NY5Z7cZObCkiCy+B5+BLPw4GIYa5I958k9/7R1vF
-         zkrjlxpDqRGhImZCz+QFyAzS9jduu5yx6aOgs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=dgI64UoblbKScY/BfBRy+igIcFhseJze1pwCaILZ+VEU7bANqbgSndUl9nlbs8ZIy0
-         EE+DNaRYMXzAnxX+A0FLFCdC8CcNWHCjQAqMnT9ChhgsZRJGmVNOxB8FxGlq26kXDrMo
-         UbmBOy3IygTGVoXNOVQ52eecV3sPPXVjcUakE=
-Received: by 10.181.138.13 with SMTP id q13mr238553bkn.42.1234086468448; Sun, 
-	08 Feb 2009 01:47:48 -0800 (PST)
-In-Reply-To: <20090208034406.GB7230@b2j>
+	id S1752833AbZBHJuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 04:50:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752795AbZBHJue
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 04:50:34 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62133 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752774AbZBHJud (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 04:50:33 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B27B72AAFC;
+	Sun,  8 Feb 2009 04:50:32 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BC80B2AAF9; Sun, 
+ 8 Feb 2009 04:50:28 -0500 (EST)
+In-Reply-To: <20090208085933.GB4392@coredump.intra.peff.net> (Jeff King's
+ message of "Sun, 8 Feb 2009 03:59:33 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: ED27B608-F5C5-11DD-BC3E-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108939>
 
-On Sun, Feb 8, 2009 at 04:44, bill lam <cbill.lam@gmail.com> wrote:
-> I track /etc using a config
->
-> [core]
->        repositoryformatversion = 0
->        filemode = true
->        bare = false
->        worktree = /etc
->        logAllRefUpdates = true
->        excludesfile =
->
-> But that can not be handled by tools,
->
-> tig : status view said, The status view requires a working tree
+Jeff King <peff@peff.net> writes:
 
-Yes, on startup, tig checks git-rev-parse --is-inside-work-tree and
-disables things like the status view if it is false. I don't know how
-much work it would be to start using core.worktree. It might be as
-simple as setting the GIT_DIR environment to getcwd() + output of
-git-rev-parse --git-dir and then chdir() to core.worktree.
+> On Sat, Feb 07, 2009 at 01:45:44PM -0800, Junio C Hamano wrote:
+>
+>> > Because I would expect "git check-ignore foo/bar | grep ^foo/bar:" to
+>> > tell me if and how foo/bar is being excluded. But I have to instead
+>> > check for ^foo and ^foo/bar.
+>> 
+>> Sorry, I do not understand why you need the downstream pipe that filters
+>> using grep to begin with.
+>
+> Sorry, I should have been more clear. The grep was meant to simulate
+> what my eyes and brain are doing. That is, if I ask "what are patterns
+> affecting foo/bar?", I expect to see "foo/bar" in the output.
 
--- 
-Jonas Fonseca
+Oh, then the output format would, just like "grep" given more than one
+file tells which file it found the match in, talk about which path the
+output entry talks about when given more than one path.
+
+Something like:
+
+	$ git check-ignore foo/bar xyzzy~ hello.c
+	foo/bar: foo/.gitignore:4: ??r
+        xyzzy~: .git/info/excludes:22: *~
+
+that says "foo/bar is ignored because line 4 of foo/.gitignore tells us to
+ignore any three-letter filename that ends with r, xyzzy~ is ignored
+because .git/info/excludes tells us to ignore everything that ends with
+tilde on line 22, and hello.c is not ignored at all."
