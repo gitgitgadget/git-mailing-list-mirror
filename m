@@ -1,71 +1,73 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [ANNOUNCE] tig-0.14
-Date: Sun, 8 Feb 2009 11:31:43 +0100
-Message-ID: <2c6b72b30902080231i3f550322s106e1be2e5a4ed@mail.gmail.com>
-References: <20090205204436.GA6072@diku.dk>
-	 <20090206191511.GD19494@coredump.intra.peff.net>
-	 <2c6b72b30902061410l64c98c33g19b97f656d347c83@mail.gmail.com>
-	 <20090207071056.GB14856@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] doc/bundle: Use the more conventional suffix '.bundle'
+Date: Sun, 8 Feb 2009 11:41:03 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902081139280.10279@pacific.mpi-cbg.de>
+References: <1234045309-3626-1-git-send-email-santi@agolina.net> <200902072302.36991.bss@iguanasuicide.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Feb 08 11:33:13 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1790123919-1234089663=:10279"
+Cc: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
+	git@vger.kernel.org
+To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+X-From: git-owner@vger.kernel.org Sun Feb 08 11:42:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LW6yP-0000Hp-3o
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 11:33:13 +0100
+	id 1LW76k-0002Ao-Jh
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 11:41:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753162AbZBHKbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 05:31:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753101AbZBHKbq
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 05:31:46 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:57640 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753054AbZBHKbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 05:31:45 -0500
-Received: by fxm13 with SMTP id 13so2071670fxm.13
-        for <git@vger.kernel.org>; Sun, 08 Feb 2009 02:31:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=7qLa0Pk3Ah1krDIcqVVe/DdJYZaem9ISKuw2Cq1mPos=;
-        b=cbcCzuRpO4JnXRRopBrDpJFAduNJd3nk5zSbLnUpwc9MJh3+KuQlyvhhamR82hwid6
-         T+3knM7hOyAHSHdn6PU3nBJov+5NiVtPD/nl7hLNlphcJllMc4GKl4m6MeaE3HFrKhTE
-         PHzovqEd3cCC0sXQJQH9+Nnr6Vfqwu7VtnrsQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=UO3hMsNCzO3U5NvOOQPdYSHjm97k5WM2c6npuayMTZQgmaydlA57P5+6uk7+C4BGVj
-         SUkpbeQ+ipBVvRoBSQCrDQkCAaw15P7DSOyykwW8sDaAK+QQw/vnXQQQn4NIqgpE0SkD
-         gRo4hLOR6dFQ87BFeBWgOw81XJJQ4zbVbjZgs=
-Received: by 10.181.198.10 with SMTP id a10mr1359686bkq.120.1234089103748; 
-	Sun, 08 Feb 2009 02:31:43 -0800 (PST)
-In-Reply-To: <20090207071056.GB14856@coredump.intra.peff.net>
-X-Google-Sender-Auth: a4bbd1912b159873
+	id S1753186AbZBHKkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 05:40:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753182AbZBHKkY
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 05:40:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41760 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753170AbZBHKkX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 05:40:23 -0500
+Received: (qmail invoked by alias); 08 Feb 2009 10:40:21 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp001) with SMTP; 08 Feb 2009 11:40:21 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/BETYaOKvBHUpLqZsgw4w4nU+5810w5dVNAbbLlr
+	KT7ef0o0roLzZO
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200902072302.36991.bss@iguanasuicide.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108950>
 
-On Sat, Feb 7, 2009 at 08:10, Jeff King <peff@peff.net> wrote:
-> It would require a "reload and jump to this arbitrary line" function,
-> which I remember being problematic when I did my original patch a long
-> time ago.  But I haven't looked at the new code to see if it is easier
-> now (it looks like you have been doing quite a bit of refactoring in
-> that area lately).
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Yes, support for restoring/jumping to an arbitrary line is possible by
-setting the view lineno and then call open_view with the OPEN_REFRESH
-flag.
+--8323328-1790123919-1234089663=:10279
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
--- 
-Jonas Fonseca
+Hi,
+
+On Sat, 7 Feb 2009, Boyd Stephen Smith Jr. wrote:
+
+> On Saturday 07 February 2009 16:21:49 Santi Béjar wrote:
+> > Although it does not matter in general it is handled different by
+> > "git clone", as it removes it to make the "humanish" name of the
+> > new repository.
+> 
+> I'm mixed on this, particularly with the increasing numbers of MySysGit 
+> users we attract.
+
+Why should that pose any problems?  We are living in the 21st century, and 
+even that crappy FS called FAT knows how to handle "extensions" longer 
+than 3 characters.
+
+Rather than making it confusing for everybody, we could drag some DOS 
+types (kicking and screaming, probably) into their future.
+
+Ciao,
+Dscho
+
+--8323328-1790123919-1234089663=:10279--
