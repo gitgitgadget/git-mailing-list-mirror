@@ -1,78 +1,96 @@
 From: Todd Zullinger <tmz@pobox.com>
-Subject: [PATCH 1/2] git-web--browse: Fix check for /bin/start
-Date: Sun, 8 Feb 2009 18:12:43 -0500
-Message-ID: <e44161a223e7ec2cfb1f1b71399b995626c2d208.1234127422.git.tmz@pobox.com>
+Subject: [PATCH 2/2] git-web--browse: Use xdg-open if it is available
+Date: Sun, 8 Feb 2009 18:13:33 -0500
+Message-ID: <505e3349e025bb4ac91fdfaa987a19cc729fa8fb.1234127422.git.tmz@pobox.com>
+References: <e44161a223e7ec2cfb1f1b71399b995626c2d208.1234127422.git.tmz@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Feb 09 00:14:17 2009
+X-From: git-owner@vger.kernel.org Mon Feb 09 00:15:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWIqu-0001cr-L4
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 00:14:17 +0100
+	id 1LWIrf-0001nt-Fs
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 00:15:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753400AbZBHXMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 18:12:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753394AbZBHXMt
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 18:12:49 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56228 "EHLO
+	id S1753447AbZBHXNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 18:13:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753416AbZBHXNh
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 18:13:37 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56288 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753128AbZBHXMs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 18:12:48 -0500
+	with ESMTP id S1753415AbZBHXNh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 18:13:37 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 78CBE98F15;
-	Sun,  8 Feb 2009 18:12:46 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CCC8898F21;
+	Sun,  8 Feb 2009 18:13:36 -0500 (EST)
 Received: from inocybe.teonanacatl.org (unknown [71.173.205.56]) (using TLSv1
  with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E096C98F14; Sun,
-  8 Feb 2009 18:12:44 -0500 (EST)
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4920B98F20; Sun,
+  8 Feb 2009 18:13:35 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <e44161a223e7ec2cfb1f1b71399b995626c2d208.1234127422.git.tmz@pobox.com>
 User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Pobox-Relay-ID: FF194A14-F635-11DD-BB61-8B21C92D7133-09356542!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 1D1E27DC-F636-11DD-8129-8B21C92D7133-09356542!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109024>
-
-The previous check in git-web--browse for /bin/start used test -n
-/bin/start, which was always true.  This lead to "start" being tried
-first in the browser list.  On systems with upstart installed, "start"
-exists and might be in the PATH, but it makes a poor choice for a web
-browser.  Instead, test that /bin/start exists and is executable.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109025>
 
 Signed-off-by: Todd Zullinger <tmz@pobox.com>
 ---
 
-This test is still a bit fragile, as it relies on the start from
-upstart not being installed in /bin.  I don't know if that's something
-we can count on or not.  If not, the test needs to be extended to
-differentiate between the MingW's start and upstart's start.  Does the
-MingW start have a --version string or something we could check before
-adding start to the list?
+For now, I didn't remove any of the KDE specific hacks.  It seemed
+better to add  xdg-open and let it prove whether it's workable first.
 
- git-web--browse.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Is testing for start and xdg-open based on their paths robust enough?
+Is there a more portable, preferred method to search for these
+programs in $PATH?
+
+ git-web--browse.sh |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/git-web--browse.sh b/git-web--browse.sh
-index 78d236b..7ed0fad 100755
+index 7ed0fad..a72cd5b 100755
 --- a/git-web--browse.sh
 +++ b/git-web--browse.sh
-@@ -115,7 +115,7 @@ if test -z "$browser" ; then
- 	browser_candidates="open $browser_candidates"
-     fi
-     # /bin/start indicates MinGW
--    if test -n /bin/start; then
-+    if test -x /bin/start; then
+@@ -31,7 +31,7 @@ valid_custom_tool()
+
+ valid_tool() {
+ 	case "$1" in
+-		firefox | iceweasel | konqueror | w3m | links | lynx | dillo | open | start)
++		firefox | iceweasel | konqueror | w3m | links | lynx | dillo | open | start | xdg-open)
+ 			;; # happy
+ 		*)
+ 			valid_custom_tool "$1" || return 1
+@@ -118,6 +118,10 @@ if test -z "$browser" ; then
+     if test -x /bin/start; then
  	browser_candidates="start $browser_candidates"
      fi
++    # Use xdg-open if it is available
++    if test -x /usr/bin/xdg-open; then
++	browser_candidates="xdg-open $browser_candidates"
++    fi
 
+     for i in $browser_candidates; do
+ 	init_browser_path $i
+@@ -161,7 +165,7 @@ case "$browser" in
+ 		;;
+ 	esac
+ 	;;
+-    w3m|links|lynx|open|start)
++    w3m|links|lynx|open|start|xdg-open)
+ 	eval "$browser_path" "$@"
+ 	;;
+     dillo)
 -- 
 1.6.1.3
 
 -- 
 Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Honesty is the best policy, but insanity is a better defense.
+He may look like an idiot and talk like an idiot but don't let that
+fool you. He really is an idiot.
+    -- Groucho Marx
