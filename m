@@ -1,161 +1,283 @@
 From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: [PATCH v5 2/5] Add find_insert_index, insert_at_index and clear_func functions to string_list
-Date: Sun,  8 Feb 2009 15:34:28 +0100
-Message-ID: <8b7c8612d6948421813b707ae4e265d950b4bf41.1234102794.git.marius@trolltech.com>
+Subject: [PATCH v5 5/5] Move mailmap documentation into separate file
+Date: Sun,  8 Feb 2009 15:34:31 +0100
+Message-ID: <f970142e47c9992abb2aafd40843a5f4be846e96.1234102794.git.marius@trolltech.com>
 References: <cover.1234102794.git.marius@trolltech.com>
  <3db7411da93f5ae4de5247170d4b821e7b0ed88a.1234102794.git.marius@trolltech.com>
+ <8b7c8612d6948421813b707ae4e265d950b4bf41.1234102794.git.marius@trolltech.com>
+ <b94c3ab1a2afb95b4243dea381024a432a2d9cc5.1234102794.git.marius@trolltech.com>
+ <6e190d2b99c8044b782cf5991821e82da80ea957.1234102794.git.marius@trolltech.com>
 Cc: gitster@pobox.com, Marius Storm-Olsen <marius@trolltech.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 08 15:39:37 2009
+X-From: git-owner@vger.kernel.org Sun Feb 08 15:40:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWAmx-0005L3-7b
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 15:37:39 +0100
+	id 1LWAnR-0005cm-Ci
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 15:38:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751933AbZBHOgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 09:36:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbZBHOgL
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 09:36:11 -0500
-Received: from hoat.troll.no ([62.70.27.150]:37739 "EHLO hoat.troll.no"
+	id S1752959AbZBHOgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 09:36:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752909AbZBHOgW
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 09:36:22 -0500
+Received: from hoat.troll.no ([62.70.27.150]:37743 "EHLO hoat.troll.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751598AbZBHOgK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 09:36:10 -0500
+	id S1751816AbZBHOgM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 09:36:12 -0500
 Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 6D37F21211;
+	by hoat.troll.no (Postfix) with SMTP id BE69821165;
 	Sun,  8 Feb 2009 15:36:02 +0100 (CET)
 Received: from localhost.localdomain (unknown [172.24.90.96])
-	by hoat.troll.no (Postfix) with ESMTP id 5200C21165;
+	by hoat.troll.no (Postfix) with ESMTP id 9ADF8211A4;
 	Sun,  8 Feb 2009 15:36:02 +0100 (CET)
 X-Mailer: git-send-email 1.6.2.rc0.5.gf970
-In-Reply-To: <3db7411da93f5ae4de5247170d4b821e7b0ed88a.1234102794.git.marius@trolltech.com>
+In-Reply-To: <6e190d2b99c8044b782cf5991821e82da80ea957.1234102794.git.marius@trolltech.com>
 In-Reply-To: <cover.1234102794.git.marius@trolltech.com>
 References: <cover.1234102794.git.marius@trolltech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108981>
 
-string_list_find_insert_index() and string_list_insert_at_index()
-enables you to see if an item is in the string_list, and to
-insert at the appropriate index in the list, if not there.
-This is usefull if you need to manipulate an existing item,
-if present, and insert a new item if not.
-
-Future mailmap code will use this construct to enable
-complex (old_name, old_email) -> (new_name, new_email)
-lookups.
-
-The string_list_clear_func() allows to call a custom
-cleanup function on each item in a string_list, which is
-useful is the util member points to a complex structure.
+Include it directly from git-shortlog.txt, and refer
+to it from pretty-format.txt.
 
 Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
 ---
- string-list.c |   43 +++++++++++++++++++++++++++++++++++++++----
- string-list.h |    9 +++++++++
- 2 files changed, 48 insertions(+), 4 deletions(-)
+ Documentation/git-blame.txt      |    6 +++
+ Documentation/git-shortlog.txt   |   89 ++++----------------------------------
+ Documentation/mailmap.txt        |   75 ++++++++++++++++++++++++++++++++
+ Documentation/pretty-formats.txt |    8 ++--
+ 4 files changed, 94 insertions(+), 84 deletions(-)
+ create mode 100644 Documentation/mailmap.txt
 
-diff --git a/string-list.c b/string-list.c
-index ddd83c8..15e14cf 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -26,10 +26,10 @@ static int get_entry_index(const struct string_list *list, const char *string,
- }
+diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+index fba374d..6999cf2 100644
+--- a/Documentation/git-blame.txt
++++ b/Documentation/git-blame.txt
+@@ -184,6 +184,12 @@ there is ever added information (like the commit encoding or extended
+ commit commentary), a blame viewer won't ever care.
  
- /* returns -1-index if already exists */
--static int add_entry(struct string_list *list, const char *string)
-+static int add_entry(int insert_at, struct string_list *list, const char *string)
- {
--	int exact_match;
--	int index = get_entry_index(list, string, &exact_match);
-+	int exact_match = 0;
-+	int index = insert_at != -1 ? insert_at : get_entry_index(list, string, &exact_match);
  
- 	if (exact_match)
- 		return -1 - index;
-@@ -53,7 +53,13 @@ static int add_entry(struct string_list *list, const char *string)
- 
- struct string_list_item *string_list_insert(const char *string, struct string_list *list)
- {
--	int index = add_entry(list, string);
-+	return string_list_insert_at_index(-1, string, list);
-+}
++MAPPING AUTHORS
++---------------
 +
-+struct string_list_item *string_list_insert_at_index(int insert_at,
-+						     const char *string, struct string_list *list)
-+{
-+	int index = add_entry(insert_at, list, string);
- 
- 	if (index < 0)
- 		index = -1 - index;
-@@ -68,6 +74,16 @@ int string_list_has_string(const struct string_list *list, const char *string)
- 	return exact_match;
- }
- 
-+int string_list_find_insert_index(const struct string_list *list, const char *string,
-+				  int negative_existing_index)
-+{
-+	int exact_match;
-+	int index = get_entry_index(list, string, &exact_match);
-+	if (exact_match)
-+		index = -1 - (negative_existing_index ? index : 0);
-+	return index;
-+}
-+
- struct string_list_item *string_list_lookup(const char *string, struct string_list *list)
- {
- 	int exact_match, i = get_entry_index(list, string, &exact_match);
-@@ -94,6 +110,25 @@ void string_list_clear(struct string_list *list, int free_util)
- 	list->nr = list->alloc = 0;
- }
- 
-+void string_list_clear_func(struct string_list *list, string_list_clear_func_t clearfunc)
-+{
-+	if (list->items) {
-+		int i;
-+		if (clearfunc) {
-+			for (i = 0; i < list->nr; i++)
-+				clearfunc(list->items[i].util, list->items[i].string);
-+		}
-+		if (list->strdup_strings) {
-+			for (i = 0; i < list->nr; i++)
-+				free(list->items[i].string);
-+		}
-+		free(list->items);
-+	}
-+	list->items = NULL;
-+	list->nr = list->alloc = 0;
-+}
++include::mailmap.txt[]
 +
 +
- void print_string_list(const char *text, const struct string_list *p)
- {
- 	int i;
-diff --git a/string-list.h b/string-list.h
-index 4d6a705..d32ba05 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -15,9 +15,18 @@ struct string_list
- void print_string_list(const char *text, const struct string_list *p);
- void string_list_clear(struct string_list *list, int free_util);
+ SEE ALSO
+ --------
+ linkgit:git-annotate[1]
+diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
+index a0eaab5..42463a9 100644
+--- a/Documentation/git-shortlog.txt
++++ b/Documentation/git-shortlog.txt
+@@ -45,86 +45,15 @@ OPTIONS
+ 	and subsequent lines are indented by `indent2` spaces. `width`,
+ 	`indent1`, and `indent2` default to 76, 6 and 9 respectively.
  
-+/* Use this function to call a custom clear function on each util pointer */
-+/* The string associated with the util pointer is passed as the second argument */
-+typedef void (*string_list_clear_func_t)(void *p, const char *str);
-+void string_list_clear_func(struct string_list *list, string_list_clear_func_t clearfunc);
+-FILES
+------
+-
+-If the file `.mailmap` exists at the toplevel of the repository, or at
+-the location pointed to by the mailmap.file configuration option, it
+-is used to map author and committer names and email addresses to
+-canonical real names and email addresses.
+-This mapping can be used to coalesce together commits by the same
+-person where their name and/or email address was spelled differently.
+-
+-In the simple form, each line in the file consists of the canonical
+-real name of an author, whitespace, and an email address used in the
+-commit (enclosed by '<' and '>') to map to the name. Thus, looks like
+-this
+---
+-	Proper Name <commit@email.xx>
+---
+-
+-The more complex forms are
+---
+-	<proper@email.xx> <commit@email.xx>
+---
+-which allows mailmap to replace only the email part of a commit, and
+---
+-	Proper Name <proper@email.xx> <commit@email.xx>
+---
+-which allows mailmap to replace both the name and the email of a
+-commit matching the specified commit email address, and
+---
+-	Proper Name <proper@email.xx> Commit Name <commit@email.xx>
+---
+-which allows mailmap to replace both the name and the email of a
+-commit matching both the specified commit name and email address.
+-
+-Example 1: Your history contains commits by two authors, Jane
+-and Joe, whose names appear in the repository under several forms:
+-
+-------------
+-Joe Developer <joe@example.com>
+-Joe R. Developer <joe@example.com>
+-Jane Doe <jane@example.com>
+-Jane Doe <jane@laptop.(none)>
+-Jane D. <jane@desktop.(none)>
+-------------
+-
+-Now suppose that Joe wants his middle name initial used, and Jane
+-prefers her family name fully spelled out. A proper `.mailmap` file
+-would look like:
+-
+-------------
+-Jane Doe         <jane@desktop.(none)>
+-Joe R. Developer <joe@example.com>
+-------------
+-
+-Note how we don't need an entry for <jane@laptop.(none)>, because the
+-real name of that author is correct already, and coalesced directly.
+-
+-Example 2: Your repository contains commits from the following
+-authors:
+-
+-------------
+-nick1 <bugs@company.xx>
+-nick2 <bugs@company.xx>
+-nick2 <nick2@company.xx>
+-santa <me@company.xx>
+-claus <me@company.xx>
+-CTO <cto@coompany.xx>
+-------------
+-
+-Then, you might want a `.mailmap` file looking like:
+-------------
+-<cto@company.xx>                       <cto@coompany.xx>
+-Some Dude <some@dude.xx>         nick1 <bugs@company.xx>
+-Other Author <other@author.xx>   nick2 <bugs@company.xx>
+-Other Author <other@author.xx>         <nick2@company.xx>
+-Santa Claus <santa.claus@northpole.xx> <me@company.xx>
+-------------
+-
+-Use hash '#' for comments that are either on their own line, or after
+-the email address.
 +
- /* Use these functions only on sorted lists: */
- int string_list_has_string(const struct string_list *list, const char *string);
-+int string_list_find_insert_index(const struct string_list *list, const char *string,
-+				  int negative_existing_index);
- struct string_list_item *string_list_insert(const char *string, struct string_list *list);
-+struct string_list_item *string_list_insert_at_index(int insert_at,
-+						     const char *string, struct string_list *list);
- struct string_list_item *string_list_lookup(const char *string, struct string_list *list);
++MAPPING AUTHORS
++---------------
++
++The `.mailmap` feature is used to coalesce together commits by the same
++person in the shortlog, where their name and/or email address was
++spelled differently.
++
++include::mailmap.txt[]
  
- /* Use these functions only on unsorted lists: */
+ 
+ Author
+diff --git a/Documentation/mailmap.txt b/Documentation/mailmap.txt
+new file mode 100644
+index 0000000..e25b154
+--- /dev/null
++++ b/Documentation/mailmap.txt
+@@ -0,0 +1,75 @@
++If the file `.mailmap` exists at the toplevel of the repository, or at
++the location pointed to by the mailmap.file configuration option, it
++is used to map author and committer names and email addresses to
++canonical real names and email addresses.
++
++In the simple form, each line in the file consists of the canonical
++real name of an author, whitespace, and an email address used in the
++commit (enclosed by '<' and '>') to map to the name. Thus, looks like
++this
++--
++	Proper Name <commit@email.xx>
++--
++
++The more complex forms are
++--
++	<proper@email.xx> <commit@email.xx>
++--
++which allows mailmap to replace only the email part of a commit, and
++--
++	Proper Name <proper@email.xx> <commit@email.xx>
++--
++which allows mailmap to replace both the name and the email of a
++commit matching the specified commit email address, and
++--
++	Proper Name <proper@email.xx> Commit Name <commit@email.xx>
++--
++which allows mailmap to replace both the name and the email of a
++commit matching both the specified commit name and email address.
++
++Example 1: Your history contains commits by two authors, Jane
++and Joe, whose names appear in the repository under several forms:
++
++------------
++Joe Developer <joe@example.com>
++Joe R. Developer <joe@example.com>
++Jane Doe <jane@example.com>
++Jane Doe <jane@laptop.(none)>
++Jane D. <jane@desktop.(none)>
++------------
++
++Now suppose that Joe wants his middle name initial used, and Jane
++prefers her family name fully spelled out. A proper `.mailmap` file
++would look like:
++
++------------
++Jane Doe         <jane@desktop.(none)>
++Joe R. Developer <joe@example.com>
++------------
++
++Note how we don't need an entry for <jane@laptop.(none)>, because the
++real name of that author is correct already.
++
++Example 2: Your repository contains commits from the following
++authors:
++
++------------
++nick1 <bugs@company.xx>
++nick2 <bugs@company.xx>
++nick2 <nick2@company.xx>
++santa <me@company.xx>
++claus <me@company.xx>
++CTO <cto@coompany.xx>
++------------
++
++Then, you might want a `.mailmap` file looking like:
++------------
++<cto@company.xx>                       <cto@coompany.xx>
++Some Dude <some@dude.xx>         nick1 <bugs@company.xx>
++Other Author <other@author.xx>   nick2 <bugs@company.xx>
++Other Author <other@author.xx>         <nick2@company.xx>
++Santa Claus <santa.claus@northpole.xx> <me@company.xx>
++------------
++
++Use hash '#' for comments that are either on their own line, or after
++the email address.
+\ No newline at end of file
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 28808b7..159390c 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -101,18 +101,18 @@ The placeholders are:
+ - '%P': parent hashes
+ - '%p': abbreviated parent hashes
+ - '%an': author name
+-- '%aN': author name (respecting .mailmap)
++- '%aN': author name (respecting .mailmap, see linkgit:git-shortlog[1] or linkgit:git-blame[1])
+ - '%ae': author email
+-- '%aE': author email (respecting .mailmap)
++- '%aE': author email (respecting .mailmap, see linkgit:git-shortlog[1] or linkgit:git-blame[1])
+ - '%ad': author date (format respects --date= option)
+ - '%aD': author date, RFC2822 style
+ - '%ar': author date, relative
+ - '%at': author date, UNIX timestamp
+ - '%ai': author date, ISO 8601 format
+ - '%cn': committer name
+-- '%cN': committer name (respecting .mailmap)
++- '%cN': committer name (respecting .mailmap, see linkgit:git-shortlog[1] or linkgit:git-blame[1])
+ - '%ce': committer email
+-- '%cE': committer email (respecting .mailmap)
++- '%cE': committer email (respecting .mailmap, see linkgit:git-shortlog[1] or linkgit:git-blame[1])
+ - '%cd': committer date
+ - '%cD': committer date, RFC2822 style
+ - '%cr': committer date, relative
 -- 
 1.6.1.2.354.g9a90
