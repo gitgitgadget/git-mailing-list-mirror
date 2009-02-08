@@ -1,99 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
 Subject: Re: gc considered dangerous
-Date: Sun, 08 Feb 2009 12:09:17 -0800
-Message-ID: <7vab8wy9le.fsf@gitster.siamese.dyndns.org>
-References: <200902080347.25970.robin.rosenberg.lists@dewire.com>
+Date: Sun, 8 Feb 2009 21:10:43 +0100
+Message-ID: <200902082110.44151.robin.rosenberg.lists@dewire.com>
+References: <200902080347.25970.robin.rosenberg.lists@dewire.com> <alpine.DEB.1.00.0902081551290.10279@pacific.mpi-cbg.de> <7vhc34y9za.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git ML <git@vger.kernel.org>,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git ML <git@vger.kernel.org>,
 	"Shawn O. Pearce" <spearce@spearce.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Feb 08 21:11:05 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 08 21:12:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWFzc-0000L8-Of
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 21:11:05 +0100
+	id 1LWG0l-0000hA-Dy
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 21:12:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753454AbZBHUJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 15:09:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753413AbZBHUJY
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 15:09:24 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53004 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753335AbZBHUJY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 15:09:24 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A50B92AB68;
-	Sun,  8 Feb 2009 15:09:23 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 87B272A579; Sun, 
- 8 Feb 2009 15:09:19 -0500 (EST)
-In-Reply-To: <200902080347.25970.robin.rosenberg.lists@dewire.com> (Robin
- Rosenberg's message of "Sun, 8 Feb 2009 03:47:25 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 60EC3AD6-F61C-11DD-A217-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1753440AbZBHUKt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2009 15:10:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753413AbZBHUKt
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 15:10:49 -0500
+Received: from mail.dewire.com ([83.140.172.130]:20454 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753321AbZBHUKs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Feb 2009 15:10:48 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id E5E11147E89C;
+	Sun,  8 Feb 2009 21:10:46 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cr8tL-pa1aS6; Sun,  8 Feb 2009 21:10:46 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 2F0F7A149A4;
+	Sun,  8 Feb 2009 21:10:46 +0100 (CET)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <7vhc34y9za.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109009>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
+s=F6ndag 08 februari 2009 21:00:57 skrev Junio C Hamano:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>=20
+> > My preliminary guess is that this code in pack-write.c needs to use=
+ the=20
+> > lock file paradigm:
+> >
+> >         if (!index_name) {
+> > 		[...]
+> >         } else {
+> >                 unlink(index_name);
+> >                 fd =3D open(index_name, O_CREAT|O_EXCL|O_WRONLY, 06=
+00);
+> >         }
+>=20
+> Whoa.  That particular code has been (and is still) correct.
+>=20
+> When repacking we should pack into a temporary pack and idx file and =
+then
+> replace the real ones after both new pack and its idx are successfull=
+y
+> written, and I thought that is how we've been doing this all the time=
+=2E
+> Maybe the caller has been broken at some point?  Sigh...
+>=20
+I intend to test something like this (as of yet completely untested)
 
-> I've seen this. Running git gc on Windows, while having Elipse open can kill your
-> object database. 
->
-> Eclipse keeps the pack files open most of the time. Then you 
-> launch git gui which recommends the user to do a git gc. I never
-> do (it *always* wants to do this), so I haven't encountered the 
-> issue, but if gc doesn't find a new optimal pack it tries to rewrite a 
-> new pack with the same id. So it rm's the idx file (fine) and the the
-> pack file (not ok) and gives up, which means it has a .pack file with 
-> no index, so it cannot use it. Trying git gc again after eclipse exits 
-> will execute the final stab on your objects. 
->
-> The underlying bug is ofcource that Windows locks files when
-> they are open. A *nix* user does not suffer from this problem.
->
-> I'll investigate more at some other time. This is a preliminary
-> analysis.
+-- robin
 
-That sounds like you are hitting this codepath in git-repack.sh:
+commit 25a77c80efeb221d165db0bef66b4498aacfac96
+Author: Robin Rosenberg <robin.rosenberg@dewire.com>
+Date:   Sun Feb 8 20:59:30 2009 +0100
 
-	fullbases="$fullbases pack-$name"
-	chmod a-w "$PACKTMP-$name.pack"
-	chmod a-w "$PACKTMP-$name.idx"
-	mkdir -p "$PACKDIR" || exit
+    Make repack more fail-safe
+   =20
+    If renaming an old pack fails try to restore halfway renames
+    befor failing. The basis is the assumption that this occurs
+    because a files is locked for reading on Windows.
 
-	for sfx in pack idx
-	do
-		if test -f "$PACKDIR/pack-$name.$sfx"
-		then
-			mv -f "$PACKDIR/pack-$name.$sfx" \
-				"$PACKDIR/old-pack-$name.$sfx"
-		fi
-	done &&
-	mv -f "$PACKTMP-$name.pack" "$PACKDIR/pack-$name.pack" &&
-	mv -f "$PACKTMP-$name.idx"  "$PACKDIR/pack-$name.idx" &&
-	test -f "$PACKDIR/pack-$name.pack" &&
-	test -f "$PACKDIR/pack-$name.idx" || {
-		echo >&2 "Couldn't replace the existing pack with updated one."
-		echo >&2 "The original set of packs have been saved as"
-		echo >&2 "old-pack-$name.{pack,idx} in $PACKDIR."
-		exit 1
-	}
-	rm -f "$PACKDIR/old-pack-$name.pack" "$PACKDIR/old-pack-$name.idx"
-
-We created a pack and an idx successfully in a pair of temporary files, we
-notice that pack-$name.idx and/or pack-$name.pack exists and try to move
-them out of the way, then we install the new ones in their final
-destination, and we try to see if that move succeeded.  If any one of
-these steps fails, the entire process fails, but along the way we
-shouldn't have lost anything.
-
-I see if .pack can be renamed but .idx can't, then it is possible to get
-into a state where you have to mix and match pack-$name.pack and
-old-pack-$name.idx.
+diff --git a/git-repack.sh b/git-repack.sh
+index 458a497..e816997 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -94,14 +94,25 @@ for name in $names ; do
+ 	chmod a-w "$PACKTMP-$name.idx"
+ 	mkdir -p "$PACKDIR" || exit
+=20
+-	for sfx in pack idx
+-	do
+-		if test -f "$PACKDIR/pack-$name.$sfx"
+-		then
+-			mv -f "$PACKDIR/pack-$name.$sfx" \
+-				"$PACKDIR/old-pack-$name.$sfx"
+-		fi
+-	done &&
++	if test -f "$PACKDIR/pack-$name.pack"
++	then
++		mv -f "$PACKDIR/pack-$name.pack" \
++			"$PACKDIR/old-pack-$name.pack"
++	fi &&
++	if test -f "$PACKDIR/pack-$name.idx"
++	then
++		mv -f "$PACKDIR/pack-$name.idx" \
++			"$PACKDIR/old-pack-$name.idx" ||
++		(
++			mv -f $PACKDIR/old-pack-$name.pack" \
++			"$PACKDIR/pack-$name.pack" || (
++			echo >&2 "Failed to restore after a failure to rename pack-$name to=
+ old-$pack"
++			echo >&2 "Please aquire advice on how to recover from this"
++			echo >&2 "situation before you proceed."
++			false
++			)
++		)
++	fi &&
+ 	mv -f "$PACKTMP-$name.pack" "$PACKDIR/pack-$name.pack" &&
+ 	mv -f "$PACKTMP-$name.idx"  "$PACKDIR/pack-$name.idx" &&
+ 	test -f "$PACKDIR/pack-$name.pack" &&
+@@ -109,6 +120,8 @@ for name in $names ; do
+ 		echo >&2 "Couldn't replace the existing pack with updated one."
+ 		echo >&2 "The original set of packs have been saved as"
+ 		echo >&2 "old-pack-$name.{pack,idx} in $PACKDIR."
++		echo >&2 "Please aquire advice on how to recover from this situation=
+"
++		echo >&2 "before you proceed."
+ 		exit 1
+ 	}
+ 	rm -f "$PACKDIR/old-pack-$name.pack" "$PACKDIR/old-pack-$name.idx"
