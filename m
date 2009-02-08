@@ -1,445 +1,450 @@
 From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: [PATCH v5 3/5] Add map_user() and clear_mailmap() to mailmap
-Date: Sun,  8 Feb 2009 15:34:29 +0100
-Message-ID: <b94c3ab1a2afb95b4243dea381024a432a2d9cc5.1234102794.git.marius@trolltech.com>
+Subject: [PATCH v5 4/5] Change current mailmap usage to do matching on both name and email of author/committer.
+Date: Sun,  8 Feb 2009 15:34:30 +0100
+Message-ID: <6e190d2b99c8044b782cf5991821e82da80ea957.1234102794.git.marius@trolltech.com>
 References: <cover.1234102794.git.marius@trolltech.com>
  <3db7411da93f5ae4de5247170d4b821e7b0ed88a.1234102794.git.marius@trolltech.com>
  <8b7c8612d6948421813b707ae4e265d950b4bf41.1234102794.git.marius@trolltech.com>
+ <b94c3ab1a2afb95b4243dea381024a432a2d9cc5.1234102794.git.marius@trolltech.com>
 Cc: gitster@pobox.com, Marius Storm-Olsen <marius@trolltech.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 08 15:40:05 2009
+X-From: git-owner@vger.kernel.org Sun Feb 08 15:40:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWAnQ-0005cm-NR
-	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 15:38:09 +0100
+	id 1LWAnP-0005cm-Kg
+	for gcvg-git-2@gmane.org; Sun, 08 Feb 2009 15:38:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752890AbZBHOgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 09:36:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752117AbZBHOgU
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 09:36:20 -0500
-Received: from hoat.troll.no ([62.70.27.150]:37740 "EHLO hoat.troll.no"
+	id S1752848AbZBHOgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 09:36:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752117AbZBHOgS
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 09:36:18 -0500
+Received: from hoat.troll.no ([62.70.27.150]:37741 "EHLO hoat.troll.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751791AbZBHOgK (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751795AbZBHOgK (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 8 Feb 2009 09:36:10 -0500
 Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 83718212AD;
+	by hoat.troll.no (Postfix) with SMTP id 9EDEE212EC;
 	Sun,  8 Feb 2009 15:36:02 +0100 (CET)
 Received: from localhost.localdomain (unknown [172.24.90.96])
-	by hoat.troll.no (Postfix) with ESMTP id 666D8211A4;
+	by hoat.troll.no (Postfix) with ESMTP id 8324821165;
 	Sun,  8 Feb 2009 15:36:02 +0100 (CET)
 X-Mailer: git-send-email 1.6.2.rc0.5.gf970
-In-Reply-To: <8b7c8612d6948421813b707ae4e265d950b4bf41.1234102794.git.marius@trolltech.com>
+In-Reply-To: <b94c3ab1a2afb95b4243dea381024a432a2d9cc5.1234102794.git.marius@trolltech.com>
 In-Reply-To: <cover.1234102794.git.marius@trolltech.com>
 References: <cover.1234102794.git.marius@trolltech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/108983>
 
-map_user() allows to lookup and replace both email and
-name of a user, based on a new style mailmap file.
-
-The possible mailmap definitions are now:
-
-  proper_name <commit_email>                             # Old style
-  <proper_email> <commit_email>                          # New style
-  proper_name <proper_email> <commit_email>              # New style
-  proper_name <proper_email> commit_name <commit_email>  # New style
-
-map_email() operates the same as before, with the
-exception that it also will to try to match on a name
-passed in through the name return buffer.
-
-clear_mailmap() is needed to now clear the more complex
-mailmap structure.
 
 Signed-off-by: Marius Storm-Olsen <marius@trolltech.com>
 ---
- Documentation/git-shortlog.txt |   87 +++++++++++++-----
- mailmap.c                      |  196 ++++++++++++++++++++++++++++++++++------
- mailmap.h                      |    4 +
- 3 files changed, 236 insertions(+), 51 deletions(-)
+ Documentation/pretty-formats.txt |    2 +
+ builtin-blame.c                  |   50 +++++++++++-------
+ builtin-shortlog.c               |   22 ++++++--
+ pretty.c                         |   57 +++++++++++----------
+ t/t4203-mailmap.sh               |  106 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 186 insertions(+), 51 deletions(-)
 
-diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
-index 66b6045..a0eaab5 100644
---- a/Documentation/git-shortlog.txt
-+++ b/Documentation/git-shortlog.txt
-@@ -48,24 +48,38 @@ OPTIONS
- FILES
- -----
- 
--If a file `.mailmap` exists at the toplevel of the repository, or at the
--location pointed to by the log.mailmap configuration option,
--it is used to map an author email address to a canonical real name. This
--can be used to coalesce together commits by the same person where their
--name was spelled differently (whether with the same email address or
--not).
--
--Each line in the file consists, in this order, of the canonical real name
--of an author, whitespace, and an email address (enclosed by '<' and '>')
--to map to the name. Use hash '#' for comments, either on their own line,
--or after the email address.
--
--A canonical name may appear in more than one line, associated with
--different email addresses, but it doesn't make sense for a given address
--to appear more than once (if that happens, a later line overrides the
--earlier ones).
--
--So, for example, if your history contains commits by two authors, Jane
-+If the file `.mailmap` exists at the toplevel of the repository, or at
-+the location pointed to by the mailmap.file configuration option, it
-+is used to map author and committer names and email addresses to
-+canonical real names and email addresses.
-+This mapping can be used to coalesce together commits by the same
-+person where their name and/or email address was spelled differently.
-+
-+In the simple form, each line in the file consists of the canonical
-+real name of an author, whitespace, and an email address used in the
-+commit (enclosed by '<' and '>') to map to the name. Thus, looks like
-+this
-+--
-+	Proper Name <commit@email.xx>
-+--
-+
-+The more complex forms are
-+--
-+	<proper@email.xx> <commit@email.xx>
-+--
-+which allows mailmap to replace only the email part of a commit, and
-+--
-+	Proper Name <proper@email.xx> <commit@email.xx>
-+--
-+which allows mailmap to replace both the name and the email of a
-+commit matching the specified commit email address, and
-+--
-+	Proper Name <proper@email.xx> Commit Name <commit@email.xx>
-+--
-+which allows mailmap to replace both the name and the email of a
-+commit matching both the specified commit name and email address.
-+
-+Example 1: Your history contains commits by two authors, Jane
- and Joe, whose names appear in the repository under several forms:
- 
- ------------
-@@ -76,16 +90,43 @@ Jane Doe <jane@laptop.(none)>
- Jane D. <jane@desktop.(none)>
- ------------
- 
--Then, supposing Joe wants his middle name initial used, and Jane prefers
--her family name fully spelled out, a proper `.mailmap` file would look like:
-+Now suppose that Joe wants his middle name initial used, and Jane
-+prefers her family name fully spelled out. A proper `.mailmap` file
-+would look like:
- 
- ------------
--# Note how we don't need an entry for <jane@laptop.(none)>, because the
--# real name of that author is correct already, and coalesced directly.
--Jane Doe <jane@desktop.(none)>
-+Jane Doe         <jane@desktop.(none)>
- Joe R. Developer <joe@example.com>
- ------------
- 
-+Note how we don't need an entry for <jane@laptop.(none)>, because the
-+real name of that author is correct already, and coalesced directly.
-+
-+Example 2: Your repository contains commits from the following
-+authors:
-+
-+------------
-+nick1 <bugs@company.xx>
-+nick2 <bugs@company.xx>
-+nick2 <nick2@company.xx>
-+santa <me@company.xx>
-+claus <me@company.xx>
-+CTO <cto@coompany.xx>
-+------------
-+
-+Then, you might want a `.mailmap` file looking like:
-+------------
-+<cto@company.xx>                       <cto@coompany.xx>
-+Some Dude <some@dude.xx>         nick1 <bugs@company.xx>
-+Other Author <other@author.xx>   nick2 <bugs@company.xx>
-+Other Author <other@author.xx>         <nick2@company.xx>
-+Santa Claus <santa.claus@northpole.xx> <me@company.xx>
-+------------
-+
-+Use hash '#' for comments that are either on their own line, or after
-+the email address.
-+
-+
- Author
- ------
- Written by Jeff Garzik <jgarzik@pobox.com>
-diff --git a/mailmap.c b/mailmap.c
-index d006dad..f12bb45 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -2,7 +2,122 @@
- #include "string-list.h"
- #include "mailmap.h"
- 
-+#define DEBUG_MAILMAP 0
-+#if DEBUG_MAILMAP
-+#define debug_mm(...) fprintf(stderr, __VA_ARGS__)
-+#else
-+static inline void debug_mm(const char *format, ...) {}
-+#endif
-+
- const char *git_mailmap_file;
-+
-+struct mailmap_info {
-+	char *name;
-+	char *email;
-+};
-+
-+struct mailmap_entry {
-+	/* name and email for the simple mail-only case */
-+	char *name;
-+	char *email;
-+
-+	/* name and email for the complex mail and name matching case */
-+	struct string_list namemap;
-+};
-+
-+static void free_mailmap_info(void *p, const char *s)
-+{
-+	struct mailmap_info *mi = (struct mailmap_info *)p;
-+	debug_mm("mailmap: -- complex: '%s' -> '%s' <%s>\n", s, mi->name, mi->email);
-+	free(mi->name);
-+	free(mi->email);
-+}
-+
-+static void free_mailmap_entry(void *p, const char *s)
-+{
-+	struct mailmap_entry *me = (struct mailmap_entry *)p;
-+	debug_mm("mailmap: removing entries for <%s>, with %d sub-entries\n", s, me->namemap.nr);
-+	debug_mm("mailmap: - simple: '%s' <%s>\n", me->name, me->email);
-+	free(me->name);
-+	free(me->email);
-+
-+	me->namemap.strdup_strings = 1;
-+	string_list_clear_func(&me->namemap, free_mailmap_info);
-+}
-+
-+static void add_mapping(struct string_list *map,
-+			char *new_name, char *new_email, char *old_name, char *old_email)
-+{
-+	struct mailmap_entry *me;
-+	int index;
-+	if (old_email == NULL) {
-+		old_email = new_email;
-+		new_email = NULL;
-+	}
-+
-+	if ((index = string_list_find_insert_index(map, old_email, 1)) < 0) {
-+		/* mailmap entry exists, invert index value */
-+		index = -1 - index;
-+	} else {
-+		/* create mailmap entry */
-+		struct string_list_item *item = string_list_insert_at_index(index, old_email, map);
-+		item->util = xmalloc(sizeof(struct mailmap_entry));
-+		memset(item->util, 0, sizeof(struct mailmap_entry));
-+		((struct mailmap_entry *)item->util)->namemap.strdup_strings = 1;
-+	}
-+	me = (struct mailmap_entry *)map->items[index].util;
-+
-+	if (old_name == NULL) {
-+		debug_mm("mailmap: adding (simple) entry for %s at index %d\n", old_email, index);
-+		/* Replace current name and new email for simple entry */
-+		free(me->name);
-+		free(me->email);
-+		if (new_name)
-+			me->name = xstrdup(new_name);
-+		if (new_email)
-+			me->email = xstrdup(new_email);
-+	} else {
-+		struct mailmap_info *mi = xmalloc(sizeof(struct mailmap_info));
-+		debug_mm("mailmap: adding (complex) entry for %s at index %d\n", old_email, index);
-+		if (new_name)
-+			mi->name = xstrdup(new_name);
-+		if (new_email)
-+			mi->email = xstrdup(new_email);
-+		string_list_insert(old_name, &me->namemap)->util = mi;
-+	}
-+
-+	debug_mm("mailmap:  '%s' <%s> -> '%s' <%s>\n",
-+		 old_name, old_email, new_name, new_email);
-+}
-+
-+static char *parse_name_and_email(char *buffer, char **name, char **email)
-+{
-+	char *left, *right, *nstart, *nend;
-+	*name = *email = 0;
-+
-+	if ((left = strchr(buffer, '<')) == NULL)
-+		return NULL;
-+	if ((right = strchr(left+1, '>')) == NULL)
-+		return NULL;
-+	if (left+1 == right)
-+		return NULL;
-+
-+	/* remove whitespace from beginning and end of name */
-+	nstart = buffer;
-+	while (isspace(*nstart) && nstart < left)
-+		++nstart;
-+	nend = left-1;
-+	while (isspace(*nend) && nend > nstart)
-+		--nend;
-+
-+	*name = (nstart < nend ? nstart : NULL);
-+	*email = left+1;
-+	*(nend+1) = '\0';
-+	*right++ = '\0';
-+
-+	return (*right == '\0' ? NULL : right);
-+}
-+
- static int read_single_mailmap(struct string_list *map, const char *filename, char **repo_abbrev)
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 3d87d3e..28808b7 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -103,6 +103,7 @@ The placeholders are:
+ - '%an': author name
+ - '%aN': author name (respecting .mailmap)
+ - '%ae': author email
++- '%aE': author email (respecting .mailmap)
+ - '%ad': author date (format respects --date= option)
+ - '%aD': author date, RFC2822 style
+ - '%ar': author date, relative
+@@ -111,6 +112,7 @@ The placeholders are:
+ - '%cn': committer name
+ - '%cN': committer name (respecting .mailmap)
+ - '%ce': committer email
++- '%cE': committer email (respecting .mailmap)
+ - '%cd': committer date
+ - '%cD': committer date, RFC2822 style
+ - '%cr': committer date, relative
+diff --git a/builtin-blame.c b/builtin-blame.c
+index 9cfa090..114a214 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -1264,11 +1264,12 @@ struct commit_info
+  * Parse author/committer line in the commit object buffer
+  */
+ static void get_ac_line(const char *inbuf, const char *what,
+-			int bufsz, char *person, const char **mail,
++			int person_len, char *person,
++			int mail_len, char *mail,
+ 			unsigned long *time, const char **tz)
  {
- 	char buffer[1024];
-@@ -11,9 +126,7 @@ static int read_single_mailmap(struct string_list *map, const char *filename, ch
- 	if (f == NULL)
- 		return 1;
- 	while (fgets(buffer, sizeof(buffer), f) != NULL) {
--		char *end_of_name, *left_bracket, *right_bracket;
--		char *name, *email;
--		int i;
-+		char *name1 = 0, *email1 = 0, *name2 = 0, *email2 = 0;
- 		if (buffer[0] == '#') {
- 			static const char abbrev[] = "# repo-abbrev:";
- 			int abblen = sizeof(abbrev) - 1;
-@@ -37,25 +150,11 @@ static int read_single_mailmap(struct string_list *map, const char *filename, ch
- 			}
- 			continue;
- 		}
--		if ((left_bracket = strchr(buffer, '<')) == NULL)
--			continue;
--		if ((right_bracket = strchr(left_bracket + 1, '>')) == NULL)
--			continue;
--		if (right_bracket == left_bracket + 1)
--			continue;
--		for (end_of_name = left_bracket;
--		     end_of_name != buffer && isspace(end_of_name[-1]);
--		     end_of_name--)
--			; /* keep on looking */
--		if (end_of_name == buffer)
--			continue;
--		name = xmalloc(end_of_name - buffer + 1);
--		strlcpy(name, buffer, end_of_name - buffer + 1);
--		email = xmalloc(right_bracket - left_bracket);
--		for (i = 0; i < right_bracket - left_bracket - 1; i++)
--			email[i] = tolower(left_bracket[i + 1]);
--		email[right_bracket - left_bracket - 1] = '\0';
--		string_list_insert(email, map)->util = name;
-+		if ((name2 = parse_name_and_email(buffer, &name1, &email1)) != NULL)
-+			parse_name_and_email(name2, &name2, &email2);
-+
-+		if (email1)
-+			add_mapping(map, name1, email1, name2, email2);
- 	}
- 	fclose(f);
- 	return 0;
-@@ -63,22 +162,37 @@ static int read_single_mailmap(struct string_list *map, const char *filename, ch
+ 	int len, tzlen, maillen;
+-	char *tmp, *endp, *timepos;
++	char *tmp, *endp, *timepos, *mailpos;
  
- int read_mailmap(struct string_list *map, char **repo_abbrev)
- {
-+	map->strdup_strings = 1;
- 	/* each failure returns 1, so >1 means both calls failed */
- 	return read_single_mailmap(map, ".mailmap", repo_abbrev) +
- 	       read_single_mailmap(map, git_mailmap_file, repo_abbrev) > 1;
- }
- 
--int map_email(struct string_list *map, const char *email, char *name, int maxlen)
-+void clear_mailmap(struct string_list *map)
-+{
-+	debug_mm("mailmap: clearing %d entries...\n", map->nr);
-+	map->strdup_strings = 1;
-+	string_list_clear_func(map, free_mailmap_entry);
-+	debug_mm("mailmap: cleared\n");
-+}
-+
-+int map_user(struct string_list *map,
-+	     char *email, int maxlen_email, char *name, int maxlen_name)
- {
- 	char *p;
- 	struct string_list_item *item;
-+	struct mailmap_entry *me;
- 	char buf[1024], *mailbuf;
- 	int i;
- 
--	/* autocomplete common developers */
-+	/* figure out space requirement for email */
- 	p = strchr(email, '>');
--	if (!p)
--		return 0;
-+	if (!p) {
-+		/* email passed in might not be wrapped in <>, but end with a \0 */
-+		p = memchr(email, '\0', maxlen_email);
-+		if (p == 0)
-+			return 0;
-+	}
- 	if (p - email + 1 < sizeof(buf))
- 		mailbuf = buf;
+ 	tmp = strstr(inbuf, what);
+ 	if (!tmp)
+@@ -1279,10 +1280,11 @@ static void get_ac_line(const char *inbuf, const char *what,
+ 		len = strlen(tmp);
  	else
-@@ -88,13 +202,39 @@ int map_email(struct string_list *map, const char *email, char *name, int maxlen
- 	for (i = 0; i < p - email; i++)
- 		mailbuf[i] = tolower(email[i]);
- 	mailbuf[i] = 0;
-+
-+	debug_mm("map_user: map '%s' <%s>\n", name, mailbuf);
- 	item = string_list_lookup(mailbuf, map);
-+	if (item != NULL) {
-+		me = (struct mailmap_entry *)item->util;
-+		if (me->namemap.nr) {
-+			/* The item has multiple items, so we'll look up on name too */
-+			/* If the name is not found, we choose the simple entry      */
-+			struct string_list_item *subitem = string_list_lookup(name, &me->namemap);
-+			if (subitem)
-+				item = subitem;
+ 		len = endp - tmp;
+-	if (bufsz <= len) {
++	if (person_len <= len) {
+ 	error_out:
+ 		/* Ugh */
+-		*mail = *tz = "(unknown)";
++		*tz = "(unknown)";
++		strcpy(mail, *tz);
+ 		*time = 0;
+ 		return;
+ 	}
+@@ -1305,9 +1307,10 @@ static void get_ac_line(const char *inbuf, const char *what,
+ 	*tmp = 0;
+ 	while (*tmp != ' ')
+ 		tmp--;
+-	*mail = tmp + 1;
++	mailpos = tmp + 1;
+ 	*tmp = 0;
+ 	maillen = timepos - tmp;
++	memcpy(mail, mailpos, maillen);
+ 
+ 	if (!mailmap.nr)
+ 		return;
+@@ -1316,20 +1319,23 @@ static void get_ac_line(const char *inbuf, const char *what,
+ 	 * mailmap expansion may make the name longer.
+ 	 * make room by pushing stuff down.
+ 	 */
+-	tmp = person + bufsz - (tzlen + 1);
++	tmp = person + person_len - (tzlen + 1);
+ 	memmove(tmp, *tz, tzlen);
+ 	tmp[tzlen] = 0;
+ 	*tz = tmp;
+ 
+-	tmp = tmp - (maillen + 1);
+-	memmove(tmp, *mail, maillen);
+-	tmp[maillen] = 0;
+-	*mail = tmp;
+-
+ 	/*
+-	 * Now, convert e-mail using mailmap
++	 * Now, convert both name and e-mail using mailmap
+ 	 */
+-	map_email(&mailmap, tmp + 1, person, tmp-person-1);
++	if(map_user(&mailmap, mail+1, mail_len-1, person, tmp-person-1)) {
++		/* Add a trailing '>' to email, since map_user returns plain emails
++		   Note: It already has '<', since we replace from mail+1 */
++		mailpos = memchr(mail, '\0', mail_len);
++		if (mailpos && mailpos-mail < mail_len - 1) {
++			*mailpos = '>';
++			*(mailpos+1) = '\0';
 +		}
 +	}
- 	if (mailbuf != buf)
- 		free(mailbuf);
- 	if (item != NULL) {
--		const char *realname = (const char *)item->util;
--		strlcpy(name, realname, maxlen);
-+		struct mailmap_info *mi = (struct mailmap_info *)item->util;
-+		if (mi->name == NULL && (mi->email == NULL || maxlen_email == 0)) {
-+			debug_mm("map_user:  -- (no simple mapping)\n");
-+			return 0;
-+		}
-+		if (maxlen_email && mi->email)
-+			strlcpy(email, mi->email, maxlen_email);
-+		if (maxlen_name && mi->name)
-+			strlcpy(name, mi->name, maxlen_name);
-+		debug_mm("map_user:  to '%s' <%s>\n", name, mi->email ? mi->email : "");
- 		return 1;
- 	}
-+	debug_mm("map_user:  --\n");
- 	return 0;
  }
-+
-+int map_email(struct string_list *map, const char *email, char *name, int maxlen)
-+{
-+	return map_user(map, (char *)email, 0, name, maxlen);
-+}
-diff --git a/mailmap.h b/mailmap.h
-index ba2ee76..4b2ca3a 100644
---- a/mailmap.h
-+++ b/mailmap.h
-@@ -2,6 +2,10 @@
- #define MAILMAP_H
  
- int read_mailmap(struct string_list *map, char **repo_abbrev);
-+void clear_mailmap(struct string_list *map);
-+
- int map_email(struct string_list *mailmap, const char *email, char *name, int maxlen);
-+int map_user(struct string_list *mailmap,
-+	     char *email, int maxlen_email, char *name, int maxlen_name);
+ static void get_commit_info(struct commit *commit,
+@@ -1338,8 +1344,10 @@ static void get_commit_info(struct commit *commit,
+ {
+ 	int len;
+ 	char *tmp, *endp, *reencoded, *message;
+-	static char author_buf[1024];
+-	static char committer_buf[1024];
++	static char author_name[1024];
++	static char author_mail[1024];
++	static char committer_name[1024];
++	static char committer_mail[1024];
+ 	static char summary_buf[1024];
  
- #endif
+ 	/*
+@@ -1357,9 +1365,11 @@ static void get_commit_info(struct commit *commit,
+ 	}
+ 	reencoded = reencode_commit_message(commit, NULL);
+ 	message   = reencoded ? reencoded : commit->buffer;
+-	ret->author = author_buf;
++	ret->author = author_name;
++	ret->author_mail = author_mail;
+ 	get_ac_line(message, "\nauthor ",
+-		    sizeof(author_buf), author_buf, &ret->author_mail,
++		    sizeof(author_name), author_name,
++		    sizeof(author_mail), author_mail,
+ 		    &ret->author_time, &ret->author_tz);
+ 
+ 	if (!detailed) {
+@@ -1367,9 +1377,11 @@ static void get_commit_info(struct commit *commit,
+ 		return;
+ 	}
+ 
+-	ret->committer = committer_buf;
++	ret->committer = committer_name;
++	ret->committer_mail = committer_mail;
+ 	get_ac_line(message, "\ncommitter ",
+-		    sizeof(committer_buf), committer_buf, &ret->committer_mail,
++		    sizeof(committer_name), committer_name,
++		    sizeof(committer_mail), committer_mail,
+ 		    &ret->committer_time, &ret->committer_tz);
+ 
+ 	ret->summary = summary_buf;
+diff --git a/builtin-shortlog.c b/builtin-shortlog.c
+index 314b6bc..badd912 100644
+--- a/builtin-shortlog.c
++++ b/builtin-shortlog.c
+@@ -40,6 +40,7 @@ static void insert_one_record(struct shortlog *log,
+ 	char *buffer, *p;
+ 	struct string_list_item *item;
+ 	char namebuf[1024];
++	char emailbuf[1024];
+ 	size_t len;
+ 	const char *eol;
+ 	const char *boemail, *eoemail;
+@@ -51,7 +52,19 @@ static void insert_one_record(struct shortlog *log,
+ 	eoemail = strchr(boemail, '>');
+ 	if (!eoemail)
+ 		return;
+-	if (!map_email(&log->mailmap, boemail+1, namebuf, sizeof(namebuf))) {
++
++	/* copy author name to namebuf, to support matching on both name and email */
++	memcpy(namebuf, author, boemail - author);
++	len = boemail - author;
++	while(len > 0 && isspace(namebuf[len-1]))
++		len--;
++	namebuf[len] = 0;
++
++	/* copy email name to emailbuf, to allow email replacement as well */
++	memcpy(emailbuf, boemail+1, eoemail - boemail);
++	emailbuf[eoemail - boemail - 1] = 0;
++
++	if (!map_user(&log->mailmap, emailbuf, sizeof(emailbuf), namebuf, sizeof(namebuf))) {
+ 		while (author < boemail && isspace(*author))
+ 			author++;
+ 		for (len = 0;
+@@ -67,8 +80,8 @@ static void insert_one_record(struct shortlog *log,
+ 
+ 	if (log->email) {
+ 		size_t room = sizeof(namebuf) - len - 1;
+-		int maillen = eoemail - boemail + 1;
+-		snprintf(namebuf + len, room, " %.*s", maillen, boemail);
++		int maillen = strlen(emailbuf);
++		snprintf(namebuf + len, room, " <%.*s>", maillen, emailbuf);
+ 	}
+ 
+ 	item = string_list_insert(namebuf, &log->list);
+@@ -321,6 +334,5 @@ void shortlog_output(struct shortlog *log)
+ 
+ 	log->list.strdup_strings = 1;
+ 	string_list_clear(&log->list, 1);
+-	log->mailmap.strdup_strings = 1;
+-	string_list_clear(&log->mailmap, 1);
++	clear_mailmap(&log->mailmap);
+ }
+diff --git a/pretty.c b/pretty.c
+index cecd9fc..518b40a 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -306,23 +306,14 @@ static char *logmsg_reencode(const struct commit *commit,
+ 	return out;
+ }
+ 
+-static int mailmap_name(struct strbuf *sb, const char *email)
++static int mailmap_name(char *email, int email_len, char *name, int name_len)
+ {
+ 	static struct string_list *mail_map;
+-	char buffer[1024];
+-
+ 	if (!mail_map) {
+ 		mail_map = xcalloc(1, sizeof(*mail_map));
+ 		read_mailmap(mail_map, NULL);
+ 	}
+-
+-	if (!mail_map->nr)
+-		return -1;
+-
+-	if (!map_email(mail_map, email, buffer, sizeof(buffer)))
+-		return -1;
+-	strbuf_addstr(sb, buffer);
+-	return 0;
++	return mail_map->nr && map_user(mail_map, email, email_len, name, name_len);
+ }
+ 
+ static size_t format_person_part(struct strbuf *sb, char part,
+@@ -333,6 +324,9 @@ static size_t format_person_part(struct strbuf *sb, char part,
+ 	int start, end, tz = 0;
+ 	unsigned long date = 0;
+ 	char *ep;
++	const char *name_start, *name_end, *mail_start, *mail_end, *msg_end = msg+len;
++	char person_name[1024];
++	char person_mail[1024];
+ 
+ 	/* advance 'end' to point to email start delimiter */
+ 	for (end = 0; end < len && msg[end] != '<'; end++)
+@@ -346,25 +340,34 @@ static size_t format_person_part(struct strbuf *sb, char part,
+ 	if (end >= len - 2)
+ 		goto skip;
+ 
++	/* Seek for both name and email part */
++	name_start = msg;
++	name_end = msg+end;
++	while (name_end > name_start && isspace(*(name_end-1)))
++		name_end--;
++	mail_start = msg+end+1;
++	mail_end = mail_start;
++	while (mail_end < msg_end && *mail_end != '>')
++		mail_end++;
++	if (mail_end == msg_end)
++		goto skip;
++	end = mail_end-msg;
++
++	if (part == 'N' || part == 'E') { /* mailmap lookup */
++		strlcpy(person_name, name_start, name_end-name_start+1);
++		strlcpy(person_mail, mail_start, mail_end-mail_start+1);
++		mailmap_name(person_mail, sizeof(person_mail), person_name, sizeof(person_name));
++		name_start = person_name;
++		name_end = name_start + strlen(person_name);
++		mail_start = person_mail;
++		mail_end = mail_start +  strlen(person_mail);
++	}
+ 	if (part == 'n' || part == 'N') {	/* name */
+-		while (end > 0 && isspace(msg[end - 1]))
+-			end--;
+-		if (part != 'N' || !msg[end] || !msg[end + 1] ||
+-		    mailmap_name(sb, msg + end + 2) < 0)
+-			strbuf_add(sb, msg, end);
++		strbuf_add(sb, name_start, name_end-name_start);
+ 		return placeholder_len;
+ 	}
+-	start = ++end; /* save email start position */
+-
+-	/* advance 'end' to point to email end delimiter */
+-	for ( ; end < len && msg[end] != '>'; end++)
+-		; /* do nothing */
+-
+-	if (end >= len)
+-		goto skip;
+-
+-	if (part == 'e') {	/* email */
+-		strbuf_add(sb, msg + start, end - start);
++	if (part == 'e' || part == 'E') {	/* email */
++		strbuf_add(sb, mail_start, mail_end-mail_start);
+ 		return placeholder_len;
+ 	}
+ 
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index fc50ac2..9a7d1b4 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -106,4 +106,110 @@ test_expect_success 'No mailmap files, but configured' '
+ 	test_cmp expect actual
+ '
+ 
++# Extended mailmap configurations should give us the following output for shortlog
++cat >expect <<\EOF
++A U Thor <author@example.com> (1):
++      initial
++
++CTO <cto@company.xx> (1):
++      seventh
++
++Other Author <other@author.xx> (2):
++      third
++      fourth
++
++Santa Claus <santa.claus@northpole.xx> (2):
++      fifth
++      sixth
++
++Some Dude <some@dude.xx> (1):
++      second
++
++EOF
++
++test_expect_success 'Shortlog output (complex mapping)' '
++	echo three >>one &&
++	git add one &&
++	test_tick &&
++	git commit --author "nick2 <bugs@company.xx>" -m third &&
++
++	echo four >>one &&
++	git add one &&
++	test_tick &&
++	git commit --author "nick2 <nick2@company.xx>" -m fourth &&
++
++	echo five >>one &&
++	git add one &&
++	test_tick &&
++	git commit --author "santa <me@company.xx>" -m fifth &&
++
++	echo six >>one &&
++	git add one &&
++	test_tick &&
++	git commit --author "claus <me@company.xx>" -m sixth &&
++
++	echo seven >>one &&
++	git add one &&
++	test_tick &&
++	git commit --author "CTO <cto@coompany.xx>" -m seventh &&
++
++	mkdir internal_mailmap &&
++	echo "Committed <committer@example.com>" > internal_mailmap/.mailmap &&
++	echo "<cto@company.xx>                       <cto@coompany.xx>" >> internal_mailmap/.mailmap &&
++	echo "Some Dude <some@dude.xx>         nick1 <bugs@company.xx>" >> internal_mailmap/.mailmap &&
++	echo "Other Author <other@author.xx>   nick2 <bugs@company.xx>" >> internal_mailmap/.mailmap &&
++	echo "Other Author <other@author.xx>         <nick2@company.xx>" >> internal_mailmap/.mailmap &&
++	echo "Santa Claus <santa.claus@northpole.xx> <me@company.xx>" >> internal_mailmap/.mailmap &&
++	echo "Santa Claus <santa.claus@northpole.xx> <me@company.xx>" >> internal_mailmap/.mailmap &&
++
++	git shortlog -e HEAD >actual &&
++	test_cmp expect actual
++
++'
++
++# git log with --pretty format which uses the name and email mailmap placemarkers
++cat >expect <<\EOF
++Author CTO <cto@coompany.xx> maps to CTO <cto@company.xx>
++Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
++
++Author claus <me@company.xx> maps to Santa Claus <santa.claus@northpole.xx>
++Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
++
++Author santa <me@company.xx> maps to Santa Claus <santa.claus@northpole.xx>
++Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
++
++Author nick2 <nick2@company.xx> maps to Other Author <other@author.xx>
++Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
++
++Author nick2 <bugs@company.xx> maps to Other Author <other@author.xx>
++Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
++
++Author nick1 <bugs@company.xx> maps to Some Dude <some@dude.xx>
++Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
++
++Author A U Thor <author@example.com> maps to A U Thor <author@example.com>
++Committer C O Mitter <committer@example.com> maps to Committed <committer@example.com>
++EOF
++
++test_expect_success 'Log output (complex mapping)' '
++	git log --pretty=format:"Author %an <%ae> maps to %aN <%aE>%nCommitter %cn <%ce> maps to %cN <%cE>%n" >actual &&
++	test_cmp expect actual
++'
++
++# git blame
++cat >expect <<\EOF
++^3a2fdcb (A U Thor     2005-04-07 15:13:13 -0700 1) one
++7de6f99b (Some Dude    2005-04-07 15:13:13 -0700 2) two
++5815879d (Other Author 2005-04-07 15:14:13 -0700 3) three
++ff859d96 (Other Author 2005-04-07 15:15:13 -0700 4) four
++5ab6d4fa (Santa Claus  2005-04-07 15:16:13 -0700 5) five
++38a42d8b (Santa Claus  2005-04-07 15:17:13 -0700 6) six
++8ddc0386 (CTO          2005-04-07 15:18:13 -0700 7) seven
++EOF
++
++test_expect_success 'Blame output (complex mapping)' '
++	git blame one >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 1.6.1.2.354.g9a90
