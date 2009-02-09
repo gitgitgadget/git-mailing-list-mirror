@@ -1,57 +1,76 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [JGIT PATCH] Permit a wider range of repository names in jgit daemon requests
-Date: Mon, 9 Feb 2009 08:47:40 +0100
-Message-ID: <200902090847.40905.robin.rosenberg@dewire.com>
-References: <1234151883-30479-1-git-send-email-spearce@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Feb 09 09:59:10 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/6] Deleting the "current" branch in a remote repository
+Date: Mon,  9 Feb 2009 01:09:19 -0800
+Message-ID: <1234170565-6740-1-git-send-email-gitster@pobox.com>
+References: <7v8wogzr3v.fsf@gitster.siamese.dyndns.org>
+Cc: jk@jk.gs, peff@peff.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 09 10:10:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWRyq-0001Ii-CW
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 09:59:04 +0100
+	id 1LWSAL-0004Ri-Ge
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 10:10:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751490AbZBII5g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Feb 2009 03:57:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbZBII5e
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 03:57:34 -0500
-Received: from pne-smtpout1-sn1.fre.skanova.net ([81.228.11.98]:57280 "EHLO
-	pne-smtpout1-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751377AbZBII5e convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 Feb 2009 03:57:34 -0500
-X-Greylist: delayed 4181 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Feb 2009 03:57:34 EST
-Received: from sleipner.localnet (90.234.23.249) by pne-smtpout1-sn1.fre.skanova.net (7.3.129)
-        id 47A9795005FB67AB; Mon, 9 Feb 2009 08:47:50 +0100
-User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
-In-Reply-To: <1234151883-30479-1-git-send-email-spearce@spearce.org>
-Content-Disposition: inline
+	id S1751786AbZBIJJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 04:09:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751766AbZBIJJa
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 04:09:30 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60464 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751661AbZBIJJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 04:09:29 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D1FEC2ABFD
+	for <git@vger.kernel.org>; Mon,  9 Feb 2009 04:09:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4572F2ABE6 for
+ <git@vger.kernel.org>; Mon,  9 Feb 2009 04:09:27 -0500 (EST)
+X-Mailer: git-send-email 1.6.2.rc0.28.g2593d
+In-Reply-to: <7v8wogzr3v.fsf@gitster.siamese.dyndns.org>
+X-Pobox-Relay-ID: 5A640A0A-F689-11DD-948F-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109051>
 
-m=E5ndag 09 februari 2009 04:58:03 skrev du:
-> The earlier restriction was too narrow for some applications, for
-> example repositories named "jgit.dev" and "jgit.test" are perfectly
-> valid Git repositories and should still be able to be served by
-> the daemon.
->=20
-> By blocking out only uses of ".." as a path component and Windows
-> UNC paths (by blocking "\") we can reasonably prevent the client
-> from escaping the base dirctories configured in the daemon.
+The first two are preparatory clean-up and bugfix patches.
 
-Didn't I tell you // is also UNC-prefix? Windows treats / =3D=3D \ at t=
-he API
-level. Also why test for contains one "\"? And why in the middle? The
-UNC prefix can only occur at the beginning of a path. You can use
-=46ile.isAbsolute to see if a name represents an absolute path. It is
-platform-depdendent, so new File("//foo/bar").isAbsolute() yield
-different results on Windows and unix platforms.
+The third one introduces receive.denyDeleteCurrent configuration that
+defaults to "annoyingly loud warning", which we will flip to "refusal with
+insn" at the end.
 
--- robin
+The fourth and fifth one are not about push and are more or less
+independent.  They deal with what happens when you ended up with a
+dangling symbolic ref in a tracking hierarchy.  I think a check
+and warning similar to the fourth one may be needed in git-push (and
+git-send-pack) when it pushes a void to remove a branch from a remote, and
+in turn removes the corresponding tracking branch at the local end.
+
+Then finally the last one flips the default for receive.denyDeleteCurrent
+to refuse.
+
+I think the first five ought to be in 1.6.2-rc1 but I lack the energy and
+time to finish the testing, re-eyeballing and documentation tonight.  It
+would be very nice to see friends from other timezones to help me with
+these tasks ;-)
+
+
+Junio C Hamano (6):
+  builtin-receive-pack.c: do not initialize statics to 0
+  t5400: allow individual tests to fail
+  receive-pack: receive.denyDeleteCurrent
+  remote prune: warn dangling symrefs
+  Warn use of "origin" when remotes/origin/HEAD is dangling
+  receive-pack: default receive.denyDeleteCurrent to refuse
+
+ builtin-receive-pack.c |   70 ++++++++++++++++++++++++++++++++++++++--------
+ builtin-remote.c       |    6 ++++
+ refs.c                 |   72 ++++++++++++++++++++++++++++++++++++------------
+ refs.h                 |    5 +++
+ sha1_name.c            |    6 ++-
+ t/t5400-send-pack.sh   |   44 ++++++++++++++++++++--------
+ 6 files changed, 157 insertions(+), 46 deletions(-)
