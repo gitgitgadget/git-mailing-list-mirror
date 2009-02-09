@@ -1,74 +1,74 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH] git-rebase-interactive: you can also add new commits to the
- "work list"
-Date: Mon, 09 Feb 2009 22:25:01 +0100
-Message-ID: <1234214701-20245-1-git-send-email-barvik@broadpark.no>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: RFC: Flat directory for notes, or fan-out?  Both!
+Date: Mon, 9 Feb 2009 22:12:06 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: Kjetil Barvik <barvik@broadpark.no>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 09 22:26:44 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, peff@peff.net, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Mon Feb 09 22:29:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWdeB-0005e1-WD
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 22:26:32 +0100
+	id 1LWdh2-0006iV-0C
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 22:29:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754111AbZBIVZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 16:25:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754096AbZBIVZE
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 16:25:04 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:37581 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753899AbZBIVZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 16:25:03 -0500
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KET00IACI5QPRA0@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Mon, 09 Feb 2009 22:25:02 +0100 (CET)
-Received: from localhost.localdomain ([80.202.166.166])
- by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTPA id <0KET006ZOI5PUW80@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Mon, 09 Feb 2009 22:25:02 +0100 (CET)
-X-Mailer: git-send-email 1.6.1.349.g99fa5
+	id S1754115AbZBIV1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 16:27:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754052AbZBIV1j
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 16:27:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48642 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752306AbZBIV1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 16:27:38 -0500
+Received: (qmail invoked by alias); 09 Feb 2009 21:11:22 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp069) with SMTP; 09 Feb 2009 22:11:22 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/g0Uh3oQfgBaXQ2UJXful4dIhYdca5B2jh7SFdF2
+	MCkSwNZGXmyAQw
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109135>
 
-Add 2 small lines to document that you can also use 'git rebase
---interactive' to add new commits to the rebased patch-series.  This
-is sort of running multiple 'git cherry-pick' commands in one go.
+Hi,
 
-Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
----
+Shawn triggered some well needed thinking on my part about the notes 
+implementation.  At the moment, we have flat directory structure, and read 
+all of them in one go (when needed).
 
-  If this is a good idea, soneone should correct my poor english.
+I think we should support that, because it is relatively easy to generate 
+that kind of trees for small-scale applications.
 
-  -- kjetil
+However, I think there is also a benefit to handle fan-out directory 
+structures, too: they scale much nicer.
 
+If the commit name was not found as a filename, it could be searched in 
+whatever subdirectory whose name is a prefix of said commit name (first 
+wins).
 
- git-rebase--interactive.sh |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+So I think it would be a sane plan to do the following when a commit note 
+is requested:
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 3dc659d..aa2e53c 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -734,6 +734,9 @@ first and then run 'git rebase --continue' again."
- # If you remove a line here THAT COMMIT WILL BE LOST.
- # However, if you remove everything, the rebase will be aborted.
- #
-+# If you add a new line with a command followed by the SHA1 ref of the
-+# patch, then that patch will be added to the list.
-+#
- EOF
- 
- 		has_action "$TODO" ||
--- 
-1.6.1.349.g99fa5
+- If not done yet, read in the whole top-level directory of the notes ref.
+
+- If the commit name is not found, find the tree entries whose name is a 
+  prefix of the commit name (we can even use the same hashmap to store 
+  these "incomplete" names, as we use a linear hash, which we fill in 
+  ascending order),
+
+  - read the trees one by one, until the commit name is found (or no tree 
+    entry is left), deleting the trees from the hashmap on the go.
+
+How does that sound?
+
+Ciao,
+Dscho
+
+	
