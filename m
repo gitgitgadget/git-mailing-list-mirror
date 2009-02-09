@@ -1,178 +1,160 @@
-From: Yann Simon <yann.simon.fr@gmail.com>
-Subject: [PATCH JGIT] Add the signed-off in the commit text dialog
-Date: Mon, 09 Feb 2009 16:17:17 +0100
-Message-ID: <499048FD.7050803@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH v2] Permit a wider range of repository names in jgit
+	daemon requests
+Date: Mon, 9 Feb 2009 07:23:37 -0800
+Message-ID: <20090209152337.GH30949@spearce.org>
+References: <1234151883-30479-1-git-send-email-spearce@spearce.org> <200902090847.40905.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Feb 09 16:19:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Feb 09 16:25:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWXuc-0000pv-LY
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 16:19:07 +0100
+	id 1LWY0Q-0002zd-6V
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 16:25:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754545AbZBIPRZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 10:17:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754478AbZBIPRZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 10:17:25 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:47113 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754343AbZBIPRY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 10:17:24 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so1061728fgg.17
-        for <git@vger.kernel.org>; Mon, 09 Feb 2009 07:17:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=+0j2dDVINTB7Gh89PDFg9ECsNWTp3CdhevYmKU+2vnQ=;
-        b=iwDyP3uZomlPcd2XE6ttpoCnGcevhUvG9ETvXZyHZW22KNavBj8AJFIINk8s34PJxq
-         HqcwE5Okv/3sRdTEf7yrKiTEmAs2RUcAUhrP3BXoDbVXDo5m/cvu6KQkbNuNOUbjQwIY
-         Hi4vZsjQ/j9y7C/lZtNa8muF9JNdd5xtjkQwU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=IyEkwZZ+uVzB0qsTwYzIKTiaVqwOvlGQnxIUeF1FXfJagtNHOSucSVdYQ2mGcn3/vw
-         DpOWigonyWaRLLcT0RtPi07E7Mthp7LOEiQiWvGOeQ1BGHPezd+1r3gJuppvLBbF8gGL
-         yl0XNr32DvfptuWDQ/jwjMphebSpEWqMIpwB0=
-Received: by 10.86.59.18 with SMTP id h18mr442263fga.5.1234192642491;
-        Mon, 09 Feb 2009 07:17:22 -0800 (PST)
-Received: from ?10.11.2.21? (port-87-193-216-74.static.qsc.de [87.193.216.74])
-        by mx.google.com with ESMTPS id 3sm177060fge.52.2009.02.09.07.17.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 09 Feb 2009 07:17:22 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+	id S1754526AbZBIPXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 10:23:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753266AbZBIPXj
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 10:23:39 -0500
+Received: from george.spearce.org ([209.20.77.23]:35624 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752707AbZBIPXi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 10:23:38 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id A462F38210; Mon,  9 Feb 2009 15:23:37 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200902090847.40905.robin.rosenberg@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109080>
 
-The user can see and edit the signed-off in the commit dialog
-before committing.
+The earlier restriction was too narrow for some applications, for
+example repositories named "jgit.dev" and "jgit.test" are perfectly
+valid Git repositories and should still be able to be served by
+the daemon.
 
-For new lines in the commit dialog, use Text.DELIMITER for
-plateform neutrality.
+By blocking out only uses of ".." as a path component and Windows
+UNC paths (by blocking "//") we can reasonably prevent the client
+from escaping the base directories configured in the daemon.
 
-Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
-This patch only applies after the 2 previous patches.
-If you want to, I could probably modify this patch so that it would
-apply on the current origin.
+  Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+  > Didn't I tell you // is also UNC-prefix? Windows treats / == \ at the API
+  > level. Also why test for contains one "\"? And why in the middle? The
+  > UNC prefix can only occur at the beginning of a path. You can use
+  > File.isAbsolute to see if a name represents an absolute path. It is
+  > platform-depdendent, so new File("//foo/bar").isAbsolute() yield
+  > different results on Windows and unix platforms.
 
- .../egit/ui/internal/actions/CommitAction.java     |   10 +-----
- .../egit/ui/internal/dialogs/CommitDialog.java     |   29 +++++++++++++++++++-
- 2 files changed, 30 insertions(+), 9 deletions(-)
+  *sigh*... so *that's* what happened to this patch.  I posted it,
+  you sent me comments, and I forgot to correct it.  Doh.
 
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
-index 97aa60f..6aff07e 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
-@@ -172,7 +172,7 @@ private void performCommit(CommitDialog commitDialog, String commitMessage)
- 		}
+  Sorry for blasting you with the same patch twice.  I just really
+  forgot that I even posted it, let alone that you had sent me back
+  comments and that was why its not in tree yet.
+
+  I think I've addressed your concerns above in this version.
+  
+ .../src/org/spearce/jgit/transport/Daemon.java     |   56 ++++++++++++--------
+ 1 files changed, 34 insertions(+), 22 deletions(-)
+
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/Daemon.java b/org.spearce.jgit/src/org/spearce/jgit/transport/Daemon.java
+index 5087533..e5b446c 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/Daemon.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/Daemon.java
+@@ -52,7 +52,6 @@
+ import java.util.Collection;
+ import java.util.HashMap;
+ import java.util.Map;
+-import java.util.regex.Pattern;
  
- 		try {
--			commitMessage = doCommits(commitDialog, commitMessage, treeMap);
-+			doCommits(commitDialog, commitMessage, treeMap);
- 		} catch (IOException e) {
- 			throw new TeamException("Committing changes", e);
- 		}
-@@ -181,7 +181,7 @@ private void performCommit(CommitDialog commitDialog, String commitMessage)
- 		}
- 	}
+ import org.spearce.jgit.lib.PersonIdent;
+ import org.spearce.jgit.lib.Repository;
+@@ -64,9 +63,6 @@
  
--	private String doCommits(CommitDialog commitDialog, String commitMessage,
-+	private void doCommits(CommitDialog commitDialog, String commitMessage,
- 			HashMap<Repository, Tree> treeMap) throws IOException, TeamException {
+ 	private static final int BACKLOG = 5;
  
- 		String author = commitDialog.getAuthor();
-@@ -209,11 +209,6 @@ private String doCommits(CommitDialog commitDialog, String commitMessage,
- 			}
- 			Commit commit = new Commit(repo, parentIds);
- 			commit.setTree(tree);
--			commitMessage = commitMessage.replaceAll("\r", "\n");
--			if (commitDialog.isSignedOff())
--				commitMessage += "\n\nSigned-off-by: " + committerIdent.getName() + " <"
--								+ committerIdent.getEmailAddress() + ">";
+-	private static final Pattern SAFE_REPOSITORY_NAME = Pattern
+-			.compile("^[A-Za-z][A-Za-z0-9/_ -]+(\\.git)?$");
 -
- 			commit.setMessage(commitMessage);
- 			commit.setAuthor(new PersonIdent(authorIdent, commitDate, timeZone));
- 			commit.setCommitter(new PersonIdent(committerIdent, commitDate, timeZone));
-@@ -229,7 +224,6 @@ private String doCommits(CommitDialog commitDialog, String commitMessage,
- 						+ " to commit " + commit.getCommitId() + ".");
- 			}
+ 	private InetSocketAddress myAddress;
+ 
+ 	private final DaemonService[] services;
+@@ -286,8 +282,26 @@ synchronized DaemonService matchService(final String cmd) {
+ 	}
+ 
+ 	Repository openRepository(String name) {
++		// Assume any attempt to use \ was by a Windows client
++		// and correct to the more typical / used in Git URIs.
++		//
++		name = name.replace('\\', '/');
++
++		// git://thishost/path should always be name="/path" here
++		//
+ 		if (!name.startsWith("/"))
+ 			return null;
++
++		// Forbid Windows UNC paths as they might escape the base
++		//
++		if (name.startsWith("//"))
++			return null;
++
++		// Forbid funny paths which contain an up-reference, they
++		// might be trying to escape and read /../etc/password.
++		//
++		if (name.contains("/../"))
++			return null;
+ 		name = name.substring(1);
+ 
+ 		Repository db;
+@@ -301,24 +315,22 @@ synchronized (exports) {
+ 				return db;
  		}
--		return commitMessage;
+ 
+-		if (SAFE_REPOSITORY_NAME.matcher(name).matches()) {
+-			final File[] search;
+-			synchronized (exportBase) {
+-				search = exportBase.toArray(new File[exportBase.size()]);
+-			}
+-			for (final File f : search) {
+-				db = openRepository(new File(f, name));
+-				if (db != null)
+-					return db;
+-
+-				db = openRepository(new File(f, name + ".git"));
+-				if (db != null)
+-					return db;
+-
+-				db = openRepository(new File(f, name + "/.git"));
+-				if (db != null)
+-					return db;
+-			}
++		final File[] search;
++		synchronized (exportBase) {
++			search = exportBase.toArray(new File[exportBase.size()]);
++		}
++		for (final File f : search) {
++			db = openRepository(new File(f, name));
++			if (db != null)
++				return db;
++
++			db = openRepository(new File(f, name + ".git"));
++			if (db != null)
++				return db;
++
++			db = openRepository(new File(f, name + "/.git"));
++			if (db != null)
++				return db;
+ 		}
+ 		return null;
  	}
- 
- 	private void prepareTrees(IFile[] selectedItems,
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
-index 9d062cc..8f85c08 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
-@@ -17,6 +17,7 @@
- import java.util.Collections;
- import java.util.Comparator;
- import java.util.Iterator;
-+import java.util.regex.Pattern;
- 
- import org.eclipse.core.resources.IFile;
- import org.eclipse.core.resources.IProject;
-@@ -67,6 +68,8 @@
-  */
- public class CommitDialog extends Dialog {
- 
-+	private static Pattern signedOffPattern = Pattern.compile("(.|\r|\n)*Signed-off-by: .*(\r|\n)*"); //$NON-NLS-1$
-+
- 	class CommitContentProvider implements IStructuredContentProvider {
- 
- 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-@@ -214,6 +217,30 @@ public void widgetDefaultSelected(SelectionEvent arg0) {
- 		signedOffButton.setText(UIText.CommitDialog_AddSOB);
- 		signedOffButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).span(2, 1).create());
- 
-+		signedOffButton.addSelectionListener(new SelectionListener() {
-+			boolean alreadySigned = false;
-+			public void widgetSelected(SelectionEvent arg0) {
-+				if (alreadySigned)
-+					return;
-+				if (signedOffButton.getSelection()) {
-+					alreadySigned = true;
-+					String curText = commitText.getText();
-+
-+					// add new lines if necessary
-+					if (!curText.endsWith(Text.DELIMITER))
-+						curText += Text.DELIMITER;
-+
-+					// if the last line is not a signed off (amend a commit), add a line break
-+					if (!signedOffPattern.matcher(new StringBuilder(curText)).matches())
-+						curText += Text.DELIMITER;
-+					commitText.setText(curText + "Signed-off-by: " + committerText.getText()); //$NON-NLS-1$
-+				}
-+			}
-+
-+			public void widgetDefaultSelected(SelectionEvent arg0) {
-+				// Empty
-+			}
-+		});
- 		Table resourcesTable = new Table(container, SWT.H_SCROLL | SWT.V_SCROLL
- 				| SWT.FULL_SELECTION | SWT.MULTI | SWT.CHECK | SWT.BORDER);
- 		resourcesTable.setLayoutData(GridDataFactory.fillDefaults().hint(600,
-@@ -330,7 +357,7 @@ private static String getFileStatus(IFile file) {
- 	 * @return The message the user entered
- 	 */
- 	public String getCommitMessage() {
--		return commitMessage;
-+		return commitMessage.replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$;
- 	}
- 
- 	/**
 -- 
-1.6.0.4
+1.6.2.rc0.173.g5e148
