@@ -1,146 +1,62 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: [PATCH] Makefile: resort filenames alphabetically
-Date: Mon,  9 Feb 2009 23:00:45 +0100
-Message-ID: <1234216845-27904-1-git-send-email-s-beyer@gmx.net>
-Cc: gitster@pobox.com, Stephan Beyer <s-beyer@gmx.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 09 23:02:28 2009
+From: Ben Bucksch <ben.bucksch.news@beonex.com>
+Subject: Re: Thunderbird and patches (was Re: [PATCH v2] Enable setting attach
+   as the default in .gitconfig   for git-format-patch.)
+Date: Mon, 09 Feb 2009 23:01:58 +0100
+Organization: Beonex
+Message-ID: <4990A7D6.5090709@beonex.com>
+References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com> <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com> <49904DE7.2080205@codeweavers.com> <4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com> <qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil> <49907F75.2050100@beonex.com> <alpine.DEB.1.00.0902092013260.10279@pacific.mpi-cbg.de> <4990820B.504@beonex.com> <r57oMSnamWCJ1G1-r98G6mYQjX0YNpQz1OzEBHSrDifmBU_ir2P77A@cipher.nrlssc.navy.mil> <49908927.2030408@beonex.com> <49908B1A.7040101@
+ beonex.com> <kCHkjagMqmrTXbd229odxLGt0neIkfVZDCJPnhpXGVU71q9GcXEmPw@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeremy White <jwhite@codeweavers.com>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Mon Feb 09 23:04:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWeCp-0001yq-Th
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 23:02:20 +0100
+	id 1LWeEa-0002bw-B3
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 23:04:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753016AbZBIWAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 17:00:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752770AbZBIWAw
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 17:00:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59122 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752722AbZBIWAv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 17:00:51 -0500
-Received: (qmail invoked by alias); 09 Feb 2009 22:00:49 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp032) with SMTP; 09 Feb 2009 23:00:49 +0100
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX18mA7MMZB0mNxnRPSg4z7RCyr67UI/Fjj7hZ02pVM
-	8iHX9cKplOun1Z
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1LWeBJ-0003ln-8I; Mon, 09 Feb 2009 23:00:45 +0100
-X-Mailer: git-send-email 1.6.2.rc0.458.g97dd
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1752833AbZBIWCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 17:02:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbZBIWCl
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 17:02:41 -0500
+Received: from mail.server.beonex.com ([78.46.195.11]:43317 "EHLO
+	mail.server.beonex.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752591AbZBIWCl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 17:02:41 -0500
+Received: from [10.1.1.3] (localhost [127.0.0.1])
+	by mail.server.beonex.com (Postfix) with ESMTP id A79D9303C560;
+	Mon,  9 Feb 2009 23:02:48 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2a1pre) Gecko/20081217 Shredder/3.0b2pre
+In-Reply-To: <kCHkjagMqmrTXbd229odxLGt0neIkfVZDCJPnhpXGVU71q9GcXEmPw@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109143>
 
-Some filenames in the Makefile got out of order.
-This patch resorts the filename lists which makes it easier
-to grasp that it is sorted and that this should be kept.
+On 09.02.2009 22:03, Brandon Casey wrote:
+> > So, TB *does* save it correctly, byte-for-byte.
+>
+> Sorry, but I think you did your comparison wrong.  Possibly the tool
+> which extracted the email from the cyrus server performed the same
+> transformation that Thunderbird does.
+>    
 
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
----
- Makefile |   16 ++++++++--------
- 1 files changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 27b9569..124efa0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -318,8 +318,8 @@ PROGRAMS += git-var$X
- # builtin-$C.o but is linked in as part of some other command.
- BUILT_INS += $(patsubst builtin-%.o,git-%$X,$(BUILTIN_OBJS))
- 
--BUILT_INS += git-cherry-pick$X
- BUILT_INS += git-cherry$X
-+BUILT_INS += git-cherry-pick$X
- BUILT_INS += git-format-patch$X
- BUILT_INS += git-fsck-objects$X
- BUILT_INS += git-get-tar-commit-id$X
-@@ -358,8 +358,8 @@ LIB_H += builtin.h
- LIB_H += cache.h
- LIB_H += cache-tree.h
- LIB_H += commit.h
--LIB_H += compat/mingw.h
- LIB_H += compat/cygwin.h
-+LIB_H += compat/mingw.h
- LIB_H += csum-file.h
- LIB_H += decorate.h
- LIB_H += delta.h
-@@ -385,7 +385,6 @@ LIB_H += pack-refs.h
- LIB_H += pack-revindex.h
- LIB_H += parse-options.h
- LIB_H += patch-ids.h
--LIB_H += string-list.h
- LIB_H += pkt-line.h
- LIB_H += progress.h
- LIB_H += quote.h
-@@ -399,6 +398,7 @@ LIB_H += sha1-lookup.h
- LIB_H += sideband.h
- LIB_H += sigchain.h
- LIB_H += strbuf.h
-+LIB_H += string-list.h
- LIB_H += tag.h
- LIB_H += transport.h
- LIB_H += tree.h
-@@ -437,8 +437,8 @@ LIB_OBJS += diffcore-order.o
- LIB_OBJS += diffcore-pickaxe.o
- LIB_OBJS += diffcore-rename.o
- LIB_OBJS += diff-delta.o
--LIB_OBJS += diff-no-index.o
- LIB_OBJS += diff-lib.o
-+LIB_OBJS += diff-no-index.o
- LIB_OBJS += diff.o
- LIB_OBJS += dir.o
- LIB_OBJS += editor.o
-@@ -471,9 +471,9 @@ LIB_OBJS += pager.o
- LIB_OBJS += parse-options.o
- LIB_OBJS += patch-delta.o
- LIB_OBJS += patch-ids.o
--LIB_OBJS += string-list.o
- LIB_OBJS += path.o
- LIB_OBJS += pkt-line.o
-+LIB_OBJS += preload-index.o
- LIB_OBJS += pretty.o
- LIB_OBJS += progress.o
- LIB_OBJS += quote.o
-@@ -487,13 +487,14 @@ LIB_OBJS += revision.o
- LIB_OBJS += run-command.o
- LIB_OBJS += server-info.o
- LIB_OBJS += setup.o
--LIB_OBJS += sha1_file.o
- LIB_OBJS += sha1-lookup.o
-+LIB_OBJS += sha1_file.o
- LIB_OBJS += sha1_name.o
- LIB_OBJS += shallow.o
- LIB_OBJS += sideband.o
- LIB_OBJS += sigchain.o
- LIB_OBJS += strbuf.o
-+LIB_OBJS += string-list.o
- LIB_OBJS += symlinks.o
- LIB_OBJS += tag.o
- LIB_OBJS += trace.o
-@@ -502,8 +503,8 @@ LIB_OBJS += tree-diff.o
- LIB_OBJS += tree.o
- LIB_OBJS += tree-walk.o
- LIB_OBJS += unpack-trees.o
--LIB_OBJS += userdiff.o
- LIB_OBJS += usage.o
-+LIB_OBJS += userdiff.o
- LIB_OBJS += utf8.o
- LIB_OBJS += walker.o
- LIB_OBJS += wrapper.o
-@@ -511,7 +512,6 @@ LIB_OBJS += write_or_die.o
- LIB_OBJS += ws.o
- LIB_OBJS += wt-status.o
- LIB_OBJS += xdiff-interface.o
--LIB_OBJS += preload-index.o
- 
- BUILTIN_OBJS += builtin-add.o
- BUILTIN_OBJS += builtin-annotate.o
--- 
-1.6.2.rc0.458.g97dd
+No. Cyrus stores each mail in its own file. All I did was:
+TB | File | Save as.... | "1.eml"
+scp root@<imap server>:/<mailbox store path>/<mail folder path>/749\. 2.eml
+md5sum 1.eml 2.eml
+b98d288357e384b8f58fe332ed65748b  1.eml
+b98d288357e384b8f58fe332ed65748b  2.eml
+(the md5sum will be different for you, as my mail contains the Received: 
+headers from my server.)
+Given that I don't think TB changes the email on the server, what TB 
+saved is exactly what I received, verbatim, on the wire.
