@@ -1,125 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/6] t5400: allow individual tests to fail
-Date: Mon, 09 Feb 2009 11:08:29 -0800
-Message-ID: <7v4oz3v36a.fsf@gitster.siamese.dyndns.org>
-References: <1234170565-6740-1-git-send-email-gitster@pobox.com>
- <1234170565-6740-2-git-send-email-gitster@pobox.com>
- <1234170565-6740-3-git-send-email-gitster@pobox.com>
- <20090209184625.GA27037@coredump.intra.peff.net>
+From: Ben Bucksch <ben.bucksch.news@beonex.com>
+Subject: Re: Thunderbird and patches (was Re: [PATCH v2] Enable setting attach
+   as the default in .gitconfig   for git-format-patch.)
+Date: Mon, 09 Feb 2009 20:09:41 +0100
+Organization: Beonex
+Message-ID: <49907F75.2050100@beonex.com>
+References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com> <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com> <49904DE7.2080205@codeweavers.com> <4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com> <qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 09 20:10:31 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeremy White <jwhite@codeweavers.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Mon Feb 09 20:12:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWbW7-00056Y-Lf
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 20:10:04 +0100
+	id 1LWbXr-0005qY-Qw
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 20:11:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbZBITIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 14:08:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751784AbZBITIg
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 14:08:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33631 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751235AbZBITIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 14:08:35 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3D2602AC83;
-	Mon,  9 Feb 2009 14:08:34 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 534412AC71; Mon, 
- 9 Feb 2009 14:08:31 -0500 (EST)
-In-Reply-To: <20090209184625.GA27037@coredump.intra.peff.net> (Jeff King's
- message of "Mon, 9 Feb 2009 13:46:26 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0C1BF458-F6DD-11DD-B721-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1752958AbZBITK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 14:10:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752637AbZBITKZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 14:10:25 -0500
+Received: from mail.server.beonex.com ([78.46.195.11]:55990 "EHLO
+	mail.server.beonex.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752491AbZBITKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 14:10:24 -0500
+Received: from [10.1.1.3] (localhost [127.0.0.1])
+	by mail.server.beonex.com (Postfix) with ESMTP id 0C997303C560;
+	Mon,  9 Feb 2009 20:10:30 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2a1pre) Gecko/20081217 Shredder/3.0b2pre
+In-Reply-To: <qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109105>
 
-Jeff King <peff@peff.net> writes:
+On 09.02.2009 19:54, Brandon Casey wrote:
+> I will follow up with an example patch which has the control characters in
+> it.
+>    
 
-> On Mon, Feb 09, 2009 at 01:09:21AM -0800, Junio C Hamano wrote:
->
->> Each test chdir'ed around and ended up in a random place if any of the
->> test in the sequence failed but the entire test script was allowed to
->> run.  This wrapps each in a subshell as necessary.
->
-> Certainly a good cleanup, but...
->
->> -test_expect_success \
->> -        'push can be used to delete a ref' '
->> +test_expect_success 'push can be used to delete a ref' '
->> +    (
->>  	cd victim &&
->>  	git branch extra master &&
->>  	cd .. &&
->>  	test -f victim/.git/refs/heads/extra &&
->>  	git send-pack ./victim/.git/ :extra master &&
->>  	! test -f victim/.git/refs/heads/extra
->> +    )
->>  '
->
-> Wouldn't this be cleaner as:
->
->   (
->     cd victim &&
->     git branch extra master
->   ) &&
->   ...
->
-> That is, it is not only safer but (IMHO) a bit easier to see which parts
-> are happening in which directory.
->
->> +test_expect_success 'pushing a delete should be denied with denyDeletes' '
->> +    (
->>  	cd victim &&
->>  	git config receive.denyDeletes true &&
->>  	git branch extra master &&
->>  	cd .. &&
->>  	test -f victim/.git/refs/heads/extra &&
->>  	test_must_fail git send-pack ./victim/.git/ :extra master
->> +    )
->
-> Ditto (and there are more, but I won't quote each one).
->
->> +test_expect_success 'pushing with --force should be denied with denyNonFastforwards' '
->> +    (
->>  	cd victim &&
->>  	git config receive.denyNonFastforwards true &&
->>  	cd .. &&
->>  	git update-ref refs/heads/master master^ || return 1
->>  	git send-pack --force ./victim/.git/ master && return 1
->>  	! test_cmp .git/refs/heads/master victim/.git/refs/heads/master
->> +    )
->
-> And here I don't know what in the world is going on with those "return
-> 1" lines. Shouldn't this be a chain of &&'s with a test_must_fail?
-> I.e.,:
->
->   ( cd victim && git config receive.denyNonFastforwards true ) &&
->   git update-ref refs/heads/master master^ &&
->   test_must_fail git send-pack --force ./victim/.git/ master &&
->   ! test_cmp .git/refs/heads/master victim/.git/refs/heads/master
->
-> Not to mention that the final test_cmp would be more robust if written
-> to make sure the victim's master ref stayed the same (instead of just
-> making sure we didn't screw it up in one particular way). And it should
-> probably use a git command rather than looking at the refs files (to be
-> future-proof against any automatic ref-packing), but that is just
-> nit-picking.
->
->
-> All minor things, of course, but while we're cleaning up... :)
+I can only advise against sending patches in the bodies, sorry. Bodies 
+are for human-language text. Attachments are for files like diffs, and 
+are preserved. Attachments with "Content-Disposition: inline" are for 
+attachments which are supposed to be read directly in the email reader, 
+like is the case here.
 
-Sure.  This was made as a quick-fix to a mess others created, so I did not
-study them very deeply.
+I guess that other, console-based email software won't deal with inline 
+attachments as nicely, but the major email clients do. Instead of trying 
+to do something that's going to be fruitless - email bodies are never 
+going to be character-to-character identical, because there are many 
+demands on formatting (up to graphical smiles) and from many different 
+languages (charsets, like seems to be the problem here) on it by users 
+-, I think your better route for success would be to use inline 
+attachments and fix the software which can't deal with *that* properly, 
+including display and quoting.
 
-Will reroll if I have the time but it is likely that I may be tending
-other topics first.
+Sorry to brush you off, but I this is a battle we can't win, either way. 
+Too many demands from too many sides.
+
+Ben
