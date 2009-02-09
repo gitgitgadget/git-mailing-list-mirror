@@ -1,103 +1,119 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: git fast-export issue -- anyone know if this is a bug or a feature?
-Date: Sun, 8 Feb 2009 22:31:50 -0700
-Message-ID: <51419b2c0902082131o512e966l1fb3029c7513b02e@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make repack less likely to corrupt repository
+Date: Sun, 08 Feb 2009 22:04:46 -0800
+Message-ID: <7vwsc0uow1.fsf@gitster.siamese.dyndns.org>
+References: <1234140299-29785-1-git-send-email-robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 09 06:33:22 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+	spearce@spearce.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Feb 09 07:06:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWOlj-0000pP-Pa
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 06:33:20 +0100
+	id 1LWPHm-0006le-OV
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 07:06:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751607AbZBIFbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 00:31:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751579AbZBIFbw
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 00:31:52 -0500
-Received: from mail-gx0-f21.google.com ([209.85.217.21]:49361 "EHLO
-	mail-gx0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750983AbZBIFbw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 00:31:52 -0500
-Received: by gxk14 with SMTP id 14so1580163gxk.13
-        for <git@vger.kernel.org>; Sun, 08 Feb 2009 21:31:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=RHOukVZokYNz/5Vkx/n+mbGpT7DosH5spdFDRJBZeHk=;
-        b=wY8TGlQpIPM/ADhexzUps351YIWtA0vGlA8adsALsz4HCWvH+s+SfSGI1wOte0v+0o
-         LN86aY4lEnOn4zdl2b5K+kV7zuJnKd/IH4DN3gjxbDtLipZDky5w6pC7SDQe4sImv1dE
-         nkd4KjGayx0fI3Q5I6Bw2q86uBMHqL+zEnvZA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=oWMJquc/jzxbFK7dQbfBmH1I6YTu17t0LwrCjX+8RaJcl4tXoOvWJu/f60Ck6Z4suq
-         UwMc/pRzMReqTMhIXWOBRQDjaKVKJmHHnRXnQeFsbV3OLF7659bmDwJ/lzS5HGC9sGTC
-         4NdohAoNPEpNeGDYQ2uTeohlVMaw/d9uGjM3g=
-Received: by 10.151.111.15 with SMTP id o15mr1587281ybm.214.1234157510699; 
-	Sun, 08 Feb 2009 21:31:50 -0800 (PST)
+	id S1753213AbZBIGFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 01:05:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753040AbZBIGFB
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 01:05:01 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54169 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752957AbZBIGFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 01:05:00 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CCDFA2ABEB;
+	Mon,  9 Feb 2009 01:04:57 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B47022ABEA; Mon, 
+ 9 Feb 2009 01:04:48 -0500 (EST)
+In-Reply-To: <1234140299-29785-1-git-send-email-robin.rosenberg@dewire.com>
+ (Robin Rosenberg's message of "Mon, 9 Feb 2009 01:44:59 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9424E5DA-F66F-11DD-8DC1-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109047>
 
-Hi,
+Robin Rosenberg <robin.rosenberg@dewire.com> writes:
 
-The git-fast-export manpage, under the first example, says that
-$ git fast-export --all | (cd /empty/repository && git fast-import)
-should create a one-to-one mirror of the source repository (other than
-reencoding commits that are not in UTF-8).
+> diff --git a/git-repack.sh b/git-repack.sh
+> index 458a497..6a7ba90 100755
+> --- a/git-repack.sh
+> +++ b/git-repack.sh
+> @@ -93,22 +93,43 @@ for name in $names ; do
+>  	chmod a-w "$PACKTMP-$name.pack"
+>  	chmod a-w "$PACKTMP-$name.idx"
+>  	mkdir -p "$PACKDIR" || exit
 
-Either I am misunderstanding this comment, or it's not quite true:
-while I've gotten identical mirrors using this recipe with most
-repositories I have tried, I have one which shows some changes under
-this process.  The changes I noticed are that, for example, the master
-branch has fewer commits in the "mirrored" repository than the source
-one, and that the history of commits has changed. (The content at the
-heads of all branches do match, so the changes seem restricted to the
-history of obtaining that content).  Unfortunately, (a) this
-repository is pretty unwieldy, (b) I can't share it, and (c) it's
-defied my attempts so far to find a small reproducible testcase.
-However, from what I have found, it looks like this could be a
-feature, because I actually like one of the changes I noticed so far.
+> +	ok=t
 
-The "source" repository is one that has been created by cvs2git (which
-operated on a franken cvs repository munged together from lots of
-different places; I'm running git-fast-export & git-fast-import based
-on it since I want to do some extra changes outside of cvs2git).  In
-the source repository, I noticed that 6 of the earliest commits in one
-root of history looked like:
+This does not seem to be used at all.
 
-     /--E
-    /  /
-A--C--D
-  /
- B
+> +	if test -f "$PACKDIR/pack-$name.pack"
+> +	then
+> +		mv -f "$PACKDIR/pack-$name.pack" \
+> +			"$PACKDIR/old-pack-$name.pack"
+> +	fi &&
+> +	if test -f "$PACKDIR/pack-$name.idx"
+> +	then
+> +		mv -f "$PACKDIR/pack-$name.idx" \
+> +			"$PACKDIR/old-pack-$name.idx" ||
+> +		(
+> +			mv -f "$PACKDIR/old-pack-$name.pack" \
+> +			"$PACKDIR/pack-$name.pack" || (
+> +				echo >&2 "Failed to restore after a failure to rename"\
+> +					"pack-$name{pack,idx} to old-$pack{pack,idx} in $PACKDIR"
+> +				echo >&2 "Please acquire advice on how to recover from this"\
+> +					"situation before you proceed."
+> +				exit 1
+> +			) || false
+> +		) || (
+> +			echo >&2 "Failed to replace the existing pack with updated one."
+> +			echo >&2 "We recovered from the situation, but cannot continue".
+> +			echo >&2 "repacking."
+> +			exit 0
+> +		)
+> +	fi &&
+>  	mv -f "$PACKTMP-$name.pack" "$PACKDIR/pack-$name.pack" &&
+>  	mv -f "$PACKTMP-$name.idx"  "$PACKDIR/pack-$name.idx" &&
+>  	test -f "$PACKDIR/pack-$name.pack" &&
+>  	test -f "$PACKDIR/pack-$name.idx" || {
+>  		echo >&2 "Couldn't replace the existing pack with updated one."
+> +		if (test -f "$PACKDIR/old-pack-$name.pack" ||
+> +			test -f "$PACKDIR/old-pack-$name.idx")
 
-In the "mirrored" repository, I notice this history had been modified
-so that it looked like
+Why fork a subshell?
 
-        E
-       /
-A--C--D
-  /
- B
+> +		then
+> +			echo >&2 "The original set of packs have been saved as"
+> +			echo >&2 "old-pack-$name.{pack,idx} in $PACKDIR."
+> +		fi
+>  		exit 1
 
-The latter history seems much more sane to me; since D is a child of
-C, making E a merge of C and D seemed really weird.  I did pour over
-the output of git fast-export --all to see if the merge directives
-were as expected, in order to see whether git fast-export or git
-fast-import were to be credited with the history fix.  It looks to me
-like git-fast-export reports no merge parents for E, so this seems to
-be on the fast-export side.
+What's troubling more is that this would seem to leave the result even
+more inconsistent if there are more than one packs that need to be
+replaced.
 
-Is this, by chance, intentional?  (I'm using git-1.6.0.6, if it matters.)
+I wonder if a completely different strategy would be less problematic.
 
-Thanks,
-Elijah
+ (1) create a new directory objects/new-pack/, copy ones with the same
+     name, and hardlink the rest;
+
+ (2) Do the usual "mv temp to final" dance into objects/new-pack/, but
+     without any old-pack-$name part; if any fail, do not even try to
+     recover but just barf, perhaps removing new-pack directory;
+
+ (3) If all succeed, rename pack/ to old-pack/, rename new-pack/ to pack/.
+     If the former fails, you can stop and report that your repack did not
+     quite work, but new packs are still found in new-pack.  If the latter
+     fails, you can stop and report that your repack did not quite work,
+     but original packs are still found in old-pack.
+
+ (4) If the directory rename succeed, remove old-pack/
