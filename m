@@ -1,65 +1,80 @@
-From: Ben Bucksch <ben.bucksch.news@beonex.com>
-Subject: Re: Thunderbird and patches
-Date: Mon, 09 Feb 2009 23:39:02 +0100
-Organization: Beonex
-Message-ID: <4990B086.10804@beonex.com>
-References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com> <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: [PATCH v2] git-rebase-interactive: you can also add new commits to the
+ "work list"
+Date: Mon, 09 Feb 2009 23:44:54 +0100
+Message-ID: <1234219494-20513-1-git-send-email-barvik@broadpark.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git@vger.kernel.org
-To: Jeremy White <jwhite@codeweavers.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 23:41:12 2009
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: Kjetil Barvik <barvik@broadpark.no>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 09 23:46:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWeoR-0007GN-HC
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 23:41:12 +0100
+	id 1LWetV-0000mt-Pa
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 23:46:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752890AbZBIWjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 17:39:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752491AbZBIWjo
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 17:39:44 -0500
-Received: from mail.server.beonex.com ([78.46.195.11]:33009 "EHLO
-	mail.server.beonex.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752203AbZBIWjo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 17:39:44 -0500
-Received: from [10.1.1.3] (localhost [127.0.0.1])
-	by mail.server.beonex.com (Postfix) with ESMTP id 6EE05303C560;
-	Mon,  9 Feb 2009 23:39:52 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2a1pre) Gecko/20081217 Shredder/3.0b2pre
-In-Reply-To: <49903521.1060101@codeweavers.com>
+	id S1752643AbZBIWo5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 17:44:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752411AbZBIWo5
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 17:44:57 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:40176 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752161AbZBIWo4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 17:44:56 -0500
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KET00IJQLUVPRD0@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Mon, 09 Feb 2009 23:44:55 +0100 (CET)
+Received: from localhost.localdomain ([80.202.166.166])
+ by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTPA id <0KET00DIFLUU3P40@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Mon, 09 Feb 2009 23:44:55 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.349.g99fa5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109154>
 
-Summary of proposed/possible solutions:
+Add some lines to document that you can also use 'git rebase
+--interactive' to add new commits to the rebased patch-series.  This
+is sort of running multiple 'git cherry-pick' commands in one go.
 
-    * TB | normal msg viewer | main menu | File | Save As | File |
-      "foo.eml" saves the verbatim, on the wire RFC822 mail
-      (that may include quoted printable etc., though, so verbatim may
-      not actually be what you want)
-    * You can turn off format=flowed during sending, if it disturbs you:
-         1. Prefs | Advanced | General | Config Editor...
-         2. "mailnews.send_plaintext_flowed" = false
-    * Jeremy White has a patch for git-imap-send to work around TB's
-      body reformatting, by inserting a preformatted (<pre>) section.
+Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
+---
+ Documentation/git-rebase.txt |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
-(Other solutions, involves other software:)
-
-    * I strong suggest to send inline attachments (Content-Disposition:
-      inline, RFC 2183 [1], Internet Standard), because patches are
-      arguably files, and the body is for human language text.
-      Therefore, it's an attachment that you want to see inline,
-      therefore inline attachment is the IMHO correct solution.
-      If some mailers cannot handle this comfortably (display inline,
-      quote), maybe you can also advocate having *them* fixed.
-
-
-[1] <http://www.apps.ietf.org/rfc/rfc2183.html>
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 3d6d429..11eff32 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -318,8 +318,9 @@ Start it with the last commit you want to retain as-is:
+ 
+ An editor will be fired up with all the commits in your current branch
+ (ignoring merge commits), which come after the given commit.  You can
+-reorder the commits in this list to your heart's content, and you can
+-remove them.  The list looks more or less like this:
++reorder the commits in this list to your heart's content, you can
++remove them, and you can and new commits.  The list looks more or less
++like this:
+ 
+ -------------------------------------------
+ pick deadbee The oneline of this commit
+@@ -331,6 +332,9 @@ The oneline descriptions are purely for your pleasure; 'git-rebase' will
+ not look at them but at the commit names ("deadbee" and "fa1afe1" in this
+ example), so do not delete or edit the names.
+ 
++You can also introduce a new commit into the list, by finding the SHA1
++ref of that new commit, and place a command in front of it.
++
+ By replacing the command "pick" with the command "edit", you can tell
+ 'git-rebase' to stop after applying that commit, so that you can edit
+ the files and/or the commit message, amend the commit, and continue
+-- 
+1.6.1.349.g99fa5
