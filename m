@@ -1,85 +1,79 @@
-From: Chris Velevitch <chris.velevitch@gmail.com>
-Subject: Re: Eclipse Plugin install issue
-Date: Mon, 9 Feb 2009 21:55:24 +1100
-Message-ID: <b0a3bf780902090255o6a52555eq18235320782652eb@mail.gmail.com>
-References: <b0a3bf780902060717l653cc6dcx385aa147f606a520@mail.gmail.com>
-	 <200902061710.34337.robin.rosenberg@dewire.com>
-	 <1234007463339-2288907.post@n2.nabble.com>
-	 <200902080120.06894.robin.rosenberg.lists@dewire.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: receive.denyCurrentBranch
+Date: Mon, 9 Feb 2009 12:06:44 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902091204100.10279@pacific.mpi-cbg.de>
+References: <20090208042910.19079.qmail@science.horizon.com> <alpine.DEB.1.00.0902081128420.10279@pacific.mpi-cbg.de> <76718490902080950r798ca02es4e560da35e499046@mail.gmail.com> <alpine.DEB.1.00.0902082149380.10279@pacific.mpi-cbg.de>
+ <76718490902081451xd953e84y33de64cc82c1da42@mail.gmail.com> <alpine.DEB.1.00.0902090038550.10279@pacific.mpi-cbg.de> <76718490902081747s7a1ebe12yaf08665429a594c6@mail.gmail.com> <20090209050659.GA12655@mini-me.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 09 11:56:54 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	George Spelvin <linux@horizon.com>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Mon Feb 09 12:07:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWTor-0001z0-Hx
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 11:56:54 +0100
+	id 1LWTzA-0004yS-Pm
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 12:07:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410AbZBIKz1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Feb 2009 05:55:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754343AbZBIKz1
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 05:55:27 -0500
-Received: from rv-out-0506.google.com ([209.85.198.229]:21019 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754202AbZBIKz0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Feb 2009 05:55:26 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so1748800rvb.1
-        for <git@vger.kernel.org>; Mon, 09 Feb 2009 02:55:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=sWAZ1zGfpEF7qLielNQ5Ye1Q9DFXgiTAPV0Kf7UCAmU=;
-        b=j6+qVKsh07uxVTyAQg++6rGimzPaCd3F10Ke3Xepk6St2iCQ5DnnkTVHREiuLv5kgu
-         MdFJj3TGpvmZeP9ns5Bb4DLtR0Rmwim3eQ3aKZwiheODCudtOzWRHFMp/rwhodp7dWc6
-         vDztQDa1a2RtWMzjvYwuO+ehZJ5fjdnhNZmxw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=RNnlpJFr6FedTPfAplF81oOctATm4EOibNJ4v3ytZJ41FJgSSsECt54BwDRgLz8Vhe
-         8dnEoBrmg5GHhNjNlXZ4vHfUF01FhwQdlWlYE9z2YLKaroZRvRZLFXCj3FKtFSeFVmVc
-         eEQ2mm6arl+SkGIA9EcfFZaSeGxKr66+ycFCs=
-Received: by 10.141.68.12 with SMTP id v12mr155692rvk.51.1234176925022; Mon, 
-	09 Feb 2009 02:55:25 -0800 (PST)
-In-Reply-To: <200902080120.06894.robin.rosenberg.lists@dewire.com>
+	id S1753141AbZBILGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 06:06:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752635AbZBILGF
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 06:06:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51965 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752308AbZBILGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 06:06:04 -0500
+Received: (qmail invoked by alias); 09 Feb 2009 11:06:00 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp006) with SMTP; 09 Feb 2009 12:06:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/vcR5T177vVdy35IkvCXHWCI7kWzZ9nDnNaiEPxq
+	6f8pRgOW/UAf+0
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090209050659.GA12655@mini-me.lan>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109063>
 
-On Sun, Feb 8, 2009 at 11:20, Robin Rosenberg
-<robin.rosenberg.lists@dewire.com> wrote:
-> l=F6rdag 07 februari 2009 12:51:03 skrev Tim Schofield:
->> I am getting this identical error. I am using 200902052244 and eclip=
-se
->> Version: 3.4.1 Build id: M20080911-1700.
->
-> Was that a pristine version of that build or did you have other plugi=
-ns too?
-> I know Eclipse can give very confusing error messages sometimes when
-> things don't match up. It might be that we have a dependency requirem=
-ent
-> that is too strict and collides with another plugin.
+Hi,
 
-I installed Eclipse-jee-ganymede-3.4.1.tar.gz and Web Tools (WTP). I
-also have EMF and Mylyn, but I can't recall if they came with it or I
-installed them.
+On Mon, 9 Feb 2009, Theodore Tso wrote:
 
+> On Sun, Feb 08, 2009 at 08:47:26PM -0500, Jay Soffian wrote:
+> > I agree that a detached HEAD is a bad idea. The closest parallel that
+> > I can come up with for git would be for receive-pack to store incoming
+> > changes into separate branch hierarchy, NOT for it to detach HEAD. A
+> > toy-patch I played around with earlier allowed this on the non-bare
+> > upstream repo:
+> > 
+> > [receive]
+> >      prefix = refs/remotes/incoming
+> > 
+> > Then a push to refs/heads/master was automatically stored as
+> > refs/remotes/incoming/master instead.
+> 
+> What happens when the next person pushes to the same remote repo, and
+> their refs/heads/master push is not a fast-forward merge of the
+> current refs/remotes/incoming/master?
+> 
+> Do you lose the first user's push at that point?  Or do you refuse the
+> push?
 
-Chris
---
-Chris Velevitch
-Manager - Adobe Platform Users Group, Sydney
-m: 0415 469 095
-www.apugs.org.au
+This is meant for non-bare repositories, right?  Repositories that do have 
+reflogs...
 
-Adobe Platform Users Group, Sydney
-=46eb '09 meeting: Cairngorm Basics
-Date: Mon 23rd Feb January 6pm for 6:30 start
-Details and RSVP on http://groups.adobe.com/posts/d094878396
+Ciao,
+Dscho
+
+P.S.: There _have_ been times when I would have liked an automatic 
+PUSH_HEAD that is always temporary, such as FETCH_HEAD.  I _could_ imagine 
+that this is something we could do (opt-in, of course): storing what was 
+already pushed in a PUSH_HEAD, even if the refs could not be updated.
