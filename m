@@ -1,80 +1,57 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH v2] git-rebase-interactive: you can also add new commits to the
- "work list"
-Date: Mon, 09 Feb 2009 23:44:54 +0100
-Message-ID: <1234219494-20513-1-git-send-email-barvik@broadpark.no>
+From: Ben Bucksch <ben.bucksch.news@beonex.com>
+Subject: Re: Thunderbird and patches (was Re: [PATCH v2] Enable setting attach
+   as the default in .gitconfig   for git-format-patch.)
+Date: Mon, 09 Feb 2009 23:46:34 +0100
+Organization: Beonex
+Message-ID: <4990B24A.4000801@beonex.com>
+References: <498E50E2.8050309@codeweavers.com> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com> <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com> <49904DE7.2080205@codeweavers.com> <4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com> <qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil> <49907F75.2050100@beonex.com> <alpine.DEB.1.00.0902092013260.10279@pacific.mpi-cbg.de> <4990820B.504@beonex.com> <r57oMSnamWCJ1G1-r98G6mYQjX0YNpQz1OzEBHSrDifmBU_ir2P77A@cipher.nrlssc.navy.mil> <49908927.2030408@beonex.com> <49908B1A.7040101@beonex.com> <kCHkjagMqmrTXbd229odxLGt0neIkfVZDCJPnhpXGVU71q9GcXEmPw@cipher.nrlssc.navy.mil> <4990A7D6.5090709@beonex.com> <1quO9vKdveU3
+ UD9xhBB6YkuoBUyUsLvXylSjOkZKRByKfUxgId9fwQ@cipher.nrlssc.navy.mil> <4990AD62.1030102@beonex.com> <LPqf-HWrLRqzpr9F2D3QXUFfkpclYxx-y3jCNxZ6UAc@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: Kjetil Barvik <barvik@broadpark.no>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 09 23:46:27 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeremy White <jwhite@codeweavers.com>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Mon Feb 09 23:48:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWetV-0000mt-Pa
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 23:46:26 +0100
+	id 1LWevk-0001Xd-53
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 23:48:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752643AbZBIWo5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 17:44:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752411AbZBIWo5
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 17:44:57 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:40176 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752161AbZBIWo4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 17:44:56 -0500
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KET00IJQLUVPRD0@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Mon, 09 Feb 2009 23:44:55 +0100 (CET)
-Received: from localhost.localdomain ([80.202.166.166])
- by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTPA id <0KET00DIFLUU3P40@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Mon, 09 Feb 2009 23:44:55 +0100 (CET)
-X-Mailer: git-send-email 1.6.1.349.g99fa5
+	id S1753154AbZBIWrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 17:47:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753275AbZBIWrR
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 17:47:17 -0500
+Received: from mail.server.beonex.com ([78.46.195.11]:43670 "EHLO
+	mail.server.beonex.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753064AbZBIWrQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 17:47:16 -0500
+Received: from [10.1.1.3] (localhost [127.0.0.1])
+	by mail.server.beonex.com (Postfix) with ESMTP id D9999303C560;
+	Mon,  9 Feb 2009 23:47:24 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2a1pre) Gecko/20081217 Shredder/3.0b2pre
+In-Reply-To: <LPqf-HWrLRqzpr9F2D3QXUFfkpclYxx-y3jCNxZ6UAc@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109155>
 
-Add some lines to document that you can also use 'git rebase
---interactive' to add new commits to the rebased patch-series.  This
-is sort of running multiple 'git cherry-pick' commands in one go.
+On 09.02.2009 23:28, Brandon Casey wrote:
+> But it's the latter one that gives me the *correct* results. :b
+>    
+Oh. As I showed, File | Save As... in normal msg viewer works here.
+When I save in View Source, the file is different, and diff -u shows 
+every line different, and diff -uw shows no difference. Therefore, I 
+think it's the line ending.
 
-Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
----
- Documentation/git-rebase.txt |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+FWIW, I'm on Linux, in case TB adapts to the system line ending in one 
+case and not in the other, which may explain the difference between what 
+we see.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 3d6d429..11eff32 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -318,8 +318,9 @@ Start it with the last commit you want to retain as-is:
- 
- An editor will be fired up with all the commits in your current branch
- (ignoring merge commits), which come after the given commit.  You can
--reorder the commits in this list to your heart's content, and you can
--remove them.  The list looks more or less like this:
-+reorder the commits in this list to your heart's content, you can
-+remove them, and you can and new commits.  The list looks more or less
-+like this:
- 
- -------------------------------------------
- pick deadbee The oneline of this commit
-@@ -331,6 +332,9 @@ The oneline descriptions are purely for your pleasure; 'git-rebase' will
- not look at them but at the commit names ("deadbee" and "fa1afe1" in this
- example), so do not delete or edit the names.
- 
-+You can also introduce a new commit into the list, by finding the SHA1
-+ref of that new commit, and place a command in front of it.
-+
- By replacing the command "pick" with the command "edit", you can tell
- 'git-rebase' to stop after applying that commit, so that you can edit
- the files and/or the commit message, amend the commit, and continue
--- 
-1.6.1.349.g99fa5
+/me just realizes that he's talking with the military.
