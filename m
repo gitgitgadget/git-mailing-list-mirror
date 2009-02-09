@@ -1,92 +1,56 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [RFC] New command: 'git snapshot'.
-Date: Mon, 09 Feb 2009 20:52:30 +0100
-Message-ID: <gmq1hu$ccn$1@ger.gmane.org>
-References: <38cfbb550902091054u78f2e706u67752b4dc9de6c3b@mail.gmail.com>
+From: Ben Bucksch <ben.bucksch.news@beonex.com>
+Subject: Re: Thunderbird and patches (was Re: [PATCH v2] Enable setting attach
+   as the default in .gitconfig   for git-format-patch.)
+Date: Mon, 09 Feb 2009 20:59:22 +0100
+Organization: Beonex
+Message-ID: <49908B1A.7040101@beonex.com>
+References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com> <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com> <49904DE7.2080205@codeweavers.com> <4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com> <qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil> <49907F75.2050100@beonex.com> <alpine.DEB.1.00.0902092013260.10279@pacific.mpi-cbg.de> <4990820B.504@beonex.com> <r57oMSnamWCJ1G1-r98G6mYQjX0YNpQz1OzEBHSrDifmBU_ir2P77A@cipher.nrlssc.navy.mil> <49908927.2030408@beonex.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 09 20:54:12 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeremy White <jwhite@codeweavers.com>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Mon Feb 09 21:02:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWcCp-00044K-9e
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 20:54:11 +0100
+	id 1LWcK7-0006fx-Bt
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 21:01:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753184AbZBITwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 14:52:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751109AbZBITwm
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 14:52:42 -0500
-Received: from main.gmane.org ([80.91.229.2]:53248 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750782AbZBITwl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 14:52:41 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LWcBL-0002Fk-9H
-	for git@vger.kernel.org; Mon, 09 Feb 2009 19:52:39 +0000
-Received: from host-78-15-9-200.cust-adsl.tiscali.it ([78.15.9.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Feb 2009 19:52:39 +0000
-Received: from giuseppe.bilotta by host-78-15-9-200.cust-adsl.tiscali.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Feb 2009 19:52:39 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: host-78-15-9-200.cust-adsl.tiscali.it
-User-Agent: KNode/0.10.9
-X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
+	id S1756091AbZBIUAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 15:00:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757444AbZBIUAG
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 15:00:06 -0500
+Received: from mail.server.beonex.com ([78.46.195.11]:38520 "EHLO
+	mail.server.beonex.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756953AbZBIUAF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 15:00:05 -0500
+Received: from [10.1.1.3] (localhost [127.0.0.1])
+	by mail.server.beonex.com (Postfix) with ESMTP id BB15B303C561;
+	Mon,  9 Feb 2009 21:00:12 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2a1pre) Gecko/20081217 Shredder/3.0b2pre
+In-Reply-To: <49908927.2030408@beonex.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109116>
 
-On Monday 09 February 2009 19:54, Fabio Augusto Dal Castel wrote:
+On 09.02.2009 20:51, Ben Bucksch wrote:
+> On 09.02.2009 20:30, Brandon Casey wrote:
+>> Did you try it with the message I sent titled
+>> '[PATCH] example patch corrupted by thunderbird'?
+>
+> I tried now, and none of the editors/viewers I tried are displaying 
+> anything that would come close to readable to me, even if you count 
+> clearly marked hex character codes as readable. I tried less, e3 and 
+> kwrite. Therefore, a) I can't verify whether the result is correct or not
 
-> Q. What are the differences between 'git stash' and 'git snapshot'?
-> 
-> A.
-> 
-> git stash                         git snapshot
-> 
-> temporary/short-term              permanent/long-term
-> reflog-based                      branch-based
-> applies a "git reset --hard"      leaves working dir / index untouched
-> does not stash untracked files    snapshots ALL files (except ignored)
-
-I like this snapshot idea, and I clearly see the difference
-between this and stash.
-
-For example, I use stash when I want to move away from the current
-hacking because a new, more urgent change must be done somewhere
-else.
-
-Instead, I see a usecase for git snapshot for progressive
-temporary snapshot while working towards a more complex feature
-while needing temporary intermediate checkpoints: an effect
-similar to what I currently achieve using git commit (a first
-time) and git commit --amend as my work progresses.
-
-In this respect, I wouldn't agree with the first difference you
-remarked, but that's just the usecase I have in mind.
-
-> Q. How it works?
-> 
-> A.[What follows is a textual description of my current implementation.
-> Of course, there is nothing carved in stone: suggestions and comments
-> are MORE than welcome.]
-> 
-> All snapshots are stored in a special branch ("<branch>_snapshots").
-> So, if you are on 'master' branch, a 'git snapshot' will create/use a
-> 'master_snapshots' branch.
-
-I'm not sure I like the idea of creating these branches with these
-branchnames. What about using another refs/ subtree? So
-refs/snapshots/somebranchname would contain the snapshot paired
-with refs/heads/somebranchname.
-
--- 
-Giuseppe "Oblomov" Bilotta
+I now compared the result of File | Save as.... (main menu, not context 
+menu) | "1.eml" with the email on the cyrus server, and they are 
+identical (diff and md5sum). So, TB *does* save it correctly, byte-for-byte.
