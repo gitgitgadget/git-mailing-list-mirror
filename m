@@ -1,84 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Thunderbird and patches (was Re: [PATCH v2] Enable setting attach
-   as the default in .gitconfig   for git-format-patch.)
-Date: Mon, 9 Feb 2009 21:09:06 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902092105230.10279@pacific.mpi-cbg.de>
-References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com>
- <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com> <49904DE7.2080205@codeweavers.com> <4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com>
- <qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil> <49907F75.2050100@beonex.com> <alpine.DEB.1.00.0902092013260.10279@pacific.mpi-cbg.de> <RD8dEuXN_TYvtiDHum-mdwL3m_eJP49xWrl9-YgiLfhOFN6weRXVhg@cipher.nrlssc.navy.mil>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git ready: daily git tips
+Date: Mon, 09 Feb 2009 15:42:07 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.0902091524520.30940@xanadu.home>
+References: <1234131508141-2294642.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ben Bucksch <ben.bucksch.news@beonex.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jeremy White <jwhite@codeweavers.com>,
-	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Mon Feb 09 21:36:12 2009
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Nick Quaranto <nick@quaran.to>
+X-From: git-owner@vger.kernel.org Mon Feb 09 21:43:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWcrN-0003bl-Gx
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 21:36:05 +0100
+	id 1LWcyk-0006Id-BM
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 21:43:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752509AbZBIUei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 15:34:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbZBIUei
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 15:34:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59340 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750699AbZBIUeh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 15:34:37 -0500
-Received: (qmail invoked by alias); 09 Feb 2009 20:08:23 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp069) with SMTP; 09 Feb 2009 21:08:23 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Hnd9RwmPHRZTft4pwkbpNqmzI+XRlStTrxmyTJA
-	Ln6ExxXJxHQhAc
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <RD8dEuXN_TYvtiDHum-mdwL3m_eJP49xWrl9-YgiLfhOFN6weRXVhg@cipher.nrlssc.navy.mil>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1752627AbZBIUmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 15:42:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752502AbZBIUmP
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 15:42:15 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:60928 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752387AbZBIUmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 15:42:14 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KET008D0G67K4C1@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 09 Feb 2009 15:42:08 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1234131508141-2294642.post@n2.nabble.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109118>
 
-Hi,
+On Sun, 8 Feb 2009, Nick Quaranto wrote:
 
-On Mon, 9 Feb 2009, Brandon Casey wrote:
-
-> Johannes Schindelin wrote:
-> > Hi,
-> > 
-> > On Mon, 9 Feb 2009, Ben Bucksch wrote:
-> > 
-> >> On 09.02.2009 19:54, Brandon Casey wrote:
-> >>> I will follow up with an example patch which has the control 
-> >>> characters in it.
-> > 
-> > You can use a mailer such as Alpine, which has no problems with patches 
-> > like that whatsoever.
 > 
-> Yes, that's my work-around.  Though it's pine, we're not modern enough to
-> have alpine.
+> I started this blog just around a month ago on a quest to learn more about
+> git on a daily basis and to show others how awesome it is. If you have any
+> suggestions on what content to cover or how things should be done
+> differently, I would greatly appreciate it. Thanks!
+> 
+> http://gitready.com
 
-BTW it seems that a few people misunderstood my comments.
+Well done.
 
-Just to clarify: I am happy if a lot of non-technical people use 
-Thunderbird.  I mean, I am happy for them.
+One topic that IMHO you fail to cover, and which is being neglected 
+almost everywhere else too, is the reflog.
 
-If it is too complicated for Thunderbird to accomodate the workflow 
-required on our mailing list, however, I will have to recommend another 
-tool to the people who want to contribute to Git.
+The reflog is really your safety net when working with git.  It records 
+everything you do. So even if you screw up a rebase, perform the wrong 
+merge, or any other kind of undesired operation, then you may always go 
+back to a previous state.  Either you use -g with 'git log' to see all 
+those recorded states, or even 'git reflog' without any argument to get 
+a condensed list for HEAD.
 
-I would not recommend emacs to a vim user, either.  Or vice versa.
+The <branch>@{<spec>} notation can be used anywhere a ref is normally 
+required.  The special branch "HEAD" shows every state the HEAD pointer 
+went through, including branch switches.  The <branch< part can be left 
+out to mean "currently checked-out branch".
 
-In other words: use the right tool.  Or, as somebody put it at the 
-GitTogether: to a hammer, everything looks like a nail.
+One thing that I use all the time after a 'git pull' is 'git log @{1}..' 
+where "@{1}" means the first previous tip of the current branch, so 
+effectively showing me the log of what the pull brought in my branch.
 
-Ciao,
-Dscho
+
+Nicolas
