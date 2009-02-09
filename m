@@ -1,97 +1,126 @@
-From: Deskin Miller <deskinm@umich.edu>
-Subject: [PATCH v2] git-svn: Print revision while searching for earliest use of path
-Date: Sun,  8 Feb 2009 19:33:18 -0500
-Message-ID: <1234139598-13703-1-git-send-email-deskinm@umich.edu>
-References: <86d4c5e00902050542n74b10bfdw5e9249ac23fdc9e7@mail.gmail.com>
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	Deskin Miller <deskinm@umich.edu>
-To: normalperson@yhbt.net
-X-From: git-owner@vger.kernel.org Mon Feb 09 01:35:00 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Make repack less likely to corrupt repository
+Date: Mon,  9 Feb 2009 01:44:59 +0100
+Message-ID: <1234140299-29785-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+	spearce@spearce.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 09 01:46:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWK6v-0003CE-I3
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 01:34:53 +0100
+	id 1LWKIG-00061n-Ii
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 01:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753556AbZBIAd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Feb 2009 19:33:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753508AbZBIAd1
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 19:33:27 -0500
-Received: from yx-out-2324.google.com ([74.125.44.30]:24715 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753502AbZBIAd0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 19:33:26 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so635029yxm.1
-        for <git@vger.kernel.org>; Sun, 08 Feb 2009 16:33:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=IplrJavCODGBdGfKdKuN0Z7d/pXtRMKSUz6/JKakSr4=;
-        b=BPuiF6U5yMkbf5rpE/rcAUy4BbTAsY3dD58s7Q4aaZb7UqbAJjLBVNEUNs16M2BMX2
-         Lb9LSCwPy6gykygKQ0uB7cdHWcHMGARGH02wWi7kBjv5OFppC2CJQLuYQj8l3yLbit8E
-         4siZGuZfdtS11ae7363m9gXLi6WwdH63sC3kA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        b=RFaIDN6up9bb46At2QGqz9YsAWZzU1HqLSULrIP4lupRnvV+wBirJRmDBEpbKTq/j8
-         m0jUK/FpfcG763fbcDOKywsMLDsby/P15TolmO2Z1dcxcQIG3htOsFjsBDGJHNmrjjSE
-         J1ErCvgINzPQ+qG64SL2t0XjUUeXQHtkrgUp4=
-Received: by 10.64.180.5 with SMTP id c5mr1323592qbf.39.1234139604739;
-        Sun, 08 Feb 2009 16:33:24 -0800 (PST)
-Received: from localhost.localdomain ([68.40.49.130])
-        by mx.google.com with ESMTPS id 27sm6493045qbw.19.2009.02.08.16.33.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 08 Feb 2009 16:33:23 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.399.g0d272
-In-Reply-To: <86d4c5e00902050542n74b10bfdw5e9249ac23fdc9e7@mail.gmail.com>
+	id S1753662AbZBIApJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 19:45:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753630AbZBIApI
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 19:45:08 -0500
+Received: from mail.dewire.com ([83.140.172.130]:22086 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753023AbZBIApH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 19:45:07 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id B19B1A149A4;
+	Mon,  9 Feb 2009 01:45:03 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id av+dAILyq3RZ; Mon,  9 Feb 2009 01:45:02 +0100 (CET)
+Received: from localhost.localdomain (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id D9DB68026F9;
+	Mon,  9 Feb 2009 01:45:01 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.285.g35d8b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109029>
 
-When initializing a git-svn repository from a Subversion repoository,
-it is common to be interested in a path which did not exist in the
-initial commit to Subversion.  In a large repository, the initial fetch
-may take some looking for the earliest existence of the path time while
-the user receives no additional feedback.  Print the highest revision
-number scanned thus far to let the user know something is still
-happening.
+Repack could easily leave a repo in bad state after a failed
+repack on Windows if a pack file that repack wanted to replace
+was locked by a reader. A second attempt at running repack
+would then destroy the repo by removing the pack file. This
+attempts to make repack leave the repo in a good state, although
+not optimal, in order to avoid disasters.
 
-Signed-off-by: Deskin Miller <deskinm@umich.edu>
+If renaming an old pack fails we will try to restore halfway renames
+before exiting repack.
+
+For severe situations we encourage the user to seek advice.
+
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 ---
-I'd never looked closely enough at gs_fetch_loop_common to grok what was
-going on, and my previous experience with svn's get_log led me to think
-that git-svn would slurp up log info for all commits at once.  Silly of
-me.
+ git-repack.sh |   43 ++++++++++++++++++++++++++++++++-----------
+ 1 files changed, 32 insertions(+), 11 deletions(-)
 
-Eric, things are much cleaner doing as you suggest.  I added a
-carriage-return at the end of the message because I like it that way,
-and the line will be overwritten once it actually starts fetching data
-from svn.  I don't feel strongly about it though, so if it's better to
-make it a newline, please feel free to change it and apply.
+Here is an attempt at fixing this It was tested by making sure the
+idx or pack file was opened by some process and verifying that repo
+was ok after git repack -a -d. That was a manual test. We should
+probably add an automatic one too of some sort but I submit this 
+for reading  and ad-hoc testing by interested parties.
 
-Deskin Miller
+-- robin
 
- git-svn.perl |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 79888a0..601e2a3 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -4348,6 +4348,9 @@ sub gs_fetch_loop_common {
- 		}
- 		$self->get_log([$longest_path], $min, $max, 0, 1, 1,
- 		               sub { $revs{$_[1]} = _cb(@_) });
-+		if ($err) {
-+			print "Checked through r$max\r";
-+		}
- 		if ($err && $max >= $head) {
- 			print STDERR "Path '$longest_path' ",
- 				     "was probably deleted:\n",
+diff --git a/git-repack.sh b/git-repack.sh
+index 458a497..6a7ba90 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -93,22 +93,43 @@ for name in $names ; do
+ 	chmod a-w "$PACKTMP-$name.pack"
+ 	chmod a-w "$PACKTMP-$name.idx"
+ 	mkdir -p "$PACKDIR" || exit
+-
+-	for sfx in pack idx
+-	do
+-		if test -f "$PACKDIR/pack-$name.$sfx"
+-		then
+-			mv -f "$PACKDIR/pack-$name.$sfx" \
+-				"$PACKDIR/old-pack-$name.$sfx"
+-		fi
+-	done &&
++	ok=t
++	if test -f "$PACKDIR/pack-$name.pack"
++	then
++		mv -f "$PACKDIR/pack-$name.pack" \
++			"$PACKDIR/old-pack-$name.pack"
++	fi &&
++	if test -f "$PACKDIR/pack-$name.idx"
++	then
++		mv -f "$PACKDIR/pack-$name.idx" \
++			"$PACKDIR/old-pack-$name.idx" ||
++		(
++			mv -f "$PACKDIR/old-pack-$name.pack" \
++			"$PACKDIR/pack-$name.pack" || (
++				echo >&2 "Failed to restore after a failure to rename"\
++					"pack-$name{pack,idx} to old-$pack{pack,idx} in $PACKDIR"
++				echo >&2 "Please acquire advice on how to recover from this"\
++					"situation before you proceed."
++				exit 1
++			) || false
++		) || (
++			echo >&2 "Failed to replace the existing pack with updated one."
++			echo >&2 "We recovered from the situation, but cannot continue".
++			echo >&2 "repacking."
++			exit 0
++		)
++	fi &&
+ 	mv -f "$PACKTMP-$name.pack" "$PACKDIR/pack-$name.pack" &&
+ 	mv -f "$PACKTMP-$name.idx"  "$PACKDIR/pack-$name.idx" &&
+ 	test -f "$PACKDIR/pack-$name.pack" &&
+ 	test -f "$PACKDIR/pack-$name.idx" || {
+ 		echo >&2 "Couldn't replace the existing pack with updated one."
+-		echo >&2 "The original set of packs have been saved as"
+-		echo >&2 "old-pack-$name.{pack,idx} in $PACKDIR."
++		if (test -f "$PACKDIR/old-pack-$name.pack" ||
++			test -f "$PACKDIR/old-pack-$name.idx")
++		then
++			echo >&2 "The original set of packs have been saved as"
++			echo >&2 "old-pack-$name.{pack,idx} in $PACKDIR."
++		fi
+ 		exit 1
+ 	}
+ 	rm -f "$PACKDIR/old-pack-$name.pack" "$PACKDIR/old-pack-$name.idx"
 -- 
-1.6.1.399.g0d272
+1.6.1.285.g35d8b
