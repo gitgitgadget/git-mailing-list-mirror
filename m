@@ -1,59 +1,75 @@
-From: Jeremy White <jwhite@codeweavers.com>
-Subject: Re: Thunderbird and patches (was Re: [PATCH v2] Enable setting attach
-   as the default in .gitconfig   for git-format-patch.)
-Date: Mon, 09 Feb 2009 12:06:19 -0600
-Message-ID: <4990709B.90401@codeweavers.com>
-References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com> <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com> <49904DE7.2080205@codeweavers.com> <4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Deleting the "current" branch in remote bare repositories
+Date: Mon, 9 Feb 2009 13:28:43 -0500
+Message-ID: <20090209182843.GA27109@coredump.intra.peff.net>
+References: <20090207162754.5fb8b63f@perceptron> <94a0d4530902071405m33a0804er8030e14bea205898@mail.gmail.com> <20090208011802.2b7b9e74@perceptron> <7v1vu91d00.fsf@gitster.siamese.dyndns.org> <20090208111838.GD14359@coredump.intra.peff.net> <7v8wogzr3v.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git@vger.kernel.org
-To: Ben Bucksch <ben.bucksch.news@beonex.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 19:08:35 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Git ML <git@vger.kernel.org>, obrien654j@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 09 19:30:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWaYQ-0007CL-O9
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 19:08:23 +0100
+	id 1LWata-0007Dk-9f
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 19:30:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755574AbZBISGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 13:06:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754693AbZBISGY
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 13:06:24 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:52319 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753037AbZBISGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 13:06:23 -0500
-Received: from localhost
-	([127.0.0.1] helo=[216.251.189.140] ident=stunnel4)
-	by mail.codeweavers.com with esmtp (Exim 4.63)
-	(envelope-from <jwhite@codeweavers.com>)
-	id 1LWaWT-0005AE-VH; Mon, 09 Feb 2009 12:06:21 -0600
-User-Agent: Mozilla-Thunderbird 2.0.0.16 (X11/20080724)
-In-Reply-To: <499058B4.4070009@beonex.com>
-X-Enigmail-Version: 0.95.0
+	id S1753619AbZBIS2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 13:28:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbZBIS2q
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 13:28:46 -0500
+Received: from peff.net ([208.65.91.99]:46122 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752452AbZBIS2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 13:28:46 -0500
+Received: (qmail 4076 invoked by uid 107); 9 Feb 2009 18:29:01 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 09 Feb 2009 13:29:01 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Feb 2009 13:28:43 -0500
+Content-Disposition: inline
+In-Reply-To: <7v8wogzr3v.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109098>
 
-> So, you first have to quote using HTML rules:
-> <   -> &lt;
->  >   -> &gt;
-> &   -> &amp;
-> "   -> &quot;
+On Sun, Feb 08, 2009 at 11:05:40AM -0800, Junio C Hamano wrote:
 
-Thanks; that was helpful.
+> If you remove the current branch from a repository, the impact that
+> operation causes the remote users of the repository would be the same
+> whether the repository has or does not have a work tree.  And in that
+> sense, I think it should apply equally.  The criteria is not "is it bare",
+> but "is it used by people remotely".  IOW, you refuse deletion of the
+> current branch if other people may fetch from it.
 
-I've sent an experimental patch for further discussion (I even sent it
-using my patch + Thunderbird, and now I'm carefully studying my navel
-<grin>).
+Here are two reasons why we might not want to conflate the two safety
+valves:
 
-Cheers,
+ 1. I'm concerned about it becoming more confusing for end users. Right
+    now we don't even bother to look at denyCurrentBranch if we are in a
+    bare repo. That is, it is easily explained as "this prevents a
+    dangerous operation pushing into a non-bare repo, and if you have a
+    bare repo, you don't have to care about or set this at all." But
+    having it cover HEAD deletion, too, means that it is now "prevent
+    some dangerous operations; some things are dangerous if your repo is
+    non-bare, but safe otherwise.  But some of the operations are
+    dangerous all the time".
 
-Jeremy
+    But maybe that is not really a concern. Most users should leave it
+    set to the default unless they are clueful enough to know which
+    operations are safe and which are not.
+
+ 2. It may not be fine-grained enough. If I am a clueful user with a
+    post-receive hook, then I may want to set receive.denyCurrentBranch
+    to "ignore". But that doesn't necessarily mean my hook gracefully
+    handles _deletion_ of the branch. I may want to keep that set to
+    "refuse", since it makes no sense for my workflow.
+
+    Such a user is better served by a separate receive.denyDeleteHEAD
+    option.
+
+-Peff
