@@ -1,98 +1,118 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: Re: tool and worktree
-Date: Mon, 9 Feb 2009 10:15:08 +0800
-Message-ID: <20090209021508.GA7599@b2j>
-References: <20090208034406.GB7230@b2j> <2c6b72b30902080147u61412b04w24baa0e5fdc29584@mail.gmail.com> <2c6b72b30902081717q35fd4ba0k6ff5b1be8cd5ef2c@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: "repack" when a needed commit object missing "kills" the repo
+Date: Mon, 9 Feb 2009 03:26:42 +0100
+Message-ID: <20090209022642.GA19413@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Jonas Fonseca <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 03:16:53 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Feb 09 03:28:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWLhb-00077q-Cz
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 03:16:51 +0100
+	id 1LWLsu-0000u0-ED
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 03:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753785AbZBICPT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2009 21:15:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753773AbZBICPR
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 21:15:17 -0500
-Received: from ti-out-0910.google.com ([209.85.142.190]:29523 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753491AbZBICPQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 21:15:16 -0500
-Received: by ti-out-0910.google.com with SMTP id d10so1606265tib.23
-        for <git@vger.kernel.org>; Sun, 08 Feb 2009 18:15:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mail-followup-to:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=YPKSCZ2iZIBYkkVjtuI7F95HrheIWKzFa4aKxU6KkPA=;
-        b=s01D6qz/L/umeCVulTa3oUn/woq6dW4qCr5nIlB7nUFseQ36wYtiOQwmaKPLq+jJai
-         R1X4Y2E+OmWupAXmQemlY8JonFsbtmf51jtVTIQFlQn1ZTVs/BFkRjibBJMHIixGEnuW
-         UYpfgy1dl40NKH/0KBHy4Sod1C4+A8iOG5VKI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        b=U/VDbguRI89ZtyZBHsTHn9aIA1fMTiMwiZk9684+xzxnKcM8gBIqb9KSWefL4Y1lnx
-         iPF9Fv4532ZqlSe9g8NTi2c73wPU5yPnhE3+YWv2Ag3vZ/gryRxrf8nhzyl3qZUzSitR
-         YvDEuhLbMFS3LXdSuSzJQwUwhSyEg9lnYTYOA=
-Received: by 10.110.68.10 with SMTP id q10mr7205623tia.32.1234145713785;
-        Sun, 08 Feb 2009 18:15:13 -0800 (PST)
-Received: from localhost (pcd632187.netvigator.com [218.102.164.187])
-        by mx.google.com with ESMTPS id 22sm5798311tim.24.2009.02.08.18.15.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 08 Feb 2009 18:15:12 -0800 (PST)
-Mail-Followup-To: Jonas Fonseca <jonas.fonseca@gmail.com>,
-	git <git@vger.kernel.org>
+	id S1753733AbZBIC1G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2009 21:27:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753099AbZBIC1E
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 21:27:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57308 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753692AbZBIC1B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 21:27:01 -0500
+Received: (qmail invoked by alias); 09 Feb 2009 02:26:59 -0000
+Received: from i577BBA15.versanet.de (EHLO atjola.local) [87.123.186.21]
+  by mail.gmx.net (mp006) with SMTP; 09 Feb 2009 03:26:59 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+zTvdULpGzFjWct6k9XkRLx9usSY55FMxAI17CPs
+	6u4A/Za+LtWlAF
 Content-Disposition: inline
-In-Reply-To: <2c6b72b30902081717q35fd4ba0k6ff5b1be8cd5ef2c@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-27)
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109039>
 
-On Mon, 09 Feb 2009, Jonas Fonseca wrote:
-> On Sun, Feb 8, 2009 at 10:47, Jonas Fonseca <jonas.fonseca@gmail.com>=
- wrote:
-> > It might be as
-> > simple as setting the GIT_DIR environment to getcwd() + output of
-> > git-rev-parse --git-dir and then chdir() to core.worktree.
->=20
-> I have pushed a lightly tested patch that does something like this ..=
-=2E
+Hi,
 
-Thanks. Now the status view works.
+I have a git-svn repo with a large grafts file to recreate merges done
+in svn and in one case to simply change a commit's parent. I don't
+recall the reason for the latter, it's been there for almost a year now=
+,
+probably some crap from the svn repo that I didn't want to have in my
+git history. So the original history was like:
 
-Since /etc contains both public and private files.  When browsing the
-untracked files in the status view, for files that without read
-permission, eg the shadow passwd file, the lower pane displays the
-content of the last readable file.  Could it clear the content or just
-filter and display only files with read permission for the untracked
-files?
+A---B---C
 
---=20
-regards,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
-=E5=94=90=E8=A9=A9215 =E6=9D=8E=E5=95=86=E9=9A=B1  =E7=84=A1=E9=A1=8C
-    =E7=9B=B8=E8=A6=8B=E6=99=82=E9=9B=A3=E5=88=A5=E4=BA=A6=E9=9B=A3  =E6=
-=9D=B1=E9=A2=A8=E7=84=A1=E5=8A=9B=E7=99=BE=E8=8A=B1=E6=AE=98  =E6=98=A5=
-=E8=A0=B6=E5=88=B0=E6=AD=BB=E7=B5=B2=E6=96=B9=E7=9B=A1  =E8=A0=9F=E7=82=
-=AC=E6=88=90=E7=81=B0=E6=B7=9A=E5=A7=8B=E4=B9=BE
-    =E6=9B=89=E9=8F=A1=E4=BD=86=E6=84=81=E9=9B=B2=E9=AC=A2=E6=94=B9  =E5=
-=A4=9C=E5=90=9F=E6=87=89=E8=A6=BA=E6=9C=88=E5=85=89=E5=AF=92  =E8=93=AC=
-=E8=90=8A=E6=AD=A4=E5=8E=BB=E7=84=A1=E5=A4=9A=E8=B7=AF  =E9=9D=92=E9=B3=
-=A5=E6=AE=B7=E5=8B=A4=E7=82=BA=E6=8E=A2=E7=9C=8B
+And the graft turns that into:
+
+A---C
+
+Earlier repacks seem to have already pruned the B commit object, so
+removing the grafts correctly causes git to complain about that missing
+object.
+
+Now I decided to finally run filter-branch on that repo to get rid of
+the huge grafts file. So I ran "git filter-branch -- --all", removed th=
+e
+grafts file, dropped all the refs/original/ stuff and went on to "git
+repack -adf". And when that finished, a _lot_ of objects were suddenly
+missing, including some of the rewritten commits --> repo busted.
+=46ortunately I had made a backup. :-)
+
+The pack-objects process complained about the B commit object that was
+already missing earlier, and after some time I realised that I didn't
+expire the reflogs, so the "broken" commit was still reachable through
+them. So I retried with the reflogs empty, and yup, that worked well. S=
+o
+missing objects seem to confuse pack-objects enough to stop it from
+packing all of objects reachable through non-broken chains.
+
+A backtrace from the point at which pack-objects complains about the
+missing object shows this:
+
+#0  error (err=3D0x4bff35 "Could not read %s") at usage.c:64
+#1  0x0000000000459e3c in parse_commit (item=3D0x15f8c50) at commit.c:3=
+04
+#2  0x000000000048d2ea in add_parents_to_list (revs=3D0x7fff5f8bd7c0,=20
+    commit=3D0x15f8a10, list=3D0x7fff5f8bd7c0, cache_ptr=3D0x0) at revi=
+sion.c:514
+#3  0x000000000048d75d in get_revision_1 (revs=3D0x7fff5f8bd7c0)
+    at revision.c:1740
+#4  0x000000000048d7cb in get_revision_internal (revs=3D0x7fff5f8bd7c0)
+    at revision.c:1843
+#5  0x000000000048da31 in get_revision (revs=3D0x7fff5f8bd7c0) at revis=
+ion.c:1924
+#6  0x0000000000471f0c in traverse_commit_list (revs=3D0x7fff5f8bd7c0,=20
+    show_commit=3D0x437ec0 <show_commit>, show_object=3D0x437e80 <show_=
+object>)
+    at list-objects.c:147
+#7  0x0000000000437fc8 in get_object_list (ac=3D<value optimized out>,=20
+    av=3D<value optimized out>) at builtin-pack-objects.c:2059
+#8  0x000000000043aa4e in cmd_pack_objects (argc=3D6, argv=3D0x7fff5f8b=
+de38,=20
+    prefix=3D<value optimized out>) at builtin-pack-objects.c:2288
+#9  0x0000000000404983 in handle_internal_command (argc=3D6, argv=3D0x7=
+fff5f8bde38)
+    at git.c:244
+#10 0x0000000000404eb6 in main (argc=3D6, argv=3D0x7fff5f8bde38) at git=
+=2Ec:473
+
+Maybe get_revision_internal() switching into boundary mode is bad there=
+?
+The failing parse_commit() call causes get_revision_1() to return NULL,
+so get_revision_internal() assumes it ran out of commits, but in this
+case, it "just" hit a bad commit.
+
+Up to now, I don't have a small reproduction case yet and unfortunately
+I can't make the repo with which I've seen the failure available.
+
+Thanks,
+Bj=F6rn
