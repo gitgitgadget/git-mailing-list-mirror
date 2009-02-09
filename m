@@ -1,70 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/6] receive-pack: receive.denyDeleteCurrent
-Date: Mon, 9 Feb 2009 13:53:10 -0500
-Message-ID: <20090209185310.GB27037@coredump.intra.peff.net>
-References: <1234170565-6740-1-git-send-email-gitster@pobox.com> <1234170565-6740-2-git-send-email-gitster@pobox.com> <1234170565-6740-3-git-send-email-gitster@pobox.com> <1234170565-6740-4-git-send-email-gitster@pobox.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: Thunderbird and patches (was Re: [PATCH v2] Enable setting attach
+   as the default in .gitconfig   for git-format-patch.)
+Date: Mon, 09 Feb 2009 12:54:11 -0600
+Message-ID: <qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil>
+References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com> <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com> <49904DE7.2080205@codeweavers.com> <4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 19:54:53 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeremy White <jwhite@codeweavers.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org
+To: Ben Bucksch <ben.bucksch.news@beonex.com>
+X-From: git-owner@vger.kernel.org Mon Feb 09 19:56:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWbHE-0007Wn-I4
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 19:54:41 +0100
+	id 1LWbIt-0008Hn-P6
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 19:56:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753903AbZBISxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 13:53:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753868AbZBISxN
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 13:53:13 -0500
-Received: from peff.net ([208.65.91.99]:35425 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753678AbZBISxM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 13:53:12 -0500
-Received: (qmail 4277 invoked by uid 107); 9 Feb 2009 18:53:28 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 09 Feb 2009 13:53:28 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Feb 2009 13:53:10 -0500
-Content-Disposition: inline
-In-Reply-To: <1234170565-6740-4-git-send-email-gitster@pobox.com>
+	id S1754158AbZBISyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 13:54:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754124AbZBISyz
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 13:54:55 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:48121 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754378AbZBISyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 13:54:54 -0500
+Received: by mail.nrlssc.navy.mil id n19IsBDV002496; Mon, 9 Feb 2009 12:54:12 -0600
+In-Reply-To: <499058B4.4070009@beonex.com>
+X-OriginalArrivalTime: 09 Feb 2009 18:54:11.0915 (UTC) FILETIME=[CBDDA9B0:01C98AE7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109102>
 
-On Mon, Feb 09, 2009 at 01:09:22AM -0800, Junio C Hamano wrote:
 
-> This is a companion patch to the recent 3d95d92 (receive-pack: explain
-> what to do when push updates the current branch, 2009-01-31).
-> 
-> Deleting the current branch from a remote will result in the next clone
-> from it not check out anything, among other things.  It also is one of the
-> cause that makes remotes/origin/HEAD a dangling symbolic ref.  This patch
-> still allows the traditional behaviour but with a big warning, and promises
-> that the default will change to 'refuse' in a future release.
+I have an issue with Thunderbird that I'd like to describe while we have
+the developers ear.
 
-This patch looks good to me. One comment:
+I was sent a patch which had a sequence of control characters in it.
 
-> --- a/t/t5400-send-pack.sh
-> +++ b/t/t5400-send-pack.sh
-> @@ -193,4 +193,11 @@ test_expect_success 'pushing wildcard refspecs respects forcing' '
->      )
->  '
->  
-> +test_expect_success 'deny pushing to delete current branch' '
-> +    (
-> +	rewound_push_setup &&
-> +	git send-pack ../parent/.git :refs/heads/master 2>errs
-> +    )
-> +'
+To save an emailed patch, I normally write click in the message body and
+choose 'Save As...'.  Thunderbird populates the 'Name:' field for the
+name of the saved file with a name based on the subject, which I like.
 
-It was not immediately obvious why the subshell is needed here (for
-those in the audience, it is because rewound_push_setup changes
-directory). Perhaps 2/6 should be amended for rewound_push_setup to use
-a subshell instead, which makes it less likely to be forgotten by new
-tests.
+But, in this case, Thunderbird corrupted the original message and saved
+something that was not equivalent to what was sent.  Naturally, the patch
+could not be applied, and after investigating, it was determined that
+Thunderbird was responsible.  If I instead choose View -> 'Message Source'
+and then in the window that pops up choose File -> 'Save Page As', and then
+give it a name, I do indeed get the original uncorrupted message, but it
+is _not_ convenient.
 
--Peff
+This is Thunderbird v2.0.0.19.
+Is this a bug? Or is there something I can set or disable so that Thunderbird
+saves the original contents when right clicking in the message body and
+selecting 'Save As...'?
+
+I will follow up with an example patch which has the control characters in
+it.
+
+-brandon
