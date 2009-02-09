@@ -1,118 +1,81 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: "repack" when a needed commit object missing "kills" the repo
-Date: Mon, 9 Feb 2009 03:26:42 +0100
-Message-ID: <20090209022642.GA19413@atjola.homenet>
+From: Brent Goodrick <bgoodr@gmail.com>
+Subject: Re: Trouble testing out a patch on a branch new scratch git.git 
+	repository
+Date: Sun, 8 Feb 2009 18:59:34 -0800
+Message-ID: <e38bce640902081859o47462a58s59c120209fabb0@mail.gmail.com>
+References: <e38bce640902081256j3cd84aadn2f0cc863cfca904d@mail.gmail.com>
+	 <7vy6wgwqjp.fsf@gitster.siamese.dyndns.org>
+	 <e38bce640902081613v3e93c1e3g716118c38ce861ab@mail.gmail.com>
+	 <200902081918.35665.bss@iguanasuicide.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Feb 09 03:28:35 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+X-From: git-owner@vger.kernel.org Mon Feb 09 04:01:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWLsu-0000u0-ED
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 03:28:32 +0100
+	id 1LWMOM-0006Gd-Ex
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 04:01:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753733AbZBIC1G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Feb 2009 21:27:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753099AbZBIC1E
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 21:27:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57308 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753692AbZBIC1B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Feb 2009 21:27:01 -0500
-Received: (qmail invoked by alias); 09 Feb 2009 02:26:59 -0000
-Received: from i577BBA15.versanet.de (EHLO atjola.local) [87.123.186.21]
-  by mail.gmx.net (mp006) with SMTP; 09 Feb 2009 03:26:59 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+zTvdULpGzFjWct6k9XkRLx9usSY55FMxAI17CPs
-	6u4A/Za+LtWlAF
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1753731AbZBIC7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Feb 2009 21:59:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753635AbZBIC7g
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Feb 2009 21:59:36 -0500
+Received: from yx-out-2324.google.com ([74.125.44.30]:55623 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753084AbZBIC7f (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Feb 2009 21:59:35 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so649508yxm.1
+        for <git@vger.kernel.org>; Sun, 08 Feb 2009 18:59:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ep5a/wXWPFabSl6e1dk+xPTk/RGao7xGrQcb5HfwMss=;
+        b=ltaCqO1BLKMp1Kc55kWNdBDB/wvTDRc0vQp23sggPOi4BZmRDI3NB0oo/nR1QTPrcb
+         0Be7tIFBrcc0yNUroUDIsYwSBe2mrivN/WPlY90cQpZuiHlqla6wJOtGcUMO9Git9zEW
+         /U4GCry1HVv0bUzaRSBJb0VJQNFgVqcUoi2eg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=IlcD2m1QQpJ4ZeG7lmeohhHmh0Hi+xR7jMQjhdGRp0BxvSjhrFHNJ43KtbHva88uQh
+         6y5vdaD1Bodrn11vbfIpfQOQPJ92inN+XZ615uDsKF7SCtiKlMcUacXAh0J84ocS0V4x
+         u6Y3lGocejFki1+f++5tN6mL4ayyZzuUCZzIo=
+Received: by 10.90.120.14 with SMTP id s14mr356361agc.20.1234148374124; Sun, 
+	08 Feb 2009 18:59:34 -0800 (PST)
+In-Reply-To: <200902081918.35665.bss@iguanasuicide.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109040>
 
-Hi,
+On Sun, Feb 8, 2009 at 5:18 PM, Boyd Stephen Smith Jr.
+<bss@iguanasuicide.net> wrote:
+> > What do you mean by "reorder, squash" mean here? Is that something
+> > that is done as a part of the -i option to git rebase?
+>
+> Reordering and squashing can be done via rebase -i, but it's basically just
+> the practice of "prettying" your changes.
+> http://magazine.redhat.com/2008/05/02/shipping-quality-code-with-git/ has more
+> prose on the subject.
 
-I have a git-svn repo with a large grafts file to recreate merges done
-in svn and in one case to simply change a commit's parent. I don't
-recall the reason for the latter, it's been there for almost a year now=
-,
-probably some crap from the svn repo that I didn't want to have in my
-git history. So the original history was like:
+Thanks Boyd.  I made the mistake of using git revert HEAD thinking it
+would just delete that last revision, but it instead added a new
+revision that acted as if it just reversed the changes.
 
-A---B---C
-
-And the graft turns that into:
-
-A---C
-
-Earlier repacks seem to have already pruned the B commit object, so
-removing the grafts correctly causes git to complain about that missing
-object.
-
-Now I decided to finally run filter-branch on that repo to get rid of
-the huge grafts file. So I ran "git filter-branch -- --all", removed th=
-e
-grafts file, dropped all the refs/original/ stuff and went on to "git
-repack -adf". And when that finished, a _lot_ of objects were suddenly
-missing, including some of the rewritten commits --> repo busted.
-=46ortunately I had made a backup. :-)
-
-The pack-objects process complained about the B commit object that was
-already missing earlier, and after some time I realised that I didn't
-expire the reflogs, so the "broken" commit was still reachable through
-them. So I retried with the reflogs empty, and yup, that worked well. S=
-o
-missing objects seem to confuse pack-objects enough to stop it from
-packing all of objects reachable through non-broken chains.
-
-A backtrace from the point at which pack-objects complains about the
-missing object shows this:
-
-#0  error (err=3D0x4bff35 "Could not read %s") at usage.c:64
-#1  0x0000000000459e3c in parse_commit (item=3D0x15f8c50) at commit.c:3=
-04
-#2  0x000000000048d2ea in add_parents_to_list (revs=3D0x7fff5f8bd7c0,=20
-    commit=3D0x15f8a10, list=3D0x7fff5f8bd7c0, cache_ptr=3D0x0) at revi=
-sion.c:514
-#3  0x000000000048d75d in get_revision_1 (revs=3D0x7fff5f8bd7c0)
-    at revision.c:1740
-#4  0x000000000048d7cb in get_revision_internal (revs=3D0x7fff5f8bd7c0)
-    at revision.c:1843
-#5  0x000000000048da31 in get_revision (revs=3D0x7fff5f8bd7c0) at revis=
-ion.c:1924
-#6  0x0000000000471f0c in traverse_commit_list (revs=3D0x7fff5f8bd7c0,=20
-    show_commit=3D0x437ec0 <show_commit>, show_object=3D0x437e80 <show_=
-object>)
-    at list-objects.c:147
-#7  0x0000000000437fc8 in get_object_list (ac=3D<value optimized out>,=20
-    av=3D<value optimized out>) at builtin-pack-objects.c:2059
-#8  0x000000000043aa4e in cmd_pack_objects (argc=3D6, argv=3D0x7fff5f8b=
-de38,=20
-    prefix=3D<value optimized out>) at builtin-pack-objects.c:2288
-#9  0x0000000000404983 in handle_internal_command (argc=3D6, argv=3D0x7=
-fff5f8bde38)
-    at git.c:244
-#10 0x0000000000404eb6 in main (argc=3D6, argv=3D0x7fff5f8bde38) at git=
-=2Ec:473
-
-Maybe get_revision_internal() switching into boundary mode is bad there=
-?
-The failing parse_commit() call causes get_revision_1() to return NULL,
-so get_revision_internal() assumes it ran out of commits, but in this
-case, it "just" hit a bad commit.
-
-Up to now, I don't have a small reproduction case yet and unfortunately
-I can't make the repo with which I've seen the failure available.
+What I really want to do is simply replace the last two commits on the
+branch with one commit, so that when I make my patch it will be just
+the full set of changes and not a lot of noise. Is there a way to do
+that? (note: I did try the git merge --squash command but it just
+showed me the usage, as I was on my bg/no-progress branch).  Note that
+I know that I would not be able to do this once some of my changes had
+merged upstream.
 
 Thanks,
-Bj=F6rn
+bgoodr
