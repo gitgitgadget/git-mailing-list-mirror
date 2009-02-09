@@ -1,69 +1,57 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: Is Git Scalable?
-Date: Mon, 09 Feb 2009 10:51:55 -0600
-Message-ID: <49905F2B.5030306@freescale.com>
-References: <21916359.post@talk.nabble.com>
+From: Keith Cascio <keith@CS.UCLA.EDU>
+Subject: Re: [PATCH v2 1/2] Introduce config variable "diff.primer"
+Date: Mon, 9 Feb 2009 09:24:37 -0800 (PST)
+Message-ID: <alpine.GSO.2.00.0902090921270.719@kiwi.cs.ucla.edu>
+References: <1233598855-1088-1-git-send-email-keith@cs.ucla.edu> <1233598855-1088-2-git-send-email-keith@cs.ucla.edu> <20090203071516.GC21367@sigill.intra.peff.net> <alpine.GSO.2.00.0902030833250.5994@kiwi.cs.ucla.edu>
+ <20090206161954.GA18956@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: agent59624285 <agent59624285@spamcorptastic.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 17:53:49 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 09 18:26:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWZO8-0002yy-NY
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 17:53:41 +0100
+	id 1LWZtl-0007fq-Su
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 18:26:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754748AbZBIQwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 11:52:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754697AbZBIQwN
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 11:52:13 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:34910 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754611AbZBIQwM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 11:52:12 -0500
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.14.3/az33egw02) with ESMTP id n19Gq0mn015274;
-	Mon, 9 Feb 2009 09:52:01 -0700 (MST)
-Received: from [127.0.0.1] (mvp-10-214-73-77.am.freescale.net [10.214.73.77])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id n19Gpw98008402;
-	Mon, 9 Feb 2009 10:52:00 -0600 (CST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <21916359.post@talk.nabble.com>
+	id S1754897AbZBIRYx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 12:24:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754018AbZBIRYx
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 12:24:53 -0500
+Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:60568 "EHLO kiwi.cs.ucla.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753492AbZBIRYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 12:24:52 -0500
+Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n19HOe8a001040;
+	Mon, 9 Feb 2009 09:24:40 -0800 (PST)
+Received: from localhost (keith@localhost)
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n19HObPi001037;
+	Mon, 9 Feb 2009 09:24:40 -0800 (PST)
+X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
+In-Reply-To: <20090206161954.GA18956@coredump.intra.peff.net>
+User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109095>
 
-agent59624285 wrote:
-> I'm thinking on use Git in my projects. But I have a doubt I couldn't resolve
-> in the Git Docs or Wiki.
-> My organization has really big projects that we split in sub-projects, like
-> this:
-> 
-> Big Project
->   \---> Project A
->   \---> Project B
->      \---> Project B1
->      \---> Project B2
->      \---> Project B3
->   \---> Project C
->      \---> Project C1
-> 
-> and so on...
-> 
-> Now it's possible to work in each "small" project independently (like "git
-> clone ProjectB3") or you can work with a big project inheriting its
-> sub-projects (like "git clone ProjectB" that automatically makes a "git
-> clone ProjectB1",  "git clone ProjectB2" and  "git clone ProjectB3", putting
-> each sub-project in the right place).
-> 
-> The question is: does Git support something like this?
-> 
+On Fri, 6 Feb 2009, Jeff King wrote:
 
-Perhaps "git submodule" ?
+> if somebody really wants to call a porcelain and _disable_ options, I don't 
+> think "--no-primer" is necessarily the right interface. Instead, the actual 
+> command line options given override what's in diff.primer, so you can 
+> selectively disable whatever you like.
 
-jdl
+Sir I appreciate the intention, as I interpret it, that it's always better to 
+accomplish something without adding new vocabulary.  I'd much rather avoid 
+adding new vocab if possible.  If I'm missing something, I apologize ahead of 
+time, but let me describe the problem I see.  Let's take the context size 
+setting as an example, i.e. -U<n> or --unified=<n>.  Default is 3.  Let's say 
+someone defines diff.primer = -U6.  Now, without --no-primer, how does a program 
+say "use the default value for context."  Aren't there options for which no 
+inverse counterpart exists?  Is there command-line syntax to disable all 
+whitespace ignore options, e.g. to disable -b?  If not then we need --no-primer.
