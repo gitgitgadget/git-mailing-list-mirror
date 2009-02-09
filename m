@@ -1,87 +1,80 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: Article about "git bisect run" on LWN
-Date: Mon, 9 Feb 2009 13:19:43 +0100
-Message-ID: <20090209121943.GG17782@elte.hu>
-References: <200902050747.50100.chriscool@tuxfamily.org> <20090205141336.GA28443@elte.hu> <200902060623.16046.chriscool@tuxfamily.org> <200902070541.29955.chriscool@tuxfamily.org> <ee77f5c20902070455h360d8476re76294735673b4ca@mail.gmail.com> <7vskmqw1s4.fsf@gitster.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH v2] Enable setting attach as the default in .gitconfig
+   for git-format-patch.
+Date: Mon, 09 Feb 2009 13:34:27 +0100
+Message-ID: <499022D3.3000200@drmicha.warpmail.net>
+References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Symonds <dsymonds@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, Andreas Ericsson <ae@op5.se>,
-	Jeff Garzik <jeff@garzik.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Bill Lear <rael@zopyra.com>,
-	Jon Seymour <jon.seymour@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 13:22:01 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeremy White <jwhite@codeweavers.com>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org, mozeditor@floppymoose.com,
+	ben.bucksch@beonex.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 09 13:36:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWV98-00010t-VO
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 13:21:55 +0100
+	id 1LWVMq-0005Hd-MK
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 13:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754895AbZBIMUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 07:20:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755297AbZBIMUH
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 07:20:07 -0500
-Received: from mx3.mail.elte.hu ([157.181.1.138]:41759 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754021AbZBIMUF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 07:20:05 -0500
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1LWV75-0007Mg-SL
-	from <mingo@elte.hu>; Mon, 09 Feb 2009 13:19:54 +0100
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id A6A6B3E21B0; Mon,  9 Feb 2009 13:19:38 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vskmqw1s4.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1755180AbZBIMef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 07:34:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755148AbZBIMee
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 07:34:34 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48422 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755111AbZBIMed (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Feb 2009 07:34:33 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id D88FC29002B;
+	Mon,  9 Feb 2009 07:34:32 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 09 Feb 2009 07:34:32 -0500
+X-Sasl-enc: Qf71YPicnkYDpelxVb7cmrQQ43oLG79lj+hNt+shubQC 1234182872
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 950F1132EC;
+	Mon,  9 Feb 2009 07:34:31 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109066>
 
-
-* Junio C Hamano <gitster@pobox.com> wrote:
-
-> David Symonds <dsymonds@gmail.com> writes:
+Johannes Schindelin venit, vidit, dixit 08.02.2009 18:28:
+> Hi,
 > 
-> > On Sat, Feb 7, 2009 at 3:41 PM, Christian Couder
-> > <chriscool@tuxfamily.org> wrote:
-> >
-> >> It might be useful to have a list of always good commits too, and use it
-> >> like this:
-> >>
-> >> $ git bisect start <bad> <good> $(cat always_good.txt)
-> >> $ git bisect skip $(cat always_skipped.txt)
-> >> $ git bisect run ./my_test_script.sh
-> >
-> > Your test script could just do this at its start instead:
-> >
-> >   if cat always_good.txt | grep $(rev-parse HEAD); then
-> >     exit 0
-> >   elif cat always_skipped.txt | grep $(rev-parse HEAD); then
-> >     exit 125
-> >   fi
+> On Sun, 8 Feb 2009, Jeremy White wrote:
 > 
-> Don't cat a file into grep, please.
+>> As an aside, there is a long (and discouraging) read about the issue
+>> with Thunderbird here:
+>>   https://bugzilla.mozilla.org/show_bug.cgi?id=141983
+>>
+>> Essentially, the problem is well understood - Thunderbird uses
+>> format=flowed by default, which is what mangles the patches.  The author
+>> of the relevant code is unmoved by arguments that the default should
+>> switch, and no one has yet been willing to create a simpler UI for
+>> switching the setting.
+> 
+> I guess I'll start discouraging use of Thunderbird from now on. 
 
-I do it all the time not because i dont know about grep's ability
-to take a file parameter, but because this way it's just a
-special-case of command piping and i can inject other commands as
-i extend/edit the command line interactively, etc.
+...specifically for patch submission, please ;)
+I'm a TB user who compiles the beast and writes extensions for it, and
+yet I found git-send-email the more reliable and practical solution for
+sending out patches. Put yourself in bcc and you'll have a copy in TB's
+inbox or another folder (use filters).
 
-	Ingo
+> Seems 
+> that not even the opposition of a guy named Andrew Morton was clue bat 
+> enough.
+
+<sarcasm style="reality: exaggerated;">
+Isn't that some Linux guy? How would he matter for Mozilla? Does he even
+know how to send HTML mail...
+</sarcasm>
+
+Michael
