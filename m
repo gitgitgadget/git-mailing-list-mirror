@@ -1,76 +1,64 @@
-From: Ben Bucksch <ben.bucksch.news@beonex.com>
-Subject: Re: Thunderbird and patches (was Re: [PATCH v2] Enable setting attach
-   as the default in .gitconfig   for git-format-patch.)
-Date: Mon, 09 Feb 2009 17:24:20 +0100
-Organization: Beonex
-Message-ID: <499058B4.4070009@beonex.com>
-References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com> <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com> <49904DE7.2080205@codeweavers.com> <4990519C.8060601@drmicha.warpmail.net>
+From: agent59624285 <agent59624285@spamcorptastic.com>
+Subject: Is Git Scalable?
+Date: Mon, 9 Feb 2009 08:29:47 -0800 (PST)
+Message-ID: <21916359.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Jeremy White <jwhite@codeweavers.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Feb 09 17:26:45 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 09 17:31:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWYxs-0000lq-EN
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 17:26:32 +0100
+	id 1LWZ2U-0002Xv-7f
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 17:31:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752443AbZBIQZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 11:25:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752106AbZBIQZF
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 11:25:05 -0500
-Received: from mail.server.beonex.com ([78.46.195.11]:33755 "EHLO
-	mail.server.beonex.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754068AbZBIQZE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 11:25:04 -0500
-Received: from [10.1.1.3] (localhost [127.0.0.1])
-	by mail.server.beonex.com (Postfix) with ESMTP id 32A93303C561;
-	Mon,  9 Feb 2009 17:25:10 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2a1pre) Gecko/20081217 Shredder/3.0b2pre
-In-Reply-To: <4990519C.8060601@drmicha.warpmail.net>
+	id S1753623AbZBIQ3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 11:29:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753510AbZBIQ3v
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 11:29:51 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:37230 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751549AbZBIQ3u (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 11:29:50 -0500
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1LWZ11-00021F-4F
+	for git@vger.kernel.org; Mon, 09 Feb 2009 08:29:47 -0800
+X-Nabble-From: agent59624285@spamcorptastic.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109092>
 
-On 09.02.2009 16:54, Michael J Gruber wrote:
-> I don't remember what else you need to quote within<pre></pre>.
->    
 
-Escaping:
+I'm thinking on use Git in my projects. But I have a doubt I couldn't resolve
+in the Git Docs or Wiki.
+My organization has really big projects that we split in sub-projects, like
+this:
 
-With mailto:, you send HTML (SGML) in a URL.
+Big Project
+  \---> Project A
+  \---> Project B
+     \---> Project B1
+     \---> Project B2
+     \---> Project B3
+  \---> Project C
+     \---> Project C1
 
-So, you first have to quote using HTML rules:
-<   -> &lt;
- >   -> &gt;
-&   -> &amp;
-"   -> &quot;
+and so on...
 
-If that's not done, TB/Mozilla may or may not fix it up: e.g. if you 
-have html tags in your source code, it would probably go wrong without 
-quoting.
+Now it's possible to work in each "small" project independently (like "git
+clone ProjectB3") or you can work with a big project inheriting its
+sub-projects (like "git clone ProjectB" that automatically makes a "git
+clone ProjectB1",  "git clone ProjectB2" and  "git clone ProjectB3", putting
+each sub-project in the right place).
 
-After that, given that you put it in a URL, you need to escape it using 
-"URL component rules" (same as you escape any URL GET parameter), using 
-the %charcode rule, e.g.
-(space)  ->   %20
-=   ->   %3D
-&   ->   %26
-#   ->   %23
-(Firefox does the URL escaping automatically when putting it in the 
-URLbar, and you can also try it in JS using encodeURIComponent(), e.g. 
-by opening the Firefox Error Console and writing 
-encodeURIComponent("foo=bla&bar=baz bal"); or starting the 
-yourfirefoxdir/js runner.)
+The question is: does Git support something like this?
 
-E.g. "<" in original turns into "mailto:?html-body=<pre>%26lt;<pre>"
-
-Sorry that it's non-trivial (I also hate escaping).
+-- 
+View this message in context: http://www.nabble.com/Is-Git-Scalable--tp21916359p21916359.html
+Sent from the git mailing list archive at Nabble.com.
