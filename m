@@ -1,100 +1,142 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH JGIT] Add the signed-off in the commit text dialog
-Date: Mon, 9 Feb 2009 07:46:27 -0800
-Message-ID: <20090209154627.GJ30949@spearce.org>
-References: <499048FD.7050803@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Thunderbird and patches (was Re: [PATCH v2] Enable setting attach
+   as the default in .gitconfig   for git-format-patch.)
+Date: Mon, 09 Feb 2009 16:49:05 +0100
+Message-ID: <49905071.6030805@drmicha.warpmail.net>
+References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com> <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git <git@vger.kernel.org>
-To: Yann Simon <yann.simon.fr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 16:48:48 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeremy White <jwhite@codeweavers.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org
+To: Ben Bucksch <ben.bucksch.news@beonex.com>
+X-From: git-owner@vger.kernel.org Mon Feb 09 16:50:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWYNE-0003dc-6f
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 16:48:40 +0100
+	id 1LWYPA-0004Lt-EH
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 16:50:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755683AbZBIPq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 10:46:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755661AbZBIPq2
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 10:46:28 -0500
-Received: from george.spearce.org ([209.20.77.23]:59123 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754704AbZBIPq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 10:46:28 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 5D32038210; Mon,  9 Feb 2009 15:46:27 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <499048FD.7050803@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754763AbZBIPtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 10:49:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754633AbZBIPtN
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 10:49:13 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52210 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754573AbZBIPtN (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Feb 2009 10:49:13 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 909DD29026A;
+	Mon,  9 Feb 2009 10:49:11 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 09 Feb 2009 10:49:11 -0500
+X-Sasl-enc: GLqNLgxkzkjf0uU/doG6aKxwUVOdStTX1ueNDuDPVreE 1234194550
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 4D140C7F5;
+	Mon,  9 Feb 2009 10:49:10 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <49903B27.8070608@beonex.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109086>
 
-Yann Simon <yann.simon.fr@gmail.com> wrote:
-> The user can see and edit the signed-off in the commit dialog
-> before committing.
-> 
-> For new lines in the commit dialog, use Text.DELIMITER for
-> plateform neutrality.
-> 
-> Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
-> ---
-> This patch only applies after the 2 previous patches.
-> If you want to, I could probably modify this patch so that it would
-> apply on the current origin.
+Currently, git-notes barks when asked to show an empty (i.e.
+non-existing) note. Change this to explicitly say there is none.
 
-The other two have been applied so no need to rebase.
+Signed-off-by: Michael J Gruber 
+---
+ git-notes.sh     |    2 ++
+ t/t3301-notes.sh |    2 +-
+ 2 files changed, 3 insertions(+), 1 deletions(-)
+
+
+Ben Bucksch venit, vidit, dixit 09.02.2009 15:18:
+> On 09.02.2009 14:52, Jeremy White wrote:
+>   
+>> I discovered that if I just injected charset=iso-2022-jp, format=flowed
+>> would stay off!<grin>
+>>    
+>>     
+> (This was a hack, caused by the different use of spaces in Japanese / 
+> CJK, which means a different kind of "flow".)
+>
+>   
+>> Ben, along those lines, we do have the ability to control the entire 
+>> body of a possible patch before Thunderbird sees it. Would it be 
+>> possible, or reasonable, for Thunderbird to look for and preserve a 
+>> 'format=fixed' setting inside a body that we generated?
+>>     
+>
+> I don't know how you're injecting the email to Thunderbird. mailto:?
+>
+>   
+git comes with a contributed hint which suggests using the external
+editor extension. There's also a script which shuffles things around and
+into place for TB to accept the header lines. Alternatively, call vim as
+the external editor....
+> What you propose is a header, not a body.
+> (I'm a bit irritated that TB would react to a charset header *in the 
+> body*, but maybe that's a hack specially for charsets, in some code part 
+> I don't know, given that they are unfortunately sometimes only marked in 
+> content.)
+>
+> I think it would most likely work easily if you inject HTML (read before 
+> you scream):
+> mailto:fred@example.com?html-body=Here's patch revision abc from repo 
+> def:<p><pre>Patch: file ....<br>+++ bla<br>line 3<br></pre>
+> (properly escaped, of course)
+> It should invoke the normal rich editor, with the patch properly marked 
+> as preformatted. Once you send it, it would send it as plaintext, 
+> depending on your prefs. During the formatting, it would see the 
+> preformat section and should send it out with the lineendings as marked.
+> I haven't tried the full chain, but it's something to play with.
+>
+> Ben
+>   
+OK, for the first time in I don't know how many months/years I fire up
+the HTML composer in TB. Please don't tell anyone from my git
+acquaintances, they'll give me an even tougher rub than usual on my next
+patch submission...
+
+I'll try and inline with <pre> a patch I sent resently... Now this looks
+interesting after coming back from external editor (gvim -f). Kinda
+cute. We'll see what TB makes out of it (hopefully confirming Ben's
+pre-theory, uhm).
+
+Cheers,
+Michael
+
+
+diff --git a/git-notes.sh b/git-notes.sh
+index bfdbaa8..9cbad02 100755
+--- a/git-notes.sh
++++ b/git-notes.sh
+@@ -58,6 +58,8 @@ edit)
+ 		"$GIT_NOTES_REF" $NEW_HEAD $CURRENT_HEAD
+ ;;
+ show)
++	git rev-parse -q --verify "$GIT_NOTES_REF":$COMMIT > /dev/null ||
++		die "No note for commit $COMMIT."
+ 	git show "$GIT_NOTES_REF":$COMMIT
+ ;;
+ *)
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 7ef1c29..ff4ea05 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -36,7 +36,7 @@ test_expect_success 'need valid notes ref' '
+ '
  
-> diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
-> index 9d062cc..8f85c08 100644
-> --- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
-> +++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
-> @@ -67,6 +68,8 @@
->   */
->  public class CommitDialog extends Dialog {
->  
-> +	private static Pattern signedOffPattern = Pattern.compile("(.|\r|\n)*Signed-off-by: .*(\r|\n)*"); //$NON-NLS-1$
-
-Wouldn't "[.\r\n]" be easier to use here than "(.|\r|\n)"?
-
-> @@ -214,6 +217,30 @@ public void widgetDefaultSelected(SelectionEvent arg0) {
->  		signedOffButton.setText(UIText.CommitDialog_AddSOB);
->  		signedOffButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).span(2, 1).create());
->  
-> +		signedOffButton.addSelectionListener(new SelectionListener() {
-> +			boolean alreadySigned = false;
-> +			public void widgetSelected(SelectionEvent arg0) {
-> +				if (alreadySigned)
-> +					return;
-> +				if (signedOffButton.getSelection()) {
-> +					alreadySigned = true;
-
-Huh.  So I can only push the checkbox once, and that after that
-its just an idiot switch?
-
-If that's really going to be how it is, maybe we should disable
-the checkbox?
-
-FWIW, git-gui actually looks for the user's Signed-off-by line in the
-text buffer.  If it can't find it, then it appends it onto the end.
-That way the user can delete the line and do the sign off again if
-they messed up somehow.
-
-And actually, given that this is a checkbox and not a button, maybe
-we should be able to *delete* the SBO line when the user tries to
-uncheck the checkbox.  Which then gets into, what if the user made
-an edit to the text and changed the SBO line, should this box get
-unchecked automatically by some form a listener on the text box?
-
-Food for thought.  I'm not sure what it should be.  But if it were
-a checkbox, as a user I'd like it to be bi-directional (both add
-and remove my SBO) and also uncheck when I edit or delete the SBO
-line in the message box.
-
+ # 1 indicates caught gracefully by die, 128 means git-show barked
+-test_expect_failure 'handle empty notes gracefully' '
++test_expect_success 'handle empty notes gracefully' '
+ 	git notes show ; test 1 = $?
+ '
+ 
 -- 
-Shawn.
+1.6.1.2.253.ga34a
