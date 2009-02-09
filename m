@@ -1,64 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/6] remote prune: warn dangling symrefs
-Date: Mon, 9 Feb 2009 14:15:26 -0500
-Message-ID: <20090209191526.GC27037@coredump.intra.peff.net>
-References: <1234170565-6740-1-git-send-email-gitster@pobox.com> <1234170565-6740-2-git-send-email-gitster@pobox.com> <1234170565-6740-3-git-send-email-gitster@pobox.com> <1234170565-6740-4-git-send-email-gitster@pobox.com> <1234170565-6740-5-git-send-email-gitster@pobox.com>
+From: Ben Bucksch <ben.bucksch.news@beonex.com>
+Subject: Re: Thunderbird and patches (was Re: [PATCH v2] Enable setting attach
+   as the default in .gitconfig   for git-format-patch.)
+Date: Mon, 09 Feb 2009 20:20:43 +0100
+Organization: Beonex
+Message-ID: <4990820B.504@beonex.com>
+References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com> <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com> <49904DE7.2080205@codeweavers.com> <4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com> <qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil> <49907F75.2050100@beonex.com> <alpine.DEB.1.00.0902092013260.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 20:16:54 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeremy White <jwhite@codeweavers.com>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 09 20:23:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWbcj-0007pE-Vn
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 20:16:54 +0100
+	id 1LWbiY-0001dz-QN
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 20:22:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752625AbZBITPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 14:15:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756029AbZBITPa
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 14:15:30 -0500
-Received: from peff.net ([208.65.91.99]:36677 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753861AbZBITP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 14:15:29 -0500
-Received: (qmail 4501 invoked by uid 107); 9 Feb 2009 19:15:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 09 Feb 2009 14:15:44 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Feb 2009 14:15:26 -0500
-Content-Disposition: inline
-In-Reply-To: <1234170565-6740-5-git-send-email-gitster@pobox.com>
+	id S1753887AbZBITV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 14:21:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752988AbZBITV0
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 14:21:26 -0500
+Received: from mail.server.beonex.com ([78.46.195.11]:53135 "EHLO
+	mail.server.beonex.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751860AbZBITV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 14:21:26 -0500
+Received: from [10.1.1.3] (localhost [127.0.0.1])
+	by mail.server.beonex.com (Postfix) with ESMTP id 64226303C560;
+	Mon,  9 Feb 2009 20:21:33 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2a1pre) Gecko/20081217 Shredder/3.0b2pre
+In-Reply-To: <alpine.DEB.1.00.0902092013260.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109109>
 
-On Mon, Feb 09, 2009 at 01:09:23AM -0800, Junio C Hamano wrote:
+On 09.02.2009 20:14, Johannes Schindelin wrote:
+> On 09.02.2009 19:54, Brandon Casey wrote:
+>>> I will follow up with an example patch which has the control
+>>> characters in it.
+>>>        
 
-> If you prune from the remote "frotz" that deleted the ref your tracking
-> branch remotes/frotz/HEAD points at, the symbolic ref will become
-> dangling.  We used to detect this as an error condition and issued a
-> message every time refs are enumerated.
-> 
-> This stops the error message, but moves the warning to "remote prune".
+> Especially the "Save" command will save the byte-identical body of the
+> mail.
+>    
 
-Very nice. As a bonus, this fixes certain (admittedly unlikely) renames,
-too (which don't need to pass the BROKEN flag, since ref_rename uses
-get_loose_refs directly):
+I think Thunderbird will also save a byte-identical copy of the mail, if 
+you use File | Save... and use ".eml" (for email = RFC822) file extension.
 
-  # without this patch
-  $ git symbolic-ref refs/heads/foo/bar refs/heads/nonexistant
-  $ git branch -m master foo
-  error: refs/heads/foo/bar points nowhere!
-  error: there are still refs under 'refs/heads/foo'
-  error: unable to lock refs/heads/foo for update
-  fatal: Branch rename failed
+The dialog is sensitive to the file extension and determines the format 
+based on that, but is unfortunately not communicative about it.
 
-  # with this patch
-  $ git branch -m master foo
-  error: 'refs/heads/foo/bar' exists; cannot create 'refs/heads/foo'
-  fatal: Branch rename failed
-
--Peff
+If you save as HTML (.html) or plaintext (.txt), it runs it through the 
+MIME converters and reformats it for display / human reading.
