@@ -1,162 +1,146 @@
-From: Brent Goodrick <bgoodr@gmail.com>
-Subject: Re: Trouble testing out a patch on a branch new scratch git.git 
-	repository
-Date: Mon, 9 Feb 2009 13:59:40 -0800
-Message-ID: <e38bce640902091359j3f306839h9aeb699e18e420ab@mail.gmail.com>
-References: <e38bce640902081256j3cd84aadn2f0cc863cfca904d@mail.gmail.com>
-	 <7vy6wgwqjp.fsf@gitster.siamese.dyndns.org>
-	 <e38bce640902081613v3e93c1e3g716118c38ce861ab@mail.gmail.com>
-	 <200902081918.35665.bss@iguanasuicide.net>
-	 <e38bce640902081859o47462a58s59c120209fabb0@mail.gmail.com>
-	 <7vmycww6if.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 09 23:01:14 2009
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH] Makefile: resort filenames alphabetically
+Date: Mon,  9 Feb 2009 23:00:45 +0100
+Message-ID: <1234216845-27904-1-git-send-email-s-beyer@gmx.net>
+Cc: gitster@pobox.com, Stephan Beyer <s-beyer@gmx.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 09 23:02:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWeBk-0001Yj-Ei
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 23:01:12 +0100
+	id 1LWeCp-0001yq-Th
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 23:02:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752822AbZBIV7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 16:59:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbZBIV7n
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 16:59:43 -0500
-Received: from yx-out-2324.google.com ([74.125.44.30]:21050 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752788AbZBIV7m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 16:59:42 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so98867yxm.1
-        for <git@vger.kernel.org>; Mon, 09 Feb 2009 13:59:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Y5hI/49HwaUP8fjNyF+2JJXjwJNqiHPlYb7VnfJqK0g=;
-        b=Q/wH6ByW4CZOmnmnpz0Jz+bd4aTUcrbCtLiboD8ZUEIILFBR0QyzMk+C5iDq20OGBZ
-         m1BV8w0h39XmCUpqIIrUQVHK6++/ccvDcOVKkdxDo4PIYyPSbghon3Z6WNeGU0VeUYg1
-         p1ovrCQNJ5Zy6AvdfgtUsvqm9OS/q6uRr16Eg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=hA8mKjywE6NOdjGQxW22Ma+gZ0sQold249cqI7I+Mi+dTy5RGrNPBfxHZdtdWDznkz
-         Zc9O7L7jtArwkzALB3TbMEQ78LB+X+245DF2XNXCEdkQfFFmkw3hu3ES4M4vLX8YDo4G
-         SRnM2vORFmOkXEY1K7Vc8/MpIYWwlZ78JCPZs=
-Received: by 10.90.96.1 with SMTP id t1mr386208agb.93.1234216780756; Mon, 09 
-	Feb 2009 13:59:40 -0800 (PST)
-In-Reply-To: <7vmycww6if.fsf@gitster.siamese.dyndns.org>
+	id S1753016AbZBIWAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 17:00:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752770AbZBIWAw
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 17:00:52 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59122 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752722AbZBIWAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 17:00:51 -0500
+Received: (qmail invoked by alias); 09 Feb 2009 22:00:49 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp032) with SMTP; 09 Feb 2009 23:00:49 +0100
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18mA7MMZB0mNxnRPSg4z7RCyr67UI/Fjj7hZ02pVM
+	8iHX9cKplOun1Z
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1LWeBJ-0003ln-8I; Mon, 09 Feb 2009 23:00:45 +0100
+X-Mailer: git-send-email 1.6.2.rc0.458.g97dd
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109142>
 
-My changes should live on my bg/no-progress branch until which time as
-they are accepted so I don't want them plunked down onto the
-originating branch quite yet (rebasing is fine, but I don't want to
-disturb that originating branch).
+Some filenames in the Makefile got out of order.
+This patch resorts the filename lists which makes it easier
+to grasp that it is sorted and that this should be kept.
 
-To explain what I mean: Yesterday, I had this configuration on my
-bg/no-progress branch:
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
+ Makefile |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
 
-             A---B---C---D (bg/no-progress)
-            /
-----1-----2----3----4 (master)
-
-B C and D commits are noisy,
-fix-the-white-space-and-conform-to-coding-guidelines type commits. I
-want to collapse A through D into one commit called E on that branch
-so that I can run git format-patch -M on the result and provide a nice
-patch email. I would end up with:
-
-             E (bg/no-progress)
-            /
-----1-----2----3----4 (master)
-
-I do have a way to do that, but it is cumbersome: I ended up doing:
-
-1. git diff -p >saved_patch of A through D (I don't recall the exact
-git diff command).
-2. Use a form of git rebase similar to "git rebase --onto topicA~5
-topicA~3 topicA" as explained in the git-rebase man page
-3. Use git apply saved_patch
-4. Reapply the commit with a new commit message
-5. Use git format-patch -M --stdout .... > mail.txt
-
-Again, all while staying on the bg/no-progress branch.
-
-But that was tricky (at least the git rebase command was). Is there a
-shorter, cleaner way to compress multiple commits on a given branch
-using one rebase command and not saving off a patch?
-
-Thanks,
-bg
-
-
-On Sun, Feb 8, 2009 at 8:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Brent Goodrick <bgoodr@gmail.com> writes:
->
-> > What I really want to do is simply replace the last two commits on the
-> > branch with one commit, so that when I make my patch it will be just
-> > the full set of changes and not a lot of noise. Is there a way to do
-> > that? (note: I did try the git merge --squash command but it just
-> > showed me the usage, as I was on my bg/no-progress branch).  Note that
-> > I know that I would not be able to do this once some of my changes had
-> > merged upstream.
->
-> Suppose you have this topology.  You forked and built 2 commits, while the
-> upstream advanced its tip (or not).
->
->                 1--2 your commits (master)
->                /
->        ---o---o---o upstream (origin)
->
-> 1. Using "rebase -i"
->
->    ... on your "master"
->    $ git rebase -i origin
->    ... will give you an insn sheet for interactive rebase to edit.
->    ... you will see something like:
->
->        pick xxxxxx title of commit 1
->        pick yyyyyy title of commit 2
->
->    ... edit the second "pick" to "squash", save and exit the editor.
->    ... You are telling it to "first cherry-pick my 1, and then squash my
->    ... 2 on top of it.
->
->    ... it will do as it is told, and will give you another editor, with
->    ... messages from both commits in it.  Edit to formulate a log message
->    ... suitable for the combined commit, save and exit the editor.
->
->   You will end up with:
->
->        ---o---o---o---X
->
->   where rightmost 'o' is still origin, X is your two commits squashed
->   into one.
->
-> 2. Using "mrege -s squash"
->
->    ... on your "master"
->    $ git merge --squash origin
->    ... this will stop without creating a commit.  Then you would
->    $ git commit
->    ... and the editor will give you the log message from all the
->    ... commits on the branch you just merged.  Come up with a single
->    ... log message to describe all, save and exit the editor.
->
->   You will end up with:
->
->        ---o---o---o---X
->
->   where rightmost 'o' is still origin, X is your two commits squashed
->   into one.
+diff --git a/Makefile b/Makefile
+index 27b9569..124efa0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -318,8 +318,8 @@ PROGRAMS += git-var$X
+ # builtin-$C.o but is linked in as part of some other command.
+ BUILT_INS += $(patsubst builtin-%.o,git-%$X,$(BUILTIN_OBJS))
+ 
+-BUILT_INS += git-cherry-pick$X
+ BUILT_INS += git-cherry$X
++BUILT_INS += git-cherry-pick$X
+ BUILT_INS += git-format-patch$X
+ BUILT_INS += git-fsck-objects$X
+ BUILT_INS += git-get-tar-commit-id$X
+@@ -358,8 +358,8 @@ LIB_H += builtin.h
+ LIB_H += cache.h
+ LIB_H += cache-tree.h
+ LIB_H += commit.h
+-LIB_H += compat/mingw.h
+ LIB_H += compat/cygwin.h
++LIB_H += compat/mingw.h
+ LIB_H += csum-file.h
+ LIB_H += decorate.h
+ LIB_H += delta.h
+@@ -385,7 +385,6 @@ LIB_H += pack-refs.h
+ LIB_H += pack-revindex.h
+ LIB_H += parse-options.h
+ LIB_H += patch-ids.h
+-LIB_H += string-list.h
+ LIB_H += pkt-line.h
+ LIB_H += progress.h
+ LIB_H += quote.h
+@@ -399,6 +398,7 @@ LIB_H += sha1-lookup.h
+ LIB_H += sideband.h
+ LIB_H += sigchain.h
+ LIB_H += strbuf.h
++LIB_H += string-list.h
+ LIB_H += tag.h
+ LIB_H += transport.h
+ LIB_H += tree.h
+@@ -437,8 +437,8 @@ LIB_OBJS += diffcore-order.o
+ LIB_OBJS += diffcore-pickaxe.o
+ LIB_OBJS += diffcore-rename.o
+ LIB_OBJS += diff-delta.o
+-LIB_OBJS += diff-no-index.o
+ LIB_OBJS += diff-lib.o
++LIB_OBJS += diff-no-index.o
+ LIB_OBJS += diff.o
+ LIB_OBJS += dir.o
+ LIB_OBJS += editor.o
+@@ -471,9 +471,9 @@ LIB_OBJS += pager.o
+ LIB_OBJS += parse-options.o
+ LIB_OBJS += patch-delta.o
+ LIB_OBJS += patch-ids.o
+-LIB_OBJS += string-list.o
+ LIB_OBJS += path.o
+ LIB_OBJS += pkt-line.o
++LIB_OBJS += preload-index.o
+ LIB_OBJS += pretty.o
+ LIB_OBJS += progress.o
+ LIB_OBJS += quote.o
+@@ -487,13 +487,14 @@ LIB_OBJS += revision.o
+ LIB_OBJS += run-command.o
+ LIB_OBJS += server-info.o
+ LIB_OBJS += setup.o
+-LIB_OBJS += sha1_file.o
+ LIB_OBJS += sha1-lookup.o
++LIB_OBJS += sha1_file.o
+ LIB_OBJS += sha1_name.o
+ LIB_OBJS += shallow.o
+ LIB_OBJS += sideband.o
+ LIB_OBJS += sigchain.o
+ LIB_OBJS += strbuf.o
++LIB_OBJS += string-list.o
+ LIB_OBJS += symlinks.o
+ LIB_OBJS += tag.o
+ LIB_OBJS += trace.o
+@@ -502,8 +503,8 @@ LIB_OBJS += tree-diff.o
+ LIB_OBJS += tree.o
+ LIB_OBJS += tree-walk.o
+ LIB_OBJS += unpack-trees.o
+-LIB_OBJS += userdiff.o
+ LIB_OBJS += usage.o
++LIB_OBJS += userdiff.o
+ LIB_OBJS += utf8.o
+ LIB_OBJS += walker.o
+ LIB_OBJS += wrapper.o
+@@ -511,7 +512,6 @@ LIB_OBJS += write_or_die.o
+ LIB_OBJS += ws.o
+ LIB_OBJS += wt-status.o
+ LIB_OBJS += xdiff-interface.o
+-LIB_OBJS += preload-index.o
+ 
+ BUILTIN_OBJS += builtin-add.o
+ BUILTIN_OBJS += builtin-annotate.o
+-- 
+1.6.2.rc0.458.g97dd
