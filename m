@@ -1,181 +1,249 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/6] t5400: allow individual tests to fail
-Date: Mon,  9 Feb 2009 01:09:21 -0800
-Message-ID: <1234170565-6740-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH 4/6] remote prune: warn dangling symrefs
+Date: Mon,  9 Feb 2009 01:09:23 -0800
+Message-ID: <1234170565-6740-5-git-send-email-gitster@pobox.com>
 References: <1234170565-6740-1-git-send-email-gitster@pobox.com>
  <1234170565-6740-2-git-send-email-gitster@pobox.com>
+ <1234170565-6740-3-git-send-email-gitster@pobox.com>
+ <1234170565-6740-4-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 09 10:11:32 2009
+X-From: git-owner@vger.kernel.org Mon Feb 09 10:11:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWSAt-0004Zb-2i
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 10:11:31 +0100
+	id 1LWSAu-0004Zb-H4
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 10:11:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752221AbZBIJJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 04:09:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752242AbZBIJJh
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 04:09:37 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61124 "EHLO
+	id S1752327AbZBIJJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 04:09:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752282AbZBIJJm
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 04:09:42 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60486 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751661AbZBIJJe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 04:09:34 -0500
+	with ESMTP id S1752243AbZBIJJi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 04:09:38 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F3C3A984C8
-	for <git@vger.kernel.org>; Mon,  9 Feb 2009 04:09:32 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E25092ABFD
+	for <git@vger.kernel.org>; Mon,  9 Feb 2009 04:09:37 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 067BE984C7 for
- <git@vger.kernel.org>; Mon,  9 Feb 2009 04:09:31 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EB89E2ABE6 for
+ <git@vger.kernel.org>; Mon,  9 Feb 2009 04:09:36 -0500 (EST)
 X-Mailer: git-send-email 1.6.2.rc0.28.g2593d
-In-Reply-To: <1234170565-6740-2-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 5D72E022-F689-11DD-A3A3-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+In-Reply-To: <1234170565-6740-4-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 60643DA8-F689-11DD-830D-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109054>
 
-Each test chdir'ed around and ended up in a random place if any of the
-test in the sequence failed but the entire test script was allowed to
-run.  This wrapps each in a subshell as necessary.
+If you prune from the remote "frotz" that deleted the ref your tracking
+branch remotes/frotz/HEAD points at, the symbolic ref will become
+dangling.  We used to detect this as an error condition and issued a
+message every time refs are enumerated.
+
+This stops the error message, but moves the warning to "remote prune".
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t5400-send-pack.sh |   37 ++++++++++++++++++++++++-------------
- 1 files changed, 24 insertions(+), 13 deletions(-)
+ builtin-remote.c |    6 ++++
+ refs.c           |   72 ++++++++++++++++++++++++++++++++++++++++-------------
+ refs.h           |    5 +++
+ 3 files changed, 65 insertions(+), 18 deletions(-)
 
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index b21317d..013aced 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -10,6 +10,7 @@ test_description='See why rewinding head breaks send-pack
+diff --git a/builtin-remote.c b/builtin-remote.c
+index db18bcf..ac69d37 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -756,12 +756,17 @@ static int prune(int argc, const char **argv)
+ 		OPT_END()
+ 	};
+ 	struct ref_states states;
++	const char *dangling_msg;
  
- cnt=64
- test_expect_success setup '
-+    (
- 	test_tick &&
- 	mkdir mozart mozart/is &&
- 	echo "Commit #0" >mozart/is/pink &&
-@@ -51,7 +52,9 @@ test_expect_success setup '
- 	done &&
- 	git update-ref HEAD "$commit" &&
- 	echo Rebase &&
--	git log'
-+	git log
-+    )
-+'
+ 	argc = parse_options(argc, argv, options, builtin_remote_usage, 0);
  
- test_expect_success 'pack the source repository' '
- 	git repack -a -d &&
-@@ -59,10 +62,12 @@ test_expect_success 'pack the source repository' '
- '
+ 	if (argc < 1)
+ 		usage_with_options(builtin_remote_usage, options);
  
- test_expect_success 'pack the destination repository' '
-+    (
- 	cd victim &&
- 	git repack -a -d &&
- 	git prune &&
- 	cd ..
-+    )
- '
++	dangling_msg = (dry_run
++			? " %s will become dangling!\n"
++			: " %s has become dangling!\n");
++
+ 	memset(&states, 0, sizeof(states));
+ 	for (; argc; argc--, argv++) {
+ 		int i;
+@@ -784,6 +789,7 @@ static int prune(int argc, const char **argv)
  
- test_expect_success \
-@@ -89,49 +94,53 @@ test_expect_success \
- 	cmp victim/.git/refs/heads/master .git/refs/heads/master
- '
+ 			printf(" * [%s] %s\n", dry_run ? "would prune" : "pruned",
+ 			       abbrev_ref(refname, "refs/remotes/"));
++			warn_dangling_symref(dangling_msg, refname);
+ 		}
  
--test_expect_success \
--        'push can be used to delete a ref' '
-+test_expect_success 'push can be used to delete a ref' '
-+    (
- 	cd victim &&
- 	git branch extra master &&
- 	cd .. &&
- 	test -f victim/.git/refs/heads/extra &&
- 	git send-pack ./victim/.git/ :extra master &&
- 	! test -f victim/.git/refs/heads/extra
-+    )
- '
- 
- unset GIT_CONFIG
- HOME=`pwd`/no-such-directory
- export HOME ;# this way we force the victim/.git/config to be used.
- 
--test_expect_success \
--	'pushing a delete should be denied with denyDeletes' '
-+test_expect_success 'pushing a delete should be denied with denyDeletes' '
-+    (
- 	cd victim &&
- 	git config receive.denyDeletes true &&
- 	git branch extra master &&
- 	cd .. &&
- 	test -f victim/.git/refs/heads/extra &&
- 	test_must_fail git send-pack ./victim/.git/ :extra master
-+    )
- '
- rm -f victim/.git/refs/heads/extra
- 
--test_expect_success \
--        'pushing with --force should be denied with denyNonFastforwards' '
-+test_expect_success 'pushing with --force should be denied with denyNonFastforwards' '
-+    (
- 	cd victim &&
- 	git config receive.denyNonFastforwards true &&
- 	cd .. &&
- 	git update-ref refs/heads/master master^ || return 1
- 	git send-pack --force ./victim/.git/ master && return 1
- 	! test_cmp .git/refs/heads/master victim/.git/refs/heads/master
-+    )
- '
- 
--test_expect_success \
--	'pushing does not include non-head refs' '
-+test_expect_success 'pushing does not include non-head refs' '
-+    (
- 	mkdir parent && cd parent &&
- 	git init && touch file && git add file && git commit -m add &&
- 	cd .. &&
- 	git clone parent child && cd child && git push --all &&
- 	cd ../parent &&
- 	git branch -a >branches && ! grep origin/master branches
-+    )
- '
- 
- rewound_push_setup() {
-@@ -156,8 +165,8 @@ rewound_push_failed() {
- 	fi
+ 		/* NEEDSWORK: free remote */
+diff --git a/refs.c b/refs.c
+index 024211d..6eb5f53 100644
+--- a/refs.c
++++ b/refs.c
+@@ -275,10 +275,8 @@ static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
+ 				list = get_ref_dir(ref, list);
+ 				continue;
+ 			}
+-			if (!resolve_ref(ref, sha1, 1, &flag)) {
+-				error("%s points nowhere!", ref);
+-				continue;
+-			}
++			if (!resolve_ref(ref, sha1, 1, &flag))
++				hashclr(sha1);
+ 			list = add_ref(ref, sha1, flag, list, NULL);
+ 		}
+ 		free(ref);
+@@ -287,6 +285,35 @@ static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
+ 	return sort_ref_list(list);
  }
  
--test_expect_success \
--	'pushing explicit refspecs respects forcing' '
-+test_expect_success 'pushing explicit refspecs respects forcing' '
-+    (
- 	rewound_push_setup &&
- 	if git send-pack ../parent/.git refs/heads/master:refs/heads/master
- 	then
-@@ -167,10 +176,11 @@ test_expect_success \
- 	fi && rewound_push_failed &&
- 	git send-pack ../parent/.git +refs/heads/master:refs/heads/master &&
- 	rewound_push_succeeded
-+    )
- '
++struct warn_if_dangling_data {
++	const char *refname;
++	const char *msg_fmt;
++};
++
++static int warn_if_dangling_symref(const char *refname, const unsigned char *sha1,
++				   int flags, void *cb_data)
++{
++	struct warn_if_dangling_data *d = cb_data;
++	const char *resolves_to;
++	unsigned char junk[20];
++
++	if (!(flags & REF_ISSYMREF))
++		return 0;
++
++	resolves_to = resolve_ref(refname, junk, 0, NULL);
++	if (!resolves_to || strcmp(resolves_to, d->refname))
++		return 0;
++
++	printf(d->msg_fmt, refname);
++	return 0;
++}
++
++void warn_dangling_symref(const char *msg_fmt, const char *refname)
++{
++	struct warn_if_dangling_data data = { refname, msg_fmt };
++	for_each_rawref(warn_if_dangling_symref, &data);
++}
++
+ static struct ref_list *get_loose_refs(void)
+ {
+ 	if (!cached_refs.did_loose) {
+@@ -498,16 +525,19 @@ int read_ref(const char *ref, unsigned char *sha1)
+ 	return -1;
+ }
  
--test_expect_success \
--	'pushing wildcard refspecs respects forcing' '
-+test_expect_success 'pushing wildcard refspecs respects forcing' '
-+    (
- 	rewound_push_setup &&
- 	if git send-pack ../parent/.git refs/heads/*:refs/heads/*
- 	then
-@@ -180,6 +190,7 @@ test_expect_success \
- 	fi && rewound_push_failed &&
- 	git send-pack ../parent/.git +refs/heads/*:refs/heads/* &&
- 	rewound_push_succeeded
-+    )
- '
++#define DO_FOR_EACH_INCLUDE_BROKEN 01
+ static int do_one_ref(const char *base, each_ref_fn fn, int trim,
+-		      void *cb_data, struct ref_list *entry)
++		      int flags, void *cb_data, struct ref_list *entry)
+ {
+ 	if (strncmp(base, entry->name, trim))
+ 		return 0;
+-	if (is_null_sha1(entry->sha1))
+-		return 0;
+-	if (!has_sha1_file(entry->sha1)) {
+-		error("%s does not point to a valid object!", entry->name);
+-		return 0;
++	if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN)) {
++		if (is_null_sha1(entry->sha1))
++			return 0;
++		if (!has_sha1_file(entry->sha1)) {
++			error("%s does not point to a valid object!", entry->name);
++			return 0;
++		}
+ 	}
+ 	current_ref = entry;
+ 	return fn(entry->name + trim, entry->sha1, entry->flag, cb_data);
+@@ -561,7 +591,7 @@ fallback:
+ }
  
- test_done
+ static int do_for_each_ref(const char *base, each_ref_fn fn, int trim,
+-			   void *cb_data)
++			   int flags, void *cb_data)
+ {
+ 	int retval = 0;
+ 	struct ref_list *packed = get_packed_refs();
+@@ -570,7 +600,7 @@ static int do_for_each_ref(const char *base, each_ref_fn fn, int trim,
+ 	struct ref_list *extra;
+ 
+ 	for (extra = extra_refs; extra; extra = extra->next)
+-		retval = do_one_ref(base, fn, trim, cb_data, extra);
++		retval = do_one_ref(base, fn, trim, flags, cb_data, extra);
+ 
+ 	while (packed && loose) {
+ 		struct ref_list *entry;
+@@ -586,13 +616,13 @@ static int do_for_each_ref(const char *base, each_ref_fn fn, int trim,
+ 			entry = packed;
+ 			packed = packed->next;
+ 		}
+-		retval = do_one_ref(base, fn, trim, cb_data, entry);
++		retval = do_one_ref(base, fn, trim, flags, cb_data, entry);
+ 		if (retval)
+ 			goto end_each;
+ 	}
+ 
+ 	for (packed = packed ? packed : loose; packed; packed = packed->next) {
+-		retval = do_one_ref(base, fn, trim, cb_data, packed);
++		retval = do_one_ref(base, fn, trim, flags, cb_data, packed);
+ 		if (retval)
+ 			goto end_each;
+ 	}
+@@ -614,22 +644,28 @@ int head_ref(each_ref_fn fn, void *cb_data)
+ 
+ int for_each_ref(each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref("refs/", fn, 0, cb_data);
++	return do_for_each_ref("refs/", fn, 0, 0, cb_data);
+ }
+ 
+ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref("refs/tags/", fn, 10, cb_data);
++	return do_for_each_ref("refs/tags/", fn, 10, 0, cb_data);
+ }
+ 
+ int for_each_branch_ref(each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref("refs/heads/", fn, 11, cb_data);
++	return do_for_each_ref("refs/heads/", fn, 11, 0, cb_data);
+ }
+ 
+ int for_each_remote_ref(each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref("refs/remotes/", fn, 13, cb_data);
++	return do_for_each_ref("refs/remotes/", fn, 13, 0, cb_data);
++}
++
++int for_each_rawref(each_ref_fn fn, void *cb_data)
++{
++	return do_for_each_ref("refs/", fn, 0,
++			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+ }
+ 
+ /*
+diff --git a/refs.h b/refs.h
+index 3bb529d..29bdcec 100644
+--- a/refs.h
++++ b/refs.h
+@@ -24,6 +24,11 @@ extern int for_each_tag_ref(each_ref_fn, void *);
+ extern int for_each_branch_ref(each_ref_fn, void *);
+ extern int for_each_remote_ref(each_ref_fn, void *);
+ 
++/* can be used to learn about broken ref and symref */
++extern int for_each_rawref(each_ref_fn, void *);
++
++extern void warn_dangling_symref(const char *msg_fmt, const char *refname);
++
+ /*
+  * Extra refs will be listed by for_each_ref() before any actual refs
+  * for the duration of this process or until clear_extra_refs() is
 -- 
 1.6.2.rc0.28.g2593d
