@@ -1,201 +1,184 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] builtin-branch: highlight current remote branches with an asterisk
-Date: Mon,  9 Feb 2009 18:32:06 -0500
-Message-ID: <1234222326-55818-1-git-send-email-jaysoffian@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, gitster@pobox.com
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH] Generalize and libify index_is_dirty() to index_differs_from(...)
+Date: Tue, 10 Feb 2009 00:40:43 +0100
+Message-ID: <1234222843-15577-1-git-send-email-s-beyer@gmx.net>
+Cc: gitster@pobox.com, Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Alex Riesen <raa.lkml@gmail.com>, Jeff King <peff@peff.net>,
+	Stephan Beyer <s-beyer@gmx.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 10 00:33:44 2009
+X-From: git-owner@vger.kernel.org Tue Feb 10 00:42:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWfdG-0007xx-Ms
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 00:33:43 +0100
+	id 1LWflr-0002Aw-84
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 00:42:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754595AbZBIXcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 18:32:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754498AbZBIXcM
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 18:32:12 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:41841 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753785AbZBIXcK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 18:32:10 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so114515yxm.1
-        for <git@vger.kernel.org>; Mon, 09 Feb 2009 15:32:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=diN7vJl0E7rYbDWcuAgRjb4G7Wvim/1DlgF41nMdVvs=;
-        b=kkhFPlSi5A4ogpICSYB/avcZdOth7nyjNWSY6FAwM0WnhAAgB33TVzqUveLYANwUXP
-         XJtvWJ8qbbhMPiZTEVuibUfkPwwYWhXa9kBTjsX8j7JAk/EyEEAn/8irJ1k1zkb3kvwT
-         J6uEY/b3O0BE2Kwq4x6t7bB42iIaOScdO4TNY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=x+V2g0+nfyPyho0E86iAp8c6EfwjbR7e/byChB7yQOqTT1bFsp6+IGyVKVvlDw2w5N
-         l1s4PgsR7mio1EF7hOw9BI6s0sCAcguVzQ79PIRMyPGkfkChoEWHsyWZwzErg/mkBKjX
-         wfpDPEG9qLV1DCP0HKZQRLjXxvnYhwNPAXlD4=
-Received: by 10.64.193.1 with SMTP id q1mr2775136qbf.16.1234222328943;
-        Mon, 09 Feb 2009 15:32:08 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id k30sm11886260qba.11.2009.02.09.15.32.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 09 Feb 2009 15:32:08 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.2.354.ge44a2
+	id S1752328AbZBIXkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 18:40:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752199AbZBIXkv
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 18:40:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:32818 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752017AbZBIXku (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 18:40:50 -0500
+Received: (qmail invoked by alias); 09 Feb 2009 23:40:47 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp048) with SMTP; 10 Feb 2009 00:40:47 +0100
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18h9dlQKnYhuYc4b7ombZMWwPJC2n87HYKUsqRzA1
+	V3DBK9sbUE3ipG
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1LWfk3-0002mG-31; Tue, 10 Feb 2009 00:40:43 +0100
+X-Mailer: git-send-email 1.6.2.rc0.458.g97dd
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.42
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109162>
 
-Teach git branch -{r,a} how to interpret remote HEADs and highlight the
-corresponding remote branch with an asterisk, instead of showing literal
-"<remote_name>/HEAD".
+index_is_dirty() in builtin-revert.c checks if the index is dirty.
+This patch generalizes this function to check if the index differs
+from a revision, i.e. the former index_is_dirty() behavior can now be
+achieved by index_differs_from("HEAD", 0).
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+The second argument "diff_flags" allows to set further diff option
+flags like DIFF_OPT_IGNORE_SUBMODULES. See DIFF_OPT_* macros in diff.h
+for a list.
+
+index_differs_from() seems to be useful for more than builtin-revert.c,
+so it is moved into revision.c and also used in builtin-commit.c to
+remove code duplication.
+
+Yet to mention:
+
+ - "rev.abbrev = 0;" in builtin-commit.c can be safely removed.
+   This has no impact on performance or functioning of neither
+   setup_revisions() nor run_diff_index().
+
+ - rev.pending.objects is free()d because this fixes a leak.
+   (Also see 295dd2ad "Fix memory leak in traverse_commit_list")
+
+Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 ---
-git branch -r before patch:
-  origin/HEAD
-  origin/html
-  origin/maint
-  origin/man
-  origin/master
-  origin/next
-  origin/pu
-  origin/todo
 
-git branch -r after patch:
-  origin/html
-  origin/maint
-  origin/man
-* origin/master
-  origin/next
-  origin/pu
-  origin/todo
+  This is one of the sequencer-preparing patches.
+  (The function is used in sequencer several times, most of the time
+   with diff_flags set to DIFF_OPT_IGNORE_SUBMODULES.)
 
-The coloring for the current remote branch remains red, not green like
-the current local branch.
+  Alex is on Cc because he introduced the "Is commitable?" (i.e.
+  "Is index dirty?") part in builtin-commit.c.
 
-I think it's an improvement. :)
+  Peff is on Cc because he introduced index_is_dirty() in
+  builtin-revert.c.
 
- builtin-branch.c |   41 ++++++++++++++++++++++++++++++-----------
- 1 files changed, 30 insertions(+), 11 deletions(-)
+ builtin-commit.c |   13 ++-----------
+ builtin-revert.c |   13 +------------
+ revision.c       |   15 +++++++++++++++
+ revision.h       |    2 ++
+ 4 files changed, 20 insertions(+), 23 deletions(-)
 
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 56a1971..62558a7 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -15,6 +15,7 @@
- #include "branch.h"
- #include "diff.h"
- #include "revision.h"
-+#include "string-list.h"
+diff --git a/builtin-commit.c b/builtin-commit.c
+index d6a3a62..46e649c 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -561,7 +561,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
+ 		commitable = run_status(fp, index_file, prefix, 1);
+ 		wt_status_use_color = saved_color_setting;
+ 	} else {
+-		struct rev_info rev;
+ 		unsigned char sha1[20];
+ 		const char *parent = "HEAD";
  
- static const char * const builtin_branch_usage[] = {
- 	"git branch [options] [-r | -a] [--merged | --no-merged]",
-@@ -190,9 +191,19 @@ struct ref_list {
- 	int index, alloc, maxwidth;
- 	struct ref_item *list;
- 	struct commit_list *with_commit;
-+	struct string_list *remote_heads;
- 	int kinds;
- };
+@@ -573,16 +572,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
  
-+static void add_to_remote_heads(struct string_list *remote_heads, const char *head) {
-+	unsigned char sha1[20];
-+	int flag;
-+	const char *refname = resolve_ref(head, sha1, 0, &flag);
-+	if (refname && (flag & REF_ISSYMREF) &&
-+	    !prefixcmp(refname, "refs/remotes/"))
-+		string_list_insert(refname + 13, remote_heads);
-+}
-+
- static int append_ref(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
- {
- 	struct ref_list *ref_list = (struct ref_list*)(cb_data);
-@@ -223,6 +234,13 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
- 	if ((kind & ref_list->kinds) == 0)
- 		return 0;
- 
-+	/* Handle remote HEAD */
-+	if (kind == REF_REMOTE_BRANCH && ((len = strlen(refname)) > 5) &&
-+	    !strcmp(refname + len - 5, "/HEAD")) {
-+		add_to_remote_heads(ref_list->remote_heads, refname - 13);
-+		return 0;
-+	}
-+
- 	if (merge_filter != NO_FILTER)
- 		add_pending_object(&ref_list->revs,
- 				   (struct object *)commit, refname);
-@@ -294,8 +312,8 @@ static int matches_merge_filter(struct commit *commit)
- static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 			   int abbrev, int current)
- {
--	char c;
--	int color;
-+	char c = ' ';
-+	int color = COLOR_BRANCH_PLAIN, current_color = COLOR_BRANCH_CURRENT;
- 	struct commit *commit = item->commit;
- 
- 	if (!matches_merge_filter(commit))
-@@ -306,17 +324,13 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 		color = COLOR_BRANCH_LOCAL;
- 		break;
- 	case REF_REMOTE_BRANCH:
--		color = COLOR_BRANCH_REMOTE;
--		break;
--	default:
--		color = COLOR_BRANCH_PLAIN;
-+		color = current_color = COLOR_BRANCH_REMOTE;
- 		break;
- 	}
- 
--	c = ' ';
- 	if (current) {
- 		c = '*';
--		color = COLOR_BRANCH_CURRENT;
-+		color = current_color;
- 	}
- 
- 	if (verbose) {
-@@ -364,10 +378,12 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
- 	int i;
- 	struct ref_list ref_list;
- 	struct commit *head_commit = lookup_commit_reference_gently(head_sha1, 1);
-+	struct string_list remote_heads = { NULL, 0, 0, 1};
- 
- 	memset(&ref_list, 0, sizeof(ref_list));
- 	ref_list.kinds = kinds;
- 	ref_list.with_commit = with_commit;
-+	ref_list.remote_heads = &remote_heads;
- 	if (merge_filter != NO_FILTER)
- 		init_revisions(&ref_list.revs, NULL);
- 	for_each_ref(append_ref, &ref_list);
-@@ -399,13 +415,16 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
- 	}
- 
- 	for (i = 0; i < ref_list.index; i++) {
--		int current = !detached &&
-+		int current = (!detached &&
- 			(ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
--			!strcmp(ref_list.list[i].name, head);
-+			!strcmp(ref_list.list[i].name, head)) ||
-+			(ref_list.list[i].kind == REF_REMOTE_BRANCH &&
-+			string_list_has_string(&remote_heads,
-+			                       ref_list.list[i].name));
- 		print_ref_item(&ref_list.list[i], ref_list.maxwidth, verbose,
- 			       abbrev, current);
- 	}
+ 		if (get_sha1(parent, sha1))
+ 			commitable = !!active_nr;
+-		else {
+-			init_revisions(&rev, "");
+-			rev.abbrev = 0;
+-			setup_revisions(0, NULL, &rev, parent);
+-			DIFF_OPT_SET(&rev.diffopt, QUIET);
+-			DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
+-			run_diff_index(&rev, 1 /* cached */);
 -
-+	string_list_clear(&remote_heads, 0);
- 	free_ref_list(&ref_list);
+-			commitable = !!DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES);
+-		}
++		else
++			commitable = index_differs_from(parent, 0);
+ 	}
+ 
+ 	fclose(fp);
+diff --git a/builtin-revert.c b/builtin-revert.c
+index d48313c..d210150 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -223,17 +223,6 @@ static char *help_msg(const unsigned char *sha1)
+ 	return helpbuf;
  }
  
+-static int index_is_dirty(void)
+-{
+-	struct rev_info rev;
+-	init_revisions(&rev, NULL);
+-	setup_revisions(0, NULL, &rev, "HEAD");
+-	DIFF_OPT_SET(&rev.diffopt, QUIET);
+-	DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
+-	run_diff_index(&rev, 1);
+-	return !!DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES);
+-}
+-
+ static struct tree *empty_tree(void)
+ {
+ 	struct tree *tree = xcalloc(1, sizeof(struct tree));
+@@ -279,7 +268,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	} else {
+ 		if (get_sha1("HEAD", head))
+ 			die ("You do not have a valid HEAD");
+-		if (index_is_dirty())
++		if (index_differs_from("HEAD", 0))
+ 			die ("Dirty index: cannot %s", me);
+ 	}
+ 	discard_cache();
+diff --git a/revision.c b/revision.c
+index 8603c14..de489db 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1926,3 +1926,18 @@ struct commit *get_revision(struct rev_info *revs)
+ 		graph_update(revs->graph, c);
+ 	return c;
+ }
++
++int index_differs_from(const char *def, int diff_flags)
++{
++	struct rev_info rev;
++
++	init_revisions(&rev, NULL);
++	setup_revisions(0, NULL, &rev, def);
++	DIFF_OPT_SET(&rev.diffopt, QUIET);
++	DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
++	rev.diffopt.flags |= diff_flags;
++	run_diff_index(&rev, 1);
++	if (rev.pending.alloc)
++		free(rev.pending.objects);
++	return (DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES) != 0);
++}
+diff --git a/revision.h b/revision.h
+index 7cf8487..bc17949 100644
+--- a/revision.h
++++ b/revision.h
+@@ -164,4 +164,6 @@ enum commit_action {
+ 
+ extern enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit);
+ 
++extern int index_differs_from(const char *def, int diff_flags);
++
+ #endif
 -- 
-1.6.1.2.354.ge44a2
+1.6.2.rc0.458.g97dd
