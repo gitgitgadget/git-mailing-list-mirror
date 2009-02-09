@@ -1,72 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: gc considered dangerous
-Date: Sun, 08 Feb 2009 23:43:00 -0800
-Message-ID: <7vskmoukcb.fsf@gitster.siamese.dyndns.org>
-References: <200902080347.25970.robin.rosenberg.lists@dewire.com>
- <alpine.DEB.1.00.0902081551290.10279@pacific.mpi-cbg.de>
- <7vhc34y9za.fsf@gitster.siamese.dyndns.org>
- <20090209065919.GB13257@glandium.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [JGIT PATCH] Permit a wider range of repository names in jgit daemon requests
+Date: Mon, 9 Feb 2009 08:47:40 +0100
+Message-ID: <200902090847.40905.robin.rosenberg@dewire.com>
+References: <1234151883-30479-1-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Git ML <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Mon Feb 09 08:44:47 2009
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Feb 09 09:59:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWQot-0001EC-Kk
-	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 08:44:44 +0100
+	id 1LWRyq-0001Ii-CW
+	for gcvg-git-2@gmane.org; Mon, 09 Feb 2009 09:59:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754044AbZBIHnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 02:43:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754028AbZBIHnM
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 02:43:12 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37540 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754018AbZBIHnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 02:43:11 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0F9A2980F8;
-	Mon,  9 Feb 2009 02:43:10 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A944A980F5; Mon,
-  9 Feb 2009 02:43:02 -0500 (EST)
-In-Reply-To: <20090209065919.GB13257@glandium.org> (Mike Hommey's message of
- "Mon, 9 Feb 2009 07:59:19 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4C2DD9FE-F67D-11DD-95E2-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751490AbZBII5g convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Feb 2009 03:57:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbZBII5e
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 03:57:34 -0500
+Received: from pne-smtpout1-sn1.fre.skanova.net ([81.228.11.98]:57280 "EHLO
+	pne-smtpout1-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751377AbZBII5e convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 Feb 2009 03:57:34 -0500
+X-Greylist: delayed 4181 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Feb 2009 03:57:34 EST
+Received: from sleipner.localnet (90.234.23.249) by pne-smtpout1-sn1.fre.skanova.net (7.3.129)
+        id 47A9795005FB67AB; Mon, 9 Feb 2009 08:47:50 +0100
+User-Agent: KMail/1.10.4 (Linux/2.6.27-11-generic; KDE/4.1.4; i686; ; )
+In-Reply-To: <1234151883-30479-1-git-send-email-spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109050>
 
-Mike Hommey <mh@glandium.org> writes:
+m=E5ndag 09 februari 2009 04:58:03 skrev du:
+> The earlier restriction was too narrow for some applications, for
+> example repositories named "jgit.dev" and "jgit.test" are perfectly
+> valid Git repositories and should still be able to be served by
+> the daemon.
+>=20
+> By blocking out only uses of ".." as a path component and Windows
+> UNC paths (by blocking "\") we can reasonably prevent the client
+> from escaping the base dirctories configured in the daemon.
 
-> On Sun, Feb 08, 2009 at 12:00:57PM -0800, Junio C Hamano wrote:
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> > My preliminary guess is that this code in pack-write.c needs to use the 
->> > lock file paradigm:
->> >
->> >         if (!index_name) {
->> > 		[...]
->> >         } else {
->> >                 unlink(index_name);
->> >                 fd = open(index_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
->> >         }
->> 
->> Whoa.  That particular code has been (and is still) correct.
->
-> Don't both unlink and open fail in the case the index file is locked in
-> Windows ?
+Didn't I tell you // is also UNC-prefix? Windows treats / =3D=3D \ at t=
+he API
+level. Also why test for contains one "\"? And why in the middle? The
+UNC prefix can only occur at the beginning of a path. You can use
+=46ile.isAbsolute to see if a name represents an absolute path. It is
+platform-depdendent, so new File("//foo/bar").isAbsolute() yield
+different results on Windows and unix platforms.
 
-Read the rest of the thread and read the code.
-
-The index_file in question is not the file git-repack is telling
-pack-write.c to unlink and open.
+-- robin
