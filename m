@@ -1,121 +1,177 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] Support "\" in non-wildcard exclusion entries
-Date: Tue, 10 Feb 2009 15:27:43 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902101525380.10279@pacific.mpi-cbg.de>
-References: <20090210121149.GA1226@pvv.org> <alpine.DEB.1.00.0902101354460.10279@pacific.mpi-cbg.de> <20090210125800.GA14800@pvv.org> <alpine.DEB.1.00.0902101402230.10279@pacific.mpi-cbg.de> <20090210142017.GA16478@pvv.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Tue Feb 10 15:28:48 2009
+From: Stephan Beyer <s-beyer@gmx.net>
+Subject: [PATCH v2] Generalize and libify index_is_dirty() to index_differs_from(...)
+Date: Tue, 10 Feb 2009 15:30:35 +0100
+Message-ID: <1234276235-21822-1-git-send-email-s-beyer@gmx.net>
+References: <7v63jirhw8.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Alex Riesen <raa.lkml@gmail.com>, Jeff King <peff@peff.net>,
+	Stephan Beyer <s-beyer@gmx.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 15:32:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWtbI-0000fj-Dn
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 15:28:36 +0100
+	id 1LWtej-0001vi-6j
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 15:32:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755548AbZBJO1B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 09:27:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755520AbZBJO1A
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 09:27:00 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52576 "HELO mail.gmx.net"
+	id S1754347AbZBJOam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 09:30:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754281AbZBJOam
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 09:30:42 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54993 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755548AbZBJO07 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 09:26:59 -0500
-Received: (qmail invoked by alias); 10 Feb 2009 14:26:57 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp036) with SMTP; 10 Feb 2009 15:26:57 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18loJklBAclvDX5KfPZKTn/XFGFbZJnQN6RTtVM7X
-	IAFjMwN0UDvBKH
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090210142017.GA16478@pvv.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+	id S1754143AbZBJOal (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 09:30:41 -0500
+Received: (qmail invoked by alias); 10 Feb 2009 14:30:39 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp019) with SMTP; 10 Feb 2009 15:30:39 +0100
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX18upR1F+qsuKVvFhzcyeBIJnoqGRukYqbsSBhYgqo
+	DnWz40sHRhCA8/
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1LWtdD-0005gX-6J; Tue, 10 Feb 2009 15:30:35 +0100
+X-Mailer: git-send-email 1.6.2.rc0.464.g3ec3
+In-Reply-To: <7v63jirhw8.fsf@gitster.siamese.dyndns.org>
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+X-FuHaFi: 0.42
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109246>
 
-Hi,
+index_is_dirty() in builtin-revert.c checks if the index is dirty.
+This patch generalizes this function to check if the index differs
+from a revision, i.e. the former index_is_dirty() behavior can now be
+achieved by index_differs_from("HEAD", 0).
 
-On Tue, 10 Feb 2009, Finn Arne Gangstad wrote:
+The second argument "diff_flags" allows to set further diff option
+flags like DIFF_OPT_IGNORE_SUBMODULES. See DIFF_OPT_* macros in diff.h
+for a list.
 
-> "\" was treated differently in exclude rules depending on whether a
-> wildcard match was done. For wildcard rules, "\" was de-escaped in
-> fnmatch, but this was not done for other rules since they used strcmp
-> instead.  A file named "#foo" would not be excluded by "\#foo", but would
-> be excluded by "\#foo*".
-> 
-> We now treat all rules with "\" as wildcard rules.
-> 
-> Another solution could be to de-escape all non-wildcard rules as we
-> read them, but we would have to do the de-escaping exactly as fnmatch
-> does it to avoid inconsistencies.
-> 
-> Signed-off-by: Finn Arne Gangstad <finnag@pvv.org>
-> ---
->  dir.c                                       |    2 +-
->  t/t3003-ls-files-others-escaped-excludes.sh |   37 +++++++++++++++++++++++++++
+index_differs_from() seems to be useful for more than builtin-revert.c,
+so it is moved into diff-lib.c and also used in builtin-commit.c.
 
-Thanks, much appreciated!
+Yet to mention:
 
-> diff --git a/t/t3003-ls-files-others-escaped-excludes.sh b/t/t3003-ls-files-others-escaped-excludes.sh
-> new file mode 100755
-> index 0000000..bce8741
-> --- /dev/null
-> +++ b/t/t3003-ls-files-others-escaped-excludes.sh
-> @@ -0,0 +1,37 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2009 Finn Arne Gangstad
-> +#
-> +
-> +test_description='git ls-files --others with escaped excludes
-> +
-> +This test tests exclusion patterns with \ in them and makes sure they
-> +are treated correctly and identically both for normal and wildcard rules.
-> +'
-> +
-> +. ./test-lib.sh
-> +
-> +touch \#ignore1 &&
+ - "rev.abbrev = 0;" can be safely removed.
+   This has no impact on performance or functioning of neither
+   setup_revisions() nor run_diff_index().
 
-In other tests, we avoid 'touch' (IIRC it is not available everywhere or 
-some such), and we write ': > \#ignore1' instead.
+ - rev.pending.objects is free()d because this fixes a leak.
+   (Also see 295dd2ad "Fix memory leak in traverse_commit_list")
 
-BTW we do not need the # in the name, it could be any letter, right?  
-(Just for my understanding, not as a request to change it.)
+Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+---
 
-> +touch \#ignore2 &&
-> +touch \#hidden &&
-> +touch keep
-> +
-> +echo keep > expect
-> +
-> +cat >.gitignore <<EOF
+  Err, this didn't get to the list, did it?
 
-You probably want to use \EOF here.
+ builtin-commit.c |   13 ++-----------
+ builtin-revert.c |   13 +------------
+ diff-lib.c       |   15 +++++++++++++++
+ diff.h           |    2 ++
+ 4 files changed, 20 insertions(+), 23 deletions(-)
 
-> +.gitignore
-> +expect
-> +output
-> +\#ignore1
-> +\#ignore2*
-> +\#hid*n
-> +EOF
-> +
-> +test_expect_success \
-> +    'git ls-files --others with escaped excludes.' \
-> +    'git ls-files --others \
-> +       --exclude-per-directory=.gitignore \
-> +       >output &&
-> +     test_cmp expect output'
-> +
-> +test_done
-
-Thanks!
-Dscho
+diff --git a/builtin-commit.c b/builtin-commit.c
+index d6a3a62..46e649c 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -561,7 +561,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
+ 		commitable = run_status(fp, index_file, prefix, 1);
+ 		wt_status_use_color = saved_color_setting;
+ 	} else {
+-		struct rev_info rev;
+ 		unsigned char sha1[20];
+ 		const char *parent = "HEAD";
+ 
+@@ -573,16 +572,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix)
+ 
+ 		if (get_sha1(parent, sha1))
+ 			commitable = !!active_nr;
+-		else {
+-			init_revisions(&rev, "");
+-			rev.abbrev = 0;
+-			setup_revisions(0, NULL, &rev, parent);
+-			DIFF_OPT_SET(&rev.diffopt, QUIET);
+-			DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
+-			run_diff_index(&rev, 1 /* cached */);
+-
+-			commitable = !!DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES);
+-		}
++		else
++			commitable = index_differs_from(parent, 0);
+ 	}
+ 
+ 	fclose(fp);
+diff --git a/builtin-revert.c b/builtin-revert.c
+index d48313c..d210150 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -223,17 +223,6 @@ static char *help_msg(const unsigned char *sha1)
+ 	return helpbuf;
+ }
+ 
+-static int index_is_dirty(void)
+-{
+-	struct rev_info rev;
+-	init_revisions(&rev, NULL);
+-	setup_revisions(0, NULL, &rev, "HEAD");
+-	DIFF_OPT_SET(&rev.diffopt, QUIET);
+-	DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
+-	run_diff_index(&rev, 1);
+-	return !!DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES);
+-}
+-
+ static struct tree *empty_tree(void)
+ {
+ 	struct tree *tree = xcalloc(1, sizeof(struct tree));
+@@ -279,7 +268,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	} else {
+ 		if (get_sha1("HEAD", head))
+ 			die ("You do not have a valid HEAD");
+-		if (index_is_dirty())
++		if (index_differs_from("HEAD", 0))
+ 			die ("Dirty index: cannot %s", me);
+ 	}
+ 	discard_cache();
+diff --git a/diff-lib.c b/diff-lib.c
+index a41e1ec..79d0606 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -513,3 +513,18 @@ int do_diff_cache(const unsigned char *tree_sha1, struct diff_options *opt)
+ 		exit(128);
+ 	return 0;
+ }
++
++int index_differs_from(const char *def, int diff_flags)
++{
++	struct rev_info rev;
++
++	init_revisions(&rev, NULL);
++	setup_revisions(0, NULL, &rev, def);
++	DIFF_OPT_SET(&rev.diffopt, QUIET);
++	DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
++	rev.diffopt.flags |= diff_flags;
++	run_diff_index(&rev, 1);
++	if (rev.pending.alloc)
++		free(rev.pending.objects);
++	return (DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES) != 0);
++}
+diff --git a/diff.h b/diff.h
+index 23cd90c..6703a4f 100644
+--- a/diff.h
++++ b/diff.h
+@@ -265,4 +265,6 @@ extern int diff_result_code(struct diff_options *, int);
+ 
+ extern void diff_no_index(struct rev_info *, int, const char **, int, const char *);
+ 
++extern int index_differs_from(const char *def, int diff_flags);
++
+ #endif /* DIFF_H */
+-- 
+1.6.2.rc0.464.g3ec3
