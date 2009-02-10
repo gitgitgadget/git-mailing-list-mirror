@@ -1,72 +1,54 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] builtin-branch: highlight current remote branches with an 
-	asterisk
-Date: Mon, 9 Feb 2009 19:10:41 -0500
-Message-ID: <76718490902091610v1a53494ajb24b6a87bf207a78@mail.gmail.com>
-References: <1234222326-55818-1-git-send-email-jaysoffian@gmail.com>
-	 <alpine.DEB.1.00.0902100048410.10279@pacific.mpi-cbg.de>
+From: Jeff King <peff@cc.gatech.edu>
+Subject: Re: [PATCH] Generalize and libify index_is_dirty() to
+	index_differs_from(...)
+Date: Mon, 9 Feb 2009 19:12:20 -0500
+Message-ID: <20090210001220.GB5551@sigill.intra.peff.net>
+References: <1234222843-15577-1-git-send-email-s-beyer@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 10 01:12:12 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Stephan Beyer <s-beyer@gmx.net>
+X-From: git-owner@vger.kernel.org Tue Feb 10 01:20:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWgEU-0002Id-GJ
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 01:12:10 +0100
+	id 1LWgMe-0004TH-06
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 01:20:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753104AbZBJAKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 19:10:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752889AbZBJAKm
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 19:10:42 -0500
-Received: from rv-out-0506.google.com ([209.85.198.238]:20108 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752223AbZBJAKm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 19:10:42 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so2034323rvb.1
-        for <git@vger.kernel.org>; Mon, 09 Feb 2009 16:10:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=io8tylLeppzQVTO2WutD9O1GrFLbDNCbWbvatiE2qbY=;
-        b=oSjkcIb1XPnJOojIGQMFR/YN2LTswLiRbJ4Yd/Gz94ff7++VxsyzVwBo59VNcgG1mO
-         lJEss8kuZA5hwcUqrRUd44Y0Xjm1c7TCbQKX3A9lLPnHPXDAmbjqsWiVEOAPpH5kON8C
-         WQGKvOD7wPkixeLEYJQZnJa62PSgRMB+2WJYU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=F1r47U2BOCbjYKgaMODj2rc45b0avZhPL9eW7apJPAkSNnUFbcvw7JSjqby72i9G9z
-         SchwR8HE77JwiQx+MLO37wNWmaRCfLTlswiykZLtJjPvz8rV6edjwteJLwxsQXmqAxhN
-         witf4v0ZRPBNLStvqnLYsCwuQmp9hWsPU8b+s=
-Received: by 10.140.172.20 with SMTP id u20mr1935575rve.244.1234224641239; 
-	Mon, 09 Feb 2009 16:10:41 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902100048410.10279@pacific.mpi-cbg.de>
+	id S1752637AbZBJATK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 19:19:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752407AbZBJATH
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 19:19:07 -0500
+Received: from peff.net ([208.65.91.99]:44362 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752223AbZBJATG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 19:19:06 -0500
+X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Feb 2009 19:19:06 EST
+Received: (qmail 8421 invoked by uid 107); 10 Feb 2009 00:12:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 09 Feb 2009 19:12:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Feb 2009 19:12:20 -0500
+Content-Disposition: inline
+In-Reply-To: <1234222843-15577-1-git-send-email-s-beyer@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109166>
 
-On Mon, Feb 9, 2009 at 6:49 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Mon, 9 Feb 2009, Jay Soffian wrote:
->
->> Teach git branch -{r,a} how to interpret remote HEADs and highlight the
->> corresponding remote branch with an asterisk, instead of showing literal
->> "<remote_name>/HEAD".
->
-> Let's hope that nobody's scripts rely on a single star in front of the
-> local HEAD...
+On Tue, Feb 10, 2009 at 12:40:43AM +0100, Stephan Beyer wrote:
 
-Perhaps you'd be happier with a different marker for the remote head,
-but in any case, git branch is a porcelain, isn't it?
+>   Peff is on Cc because he introduced index_is_dirty() in
+>   builtin-revert.c.
 
-j.
+Certainly it looks to me like a straight-forward libification of what I
+had added before.
+
+Acked-by: Jeff King <peff@peff.net>
+
+-Peff
