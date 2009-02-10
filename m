@@ -1,126 +1,74 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
+From: Luciano Miguel Ferreira Rocha <luciano@eurotux.com>
 Subject: Re: git-svn: incomplete data after terminated "git svn clone"
-Date: Tue, 10 Feb 2009 07:01:05 -0800 (PST)
-Message-ID: <ec54bf47-c1a8-4d5e-a950-30303f1f9198@v15g2000yqn.googlegroups.com>
-References: <40aa078e0902100350m2d885516o853b1ec56eb43ce1@mail.gmail.com> 
-	<200902101442.32772.trast@student.ethz.ch>
+Date: Tue, 10 Feb 2009 15:10:48 +0000
+Message-ID: <20090210151048.GA27171@bit.office.eurotux.com>
+References: <40aa078e0902100350m2d885516o853b1ec56eb43ce1@mail.gmail.com> <200902101442.32772.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 10 16:03:05 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="MGYHOYXEY6WxJCY8"
+Cc: Erik Faye-Lund <kusmabite@googlemail.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 10 16:12:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWu8D-0005gi-4m
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 16:02:37 +0100
+	id 1LWuHe-0000ye-1z
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 16:12:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753927AbZBJPBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 10:01:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753574AbZBJPBJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 10:01:09 -0500
-Received: from yx-out-2122.google.com ([74.125.44.25]:25433 "EHLO
-	yx-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753452AbZBJPBI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 10:01:08 -0500
-Received: by yx-out-2122.google.com with SMTP id 33so185740yxl.1
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 07:01:05 -0800 (PST)
-Received: by 10.150.202.8 with SMTP id z8mr1497778ybf.29.1234278065720; Tue, 
-	10 Feb 2009 07:01:05 -0800 (PST)
+	id S1753188AbZBJPKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 10:10:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752995AbZBJPKz
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 10:10:55 -0500
+Received: from os.eurotux.com ([216.75.63.6]:38984 "EHLO os.eurotux.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752388AbZBJPKy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 10:10:54 -0500
+Received: (qmail 16504 invoked from network); 10 Feb 2009 15:10:52 -0000
+Received: from unknown (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
+  by 0 with AES128-SHA encrypted SMTP; 10 Feb 2009 15:10:52 -0000
+Content-Disposition: inline
 In-Reply-To: <200902101442.32772.trast@student.ethz.ch>
-X-IP: 217.140.96.21
-User-Agent: G2/1.0
-X-HTTP-UserAgent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) 
-	AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.46 Safari/525.19,gzip(gfe),gzip(gfe)
+User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109251>
-
-On Feb 10, 2009 2:42pm, Thomas Rast <trast@student.ethz.ch> wrote:
-> Some ideas:
->
-> First you can try to reset the git-svn head to the SHA of the commit
-> before (in case the one it stopped at ended up being corrupted).  For
-> example, if $stopped is the commit you interrupted it at,
->
->  git update-ref refs/remotes/git-svn $stopped^
->
-> Adjust the ref name if you used a trunk/branches layout.  Then remove
-> the .git/svn/ cache and try again.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109252>
 
 
-Thanks for the suggestion.
+--MGYHOYXEY6WxJCY8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'm not entirely sure what you mean by "Adjust the ref name if you
-used a trunk/branches layout." - in what way do I need to adjust it?
-Would something like "refs/remotes/trunk/git-svn" be right? At least
-that ref corresponds with a file relative to the .git-folder.
-
-Yes, I use a trunk/branches-layout... but I'm fetching a branch that
-has been moved (multiple times), so git-svn seems to try to fetch
-something called "trunk@54516"... perhaps the "@ 54516"
-
-Anyway, I tried doing the following:
-
-git update-ref refs/remotes/trunk/git-svn <SHA1 of old revision>
-rm .git/svn
-git svn fetch
-
-git then outputs something like this:
-
-r<some rev> = <some SHA1>
-r<some rev> = <some SHA1>
-...lots and lots of these...
-r<some rev> = <some SHA1>
-r<old revision> = <SHA1 of old revision>
-r<some rev> = <some SHA1>
-r<some rev> = <some SHA1>
-...some more lines...
-r<some rev> = <some SHA1>
-Done rebuilding .git/svn/trunk@<some revision>/.rev_map.<some SHA1>
-Incomplete data: Delta source ended unexpectedly at /home/erifay01/
-libexec/git-core/git-svn line 4249
-
-This is basically the same thing I'm getting if I just delete the .git/
-svn-folder and re-fetch. For the record, I decided to roll-back about
-10 more revisions than where I terminated, just to be sure.
-
-
+On Tue, Feb 10, 2009 at 02:42:29PM +0100, Thomas Rast wrote:
 > Failing that, you could test if this also happens when only looking at
 > a few surrounding revisions, for example if the failure was around
 > revision 100:
->
->  mkdir ../new-test
->  cd ../new-test
->  git svn init <args you gave to the other git svn init/clone>
->  git svn fetch -r 95:105
 
-This turns out to be a bit more tricky than I expected. You see, the
-project has moved inside the repo multiple times during it's life-
-time, and the revision where I broke the fetching is at an old
-location.
+Usually this happens to me due to server closing my connection and/or
+starting ignoring me.
 
-So I tried fetching if from old location:
-git svn init <old path> -s .
-git svn fetch -r <old revision - 100>:<old revision + 100>
+A full clone for some projects takes too much time and bandwidth...
 
-Doing the fetch outputs nothing (git svn init outputs "the usual
-stuff", though). Trying to do the same thing with the new path (same
-as above, but with <old path> set to the path of the new location)
-gives the following output:
+Regards,
+Luciano Rocha
 
-Path '<old path>' was probably deleted:
-Filesystem has no item: REPORT request failed on '<new path>/!svn/bc/
-<last rev>':
-File not found: revision <last rev>, path '<old path>'
+--=20
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
 
-Will attempt to follow revisions r<old revision - 100> .. r<old
-revision + 100> committed before the deletion
+--MGYHOYXEY6WxJCY8
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-... And then nothing.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-So, I'm still quite lost here. It might be that a full re-clone is
-what is needed.
+iEYEARECAAYFAkmRmPgACgkQinSul6a7oB8EjwCfakeklG2lsTMX1NO7t9BYoSnt
+LbcAnjH0jRmikSZ9mhvcOFD/okkRh4rs
+=tCR6
+-----END PGP SIGNATURE-----
+
+--MGYHOYXEY6WxJCY8--
