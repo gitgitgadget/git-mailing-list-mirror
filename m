@@ -1,109 +1,68 @@
-From: Fabio Augusto Dal Castel <fdcastel@gmail.com>
-Subject: Re: [RFC] New command: 'git snapshot'.
-Date: Tue, 10 Feb 2009 18:48:33 -0200
-Message-ID: <38cfbb550902101248v16f0f0f0v6a48cabf498317cf@mail.gmail.com>
-References: <38cfbb550902091054u78f2e706u67752b4dc9de6c3b@mail.gmail.com>
-	 <gmq1hu$ccn$1@ger.gmane.org>
-	 <38cfbb550902101232l4c83b6dfjc70e1e2f79a8c3c1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [ANNOUNCE] tig-0.14
+Date: Tue, 10 Feb 2009 15:49:54 -0500
+Message-ID: <3902F3BD-6EE5-4896-9E96-C4A1C4B6E9AF@silverinsanity.com>
+References: <20090205204436.GA6072@diku.dk> <4991814A.6050803@tedpavlic.com> <2c6b72b30902101029s72628a88n16473ee30f853198@mail.gmail.com> <6BA2725C-2127-48BE-871E-7449A507CCD8@silverinsanity.com> <d4bc1a2a0902101129y22224c89y144b223e7d7dd463@mail.gmail.com> <2c6b72b30902101241p67a0e1e9u60c8033c4a03260c@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 10 21:50:15 2009
+Cc: Stefan Karpinski <stefan.karpinski@gmail.com>,
+	Ted Pavlic <ted@tedpavlic.com>, git <git@vger.kernel.org>
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Tue Feb 10 21:51:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWzYR-0005jf-3B
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 21:50:03 +0100
+	id 1LWzZm-0006F0-FH
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 21:51:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754966AbZBJUsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 15:48:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754731AbZBJUsf
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 15:48:35 -0500
-Received: from qb-out-0506.google.com ([72.14.204.229]:13656 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754685AbZBJUsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 15:48:35 -0500
-Received: by qb-out-0506.google.com with SMTP id q18so15764qba.17
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 12:48:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=aSgPiJg27upcn/ySWzFPnt3eTA1bJyzjqzz+kdyXn5s=;
-        b=PDS5mif/8Cw/fg6PtRcH4mG8287wC2M1YANaE1hpgADIfECQyCEsFJcsQ1CUkubwVX
-         ZFAk+YH91PoxIII/gms+PzWOcflGZ5P3rAlNIVdzrIvfuQsntNV3AoY4Fe9Pe3CckXzD
-         1KT8KHN0qad7WMTZJ9YZlv5pABv7z1WK8aHXY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=x4NlGy7nJsupOnj1KVfTeiCyVBVdq8dSbkHljsyWcsMAWqNuBqPa9XXJYqX9kNRW+h
-         EF0gY7z0RFEG3JfpO0KFj7o4CSj7ecvzzzsoWt1vjU+HhX9H5+rweoXwMwM+OoSGcy5Y
-         emikShmkm+sqEJ36xS7ivoWpAxheKJjCRjspU=
-Received: by 10.231.16.134 with SMTP id o6mr1270569iba.53.1234298913689; Tue, 
-	10 Feb 2009 12:48:33 -0800 (PST)
-In-Reply-To: <38cfbb550902101232l4c83b6dfjc70e1e2f79a8c3c1@mail.gmail.com>
+	id S1755277AbZBJUt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 15:49:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754729AbZBJUt6
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 15:49:58 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:33680 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754072AbZBJUt6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 15:49:58 -0500
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 8994A1FFC281; Tue, 10 Feb 2009 20:49:51 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
+	silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.1 required=4.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.1.7-deb3
+Received: from [192.168.1.115] (cpe-74-74-137-205.rochester.res.rr.com [74.74.137.205])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id A55111FFC273;
+	Tue, 10 Feb 2009 20:49:49 +0000 (UTC)
+In-Reply-To: <2c6b72b30902101241p67a0e1e9u60c8033c4a03260c@mail.gmail.com>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109306>
-
-Giuseppe
-
-> I use stash when I want to move away from the current
-> hacking because a new, more urgent change must be done
-> somewhere else
-
-Yes. That is exactly what stash is for. Temporary fixes. Now...
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109307>
 
 
-> Instead, I see a usecase for git snapshot for progressive
-> temporary snapshot while working towards a more complex feature
-> while needing temporary intermediate checkpoints
+On Feb 10, 2009, at 3:41 PM, Jonas Fonseca wrote:
 
-That's the idea. You could take a snapshot automatically every x
-minutes. For example: I'm testing it taking a snapshot on every
-build/compile of my project (and it is going fine, BTW).
+> On Tue, Feb 10, 2009 at 20:29, Stefan Karpinski
+> <stefan.karpinski@gmail.com> wrote:
+>> On Tue, Feb 10, 2009 at 11:07 AM, Brian Gernhardt
+>> <benji@silverinsanity.com> wrote:
+>>>
+>>> OS 10.5.6's Terminal.app, with TERM=xterm-color
+>>> I have no .tigrc
+>>
+>> Ditto. Same bug. Completely vanilla tig setup. OS X Leopard,
+>> tig-0.14-9-gd06137e, TERM=xterm-color.
+>
+> Looks like there might be a pattern and I might have an excuse to go
+> knock on the door of one of my "Mac" friends. ;) However, first I
+> would kindly ask if one of you have time to test the attached patch.
 
-
-> similar to what I currently achieve using git commit (a first
-> time) and git commit --amend as my work progresses.
-
-Except that, in this solution, you have only ONE saved state.
-Also, it needs to be done manually. I wanted something automatic (like
-John Wiegley's sugestion)
-
-
-
-> In this respect, I wouldn't agree with the first difference you
-> remarked, but that's just the usecase I have in mind.
-
-Making another analogy: I see stash like a stack (you push/stash, and
-after you pop/apply). And I don't see stacks as a good long-term
-storages <g> (ok, you CAN 'cheat' and see all items other than the
-first)
-
-Snapshots would be like a queue: You can keep it entirely, or you can
-keep only the last 'n' interesting snapshots, removing the others.
-
-
-
-
-> I'm not sure I like the idea of creating these branches with these
-> branchnames. What about using another refs/ subtree?
-
-I'm also not sure <g>. The idea of refs/ is a good one, too (and could
-solve the problem of 'where to store the original index?'). But my
-first idea of using branches was to avoid a load of another
-'maintenance' commands ('snapshot list', 'snapshot delete', etc) and
-to use a more known facility (branches).
-
-
-
-Best regards,
-
-Fabio.
+That fixes half the problem.  It no longer leaves a highlight on the  
+wrong line, but the newly selected line does not highlight the empty  
+space at the end of the line.
