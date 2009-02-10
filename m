@@ -1,107 +1,102 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] builtin-branch: highlight current remote branches with an 
-	asterisk
-Date: Mon, 9 Feb 2009 19:22:50 -0500
-Message-ID: <76718490902091622y9a6d1bak5dc401858382e2ff@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-branch: highlight current remote branches with
+ an asterisk
+Date: Mon, 09 Feb 2009 16:24:44 -0800
+Message-ID: <7viqnjrveb.fsf@gitster.siamese.dyndns.org>
 References: <1234222326-55818-1-git-send-email-jaysoffian@gmail.com>
-	 <alpine.DEB.1.00.0902100048410.10279@pacific.mpi-cbg.de>
-	 <20090210000321.78025483@crow>
+ <alpine.DEB.1.00.0902100048410.10279@pacific.mpi-cbg.de>
+ <20090210000321.78025483@crow>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	gitster@pobox.com
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Mark Burton <markb@ordern.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 01:24:23 2009
+X-From: git-owner@vger.kernel.org Tue Feb 10 01:26:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWgQG-0005h2-Os
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 01:24:21 +0100
+	id 1LWgSD-0006GR-JL
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 01:26:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752643AbZBJAWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 19:22:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752627AbZBJAWw
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 19:22:52 -0500
-Received: from rv-out-0506.google.com ([209.85.198.229]:25527 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1749667AbZBJAWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 19:22:51 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so2038850rvb.1
-        for <git@vger.kernel.org>; Mon, 09 Feb 2009 16:22:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Q6zqdH7HwuNMqH6xvAT9QTmzRvA6JDJouIFXYoxg5z0=;
-        b=NSjlQGpv+XioMEiHRAkbVG9g15qWtsMayLI5/rh5HZ1GdZEbhzWvPMUogoxj6iVkdB
-         nnw91NvlHw0+T61+CcTnzP2ybRrxNxbKW9/RVUghoX2ADFFXvfzdvINja2+h26RYKfgo
-         NyXrzCqhXC5PBoxIR3VWc3PICupO74yONnCMQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=v9mBNvlXA88YDnqnf2JuNdTOD77lTXvmP7KKL7UfS71Wy/gVdgnXtQVL2zCe1Qr4gM
-         1eAd7jKlhW4piCyAsEy4Is70QcbIRIjGbDnIvFUTbgnXrsuU4unWi6tre8D/W3p1IHVE
-         B19aJhnaRBmkwdZoGoTsUUDZElQLKIPqq5vIM=
-Received: by 10.141.53.1 with SMTP id f1mr4287752rvk.6.1234225370575; Mon, 09 
-	Feb 2009 16:22:50 -0800 (PST)
-In-Reply-To: <20090210000321.78025483@crow>
+	id S1752206AbZBJAYx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 19:24:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750920AbZBJAYx
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 19:24:53 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51208 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750831AbZBJAYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 19:24:52 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 557ED980D8;
+	Mon,  9 Feb 2009 19:24:51 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ADBC6980D1; Mon,
+  9 Feb 2009 19:24:47 -0500 (EST)
+In-Reply-To: <20090210000321.78025483@crow> (Mark Burton's message of "Tue,
+ 10 Feb 2009 00:03:21 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3B56539A-F709-11DD-8388-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109168>
 
-(Please don't trim cc:)
+Mark Burton <markb@ordern.com> writes:
 
-On Mon, Feb 9, 2009 at 7:03 PM, Mark Burton <markb@ordern.com> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> Let's hope that nobody's scripts rely on a single star in front of the 
+>> local HEAD...
+>
 > I don't know if I have any scripts that rely on a single star in front of
 > the local HEAD or not (I'm sure some people must have them), but I do
 > think this new feature would be very confusing, especially when used
 > with -a.
->
-> At the very least, make the indicator something other than a star, an @
-> or #, perhaps.
 
-With color, it shouldn't be confusing at all as only one branch is in
-green. W/o color, it still seems clear to me as the remote branches
-have their remote name prefixed to them. Even if you're on a detached
-head:
+People use "git branch | sed -ne 's/^\* //p' in their scripts (you can say
+"against recommendation" but I think it is a sign that the recommendation
+against use of Porcelain in the scripts is not loud enough).  I do not
+think anybody greps in "git branch -a", though, for that purpose.
 
-* (no branch)
-  master
-  next
-  sent/branch-show-remote-HEAD
-  wip/am-usability-improvements
-  wip/push-docs
-  origin/html
-  origin/maint
-  origin/man
-* origin/master
-  origin/next
-  origin/pu
-  origin/todo
+The current "branch -a" output is a mess.  It omits "remotes/" even though
+it includes the local ones in the output.  Perhaps with remotes/, the
+output may become a bit more readable:
 
-A different marker doesn't really seem like an improvement to me:
+    $ git branch -a
+    * master
+      next
+      pu
+    * remotes/dscho/master
+    * remotes/origin/master
+      remotes/origin/next
+      remotes/origin/pu
+    * remotes/spearce/master
 
-* (no branch)
-  master
-  next
-  sent/branch-show-remote-HEAD
-  wip/am-usability-improvements
-  wip/push-docs
-  origin/html
-  origin/maint
-  origin/man
-@ origin/master
-  origin/next
-  origin/pu
-  origin/todo
+which may still be too loud with asterisks, but at least there is no
+confusion.  Or perhaps like this:
 
-But I'm happy to have the community paint the shed I've constructed.
+    $ git branch -a
+    * master
+      next
+      pu
+      remotes/dscho/HEAD -> master
+      remotes/dscho/master
+      remotes/origin/HEAD -> master
+      remotes/origin/master
+      remotes/origin/next
+      remotes/origin/pu
+      remotes/spearce/HEAD -> master
+      remotes/spearce/master
 
-j.
+with an obvious twist when there is no mixed output:
+
+    $ git branch -r
+      dscho/HEAD -> master
+      dscho/master
+      origin/HEAD -> master
+      origin/master
+      origin/next
+      origin/pu
+      spearce/HEAD -> master
+      spearce/master
