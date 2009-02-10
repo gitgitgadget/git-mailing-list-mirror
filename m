@@ -1,84 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] shortstatus v1
-Date: Tue, 10 Feb 2009 08:01:53 -0500
-Message-ID: <20090210130153.GA17305@coredump.intra.peff.net>
-References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com> <20090210110330.GB12089@coredump.intra.peff.net> <49916524.4000400@drmicha.warpmail.net> <20090210114506.GF12089@coredump.intra.peff.net> <499174E8.3030207@drmicha.warpmail.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Support \ in non-wildcard .gitignore entries
+Date: Tue, 10 Feb 2009 14:02:45 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902101402230.10279@pacific.mpi-cbg.de>
+References: <20090210121149.GA1226@pvv.org> <alpine.DEB.1.00.0902101354460.10279@pacific.mpi-cbg.de> <20090210125800.GA14800@pvv.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Tuncer Ayaz <tuncer.ayaz@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Feb 10 14:03:25 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Tue Feb 10 14:03:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWsGp-00040e-OS
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 14:03:24 +0100
+	id 1LWsH1-00044h-Ty
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 14:03:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754133AbZBJNB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 08:01:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754122AbZBJNB4
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 08:01:56 -0500
-Received: from peff.net ([208.65.91.99]:44379 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753624AbZBJNBz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 08:01:55 -0500
-Received: (qmail 13603 invoked by uid 107); 10 Feb 2009 13:02:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Feb 2009 08:02:12 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2009 08:01:53 -0500
-Content-Disposition: inline
-In-Reply-To: <499174E8.3030207@drmicha.warpmail.net>
+	id S1754176AbZBJNCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 08:02:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754155AbZBJNCE
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 08:02:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43705 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754164AbZBJNCB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 08:02:01 -0500
+Received: (qmail invoked by alias); 10 Feb 2009 13:01:59 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp015) with SMTP; 10 Feb 2009 14:01:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX181REE0kho19LXJZM5XKbvIgOFVA+SiZcZVUzAPgw
+	iij5ZJSJxBPNas
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090210125800.GA14800@pvv.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109232>
 
-On Tue, Feb 10, 2009 at 01:36:56PM +0100, Michael J Gruber wrote:
+Hi,
 
-> > I would much prefer that, if it had been done that way from the
-> > beginning. But I think we are stuck with "git status" due to hysterical
-> > raisins.
+On Tue, 10 Feb 2009, Finn Arne Gangstad wrote:
+
+> On Tue, Feb 10, 2009 at 01:56:36PM +0100, Johannes Schindelin wrote:
+> > Hi,
+> > 
+> > On Tue, 10 Feb 2009, Finn Arne Gangstad wrote:
+> > 
+> > > If you had an exclude-pattern with a backslash in it, e.g. "\#foo",
+> > > this would not work, since git would do a strcmp of the exclude pattern
+> > > and the filename. Only wildcard patterns were matched with fnmatch,
+> > > which does the right thing with backslashes. We now also treat all patterns
+> > > containing backslashes as wildcards.
+> > > 
+> > > De-escaping the pattern while reading the .gitignore file is error prone,
+> > > since that would break patterns with both backslashes and wildcards.
+> > > E.g. "\\*.c" would be translated to "\*.c" before fnmatch got it,
+> > > and would change the meaning of the rule dramatically.
+> > 
+> > I am not sure I understand (maybe a test case would help, but that test 
+> > case would have to be disabled on Windows, I guess):
+> > 
+> > You mean that '\#abc' would match '\#abc', but '\#abc*' would not?
 > 
-> ROTFTCOOTF!
+> Currently, \#abc does not match a file named #abc, but \#abc* does.
+> With the patch, both will match.
 
-I have to admit, this is a new acronym for me...I get the first half,
-but not the second.
+Ah, so I was wrong, and the test case would not have to be disabled on 
+Windows.
 
-> > The big downside with the snippet I posted above is that it runs three
-> > separate commands that go through the index. In theory, you could do it
-> > in one pass. But wt-status _doesn't_ do that, since the diff
-> > infrastructure isn't there (a long time ago, Junio had an experimental
-> > parallel diff walker patch, but it never made it out of next).
-> 
-> We completely agree. How do you suggest to progress? Go for the diff
-> walker? For a (porc.) command like shortstatus I think going through the
-> index 3 times isn't that bad, all disk access should be cached after the
-> first run.
-
-I don't know if resurrecting the parallel diff walker is worth the
-trouble. I guess if somebody cares enough about the performance they can
-find the old patch and try benchmarking it.
-
-Making a C command rather than a shell script is probably reasonable if
-this is performance critical (and there seems to be talk of putting it
-into a prompt).  What I really object to in the patch is:
-
-  - sticking this in builtin-commit.c. It really has _nothing_ to do
-    with commit or the existing status. Especially using the same
-    option parser is just nonsensical.
-
-  - I'm not sure bolting this onto wt-status really makes much sense.
-    Especially the performance-critical --mini prompt mode _doesn't_
-    want to do the string collection because it wastes a lot of cycles
-    figuring out things that we are just going to throw away.
-
-    However, for the "regular" mode, I don't think it is too big a
-    problem. wt_status does a few extra things that shortstatus won't
-    care about, but I don't think they are too performance critical
-    (e.g., I believe it will find out the "your branch is N commits
-    ahead of the remote" information).
-
--Peff
+Thanks,
+Dscho
