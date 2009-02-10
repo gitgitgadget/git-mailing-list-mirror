@@ -1,81 +1,68 @@
-From: "Pat Notz" <pknotz@sandia.gov>
-Subject: [PATCH] Fix contrib/hooks/post-receive-email for new duplicate
- branch
-Date: Tue, 10 Feb 2009 09:18:27 -0700
-Message-ID: <1234282707-6295-1-git-send-email-pknotz@sandia.gov>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 1/2] code cleanup in sha1_file.c: xmalloc -> xcalloc
+Date: Tue, 10 Feb 2009 10:29:14 -0600
+Message-ID: <EohcOnsg9EGsisIaM0B0iYUSHt-mz_fzqBCqg27mBU0yXXlkP9baOA@cipher.nrlssc.navy.mil>
+References: <1234334612-24907-1-git-send-email-guanqun.lu@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Pat Notz" <pknotz@sandia.gov>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 10 17:20:18 2009
+Cc: git@vger.kernel.org
+To: Guanqun Lu <guanqun.lu@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 17:31:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWvLJ-0004hS-9f
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 17:20:13 +0100
+	id 1LWvVb-0000Zk-Ai
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 17:30:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754088AbZBJQSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 11:18:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754024AbZBJQSp
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 11:18:45 -0500
-Received: from sentry.sandia.gov ([132.175.109.20]:2094 "EHLO
-	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753184AbZBJQSp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 11:18:45 -0500
-Received: from [134.253.165.159] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.2)); Tue, 10 Feb 2009 09:18:33 -0700
-X-Server-Uuid: AF72F651-81B1-4134-BA8C-A8E1A4E620FF
-Received: from localhost.localdomain (134.253.112.110) by
- cas1.srn.sandia.gov (134.253.165.189) with Microsoft SMTP Server id
- 8.1.336.0; Tue, 10 Feb 2009 09:18:32 -0700
-X-Mailer: git-send-email 1.6.1.2
-X-TMWD-Spam-Summary: TS=20090210161833; ID=1; SEV=2.3.1;
- DFV=B2009021012; IFV=NA; AIF=B2009021012; RPD=5.03.0010; ENG=NA;
- RPDID=7374723D303030312E30413031303230342E34393931413844412E303033452C73733D312C6667733D30;
- CAT=NONE; CON=NONE; SIG=AAABAKR1FwAAAAAAAAAAAAAAAAAAAH0=
-X-MMS-Spam-Filter-ID: B2009021012_5.03.0010
-X-WSS-ID: 658F77532D4187508-01-01
+	id S1755665AbZBJQ3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 11:29:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755594AbZBJQ3W
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 11:29:22 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:58905 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755520AbZBJQ3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 11:29:21 -0500
+Received: by mail.nrlssc.navy.mil id n1AGTFbZ031808; Tue, 10 Feb 2009 10:29:15 -0600
+In-Reply-To: <1234334612-24907-1-git-send-email-guanqun.lu@gmail.com>
+X-OriginalArrivalTime: 10 Feb 2009 16:29:15.0215 (UTC) FILETIME=[B6A44DF0:01C98B9C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109265>
 
-In the show_new_revisions function, the original code:
+Guanqun Lu wrote:
+> 'xmalloc' followed immediately by 'memset' is replaced
+> with 'xcalloc', and a simple grep in this project seems
+> to show that it's the only place.
+> 
+> Signed-off-by: Guanqun Lu <guanqun.lu@gmail.com>
+> ---
+>  sha1_file.c |    3 +--
+>  1 files changed, 1 insertions(+), 2 deletions(-)
+> 
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 8868b80..93e5fc0 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -858,8 +858,7 @@ unsigned char* use_pack(struct packed_git *p,
+>  
+>  static struct packed_git *alloc_packed_git(int extra)
+>  {
+> -	struct packed_git *p = xmalloc(sizeof(*p) + extra);
+> -	memset(p, 0, sizeof(*p));
+> +	struct packed_git *p = xcalloc(1, sizeof(*p) + extra);
+>  	p->pack_fd = -1;
+>  	return p;
+>  }
 
-  git rev-parse --not --branches | grep -v $(git rev-parse $refname) |
+I previously scanned through and did this.  I left this one as is
+because the extra part is about as large as the sizeof(*p) part.  69 and
+72 bytes respectively on 32-bit.  The extra part is always filled in
+immediately by callers.  It's only called once for each pack so it's
+not performance critical, so maybe your patch is worth it since it is
+simpler?
 
-isn't quite right since one can create a new branch and push it
-without any new commits.  In that case, two refs will have the same
-sha1 but both would get filtered by the 'grep'.  In the end, we'll
-show ALL the history which is not what we want.  Instead, we should
-list the branches by name and remove the branch being updated and THEN
-pass that list through rev-parse.
-
-Revised as suggested by Jakub Narebski <jnareb@gmail.com> to use
-git-for-each-ref instead of git-branch.  (Thanks!)
-
-Signed-off-by: Pat Notz <pknotz@sandia.gov>
----
- contrib/hooks/post-receive-email |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 28a3c0e..ec52751 100644
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -615,7 +615,9 @@ show_new_revisions()
- 		revspec=$oldrev..$newrev
- 	fi
- 
--	git rev-parse --not --branches | grep -v $(git rev-parse $refname) |
-+	other_branches=$(git for-each-ref --format='%(refname)' refs/heads/ |
-+	    grep -v $refname)
-+	git rev-parse --not $other_branches |
- 	if [ -z "$custom_showrev" ]
- 	then
- 		git rev-list --pretty --stdin $revspec
--- 
-1.6.1.2
+-brandon
