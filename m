@@ -1,68 +1,95 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: Re: how to clone all branches include remote branches
-Date: Tue, 10 Feb 2009 18:05:42 +0000 (UTC)
-Message-ID: <gmsflm$sd4$1@ger.gmane.org>
-References: <95463c700902100949w23a95536re9a65a2e5c3c0b5d@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] shortstatus v1
+Date: Tue, 10 Feb 2009 13:10:52 -0500
+Message-ID: <20090210181052.GA19634@coredump.intra.peff.net>
+References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com> <20090210110330.GB12089@coredump.intra.peff.net> <7vwsbynv0o.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 10 19:07:40 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Tuncer Ayaz <tuncer.ayaz@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 19:13:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWx11-0006Tk-EU
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 19:07:23 +0100
+	id 1LWx79-0000ky-3h
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 19:13:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753759AbZBJSF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 13:05:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753045AbZBJSFz
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 13:05:55 -0500
-Received: from main.gmane.org ([80.91.229.2]:42764 "EHLO ciao.gmane.org"
+	id S1753851AbZBJSK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 13:10:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753434AbZBJSK4
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 13:10:56 -0500
+Received: from peff.net ([208.65.91.99]:39591 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752721AbZBJSFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 13:05:55 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LWwzY-0008JX-BT
-	for git@vger.kernel.org; Tue, 10 Feb 2009 18:05:52 +0000
-Received: from u-5-128.vpn.rwth-aachen.de ([137.226.101.128])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 18:05:52 +0000
-Received: from heipei by u-5-128.vpn.rwth-aachen.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 18:05:52 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: u-5-128.vpn.rwth-aachen.de
-User-Agent: slrn/0.9.9p1 (Linux)
+	id S1752457AbZBJSKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 13:10:55 -0500
+Received: (qmail 16188 invoked by uid 107); 10 Feb 2009 18:11:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Feb 2009 13:11:11 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2009 13:10:52 -0500
+Content-Disposition: inline
+In-Reply-To: <7vwsbynv0o.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109286>
 
-On 2009-02-10, gnu kevin <kevin.gnu.zhang@gmail.com> wrote:
-> I'd like to know how to get all remote(grandparent) branches by clone
-> a remote repo . for example:
-> remote repo ABC contains below branches:
-> master
-> stable/main
-> dev/main
+On Tue, Feb 10, 2009 at 07:58:47AM -0800, Junio C Hamano wrote:
 
-You could (if your .git/config) already contains the remote simply add a 
-line:
-fetch = +refs/remotes/*:refs/remotes/<remote-name>/remotes/*
+> >   2. Why do staged changes get a letter marking what happened, but
+> >      unstaged changes do not?
+> 
+> Bug?   FWIW, the original patch from October shows:
+> 
+>     M changed
+> M   M changed-again
+> M     changed-staged
+>     D deleted
+> D     deleted-staged
+> 
+> (where changed-again has both staged changes and further changes in the
+> work tree).
+> 
+> The gap between these two are to show the rename similarity index, which
+> we could do without.
 
-The double remotes is used so that no remote-remote-branch can overwrite 
-your tracking branch with the same name.
+OK, that makes more sense. And your example shows a good answer to my
+earlier question: why is just sorting the output of the the three
+commands (diff, diff --cached, and ls-files -o) not as nice. The answer
+is that we need to actually combine lines when files are appear in
+multiple places.
 
-Hope that helped,
-Jojo
+> The output mimicked what was in Shawn's "repo" tool announcement IIRC.
+> 
+> My patch was supposed to give interested parties hint to base a patch like
+> Tuncer's on (I think this answers your last question, too).
 
--- 
-Johannes Gilger <heipei@hackvalue.de>
-http://hackvalue.de/heipei/
-GPG-Key: 0x42F6DE81
-GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
+I went back and read some of the background. I think having this work
+with the wt-status machinery is reasonable, then. My concerns with
+Tuncer's patch are still:
+
+  - this should not be part of builtin-commit.c; it doesn't use any of
+    the same code except that which has already been lib-ified in
+    wt-status.[ch].
+
+  - I don't think the "mini" status is really related to this. The novel
+    thing here is collating the outputs into a single sorted list. But
+    the "mini" output is not about that at all:
+
+      1. It doesn't care about full output, so it should be able to exit
+         early from the diff, avoid rename detection, etc, so that it is
+         as quick as possible.
+
+      2. It doesn't collate the output at all. It is about three
+         separate symbols for the three separate lists.
+
+-Peff
+
+
+
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
