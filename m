@@ -1,105 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
-Date: Tue, 10 Feb 2009 14:32:22 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902101427490.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de> <20090210121833.GC15491@coredump.intra.peff.net> <alpine.DEB.1.00.0902101357140.10279@pacific.mpi-cbg.de> <20090210131029.GC17305@coredump.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: git-svn: incomplete data after terminated "git svn clone"
+Date: Tue, 10 Feb 2009 14:42:29 +0100
+Message-ID: <200902101442.32772.trast@student.ethz.ch>
+References: <40aa078e0902100350m2d885516o853b1ec56eb43ce1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Jeff King <peff@peff.net>, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Feb 10 14:33:20 2009
+Content-Type: multipart/signed;
+  boundary="nextPart4720532.PfGztQermW";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Erik Faye-Lund" <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 14:44:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWsja-0005QP-Px
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 14:33:07 +0100
+	id 1LWsuF-0000ww-6p
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 14:44:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754076AbZBJNbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 08:31:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753942AbZBJNbj
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 08:31:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49454 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753896AbZBJNbj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 08:31:39 -0500
-Received: (qmail invoked by alias); 10 Feb 2009 13:31:37 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp058) with SMTP; 10 Feb 2009 14:31:37 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX199lQZprLt9XTQiiYs8/HebGmc3EktZP29qrm90fy
-	0l8OPbrp6ZFla8
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090210131029.GC17305@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1755477AbZBJNml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 08:42:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755585AbZBJNml
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 08:42:41 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:51982 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755549AbZBJNmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 08:42:40 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 10 Feb 2009 14:42:38 +0100
+Received: from thomas.localnet ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 10 Feb 2009 14:42:38 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <40aa078e0902100350m2d885516o853b1ec56eb43ce1@mail.gmail.com>
+X-OriginalArrivalTime: 10 Feb 2009 13:42:38.0181 (UTC) FILETIME=[6FF1F950:01C98B85]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109239>
 
-Hi,
+--nextPart4720532.PfGztQermW
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-[Junio: seems like both Peff and me would like to hold the notes out of 
-1.6.2, would you mind?]
+Erik Faye-Lund wrote:
+> I recently tried to clone an existing (very big) SVN repo by using
+> "git svn clone <repo> -s", and by mistake I pressed Ctrl-C after the
+> clone operation had been running for ~16 hours. When trying to
+> re-issue the clone, I got the error message "Incomplete data: Delta
+> source ended unexpectedly at /home/erifay01/libexec/git-core/git-svn
+> line 4249" after git-svn fetching another 8 or so revisions. Now, I
+> realize I shouldn't have done this, but I'd still prefer avoiding to
+> have to re-do it all.
+[...]
+> Now, I'm wondering if there's any way of going back to the state
+> before I pressed Ctrl-C, so I can rebuild from there. I know what
+> revision I terminated at, and I have the corresponding SHA.
 
-On Tue, 10 Feb 2009, Jeff King wrote:
+Some ideas:
 
-> On Tue, Feb 10, 2009 at 01:59:06PM +0100, Johannes Schindelin wrote:
-> 
-> > > Hmm. Do we really care about how easy it is to generate? Are we
-> > > expecting people to not use the command interface and instead check out
-> > > a notes tree and start putting stuff into $commit/foo?
-> > 
-> > I wanted to be nice to existing users of the feature (it is in 'next', 
-> > after all, and Thomas has produced some awesome examples, that will 
-> > hopefully show the scalability of the thing).
-> > 
-> > But you're right, it almost, but not quite, too late to switch.
-> 
-> OK. I think if you are seeing performance benefits from a 2-character
-> fanout, then we should standardize on that (do you have new performance
-> numbers somewhere?).
+=46irst you can try to reset the git-svn head to the SHA of the commit
+before (in case the one it stopped at ended up being corrupted).  For
+example, if $stopped is the commit you interrupted it at,
 
-The thing is: Shawn is correct when he says that a tree object to hold the 
-notes of all commits (which is not an unlikely scenario if you are 
-thinking about corporate processes) would be huge.
+  git update-ref refs/remotes/git-svn $stopped^
 
-> The notes implementation is now in master. If it's about to change in an 
-> incompatible way, how do you want to handle it? I'm wary of a quick 
-> patch to change the format this late in the release cycle. We could hold 
-> it back from 1.6.2. Alternatively, we could let it release with a "this 
-> is probably going to change" warning.
-> 
-> I think I favor holding it back, but I am not picky.
+Adjust the ref name if you used a trunk/branches layout.  Then remove
+the .git/svn/ cache and try again.
 
-Yes, I am also in favor of holding it back.
+=46ailing that, you could test if this also happens when only looking at
+a few surrounding revisions, for example if the failure was around
+revision 100:
 
-> > > multiple notes some sane semantics (one trumps the other, or they are a
-> > > list, or whatever), but there is still an inconsistency: B's notes and
-> > > C's notes behave differently. So now A has to start caring about how
-> > > other people generate their notes.
-> > > [...]
-> > 
-> > You're correct.  This buys all kinds of trouble.
-> 
-> One other thing to note: I think we discussed in the past other kinds of
-> "more than one way to store it" strategies (e.g., letting a blob note be
-> the same as a tree note containing a blob "default"). They suffer from
-> some of the same issues (though not quite as badly, since you would at
-> least see that there was a conflict).
+  mkdir ../new-test
+  cd ../new-test
+  git svn init <args you gave to the other git svn init/clone>
+  git svn fetch -r 95:105
 
-Actually, I do not see much of a problem there.  If the entry 
-(corresponding to the commit name) in the notes tree points to a blob, 
-then that is that, if it points to a tree, then we just read all of the 
-objects therein (or maybe at a later stage we allow restricting to a 
-certain file basename).
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
-The point you raised earlier, that there would be a lot of ambiguity if 
-we allow both flat and fan-out directory structures, is a valid point, 
-though.
+--nextPart4720532.PfGztQermW
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-Ciao,
-Dscho
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkmRhEgACgkQqUud07tmzP1ypACfY0SizloFPlp4pWd1BRCol4RF
+g2cAn1bEvLxnKmBtkkJrPgpkL0xO5YhV
+=k9DG
+-----END PGP SIGNATURE-----
+
+--nextPart4720532.PfGztQermW--
