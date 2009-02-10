@@ -1,65 +1,65 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] fix the installation path for html documentation
-Date: Tue, 10 Feb 2009 21:25:04 +0100
-Message-ID: <200902102125.05287.j6t@kdbg.org>
-References: <1234278853-25452-1-git-send-email-git@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] New command: 'git snapshot'.
+Date: Tue, 10 Feb 2009 12:31:28 -0800
+Message-ID: <7v7i3ym3tr.fsf@gitster.siamese.dyndns.org>
+References: <38cfbb550902091054u78f2e706u67752b4dc9de6c3b@mail.gmail.com>
+ <etsYQzEDjdk-_NxhvO3i6EyShR6eZ202GBdQx7ZZpPHH5iNfWiuV6g@cipher.nrlssc.navy.mil> <slrngp21uj.i22.sitaramc@sitaramc.homelinux.net> <1234295272.10335.26.camel@ld0161-tx32>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Feb 10 21:27:19 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jon Loeliger <jdl@freescale.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 21:33:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWzC5-00048C-SO
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 21:26:58 +0100
+	id 1LWzI0-0006Wa-My
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 21:33:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755147AbZBJUZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 15:25:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754742AbZBJUZN
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 15:25:13 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:27122 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754748AbZBJUZM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 15:25:12 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 67BA5CDF88;
-	Tue, 10 Feb 2009 21:25:07 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 153095BB72;
-	Tue, 10 Feb 2009 21:25:07 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <1234278853-25452-1-git-send-email-git@drmicha.warpmail.net>
-Content-Disposition: inline
+	id S1755028AbZBJUbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 15:31:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754490AbZBJUbh
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 15:31:37 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56883 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754475AbZBJUbg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 15:31:36 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 55B4A98686;
+	Tue, 10 Feb 2009 15:31:35 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D307298684; Tue,
+ 10 Feb 2009 15:31:30 -0500 (EST)
+In-Reply-To: <1234295272.10335.26.camel@ld0161-tx32> (Jon Loeliger's message
+ of "Tue, 10 Feb 2009 13:47:52 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: CF7C3014-F7B1-11DD-9B7D-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109303>
 
-On Dienstag, 10. Februar 2009, Michael J Gruber wrote:
-> Since 026fa0d5ad9538ca76838070861531c037d7b9ba (Move computation of
-> absolute paths from Makefile to runtime (in preparation for
-> RUNTIME_PREFIX) the installation of html doc was broken:
-> Documentation/Makefile does not know how to resolve relative dirs, which
-> results in html doc being installed in
-> $(git-build-root)/Documentation/share/doc/git-doc.
+Jon Loeliger <jdl@freescale.com> writes:
+
+> On Tue, 2009-02-10 at 04:51 +0000, Sitaram Chamarty wrote:
 >
-> Fix this by not exporting htmldir from Makefile since this allows
-> Documentation/Makefile to compute htmldir from prefix.
+>> I use cross-branch stashes all the time.  Stash it here, go
+>> there, and pop the stash.  I hope that does not change :-)
 >
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> An alternative would be to teach Documentation/Makefile to take the
-> relative htmldir and make it into an absolute path. But the approach I'm
-> taking with this patch as analogous to how mandir is handled, with the
-> same draw back. But all is well as long as the build monkey messes with
-> prefix only.
+> Perhaps 'git checkout -m other_branch'?
 
-Makes sense. There is no point handling mandir and htmldir differently.
+Sure, or even "git checkout other_branch" without -m.
 
--- Hannes
+"Stash it here, go there, and pop the stash" is what you would use when
+you have many changes that you _know_ "checkout -m" will run a 3-way merge
+to produce a heavy conflict, and you suspect you may need to be able to
+retry the unstashing after taking a break.
+
+If you are lucky and manage to resolve the conflicts easily (or did not
+even get conflicts when applying), then pop will drop the stash and you
+have everything you want in your index and the work tree.  Otherwise, your
+work tree would be a mess, and you may have to "reset --hard" out to start
+from scratch, but then the stash will still be there.
