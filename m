@@ -1,68 +1,84 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [ANNOUNCE] tig-0.14
-Date: Tue, 10 Feb 2009 15:49:54 -0500
-Message-ID: <3902F3BD-6EE5-4896-9E96-C4A1C4B6E9AF@silverinsanity.com>
-References: <20090205204436.GA6072@diku.dk> <4991814A.6050803@tedpavlic.com> <2c6b72b30902101029s72628a88n16473ee30f853198@mail.gmail.com> <6BA2725C-2127-48BE-871E-7449A507CCD8@silverinsanity.com> <d4bc1a2a0902101129y22224c89y144b223e7d7dd463@mail.gmail.com> <2c6b72b30902101241p67a0e1e9u60c8033c4a03260c@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Karpinski <stefan.karpinski@gmail.com>,
-	Ted Pavlic <ted@tedpavlic.com>, git <git@vger.kernel.org>
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Tue Feb 10 21:51:27 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
+Date: Tue, 10 Feb 2009 22:10:43 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902102210140.10279@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de> <20090210121833.GC15491@coredump.intra.peff.net> <alpine.DEB.1.00.0902101357140.10279@pacific.mpi-cbg.de> <20090210131029.GC17305@coredump.intra.peff.net> <alpine.DEB.1.00.0902101427490.10279@pacific.mpi-cbg.de>
+ <7vprhqnv0c.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0902101743180.10279@pacific.mpi-cbg.de> <20090210165610.GP30949@spearce.org> <7vocxam96s.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 22:13:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWzZm-0006F0-FH
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 21:51:26 +0100
+	id 1LWzur-0006pR-Fe
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 22:13:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755277AbZBJUt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 15:49:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754729AbZBJUt6
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 15:49:58 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:33680 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754072AbZBJUt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 15:49:58 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 8994A1FFC281; Tue, 10 Feb 2009 20:49:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=4.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.1.7-deb3
-Received: from [192.168.1.115] (cpe-74-74-137-205.rochester.res.rr.com [74.74.137.205])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id A55111FFC273;
-	Tue, 10 Feb 2009 20:49:49 +0000 (UTC)
-In-Reply-To: <2c6b72b30902101241p67a0e1e9u60c8033c4a03260c@mail.gmail.com>
-X-Mailer: Apple Mail (2.930.3)
+	id S1754507AbZBJVKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 16:10:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754408AbZBJVKM
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 16:10:12 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50764 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751387AbZBJVKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 16:10:11 -0500
+Received: (qmail invoked by alias); 10 Feb 2009 21:09:57 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 10 Feb 2009 22:09:57 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19oIBMQCP9oIPQX9eT/RD1mLzjG8qMSYDS9rDjLe9
+	xLiVzMORb3j6Am
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vocxam96s.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109308>
 
+Hi,
 
-On Feb 10, 2009, at 3:41 PM, Jonas Fonseca wrote:
+On Tue, 10 Feb 2009, Junio C Hamano wrote:
 
-> On Tue, Feb 10, 2009 at 20:29, Stefan Karpinski
-> <stefan.karpinski@gmail.com> wrote:
->> On Tue, Feb 10, 2009 at 11:07 AM, Brian Gernhardt
->> <benji@silverinsanity.com> wrote:
->>>
->>> OS 10.5.6's Terminal.app, with TERM=xterm-color
->>> I have no .tigrc
->>
->> Ditto. Same bug. Completely vanilla tig setup. OS X Leopard,
->> tig-0.14-9-gd06137e, TERM=xterm-color.
->
-> Looks like there might be a pattern and I might have an excuse to go
-> knock on the door of one of my "Mac" friends. ;) However, first I
-> would kindly ask if one of you have time to test the attached patch.
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >> On Tue, 10 Feb 2009, Junio C Hamano wrote:
+> >> > 
+> >> > I could do a revert on 'master' if it is really needed, but I found that
+> >> > the above reasoning is a bit troublesome.  The thing is, if a tree to hold
+> >> > the notes would be huge to be unmanageable, then it would still be huge to
+> >> > be unmanageable if you split it into 256 pieces.
+> >> 
+> >> The thing is, a tree object of 17 megabyte is unmanagably large if you 
+> >> have to read it whenever you access even a single node.  Having 256 trees 
+> >> instead, each of which is about 68 kilobyte is much nicer.
+> >
+> > See my other email on this thread; we'd probably need to unpack
+> > all 256 subtrees *anyway* due to the distribution of SHA-1 names
+> > for commits.
+> 
+> I wonder if we can solve this by introducing a local cache that is a flat
+> file that looks like:
+> 
+>     magic number for /usr/bin/file
+>     tree object SHA-1 the file caches
+>     Number of entries in this file
+>     256 fan-out offsets into this file
+>     N entries of <SHA-1, SHA-1>, sorted
+>     Checksum of the file itself
+> 
+> and use it when availble (otherwise optionally create it upon the first
+> lookup).  The file can be used by mmaping it and then doing a newton
+> raphson or binary search similar to the way patch-ids.c does.
 
-That fixes half the problem.  It no longer leaves a highlight on the  
-wrong line, but the newly selected line does not highlight the empty  
-space at the end of the line.
+Or we could use an on-disk hashmap.  Oh, wait...
+
+Ciao,
+Dscho
