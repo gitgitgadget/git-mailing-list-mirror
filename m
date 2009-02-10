@@ -1,79 +1,74 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: git ready: daily git tips
-Date: Tue, 10 Feb 2009 01:20:48 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngp1ljg.cnd.sitaramc@sitaramc.homelinux.net>
-References: <1234131508141-2294642.post@n2.nabble.com>
- <alpine.LFD.2.00.0902091524520.30940@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Enable setting attach as the default in .gitconfig
+ for git-format-patch.
+Date: Mon, 09 Feb 2009 17:41:46 -0800
+Message-ID: <7v3aenrrtx.fsf@gitster.siamese.dyndns.org>
+References: <498E50E2.8050309@codeweavers.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 10 02:22:26 2009
+Cc: git@vger.kernel.org
+To: Jeremy White <jwhite@codeweavers.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 02:43:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWhKT-0003Ci-M8
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 02:22:26 +0100
+	id 1LWhei-0000PQ-VJ
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 02:43:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753145AbZBJBU7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 20:20:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753032AbZBJBU6
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 20:20:58 -0500
-Received: from main.gmane.org ([80.91.229.2]:48423 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752928AbZBJBU6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 20:20:58 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LWhJ2-0005qf-V3
-	for git@vger.kernel.org; Tue, 10 Feb 2009 01:20:57 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 01:20:56 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 01:20:56 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1752689AbZBJBlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 20:41:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbZBJBlx
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 20:41:53 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64376 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751661AbZBJBlw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 20:41:52 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5669D2ACD2;
+	Mon,  9 Feb 2009 20:41:51 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 907032ACCA; Mon, 
+ 9 Feb 2009 20:41:48 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FD141CBA-F713-11DD-BDD6-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109173>
 
-On 2009-02-09, Nicolas Pitre <nico@cam.org> wrote:
-> On Sun, 8 Feb 2009, Nick Quaranto wrote:
->> http://gitready.com
->
-> Well done.
->
-> One topic that IMHO you fail to cover, and which is being neglected 
-> almost everywhere else too, is the reflog.
->
-> The reflog is really your safety net when working with git.  It records 
-> everything you do. So even if you screw up a rebase, perform the wrong 
-> merge, or any other kind of undesired operation, then you may always go 
-> back to a previous state.  Either you use -g with 'git log' to see all 
-> those recorded states, or even 'git reflog' without any argument to get 
-> a condensed list for HEAD.
->
-> The <branch>@{<spec>} notation can be used anywhere a ref is normally 
-> required.  The special branch "HEAD" shows every state the HEAD pointer 
-> went through, including branch switches.  The <branch< part can be left 
-> out to mean "currently checked-out branch".
->
-> One thing that I use all the time after a 'git pull' is 'git log @{1}..' 
-> where "@{1}" means the first previous tip of the current branch, so 
-> effectively showing me the log of what the pull brought in my branch.
+Jeremy White <jwhite@codeweavers.com> writes:
 
-Also, the @{now} notation to get a relative timestamp of the
-reflog is invaluable.  Seeing reflog lines annotated with
-'14 minutes ago' or '17 hours ago' or perhaps '4 days ago',
-really helps to focus on the commits you're looking for:
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> index 11a7d77..2e8e94e 100644
+> --- a/Documentation/git-format-patch.txt
+> +++ b/Documentation/git-format-patch.txt
+> @@ -174,7 +174,8 @@ CONFIGURATION
+>  -------------
+>  You can specify extra mail header lines to be added to each message
+>  in the repository configuration, new defaults for the subject prefix
+> -and file suffix, and number patches when outputting more than one.
+> +and file suffix, control attachements, and number patches when outputting
+> +more than one.
+>  
+>  ------------
+>  [format]
+> @@ -183,6 +184,7 @@ and file suffix, and number patches when outputting more than one.
+>  	suffix = .txt
+>  	numbered = auto
+>  	cc = <email>
+> +	attach [ = mime-boundary-string ]
+>  ------------
 
-    git reflog show @{now}
-    # (the 'show' is not optional in this syntax)
+Once you added this configuration, if you ever wanted to defeat it for a
+single invocation, how would you do so?  Edit the configuration file
+again?
+
+Not that I am objecting to the patch, as I am unlikely to have such a
+configuration, but are there people who need to send attachment sometimes
+but not other times?  They can say --attach from the command line without
+adding the configuraiton if they send their patch non-attached more often
+than as an attachment, but if they most of the time need to attach but
+sometimes need to send in-line, they do not have an easy way to do so.
