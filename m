@@ -1,95 +1,207 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: fact-import: failed to apply delta
-Date: Tue, 10 Feb 2009 16:19:27 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0902101520240.19665@iabervon.org>
-References: <alpine.LNX.1.00.0902092218050.19665@iabervon.org> <alpine.DEB.1.00.0902101126040.10279@pacific.mpi-cbg.de> <20090210155626.GM30949@spearce.org> <alpine.LNX.1.00.0902101118110.19665@iabervon.org> <20090210172212.GR30949@spearce.org>
- <alpine.LNX.1.00.0902101226580.19665@iabervon.org> <20090210191220.GT30949@spearce.org> <alpine.LNX.1.00.0902101427300.19665@iabervon.org> <20090210201203.GU30949@spearce.org>
+From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+Subject: Re: [RFC/PATCH] shortstatus v1
+Date: Tue, 10 Feb 2009 22:21:16 +0100
+Message-ID: <4ac8254d0902101321w1b6171cfkf7a6253181324acd@mail.gmail.com>
+References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com>
+	 <20090210110330.GB12089@coredump.intra.peff.net>
+	 <7vwsbynv0o.fsf@gitster.siamese.dyndns.org>
+	 <20090210181052.GA19634@coredump.intra.peff.net>
+	 <20090210191118.GA26651@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 10 22:21:20 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 10 22:23:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX02h-0001Sv-HO
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 22:21:20 +0100
+	id 1LX046-0001za-Q6
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 22:22:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756302AbZBJVTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 16:19:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755936AbZBJVTf
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 16:19:35 -0500
-Received: from iabervon.org ([66.92.72.58]:40769 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756302AbZBJVTe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 16:19:34 -0500
-Received: (qmail 716 invoked by uid 1000); 10 Feb 2009 21:19:27 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Feb 2009 21:19:27 -0000
-In-Reply-To: <20090210201203.GU30949@spearce.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1755287AbZBJVVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 16:21:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755277AbZBJVVT
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 16:21:19 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:36086 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755271AbZBJVVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 16:21:19 -0500
+Received: by bwz5 with SMTP id 5so80021bwz.13
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 13:21:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JQK/COvOnAMSioGp6gCP1nF8Uefii1eynSik7UFnMY8=;
+        b=sa11R/VB5U4z4x7kyi+NYywOJ+MNk/wZswRYhIJM3j81hBom4r36Zwv4I0JYUsPAZN
+         v6hesSp1R9KuZLrqM8FzW/nCUUnDuQL4Jw/iBGn49RhUKFRFmOIRC8iEAebhmI4lzAN6
+         OIwYzTzmNULX4S/+w5vMr0u9oGVuiuKsTTyfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tEIEEk+AWNbXviSGS8PN7THraSsRcTKrnvXf4VCIzelUz7Ccy7xMNFy4WLEXdWe0LA
+         zD2QCK4PcCupLmSl5sXVgwE6r9QbI6HOjyMOT/hLy7YFiHIXTZbKeyOCs1r7H1fmFuZm
+         MuG/E0IJSDC8kFBZQD2tTzgAwepKH1U77Nfeo=
+Received: by 10.223.115.193 with SMTP id j1mr438696faq.98.1234300876291; Tue, 
+	10 Feb 2009 13:21:16 -0800 (PST)
+In-Reply-To: <20090210191118.GA26651@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109313>
 
-On Tue, 10 Feb 2009, Shawn O. Pearce wrote:
+On Tue, Feb 10, 2009 at 8:11 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Feb 10, 2009 at 01:10:52PM -0500, Jeff King wrote:
+>
+>>   - I don't think the "mini" status is really related to this. The novel
+>>     thing here is collating the outputs into a single sorted list. But
+>>     the "mini" output is not about that at all:
+>>
+>>       1. It doesn't care about full output, so it should be able to exit
+>>          early from the diff, avoid rename detection, etc, so that it is
+>>          as quick as possible.
+>>
+>>       2. It doesn't collate the output at all. It is about three
+>>          separate symbols for the three separate lists.
+>
+> OK, I realize this is not exactly what the proposed --mini does. But
+> here is more along the lines of what I was thinking.
+>
+> Warm cache, it runs in .042s on my git repo, about half of which is the
+> untracked files check. It takes about .49s on the kernel repo. The
+> read_directory() bit is not optimized at all, and could probably benefit
+> from an early return (OTOH, the worst case is still going to need to
+> look at every path).
+>
+> I am not particularly interested in a fancy prompt myself, but maybe
+> this will help somebody else.
 
-> Daniel Barkalow <barkalow@iabervon.org> wrote:
-> > 
-> > Is there some easy way to tell what object it was having problems with 
-> > when it failed to unpack? I've got a whole lot of objects.
-> 
-> Can you use gdb to find it?  If so, walk up the stack into
-> fast-import.c's load_tree() function and look at sha1 here,
-> and also, *myoe.
+I tried this and it did not run faster than my experiment.
+I had to add a missing opening curly brace in
+have_untracked() before it compiled.
 
-Okay, sha1 is 961a2199..., which is correct as a delta against the tree of 
-size 151 at offset 12 of its own pack; the bogus thing seems to be the 
-base_size (and presumably base).
+As we haven't found a fast way yet I can live without it.
 
-> > The expected size of the base is 1882, while the actual size is 151. The 
-> > base offset it found was 12.
-> > 
-> > I'm using "checkpoint" a lot, so I've got 24 packs. Two of them have tree 
-> > objects of size 1882 at offset 12; a different one has a tree object of 
-> > size 151 at offset 12. The one with the object of size 151 was the one 
-> > that was still open at the end. There's no tree of size 1882 in this pack, 
-> > nor in any other pack that has a tree of size 151.
-> > 
-> > So maybe it's right about the offsets and all, but it's confused about 
-> > which pack something was in? Maybe it cached something when the pack 
-> > containing the object it wants was open, and it ended up thinking it was 
-> > in the pack that's now open rather than the pack that was open and is now 
-> > closed?
-> 
-> fast-import keeps all of its object data in a single table of
-> "struct object_entry", the table is keyed by SHA-1.  Each entry
-> has a pack_id, which tells it which pack this object is in, and
-> the offset of the object within that pack.
-> 
-> Sounds like maybe its confusing the pack pointer in the all_packs
-> array (see gfi_unpack_entry).
-
-I think maybe there's aliasing in the delta base cache? If it recycled a 
-struct packed_git, the cache would come up with a cached tree at offset 12 
-of the packed_git at that address, but the pack used by that struct has 
-changed.
-
-I don't see any reason that the situation couldn't arise where you start a
-pack, look up an object in it while it's still open but the object isn't 
-in the window, cache the delta base, end that packfile, eventually start a 
-packfile that gets allocated in the space that was freed, produce a new 
-delta against the object at exactly the same offset of the new pack (with 
-the same address as the old pack), and go on happily until you try looking 
-up this last delta and pull the wrong base out of the cache.
-
-I don't see any code to flush the delta cache ever, but it's hard to get a 
-new packed_git allocated at the address of a freed one, except by doing a 
-lot of checkpoints in fast-import...
-
-	-Daniel
-*This .sig left intentionally blank*
+> The patch relies on the index_differs_from() patch that Stephan
+> posted earlier today.
+>
+> ---
+>  .gitignore           |    1 +
+>  Makefile             |    1 +
+>  builtin-ministatus.c |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  builtin.h            |    1 +
+>  git.c                |    1 +
+>  5 files changed, 56 insertions(+), 0 deletions(-)
+>
+> diff --git a/.gitignore b/.gitignore
+> index 055eb54..de2249b 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -81,6 +81,7 @@ git-mergetool
+>  git-mktag
+>  git-mktree
+>  git-name-rev
+> +git-ministatus
+>  git-mv
+>  git-notes
+>  git-pack-redundant
+> diff --git a/Makefile b/Makefile
+> index a0ca137..9145c7b 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -559,6 +559,7 @@ BUILTIN_OBJS += builtin-merge-base.o
+>  BUILTIN_OBJS += builtin-merge-file.o
+>  BUILTIN_OBJS += builtin-merge-ours.o
+>  BUILTIN_OBJS += builtin-merge-recursive.o
+> +BUILTIN_OBJS += builtin-ministatus.o
+>  BUILTIN_OBJS += builtin-mv.o
+>  BUILTIN_OBJS += builtin-name-rev.o
+>  BUILTIN_OBJS += builtin-pack-objects.o
+> diff --git a/builtin-ministatus.c b/builtin-ministatus.c
+> new file mode 100644
+> index 0000000..c9f8e7f
+> --- /dev/null
+> +++ b/builtin-ministatus.c
+> @@ -0,0 +1,52 @@
+> +#include "cache.h"
+> +#include "diff.h"
+> +#include "commit.h"
+> +#include "revision.h"
+> +#include "dir.h"
+> +
+> +static int worktree_is_dirty(void)
+> +{
+> +       struct rev_info rev;
+> +       init_revisions(&rev, "");
+> +       setup_revisions(0, NULL, &rev, NULL);
+> +       DIFF_OPT_SET(&rev.diffopt, QUIET);
+> +       DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
+> +       run_diff_files(&rev, 0);
+> +       return DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES);
+> +}
+> +
+> +static int have_untracked(void)
+> +{
+> +       struct dir_struct dir;
+> +       int i;
+> +
+> +       memset(&dir, 0, sizeof dir);
+> +       setup_standard_excludes(&dir);
+> +
+> +       read_directory(&dir, ".", "", 0, NULL);
+> +       /* XXX we are probably leaking memory from dir */
+> +       for (i = 0; i < dir.nr; i++)
+> +               struct dir_entry *ent = dir.entries[i];
+> +               if (cache_name_is_other(ent->name, ent->len))
+> +                       return 1;
+> +       }
+> +       return 0;
+> +}
+> +
+> +int cmd_ministatus(int argc, const char **argv, const char *prefix)
+> +{
+> +       if (argc != 1)
+> +               die("Sorry, I don't understand any command line options.");
+> +
+> +       read_cache();
+> +       refresh_cache(REFRESH_QUIET);
+> +
+> +       if (index_differs_from("HEAD", 0))
+> +               putchar('+');
+> +       if (worktree_is_dirty())
+> +               putchar('*');
+> +       if (have_untracked())
+> +               putchar('?');
+> +
+> +       return 0;
+> +}
+> diff --git a/builtin.h b/builtin.h
+> index f054fc7..03e6a88 100644
+> --- a/builtin.h
+> +++ b/builtin.h
+> @@ -71,6 +71,7 @@ extern int cmd_merge_base(int argc, const char **argv, const char *prefix);
+>  extern int cmd_merge_ours(int argc, const char **argv, const char *prefix);
+>  extern int cmd_merge_file(int argc, const char **argv, const char *prefix);
+>  extern int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
+> +extern int cmd_ministatus(int argc, const char **argv, const char *prefix);
+>  extern int cmd_mv(int argc, const char **argv, const char *prefix);
+>  extern int cmd_name_rev(int argc, const char **argv, const char *prefix);
+>  extern int cmd_pack_objects(int argc, const char **argv, const char *prefix);
+> diff --git a/git.c b/git.c
+> index 4c0fa44..8bf7e78 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -323,6 +323,7 @@ static void handle_internal_command(int argc, const char **argv)
+>                { "merge-ours", cmd_merge_ours, RUN_SETUP },
+>                { "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+>                { "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+> +               { "ministatus", cmd_ministatus, RUN_SETUP | NEED_WORK_TREE },
+>                { "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
+>                { "name-rev", cmd_name_rev, RUN_SETUP },
+>                { "pack-objects", cmd_pack_objects, RUN_SETUP },
+>
