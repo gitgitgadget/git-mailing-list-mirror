@@ -1,73 +1,75 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: RFH: spawning pager takes long time when when unconnected from 
-	network
-Date: Tue, 10 Feb 2009 11:34:47 -0500
-Message-ID: <76718490902100834j7f1f61aaibdefe8416091b3fb@mail.gmail.com>
-References: <loom.20090210T015515-886@post.gmane.org>
-	 <4991337B.2010102@viscovery.net>
-	 <loom.20090210T085859-630@post.gmane.org>
-	 <alpine.DEB.1.00.0902101124160.10279@pacific.mpi-cbg.de>
-	 <279b37b20902100253v3cfd8e45kefa6da7de2ea4a4b@mail.gmail.com>
-	 <20090210110729.GC12089@coredump.intra.peff.net>
-	 <279b37b20902100355r44985270x50ff8cb8a072868d@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Support "\" in non-wildcard exclusion entries
+Date: Tue, 10 Feb 2009 08:41:12 -0800
+Message-ID: <7v7i3ynt1z.fsf@gitster.siamese.dyndns.org>
+References: <20090210121149.GA1226@pvv.org>
+ <alpine.DEB.1.00.0902101354460.10279@pacific.mpi-cbg.de>
+ <20090210125800.GA14800@pvv.org>
+ <alpine.DEB.1.00.0902101402230.10279@pacific.mpi-cbg.de>
+ <20090210142017.GA16478@pvv.org>
+ <alpine.DEB.1.00.0902101525380.10279@pacific.mpi-cbg.de>
+ <20090210143742.GB16478@pvv.org> <7vab8upb5v.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Raible <raible+git@gmail.com>, git@vger.kernel.org
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 17:36:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Tue Feb 10 17:42:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWvaq-0002xo-Dj
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 17:36:16 +0100
+	id 1LWvhC-0005cX-CI
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 17:42:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754147AbZBJQeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 11:34:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754084AbZBJQet
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 11:34:49 -0500
-Received: from rv-out-0506.google.com ([209.85.198.230]:40637 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753984AbZBJQet (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 11:34:49 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so2341100rvb.1
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 08:34:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=X6s0DV9zWLdPAmu22L5Vu3XBv8jtywzYYJKwjuypbcQ=;
-        b=UglAMhjFX5DhcLIFYzSUZiYRBWVIsXsMwc5Hk702ueB8X+oxol94rv8i+QtHPUPPEA
-         9Z8MYS00sDpGqK98opDXWSsaiNLeGqIZ/NbLSBQq9qM3ZmvafsJ0bdOCltq2+itJWUOW
-         a1UVqG9Ub9EtvhnVaB0FneHsn1DIOt8j9LZX8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=SroiEq8DprISMvbXbT0Pw/lQ8sHqLtVGdiJiofukXJlPBLKnDwD9KZqy++OPl+LFg2
-         AmwtIe9P1c6Il+MhzpQhR2AA0K+320XLQs086nxS7+YSDOB76n5rPDVsAAFZ4yYg0O9S
-         dQVBd1wAPFDboeOSvmvuyRZ3DDSz9AeAiOIJU=
-Received: by 10.140.144.1 with SMTP id r1mr4745036rvd.271.1234283687824; Tue, 
-	10 Feb 2009 08:34:47 -0800 (PST)
-In-Reply-To: <279b37b20902100355r44985270x50ff8cb8a072868d@mail.gmail.com>
+	id S1754195AbZBJQlX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 11:41:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754146AbZBJQlW
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 11:41:22 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64938 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754008AbZBJQlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 11:41:22 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B6466981B9;
+	Tue, 10 Feb 2009 11:41:18 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5C554981B8; Tue,
+ 10 Feb 2009 11:41:14 -0500 (EST)
+In-Reply-To: <7vab8upb5v.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue, 10 Feb 2009 07:24:44 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A425B0F4-F791-11DD-A6E0-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109268>
 
-On Tue, Feb 10, 2009 at 6:55 AM, Eric Raible <raible@gmail.com> wrote:
-> My shell is the standard vanilla msysgit shell, with no customizations.
-> It does of course seem that something is touching the network, but I
-> have no idea what that might be.  Nothing in my path, that's for sure.
+Junio C Hamano <gitster@pobox.com> writes:
 
-If you plug into the network, but statically assign yourself a bogus
-IP so that you don't get anywhere, does the same thing happen? If so,
-then perhaps you can sniff your network interface to see what the
-traffic is.
+> Finn Arne Gangstad <finnag@pvv.org> writes:
+>
+>>> > +cat >.gitignore <<EOF
+>>> 
+>>> You probably want to use \EOF here.
+>>
+>> I am curious, does it matter? Most of the tests use EOF and not \EOF.
+>
+> If you want the same shell variable expansion and quoting rules as you get
+> inside double-quote pair, you would say <<EOF without any quotes.  If you
+> quote the EOF, no such substitutions happen.
+>
+> In this particular case, you want what you typed there literally in the
+> file, so <<\EOF would be more correct, even though \# expands to \#
+> itself.
+>
+> IOW, your current list of patterns does not happen to have anything like
+> $var nor \\ that would make a difference, but to protect future breakages
+> by people adding more patterns there, it is better to say <<\EOF when you
+> know you are not asking for any funny expansion to be explicit.
 
-j.
+Oh, by the way, do we really want to add a new test script?  I am
+wondering why the test is not an update to an existing test for the
+exclusion feature, such as t/t3001-ls-files-others-exclude.sh
