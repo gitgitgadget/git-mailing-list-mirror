@@ -1,63 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] shortstatus v1
-Date: Tue, 10 Feb 2009 13:22:14 -0500
-Message-ID: <20090210182214.GA19957@coredump.intra.peff.net>
-References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com> <20090210110330.GB12089@coredump.intra.peff.net> <7vwsbynv0o.fsf@gitster.siamese.dyndns.org> <20090210181052.GA19634@coredump.intra.peff.net>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [ANNOUNCE] tig-0.14
+Date: Tue, 10 Feb 2009 19:29:04 +0100
+Message-ID: <2c6b72b30902101029s72628a88n16473ee30f853198@mail.gmail.com>
+References: <20090205204436.GA6072@diku.dk> <4991814A.6050803@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Tuncer Ayaz <tuncer.ayaz@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 19:23:47 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 19:30:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWxGs-0005Je-P2
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 19:23:47 +0100
+	id 1LWxNW-0008GL-1F
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 19:30:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754365AbZBJSWT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 13:22:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754323AbZBJSWS
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 13:22:18 -0500
-Received: from peff.net ([208.65.91.99]:41600 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754142AbZBJSWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 13:22:17 -0500
-Received: (qmail 16272 invoked by uid 107); 10 Feb 2009 18:22:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Feb 2009 13:22:33 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2009 13:22:14 -0500
-Content-Disposition: inline
-In-Reply-To: <20090210181052.GA19634@coredump.intra.peff.net>
+	id S1753851AbZBJS3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 13:29:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753429AbZBJS3J
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 13:29:09 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:39598 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752457AbZBJS3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 13:29:08 -0500
+Received: by bwz5 with SMTP id 5so3029932bwz.13
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 10:29:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=+V4uWUIS9v8HAXlbBSLDFAQoBampRN6eqY3OgyJ/lYg=;
+        b=XxvuKg28lsUmhYUrhtQT/G2cl0EQbBpNunBC32ozyxKWZIKl8YB2KN4FuHs6uoap38
+         MEt3EUFxpEw+4ZXpBp+p8q43DftzGsnhDJlqxtzTH6+0+Ke7dn7EMHBl1sv1wd2nFBSW
+         cYDgumAyUlLZlXZ1Tt3AvPPdGiLvdyG3MZxvA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=STTAirr+56x/NqSSXAFK24AOF/BmEb0iwzETO6zGT4+0mEB0AaqjiXWX9D3Akzqhb2
+         /8dsPiCVlplR5LHwt+kJWhVrLfHhFC1/1wdnoiKCXqR6XqXy9lNLp/lVlZ2KEEQy51Kh
+         hK/AZvySIrt2JVbE+so1xNEG88O94nUqZzq9o=
+Received: by 10.181.48.13 with SMTP id a13mr557420bkk.43.1234290544976; Tue, 
+	10 Feb 2009 10:29:04 -0800 (PST)
+In-Reply-To: <4991814A.6050803@tedpavlic.com>
+X-Google-Sender-Auth: 906235fdd2f221e0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109288>
 
-On Tue, Feb 10, 2009 at 01:10:52PM -0500, Jeff King wrote:
+On Tue, Feb 10, 2009 at 14:29, Ted Pavlic <ted@tedpavlic.com> wrote:
+> I notice that when I do the sequence...
+>
+> *) open tig
+> *) hit <CR> to view first changeset
+> *) hit "j" to scroll one line
+>
+> the green highlighting on the first line moves to the second, but the
+> whitespace following the "commit 00000000000000" stays green. For example,
+> if I do the sequence above in the tig repo, I'm left with
+>
+> commit e278600f599f60a2b98aeae6bfbb6ba92cf92d6f---GREEN BG HERE---
+> ---This line (Refs:) has GREEN BG---
+>
+> The "commit" has a black background.
+>
+> Is that a bug? Or do I need to upgrade my ncurses?
 
->   - I don't think the "mini" status is really related to this. The novel
->     thing here is collating the outputs into a single sorted list. But
->     the "mini" output is not about that at all:
-> 
->       1. It doesn't care about full output, so it should be able to exit
->          early from the diff, avoid rename detection, etc, so that it is
->          as quick as possible.
-> 
->       2. It doesn't collate the output at all. It is about three
->          separate symbols for the three separate lists.
+Sounds like a bug. Probably from the drawing optimizations in tig-0.14.
 
-Oh, sorry, I was misreading the "mini" output. I thought the three flags
-corresponded to the staged, unstaged, and untracked changes. But they
-are "unstaged or staged but added", "unstaged or staged but changed", or
-"untracked" (although right now the last is triggered by unmerged
-entries?).
+No upgrade should be necessary. Could you give me some information
+about what terminal application you are using. Also, have you added
+any specific color settings to ~/.tigrc?
 
-I honestly don't see much point in differentiating added versus changed
-files. Splitting it into "some things are staged" and "some things are
-not staged" makes more sense to me. But if you do want that distinction
-then an early exit from the diff is more complicated (since you might
-have to keep going to see if there are any of _either_ type).
+> If I hit <CR> a few more times (to move the screen) and then hit "j" more
+> (to move the highlighted line), I get this same bug randomly on different
+> lines.
 
--Peff
+This is a good hint. Does it happen a mostly when you hit "j" and it
+causes the view to be scrolled down?
+
+-- 
+Jonas Fonseca
