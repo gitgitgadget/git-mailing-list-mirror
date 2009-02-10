@@ -1,88 +1,106 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [ANNOUNCE] tig-0.14
-Date: Tue, 10 Feb 2009 19:29:04 +0100
-Message-ID: <2c6b72b30902101029s72628a88n16473ee30f853198@mail.gmail.com>
-References: <20090205204436.GA6072@diku.dk> <4991814A.6050803@tedpavlic.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
+Date: Tue, 10 Feb 2009 10:35:39 -0800
+Message-ID: <7vocxam96s.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de>
+ <20090210121833.GC15491@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0902101357140.10279@pacific.mpi-cbg.de>
+ <20090210131029.GC17305@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0902101427490.10279@pacific.mpi-cbg.de>
+ <7vprhqnv0c.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0902101743180.10279@pacific.mpi-cbg.de>
+ <20090210165610.GP30949@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 19:30:43 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 10 19:37:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWxNW-0008GL-1F
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 19:30:38 +0100
+	id 1LWxTw-0002RG-6H
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 19:37:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753851AbZBJS3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 13:29:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753429AbZBJS3J
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 13:29:09 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:39598 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752457AbZBJS3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 13:29:08 -0500
-Received: by bwz5 with SMTP id 5so3029932bwz.13
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 10:29:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=+V4uWUIS9v8HAXlbBSLDFAQoBampRN6eqY3OgyJ/lYg=;
-        b=XxvuKg28lsUmhYUrhtQT/G2cl0EQbBpNunBC32ozyxKWZIKl8YB2KN4FuHs6uoap38
-         MEt3EUFxpEw+4ZXpBp+p8q43DftzGsnhDJlqxtzTH6+0+Ke7dn7EMHBl1sv1wd2nFBSW
-         cYDgumAyUlLZlXZ1Tt3AvPPdGiLvdyG3MZxvA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=STTAirr+56x/NqSSXAFK24AOF/BmEb0iwzETO6zGT4+0mEB0AaqjiXWX9D3Akzqhb2
-         /8dsPiCVlplR5LHwt+kJWhVrLfHhFC1/1wdnoiKCXqR6XqXy9lNLp/lVlZ2KEEQy51Kh
-         hK/AZvySIrt2JVbE+so1xNEG88O94nUqZzq9o=
-Received: by 10.181.48.13 with SMTP id a13mr557420bkk.43.1234290544976; Tue, 
-	10 Feb 2009 10:29:04 -0800 (PST)
-In-Reply-To: <4991814A.6050803@tedpavlic.com>
-X-Google-Sender-Auth: 906235fdd2f221e0
+	id S1754303AbZBJSfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 13:35:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753851AbZBJSfs
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 13:35:48 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33974 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753802AbZBJSfr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 13:35:47 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D1BC12ADA5;
+	Tue, 10 Feb 2009 13:35:45 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C7FC72ADA4; Tue,
+ 10 Feb 2009 13:35:40 -0500 (EST)
+In-Reply-To: <20090210165610.GP30949@spearce.org> (Shawn O. Pearce's message
+ of "Tue, 10 Feb 2009 08:56:10 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A144EBBA-F7A1-11DD-A157-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109289>
 
-On Tue, Feb 10, 2009 at 14:29, Ted Pavlic <ted@tedpavlic.com> wrote:
-> I notice that when I do the sequence...
+"Shawn O. Pearce" <spearce@spearce.org> writes:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> On Tue, 10 Feb 2009, Junio C Hamano wrote:
+>> > 
+>> > I could do a revert on 'master' if it is really needed, but I found that
+>> > the above reasoning is a bit troublesome.  The thing is, if a tree to hold
+>> > the notes would be huge to be unmanageable, then it would still be huge to
+>> > be unmanageable if you split it into 256 pieces.
+>> 
+>> The thing is, a tree object of 17 megabyte is unmanagably large if you 
+>> have to read it whenever you access even a single node.  Having 256 trees 
+>> instead, each of which is about 68 kilobyte is much nicer.
 >
-> *) open tig
-> *) hit <CR> to view first changeset
-> *) hit "j" to scroll one line
->
-> the green highlighting on the first line moves to the second, but the
-> whitespace following the "commit 00000000000000" stays green. For example,
-> if I do the sequence above in the tig repo, I'm left with
->
-> commit e278600f599f60a2b98aeae6bfbb6ba92cf92d6f---GREEN BG HERE---
-> ---This line (Refs:) has GREEN BG---
->
-> The "commit" has a black background.
->
-> Is that a bug? Or do I need to upgrade my ncurses?
+> See my other email on this thread; we'd probably need to unpack
+> all 256 subtrees *anyway* due to the distribution of SHA-1 names
+> for commits.
 
-Sounds like a bug. Probably from the drawing optimizations in tig-0.14.
+I wonder if we can solve this by introducing a local cache that is a flat
+file that looks like:
 
-No upgrade should be necessary. Could you give me some information
-about what terminal application you are using. Also, have you added
-any specific color settings to ~/.tigrc?
+    magic number for /usr/bin/file
+    tree object SHA-1 the file caches
+    Number of entries in this file
+    256 fan-out offsets into this file
+    N entries of <SHA-1, SHA-1>, sorted
+    Checksum of the file itself
 
-> If I hit <CR> a few more times (to move the screen) and then hit "j" more
-> (to move the highlighted line), I get this same bug randomly on different
-> lines.
+and use it when availble (otherwise optionally create it upon the first
+lookup).  The file can be used by mmaping it and then doing a newton
+raphson or binary search similar to the way patch-ids.c does.
 
-This is a good hint. Does it happen a mostly when you hit "j" and it
-causes the view to be scrolled down?
+The top-level API for such a hash-map would perhaps look like:
 
--- 
-Jonas Fonseca
+    /*
+     * take the object name a tree object that is a hash map,
+     * return an opaque struct.
+     */
+    struct hashmap *hashmap_open(const unsigned char *);
+
+    /*
+     * find the value given the key and return 0, or return negative
+     * if not found.
+     */
+    int hashmap_lookup(struct hashmap *map, const unsigned char *key,
+    		       unsigned char *val);
+
+    /* discard the thing */
+    void hashmap_close(struct hashmap *map);
+
+We should be able to use these in "git log" and friends where Dscho added
+the hook in his git-notes topic.
+
+I am hoping that I could eventually rewrite rerere to use something like
+this, so that rerere database can be shared, just like the way notes can
+be shared, across repositories.
