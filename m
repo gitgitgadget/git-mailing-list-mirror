@@ -1,345 +1,114 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: [StGit PATCH] Add mergetool support to the classic StGit
-	infrastructure
-Date: Tue, 10 Feb 2009 14:14:17 +0000
-Message-ID: <20090210141413.28782.19243.stgit@pc1117.cambridge.arm.com>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: [PATCH v2] Support "\" in non-wildcard exclusion entries
+Date: Tue, 10 Feb 2009 15:20:17 +0100
+Message-ID: <20090210142017.GA16478@pvv.org>
+References: <20090210121149.GA1226@pvv.org> <alpine.DEB.1.00.0902101354460.10279@pacific.mpi-cbg.de> <20090210125800.GA14800@pvv.org> <alpine.DEB.1.00.0902101402230.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org,
-	Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 15:16:09 2009
+Content-Type: text/plain; charset=us-ascii
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Feb 10 15:21:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWtP9-0004Y8-MQ
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 15:16:04 +0100
+	id 1LWtUl-0006ki-5Z
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 15:21:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755966AbZBJOOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 09:14:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755955AbZBJOO2
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 09:14:28 -0500
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:47409 "EHLO
-	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755925AbZBJOO1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Feb 2009 09:14:27 -0500
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id n1AECgZm016945;
-	Tue, 10 Feb 2009 14:12:42 GMT
-Received: from pc1117.cambridge.arm.com ([10.1.255.212]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 10 Feb 2009 14:14:22 +0000
-User-Agent: StGit/0.14.3.346.g5c97
-X-OriginalArrivalTime: 10 Feb 2009 14:14:22.0737 (UTC) FILETIME=[DF262810:01C98B89]
+	id S1754446AbZBJOUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 09:20:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754383AbZBJOUY
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 09:20:24 -0500
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:38596 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753896AbZBJOUX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 09:20:23 -0500
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1LWtTG-00008D-08; Tue, 10 Feb 2009 15:20:18 +0100
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0902101402230.10279@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109244>
 
-Since Git already has a tool for interactively solving conflicts which
-is highly customisable, there is no need to duplicate this feature via
-the i3merge and i2merge configuration options. The user-visible change
-is that now mergetool is invoked rather than the previously customised
-interactive merging tool.
+"\" was treated differently in exclude rules depending on whether a
+wildcard match was done. For wildcard rules, "\" was de-escaped in
+fnmatch, but this was not done for other rules since they used strcmp
+instead.  A file named "#foo" would not be excluded by "\#foo", but would
+be excluded by "\#foo*".
 
-The stgit.keeporig option is no longer available to be more consistent
-with the Git behaviour.
+We now treat all rules with "\" as wildcard rules.
 
-Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
+Another solution could be to de-escape all non-wildcard rules as we
+read them, but we would have to do the de-escaping exactly as fnmatch
+does it to avoid inconsistencies.
+
+Signed-off-by: Finn Arne Gangstad <finnag@pvv.org>
 ---
- examples/gitconfig         |   21 +-----
- stgit/commands/resolved.py |    5 -
- stgit/config.py            |    1 
- stgit/git.py               |   17 +++--
- stgit/gitmergeonefile.py   |  150 --------------------------------------------
- t/t0002-status.sh          |    3 -
- 6 files changed, 13 insertions(+), 184 deletions(-)
- delete mode 100644 stgit/gitmergeonefile.py
+ dir.c                                       |    2 +-
+ t/t3003-ls-files-others-escaped-excludes.sh |   37 +++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 1 deletions(-)
+ create mode 100755 t/t3003-ls-files-others-escaped-excludes.sh
 
-diff --git a/examples/gitconfig b/examples/gitconfig
-index 9efc089..2afc87a 100644
---- a/examples/gitconfig
-+++ b/examples/gitconfig
-@@ -64,27 +64,10 @@
- 	# To support local parent branches:
- 	#pull-policy = rebase
+diff --git a/dir.c b/dir.c
+index cfd1ea5..2245749 100644
+--- a/dir.c
++++ b/dir.c
+@@ -137,7 +137,7 @@ int match_pathspec(const char **pathspec, const char *name, int namelen,
  
--	# Interactive two/three-way merge tool. It is executed by the
--	# 'resolved --interactive' command
--	#i3merge = xxdiff --title1 current --title2 ancestor --title3 patched \
--	#	--show-merged-pane -m -E -O -X -M \"%(output)s\" \
--	#	\"%(branch1)s\" \"%(ancestor)s\" \"%(branch2)s\"
--	#i2merge = xxdiff --title1 current --title2 patched \
--	#	--show-merged-pane -m -E -O -X -M \"%(output)s\" \
--	#	\"%(branch1)s\" \"%(branch2)s\"
--	#i3merge = emacs --eval '(ediff-merge-files-with-ancestor \
--	#	\"%(branch1)s\" \"%(branch2)s\" \"%(ancestor)s\" nil \
--	#	\"%(output)s\")'
--	#i2merge = emacs --eval '(ediff-merge-files \
--	#	\"%(branch1)s\" \"%(branch2)s\" nil \"%(output)s\")'
--
--	# Automatically invoke the interactive merger in case of conflicts
-+	# Automatically invoke the interactive merger (git mergetool) in case
-+	# of conflicts
- 	#autoimerge = no
+ static int no_wildcard(const char *string)
+ {
+-	return string[strcspn(string, "*?[{")] == '\0';
++	return string[strcspn(string, "*?[{\\")] == '\0';
+ }
  
--	# Leave the original files in the working tree in case of a
--	# merge conflict
--	#keeporig = yes
--
- 	# Optimize (repack) the object store after every pull
- 	#keepoptimized = yes
- 
-diff --git a/stgit/commands/resolved.py b/stgit/commands/resolved.py
-index 2ce7ec3..eba778d 100644
---- a/stgit/commands/resolved.py
-+++ b/stgit/commands/resolved.py
-@@ -22,7 +22,6 @@ from stgit.commands.common import *
- from stgit.utils import *
- from stgit import argparse, stack, git, basedir
- from stgit.config import config, file_extensions
--from stgit.gitmergeonefile import interactive_merge
- 
- help = 'Mark a file conflict as solved'
- kind = 'wc'
-@@ -78,8 +77,6 @@ def func(parser, options, args):
- 
-     # resolved
-     if options.interactive:
--        for filename in files:
--            interactive_merge(filename)
--            git.resolved([filename])
-+        git.mergetool(files)
-     else:
-         git.resolved(files, options.reset)
-diff --git a/stgit/config.py b/stgit/config.py
-index 05ef624..efce097 100644
---- a/stgit/config.py
-+++ b/stgit/config.py
-@@ -35,7 +35,6 @@ class GitConfig:
-         'stgit.fetchcmd':	'git fetch',
-         'stgit.pull-policy':	'pull',
-         'stgit.autoimerge':	'no',
--        'stgit.keeporig':	'yes',
-         'stgit.keepoptimized':	'no',
-         'stgit.extensions':	'.ancestor .current .patched',
-         'stgit.shortnr':	 '5'
-diff --git a/stgit/git.py b/stgit/git.py
-index 4d01fc2..fb3932d 100644
---- a/stgit/git.py
-+++ b/stgit/git.py
-@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- """
- 
--import sys, os, re, gitmergeonefile
-+import sys, os, re
- from shutil import copyfile
- 
- from stgit.exception import *
-@@ -635,16 +635,20 @@ def merge_recursive(base, head1, head2):
-         conflicts = [l.strip() for l in output if l.startswith('CONFLICT')]
-         out.info(*conflicts)
- 
--        # try the interactive merge or stage checkout (if enabled)
--        for filename in get_conflicts():
--            if (gitmergeonefile.merge(filename)):
--                # interactive merge succeeded
--                resolved([filename])
-+        # try the interactive merge (if enabled)
-+        if config.get('stgit.autoimerge') == 'yes':
-+            mergetool()
- 
-         # any conflicts left unsolved?
-         cn = len(get_conflicts())
-         if cn:
-             raise GitException, "%d conflict(s)" % cn
-+ 
-+def mergetool(self, files = []):
-+    """Invoke 'git mergetool' to resolve any outstanding conflicts."""
-+    err = os.system('git mergetool %s' % ' '.join(files))
-+    if err:
-+        raise GitException('"git mergetool" failed, exit code: %d' % err)
- 
- def diff(files = None, rev1 = 'HEAD', rev2 = None, diff_flags = [],
-          binary = True):
-@@ -754,7 +758,6 @@ def resolved(filenames, reset = None):
-              '--stdin', '-z').input_nulterm(filenames).no_output()
-     GRun('update-index', '--add', '--').xargs(filenames)
-     for filename in filenames:
--        gitmergeonefile.clean_up(filename)
-         # update the access and modificatied times
-         os.utime(filename, None)
- 
-diff --git a/stgit/gitmergeonefile.py b/stgit/gitmergeonefile.py
-deleted file mode 100644
-index 1fe226e..0000000
---- a/stgit/gitmergeonefile.py
-+++ /dev/null
-@@ -1,150 +0,0 @@
--"""Performs a 3-way merge for GIT files
--"""
--
--__copyright__ = """
--Copyright (C) 2006, Catalin Marinas <catalin.marinas@gmail.com>
--
--This program is free software; you can redistribute it and/or modify
--it under the terms of the GNU General Public License version 2 as
--published by the Free Software Foundation.
--
--This program is distributed in the hope that it will be useful,
--but WITHOUT ANY WARRANTY; without even the implied warranty of
--MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--GNU General Public License for more details.
--
--You should have received a copy of the GNU General Public License
--along with this program; if not, write to the Free Software
--Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
--"""
--
--import sys, os
--from stgit.exception import *
--from stgit import basedir
--from stgit.config import config, file_extensions, ConfigOption
--from stgit.utils import append_string
--from stgit.out import *
--from stgit.run import *
--
--class GitMergeException(StgException):
--    pass
--
--
--#
--# Options
--#
--autoimerge = ConfigOption('stgit', 'autoimerge')
--keeporig = ConfigOption('stgit', 'keeporig')
--
--#
--# Utility functions
--#
--def __str2none(x):
--    if x == '':
--        return None
--    else:
--        return x
--
--class MRun(Run):
--    exc = GitMergeException # use a custom exception class on errors
--
--def __checkout_stages(filename):
--    """Check-out the merge stages in the index for the give file
--    """
--    extensions = file_extensions()
--    line = MRun('git', 'checkout-index', '--stage=all', '--', filename
--                ).output_one_line()
--    stages, path = line.split('\t')
--    stages = dict(zip(['ancestor', 'current', 'patched'],
--                      stages.split(' ')))
--
--    for stage, fn in stages.iteritems():
--        if stages[stage] == '.':
--            stages[stage] = None
--        else:
--            newname = filename + extensions[stage]
--            if os.path.exists(newname):
--                # remove the stage if it is already checked out
--                os.remove(newname)
--            os.rename(stages[stage], newname)
--            stages[stage] = newname
--
--    return stages
--
--def __remove_stages(filename):
--    """Remove the merge stages from the working directory
--    """
--    extensions = file_extensions()
--    for ext in extensions.itervalues():
--        fn = filename + ext
--        if os.path.isfile(fn):
--            os.remove(fn)
--
--def interactive_merge(filename):
--    """Run the interactive merger on the given file. Stages will be
--    removed according to stgit.keeporig. If successful and stages
--    kept, they will be removed via git.resolved().
--    """
--    stages = __checkout_stages(filename)
--
--    try:
--        # Check whether we have all the files for the merge.
--        if not (stages['current'] and stages['patched']):
--            raise GitMergeException('Cannot run the interactive merge')
--
--        if stages['ancestor']:
--            three_way = True
--            files_dict = {'branch1': stages['current'],
--                          'ancestor': stages['ancestor'],
--                          'branch2': stages['patched'],
--                          'output': filename}
--            imerger = config.get('stgit.i3merge')
--        else:
--            three_way = False
--            files_dict = {'branch1': stages['current'],
--                          'branch2': stages['patched'],
--                          'output': filename}
--            imerger = config.get('stgit.i2merge')
--
--        if not imerger:
--            raise GitMergeException, 'No interactive merge command configured'
--
--        mtime = os.path.getmtime(filename)
--
--        out.start('Trying the interactive %s merge'
--                  % (three_way and 'three-way' or 'two-way'))
--        err = os.system(imerger % files_dict)
--        out.done()
--        if err != 0:
--            raise GitMergeException, 'The interactive merge failed'
--        if not os.path.isfile(filename):
--            raise GitMergeException, 'The "%s" file is missing' % filename
--        if mtime == os.path.getmtime(filename):
--            raise GitMergeException, 'The "%s" file was not modified' % filename
--    finally:
--        # keep the merge stages?
--        if str(keeporig) != 'yes':
--            __remove_stages(filename)
--
--def clean_up(filename):
--    """Remove merge conflict stages if they were generated.
--    """
--    if str(keeporig) == 'yes':
--        __remove_stages(filename)
--
--def merge(filename):
--    """Merge one file if interactive is allowed or check out the stages
--    if keeporig is set.
--    """
--    if str(autoimerge) == 'yes':
--        try:
--            interactive_merge(filename)
--        except GitMergeException, ex:
--            out.error(str(ex))
--            return False
--        return True
--
--    if str(keeporig) == 'yes':
--        __checkout_stages(filename)
--
--    return False
-diff --git a/t/t0002-status.sh b/t/t0002-status.sh
-index ac92aa8..d95a83b 100755
---- a/t/t0002-status.sh
-+++ b/t/t0002-status.sh
-@@ -107,9 +107,6 @@ test_expect_success 'Make a conflicting patch' '
- '
- 
- cat > expected.txt <<EOF
--? foo/bar.ancestor
--? foo/bar.current
--? foo/bar.patched
- A fie
- C foo/bar
- EOF
+ void add_exclude(const char *string, const char *base,
+diff --git a/t/t3003-ls-files-others-escaped-excludes.sh b/t/t3003-ls-files-others-escaped-excludes.sh
+new file mode 100755
+index 0000000..bce8741
+--- /dev/null
++++ b/t/t3003-ls-files-others-escaped-excludes.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
++#
++# Copyright (c) 2009 Finn Arne Gangstad
++#
++
++test_description='git ls-files --others with escaped excludes
++
++This test tests exclusion patterns with \ in them and makes sure they
++are treated correctly and identically both for normal and wildcard rules.
++'
++
++. ./test-lib.sh
++
++touch \#ignore1 &&
++touch \#ignore2 &&
++touch \#hidden &&
++touch keep
++
++echo keep > expect
++
++cat >.gitignore <<EOF
++.gitignore
++expect
++output
++\#ignore1
++\#ignore2*
++\#hid*n
++EOF
++
++test_expect_success \
++    'git ls-files --others with escaped excludes.' \
++    'git ls-files --others \
++       --exclude-per-directory=.gitignore \
++       >output &&
++     test_cmp expect output'
++
++test_done
+-- 
+1.6.2.rc0.11.g665ed
