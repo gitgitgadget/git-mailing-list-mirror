@@ -1,96 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
-Date: Tue, 10 Feb 2009 13:59:06 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902101357140.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de> <20090210121833.GC15491@coredump.intra.peff.net>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: A little mystery - crash caused by empty commit message.
+Date: Tue, 10 Feb 2009 13:58:43 +0100
+Message-ID: <1a6be5fa0902100458w246f2bfeu5c0c303d18d17a3b@mail.gmail.com>
+References: <1a6be5fa0902100315q554dc457j8c8476d3f59a314f@mail.gmail.com>
+	 <20090210113234.GE12089@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, spearce@spearce.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git mailing list <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 10 14:00:18 2009
+X-From: git-owner@vger.kernel.org Tue Feb 10 14:00:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWsDP-0002mn-2k
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 13:59:51 +0100
+	id 1LWsE6-00035h-AC
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 14:00:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755112AbZBJM6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 07:58:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755052AbZBJM6W
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 07:58:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37584 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754816AbZBJM6V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 07:58:21 -0500
-Received: (qmail invoked by alias); 10 Feb 2009 12:58:20 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp035) with SMTP; 10 Feb 2009 13:58:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+k3Pxpu6ukCPkyPvy6YnP1Rf9bEuD0dUmrdofj9P
-	YWWOcvivIwClKZ
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090210121833.GC15491@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1753843AbZBJM6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 07:58:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753251AbZBJM6q
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 07:58:46 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:41749 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751920AbZBJM6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 07:58:45 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so1306516fgg.17
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 04:58:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=O6bZhXQC3e1B6rxIciaRtWPDHLRhGfNvrcI7crDAGa8=;
+        b=A1isBmi1Fp6Sv1gwFFQvpnJdKkD/Yo6y20/7DzCccw/T1rsFy+FZbIDuMVYBP5GSP1
+         WsBCELBHgODce0scVBRA6sRv5oskJkOmcHTfruC1SAgBN2ESC23nfnTDKpzzzfQDr0+7
+         VIvr7DYMDkNojcEkMKENXL8ZLhdy0XsMPKGaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=oqw++QOrsAi0oEkIgWEwW3wj0NVg51x24V8UvbBI0F/SNgLGiL6PRc5te/u3JG5PT1
+         bhYF7KmcL04l9FzV9wgEbGTCC5oZ3O2hOQZKehGFkC4/b4Ljyj8rV6e1S81ufKOkRiam
+         qGB8hyptIyMDqc1h6yeMwF40I9R4wfma7ZPzA=
+Received: by 10.103.222.1 with SMTP id z1mr1230549muq.100.1234270723287; Tue, 
+	10 Feb 2009 04:58:43 -0800 (PST)
+In-Reply-To: <20090210113234.GE12089@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109230>
 
-Hi,
+On Tue, Feb 10, 2009 at 12:32 PM, Jeff King <peff@peff.net> wrote:
+> Are you sure it's truly an _empty_ commit message? Can you try
+>
+>  git cat-file commit f67f77edf06bbcebabf430735c751245a4b70f14
+>
+> and look at the result with xxd, hd, or similar.
 
-On Tue, 10 Feb 2009, Jeff King wrote:
+Cool. You are correct. It is not empty after all. I ran git cat-file
+on that commit, and on the "same" commit on the branch where I did not
+see the problem. The correct one looks like:
 
-> On Mon, Feb 09, 2009 at 10:12:06PM +0100, Johannes Schindelin wrote:
-> 
-> > Shawn triggered some well needed thinking on my part about the notes 
-> > implementation.  At the moment, we have flat directory structure, and read 
-> > all of them in one go (when needed).
-> > 
-> > I think we should support that, because it is relatively easy to generate 
-> > that kind of trees for small-scale applications.
-> 
-> Hmm. Do we really care about how easy it is to generate? Are we
-> expecting people to not use the command interface and instead check out
-> a notes tree and start putting stuff into $commit/foo?
+<start>
+tree c5d2063a9b21de1f84240e4b9c0e40a44f0357b6
+parent 6d109492008c68d28af821b96b82f807f338caf6
+author Tor Arvid Lund <toral@qsystems.no> 1233852429 +0100
+committer Tor Arvid Lund <toral@qsystems.no> 1233852429 +0100
 
-I wanted to be nice to existing users of the feature (it is in 'next', 
-after all, and Thomas has produced some awesome examples, that will 
-hopefully show the scalability of the thing).
+[HIA] Log exception when serializing fails.
 
-But you're right, it almost, but not quite, too late to switch.
+[git-p4: depot-paths = "//Heads/Dev/MarkII/Main/": change = 19233]
+<stop>
 
-> And if we are encouraging the dual possibilities, how do we handle the 
-> case of merging two trees with equivalent but differently-formatted 
-> content?
-> 
-> Imagine I have three users, A, B, and C, all collaborating on a project
-> with notes. A and B use the "git notes" interface which generates a
-> fan-out directory structure. C uses his own script that directly writes
-> to the notes tree without fan-out.
-> 
-> Now let's imagine A, B, and C all write a note for commit X, and A pulls
-> from the other two. When he pulls from B, there is a file-level
-> conflict, and he decides that his note is better and resolves in his
-> favor. But when he pulls from C, there is _no_ conflict, and now there
-> are two notes for the same commit in his notes tree. You can give the
-> multiple notes some sane semantics (one trumps the other, or they are a
-> list, or whatever), but there is still an inconsistency: B's notes and
-> C's notes behave differently. So now A has to start caring about how
-> other people generate their notes.
-> 
-> The only two solutions I can think of are:
-> 
->   - when A pulls notes, he does a specialized merge that normalizes the
->     note trees
-> 
->   - particular notes trees are specified as being in "fan out" or "not
->     fan out" mode. But there is no place to specify that to enforce it.
+So - after the "+0100" on the committer line, hd tells me (as
+expected) that I have 0a 0a before "[HIA]". On the "faulty" commit I,
+for some reason, have 0a 00 instead. I do not understand why, but I
+guess strchr will return NULL when "\0[HIA]....." is passed to it, and
+segfault on the next iteration.
 
-You're correct.  This buys all kinds of trouble.
+So - I am no closer to understanding what got me to this state, but
+your reply was helpful anyway, thanks :-)
 
-Ciao,
-Dscho
+-Tor Arvid-
