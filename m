@@ -1,99 +1,83 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git-svn: incomplete data after terminated "git svn clone"
-Date: Tue, 10 Feb 2009 14:42:29 +0100
-Message-ID: <200902101442.32772.trast@student.ethz.ch>
-References: <40aa078e0902100350m2d885516o853b1ec56eb43ce1@mail.gmail.com>
+From: "Pat Notz" <pknotz@sandia.gov>
+Subject: [PATCH] Fix contrib/hooks/post-receive-email for new branch
+ with no new commits
+Date: Tue, 10 Feb 2009 06:48:15 -0700
+Message-ID: <1234273695-4981-1-git-send-email-pknotz@sandia.gov>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart4720532.PfGztQermW";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Erik Faye-Lund" <kusmabite@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 14:44:08 2009
+Cc: "Pat Notz" <pknotz@sandia.gov>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 10 15:00:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWsuF-0000ww-6p
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 14:44:07 +0100
+	id 1LWt9X-0006s8-JD
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 14:59:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755477AbZBJNml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 08:42:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755585AbZBJNml
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 08:42:41 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:51982 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755549AbZBJNmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 08:42:40 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 10 Feb 2009 14:42:38 +0100
-Received: from thomas.localnet ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 10 Feb 2009 14:42:38 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
-In-Reply-To: <40aa078e0902100350m2d885516o853b1ec56eb43ce1@mail.gmail.com>
-X-OriginalArrivalTime: 10 Feb 2009 13:42:38.0181 (UTC) FILETIME=[6FF1F950:01C98B85]
+	id S1754523AbZBJN6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 08:58:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754205AbZBJN6R
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 08:58:17 -0500
+Received: from mm03snlnto.sandia.gov ([132.175.109.20]:4261 "EHLO
+	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753949AbZBJN6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 08:58:17 -0500
+X-Greylist: delayed 589 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Feb 2009 08:58:16 EST
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.2)); Tue, 10 Feb 2009 06:48:20 -0700
+X-Server-Uuid: 6BFC7783-7E22-49B4-B610-66D6BE496C0E
+Received: from mail.sandia.gov (cas1.sandia.gov [134.253.165.159] (may
+ be forged)) by mailgate.sandia.gov (8.14.1/8.14.1) with ESMTP id
+ n1ADmJlV018465 for <git@vger.kernel.org>; Tue, 10 Feb 2009 06:48:20
+ -0700
+Received: from localhost.localdomain (134.253.112.110) by
+ cas1.srn.sandia.gov (134.253.165.189) with Microsoft SMTP Server id
+ 8.1.336.0; Tue, 10 Feb 2009 06:48:19 -0700
+X-Mailer: git-send-email 1.6.1.2
+X-TMWD-Spam-Summary: TS=20090210134820; ID=1; SEV=2.3.1;
+ DFV=B2009021010; IFV=NA; AIF=B2009021010; RPD=5.03.0010; ENG=NA;
+ RPDID=7374723D303030312E30413031303230332E34393931383541342E303136413A534346535441543838363133332C73733D312C6667733D30;
+ CAT=NONE; CON=NONE; SIG=AAABAKR1FwAAAAAAAAAAAAAAAAAAAH0=
+X-MMS-Spam-Filter-ID: B2009021010_5.03.0010
+X-WSS-ID: 658F5A2E2G8166937-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109240>
 
---nextPart4720532.PfGztQermW
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+In the show_new_revisions function, the original code:
 
-Erik Faye-Lund wrote:
-> I recently tried to clone an existing (very big) SVN repo by using
-> "git svn clone <repo> -s", and by mistake I pressed Ctrl-C after the
-> clone operation had been running for ~16 hours. When trying to
-> re-issue the clone, I got the error message "Incomplete data: Delta
-> source ended unexpectedly at /home/erifay01/libexec/git-core/git-svn
-> line 4249" after git-svn fetching another 8 or so revisions. Now, I
-> realize I shouldn't have done this, but I'd still prefer avoiding to
-> have to re-do it all.
-[...]
-> Now, I'm wondering if there's any way of going back to the state
-> before I pressed Ctrl-C, so I can rebuild from there. I know what
-> revision I terminated at, and I have the corresponding SHA.
+   git rev-parse --not --branches | grep -v $(git rev-parse $refname) |
 
-Some ideas:
+isn't quite right since one can create a new branch and push it without
+any new commits.  In that case, two refs will have the same sha1 but
+both would get filtered by the 'grep'.  In the end, we'll show ALL the
+history which is not what we want.  Instead, we should list the branches
+by name and remove the branch being updated and THEN pass that list
+through rev-parse.
 
-=46irst you can try to reset the git-svn head to the SHA of the commit
-before (in case the one it stopped at ended up being corrupted).  For
-example, if $stopped is the commit you interrupted it at,
+Signed-off-by: Pat Notz <pknotz@sandia.gov>
+---
+ contrib/hooks/post-receive-email |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-  git update-ref refs/remotes/git-svn $stopped^
-
-Adjust the ref name if you used a trunk/branches layout.  Then remove
-the .git/svn/ cache and try again.
-
-=46ailing that, you could test if this also happens when only looking at
-a few surrounding revisions, for example if the failure was around
-revision 100:
-
-  mkdir ../new-test
-  cd ../new-test
-  git svn init <args you gave to the other git svn init/clone>
-  git svn fetch -r 95:105
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart4720532.PfGztQermW
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkmRhEgACgkQqUud07tmzP1ypACfY0SizloFPlp4pWd1BRCol4RF
-g2cAn1bEvLxnKmBtkkJrPgpkL0xO5YhV
-=k9DG
------END PGP SIGNATURE-----
-
---nextPart4720532.PfGztQermW--
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 28a3c0e..116f89c 100644
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -615,7 +615,9 @@ show_new_revisions()
+ 		revspec=$oldrev..$newrev
+ 	fi
+ 
+-	git rev-parse --not --branches | grep -v $(git rev-parse $refname) |
++	this_branch=$(echo $refname | sed 's@refs/heads/@@')
++	other_branches=$(git branch | sed 's/\*//g' | grep -v $this_branch)
++	git rev-parse --not $other_branches |
+ 	if [ -z "$custom_showrev" ]
+ 	then
+ 		git rev-list --pretty --stdin $revspec
+-- 
+1.6.1.2
