@@ -1,64 +1,102 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] Make 'remote show' distinguish between merged and rebased
- remote branches
-Date: Tue, 10 Feb 2009 17:05:12 -0500
-Message-ID: <4991FA18.1040200@xiplink.com>
-References: <20090210202046.8EBEC3360AC@rincewind> <7v3aemm1po.fsf@gitster.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
+Date: Tue, 10 Feb 2009 23:16:49 +0100
+Message-ID: <200902102316.56348.trast@student.ethz.ch>
+References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de> <7vocxam96s.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0902102210140.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart1642482.JbxzQ4Svxm";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 23:06:59 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 10 23:19:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX0kf-0001uu-3W
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 23:06:45 +0100
+	id 1LX0wQ-0006SH-V7
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 23:18:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755665AbZBJWFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 17:05:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755477AbZBJWFR
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 17:05:17 -0500
-Received: from smtp152.iad.emailsrvr.com ([207.97.245.152]:52648 "EHLO
-	smtp152.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754888AbZBJWFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 17:05:16 -0500
-Received: from relay5.relay.iad.emailsrvr.com (localhost [127.0.0.1])
-	by relay5.relay.iad.emailsrvr.com (SMTP Server) with ESMTP id 52D59738949;
-	Tue, 10 Feb 2009 17:05:15 -0500 (EST)
-Received: by relay5.relay.iad.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 2F0B17388C7;
-	Tue, 10 Feb 2009 17:05:15 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <7v3aemm1po.fsf@gitster.siamese.dyndns.org>
+	id S1756752AbZBJWRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 17:17:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755891AbZBJWRG
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 17:17:06 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:28059 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755771AbZBJWRF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 17:17:05 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 10 Feb 2009 23:17:02 +0100
+Received: from thomas.localnet ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 10 Feb 2009 23:17:01 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <alpine.DEB.1.00.0902102210140.10279@pacific.mpi-cbg.de>
+X-OriginalArrivalTime: 10 Feb 2009 22:17:01.0738 (UTC) FILETIME=[4C0F08A0:01C98BCD]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109322>
 
-Junio C Hamano wrote:
-> 
-> I sympathize with what you are trying to do but I do not think this is
-> correct.  You will *never* rebase remote on top of your changes; rather
-> you will replay your changes on top of what the updated remote has.
-> 
-> It is more like "if you start git pull while on branch rebaser, it will
-> rebased on top of this branch from the remote".
-> 
+--nextPart1642482.JbxzQ4Svxm
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I'm happy to use more accurate phrasing -- I was just going for a minimal change.
+Johannes Schindelin wrote:
+> Or we could use an on-disk hashmap.  Oh, wait...
 
-How about the following, consistent for both cases:
+While reading this thread, I sure wondered ... why don't we use the
+one on-disk fast access structure we already have: the index?
 
-'git pull' merges branch master with remote branch
-  master
-'git pull' rebases branch rebaser on top of remote branch
-  side
+Sure, one problem is that the index reading code is inherently written
+for a single index state.  However, all notes consumers I can
+currently think of (show, log, anything that displays commit messages)
+do not have to access the "real" index.
 
-?
+We'd immediately get lots of tool support for free.  Presumably the
+real index code has been optimized very well, so it should perform
+well.  Perhaps there could even be some definition of a NOTES_HEAD
+that tracks the current (albeit not checked out, that would be insane)
+state.
 
-I like the above because the keywords & branch names are in consistent locations, making it easier to parse the output.
 
-		Marc
+On a tangent, I'd really like to see a feature that lets us have
+several sets of notes (by whatever mechanism).  Displaying them as
+"Notes from remotes/trast/mailnotes" or similar should be ok.  Given
+that even before notes are in any release we already have at least two
+projects working with mass annotations, it doesn't take much of a
+crystal ball to see that the current one-note restriction will be a
+limitation.
+
+At a (*very*) cursory glance at read-cache.c, it seems that there is
+even support for having several index structures in memory at once,
+making this easy.  And it looks like reading the cache is more or less
+memcpy() if xmmap() is fast (Windows would suffer once again).
+
+
+Then again I joined this discussion very late so feel free to ignore
+my ramblings.
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart1642482.JbxzQ4Svxm
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkmR/NgACgkQqUud07tmzP1OUACfdfVo1PU36xAlewarthuStL6Q
+U6QAnjmCMaP4GYhula02F+gs+SF/DTdd
+=45YN
+-----END PGP SIGNATURE-----
+
+--nextPart1642482.JbxzQ4Svxm--
