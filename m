@@ -1,108 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] shortstatus v1
-Date: Mon, 09 Feb 2009 17:44:38 -0800
-Message-ID: <7vr627qd4p.fsf@gitster.siamese.dyndns.org>
-References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com>
+From: Eric Raible <raible+git@gmail.com>
+Subject: RFH: spawning pager takes long time when when unconnected from network
+Date: Tue, 10 Feb 2009 02:07:10 +0000 (UTC)
+Message-ID: <loom.20090210T015515-886@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 02:46:15 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 10 03:17:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWhhU-0000wF-Df
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 02:46:12 +0100
+	id 1LWiBA-0007yP-QB
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 03:16:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752721AbZBJBor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 20:44:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752645AbZBJBop
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 20:44:45 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47505 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752575AbZBJBop (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 20:44:45 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3A04F9878C;
-	Mon,  9 Feb 2009 20:44:44 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F0AF39878B; Mon,
-  9 Feb 2009 20:44:40 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 641F0258-F714-11DD-83AC-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753213AbZBJCPG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 21:15:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752992AbZBJCPG
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 21:15:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:51930 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752952AbZBJCPF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 21:15:05 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LWi9O-0007bp-DT
+	for git@vger.kernel.org; Tue, 10 Feb 2009 02:15:02 +0000
+Received: from mail.nextest.com ([12.96.234.114])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 02:15:02 +0000
+Received: from raible+git by mail.nextest.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 02:15:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 12.96.234.114 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.48 Safari/525.19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109175>
 
-Tuncer Ayaz <tuncer.ayaz@gmail.com> writes:
+Hello All -
 
-> Adding git 'shortstatus --mini' to PS1 is not noticeable or 1sec
-> maximum in my tree. As a worst case it takes 10secs in a clone
-> of WebKit.git.
+I've got a weird one which I haven't been able to figure out.
+The problem is that git sometimes takes a long time (~5-10 seconds)
+before producing output when it needs to internally spawn a pager.
 
-Frankly, I think having to spend one second to add only one or two bits to
-PS1 is simply spending one second too much.
+This only occurs when I'm not plugged in to a network.
+When I'm plugged in everything operates at the normal speed.
 
-> diff --git a/builtin-commit.c b/builtin-commit.c
-> index d6a3a62..9267d26 100644
-> --- a/builtin-commit.c
-> +++ b/builtin-commit.c
-> @@ -821,6 +827,88 @@ static int parse_and_validate_options(int argc, const char *argv[],
->  	return argc;
->  }
->  
-> +int cmd_shortstatus(int argc, const char **argv, const char *prefix)
-> +{
-> +	struct wt_status s;
-> +	int i;
-> +	int c, a, u;
-> +
-> +	c = a = u = 0;
-> +
-> +	argc = parse_and_validate_options(argc, argv, builtin_shortstatus_usage, prefix);
-> +	read_cache();
-> +	refresh_cache(REFRESH_QUIET);
-> +	wt_status_prepare(&s);
-> +	wt_status_collect_changes(&s);
-> +	if (mini) {
-> +		for (i = 0; i < s.change.nr; i++) {
-> +			struct wt_status_change_data *d;
-> +			struct string_list_item *it;
-> +
-> +			it = &(s.change.items[i]);
-> +			d = it->util;
-> +			switch (d->index_status) {
-> +				case DIFF_STATUS_ADDED:
-> +					a = 1;
-> +					break;
-> +				case 0:
-> +				case DIFF_STATUS_COPIED:
-> +				case DIFF_STATUS_DELETED:
-> +				case DIFF_STATUS_MODIFIED:
-> +				case DIFF_STATUS_RENAMED:
-> +				case DIFF_STATUS_TYPE_CHANGED:
-> +					c = 1;
-> +					break;
+This would be slow: git diff some-branch
+This would be fast: git diff some-branch | less
 
-If you at the end discard information by squashing renamed, copied,
-deleted and modified into a single "changed" category, I do not think you
-would want wt_status_collect_changes() to spend the cost of rename
-detection in the first place.  Sure, you can tell between "git mv old new"
-and "git add new", because you won't show "+" for "new" if you run rename
-detection, but that is about the only thing I think you are getting.
+Unsetting core.pager (IOW setting core.pager="") is also fast.
 
-Is it worth extra 1 second (or 10 seconds)?
+Tracking this down has been problematic, because I suspect it's
+got to do with the relative timing of the two processes, and I
+don't know the code well enough to figure out an effective debugging
+strategy.
 
-What are you really trying to achieve?  Do you want to see if you have any
-change to the index since you checked out?  Do you want to further tell
-the user that the work tree has more changes that are not staged yet
-(which --mini does not seem to do)?
+Any ideas or things to try?
 
-Do you really need more than "diff-index --cached --exit-code" in your
-$PS1 code, and so why?  Does the added feature your "shortstatus --mini"
-offers over "diff-index --cached --exit-code" justify the latency penalty
-to the user?
+Thanks - Eric
