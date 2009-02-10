@@ -1,24 +1,25 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv2] lis3lv02d: support both one- and two-byte sensors
-Date: Wed, 11 Feb 2009 00:40:49 +0100
-Message-ID: <1234309249-13672-1-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCHv3] lis3lv02d: support both one- and two-byte sensors
+Date: Wed, 11 Feb 2009 00:46:15 +0100
+Message-ID: <1234309575-13760-1-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?utf-8?q?=C3=89ric=20Piel?= <Eric.Piel@tremplin-utc.net>,
 	Pavel Machek <pavel@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 11 00:42:28 2009
+X-From: git-owner@vger.kernel.org Wed Feb 11 00:47:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX2FB-0002MN-Vu
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 00:42:22 +0100
+	id 1LX2KR-00041d-GY
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 00:47:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755616AbZBJXkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 18:40:55 -0500
+	id S1753880AbZBJXqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 18:46:20 -0500
 X-Warning: Original message contained 8-bit characters, however during
 	   the SMTP transport session the receiving system did not announce
 	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
@@ -29,40 +30,40 @@ X-Warning: We ASSUME it is less harmful to add the MIME headers, and
 	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
 X-Warning: We don't know what character set the user used, thus we had to
 	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755403AbZBJXky
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 18:40:54 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:1450 "EHLO
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753448AbZBJXqU
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 18:46:20 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:51405 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752150AbZBJXky (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 18:40:54 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so66052fgg.17
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 15:40:52 -0800 (PST)
+	with ESMTP id S1752150AbZBJXqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 18:46:19 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so66770fgg.17
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 15:46:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer;
-        bh=FgIjwTYdIOxjJ7hAKMISL+ubzz6TVl5JyUShlzGyvHE=;
-        b=Qrrs0knscS4vUUiyT4j64/PONonHJxbls6WuXqdshnC4EMgMtsmX2r78E4F6uTUd9/
-         ErMtFRt80U++1pc/SbX98mDncv08nnSVQ/UOqZL+w74vSxQNdszaa+8WLY+7d6W6SRq6
-         GkBzCcYxcIgrkOmTm5VMHsAUKRuoO5aG9Jh8A=
+        bh=TA5zExw8GbepyVBzBdxtEhnqqvl99oMXSK46impnpoY=;
+        b=uhQSw9YQdC6Knd4BJhAYBDWQef88Ivt7/9VrScH64XgUkpb3iVQ0A0kLRBg0bbbivk
+         OBc8551hbitK11BwPW0OBPi/mP6uXtBoHOYC5dPEsrIVRqXxJIV/73el4hbAe5le82fO
+         vbTrZD0zwSYxssbGYSowno1WumUxoQ6suy+hw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        b=i6kZEQUJuxLEAl3Yre3ytLJ9cZSxaXqr/WjIaC+rQ96Kc8XlXCF50nHbSE0YV5MFgL
-         ZtxpWzQwDpUWD4D4C7lmDM8olZl2yaYyCZkjZyqj09JxleF682/qxgbbBPNsXxc6/GzM
-         2WJhZfbZPlmCC2OCXtqNtsml8Mpn+xsux8U2w=
-Received: by 10.86.78.4 with SMTP id a4mr210130fgb.10.1234309252161;
-        Tue, 10 Feb 2009 15:40:52 -0800 (PST)
+        b=R8Y4nCgOQQ2IiF9DNbxEkrEjDb53vaMdIfLrcBPBtD+iK2RuySzpXvo9VOnBGcA1pt
+         YyjFjLBXwAnHzeH5oUaZ/kDScAm/8nxnPZ+R1TftMAyrA2REORjuI4ZWL0abLR4iwb73
+         +5UKzVZqkmLrgPtMtJMnCFigNzWffQFonLEmw=
+Received: by 10.86.98.18 with SMTP id v18mr189701fgb.46.1234309577617;
+        Tue, 10 Feb 2009 15:46:17 -0800 (PST)
 Received: from localhost (host-78-15-9-200.cust-adsl.tiscali.it [78.15.9.200])
-        by mx.google.com with ESMTPS id 4sm438433fge.24.2009.02.10.15.40.51
+        by mx.google.com with ESMTPS id l12sm2615133fgb.41.2009.02.10.15.46.16
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 10 Feb 2009 15:40:51 -0800 (PST)
+        Tue, 10 Feb 2009 15:46:16 -0800 (PST)
 X-Mailer: git-send-email 1.6.2.rc0.173.g5e148
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109348>
 
 Sensors responding with 0x3B to WHO_AM_I only have one data register pe=
 r
@@ -77,16 +78,8 @@ joystick) depending on what we find.
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
 
-This is the other version of the patch, and it changes access to use th=
-e
-base address from the 8-bit, so the 16-bit routine is changed to access
-the PREVIOUS byte for the LSB.
-
-Choose whichever of the patches is deemed more correct 8-)
-
-Note that both patches are based off Linus tree, so I don't know how
-they cope with Pavel's "don't touch too much on init" one. I'll try to
-work out a patch on top of that too.
+This version of the patch should apply without conflicts to -mm's tree,
+as it's based on Pavel's "don't touch stuff on init" patch.
 
  drivers/hwmon/lis3lv02d.c |   42 ++++++++++++++++++++++++++++++-------=
 -----
@@ -94,10 +87,10 @@ work out a patch on top of that too.
  2 files changed, 41 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/hwmon/lis3lv02d.c b/drivers/hwmon/lis3lv02d.c
-index 219d2d0..b6b2d4a 100644
+index 3afa3af..408d57b 100644
 --- a/drivers/hwmon/lis3lv02d.c
 +++ b/drivers/hwmon/lis3lv02d.c
-@@ -52,9 +52,6 @@
+@@ -53,13 +53,9 @@
   * joystick.
   */
 =20
@@ -105,10 +98,14 @@ index 219d2d0..b6b2d4a 100644
 ) */
 -#define MDPS_MAX_VAL 2048
 -
- struct acpi_lis3lv02d adev;
+ struct acpi_lis3lv02d adev =3D {
+ 	.misc_wait   =3D __WAIT_QUEUE_HEAD_INITIALIZER(adev.misc_wait),
+ };
+-
  EXPORT_SYMBOL_GPL(adev);
 =20
-@@ -64,12 +61,19 @@ static s16 lis3lv02d_read_16(acpi_handle handle, in=
+ static int lis3lv02d_add_fs(struct acpi_device *device);
+@@ -68,12 +64,19 @@ static s16 lis3lv02d_read_16(acpi_handle handle, in=
 t reg)
  {
  	u8 lo, hi;
@@ -131,8 +128,8 @@ t reg)
  /**
   * lis3lv02d_get_axis - For the given axis, give the value converted
   * @axis:      1,2,3 - can also be negative
-@@ -98,9 +102,9 @@ static void lis3lv02d_get_xyz(acpi_handle handle, in=
-t *x, int *y, int *z)
+@@ -102,9 +105,9 @@ static void lis3lv02d_get_xyz(acpi_handle handle, i=
+nt *x, int *y, int *z)
  {
  	int position[3];
 =20
@@ -145,11 +142,10 @@ t *x, int *y, int *z)
 =20
  	*x =3D lis3lv02d_get_axis(adev.ac.x, position);
  	*y =3D lis3lv02d_get_axis(adev.ac.y, position);
-@@ -121,7 +125,21 @@ void lis3lv02d_poweron(acpi_handle handle)
-=20
+@@ -121,6 +124,21 @@ void lis3lv02d_poweron(acpi_handle handle)
+ {
  	adev.is_on =3D 1;
  	adev.init(handle);
--	adev.write(handle, FF_WU_CFG, 0);
 +	adev.read(handle, WHO_AM_I, &adev.whoami);
 +	/* Tell apart LISxLV02Dy from LISx02Dy family by checking the LSB
 +	 * (0x3A vs 0x3B). TODO More sophisticated checks on other registers
@@ -166,10 +162,10 @@ nd
 +		adev.lis3lv02d_read =3D lis3lv02d_read_16;
 +		adev.mdps_max_val =3D 2048;
 +	}
- 	/*
- 	 * BDU: LSB and MSB values are not updated until both have been read.
- 	 *      So the value read will always be correct.
-@@ -231,9 +249,9 @@ int lis3lv02d_joystick_enable(void)
+ }
+ EXPORT_SYMBOL_GPL(lis3lv02d_poweron);
+=20
+@@ -355,9 +373,9 @@ int lis3lv02d_joystick_enable(void)
  	adev.idev->close      =3D lis3lv02d_joystick_close;
 =20
  	set_bit(EV_ABS, adev.idev->evbit);
@@ -189,7 +185,7 @@ max_val, 3, 3);
  	err =3D input_register_device(adev.idev);
  	if (err) {
 diff --git a/drivers/hwmon/lis3lv02d.h b/drivers/hwmon/lis3lv02d.h
-index 223f1c0..9d7d4a8 100644
+index 2e7597c..cd0e838 100644
 --- a/drivers/hwmon/lis3lv02d.h
 +++ b/drivers/hwmon/lis3lv02d.h
 @@ -22,11 +22,14 @@
