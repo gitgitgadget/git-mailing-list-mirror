@@ -1,74 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Generalize and libify index_is_dirty() to
- index_differs_from(...)
-Date: Mon, 09 Feb 2009 21:16:23 -0800
-Message-ID: <7v63jirhw8.fsf@gitster.siamese.dyndns.org>
-References: <1234222843-15577-1-git-send-email-s-beyer@gmx.net>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Trouble testing out a patch on a branch new scratch git.git
+  repository
+Date: Tue, 10 Feb 2009 05:32:09 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngp24ap.i22.sitaramc@sitaramc.homelinux.net>
+References: <e38bce640902081256j3cd84aadn2f0cc863cfca904d@mail.gmail.com>
+ <7vy6wgwqjp.fsf@gitster.siamese.dyndns.org>
+ <e38bce640902081613v3e93c1e3g716118c38ce861ab@mail.gmail.com>
+ <200902081918.35665.bss@iguanasuicide.net>
+ <e38bce640902081859o47462a58s59c120209fabb0@mail.gmail.com>
+ <7vmycww6if.fsf@gitster.siamese.dyndns.org>
+ <e38bce640902091359j3f306839h9aeb699e18e420ab@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Alex Riesen <raa.lkml@gmail.com>, Jeff King <peff@peff.net>
-To: Stephan Beyer <s-beyer@gmx.net>
-X-From: git-owner@vger.kernel.org Tue Feb 10 06:18:10 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 10 06:33:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWl0a-0004Ju-KP
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 06:18:09 +0100
+	id 1LWlFp-00088J-Cf
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 06:33:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750823AbZBJFQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 00:16:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750793AbZBJFQl
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 00:16:41 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43604 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1749667AbZBJFQk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 00:16:40 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 035B19867D;
-	Tue, 10 Feb 2009 00:16:39 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 80F959867C; Tue,
- 10 Feb 2009 00:16:29 -0500 (EST)
-In-Reply-To: <1234222843-15577-1-git-send-email-s-beyer@gmx.net> (Stephan
- Beyer's message of "Tue, 10 Feb 2009 00:40:43 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FEB772F6-F731-11DD-A273-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1751212AbZBJFc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 00:32:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751165AbZBJFcZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 00:32:25 -0500
+Received: from main.gmane.org ([80.91.229.2]:58194 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751075AbZBJFcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 00:32:25 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LWlEK-0005Lp-Q7
+	for git@vger.kernel.org; Tue, 10 Feb 2009 05:32:21 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 05:32:20 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 05:32:20 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109181>
 
-Stephan Beyer <s-beyer@gmx.net> writes:
-
->   This is one of the sequencer-preparing patches.
->   (The function is used in sequencer several times, most of the time
->    with diff_flags set to DIFF_OPT_IGNORE_SUBMODULES.)
+On 2009-02-09, Brent Goodrick <bgoodr@gmail.com> wrote:
+> To explain what I mean: Yesterday, I had this configuration on my
+> bg/no-progress branch:
 >
->   Alex is on Cc because he introduced the "Is commitable?" (i.e.
->   "Is index dirty?") part in builtin-commit.c.
+>              A---B---C---D (bg/no-progress)
+>             /
+> ----1-----2----3----4 (master)
 >
->   Peff is on Cc because he introduced index_is_dirty() in
->   builtin-revert.c.
+> B C and D commits are noisy,
+> fix-the-white-space-and-conform-to-coding-guidelines type commits. I
+> want to collapse A through D into one commit called E on that branch
+> so that I can run git format-patch -M on the result and provide a nice
+> patch email. I would end up with:
 >
->  builtin-commit.c |   13 ++-----------
->  builtin-revert.c |   13 +------------
->  revision.c       |   15 +++++++++++++++
->  revision.h       |    2 ++
->  4 files changed, 20 insertions(+), 23 deletions(-)
+>              E (bg/no-progress)
+>             /
+> ----1-----2----3----4 (master)
 
-It is a straightforward and clean restructuring, but please do not
-contaminate revision.[ch] with this function about "internally running
-diff-index".  
+You want to squash the last 4 patches on the current branch
+into one?
 
-revision.[ch] is a library for revision/ancestry traversal and it is
-already one of the largest library-ish files. It does not know nor care
-about the index, and we want to keep it that way.  Please keep its focus
-to revision traversal.
+The fastest way, if you don't mind re-typing the commit
+message for the combined commit, is this:
 
-Perhaps diff-lib.c would be a better home for your helper function.
+    git reset --soft HEAD~4
+    git commit
+
+A kinder, gentler, way is this:
+
+(1) type in 'git rebase -i HEAD~4'
+
+(2) In the editor that pops up, change the 'pick' on all but
+    the first entry to 'squash' or just 's' and save the
+    file.
+
+    There won't be any conflicts in this scenario, so don't
+    worry about that.
+
+(3) Another editor will pop up showing all 4 commit messages
+    in one edit buffer -- combine the various commit
+    messages however you wish and save the file.
+
+Done :-)
+
+-- 
+Sitaram
