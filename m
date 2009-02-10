@@ -1,102 +1,160 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: RFH: spawning pager takes long time when when unconnected from
-  network
-Date: Tue, 10 Feb 2009 12:03:35 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902101159300.10279@pacific.mpi-cbg.de>
-References: <loom.20090210T015515-886@post.gmane.org>  <4991337B.2010102@viscovery.net>  <loom.20090210T085859-630@post.gmane.org>  <alpine.DEB.1.00.0902101124160.10279@pacific.mpi-cbg.de> <279b37b20902100253v3cfd8e45kefa6da7de2ea4a4b@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] shortstatus v1
+Date: Tue, 10 Feb 2009 06:03:30 -0500
+Message-ID: <20090210110330.GB12089@coredump.intra.peff.net>
+References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Eric Raible <raible+git@gmail.com>, git@vger.kernel.org
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 12:04:21 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 12:05:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWqPa-0008H9-JG
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 12:04:19 +0100
+	id 1LWqQG-0008Un-4I
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 12:05:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752859AbZBJLCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 06:02:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752788AbZBJLCv
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 06:02:51 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41306 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752625AbZBJLCu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 06:02:50 -0500
-Received: (qmail invoked by alias); 10 Feb 2009 11:02:49 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp002) with SMTP; 10 Feb 2009 12:02:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ocBsqTJNoPJ5fZ2TP3Gjli7sihU6/EjtjEhuAPW
-	L5r2cAESdDhMci
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <279b37b20902100253v3cfd8e45kefa6da7de2ea4a4b@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1752991AbZBJLDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 06:03:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752890AbZBJLDd
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 06:03:33 -0500
+Received: from peff.net ([208.65.91.99]:39630 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752788AbZBJLDc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 06:03:32 -0500
+Received: (qmail 12205 invoked by uid 107); 10 Feb 2009 11:03:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Feb 2009 06:03:48 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2009 06:03:30 -0500
+Content-Disposition: inline
+In-Reply-To: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109202>
 
-Hi,
+On Tue, Feb 10, 2009 at 01:51:07AM +0100, Tuncer Ayaz wrote:
 
-On Tue, 10 Feb 2009, Eric Raible wrote:
-
-> On Tue, Feb 10, 2009 at 2:24 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->
-> > On Tue, 10 Feb 2009, Eric Raible wrote:
-> >
-> >> Johannes Sixt <j.sixt <at> viscovery.net> writes:
-> >>
-> >> > Do you have a directory in your PATH that points to a disconnected network
-> >> > drive? Do you use the default pager settings, or did you customize the pager?
-> >>
-> >> All components in my path are local.
-> >
-> > Could you run it with GIT_TRACE=<file>?
+> As discussed recently I started taking Junio's shortstatus patch
+> from October 25th 2008 and integrated it into current master.
 > 
-> The first thing I tried was to set GIT_TRACE=1, and it doesn't give much:
-> trace: built-in: git 'diff' 'ss' '--name-only'
-> trace: run_command: 'sh' '-c' 'less'
-> 
-> The long pause in question begins after the above output is produced
-> but before the list of files is shown.  The output is identical when setting
-> GIT_TRACE to a file.
-> 
-> When I pipe the git diff to less or set core.pager="",
-> then obviously it doesn't call run_command.
+> This revision does work as advertised by Junio and v0 also did.
 
-You could also try to set it to /bin/false, just so you know if the delay 
-is caused by the shell startup.
+I did a simple test with this:
 
-> Since I can't really reproduce this in the debugger (because the "bug" 
-> is an intermittent delay of 3-10 seconds), I tried littering the code 
-> with trace_printf's.  Didn't really help, partially because after the 
-> dup2 (which is part of spawning the pager process) they don't on stdout 
-> any longer.  Now that I know about setting GIT_TRACE to a file perhaps 
-> this is worth trying again.
-> 
-> But once it started to look like the delay was in the xdiff machinery,
-> I figured I was chasing a side-effect, and that the real problem was
-> some interaction between the two processes.  That's when I sent
-> my first RFH  to the list.
+  mkdir repo && cd repo && git init &&
+  touch unchanged changed changed-staged deleted deleted-staged &&
+  git add . && git commit -m one &&
+  echo changes >changed &&
+  echo changes >changed-staged && git add changed-staged &&
+  rm deleted &&
+  git rm deleted-staged &&
+  git shortstatus
 
-In my experience, such intermittent delays are often triggered by some 
-(mostly unnecessary) calls to either DNS (which might hang for quite some 
-time) or domain controllers (same).  These can be triggered by shell 
-startup looking for the user or host name.
+The output is:
 
-However, I am just fishing here, as I cannot begin to get an idea what is 
-happening on your side.
+           changed
+  M           changed-staged
+           deleted
+  D           deleted-staged
 
-Also, it does not help that the platform is Windows, an OS I am mostly 
-unfamiliar with.  But there have to be profiling tools for that platform 
-where you should be able to see what function is blocking (I assume it is 
-a blocking call, of course).
+Some comments:
 
-Ciao,
-Dscho
+  1. Is the staggered indentation intentional? It looks awful, and the
+     only use I can think of is to separate unstaged from staged
+     changes. But surely there must be a more obvious way of doing so.
+
+  2. Why do staged changes get a letter marking what happened, but
+     unstaged changes do not?
+
+  3. What advantage does this have over just doing:
+
+       (git diff --name-status;
+        git diff --cached --name-status) | sort -k2
+
+> Right now this is basically Junio's shortstatus
+> from Oct 25th 2008 with no substantial change
+> except a line or two.
+
+This is not a very helpful commit message. What is it supposed to do?
+What does the output look like? Why is it implemented this way? If Junio
+sent a patch in October and it isn't substantially changed, why wasn't
+it accepted then?
+
+> +static const char * const builtin_shortstatus_usage[] = {
+> +	"git shortstatus [options] [--] <filepattern>...",
+> +	NULL
+> +};
+
+Really? Doing "git shortstatus subdir" seems not to affect the output,
+nor does "git shortstatus I totally made up these command line
+arguments".
+
+What options are available? It looks like this is intimately tied with
+"commit", which I think is one of the _shortcomings_ of the current
+status. It means the command line options are non-intuitive for what
+people generally want to say: "what is changed, possibly limiting to
+some path".
+
+> +	OPT_BOOLEAN(0, "mini", &mini, "print mini shortstatus"),
+
+So now "git status --mini" doesn't complain, but it doesn't seem to
+actually do anything.
+
+> +	argc = parse_and_validate_options(argc, argv, builtin_shortstatus_usage, prefix);
+
+Ah, I see the source of the option issues. You parse with the commit
+options, but then you don't actually respect any of them. You would want
+a totally separate set of options for shortstatus. In fact, I really
+don't see what point there is in putting it with the 'commit' code at
+all.
+
+> +	if (mini) {
+> +		for (i = 0; i < s.change.nr; i++) {
+> +			struct wt_status_change_data *d;
+> +			struct string_list_item *it;
+> +
+> +			it = &(s.change.items[i]);
+> +			d = it->util;
+> +			switch (d->index_status) {
+> +				case DIFF_STATUS_ADDED:
+> +					a = 1;
+> +					break;
+> +				case 0:
+> +				case DIFF_STATUS_COPIED:
+> +				case DIFF_STATUS_DELETED:
+> +				case DIFF_STATUS_MODIFIED:
+> +				case DIFF_STATUS_RENAMED:
+> +				case DIFF_STATUS_TYPE_CHANGED:
+> +					c = 1;
+> +					break;
+> +				default:
+> +				case DIFF_STATUS_UNKNOWN:
+> +				case DIFF_STATUS_UNMERGED:
+> +					u = 1;
+> +					break;
+> +			}
+> +		}
+> +		if (c)
+> +			printf("*");
+> +		if (a)
+> +			printf("+");
+> +		if (u)
+> +			printf("?");
+
+Isn't this a bit heavy-handed? If you really just want to know "are
+there any changes", can't you run a custom diff with EXIT_CODE and QUIET
+set, which will bail when it sees the first change, saving you a lot of
+useless computation?
+
+> +	} else {
+> +		for (i = 0; i < s.change.nr; i++) {
+> +			struct wt_status_change_data *d;
+> +			struct string_list_item *it;
+> +			char pfx[1 + 3 + 1 + 1];
+
+Holy magic numbers, Batman.
+
+-Peff
