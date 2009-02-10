@@ -1,110 +1,74 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] builtin-branch: highlight current remote branches with
-	an asterisk
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: git-svn: incomplete data after terminated "git svn clone"
 Date: Tue, 10 Feb 2009 12:50:36 +0100
-Message-ID: <20090210115036.GG1320@atjola.homenet>
-References: <1234222326-55818-1-git-send-email-jaysoffian@gmail.com> <20090210075214.GC1320@atjola.homenet> <20090210111907.GD12089@coredump.intra.peff.net>
+Message-ID: <40aa078e0902100350m2d885516o853b1ec56eb43ce1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 10 12:52:36 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 10 12:52:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWrAE-0006VX-ED
+	id 1LWrAD-0006VX-Mg
 	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 12:52:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753497AbZBJLvC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Feb 2009 06:51:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753320AbZBJLvB
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 06:51:01 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35765 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753372AbZBJLvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 06:51:00 -0500
-Received: (qmail invoked by alias); 10 Feb 2009 11:50:56 -0000
-Received: from i577B9B52.versanet.de (EHLO atjola.local) [87.123.155.82]
-  by mail.gmx.net (mp054) with SMTP; 10 Feb 2009 12:50:56 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19jXgpgf7BjRn8DLtncSxJgUFdN249C6mP1Y3epg7
-	VISgH1sSBx1PDd
-Content-Disposition: inline
-In-Reply-To: <20090210111907.GD12089@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1753941AbZBJLuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 06:50:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753170AbZBJLuj
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 06:50:39 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:64947 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752768AbZBJLui (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 06:50:38 -0500
+Received: by bwz5 with SMTP id 5so2549584bwz.13
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 03:50:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=R4D2dosFa+PTxdvyOadx5roHtKx+FQo1O9766OGVyKY=;
+        b=CcGMPSJwZo/MmiFAVKlAfgOj/D2VldAQreTvJh1NRjt82zkXDfM31kvg+E5b/BSp9z
+         xD1WtCNf8yZsUyCzn1Stjq00ZGc+9uPUEC6+sB9GXCZ3Mx+Dvtg50Vz4ALtEDWm1WqbA
+         tubXUFA+Fx8YR5AosQqyTPNaCc74iEpm6qtH0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=c16lIRaVj4GpRz++XDjIg7UAO4NHinSxA/J3ayGTomBc/cLFFprR2zFBjnM1HHyBwz
+         dqW+iFREceH24hmKPMVeyjh9D/Xn+9J2Ps0zGiSzmOFNcZsk/XrIsYfp8Vg0nzrRY5gu
+         fs+pfMxhz9q0yqpOk4WF1EvoIeuoARTSnzC3c=
+Received: by 10.181.199.19 with SMTP id b19mr2201703bkq.191.1234266636237; 
+	Tue, 10 Feb 2009 03:50:36 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109216>
 
-On 2009.02.10 06:19:07 -0500, Jeff King wrote:
-> On Tue, Feb 10, 2009 at 08:52:14AM +0100, Bj=F6rn Steinbrink wrote:
->=20
-> > still don't really see what I'd use it for. From what I've heard, s=
-ome
-> > people just consider origin/HEAD a clone artifact without much use,=
- and
-> > so far, I think I agree. But maybe there's more to it?
->=20
-> The ref "origin" will resolve to "refs/remotes/origin/HEAD", if it
-> exists. So you can use it as a shorthand for "origin/master" (or
-> whatever branch is most interesting to you on the remote).
+I'm a novice at Git, so bear with me even if the answer is obvious to
+experienced users, please :)
 
-Yeah, that's what I meant when I said "short-shortname". Maybe it's jus=
-t
-me, but I really can't see myself using that. Would be likely that
-"origin" references something else than what I expect, especially when
-switching from one repo to another. And doing "git branch -r" to find
-out if "origin" is the right thing is slower than just typing the full
-shortname right away. Well, just my 2 cents.
+I recently tried to clone an existing (very big) SVN repo by using
+"git svn clone <repo> -s", and by mistake I pressed Ctrl-C after the
+clone operation had been running for ~16 hours. When trying to
+re-issue the clone, I got the error message "Incomplete data: Delta
+source ended unexpectedly at /home/erifay01/libexec/git-core/git-svn
+line 4249" after git-svn fetching another 8 or so revisions. Now, I
+realize I shouldn't have done this, but I'd still prefer avoiding to
+have to re-do it all.
 
-> > If the <name>/HEAD symref would be created for all remotes and woul=
-d get
-> > updated, that would at least make the marker more meaningful, but I
->=20
-> It has been noted in the past that it should _not_ be automatically
-> updated, since it is really about "what is the user's preference for =
-the
-> 'most interesting' branch in this remote". And we don't want to
-> overwrite some preference that they specified.
+I already tried re-building the svn metadata by moving away ".git/svn"
+and re-issuing the clone command, but no luck. It quickly re-builds
+everything up to the revision that git-svn broke at, but fails with
+the same error message.
 
-Yeah, as I said in the other mail, having it as a default would make ad=
-d
--m quite pointless.
+Now, I'm wondering if there's any way of going back to the state
+before I pressed Ctrl-C, so I can rebuild from there. I know what
+revision I terminated at, and I have the corresponding SHA.
 
-> So I think it makes sense to:
->=20
->   - if it doesn't exist, set it up based on the remote's HEAD. Clone
->     already does this, but "git remote add -f" should probably do it,
->     too. I'm not sure if every fetch should do it.
-
-=46WIW, I would hate fetch for doing that. I dislike the whole
-<remote>/HEAD thing, and wouldn't want fetch to recreate that for me al=
-l
-the time.
-
->   - give the user some nice interface (probably via "git remote") to
->     move the pointer around (right now, it is "git symbolic-ref
->     refs/remotes/$remote/HEAD refs/remotes/$remote/$branch").
-
-Maybe "git remote set-master"? Though I kinda dislike the "master" part
-of the name, which I just took from the -m option to "remote add",
-though. I guess that could increase the confusion about the "master"
-branch as pre-setup by "git init" being special, and might lead to
-interesting conclusions about that command affecting the remote
-repository.
-
->   - give the user some nice interface to re-fetch the remote HEAD and
->     update refs/remotes/$remote/HEAD with it. Probably as an option t=
-o
->     the "git remote" invocation above.
-
-Yeah, would make sense.
-
-Bj=F6rn
+--
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
