@@ -1,72 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
-Date: Tue, 10 Feb 2009 18:31:34 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902101810410.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de> <20090210121833.GC15491@coredump.intra.peff.net> <alpine.DEB.1.00.0902101357140.10279@pacific.mpi-cbg.de> <20090210131029.GC17305@coredump.intra.peff.net> <alpine.DEB.1.00.0902101427490.10279@pacific.mpi-cbg.de>
- <7vprhqnv0c.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0902101743180.10279@pacific.mpi-cbg.de> <20090210165610.GP30949@spearce.org>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Spending time in PS1, was Re: [RFC/PATCH] shortstatus v1
+Date: Tue, 10 Feb 2009 17:31:14 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngp3ef2.a51.sitaramc@sitaramc.homelinux.net>
+References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com>
+ <7vr627qd4p.fsf@gitster.siamese.dyndns.org>
+ <slrngp1u4h.i22.sitaramc@sitaramc.homelinux.net>
+ <alpine.DEB.1.00.0902101120460.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 10 18:32:38 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 10 18:33:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWwT5-00017Q-UR
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 18:32:20 +0100
+	id 1LWwTh-0001Pd-76
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 18:32:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753429AbZBJRax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 12:30:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752827AbZBJRaw
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 12:30:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57452 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752776AbZBJRaw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 12:30:52 -0500
-Received: (qmail invoked by alias); 10 Feb 2009 17:30:50 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp011) with SMTP; 10 Feb 2009 18:30:50 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18e4zBesdseZ9t8eoZBZ+BpzzXWblCjUN/8RxiJ33
-	iEMxOTcWv+PCWM
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090210165610.GP30949@spearce.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1753454AbZBJRba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 12:31:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753436AbZBJRb3
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 12:31:29 -0500
+Received: from main.gmane.org ([80.91.229.2]:40998 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752827AbZBJRb3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 12:31:29 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LWwSC-0006w0-8O
+	for git@vger.kernel.org; Tue, 10 Feb 2009 17:31:24 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 17:31:24 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 17:31:24 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109282>
 
-Hi,
+On 2009-02-10, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Tue, 10 Feb 2009, Sitaram Chamarty wrote:
+>
+>> I wonder if I could ask people opinions on a trick I pulled, which is 
+>> basically maintain a state of the value of $SECONDS each time the user 
+>> is shown a bash prompt.  If the value is the same as last time (meaning 
+>> he hit enter twice in a row very quickly), it runs the extra stuff.
+>
+> As you know, I am a big fan of consistency.  In this light, I do not like 
 
-On Tue, 10 Feb 2009, Shawn O. Pearce wrote:
+Actually no; I haven't been here long enough yet.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > On Tue, 10 Feb 2009, Junio C Hamano wrote:
-> > > 
-> > > I could do a revert on 'master' if it is really needed, but I found that
-> > > the above reasoning is a bit troublesome.  The thing is, if a tree to hold
-> > > the notes would be huge to be unmanageable, then it would still be huge to
-> > > be unmanageable if you split it into 256 pieces.
-> > 
-> > The thing is, a tree object of 17 megabyte is unmanagably large if you 
-> > have to read it whenever you access even a single node.  Having 256 trees 
-> > instead, each of which is about 68 kilobyte is much nicer.
-> 
-> See my other email on this thread; we'd probably need to unpack
-> all 256 subtrees *anyway* due to the distribution of SHA-1 names
-> for commits.
+> it when I am shown something at times, and at other times not.
 
-No, that is not true.  It is only true if you show more than 94180 
-commit, actually, as only then the probability that you hit all 256 
-buckets is larger than 50 percent.
+However, it seems to me that this discussion is about
+reconciling two conflicting needs:
 
-In general, you will look at only a few commits, though.
+  - some people (not all) want certain info in the prompt
+  - but getting that info is expensive so it shouldn't be in
+    the prompt *all* the time
 
-Ciao,
-Dscho
+Such a conflict might well be served by showing something
+sometimes, and at other times not.  A little bit of
+DWIMmery, if you will...
+
+In any case, one can always alias something to a single
+letter (say "s") if one needs quick but not "in your face"
+access to this info, making this whole discussion moot if it
+should not be *in* the prompt.
