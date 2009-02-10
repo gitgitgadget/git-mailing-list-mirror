@@ -1,74 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix contrib/hooks/post-receive-email for new branch with
- no new commits
-Date: Tue, 10 Feb 2009 16:59:38 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902101655500.10279@pacific.mpi-cbg.de>
-References: <1234273695-4981-1-git-send-email-pknotz@sandia.gov> <m3ab8uuwfg.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make repack less likely to corrupt repository
+Date: Tue, 10 Feb 2009 07:59:16 -0800
+Message-ID: <7viqninuzv.fsf@gitster.siamese.dyndns.org>
+References: <1234140299-29785-1-git-send-email-robin.rosenberg@dewire.com>
+ <7vwsc0uow1.fsf@gitster.siamese.dyndns.org>
+ <200902100807.40417.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pat Notz <pknotz@sandia.gov>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 17:00:45 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+	spearce@spearce.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 17:01:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWv2K-00054y-Ln
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 17:00:37 +0100
+	id 1LWv2v-0005KP-2U
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 17:01:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753869AbZBJP7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 10:59:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753857AbZBJP7B
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 10:59:01 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49378 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753833AbZBJP7B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 10:59:01 -0500
-Received: (qmail invoked by alias); 10 Feb 2009 15:58:52 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp057) with SMTP; 10 Feb 2009 16:58:52 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/lcF1XS1bl0JL8mHCC9Tcql3WiNx1mWC9meq+L4G
-	mtXCDo1qfl9LvP
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <m3ab8uuwfg.fsf@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: -0.07000000000000001
+	id S1753938AbZBJP7Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Feb 2009 10:59:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753910AbZBJP7Y
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 10:59:24 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52295 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753883AbZBJP7Y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Feb 2009 10:59:24 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 91A652AD5E;
+	Tue, 10 Feb 2009 10:59:23 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 15BA02AD7D; Tue,
+ 10 Feb 2009 10:59:17 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C9014358-F78B-11DD-814F-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109263>
 
-Hi,
+Robin Rosenberg <robin.rosenberg@dewire.com> writes:
 
-On Tue, 10 Feb 2009, Jakub Narebski wrote:
+> m=C3=A5ndag 09 februari 2009 07:04:46 skrev Junio C Hamano:
+>> What's troubling more is that this would seem to leave the result ev=
+en
+>> more inconsistent if there are more than one packs that need to be
+>> replaced.
+>
+> Why? We don't prune the old objects if we fail. The result might be a=
+ lot
+> of redundancy, but nothing should be lost.
 
-> "Pat Notz" <pknotz@sandia.gov> writes:
-> 
-> > In the show_new_revisions function, the original code:
-> > 
-> >    git rev-parse --not --branches | grep -v $(git rev-parse $refname) |
-> > 
-> > isn't quite right since one can create a new branch and push it without
-> > any new commits.  In that case, two refs will have the same sha1 but
-> > both would get filtered by the 'grep'.  In the end, we'll show ALL the
-> > history which is not what we want.  Instead, we should list the branches
-> > by name and remove the branch being updated and THEN pass that list
-> > through rev-parse.
-> 
-> Good idea, bad execution.
+I was not talking about any loss.  The result would be a funny mixture =
+of
+permutations of {old-,}pack-*.{pack,idx} the user needs to match up aft=
+er
+figuring out what corresponds with what other one, and I think an exper=
+t
+who is asked for help would have hard time matching them up too, even
+though that is what you suggested in the message.
 
-And I thought that I hold the patent for grumpy comments on this list :-)
-
-As for your suggestions, I think they are valid.  We try to keep the 
-interface of certain commands (so called "plumbing") stable, for script 
-consumption.  "git for-each-ref" is such a command.
-
-However, "git branch" is meant for human consumption, and a pretty recent 
-patch wants to change the interface to make it even friendlier -- but 
-breaking scripts' assumption in the process, should they use "git branch".
-
-Ciao,
-Dscho
+That troubled me and I was wondering if we can make the recovery simple=
+r
+for the users.
