@@ -1,75 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Support \ in non-wildcard .gitignore entries
-Date: Tue, 10 Feb 2009 14:02:45 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902101402230.10279@pacific.mpi-cbg.de>
-References: <20090210121149.GA1226@pvv.org> <alpine.DEB.1.00.0902101354460.10279@pacific.mpi-cbg.de> <20090210125800.GA14800@pvv.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] builtin-branch: highlight current remote branches with
+	an asterisk
+Date: Tue, 10 Feb 2009 08:04:16 -0500
+Message-ID: <20090210130416.GB17305@coredump.intra.peff.net>
+References: <1234222326-55818-1-git-send-email-jaysoffian@gmail.com> <20090210075214.GC1320@atjola.homenet> <20090210111907.GD12089@coredump.intra.peff.net> <20090210115036.GG1320@atjola.homenet> <20090210115943.GA15387@coredump.intra.peff.net> <20090210122341.GH1320@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Tue Feb 10 14:03:36 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 10 14:06:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWsH1-00044h-Ty
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 14:03:36 +0100
+	id 1LWsJ8-0004a5-Fg
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 14:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754176AbZBJNCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 08:02:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754155AbZBJNCE
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 08:02:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43705 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754164AbZBJNCB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 08:02:01 -0500
-Received: (qmail invoked by alias); 10 Feb 2009 13:01:59 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp015) with SMTP; 10 Feb 2009 14:01:59 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX181REE0kho19LXJZM5XKbvIgOFVA+SiZcZVUzAPgw
-	iij5ZJSJxBPNas
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090210125800.GA14800@pvv.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1754155AbZBJNEU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Feb 2009 08:04:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754076AbZBJNET
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 08:04:19 -0500
+Received: from peff.net ([208.65.91.99]:45422 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753692AbZBJNES (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 08:04:18 -0500
+Received: (qmail 13656 invoked by uid 107); 10 Feb 2009 13:04:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Feb 2009 08:04:35 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2009 08:04:16 -0500
+Content-Disposition: inline
+In-Reply-To: <20090210122341.GH1320@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109233>
 
-Hi,
+On Tue, Feb 10, 2009 at 01:23:41PM +0100, Bj=C3=B6rn Steinbrink wrote:
 
-On Tue, 10 Feb 2009, Finn Arne Gangstad wrote:
+> > > Yeah, as I said in the other mail, having it as a default would m=
+ake add
+> > > -m quite pointless.
+> >=20
+> > Not necessarily. You might be interested in some other branch that =
+isn't
+> > their HEAD. So yes, you would hopefully be using it much less becau=
+se we
+> > would be guessing what you wanted to put there instead of making yo=
+u
+> > type it. But it would still be useful as an override.
+>=20
+> I guess you read that in the wrong context (or I replied in the wrong
+> context). What I meant is that it would be bad if "git remote update"=
+ or
+> "git fetch <remote>" or whatever would update <remote>/HEAD
+> automatically, as that would kill what you have setup with -m.
 
-> On Tue, Feb 10, 2009 at 01:56:36PM +0100, Johannes Schindelin wrote:
-> > Hi,
-> > 
-> > On Tue, 10 Feb 2009, Finn Arne Gangstad wrote:
-> > 
-> > > If you had an exclude-pattern with a backslash in it, e.g. "\#foo",
-> > > this would not work, since git would do a strcmp of the exclude pattern
-> > > and the filename. Only wildcard patterns were matched with fnmatch,
-> > > which does the right thing with backslashes. We now also treat all patterns
-> > > containing backslashes as wildcards.
-> > > 
-> > > De-escaping the pattern while reading the .gitignore file is error prone,
-> > > since that would break patterns with both backslashes and wildcards.
-> > > E.g. "\\*.c" would be translated to "\*.c" before fnmatch got it,
-> > > and would change the meaning of the rule dramatically.
-> > 
-> > I am not sure I understand (maybe a test case would help, but that test 
-> > case would have to be disabled on Windows, I guess):
-> > 
-> > You mean that '\#abc' would match '\#abc', but '\#abc*' would not?
-> 
-> Currently, \#abc does not match a file named #abc, but \#abc* does.
-> With the patch, both will match.
+Ah, OK, I totally misunderstood. Yes, I think we are in agreement, then=
+=2E
 
-Ah, so I was wrong, and the test case would not have to be disabled on 
-Windows.
-
-Thanks,
-Dscho
+-Peff
