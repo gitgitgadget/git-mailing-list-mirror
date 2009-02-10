@@ -1,100 +1,280 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Re: RFH: spawning pager takes long time when when unconnected from 
-	network
-Date: Tue, 10 Feb 2009 02:53:31 -0800
-Message-ID: <279b37b20902100253v3cfd8e45kefa6da7de2ea4a4b@mail.gmail.com>
-References: <loom.20090210T015515-886@post.gmane.org>
-	 <4991337B.2010102@viscovery.net>
-	 <loom.20090210T085859-630@post.gmane.org>
-	 <alpine.DEB.1.00.0902101124160.10279@pacific.mpi-cbg.de>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH] builtin-branch: improve output when displaying remote branches
+Date: Tue, 10 Feb 2009 06:01:41 -0500
+Message-ID: <1234263701-95463-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Eric Raible <raible+git@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 10 11:55:23 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 10 12:03:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWqGw-0005Rr-6T
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 11:55:22 +0100
+	id 1LWqOY-00080X-Kj
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 12:03:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754574AbZBJKxf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 05:53:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753520AbZBJKxf
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 05:53:35 -0500
-Received: from rv-out-0506.google.com ([209.85.198.227]:11864 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752728AbZBJKxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 05:53:34 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so2248849rvb.1
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 02:53:33 -0800 (PST)
+	id S1751726AbZBJLBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 06:01:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751109AbZBJLBr
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 06:01:47 -0500
+Received: from yw-out-2324.google.com ([74.125.46.30]:21989 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750759AbZBJLBp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 06:01:45 -0500
+Received: by yw-out-2324.google.com with SMTP id 5so572878ywh.1
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 03:01:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=AU4u0er/R3lK6L/b+SO0KHNkJgy2WKpAjjeOf3Zb2I4=;
-        b=OcKWeAMIqFJf1CZCmSCl4PJROoIdzTSSHquzZkmZ32uXyC13k4jc6f9cKzmoW5Zp4G
-         7QF8dg5JNswB6o1pqatsugnbnIoHLdXLbQq9NaY4MW1YYqzWPo5TirOUUEsouFF8I/dB
-         r5gQhy8neCjEnxk5u8ysXFhPVs5RRo+wQhJxA=
+        bh=uwRi3UGDVKYFVO9l38ma46b1RcoyrasrH4ZQeaapl4g=;
+        b=onRmAdx6Vt/TynX+s/UceCpqtaY7pRzU+Ahu4QPGBPfysNPWB5rCicKZtddrHpNcX5
+         HbnQTyajRmWggKpZF6J0XlF6j+kUmlM8le4QukrMXMIb3UcQlflsrWkUoasVc7orTly8
+         qn/7uc6qWF84C5ZUpywwm1KTHCfclp1V7/7UA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=qsMa7++QRv9UlPo1HcH9vBQJlbATwNgn5pn4ci7vepse19wjmmYoBv9aaKt0/diTKY
-         jXyDNff/7D5WbUnJLOOQ3Uu8OGfGstA9tqCIrd5/Fsua1gZoDTY1XI8zREVQM/8awtpI
-         CNNkFxsiAHahhizzzNC1gJp7JB3XDppz0Tm5E=
-Received: by 10.140.125.1 with SMTP id x1mr2850838rvc.162.1234263211657; Tue, 
-	10 Feb 2009 02:53:31 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902101124160.10279@pacific.mpi-cbg.de>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=sHwo7Rs61+mXfCFyXI0Y9ER/b/rE004Wy+kA/47sSy/YhjQhnfLlCX4hpmn0Xg8mpE
+         I3PPdJbxXJeD79hn2DTWeIOWC5pozguJbxSI042sB5JwTTVPPsvSRjplYTvlCcRSChMg
+         rHPv779ddTMMd+iy+our8v3kgh7jMCIdsjMI8=
+Received: by 10.151.14.5 with SMTP id r5mr907050ybi.26.1234263704482;
+        Tue, 10 Feb 2009 03:01:44 -0800 (PST)
+Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
+        by mx.google.com with ESMTPS id h27sm15338570elf.17.2009.02.10.03.01.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 10 Feb 2009 03:01:43 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc0.12.gbd893
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109200>
 
-On Tue, Feb 10, 2009 at 2:24 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Tue, 10 Feb 2009, Eric Raible wrote:
->
->> Johannes Sixt <j.sixt <at> viscovery.net> writes:
->>
->> > Do you have a directory in your PATH that points to a disconnected network
->> > drive? Do you use the default pager settings, or did you customize the pager?
->>
->> All components in my path are local.
->
-> Could you run it with GIT_TRACE=<file>?
->
-> Ciao,
-> Dscho
->
+When displaying local and remote branches, prefix the remote branch names with
+"remotes/" to make the remote branches clear from the local branches. If
+displaying only the remote branches, the prefix is not shown since it would be
+redundant.
 
-The first thing I tried was to set GIT_TRACE=1, and it doesn't give much:
-trace: built-in: git 'diff' 'ss' '--name-only'
-trace: run_command: 'sh' '-c' 'less'
+When displaying a remote branch HEAD (which is a sane symref), show what it
+points to similar to how "ls -l" show symlinks. Also in this case, do not show
+verbose output for the HEAD itself as it is shown immediately below on the
+pointed to branch.
 
-The long pause in question begins after the above output is produced
-but before the list of files is shown.  The output is identical when setting
-GIT_TRACE to a file.
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+I think this addresses the feedback I got on the original patch,
+http://article.gmane.org/gmane.comp.version-control.git/109161
 
-When I pipe the git diff to less or set core.pager="",
-then obviously it doesn't call run_command.
+Some sample output:
 
-Since I can't really reproduce this in the debugger
-(because the "bug" is an intermittent delay of 3-10 seconds), I tried
-littering the code with trace_printf's.  Didn't really help, partially because
-after the dup2 (which is part of spawning the pager process)
-they don't on stdout any longer.  Now that I know about setting
-GIT_TRACE to a file perhaps this is worth trying again.
+$ git branch -a
+  master
+  next
+* wip/branch-show-remote-HEAD-2
+  wip/push-docs
+  remotes/origin/HEAD -> master
+  remotes/origin/html
+  remotes/origin/maint
+  remotes/origin/man
+  remotes/origin/master
+  remotes/origin/next
+  remotes/origin/pu
+  remotes/origin/todo
 
-But once it started to look like the delay was in the xdiff machinery,
-I figured I was chasing a side-effect, and that the real problem was
-some interaction between the two processes.  That's when I sent
-my first RFH  to the list.
+$ git branch -r
+  origin/HEAD -> master
+  origin/html
+  origin/maint
+  origin/man
+  origin/master
+  origin/next
+  origin/pu
+  origin/todo
 
-- Eric
+$ git branch -rv
+  origin/HEAD -> master
+  origin/html           6116912 Autogenerated HTML docs for v1.6.2-rc0-10-gf6b9
+  origin/maint          7e1100e gitweb: add $prevent_xss option to prevent XSS by repository content
+  origin/man            67cb1a7 Autogenerated manpages for v1.6.2-rc0-10-gf6b9
+  origin/master         f6b98e4 git-web--browse: Fix check for /bin/start
+  origin/next           417ce12 Merge branch 'master' into next
+  origin/pu             9d798e7 Merge branch 'db/foreign-scm' into pu
+  origin/todo           5ed7079 What's in update
+
+Notice that the verbose output for HEAD is squelched as it would be identical to
+what is shown below in "origin/master". Of course, if <remote>/HEAD does not
+resolve as a symref pointing to a branch inside <remote> (I don't know why this
+would happen though...), then it is shown like the other branches.
+
+BTW, I noticed that "git branch -a --merged" and "git branch -av --merged"
+return a different set of branches. I'm not sure why though (but it isn't due to
+this patch).
+
+ builtin-branch.c |   68 ++++++++++++++++++++++++++++++++++++++++-------------
+ 1 files changed, 51 insertions(+), 17 deletions(-)
+
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 56a1971..03ad757 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -181,7 +181,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
+ 
+ struct ref_item {
+ 	char *name;
+-	unsigned int kind;
++	char *dest;
++	unsigned int kind, len;
+ 	struct commit *commit;
+ };
+ 
+@@ -193,13 +194,23 @@ struct ref_list {
+ 	int kinds;
+ };
+ 
++static char *resolve_remote_head_symref(const char *head_name) {
++	unsigned char sha1[20];
++	int flag;
++	const char *refname;
++	refname = resolve_ref(head_name, sha1, 0, &flag);
++	if (refname && (flag & REF_ISSYMREF) &&
++	    !prefixcmp(refname, "refs/remotes/"))
++		return xstrdup(refname + strlen(head_name) - 4);
++	return NULL;
++}
++
+ static int append_ref(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
+ {
+ 	struct ref_list *ref_list = (struct ref_list*)(cb_data);
+ 	struct ref_item *newitem;
+ 	struct commit *commit;
+ 	int kind;
+-	int len;
+ 
+ 	/* Detect kind */
+ 	if (!prefixcmp(refname, "refs/heads/")) {
+@@ -239,9 +250,20 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+ 	newitem->name = xstrdup(refname);
+ 	newitem->kind = kind;
+ 	newitem->commit = commit;
+-	len = strlen(newitem->name);
+-	if (len > ref_list->maxwidth)
+-		ref_list->maxwidth = len;
++	newitem->len = strlen(newitem->name);
++	newitem->dest = (newitem->kind == REF_REMOTE_BRANCH &&
++			 newitem->len > 5 &&
++			 !strcmp(newitem->name + newitem->len - 5, "/HEAD"))
++			? resolve_remote_head_symref(refname - 13) : NULL;
++	/* adjust for " -> " */
++	if (newitem->dest)
++		newitem->len += strlen(newitem->dest) + 4;
++	/* adjust for "remotes/" */
++	if (newitem->kind == REF_REMOTE_BRANCH &&
++	    ref_list->kinds != REF_REMOTE_BRANCH)
++		newitem->len += 8;
++	if (newitem->len > ref_list->maxwidth)
++		ref_list->maxwidth = newitem->len;
+ 
+ 	return 0;
+ }
+@@ -250,8 +272,11 @@ static void free_ref_list(struct ref_list *ref_list)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < ref_list->index; i++)
++	for (i = 0; i < ref_list->index; i++) {
+ 		free(ref_list->list[i].name);
++		if (ref_list->list[i].dest)
++			free(ref_list->list[i].dest);
++	}
+ 	free(ref_list->list);
+ }
+ 
+@@ -292,7 +317,7 @@ static int matches_merge_filter(struct commit *commit)
+ }
+ 
+ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+-			   int abbrev, int current)
++			   int abbrev, int current, char *prefix)
+ {
+ 	char c;
+ 	int color;
+@@ -319,8 +344,13 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+ 		color = COLOR_BRANCH_CURRENT;
+ 	}
+ 
+-	if (verbose) {
++	if (item->dest) {
++		printf("%c %s%s%s%s -> %s\n", c, branch_get_color(color),
++		       prefix, item->name,
++		       branch_get_color(COLOR_BRANCH_RESET), item->dest);
++	} else if (verbose) {
+ 		struct strbuf subject = STRBUF_INIT, stat = STRBUF_INIT;
++		struct strbuf name = STRBUF_INIT;
+ 		const char *sub = " **** invalid ref ****";
+ 
+ 		commit = item->commit;
+@@ -333,28 +363,29 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+ 		if (item->kind == REF_LOCAL_BRANCH)
+ 			fill_tracking_info(&stat, item->name);
+ 
++		strbuf_addf(&name, "%s%s", prefix, item->name);
+ 		printf("%c %s%-*s%s %s %s%s\n", c, branch_get_color(color),
+-		       maxwidth, item->name,
++		       maxwidth, name.buf,
+ 		       branch_get_color(COLOR_BRANCH_RESET),
+ 		       find_unique_abbrev(item->commit->object.sha1, abbrev),
+ 		       stat.buf, sub);
+ 		strbuf_release(&stat);
+ 		strbuf_release(&subject);
++		strbuf_release(&name);
+ 	} else {
+-		printf("%c %s%s%s\n", c, branch_get_color(color), item->name,
+-		       branch_get_color(COLOR_BRANCH_RESET));
++		printf("%c %s%s%s%s\n", c, branch_get_color(color), prefix,
++		       item->name, branch_get_color(COLOR_BRANCH_RESET));
+ 	}
+ }
+ 
+ static int calc_maxwidth(struct ref_list *refs)
+ {
+-	int i, l, w = 0;
++	int i, w = 0;
+ 	for (i = 0; i < refs->index; i++) {
+ 		if (!matches_merge_filter(refs->list[i].commit))
+ 			continue;
+-		l = strlen(refs->list[i].name);
+-		if (l > w)
+-			w = l;
++		if (refs->list[i].len > w)
++			w = refs->list[i].len;
+ 	}
+ 	return w;
+ }
+@@ -394,7 +425,7 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
+ 		item.commit = head_commit;
+ 		if (strlen(item.name) > ref_list.maxwidth)
+ 			ref_list.maxwidth = strlen(item.name);
+-		print_ref_item(&item, ref_list.maxwidth, verbose, abbrev, 1);
++		print_ref_item(&item, ref_list.maxwidth, verbose, abbrev, 1, "");
+ 		free(item.name);
+ 	}
+ 
+@@ -402,8 +433,11 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
+ 		int current = !detached &&
+ 			(ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
+ 			!strcmp(ref_list.list[i].name, head);
++		char *prefix = (kinds != REF_REMOTE_BRANCH &&
++				ref_list.list[i].kind == REF_REMOTE_BRANCH)
++				? "remotes/" : "";
+ 		print_ref_item(&ref_list.list[i], ref_list.maxwidth, verbose,
+-			       abbrev, current);
++			       abbrev, current, prefix);
+ 	}
+ 
+ 	free_ref_list(&ref_list);
+-- 
+1.6.2.rc0.12.gbd893
