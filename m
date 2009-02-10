@@ -1,122 +1,93 @@
-From: Mark Burton <markb@ordern.com>
-Subject: Re: [PATCH] builtin-branch: highlight current remote branches with
- an  asterisk
-Date: Tue, 10 Feb 2009 11:05:46 +0000
-Organization: Order N Ltd.
-Message-ID: <20090210110546.5ead75a6@crow>
-References: <1234222326-55818-1-git-send-email-jaysoffian@gmail.com>
-	<alpine.DEB.1.00.0902100048410.10279@pacific.mpi-cbg.de>
-	<20090210000321.78025483@crow>
-	<76718490902091622y9a6d1bak5dc401858382e2ff@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: RFC re Thunderbird + imap-send
+Date: Tue, 10 Feb 2009 12:06:30 +0100
+Message-ID: <49915FB6.8010803@drmicha.warpmail.net>
+References: <4990A4FF.6020404@codeweavers.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	gitster@pobox.com
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 12:07:34 2009
+Cc: git@vger.kernel.org, Ben Bucksch <ben.bucksch.news@beonex.com>
+To: Jeremy White <jwhite@codeweavers.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 12:08:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWqSi-0000oW-0o
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 12:07:32 +0100
+	id 1LWqTF-0000xH-4v
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 12:08:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752443AbZBJLGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 06:06:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbZBJLGE
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 06:06:04 -0500
-Received: from c2beaomr10.btconnect.com ([213.123.26.188]:3263 "EHLO
-	c2beaomr10.btconnect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750759AbZBJLGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 06:06:01 -0500
-Received: from crow.ordern.com (host86-128-142-98.range86-128.btcentralplus.com [86.128.142.98])
-	by c2beaomr10.btconnect.com (MOS 3.8.6-GA)
-	with ESMTP id BSS25064;
-	Tue, 10 Feb 2009 11:05:46 GMT
-Received: from crow (localhost [127.0.0.1])
-	by crow.ordern.com (Postfix) with ESMTP id 707F1190DC5;
-	Tue, 10 Feb 2009 11:05:46 +0000 (GMT)
-In-Reply-To: <76718490902091622y9a6d1bak5dc401858382e2ff@mail.gmail.com>
-X-Mailer: Claws Mail 3.7.0 (GTK+ 2.12.9; x86_64-pc-linux-gnu)
-X-Junkmail-Status: score=10/50, host=c2beaomr10.btconnect.com
-X-Junkmail-SD-Raw: score=unknown,
-	refid=str=0001.0A0B0208.49915F8E.0006,ss=1,fgs=0,
-	ip=86.128.142.98,
-	so=2007-10-30 19:00:17,
-	dmn=5.7.1/2008-09-02
-X-Junkmail-IWF: false
+	id S1752738AbZBJLGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 06:06:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752457AbZBJLGi
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 06:06:38 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53730 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751252AbZBJLGh (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Feb 2009 06:06:37 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 12DD628DCE7;
+	Tue, 10 Feb 2009 06:06:36 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 10 Feb 2009 06:06:36 -0500
+X-Sasl-enc: vf8m9qeZ5nijRBzqCYQfb1nqOQHp3jYmSl1OTM7pKhd5 1234263995
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 299602A443;
+	Tue, 10 Feb 2009 06:06:35 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090209 Shredder/3.0b2pre
+In-Reply-To: <4990A4FF.6020404@codeweavers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109204>
 
-On Mon, 9 Feb 2009 19:22:50 -0500
-Jay Soffian <jaysoffian@gmail.com> wrote:
-
-> (Please don't trim cc:)
+Jeremy White venit, vidit, dixit 09.02.2009 22:49:
+> So, MajorDomo knows that what I'm trying is sick and twisted; I seem to
+> have run afoul of the taboos:
+>   http://vger.kernel.org/majordomo-taboos.txt
 > 
-> On Mon, Feb 9, 2009 at 7:03 PM, Mark Burton <markb@ordern.com> wrote:
-> > I don't know if I have any scripts that rely on a single star in front of
-> > the local HEAD or not (I'm sure some people must have them), but I do
-> > think this new feature would be very confusing, especially when used
-> > with -a.
-> >
-> > At the very least, make the indicator something other than a star, an @
-> > or #, perhaps.
+> (ixnay on the ention may of ontentcay ypetay tmlhay :-/).
 > 
-> With color, it shouldn't be confusing at all as only one branch is in
-> green. 
-
-How about the colour blind git users?
-
-> W/o color, it still seems clear to me as the remote branches
-> have their remote name prefixed to them. Even if you're on a detached
-> head:
+> So here is a pointer to a proposed patch to enable git-imap-send to work
+> with Thunderbird, based on Ben's suggestion:
 > 
-> * (no branch)
->   master
->   next
->   sent/branch-show-remote-HEAD
->   wip/am-usability-improvements
->   wip/push-docs
->   origin/html
->   origin/maint
->   origin/man
-> * origin/master
->   origin/next
->   origin/pu
->   origin/todo
+> http://www.codeweavers.com/~jwhite/0001-Add-an-option-to-wrap-a-patch-in-pre-in-git-imap-s.patch
 > 
-> A different marker doesn't really seem like an improvement to me:
+> Essentially, with this patch, I add an html option to the imap-send
+> server configuration block.  If turned on, we structure each patch as
+> html, inside of pre blocks.  And, in fact, Thunderbird does
+> automatically convert such an email into a plain/text, format=fixed
+> email, that seems to diff cleanly with a regular git-format-patch result.
 > 
-> * (no branch)
->   master
->   next
->   sent/branch-show-remote-HEAD
->   wip/am-usability-improvements
->   wip/push-docs
->   origin/html
->   origin/maint
->   origin/man
-> @ origin/master
->   origin/next
->   origin/pu
->   origin/todo
-> 
-> But I'm happy to have the community paint the shed I've constructed.
-> 
-> j.
+> Thoughts?  Tar and feathers?
 
-You can paint a rickety old shed any colour you wish but it doesn't
-make it any stronger.
+Looks okay here. I leave the tarring and feathering to Dscho ;)
 
-Personally, I think the -> syntax is a much better idea as it is unlikely
-to be confused with the existing marker and it shows the relationship
-between the (remote) HEAD and remote current branch.
+Trying this out showed that indeed git-imap-send needs much more love.
+The man page doesn't say much, doesn't describe all options. Most
+options can be specified in config only. You can't pass file arguments,
+only stdin. You can't even pass a recipient!
 
-Cheers,
+To be useful, imap-send should really obey the same config options and
+parameters as much as possible. In fact they should share some.
+imap-send and send-email should be usable interchangeably, without
+fiddling with format-patch options (which has to: and cc: where it
+doesn't really belong). Uhm, I'm getting off-topic.
 
-Mark
+Back on topic: TB does the automatic conversion to plain text only when
+the send options are appropriate, or if you set the recipient to "text
+only".
+
+Also:
+For a typical text mail in Drafts I see lines like
+
+X-Mozilla-Draft-Info: internal/draft; vcard=0; receipt=0; uuencode=0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
+
+Any chance we could use that rather than invoke the HTML editor?
+We would need to shut off q-p and f-f *and* avoid automatic word wrap
+(or make sure patches don't have longer lines then TBs editor allows),
+the latter I don't know how to do.
+
+Michael
