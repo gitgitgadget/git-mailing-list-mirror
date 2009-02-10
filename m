@@ -1,51 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix contrib/hooks/post-receive-email for new branch with
- no new commits
-Date: Tue, 10 Feb 2009 08:30:57 -0800
-Message-ID: <7vbptantj2.fsf@gitster.siamese.dyndns.org>
-References: <1234273695-4981-1-git-send-email-pknotz@sandia.gov>
- <m3ab8uuwfg.fsf@localhost.localdomain>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: RFH: spawning pager takes long time when when unconnected from 
+	network
+Date: Tue, 10 Feb 2009 11:34:47 -0500
+Message-ID: <76718490902100834j7f1f61aaibdefe8416091b3fb@mail.gmail.com>
+References: <loom.20090210T015515-886@post.gmane.org>
+	 <4991337B.2010102@viscovery.net>
+	 <loom.20090210T085859-630@post.gmane.org>
+	 <alpine.DEB.1.00.0902101124160.10279@pacific.mpi-cbg.de>
+	 <279b37b20902100253v3cfd8e45kefa6da7de2ea4a4b@mail.gmail.com>
+	 <20090210110729.GC12089@coredump.intra.peff.net>
+	 <279b37b20902100355r44985270x50ff8cb8a072868d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Pat Notz" <pknotz@sandia.gov>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 17:32:56 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Raible <raible+git@gmail.com>, git@vger.kernel.org
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 17:36:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWvXI-0001QL-1y
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 17:32:36 +0100
+	id 1LWvaq-0002xo-Dj
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 17:36:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754022AbZBJQbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 11:31:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754155AbZBJQbI
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 11:31:08 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55542 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753802AbZBJQbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 11:31:07 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6098D2AD8C;
-	Tue, 10 Feb 2009 11:31:03 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A92D92AD8A; Tue,
- 10 Feb 2009 11:30:59 -0500 (EST)
-In-Reply-To: <m3ab8uuwfg.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Tue, 10 Feb 2009 07:46:31 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 355FB18E-F790-11DD-8AD8-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1754147AbZBJQeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 11:34:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754084AbZBJQet
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 11:34:49 -0500
+Received: from rv-out-0506.google.com ([209.85.198.230]:40637 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753984AbZBJQet (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 11:34:49 -0500
+Received: by rv-out-0506.google.com with SMTP id k40so2341100rvb.1
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 08:34:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=X6s0DV9zWLdPAmu22L5Vu3XBv8jtywzYYJKwjuypbcQ=;
+        b=UglAMhjFX5DhcLIFYzSUZiYRBWVIsXsMwc5Hk702ueB8X+oxol94rv8i+QtHPUPPEA
+         9Z8MYS00sDpGqK98opDXWSsaiNLeGqIZ/NbLSBQq9qM3ZmvafsJ0bdOCltq2+itJWUOW
+         a1UVqG9Ub9EtvhnVaB0FneHsn1DIOt8j9LZX8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SroiEq8DprISMvbXbT0Pw/lQ8sHqLtVGdiJiofukXJlPBLKnDwD9KZqy++OPl+LFg2
+         AmwtIe9P1c6Il+MhzpQhR2AA0K+320XLQs086nxS7+YSDOB76n5rPDVsAAFZ4yYg0O9S
+         dQVBd1wAPFDboeOSvmvuyRZ3DDSz9AeAiOIJU=
+Received: by 10.140.144.1 with SMTP id r1mr4745036rvd.271.1234283687824; Tue, 
+	10 Feb 2009 08:34:47 -0800 (PST)
+In-Reply-To: <279b37b20902100355r44985270x50ff8cb8a072868d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109267>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Tue, Feb 10, 2009 at 6:55 AM, Eric Raible <raible@gmail.com> wrote:
+> My shell is the standard vanilla msysgit shell, with no customizations.
+> It does of course seem that something is touching the network, but I
+> have no idea what that might be.  Nothing in my path, that's for sure.
 
-> +	this_branch=$refname
-> +	other_branches=$(git for-each-ref --format='%(refname)' refs/heads/ |
-> +               grep -v $this_branch)
+If you plug into the network, but statically assign yourself a bogus
+IP so that you don't get anywhere, does the same thing happen? If so,
+then perhaps you can sniff your network interface to see what the
+traffic is.
 
-This is still not quite right.  grep -F -v "$this_branch" perhaps?
+j.
