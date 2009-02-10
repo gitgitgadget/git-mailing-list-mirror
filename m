@@ -1,90 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] shortstatus v1
-Date: Tue, 10 Feb 2009 06:45:06 -0500
-Message-ID: <20090210114506.GF12089@coredump.intra.peff.net>
-References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com> <20090210110330.GB12089@coredump.intra.peff.net> <49916524.4000400@drmicha.warpmail.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: A little mystery - crash caused by empty commit message.
+Date: Tue, 10 Feb 2009 12:46:38 +0100
+Message-ID: <4991691E.6010808@viscovery.net>
+References: <1a6be5fa0902100315q554dc457j8c8476d3f59a314f@mail.gmail.com> <20090210113234.GE12089@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Tuncer Ayaz <tuncer.ayaz@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Feb 10 12:46:47 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
+To: Tor Arvid Lund <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 12:48:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWr4X-0004nT-V7
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 12:46:38 +0100
+	id 1LWr63-0005Cf-DW
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 12:48:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753319AbZBJLpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 06:45:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753237AbZBJLpK
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 06:45:10 -0500
-Received: from peff.net ([208.65.91.99]:40080 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753213AbZBJLpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 06:45:09 -0500
-Received: (qmail 12797 invoked by uid 107); 10 Feb 2009 11:45:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Feb 2009 06:45:24 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2009 06:45:06 -0500
-Content-Disposition: inline
-In-Reply-To: <49916524.4000400@drmicha.warpmail.net>
+	id S1753216AbZBJLqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 06:46:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbZBJLqo
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 06:46:44 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:50609 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750772AbZBJLqo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 06:46:44 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LWr4Z-0008Te-B8; Tue, 10 Feb 2009 12:46:39 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id E3E526D9; Tue, 10 Feb 2009 12:46:38 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <20090210113234.GE12089@coredump.intra.peff.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109214>
 
-On Tue, Feb 10, 2009 at 12:29:40PM +0100, Michael J Gruber wrote:
+Jeff King schrieb:
+> It _is_ generally hard to get an empty commit message using "git
+> commit". But it's possible there is a bug in cherry-pick, rebase, or
+> some ohter low-level tool that accidentally erased your message
+> as the commit was moved.
 
-> >   3. What advantage does this have over just doing:
-> > 
-> >        (git diff --name-status;
-> >         git diff --cached --name-status) | sort -k2
-> 
-> That is fine, except that it can't list untracked files.
+Since this is on Windows, chances are that this is an encoding issue. If
+you have non-ASCII in the commit message, but i18n.commitEncoding is
+unset, then you can introduce invalid UTF8 sequences easily. This could
+confuse one of the pipelines (rebase, am, cherry-pick, etc).
 
-Well, neither does this patch:
+You should set
 
-  $ echo content >tracked &&
-  > echo content >untracked &&
-  > git add tracked &&
-  > git shortstatus
-  A           tracked
+	git config i18n.commitencoding cp1252
 
-but you could easily include that:
+(or whatever is appropriate for you locale). I even have
 
-  (git diff --name-status;
-   git diff --cached --name-status;
-   git ls-files --exclude-standard -o | sed 's/^/? /') | sort -k2
+	git config i18n.logoutputencoding cp850
 
-which is really more or less what the wt-status code does.
+so that I see correct umlauts if I happen to run git log without a pager
+in CMD ;) (I rarely do that, though.)
 
-Note that I am not _against_ a convenient command for doing this. But I
-have to wonder why such a large patch is necessary when I can do it in
-three lines. I don't mind the C version being a little longer, but I
-wonder what advantage there is in using wt_status for this.
-
-> Right now, "git status" is basically "git commit --dry-run", which may
-> or may not be good, but certainly is not what people coming from other
-> vcs expect. I would suggest having "git commit -n" replace "git status"
-> if I hadn't done so already or if I dared to (I can't remember ;) ).
-
-I would much prefer that, if it had been done that way from the
-beginning. But I think we are stuck with "git status" due to hysterical
-raisins.
-
-> "git ls-files" may do but has a different set of mode characters. I
-> think that sums up what preceeded Junio's patch from October.
-
-But you only need to use it here to get the untracked files, so it
-doesn't matter what it says about modified files.
-
-The big downside with the snippet I posted above is that it runs three
-separate commands that go through the index. In theory, you could do it
-in one pass. But wt-status _doesn't_ do that, since the diff
-infrastructure isn't there (a long time ago, Junio had an experimental
-parallel diff walker patch, but it never made it out of next).
-
--Peff
+-- Hannes
