@@ -1,112 +1,180 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
-Date: Tue, 10 Feb 2009 11:09:09 -0800
-Message-ID: <20090210190909.GS30949@spearce.org>
-References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de> <20090210121833.GC15491@coredump.intra.peff.net> <alpine.DEB.1.00.0902101357140.10279@pacific.mpi-cbg.de> <20090210131029.GC17305@coredump.intra.peff.net> <alpine.DEB.1.00.0902101427490.10279@pacific.mpi-cbg.de> <7vprhqnv0c.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0902101743180.10279@pacific.mpi-cbg.de> <20090210165610.GP30949@spearce.org> <7vocxam96s.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] shortstatus v1
+Date: Tue, 10 Feb 2009 14:11:18 -0500
+Message-ID: <20090210191118.GA26651@coredump.intra.peff.net>
+References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com> <20090210110330.GB12089@coredump.intra.peff.net> <7vwsbynv0o.fsf@gitster.siamese.dyndns.org> <20090210181052.GA19634@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 20:12:20 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Tuncer Ayaz <tuncer.ayaz@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 10 20:14:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWy1F-00080B-LQ
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 20:11:42 +0100
+	id 1LWy3B-0000aO-F8
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 20:13:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755909AbZBJTJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 14:09:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756099AbZBJTJM
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 14:09:12 -0500
-Received: from george.spearce.org ([209.20.77.23]:46799 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754894AbZBJTJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 14:09:10 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id B96A538210; Tue, 10 Feb 2009 19:09:09 +0000 (UTC)
+	id S1754567AbZBJTLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 14:11:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757386AbZBJTLY
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 14:11:24 -0500
+Received: from peff.net ([208.65.91.99]:60384 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756613AbZBJTLW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 14:11:22 -0500
+Received: (qmail 16611 invoked by uid 107); 10 Feb 2009 19:11:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Feb 2009 14:11:37 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2009 14:11:18 -0500
 Content-Disposition: inline
-In-Reply-To: <7vocxam96s.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20090210181052.GA19634@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109294>
 
-Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Feb 10, 2009 at 01:10:52PM -0500, Jeff King wrote:
+
+>   - I don't think the "mini" status is really related to this. The novel
+>     thing here is collating the outputs into a single sorted list. But
+>     the "mini" output is not about that at all:
 > 
-> I wonder if we can solve this by introducing a local cache that is a flat
-> file that looks like:
+>       1. It doesn't care about full output, so it should be able to exit
+>          early from the diff, avoid rename detection, etc, so that it is
+>          as quick as possible.
 > 
->     magic number for /usr/bin/file
+>       2. It doesn't collate the output at all. It is about three
+>          separate symbols for the three separate lists.
 
-Don't forget a version number.  Waste 4 bytes now and its easier
-to change the format in the future if we need to.
+OK, I realize this is not exactly what the proposed --mini does. But
+here is more along the lines of what I was thinking.
 
->     tree object SHA-1 the file caches
->     Number of entries in this file
->     256 fan-out offsets into this file
->     N entries of <SHA-1, SHA-1>, sorted
->     Checksum of the file itself
-> 
-> and use it when availble (otherwise optionally create it upon the first
-> lookup).  The file can be used by mmaping it and then doing a newton
-> raphson or binary search similar to the way patch-ids.c does.
+Warm cache, it runs in .042s on my git repo, about half of which is the
+untracked files check. It takes about .49s on the kernel repo. The
+read_directory() bit is not optimized at all, and could probably benefit
+from an early return (OTOH, the worst case is still going to need to
+look at every path).
 
-Yup.  Sort of my thoughts when I was thinking about that external
-index for a "git database".
+I am not particularly interested in a fancy prompt myself, but maybe
+this will help somebody else.
 
-I was considering a much more complex file layout though; one that
-would permit editing without completely recopying the file every
-time something changes.
+The patch relies on the index_differs_from() patch that Stephan
+posted earlier today.
 
-More or less a traditional block oriented on-disk M-tree, with
-copy-on-write semantics for the blocks.  This would permit us to
-quickly append onto the end of the file with new updates, and then
-periodically copy and flatten out the the file as necessary to
-reclaim the prior dead space.
+---
+ .gitignore           |    1 +
+ Makefile             |    1 +
+ builtin-ministatus.c |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ builtin.h            |    1 +
+ git.c                |    1 +
+ 5 files changed, 56 insertions(+), 0 deletions(-)
 
-E.g.:
-
-  magic number
-  version
-  [intermediate blocks ...]
-  [leaf blocks...]
-  root block
-
-Writers would append modified leaf and intermediate blocks as
-necessary to the end of the file, then append a new root block.
-
-Readers would read the file tail and verify it is a root, then scan
-with a traditional M-tree search algorithm.
-
-If the root block has a "magic block header" and a strong checksum
-at the tail of the block, readers can concurrently read while a
-writer is appending.  Any invalid root block just means the reader
-is seeing the middle of a write, or an aborted write, and should
-scan backwards to locate the prior valid root.
-
-If the root block also has a commit SHA-1 indicating which commit
-that root become valid under, a reader can decide if that root
-might give it answers which aren't correct for the current value of
-the notes history it is reading, and scan backwards for some older
-root block.  We could accelerate that by including the file offset
-of the prior root block in each new root.
-
-GC compacting the file is just a matter of write-locking the file
-to block out a new writer, then traversing the current root and
-copying all blocks that are reachable.
-
-</end-hand-waving>
-
-> I am hoping that I could eventually rewrite rerere to use something like
-> this, so that rerere database can be shared, just like the way notes can
-> be shared, across repositories.
-
-Ooh, great idea.  If we could toss rerere data into something that
-can be transported around, and efficiently accessed.  I like it.
-
--- 
-Shawn.
+diff --git a/.gitignore b/.gitignore
+index 055eb54..de2249b 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -81,6 +81,7 @@ git-mergetool
+ git-mktag
+ git-mktree
+ git-name-rev
++git-ministatus
+ git-mv
+ git-notes
+ git-pack-redundant
+diff --git a/Makefile b/Makefile
+index a0ca137..9145c7b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -559,6 +559,7 @@ BUILTIN_OBJS += builtin-merge-base.o
+ BUILTIN_OBJS += builtin-merge-file.o
+ BUILTIN_OBJS += builtin-merge-ours.o
+ BUILTIN_OBJS += builtin-merge-recursive.o
++BUILTIN_OBJS += builtin-ministatus.o
+ BUILTIN_OBJS += builtin-mv.o
+ BUILTIN_OBJS += builtin-name-rev.o
+ BUILTIN_OBJS += builtin-pack-objects.o
+diff --git a/builtin-ministatus.c b/builtin-ministatus.c
+new file mode 100644
+index 0000000..c9f8e7f
+--- /dev/null
++++ b/builtin-ministatus.c
+@@ -0,0 +1,52 @@
++#include "cache.h"
++#include "diff.h"
++#include "commit.h"
++#include "revision.h"
++#include "dir.h"
++
++static int worktree_is_dirty(void)
++{
++	struct rev_info rev;
++	init_revisions(&rev, "");
++	setup_revisions(0, NULL, &rev, NULL);
++	DIFF_OPT_SET(&rev.diffopt, QUIET);
++	DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
++	run_diff_files(&rev, 0);
++	return DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES);
++}
++
++static int have_untracked(void)
++{
++	struct dir_struct dir;
++	int i;
++
++	memset(&dir, 0, sizeof dir);
++	setup_standard_excludes(&dir);
++
++	read_directory(&dir, ".", "", 0, NULL);
++	/* XXX we are probably leaking memory from dir */
++	for (i = 0; i < dir.nr; i++)
++		struct dir_entry *ent = dir.entries[i];
++		if (cache_name_is_other(ent->name, ent->len))
++			return 1;
++	}
++	return 0;
++}
++
++int cmd_ministatus(int argc, const char **argv, const char *prefix)
++{
++	if (argc != 1)
++		die("Sorry, I don't understand any command line options.");
++
++	read_cache();
++	refresh_cache(REFRESH_QUIET);
++
++	if (index_differs_from("HEAD", 0))
++		putchar('+');
++	if (worktree_is_dirty())
++		putchar('*');
++	if (have_untracked())
++		putchar('?');
++
++	return 0;
++}
+diff --git a/builtin.h b/builtin.h
+index f054fc7..03e6a88 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -71,6 +71,7 @@ extern int cmd_merge_base(int argc, const char **argv, const char *prefix);
+ extern int cmd_merge_ours(int argc, const char **argv, const char *prefix);
+ extern int cmd_merge_file(int argc, const char **argv, const char *prefix);
+ extern int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
++extern int cmd_ministatus(int argc, const char **argv, const char *prefix);
+ extern int cmd_mv(int argc, const char **argv, const char *prefix);
+ extern int cmd_name_rev(int argc, const char **argv, const char *prefix);
+ extern int cmd_pack_objects(int argc, const char **argv, const char *prefix);
+diff --git a/git.c b/git.c
+index 4c0fa44..8bf7e78 100644
+--- a/git.c
++++ b/git.c
+@@ -323,6 +323,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "merge-ours", cmd_merge_ours, RUN_SETUP },
+ 		{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
++		{ "ministatus", cmd_ministatus, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "name-rev", cmd_name_rev, RUN_SETUP },
+ 		{ "pack-objects", cmd_pack_objects, RUN_SETUP },
