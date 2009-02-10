@@ -1,287 +1,80 @@
-From: Anton Gyllenberg <anton@iki.fi>
-Subject: [PATCH] test case for regression caused by git-svn empty symlink fix
-Date: Wed, 11 Feb 2009 00:38:45 +0200
-Message-ID: <83dfc36c0902101438p7b7fbff8ja66b1fb021942cd8@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC/RFH] Fun things with git-notes, or: patch tracking backwards
+Date: Tue, 10 Feb 2009 23:42:27 +0100
+Message-ID: <200902102342.29962.trast@student.ethz.ch>
+References: <200902091508.11460.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart4232548.JnWJNA4P7V";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 10 23:40:24 2009
+X-From: git-owner@vger.kernel.org Tue Feb 10 23:44:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX1H5-00060A-MT
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 23:40:16 +0100
+	id 1LX1L0-0007TQ-0N
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 23:44:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756005AbZBJWit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 17:38:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755674AbZBJWis
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 17:38:48 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:63164 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753650AbZBJWir (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 17:38:47 -0500
-Received: by nf-out-0910.google.com with SMTP id d21so20437nfb.21
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 14:38:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QzT7IwMljTgBlS1jDWodg7yCaf5Pid29vnRieyjTHnE=;
-        b=ixJtLS7mhGisICm/veR4nXyKD2sEr9pFPIp4vl1FcAYQanV8KKl2jRMULhX2wQGPag
-         SOpqoX1loixhJRagy0xWc2wm+mdidKzhXtTSKBp3L1CpQx3rJalDbDXkPXxvIuy/SGGy
-         4o+czBMnGBlNuYi7N0AKro45LhlgwD7SoFfjU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        b=jdzzEvv7cxHuoP1U+d7RLgZYaZ9qVchrmBMbxhaFhZBDXd0Tuq/mN3KnwYTYU2Y2QP
-         XXhFMPtXfNg5KX+Ko0sPVx7wwqE2DC0w90+giO977RkM19pNDNOfaEO+bHWYX2ocHmI6
-         wIxScepLx0jsRcu7Ccvbs4vSCrxN67ciQp4WA=
-Received: by 10.210.105.2 with SMTP id d2mr3462555ebc.155.1234305525833; Tue, 
-	10 Feb 2009 14:38:45 -0800 (PST)
-X-Google-Sender-Auth: 816b9b621c7a0f71
+	id S1756512AbZBJWmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 17:42:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756180AbZBJWmh
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 17:42:37 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:35680 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756148AbZBJWmh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 17:42:37 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 10 Feb 2009 23:42:34 +0100
+Received: from thomas.localnet ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 10 Feb 2009 23:42:34 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <200902091508.11460.trast@student.ethz.ch>
+X-OriginalArrivalTime: 10 Feb 2009 22:42:34.0908 (UTC) FILETIME=[DDE635C0:01C98BD0]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109328>
 
-Commit dbc6c74d0858d77e61e092a48d467e725211f8e9 "git-svn: handle empty
-files marked as symlinks in SVN" caused a regression in an unusual case
-where a branch has been created in SVN, later deleted and then created
-again from another branch point and the original branch point had empty
-files not in the new branch. In some cases git svn fetch will then fail
-while trying to fetch the empty file from the wrong SVN revision.
+--nextPart4232548.JnWJNA4P7V
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-This adds a test case that reproduces the issue.
+Thomas Rast wrote:
+>   git fetch git://repo.or.cz/git/trast.git mailnotes &&
+>   GIT_NOTES_REF=3DFETCH_HEAD git log origin/pu
 
-Signed-off-by: Anton Gyllenberg <anton@iki.fi>
----
- t/t9135-git-svn-moved-branch-empty-file.sh |   11 ++
- t/t9135/svn.dump                           |  192 ++++++++++++++++++++++++++++
- 2 files changed, 203 insertions(+), 0 deletions(-)
- create mode 100755 t/t9135-git-svn-moved-branch-empty-file.sh
- create mode 100644 t/t9135/svn.dump
+An update: I have fully automated the process, it now fetches mails
+from Gmane over HTTP which gives it the Gmane URLs for free.  I'm
+rather happy with the latter feature, especially since Konsole has a
+feature to recognize and open links directly.
 
-diff --git a/t/t9135-git-svn-moved-branch-empty-file.sh
-b/t/t9135-git-svn-moved-branch-empty-file.sh
-new file mode 100755
-index 0000000..903575a
---- /dev/null
-+++ b/t/t9135-git-svn-moved-branch-empty-file.sh
-@@ -0,0 +1,11 @@
-+#!/bin/sh
-+
-+test_description='test moved svn branch with missing empty files'
-+
-+. ./lib-git-svn.sh
-+test_expect_success 'load svn dumpfile'  '
-+	svnadmin load "$rawsvnrepo" < "${TEST_DIRECTORY}/t9135/svn.dump"
-+	'
-+
-+test_expect_success 'clone using git svn' 'git svn clone -s "$svnrepo" x'
-+test_done
-diff --git a/t/t9135/svn.dump b/t/t9135/svn.dump
-new file mode 100644
-index 0000000..b51c0cc
---- /dev/null
-+++ b/t/t9135/svn.dump
-@@ -0,0 +1,192 @@
-+SVN-fs-dump-format-version: 2
-+
-+UUID: 1f80e919-e9e3-4d80-a3ae-d9f21095e27b
-+
-+Revision-number: 0
-+Prop-content-length: 56
-+Content-length: 56
-+
-+K 8
-+svn:date
-+V 27
-+2009-02-10T19:23:16.424027Z
-+PROPS-END
-+
-+Revision-number: 1
-+Prop-content-length: 123
-+Content-length: 123
-+
-+K 7
-+svn:log
-+V 20
-+init standard layout
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-10T19:23:17.195072Z
-+PROPS-END
-+
-+Node-path: branches
-+Node-kind: dir
-+Node-action: add
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+
-+Node-path: trunk
-+Node-kind: dir
-+Node-action: add
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+
-+Revision-number: 2
-+Prop-content-length: 121
-+Content-length: 121
-+
-+K 7
-+svn:log
-+V 18
-+branch-b off trunk
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-10T19:23:19.160095Z
-+PROPS-END
-+
-+Node-path: branches/branch-b
-+Node-kind: dir
-+Node-action: add
-+Node-copyfrom-rev: 1
-+Node-copyfrom-path: trunk
-+Prop-content-length: 34
-+Content-length: 34
-+
-+K 13
-+svn:mergeinfo
-+V 0
-+
-+PROPS-END
-+
-+
-+Revision-number: 3
-+Prop-content-length: 120
-+Content-length: 120
-+
-+K 7
-+svn:log
-+V 17
-+add empty file b1
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-10T19:23:20.194568Z
-+PROPS-END
-+
-+Node-path: branches/branch-b/b1
-+Node-kind: file
-+Node-action: add
-+Prop-content-length: 10
-+Text-content-length: 0
-+Text-content-md5: d41d8cd98f00b204e9800998ecf8427e
-+Content-length: 10
-+
-+PROPS-END
-+
-+
-+Revision-number: 4
-+Prop-content-length: 110
-+Content-length: 110
-+
-+K 7
-+svn:log
-+V 8
-+branch-c
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-10T19:23:21.169100Z
-+PROPS-END
-+
-+Node-path: branches/branch-c
-+Node-kind: dir
-+Node-action: add
-+Node-copyfrom-rev: 3
-+Node-copyfrom-path: trunk
-+
-+
-+Revision-number: 5
-+Prop-content-length: 126
-+Content-length: 126
-+
-+K 7
-+svn:log
-+V 23
-+oops, wrong branchpoint
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-10T19:23:21.253557Z
-+PROPS-END
-+
-+Node-path: branches/branch-c
-+Node-action: delete
-+
-+
-+Revision-number: 6
-+Prop-content-length: 127
-+Content-length: 127
-+
-+K 7
-+svn:log
-+V 24
-+branch-c off of branch-b
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-10T19:23:21.314659Z
-+PROPS-END
-+
-+Node-path: branches/branch-c
-+Node-kind: dir
-+Node-action: add
-+Node-copyfrom-rev: 5
-+Node-copyfrom-path: branches/branch-b
-+Prop-content-length: 34
-+Content-length: 34
-+
-+K 13
-+svn:mergeinfo
-+V 0
-+
-+PROPS-END
-+
-+
--- 
-1.6.2.rc0
+I have imported all commits, and mails since roughly July 2008
+(starting with Gmane 89000).  In this timeframe there were 1802
+non-merge commits, and the mailnotes tree now holds 1122 annotations.
+I won't import mails any further back until the parsing-related code
+has become reasonably stable, but this at least covers the post-v1.6.0
+commits.
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart4232548.JnWJNA4P7V
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkmSAtUACgkQqUud07tmzP0AYACeNh0RQ0WsSGg/3MLelgFbDAmB
+M9MAoIeDphayags/h/stDoQtGsOa29oq
+=3eYK
+-----END PGP SIGNATURE-----
+
+--nextPart4232548.JnWJNA4P7V--
