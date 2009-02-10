@@ -1,75 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] fix the installation path for html documentation
-Date: Tue, 10 Feb 2009 16:14:13 +0100
-Message-ID: <1234278853-25452-1-git-send-email-git@drmicha.warpmail.net>
-Cc: Johannes Sixt <j6t@kdbg.org>, Steffen Prohaska <prohaska@zib.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 10 16:16:08 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] receive-pack: receive.denyDeleteCurrent
+Date: Tue, 10 Feb 2009 07:15:19 -0800
+Message-ID: <7vfximpblk.fsf@gitster.siamese.dyndns.org>
+References: <1234170565-6740-1-git-send-email-gitster@pobox.com>
+ <1234170565-6740-2-git-send-email-gitster@pobox.com>
+ <1234170565-6740-3-git-send-email-gitster@pobox.com>
+ <1234170565-6740-4-git-send-email-gitster@pobox.com>
+ <20090209185310.GB27037@coredump.intra.peff.net>
+ <20090209192210.GD27037@coredump.intra.peff.net>
+ <7veiy7thnv.fsf@gitster.siamese.dyndns.org>
+ <20090210120753.GB15491@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 10 16:17:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWuKx-0002q8-G0
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 16:15:47 +0100
+	id 1LWuM2-0003S6-5P
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 16:16:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753792AbZBJPOV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 10:14:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753655AbZBJPOU
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 10:14:20 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43490 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753452AbZBJPOU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Feb 2009 10:14:20 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 149F1290EF8;
-	Tue, 10 Feb 2009 10:14:19 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 10 Feb 2009 10:14:19 -0500
-X-Sasl-enc: jaXtaSg8yYcIL1+SZrAxkBH5au7YexUur61NqHmrN13z 1234278858
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 713512B89D;
-	Tue, 10 Feb 2009 10:14:18 -0500 (EST)
-X-Mailer: git-send-email 1.6.1.2.253.ga34a
+	id S1753846AbZBJPP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 10:15:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753655AbZBJPP1
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 10:15:27 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48579 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753016AbZBJPP1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 10:15:27 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 99AFD2AD66;
+	Tue, 10 Feb 2009 10:15:24 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DF2132AD5E; Tue,
+ 10 Feb 2009 10:15:21 -0500 (EST)
+In-Reply-To: <20090210120753.GB15491@coredump.intra.peff.net> (Jeff King's
+ message of "Tue, 10 Feb 2009 07:07:53 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A40EE52E-F785-11DD-97D2-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109254>
 
-Since 026fa0d5ad9538ca76838070861531c037d7b9ba (Move computation of
-absolute paths from Makefile to runtime (in preparation for
-RUNTIME_PREFIX) the installation of html doc was broken:
-Documentation/Makefile does not know how to resolve relative dirs, which
-results in html doc being installed in
-$(git-build-root)/Documentation/share/doc/git-doc.
+Jeff King <peff@peff.net> writes:
 
-Fix this by not exporting htmldir from Makefile since this allows
-Documentation/Makefile to compute htmldir from prefix.
+>> I think denyCurrentBranch means do not touch the currently checked out
+>> branch, so 'refuse' there should trump whatever denyDeleteCurrent says as
+>> long as the repository has a work tree.
+>
+> I'm not sure "trump" is the right behavior. How would I specify "it is
+> OK to update this branch, but not to delete it, because I have installed
+> a hook that deals with the former but not the latter".
+>
+> It seems like "delete" is a subset of "touch", so I think you probably
+> want to refuse if _either_ is refuse. Which I think maybe is what you
+> are saying here:
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-An alternative would be to teach Documentation/Makefile to take the
-relative htmldir and make it into an absolute path. But the approach I'm
-taking with this patch as analogous to how mandir is handled, with the
-same draw back. But all is well as long as the build monkey messes with
-prefix only.
-
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 27b9569..862b96c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -228,7 +228,7 @@ GITWEB_FAVICON = git-favicon.png
- GITWEB_SITE_HEADER =
- GITWEB_SITE_FOOTER =
- 
--export prefix bindir sharedir htmldir sysconfdir
-+export prefix bindir sharedir sysconfdir
- 
- CC = gcc
- AR = ar
--- 
-1.6.1.2.253.ga34a
+I meant "'refuse' in denyCurrentBranch trumps" and not "whatever is set to
+denyCurrentBranch trumps".  IOW, I think we are in agreement.
