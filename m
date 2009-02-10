@@ -1,80 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] builtin-branch: highlight current remote branches with
-	an asterisk
-Date: Tue, 10 Feb 2009 06:19:07 -0500
-Message-ID: <20090210111907.GD12089@coredump.intra.peff.net>
-References: <1234222326-55818-1-git-send-email-jaysoffian@gmail.com> <20090210075214.GC1320@atjola.homenet>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/PATCH] shortstatus v1
+Date: Tue, 10 Feb 2009 12:29:40 +0100
+Message-ID: <49916524.4000400@drmicha.warpmail.net>
+References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com> <20090210110330.GB12089@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Tuncer Ayaz <tuncer.ayaz@gmail.com>, git@vger.kernel.org,
 	gitster@pobox.com
-To: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 10 12:20:46 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 10 12:31:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWqfN-0005Ou-IB
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 12:20:38 +0100
+	id 1LWqq3-0000Vz-TD
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 12:31:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752750AbZBJLTM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Feb 2009 06:19:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbZBJLTL
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 06:19:11 -0500
-Received: from peff.net ([208.65.91.99]:38637 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750887AbZBJLTK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 06:19:10 -0500
-Received: (qmail 12395 invoked by uid 107); 10 Feb 2009 11:19:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Feb 2009 06:19:25 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2009 06:19:07 -0500
-Content-Disposition: inline
-In-Reply-To: <20090210075214.GC1320@atjola.homenet>
+	id S1751731AbZBJLaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 06:30:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750841AbZBJLaM
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 06:30:12 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43803 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750790AbZBJLaL (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Feb 2009 06:30:11 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id AC9142908F5;
+	Tue, 10 Feb 2009 06:29:46 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 10 Feb 2009 06:29:47 -0500
+X-Sasl-enc: Grs01bPEUQkSFCNTjc4CSWs1TQO+jziRZlyXRQX5cedz 1234265385
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8389418B46;
+	Tue, 10 Feb 2009 06:29:44 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090209 Shredder/3.0b2pre
+In-Reply-To: <20090210110330.GB12089@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109209>
 
-[let me answer your email in reverse order, which will hopefully make
-more sense when reading]
+Jeff King venit, vidit, dixit 10.02.2009 12:03:
+> On Tue, Feb 10, 2009 at 01:51:07AM +0100, Tuncer Ayaz wrote:
+...
+>   3. What advantage does this have over just doing:
+> 
+>        (git diff --name-status;
+>         git diff --cached --name-status) | sort -k2
 
-On Tue, Feb 10, 2009 at 08:52:14AM +0100, Bj=C3=B6rn Steinbrink wrote:
+That is fine, except that it can't list untracked files.
 
-> still don't really see what I'd use it for. From what I've heard, som=
-e
-> people just consider origin/HEAD a clone artifact without much use, a=
-nd
-> so far, I think I agree. But maybe there's more to it?
+> What options are available? It looks like this is intimately tied with
+> "commit", which I think is one of the _shortcomings_ of the current
+> status. It means the command line options are non-intuitive for what
+> people generally want to say: "what is changed, possibly limiting to
+> some path".
 
-The ref "origin" will resolve to "refs/remotes/origin/HEAD", if it
-exists. So you can use it as a shorthand for "origin/master" (or
-whatever branch is most interesting to you on the remote).
+Right now, "git status" is basically "git commit --dry-run", which may
+or may not be good, but certainly is not what people coming from other
+vcs expect. I would suggest having "git commit -n" replace "git status"
+if I hadn't done so already or if I dared to (I can't remember ;) ).
 
-> If the <name>/HEAD symref would be created for all remotes and would =
-get
-> updated, that would at least make the marker more meaningful, but I
+The softer approach was naming "shortstatus" what those people would
+expect for "status".
 
-It has been noted in the past that it should _not_ be automatically
-updated, since it is really about "what is the user's preference for th=
-e
-'most interesting' branch in this remote". And we don't want to
-overwrite some preference that they specified.
+The "git diff" based solution does almost everything, but back then it
+wasn't clear how to get at the untracked and ignored files. In fact,
+that would have the benefit that output from "git diff --name-status
+commitA commitB" is guaranteed to stay consistent with "git diff
+--name-status HEAD WORKTREE", "git diff --name-status INDEX WORKTREE"
+and the three-way diff between HEAD, INDEX and WORKTREE which
+shortstatus really is (WORKTREE meaning full wt with untrcaked/ignored
+files).
 
-So I think it makes sense to:
+"git ls-files" may do but has a different set of mode characters. I
+think that sums up what preceeded Junio's patch from October.
 
-  - if it doesn't exist, set it up based on the remote's HEAD. Clone
-    already does this, but "git remote add -f" should probably do it,
-    too. I'm not sure if every fetch should do it.
-
-  - give the user some nice interface (probably via "git remote") to
-    move the pointer around (right now, it is "git symbolic-ref
-    refs/remotes/$remote/HEAD refs/remotes/$remote/$branch").
-
-  - give the user some nice interface to re-fetch the remote HEAD and
-    update refs/remotes/$remote/HEAD with it. Probably as an option to
-    the "git remote" invocation above.
-
--Peff
+Michael
