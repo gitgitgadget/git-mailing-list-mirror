@@ -1,67 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
-Date: Tue, 10 Feb 2009 08:16:00 -0500
-Message-ID: <20090210131600.GD17305@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de> <200902100158.46884.bss@iguanasuicide.net>
+From: Jeremy White <jwhite@codeweavers.com>
+Subject: Re: RFC re Thunderbird + imap-send
+Date: Tue, 10 Feb 2009 07:23:16 -0600
+Message-ID: <49917FC4.3000807@codeweavers.com>
+References: <4990A4FF.6020404@codeweavers.com> <49915FB6.8010803@drmicha.warpmail.net> <49917208.6000807@beonex.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, spearce@spearce.org
-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-X-From: git-owner@vger.kernel.org Tue Feb 10 14:17:31 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Ben Bucksch <ben.bucksch.news@beonex.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 14:25:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWsUU-0000K8-RY
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 14:17:31 +0100
+	id 1LWsbp-0002o6-Gm
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 14:25:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753596AbZBJNQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 08:16:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752888AbZBJNQE
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 08:16:04 -0500
-Received: from peff.net ([208.65.91.99]:49893 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751860AbZBJNQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 08:16:03 -0500
-Received: (qmail 13743 invoked by uid 107); 10 Feb 2009 13:16:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Feb 2009 08:16:18 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Feb 2009 08:16:00 -0500
-Content-Disposition: inline
-In-Reply-To: <200902100158.46884.bss@iguanasuicide.net>
+	id S1754156AbZBJNXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 08:23:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754087AbZBJNXh
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 08:23:37 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:53098 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753896AbZBJNXh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 08:23:37 -0500
+Received: from jwhite-home.codeweavers.com ([209.240.253.22] helo=[10.0.0.5])
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <jwhite@codeweavers.com>)
+	id 1LWsaH-0003Q5-RL; Tue, 10 Feb 2009 07:23:35 -0600
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <49917208.6000807@beonex.com>
+X-Spam-Score: -3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109236>
 
-On Tue, Feb 10, 2009 at 01:58:41AM -0600, Boyd Stephen Smith Jr. wrote:
+Ben Bucksch wrote:
+> On 10.02.2009 12:06, Michael J Gruber wrote:
+>> For a typical text mail in Drafts I see lines like
+>> Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+>> Content-Transfer-Encoding: quoted-printable
+>> Any chance we could use that rather than invoke the HTML editor?
+>> We would need to shut off q-p and f-f *and* avoid automatic word wrap
+>> (or make sure patches don't have longer lines then TBs editor allows),
+>> the latter I don't know how to do.
+>>    
+> I'm not aware that existing headers would influence the send logic (in 
+> turning on/off qp or f=f or word wrap).
 
-> On Monday 09 February 2009 15:12:06 Johannes Schindelin wrote:
-> > So I think it would be a sane plan to do the following when a commit note
-> > is requested:
-> 
-> So, something like a Trie data structure?  I think that is a great way to 
-> store fixed-length strings from a limited alphabet with arbitrary data 
-> attached.
+I both looked at the Thunderbird code and experimented with a variety 
+of options and found no way to do this; only the charset seems to
+be picked up (and that may actually be a bug, judging by Ben's initial
+reaction :-/).
 
-I don't think a Trie quite makes sense here. We still have to look
-linearly through each git tree (an artifact of the tree implementation).
+Cheers,
 
-You could organize the tree into a deeper, more complex data structure
-than just a simple fan-out. But remember that traditional data
-structures are usually trying to save expensive comparisons, and
-following a pointer is inexpensive. In the case of git trees, though,
-following a pointer into a subtree is _very_ expensive, since you have
-to lookup and decompress the object.
-
-So what we do now is read the tree into an associative hash.
-You could replace the hash with a trie, but it is not really the
-performance-critical part here. The issue is that without fan-out you
-have to read the _whole_ tree into the hash. With a constant-sized
-fanout, you get to divide that work by a constant.
-
-Or did you mean something else entirely?
-
--Peff
+Jeremy
