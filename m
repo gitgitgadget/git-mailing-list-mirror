@@ -1,109 +1,153 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Thunderbird and patches (was Re: [PATCH v2] Enable setting attach
-     as the default in .gitconfig   for git-format-patch.)
-Date: Tue, 10 Feb 2009 11:07:05 +0100
-Message-ID: <499151C9.7090502@drmicha.warpmail.net>
-References: <498E50E2.8050309@codeweavers.com> <200902072310.12764.bss@iguanasuicide.net> <498F01C2.5080105@codeweavers.com> <alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de> <499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com> <alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de> <49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com> <49904DE7.2080205@codeweavers.com> <4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com> <qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil> <49907F75.2050100@beonex.com> <alpine.DEB.1.00.0902092013260.10279@pacific.mpi-cbg.de> <RD8dEuXN_TYvtiDHum-mdwL3m_eJP49xWrl9-YgiLfhOFN6weRXVhg@cipher.nrlssc.navy.mil> <alpine.DEB.1.00.0902092105230.10279@pacific.mpi-cbg.de>
+From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+Subject: Re: [RFC/PATCH] shortstatus v1
+Date: Tue, 10 Feb 2009 11:11:59 +0100
+Message-ID: <4ac8254d0902100211p6a52e040je10e11c4f79ea488@mail.gmail.com>
+References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com>
+	 <7vr627qd4p.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Ben Bucksch <ben.bucksch.news@beonex.com>,
-	Jeremy White <jwhite@codeweavers.com>,
-	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 10 11:08:43 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 11:13:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWpXm-00005T-CI
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 11:08:42 +0100
+	id 1LWpcS-0001XG-Ql
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 11:13:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752625AbZBJKHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 05:07:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752595AbZBJKHO
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 05:07:14 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:44545 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752445AbZBJKHN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Feb 2009 05:07:13 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 84DDA28FCBF;
-	Tue, 10 Feb 2009 05:07:11 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 10 Feb 2009 05:07:11 -0500
-X-Sasl-enc: P9LXgS2O4+TAuFPjg7G6CUXs3KxNxPuajW6hMkG13aU/ 1234260431
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 38445245E5;
-	Tue, 10 Feb 2009 05:07:10 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090209 Shredder/3.0b2pre
-In-Reply-To: <alpine.DEB.1.00.0902092105230.10279@pacific.mpi-cbg.de>
+	id S1752643AbZBJKMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 05:12:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752443AbZBJKME
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 05:12:04 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:57947 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752445AbZBJKMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 05:12:01 -0500
+Received: by bwz5 with SMTP id 5so2435486bwz.13
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 02:12:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=W7pzWVYW4+wNGiuTjBgr5vk8zTNgJY83t0yQQl4mRyI=;
+        b=xRZjKPiYKKw7AnKYTOkK+0gvxhjCCPysY7SSI10vR+8wdezjZb3ESfmKInW7S/x0Sl
+         iA2ZSob9VKcg813iOA9mlIPn2Wp0xBg5sCjTCWqLzb0Wq/LFIHRNCUFACXwvv10yPvJH
+         +SN21/uQjOp0E3huGU++ZfucmCAn2XBqEo8tw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=flu7mSTGUVhfV06RAnhctmG5PBGR7g3OhPyIeH5HZ68z4HJtEEqSpYI+64G840F9xG
+         NVtcbZjzPCL3NHPm7rWT75gJz8XZfYvScvsZd2x1U3NZ6p2Hdty1R0B+BP4MA11J4Fj4
+         oXmSmFcIgJ+SOXM1B7grzdcQbt4xn85S1FAkU=
+Received: by 10.223.107.20 with SMTP id z20mr1262fao.28.1234260719680; Tue, 10 
+	Feb 2009 02:11:59 -0800 (PST)
+In-Reply-To: <7vr627qd4p.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109193>
 
-Johannes Schindelin venit, vidit, dixit 09.02.2009 21:09:
-> Hi,
-> 
-> On Mon, 9 Feb 2009, Brandon Casey wrote:
-> 
->> Johannes Schindelin wrote:
->>> Hi,
->>>
->>> On Mon, 9 Feb 2009, Ben Bucksch wrote:
->>>
->>>> On 09.02.2009 19:54, Brandon Casey wrote:
->>>>> I will follow up with an example patch which has the control 
->>>>> characters in it.
->>> You can use a mailer such as Alpine, which has no problems with patches 
->>> like that whatsoever.
->> Yes, that's my work-around.  Though it's pine, we're not modern enough to
->> have alpine.
-> 
-> BTW it seems that a few people misunderstood my comments.
-> 
-> Just to clarify: I am happy if a lot of non-technical people use 
-> Thunderbird.  I mean, I am happy for them.
-> 
-> If it is too complicated for Thunderbird to accomodate the workflow 
-> required on our mailing list, however, I will have to recommend another 
-> tool to the people who want to contribute to Git.
-> 
-> I would not recommend emacs to a vim user, either.  Or vice versa.
-> 
-> In other words: use the right tool.  Or, as somebody put it at the 
-> GitTogether: to a hammer, everything looks like a nail.
+On Tue, Feb 10, 2009 at 2:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Tuncer Ayaz <tuncer.ayaz@gmail.com> writes:
+>
+>> Adding git 'shortstatus --mini' to PS1 is not noticeable or 1sec
+>> maximum in my tree. As a worst case it takes 10secs in a clone
+>> of WebKit.git.
 
-It just seems that the workflow "required" here on the git list is the
-way it is because it caters for differently abled MUAs which can't
-handle certain standards (inline disposition) efficiently. Mutt
-obviously can, so it's not a matter of John Doe's MUA versus geeky MUAs.
+Junio, if I leave out my --mini experiment would you be interested
+in merging shortstatus without any additions except maybe
+removing the index_score? Is it useful enough in your eyes? If yes
+I will resubmit it and decouple the --mini case completely as
+possible future work.
 
-Thunderbird is differently abled also, of course, by way of definition,
-but also because there's no easy way to directly feed an e-mail (or a
-bunch of them) into a shell command such as git-am, e.g. So it certainly
-won't be a maintainer's MUA.
+> Frankly, I think having to spend one second to add only one or two bits to
+> PS1 is simply spending one second too much.
 
-When I joined the git community I adjusted my personal workflow, which
-required posting by e-mail rather than nntp (gmane) and avoiding the
-natural way (attachments) for patch submission, even avoiding my main
-standards compliant MUA; rather than arguing for a change to the better,
-more standard conforming approach, and telling people here to use MUAs
-which can deal with it, i.e.: use the right tool. I know things won't
-change here, just as certain people won't either.
+ACK. it will get worse with time.
 
-But please don't take the status quo here as something setting global
-standards. And don't take my conformance with the requirements here as
-approval.
+>> diff --git a/builtin-commit.c b/builtin-commit.c
+>> index d6a3a62..9267d26 100644
+>> --- a/builtin-commit.c
+>> +++ b/builtin-commit.c
+>> @@ -821,6 +827,88 @@ static int parse_and_validate_options(int argc, const char *argv[],
+>>       return argc;
+>>  }
+>>
+>> +int cmd_shortstatus(int argc, const char **argv, const char *prefix)
+>> +{
+>> +     struct wt_status s;
+>> +     int i;
+>> +     int c, a, u;
+>> +
+>> +     c = a = u = 0;
+>> +
+>> +     argc = parse_and_validate_options(argc, argv, builtin_shortstatus_usage, prefix);
+>> +     read_cache();
+>> +     refresh_cache(REFRESH_QUIET);
+>> +     wt_status_prepare(&s);
+>> +     wt_status_collect_changes(&s);
+>> +     if (mini) {
+>> +             for (i = 0; i < s.change.nr; i++) {
+>> +                     struct wt_status_change_data *d;
+>> +                     struct string_list_item *it;
+>> +
+>> +                     it = &(s.change.items[i]);
+>> +                     d = it->util;
+>> +                     switch (d->index_status) {
+>> +                             case DIFF_STATUS_ADDED:
+>> +                                     a = 1;
+>> +                                     break;
+>> +                             case 0:
+>> +                             case DIFF_STATUS_COPIED:
+>> +                             case DIFF_STATUS_DELETED:
+>> +                             case DIFF_STATUS_MODIFIED:
+>> +                             case DIFF_STATUS_RENAMED:
+>> +                             case DIFF_STATUS_TYPE_CHANGED:
+>> +                                     c = 1;
+>> +                                     break;
+>
+> If you at the end discard information by squashing renamed, copied,
+> deleted and modified into a single "changed" category, I do not think you
+> would want wt_status_collect_changes() to spend the cost of rename
+> detection in the first place.  Sure, you can tell between "git mv old new"
+> and "git add new", because you won't show "+" for "new" if you run rename
+> detection, but that is about the only thing I think you are getting.
 
-Ben has shown remarkable willingness in helping get around the
-limitations of sending out patch files plainly included in e-mails, when
-using TB, so let's please focus on making that successful and keep the
-flame(r)s off this thread. Everyone will benefit, because it will keep
-the number of misformed patches (i.e. not matching local requirements) low.
+actually I can leave out all but case 0 to get the current behavior.
+I am not sure but (presumably) have the suspicion from what I
+have read that these extra cases are irrelevant in this case.
+I may err.
 
-Michael
+> Is it worth extra 1 second (or 10 seconds)?
+
+1 second is noticeable and therefore bad but it is a definite
+improvement compared to what I had before with
+'git status|grep' calls. it is slow for PS1, yes.
+
+> What are you really trying to achieve?  Do you want to see if you have any
+> change to the index since you checked out?  Do you want to further tell
+> the user that the work tree has more changes that are not staged yet
+> (which --mini does not seem to do)?
+>
+> Do you really need more than "diff-index --cached --exit-code" in your
+> $PS1 code, and so why?  Does the added feature your "shortstatus --mini"
+> offers over "diff-index --cached --exit-code" justify the latency penalty
+> to the user?
+>
+
+What I and others need - based on the fact that the PS1
+enhancement was inspired by someone else's PS1 - is not
+diff-index --cached. It should include changes in the
+index plus those not.
+The feature is there to display that a repo is dirty and if
+possible in an instant way also display that there are not
+only untrackeds but also modifications and/or additions not
+yet committed with separate symbols (+,*,?).
+If this is not currently implementable fast enough let's forget
+about it for now and tackle it once the future unfolds and shows
+us a better path or someone comes up with a bright idea :).
