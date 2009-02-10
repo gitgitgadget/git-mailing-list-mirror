@@ -1,63 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] New command: 'git snapshot'.
-Date: Tue, 10 Feb 2009 15:08:31 -0800
-Message-ID: <7vy6wdkhzk.fsf@gitster.siamese.dyndns.org>
-References: <38cfbb550902091054u78f2e706u67752b4dc9de6c3b@mail.gmail.com>
- <etsYQzEDjdk-_NxhvO3i6EyShR6eZ202GBdQx7ZZpPHH5iNfWiuV6g@cipher.nrlssc.navy.mil> <38cfbb550902101240x1202c592ra7eb01d66e22da43@mail.gmail.com> <20090210230054.GD26954@coredump.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: fact-import: failed to apply delta
+Date: Tue, 10 Feb 2009 15:09:50 -0800
+Message-ID: <20090210230950.GX30949@spearce.org>
+References: <alpine.LNX.1.00.0902101226580.19665@iabervon.org> <20090210191220.GT30949@spearce.org> <alpine.LNX.1.00.0902101427300.19665@iabervon.org> <20090210201203.GU30949@spearce.org> <alpine.LNX.1.00.0902101520240.19665@iabervon.org> <20090210212539.GV30949@spearce.org> <alpine.LNX.1.00.0902101628140.19665@iabervon.org> <20090210213612.GW30949@spearce.org> <7vprhqkjrr.fsf@gitster.siamese.dyndns.org> <7vfxillxiu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Fabio Augusto Dal Castel <fdcastel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 11 00:10:21 2009
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 00:11:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX1k2-0008SW-Hh
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 00:10:11 +0100
+	id 1LX1l8-0000QR-EO
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 00:11:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756101AbZBJXIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 18:08:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756005AbZBJXIn
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 18:08:43 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59790 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755754AbZBJXIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 18:08:42 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D3FE22ADBB;
-	Tue, 10 Feb 2009 18:08:39 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 91DB72AD81; Tue,
- 10 Feb 2009 18:08:33 -0500 (EST)
-In-Reply-To: <20090210230054.GD26954@coredump.intra.peff.net> (Jeff King's
- message of "Tue, 10 Feb 2009 18:00:54 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C0F07594-F7C7-11DD-92FF-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1756060AbZBJXJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 18:09:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755909AbZBJXJv
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 18:09:51 -0500
+Received: from george.spearce.org ([209.20.77.23]:34357 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755593AbZBJXJu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 18:09:50 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 2035B38210; Tue, 10 Feb 2009 23:09:50 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7vfxillxiu.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109337>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> On second thought, I think fast-import is the only program that plays
+> funny games of feeding a packed_git that is *not* part of the real list of
+> packed_git installed in the system to unpack_entry(), so probably your
+> patch is a better idea.
 
-> On Tue, Feb 10, 2009 at 06:40:34PM -0200, Fabio Augusto Dal Castel wrote:
->
->> > If stashes were per-branch, then it would probably
->> > be pretty easy to build this snapshot tool on top of it.
->> 
->> Or the other way around <g>.
->> 
->> Remember that 'stash' is actually TWO commands in one:
->> * Save current state
->> * Reset to HEAD
->> 
->> My primary reason to use snapshots is to AVOID the second step.
->
-> Doesn't that argue for "git stash --no-reset" or similar instead of a
-> separate command?
+Right, that was my thought.
+ 
+> We really need a better comment in the codepath from gfi_unpack_entry() to
+> unpack_entry() that there is a very unusual thing going on.
 
-How is it different from "git stash create"?
+That whole code is hairy.  It already has more comments than code.
+What more can I really say here other than maybe this?
+
+diff --git a/fast-import.c b/fast-import.c
+index 03b13e0..7bfb563 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1204,6 +1204,12 @@ static void *gfi_unpack_entry(
+ 		 */
+ 		p->pack_size = pack_size + 20;
+ 	}
++	/* DANGER, WILL ROBINSON DANGER !!!!
++	 *
++	 * unpack_entry() wasn't meant to be called the way we are
++	 * about to call it right here.  Be very careful, any sort
++	 * of assumption is probably wrong.
++	 */
+ 	return unpack_entry(p, oe->offset, &type, sizep);
+ }
+ 
+ 
+> By the way, strictly speaking, you need to release the delta_base_cache
+> entries that is based on pack_data and nothing else, no?
+
+Right.
+
+But the hiccup of a checkpoint in terms of overall performance is
+such a huge amount (due to needing to re-read the entire pack to
+compute its final checksum) that the loss of the delta_base_cache
+is pretty much a drop in the bucket here.
+
+I can go back and add in a struct packed_git* and filter to only
+those entries in the cache, but it doesn't seem worth it to me.
+
+-- 
+Shawn.
