@@ -1,58 +1,68 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: RFH: spawning pager takes long time when when unconnected from
- network
-Date: Tue, 10 Feb 2009 11:24:35 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902101124160.10279@pacific.mpi-cbg.de>
-References: <loom.20090210T015515-886@post.gmane.org> <4991337B.2010102@viscovery.net> <loom.20090210T085859-630@post.gmane.org>
+Subject: Re: fact-import: failed to apply delta
+Date: Tue, 10 Feb 2009 11:28:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902101126040.10279@pacific.mpi-cbg.de>
+References: <alpine.LNX.1.00.0902092218050.19665@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Eric Raible <raible+git@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 11:25:21 2009
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Feb 10 11:29:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWpnq-0004v7-Hz
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 11:25:19 +0100
+	id 1LWprf-00063B-8l
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 11:29:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752738AbZBJKXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 05:23:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752433AbZBJKXv
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 05:23:51 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42888 "HELO mail.gmx.net"
+	id S1752643AbZBJK1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 05:27:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752451AbZBJK1s
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 05:27:48 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37152 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751252AbZBJKXv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 05:23:51 -0500
-Received: (qmail invoked by alias); 10 Feb 2009 10:23:49 -0000
+	id S1752433AbZBJK1r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 05:27:47 -0500
+Received: (qmail invoked by alias); 10 Feb 2009 10:27:45 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp037) with SMTP; 10 Feb 2009 11:23:49 +0100
+  by mail.gmx.net (mp062) with SMTP; 10 Feb 2009 11:27:45 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18XR8If2KwXv0okijLqN5ep5k9Rq3nBw7sDRXgICo
-	Ns4tip15cMmS/t
+X-Provags-ID: V01U2FsdGVkX18B39lMtKMBM7t/I8NpuJdjmNJT03/9+lQz/ht/Xo
+	INlsQh3PggyzQH
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <loom.20090210T085859-630@post.gmane.org>
+In-Reply-To: <alpine.LNX.1.00.0902092218050.19665@iabervon.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109197>
 
 Hi,
 
-On Tue, 10 Feb 2009, Eric Raible wrote:
+[nice typo in the subject BTW]
 
-> Johannes Sixt <j.sixt <at> viscovery.net> writes:
-> 
-> > Do you have a directory in your PATH that points to a disconnected network
-> > drive? Do you use the default pager settings, or did you customize the pager?
-> 
-> All components in my path are local.
+On Mon, 9 Feb 2009, Daniel Barkalow wrote:
 
-Could you run it with GIT_TRACE=<file>?
+> I'm getting a "fatal: failed to apply delta" from fast-import. I'm using 
+> a lot of checkpoints, and I haven't had it happen without making 
+> progress, so I was eventually able to import what I was importing (bunch 
+> of stuff I can't distribute, imported from perforce with the latest 
+> version of my p4 importer that I'm still working on). Also, everything 
+> that was saved by the checkpoints was valid and correct (at least after 
+> the fact).
+> 
+> I'm going to see if it's reproducable, and, if so, if I can get a test 
+> case that I can distribute, but I wanted to post to see if anyone had 
+> any special debugging advice for this error message and program 
+> combination.
+
+I see three likely candidates: two in index-pack.c and one in sha1_file.c.  
+My advice: instrument the code (IOW litter the code with debug output that 
+tells you where it did what), and then run it on the same test case you 
+had the problems.
 
 Ciao,
 Dscho
