@@ -1,167 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make repack less likely to corrupt repository
-Date: Tue, 10 Feb 2009 12:16:31 -0800
-Message-ID: <7vd4dqm4io.fsf@gitster.siamese.dyndns.org>
-References: <1234140299-29785-1-git-send-email-robin.rosenberg@dewire.com>
- <200902100807.40417.robin.rosenberg@dewire.com>
- <7viqninuzv.fsf@gitster.siamese.dyndns.org>
- <200902101758.00062.robin.rosenberg@dewire.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	spearce@spearce.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 21:18:13 2009
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: [PATCH] Make 'remote show' distinguish between merged and rebased remote branches
+Date: Tue, 10 Feb 2009 12:08:58 -0500
+Message-ID: <20090210202046.8EBEC3360AC@rincewind>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 10 21:22:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWz3b-0000pO-7R
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 21:18:11 +0100
+	id 1LWz7c-0002OH-QQ
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 21:22:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754596AbZBJUQn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 15:16:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754490AbZBJUQm
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 15:16:42 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52578 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753344AbZBJUQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 15:16:41 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B834398540;
-	Tue, 10 Feb 2009 15:16:39 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ACDA09853C; Tue,
- 10 Feb 2009 15:16:33 -0500 (EST)
-In-Reply-To: <200902101758.00062.robin.rosenberg@dewire.com> (Robin
- Rosenberg's message of "Tue, 10 Feb 2009 17:57:59 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B9AAE11A-F7AF-11DD-832D-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753188AbZBJUUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 15:20:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753143AbZBJUUy
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 15:20:54 -0500
+Received: from smtp242.iad.emailsrvr.com ([207.97.245.242]:57641 "EHLO
+	smtp242.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752341AbZBJUUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 15:20:53 -0500
+Received: from relay14.relay.iad.mlsrvr.com (localhost [127.0.0.1])
+	by relay14.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 21DF12368E5
+	for <git@vger.kernel.org>; Tue, 10 Feb 2009 15:20:50 -0500 (EST)
+Received: by relay14.relay.iad.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 9B5E22368F2
+	for <git@vger.kernel.org>; Tue, 10 Feb 2009 15:20:49 -0500 (EST)
+Received: by rincewind (Postfix, from userid 1000)
+	id 8EBEC3360AC; Tue, 10 Feb 2009 15:20:46 -0500 (EST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109301>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> writes:
+Prints "rebased" instead of "merged" if branch.<name>.rebase is true.
 
->> I was not talking about any loss.  The result would be a funny mixture of
->> permutations of {old-,}pack-*.{pack,idx} the user needs to match up after
->
-> We don't leave old-files around unless we go very very wrong and only in
-> that case would be leave "old"-files for one pack around and only if gc wants
-> to replace a pack with the same name. That would not be fatal and the
-> user can continue repacking to get rid of the redundant stuff once the cause
-> of them problem is fixed. 
+Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
+---
 
-You can succeed for the first name and then fail for the second name, for
-example, and can end up with old-pack-* and pack-* with the same name.  I
-found that potentially confusing.  Since you are trying to improve the
-area, it would be nicer to make it less prone to fail and easier to
-recover.
+I'd like to be able to tell if my "git pull" is going to merge or rebase...
 
-Here is another attempt to rewrite it, which is closer to what you are
-doing in your patch, but hopefully easier to understand what is going on
-and more atomic.
+ builtin-remote.c  |   13 ++++++++++---
+ t/t5505-remote.sh |    5 +++++
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
-This is not the "prepare objects/new-pack/ and if we manage to create it
-into a good shape replace objects/pack/ with it" approach that I suggested
-earlier, though.  That would be a lot more atomic.
-
- git-repack.sh |   78 ++++++++++++++++++++++++++++++++++++++++++--------------
- 1 files changed, 58 insertions(+), 20 deletions(-)
-
-diff --git a/git-repack.sh b/git-repack.sh
-index 458a497..1e38559 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -88,30 +88,68 @@ if [ -z "$names" ]; then
- 		echo Nothing new to pack.
- 	fi
- fi
--for name in $names ; do
--	fullbases="$fullbases pack-$name"
--	chmod a-w "$PACKTMP-$name.pack"
--	chmod a-w "$PACKTMP-$name.idx"
--	mkdir -p "$PACKDIR" || exit
+diff --git a/builtin-remote.c b/builtin-remote.c
+index abc8dd8..ac3a88e 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -145,6 +145,7 @@ static int add(int argc, const char **argv)
+ struct branch_info {
+ 	char *remote;
+ 	struct string_list merge;
++	int rebase;
+ };
  
-+# Ok we have prepared all new packfiles.
-+mkdir -p "$PACKDIR" || exit
-+
-+# First see if there are packs of the same name and if so
-+# if we can move them out of the way (this can happen if we
-+# repacked immediately after packing fully.
-+rollback=
-+failed=
-+for name in $names
-+do
- 	for sfx in pack idx
- 	do
--		if test -f "$PACKDIR/pack-$name.$sfx"
--		then
--			mv -f "$PACKDIR/pack-$name.$sfx" \
--				"$PACKDIR/old-pack-$name.$sfx"
--		fi
--	done &&
-+		file=pack-$name.$sfx
-+		test -f "$PACKDIR/$file" || continue
-+		rm -f "$PACKDIR/old-$file" &&
-+		mv "$PACKDIR/$file" "$PACKDIR/old-$file" || {
-+			failed=t
-+			break
-+		}
-+		rollback="$rollback $file"
-+	done
-+	test -z "$failed" || break
-+done
-+
-+# If renaming failed for any of them, roll the ones we have
-+# already renamed back to their original names.
-+if test -n "$failed"
-+then
-+	rollback_failure=
-+	for file in $rollback
-+	do
-+		mv "$PACKDIR/old-$file" "$PACKDIR/$file" ||
-+		rollback_failure="$rollback_failure $file"
-+	done
-+	if test -n "$rollback_failure"
-+	then
-+		echo >&2 "WARNING: Some packs in use have been renamed by"
-+		echo >&2 "WARNING: prefixing old- to their name, in order to"
-+		echo >&2 "WARNING: replace them with the new version of the"
-+		echo >&2 "WARNING: file.  But the operation failed, and"
-+		echo >&2 "WARNING: attempt to rename them back to their"
-+		echo >&2 "WARNING: original names also failed."
-+		echo >&2 "WARNING: Please rename them in $PACKDIR manually:"
-+		for file in $rollback_failure
-+		do
-+			echo >&2 "WARNING:   old-$file -> $file"
-+		done
-+	fi
-+	exit 1
-+fi
-+
-+# Now the ones with the same name are out of the way...
-+fullbases=
-+for name in $names
-+do
-+	fullbases="$fullbases pack-$name"
-+	chmod a-w "$PACKTMP-$name.pack"
-+	chmod a-w "$PACKTMP-$name.idx"
- 	mv -f "$PACKTMP-$name.pack" "$PACKDIR/pack-$name.pack" &&
--	mv -f "$PACKTMP-$name.idx"  "$PACKDIR/pack-$name.idx" &&
--	test -f "$PACKDIR/pack-$name.pack" &&
--	test -f "$PACKDIR/pack-$name.idx" || {
--		echo >&2 "Couldn't replace the existing pack with updated one."
--		echo >&2 "The original set of packs have been saved as"
--		echo >&2 "old-pack-$name.{pack,idx} in $PACKDIR."
--		exit 1
--	}
--	rm -f "$PACKDIR/old-pack-$name.pack" "$PACKDIR/old-pack-$name.idx"
-+	mv -f "$PACKTMP-$name.idx"  "$PACKDIR/pack-$name.idx" ||
-+	exit
- done
+ static struct string_list branch_list;
+@@ -164,7 +165,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+ 		char *name;
+ 		struct string_list_item *item;
+ 		struct branch_info *info;
+-		enum { REMOTE, MERGE } type;
++		enum { REMOTE, MERGE, REBASE } type;
  
- if test "$remove_redundant" = t
+ 		key += 7;
+ 		if (!postfixcmp(key, ".remote")) {
+@@ -173,6 +174,9 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+ 		} else if (!postfixcmp(key, ".merge")) {
+ 			name = xstrndup(key, strlen(key) - 6);
+ 			type = MERGE;
++		} else if (!postfixcmp(key, ".rebase")) {
++			name = xstrndup(key, strlen(key) - 7);
++			type = REBASE;
+ 		} else
+ 			return 0;
+ 
+@@ -185,7 +189,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+ 			if (info->remote)
+ 				warning("more than one branch.%s", key);
+ 			info->remote = xstrdup(value);
+-		} else {
++		} else if (type == MERGE) {
+ 			char *space = strchr(value, ' ');
+ 			value = abbrev_branch(value);
+ 			while (space) {
+@@ -196,6 +200,8 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+ 				space = strchr(value, ' ');
+ 			}
+ 			string_list_append(xstrdup(value), &info->merge);
++		} else {
++			info->rebase = 1;
+ 		}
+ 	}
+ 	return 0;
+@@ -678,9 +684,10 @@ static int show(int argc, const char **argv)
+ 
+ 			if (!info->merge.nr || strcmp(*argv, info->remote))
+ 				continue;
+-			printf("  Remote branch%s merged with 'git pull' "
++			printf("  Remote branch%s %s with 'git pull' "
+ 				"while on branch %s\n   ",
+ 				info->merge.nr > 1 ? "es" : "",
++				info->rebase ? "rebased" : "merged",
+ 				branch->string);
+ 			for (j = 0; j < info->merge.nr; j++)
+ 				printf(" %s", info->merge.items[j].string);
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 1f59960..be0316a 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -112,6 +112,8 @@ cat > test/expect << EOF
+   URL: $(pwd)/one
+   Remote branch merged with 'git pull' while on branch master
+     master
++  Remote branch rebased with 'git pull' while on branch rebaser
++    side
+   New remote branch (next fetch will store in remotes/origin)
+     master
+   Tracked remote branches
+@@ -136,7 +138,10 @@ test_expect_success 'show' '
+ 		refs/heads/master:refs/heads/upstream &&
+ 	 git config --add remote.origin.push \
+ 		+refs/tags/lastbackup &&
++	 git branch --track rebaser origin/side &&
++	 git config --add branch.rebaser.rebase true &&
+ 	 git remote show origin > output &&
++	 git branch -D rebaser &&
+ 	 test_cmp expect output)
+ '
+ 
+-- 
+1.6.1.2.390.gba743
