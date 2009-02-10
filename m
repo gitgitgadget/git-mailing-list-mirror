@@ -1,74 +1,108 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Enable setting attach as the default in .gitconfig
- for git-format-patch.
-Date: Mon, 09 Feb 2009 17:41:46 -0800
-Message-ID: <7v3aenrrtx.fsf@gitster.siamese.dyndns.org>
-References: <498E50E2.8050309@codeweavers.com>
+Subject: Re: [RFC/PATCH] shortstatus v1
+Date: Mon, 09 Feb 2009 17:44:38 -0800
+Message-ID: <7vr627qd4p.fsf@gitster.siamese.dyndns.org>
+References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeremy White <jwhite@codeweavers.com>
-X-From: git-owner@vger.kernel.org Tue Feb 10 02:43:23 2009
+To: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 10 02:46:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LWhei-0000PQ-VJ
-	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 02:43:21 +0100
+	id 1LWhhU-0000wF-Df
+	for gcvg-git-2@gmane.org; Tue, 10 Feb 2009 02:46:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752689AbZBJBlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Feb 2009 20:41:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbZBJBlx
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 20:41:53 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64376 "EHLO
+	id S1752721AbZBJBor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Feb 2009 20:44:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752645AbZBJBop
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Feb 2009 20:44:45 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47505 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751661AbZBJBlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Feb 2009 20:41:52 -0500
+	with ESMTP id S1752575AbZBJBop (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Feb 2009 20:44:45 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5669D2ACD2;
-	Mon,  9 Feb 2009 20:41:51 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3A04F9878C;
+	Mon,  9 Feb 2009 20:44:44 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 907032ACCA; Mon, 
- 9 Feb 2009 20:41:48 -0500 (EST)
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F0AF39878B; Mon,
+  9 Feb 2009 20:44:40 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FD141CBA-F713-11DD-BDD6-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 641F0258-F714-11DD-83AC-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109174>
 
-Jeremy White <jwhite@codeweavers.com> writes:
+Tuncer Ayaz <tuncer.ayaz@gmail.com> writes:
 
-> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> index 11a7d77..2e8e94e 100644
-> --- a/Documentation/git-format-patch.txt
-> +++ b/Documentation/git-format-patch.txt
-> @@ -174,7 +174,8 @@ CONFIGURATION
->  -------------
->  You can specify extra mail header lines to be added to each message
->  in the repository configuration, new defaults for the subject prefix
-> -and file suffix, and number patches when outputting more than one.
-> +and file suffix, control attachements, and number patches when outputting
-> +more than one.
+> Adding git 'shortstatus --mini' to PS1 is not noticeable or 1sec
+> maximum in my tree. As a worst case it takes 10secs in a clone
+> of WebKit.git.
+
+Frankly, I think having to spend one second to add only one or two bits to
+PS1 is simply spending one second too much.
+
+> diff --git a/builtin-commit.c b/builtin-commit.c
+> index d6a3a62..9267d26 100644
+> --- a/builtin-commit.c
+> +++ b/builtin-commit.c
+> @@ -821,6 +827,88 @@ static int parse_and_validate_options(int argc, const char *argv[],
+>  	return argc;
+>  }
 >  
->  ------------
->  [format]
-> @@ -183,6 +184,7 @@ and file suffix, and number patches when outputting more than one.
->  	suffix = .txt
->  	numbered = auto
->  	cc = <email>
-> +	attach [ = mime-boundary-string ]
->  ------------
+> +int cmd_shortstatus(int argc, const char **argv, const char *prefix)
+> +{
+> +	struct wt_status s;
+> +	int i;
+> +	int c, a, u;
+> +
+> +	c = a = u = 0;
+> +
+> +	argc = parse_and_validate_options(argc, argv, builtin_shortstatus_usage, prefix);
+> +	read_cache();
+> +	refresh_cache(REFRESH_QUIET);
+> +	wt_status_prepare(&s);
+> +	wt_status_collect_changes(&s);
+> +	if (mini) {
+> +		for (i = 0; i < s.change.nr; i++) {
+> +			struct wt_status_change_data *d;
+> +			struct string_list_item *it;
+> +
+> +			it = &(s.change.items[i]);
+> +			d = it->util;
+> +			switch (d->index_status) {
+> +				case DIFF_STATUS_ADDED:
+> +					a = 1;
+> +					break;
+> +				case 0:
+> +				case DIFF_STATUS_COPIED:
+> +				case DIFF_STATUS_DELETED:
+> +				case DIFF_STATUS_MODIFIED:
+> +				case DIFF_STATUS_RENAMED:
+> +				case DIFF_STATUS_TYPE_CHANGED:
+> +					c = 1;
+> +					break;
 
-Once you added this configuration, if you ever wanted to defeat it for a
-single invocation, how would you do so?  Edit the configuration file
-again?
+If you at the end discard information by squashing renamed, copied,
+deleted and modified into a single "changed" category, I do not think you
+would want wt_status_collect_changes() to spend the cost of rename
+detection in the first place.  Sure, you can tell between "git mv old new"
+and "git add new", because you won't show "+" for "new" if you run rename
+detection, but that is about the only thing I think you are getting.
 
-Not that I am objecting to the patch, as I am unlikely to have such a
-configuration, but are there people who need to send attachment sometimes
-but not other times?  They can say --attach from the command line without
-adding the configuraiton if they send their patch non-attached more often
-than as an attachment, but if they most of the time need to attach but
-sometimes need to send in-line, they do not have an easy way to do so.
+Is it worth extra 1 second (or 10 seconds)?
+
+What are you really trying to achieve?  Do you want to see if you have any
+change to the index since you checked out?  Do you want to further tell
+the user that the work tree has more changes that are not staged yet
+(which --mini does not seem to do)?
+
+Do you really need more than "diff-index --cached --exit-code" in your
+$PS1 code, and so why?  Does the added feature your "shortstatus --mini"
+offers over "diff-index --cached --exit-code" justify the latency penalty
+to the user?
