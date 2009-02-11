@@ -1,127 +1,92 @@
-From: Stefan Karpinski <stefan.karpinski@gmail.com>
-Subject: [RFC] post-commit hook to "fix" patches
-Date: Wed, 11 Feb 2009 01:48:31 -0800
-Message-ID: <d4bc1a2a0902110148u4e13d77cs3dde64d27003e58c@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Disable filemode rebase tests in t3400-rebase.sh if no 
+	filesystem mode support
+Date: Wed, 11 Feb 2009 10:51:30 +0100
+Message-ID: <81b0412b0902110151x35fbbb4esb9efefae2e1fe90a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 11 10:50:05 2009
+Content-Type: multipart/mixed; boundary=0015174c17a85bf6aa0462a18cc9
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 11 10:54:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXBjF-0000yl-Hs
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 10:50:02 +0100
+	id 1LXBmc-0002Nv-Cz
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 10:53:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754650AbZBKJsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 04:48:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbZBKJsd
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 04:48:33 -0500
-Received: from wa-out-1112.google.com ([209.85.146.177]:27105 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752501AbZBKJsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 04:48:32 -0500
-Received: by wa-out-1112.google.com with SMTP id v33so60832wah.21
-        for <git@vger.kernel.org>; Wed, 11 Feb 2009 01:48:31 -0800 (PST)
+	id S1756551AbZBKJve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 04:51:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756540AbZBKJve
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 04:51:34 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:28686 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756516AbZBKJvc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 04:51:32 -0500
+Received: by nf-out-0910.google.com with SMTP id d21so9309nfb.21
+        for <git@vger.kernel.org>; Wed, 11 Feb 2009 01:51:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=/53pIv8TTLwDy+iouBaO0L2sYVMpVBKlPxz6ep//ND0=;
-        b=wn6rj6Ut/Fc/IwG1ITnSJmNZip6Kei5TroJDq+CFlOx1mlHMzukNxCCZ6uZ466xnYH
-         oyjVTM43x6eeyrhOAd55HDDt8Dk83pHR91tsJ6KMFHUAbb4b++Qfek1xw8npkKc2saHg
-         JVf80HdHyNCoDHwS6xVs8I6p3Jxt5/RJVEq58=
+         :from:to:cc:content-type;
+        bh=nVMZ4FxgBvjq+F2btso1op0ibIiDOqBGyWyehEqHtWk=;
+        b=qjNLGcUoKtDd3BY6AebkeaviL7ZlNFYzPf3Es4l6TyI0lAJppuVp8GFrXOguH3A1hJ
+         t51u0p9bvuo15NRxZHBj/iQme639LK2nPDugcgLWMuDNDCBeJozkLGRrOpFoRrBleDjv
+         i47QiNAXTXUpqiAddraD3kaxYTGml+m4hokBk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=VDkgfgXca4vReDe9I3UDBCf6RFS/6H2UpObrRh5RFA8sYTgR3sRfyCIQCD2eaOkAIy
-         5tWn2YJhSpkyGvZOl2i/esNvaPhab94U8f8RfdbK7oxdEL5+6MnJJ/E6sBvnSqQx101e
-         sYWARD9WrWIC0nSDJjzFMzhJrh/n/e+KkADIE=
-Received: by 10.114.95.12 with SMTP id s12mr5442776wab.223.1234345711800; Wed, 
-	11 Feb 2009 01:48:31 -0800 (PST)
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=Kdyt2qjrw6nwGtq6zzNt9sLJpmmAtnFIvS5zr5uj/m6o+hXc5RSJ6pAnbQm2N8WbNQ
+         +ytjOkqfV8SGykcLhNuq5jk71CKqmsbJG/u+YC53kqdB55OVqZDmIWSg9wbnzXXMrOA/
+         pfCA8An6rTxjg8qz6lg2JoLvtvOfMqxHBxsx4=
+Received: by 10.210.35.17 with SMTP id i17mr67464ebi.165.1234345890936; Wed, 
+	11 Feb 2009 01:51:30 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109393>
 
-I just wrote the following post-commit hook that I thought others
-might find interesting or useful. It's a non-intrusive, efficient and
-IMO elegant solution to the problem that I was trying to solve here:
+--0015174c17a85bf6aa0462a18cc9
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-  http://thread.gmane.org/gmane.comp.version-control.git/98228
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-The post-commit hook calls a named "git-fix-patch", presumed to be in
-the path somewhere, which munges a git diff to enforce whatever
-stylistic rules a project might have (typically whitespace)---but only
-in added lines. The hook creates a new commit with the same effect as
-the HEAD commit, but without the added style errors.
+I'm honestly sorry for my contributions. They seem to be exclusively
+in the "make Git work in Windows" area.  Depressing.
 
-That part's easy. What's much more interesting is making sure that the
-workspace is left essentially the way it was, but reflecting the
-changes wrought by the "enforcer." This involves generating reverse
-patches, fixing them up, and then applying the fixed up patch in
-reverse. I had to think about this for a long time (and draw a bunch
-of commutative diagrams) to grok that this was what needed to be done,
-but it seems to work quite nicely and generally.
+ t/t3400-rebase.sh |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-Here's the post-commit hook:
+--0015174c17a85bf6aa0462a18cc9
+Content-Type: application/octet-stream; 
+	name="0001-Disable-filemode-rebase-tests-in-t3400-rebase.sh-if-n.diff"
+Content-Disposition: attachment; 
+	filename="0001-Disable-filemode-rebase-tests-in-t3400-rebase.sh-if-n.diff"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fr1tkhqu0
 
-== >8 ==
-#!/bin/sh
-
-if test -z "$GIT_POST_COMMIT_HOOK_RUNNING"
-then
-  export GIT_POST_COMMIT_HOOK_RUNNING=true
-  x=$(git rev-parse HEAD)
-  git reset -q $x^
-  git diff -U0 $x^ $x | git-fix-patch | \
-    git apply --unidiff-zero --cached
-  if git diff --cached --quiet $x
-  then
-    git reset -q $x
-  else
-    echo "Automatically amending style errors..."
-    git commit -q -C $x
-    if git diff -R -U0 $x | git-fix-patch | \
-      git apply -R --unidiff-zero --cached --check 2>/dev/null
-    then
-      git diff -R -U0 $x | git-fix-patch | \
-        git apply -R --unidiff-zero --cached 2>/dev/null
-      git checkout-index -a -f
-      git reset -q
-    else
-      echo "WARNING: Failed patching uncommitted changes."
-    fi
-  fi
-  unset GIT_POST_COMMIT_HOOK_RUNNING
-fi
-== >8 ==
-
-I also wrote a sample git-fix-patch script that enforces the following
-coding styles:
-  1. no trailing whitespace
-  2. all leading indentation with tabs (assumed to have width $t, below)
-  3. indentation only with spaces after the initial indentation
-
-== >8 ==
-#!/usr/bin/env perl
-
-$t=4;
-
-while (<>) {
-  if (m{^\+}) {
-    s{\s*$}{\n};
-    while (s{\t}{" "x($t-((length($`)-1)%$t))}e) {0}
-    s{^\+((?: {$t})+)}{"+"."\t"x(length($1)/$t)}e;
-  }
-  print;
-}
-== >8 ==
-
-I'd be really interested in reactions or thoughts about this. Maybe it
-can even go into the collection of contrib scripts.
-
-Stefan
+RnJvbSBmNDFiOTliYmRmMTAyNDljMGRmY2I1NDU0NTcwOWYwYThkZDAwNDg0IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBXZWQsIDExIEZlYiAyMDA5IDEwOjQ1OjQzICswMTAwClN1YmplY3Q6IFtQQVRDSF0gRGlzYWJs
+ZSBmaWxlbW9kZSByZWJhc2UgdGVzdHMgaW4gdDM0MDAtcmViYXNlLnNoIGlmIG5vIGZpbGVzeXN0
+ZW0gbW9kZSBzdXBwb3J0CgpTaWduZWQtb2ZmLWJ5OiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21h
+aWwuY29tPgotLS0KIHQvdDM0MDAtcmViYXNlLnNoIHwgICAgNSArKysrKwogMSBmaWxlcyBjaGFu
+Z2VkLCA1IGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvdC90MzQw
+MC1yZWJhc2Uuc2ggYi90L3QzNDAwLXJlYmFzZS5zaAppbmRleCA4YzBjNWY1Li5hMjI5Mjc2IDEw
+MDc1NQotLS0gYS90L3QzNDAwLXJlYmFzZS5zaAorKysgYi90L3QzNDAwLXJlYmFzZS5zaApAQCAt
+NzAsNiArNzAsMTAgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyBcCiAgICAgIHRlc3QgMyA9ICQoZ2l0
+IHJldi1saXN0IG1hc3Rlci4uIHwgd2MgLWwpCiAnCiAKK2lmIHRlc3QgIiQoZ2l0IGNvbmZpZyAt
+LWJvb2wgY29yZS5maWxlbW9kZSkiID0gZmFsc2UKK3RoZW4KKyAgICBzYXkgJ3NraXBwaW5nIHJl
+YmFzZSBmaWxlbW9kZSB0ZXN0cyAobm8gZmlsZXN5c3RlbSBzdXBwb3J0KScKK2Vsc2UKIHRlc3Rf
+ZXhwZWN0X3N1Y2Nlc3MgJ3JlYmFzZSBhIHNpbmdsZSBtb2RlIGNoYW5nZScgJwogICAgICBnaXQg
+Y2hlY2tvdXQgbWFzdGVyICYmCiAgICAgIGVjaG8gMSA+IFggJiYKQEAgLTk0LDUgKzk4LDYgQEAg
+dGVzdF9leHBlY3Rfc3VjY2VzcyAnU2hvdyB2ZXJib3NlIGVycm9yIHdoZW4gSEVBRCBjb3VsZCBu
+b3QgYmUgZGV0YWNoZWQnICcKICAgICAgdGVzdF9tdXN0X2ZhaWwgZ2l0IHJlYmFzZSB0b3BpYyAy
+PiBvdXRwdXQuZXJyID4gb3V0cHV0Lm91dCAmJgogICAgICBncmVwICJVbnRyYWNrZWQgd29ya2lu
+ZyB0cmVlIGZpbGUgLkIuIHdvdWxkIGJlIG92ZXJ3cml0dGVuIiBvdXRwdXQuZXJyCiAnCitmaQog
+CiB0ZXN0X2RvbmUKLS0gCjEuNi4yLnJjMC4yOC5nMWYwZmU4Cgo=
+--0015174c17a85bf6aa0462a18cc9--
