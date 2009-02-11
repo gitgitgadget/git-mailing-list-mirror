@@ -1,67 +1,73 @@
-From: Ted Pavlic <ted@tedpavlic.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 2/3] completion: Change "if [...]" to "if test ..." to
  match git convention
-Date: Wed, 11 Feb 2009 11:36:08 -0500
-Message-ID: <4992FE78.6000206@tedpavlic.com>
-References: <1234366634-17900-1-git-send-email-ted@tedpavlic.com> <1234366634-17900-2-git-send-email-ted@tedpavlic.com> <1234366634-17900-3-git-send-email-ted@tedpavlic.com> <20090211162432.GF30949@spearce.org>
+Date: Wed, 11 Feb 2009 08:46:01 -0800
+Message-ID: <7vwsbwgbw6.fsf@gitster.siamese.dyndns.org>
+References: <1234366634-17900-1-git-send-email-ted@tedpavlic.com>
+ <1234366634-17900-2-git-send-email-ted@tedpavlic.com>
+ <1234366634-17900-3-git-send-email-ted@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, gitster <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 11 17:37:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: spearce@spearce.org, git@vger.kernel.org
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 17:47:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXI5o-0002dB-Tm
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 17:37:45 +0100
+	id 1LXIFN-0007Wn-8r
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 17:47:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754884AbZBKQgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 11:36:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754404AbZBKQgR
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 11:36:17 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:49773 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754158AbZBKQgQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2009 11:36:16 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id BE2F280D8088;
-	Wed, 11 Feb 2009 11:29:45 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id o0pvdITBGpuV; Wed, 11 Feb 2009 11:29:45 -0500 (EST)
-Received: from tedbook.mshome.net (tedpc.ece.ohio-state.edu [164.107.164.122])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id A270E80D8036;
-	Wed, 11 Feb 2009 11:29:45 -0500 (EST)
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <20090211162432.GF30949@spearce.org>
+	id S1755081AbZBKQqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 11:46:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750760AbZBKQqL
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 11:46:11 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52445 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753807AbZBKQqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 11:46:10 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7EF8C9855D;
+	Wed, 11 Feb 2009 11:46:07 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2613A9855A; Wed,
+ 11 Feb 2009 11:46:02 -0500 (EST)
+In-Reply-To: <1234366634-17900-3-git-send-email-ted@tedpavlic.com> (Ted
+ Pavlic's message of "Wed, 11 Feb 2009 10:37:13 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7AAEC7E0-F85B-11DD-B591-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109442>
 
-> NAK.
+Ted Pavlic <ted@tedpavlic.com> writes:
+
+> In the single case of:
 >
-> This script only runs in bash.  bash supports [...].  The
-> prevailing convention in the script is to use [...].  Only
-> 4 tests inside of __git_ps1 use "test", the rest of the code
-> is using [...].
+>     if [...] || [...]
+>
+> changed to:
+>
+>     if test ... || test ...
 
-So this trumps Documentation/CodingGuidelines, which says:
+In [0/3] you talked about "git convention", but please match the local
+convention, especially inside contrib/ area.  That is, consistency of the
+style within the same file (and files in vicinity), is more important.
 
-  - We prefer "test" over "[ ... ]".
+> Also changed:
+>
+>     if test ...
+>     then
+>
+> to:
+>
+>     if test ...; then
 
-?
-
-Thanks --
-Ted
-
--- 
-Ted Pavlic <ted@tedpavlic.com>
-
-   Please visit my ALS association page:
-         http://web.alsa.org/goto/tedpavlic
-   My family appreciates your support in the fight to defeat ALS.
+The prevailing style in bash completion script is to write "then" on the
+same line as "if", so I think this is a good example of matching the local
+convention (if you are trying to match "git convention", "then" is written
+on the same column as "if" on a line by itself for readability, so this
+change is going backwards).
