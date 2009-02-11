@@ -1,65 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to use path limiting (using a glob)?
-Date: Wed, 11 Feb 2009 11:48:52 -0800
-Message-ID: <7v1vu4eouz.fsf@gitster.siamese.dyndns.org>
-References: <20090211191432.GC27232@m62s10.vlinux.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
+Date: Wed, 11 Feb 2009 15:02:27 -0500
+Message-ID: <20090211200227.GA27961@coredump.intra.peff.net>
+References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de> <20090210121833.GC15491@coredump.intra.peff.net> <alpine.DEB.1.00.0902101357140.10279@pacific.mpi-cbg.de> <20090210131029.GC17305@coredump.intra.peff.net> <alpine.DEB.1.00.0902101427490.10279@pacific.mpi-cbg.de> <7vprhqnv0c.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0902101743180.10279@pacific.mpi-cbg.de> <20090210165610.GP30949@spearce.org> <7vocxam96s.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0902102210140.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 11 20:50:43 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 11 21:04:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXL6I-0007sw-MV
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 20:50:27 +0100
+	id 1LXLJP-0004ev-Jr
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 21:04:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755716AbZBKTs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 14:48:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755446AbZBKTs6
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 14:48:58 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39008 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751169AbZBKTs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 14:48:57 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CA3F42AECF;
-	Wed, 11 Feb 2009 14:48:56 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1CBBC2AEC0; Wed,
- 11 Feb 2009 14:48:53 -0500 (EST)
-In-Reply-To: <20090211191432.GC27232@m62s10.vlinux.de> (Peter Baumann's
- message of "Wed, 11 Feb 2009 20:14:32 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 04E75D82-F875-11DD-9C45-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1755342AbZBKUCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 15:02:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754884AbZBKUCb
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 15:02:31 -0500
+Received: from peff.net ([208.65.91.99]:51451 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750958AbZBKUCb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 15:02:31 -0500
+Received: (qmail 1487 invoked by uid 107); 11 Feb 2009 20:02:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 11 Feb 2009 15:02:46 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Feb 2009 15:02:27 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0902102210140.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109519>
 
-Peter Baumann <waste.manager@gmx.de> writes:
+On Tue, Feb 10, 2009 at 10:10:43PM +0100, Johannes Schindelin wrote:
 
-> after reading Junio's nice blog today where he explained how to use git grep
-> efficiently, I saw him using a glob to match for the interesting files:
->
-> 	 $ git grep -e ';;' -- '*.c'
->
-> Is it possible to have the same feature in git diff and the revision
-> machinery? Because I tried
->
-> 	$ cd $path_to_your_git_src_dir
-> 	$ git log master -p -- '*.h'
-> 	.... No commit shown 
->
-> 	$ git diff --name-only v1.5.0  v1.6.0 -- '*.c'
->
-> and both don't return anything.
+> > I wonder if we can solve this by introducing a local cache that is a flat
+> > file that looks like:
+> [...]
+> Or we could use an on-disk hashmap.  Oh, wait...
 
-There was a recent discussion on this.  The index family uses glob, the
-tree family uses leading-path only.  The one implemented for grep can do
-both, and attempts to unify both by providing possibly reusable interface
-so that the other two families can be ported to, but we haven't managed to
-trick anybody to take up the task ;-).
+That was my first thought, as well. Maybe your original implementation
+wasn't so bad, after all. :)
+
+I searched through the archive to find a list of criticisms, but I
+didn't see any. So I guess the problem was just a concern that it might
+end up too complex.
+
+-Peff
