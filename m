@@ -1,110 +1,91 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: fix broken symlink workaround when switching
-	branches
-Date: Wed, 11 Feb 2009 02:12:07 -0800
-Message-ID: <20090211101207.GA28840@dcvr.yhbt.net>
-References: <83dfc36c0902101438p7b7fbff8ja66b1fb021942cd8@mail.gmail.com>
+Subject: Re: Malformed network data
+Date: Wed, 11 Feb 2009 02:23:29 -0800
+Message-ID: <20090211102329.GA10762@dcvr.yhbt.net>
+References: <6a7129610902060729ta73d8d6leb4dc64ce2bb7fe3@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Anton Gyllenberg <anton@iki.fi>
-X-From: git-owner@vger.kernel.org Wed Feb 11 11:13:37 2009
+Cc: git@vger.kernel.org
+To: Josh Sharpe <josh.m.sharpe@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 11:25:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXC64-00014t-LW
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 11:13:37 +0100
+	id 1LXCH4-0004tL-40
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 11:24:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753870AbZBKKML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 05:12:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752341AbZBKKMJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 05:12:09 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:43346 "EHLO dcvr.yhbt.net"
+	id S1754441AbZBKKXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 05:23:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752432AbZBKKXa
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 05:23:30 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:50977 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751201AbZBKKMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 05:12:08 -0500
+	id S1752086AbZBKKX3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 05:23:29 -0500
 Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E1DC1F798;
-	Wed, 11 Feb 2009 10:12:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A0CA1F798;
+	Wed, 11 Feb 2009 10:23:29 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <83dfc36c0902101438p7b7fbff8ja66b1fb021942cd8@mail.gmail.com>
+In-Reply-To: <6a7129610902060729ta73d8d6leb4dc64ce2bb7fe3@mail.gmail.com>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109399>
 
-Thanks to Anton Gyllenberg <anton@iki.fi> for the bug report
-(and testcase in the following commit):
-> Commit dbc6c74d0858d77e61e092a48d467e725211f8e9 "git-svn:
-> handle empty files marked as symlinks in SVN" caused a
-> regression in an unusual case where a branch has been created
-> in SVN, later deleted and then created again from another
-> branch point and the original branch point had empty files not
-> in the new branch. In some cases git svn fetch will then fail
-> while trying to fetch the empty file from the wrong SVN
-> revision.
+Josh Sharpe <josh.m.sharpe@gmail.com> wrote:
+> I was originally using ubuntu's package of git and git-svn (1.5.6.3)
+> and had the following Malformed Network Data error occuring at the
+> same spot.
+> 
+> I've since built svn and git so that I'm using the latest versions of
+> each svn: 1.5.5 and git: 1.6.1.2.390.gba743
+> 
+> With the latest version I got a new error during the initial clone
+> followed by the original error.
+> 
+> One thing to note that I thought was odd.  The clone starts at ~r977
+> and proceeded through about ~r1100 before starting over at r1 and
+> running all the way up to the code you see below (r1116)
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
+Hi,
 
- Thanks Anton, I've made the following patch along with your
- testcase and pushed to git://git.bogomips.org/git-svn
+This could be the way branching/tagging is done with the repo.
+git-svn does not handle non-standard branching/tagging practices
+very well.
 
- Can you let me know if it works on a real repo (or breaks anything
- else)?  It's once again way past my bed time...
+> Following parent with do_switch
+> Filesystem has no item: File not found: revision 1036, path
+> '/branches/current_demo/sample_data/email_templates.yml' at
+> /usr/local/libexec/git-core/git-svn line 3288
 
- git-svn.perl |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
+Hmm.. this is new. Is email_templates.yml an empty file by any chance?
+If it's an empty file, can you try pulling the latest from
+git://git.bogomips.org/git-svn and see if that fixes at least this for
+you?  There was a bug that slipped in recently with trying to handle
+empty files better to workaround a bug in SVN.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 9baf822..001a1d8 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2417,7 +2417,7 @@ sub find_parent_branch {
- 			# is not included with SVN 1.4.3 (the latest version
- 			# at the moment), so we can't rely on it
- 			$self->{last_commit} = $parent;
--			$ed = SVN::Git::Fetcher->new($self);
-+			$ed = SVN::Git::Fetcher->new($self, $gs->{path});
- 			$gs->ra->gs_do_switch($r0, $rev, $gs,
- 					      $self->full_url, $ed)
- 			  or die "SVN connection failed somewhere...\n";
-@@ -3258,12 +3258,13 @@ use vars qw/$_ignore_regex/;
- 
- # file baton members: path, mode_a, mode_b, pool, fh, blob, base
- sub new {
--	my ($class, $git_svn) = @_;
-+	my ($class, $git_svn, $switch_path) = @_;
- 	my $self = SVN::Delta::Editor->new;
- 	bless $self, $class;
- 	if (exists $git_svn->{last_commit}) {
- 		$self->{c} = $git_svn->{last_commit};
--		$self->{empty_symlinks} = _mark_empty_symlinks($git_svn);
-+		$self->{empty_symlinks} =
-+		                  _mark_empty_symlinks($git_svn, $switch_path);
- 	}
- 	$self->{empty} = {};
- 	$self->{dir_prop} = {};
-@@ -3278,7 +3279,7 @@ sub new {
- # not inside them (when the Git::SVN::Fetcher object is passed) to
- # do_{switch,update}
- sub _mark_empty_symlinks {
--	my ($git_svn) = @_;
-+	my ($git_svn, $switch_path) = @_;
- 	my $bool = Git::config_bool('svn.brokenSymlinkWorkaround');
- 	return {} if (defined($bool) && ! $bool);
- 
-@@ -3294,7 +3295,7 @@ sub _mark_empty_symlinks {
- 	chomp(my $empty_blob = `git hash-object -t blob --stdin < /dev/null`);
- 	my ($ls, $ctx) = command_output_pipe(qw/ls-tree -r -z/, $cmt);
- 	local $/ = "\0";
--	my $pfx = $git_svn->{path};
-+	my $pfx = defined($switch_path) ? $switch_path : $git_svn->{path};
- 	$pfx .= '/' if length($pfx);
- 	while (<$ls>) {
- 		chomp;
+> $ cd community_service/
+> $ git svn fetch
+> 
+> Found possible branch point: svn+ssh://.../community_service/trunk =>
+> svn+ssh://.../community_service/branches/current_demo, 1118
+> Found branch parent: (current_demo) ab725a6c32905b6d007fcd8fd4723058d9487706
+> Index mismatch: e8075b5d0694a738392d84016922eca87db65dcd !=
+> 44b21b4a4fa70455621da3ac159cdf42c8c59987
+> rereading ab725a6c32905b6d007fcd8fd4723058d9487706
+> Following parent with do_switch
+> Malformed network data: Malformed network data at
+> /usr/local/libexec/git-core/git-svn line 3288
+
+The malformed network data error has not been consistently reproducible
+for me.  I've seen it occasionally on overloaded servers, but it always
+goes away when I restarted git-svn or tried to reproduce it.  I'm
+guessing it is FD mangling and/or refcount mismanagement in the SVN perl
+libraries (which don't seem to be able to handle multiple connections to
+a server well at all).
+
 -- 
 Eric Wong
