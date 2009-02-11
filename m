@@ -1,64 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-filter-branch: Add more error-handling
-Date: Wed, 11 Feb 2009 16:36:31 +0100
-Message-ID: <4992F07F.2080005@viscovery.net>
-References: <1234361365-63711-1-git-send-email-git@randomhacks.net> <4992E79D.10208@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Kidd <git@randomhacks.net>
-X-From: git-owner@vger.kernel.org Wed Feb 11 16:38:21 2009
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: [PATCH 1/3] completion: For consistency, changed "git rev-parse" to __gitdir calls.
+Date: Wed, 11 Feb 2009 10:37:12 -0500
+Message-ID: <1234366634-17900-2-git-send-email-ted@tedpavlic.com>
+References: <1234366634-17900-1-git-send-email-ted@tedpavlic.com>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Ted Pavlic <ted@tedpavlic.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Feb 11 16:39:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXHA2-0001kD-Fx
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 16:38:02 +0100
+	id 1LXHBI-0002IF-BQ
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 16:39:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755731AbZBKPge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 10:36:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755404AbZBKPgd
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 10:36:33 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:11162 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754870AbZBKPgd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 10:36:33 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LXH8Z-0003sp-AN; Wed, 11 Feb 2009 16:36:31 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2C5C96EF; Wed, 11 Feb 2009 16:36:31 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <4992E79D.10208@viscovery.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1757332AbZBKPh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 10:37:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751873AbZBKPh2
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 10:37:28 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:35903 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751774AbZBKPh0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2009 10:37:26 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 0E2DF80D8005;
+	Wed, 11 Feb 2009 10:30:55 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jEq0TnBWrltX; Wed, 11 Feb 2009 10:30:54 -0500 (EST)
+Received: from localhost.localdomain (tedpc.ece.ohio-state.edu [164.107.164.122])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id E9C5680D8036;
+	Wed, 11 Feb 2009 10:30:54 -0500 (EST)
+X-Mailer: git-send-email 1.6.1.2.390.gba743
+In-Reply-To: <1234366634-17900-1-git-send-email-ted@tedpavlic.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109427>
 
-Johannes Sixt schrieb:
->> @@ -483,7 +486,7 @@ test -z "$ORIG_GIT_INDEX_FILE" || {
->>  }
->>  
->>  if [ "$(is_bare_repository)" = false ]; then
->> -	git read-tree -u -m HEAD
->> +	git read-tree -u -m HEAD || die "Unable to checkout rewritten tree"
-> 
-> Here you shouldn't die.
+Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
+---
+ contrib/completion/git-completion.bash |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-I take this back. I was distracted by the 'exit $ret' that is visible in
-the context:
-
->>  fi
->>  
->>  exit $ret
-
-But this exit statement is pointless: ret is initialized to zero and never
-changed.
-
--- Hannes
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index f44f63c..6bbe09a 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -80,7 +80,7 @@ __gitdir ()
+ # returns text to add to bash PS1 prompt (includes branch name)
+ __git_ps1 ()
+ {
+-	local g="$(git rev-parse --git-dir 2>/dev/null)"
++	local g="$(__gitdir)"
+ 	if [ -n "$g" ]; then
+ 		local r
+ 		local b
+@@ -1797,7 +1797,7 @@ _gitk ()
+ 	__git_has_doubledash && return
+ 
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+-	local g="$(git rev-parse --git-dir 2>/dev/null)"
++	local g="$(__gitdir)"
+ 	local merge=""
+ 	if [ -f $g/MERGE_HEAD ]; then
+ 		merge="--merge"
+-- 
+1.6.1.2.390.gba743
