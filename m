@@ -1,90 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git push failure in the case of SSH to localhost
-Date: Wed, 11 Feb 2009 12:23:12 -0800
-Message-ID: <7vvdrgd8pb.fsf@gitster.siamese.dyndns.org>
-References: <8e04b5820902110824u1ab99cc1r4df6349b20d62f84@mail.gmail.com>
- <20090211180559.GC19749@coredump.intra.peff.net>
- <8e04b5820902111042q138a2e79vc97c533007482e5c@mail.gmail.com>
- <20090211184429.GA27896@coredump.intra.peff.net>
- <8e04b5820902111103n69cde3e1le5781fb1818b622c@mail.gmail.com>
- <20090211191445.GU30949@spearce.org>
- <8e04b5820902111120w4cb87b41sfca647a838bab43c@mail.gmail.com>
- <20090211192245.GA28832@coredump.intra.peff.net>
- <8e04b5820902111132v5b7c8e14s15c6fad13b5b76a9@mail.gmail.com>
- <20090211194218.GA28927@coredump.intra.peff.net>
- <8e04b5820902111203t344881f6g31f25cfbff5fd822@mail.gmail.com>
+From: Fabio Augusto Dal Castel <fdcastel@gmail.com>
+Subject: Re: [RFC] New command: 'git snapshot'.
+Date: Wed, 11 Feb 2009 18:40:15 -0200
+Message-ID: <38cfbb550902111240v6e593bfw5c8347d92fe8f767@mail.gmail.com>
+References: <38cfbb550902091054u78f2e706u67752b4dc9de6c3b@mail.gmail.com>
+	 <etsYQzEDjdk-_NxhvO3i6EyShR6eZ202GBdQx7ZZpPHH5iNfWiuV6g@cipher.nrlssc.navy.mil>
+	 <38cfbb550902101240x1202c592ra7eb01d66e22da43@mail.gmail.com>
+	 <20090210230054.GD26954@coredump.intra.peff.net>
+	 <vpq3aelcpjk.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Brandon Casey <casey@nrlssc.navy.mil>,
 	git@vger.kernel.org
-To: "Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 21:25:00 2009
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Feb 11 21:42:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXLdi-0004PR-TK
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 21:24:59 +0100
+	id 1LXLuC-0002hU-V8
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 21:42:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756106AbZBKUXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 15:23:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755509AbZBKUXb
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 15:23:31 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63447 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752831AbZBKUXa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 15:23:30 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 068A298BC4;
-	Wed, 11 Feb 2009 15:23:29 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 73B2D98BC3; Wed,
- 11 Feb 2009 15:23:22 -0500 (EST)
-In-Reply-To: <8e04b5820902111203t344881f6g31f25cfbff5fd822@mail.gmail.com>
- (Ciprian Dorin's message of "Wed, 11 Feb 2009 22:03:13 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D80658EA-F879-11DD-BF94-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1757653AbZBKUkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 15:40:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757616AbZBKUkT
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 15:40:19 -0500
+Received: from qb-out-0506.google.com ([72.14.204.229]:28657 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755457AbZBKUkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 15:40:17 -0500
+Received: by qb-out-0506.google.com with SMTP id q18so275508qba.17
+        for <git@vger.kernel.org>; Wed, 11 Feb 2009 12:40:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=AoNJPsn4zPmOLqaRIi7ezm+h5tMuyI6XMLuH3MXaME8=;
+        b=B5Jss290C7W/zYBsruiPFmJZZ8pa0Bpw2JfLyZyko8Khbdhx1tmvo9cb4bQycykuhq
+         eEDRYs4fQJ9U5jttkAt6wMHP9XaU5xTnUAu3DX+rNN4PJU+Z+vnBThXCVkGrDRXLoxI+
+         hFLKmPTkpuxUMNDfgcwCUrDSGSez2ijbWjpcw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=EbCk7I0S/wn2/7PJ8envSfdmiTJdDXw65F0p5dXgcbavg9Y4jKygPtjlj+l6rcCWE+
+         VjCGpI2kU/dCnjiZFvZdVIxcQdWNt0C4N6xGOPnyNFbV3zACK7cgGnVkyib15mH7Wzxi
+         0WqyZ/M+XtOAWlqP+I0biHh+qI1B4yUW1M0nY=
+Received: by 10.231.19.72 with SMTP id z8mr15180iba.6.1234384815426; Wed, 11 
+	Feb 2009 12:40:15 -0800 (PST)
+In-Reply-To: <vpq3aelcpjk.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109523>
 
-"Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com> writes:
+> Doesn't that argue for "git stash --no-reset" or similar instead of a
+> separate command?
 
->     I'll merge both Junio's and Jeff's emails into one... My answers bellow.
->
-> On Wed, Feb 11, 2009 at 9:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> "Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com> writes:
->>
->>> On Wed, Feb 11, 2009 at 9:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>>> And why isn't it in $HOME/bin/?
->>>
->>>     No, it is inside .git/bin folder.
->>
->> You are not answering my question.
->>
->> I questioned the sanity of putting the scripts in .git/bin/ per
->> repository.  Why shouldn't a useful script like your "branch-import"
->> available to _all_ your repositories, possibly taking customization per
->> repository from repository's .git/config file, so that it does what is
->> appropriate in each repository?
-> ...
->     Both these solutions work fine, except one concern: when moving
-> the repository I would also want to move my scripts,...
+Yes. And also for an "--untracked" (as already suggested).
 
-Define "moving the repository".  More often than not, people move their
-repositories with "git clone" than "tar cf - | tar xf -".
+Since stashes does not expire anymore (as correctly pointed by
+Brandon), a snapshot could be reduced to an alias for:
 
-No matter how you are moving it to a new location, you would want to have
-a working set of "regular environment" you normally work in.  Why aren't
-you moving/copying your $HOME/bin at the same time to get a more familiar
-and useful environment?  Viewed under this light, I think your "I move my
-repository to a new machine" is a made up example that is not interesting
-at all, if you ask me.
+git stash --no-reset --untracked
 
-There are additional security implications.  You can invite a victim to
-run "git diff" in your repository which runs your .git/bin/git-diff, for
-example.
+(except for the branch storage)
+
+
+However, the rationale behind a new command was also to avoid the
+'loss of identity' of stash (as currently implemented). I always saw
+stash as a way to allow a temporary hack or a pull. If we start adding
+a lot of switches into stash that ultimately would change its main
+purpose, should it yet be called 'stash'? (something like a 'git
+commit --no-commit' ?)
+
+(Please, don't get me wrong: I'm just raising food for thoughts, here)
+
+Maybe the 'stash' command and multiples switches would be more
+appropriate if 'reset' was NOT the default behavior. Something like:
+
+git stash [--untracked] [--reset]
+
+where the current 'git stash' would be 'git stash --reset'.Of course,
+this would be a significant breaking change.
+
+I know... I know...  "Heresy!" You'd say... <g>
+
+But... what about it? Why, after all, stash MUST do a reset?
+
+"Do one thing. Do it well"?
+
+Regards!
+Fabio.
