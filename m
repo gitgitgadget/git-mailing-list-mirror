@@ -1,128 +1,55 @@
 From: Ted Pavlic <ted@tedpavlic.com>
-Subject: [PATCH 2/4] completion: Use consistent if [...] convention. No test.
-Date: Wed, 11 Feb 2009 13:54:37 -0500
-Message-ID: <1234378479-29304-3-git-send-email-ted@tedpavlic.com>
+Subject: [PATCH 0/4] completion fixes: Acks, whitespace, and r=""
+Date: Wed, 11 Feb 2009 13:54:35 -0500
+Message-ID: <1234378479-29304-1-git-send-email-ted@tedpavlic.com>
 References: <7v63jgg7st.fsf@gitster.siamese.dyndns.org>
- <1234378479-29304-1-git-send-email-ted@tedpavlic.com>
- <1234378479-29304-2-git-send-email-ted@tedpavlic.com>
 Cc: git@vger.kernel.org, gitster@pobox.com,
 	Ted Pavlic <ted@tedpavlic.com>
 To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Feb 11 19:56:28 2009
+X-From: git-owner@vger.kernel.org Wed Feb 11 19:56:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXKG1-0002sJ-Ao
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 19:56:25 +0100
+	id 1LXKFy-0002sJ-Ik
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 19:56:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756994AbZBKSzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 13:55:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756781AbZBKSy6
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 13:54:58 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:44563 "EHLO
+	id S1756874AbZBKSyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 13:54:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756426AbZBKSyw
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 13:54:52 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:44554 "EHLO
 	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754709AbZBKSyv (ORCPT
+	by vger.kernel.org with ESMTP id S1755718AbZBKSyv (ORCPT
 	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2009 13:54:51 -0500
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 4031E80D808F;
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 1900580D808D;
 	Wed, 11 Feb 2009 13:48:20 -0500 (EST)
 X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
 Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
 	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eiuJrgC6qTwu; Wed, 11 Feb 2009 13:48:20 -0500 (EST)
+	with ESMTP id sKGR34VbXGlv; Wed, 11 Feb 2009 13:48:20 -0500 (EST)
 Received: from localhost.localdomain (tedpc.ece.ohio-state.edu [164.107.164.122])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 1111C80D808C;
-	Wed, 11 Feb 2009 13:48:20 -0500 (EST)
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id EBA9E80D8088;
+	Wed, 11 Feb 2009 13:48:19 -0500 (EST)
 X-Mailer: git-send-email 1.6.1.2.390.gba743
-In-Reply-To: <1234378479-29304-2-git-send-email-ted@tedpavlic.com>
+In-Reply-To: <7v63jgg7st.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109500>
 
-The local coding convention in bash completion is to use [...] rather
-than test. Additionally,
+* Added Shawn O. Pearce acks
+* Fixed whitespace problem in second patch (vim:expandtabs was on)
+* When in GIT_DIR, set r="" in __git_ps1 as well
 
-    if [...]; then
+Ted Pavlic (4):
+  completion: For consistency, changed "git rev-parse" to __gitdir
+    calls.
+  completion: Use consistent if [...] convention. No test.
+  completion: Better __git_ps1 support when not in working directory
+  completion: More fixes to prevent unbound variable errors.
 
-is preferred over
-
-    if [...]
-    then
-
-and so matching "if [...]\nthen" were changed accordingly.
-
-Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |   31 +++++++++++--------------------
- 1 files changed, 11 insertions(+), 20 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 6bbe09a..e729944 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -84,39 +84,30 @@ __git_ps1 ()
- 	if [ -n "$g" ]; then
- 		local r
- 		local b
--		if [ -d "$g/rebase-apply" ]
--		then
--			if test -f "$g/rebase-apply/rebasing"
--			then
-+		if [ -d "$g/rebase-apply" ]; then
-+			if [ -f "$g/rebase-apply/rebasing" ]; then
- 				r="|REBASE"
--			elif test -f "$g/rebase-apply/applying"
--			then
-+			elif [ -f "$g/rebase-apply/applying" ]; then
- 				r="|AM"
- 			else
- 				r="|AM/REBASE"
- 			fi
- 			b="$(git symbolic-ref HEAD 2>/dev/null)"
--		elif [ -f "$g/rebase-merge/interactive" ]
--		then
-+		elif [ -f "$g/rebase-merge/interactive" ]; then
- 			r="|REBASE-i"
- 			b="$(cat "$g/rebase-merge/head-name")"
--		elif [ -d "$g/rebase-merge" ]
--		then
-+		elif [ -d "$g/rebase-merge" ]; then
- 			r="|REBASE-m"
- 			b="$(cat "$g/rebase-merge/head-name")"
--		elif [ -f "$g/MERGE_HEAD" ]
--		then
-+		elif [ -f "$g/MERGE_HEAD" ]; then
- 			r="|MERGING"
- 			b="$(git symbolic-ref HEAD 2>/dev/null)"
- 		else
--			if [ -f "$g/BISECT_LOG" ]
--			then
-+			if [ -f "$g/BISECT_LOG" ]; then
- 				r="|BISECTING"
- 			fi
--			if ! b="$(git symbolic-ref HEAD 2>/dev/null)"
--			then
--				if ! b="$(git describe --exact-match HEAD 2>/dev/null)"
--				then
-+			if ! b="$(git symbolic-ref HEAD 2>/dev/null)"; then
-+				if ! b="$(git describe --exact-match HEAD 2>/dev/null)"; then
- 					b="$(cut -c1-7 "$g/HEAD")..."
- 				fi
- 			fi
-@@ -125,8 +116,8 @@ __git_ps1 ()
- 		local w
- 		local i
- 
--		if test -n "${GIT_PS1_SHOWDIRTYSTATE-}"; then
--			if test "$(git config --bool bash.showDirtyState)" != "false"; then
-+		if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ]; then
-+			if [ "$(git config --bool bash.showDirtyState)" != "false" ]; then
- 				git diff --no-ext-diff --ignore-submodules \
- 					--quiet --exit-code || w="*"
- 				if git rev-parse --quiet --verify HEAD >/dev/null; then
--- 
-1.6.1.2.390.gba743
+ contrib/completion/git-completion.bash |   76 ++++++++++++++++----------------
+ 1 files changed, 38 insertions(+), 38 deletions(-)
