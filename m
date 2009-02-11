@@ -1,715 +1,211 @@
 From: =?utf-8?q?Tor=20Arne=20Vestb=C3=B8?= <torarnv@gmail.com>
-Subject: [EGIT PATCH v2 05/12] Add new class SWTUtils with helper-methods for creating controls
-Date: Wed, 11 Feb 2009 19:40:07 +0100
-Message-ID: <1234377614-23798-6-git-send-email-torarnv@gmail.com>
-References: <1234377614-23798-1-git-send-email-torarnv@gmail.com>
- <1234377614-23798-2-git-send-email-torarnv@gmail.com>
- <1234377614-23798-3-git-send-email-torarnv@gmail.com>
- <1234377614-23798-4-git-send-email-torarnv@gmail.com>
- <1234377614-23798-5-git-send-email-torarnv@gmail.com>
+Subject: [EGIT PATCH v2 00/12] Support customizable label decorations
+Date: Wed, 11 Feb 2009 19:40:02 +0100
+Message-ID: <1234377614-23798-1-git-send-email-torarnv@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>,
 	Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 19:42:11 2009
+X-From: git-owner@vger.kernel.org Wed Feb 11 19:42:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXK23-0005RI-RW
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 19:42:00 +0100
+	id 1LXK22-0005RI-5p
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 19:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756801AbZBKSj7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Feb 2009 13:39:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756501AbZBKSj7
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 13:39:59 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:56125 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756511AbZBKSj6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 13:39:58 -0500
-Received: by mail-fx0-f20.google.com with SMTP id 13so1002022fxm.13
-        for <git@vger.kernel.org>; Wed, 11 Feb 2009 10:39:56 -0800 (PST)
+	id S1755778AbZBKSjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 13:39:43 -0500
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756851AbZBKSjm
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 13:39:42 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:1116 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756501AbZBKSjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 13:39:40 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so108715fgg.17
+        for <git@vger.kernel.org>; Wed, 11 Feb 2009 10:39:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=WSRyAjCJIlorFdGm5Y9OIxsKJf2p4LyAg4xz8VRxkuU=;
-        b=d7q5TN7b5WjhkSkf3aGTL0Bf4hgdQMxP58D+yapqvzEPMFceXS+gBJQQODlE9PQwEP
-         GF5If5wnlCOpjHqcDhUjoaWSHSyD9hAOidixMXmNsiYbiyEBV2bpxPZFCmBmzGCVLfON
-         VGHIYr80PhIgZTt3Lz+3Ea/Ay7zJbM8/m8wVQ=
+         :date:message-id:x-mailer;
+        bh=/EAUOpfxqyIJpXAbNfLz3MH5AvmewAGQxkEpA7ng14A=;
+        b=ILMFK1VybwE1GLsJKsp5gkgUtotAO/xdiTPW9JQJoTDFUYqyusN9E2q0CmixPPZeh6
+         6tkIiNlQ0pQPWDtc9U9Vf9Vsj1HB6MsR0CVc4LaixUl8XoJYEw0cyd5rb8ktqVia7qWy
+         neGOsTMl/SRP3zBg9AmR7p8XLxicGQjHJ8d54=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=FtaDAXmEzUb8/RaNIKhaGYBAIz5UwXEPGM4NFl/ZH5fjfCHVv5fRRYjg/43/Y1bNHB
-         tQeYZsbfNbqMIuX5ZiJGZEHbXaXrZFXTKfsFFG1NglBG9Sx1nOiS+b0RoyZ64IgBLGuk
-         0Cbcbej590Tml6HFpYNcpH8+qPsLF5r3aXdks=
-Received: by 10.86.59.2 with SMTP id h2mr843233fga.73.1234377596922;
-        Wed, 11 Feb 2009 10:39:56 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=VIfctTVv6DpQqgbRXa9hFcAJQ0edg1BhhRBQXqa5dBDNdaVJ1iGP0TswIJiJ7ac4bF
+         XGpKHE9U+e0LTPU78zNu7Ao6KbHXS9blgS3z4ogH8E4bNjl0UtA6N9L5IIqA4WwcTW0L
+         KrSJS85WAqBCs3owinD1kVkAReLe6GMuvO1VQ=
+Received: by 10.86.91.3 with SMTP id o3mr838259fgb.77.1234377579424;
+        Wed, 11 Feb 2009 10:39:39 -0800 (PST)
 Received: from monstre.mystifistisk.net (212251244070.customer.cdi.no [212.251.244.70])
-        by mx.google.com with ESMTPS id 4sm6329549fgg.45.2009.02.11.10.39.28
+        by mx.google.com with ESMTPS id d6sm4913720fga.49.2009.02.11.10.38.36
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 11 Feb 2009 10:39:38 -0800 (PST)
+        Wed, 11 Feb 2009 10:38:52 -0800 (PST)
 Received: by monstre.mystifistisk.net (Postfix, from userid 1000)
-	id 4988B468004; Wed, 11 Feb 2009 19:40:14 +0100 (CET)
+	id CB8B8468001; Wed, 11 Feb 2009 19:40:14 +0100 (CET)
 X-Mailer: git-send-email 1.6.1.2.309.g2ea3
-In-Reply-To: <1234377614-23798-5-git-send-email-torarnv@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109487>
 
-Copied verbatim from org.eclipse.team.internal.ui and documented
+This series adds support for customizable label decorations, which
+is usefull for hiding selected decorations, or tweaking the format
+of the decoration text.
 
-Signed-off-by: Tor Arne Vestb=C3=B8 <torarnv@gmail.com>
----
- .../src/org/spearce/egit/ui/internal/SWTUtils.java |  595 ++++++++++++=
+Changes in v2:
+
+  - Fixed layout issues in preference dialog
+  - Icons replaced to match established conventions
+  - 'Assume unchanged' icon is back
+  - Added tooltips in the preference dialog
+  - 'Added and dirty' is now decorated appropriately
+  - Refactored container decorations. Now shares code path with
+    files for more accurate results, and to allow inheritance
+
+Decorations are edited using the new Team->Git->Label Decorations
+preference page, which is based off similar functionality from the
+existing CVS and SVN team providers.
+
+Icons can be enabled and disabled individually, and text can be
+customized by reordering and editing the set of mapped variables.
+Boolean variables like 'dirty' and 'staged' can be customized by
+postfixing the variable name with a colon and a selected string
+that should be insert if the variable evaluates to true.
+
+The two general options control traversal of child and parent
+elements during decoration. The first, 'Also re-decorate...',
+controls whether or not ancestor elements of the current decorated
+elment will also be scheduled for re-recoration. The second,=20
+'Maximum number of levels...', controls how deep the container
+decoration algorithm will recurse when trying to determine the
+state (dirty, staged, etc.) of a container.
+
+Tweaking these options will improve performance for large trees.
+
+The code should work fairly well for most usecases, but I may have
+missed cases where the decorations will fail misserably. If so,=20
+please let me know.=20
+
+Known issues are:
+
+  - If a project has a repository more than one level above the
+    project directory decorations will fail.
+
+  - When a Java resource is dirty, each package in the package
+    hierarcy will appear dirty, also when the layout is set
+    to 'flat', which can be confusing.
+
+These are on my list for features to add on top of these series,
+but I consider them non-blocking. This also goes for online help,
+which will be added when things stabilize some more.
+
+I've also sprinkled the code with TODOs where I found possible=20
+future improvments. One such improvment is performance, where for
+example refactoring to use one shared status cache should help.
+
+Tor Arne
+
+
+
+Tor Arne Vestb=C3=B8 (12):
+  Add support code to handle plugin property changes
+  Use Set instead of array to keep track of change listeners
+  Add a specialized team exception for Git
+  Add new class ExceptionCollector for grouping exceptions
+  Add new class SWTUtils with helper-methods for creating controls
+  Implement basic customizable label decorations with preferences
+  Add binding for name of the current branch
+  Add icon decoration for tracked and untracked resources
+  Implement icon and text decorations of various resource states
+  Don't decorate every single resource on repository change
+  Expose the underlying resource entries in ContainerTreeIterator
+  Implement label decorations for folders and projects
+
+ org.spearce.egit.core/META-INF/MANIFEST.MF         |    5 +-
+ .../spearce/egit/core/ContainerTreeIterator.java   |   23 +-
+ .../src/org/spearce/egit/core/GitException.java    |  168 ++++
+ .../core/internal/util/ExceptionCollector.java     |  128 +++
+ .../spearce/egit/core/project/GitProjectData.java  |   40 +-
+ org.spearce.egit.ui/icons/ovr/assume_valid.gif     |  Bin 0 -> 85 byte=
+s
+ org.spearce.egit.ui/icons/ovr/assumevalid.gif      |  Bin 64 -> 0 byte=
+s
+ org.spearce.egit.ui/icons/ovr/conflict.gif         |  Bin 64 -> 194 by=
+tes
+ org.spearce.egit.ui/icons/ovr/pending_add.gif      |  Bin 64 -> 0 byte=
+s
+ org.spearce.egit.ui/icons/ovr/pending_remove.gif   |  Bin 111 -> 0 byt=
+es
+ org.spearce.egit.ui/icons/ovr/shared.gif           |  Bin 106 -> 0 byt=
+es
+ org.spearce.egit.ui/icons/ovr/staged.gif           |  Bin 0 -> 114 byt=
+es
+ org.spearce.egit.ui/icons/ovr/staged_added.gif     |  Bin 0 -> 169 byt=
+es
+ org.spearce.egit.ui/icons/ovr/staged_removed.gif   |  Bin 0 -> 176 byt=
+es
+ org.spearce.egit.ui/icons/ovr/untracked.gif        |  Bin 0 -> 79 byte=
+s
+ org.spearce.egit.ui/plugin.properties              |    1 +
+ org.spearce.egit.ui/plugin.xml                     |   12 +-
+ .../src/org/spearce/egit/ui/Activator.java         |   68 ++
+ .../egit/ui/PluginPreferenceInitializer.java       |   15 +
+ .../src/org/spearce/egit/ui/UIIcons.java           |   21 +-
+ .../src/org/spearce/egit/ui/UIPreferences.java     |   21 +
+ .../src/org/spearce/egit/ui/UIText.java            |   99 ++-
+ .../src/org/spearce/egit/ui/internal/SWTUtils.java |  595 ++++++++++++
+ .../egit/ui/internal/actions/BranchAction.java     |    4 +-
+ .../egit/ui/internal/actions/Disconnect.java       |    4 +-
+ .../egit/ui/internal/actions/ResetAction.java      |    4 +-
+ .../decorators/DecoratableResourceAdapter.java     |  391 ++++++++
+ .../decorators/GitLightweightDecorator.java        |  653 ++++++++++++=
+++
+ .../internal/decorators/GitResourceDecorator.java  |  454 ----------
+ .../internal/decorators/IDecoratableResource.java  |  100 ++
+ .../preferences/GitDecoratorPreferencePage.java    |  949 ++++++++++++=
 ++++++++
- 1 files changed, 595 insertions(+), 0 deletions(-)
+ .../src/org/spearce/egit/ui/uitext.properties      |   38 +-
+ .../src/org/spearce/jgit/treewalk/TreeWalk.java    |    9 +
+ 33 files changed, 3310 insertions(+), 492 deletions(-)
+ create mode 100644 org.spearce.egit.core/src/org/spearce/egit/core/Git=
+Exception.java
+ create mode 100644 org.spearce.egit.core/src/org/spearce/egit/core/int=
+ernal/util/ExceptionCollector.java
+ create mode 100644 org.spearce.egit.ui/icons/ovr/assume_valid.gif
+ delete mode 100644 org.spearce.egit.ui/icons/ovr/assumevalid.gif
+ delete mode 100644 org.spearce.egit.ui/icons/ovr/pending_add.gif
+ delete mode 100644 org.spearce.egit.ui/icons/ovr/pending_remove.gif
+ delete mode 100644 org.spearce.egit.ui/icons/ovr/shared.gif
+ create mode 100644 org.spearce.egit.ui/icons/ovr/staged.gif
+ create mode 100644 org.spearce.egit.ui/icons/ovr/staged_added.gif
+ create mode 100644 org.spearce.egit.ui/icons/ovr/staged_removed.gif
+ create mode 100644 org.spearce.egit.ui/icons/ovr/untracked.gif
  create mode 100644 org.spearce.egit.ui/src/org/spearce/egit/ui/interna=
 l/SWTUtils.java
-
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/SWTUt=
-ils.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/SWTUtil=
-s.java
-new file mode 100644
-index 0000000..fe65bbb
---- /dev/null
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/SWTUtils.jav=
-a
-@@ -0,0 +1,595 @@
-+/*********************************************************************=
-**********
-+ * Copyright (c) 2000, 2005 IBM Corporation and others.
-+ * All rights reserved. This program and the accompanying materials
-+ * are made available under the terms of the Eclipse Public License v1=
-=2E0
-+ * which accompanies this distribution, and is available at
-+ * http://www.eclipse.org/legal/epl-v10.html
-+ *
-+ * Contributors:
-+ *	 IBM Corporation - initial API and implementation
-+ *********************************************************************=
-**********/
-+
-+package org.spearce.egit.ui.internal;
-+
-+import org.eclipse.core.runtime.Assert;
-+import org.eclipse.jface.dialogs.Dialog;
-+import org.eclipse.jface.dialogs.IDialogConstants;
-+import org.eclipse.swt.SWT;
-+import org.eclipse.swt.graphics.FontMetrics;
-+import org.eclipse.swt.graphics.GC;
-+import org.eclipse.swt.layout.GridData;
-+import org.eclipse.swt.layout.GridLayout;
-+import org.eclipse.swt.widgets.*;
-+import org.eclipse.ui.dialogs.PreferenceLinkArea;
-+import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
-+
-+/**
-+ * A collection of factory methods for creating common SWT controls
-+ */
-+public class SWTUtils {
-+
-+	/** */
-+	public static final int MARGINS_DEFAULT =3D -1;
-+
-+	/** */
-+	public static final int MARGINS_NONE =3D 0;
-+
-+	/** */
-+	public static final int MARGINS_DIALOG =3D 1;
-+
-+	/**
-+	 * Creates a preference link which will open in the specified contain=
-er
-+	 *=20
-+	 * @param container
-+	 * @param parent
-+	 * @param pageId
-+	 * @param text
-+	 *=20
-+	 * @return the created link
-+	 */
-+	public static PreferenceLinkArea createPreferenceLink(
-+			IWorkbenchPreferenceContainer container, Composite parent,
-+			String pageId, String text) {
-+		final PreferenceLinkArea area =3D new PreferenceLinkArea(parent,
-+				SWT.NONE, pageId, text, container, null);
-+		return area;
-+	}
-+
-+	/**
-+	 * Creates a grid data with the specified metrics
-+	 *=20
-+	 * @param width
-+	 * @param height
-+	 * @param hFill
-+	 * @param vFill
-+	 *=20
-+	 * @return the created grid data
-+	 */
-+	public static GridData createGridData(int width, int height, boolean =
-hFill,
-+			boolean vFill) {
-+		return createGridData(width, height, hFill ? SWT.FILL : SWT.BEGINNIN=
-G,
-+				vFill ? SWT.FILL : SWT.CENTER, hFill, vFill);
-+	}
-+
-+	/**
-+	 * Creates a grid data with the specified metrics
-+	 *=20
-+	 * @param width
-+	 * @param height
-+	 * @param hAlign
-+	 * @param vAlign
-+	 * @param hGrab
-+	 * @param vGrab
-+	 *=20
-+	 * @return the created grid data
-+	 */
-+	public static GridData createGridData(int width, int height, int hAli=
-gn,
-+			int vAlign, boolean hGrab, boolean vGrab) {
-+		final GridData gd =3D new GridData(hAlign, vAlign, hGrab, vGrab);
-+		gd.widthHint =3D width;
-+		gd.heightHint =3D height;
-+		return gd;
-+	}
-+
-+	/**
-+	 * Creates a horizontal grid data with the default metrics
-+	 *=20
-+	 * @return the created grid data
-+	 */
-+	public static GridData createHFillGridData() {
-+		return createHFillGridData(1);
-+	}
-+
-+	/**
-+	 * Creates a horizontal grid data with the specified span
-+	 *=20
-+	 * @param span
-+	 *=20
-+	 * @return the created grid data
-+	 */
-+	public static GridData createHFillGridData(int span) {
-+		final GridData gd =3D createGridData(0, SWT.DEFAULT, SWT.FILL,
-+				SWT.CENTER, true, false);
-+		gd.horizontalSpan =3D span;
-+		return gd;
-+	}
-+
-+	/**
-+	 * Creates a horizontal fill composite with the specified margins
-+	 *=20
-+	 * @param parent
-+	 * @param margins
-+	 *=20
-+	 * @return the created composite
-+	 */
-+	public static Composite createHFillComposite(Composite parent, int ma=
-rgins) {
-+		return createHFillComposite(parent, margins, 1);
-+	}
-+
-+	/**
-+	 * Creates a horizontal fill composite with the specified margins and
-+	 * columns
-+	 *=20
-+	 * @param parent
-+	 * @param margins
-+	 * @param columns
-+	 *=20
-+	 * @return the created composite
-+	 */
-+	public static Composite createHFillComposite(Composite parent, int ma=
-rgins,
-+			int columns) {
-+		final Composite composite =3D new Composite(parent, SWT.NONE);
-+		composite.setFont(parent.getFont());
-+		composite.setLayoutData(createHFillGridData());
-+		composite.setLayout(createGridLayout(columns,
-+				new PixelConverter(parent), margins));
-+		return composite;
-+	}
-+
-+	/**
-+	 * Creates a horizontal/vertical fill composite with the specified ma=
-rgins
-+	 *=20
-+	 * @param parent
-+	 * @param margins
-+	 *=20
-+	 * @return the created composite
-+	 */
-+	public static Composite createHVFillComposite(Composite parent, int m=
-argins) {
-+		return createHVFillComposite(parent, margins, 1);
-+	}
-+
-+	/**
-+	 * Creates a horizontal/vertical fill composite with the specified ma=
-rgins
-+	 * and columns
-+	 *=20
-+	 * @param parent
-+	 * @param margins
-+	 * @param columns
-+	 *=20
-+	 * @return the created composite
-+	 */
-+	public static Composite createHVFillComposite(Composite parent,
-+			int margins, int columns) {
-+		final Composite composite =3D new Composite(parent, SWT.NONE);
-+		composite.setFont(parent.getFont());
-+		composite.setLayoutData(createHVFillGridData());
-+		composite.setLayout(createGridLayout(columns,
-+				new PixelConverter(parent), margins));
-+		return composite;
-+	}
-+
-+	/**
-+	 * Creates a horizontal fill group with the specified text and margin=
-s
-+	 *=20
-+	 * @param parent
-+	 * @param text
-+	 * @param margins
-+	 * @return the created group
-+	 */
-+	public static Group createHFillGroup(Composite parent, String text,
-+			int margins) {
-+		return createHFillGroup(parent, text, margins, 1);
-+	}
-+
-+	/**
-+	 * Creates a horizontal fill group with the specified text, margins a=
-nd rows
-+	 *=20
-+	 * @param parent
-+	 * @param text
-+	 * @param margins
-+	 * @param rows
-+	 *=20
-+	 * @return the created group
-+	 */
-+	public static Group createHFillGroup(Composite parent, String text,
-+			int margins, int rows) {
-+		final Group group =3D new Group(parent, SWT.NONE);
-+		group.setFont(parent.getFont());
-+		group.setLayoutData(createHFillGridData());
-+		if (text !=3D null)
-+			group.setText(text);
-+		group.setLayout(createGridLayout(rows, new PixelConverter(parent),
-+				margins));
-+		return group;
-+	}
-+
-+	/**
-+	 * Creates a horizontal/vertical fill group with the specified text a=
-nd
-+	 * margins
-+	 *=20
-+	 * @param parent
-+	 * @param text
-+	 * @param margins
-+	 *=20
-+	 * @return the created group
-+	 */
-+	public static Group createHVFillGroup(Composite parent, String text,
-+			int margins) {
-+		return createHVFillGroup(parent, text, margins, 1);
-+	}
-+
-+	/**
-+	 * Creates a horizontal/vertical fill group with the specified text, =
-margins
-+	 * and rows
-+	 *=20
-+	 * @param parent
-+	 * @param text
-+	 * @param margins
-+	 * @param rows
-+	 *=20
-+	 * @return the created group
-+	 */
-+	public static Group createHVFillGroup(Composite parent, String text,
-+			int margins, int rows) {
-+		final Group group =3D new Group(parent, SWT.NONE);
-+		group.setFont(parent.getFont());
-+		group.setLayoutData(createHVFillGridData());
-+		if (text !=3D null)
-+			group.setText(text);
-+		group.setLayout(createGridLayout(rows, new PixelConverter(parent),
-+				margins));
-+		return group;
-+	}
-+
-+	/**
-+	 * Creates a horizontal/vertical fill grid data with the default metr=
-ics
-+	 *=20
-+	 * @return the created grid data
-+	 */
-+	public static GridData createHVFillGridData() {
-+		return createHVFillGridData(1);
-+	}
-+
-+	/**
-+	 * Creates a horizontal/vertical fill grid data with the specified sp=
-an
-+	 *=20
-+	 * @param span
-+	 *=20
-+	 * @return the created grid data
-+	 */
-+	public static GridData createHVFillGridData(int span) {
-+		final GridData gd =3D createGridData(0, 0, true, true);
-+		gd.horizontalSpan =3D span;
-+		return gd;
-+	}
-+
-+	/**
-+	 * Creates a grid layout with the specified number of columns and the
-+	 * standard spacings.
-+	 *=20
-+	 * @param numColumns
-+	 *            the number of columns
-+	 * @param converter
-+	 *            the pixel converter
-+	 * @param margins
-+	 *            one of <code>MARGINS_DEFAULT</code>, <code>MARGINS_NONE=
-</code>
-+	 *            or <code>MARGINS_DIALOG</code>.
-+	 *=20
-+	 * @return the created grid layout
-+	 */
-+	public static GridLayout createGridLayout(int numColumns,
-+			PixelConverter converter, int margins) {
-+		Assert.isTrue(margins =3D=3D MARGINS_DEFAULT || margins =3D=3D MARGI=
-NS_NONE
-+				|| margins =3D=3D MARGINS_DIALOG);
-+
-+		final GridLayout layout =3D new GridLayout(numColumns, false);
-+		layout.horizontalSpacing =3D converter
-+				.convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING=
-);
-+		layout.verticalSpacing =3D converter
-+				.convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_SPACING);
-+
-+		switch (margins) {
-+		case MARGINS_NONE:
-+			layout.marginLeft =3D layout.marginRight =3D 0;
-+			layout.marginTop =3D layout.marginBottom =3D 0;
-+			break;
-+		case MARGINS_DIALOG:
-+			layout.marginLeft =3D layout.marginRight =3D converter
-+					.convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_MARGIN=
-);
-+			layout.marginTop =3D layout.marginBottom =3D converter
-+					.convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_MARGIN);
-+			break;
-+		case MARGINS_DEFAULT:
-+			layout.marginLeft =3D layout.marginRight =3D layout.marginWidth;
-+			layout.marginTop =3D layout.marginBottom =3D layout.marginHeight;
-+		}
-+		layout.marginWidth =3D layout.marginHeight =3D 0;
-+		return layout;
-+	}
-+
-+	/**
-+	 * Creates a label with the specified message
-+	 *=20
-+	 * @param parent
-+	 * @param message
-+	 *=20
-+	 * @return the created label
-+	 */
-+	public static Label createLabel(Composite parent, String message) {
-+		return createLabel(parent, message, 1);
-+	}
-+
-+	/**
-+	 * Creates a label with the specified message and span
-+	 *=20
-+	 * @param parent
-+	 * @param message
-+	 * @param span
-+	 *=20
-+	 * @return the created label
-+	 */
-+	public static Label createLabel(Composite parent, String message, int=
- span) {
-+		final Label label =3D new Label(parent, SWT.WRAP);
-+		if (message !=3D null)
-+			label.setText(message);
-+		label.setLayoutData(createHFillGridData(span));
-+		return label;
-+	}
-+
-+	/**
-+	 * Creates a check box with the specified message
-+	 *=20
-+	 * @param parent
-+	 * @param message
-+	 *=20
-+	 * @return the created check box
-+	 */
-+	public static Button createCheckBox(Composite parent, String message)=
- {
-+		return createCheckBox(parent, message, 1);
-+	}
-+
-+	/**
-+	 * Creates a check box with the specified message and span
-+	 *=20
-+	 * @param parent
-+	 * @param message
-+	 * @param span
-+	 *=20
-+	 * @return the created check box
-+	 */
-+	public static Button createCheckBox(Composite parent, String message,
-+			int span) {
-+		final Button button =3D new Button(parent, SWT.CHECK);
-+		button.setText(message);
-+		button.setLayoutData(createHFillGridData(span));
-+		return button;
-+	}
-+
-+	/**
-+	 * Creates a radio button with the specified message
-+	 *=20
-+	 * @param parent
-+	 * @param message
-+	 *=20
-+	 * @return the created radio button
-+	 */
-+	public static Button createRadioButton(Composite parent, String messa=
-ge) {
-+		return createRadioButton(parent, message, 1);
-+	}
-+
-+	/**
-+	 * Creates a radio button with the specified message and span
-+	 *=20
-+	 * @param parent
-+	 * @param message
-+	 * @param span
-+	 *=20
-+	 * @return the created radio button
-+	 */
-+	public static Button createRadioButton(Composite parent, String messa=
-ge,
-+			int span) {
-+		final Button button =3D new Button(parent, SWT.RADIO);
-+		button.setText(message);
-+		button.setLayoutData(createHFillGridData(span));
-+		return button;
-+	}
-+
-+	/**
-+	 * Creates a text control
-+	 *=20
-+	 * @param parent
-+	 *=20
-+	 * @return the created text control
-+	 */
-+	public static Text createText(Composite parent) {
-+		return createText(parent, 1);
-+	}
-+
-+	/**
-+	 * Creates a text control with the specified span
-+	 *=20
-+	 * @param parent
-+	 * @param span
-+	 *=20
-+	 * @return the created text control
-+	 */
-+	public static Text createText(Composite parent, int span) {
-+		final Text text =3D new Text(parent, SWT.SINGLE | SWT.BORDER);
-+		text.setLayoutData(createHFillGridData(span));
-+		return text;
-+	}
-+
-+	/**
-+	 * Creates a place holder with the specified height and span
-+	 *=20
-+	 * @param parent
-+	 * @param heightInChars
-+	 * @param span
-+	 *=20
-+	 * @return the created place holder
-+	 */
-+	public static Control createPlaceholder(Composite parent,
-+			int heightInChars, int span) {
-+		Assert.isTrue(heightInChars > 0);
-+		final Control placeHolder =3D new Composite(parent, SWT.NONE);
-+		final GridData gd =3D new GridData(SWT.BEGINNING, SWT.TOP, false, fa=
-lse);
-+		gd.heightHint =3D new PixelConverter(parent)
-+				.convertHeightInCharsToPixels(heightInChars);
-+		gd.horizontalSpan =3D span;
-+		placeHolder.setLayoutData(gd);
-+		return placeHolder;
-+	}
-+
-+	/**
-+	 * Creates a place holder with the specified height
-+	 *=20
-+	 * @param parent
-+	 * @param heightInChars
-+	 * @return the created place holder
-+	 */
-+	public static Control createPlaceholder(Composite parent, int heightI=
-nChars) {
-+		return createPlaceholder(parent, heightInChars, 1);
-+	}
-+
-+	/**
-+	 * Creates a pixel converter
-+	 *=20
-+	 * @param control
-+	 *=20
-+	 * @return the created pixel converter
-+	 */
-+	public static PixelConverter createDialogPixelConverter(Control contr=
-ol) {
-+		Dialog.applyDialogFont(control);
-+		return new PixelConverter(control);
-+	}
-+
-+	/**
-+	 * Calculates the size of the specified controls, using the specified
-+	 * converter
-+	 *=20
-+	 * @param converter
-+	 * @param controls
-+	 *=20
-+	 * @return the size of the control(s)
-+	 */
-+	public static int calculateControlSize(PixelConverter converter,
-+			Control[] controls) {
-+		return calculateControlSize(converter, controls, 0, controls.length =
-- 1);
-+	}
-+
-+	/**
-+	 * Calculates the size of the specified subset of controls, using the
-+	 * specified converter
-+	 *=20
-+	 * @param converter
-+	 * @param controls
-+	 * @param start
-+	 * @param end
-+	 *=20
-+	 * @return the created control
-+	 */
-+	public static int calculateControlSize(PixelConverter converter,
-+			Control[] controls, int start, int end) {
-+		int minimum =3D converter
-+				.convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
-+		for (int i =3D start; i <=3D end; i++) {
-+			final int length =3D controls[i]
-+					.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
-+			if (minimum < length)
-+				minimum =3D length;
-+		}
-+		return minimum;
-+	}
-+
-+	/**
-+	 * Equalizes the specified controls using the specified converter
-+	 *=20
-+	 * @param converter
-+	 * @param controls
-+	 */
-+	public static void equalizeControls(PixelConverter converter,
-+			Control[] controls) {
-+		equalizeControls(converter, controls, 0, controls.length - 1);
-+	}
-+
-+	/**
-+	 * Equalizes the specified subset of controls using the specified con=
-verter
-+	 *=20
-+	 * @param converter
-+	 * @param controls
-+	 * @param start
-+	 * @param end
-+	 */
-+	public static void equalizeControls(PixelConverter converter,
-+			Control[] controls, int start, int end) {
-+		final int size =3D calculateControlSize(converter, controls, start, =
-end);
-+		for (int i =3D start; i <=3D end; i++) {
-+			final Control button =3D controls[i];
-+			if (button.getLayoutData() instanceof GridData) {
-+				((GridData) button.getLayoutData()).widthHint =3D size;
-+			}
-+		}
-+	}
-+
-+	/**
-+	 * Gets the width of the longest string in <code>strings</code>, usin=
-g the
-+	 * specified pixel converter
-+	 *=20
-+	 * @param converter
-+	 * @param strings
-+	 *=20
-+	 * @return the width of the longest string
-+	 */
-+	public static int getWidthInCharsForLongest(PixelConverter converter,
-+			String[] strings) {
-+		int minimum =3D 0;
-+		for (int i =3D 0; i < strings.length; i++) {
-+			final int length =3D converter.convertWidthInCharsToPixels(strings[=
-i]
-+					.length());
-+			if (minimum < length)
-+				minimum =3D length;
-+		}
-+		return minimum;
-+	}
-+
-+	private static class PixelConverter {
-+
-+		private final FontMetrics fFontMetrics;
-+
-+		public PixelConverter(Control control) {
-+			GC gc =3D new GC(control);
-+			try {
-+				gc.setFont(control.getFont());
-+				fFontMetrics =3D gc.getFontMetrics();
-+			} finally {
-+				gc.dispose();
-+			}
-+		}
-+
-+		public int convertHeightInCharsToPixels(int chars) {
-+			return Dialog.convertHeightInCharsToPixels(fFontMetrics, chars);
-+		}
-+
-+		public int convertHorizontalDLUsToPixels(int dlus) {
-+			return Dialog.convertHorizontalDLUsToPixels(fFontMetrics, dlus);
-+		}
-+
-+		public int convertVerticalDLUsToPixels(int dlus) {
-+			return Dialog.convertVerticalDLUsToPixels(fFontMetrics, dlus);
-+		}
-+
-+		public int convertWidthInCharsToPixels(int chars) {
-+			return Dialog.convertWidthInCharsToPixels(fFontMetrics, chars);
-+		}
-+	}
-+}
---=20
-1.6.1.2.309.g2ea3
+ create mode 100644 org.spearce.egit.ui/src/org/spearce/egit/ui/interna=
+l/decorators/DecoratableResourceAdapter.java
+ create mode 100644 org.spearce.egit.ui/src/org/spearce/egit/ui/interna=
+l/decorators/GitLightweightDecorator.java
+ delete mode 100644 org.spearce.egit.ui/src/org/spearce/egit/ui/interna=
+l/decorators/GitResourceDecorator.java
+ create mode 100644 org.spearce.egit.ui/src/org/spearce/egit/ui/interna=
+l/decorators/IDecoratableResource.java
+ create mode 100644 org.spearce.egit.ui/src/org/spearce/egit/ui/interna=
+l/preferences/GitDecoratorPreferencePage.java
