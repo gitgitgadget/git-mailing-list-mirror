@@ -1,109 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: [PATCH] git-filter-branch: Add more error-handling
-Date: Wed, 11 Feb 2009 16:24:26 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902111621490.13279@intel-tinevez-2-302>
-References: <1234361365-63711-1-git-send-email-git@randomhacks.net>
+Date: Wed, 11 Feb 2009 16:36:31 +0100
+Message-ID: <4992F07F.2080005@viscovery.net>
+References: <1234361365-63711-1-git-send-email-git@randomhacks.net> <4992E79D.10208@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Eric Kidd <git@randomhacks.net>
-X-From: git-owner@vger.kernel.org Wed Feb 11 16:26:21 2009
+X-From: git-owner@vger.kernel.org Wed Feb 11 16:38:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXGyU-0004uK-40
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 16:26:06 +0100
+	id 1LXHA2-0001kD-Fx
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 16:38:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757430AbZBKPYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 10:24:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757344AbZBKPYb
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 10:24:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42416 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757826AbZBKPY3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 10:24:29 -0500
-Received: (qmail invoked by alias); 11 Feb 2009 15:24:27 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp047) with SMTP; 11 Feb 2009 16:24:27 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/uOrFTxsXuHi7gIomJZ++85addGjrkCGqEZPoRgL
-	SpoLeO0QHDZof0
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <1234361365-63711-1-git-send-email-git@randomhacks.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+	id S1755731AbZBKPge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 10:36:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755404AbZBKPgd
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 10:36:33 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:11162 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754870AbZBKPgd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 10:36:33 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LXH8Z-0003sp-AN; Wed, 11 Feb 2009 16:36:31 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 2C5C96EF; Wed, 11 Feb 2009 16:36:31 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <4992E79D.10208@viscovery.net>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109426>
 
-Hi,
-
-On Wed, 11 Feb 2009, Eric Kidd wrote:
-
-> In commit 9273b56278e64dd47b1a96a705ddf46aeaf6afe3, I fixed an error 
-> that had slipped by the test suites because of a missing check on 'git 
-> read-tree -u -m HEAD'.
+Johannes Sixt schrieb:
+>> @@ -483,7 +486,7 @@ test -z "$ORIG_GIT_INDEX_FILE" || {
+>>  }
+>>  
+>>  if [ "$(is_bare_repository)" = false ]; then
+>> -	git read-tree -u -m HEAD
+>> +	git read-tree -u -m HEAD || die "Unable to checkout rewritten tree"
 > 
-> I mentioned to Johannes Schindelin that there were several bugs of this 
-> type in git-filter-branch, and he suggested that I send a patch.
-> 
-> I've tested this patch using t/t7003-filter-branch.sh, and it passes all
-> the existing tests.  But it's entirely possible that this patch contains
-> errors, and I would love input from people who have more experience with
-> sh and who know more about git-filter-branch.
-> 
-> In particular, the following hunk may change the public UI to
-> git-filter-branch, although I'm not sure whether the change is for
-> better or for worse.  As I understand it, this hunk would allow
-> $filter_commit to abort the rewriting process by returning a non-0 exit
-> status:
-> 
->  	@SHELL_PATH@ -c "$filter_commit" "git commit-tree" \
-> -		$(git write-tree) $parentstr < ../message > ../map/$commit
-> +		$(git write-tree) $parentstr < ../message > ../map/$commit ||
-> +			die "could not write rewritten commit"
->  done <../revs
-> 
-> I'd be happy to add a test case for what happens when $filter_commit
-> returns a non-0 exit status.  Is the old behavior preferable?
-> ---
+> Here you shouldn't die.
 
-Thanks.  Although it lacks a Sign-off, and part of the commit message is 
-actually a personal comment that belongs after the three dashes.
+I take this back. I was distracted by the 'exit $ret' that is visible in
+the context:
 
-> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> index 86eef56..9d50978 100755
-> --- a/git-filter-branch.sh
-> +++ b/git-filter-branch.sh
-> @@ -242,7 +242,7 @@ export GIT_DIR GIT_WORK_TREE
->  
->  # The refs should be updated if their heads were rewritten
->  git rev-parse --no-flags --revs-only --symbolic-full-name --default HEAD "$@" |
-> -sed -e '/^^/d' >"$tempdir"/heads
-> +sed -e '/^^/d' >"$tempdir"/heads || die "Can't make list of original refs"
+>>  fi
+>>  
+>>  exit $ret
 
-This will catch errors in the sed invocation, but not in rev-parse.
+But this exit statement is pointless: ret is initialized to zero and never
+changed.
 
-> @@ -315,10 +315,11 @@ while read commit parents; do
->  			die "tree filter failed: $filter_tree"
->  
->  		(
-> -			git diff-index -r --name-only $commit
-> +			git diff-index -r --name-only $commit &&
->  			git ls-files --others
->  		) |
-> -		git update-index --add --replace --remove --stdin
-> +		git update-index --add --replace --remove --stdin ||
-> +			die "unable to update index with results of tree filter"
-
-This will catch errors in the update-index call, but neither in diff-index 
-nor ls-files.
-
-Otherwise, the patch looks good to me.
-
-Ciao,
-Dscho
+-- Hannes
