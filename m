@@ -1,98 +1,71 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv2 5/6] gitweb: last-modified time should be commiter, not 
-	author
-Date: Wed, 11 Feb 2009 10:54:46 +0100
-Message-ID: <cb7bb73a0902110154h325ed146h4d1161d4a8dcb1ca@mail.gmail.com>
-References: <1232970616-21167-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <86d4c5e00902101910k5512efel2c9165f75d61ba53@mail.gmail.com>
-	 <cb7bb73a0902110102k5b7e5a21vd7d0932c6b6ba20e@mail.gmail.com>
-	 <200902111018.39699.jnareb@gmail.com>
+From: Stefan Karpinski <stefan.karpinski@gmail.com>
+Subject: Re: [RFC] post-commit hook to "fix" patches
+Date: Wed, 11 Feb 2009 01:56:23 -0800
+Message-ID: <d4bc1a2a0902110156nff21282q5fe0a6b7b656a0e6@mail.gmail.com>
+References: <d4bc1a2a0902110148u4e13d77cs3dde64d27003e58c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Deskin Miller <deskinm@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 10:56:26 2009
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	A Large Angry SCM <gitzilla@gmail.com>,
+	Marc Weber <marco-oweber@gmx.de>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 11 10:57:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXBpQ-0003dM-MX
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 10:56:25 +0100
+	id 1LXBqq-0004Be-Ds
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 10:57:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754850AbZBKJyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 04:54:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbZBKJyu
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 04:54:50 -0500
-Received: from mail-ew0-f26.google.com ([209.85.219.26]:45281 "EHLO
-	mail-ew0-f26.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341AbZBKJys (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 04:54:48 -0500
-Received: by ewy7 with SMTP id 7so33434ewy.13
-        for <git@vger.kernel.org>; Wed, 11 Feb 2009 01:54:46 -0800 (PST)
+	id S1754332AbZBKJ40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 04:56:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752645AbZBKJ4Z
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 04:56:25 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:28547 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752546AbZBKJ4Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 04:56:24 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so62169wah.21
+        for <git@vger.kernel.org>; Wed, 11 Feb 2009 01:56:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=537BFpYNNTAg3L6NoooW5YTm5pizuz0/XId2vaXSJC0=;
-        b=fR2vgGacFf8CjChUwi2hxuknGvcmBMPQ4vIob2XYuWbD5iiThCfK1OuEJdlfg1OguI
-         +tcjB6eWbUC9Vb/ZMFGh6MClIgOLyT4K9+BG7WRzI4x3/lcKwvgdDSglWmU+tthvq/rk
-         IQL4anjZvZ3jWQnBTjGvjqCjaNj3vfYx9ykA4=
+        bh=RC5/kRoU1OwfyHZq8lOLJEhUfV2x/a6nz17FvffcbwE=;
+        b=hp30pqXgwgIhB76huLbD4Nq8mJw7n4vYLdtXUI7CyJfx4hFGkIIxQgpHpZr8qFn4rA
+         65XTE1jRk0p8iaIie/XGeLim6q5LpFnRl/hPmBH62eC5rz4kHZJVgcaxMRAR2BpmAuE9
+         Y8t1qGOf85uMXB/JdcOAMCIDy6KDW7xsRy/NM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=InEn9lid578RXW6pP6FJauzhww9KTjytbhjkzXR3ultJm/B7pRxMqtLMUMcaVC6el+
-         GkwrGQAV0AYH4l44od9IJZx4vmVQRGaEdouj7AKOVIMCr9/3tqjCGJzvASpF09MuNMJg
-         WickUIfvbdGO+r1wlRHWtMunDfgUl0CmIe/2w=
-Received: by 10.210.39.8 with SMTP id m8mr1727951ebm.154.1234346086893; Wed, 
-	11 Feb 2009 01:54:46 -0800 (PST)
-In-Reply-To: <200902111018.39699.jnareb@gmail.com>
+        b=Q4++DxsIb1+2GvY8lS2A0nkGy8DkWAD5Z1Sy/dqwUN5QbvPr0ibKYK86RlB4FgZYyU
+         rvY7RsM4M+715yvPtMkQ/vBB423KyL/iKrRUFf6L9jLDUIwQmdpmbj+sTq+M1/Hidckm
+         B8AJQXQ8VKenW2JJgDB1M7c5rMPbvaixBUQWg=
+Received: by 10.114.157.1 with SMTP id f1mr5458702wae.43.1234346183395; Wed, 
+	11 Feb 2009 01:56:23 -0800 (PST)
+In-Reply-To: <d4bc1a2a0902110148u4e13d77cs3dde64d27003e58c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109395>
 
-On Wed, Feb 11, 2009 at 10:18 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Wed, 11 Feb 2009, Giuseppe Bilotta wrote:
->> On Wed, Feb 11, 2009 at 4:10 AM, Deskin Miller <deskinm@gmail.com> wrote:
->>> git reflog?
->>>
->>> Seems like one could find the oldest time the commit appears in the
->>> reflog, for the branch one is interested in.  You can use the commit
->>> time to limit the search through the reflog, but there would be clock
->>> skew concerns.
->>
->> Bingo! Thanks a lot
->>
->> oblomov@rbot ~ $ GIT_DIR=/var/git/rbot.git/ git reflog show
->> --since="two days ago" master | cat
->> 7324b32... master@{0}: push
->> e2dc08d... master@{1}: push
->> oblomov@rbot ~ $ GIT_DIR=/var/git/rbot.git/ git reflog show
->> --since="yesterday" master | cat
->> oblomov@rbot ~ $
->>
->> I'll try to work it in the next review for this patchset.
->
-> Assuming that you have reflog enabled (yes, it is default now)...
-> So you would have to provide fallback in the case there is no reflog.
->
-> BTW. "git reflog" is porcelain; it would be better to parse reflog
-> directly, I think.
+I'm CC'ing a couple people who replied to the thread I referenced
+earlier, in case they're interested and would otherwise miss this
+message.
 
-Does disabling reflog remove old reflogs? IOW, can I check if reflog
-is enabled just by opening the reflog file and assuming reflog isn't
-enabled if it's not there? Falling back to the commit date would still
-work decently.
+Especially Marc Weber, who expressed interest in having a good
+solution to this problem. Does this address what you wanted? I like it
+because it allows you to transparently and automatically enforce style
+policy and:
 
-Since we're only interested in the last reflog date, what we can do is
-to read the last line and get the unix time which is held two places
-before the tab separating the metadata from the log message. Correct?
-
-
--- 
-Giuseppe "Oblomov" Bilotta
+  - it doesn't require modifying git,
+  - it's efficient (no overhead except on commit),
+  - it doesn't pretend to be a clean/smudge filter (as people pointed
+out this isn't reversible),
+  - it's portable: everything's written in sh and perl.
