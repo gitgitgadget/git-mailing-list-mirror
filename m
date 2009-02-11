@@ -1,109 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Drop double-semicolon in C
-Date: Tue, 10 Feb 2009 17:48:40 -0800
-Message-ID: <7vfxiliw07.fsf@gitster.siamese.dyndns.org>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
+Date: Tue, 10 Feb 2009 19:58:15 -0600
+Message-ID: <200902101958.21284.bss@iguanasuicide.net>
+References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de> <200902100158.46884.bss@iguanasuicide.net> <20090210131600.GD17305@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 11 02:50:17 2009
+Content-Type: multipart/signed;
+  boundary="nextPart2527904.F8EehSksuT";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, spearce@spearce.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 11 03:00:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX4Ey-0004oM-RG
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 02:50:17 +0100
+	id 1LX4OG-0007lj-Kf
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 02:59:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753266AbZBKBsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 20:48:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752885AbZBKBsu
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 20:48:50 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34664 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752341AbZBKBst (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 20:48:49 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B0F4898596;
-	Tue, 10 Feb 2009 20:48:46 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1279198594; Tue,
- 10 Feb 2009 20:48:43 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1F11493A-F7DE-11DD-A7A9-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753934AbZBKB6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 20:58:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753674AbZBKB6Z
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 20:58:25 -0500
+Received: from eastrmmtao107.cox.net ([68.230.240.59]:55627 "EHLO
+	eastrmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752407AbZBKB6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 20:58:24 -0500
+Received: from eastrmimpo03.cox.net ([68.1.16.126])
+          by eastrmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090211015824.VYHD23750.eastrmmtao107.cox.net@eastrmimpo03.cox.net>;
+          Tue, 10 Feb 2009 20:58:24 -0500
+Received: from localhost ([72.204.50.125])
+	by eastrmimpo03.cox.net with bizsmtp
+	id ERyN1b0022i4SyG02RyPfV; Tue, 10 Feb 2009 20:58:23 -0500
+X-Authority-Analysis: v=1.0 c=1 a=kahiNejmDeEA:10 a=2p8oXooCbN8A:10
+ a=Fq1VQ0LPAAAA:8 a=g5MTTETZpcmJMd6_8TQA:9 a=smFSSdp-uYp6zytQ4mgA:7
+ a=GVl_6f4wgnJCjeOdlBjexapcTKsA:4 a=T3brmoaXcPoA:10 a=LY0hPdMaydYA:10
+ a=nQwsU0KE4TZviDOQGkIA:9 a=PrH3SBCaFU0gV8UEucDoE2agfi4A:4 a=rPt6xJ-oxjAA:10
+X-CM-Score: 0.00
+Received: from bss by localhost with local (Exim 4.69)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LX4Mn-000LqN-Dd; Tue, 10 Feb 2009 19:58:21 -0600
+User-Agent: KMail/1.11.0 (Linux/2.6.26-1-amd64; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <20090210131600.GD17305@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109366>
 
-The worst offenders are "continue;;" and "break;;" in switch statements.
+--nextPart2527904.F8EehSksuT
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+On Tuesday 10 February 2009 07:16:00 you wrote:
+> On Tue, Feb 10, 2009 at 01:58:41AM -0600, Boyd Stephen Smith Jr. wrote:
+> > On Monday 09 February 2009 15:12:06 Johannes Schindelin wrote:
+> > > So I think it would be a sane plan to do the following when a commit
+> > > note is requested:
+> >
+> > So, something like a Trie data structure?  I think that is a great way =
+to
+> > store fixed-length strings from a limited alphabet with arbitrary data
+> > attached.
+>
+> I don't think a Trie quite makes sense here. We still have to look
+> linearly through each git tree (an artifact of the tree implementation).
 
- * I think this is very trivial.  You can use
+Perhaps it's not a traditional trie structure but that was the closest anal=
+ogy=20
+I could come up with.  I was actually thinking of something between a trie =
+and=20
+a b-tree, I think.  (It has been a long time since data structures class...)
 
-   $ git grep -n -e ';;' --and --not -e 'for *(.*;;' -- '*.c'
+The issue, as I understand it, it that we don't have gargantuan tree object=
+s. =20
+Reading and writing are slow and they'd also take up way to much memory if =
+you=20
+are only trying to find a few commits.
 
-   to verify I caught all the bad ones.
+So, we figure out a maximum tree size that is reasonable, figure out a fan-=
+out=20
+that prevents the tree from growing above that size, but *dynamically* appl=
+y=20
+that fan-out.  I.e. if the fanout is 2 characters, and we've added notes fo=
+r=20
+both ff82730c and ff23abc0, then our tree would have ff/ -> some_tree_sha, =
+but=20
+if we had only a note for the one one our tree would have ff82730c... ->=20
+some_note_sha.  Unlike .git/objects, we should probably also do dynamic fan=
+out=20
+in subtrees.
 
- fast-import.c |    2 +-
- rerere.c      |    2 +-
- tree.c        |    2 +-
- walker.c      |    2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+Yes, this would require a custom merge strategy for notes to flatten -> mer=
+ge=20
+=2D> canonicalize.
 
-diff --git a/fast-import.c b/fast-import.c
-index 03b13e0..3ef3413 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -869,7 +869,7 @@ static char *create_index(void)
- 	/* Generate the fan-out array. */
- 	c = idx;
- 	for (i = 0; i < 256; i++) {
--		struct object_entry **next = c;;
-+		struct object_entry **next = c;
- 		while (next < last) {
- 			if ((*next)->sha1[0] != i)
- 				break;
-diff --git a/rerere.c b/rerere.c
-index 718fb52..3518207 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -290,7 +290,7 @@ static int do_plain_rerere(struct string_list *rr, int fd)
- 			hex = xstrdup(sha1_to_hex(sha1));
- 			string_list_insert(path, rr)->util = hex;
- 			if (mkdir(git_path("rr-cache/%s", hex), 0755))
--				continue;;
-+				continue;
- 			handle_file(path, NULL, rr_path(hex, "preimage"));
- 			fprintf(stderr, "Recorded preimage for '%s'\n", path);
- 		}
-diff --git a/tree.c b/tree.c
-index dfe4d5f..25d2e29 100644
---- a/tree.c
-+++ b/tree.c
-@@ -110,7 +110,7 @@ int read_tree_recursive(struct tree *tree,
- 		case 0:
- 			continue;
- 		case READ_TREE_RECURSIVE:
--			break;;
-+			break;
- 		default:
- 			return -1;
- 		}
-diff --git a/walker.c b/walker.c
-index 679adab..e57630e 100644
---- a/walker.c
-+++ b/walker.c
-@@ -18,7 +18,7 @@ void walker_say(struct walker *walker, const char *fmt, const char *hex)
- static void report_missing(const struct object *obj)
- {
- 	char missing_hex[41];
--	strcpy(missing_hex, sha1_to_hex(obj->sha1));;
-+	strcpy(missing_hex, sha1_to_hex(obj->sha1));
- 	fprintf(stderr, "Cannot obtain needed %s %s\n",
- 		obj->type ? typename(obj->type): "object", missing_hex);
- 	if (!is_null_sha1(current_commit_sha1))
--- 
-1.6.2.rc0.36.g8307
+> Or did you mean something else entirely?
+
+Yeah, that.
+
+While I'm throwing out crazy ideas, why not makes a notes tree look just li=
+ke=20
+=2Egit/objects, including info and pack directories?
+=2D-=20
+Boyd Stephen Smith Jr.                   ,=3D ,-_-. =3D.
+bss@iguanasuicide.net                   ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy         `-'(. .)`-'
+http://iguanasuicide.net/                    \_/
+
+
+--nextPart2527904.F8EehSksuT
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkmSMLgACgkQ55pqL7G1QFlgPgCeMuXNDMfjSin/17TtRiLFVakm
+7aAAn1q6oKypHhQgB655PNB3BxYlY/x9
+=KUpj
+-----END PGP SIGNATURE-----
+
+--nextPart2527904.F8EehSksuT--
