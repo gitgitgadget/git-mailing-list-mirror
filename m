@@ -1,68 +1,68 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: showing SHA1 of parent commit in tig [was Re: [ANNOUNCE] tig-0.14
-Date: Wed, 11 Feb 2009 16:05:40 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngp5tqk.u46.sitaramc@sitaramc.homelinux.net>
-References: <20090205204436.GA6072@diku.dk> <20090206104946.GE7259@b2j>
- <2c6b72b30902060629i2539ddds48ab858e83d4bb4@mail.gmail.com>
- <slrngooljv.urh.sitaramc@sitaramc.homelinux.net>
- <2c6b72b30902080207m4a1e14b7j4862f9a8b7ca32a9@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: Q: description of file name encoding approach used by git
+Date: Wed, 11 Feb 2009 11:08:48 -0500
+Message-ID: <76718490902110808g47b3ce0bm24419c89b5cb4aaa@mail.gmail.com>
+References: <85647ef50902110356l19870259t9de22fd8827ac144@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 11 17:08:06 2009
+Cc: git@vger.kernel.org
+To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 17:11:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXHcW-00063B-6L
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 17:07:28 +0100
+	id 1LXHfk-0007eE-NT
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 17:10:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755925AbZBKQGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 11:06:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755860AbZBKQGA
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 11:06:00 -0500
-Received: from main.gmane.org ([80.91.229.2]:46727 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753254AbZBKQF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 11:05:59 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LXHb0-0004ux-B9
-	for git@vger.kernel.org; Wed, 11 Feb 2009 16:05:54 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Feb 2009 16:05:54 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 11 Feb 2009 16:05:54 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1757660AbZBKQIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 11:08:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757646AbZBKQIu
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 11:08:50 -0500
+Received: from rv-out-0506.google.com ([209.85.198.225]:9813 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757631AbZBKQIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 11:08:49 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so7606rvb.1
+        for <git@vger.kernel.org>; Wed, 11 Feb 2009 08:08:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TcycQTnlb8hOJrHLc5GqS6fOJsDVb79K84GpfOOs9ew=;
+        b=Nk1ZKnSqYpfmejfLruQ3rHqxjgTnP3bAHO3OeTSEsG4KPAReT/aQbod4Vl61nIK5Za
+         ETqmsNn+JZpZe6sP5k1onHX6w+lxd6DSF470YWaC5kr7JO7sxkAaVy/SmZhZSA4wMy5v
+         rHkWfZ280FlOlvOe+VfgagnBcOwkuhPRCEiE8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Q3WCRN+PyCxg03P7cZ/6OC+br0JBZsffqutMYkopiy7kq7YFoBzAQzfJArRFeCYUDX
+         P+5oEuNjJiJvgiYYw5c2vlUySMxxrkx5tZXhzpSChNsAzQHCUqsVbCr/Z1qbgTbKFvm4
+         fkuDG//N9AplNE0CPin58Gf27/FnEKKfOjirU=
+Received: by 10.141.71.21 with SMTP id y21mr5657716rvk.0.1234368528291; Wed, 
+	11 Feb 2009 08:08:48 -0800 (PST)
+In-Reply-To: <85647ef50902110356l19870259t9de22fd8827ac144@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109433>
 
-On 2009-02-08, Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
-> On Fri, Feb 6, 2009 at 16:25, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+On Wed, Feb 11, 2009 at 6:56 AM, Constantine Plotnikov
+<constantine.plotnikov@gmail.com> wrote:
+> 3. As I understand, there is an unresolved problem with Mac OSX HFS+
+> case insensitive file system due to file name normalization.
 
->> But I must say that the last time I did this, the hunks that
->> tig showed me were more granular than what 'git gui' did; no
->> idea why.  To do what I wanted to do in 'git gui' was
->> possible, by staging line by line instead of hunk by hunk,
->> but I didn't fancy all that clicking and tig saved me.
+HFS+ can be configured to be case-sensitive, though it is not by
+default. However, this is only a problem if the repo contains > 1
+filenames that collide in a case-insensitive filesystem, since HFS+ is
+case-preserving.
 
-> Great to hear. I sometimes, miss though, being able to lower the diff
-> context to 1 or 2, however, maybe I should learn to commit more often
-> instead.
+The larger HFS+ problem is that it performs Unicode NFD normalization,
+which is unfortunately lossy. There are some good links about the
+topic here: https://bugs.launchpad.net/bzr/+bug/172383
 
-Is there any way to see the sha1 of the parent commit in any
-of the displays, like gitk does?
-
-I know you're only parsing the 4 or 5 basic git commands,
-and none of those do, so I guess I know the answer :-( but
-it doesn't hurt to ask.
+j.
