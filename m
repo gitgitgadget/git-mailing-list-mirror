@@ -1,82 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-filter-branch: Add more error-handling
-Date: Wed, 11 Feb 2009 15:58:37 +0100
-Message-ID: <4992E79D.10208@viscovery.net>
-References: <1234361365-63711-1-git-send-email-git@randomhacks.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] fast-export: ensure we traverse commits in topological
+ order
+Date: Wed, 11 Feb 2009 16:18:28 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902111618120.13279@intel-tinevez-2-302>
+References: <1234332233-10017-1-git-send-email-newren@gmail.com> <1234332233-10017-2-git-send-email-newren@gmail.com> <alpine.DEB.1.00.0902111125410.10279@pacific.mpi-cbg.de> <e2b179460902110248m8055b3amdebcfc550438cff2@mail.gmail.com>
+ <20090211135640.GA19600@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Kidd <git@randomhacks.net>
-X-From: git-owner@vger.kernel.org Wed Feb 11 16:00:13 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mike Ralphson <mike.ralphson@gmail.com>,
+	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 11 16:20:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXGZN-0002OG-7t
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 16:00:09 +0100
+	id 1LXGsY-0002G5-Tf
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 16:19:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753980AbZBKO6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 09:58:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbZBKO6m
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 09:58:42 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:50966 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750958AbZBKO6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 09:58:41 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LXGXs-0002EJ-U9; Wed, 11 Feb 2009 15:58:37 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id A6B066EF; Wed, 11 Feb 2009 15:58:36 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <1234361365-63711-1-git-send-email-git@randomhacks.net>
-X-Spam-Score: -1.4 (-)
+	id S1755471AbZBKPSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 10:18:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755446AbZBKPSc
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 10:18:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40507 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755282AbZBKPSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 10:18:31 -0500
+Received: (qmail invoked by alias); 11 Feb 2009 15:18:29 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp006) with SMTP; 11 Feb 2009 16:18:29 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Yq5MeqOAYb5fdcts1JABfqliEWCN7ZomqC86zAZ
+	ea2HexW/HiCLGF
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090211135640.GA19600@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109423>
 
-Eric Kidd schrieb:
-> In particular, the following hunk may change the public UI to
-> git-filter-branch, although I'm not sure whether the change is for
-> better or for worse.  As I understand it, this hunk would allow
-> $filter_commit to abort the rewriting process by returning a non-0 exit
-> status:
+Hi,
+
+On Wed, 11 Feb 2009, Jeff King wrote:
+
+> On Wed, Feb 11, 2009 at 10:48:18AM +0000, Mike Ralphson wrote:
 > 
->  	@SHELL_PATH@ -c "$filter_commit" "git commit-tree" \
-> -		$(git write-tree) $parentstr < ../message > ../map/$commit
-> +		$(git write-tree) $parentstr < ../message > ../map/$commit ||
-> +			die "could not write rewritten commit"
->  done <../revs
+> > > On Tue, 10 Feb 2009, newren@gmail.com wrote:
+> > > fast-export will only list as parents those commits which have already
+> > > been traversed (making it appear as if merges have been squashed if not
+> > > all parents have been traversed).  To avoid this silent squashing of
+> > > merge commits, we request commits in topological order.
+> > 
+> > Any comparative timings? We don't need to rename this to 'git
+> > reasonably-speedy-export'? 8-)
 > 
-> I'd be happy to add a test case for what happens when $filter_commit
-> returns a non-0 exit status.  Is the old behavior preferable?
+> Hmm.
+> 
+> In git.git:
+> 
+>   $ time git fast-export --all --signed-tags=strip >/dev/null
+>   real    1m6.013s
+>   user    1m3.840s
+>   sys     0m2.140s
+> 
+>   $ time git fast-export --all --signed-tags=strip --topo-order >/dev/null
+>   real    0m49.018s
+>   user    0m47.987s
+>   sys     0m0.888s
+> 
+> I certainly didn't expect it to be _faster_.  More efficient use of the
+> delta cache, maybe?
 
-I think it's OK to die if the commit filter fails.
+Or a warm against a cold cache?
 
-But generally, I think it is not necessary to use 'die with error
-message', a plain '|| exit' should be enough because an error will have
-been reported already by the tool that failed.
-
-> @@ -483,7 +486,7 @@ test -z "$ORIG_GIT_INDEX_FILE" || {
->  }
->  
->  if [ "$(is_bare_repository)" = false ]; then
-> -	git read-tree -u -m HEAD
-> +	git read-tree -u -m HEAD || die "Unable to checkout rewritten tree"
-
-Here you shouldn't die. But unlike elsewhere, this case warrants an
-explanation for the user:
-
-	git read-tree -u -m HEAD ||
-		echo >&2 "WARNING: The working directory is not up-to-date!"
-
->  fi
->  
->  exit $ret
-
--- Hannes
+Hides,
+Dscho
