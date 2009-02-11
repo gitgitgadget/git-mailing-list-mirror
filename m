@@ -1,62 +1,66 @@
 From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: gitk endless loop
-Date: Wed, 11 Feb 2009 12:26:22 +0100
-Message-ID: <4992B5DE.3010207@viscovery.net>
+Subject: Re: [PATCH] Disable filemode rebase tests in t3400-rebase.sh if no
+ 	filesystem mode support
+Date: Wed, 11 Feb 2009 12:30:13 +0100
+Message-ID: <4992B6C5.3010609@viscovery.net>
+References: <81b0412b0902110151x35fbbb4esb9efefae2e1fe90a@mail.gmail.com>	 <4992A3DF.4010707@viscovery.net> <81b0412b0902110253g2288419eha4037f22f6286ea4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Feb 11 12:28:10 2009
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 12:32:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXDGA-0008G8-WB
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 12:28:07 +0100
+	id 1LXDJt-00017d-NM
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 12:31:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754376AbZBKL0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 06:26:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753870AbZBKL0k
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 06:26:40 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:56116 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753400AbZBKL0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 06:26:39 -0500
+	id S1754376AbZBKLab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 06:30:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753870AbZBKLaa
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 06:30:30 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:49249 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753271AbZBKLaa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 06:30:30 -0500
 Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
 	(envelope-from <j.sixt@viscovery.net>)
-	id 1LXDEW-0001zZ-4L; Wed, 11 Feb 2009 12:26:30 +0100
+	id 1LXDIH-0001z1-6v; Wed, 11 Feb 2009 12:30:24 +0100
 Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
 	by linz.eudaptics.com (Postfix) with ESMTP
-	id 5FE466EF; Wed, 11 Feb 2009 12:26:22 +0100 (CET)
+	id 833B06EF; Wed, 11 Feb 2009 12:30:13 +0100 (CET)
 User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <81b0412b0902110253g2288419eha4037f22f6286ea4@mail.gmail.com>
 X-Enigmail-Version: 0.95.5
 X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109410>
 
-This recipe sends gitk into an endless loop. In git.git do:
+Alex Riesen schrieb:
+> 2009/2/11 Johannes Sixt <j.sixt@viscovery.net>:
+>> Alex Riesen schrieb:
+>>> I'm honestly sorry for my contributions. They seem to be exclusively
+>>> in the "make Git work in Windows" area.  Depressing.
+>>>
+>>>  t/t3400-rebase.sh |    5 +++++
+>>>  1 files changed, 5 insertions(+), 0 deletions(-)
+>> Very interesting. This test works unmodified here. On the other hand, I
+>> have to skip the entire t4129-apply-samemode.sh.
+>>
+> 
+> hmm... These seem to work here. I have to use Cygwin. Do you use the
+> native port?
 
-cd t
-# remove chmod a+x A near the end of the file
-sed -i 's/chmod/: chmod/' t3400-rebase.sh
-sh t3400-rebase.sh --debug
-cd trash\ directory.t3400-rebase/
-gitk master modechange modechange@{1}
-
-
-I briefly see the history chart, but the dot that should be modechange@{1}
-is missing. One automatically selected commit is shown in the diff section
-below. But then the commit list is cleared and gitk goes into an infinite
-loop.
-
-Things work alright if either modechange@{1} is dropped, or the 'chmod'
-line is left unchanged, which is a bit strange.
-
-This is with git version 1.6.1.2.390.gba743
+Yes. And the reason why the test does not fail here is because the mode
+change is outright ignored, and the test doesn't check whether the result
+meets the expectations.
 
 -- Hannes
