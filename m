@@ -1,71 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] completion: Use consistent if [...] convention. No
- test.
-Date: Wed, 11 Feb 2009 10:14:26 -0800
-Message-ID: <7v63jgg7st.fsf@gitster.siamese.dyndns.org>
-References: <1234375406-27099-1-git-send-email-ted@tedpavlic.com>
- <1234375406-27099-2-git-send-email-ted@tedpavlic.com>
- <1234375406-27099-3-git-send-email-ted@tedpavlic.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: fact-import: failed to apply delta
+Date: Wed, 11 Feb 2009 10:15:30 -0800
+Message-ID: <20090211181530.GO30949@spearce.org>
+References: <20090210191220.GT30949@spearce.org> <alpine.LNX.1.00.0902101427300.19665@iabervon.org> <20090210201203.GU30949@spearce.org> <alpine.LNX.1.00.0902101520240.19665@iabervon.org> <20090210212539.GV30949@spearce.org> <alpine.LNX.1.00.0902101628140.19665@iabervon.org> <20090210213612.GW30949@spearce.org> <7vprhqkjrr.fsf@gitster.siamese.dyndns.org> <7vfxillxiu.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0902111247300.19665@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: spearce@spearce.org, git@vger.kernel.org
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 19:16:02 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Feb 11 19:17:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXJcu-0003dB-Ty
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 19:16:01 +0100
+	id 1LXJdt-000446-Ln
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 19:17:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755610AbZBKSOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 13:14:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755066AbZBKSOd
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 13:14:33 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64664 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753942AbZBKSOd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 13:14:33 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id BB4782AEB6;
-	Wed, 11 Feb 2009 13:14:31 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E7C9E2AE50; Wed,
- 11 Feb 2009 13:14:27 -0500 (EST)
-In-Reply-To: <1234375406-27099-3-git-send-email-ted@tedpavlic.com> (Ted
- Pavlic's message of "Wed, 11 Feb 2009 13:03:24 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D4439D38-F867-11DD-A1D7-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1756728AbZBKSPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 13:15:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756669AbZBKSPd
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 13:15:33 -0500
+Received: from george.spearce.org ([209.20.77.23]:46721 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755926AbZBKSPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 13:15:32 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id ED16F38210; Wed, 11 Feb 2009 18:15:30 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.1.00.0902111247300.19665@iabervon.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109472>
 
-Ted Pavlic <ted@tedpavlic.com> writes:
+Daniel Barkalow <barkalow@iabervon.org> wrote:
+> 
+> I think free_pack_by_name() also needs to drop the entries that are from 
+> the freed pack, to avoid having repack able to get the same problem, 
+> although I wouldn't be surprised if repack happened to never allocate a 
+> new pack after freeing an old pack with stale delta cache entries, or 
+> never used the delta cache after that, simply because it does one thing 
+> and then exits.
 
-> -		if [ -d "$g/rebase-apply" ]
-> -		then
-> -			if test -f "$g/rebase-apply/rebasing"
-> -			then
-> +		if [ -d "$g/rebase-apply" ]; then
-> +			if [ -f "$g/rebase-apply/rebasing" ]; then
->  				r="|REBASE"
-> -			elif test -f "$g/rebase-apply/applying"
-> -			then
-> +            elif [ -f "$g/rebase-apply/applying" ]; then
->  				r="|AM"
->  			else
+Oy.  I missed that we added this function.  Patch follows.
 
-What's with this funny indentation?
+--8<--
+Clear the delta base cache if a pack is rebuilt
 
-As a general rule, it usually is a good idea to apply clean-up to the
-codebase before starting substantial work, but that holds true only when
-the clean-up is undisputed.  Otherwise you would end up holding the later,
-more "interesting" work a hostage to an earlier potentially controversial
-"clean-up".
+There is some risk that re-opening a regenerated pack file with
+different offsets could leave stale entries within the delta base
+cache that could be matched up against other objects using the same
+"struct packed_git*" and pack offset.
 
-I think this particular clean-up makes the odd-ball __git_ps1 more
-consnstent with the rest of the script, but it ultimately is Shawn's
-call.
+Throwing away the entire delta base cache in this case is safer,
+as we don't have to worry about a recycled "struct packed_git*"
+matching to the wrong base object, resulting in delta apply
+errors while unpacking an object.
+
+Suggested-by: Daniel Barkalow <barkalow@iabervon.org>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ sha1_file.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 7459a9c..5b6e0f6 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -689,6 +689,7 @@ void free_pack_by_name(const char *pack_name)
+ 	while (*pp) {
+ 		p = *pp;
+ 		if (strcmp(pack_name, p->pack_name) == 0) {
++			clear_delta_base_cache();
+ 			close_pack_windows(p);
+ 			if (p->pack_fd != -1)
+ 				close(p->pack_fd);
+-- 
+1.6.2.rc0.186.g417c
