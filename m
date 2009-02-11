@@ -1,75 +1,69 @@
-From: Deskin Miller <deskinm@gmail.com>
-Subject: Re: [PATCHv2 5/6] gitweb: last-modified time should be commiter, not 
-	author
-Date: Tue, 10 Feb 2009 22:10:02 -0500
-Message-ID: <86d4c5e00902101910k5512efel2c9165f75d61ba53@mail.gmail.com>
-References: <1232970616-21167-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200902050038.57999.jnareb@gmail.com>
-	 <cb7bb73a0902060314u4741528bs196a43d45ff7f283@mail.gmail.com>
-	 <200902062212.08857.jnareb@gmail.com>
-	 <cb7bb73a0902061500x12105a13la78703918937fe4b@mail.gmail.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
+Date: Wed, 11 Feb 2009 16:30:10 +1300
+Message-ID: <49924642.6000609@vilain.net>
+References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de> <200902100158.46884.bss@iguanasuicide.net> <20090210131600.GD17305@coredump.intra.peff.net> <200902101958.21284.bss@iguanasuicide.net> <alpine.LFD.2.00.0902101825360.3590@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 04:12:55 2009
+Cc: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, spearce@spearce.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 11 04:32:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX5Ww-0007Qu-AI
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 04:12:54 +0100
+	id 1LX5pq-0002ub-9P
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 04:32:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752917AbZBKDKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 22:10:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbZBKDKG
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 22:10:06 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:63771 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752782AbZBKDKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 22:10:04 -0500
-Received: by qw-out-2122.google.com with SMTP id 5so273958qwi.37
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 19:10:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lhoWtzQdHl6cHwpkEWHXuBQnaBkQG8vOGJPm3SHHXYU=;
-        b=D+dwhRXiHBsG/s8j5AIcYL+k2XsW/fTnHtNI9bWePuwUhWmQfWuerm6GGu+mhNbPWR
-         1aQlD/hNYA8A6ysOHn/w9xFErWcmaFaegbVcWTS1lmxkiceErLtYUJG7Jl7+uQxr+OTl
-         7rnlGO5bDj/xgbPQruh5DR5+J5A5XAhVVoFNA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=l5Gqh8PtZGqSgshA+e1REpJQ3hkoDNGqxXAKH/l6ShFPPH78auf6i3Kk2ut9/3Sdru
-         fl9NSAkVFY/m/cUrytCuf/xj6MRDCQ/4nrNCyZROSj+yvyMUFIclapSrz7NebtVmos5z
-         XqevQEKlO987+2cWZhUDlty+QJKfIeCb6lFLE=
-Received: by 10.143.29.17 with SMTP id g17mr535452wfj.109.1234321802869; Tue, 
-	10 Feb 2009 19:10:02 -0800 (PST)
-In-Reply-To: <cb7bb73a0902061500x12105a13la78703918937fe4b@mail.gmail.com>
+	id S1753263AbZBKDa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 22:30:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752912AbZBKDa1
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 22:30:27 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:51380 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752853AbZBKDa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 22:30:27 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 8072221D5BF; Wed, 11 Feb 2009 16:30:17 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
+	PLING_QUERY autolearn=no version=3.2.5
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id AC22721D141;
+	Wed, 11 Feb 2009 16:30:10 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <alpine.LFD.2.00.0902101825360.3590@localhost.localdomain>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109370>
 
-On Fri, Feb 6, 2009 at 18:00, Giuseppe Bilotta
-<giuseppe.bilotta@gmail.com> wrote:
+Linus Torvalds wrote:
+> That sounds unnecessarily complicated. It also really sucks for the case 
+> you want to optimize: small differences between trees, where you don't 
+> need to even linearize the common parts.
 >
-> The real question is: _how_ do you get the (branch) update time?
->
+> Why not make it just a straight fixed 12-bit prefix, single-level trie.
+>   
 
-Sorry the topic's cold, but...
+My solution suffers from that problem too, but I personally still don't
+think that the answer is to fix the trie boundary.
 
-git reflog?
+The only case where it hurts is when you want to merge. Nothing else
+should care. So, if a merge of these note trees sees two different trie
+sizes then it can convert the shorter one to the longer length first,
+and then try the merge again. So you get the pain, but only once. And
+when a project decides that its split is too small, it can split then
+and it should "silently" spread out to others.
 
-Seems like one could find the oldest time the commit appears in the
-reflog, for the branch one is interested in.  You can use the commit
-time to limit the search through the reflog, but there would be clock
-skew concerns.
-
-Deskin Miller
+Sam.
