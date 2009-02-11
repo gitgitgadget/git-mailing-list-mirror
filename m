@@ -1,67 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make repack less likely to corrupt repository
-Date: Tue, 10 Feb 2009 16:31:07 -0800
-Message-ID: <7vwsbxizlg.fsf@gitster.siamese.dyndns.org>
-References: <1234140299-29785-1-git-send-email-robin.rosenberg@dewire.com>
- <200902110051.20975.robin.rosenberg.lists@dewire.com>
- <7vd4dpkfr2.fsf@gitster.siamese.dyndns.org>
- <200902110127.18149.robin.rosenberg.lists@dewire.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
+Date: Wed, 11 Feb 2009 14:14:38 +1300
+Message-ID: <4992267E.6050707@vilain.net>
+References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	spearce@spearce.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 01:32:56 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, peff@peff.net, spearce@spearce.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 11 02:16:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX323-00009B-Jn
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 01:32:52 +0100
+	id 1LX3iD-000473-EW
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 02:16:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757613AbZBKAbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 19:31:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758060AbZBKAbT
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 19:31:19 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39015 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758121AbZBKAbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 19:31:17 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DB46698E41;
-	Tue, 10 Feb 2009 19:31:15 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3611A98E40; Tue,
- 10 Feb 2009 19:31:09 -0500 (EST)
-In-Reply-To: <200902110127.18149.robin.rosenberg.lists@dewire.com> (Robin
- Rosenberg's message of "Wed, 11 Feb 2009 01:27:17 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4AF56D34-F7D3-11DD-849A-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1754642AbZBKBO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 20:14:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753875AbZBKBO5
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 20:14:57 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:39292 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752451AbZBKBO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 20:14:56 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 3E8EA21D141; Wed, 11 Feb 2009 14:14:46 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
+	PLING_QUERY autolearn=no version=3.2.5
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id C6A7221C491;
+	Wed, 11 Feb 2009 14:14:39 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109363>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
-
-> onsdag 11 februari 2009 00:56:49 skrev Junio C Hamano:
->> We failed to honor what the end user wanted: to repack.  Why should we
->> exit 0 here?
+Johannes Schindelin wrote:
+> Hi,
 >
-> A repack may or may not yield a better packed repo. In this case, not,
-> but for a different reason than failing to find better deltas. Given the
-> circumstances that is most likely to cause the "failure (repacking on
-> windows), this is "normal" behaviour and no reason to scare the user
-> with an error code.
+> Shawn triggered some well needed thinking on my part about the notes 
+> implementation.  At the moment, we have flat directory structure, and read 
+> all of them in one go (when needed).
+>
+> I think we should support that, because it is relatively easy to generate 
+> that kind of trees for small-scale applications.
+>
+> However, I think there is also a benefit to handle fan-out directory 
+> structures, too: they scale much nicer.
+>
+> If the commit name was not found as a filename, it could be searched in 
+> whatever subdirectory whose name is a prefix of said commit name (first 
+> wins).
+>   
 
-Up to this point, I felt my earlier misconception corrected, but then ...
+Great idea! Glad I thought of it! ;-)
 
-> The unlink error might be enough.
+http://thread.gmane.org/gmane.comp.version-control.git/106715/focus=107975
 
-... I think we should not even show unlink errors, if "this is not an
-error, nothing to worry about" is the official stance about such failure;
-otherwise the errors will scare people, *and* others then doubly complain
-that even the command detects errors, the whole thing does *not* error
-out.
+I hoped my approach allowed for smarter things later, such as splitting
+into smaller buckets whenever a directory gets more than N entries or
+periodically rebalancing if required. But the initial version is at
+least forward thinking to support reading it.
+
+Merging them will need to be savvy of this of course.
+
+Sam.
