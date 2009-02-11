@@ -1,92 +1,98 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Disable filemode rebase tests in t3400-rebase.sh if no 
-	filesystem mode support
-Date: Wed, 11 Feb 2009 10:51:30 +0100
-Message-ID: <81b0412b0902110151x35fbbb4esb9efefae2e1fe90a@mail.gmail.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv2 5/6] gitweb: last-modified time should be commiter, not 
+	author
+Date: Wed, 11 Feb 2009 10:54:46 +0100
+Message-ID: <cb7bb73a0902110154h325ed146h4d1161d4a8dcb1ca@mail.gmail.com>
+References: <1232970616-21167-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <86d4c5e00902101910k5512efel2c9165f75d61ba53@mail.gmail.com>
+	 <cb7bb73a0902110102k5b7e5a21vd7d0932c6b6ba20e@mail.gmail.com>
+	 <200902111018.39699.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0015174c17a85bf6aa0462a18cc9
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Deskin Miller <deskinm@gmail.com>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 11 10:54:04 2009
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 10:56:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXBmc-0002Nv-Cz
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 10:53:30 +0100
+	id 1LXBpQ-0003dM-MX
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 10:56:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756551AbZBKJve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 04:51:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756540AbZBKJve
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 04:51:34 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:28686 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756516AbZBKJvc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 04:51:32 -0500
-Received: by nf-out-0910.google.com with SMTP id d21so9309nfb.21
-        for <git@vger.kernel.org>; Wed, 11 Feb 2009 01:51:31 -0800 (PST)
+	id S1754850AbZBKJyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 04:54:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbZBKJyu
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 04:54:50 -0500
+Received: from mail-ew0-f26.google.com ([209.85.219.26]:45281 "EHLO
+	mail-ew0-f26.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753341AbZBKJys (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 04:54:48 -0500
+Received: by ewy7 with SMTP id 7so33434ewy.13
+        for <git@vger.kernel.org>; Wed, 11 Feb 2009 01:54:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=nVMZ4FxgBvjq+F2btso1op0ibIiDOqBGyWyehEqHtWk=;
-        b=qjNLGcUoKtDd3BY6AebkeaviL7ZlNFYzPf3Es4l6TyI0lAJppuVp8GFrXOguH3A1hJ
-         t51u0p9bvuo15NRxZHBj/iQme639LK2nPDugcgLWMuDNDCBeJozkLGRrOpFoRrBleDjv
-         i47QiNAXTXUpqiAddraD3kaxYTGml+m4hokBk=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=537BFpYNNTAg3L6NoooW5YTm5pizuz0/XId2vaXSJC0=;
+        b=fR2vgGacFf8CjChUwi2hxuknGvcmBMPQ4vIob2XYuWbD5iiThCfK1OuEJdlfg1OguI
+         +tcjB6eWbUC9Vb/ZMFGh6MClIgOLyT4K9+BG7WRzI4x3/lcKwvgdDSglWmU+tthvq/rk
+         IQL4anjZvZ3jWQnBTjGvjqCjaNj3vfYx9ykA4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=Kdyt2qjrw6nwGtq6zzNt9sLJpmmAtnFIvS5zr5uj/m6o+hXc5RSJ6pAnbQm2N8WbNQ
-         +ytjOkqfV8SGykcLhNuq5jk71CKqmsbJG/u+YC53kqdB55OVqZDmIWSg9wbnzXXMrOA/
-         pfCA8An6rTxjg8qz6lg2JoLvtvOfMqxHBxsx4=
-Received: by 10.210.35.17 with SMTP id i17mr67464ebi.165.1234345890936; Wed, 
-	11 Feb 2009 01:51:30 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=InEn9lid578RXW6pP6FJauzhww9KTjytbhjkzXR3ultJm/B7pRxMqtLMUMcaVC6el+
+         GkwrGQAV0AYH4l44od9IJZx4vmVQRGaEdouj7AKOVIMCr9/3tqjCGJzvASpF09MuNMJg
+         WickUIfvbdGO+r1wlRHWtMunDfgUl0CmIe/2w=
+Received: by 10.210.39.8 with SMTP id m8mr1727951ebm.154.1234346086893; Wed, 
+	11 Feb 2009 01:54:46 -0800 (PST)
+In-Reply-To: <200902111018.39699.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109394>
 
---0015174c17a85bf6aa0462a18cc9
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+On Wed, Feb 11, 2009 at 10:18 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Wed, 11 Feb 2009, Giuseppe Bilotta wrote:
+>> On Wed, Feb 11, 2009 at 4:10 AM, Deskin Miller <deskinm@gmail.com> wrote:
+>>> git reflog?
+>>>
+>>> Seems like one could find the oldest time the commit appears in the
+>>> reflog, for the branch one is interested in.  You can use the commit
+>>> time to limit the search through the reflog, but there would be clock
+>>> skew concerns.
+>>
+>> Bingo! Thanks a lot
+>>
+>> oblomov@rbot ~ $ GIT_DIR=/var/git/rbot.git/ git reflog show
+>> --since="two days ago" master | cat
+>> 7324b32... master@{0}: push
+>> e2dc08d... master@{1}: push
+>> oblomov@rbot ~ $ GIT_DIR=/var/git/rbot.git/ git reflog show
+>> --since="yesterday" master | cat
+>> oblomov@rbot ~ $
+>>
+>> I'll try to work it in the next review for this patchset.
+>
+> Assuming that you have reflog enabled (yes, it is default now)...
+> So you would have to provide fallback in the case there is no reflog.
+>
+> BTW. "git reflog" is porcelain; it would be better to parse reflog
+> directly, I think.
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+Does disabling reflog remove old reflogs? IOW, can I check if reflog
+is enabled just by opening the reflog file and assuming reflog isn't
+enabled if it's not there? Falling back to the commit date would still
+work decently.
 
-I'm honestly sorry for my contributions. They seem to be exclusively
-in the "make Git work in Windows" area.  Depressing.
+Since we're only interested in the last reflog date, what we can do is
+to read the last line and get the unix time which is held two places
+before the tab separating the metadata from the log message. Correct?
 
- t/t3400-rebase.sh |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
 
---0015174c17a85bf6aa0462a18cc9
-Content-Type: application/octet-stream; 
-	name="0001-Disable-filemode-rebase-tests-in-t3400-rebase.sh-if-n.diff"
-Content-Disposition: attachment; 
-	filename="0001-Disable-filemode-rebase-tests-in-t3400-rebase.sh-if-n.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fr1tkhqu0
-
-RnJvbSBmNDFiOTliYmRmMTAyNDljMGRmY2I1NDU0NTcwOWYwYThkZDAwNDg0IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBXZWQsIDExIEZlYiAyMDA5IDEwOjQ1OjQzICswMTAwClN1YmplY3Q6IFtQQVRDSF0gRGlzYWJs
-ZSBmaWxlbW9kZSByZWJhc2UgdGVzdHMgaW4gdDM0MDAtcmViYXNlLnNoIGlmIG5vIGZpbGVzeXN0
-ZW0gbW9kZSBzdXBwb3J0CgpTaWduZWQtb2ZmLWJ5OiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21h
-aWwuY29tPgotLS0KIHQvdDM0MDAtcmViYXNlLnNoIHwgICAgNSArKysrKwogMSBmaWxlcyBjaGFu
-Z2VkLCA1IGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvdC90MzQw
-MC1yZWJhc2Uuc2ggYi90L3QzNDAwLXJlYmFzZS5zaAppbmRleCA4YzBjNWY1Li5hMjI5Mjc2IDEw
-MDc1NQotLS0gYS90L3QzNDAwLXJlYmFzZS5zaAorKysgYi90L3QzNDAwLXJlYmFzZS5zaApAQCAt
-NzAsNiArNzAsMTAgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyBcCiAgICAgIHRlc3QgMyA9ICQoZ2l0
-IHJldi1saXN0IG1hc3Rlci4uIHwgd2MgLWwpCiAnCiAKK2lmIHRlc3QgIiQoZ2l0IGNvbmZpZyAt
-LWJvb2wgY29yZS5maWxlbW9kZSkiID0gZmFsc2UKK3RoZW4KKyAgICBzYXkgJ3NraXBwaW5nIHJl
-YmFzZSBmaWxlbW9kZSB0ZXN0cyAobm8gZmlsZXN5c3RlbSBzdXBwb3J0KScKK2Vsc2UKIHRlc3Rf
-ZXhwZWN0X3N1Y2Nlc3MgJ3JlYmFzZSBhIHNpbmdsZSBtb2RlIGNoYW5nZScgJwogICAgICBnaXQg
-Y2hlY2tvdXQgbWFzdGVyICYmCiAgICAgIGVjaG8gMSA+IFggJiYKQEAgLTk0LDUgKzk4LDYgQEAg
-dGVzdF9leHBlY3Rfc3VjY2VzcyAnU2hvdyB2ZXJib3NlIGVycm9yIHdoZW4gSEVBRCBjb3VsZCBu
-b3QgYmUgZGV0YWNoZWQnICcKICAgICAgdGVzdF9tdXN0X2ZhaWwgZ2l0IHJlYmFzZSB0b3BpYyAy
-PiBvdXRwdXQuZXJyID4gb3V0cHV0Lm91dCAmJgogICAgICBncmVwICJVbnRyYWNrZWQgd29ya2lu
-ZyB0cmVlIGZpbGUgLkIuIHdvdWxkIGJlIG92ZXJ3cml0dGVuIiBvdXRwdXQuZXJyCiAnCitmaQog
-CiB0ZXN0X2RvbmUKLS0gCjEuNi4yLnJjMC4yOC5nMWYwZmU4Cgo=
---0015174c17a85bf6aa0462a18cc9--
+-- 
+Giuseppe "Oblomov" Bilotta
