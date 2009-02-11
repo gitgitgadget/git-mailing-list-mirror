@@ -1,130 +1,277 @@
-From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-Subject: Re: RFC: Flat directory for notes, or fan-out?  Both!
-Date: Tue, 10 Feb 2009 19:58:15 -0600
-Message-ID: <200902101958.21284.bss@iguanasuicide.net>
-References: <alpine.DEB.1.00.0902092200170.10279@pacific.mpi-cbg.de> <200902100158.46884.bss@iguanasuicide.net> <20090210131600.GD17305@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2527904.F8EehSksuT";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, spearce@spearce.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 11 03:00:02 2009
+From: Eric Kidd <git@randomhacks.net>
+Subject: [PATCH] Rough draft: Split a git repo into superproject and submodule
+Date: Tue, 10 Feb 2009 21:36:14 -0500
+Message-ID: <1234319774-48037-1-git-send-email-git@randomhacks.net>
+Cc: Eric Kidd <git@randomhacks.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 11 03:39:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX4OG-0007lj-Kf
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 02:59:53 +0100
+	id 1LX50A-00082S-P9
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 03:39:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753934AbZBKB6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 20:58:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753674AbZBKB6Z
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 20:58:25 -0500
-Received: from eastrmmtao107.cox.net ([68.230.240.59]:55627 "EHLO
-	eastrmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752407AbZBKB6Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 20:58:24 -0500
-Received: from eastrmimpo03.cox.net ([68.1.16.126])
-          by eastrmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090211015824.VYHD23750.eastrmmtao107.cox.net@eastrmimpo03.cox.net>;
-          Tue, 10 Feb 2009 20:58:24 -0500
-Received: from localhost ([72.204.50.125])
-	by eastrmimpo03.cox.net with bizsmtp
-	id ERyN1b0022i4SyG02RyPfV; Tue, 10 Feb 2009 20:58:23 -0500
-X-Authority-Analysis: v=1.0 c=1 a=kahiNejmDeEA:10 a=2p8oXooCbN8A:10
- a=Fq1VQ0LPAAAA:8 a=g5MTTETZpcmJMd6_8TQA:9 a=smFSSdp-uYp6zytQ4mgA:7
- a=GVl_6f4wgnJCjeOdlBjexapcTKsA:4 a=T3brmoaXcPoA:10 a=LY0hPdMaydYA:10
- a=nQwsU0KE4TZviDOQGkIA:9 a=PrH3SBCaFU0gV8UEucDoE2agfi4A:4 a=rPt6xJ-oxjAA:10
-X-CM-Score: 0.00
-Received: from bss by localhost with local (Exim 4.69)
-	(envelope-from <bss@iguanasuicide.net>)
-	id 1LX4Mn-000LqN-Dd; Tue, 10 Feb 2009 19:58:21 -0600
-User-Agent: KMail/1.11.0 (Linux/2.6.26-1-amd64; KDE/4.2.0; x86_64; ; )
-In-Reply-To: <20090210131600.GD17305@coredump.intra.peff.net>
+	id S1752567AbZBKCgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Feb 2009 21:36:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752451AbZBKCgX
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 21:36:23 -0500
+Received: from randomhacks.net ([69.93.127.95]:57391 "EHLO randomhacks.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750823AbZBKCgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Feb 2009 21:36:22 -0500
+Received: from pool-64-222-85-242.burl.east.myfairpoint.net ([64.222.85.242] helo=localhost.localdomain)
+	by randomhacks.net with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <git@randomhacks.net>)
+	id 1LX4xZ-0006xI-9B; Tue, 10 Feb 2009 21:36:21 -0500
+X-Mailer: git-send-email 1.6.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109367>
 
---nextPart2527904.F8EehSksuT
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+I have some extremely large git repositories which I want to split into
+modules.  This could be done using 'git filter-branch' and the following
+steps:
 
-On Tuesday 10 February 2009 07:16:00 you wrote:
-> On Tue, Feb 10, 2009 at 01:58:41AM -0600, Boyd Stephen Smith Jr. wrote:
-> > On Monday 09 February 2009 15:12:06 Johannes Schindelin wrote:
-> > > So I think it would be a sane plan to do the following when a commit
-> > > note is requested:
-> >
-> > So, something like a Trie data structure?  I think that is a great way =
-to
-> > store fixed-length strings from a limited alphabet with arbitrary data
-> > attached.
->
-> I don't think a Trie quite makes sense here. We still have to look
-> linearly through each git tree (an artifact of the tree implementation).
+ 1) Create a submodule using --subdirectory-filter.
+ 2) Create a superproject using an index filter to delete the submodule.
+ 3) Commit the submodule to the latest version of the superproject.
 
-Perhaps it's not a traditional trie structure but that was the closest anal=
-ogy=20
-I could come up with.  I was actually thinking of something between a trie =
-and=20
-a b-tree, I think.  (It has been a long time since data structures class...)
+Unfortunately, this approach loses all the historical connections
+between the superproject and the submodule, breaking tools like 'git
+bisect', and making it difficult to recover old releases.
 
-The issue, as I understand it, it that we don't have gargantuan tree object=
-s. =20
-Reading and writing are slow and they'd also take up way to much memory if =
-you=20
-are only trying to find a few commits.
+Ideally, each version of the newly created superproject would be linked
+to the correct version of the submodule (and all the .gitmodules entries
+would be set up correctly, too, throughout the project's history).
 
-So, we figure out a maximum tree size that is reasonable, figure out a fan-=
-out=20
-that prevents the tree from growing above that size, but *dynamically* appl=
-y=20
-that fan-out.  I.e. if the fanout is 2 characters, and we've added notes fo=
-r=20
-both ff82730c and ff23abc0, then our tree would have ff/ -> some_tree_sha, =
-but=20
-if we had only a note for the one one our tree would have ff82730c... ->=20
-some_note_sha.  Unlike .git/objects, we should probably also do dynamic fan=
-out=20
-in subtrees.
+The attached patch contains a _very_ rough draft of a git
+submodule-split command.  You can run it as follows:
 
-Yes, this would require a custom merge strategy for notes to flatten -> mer=
-ge=20
-=2D> canonicalize.
+  git submodule-split original-repo superproject directory-to-split
+  git clone superproject.git superproject
+  cd superproject
+  git submodule update --init
 
-> Or did you mean something else entirely?
+It will output two repositories named superproject.git and
+subproject.git.  Internally, it runs 'git filter-branch' on a bare
+repository.
 
-Yeah, that.
+There's a test suite, too.
 
-While I'm throwing out crazy ideas, why not makes a notes tree look just li=
-ke=20
-=2Egit/objects, including info and pack directories?
-=2D-=20
-Boyd Stephen Smith Jr.                   ,=3D ,-_-. =3D.
-bss@iguanasuicide.net                   ((_/)o o(\_))
-ICQ: 514984 YM/AIM: DaTwinkDaddy         `-'(. .)`-'
-http://iguanasuicide.net/                    \_/
+I still have quite a few things left to do before this script is
+actually useful:
 
+  Rename submodule-split to something more appropriate
+  Update .gitmodules using git config
+  Merge new entries with existing .gitmodules
+  Add support for directory and repository names which differ
+  Add support for multiple possible directory names
+  Add support for directories which move around the tree
+  Add support for directories which are missing in some revisions
 
---nextPart2527904.F8EehSksuT
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+I'm releasing this version for feedback on the general design and the
+coding style.  I don't often write shell scripts of this magnitude, and
+there are almost certainly some portability and style problems.  So please
+let me know what needs improvement, and I'll try to fix it.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Thank you for your feedback!
+---
+ .gitignore                 |    1 +
+ Makefile                   |    1 +
+ git-submodule-split.sh     |  113 ++++++++++++++++++++++++++++++++++++++++++++
+ t/t7404-submodule-split.sh |   36 ++++++++++++++
+ 4 files changed, 151 insertions(+), 0 deletions(-)
+ create mode 100644 git-submodule-split.sh
+ create mode 100755 t/t7404-submodule-split.sh
 
-iEYEABECAAYFAkmSMLgACgkQ55pqL7G1QFlgPgCeMuXNDMfjSin/17TtRiLFVakm
-7aAAn1q6oKypHhQgB655PNB3BxYlY/x9
-=KUpj
------END PGP SIGNATURE-----
-
---nextPart2527904.F8EehSksuT--
+diff --git a/.gitignore b/.gitignore
+index 13311f1..fa6ed07 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -119,6 +119,7 @@ git-show
+ git-show-branch
+ git-show-index
+ git-show-ref
++git-submodule-split
+ git-stage
+ git-stash
+ git-status
+diff --git a/Makefile b/Makefile
+index 27b9569..aceac8f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -277,6 +277,7 @@ SCRIPT_SH += git-sh-setup.sh
+ SCRIPT_SH += git-stash.sh
+ SCRIPT_SH += git-submodule.sh
+ SCRIPT_SH += git-web--browse.sh
++SCRIPT_SH += git-submodule-split.sh
+ 
+ SCRIPT_PERL += git-add--interactive.perl
+ SCRIPT_PERL += git-archimport.perl
+diff --git a/git-submodule-split.sh b/git-submodule-split.sh
+new file mode 100644
+index 0000000..d7d1080
+--- /dev/null
++++ b/git-submodule-split.sh
+@@ -0,0 +1,113 @@
++#!/bin/sh
++# 
++# Split a repository into a submodule and main module, with history
++#
++# Copyright 2009 Eric Kidd
++# License: GNU General Public License, version 2 or later
++
++USAGE="src-repo dst-repo submodule-repo"
++
++OPTIONS_SPEC=
++NONGIT_OK=Yes
++. git-sh-setup
++
++# Keep our argument parsing simple for now.
++test "$#" = 3 || usage
++src_repo="$1"
++dst_repo="$2.git"
++sub_repo="$3.git"
++submodule_dir="$3"
++revs="--all"
++
++# Make a bare clone of a git repo with identical branches.
++git_mirror() {
++	git clone --mirror "$1" "$2" || exit 1
++	# For some reason, git clone --mirror doesn't actually create our
++	# local branch references for us.
++	(cd "$2" && git fetch || exit 1)
++}
++
++# We export these variables so that they can be used from scripts passed to
++# git filter-branch.  Thanks to gitte for this trick, which also allows us
++# to do the right thing when subdirectory names contain spaces and quotes.
++export SPLIT_SUB_REPO="$sub_repo"
++export SPLIT_SUBMODULE_DIR="$submodule_dir"
++export SPLIT_MAP_DIR="`pwd`/$sub_repo/split-map"
++
++
++#--------------------------------------------------------------------------
++# Create the new submodule
++
++# Create a copy of $src_repo to transform.
++git_mirror "$src_repo" "$sub_repo"
++
++# For each commit ID, we will create a files in containing
++# information that we'll later use to rewrite the subproject.
++mkdir "$SPLIT_MAP_DIR" || exit 1
++
++index_filter=$(cat << \EOF
++map_info="$SPLIT_MAP_DIR/$GIT_COMMIT"
++if git rev-parse -q --verify $GIT_COMMIT:"$SPLIT_SUBMODULE_DIR"; then
++	# Adapted from git-filter-branch.
++	err=$(git read-tree -i -m $GIT_COMMIT:"$SPLIT_SUBMODULE_DIR" 2>&1) ||
++		die "$err"
++        echo -n "$SPLIT_SUBMODULE_DIR" > "$map_info-dir"
++else
++	# We will use an empty file to indicate that the directory
++        # doesn't exist in the tree.
++	# touch "$map_info-skipped"
++	die "Directory is missing"
++fi
++EOF
++)
++
++commit_filter=$(cat << \EOF
++map_info="$SPLIT_MAP_DIR/$GIT_COMMIT"
++new_commit="$(git commit-tree "$@")" || exit 1
++echo $new_commit
++echo $new_commit > "$map_info-submodule-commit" ||
++	die "Can't record the commit ID of the new commit"
++EOF
++)
++
++# Run our filters.
++(cd "$sub_repo" &&
++ git filter-branch --index-filter "$index_filter" \
++     --commit-filter "$commit_filter" -- "$revs") || exit 1
++
++
++#--------------------------------------------------------------------------
++# Create the new superproject
++
++# Next, create our new parent repository.
++git_mirror "$src_repo" "$dst_repo"
++
++index_filter=$(cat << \EOF
++map_info="$SPLIT_MAP_DIR/$GIT_COMMIT"
++
++# Splice the repo into the tree.
++test -f "$map_info-submodule-commit" || die "Can't find map for $GIT_COMMIT"
++git rm -q --cached -r "$SPLIT_SUBMODULE_DIR" || exit 1
++echo "160000 $(cat "$map_info-submodule-commit")	$SPLIT_SUBMODULE_DIR" |
++	git update-index --index-info || exit 1
++
++# Construct a new .gitmodules file.
++cat > "$SPLIT_MAP_DIR/gitmodules" <<EOC
++[submodule "$SPLIT_SUBMODULE_DIR"]
++	path = $SPLIT_SUBMODULE_DIR
++	url = ../$SPLIT_SUB_REPO
++EOC
++
++# Write the new .gitmodules file into the tree.
++new_obj=$(git hash-object -t blob -w "$SPLIT_MAP_DIR/gitmodules") ||
++	die "Error adding new .gitmodules file to tree"
++git update-index --add --cacheinfo 100644 "$new_obj" .gitmodules || exit 1
++
++EOF
++)
++
++# Run our filter.
++(cd "$dst_repo" &&
++ git filter-branch --index-filter "$index_filter" -- "$revs") || exit 1
++
++exit 0
+diff --git a/t/t7404-submodule-split.sh b/t/t7404-submodule-split.sh
+new file mode 100755
+index 0000000..b490c60
+--- /dev/null
++++ b/t/t7404-submodule-split.sh
+@@ -0,0 +1,36 @@
++#!/bin/sh
++#
++# Copyright 2009 Eric Kidd
++
++test_description='git submodule-split tests'
++. ./test-lib.sh
++
++rm -rf .git
++test_create_repo original
++
++test_expect_success \
++	'create original repository' \
++	'(cd original &&
++	  echo "In main project" > main-file &&
++	  mkdir sub1 &&
++	  echo "In sub1" > sub1/sub1-file &&
++	  git add . &&
++	  git commit -m "Original project and sub1")'
++
++test_expect_success \
++	'split out sub1' \
++	'git submodule-split original split1 sub1 &&
++	 git clone split1.git split1 &&
++	 test -f split1/main-file &&
++	 ! test -f split1/sub1/sub1-file &&
++	 git clone sub1.git sub1 &&
++	 test -f sub1/sub1-file'
++
++test_expect_success \
++	'compare split repositories with original' \
++	'rm -rf split1 &&
++	 git clone split1.git split1 &&
++	 (cd split1 && git submodule init sub1 && git submodule update) &&
++	 diff -uNr -x .git -x .gitmodules original split1'
++
++test_done
+-- 
+1.6.0.4
