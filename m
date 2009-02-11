@@ -1,98 +1,65 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Add automatic git-mergetool invocation to the new infrastructure
-Date: Wed, 11 Feb 2009 14:11:16 +0100
-Message-ID: <20090211131116.GA30272@diana.vm.bytemark.co.uk>
-References: <20090210141157.28782.10027.stgit@pc1117.cambridge.arm.com> <20090211092028.GC26136@diana.vm.bytemark.co.uk> <b0943d9e0902110248n7aa14743p19079e3d967f77a9@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] New command: 'git snapshot'.
+Date: Wed, 11 Feb 2009 08:43:22 -0500
+Message-ID: <20090211134322.GB19223@coredump.intra.peff.net>
+References: <38cfbb550902091054u78f2e706u67752b4dc9de6c3b@mail.gmail.com> <etsYQzEDjdk-_NxhvO3i6EyShR6eZ202GBdQx7ZZpPHH5iNfWiuV6g@cipher.nrlssc.navy.mil> <38cfbb550902101240x1202c592ra7eb01d66e22da43@mail.gmail.com> <20090210230054.GD26954@coredump.intra.peff.net> <7vy6wdkhzk.fsf@gitster.siamese.dyndns.org> <83d7aaa40902101539m3c40deeeo2d452f6dbb7c379c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 14:12:57 2009
+To: Geoffrey Lee <geoffreyj.lee@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 14:45:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXEtT-0008WE-D9
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 14:12:47 +0100
+	id 1LXFOg-00036k-LL
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 14:45:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754870AbZBKNLU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Feb 2009 08:11:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754703AbZBKNLU
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 08:11:20 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:54188 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752763AbZBKNLT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 08:11:19 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1LXEs0-0007ur-00; Wed, 11 Feb 2009 13:11:16 +0000
+	id S1755186AbZBKNn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 08:43:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755181AbZBKNn0
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 08:43:26 -0500
+Received: from peff.net ([208.65.91.99]:48734 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751873AbZBKNnZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 08:43:25 -0500
+Received: (qmail 30031 invoked by uid 107); 11 Feb 2009 13:43:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 11 Feb 2009 08:43:41 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Feb 2009 08:43:22 -0500
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0902110248n7aa14743p19079e3d967f77a9@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <83d7aaa40902101539m3c40deeeo2d452f6dbb7c379c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109414>
 
-On 2009-02-11 10:48:00 +0000, Catalin Marinas wrote:
+On Tue, Feb 10, 2009 at 03:39:19PM -0800, Geoffrey Lee wrote:
 
-> 2009/2/11 Karl Hasselstr=F6m <kha@treskal.com>:
->
-> > On 2009-02-10 14:14:07 +0000, Catalin Marinas wrote:
-> >
-> > > I'm still not entirely sure where the check for stgit.autoimerge
-> > > should be done. In the classic infrastructure, it is done in the
-> > > merge function. With this patch, it is done in
-> > > Transaction.push(). Should we push this even further to
-> > > stgit.commands.push? My opinion is not since by having it in
-> > > Transaction we get the advantage not listing the conflicts if
-> > > the mergetool succeeds and we don't need to abort the
-> > > transaction.
-> >
-> > Yes, one advantage of having it here is that if the user resolves
-> > the conflict, we can just continue. I'm not sure I personally like
-> > that mode of operation -- you might have guessed by now that I
-> > like noninteractive mechanisms -- but I can see how it's useful to
-> > someone who does.
->
-> I find it useful when I prepare a kernel release and pick patches
-> from many branches, it saves some typing with having to run the
-> mergetool and restart the pick or push command. It's also useful for
-> "sync".
->
-> > Another advantage of having it here is that it automatically just
-> > works for all commands, not just "stg push".
->
-> It works for commands that use Transaction.push_patch(). Other
-> commands that use IndexAndWorktree.merge() via some other function
-> would not work. Will there be such functions? I suspect a "sync"
-> implementation would need additional support in Transaction.
+> Git stash doesn't touch untracked files, whereas git snapshot would.
+> Take another closer look at the table in the original post titled
+> "What are the differences between 'git stash' and 'git snapshot'?"
 
-Yes, you're right.
+Sure, I was just responding to that particular statement about reset.
+But I think it generalizes. Why not "--untracked" as an option?
 
-> Any thoughts on calling mergetool from IndexAndWorktree.merge()
-> (with an additional parameter to explicitly enable this rather than
-> just reading the config option)?
+In other words, there are several behaviors that people might not like
+about stash, and I think they can be combined in multiple ways. So one
+solution is to make another command which chooses a different set of
+behaviors. But what about the person who wants "--untracked" but not
+"--no-reset"? Do they make a third command?
 
-That could very well be a good idea -- I can't think of anything wrong
-with it. (And it's a good idea to make this a parameter rather than
-making it read the config option.)
+So it is much more flexible to make orthogonal switches that can be
+turned on and off independently. And of course if you have a workflow
+which always uses a particular set of switches, it is convenient to hide
+it behind an alias.  And if there are just a few workflows that are
+common to a lot of people, those can graduate to become git commands.
 
-> > The disadvantage that I see is that we ask the user to put work
-> > into resolving conflicts before we've made sure that we won't roll
-> > back the whole transaction. If this is to become a dependable
-> > feature, we need a way to make sure we'll never throw away the
-> > user's work.
->
-> Maybe push_patch() can receive a parameter on whether to invoke
-> mergetool. The calling code should know the behaviour for aborting
-> transactions and only ask for interactivity if the command is
-> expected to leave conflicts in the index.
+But this proposal seems to be starting in the opposite direction, with a
+new command that is closely related to stash but changes a few
+behaviors. I haven't seen a convincing argument that between stash and
+snapshot, git will now serve all or most people's workflows (and we
+don't need another command that does something in between).
 
-That sounds like a plan.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-Peff
