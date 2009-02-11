@@ -1,68 +1,91 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Q: description of file name encoding approach used by git
-Date: Wed, 11 Feb 2009 11:08:48 -0500
-Message-ID: <76718490902110808g47b3ce0bm24419c89b5cb4aaa@mail.gmail.com>
-References: <85647ef50902110356l19870259t9de22fd8827ac144@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT] [PATCH] Make sure that the commit message has Unix
+	format line
+Date: Wed, 11 Feb 2009 08:13:46 -0800
+Message-ID: <20090211161346.GD30949@spearce.org>
+References: <34467.77.61.241.211.1234338327.squirrel@hupie.xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 17:11:06 2009
+To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+X-From: git-owner@vger.kernel.org Wed Feb 11 17:15:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXHfk-0007eE-NT
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 17:10:49 +0100
+	id 1LXHk1-00018h-Sl
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 17:15:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757660AbZBKQIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 11:08:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757646AbZBKQIu
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 11:08:50 -0500
-Received: from rv-out-0506.google.com ([209.85.198.225]:9813 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757631AbZBKQIt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 11:08:49 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so7606rvb.1
-        for <git@vger.kernel.org>; Wed, 11 Feb 2009 08:08:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=TcycQTnlb8hOJrHLc5GqS6fOJsDVb79K84GpfOOs9ew=;
-        b=Nk1ZKnSqYpfmejfLruQ3rHqxjgTnP3bAHO3OeTSEsG4KPAReT/aQbod4Vl61nIK5Za
-         ETqmsNn+JZpZe6sP5k1onHX6w+lxd6DSF470YWaC5kr7JO7sxkAaVy/SmZhZSA4wMy5v
-         rHkWfZ280FlOlvOe+VfgagnBcOwkuhPRCEiE8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Q3WCRN+PyCxg03P7cZ/6OC+br0JBZsffqutMYkopiy7kq7YFoBzAQzfJArRFeCYUDX
-         P+5oEuNjJiJvgiYYw5c2vlUySMxxrkx5tZXhzpSChNsAzQHCUqsVbCr/Z1qbgTbKFvm4
-         fkuDG//N9AplNE0CPin58Gf27/FnEKKfOjirU=
-Received: by 10.141.71.21 with SMTP id y21mr5657716rvk.0.1234368528291; Wed, 
-	11 Feb 2009 08:08:48 -0800 (PST)
-In-Reply-To: <85647ef50902110356l19870259t9de22fd8827ac144@mail.gmail.com>
+	id S1755475AbZBKQNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 11:13:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753559AbZBKQNr
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 11:13:47 -0500
+Received: from george.spearce.org ([209.20.77.23]:59255 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755302AbZBKQNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 11:13:46 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 28FAB38210; Wed, 11 Feb 2009 16:13:46 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <34467.77.61.241.211.1234338327.squirrel@hupie.xs4all.nl>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109434>
 
-On Wed, Feb 11, 2009 at 6:56 AM, Constantine Plotnikov
-<constantine.plotnikov@gmail.com> wrote:
-> 3. As I understand, there is an unresolved problem with Mac OSX HFS+
-> case insensitive file system due to file name normalization.
+"Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl> wrote:
+> From 2ad66e099fb35ad9a0d97e553843434b68ec82c9 Mon Sep 17 00:00:00 2001 From: Ferry Huberts <ferry.huberts@pelagic.nl>
+> Date: Wed, 11 Feb 2009 08:29:36 +0100
+> Subject: [PATCH] Make sure that the commit message has Unix format line delimiters
+> 
+> Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
 
-HFS+ can be configured to be case-sensitive, though it is not by
-default. However, this is only a problem if the repo contains > 1
-filenames that collide in a case-insensitive filesystem, since HFS+ is
-case-preserving.
+Doesn't this change that I committed yesterday also fix this?
 
-The larger HFS+ problem is that it performs Unicode NFD normalization,
-which is unfortunately lossy. There are some good links about the
-topic here: https://bugs.launchpad.net/bzr/+bug/172383
+  commit 72cb3bd763f17a7d9894a8443e05965ff5e77157
+  Author: Shawn O. Pearce <spearce@spearce.org>
+  Date:   Tue Feb 10 09:13:06 2009 -0800
 
-j.
+    Append Signed-off-by text in the commit message editor
+
+    The user can see and edit the Signed-off-by line in the commit
+    dialog before committing.  Toggling the existing checkbox now
+    updates the message to add or remove the user's Signed-off-by
+    line, displaying the final message.
+
+    Updating the committer name and/or email also updates the
+    Signed-off-by line if it is present.
+
+    For new lines in the commit dialog, use Text.DELIMITER for
+    platform neutrality.
+
+    Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
+    Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+
+Speaking of which, #@!*#@@!*@!!@@!#*, I amended the commit with
+something yesterday and it whacked Yann Simon off as the author
+of that patch and switch it to me.
+
+Crap.
+
+>  .../egit/ui/internal/actions/CommitAction.java     |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
+> b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java index 5996596..a14011a 100644 ---
+> a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java +++
+> b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java @@ -128,7 +128,7 @@ public void
+> run(IAction act) {
+>  		if (commitDialog.open() != IDialogConstants.OK_ID)
+>  			return;
+> 
+> -		String commitMessage = commitDialog.getCommitMessage();
+> +		String commitMessage = commitDialog.getCommitMessage().replaceAll("\n\r|\r\n", "\n");
+>  		amending = commitDialog.isAmending();
+>  		try {
+>  			performCommit(commitDialog, commitMessage);
+
+-- 
+Shawn.
