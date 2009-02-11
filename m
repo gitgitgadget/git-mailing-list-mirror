@@ -1,147 +1,195 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 2/3] builtin-remote: teach show to display remote HEAD
-Date: Wed, 11 Feb 2009 01:01:22 -0500
-Message-ID: <1234332083-45147-3-git-send-email-jaysoffian@gmail.com>
+Subject: [PATCH 3/3] builtin-remote: add sethead verb
+Date: Wed, 11 Feb 2009 01:01:23 -0500
+Message-ID: <1234332083-45147-4-git-send-email-jaysoffian@gmail.com>
 References: <1234332083-45147-1-git-send-email-jaysoffian@gmail.com>
  <1234332083-45147-2-git-send-email-jaysoffian@gmail.com>
+ <1234332083-45147-3-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Cc: Jay Soffian <jaysoffian@gmail.com>, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 11 07:02:59 2009
+X-From: git-owner@vger.kernel.org Wed Feb 11 07:03:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX8BV-0008EH-Nx
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 07:02:58 +0100
+	id 1LX8Br-0008Je-I3
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 07:03:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751207AbZBKGBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 01:01:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751177AbZBKGBd
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 01:01:33 -0500
-Received: from an-out-0708.google.com ([209.85.132.246]:18162 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751191AbZBKGBb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 01:01:31 -0500
-Received: by an-out-0708.google.com with SMTP id c2so32219anc.1
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 22:01:30 -0800 (PST)
+	id S1751222AbZBKGBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 01:01:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbZBKGBg
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 01:01:36 -0500
+Received: from yw-out-2324.google.com ([74.125.46.28]:1300 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751209AbZBKGBe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 01:01:34 -0500
+Received: by yw-out-2324.google.com with SMTP id 5so30162ywh.1
+        for <git@vger.kernel.org>; Tue, 10 Feb 2009 22:01:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=aSkCfgb37giIZEd6CZ/GCJwA0BQUbdPA3Hhcl6WrKV8=;
-        b=D3qzwnLn3T5uZdd65RwC2oCsXoQKJ4w342fkBHlyygBETJN2pw58biZK6eJUB/084n
-         Px9sXw1Xp542+zaRcPkSkid+QS86DdC+wBU8tB1Sn6tL78UMgD+6wK2BCTIQNdR7xA1I
-         BkQ3MfqxpXWgVrQyabqHxxwe9nPTdlgu93TK0=
+        bh=4fq5+pjrQep1O5WReBCAa/TJQJ1eJlBzQogMjkT3HbM=;
+        b=yIOp1gQkp6BKJD2jj49p2+LXiXcr/qm5astqegbtAyXz7nx3kbXDcfZGGBnZYuHEJw
+         2oPrW9cYXFuiIV7kvP2nEsq+e3OrL4Fl25zCq7WV/tJIIFwf3rV+SHTQsMctJz1ecel/
+         kVDETkWmqO3udzT1mUtB0Ex6MW1H2fCGwE57U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=eFwy3ahb6lPeFpkzZKOYK6JMqi8YbfbRcHe9dvSSKF3NUbw0c1UflcsO3JYL/0KZBB
-         zDyHROOfJ395HAPHlsamSWK82aCA8gGPta4Nkl3DogGkH3zTgrUWaGjmz29U+calLrKY
-         PJe0nqSp0FW+Bjxg+nt4Mf/9IH9JLpAQwms64=
-Received: by 10.100.46.10 with SMTP id t10mr853374ant.52.1234332090555;
-        Tue, 10 Feb 2009 22:01:30 -0800 (PST)
+        b=q/iUGr7MPjphPkt44HMj90MJz8JPSQ9GZ2RsmnUR8e9H3BkUfIwxe8dIy8J0RoaU86
+         EiQSG1jYrsn2gsoUVXrS7wn8ddAcoVOK5AJZVIAjZVHJb1Nb11t4wVzOldPy5UqXibIb
+         oG5lfMXsKi/hGfvbc92fUH7DKgZz6HX7KWbHY=
+Received: by 10.100.231.6 with SMTP id d6mr1747930anh.30.1234332093032;
+        Tue, 10 Feb 2009 22:01:33 -0800 (PST)
 Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id d21sm7707478and.6.2009.02.10.22.01.29
+        by mx.google.com with ESMTPS id c1sm13955049ana.20.2009.02.10.22.01.31
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 10 Feb 2009 22:01:29 -0800 (PST)
+        Tue, 10 Feb 2009 22:01:32 -0800 (PST)
 X-Mailer: git-send-email 1.6.2.rc0.187.g9fcfb
-In-Reply-To: <1234332083-45147-2-git-send-email-jaysoffian@gmail.com>
+In-Reply-To: <1234332083-45147-3-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109377>
 
-The remote HEAD cannot be determined unambiguosly, so use the same
-heuristics as builtin-clone's locate_head().
+Provide a porcelain command for setting/deleting
+$GIT_DIR/remotes/<remote>/HEAD.
+
+While we're at it, document what $GIT_DIR/remotes/<remote>/HEAD is all
+about.
 
 Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
 ---
- builtin-remote.c |   39 +++++++++++++++++++++++++++++++++++++++
- 1 files changed, 39 insertions(+), 0 deletions(-)
+ Documentation/git-remote.txt |   20 ++++++++++++++-
+ builtin-remote.c             |   51 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index fad983e..fa7ec46 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -13,6 +13,7 @@ SYNOPSIS
+ 'git remote add' [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>
+ 'git remote rename' <old> <new>
+ 'git remote rm' <name>
++'git remote sethead' <name> [-a | -d | <branch>]
+ 'git remote show' [-n] <name>
+ 'git remote prune' [-n | --dry-run] <name>
+ 'git remote update' [group]
+@@ -53,8 +54,7 @@ is created.  You can give more than one `-t <branch>` to track
+ multiple branches without grabbing all branches.
+ +
+ With `-m <master>` option, `$GIT_DIR/remotes/<name>/HEAD` is set
+-up to point at remote's `<master>` branch instead of whatever
+-branch the `HEAD` at the remote repository actually points at.
++up to point at remote's `<master>` branch. See also the sethead command.
+ +
+ In mirror mode, enabled with `\--mirror`, the refs will not be stored
+ in the 'refs/remotes/' namespace, but in 'refs/heads/'.  This option
+@@ -76,6 +76,22 @@ the configuration file format.
+ Remove the remote named <name>. All remote tracking branches and
+ configuration settings for the remote are removed.
+ 
++'sethead'::
++
++Sets or deletes the default branch (`$GIT_DIR/remotes/<name>/HEAD`) for
++the named remote. Having a default branch for a remote is not required,
++but allows the name of the remote to be specified in lieu of a specific
++branch. For example, if the default branch for `origin` is set to
++`master`, then `origin` may be specified wherever you would normally
++specify `origin/master`.
+++
++With `-d`, `$GIT_DIR/remotes/<name>/HEAD` is deleted.
+++
++With `-a`, the remote is queried to determine its `HEAD`, then
++`$GIT_DIR/remotes/<name>/HEAD` is set to the same branch.
+++
++Use `<branch>` to set `$GIT_DIR/remotes/<name>/HEAD` explicitly.
++
+ 'show'::
+ 
+ Gives some information about the remote <name>.
 diff --git a/builtin-remote.c b/builtin-remote.c
-index 00e7ca5..0be8bfd 100644
+index 0be8bfd..0715685 100644
 --- a/builtin-remote.c
 +++ b/builtin-remote.c
-@@ -212,6 +212,7 @@ static void read_branches(void)
- struct ref_states {
- 	struct remote *remote;
- 	struct string_list new, stale, tracked;
-+	char *head_name;
- };
- 
- static int handle_one_branch(const char *refname,
-@@ -271,6 +272,38 @@ static int get_ref_states(const struct ref *ref, struct ref_states *states)
- 	return 0;
+@@ -12,6 +12,7 @@ static const char * const builtin_remote_usage[] = {
+ 	"git remote add [-t <branch>] [-m <master>] [-f] [--mirror] <name> <url>",
+ 	"git remote rename <old> <new>",
+ 	"git remote rm <name>",
++	"git remote sethead <name> [-a | -d | <branch>]",
+ 	"git remote show [-n] <name>",
+ 	"git remote prune [-n | --dry-run] <name>",
+ 	"git remote [-v | --verbose] update [group]",
+@@ -791,6 +792,54 @@ static int show(int argc, const char **argv)
+ 	return result;
  }
  
-+static char *get_head_name(const struct ref *ref)
++static int sethead(int argc, const char **argv)
 +{
-+	const struct ref *remote_head = NULL;
-+	const struct ref *remote_master = NULL;
-+	const struct ref *r;
-+	for (r = ref; r; r = r->next) {
-+		if (!strcmp(r->name, "HEAD"))
-+			remote_head = r;
-+		if (!strcmp(r->name, "refs/heads/master"))
-+			remote_master = r;
++	int opt_a = 0, opt_d = 0, result = 0;
++	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
++	char *head_name = NULL;
++
++	struct option options[] = {
++		OPT_GROUP("sethead specific options"),
++		OPT_BOOLEAN('a', 0, &opt_a,
++		           "set refs/remotes/<name>/HEAD according to remote"),
++		OPT_BOOLEAN('d', 0, &opt_d, "delete refs/remotes/<name>/HEAD"),
++		OPT_END()
++	};
++	argc = parse_options(argc, argv, options, builtin_remote_usage, 0);
++	if ((argc == 1 && !(opt_a || opt_d)) ||
++	   ((argc == 2 && (opt_a || opt_d))) || argc < 1 || argc > 2)
++		usage_with_options(builtin_remote_usage, options);
++
++	strbuf_addf(&buf, "refs/remotes/%s/HEAD", argv[0]);
++
++	if (opt_d) {
++		if (result |= delete_ref(buf.buf, NULL, REF_NODEREF))
++			error("Could not delete %s", buf.buf);
++	} else if (opt_a) {
++		struct ref_states states;
++		memset(&states, 0, sizeof(states));
++		get_remote_ref_states(argv[0], &states, 1);
++		head_name = xstrdup(states.head_name);
++		free_remote_ref_states(&states);
++	} else
++		head_name = xstrdup(argv[1]);
++
++	if (head_name) {
++		unsigned char sha1[20];
++		strbuf_addf(&buf2, "refs/remotes/%s/%s", argv[0], head_name);
++		/* make sure it's valid */
++		if (!resolve_ref(buf2.buf, sha1, 1, NULL))
++			result |= error("Not a valid ref: %s", buf2.buf);
++		else if (create_symref(buf.buf, buf2.buf, "remote sethead"))
++			result |= error("Could not setup %s", buf.buf);
++		free(head_name);
 +	}
 +
-+	/* If there's no HEAD value at all, never mind. */
-+	if (!remote_head)
-+		return NULL;
-+
-+	/* If refs/heads/master could be right, it is. */
-+	if (remote_master && !hashcmp(remote_master->old_sha1,
-+				      remote_head->old_sha1))
-+		return xstrdup(abbrev_branch(remote_master->name));
-+
-+	/* Look for another ref that points there */
-+	for (r = ref; r; r = r->next)
-+		if (r != remote_head &&
-+		    !hashcmp(r->old_sha1, remote_head->old_sha1) &&
-+		    !prefixcmp(r->name, "refs/heads/"))
-+			return xstrdup(abbrev_branch(r->name));
-+
-+	/* Nothing is the same */
-+	return NULL;
++	strbuf_release(&buf);
++	strbuf_release(&buf2);
++	return result;
 +}
 +
- struct known_remote {
- 	struct known_remote *next;
- 	struct remote *remote;
-@@ -638,6 +671,8 @@ static void free_remote_ref_states(struct ref_states *states)
- 	string_list_clear(&states->new, 0);
- 	string_list_clear(&states->stale, 0);
- 	string_list_clear(&states->tracked, 0);
-+	if (states->head_name)
-+		free(states->head_name);
- }
- 
- static int get_remote_ref_states(const char *name,
-@@ -659,6 +694,7 @@ static int get_remote_ref_states(const char *name,
- 		ref = transport_get_remote_refs(transport);
- 		transport_disconnect(transport);
- 
-+		states->head_name = get_head_name(ref);
- 		get_ref_states(ref, states);
- 	}
- 
-@@ -703,6 +739,9 @@ static int show(int argc, const char **argv)
- 		printf("* remote %s\n  URL: %s\n", *argv,
- 			states.remote->url_nr > 0 ?
- 				states.remote->url[0] : "(no URL)");
-+		if (!no_query)
-+			printf("  HEAD: %s\n", states.head_name ?
-+				states.head_name : "(unknown)");
- 
- 		for (i = 0; i < branch_list.nr; i++) {
- 			struct string_list_item *branch = branch_list.items + i;
+ static int prune(int argc, const char **argv)
+ {
+ 	int dry_run = 0, result = 0;
+@@ -955,6 +1004,8 @@ int cmd_remote(int argc, const char **argv, const char *prefix)
+ 		result = mv(argc, argv);
+ 	else if (!strcmp(argv[0], "rm"))
+ 		result = rm(argc, argv);
++	else if (!strcmp(argv[0], "sethead"))
++		result = sethead(argc, argv);
+ 	else if (!strcmp(argv[0], "show"))
+ 		result = show(argc, argv);
+ 	else if (!strcmp(argv[0], "prune"))
 -- 
 1.6.2.rc0.187.g9fcfb
