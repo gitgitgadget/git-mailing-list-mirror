@@ -1,91 +1,103 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT] [PATCH] Make sure that the commit message has Unix
-	format line
-Date: Wed, 11 Feb 2009 08:13:46 -0800
-Message-ID: <20090211161346.GD30949@spearce.org>
-References: <34467.77.61.241.211.1234338327.squirrel@hupie.xs4all.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-X-From: git-owner@vger.kernel.org Wed Feb 11 17:15:24 2009
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: [PATCH 4/3] completion: More fixes to prevent unbound variable errors.
+Date: Wed, 11 Feb 2009 11:18:52 -0500
+Message-ID: <1234369132-22063-1-git-send-email-ted@tedpavlic.com>
+References: <1234366634-17900-4-git-send-email-ted@tedpavlic.com>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Ted Pavlic <ted@tedpavlic.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Feb 11 17:20:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXHk1-00018h-Sl
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 17:15:14 +0100
+	id 1LXHpC-0003Tz-Bs
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 17:20:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755475AbZBKQNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 11:13:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753559AbZBKQNr
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 11:13:47 -0500
-Received: from george.spearce.org ([209.20.77.23]:59255 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755302AbZBKQNq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 11:13:46 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 28FAB38210; Wed, 11 Feb 2009 16:13:46 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <34467.77.61.241.211.1234338327.squirrel@hupie.xs4all.nl>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755910AbZBKQTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 11:19:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755758AbZBKQTH
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 11:19:07 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:38775 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755718AbZBKQTH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2009 11:19:07 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 616CF80D8087;
+	Wed, 11 Feb 2009 11:12:35 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TnYqaaN0pvBt; Wed, 11 Feb 2009 11:12:35 -0500 (EST)
+Received: from localhost.localdomain (tedpc.ece.ohio-state.edu [164.107.164.122])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 4892F80D8085;
+	Wed, 11 Feb 2009 11:12:35 -0500 (EST)
+X-Mailer: git-send-email 1.6.1.2.390.gba743
+In-Reply-To: <1234366634-17900-4-git-send-email-ted@tedpavlic.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109435>
 
-"Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl> wrote:
-> From 2ad66e099fb35ad9a0d97e553843434b68ec82c9 Mon Sep 17 00:00:00 2001 From: Ferry Huberts <ferry.huberts@pelagic.nl>
-> Date: Wed, 11 Feb 2009 08:29:36 +0100
-> Subject: [PATCH] Make sure that the commit message has Unix format line delimiters
-> 
-> Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
+Several functions make use of "test -n" and "test -z". In many cases,
+the variables being tested were declared with "local." However, several
+__variables are not, and so they must be replaced with their ${__-}
+equivalents.
 
-Doesn't this change that I committed yesterday also fix this?
+Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
+---
 
-  commit 72cb3bd763f17a7d9894a8443e05965ff5e77157
-  Author: Shawn O. Pearce <spearce@spearce.org>
-  Date:   Tue Feb 10 09:13:06 2009 -0800
+This patch depends on:
 
-    Append Signed-off-by text in the commit message editor
+    <1234366634-17900-3-git-send-email-ted@tedpavlic.com>
+    "[PATCH 2/3] completion: Change "if [...]" to "if test ..." to 
+                             match git convention"
 
-    The user can see and edit the Signed-off-by line in the commit
-    dialog before committing.  Toggling the existing checkbox now
-    updates the message to add or remove the user's Signed-off-by
-    line, displaying the final message.
+If that patch is not applied, I can submit a new patch.
 
-    Updating the committer name and/or email also updates the
-    Signed-off-by line if it is present.
+ contrib/completion/git-completion.bash |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-    For new lines in the commit dialog, use Text.DELIMITER for
-    platform neutrality.
-
-    Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
-    Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-
-Speaking of which, #@!*#@@!*@!!@@!#*, I amended the commit with
-something yesterday and it whacked Yann Simon off as the author
-of that patch and switch it to me.
-
-Crap.
-
->  .../egit/ui/internal/actions/CommitAction.java     |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
-> b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java index 5996596..a14011a 100644 ---
-> a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java +++
-> b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java @@ -128,7 +128,7 @@ public void
-> run(IAction act) {
->  		if (commitDialog.open() != IDialogConstants.OK_ID)
->  			return;
-> 
-> -		String commitMessage = commitDialog.getCommitMessage();
-> +		String commitMessage = commitDialog.getCommitMessage().replaceAll("\n\r|\r\n", "\n");
->  		amending = commitDialog.isAmending();
->  		try {
->  			performCommit(commitDialog, commitMessage);
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index ffde82a..055e4ac 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -62,7 +62,7 @@ esac
+ __gitdir ()
+ {
+ 	if test -z "${1-}"; then
+-		if test -n "$__git_dir"; then
++		if test -n "${__git_dir-}"; then
+ 			echo "$__git_dir"
+ 		elif test -d .git; then
+ 			echo .git
+@@ -294,7 +294,7 @@ __git_remotes ()
+ 
+ __git_merge_strategies ()
+ {
+-	if test -n "$__git_merge_strategylist"; then
++	if test -n "${__git_merge_strategylist-}"; then
+ 		echo "$__git_merge_strategylist"
+ 		return
+ 	fi
+@@ -380,7 +380,7 @@ __git_complete_revlist ()
+ 
+ __git_all_commands ()
+ {
+-	if test -n "$__git_all_commandlist"; then
++	if test -n "${__git_all_commandlist-}"; then
+ 		echo "$__git_all_commandlist"
+ 		return
+ 	fi
+@@ -398,7 +398,7 @@ __git_all_commandlist="$(__git_all_commands 2>/dev/null)"
+ 
+ __git_porcelain_commands ()
+ {
+-	if test -n "$__git_porcelain_commandlist"; then
++	if test -n "${__git_porcelain_commandlist-}"; then
+ 		echo "$__git_porcelain_commandlist"
+ 		return
+ 	fi
 -- 
-Shawn.
+1.6.1.2.390.gba743
