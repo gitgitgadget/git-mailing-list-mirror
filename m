@@ -1,61 +1,50 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: How to use path limiting (using a glob)?
-Date: Wed, 11 Feb 2009 20:14:32 +0100
-Message-ID: <20090211191432.GC27232@m62s10.vlinux.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Git push failure in the case of SSH to localhost
+Date: Wed, 11 Feb 2009 11:14:45 -0800
+Message-ID: <20090211191445.GU30949@spearce.org>
+References: <8e04b5820902110824u1ab99cc1r4df6349b20d62f84@mail.gmail.com> <20090211180559.GC19749@coredump.intra.peff.net> <8e04b5820902111042q138a2e79vc97c533007482e5c@mail.gmail.com> <20090211184429.GA27896@coredump.intra.peff.net> <8e04b5820902111103n69cde3e1le5781fb1818b622c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 11 20:15:56 2009
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: "Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 20:16:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXKYl-0002O9-N9
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 20:15:48 +0100
+	id 1LXKZB-0002ZL-HS
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 20:16:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193AbZBKTOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 14:14:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbZBKTOT
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 14:14:19 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48851 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750793AbZBKTOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 14:14:18 -0500
-Received: (qmail invoked by alias); 11 Feb 2009 19:14:06 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp060) with SMTP; 11 Feb 2009 20:14:06 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1+iLqke9ceiDgO9+E5Gb/RkPmwCzoFBoRjKYdt7IK
-	FKrY7IAfAg/Sye
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id CCB551997B; Wed, 11 Feb 2009 20:14:32 +0100 (CET)
+	id S1755016AbZBKTOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 14:14:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754846AbZBKTOq
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 14:14:46 -0500
+Received: from george.spearce.org ([209.20.77.23]:36633 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751169AbZBKTOp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 14:14:45 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 72B6B38210; Wed, 11 Feb 2009 19:14:45 +0000 (UTC)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+In-Reply-To: <8e04b5820902111103n69cde3e1le5781fb1818b622c@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109507>
 
-Hallo,
+"Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com> wrote:
+> 
+>     Here is what I'm trying to accomplish: I want to add to the git
+> search path also the folder ${GIT_DIR}/bin if this already exists...
+> (This allows me to have repository specific commands...)
 
-after reading Junio's nice blog today where he explained how to use git grep
-efficiently, I saw him using a glob to match for the interesting files:
+for f in `cd $(git rev-parse --git-dir)/bin && ls *`; do
+  git config alias.$f '!$(git rev-parse --git-dir)/bin/'$f
+done
 
-	 $ git grep -e ';;' -- '*.c'
-
-Is it possible to have the same feature in git diff and the revision
-machinery? Because I tried
-
-	$ cd $path_to_your_git_src_dir
-	$ git log master -p -- '*.h'
-	.... No commit shown 
-
-	$ git diff --name-only v1.5.0  v1.6.0 -- '*.c'
-
-and both don't return anything.
-
-Grettings,
-Peter Baumann
+No need to patch git.
+ 
+-- 
+Shawn.
