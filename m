@@ -1,237 +1,168 @@
-From: "Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com>
-Subject: Re: Git push failure in the case of SSH to localhost
-Date: Wed, 11 Feb 2009 22:03:13 +0200
-Message-ID: <8e04b5820902111203t344881f6g31f25cfbff5fd822@mail.gmail.com>
-References: <8e04b5820902110824u1ab99cc1r4df6349b20d62f84@mail.gmail.com>
-	 <20090211180559.GC19749@coredump.intra.peff.net>
-	 <8e04b5820902111042q138a2e79vc97c533007482e5c@mail.gmail.com>
-	 <20090211184429.GA27896@coredump.intra.peff.net>
-	 <8e04b5820902111103n69cde3e1le5781fb1818b622c@mail.gmail.com>
-	 <20090211191445.GU30949@spearce.org>
-	 <8e04b5820902111120w4cb87b41sfca647a838bab43c@mail.gmail.com>
-	 <20090211192245.GA28832@coredump.intra.peff.net>
-	 <8e04b5820902111132v5b7c8e14s15c6fad13b5b76a9@mail.gmail.com>
-	 <20090211194218.GA28927@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+From: Eric Kidd <git@randomhacks.net>
+Subject: [PATCHv3] filter-branch: Add more error-handling
+Date: Wed, 11 Feb 2009 15:03:20 -0500
+Message-ID: <1234382600-7801-1-git-send-email-git@randomhacks.net>
+References: <7vhc30eqy7.fsf@gitster.siamese.dyndns.org>
+Cc: Eric Kidd <git@randomhacks.net>
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Wed Feb 11 21:05:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXLKO-0004x9-KY
+	id 1LXLKP-0004x9-BW
 	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 21:05:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756324AbZBKUDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 15:03:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757658AbZBKUDT
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 15:03:19 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:47710 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757506AbZBKUDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 15:03:15 -0500
-Received: by bwz5 with SMTP id 5so542445bwz.13
-        for <git@vger.kernel.org>; Wed, 11 Feb 2009 12:03:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=bRERgLUMUhg09q/+u0Zb7EvtzYmFbM9q8CGpce1iEVQ=;
-        b=uA7ormdPIUyQl1LM4B3JPKoeJLQadpAv63kgvfZGxOhgOLDyHfH/GW8Z9FeDsKM7+W
-         CJci17pZ5k2BtkR+1RpEII43hHc+ewkyRWAp3EK+fFtqBa91x0Lw6ZrMR5zCXRxPRtke
-         FgN4Q9MLleKEa/qPoVIvUIGa/tfg0W8suvKFc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QrmnEUlgP0NfNyaiiD80xPR7WXbvmvkldzsyk5QgHraJJbnvYD18paidtZTZk3bNH4
-         /1Be8TTcHR+EBYnXyiHqE/KhIS3r2nwCoLfCa12VaLkFOBNQ1TZCc3DoB85oOIVwwwUi
-         +4RlSh3amqHr9Sa806aDJmNHg3EXubKUU+GyE=
-Received: by 10.181.192.11 with SMTP id u11mr8088bkp.50.1234382593704; Wed, 11 
-	Feb 2009 12:03:13 -0800 (PST)
-In-Reply-To: <20090211194218.GA28927@coredump.intra.peff.net>
+	id S1757506AbZBKUD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 15:03:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757346AbZBKUD2
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 15:03:28 -0500
+Received: from randomhacks.net ([69.93.127.95]:57216 "EHLO randomhacks.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756241AbZBKUD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 15:03:28 -0500
+Received: from pool-64-222-85-242.burl.east.myfairpoint.net ([64.222.85.242] helo=localhost.localdomain)
+	by randomhacks.net with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <git@randomhacks.net>)
+	id 1LXLIs-000355-Nv; Wed, 11 Feb 2009 15:03:27 -0500
+X-Mailer: git-send-email 1.6.0.4
+In-Reply-To: <7vhc30eqy7.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109521>
 
-    I'll merge both Junio's and Jeff's emails into one... My answers bellow.
+In commit 9273b56278e64dd47b1a96a705ddf46aeaf6afe3, I fixed an error
+that had slipped by the test suites because of a missing check on 'git
+read-tree -u -m HEAD'.
 
+This patch attemps to add all the missing error checks to
+git-filter-branch, and removes an existing $ret variable that did
+nothing.  I've tested this patch using t/t7003-filter-branch.sh, and it
+passes all the existing tests.
 
-On Wed, Feb 11, 2009 at 9:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Ciprian Dorin, Craciun" <ciprian.craciun@gmail.com> writes:
->
->> On Wed, Feb 11, 2009 at 9:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>> And why isn't it in $HOME/bin/?
->>
->>     No, it is inside .git/bin folder.
->
-> You are not answering my question.
->
-> I questioned the sanity of putting the scripts in .git/bin/ per
-> repository.  Why shouldn't a useful script like your "branch-import"
-> available to _all_ your repositories, possibly taking customization per
-> repository from repository's .git/config file, so that it does what is
-> appropriate in each repository?
+This patch also causes 'git filter-branch' to fail if the --commit-filter
+argument returns an error.  A test case for this behavior is included.
 
-    Indeed my problem could be solved by either of the solutions
-proposed (I'll summarize them for the sake of completeness):
-    * using git alias to put simple inline scripts (without need of a
-new file), or to put the path to the real script;
-    * putting the new command into a directory that is referenced from PATH;
+In two places, I've had to break apart pipelines in order to check the
+error code for the first stage of the pipeline, as discussed here:
 
-    Both these solutions work fine, except one concern: when moving
-the repository I would also want to move my scripts, and so I'm
-remaining with only one candidate: git aliases... (For example I could
-move the repository to another machine that I haven't setup with my
-own scripts... Of course neither my solution would work, because I
-would need a patched Git, but this could be changed if Git would have
-this feature built-in :) )
+  http://kerneltrap.org/mailarchive/git/2009/1/28/4835614
 
-    But, there is a disadvantage with git aliases, meaning if I want a
-bigger script then I must keep in sync both config file and script
-names... Moreover, if I use git from another folder than the work-tree
-would the alias still work if I used relative paths? (I don't know but
-someone could clear this up as there is no mention about it in the
-documentation...)
+Feedback on this patch was provided by Johannes Sixt, Johannes Schindelin
+and Junio C Hamano.  charon on #git helped with pipeline error handling.
 
-    So my proposal is very simple: make git look inside the GIT_DIR
-and see if there is a bin folder; if so add it in the front of path
-(thus overriding built-in commands??).
+Signed-off-by: Eric Kidd <git@randomhacks.net>
 
-    The advantage is that is much simpler to setup commands by just
-dropping git-something files inside .git/bin... No config editing, no
-relative path problems...
+---
+ git-filter-branch.sh     |   26 ++++++++++++++------------
+ t/t7003-filter-branch.sh |    4 ++++
+ 2 files changed, 18 insertions(+), 12 deletions(-)
 
-    As a conclusion, I've patched Git myself to support such a
-feature... (See patch bellow...)
+v3:
+  Replaced 'exit 1' with 'exit' to use exit status of last command
+  Use test_must_fail for unit test expecting failure
 
-    So? Having explained in detail the problem and solutions what is
-(are) yours (or others) opinions?
+v2:
+  Remove useless $ret variable
+  Correctly check the first command in a pipeline, not the second
+  Replace verbose 'die' messages with 'exit 1' in most cases
 
-
-On Wed, Feb 11, 2009 at 9:42 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Feb 11, 2009 at 09:32:29PM +0200, Ciprian Dorin, Craciun wrote:
->
->>     Anyway, I don't see why it's wrong to have such a bin folder per
->> repository... Let's for a moment assume that there is a use case for
->> such a thing, I'm wondering what is wrong with this solution from a
->> Git perspective???
->
-> It's not _wrong_, we're just suggesting ways that the same thing might
-> be accomplished more easily.
->
->>     P.S.: It seems that indeed setup_git_directory_gently (or
->> something in the setup system) is kind of broken if I call it twice...
->
-> Yes, I think your patch is running into a long-standing problem in the
-> git initialization code. There are problems if you need to look into the
-> repo dir to find out which command to execute, because finding the repo
-> dir changes the environment. There is a similar problem with aliases.
->
-> So I think getting your patch to run correctly may be hard. But I admit
-> I didn't look at it that closely.
->
-> -Peff
-
-    :) I've skipped around the problem (in a non-engineering way) by
-adding a variable which enables or disables my feature... And I only
-enable it for git.c... :)
-
-
-    Thanks both Junio, Jeff and Shawn for your answers!
-    Ciprian Craciun.
-
-    P.S.: My final (working (hopefully, although tested)) patch bellow.
-
---------
-
-diff --git a/exec_cmd.c b/exec_cmd.c
-index cdd35f9..8d707e1 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -44,6 +44,45 @@ const char *git_exec_path(void)
- 	return system_path(GIT_EXEC_PATH);
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 86eef56..27b57b8 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -221,7 +221,7 @@ die ""
+ trap 'cd ../..; rm -rf "$tempdir"' 0
+ 
+ # Make sure refs/original is empty
+-git for-each-ref > "$tempdir"/backup-refs
++git for-each-ref > "$tempdir"/backup-refs || exit
+ while read sha1 type name
+ do
+ 	case "$force,$name" in
+@@ -241,8 +241,9 @@ GIT_WORK_TREE=.
+ export GIT_DIR GIT_WORK_TREE
+ 
+ # The refs should be updated if their heads were rewritten
+-git rev-parse --no-flags --revs-only --symbolic-full-name --default HEAD "$@" |
+-sed -e '/^^/d' >"$tempdir"/heads
++git rev-parse --no-flags --revs-only --symbolic-full-name \
++	--default HEAD "$@" > "$tempdir"/raw-heads || exit
++sed -e '/^^/d' "$tempdir"/raw-heads >"$tempdir"/heads
+ 
+ test -s "$tempdir"/heads ||
+ 	die "Which ref do you want to rewrite?"
+@@ -251,8 +252,6 @@ GIT_INDEX_FILE="$(pwd)/../index"
+ export GIT_INDEX_FILE
+ git read-tree || die "Could not seed the index"
+ 
+-ret=0
+-
+ # map old->new commit ids for rewriting parents
+ mkdir ../map || die "Could not create map/ directory"
+ 
+@@ -315,10 +314,11 @@ while read commit parents; do
+ 			die "tree filter failed: $filter_tree"
+ 
+ 		(
+-			git diff-index -r --name-only $commit
++			git diff-index -r --name-only $commit &&
+ 			git ls-files --others
+-		) |
+-		git update-index --add --replace --remove --stdin
++		) > "$tempdir"/tree-state || exit
++		git update-index --add --replace --remove --stdin \
++			< "$tempdir"/tree-state || exit
+ 	fi
+ 
+ 	eval "$filter_index" < /dev/null ||
+@@ -339,7 +339,8 @@ while read commit parents; do
+ 		eval "$filter_msg" > ../message ||
+ 			die "msg filter failed: $filter_msg"
+ 	@SHELL_PATH@ -c "$filter_commit" "git commit-tree" \
+-		$(git write-tree) $parentstr < ../message > ../map/$commit
++		$(git write-tree) $parentstr < ../message > ../map/$commit ||
++			die "could not write rewritten commit"
+ done <../revs
+ 
+ # In case of a subdirectory filter, it is possible that a specified head
+@@ -407,7 +408,8 @@ do
+ 			die "Could not rewrite $ref"
+ 	;;
+ 	esac
+-	git update-ref -m "filter-branch: backup" "$orig_namespace$ref" $sha1
++	git update-ref -m "filter-branch: backup" "$orig_namespace$ref" $sha1 ||
++		 exit
+ done < "$tempdir"/heads
+ 
+ # TODO: This should possibly go, with the semantics that all positive given
+@@ -483,7 +485,7 @@ test -z "$ORIG_GIT_INDEX_FILE" || {
  }
-
-+/* Returns the path of the bin folder inside the .git folder. */
-+/* (This could be used to store repository specific git programs.) */
+ 
+ if [ "$(is_bare_repository)" = false ]; then
+-	git read-tree -u -m HEAD
++	git read-tree -u -m HEAD || exit
+ fi
+ 
+-exit $ret
++exit 0
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index cb04743..11ed4c4 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -48,6 +48,10 @@ test_expect_success 'result is really identical' '
+ 	test $H = $(git rev-parse HEAD)
+ '
+ 
++test_must_fail 'Fail if commit filter fails' '
++	git filter-branch -f --commit-filter "exit 1" HEAD
++'
 +
-+int enable_git_repo_exec_path = 0;
-+
-+const char *git_repo_exec_path(void)
-+{
-+	static char path_buffer[PATH_MAX + 1];
-+	static char *path = NULL;
-+	
-+	int non_git;
-+	const char *git_dir;
-+	
-+	if (!path && enable_git_repo_exec_path) {
-+		
-+		path = path_buffer;
-+		path[0] = '\0';
-+		
-+		setup_git_directory_gently(&non_git);
-+		
-+		if (!non_git) {
-+			
-+			git_dir = get_git_dir();
-+			
-+			strncat(path, git_dir, PATH_MAX);
-+			strncat(path, "/", PATH_MAX);
-+			strncat(path, "bin", PATH_MAX);
-+			strncpy(path, make_absolute_path(path), PATH_MAX);
-+			if (access(path, F_OK) != 0)
-+				path[0] = '\0';
-+		}
-+	}
-+	
-+	if (!path || (path[0] == '\0'))
-+		return NULL;
-+	
-+	return path;
-+}
-+
- static void add_path(struct strbuf *out, const char *path)
- {
- 	if (path && *path) {
-@@ -61,6 +100,8 @@ void setup_path(void)
- 	const char *old_path = getenv("PATH");
- 	struct strbuf new_path = STRBUF_INIT;
-
-+	if (git_repo_exec_path() != NULL)
-+		add_path(&new_path, git_repo_exec_path());
- 	add_path(&new_path, argv_exec_path);
- 	add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
- 	add_path(&new_path, system_path(GIT_EXEC_PATH));
-diff --git a/exec_cmd.h b/exec_cmd.h
-index 594f961..a02256b 100644
---- a/exec_cmd.h
-+++ b/exec_cmd.h
-@@ -10,4 +10,6 @@ extern int execv_git_cmd(const char **argv); /* NULL
-terminated */
- extern int execl_git_cmd(const char *cmd, ...);
- extern const char *system_path(const char *path);
-
-+extern int enable_git_repo_exec_path;
-+
- #endif /* GIT_EXEC_CMD_H */
-diff --git a/git.c b/git.c
-index 940a498..d312ab9 100644
---- a/git.c
-+++ b/git.c
-@@ -477,6 +477,7 @@ int main(int argc, const char **argv)
- 	 * environment, and the $(gitexecdir) from the Makefile at build
- 	 * time.
- 	 */
-+	enable_git_repo_exec_path = 1;
- 	setup_path();
-
- 	while (1) {
+ test_expect_success 'rewrite, renaming a specific file' '
+ 	git filter-branch -f --tree-filter "mv d doh || :" HEAD
+ '
+-- 
+1.6.0.4
