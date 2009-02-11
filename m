@@ -1,62 +1,72 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 3/3] completion: Prevents GIT_PS1_DIRTYSTATE from
-	breaking when CWD is .git
-Date: Wed, 11 Feb 2009 10:01:00 -0800
-Message-ID: <20090211180100.GJ30949@spearce.org>
-References: <1234366634-17900-1-git-send-email-ted@tedpavlic.com> <1234366634-17900-2-git-send-email-ted@tedpavlic.com> <1234366634-17900-3-git-send-email-ted@tedpavlic.com> <1234366634-17900-4-git-send-email-ted@tedpavlic.com> <7vprhogbfa.fsf@gitster.siamese.dyndns.org> <499308DA.9090208@tedpavlic.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 19:02:49 2009
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: [PATCH 1/4] completion: For consistency, changed "git rev-parse" to __gitdir calls.
+Date: Wed, 11 Feb 2009 13:03:23 -0500
+Message-ID: <1234375406-27099-2-git-send-email-ted@tedpavlic.com>
+References: <1234375406-27099-1-git-send-email-ted@tedpavlic.com>
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Ted Pavlic <ted@tedpavlic.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Feb 11 19:06:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXJQ7-0006bg-Dv
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 19:02:47 +0100
+	id 1LXJTA-0007U8-7O
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 19:05:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757380AbZBKSBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 13:01:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750875AbZBKSBE
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 13:01:04 -0500
-Received: from george.spearce.org ([209.20.77.23]:39270 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752567AbZBKSBB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 13:01:01 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id B6E7138210; Wed, 11 Feb 2009 18:01:00 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <499308DA.9090208@tedpavlic.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1756606AbZBKSDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 13:03:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756187AbZBKSDr
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 13:03:47 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:52776 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756137AbZBKSDi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2009 13:03:38 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id C4A0480D8088;
+	Wed, 11 Feb 2009 12:57:06 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id mblZo-oIAvKC; Wed, 11 Feb 2009 12:57:06 -0500 (EST)
+Received: from localhost.localdomain (tedpc.ece.ohio-state.edu [164.107.164.122])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id A739A80D808A;
+	Wed, 11 Feb 2009 12:57:06 -0500 (EST)
+X-Mailer: git-send-email 1.6.1.2.390.gba743
+In-Reply-To: <1234375406-27099-1-git-send-email-ted@tedpavlic.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109460>
 
-Ted Pavlic <ted@tedpavlic.com> wrote:
->
->> You have at least three possible states:
->>   * You are not in git repository at all;
->>   * You are somewhere in $GIT_DIR, perhaps in a bare repository, perhaps a
->>     repository with a work tree.
->>   * You are inside a work tree.
->
-> It seems like (psuedocode)...
->
-> 	if git rev-parse --is-inside-git-dir; then
-> 		use '!' flag to indicate caution
->
-> 	elif git rev-parse --is-inside-work-tree; then
-> 		proceed as before (with '*' and '+' flags)
->
-> 	else
-> 		do nothing
->
-> I think that handles those cases. No?
+Signed-off-by: Ted Pavlic <ted@tedpavlic.com>
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/completion/git-completion.bash |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Yes, that looks right to me.
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index f44f63c..6bbe09a 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -80,7 +80,7 @@ __gitdir ()
+ # returns text to add to bash PS1 prompt (includes branch name)
+ __git_ps1 ()
+ {
+-	local g="$(git rev-parse --git-dir 2>/dev/null)"
++	local g="$(__gitdir)"
+ 	if [ -n "$g" ]; then
+ 		local r
+ 		local b
+@@ -1797,7 +1797,7 @@ _gitk ()
+ 	__git_has_doubledash && return
+ 
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+-	local g="$(git rev-parse --git-dir 2>/dev/null)"
++	local g="$(__gitdir)"
+ 	local merge=""
+ 	if [ -f $g/MERGE_HEAD ]; then
+ 		merge="--merge"
 -- 
-Shawn.
+1.6.1.2.390.gba743
