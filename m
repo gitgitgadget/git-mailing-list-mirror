@@ -1,283 +1,67 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] builtin-branch: improve output when displaying remote 
-	branches
-Date: Wed, 11 Feb 2009 01:47:25 -0500
-Message-ID: <76718490902102247i49ee91ebo4aaf24a4e5f0f5e8@mail.gmail.com>
-References: <1234263701-95463-1-git-send-email-jaysoffian@gmail.com>
+From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+Subject: [EGIT] [PATCH] Make sure that the commit message has Unix format   
+             line
+Date: Wed, 11 Feb 2009 08:45:27 +0100 (CET)
+Message-ID: <34467.77.61.241.211.1234338327.squirrel@hupie.xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 11 07:48:56 2009
+X-From: git-owner@vger.kernel.org Wed Feb 11 09:18:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX8ty-0001hB-Um
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 07:48:55 +0100
+	id 1LXAIX-00077w-RS
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 09:18:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751789AbZBKGr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 01:47:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751774AbZBKGr1
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 01:47:27 -0500
-Received: from rv-out-0506.google.com ([209.85.198.224]:32673 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750957AbZBKGr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 01:47:26 -0500
-Received: by rv-out-0506.google.com with SMTP id k40so36369rvb.1
-        for <git@vger.kernel.org>; Tue, 10 Feb 2009 22:47:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kP540Dk3lUGbZci/shh0RSPV5rwlps4dXTAVAcqlCa8=;
-        b=BDrH2AqYGaIs+i95ScCJxfB1FH6slvjTof+rSBqU16pIt5E57hbHAAk/Ri6CywzFuf
-         igTDyxD1zciPDb7uN1mLeq7y0TVl7IJoXzn1tHy03IZs0iulha11c+9tIXYJ+1wR663w
-         XjliHASjKt/bN9Kq8690qYVHsN+50TTM/y2Oo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bO1EO4RFofhQ54KmvmXnUvEMyns6fqGK+owJZ3S8h8hqFOpg7Hk9pUvqZYKKolRQZd
-         HAKUgDYpysjBNpwZKLsthjr2i7dawihRGQ75DMMfR+qEVMqgnDmHywpi8LacB3wSJDkw
-         FzP9ISJx7q7q58wvob6716g+Wv+cbh2s93em8=
-Received: by 10.141.180.5 with SMTP id h5mr5233327rvp.281.1234334845201; Tue, 
-	10 Feb 2009 22:47:25 -0800 (PST)
-In-Reply-To: <1234263701-95463-1-git-send-email-jaysoffian@gmail.com>
+	id S1753084AbZBKIQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 03:16:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752778AbZBKIQy
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 03:16:54 -0500
+Received: from hupie.xs4all.nl ([82.95.241.251]:53014 "EHLO
+	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751468AbZBKIQy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2009 03:16:54 -0500
+X-Greylist: delayed 1883 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Feb 2009 03:16:54 EST
+Received: by Lighthouse.internal.Hupie.com (Postfix, from userid 48)
+	id AF71958BDCE; Wed, 11 Feb 2009 08:45:27 +0100 (CET)
+Received: from 77.61.241.211
+        (SquirrelMail authenticated user ferry.huberts@pelagic.nl)
+        by hupie.xs4all.nl with HTTP;
+        Wed, 11 Feb 2009 08:45:27 +0100 (CET)
+User-Agent: SquirrelMail/1.4.8-5.el5.centos.3
+X-Priority: 3 (Normal)
+Importance: Normal
+References: 
+In-Reply-To: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109383>
 
-Bump, since this complements gmane 109374.
+>From 2ad66e099fb35ad9a0d97e553843434b68ec82c9 Mon Sep 17 00:00:00 2001 From: Ferry Huberts <ferry.huberts@pelagic.nl>
+Date: Wed, 11 Feb 2009 08:29:36 +0100
+Subject: [PATCH] Make sure that the commit message has Unix format line delimiters
 
-On Tue, Feb 10, 2009 at 6:01 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> When displaying local and remote branches, prefix the remote branch names with
-> "remotes/" to make the remote branches clear from the local branches. If
-> displaying only the remote branches, the prefix is not shown since it would be
-> redundant.
->
-> When displaying a remote branch HEAD (which is a sane symref), show what it
-> points to similar to how "ls -l" show symlinks. Also in this case, do not show
-> verbose output for the HEAD itself as it is shown immediately below on the
-> pointed to branch.
->
-> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
-> ---
-> I think this addresses the feedback I got on the original patch,
-> http://article.gmane.org/gmane.comp.version-control.git/109161
->
-> Some sample output:
->
-> $ git branch -a
->  master
->  next
-> * wip/branch-show-remote-HEAD-2
->  wip/push-docs
->  remotes/origin/HEAD -> master
->  remotes/origin/html
->  remotes/origin/maint
->  remotes/origin/man
->  remotes/origin/master
->  remotes/origin/next
->  remotes/origin/pu
->  remotes/origin/todo
->
-> $ git branch -r
->  origin/HEAD -> master
->  origin/html
->  origin/maint
->  origin/man
->  origin/master
->  origin/next
->  origin/pu
->  origin/todo
->
-> $ git branch -rv
->  origin/HEAD -> master
->  origin/html           6116912 Autogenerated HTML docs for v1.6.2-rc0-10-gf6b9
->  origin/maint          7e1100e gitweb: add $prevent_xss option to prevent XSS by repository content
->  origin/man            67cb1a7 Autogenerated manpages for v1.6.2-rc0-10-gf6b9
->  origin/master         f6b98e4 git-web--browse: Fix check for /bin/start
->  origin/next           417ce12 Merge branch 'master' into next
->  origin/pu             9d798e7 Merge branch 'db/foreign-scm' into pu
->  origin/todo           5ed7079 What's in update
->
-> Notice that the verbose output for HEAD is squelched as it would be identical to
-> what is shown below in "origin/master". Of course, if <remote>/HEAD does not
-> resolve as a symref pointing to a branch inside <remote> (I don't know why this
-> would happen though...), then it is shown like the other branches.
->
-> BTW, I noticed that "git branch -a --merged" and "git branch -av --merged"
-> return a different set of branches. I'm not sure why though (but it isn't due to
-> this patch).
->
->  builtin-branch.c |   68 ++++++++++++++++++++++++++++++++++++++++-------------
->  1 files changed, 51 insertions(+), 17 deletions(-)
->
-> diff --git a/builtin-branch.c b/builtin-branch.c
-> index 56a1971..03ad757 100644
-> --- a/builtin-branch.c
-> +++ b/builtin-branch.c
-> @@ -181,7 +181,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
->
->  struct ref_item {
->        char *name;
-> -       unsigned int kind;
-> +       char *dest;
-> +       unsigned int kind, len;
->        struct commit *commit;
->  };
->
-> @@ -193,13 +194,23 @@ struct ref_list {
->        int kinds;
->  };
->
-> +static char *resolve_remote_head_symref(const char *head_name) {
-> +       unsigned char sha1[20];
-> +       int flag;
-> +       const char *refname;
-> +       refname = resolve_ref(head_name, sha1, 0, &flag);
-> +       if (refname && (flag & REF_ISSYMREF) &&
-> +           !prefixcmp(refname, "refs/remotes/"))
-> +               return xstrdup(refname + strlen(head_name) - 4);
-> +       return NULL;
-> +}
-> +
->  static int append_ref(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
->  {
->        struct ref_list *ref_list = (struct ref_list*)(cb_data);
->        struct ref_item *newitem;
->        struct commit *commit;
->        int kind;
-> -       int len;
->
->        /* Detect kind */
->        if (!prefixcmp(refname, "refs/heads/")) {
-> @@ -239,9 +250,20 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
->        newitem->name = xstrdup(refname);
->        newitem->kind = kind;
->        newitem->commit = commit;
-> -       len = strlen(newitem->name);
-> -       if (len > ref_list->maxwidth)
-> -               ref_list->maxwidth = len;
-> +       newitem->len = strlen(newitem->name);
-> +       newitem->dest = (newitem->kind == REF_REMOTE_BRANCH &&
-> +                        newitem->len > 5 &&
-> +                        !strcmp(newitem->name + newitem->len - 5, "/HEAD"))
-> +                       ? resolve_remote_head_symref(refname - 13) : NULL;
-> +       /* adjust for " -> " */
-> +       if (newitem->dest)
-> +               newitem->len += strlen(newitem->dest) + 4;
-> +       /* adjust for "remotes/" */
-> +       if (newitem->kind == REF_REMOTE_BRANCH &&
-> +           ref_list->kinds != REF_REMOTE_BRANCH)
-> +               newitem->len += 8;
-> +       if (newitem->len > ref_list->maxwidth)
-> +               ref_list->maxwidth = newitem->len;
->
->        return 0;
->  }
-> @@ -250,8 +272,11 @@ static void free_ref_list(struct ref_list *ref_list)
->  {
->        int i;
->
-> -       for (i = 0; i < ref_list->index; i++)
-> +       for (i = 0; i < ref_list->index; i++) {
->                free(ref_list->list[i].name);
-> +               if (ref_list->list[i].dest)
-> +                       free(ref_list->list[i].dest);
-> +       }
->        free(ref_list->list);
->  }
->
-> @@ -292,7 +317,7 @@ static int matches_merge_filter(struct commit *commit)
->  }
->
->  static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
-> -                          int abbrev, int current)
-> +                          int abbrev, int current, char *prefix)
->  {
->        char c;
->        int color;
-> @@ -319,8 +344,13 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
->                color = COLOR_BRANCH_CURRENT;
->        }
->
-> -       if (verbose) {
-> +       if (item->dest) {
-> +               printf("%c %s%s%s%s -> %s\n", c, branch_get_color(color),
-> +                      prefix, item->name,
-> +                      branch_get_color(COLOR_BRANCH_RESET), item->dest);
-> +       } else if (verbose) {
->                struct strbuf subject = STRBUF_INIT, stat = STRBUF_INIT;
-> +               struct strbuf name = STRBUF_INIT;
->                const char *sub = " **** invalid ref ****";
->
->                commit = item->commit;
-> @@ -333,28 +363,29 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
->                if (item->kind == REF_LOCAL_BRANCH)
->                        fill_tracking_info(&stat, item->name);
->
-> +               strbuf_addf(&name, "%s%s", prefix, item->name);
->                printf("%c %s%-*s%s %s %s%s\n", c, branch_get_color(color),
-> -                      maxwidth, item->name,
-> +                      maxwidth, name.buf,
->                       branch_get_color(COLOR_BRANCH_RESET),
->                       find_unique_abbrev(item->commit->object.sha1, abbrev),
->                       stat.buf, sub);
->                strbuf_release(&stat);
->                strbuf_release(&subject);
-> +               strbuf_release(&name);
->        } else {
-> -               printf("%c %s%s%s\n", c, branch_get_color(color), item->name,
-> -                      branch_get_color(COLOR_BRANCH_RESET));
-> +               printf("%c %s%s%s%s\n", c, branch_get_color(color), prefix,
-> +                      item->name, branch_get_color(COLOR_BRANCH_RESET));
->        }
->  }
->
->  static int calc_maxwidth(struct ref_list *refs)
->  {
-> -       int i, l, w = 0;
-> +       int i, w = 0;
->        for (i = 0; i < refs->index; i++) {
->                if (!matches_merge_filter(refs->list[i].commit))
->                        continue;
-> -               l = strlen(refs->list[i].name);
-> -               if (l > w)
-> -                       w = l;
-> +               if (refs->list[i].len > w)
-> +                       w = refs->list[i].len;
->        }
->        return w;
->  }
-> @@ -394,7 +425,7 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
->                item.commit = head_commit;
->                if (strlen(item.name) > ref_list.maxwidth)
->                        ref_list.maxwidth = strlen(item.name);
-> -               print_ref_item(&item, ref_list.maxwidth, verbose, abbrev, 1);
-> +               print_ref_item(&item, ref_list.maxwidth, verbose, abbrev, 1, "");
->                free(item.name);
->        }
->
-> @@ -402,8 +433,11 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
->                int current = !detached &&
->                        (ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
->                        !strcmp(ref_list.list[i].name, head);
-> +               char *prefix = (kinds != REF_REMOTE_BRANCH &&
-> +                               ref_list.list[i].kind == REF_REMOTE_BRANCH)
-> +                               ? "remotes/" : "";
->                print_ref_item(&ref_list.list[i], ref_list.maxwidth, verbose,
-> -                              abbrev, current);
-> +                              abbrev, current, prefix);
->        }
->
->        free_ref_list(&ref_list);
-> --
-> 1.6.2.rc0.12.gbd893
->
->
+Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
+---
+ .../egit/ui/internal/actions/CommitAction.java     |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
+b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java index 5996596..a14011a 100644 ---
+a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java +++
+b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java @@ -128,7 +128,7 @@ public void
+run(IAction act) {
+ 		if (commitDialog.open() != IDialogConstants.OK_ID)
+ 			return;
+
+-		String commitMessage = commitDialog.getCommitMessage();
++		String commitMessage = commitDialog.getCommitMessage().replaceAll("\n\r|\r\n", "\n");
+ 		amending = commitDialog.isAmending();
+ 		try {
+ 			performCommit(commitDialog, commitMessage);
+-- 
+1.6.1.9.g97c34
