@@ -1,67 +1,72 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] fast-export: ensure we traverse commits in topological 
-	order
-Date: Wed, 11 Feb 2009 10:48:18 +0000
-Message-ID: <e2b179460902110248m8055b3amdebcfc550438cff2@mail.gmail.com>
-References: <1234332233-10017-1-git-send-email-newren@gmail.com>
-	 <1234332233-10017-2-git-send-email-newren@gmail.com>
-	 <alpine.DEB.1.00.0902111125410.10279@pacific.mpi-cbg.de>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Disable filemode rebase tests in t3400-rebase.sh if no 
+	filesystem mode support
+Date: Wed, 11 Feb 2009 11:53:16 +0100
+Message-ID: <81b0412b0902110253g2288419eha4037f22f6286ea4@mail.gmail.com>
+References: <81b0412b0902110151x35fbbb4esb9efefae2e1fe90a@mail.gmail.com>
+	 <4992A3DF.4010707@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 11:50:14 2009
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Feb 11 11:54:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXCfM-0004vO-5F
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 11:50:04 +0100
+	id 1LXCjt-0006S7-95
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 11:54:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754817AbZBKKsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 05:48:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754792AbZBKKsV
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 05:48:21 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:34336 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754738AbZBKKsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 05:48:20 -0500
-Received: by qyk4 with SMTP id 4so98253qyk.13
-        for <git@vger.kernel.org>; Wed, 11 Feb 2009 02:48:18 -0800 (PST)
+	id S1754586AbZBKKxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 05:53:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754386AbZBKKxS
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 05:53:18 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:31299 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753559AbZBKKxR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 05:53:17 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so16108eya.37
+        for <git@vger.kernel.org>; Wed, 11 Feb 2009 02:53:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=UAbXuPfRl04IelgMfcY9puTkbQ/UEHDuxcUCuuJ+7eU=;
-        b=DZhNsbJuAfdM6anix0PGp58i43vDiqymRIlnDRKf7j8raiDS7EvMmhFuVsrXdeHO2x
-         9DUf1b625KSGWW40DLl4/UeUs1rUNz7x75jBdfdydFId3IWnQf2hQmnbhFiavPRT4giY
-         UVKnswsMIPs1ychOqeUTkHNaVopmgZEJUqv8M=
+        bh=bT2srkhku0vSXfF87j0NAg1xJXaQS8/4CCAqLKbWX04=;
+        b=aTXdARV2i6rzvxOGdMYMs0CJesAqbMqwW+otgHi1sObjfJBuHWVfCvVJUYcJbj5KX4
+         ru+4/mcb5EwLFp30GwviSf++pDwQ0FNcnFxi/9Fihg0bcqQ9Hgra9s+xsfbmbLR+2efC
+         GL2bWpBAUIsgxZFsWQnFNhXqpgiq+ga5hCQIU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=CLNLHRvZnfVdIEBnbkUGUO07kKkGm9iADo4heAl36GLWIxxwKgc0U0cmwyrE51eO7f
-         PVolkaz0MXI/uaekOyuCZvyYUtR8xXBq8PUJ3j26URHRc8zqka7ODrvmdU8xs2J6MvMo
-         Wd8PARm6v3ItMaqTozoWQya3RY6OvePksp5qg=
-Received: by 10.224.37.17 with SMTP id v17mr147544qad.134.1234349298796; Wed, 
-	11 Feb 2009 02:48:18 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902111125410.10279@pacific.mpi-cbg.de>
+        b=R2MPciZpxEruhHIc/tI1YkuUz3JYnyTyLLRrUJiimxjCUVIq30w8pHe0Sx1P22y52g
+         sREVQo8AX4hWZA0mFiShyAuNLpFn7s3DlG7d9FDgqz4vOJgv8YshHdBCHUIXlU/5I0uO
+         5LBPJVBK/58b/zB4GUdAusKm2yZRRmRnbJUHY=
+Received: by 10.210.43.11 with SMTP id q11mr4001523ebq.48.1234349596058; Wed, 
+	11 Feb 2009 02:53:16 -0800 (PST)
+In-Reply-To: <4992A3DF.4010707@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109403>
 
-> On Tue, 10 Feb 2009, newren@gmail.com wrote:
-> fast-export will only list as parents those commits which have already
-> been traversed (making it appear as if merges have been squashed if not
-> all parents have been traversed).  To avoid this silent squashing of
-> merge commits, we request commits in topological order.
+2009/2/11 Johannes Sixt <j.sixt@viscovery.net>:
+> Alex Riesen schrieb:
+>>
+>> I'm honestly sorry for my contributions. They seem to be exclusively
+>> in the "make Git work in Windows" area.  Depressing.
+>>
+>>  t/t3400-rebase.sh |    5 +++++
+>>  1 files changed, 5 insertions(+), 0 deletions(-)
+>
+> Very interesting. This test works unmodified here. On the other hand, I
+> have to skip the entire t4129-apply-samemode.sh.
+>
 
-Any comparative timings? We don't need to rename this to 'git
-reasonably-speedy-export'? 8-)
-
-Mike
+hmm... These seem to work here. I have to use Cygwin. Do you use the
+native port?
