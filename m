@@ -1,64 +1,94 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH v2] filter-branch: Add more error-handling
-Date: Thu, 12 Feb 2009 06:30:38 +0900
-Message-ID: <20090212063038.6117@nanako3.lavabit.com>
-References: <1234361365-63711-1-git-send-email-git@randomhacks.net>
- <1234372518-6924-1-git-send-email-git@randomhacks.net>
- <7vhc30eqy7.fsf@gitster.siamese.dyndns.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH] Make 'remote show' distinguish between merged and rebased
+ 	remote branches
+Date: Wed, 11 Feb 2009 16:35:23 -0500
+Message-ID: <4993449B.2040401@xiplink.com>
+References: <20090210202046.8EBEC3360AC@rincewind>	 <7v3aemm1po.fsf@gitster.siamese.dyndns.org>	 <4991FA18.1040200@xiplink.com> <76718490902101513i504e515ocb4a2d789ba520f0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Eric Kidd <git@randomhacks.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 11 22:32:55 2009
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 11 22:37:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXMhQ-0006ER-4t
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 22:32:52 +0100
+	id 1LXMlR-0007kJ-T1
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 22:37:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755246AbZBKVbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 16:31:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754746AbZBKVbU
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 16:31:20 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:37412 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754158AbZBKVbU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 16:31:20 -0500
-Received: from h.earth.lavabit.com (h.earth.lavabit.com [192.168.111.17])
-	by karen.lavabit.com (Postfix) with ESMTP id 5191511BACC;
-	Wed, 11 Feb 2009 15:31:19 -0600 (CST)
-Received: from 7095.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id MK3X41Z2GFXC; Wed, 11 Feb 2009 15:31:19 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=LeoQyWhrvcLnfA4MBhSafCyl62OQHI/9uJGgfIHCRHdA3uKdW2kZzPo4ONYEh9duPt85nAGMh5HAguDEK6d74EtPXqkf8CJBsY/fjjBvOy2Ck+aAUtVnSYcYcEV69tD6n0yUdwNpWNZntgeqI2WQWaN1hdPcdKizBGYN0VguwqI=;
-  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7vhc30eqy7.fsf@gitster.siamese.dyndns.org>
+	id S1754894AbZBKVfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 16:35:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753400AbZBKVfd
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 16:35:33 -0500
+Received: from smtp122.iad.emailsrvr.com ([207.97.245.122]:53718 "EHLO
+	smtp122.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752143AbZBKVfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 16:35:33 -0500
+Received: from relay2.r2.iad.emailsrvr.com (localhost [127.0.0.1])
+	by relay2.r2.iad.emailsrvr.com (SMTP Server) with ESMTP id 705DA44C078;
+	Wed, 11 Feb 2009 16:35:26 -0500 (EST)
+Received: by relay2.r2.iad.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 41AA644C0C0;
+	Wed, 11 Feb 2009 16:35:26 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <76718490902101513i504e515ocb4a2d789ba520f0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109535>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+Jay Soffian wrote:
+> 
+> The output of git remote show seems much too verbose for the
+> information it provides. Something like this, I think, provides the
+> same information in much less space:
+> 
+> * remote origin
+>   URL: git://git.kernel.org/pub/scm/git/git.git
+>   Remote branches:
+>     html      Not tracked
+>     maint     Tracked
+>     man       Tracked
+>     master    Tracked
+>     next      Tracked
+>     pu        Tracked
+>     todo      Not tracked
+>     old-next  Stale (would prune)
+>   Local branches configured to pull from this remote:
+>     master           upstream is master (merges)
+>     wip/remote-HEAD  upstream is next   (rebases)
 
-> This goes after three-dashes; people who read "git log" output wouldn't
-> know nor care what was in v1.
-> 
->     Subject: Fix X under condition Z
-> 
->     X should do Y if condition Z holds, but it does not.  This can result
->     in broken results such as W and V.
-> 
->     This patch fixes X by changing A, B and C.
-> 
->     Thanks for M, N and O for reviewing and suggesting improvements.
-> 
->     Signed-off-by: A U Thor <au.thor@example.xz>
+The current test case for 'remote show' (without my rebase patch) is:
 
-I think you meant this as a sample to follow.  Can we add it to Documentation/SubmittingPatches?
+* remote origin
+  URL: $(pwd)/one
+  Remote branch merged with 'git pull' while on branch master
+    master
+  New remote branch (next fetch will store in remotes/origin)
+    master
+  Tracked remote branches
+    side
+    master
+  Local branches pushed with 'git push'
+    master:upstream
+    +refs/tags/lastbackup
 
--- 
-Nanako Shiraishi, an unofficial project secretary
-http://ivory.ap.teacup.com/nanako3/
+Should that last bit about 'git push' change as well (I admit I don't really understand what that part is saying)?  Or should we just be consistent?  Maybe something like:
+
+* remote origin
+  URL: $(pwd)/one
+  Remote branches:
+    master  Tracked
+    side    Not tracked
+    flip    Tracked
+  New remote branch (next fetch will store in remotes/origin)
+    master
+  Local branches tracking this remote:
+    master   upstream is master (merges)
+    rebaser  upstream is flip   (rebases)
+  Local branches pushed with 'git push'
+    master:upstream
+    +refs/tags/lastbackup
+
+		M.
