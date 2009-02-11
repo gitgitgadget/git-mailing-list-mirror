@@ -1,66 +1,81 @@
-From: Ted Pavlic <ted@tedpavlic.com>
-Subject: Re: [ANNOUNCE] tig-0.14
-Date: Wed, 11 Feb 2009 09:19:47 -0500
-Message-ID: <4992DE83.6080803@tedpavlic.com>
-References: <20090205204436.GA6072@diku.dk> <4991814A.6050803@tedpavlic.com>  <2c6b72b30902101029s72628a88n16473ee30f853198@mail.gmail.com>  <6BA2725C-2127-48BE-871E-7449A507CCD8@silverinsanity.com>  <d4bc1a2a0902101129y22224c89y144b223e7d7dd463@mail.gmail.com> <2c6b72b30902101241p67a0e1e9u60c8033c4a03260c@mail.gmail.com>
+From: "Marcel M. Cary" <marcel@oak.homeunix.org>
+Subject: Re: [RFC PATCH] git-sh-setup: Use "cd" option, not /bin/pwd, for
+ symlinked work tree
+Date: Wed, 11 Feb 2009 06:44:41 -0800
+Message-ID: <4992E459.1060401@oak.homeunix.org>
+References: <7viqq1hghw.fsf@gitster.siamese.dyndns.org> <1233977068-24861-1-git-send-email-marcel@oak.homeunix.org> <alpine.DEB.1.00.0902071324230.10279@pacific.mpi-cbg.de> <498F2049.9030608@oak.homeunix.org> <alpine.DEB.1.00.0902082154450.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Stefan Karpinski <stefan.karpinski@gmail.com>,
-	Brian Gernhardt <benji@silverinsanity.com>,
-	git <git@vger.kernel.org>
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Wed Feb 11 15:21:47 2009
+Cc: git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
+	ae@op5.se, j.sixt@viscovery.net, git-dev@marzelpan.de,
+	win@wincent.com, benji@silverinsanity.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 11 15:46:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXFxr-0002nK-9c
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 15:21:23 +0100
+	id 1LXGM2-00057O-IB
+	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 15:46:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755230AbZBKOT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 09:19:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755061AbZBKOT4
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 09:19:56 -0500
-Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:34333 "EHLO
-	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754496AbZBKOTz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2009 09:19:55 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id BFEE980D8036;
-	Wed, 11 Feb 2009 09:13:24 -0500 (EST)
-X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
-Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
-	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SiHwVuG-ruDx; Wed, 11 Feb 2009 09:13:24 -0500 (EST)
-Received: from tedbook.mshome.net (tedpc.ece.ohio-state.edu [164.107.164.122])
-	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id A89F380D8005;
-	Wed, 11 Feb 2009 09:13:24 -0500 (EST)
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
-In-Reply-To: <2c6b72b30902101241p67a0e1e9u60c8033c4a03260c@mail.gmail.com>
+	id S1755706AbZBKOoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 09:44:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755346AbZBKOoy
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 09:44:54 -0500
+Received: from smtp119.sbc.mail.sp1.yahoo.com ([69.147.64.92]:34308 "HELO
+	smtp119.sbc.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1754193AbZBKOoy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Feb 2009 09:44:54 -0500
+Received: (qmail 55089 invoked from network); 11 Feb 2009 14:44:53 -0000
+Received: from unknown (HELO ordinateur.home.org) (marcel@75.61.103.6 with plain)
+  by smtp119.sbc.mail.sp1.yahoo.com with SMTP; 11 Feb 2009 14:44:52 -0000
+X-YMail-OSG: Y87VWAsVM1nXUOpVrLGCGK_J06CbJ5jrJby1v24k8aYdweIwEoJd34mvtlmn0UdASWUU.uJEPw3E83xJZq3y3sBI98ZQcr9VXbkTp7SoW0EDD1TJAha0UTdtdIN89IU_LIOxGghAroWicZ.UHjlgrBIS
+X-Yahoo-Newman-Property: ymail-3
+Received: from polliwog.home.org ([192.168.0.18])
+	by ordinateur.home.org with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <marcel@oak.homeunix.org>)
+	id 1LXGKZ-0001cD-2T; Wed, 11 Feb 2009 06:44:51 -0800
+User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
+In-Reply-To: <alpine.DEB.1.00.0902082154450.10279@pacific.mpi-cbg.de>
+X-Enigmail-Version: 0.95.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109421>
 
-> Looks like there might be a pattern and I might have an excuse to go
-> knock on the door of one of my "Mac" friends. ;) However, first I
-> would kindly ask if one of you have time to test the attached patch.
+Johannes Schindelin wrote:
+> On Sun, 8 Feb 2009, Marcel M. Cary wrote:
+>> Johannes Schindelin wrote:
+>>> On Fri, 6 Feb 2009, Marcel M. Cary wrote:
+>>>> While the "-P" option may be slightly less commonly supported than
+>>>> /bin/pwd,
+>>> Does this not suggest that your patch should at least fall back to
+>>> using /bin/pwd when it was detected that "cd -P" does not work?
+>> Having the "cd -P" strategy fall back to /bin/pwd negates most of the
+>> value I saw in using the simpler strategy.
+>>
+>> I haven't found cases where "cd -P" is more correct.
+> 
+> Actually, it was not clear for me how much you researched the portability 
+> of "cd -P".
 
-It fixes it for me.
+I have not.  I've seen only that it's POSIX, is on BSD and Linux, and
+was suggested by Junio.
 
-As noted, the highlight in the changesets does not go to the end of the 
-line (where there is a cursor displayed) as it did before. I can see how 
-some people might view this as a feature (i.e., having the whole line 
-highlighted).
+> As long as it is not proven that your patch keeps working setups working, 
+> I think you'll have to put in a bit more effort, research it, and then put 
+> the discussion into the commit message.
 
---Ted
+Actually, since I haven't heard any continued interest in following up
+with the suggestion to use "cd -P", I don't see much benefit myself, and
+there is concern about it not being compatible enough, I'm content to
+just table this.
 
+I agree that keeping working setups working is important, and it seems
+like a major project to research portability of "cd -P" on a list of
+platforms that I'm guessing I'd have to collect myself.
 
--- 
-Ted Pavlic <ted@tedpavlic.com>
-
-   Please visit my ALS association page:
-         http://web.alsa.org/goto/tedpavlic
-   My family appreciates your support in the fight to defeat ALS.
+Marcel
