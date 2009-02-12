@@ -1,83 +1,83 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 3/9] Document why WindowFile's hash is *31
-Date: Wed, 11 Feb 2009 18:36:53 -0800
-Message-ID: <1234406219-19547-4-git-send-email-spearce@spearce.org>
-References: <1234406219-19547-1-git-send-email-spearce@spearce.org>
- <1234406219-19547-2-git-send-email-spearce@spearce.org>
- <1234406219-19547-3-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 0/9] Misc. pack code cleanups
+Date: Wed, 11 Feb 2009 18:36:50 -0800
+Message-ID: <1234406219-19547-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 03:39:00 2009
+X-From: git-owner@vger.kernel.org Thu Feb 12 03:39:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXRTc-0002tJ-1w
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 03:38:56 +0100
+	id 1LXRTa-0002tJ-K4
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 03:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757669AbZBLChK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 21:37:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756571AbZBLChH
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 21:37:07 -0500
-Received: from george.spearce.org ([209.20.77.23]:39176 "EHLO
+	id S1756718AbZBLChF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 21:37:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756491AbZBLChD
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 21:37:03 -0500
+Received: from george.spearce.org ([209.20.77.23]:39166 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756481AbZBLChD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 21:37:03 -0500
+	with ESMTP id S1752231AbZBLChB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 21:37:01 -0500
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 5723738260; Thu, 12 Feb 2009 02:37:02 +0000 (UTC)
+	id 1356E38215; Thu, 12 Feb 2009 02:37:00 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id D420E38211;
-	Thu, 12 Feb 2009 02:37:00 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 7E1D43819E;
+	Thu, 12 Feb 2009 02:36:59 +0000 (UTC)
 X-Mailer: git-send-email 1.6.2.rc0.204.gf6b427
-In-Reply-To: <1234406219-19547-3-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109560>
 
-It doesn't really make sense on its own, but if you know about
-the assumption in WindowCache.hash() it all becomes a bit more
-clear to the reader.
+This is a short batch of misc. cleanups related to pack handling.
+I'm trying to work towards making it safer to run "git gc" while
+JGit has a repository open.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/lib/WindowCache.java      |    3 +++
- .../src/org/spearce/jgit/lib/WindowedFile.java     |    4 ++++
- 2 files changed, 7 insertions(+), 0 deletions(-)
+Currently:
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-index 600ebdf..0b9d20c 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-@@ -362,6 +362,9 @@ private static void insertLRU(final ByteWindow<?> e) {
- 	}
- 
- 	private static int hash(final WindowedFile wp, final int id) {
-+		// wp.hash was already "stirred up" a bit by * 31 when
-+		// it was created. Its reasonable to just add here.
-+		//
- 		return ((wp.hash + id) >>> 1) % cache.length;
- 	}
- 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
-index 5eb8465..db8ea88 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
-@@ -88,6 +88,10 @@
- 	 */
- 	public WindowedFile(final File file) {
- 		fPath = file;
-+
-+		// Multiply by 31 here so we can more directly combine with another
-+		// value in WindowCache.hash(), without doing the multiply there.
-+		//
- 		hash = System.identityHashCode(this) * 31;
- 		length = Long.MAX_VALUE;
- 	}
--- 
-1.6.2.rc0.204.gf6b427
+  - when a new pack is added we don't notice it;
+  - when a previously listed pack is removed, we crash;
+  - if a pack stays but its offsets change, we crash;
+  - objects can go *poof* if they were loose and get packed;
+
+This series doesn't fix any of these issues, but it cleans
+up the code enough that I can start to consider this more.
+
+The last patch is perhaps a bit more controversial.  It sets
+core.packindex to 2 by default, which was done in C Git back
+when 1.6.0 shipped.
+
+
+Shawn O. Pearce (9):
+  Remove the Repository parameter from PackFile's constructor
+  Remove dead stats code from WindowCache
+  Document why WindowFile's hash is *31
+  Allow PackFile to lazily load its PackIndex on first demand
+  Arrange pack files in recency order to improve quick hits
+  Rename readPackHeader() to be onOpenPack()
+  Validate the pack's footer checksum matches that in the index
+  Remove yet another legacy StGit utility function
+  Make pack.indexversion config option default to version 2
+
+ .../src/org/spearce/jgit/pgm/IndexPack.java        |    4 +-
+ .../tst/org/spearce/jgit/lib/PackWriterTest.java   |    2 +-
+ .../tst/org/spearce/jgit/lib/T0004_PackReader.java |    2 +-
+ .../org/spearce/jgit/transport/IndexPackTest.java  |    4 +-
+ .../src/org/spearce/jgit/lib/CoreConfig.java       |    3 +-
+ .../src/org/spearce/jgit/lib/PackFile.java         |   95 +++++++++++++------
+ .../src/org/spearce/jgit/lib/PackIndex.java        |    3 +
+ .../src/org/spearce/jgit/lib/PackIndexV1.java      |    3 +
+ .../src/org/spearce/jgit/lib/PackIndexV2.java      |    3 +
+ .../src/org/spearce/jgit/lib/PackWriter.java       |    1 +
+ .../org/spearce/jgit/lib/PackedObjectLoader.java   |    4 +-
+ .../src/org/spearce/jgit/lib/Repository.java       |   41 +++------
+ .../src/org/spearce/jgit/lib/WindowCache.java      |   31 +------
+ .../src/org/spearce/jgit/lib/WindowedFile.java     |    4 +
+ 14 files changed, 106 insertions(+), 94 deletions(-)
