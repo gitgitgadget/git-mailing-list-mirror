@@ -1,106 +1,58 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: How to use path limiting (using a glob)?
-Date: Thu, 12 Feb 2009 11:09:36 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngp80rg.rmg.sitaramc@sitaramc.homelinux.net>
-References: <20090211191432.GC27232@m62s10.vlinux.de>
- <alpine.LFD.2.00.0902111129190.3590@localhost.localdomain>
- <20090212102719.GD27232@m62s10.vlinux.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-cvsimport and i18n.commitencoding
+Date: Thu, 12 Feb 2009 12:12:21 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902121209270.10279@pacific.mpi-cbg.de>
+References: <4993C92E.7080909@yahoo.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 12 12:11:43 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Prenom Nom <utilisateur_768@yahoo.fr>
+X-From: git-owner@vger.kernel.org Thu Feb 12 12:13:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXZTn-0005P6-E0
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 12:11:39 +0100
+	id 1LXZV7-0005sQ-7c
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 12:13:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758607AbZBLLJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 06:09:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750991AbZBLLJs
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 06:09:48 -0500
-Received: from main.gmane.org ([80.91.229.2]:54372 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758604AbZBLLJr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 06:09:47 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LXZRz-000402-2z
-	for git@vger.kernel.org; Thu, 12 Feb 2009 11:09:47 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 11:09:47 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 11:09:47 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1756763AbZBLLLd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 06:11:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756557AbZBLLLd
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 06:11:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59645 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754362AbZBLLLd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 06:11:33 -0500
+Received: (qmail invoked by alias); 12 Feb 2009 11:11:31 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp011) with SMTP; 12 Feb 2009 12:11:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19cOX4cXptcxRM1UBRIvvD/J0i8YE/i0KJoPIM4kw
+	FTHuF5mBaSnfQ1
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4993C92E.7080909@yahoo.fr>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109603>
 
-On 2009-02-12, Peter Baumann <waste.manager@gmx.de> wrote:
-> On Wed, Feb 11, 2009 at 11:40:44AM -0800, Linus Torvalds wrote:
+Hi,
 
->> On Wed, 11 Feb 2009, Peter Baumann wrote:
->> 
->> > after reading Junio's nice blog today where he
->> > explained how to use git grep efficiently, I saw him
->> > using a glob to match for the interesting files:
->> > 
->> > 	 $ git grep -e ';;' -- '*.c'
->> > 
->> > Is it possible to have the same feature in git diff and the revision
->> > machinery?
->> 
->> Not really. Git has two different kinds of path limiters, and they are 
->> really really different.
->> 
->>  - the "walk current index/directory recursively" kind that "git ls-files" 
->>    uses, which takes a 'fnmatch()' type path regexp (not a real regexp, 
->>    but the kind you're used to with shell)
->> 
->>    NOTE! On purpose, we don't set the FNM_PATHNAME, so "*.c" here is 
->>    different from *.c in shell (it's more like "**.c" in tcsh). IOW, * 
->>    matches '/' too, and will walk subdirectories.
->> 
->
-> Hm. But if git does only anchor the * at the current directory, wouldn't
-> this solve (or at least reduce) the performance problems you described in the
-> later paragraph? Having the "**.c" do a recurisve search for every .c
-> file would then be used to do a recusrive search. 
+On Thu, 12 Feb 2009, Prenom Nom wrote:
 
-I think Linus meant that it's expensive to look for all *.c
-files at any depth in the tree, for every commit in
-repository.
+> The thing is i cannot change the .git/config file since the repo is 
+> created by git-cvsimport.
 
-You can have either a prefix matcher to limit the search
-*within* a tree so you can afford to walk all revs in the
-repo, or you stick to just one tree (or a few explicitly
-named ones).
+Indeed.  A dirty little trick would be to edit $(git 
+--exec-path)git-cvsimport and put in your desired changes.
 
-You seem to be saying 'fine, I know, and I'm willing to
-indicate that I'm accepting this cost by using a different
-syntax'.
+A less ugly solution would be to patch git-cvsimport.perl to add an option 
+--into-existing-repository that does not complain when the Git repository 
+is already initialized, unless the 'origin' branch exists, too.
 
-But the syntax is not the point.  You can certainly do that
-right now, if you really wish to.  Just don't try it on a
-large repo :-)
-
-    git grep -e pattern $(git rev-list --all) -- *.c
-
-Make suitable modifications to the '--all' in the git
-rev-list to limit the revs you want to search.
-
-Regardless of whether there is a simple syntax to support it
-or not, this is probably not what you want, most of the time
-:-)
-
-Sitaram
+Hth,
+Dscho
