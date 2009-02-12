@@ -1,69 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Jan 2009, #07; Wed, 28)
-Date: Thu, 12 Feb 2009 22:51:26 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902122251120.10279@pacific.mpi-cbg.de>
-References: <7vwscej26i.fsf@gitster.siamese.dyndns.org> <20090129035138.GC11836@coredump.intra.peff.net> <bd6139dc0901290327u572cc30ci9dc719c912fbf875@mail.gmail.com> <20090129113735.GA6505@coredump.intra.peff.net> <351A6988-32EB-473F-B6E5-8FBB38D91F88@ai.rug.nl>
- <bd6139dc0901290345u4962f747gbe93c945ab35c9cb@mail.gmail.com> <20090129115026.GB10792@coredump.intra.peff.net> <bd6139dc0901290420x1216a399w656e4d1622178a06@mail.gmail.com> <20090130045131.GB18655@coredump.intra.peff.net> <alpine.DEB.1.00.0901301415260.3586@pacific.mpi-cbg.de>
- <7vr62j0wpc.fsf@gitster.siamese.dyndns.org> <7v3aekqhpo.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0902121200420.10279@pacific.mpi-cbg.de> <7vzlgrjrjz.fsf@gitster.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC PATCH] Teach rebase to rebase even if upstream is up to date 
+	with -f
+Date: Thu, 12 Feb 2009 22:57:17 +0100
+Message-ID: <bd6139dc0902121357l1eea7b8xe890513b756e97c2@mail.gmail.com>
+References: <1234468061-29923-1-git-send-email-srabbelier@gmail.com>
+	 <7vbpt7jq4c.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Sverre Rabbelier <srabbelier@gmail.com>,
-	Pieter de Bie <pdebie@ai.rug.nl>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailinglist <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Wong <normalperson@yhbt.net>,
+	"Shawn O. Pear, Sverre Rabbelier <srabbelier@gmail.com>"@b-sasl-quonix.sasl.smtp.pobox.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 22:52:15 2009
+X-From: git-owner@vger.kernel.org Thu Feb 12 22:58:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXjTf-0000vP-Ha
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 22:52:12 +0100
+	id 1LXja4-0003I0-B2
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 22:58:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758113AbZBLVul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 16:50:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758072AbZBLVul
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 16:50:41 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48328 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756980AbZBLVuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 16:50:40 -0500
-Received: (qmail invoked by alias); 12 Feb 2009 21:50:38 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp039) with SMTP; 12 Feb 2009 22:50:38 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/md8la5Zfm1y6UX5baVb2WvWUJayjRwkHIcZLq4F
-	N4zWkVS4drXbtP
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vzlgrjrjz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1753113AbZBLV5U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Feb 2009 16:57:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752435AbZBLV5U
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 16:57:20 -0500
+Received: from fg-out-1718.google.com ([72.14.220.153]:28636 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752299AbZBLV5T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Feb 2009 16:57:19 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so307451fgg.17
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 13:57:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=cfwHeBRRxkmDbTcG3cY3JOgocZzZ7Z+HJDWT25y4SV8=;
+        b=ubt8ArPlmMN0H+rtpf/Wx362pngW9y9n9KUX7uAMAYJM91wAa4NTdUD/ROQCOZlaLA
+         RywfaKMFiIP97J+v/WCe44o7LvpN5vg/G4LjCHjvJSTGmR/A7MDzs1LfMGG+wxSf9+Jz
+         73Im6Frj5eLe7Mg93BebDnLqf7OCQ2Y8fVOOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=idGJ2qb8pF2jkvhs+QNDK6WnhVVYHc0h+pLSz904MacAZ26FWXXKJ9TGElu9if2RPd
+         WQV99kVExk6IDF2Z2MQzkvkzuasX1ZTkEC//uEpbSRkCW1q1/0qrfWnJB9QU5qDqdtml
+         m2jWyJs5tdg7KFyI4FGVQVszykuj2m7GqS5Uo=
+Received: by 10.86.3.4 with SMTP id 4mr111790fgc.41.1234475837705; Thu, 12 Feb 
+	2009 13:57:17 -0800 (PST)
+In-Reply-To: <7vbpt7jq4c.fsf@gitster.siamese.dyndns.org>
+X-Google-Sender-Auth: 0cc685d319550c52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109669>
 
-Hi,
+On Thu, Feb 12, 2009 at 22:34, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> For that, I would prefer to see:
+> =A0(1)=A0 =A0git format-patch --stdout origin >my.mbox
+> =A0(2)=A0 =A0git fetch origin
+> =A0(3)=A0 =A0git checkout origin =A0 =A0 =A0 =A0 =A0 =A0 ;# yes, deta=
+ch
+> =A0(4)=A0 =A0git am --whitespace=3Dfix my.mbox
+> =A0(5)=A0 =A0make test
+> =A0(6)  =A0git format-patch -o to-send-out origin
+> =A0(7)=A0 =A0git send-email ..options.. to-send-out
 
-On Thu, 12 Feb 2009, Junio C Hamano wrote:
+If I understand things correctly 'git rebase -f --whitespace=3Dfix
+origin' does only 1 and 4, yes? In my workflow I do 2 and 5 as 'git
+pull --rebase' before I push anything, and since I push rather then
+send-email, I never use 6 and 7. That leaves 3, which I guess is
+specific to your workflow? I am guessing you detach to make it easier
+to easily test many different topic branches.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> diff --git a/builtin-clone.c b/builtin-clone.c
-> >> index f73029e..431c136 100644
-> >> --- a/builtin-clone.c
-> >> +++ b/builtin-clone.c
-> >> @@ -350,6 +350,18 @@ static struct ref *write_remote_refs(const struct ref *refs,
-> >>  	return local_refs;
-> >>  }
-> >>  
-> >> +static void install_branch_config(const char *origin, const char *local,
-> >> +				  const char *remote)
-> >
-> > I would have used a different order (local, origin, remote), but that's 
-> > okay, I guess.
-> 
-> Ok, here is an incremental that will be squashed.
+> It fixes whitespace breakages, but more importantly, the procedure ma=
+kes
+> sure that what you will be sending out will apply cleanly to the orig=
+in
+> that may have progressed since you last looked at it.
 
-Thanks, very much appreciated,
-Dscho
+Mhhh, would 'git fetch && git rebase -f whitespace=3Dfix orgin' do the
+same? Do you see any other problems with the patch?
+
+--=20
+Cheers,
+
+Sverre Rabbelier
