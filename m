@@ -1,126 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 2/9] Remove dead stats code from WindowCache
-Date: Wed, 11 Feb 2009 18:36:52 -0800
-Message-ID: <1234406219-19547-3-git-send-email-spearce@spearce.org>
-References: <1234406219-19547-1-git-send-email-spearce@spearce.org>
- <1234406219-19547-2-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 03:39:47 2009
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: showing SHA1 of parent commit in tig [was Re: [ANNOUNCE] tig-0.14
+Date: Thu, 12 Feb 2009 03:28:40 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngp75r8.q57.sitaramc@sitaramc.homelinux.net>
+References: <20090205204436.GA6072@diku.dk> <20090206104946.GE7259@b2j>
+ <2c6b72b30902060629i2539ddds48ab858e83d4bb4@mail.gmail.com>
+ <slrngooljv.urh.sitaramc@sitaramc.homelinux.net>
+ <2c6b72b30902080207m4a1e14b7j4862f9a8b7ca32a9@mail.gmail.com>
+ <slrngp5tqk.u46.sitaramc@sitaramc.homelinux.net>
+ <2c6b72b30902111719r6fd25dc7uc22b471f7904bedc@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 12 04:30:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXRUP-00037t-Jt
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 03:39:46 +0100
+	id 1LXSHX-0005aa-6V
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 04:30:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757675AbZBLChN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 21:37:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757832AbZBLChL
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 21:37:11 -0500
-Received: from george.spearce.org ([209.20.77.23]:39174 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752244AbZBLChD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 21:37:03 -0500
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id BD6D138239; Thu, 12 Feb 2009 02:37:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 6B7B93819E;
-	Thu, 12 Feb 2009 02:37:00 +0000 (UTC)
-X-Mailer: git-send-email 1.6.2.rc0.204.gf6b427
-In-Reply-To: <1234406219-19547-2-git-send-email-spearce@spearce.org>
+	id S1756696AbZBLD3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 22:29:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756703AbZBLD27
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 22:28:59 -0500
+Received: from main.gmane.org ([80.91.229.2]:57144 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755515AbZBLD26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 22:28:58 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LXSFx-0005Tl-9M
+	for git@vger.kernel.org; Thu, 12 Feb 2009 03:28:53 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 03:28:53 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 03:28:53 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109569>
 
-I used this code to try and tune the WindowCache a bit, but we're
-about as good as we can do for now.  There's no point in keeping
-it all around in somewhat critical paths if we never use it.
+On 2009-02-12, Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
+> On Wed, Feb 11, 2009 at 17:05, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+>> Is there any way to see the sha1 of the parent commit in any
+>> of the displays, like gitk does?
+>>
+>> I know you're only parsing the 4 or 5 basic git commands,
+>> and none of those do, so I guess I know the answer :-( but
+>> it doesn't hurt to ask.
+>
+> It is sort of possible by setting the TIG_DIFF_CMD environment
+> variable to something appropriate, for example using (and I don't know
+> if this will be formatted correctly):
+>
+> export TIG_DIFF_CMD='git show -p --stat -C -M
+> --pretty=format:commit%x20%H%d%nAuthor:%x20%an%x20<%ae>%x20%ai%nParent:%x20%P%nSubject:%x20%s%n%n%b
+> %(commit)'
+>
+> You need to avoid using space except for where it really separates
+> arguments, which is why the obscure %x20 is used. ;)
+>
+> Another solution would be to create a script, which just expects the
+> commit SHA1 as its first argument and then do the formatting there and
+> then use:
+>
+> export TIG_DIFF_CMD="/my/script %(commit)"
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/lib/WindowCache.java      |   28 --------------------
- 1 files changed, 0 insertions(+), 28 deletions(-)
+OK thanks -- I'll give that a shot when I get a chance.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-index 0077f52..600ebdf 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-@@ -76,14 +76,6 @@ private static final int bits(int newSize) {
- 
- 	private static int openByteCount;
- 
--	private static int hits;
--
--	private static int reqs;
--
--	private static int opens;
--
--	private static int closes;
--
- 	static {
- 		maxByteCount = 10 * MB;
- 		windowSizeShift = bits(8 * KB);
-@@ -93,22 +85,6 @@ private static final int bits(int newSize) {
- 		clearedWindowQueue = new ReferenceQueue<Object>();
- 	}
- 
--	static synchronized String statString() {
--		int maxChain = 0, tot = 0;
--		for (ByteWindow<?> e : cache) {
--			int n = 0;
--			for (; e != null; e = e.chainNext) {
--				n++;
--				tot++;
--			}
--			maxChain = Math.max(maxChain, n);
--		}
--		return "WindowCache[ hits: " + (hits * 100 / reqs) + "%"
--				+ "; windows: " + tot + " maxChain: " + maxChain + "; kb:"
--				+ (openByteCount / KB) + "; cache: " + cache.length + " fds: "
--				+ (opens - closes) + "," + opens + "," + closes + " ]";
--	}
--
- 	private static int cacheTableSize() {
- 		return 5 * (maxByteCount / windowSize) / 2;
- 	}
-@@ -215,7 +191,6 @@ private static synchronized void reconfigureImpl(final int packedGitLimit,
- 	 */
- 	public static synchronized final void get(final WindowCursor curs,
- 			final WindowedFile wp, final long position) throws IOException {
--		reqs++;
- 		final int id = (int) (position >> windowSizeShift);
- 		final int idx = hash(wp, id);
- 		for (ByteWindow<?> e = cache[idx]; e != null; e = e.chainNext) {
-@@ -223,7 +198,6 @@ public static synchronized final void get(final WindowCursor curs,
- 				if ((curs.handle = e.get()) != null) {
- 					curs.window = e;
- 					makeMostRecent(e);
--					hits++;
- 					return;
- 				}
- 
-@@ -234,7 +208,6 @@ public static synchronized final void get(final WindowCursor curs,
- 
- 		if (wp.openCount == 0) {
- 			try {
--				opens++;
- 				wp.openCount = 1;
- 				wp.cacheOpen();
- 			} catch (IOException ioe) {
-@@ -340,7 +313,6 @@ private static void clear(final ByteWindow<?> e) {
- 	private static void unlinkSize(final ByteWindow<?> e) {
- 		if (e.sizeActive) {
- 			if (--e.provider.openCount == 0) {
--				closes++;
- 				e.provider.cacheClose();
- 			}
- 			openByteCount -= e.size;
--- 
-1.6.2.rc0.204.gf6b427
+Regards,
+
+Sitaram
