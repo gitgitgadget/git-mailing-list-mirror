@@ -1,59 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] builtin-remote: teach show to display remote HEAD
-Date: Wed, 11 Feb 2009 20:56:00 -0500
-Message-ID: <20090212015559.GB3187@sigill.intra.peff.net>
-References: <1234332083-45147-1-git-send-email-jaysoffian@gmail.com> <1234332083-45147-2-git-send-email-jaysoffian@gmail.com> <1234332083-45147-3-git-send-email-jaysoffian@gmail.com> <20090212002612.GC30231@coredump.intra.peff.net> <76718490902111748j58f80591ma149f8ec9fb8b352@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 02:57:34 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 3/9] Document why WindowFile's hash is *31
+Date: Wed, 11 Feb 2009 18:36:53 -0800
+Message-ID: <1234406219-19547-4-git-send-email-spearce@spearce.org>
+References: <1234406219-19547-1-git-send-email-spearce@spearce.org>
+ <1234406219-19547-2-git-send-email-spearce@spearce.org>
+ <1234406219-19547-3-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 03:39:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXQpZ-0001BV-M9
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 02:57:34 +0100
+	id 1LXRTc-0002tJ-1w
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 03:38:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755629AbZBLB4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 20:56:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754748AbZBLB4E
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 20:56:04 -0500
-Received: from peff.net ([208.65.91.99]:34727 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753248AbZBLB4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 20:56:04 -0500
-Received: (qmail 4726 invoked by uid 107); 12 Feb 2009 01:56:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 11 Feb 2009 20:56:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Feb 2009 20:56:00 -0500
-Content-Disposition: inline
-In-Reply-To: <76718490902111748j58f80591ma149f8ec9fb8b352@mail.gmail.com>
+	id S1757669AbZBLChK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 21:37:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756571AbZBLChH
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 21:37:07 -0500
+Received: from george.spearce.org ([209.20.77.23]:39176 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756481AbZBLChD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 21:37:03 -0500
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 5723738260; Thu, 12 Feb 2009 02:37:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id D420E38211;
+	Thu, 12 Feb 2009 02:37:00 +0000 (UTC)
+X-Mailer: git-send-email 1.6.2.rc0.204.gf6b427
+In-Reply-To: <1234406219-19547-3-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109559>
 
-On Wed, Feb 11, 2009 at 08:48:42PM -0500, Jay Soffian wrote:
+It doesn't really make sense on its own, but if you know about
+the assumption in WindowCache.hash() it all becomes a bit more
+clear to the reader.
 
-> Damn, I knew I wasn't going to slip that one by. :-)
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../src/org/spearce/jgit/lib/WindowCache.java      |    3 +++
+ .../src/org/spearce/jgit/lib/WindowedFile.java     |    4 ++++
+ 2 files changed, 7 insertions(+), 0 deletions(-)
 
-"Given enough eyeballs, all ugly hacks are shallow." :)
-
-> > I see that the inputs and outputs aren't exactly the same in both cases,
-> 
-> Which is why I didn't refactor it. The extra code needed to massage
-> what builtin-remote.c has to the existing function in builtin-clone.c
-> would've been more LOC than the duplicate code (I think...).
-> 
-> BUT
-> 
-> I'll try. :-)
-
-See what you can do. But personally, I am not as concerned with reducing
-LOC as I am with encapsulating system logic like "this is how you guess
-which ref is HEAD". And if you can do both, great. :)
-
--Peff
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
+index 600ebdf..0b9d20c 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
+@@ -362,6 +362,9 @@ private static void insertLRU(final ByteWindow<?> e) {
+ 	}
+ 
+ 	private static int hash(final WindowedFile wp, final int id) {
++		// wp.hash was already "stirred up" a bit by * 31 when
++		// it was created. Its reasonable to just add here.
++		//
+ 		return ((wp.hash + id) >>> 1) % cache.length;
+ 	}
+ 
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
+index 5eb8465..db8ea88 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
+@@ -88,6 +88,10 @@
+ 	 */
+ 	public WindowedFile(final File file) {
+ 		fPath = file;
++
++		// Multiply by 31 here so we can more directly combine with another
++		// value in WindowCache.hash(), without doing the multiply there.
++		//
+ 		hash = System.identityHashCode(this) * 31;
+ 		length = Long.MAX_VALUE;
+ 	}
+-- 
+1.6.2.rc0.204.gf6b427
