@@ -1,141 +1,83 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] builtin-branch: improve output when displaying remote 
-	branches
-Date: Wed, 11 Feb 2009 23:30:52 -0500
-Message-ID: <76718490902112030x46bddd84r561705a6b4f9d4b4@mail.gmail.com>
-References: <1234263701-95463-1-git-send-email-jaysoffian@gmail.com>
-	 <7vskmkqpp4.fsf@gitster.siamese.dyndns.org>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Thunderbird and patches
+Date: Thu, 12 Feb 2009 13:37:47 +0900
+Message-ID: <buo4oz0e0dg.fsf@dhlpc061.dev.necel.com>
+References: <498E50E2.8050309@codeweavers.com>
+	<200902072310.12764.bss@iguanasuicide.net>
+	<498F01C2.5080105@codeweavers.com>
+	<alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de>
+	<499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com>
+	<alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de>
+	<49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com>
+	<49904DE7.2080205@codeweavers.com>
+	<4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com>
+	<qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil>
+	<49907F75.2050100@beonex.com>
+	<alpine.DEB.1.00.0902092013260.10279@pacific.mpi-cbg.de>
+	<RD8dEuXN_TYvtiDHum-mdwL3m_eJP49xWrl9-YgiLfhOFN6weRXVhg@cipher.nrlssc.navy.mil>
+	<alpine.DEB.1.00.0902092105230.10279@pacific.mpi-cbg.de>
+	<499151C9.7090502@drmicha.warpmail.net>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 05:32:23 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Ben Bucksch <ben.bucksch.news@beonex.com>,
+	Jeremy White <jwhite@codeweavers.com>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Feb 12 05:39:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXTFP-00012C-6a
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 05:32:23 +0100
+	id 1LXTMk-0002N4-0O
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 05:39:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755229AbZBLEaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 23:30:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755114AbZBLEay
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 23:30:54 -0500
-Received: from rv-out-0506.google.com ([209.85.198.226]:56057 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754664AbZBLEax (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 23:30:53 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so171605rvb.1
-        for <git@vger.kernel.org>; Wed, 11 Feb 2009 20:30:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=juJBluqNiuTVElQ2HeTU65e6LTLMqEtyMBFDxjmxGgM=;
-        b=CoHHaOSLq/w7I5QtmXYJ24japlVYpxiRsGUbu3u9D7tRnyeCex9f1vS/0Z6dKE/Kbk
-         6CEW/9awuS5syw8YkUuIrMz0BMhFksMkzgqo6l87fqJAV2lpZfk3VF53VOl1Zj1yYP/j
-         kgODX2PiUvL7dkM52O3qy7gF9uFKAFGLRWmEk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=De88NZm8huhAgmvOjRXPVsCuYpDj8PEu7UyIpWGCdmYODsheUqaou0d0DIb55b07J8
-         Rh7AeYRkxBgsr7SrHr8UxigQSs6D8V8T2AYGpbgFO8+5o+Nci4bMRkUSEzlHhHE4qUjk
-         9ai4WretNsF+fj9F0EwKjURM1m8dJpxKCoDmc=
-Received: by 10.141.53.4 with SMTP id f4mr287520rvk.35.1234413052406; Wed, 11 
-	Feb 2009 20:30:52 -0800 (PST)
-In-Reply-To: <7vskmkqpp4.fsf@gitster.siamese.dyndns.org>
+	id S1755346AbZBLEib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 23:38:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755114AbZBLEib
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 23:38:31 -0500
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:33710 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754953AbZBLEia (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 23:38:30 -0500
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n1C4blvw003361;
+	Thu, 12 Feb 2009 13:37:47 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay21.aps.necel.com with ESMTP; Thu, 12 Feb 2009 13:37:47 +0900
+Received: from dhlpc061 ([10.114.112.240] [10.114.112.240]) by relay21.aps.necel.com with ESMTP; Thu, 12 Feb 2009 13:37:47 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 1611452E2F8; Thu, 12 Feb 2009 13:37:47 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <499151C9.7090502@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Tue, 10 Feb 2009 11:07:05 +0100")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109573>
 
-On Wed, Feb 11, 2009 at 10:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jay Soffian <jaysoffian@gmail.com> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+>> In other words: use the right tool.  Or, as somebody put it at the 
+>> GitTogether: to a hammer, everything looks like a nail.
 >
->> $ git branch -rv
->>   origin/HEAD -> master
->>   origin/html           6116912 Autogenerated HTML docs for v1.6.2-rc0-10-gf6b9
->
-> Doesn't the misalignment between the above two bother you?
+> It just seems that the workflow "required" here on the git list is the
+> way it is because it caters for differently abled MUAs which can't
+> handle certain standards (inline disposition) efficiently.  Mutt
+> obviously can, so it's not a matter of John Doe's MUA versus geeky
+> MUAs.
 
-This comment makes me sad. In fact, a previous iteration looked like this:
+So, since you decry flames later in your message, why did you feel it
+necessary to throw in this rather creaky bit of flamebait?
 
-$ git branch -rv
- origin/HEAD -> master
- origin/html   6116912 Autogenerated HTML docs for v1.6.2-rc0-10-gf6b9
- origin/maint  7e1100e gitweb: add $prevent_xss option to prevent XSS
-by repository content
- origin/man    67cb1a7 Autogenerated manpages for v1.6.2-rc0-10-gf6b9
- origin/master f6b98e4 git-web--browse: Fix check for /bin/start
- origin/next   417ce12 Merge branch 'master' into next
- origin/pu     9d798e7 Merge branch 'db/foreign-scm' into pu
- origin/todo   5ed7079 What's in update
+[The issue is apparently MUAs which munge messages when not wanted; that
+says _nothing_ about what non-munging MUAs can or can not "handle".]
 
-IOW, align based on the width of the branch name, completely ignoring
-the width of " -> ...". But I found that ugly. It was actually more
-work to get it the way it is.
+-Miles
 
->> diff --git a/builtin-branch.c b/builtin-branch.c
->> index 56a1971..03ad757 100644
->> --- a/builtin-branch.c
->> +++ b/builtin-branch.c
->> @@ -181,7 +181,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
->> +static char *resolve_remote_head_symref(const char *head_name) {
->> +     unsigned char sha1[20];
->> +     int flag;
->> +     const char *refname;
->> +     refname = resolve_ref(head_name, sha1, 0, &flag);
->> +     if (refname && (flag & REF_ISSYMREF) &&
->> +         !prefixcmp(refname, "refs/remotes/"))
->> +             return xstrdup(refname + strlen(head_name) - 4);
->
-> Here, head_name is like "refs/remotes/frotz/HEAD", and you are assuming
-> that resolved refname begins with "refs/remotes/frotz/" without checking
-> the "frotz" part. It may point at "refs/remotes/x/y" in a misconfigured
-> repository and your xstrdup() just ran past the end of the string.
-
-Indeed. Now I'm doubly-sad, that my code sucks so bad. :-(
-
-> If the ref you feed to this function turns out not to be a symbolic ref,
-> the caller does do the right thing.  It makes wonder if your caller should
-> always call this, so that you would still work sensibly even if the tracking
-> hierarchy has a funny symref refs/remotes/origin/TAIL that is not HEAD.
->
-> The caller is currently this dense code.
->
->> +     newitem->len = strlen(newitem->name);
->> +     newitem->dest = (newitem->kind == REF_REMOTE_BRANCH &&
->> +                      newitem->len > 5 &&
->> +                      !strcmp(newitem->name + newitem->len - 5, "/HEAD"))
->> +                     ? resolve_remote_head_symref(refname - 13) : NULL;
->> +     /* adjust for " -> " */
->> +     if (newitem->dest)
->> +             newitem->len += strlen(newitem->dest) + 4;
->
-> It can become something like:
->
->        if (newitem->kind == REF_REMOTE_BRANCH)
->                newitem->dest = resolve_remote_symref(refname - 13);
->        else
->                newitem->dest = NULL;
->        if (newitem->dest)
->                ...
->
-> no?
-
-Yes indeed. I'll re-roll to to clean this up, but I'm keeping the
-visual output the same unless you really don't like it.
-
-> free(NULL) is Ok; omit the extra check.
-
-Got it. I think I did something similar in the builtin-remote patch I
-sent you earlier, so I'll make sure to fix that there too when I
-re-roll that one.
-
-Thanks for the review.
-
-j.
+-- 
+Mayonnaise, n. One of the sauces that serve the French in place of a state
+religion.
