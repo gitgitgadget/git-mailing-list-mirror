@@ -1,114 +1,130 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC PATCH] Teach rebase to rebase even if upstream is up to date 
-	with -f
-Date: Thu, 12 Feb 2009 21:44:14 +0100
-Message-ID: <bd6139dc0902121244i4f894209m37f6c80716cbc397@mail.gmail.com>
-References: <1234468061-29923-1-git-send-email-srabbelier@gmail.com>
-	 <alpine.DEB.1.00.0902122126460.10279@pacific.mpi-cbg.de>
-	 <bd6139dc0902121230w1b9fec28sae4e14bdda58a50b@mail.gmail.com>
-	 <alpine.DEB.1.00.0902122134500.10279@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailinglist <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 12 21:45:45 2009
+Subject: [RFC PATCH] Teach rebase to rebase even if upstream is up to date with -f
+Date: Thu, 12 Feb 2009 20:47:41 +0100
+Message-ID: <1234468061-29923-1-git-send-email-srabbelier@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
+To: "Git Mailinglist" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Eric Wong" <normalperson@yhbt.net>,
+	"Shawn O. Pear
+X-From: git-owner@vger.kernel.org Thu Feb 12 21:49:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXiRM-0001Jt-Dk
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 21:45:44 +0100
+	id 1LXiUh-0002YO-Lt
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 21:49:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759049AbZBLUoR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Feb 2009 15:44:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758927AbZBLUoR
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 15:44:17 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:19312 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758447AbZBLUoQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Feb 2009 15:44:16 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so296367fgg.17
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 12:44:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=oOlJgttVQjKvfqrUCDCRhfMCxSTO5shlUwhlx/M7ZL8=;
-        b=iDe/8aRo9LuLf3UNemPw1e01yfa2hd4d4uNW+PXLwDl8CW7N8UpQ6TzHdOFidFvABF
-         cE1A63rU7uBoMhcBoeEORbIqVHaIYbP56vXnIgwR5tOZ7KgWRbd0afBx8prtVF9jjWpV
-         NdFk+3VYPFj2yEesDNokKNELzl05HU945+P8E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=kARKqI+nu5xMLXlgY1b1Vrs8jFXRCIg1xOc4McSgVPcFZ6J1mFfWHD9/Ksd1XqffQt
-         SCRp+VY/TYSvgxtqBJDwgUGyAcle8gGG12Dj9I0vG1wHw09rAhPc5FvNe3fbRMQacA8M
-         k0Ow+FdjQjab73BF4r6FlLXuKAY3vh6Rh8XA8=
-Received: by 10.86.33.10 with SMTP id g10mr1649052fgg.44.1234471454093; Thu, 
-	12 Feb 2009 12:44:14 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902122134500.10279@pacific.mpi-cbg.de>
-X-Google-Sender-Auth: 35e6bf90c57e64b0
+	id S1759265AbZBLUro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 15:47:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758877AbZBLUro
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 15:47:44 -0500
+Received: from mailfe02.swip.net ([212.247.154.33]:49753 "EHLO swip.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756803AbZBLUrn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 15:47:43 -0500
+X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Feb 2009 15:47:42 EST
+X-Cloudmark-Score: 0.000000 []
+X-Cloudmark-Analysis: v=1.0 c=1 a=qcNUXQMlgSoA:10 a=AuLA5bxsci4A:10 a=avaZzRB4Cncbk6OtvmOs9w==:17 a=pGLkceISAAAA:8 a=aIiMzlGB2fuCSw1kD_kA:9 a=arlT5cztHxP4oFm9-KMA:7 a=7GrRcjFo6DRoRTZ6MGGYyXV8-vQA:4 a=6-x43y6uxGMA:10 a=q2uTnOXaV24A:10 a=MSl-tDqOz04A:10
+Received: from [87.211.114.138] (account cxu-984-6hm@tele2.nl HELO localhost.localdomain)
+  by mailfe02.swip.net (CommuniGate Pro SMTP 5.2.6)
+  with ESMTPA id 1198339859; Thu, 12 Feb 2009 20:47:39 +0100
+X-Mailer: git-send-email 1.6.2.rc0.205.g53b19b.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109648>
 
-On Thu, Feb 12, 2009 at 21:37, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> So in contrast to the other situation, there are commits left to be
-> rebased :-)
+Normally, if the current branch is up to date, the rebase is aborted.
+However, it may be desirable to allow rebasing even if the current
+branch is up to date, when using '-f' in combination with the
+'--whitespace=fix' option for example.
 
-Ah, I see, funky hack :).
+Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+---
 
->> Also, any comments on the patch? ;)
->
-> There is probably a thinko in it: if "master" already has your patche=
-s,
-> then you cannot apply them on top of "master". =A0That should conflic=
-t
-> rather horribly, and not change the commits that are already upstream=
-=2E
+Say I have a bunch of new commits ready to submit to origin, but I want to fix
+some whitespace damage, I could do something like this:
 
-Hmmm, afaik there are two cases in which 'git rebase' will abort with
-'already up to date':
-1. onto =3D=3D current
-2. onto =3D=3D current + some extra patches
+$ git checkout master
+$ git branch -b rebase-me
+$ git reset --hard origin/master
+$ git commit --allow-empty "force rebase"
+$ git checkout rebase-me
+$ git rebase --whitespace=fix master
+$ git rebase -i master # kick out the 'force rebase' commit
+$ git checkout master
+$ git reset --hard rebase-me
+$ git branch -d rebase-me
 
-A quick demo of 1:
+The result would be that all commits in origin/master..master have any
+whitespace errors fixed, but it seems a bit clumsy. That is, the need to create
+a commit on master so that 'git rebase' won't bail out early makes the whole
+process a lot more involved. This patch addresses simplifies the above process
+to the following:
 
-$ git rebase origin/master
-Current branch master is up to date.
-$ git rebase -f origin/master
-Current branch master is up to date, rebase forced.
-=46irst, rewinding head to replay your work on top of it...
-=46ast-forwarded master to origin/master.
+$ git rebase -f --whitespace=fix origin/master
 
+That's a reduction of 9 commands, not too bad at all.
 
-A quick demo of 2:
+No tests included yet, will add them if there is any interest in the patch
+from the list, otherwise I'll just keep it around locally :).
 
-$ git rebase origin/master
-Current branch master is up to date.
-$ git rebase -f origin/master
-Current branch master is up to date, rebase forced.
-=46irst, rewinding head to replay your work on top of it...
-Applying: Do not attempt to render a field if it is disabled
-Applying: Add ToS agreement to org_admin application related forms.
-Applying: Added mentor ToS
+ git-rebase.sh |   19 ++++++++++++++-----
+ 1 files changed, 14 insertions(+), 5 deletions(-)
 
-> Or I misunderstand something here. =A0Quite possible, I am pretty tir=
-ed.
-
-I hope that's the case, in my manual tests everything worked as
-expected, but perhaps I didn't understand your concern correctly.
-
---=20
-Cheers,
-
-Sverre Rabbelier
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 6d3eddb..55d0f63 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -3,7 +3,7 @@
+ # Copyright (c) 2005 Junio C Hamano.
+ #
+ 
+-USAGE='[--interactive | -i] [-v] [--onto <newbase>] [<upstream>|--root] [<branch>]'
++USAGE='[--interactive | -i] [-v] [--force-rebase | -f] [--onto <newbase>] [<upstream>|--root] [<branch>]'
+ LONG_USAGE='git-rebase replaces <branch> with a new branch of the
+ same name.  When the --onto option is provided the new branch starts
+ out with a HEAD equal to <newbase>, otherwise it is equal to <upstream>
+@@ -48,6 +48,7 @@ prec=4
+ verbose=
+ git_am_opt=
+ rebase_root=
++force_rebase=
+ 
+ continue_merge () {
+ 	test -n "$prev_head" || die "prev_head must be defined"
+@@ -300,6 +301,9 @@ do
+ 		;;
+ 	--root)
+ 		rebase_root=t
++    ;;
++  -f|--f|--fo|--for|--forc|force|--force-r|--force-re|--force-reb|--force-reba|--force_rebas|--force-rebase)
++    force_rebase=t
+ 		;;
+ 	-*)
+ 		usage
+@@ -419,10 +423,15 @@ if test "$upstream" = "$onto" && test "$mb" = "$onto" &&
+ 	# linear history?
+ 	! (git rev-list --parents "$onto".."$branch" | grep " .* ") > /dev/null
+ then
+-	# Lazily switch to the target branch if needed...
+-	test -z "$switch_to" || git checkout "$switch_to"
+-	echo >&2 "Current branch $branch_name is up to date."
+-	exit 0
++	if test -z "$force_rebase"
++	then
++		# Lazily switch to the target branch if needed...
++		test -z "$switch_to" || git checkout "$switch_to"
++		echo >&2 "Current branch $branch_name is up to date."
++		exit 0
++	else
++		echo "Current branch $branch_name is up to date, rebase forced."
++  fi
+ fi
+ 
+ if test -n "$verbose"
+-- 
+1.6.2.rc0.205.g53b19b.dirty
