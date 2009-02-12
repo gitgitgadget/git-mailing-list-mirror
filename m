@@ -1,79 +1,140 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: git-cvsimport : fatal: 'Root_branche_2_0_*_' is not a valid tag
- name.
-Date: Thu, 12 Feb 2009 10:32:24 +0100
-Message-ID: <4993ECA8.9000900@alum.mit.edu>
-References: <4993CF2C.6010704@yahoo.fr>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [topgit] tg update error
+Date: Thu, 12 Feb 2009 10:32:27 +0100
+Message-ID: <20090212093227.GC20248@piper.oerlikon.madduck.net>
+References: <cc723f590902120009w432f5f61xd6550409835cdbb7@mail.gmail.com> <20090212084811.GA14261@piper.oerlikon.madduck.net> <20090212092558.GB21074@skywalker>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Prenom Nom <utilisateur_768@yahoo.fr>
-X-From: git-owner@vger.kernel.org Thu Feb 12 10:33:59 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="s/l3CgOIzMHHjg/5"
+To: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 12 10:34:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXXxG-0006iv-Hk
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 10:33:59 +0100
+	id 1LXXxW-0006mc-QO
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 10:34:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755550AbZBLJc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 04:32:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755392AbZBLJc2
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 04:32:28 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:32929 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753099AbZBLJc1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 04:32:27 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n1C9WPrQ000355
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 12 Feb 2009 10:32:25 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.19) Gecko/20090105 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
-In-Reply-To: <4993CF2C.6010704@yahoo.fr>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1755754AbZBLJcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 04:32:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755720AbZBLJcr
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 04:32:47 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:53693 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755690AbZBLJcq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 04:32:46 -0500
+Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 883FD1D409B;
+	Thu, 12 Feb 2009 10:32:29 +0100 (CET)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTPS id 622AE9F13D;
+	Thu, 12 Feb 2009 10:32:28 +0100 (CET)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id E65514454; Thu, 12 Feb 2009 10:32:27 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20090212092558.GB21074@skywalker>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux 5.0 kernel 2.6.26-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/8981/Thu Feb 12 01:28:11 2009 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109590>
 
-Prenom Nom wrote:
-> i'd like to import a project from CVS.
 
-If you can do this as a one-time conversion, please consider using
-cvs2git [1].
+--s/l3CgOIzMHHjg/5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> The cvs commits are done using
-> Cp1252 encoding charset. The thing is i cannot change the .git/config
-> file since the repo is created by git-cvsimport. So how can i use the
-> good charset ?
+also sprach Aneesh Kumar K.V <aneesh.kumar@linux.vnet.ibm.com> [2009.02.12.=
+1025 +0100]:
+> Latest git and topgit. Moving to git version v1.6.1.3 fixed the issue.
+> I can reproduce the problem on any test repo. Just do a tg update after
+> committing something in the dependent branch.
 
-cvs2git can convert the encoding of filenames, log messages, and author
-names during the conversion.
+This is not helpful. Please provide a complete transcript of
+a session reproducing the problem.
 
-> during a run of git-cvsimport, i got this error :
-> fatal: 'Root_branche_2_0_*_' is not a valid tag name.
-> Cannot create tag Root_branche_2_0_*_: Bad file descriptor
+I can't:
 
-cvs2git can arbitrarily transform tag and branch names during the
-conversion via user-specified transformation rules.
+piper:~|master|.tmp/cdt.GydvBgiR% echo foo > bar                           =
+                      #10002
+piper:~|master|.tmp/cdt.GydvBgiR% giti                                     =
+                      #10003
+Initialized empty Git repository in /home/madduck/.tmp/cdt.GydvBgiR/.git/
+Created initial commit 0f189f3: initial checkin
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 bar
+piper:~/.tmp/cdt.GydvBgiR|master|% tg create test                          =
+                      #10004
+tg: Automatically marking dependency on master
+tg: Creating test base from master...
+Switched to a new branch "test"
+tg: Topic branch test set up. Please fill .topmsg now and make initial comm=
+it.
+tg: To abort: git rm -f .top* && git checkout master && tg delete test
+cached/staged changes:
+ .topdeps |    1 +
+ .topmsg  |    6 ++++++
+piper:~/.tmp/cdt.GydvBgiR|master|% git commit -minit                       =
+                      #10005
+Created commit d49ea41: init
+ 2 files changed, 7 insertions(+), 0 deletions(-)
+ create mode 100644 .topdeps
+ create mode 100644 .topmsg
+piper:~/.tmp/cdt.GydvBgiR|test|% echo bar >> bar                           =
+                      #10006
+changes on filesystem:
+ bar |    1 +
+piper:~/.tmp/cdt.GydvBgiR|test|% git add bar                               =
+                      #10007
+cached/staged changes:
+ bar |    1 +
+piper:~/.tmp/cdt.GydvBgiR|test|% git commit -m'append'                     =
+                      #10008
+Created commit e85457e: append
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+piper:~/.tmp/cdt.GydvBgiR|test|% tg update                                 =
+                      #10009
+tg: The base is up-to-date.
+tg: The test head is up-to-date wrt. the base.
+piper:~/.tmp/cdt.GydvBgiR|test|% git --version                             =
+                      #10010
+git version 1.6.0.2
+piper:~/.tmp/cdt.GydvBgiR|test|% tg --version                              =
+                      #10011
+Unknown subcommand: --version
+TopGit v0.5 - A different patch queue manager
+Usage: tg [-r REMOTE] (create|delete|depend|export|import|info|mail|patch|r=
+emote|summary|update|help) ...
 
-> I can't use -p -b xxx since i would like to test branch merging in git
-> so i need HEAD AND some CVS branch (you can't use -b 2 times for cvsps).
-> 
-> So i guess i won't be able to test git branch merging...
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+this space intentionally left blank.
+=20
+spamtraps: madduck.bogus@madduck.net
 
-Long-term synchronization between CVS and git is fragile.  Consider
-converting to git altogether.  If that is not possible for political or
-technical reasons, consider converting your repository to Subversion
-(IMHO a no-brainer in even the most conservative shop), then using
-git-svn as a git-to-Subversion bridge (it is much more reliable than
-git-to-CVS).
+--s/l3CgOIzMHHjg/5
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
 
-Michael
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-[1] http://cvs2svn.tigris.org/cvs2git.html
+iEYEARECAAYFAkmT7KsACgkQIgvIgzMMSnUXBwCbBbvBDqWUMMcJSKGCJqE8P5V9
+srsAnRhiD+b6tSaEp5RaEGpA1VKWefvJ
+=mcDk
+-----END PGP SIGNATURE-----
+
+--s/l3CgOIzMHHjg/5--
