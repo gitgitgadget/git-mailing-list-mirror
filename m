@@ -1,91 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Clean up use of ANSI color sequences
-Date: Thu, 12 Feb 2009 15:03:21 -0800
-Message-ID: <7vy6wbi7gm.fsf@gitster.siamese.dyndns.org>
-References: <1234471059-53625-1-git-send-email-arjen@yaph.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add 'rm -f' equivalent to 'git rm' example of filter-branch
+ --index-filter
+Date: Fri, 13 Feb 2009 00:06:11 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902130005580.10279@pacific.mpi-cbg.de>
+References: <AB13D1C5-4464-49B5-8314-FCB1E249BF22@semanticart.com> <1234461670-25657-1-git-send-email-jacob.helwig@gmail.com> <7v4oyzjmqv.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Arjen Laarhoven <arjen@yaph.org>
-X-From: git-owner@vger.kernel.org Fri Feb 13 00:04:56 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 00:08:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXkc3-0002Ow-UO
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 00:04:56 +0100
+	id 1LXkeP-0003RB-Bk
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 00:07:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755017AbZBLXD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 18:03:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbZBLXD2
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 18:03:28 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63688 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750802AbZBLXD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 18:03:28 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 63015999CA;
-	Thu, 12 Feb 2009 18:03:26 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CF750999C8; Thu,
- 12 Feb 2009 18:03:22 -0500 (EST)
-In-Reply-To: <1234471059-53625-1-git-send-email-arjen@yaph.org> (Arjen
- Laarhoven's message of "Thu, 12 Feb 2009 21:37:39 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5AEC33A8-F959-11DD-857C-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1759062AbZBLXF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 18:05:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758243AbZBLXFZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 18:05:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40244 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756963AbZBLXFY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 18:05:24 -0500
+Received: (qmail invoked by alias); 12 Feb 2009 23:05:20 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 13 Feb 2009 00:05:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19IxVR5z3BIcfb3QiOfh9USPwzr8Vs3EkJRo/SMY2
+	+sC57hWv0FI9Lw
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7v4oyzjmqv.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109677>
 
-Arjen Laarhoven <arjen@yaph.org> writes:
+Hi,
 
-> diff --git a/color.h b/color.h
-> index 5019df8..c4d2e53 100644
-> --- a/color.h
-> +++ b/color.h
-> @@ -4,6 +4,16 @@
->  /* "\033[1;38;5;2xx;48;5;2xxm\0" is 23 bytes */
->  #define COLOR_MAXLEN 24
->  
-> +#define COLOR_NORMAL	""
-> +#define COLOR_RESET	"\033[m"
-> +#define COLOR_BOLD	"\033[1m"
-> +#define COLOR_RED	"\033[31m"
-> +#define COLOR_GREEN	"\033[32m"
-> +#define COLOR_YELLOW	"\033[33m"
-> +#define COLOR_BLUE	"\033[34m"
-> +#define COLOR_CYAN	"\033[36m"
-> +#define COLOR_BG_RED	"\033[41m"
+On Thu, 12 Feb 2009, Junio C Hamano wrote:
 
-Sounds like a very sane thing to do in principle, but the choice of
-constant names are problematic.
+> Jacob Helwig <jacob.helwig@gmail.com> writes:
+> 
+> > Signed-off-by: Jacob Helwig <jacob.helwig@gmail.com>
+> > ---
+> >  Documentation/git-filter-branch.txt |    5 +++++
+> >  1 files changed, 5 insertions(+), 0 deletions(-)
+> >
+> > diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+> > index 451950b..1fbbbb4 100644
+> > --- a/Documentation/git-filter-branch.txt
+> > +++ b/Documentation/git-filter-branch.txt
+> > @@ -212,6 +212,11 @@ git filter-branch --index-filter 'git rm --cached filename' HEAD
+> >  
+> >  Now, you will get the rewritten history saved in HEAD.
+> >  
+> > +As with using `rm filename`, `git rm --cached filename` will fail
+> > +if the file is absent from the tree of a commit.  If it is not important
+> > +whether the file is already absent from the tree, you can use
+> > +`git rm --cached --ignore-unmatch filename` instead.
+> > +
+> >  To rewrite the repository to look as if `foodir/` had been its project
+> >  root, and discard all other history:
+> 
+> 
+> Looks sane to me.  Objections?
 
- (1) There are COLOR_BRANCH_$category constants, that look very similar
-     (they probably should be renamed to BRANCH_COLOR_$category). 
+Definitely no objections from me.
 
- (2) These are ANSI constants so it might be better to call them
-     ANSI_COLOR_$physical_attributes, or GIT_COLOR_$physical_attributes.
-
-     I actually prefer the latter because then later we can potentially
-     redefine these macros with something like:
-
-	#define GIT_COLOR_RED ti_setf(COLOR_RED)
-	#define GIT_COLOR_BG_RED ti_setb(COLOR_RED)
-
-     and write a set of small wrappers to terminfo to support non ANSI
-     terminals without changing the rest of the code.  It is nicer to use
-     GIT_COLOR_RED instead of COLOR_RED, because the latter are defined in
-     ncurses.h like this:
-
-        /* colors */
-        #define COLOR_BLACK	0
-        #define COLOR_RED	1
-        #define COLOR_GREEN	2
-        #define COLOR_YELLOW	3
-        #define COLOR_BLUE	4
-        #define COLOR_MAGENTA	5
-        #define COLOR_CYAN	6
-        #define COLOR_WHITE	7
+Ciao,
+Dscho
