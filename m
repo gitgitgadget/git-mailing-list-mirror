@@ -1,116 +1,77 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv2 5/6] gitweb: last-modified time should be commiter, not 
-	author
-Date: Thu, 12 Feb 2009 10:52:06 +0100
-Message-ID: <cb7bb73a0902120152h7b3e0ac6w379bd9319712ea2b@mail.gmail.com>
-References: <1232970616-21167-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200902111018.39699.jnareb@gmail.com>
-	 <cb7bb73a0902110154h325ed146h4d1161d4a8dcb1ca@mail.gmail.com>
-	 <200902121007.29867.jnareb@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Thunderbird and patches
+Date: Thu, 12 Feb 2009 11:07:15 +0100
+Message-ID: <4993F4D3.1060501@drmicha.warpmail.net>
+References: <498E50E2.8050309@codeweavers.com>	<200902072310.12764.bss@iguanasuicide.net>	<498F01C2.5080105@codeweavers.com>	<alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de>	<499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com>	<alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de>	<49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com>	<49904DE7.2080205@codeweavers.com>	<4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com>	<qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil>	<49907F75.2050100@beonex.com>	<alpine.DEB.1.00.0902092013260.10279@pacific.mpi-cbg.de>	<RD8dEuXN_TYvtiDHum-mdwL3m_eJP49xWrl9-YgiLfhOFN6weRXVhg@cipher.nrlssc.navy.mil>	<alpine.DEB.1.00.0902092105230.10279@pacific.mpi-cbg.de>	<499151C9.7090502
+ @drmicha.warpmail.net> <buo4oz0e0dg.fsf@dhlpc061.dev.necel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Deskin Miller <deskinm@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 10:53:40 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Ben Bucksch <ben.bucksch.news@beonex.com>,
+	Jeremy White <jwhite@codeweavers.com>,
+	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
+	git@vger.kernel.org
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Feb 12 11:09:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXYGJ-0005Pq-0O
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 10:53:39 +0100
+	id 1LXYV0-0001tT-PV
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 11:08:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756462AbZBLJwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 04:52:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756355AbZBLJwJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 04:52:09 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:65481 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756088AbZBLJwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 04:52:08 -0500
-Received: by ewy14 with SMTP id 14so516086ewy.13
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 01:52:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JtE86oUoSCDQdzdvEwcCP3+LGAy56ajkRCXITguzknA=;
-        b=T0jbzNYFfqMc+CfeixaCXssuVpV6gKtOc16Vy5jXDord/jfAH1/N4885nOf0bwzIMY
-         sSqFSqFX5c+AV3qWwgpNlv1+BwjqITKAba6O6qe8oyI9wdcQcx4ufS8PGICZOn8Mm5sQ
-         e65r8jYUsJS/V+t0GMW0zA4uFBnrUSV6cdyiw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QErtififb1Ao2uFGwDM1C7x0Jsqu2lbTNiN19jatAGgI1Ag5OgsKy4ur6wpgq1crVY
-         oqpKmcg2hlI2ZmYUrCfmASOnjaccuLqRo4loNh8sDG6OgHwlp1dNko43Dt+81RrznyfR
-         NiL/aygP56jDdEUsMKku7+xUXaIZX+72WO4J0=
-Received: by 10.210.19.7 with SMTP id 7mr530564ebs.169.1234432326063; Thu, 12 
-	Feb 2009 01:52:06 -0800 (PST)
-In-Reply-To: <200902121007.29867.jnareb@gmail.com>
+	id S1755868AbZBLKHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 05:07:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755691AbZBLKHX
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 05:07:23 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58245 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755085AbZBLKHW (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Feb 2009 05:07:22 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 3FFE3292A12;
+	Thu, 12 Feb 2009 05:07:21 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 12 Feb 2009 05:07:21 -0500
+X-Sasl-enc: +ncr4repM+Wzp+zVpBaAYfTKb2HApLf9nkmofuOoLuPe 1234433240
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 0C0B6296E1;
+	Thu, 12 Feb 2009 05:07:19 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090209 Shredder/3.0b2pre
+In-Reply-To: <buo4oz0e0dg.fsf@dhlpc061.dev.necel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109593>
 
-On Thu, Feb 12, 2009 at 10:07 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Wed, 11 Feb 2009, Giuseppe Bilotta wrote:
->> On Wed, Feb 11, 2009 at 10:18 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+Miles Bader venit, vidit, dixit 12.02.2009 05:37:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>> In other words: use the right tool.  Or, as somebody put it at the 
+>>> GitTogether: to a hammer, everything looks like a nail.
+>> It just seems that the workflow "required" here on the git list is the
+>> way it is because it caters for differently abled MUAs which can't
+>> handle certain standards (inline disposition) efficiently.  Mutt
+>> obviously can, so it's not a matter of John Doe's MUA versus geeky
+>> MUAs.
+> 
+> So, since you decry flames later in your message, why did you feel it
+> necessary to throw in this rather creaky bit of flamebait?
+> 
+> [The issue is apparently MUAs which munge messages when not wanted; that
+> says _nothing_ about what non-munging MUAs can or can not "handle".]
 
->>> Assuming that you have reflog enabled (yes, it is default now)...
->>> So you would have to provide fallback in the case there is no reflog.
->>>
->>> BTW. "git reflog" is porcelain; it would be better to parse reflog
->>> directly, I think.
->>
->> Does disabling reflog remove old reflogs? IOW, can I check if reflog
->> is enabled just by opening the reflog file and assuming reflog isn't
->> enabled if it's not there? Falling back to the commit date would still
->> work decently.
->
-> You can disable reflog by setting core.logAllRefUpdates to false...
-> which of course do not remove reflog.  But checking for this config
-> variable in gitweb shouldn't be too hard, although you would need
-> to somehow change assumption that we are interested only in ^gitweb\.
-> section of config.
->
-> There is other side of this issue: reflog is expired, so you can
-> have empty reflog if branch was updated long time ago.
+I think we all (all who participated so far) agreed that the MUAs we
+talked about have different abilities, thus are differently abled (pun
+intended).
 
-I'm thinking that what I could do (that should always work as
-expected) is to consider as 'last modified' the most recent date
-between the commit date and the reflog date (if the reflog is found).
-This basically implements an 'automatic' fallback for
-disabled/obsolete/expired reflog to commit date. (Of course, assuming
-the last commit doesn't suffer from a ridicously long clockskew in the
-future.)
+By now, all sides have worked constructively together to make things
+work for all MUAs and all users. Dscho even cooked up a Thunderbird
+extension, Ben provided input for git-imap-send.
 
->> Since we're only interested in the last reflog date, what we can do is
->> to read the last line and get the unix time which is held two places
->> before the tab separating the metadata from the log message. Correct?
->
-> Almost correct.  Some tools (old StGit for example) didn't provide
-> reflog message, and with empty message they forgot to append TAB
-> separator.  So you would have to provide for legacy
->
->  <old sha-1> <new-sha-1> <committer> <timestamp> <timezone>
->
-> instead of correct (for empty reflog message)
->
->  <old sha-1> <new-sha-1> <committer> <timestamp> <timezone> TAB
+If you want to fuel the flames you're too late. If you want to
+contribute you're welcome to.
 
-That's the easy part: split at TAB, get the first array entry, split
-at spaces, get the last two. But thanks for making me aware of the
-possibly missing TAB
-
-> P.S. It is a pity that due to packed refs stat-ing branch tip file
-> $GIT_DIR/refs/heads/<branch> is not enough...
-
-Yeah, that's what the other rbot developer suggested initially (then I
-found out that cloning the repo was enough to NOT have branch heads).
-
--- 
-Giuseppe "Oblomov" Bilotta
+Michael
