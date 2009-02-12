@@ -1,79 +1,69 @@
-From: Jonas Fonseca <jonas.fonseca@gmail.com>
-Subject: Re: [ANNOUNCE] tig-0.14
-Date: Thu, 12 Feb 2009 23:24:56 +0100
-Message-ID: <2c6b72b30902121424o5d4ac0d7u67a7afb3b861aa19@mail.gmail.com>
-References: <20090205204436.GA6072@diku.dk> <op.uo9di902a8ed4e@dellschleppa>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add 'rm -f' equivalent to 'git rm' example of
+ filter-branch --index-filter
+Date: Thu, 12 Feb 2009 14:47:52 -0800
+Message-ID: <7v4oyzjmqv.fsf@gitster.siamese.dyndns.org>
+References: <AB13D1C5-4464-49B5-8314-FCB1E249BF22@semanticart.com>
+ <1234461670-25657-1-git-send-email-jacob.helwig@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Tilo Schwarz <tilo@tilo-schwarz.de>
-X-From: git-owner@vger.kernel.org Thu Feb 12 23:26:52 2009
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 23:49:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXk0s-0004rh-O5
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 23:26:31 +0100
+	id 1LXkN6-0005Pb-No
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 23:49:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758976AbZBLWZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 17:25:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752632AbZBLWY7
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 17:24:59 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:47395 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752771AbZBLWY7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 17:24:59 -0500
-Received: by fxm13 with SMTP id 13so2793553fxm.13
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 14:24:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RyyQc2xUok5vB0uMmjwL9zaDabwCaXN82PpbgiwqEHI=;
-        b=gwlS631CXUAt4GTkKeXhsJ8dcWQKUnBr1oPMwmGec5mKBOW7NatleG/p7B61RyYdKT
-         MIUk+9ma3FbeOSgmFDHGvLsRumnz4lXUQuH/WQ+LEJ2pkZKJc82FC+agzLXyLLquVDli
-         xr3BovlaowtIzrZH/C/IKV+AGrOSLNaFhVnyg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lrwzTXoir5vukFHEb0+w2fuet55SdXyvpiu/nVWJFIZbvcU+HLERSY4svZFQ0vlFtC
-         J0P/KbR8JjjVB+O8ZP4wRiiOL9X26HasZjPT/ZDuhJNNS23ulvu39aERUORIyAd4TSpj
-         OO+6d2mJEk5zOZM4Dn+5oBWlYZQTps6DngXzc=
-Received: by 10.181.149.19 with SMTP id b19mr142070bko.82.1234477497459; Thu, 
-	12 Feb 2009 14:24:57 -0800 (PST)
-In-Reply-To: <op.uo9di902a8ed4e@dellschleppa>
+	id S1754939AbZBLWsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 17:48:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754867AbZBLWsA
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 17:48:00 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56135 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752896AbZBLWr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 17:47:59 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DDA8F998AF;
+	Thu, 12 Feb 2009 17:47:57 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 651A9998AC; Thu,
+ 12 Feb 2009 17:47:54 -0500 (EST)
+In-Reply-To: <1234461670-25657-1-git-send-email-jacob.helwig@gmail.com>
+ (Jacob Helwig's message of "Thu, 12 Feb 2009 10:01:10 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 317EC7C6-F957-11DD-B826-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109674>
 
-On Thu, Feb 12, 2009 at 22:48, Tilo Schwarz <tilo@tilo-schwarz.de> wrote:
-> One thing came to my mind. When I use 'S' and then 'u' to stage/unstage
-> files, it would be nice if I could press a key(maybe 'C') to fire up my
-> $EDITOR, enter my commit message, let tig do the commit and find myself back
-> into the updated status view. Does this sound reasonable?
+Jacob Helwig <jacob.helwig@gmail.com> writes:
 
-Sure, you can achieve this very easily. For example, I have the
-following bindings in my ~/.tigrc:
+> Signed-off-by: Jacob Helwig <jacob.helwig@gmail.com>
+> ---
+>  Documentation/git-filter-branch.txt |    5 +++++
+>  1 files changed, 5 insertions(+), 0 deletions(-)
+>
+> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+> index 451950b..1fbbbb4 100644
+> --- a/Documentation/git-filter-branch.txt
+> +++ b/Documentation/git-filter-branch.txt
+> @@ -212,6 +212,11 @@ git filter-branch --index-filter 'git rm --cached filename' HEAD
+>  
+>  Now, you will get the rewritten history saved in HEAD.
+>  
+> +As with using `rm filename`, `git rm --cached filename` will fail
+> +if the file is absent from the tree of a commit.  If it is not important
+> +whether the file is already absent from the tree, you can use
+> +`git rm --cached --ignore-unmatch filename` instead.
+> +
+>  To rewrite the repository to look as if `foodir/` had been its project
+>  root, and discard all other history:
 
- bind generic + !git commit --amend
- bind generic . !git commit
 
-With tig-0.14, you can also put bindings in your ~/.gitconfig or the
-project specific .git/config file using:
-
- [tig "bind"]
-    generic = C !git commit
-    generic = w !firefox http://repo.or.cz/w/tig.git?h=%(commit)
-
-The last one uses "browsing state variables". There is more
-information about those in tigrc(5)[1]
-
-[1] http://jonas.nitro.dk/tig/tigrc.5.html#_actions
-
--- 
-Jonas Fonseca
+Looks sane to me.  Objections?
