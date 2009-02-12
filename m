@@ -1,96 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv2 5/6] gitweb: last-modified time should be commiter, not  author
-Date: Thu, 12 Feb 2009 11:11:44 +0100
-Message-ID: <200902121111.51147.jnareb@gmail.com>
-References: <1232970616-21167-1-git-send-email-giuseppe.bilotta@gmail.com> <200902121007.29867.jnareb@gmail.com> <cb7bb73a0902120152h7b3e0ac6w379bd9319712ea2b@mail.gmail.com>
+From: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>
+Subject: Re: [topgit] tg update error
+Date: Thu, 12 Feb 2009 15:42:43 +0530
+Message-ID: <20090212101243.GC21074@skywalker>
+References: <cc723f590902120009w432f5f61xd6550409835cdbb7@mail.gmail.com> <20090212084811.GA14261@piper.oerlikon.madduck.net> <20090212092558.GB21074@skywalker> <20090212093227.GC20248@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Deskin Miller <deskinm@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 11:13:39 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Aneesh Kumar <aneesh.kumar@gmail.com>, git@vger.kernel.org
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Thu Feb 12 11:14:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXYZb-0003sU-SW
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 11:13:36 +0100
+	id 1LXYaK-00045P-Li
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 11:14:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755754AbZBLKMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 05:12:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751060AbZBLKMH
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 05:12:07 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:57133 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750848AbZBLKMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 05:12:05 -0500
-Received: by fxm13 with SMTP id 13so1708071fxm.13
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 02:12:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=1nbtrwvKxcYVYwN2HJu8hm8PRT+M18hF4UjibgucrbU=;
-        b=HRWMMuVc/lZORojFbMx2RrO/D/+5oDUXY/d0QZuG5v44oJc7pwdOVkYKwsQ5vD7My1
-         XMi5QwqvrBKzKNfhXRAJdj5cV4Thhbw/gBJ7u8KRvUkxXLpiRZPLkEsKObS6IIt97LSY
-         om3lZ57U4NuFfvtJgN/VapqMBtTTnxxh8oxaA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=uwZDvxOGFpzhyqjns4+O9L0nBSTyGnz5GMl+9ujeEis+N+KqKwJQIxfUJGsGobCigY
-         XGLee4DcJjVXi80HQcodZl01wShEajHeHDZ12NcvGYPrDNVHWCY6SQYTYAFD4bWXhx54
-         ++XohMNwhERD3A0RQ+mFD6jBUKCn8Sx/KQU2I=
-Received: by 10.102.247.4 with SMTP id u4mr268600muh.104.1234433522886;
-        Thu, 12 Feb 2009 02:12:02 -0800 (PST)
-Received: from ?192.168.1.13? (abxc167.neoplus.adsl.tpnet.pl [83.8.252.167])
-        by mx.google.com with ESMTPS id 23sm3167619mum.7.2009.02.12.02.12.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 12 Feb 2009 02:12:01 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0902120152h7b3e0ac6w379bd9319712ea2b@mail.gmail.com>
+	id S1756355AbZBLKMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 05:12:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756233AbZBLKMx
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 05:12:53 -0500
+Received: from e28smtp03.in.ibm.com ([59.145.155.3]:44110 "EHLO
+	e28smtp03.in.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755738AbZBLKMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 05:12:52 -0500
+Received: from d28relay04.in.ibm.com (d28relay04.in.ibm.com [9.184.220.61])
+	by e28smtp03.in.ibm.com (8.13.1/8.13.1) with ESMTP id n1CACkri004391
+	for <git@vger.kernel.org>; Thu, 12 Feb 2009 15:42:46 +0530
+Received: from d28av01.in.ibm.com (d28av01.in.ibm.com [9.184.220.63])
+	by d28relay04.in.ibm.com (8.13.8/8.13.8/NCO v9.1) with ESMTP id n1CACpok3104920
+	for <git@vger.kernel.org>; Thu, 12 Feb 2009 15:42:51 +0530
+Received: from d28av01.in.ibm.com (loopback [127.0.0.1])
+	by d28av01.in.ibm.com (8.13.1/8.13.3) with ESMTP id n1CACj3Z028827
+	for <git@vger.kernel.org>; Thu, 12 Feb 2009 15:42:45 +0530
+Received: from skywalker (skywalker.in.ibm.com [9.124.35.32])
+	by d28av01.in.ibm.com (8.13.1/8.12.11) with ESMTP id n1CAChSd028815
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 12 Feb 2009 15:42:45 +0530
 Content-Disposition: inline
+In-Reply-To: <20090212093227.GC20248@piper.oerlikon.madduck.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109595>
 
-On Thu, 12 Feb 2009, Giuseppe Bilotta wrote:
-> On Thu, Feb 12, 2009 at 10:07 AM, Jakub Narebski <jnareb@gmail.com> 
-> wrote: 
-
->> You can disable reflog by setting core.logAllRefUpdates to false...
->> which of course do not remove reflog.  But checking for this config
->> variable in gitweb shouldn't be too hard, although you would need
->> to somehow change assumption that we are interested only in ^gitweb\.
->> section of config.
->>
->> There is other side of this issue: reflog is expired, so you can
->> have empty reflog if branch was updated long time ago.
+On Thu, Feb 12, 2009 at 10:32:27AM +0100, martin f krafft wrote:
+> also sprach Aneesh Kumar K.V <aneesh.kumar@linux.vnet.ibm.com> [2009.02.12.1025 +0100]:
+> > Latest git and topgit. Moving to git version v1.6.1.3 fixed the issue.
+> > I can reproduce the problem on any test repo. Just do a tg update after
+> > committing something in the dependent branch.
 > 
-> I'm thinking that what I could do (that should always work as
-> expected) is to consider as 'last modified' the most recent date
-> between the commit date and the reflog date (if the reflog is found).
-> This basically implements an 'automatic' fallback for
-> disabled/obsolete/expired reflog to commit date. (Of course, assuming
-> the last commit doesn't suffer from a ridicously long clockskew in the
-> future.)
+> This is not helpful. Please provide a complete transcript of
+> a session reproducing the problem.
+> 
+> I can't:
+> 
+> piper:~/.tmp/cdt.GydvBgiR|test|% git --version                                                   #10010
+> git version 1.6.0.2
 
-That is, I think, a very good idea. It also covers situation where we
-use non-head 'h'/'hb', for example explicit SHA-1 (not that it makes
-sense, but...) 
- 
-Well, that beside my little doubt whether using publish date is a good
-idea or not...
+The git version that failed for me is the latest git. As I mentioned
+above git version 1.6.1.3 works fine.
 
+Can you test with
+$git --version
+git version 1.6.2.rc0.55.g30aa4f
 
-P.S. What would you do for explicit and implicit HEAD? HEAD reflog,
-or 'current branch' reflog?
--- 
-Jakub Narebski
-Poland
+-aneesh
