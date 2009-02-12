@@ -1,102 +1,91 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 2/3] builtin-remote: teach show to display remote HEAD
-Date: Thu, 12 Feb 2009 17:55:04 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0902121656570.19665@iabervon.org>
-References: <1234332083-45147-1-git-send-email-jaysoffian@gmail.com>  <1234332083-45147-2-git-send-email-jaysoffian@gmail.com>  <1234332083-45147-3-git-send-email-jaysoffian@gmail.com>  <20090212002612.GC30231@coredump.intra.peff.net> 
- <76718490902111748j58f80591ma149f8ec9fb8b352@mail.gmail.com>  <alpine.LNX.1.00.0902121519160.19665@iabervon.org> <76718490902121337l4b7f6f1dh25e6daa9adb48160@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Clean up use of ANSI color sequences
+Date: Thu, 12 Feb 2009 15:03:21 -0800
+Message-ID: <7vy6wbi7gm.fsf@gitster.siamese.dyndns.org>
+References: <1234471059-53625-1-git-send-email-arjen@yaph.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 23:56:45 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Arjen Laarhoven <arjen@yaph.org>
+X-From: git-owner@vger.kernel.org Fri Feb 13 00:04:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXkU0-0007vt-J7
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 23:56:37 +0100
+	id 1LXkc3-0002Ow-UO
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 00:04:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753038AbZBLWzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 17:55:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751107AbZBLWzI
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 17:55:08 -0500
-Received: from iabervon.org ([66.92.72.58]:34652 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751238AbZBLWzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 17:55:07 -0500
-Received: (qmail 9592 invoked by uid 1000); 12 Feb 2009 22:55:04 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Feb 2009 22:55:04 -0000
-In-Reply-To: <76718490902121337l4b7f6f1dh25e6daa9adb48160@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1755017AbZBLXD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 18:03:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbZBLXD2
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 18:03:28 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63688 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750802AbZBLXD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 18:03:28 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 63015999CA;
+	Thu, 12 Feb 2009 18:03:26 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CF750999C8; Thu,
+ 12 Feb 2009 18:03:22 -0500 (EST)
+In-Reply-To: <1234471059-53625-1-git-send-email-arjen@yaph.org> (Arjen
+ Laarhoven's message of "Thu, 12 Feb 2009 21:37:39 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5AEC33A8-F959-11DD-857C-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109676>
 
-On Thu, 12 Feb 2009, Jay Soffian wrote:
+Arjen Laarhoven <arjen@yaph.org> writes:
 
-> On Thu, Feb 12, 2009 at 3:27 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> >
-> > struct ref *head = locate_head(refs, refs, NULL);
-> > return head ? xstrdup(abbrev_branch(head->name)) : NULL;
-> >
-> > ?
-> 
-> No, I don't _think_ so. refs is everything from the remote side (tags,
-> etc). I want to only match those things under refs/heads.
+> diff --git a/color.h b/color.h
+> index 5019df8..c4d2e53 100644
+> --- a/color.h
+> +++ b/color.h
+> @@ -4,6 +4,16 @@
+>  /* "\033[1;38;5;2xx;48;5;2xxm\0" is 23 bytes */
+>  #define COLOR_MAXLEN 24
+>  
+> +#define COLOR_NORMAL	""
+> +#define COLOR_RESET	"\033[m"
+> +#define COLOR_BOLD	"\033[1m"
+> +#define COLOR_RED	"\033[31m"
+> +#define COLOR_GREEN	"\033[32m"
+> +#define COLOR_YELLOW	"\033[33m"
+> +#define COLOR_BLUE	"\033[34m"
+> +#define COLOR_CYAN	"\033[36m"
+> +#define COLOR_BG_RED	"\033[41m"
 
-I was looking at your code and comparing with locate_head; it looks to me 
-like you're using "ref" for both of the lists of refs that locate_head() 
-gets. I think, actually, that checking for refs/heads in locate_head() 
-would be a reasonable thing in general, and might avoid getting surprising 
-results in clone with --mirror and odd refs or such.
+Sounds like a very sane thing to do in principle, but the choice of
+constant names are problematic.
 
-> I think I have to do something like this (this is more or less what
-> builtin-clone does):
-> 
-> struct ref *remote_refs, *mapped_refs = NULL;
-> struct refspec branch_refspec;
-> 
-> branch_refspec.force = 0;
-> branch_refspec.src = branch_refspec.dst = "refs/heads";
-> 
-> remote_refs = transport_get_remote_refs(transport);
-> get_fetch_map(remote_refs, branch_refspec, &mapped_refs, 0);
-> head_points_at = locate_head(refs, mapped_refs, NULL);
+ (1) There are COLOR_BRANCH_$category constants, that look very similar
+     (they probably should be renamed to BRANCH_COLOR_$category). 
 
-You should be able to filter the ref list you already have, rather than 
-refetching, if nothing else.
+ (2) These are ANSI constants so it might be better to call them
+     ANSI_COLOR_$physical_attributes, or GIT_COLOR_$physical_attributes.
 
-> > I'd somehow thought I'd moved locate_head() somewhere common, but it
-> > really ought to be done.
-> 
-> I plan to move it into remote.c.
+     I actually prefer the latter because then later we can potentially
+     redefine these macros with something like:
 
-Good.
+	#define GIT_COLOR_RED ti_setf(COLOR_RED)
+	#define GIT_COLOR_BG_RED ti_setb(COLOR_RED)
 
-> > There were periodic discussions of how you find
-> > out when the remote repo changes its HEAD and you might want to do
-> > something locally about it, and we never came up with a specific thing
-> > for git to do, but the facility is probably useful.
-> 
-> Thus "git remote set-head -a" is the best I could come up with for
-> setting it to what the remote has.
+     and write a set of small wrappers to terminfo to support non ANSI
+     terminals without changing the rest of the code.  It is nicer to use
+     GIT_COLOR_RED instead of COLOR_RED, because the latter are defined in
+     ncurses.h like this:
 
-Yeah, that seems like a good interface.
-
-> > I have the vague memory, as well, that there's some way for a transport to
-> > report that it actually knows that HEAD is a symref to something in
-> > particular, and so git shouldn't guess.
-> 
-> I think for http://, but not for git://, but I'm *far* from an expert
-> in this area.
-
-Yes, it was information only available for http, but there's no reason to 
-assume that other protocols couldn't provide it, and Junio mentioned a 
-series from December (maybe never applied) to get the same info for the 
-native git protocol.
-
-	-Daniel
-*This .sig left intentionally blank*
+        /* colors */
+        #define COLOR_BLACK	0
+        #define COLOR_RED	1
+        #define COLOR_GREEN	2
+        #define COLOR_YELLOW	3
+        #define COLOR_BLUE	4
+        #define COLOR_MAGENTA	5
+        #define COLOR_CYAN	6
+        #define COLOR_WHITE	7
